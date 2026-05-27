@@ -15,12 +15,15 @@ Bundled resources:
 - `assets/photo_prompt_tags.json`: original tag dictionary.
 - `scripts/generate_photo_prompt.py`: wrapper with project-local defaults.
 
+Canonical project source path: `skills/photo-prompt-image-generator`.
+Agent compatibility path: `.agents/skills/photo-prompt-image-generator`, a symlink to the canonical skill folder.
+
 ## Default Workflow
 
 1. Generate one prompt with JSON output:
 
 ```bash
-python3 .agents/skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py
+python3 skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py
 ```
 
 2. Use `prompt_en` as the primary image prompt unless the user explicitly wants Korean-only output.
@@ -33,31 +36,31 @@ python3 .agents/skills/photo-prompt-image-generator/scripts/generate_photo_promp
 List available presets:
 
 ```bash
-python3 .agents/skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py --list-presets --plain
+python3 skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py --list-presets --plain
 ```
 
 Inspect slots:
 
 ```bash
-python3 .agents/skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py --show-slots --plain
+python3 skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py --show-slots --plain
 ```
 
 List tag ids for a slot:
 
 ```bash
-python3 .agents/skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py --list-tags subject --plain
+python3 skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py --list-tags subject --plain
 ```
 
 Generate a reproducible prompt:
 
 ```bash
-python3 .agents/skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py --preset street_documentary --seed 42
+python3 skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py --preset street_documentary --seed 42
 ```
 
 Force slot selections:
 
 ```bash
-python3 .agents/skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py \
+python3 skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py \
   --preset tiktok_vertical_snapshot \
   --set subject=influencer_creator \
   --set person_origin=south_korea \
