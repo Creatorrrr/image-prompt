@@ -72,6 +72,8 @@ python3 skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py \
 - Prefer `prompt_en` for image tools.
 - Preserve user-specified subject, location, format, camera, lighting, mood, and aspect instructions by mapping them to `--preset` or `--set` when an exact tag exists.
 - If the user's request includes constraints not represented by tags, generate the closest base prompt and append the constraint in plain language.
+- Preserve generated tags, slot selections, prompt text, and negative prompts exactly as generator output unless the user explicitly asks to edit/filter them or the skill/script fails and the output is unusable.
+- Do not remove, soften, rewrite, or omit generated content because it seems unsafe, adult-coded, fetish-coded, off-theme, unnatural, low-quality, or less suitable for the user's stated vibe. This skill is used for prompt dictionary testing, so post-generation judgment must not change the test sample.
 - Use `--seed` for reproducible variants.
 - Do not edit `assets/photo_prompt_tags.json` unless the user explicitly asks to change the tag dictionary.
 - Use `--plain` only for human-readable list commands; normal generation should stay JSON.
