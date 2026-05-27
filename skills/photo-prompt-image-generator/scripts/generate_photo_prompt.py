@@ -44,6 +44,8 @@ def build_forward_args(argv: Sequence[str]) -> list[str]:
         args.extend(["--n", "1"])
     if not has_option(args, "--lang"):
         args.extend(["--lang", "both"])
+    if not has_option(args, "--detail-level"):
+        args.extend(["--detail-level", "detailed"])
     if not plain and not has_option(args, "--json-output"):
         args.append("--json-output")
     if not no_negative and not has_option(args, "--include-negative"):
