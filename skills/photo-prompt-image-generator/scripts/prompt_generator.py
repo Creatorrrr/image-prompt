@@ -831,10 +831,10 @@ def build_fields(picked: Dict[str, Entry], lang: str) -> Dict[str, str]:
 
     if lang == "ko":
         technique_chunks = []
-        if lighting_parts:
-            technique_chunks.append("조명은 " + ", ".join(lighting_parts))
         if camera_parts:
             technique_chunks.append("카메라는 " + ", ".join(camera_parts))
+        if lighting_parts:
+            technique_chunks.append("조명은 " + ", ".join(lighting_parts))
         technique_sentence = ensure_period("; ".join(technique_chunks)) if technique_chunks else ""
 
         style_parts = [values[s] for s in style_slots if values.get(s)]
@@ -844,10 +844,10 @@ def build_fields(picked: Dict[str, Entry], lang: str) -> Dict[str, str]:
         detail_sentence = ensure_period("디테일은 " + ", ".join(detail_parts)) if detail_parts else ""
     else:
         technique_chunks = []
-        if lighting_parts:
-            technique_chunks.append("Lighting: " + ", ".join(lighting_parts))
         if camera_parts:
             technique_chunks.append("Camera: " + ", ".join(camera_parts))
+        if lighting_parts:
+            technique_chunks.append("Lighting: " + ", ".join(lighting_parts))
         technique_sentence = ensure_period("; ".join(technique_chunks)) if technique_chunks else ""
 
         style_parts = [values[s] for s in style_slots if values.get(s)]
@@ -1058,96 +1058,230 @@ def render_trend_layer_detail(layer: str, lang: str) -> str:
     return ensure_period(details.get(layer, ""))
 
 
-def render_detailed_prompt(data: JsonDict, preset: JsonDict, picked: Dict[str, Entry], lang: str) -> str:
+PROMPT_SECTION_ORDER = (
+    "intent",
+    "subject",
+    "action",
+    "scene",
+    "camera",
+    "lighting",
+    "palette_mood",
+    "finish",
+    "special_layers",
+    "constraints",
+)
+
+
+def inline_constraints(lang: str) -> List[str]:
+    if lang == "ko":
+        return ["텍스트와 워터마크 없음"]
+    return ["no text or watermark"]
+
+
+def dedupe_parts(parts: Sequence[str]) -> List[str]:
+    seen: Set[str] = set()
+    unique: List[str] = []
+    for part in parts:
+        cleaned = clean_spaces(part)
+        if not cleaned:
+            continue
+        key = cleaned.lower()
+        if key in seen:
+            continue
+        seen.add(key)
+        unique.append(cleaned)
+    return unique
+
+
+def build_prompt_sections(
+    data: JsonDict,
+    preset: JsonDict,
+    picked: Dict[str, Entry],
+    lang: str,
+    reference_edit_mode: str = "off",
+    trend_layer: str = "off",
+) -> Dict[str, List[str]]:
+    fields = build_fields(picked, lang)
+    values = {slot: localize(entry, lang) for slot, entry in picked.items()}
+
+    def selected(slots: Sequence[str]) -> List[str]:
+        return [values[slot] for slot in slots if values.get(slot)]
+
+    sections: Dict[str, List[str]] = {section: [] for section in PROMPT_SECTION_ORDER}
+    sections["intent"] = selected(("medium", "genre", "format", "quality"))
+    sections["subject"] = [
+        fields.get("subject_with_mods") or values.get("subject", "")
+    ]
+    sections["action"] = selected(("action", "prop"))
+    sections["scene"] = [
+        fields.get("location_phrase") or values.get("location", ""),
+        values.get("world", ""),
+    ]
+    sections["camera"] = selected(
+        (
+            "camera_type",
+            "camera_direction",
+            "composition",
+            "subject_framing",
+            "body_framing",
+            "lens",
+            "focus",
+            "motion",
+        )
+    )
+    sections["lighting"] = selected(
+        ("lighting", "light_direction", "light_type", "light_intensity", "light_shape")
+    )
+    sections["palette_mood"] = selected(("color", "mood", "adult_context", "caption_context"))
+    sections["finish"] = selected(
+        (
+            "wardrobe_style",
+            "makeup_style",
+            "costume_style",
+            "fetish_styling",
+            "texture",
+            "format",
+            "quality",
+        )
+    )
+    sections["special_layers"] = dedupe_parts(
+        [
+            render_surreal_layer_detail(picked, lang),
+            render_reference_edit_detail(reference_edit_mode, lang),
+            render_trend_layer_detail(trend_layer, lang),
+        ]
+    )
+    sections["constraints"] = inline_constraints(lang)
+    return {section: dedupe_parts(parts) for section, parts in sections.items()}
+
+
+def section_text(sections: Dict[str, List[str]], section: str, fallback: str = "") -> str:
+    return unique_join(sections.get(section, [])) or fallback
+
+
+def section_ordered_standard_templates(templates: Sequence[str]) -> List[str]:
+    ordered: List[str] = []
+    for template in templates:
+        subject_positions = [
+            pos for pos in (template.find("{subject_phrase}"), template.find("{object_phrase}")) if pos >= 0
+        ]
+        location_positions = [
+            pos for pos in (template.find("{location_phrase}"), template.find("{location}")) if pos >= 0
+        ]
+        if subject_positions and location_positions and min(subject_positions) < min(location_positions):
+            ordered.append(template)
+    return ordered
+
+
+def ensure_standard_section_order(
+    prompt: str,
+    sections: Dict[str, List[str]],
+    fields: Dict[str, str],
+    lang: str,
+) -> str:
+    scene_markers = dedupe_parts(
+        list(sections.get("scene", []))
+        + [
+            fields.get("location_phrase", ""),
+            fields.get("location", ""),
+        ]
+    )
+    subject_markers = [
+        part
+        for part in (
+            fields.get("subject_phrase", ""),
+            fields.get("object_phrase", ""),
+            section_text(sections, "subject"),
+        )
+        if part
+    ]
+
+    subject_positions = [prompt.find(marker) for marker in subject_markers if prompt.find(marker) >= 0]
+    scene_positions = [prompt.find(marker) for marker in scene_markers if prompt.find(marker) >= 0]
+    if not subject_positions or not scene_positions or min(subject_positions) < min(scene_positions):
+        return prompt
+
+    subject = fields.get("subject", "") or section_text(sections, "subject")
+    if not subject:
+        return prompt
+    prefix = ("중심 피사체: " if lang == "ko" else "Subject: ") + subject
+    return clean_spaces(f"{ensure_period(prefix)} {prompt}")
+
+
+def render_detailed_prompt(
+    data: JsonDict,
+    preset: JsonDict,
+    picked: Dict[str, Entry],
+    lang: str,
+    sections: Dict[str, List[str]],
+) -> str:
     fields = build_fields(picked, lang)
     values = {slot: localize(entry, lang) for slot, entry in picked.items()}
     category = subject_category(picked)
 
-    lighting = join_parts(
-        [
-            values.get("lighting", ""),
-            values.get("light_direction", ""),
-            values.get("light_type", ""),
-            values.get("light_intensity", ""),
-            values.get("light_shape", ""),
-        ],
-        "natural, believable photographic light" if lang == "en" else "자연스럽고 설득력 있는 사진 조명",
-    )
-    camera = join_parts(
-        [
-            values.get("camera_type", ""),
-            values.get("camera_direction", ""),
-            values.get("composition", ""),
-            values.get("subject_framing", ""),
-            values.get("body_framing", ""),
-            values.get("lens", ""),
-            values.get("focus", ""),
-            values.get("motion", ""),
-        ],
-        "clear camera placement, deliberate composition, realistic focus" if lang == "en" else "명확한 카메라 위치, 의도적인 구도, 사실적인 초점",
-    )
-    mood = join_parts(
-        [
-            values.get("world", ""),
-            values.get("color", ""),
-            values.get("mood", ""),
-            values.get("adult_context", ""),
-            values.get("caption_context", ""),
-        ],
-        "coherent color, mood, and world context" if lang == "en" else "일관된 색감, 분위기, 세계관 맥락",
-    )
-    finish = join_parts(
-        [
-            values.get("wardrobe_style", ""),
-            values.get("makeup_style", ""),
-            values.get("costume_style", ""),
-            values.get("fetish_styling", ""),
-            values.get("texture", ""),
-            values.get("format", ""),
-            values.get("quality", ""),
-        ],
-        "photo-ready finish with accurate material detail" if lang == "en" else "정확한 소재 디테일을 가진 이미지 생성용 마감",
-    )
-
     if lang == "ko":
-        subject = fields.get("subject_phrase") or values.get("subject", "중심 피사체")
-        location = fields.get("location_phrase") or values.get("location", "구체적인 장소")
+        subject = section_text(sections, "subject", values.get("subject", "중심 피사체"))
+        action = section_text(sections, "action")
+        subject_state = f"{subject}; 동작과 소품: {action}" if action else subject
+        location = section_text(sections, "scene", values.get("location", "구체적인 장소"))
+        camera = section_text(sections, "camera", "명확한 카메라 위치, 의도적인 구도, 사실적인 초점")
+        lighting = section_text(sections, "lighting", "자연스럽고 설득력 있는 사진 조명")
+        mood = section_text(sections, "palette_mood", "일관된 색감, 분위기, 세계관 맥락")
+        finish = section_text(sections, "finish", "정확한 소재 디테일을 가진 이미지 생성용 마감")
+        special = " ".join(sections.get("special_layers", []))
+        constraints = section_text(sections, "constraints")
         genre = values.get("genre", "사진")
         medium = values.get("medium", "실사 사진")
-        surreal_detail = render_surreal_layer_detail(picked, lang)
         subject_guidance = render_subject_guidance(category, lang)
         scene_guidance = render_scene_guidance(category, lang)
         finish_guidance = render_finish_guidance(category, lang)
-        prompt = (
-            f"{medium}로 렌더링할 {genre}. "
-            f"중심 피사체와 상태: {subject}; {subject_guidance}. "
-            f"장면과 장소: {location}; {scene_guidance}. "
-            f"카메라와 구도: {camera}; 피사체 크기, 프레임 가장자리, 원근감, 초점 위치, 움직임 처리를 명확히 한다. "
-            f"조명: {lighting}; 그림자 방향, 하이라이트, 반사광, 노출 균형, 대기감을 실제 촬영처럼 보이게 한다. "
-            f"색감과 분위기: {mood}; 색 대비, 감정 톤, 세계관 맥락이 피사체와 장소에 맞아야 한다. "
-            f"{surreal_detail} "
-            f"질감과 마감: {finish}; {finish_guidance}. "
-            "이미지 생성 시 요구사항을 빠뜨리지 말고, 막연한 스타일 요약보다 구체적인 사진 결과를 우선한다."
+        prompt = " ".join(
+            part
+            for part in [
+                f"{medium}로 렌더링할 {genre}. "
+                f"중심 피사체와 상태: {subject_state}; {subject_guidance}. "
+                f"장면과 장소: {location}; {scene_guidance}. "
+                f"카메라와 구도: {camera}; 피사체 크기, 프레임 가장자리, 원근감, 초점 위치, 움직임 처리를 명확히 한다. "
+                f"조명: {lighting}; 그림자 방향, 하이라이트, 반사광, 노출 균형, 대기감을 실제 촬영처럼 보이게 한다. "
+                f"색감과 분위기: {mood}; 색 대비, 감정 톤, 세계관 맥락이 피사체와 장소에 맞아야 한다. ",
+                special,
+                f"질감과 마감: {finish}; {finish_guidance}. "
+                f"제약: {constraints}. "
+                "이미지 생성 시 요구사항을 빠뜨리지 말고, 막연한 스타일 요약보다 구체적인 사진 결과를 우선한다.",
+            ]
+            if part
         )
     else:
-        subject = fields.get("subject_phrase") or values.get("subject", "the main subject")
-        location = fields.get("location_phrase") or values.get("location", "a specific location")
+        subject = section_text(sections, "subject", values.get("subject", "the main subject"))
+        action = section_text(sections, "action")
+        subject_state = f"{subject}; action and prop: {action}" if action else subject
+        location = section_text(sections, "scene", values.get("location", "a specific location"))
+        camera = section_text(sections, "camera", "clear camera placement, deliberate composition, realistic focus")
+        lighting = section_text(sections, "lighting", "natural, believable photographic light")
+        mood = section_text(sections, "palette_mood", "coherent color, mood, and world context")
+        finish = section_text(sections, "finish", "photo-ready finish with accurate material detail")
+        special = " ".join(sections.get("special_layers", []))
+        constraints = section_text(sections, "constraints")
         genre = values.get("genre", "photography")
         medium = values.get("medium", "photograph")
-        surreal_detail = render_surreal_layer_detail(picked, lang)
         subject_guidance = render_subject_guidance(category, lang)
         scene_guidance = render_scene_guidance(category, lang)
         finish_guidance = render_finish_guidance(category, lang)
-        prompt = (
-            f"Create {with_indefinite_article(medium)} in the style of {genre}. "
-            f"Subject and state: {subject}; {subject_guidance}. "
-            f"Scene and location: {location}; {scene_guidance}. "
-            f"Camera and composition: {camera}; define subject scale, frame edges, perspective, focus behavior, and any motion treatment clearly. "
-            f"Lighting: {lighting}; make shadow direction, highlights, reflected light, exposure balance, and atmosphere feel like a real photographic capture. "
-            f"Color and mood: {mood}; keep the palette, emotional tone, and world context coherent with the subject and setting. "
-            f"{surreal_detail} "
-            f"Texture, format, and finish: {finish}; {finish_guidance}. "
-            "Prioritize a specific, image-ready photographic result over a vague style summary."
+        prompt = " ".join(
+            part
+            for part in [
+                f"Create {with_indefinite_article(medium)} in the style of {genre}. "
+                f"Subject and state: {subject_state}; {subject_guidance}. "
+                f"Scene and location: {location}; {scene_guidance}. "
+                f"Camera and composition: {camera}; define subject scale, frame edges, perspective, focus behavior, and any motion treatment clearly. "
+                f"Lighting: {lighting}; make shadow direction, highlights, reflected light, exposure balance, and atmosphere feel like a real photographic capture. "
+                f"Color and mood: {mood}; keep the palette, emotional tone, and world context coherent with the subject and setting. ",
+                special,
+                f"Texture, format, and finish: {finish}; {finish_guidance}. "
+                f"Constraints: {constraints}. "
+                "Prioritize a specific, image-ready photographic result over a vague style summary.",
+            ]
+            if part
         )
 
     return clean_spaces(prompt)
@@ -1168,107 +1302,55 @@ def unique_join(parts: Sequence[str], separator: str = ", ") -> str:
     return separator.join(unique)
 
 
-def render_compact_prompt(data: JsonDict, preset: JsonDict, picked: Dict[str, Entry], lang: str) -> str:
-    fields = build_fields(picked, lang)
+def render_compact_prompt(
+    data: JsonDict,
+    preset: JsonDict,
+    picked: Dict[str, Entry],
+    lang: str,
+    sections: Dict[str, List[str]],
+) -> str:
     values = {slot: localize(entry, lang) for slot, entry in picked.items()}
     category = subject_category(picked)
 
-    lighting = unique_join(
-        [
-            values.get("lighting", ""),
-            values.get("light_direction", ""),
-            values.get("light_type", ""),
-            values.get("light_intensity", ""),
-            values.get("light_shape", ""),
-        ]
-    )
-    camera = unique_join(
-        [
-            values.get("camera_type", ""),
-            values.get("camera_direction", ""),
-            values.get("composition", ""),
-            values.get("subject_framing", ""),
-            values.get("body_framing", ""),
-            values.get("lens", ""),
-            values.get("focus", ""),
-            values.get("motion", ""),
-        ]
-    )
-    mood = unique_join([values.get("color", ""), values.get("mood", ""), values.get("world", "")])
-    finish = unique_join([values.get("texture", ""), values.get("quality", "")])
-    location = fields.get("location_phrase") or values.get("location", "")
-    prop = values.get("prop", "")
-    hair = values.get("hair_style", "")
-    makeup = values.get("makeup_style", "")
-    expression = values.get("expression", "")
-    wardrobe = values.get("wardrobe_style", "")
-    costume = values.get("costume_style", "")
+    def render_with_drops(drop_sections: Set[str]) -> str:
+        content_parts: List[str] = []
+        for section in ("action", "scene", "camera", "lighting", "palette_mood", "finish", "special_layers"):
+            if section in drop_sections:
+                continue
+            if section == "scene" and "world" in drop_sections:
+                content = unique_join(sections.get("scene", [])[:1])
+            else:
+                content = section_text(sections, section)
+            if content:
+                content_parts.append(content)
+        if category == "human" and "finish" not in drop_sections:
+            content_parts.append("자연스러운 피부 질감" if lang == "ko" else "natural skin texture")
+        constraints = section_text(sections, "constraints")
+        if constraints:
+            content_parts.append(constraints)
 
-    if lang == "ko":
-        subject_mods = [
-            values.get("person_origin", ""),
-            values.get("appearance_type", ""),
-            hair,
-            makeup,
-            expression + "의" if expression else "",
-            wardrobe + josa(wardrobe, "을", "를") + " 입은" if wardrobe else "",
-            costume + josa(costume, "을", "를") + " 입은" if costume else "",
-        ]
-        subject = clean_spaces(" ".join([part for part in subject_mods if part] + [values.get("subject", "중심 피사체")]))
-        action_parts = [values.get("action", ""), f"{prop}{josa(prop, '과', '와')} 함께" if prop else ""]
-        details = [
-            unique_join(action_parts),
-            location,
-            lighting,
-            camera,
-            mood,
-            values.get("adult_context", ""),
-            values.get("fetish_styling", ""),
-            values.get("caption_context", ""),
-            finish,
-            "자연스러운 피부 질감" if category == "human" else "",
-            "텍스트와 워터마크 없음",
-        ]
+        subject = section_text(sections, "subject", "중심 피사체" if lang == "ko" else "the main subject")
+        if lang == "ko":
+            lead = unique_join(
+                ["초사실적", values.get("format", ""), values.get("genre", ""), values.get("medium", "실사 사진")],
+                " ",
+            )
+            return ensure_period(f"{lead}, {subject}, {unique_join(content_parts)}")
+
         lead = unique_join(
-            ["초사실적", values.get("format", ""), values.get("genre", ""), values.get("medium", "실사 사진")],
+            ["Ultra-realistic", values.get("format", ""), values.get("genre", ""), values.get("medium", "photograph")],
             " ",
         )
-        prompt = f"{lead}, {subject}, {unique_join(details)}"
-        return ensure_period(prompt)
+        return ensure_period(f"{lead} of {subject}, {unique_join(content_parts)}")
 
-    subject_suffixes = [
-        values.get("person_origin", ""),
-        values.get("appearance_type", ""),
-        f"with {hair}" if hair else "",
-        f"with {makeup}" if makeup else "",
-        f"with {expression}" if expression else "",
-        f"wearing {wardrobe}" if wardrobe else "",
-        f"wearing {costume}" if costume else "",
-    ]
-    subject = values.get("subject", "the main subject")
-    suffix = unique_join(subject_suffixes)
-    if suffix:
-        subject = clean_spaces(f"{subject} {suffix}")
-    action_parts = [values.get("action", ""), f"with {prop}" if prop else ""]
-    details = [
-        unique_join(action_parts),
-        location,
-        lighting,
-        camera,
-        mood,
-        values.get("adult_context", ""),
-        values.get("fetish_styling", ""),
-        values.get("caption_context", ""),
-        finish,
-        "natural skin texture" if category == "human" else "",
-        "no text or watermark",
-    ]
-    lead = unique_join(
-        ["Ultra-realistic", values.get("format", ""), values.get("genre", ""), values.get("medium", "photograph")],
-        " ",
-    )
-    prompt = f"{lead} of {subject}, {unique_join(details)}"
-    return ensure_period(prompt)
+    drop_sections: Set[str] = set()
+    prompt = render_with_drops(drop_sections)
+    for section in ("palette_mood", "finish", "caption_context", "world"):
+        if lang != "en" or len(prompt.split()) <= 140:
+            break
+        drop_sections.add(section)
+        prompt = render_with_drops(drop_sections)
+    return clean_spaces(prompt)
 
 
 def render_prompt(
@@ -1281,21 +1363,13 @@ def render_prompt(
     reference_edit_mode: str = "off",
     trend_layer: str = "off",
 ) -> str:
+    sections = build_prompt_sections(data, preset, picked, lang, reference_edit_mode, trend_layer)
+
     if detail_level == "detailed":
-        prompt = render_detailed_prompt(data, preset, picked, lang)
-        additions = [
-            render_reference_edit_detail(reference_edit_mode, lang),
-            render_trend_layer_detail(trend_layer, lang),
-        ]
-        return clean_spaces(" ".join([prompt] + [part for part in additions if part]))
+        return render_detailed_prompt(data, preset, picked, lang, sections)
 
     if detail_level == "compact":
-        prompt = render_compact_prompt(data, preset, picked, lang)
-        additions = [
-            render_reference_edit_detail(reference_edit_mode, lang),
-            render_trend_layer_detail(trend_layer, lang),
-        ]
-        return clean_spaces(" ".join([prompt] + [part for part in additions if part]))
+        return render_compact_prompt(data, preset, picked, lang, sections)
 
     style = preset.get("template_style", "natural")
     templates_by_lang = data.get("templates", {}).get(style, {})
@@ -1312,18 +1386,25 @@ def render_prompt(
                 "{medium}. {genre} featuring {subject_phrase} {location_phrase}. {technique_sentence} {style_sentence} {detail_sentence}"
             ]
 
-    template = rng.choice(templates)
+    ordered_templates = section_ordered_standard_templates(templates)
+    template = rng.choice(ordered_templates or templates)
     fields = build_fields(picked, lang)
     prompt = template.format(**fields)
-    surreal_detail = render_surreal_layer_detail(picked, lang)
-    if surreal_detail:
-        prompt = clean_spaces(f"{prompt} {surreal_detail}")
-    reference_detail = render_reference_edit_detail(reference_edit_mode, lang)
-    if reference_detail:
-        prompt = clean_spaces(f"{prompt} {reference_detail}")
-    trend_detail = render_trend_layer_detail(trend_layer, lang)
-    if trend_detail:
-        prompt = clean_spaces(f"{prompt} {trend_detail}")
+    prompt = ensure_standard_section_order(prompt, sections, fields, lang)
+
+    additions: List[str] = []
+    action = section_text(sections, "action")
+    if action and any(part.lower() not in prompt.lower() for part in sections.get("action", [])):
+        additions.append(("동작과 소품: " if lang == "ko" else "Action and prop: ") + action)
+    for special in sections.get("special_layers", []):
+        if special and special.lower() not in prompt.lower():
+            additions.append(special)
+    constraints = section_text(sections, "constraints")
+    if constraints and constraints.lower() not in prompt.lower():
+        additions.append(("제약: " if lang == "ko" else "Constraints: ") + constraints)
+
+    if additions:
+        prompt = clean_spaces(" ".join([prompt] + [ensure_period(part) for part in additions]))
     return clean_spaces(prompt)
 
 

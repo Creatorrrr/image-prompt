@@ -88,6 +88,25 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             trend_layer=kwargs.pop("trend_layer", "off"),
         )
 
+    def generate_langs(self, preset: str, langs: list[str], seed: int = 1, **kwargs):
+        return self.generator.generate_once(
+            data=self.data,
+            rng=random.Random(seed),
+            preset_id=preset,
+            langs=langs,
+            include_negative=kwargs.pop("include_negative", False),
+            negative_count=kwargs.pop("negative_count", 12),
+            include_choices=kwargs.pop("include_choices", True),
+            forced_choices=kwargs.pop("forced_choices", None),
+            priority_bias=kwargs.pop("priority_bias", None),
+            detail_level=kwargs.pop("detail_level", "detailed"),
+            surreal_mode=kwargs.pop("surreal_mode", "off"),
+            surreal_probability=kwargs.pop("surreal_probability", 0.35),
+            surreal_intensity=kwargs.pop("surreal_intensity", "moderate"),
+            reference_edit_mode=kwargs.pop("reference_edit_mode", "off"),
+            trend_layer=kwargs.pop("trend_layer", "off"),
+        )
+
     def test_nonhuman_subject_does_not_get_human_pose_guidance(self):
         item = self.generate(
             "street_documentary",
@@ -362,6 +381,196 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertNotIn("food", product["choices"]["subject"].get("kind", []))
         self.assertNotIn("food", product["choices"]["subject"].get("tags", []))
         self.assertIn("food", food["choices"]["subject"].get("kind", []) + food["choices"]["subject"].get("tags", []))
+
+    def test_cross_mode_preserves_forced_prompt_facts(self):
+        forced = {
+            "subject": ["fashion_model"],
+            "action": ["taking_selfie"],
+            "prop": ["camera_held_as_prop"],
+            "location": ["creator_room"],
+            "lighting": ["softbox"],
+            "light_type": ["ring_light"],
+            "camera_type": ["smartphone_camera"],
+            "composition": ["vertical_centered_caption_space"],
+            "color": ["phone_hdr_color"],
+            "mood": ["aspirational_lifestyle"],
+            "texture": ["clean_digital"],
+        }
+        expected_phrases = {
+            "en": [
+                "a fashion model",
+                "taking an arm-length selfie",
+                "a camera held as a visible prop",
+                "a creator room with LED lights",
+                "large softbox lighting",
+                "ring light with circular catchlights",
+                "a native smartphone camera",
+                "vertical centered framing with room for captions",
+                "crisp smartphone HDR color",
+                "aspirational lifestyle mood",
+                "clean digital image quality",
+            ],
+            "ko": [
+                "패션 모델",
+                "팔을 뻗어 셀피를 찍는",
+                "손에 든 카메라 소품",
+                "LED 조명이 켜진 크리에이터 방",
+                "대형 소프트박스 조명",
+                "눈동자에 원형 반사가 생기는 링라이트",
+                "스마트폰 기본 카메라",
+                "자막 공간을 남긴 세로 중앙 구도",
+                "스마트폰 HDR 특유의 선명한 색감",
+                "동경을 부르는 라이프스타일 무드",
+                "깨끗한 디지털 이미지",
+            ],
+        }
+
+        for detail_level in ("detailed", "standard", "compact"):
+            with self.subTest(detail_level=detail_level):
+                item = self.generate_langs(
+                    "compact_urban_fashion_portrait",
+                    langs=["ko", "en"],
+                    seed=21,
+                    detail_level=detail_level,
+                    forced_choices=forced,
+                )
+                for lang, phrases in expected_phrases.items():
+                    prompt = item[f"prompt_{lang}"]
+                    for phrase in phrases:
+                        self.assertIn(phrase, prompt)
+
+    def test_all_detail_levels_include_common_inline_constraints(self):
+        for detail_level in ("detailed", "standard", "compact"):
+            with self.subTest(detail_level=detail_level):
+                item = self.generate_langs(
+                    "compact_urban_fashion_portrait",
+                    langs=["ko", "en"],
+                    seed=22,
+                    detail_level=detail_level,
+                )
+
+                self.assertIn("no text", item["prompt_en"].lower())
+                self.assertIn("watermark", item["prompt_en"].lower())
+                self.assertIn("텍스트", item["prompt_ko"])
+                self.assertIn("워터마크", item["prompt_ko"])
+
+    def test_cross_mode_section_order_is_stable(self):
+        forced = {
+            "subject": ["fashion_model"],
+            "location": ["creator_room"],
+            "camera_type": ["smartphone_camera"],
+            "lighting": ["softbox"],
+            "texture": ["clean_digital"],
+        }
+
+        for detail_level in ("detailed", "standard", "compact"):
+            with self.subTest(detail_level=detail_level):
+                item = self.generate_langs(
+                    "compact_urban_fashion_portrait",
+                    langs=["ko", "en"],
+                    seed=23,
+                    detail_level=detail_level,
+                    forced_choices=forced,
+                    include_negative=False,
+                )
+
+                markers = {
+                    "en": (
+                        "a fashion model",
+                        "a creator room with LED lights",
+                        "a native smartphone camera",
+                        "large softbox lighting",
+                        "no text",
+                    ),
+                    "ko": (
+                        "패션 모델",
+                        "LED 조명이 켜진 크리에이터 방",
+                        "스마트폰 기본 카메라",
+                        "대형 소프트박스 조명",
+                        "텍스트",
+                    ),
+                }
+                for lang, phrases in markers.items():
+                    prompt = item[f"prompt_{lang}"]
+                    subject_index = prompt.index(phrases[0])
+                    scene_index = prompt.index(phrases[1])
+                    camera_index = prompt.index(phrases[2])
+                    lighting_index = prompt.index(phrases[3])
+                    constraint_index = prompt.lower().index(phrases[4])
+                    self.assertLess(subject_index, scene_index)
+                    self.assertLess(scene_index, camera_index)
+                    self.assertLess(camera_index, lighting_index)
+                    self.assertLess(lighting_index, constraint_index)
+
+    def test_detailed_prompt_surfaces_prop(self):
+        item = self.generate(
+            "compact_urban_fashion_portrait",
+            seed=24,
+            detail_level="detailed",
+            forced_choices={"prop": ["camera_held_as_prop"]},
+            include_negative=False,
+        )
+
+        self.assertIn("a camera held as a visible prop", item["prompt_en"])
+
+    def test_reference_and_trend_layers_are_rendered_in_all_detail_levels(self):
+        for detail_level in ("detailed", "standard", "compact"):
+            with self.subTest(detail_level=detail_level):
+                item = self.generate(
+                    "candid_iphone_portrait",
+                    seed=25,
+                    detail_level=detail_level,
+                    reference_edit_mode="identity",
+                    trend_layer="scrapbook_collage",
+                    include_negative=False,
+                )
+
+                self.assertIn("Reference-edit instruction", item["prompt_en"])
+                self.assertIn("Trend layer", item["prompt_en"])
+                self.assertIn("scrapbook collage", item["prompt_en"])
+
+    def test_compact_prompt_keeps_required_sections_when_many_optional_slots_are_forced(self):
+        item = self.generate(
+            "compact_urban_fashion_portrait",
+            seed=26,
+            detail_level="compact",
+            forced_choices={
+                "subject": ["fashion_model"],
+                "action": ["taking_selfie"],
+                "prop": ["camera_held_as_prop"],
+                "location": ["creator_room"],
+                "lighting": ["softbox"],
+                "light_direction": ["front_light"],
+                "light_type": ["ring_light"],
+                "light_intensity": ["high_key_bright"],
+                "light_shape": ["large_softbox_shape"],
+                "camera_type": ["smartphone_camera"],
+                "camera_direction": ["eye_level_front"],
+                "composition": ["vertical_centered_caption_space"],
+                "subject_framing": ["full_body_framing"],
+                "lens": ["phone_1x_main"],
+                "focus": ["eye_focus"],
+                "motion": ["handheld_microshake"],
+                "color": ["phone_hdr_color"],
+                "mood": ["aspirational_lifestyle"],
+                "texture": ["clean_digital"],
+                "format": ["portrait_4_5"],
+                "quality": ["photoreal"],
+            },
+            include_negative=False,
+        )
+
+        prompt = item["prompt_en"]
+        self.assertLessEqual(len(prompt.split()), 140)
+        for phrase in (
+            "a fashion model",
+            "taking an arm-length selfie",
+            "a camera held as a visible prop",
+            "a creator room with LED lights",
+            "large softbox lighting",
+            "no text or watermark",
+        ):
+            self.assertIn(phrase, prompt)
 
 
 if __name__ == "__main__":
