@@ -757,10 +757,22 @@ def build_fields(picked: Dict[str, Entry], lang: str) -> Dict[str, str]:
 
     subject = values.get("subject", "")
     action = values.get("action", "")
+    hair = values.get("hair_style", "")
+    makeup = values.get("makeup_style", "")
+    expression = values.get("expression", "")
+    wardrobe = values.get("wardrobe_style", "")
     costume = values.get("costume_style", "")
 
     if lang == "ko":
         subject_mods = [values[s] for s in ("person_origin", "appearance_type") if values.get(s)]
+        if hair:
+            subject_mods.append(hair)
+        if makeup:
+            subject_mods.append(makeup)
+        if expression:
+            subject_mods.append(expression + "의")
+        if wardrobe:
+            subject_mods.append(wardrobe + josa(wardrobe, "을", "를") + " 입은")
         if costume:
             subject_mods.append(costume + josa(costume, "을", "를") + " 입은")
         subject_with_mods = clean_spaces(" ".join(subject_mods + ([subject] if subject else [])))
@@ -768,6 +780,14 @@ def build_fields(picked: Dict[str, Entry], lang: str) -> Dict[str, str]:
         object_phrase = subject_phrase + josa(subject_phrase, "을", "를") if subject_phrase else ""
     else:
         subject_suffixes = [values[s] for s in ("person_origin", "appearance_type") if values.get(s)]
+        if hair:
+            subject_suffixes.append(f"with {hair}")
+        if makeup:
+            subject_suffixes.append(f"with {makeup}")
+        if expression:
+            subject_suffixes.append(f"with {expression}")
+        if wardrobe:
+            subject_suffixes.append(f"wearing {wardrobe}")
         if costume:
             subject_suffixes.append(f"wearing {costume}")
         subject_with_mods = clean_spaces(" ".join(([subject] if subject else []) + subject_suffixes))
@@ -783,7 +803,16 @@ def build_fields(picked: Dict[str, Entry], lang: str) -> Dict[str, str]:
         location_phrase = ""
 
     lighting_slots = ("lighting", "light_direction", "light_type", "light_intensity", "light_shape")
-    camera_slots = ("camera_type", "camera_direction", "composition", "body_framing", "lens", "focus", "motion")
+    camera_slots = (
+        "camera_type",
+        "camera_direction",
+        "composition",
+        "subject_framing",
+        "body_framing",
+        "lens",
+        "focus",
+        "motion",
+    )
     style_slots = (
         "world",
         "color",
@@ -795,7 +824,7 @@ def build_fields(picked: Dict[str, Entry], lang: str) -> Dict[str, str]:
         "adult_context",
         "caption_context",
     )
-    detail_slots = ("costume_style", "fetish_styling", "texture", "format", "quality")
+    detail_slots = ("wardrobe_style", "makeup_style", "costume_style", "fetish_styling", "texture", "format", "quality")
 
     lighting_parts = [values[s] for s in lighting_slots if values.get(s)]
     camera_parts = [values[s] for s in camera_slots if values.get(s)]
@@ -1049,6 +1078,7 @@ def render_detailed_prompt(data: JsonDict, preset: JsonDict, picked: Dict[str, E
             values.get("camera_type", ""),
             values.get("camera_direction", ""),
             values.get("composition", ""),
+            values.get("subject_framing", ""),
             values.get("body_framing", ""),
             values.get("lens", ""),
             values.get("focus", ""),
@@ -1068,6 +1098,8 @@ def render_detailed_prompt(data: JsonDict, preset: JsonDict, picked: Dict[str, E
     )
     finish = join_parts(
         [
+            values.get("wardrobe_style", ""),
+            values.get("makeup_style", ""),
             values.get("costume_style", ""),
             values.get("fetish_styling", ""),
             values.get("texture", ""),
@@ -1155,6 +1187,7 @@ def render_compact_prompt(data: JsonDict, preset: JsonDict, picked: Dict[str, En
             values.get("camera_type", ""),
             values.get("camera_direction", ""),
             values.get("composition", ""),
+            values.get("subject_framing", ""),
             values.get("body_framing", ""),
             values.get("lens", ""),
             values.get("focus", ""),
@@ -1166,6 +1199,9 @@ def render_compact_prompt(data: JsonDict, preset: JsonDict, picked: Dict[str, En
     location = fields.get("location_phrase") or values.get("location", "")
     prop = values.get("prop", "")
     hair = values.get("hair_style", "")
+    makeup = values.get("makeup_style", "")
+    expression = values.get("expression", "")
+    wardrobe = values.get("wardrobe_style", "")
     costume = values.get("costume_style", "")
 
     if lang == "ko":
@@ -1173,10 +1209,13 @@ def render_compact_prompt(data: JsonDict, preset: JsonDict, picked: Dict[str, En
             values.get("person_origin", ""),
             values.get("appearance_type", ""),
             hair,
+            makeup,
+            expression + "의" if expression else "",
+            wardrobe + josa(wardrobe, "을", "를") + " 입은" if wardrobe else "",
             costume + josa(costume, "을", "를") + " 입은" if costume else "",
         ]
         subject = clean_spaces(" ".join([part for part in subject_mods if part] + [values.get("subject", "중심 피사체")]))
-        action_parts = [values.get("action", ""), f"{prop}와 함께" if prop else ""]
+        action_parts = [values.get("action", ""), f"{prop}{josa(prop, '과', '와')} 함께" if prop else ""]
         details = [
             unique_join(action_parts),
             location,
@@ -1200,7 +1239,10 @@ def render_compact_prompt(data: JsonDict, preset: JsonDict, picked: Dict[str, En
     subject_suffixes = [
         values.get("person_origin", ""),
         values.get("appearance_type", ""),
-        hair,
+        f"with {hair}" if hair else "",
+        f"with {makeup}" if makeup else "",
+        f"with {expression}" if expression else "",
+        f"wearing {wardrobe}" if wardrobe else "",
         f"wearing {costume}" if costume else "",
     ]
     subject = values.get("subject", "the main subject")

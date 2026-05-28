@@ -188,6 +188,10 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         slots = self.data["slots"]
         self.assertIn("prop", slots)
         self.assertIn("hair_style", slots)
+        self.assertIn("wardrobe_style", slots)
+        self.assertIn("makeup_style", slots)
+        self.assertIn("expression", slots)
+        self.assertIn("subject_framing", slots)
 
         format_ids = {entry["id"] for entry in slots["format"]}
         self.assertTrue(
@@ -208,6 +212,70 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "compact_multicut_portrait_series",
             }.issubset(preset_ids)
         )
+
+    def test_reactor_neutral_slots_are_visible_in_cli(self):
+        result = subprocess.run(
+            [sys.executable, str(WRAPPER_PATH), "--show-slots", "--plain"],
+            cwd=ROOT,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+
+        self.assertEqual(result.returncode, 0, result.stderr)
+        for slot in ("wardrobe_style", "makeup_style", "expression", "subject_framing"):
+            self.assertIn(f"{slot}:", result.stdout)
+
+        tags = subprocess.run(
+            [sys.executable, str(WRAPPER_PATH), "--list-tags", "wardrobe_style", "--plain"],
+            cwd=ROOT,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+
+        self.assertEqual(tags.returncode, 0, tags.stderr)
+        self.assertIn("casual_bomber_jacket_miniskirt", tags.stdout)
+
+    def test_compact_prompt_includes_forced_neutral_reactor_slots(self):
+        item = self.generate(
+            "compact_urban_fashion_portrait",
+            seed=11,
+            detail_level="compact",
+            forced_choices={
+                "wardrobe_style": ["casual_bomber_jacket_miniskirt"],
+                "makeup_style": ["delicate_makeup_glossy_lips"],
+                "expression": ["calm_intense_gaze"],
+                "subject_framing": ["full_body_framing"],
+                "prop": ["compact_digital_camera"],
+            },
+        )
+
+        prompt = item["prompt_en"]
+        self.assertIn("navy bomber jacket with a casual mini skirt", prompt)
+        self.assertIn("delicate makeup with glossy lips", prompt)
+        self.assertIn("calm intense gaze", prompt)
+        self.assertIn("full-body framing", prompt)
+        self.assertIn("small compact digital camera", prompt)
+
+    def test_neutral_wardrobe_and_framing_do_not_inject_adult_only_language(self):
+        item = self.generate(
+            "clean_mirror_selfie_snapshot",
+            seed=8,
+            detail_level="compact",
+            forced_choices={
+                "wardrobe_style": ["hoodie_shorts_sneakers"],
+                "subject_framing": ["upper_body_framing"],
+                "expression": ["neutral_camera_gaze"],
+            },
+        )
+
+        prompt = item["prompt_en"].lower()
+        self.assertNotIn("adult", prompt)
+        self.assertNotIn("fetish", prompt)
+        self.assertNotIn("thirst trap", prompt)
+        self.assertNotIn("adult_context", item["choices"])
+        self.assertNotIn("fetish_styling", item["choices"])
 
     def test_product_commercial_excludes_food_subjects_but_food_editorial_keeps_them(self):
         product = self.generate("product_commercial", seed=1)

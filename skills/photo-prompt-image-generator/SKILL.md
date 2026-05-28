@@ -51,6 +51,12 @@ List tag ids for a slot:
 python3 skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py --list-tags subject --plain
 ```
 
+List neutral wardrobe tags:
+
+```bash
+python3 skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py --list-tags wardrobe_style --plain
+```
+
 Generate a reproducible prompt:
 
 ```bash
@@ -69,6 +75,18 @@ Generate a compact ReactorPrompt-style single-paragraph prompt:
 python3 skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py \
   --preset compact_urban_fashion_portrait \
   --detail-level compact
+```
+
+Generate a compact ReactorPrompt-style prompt with forced neutral portrait styling:
+
+```bash
+python3 skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py \
+  --preset compact_urban_fashion_portrait \
+  --detail-level compact \
+  --set wardrobe_style=casual_bomber_jacket_miniskirt \
+  --set expression=calm_intense_gaze \
+  --plain \
+  --no-negative
 ```
 
 Force slot selections:
@@ -143,8 +161,11 @@ python3 skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py \
 - For ReactorPrompt-like requests, social portrait prompt migration, or requests that ask for a compact comma-rich English prompt similar to an image gallery prompt, use `--detail-level compact` and prefer `compact_urban_fashion_portrait`, `compact_cinematic_prop_portrait`, or `compact_multicut_portrait_series`.
 - Preserve user-specified subject, location, format, camera, lighting, mood, and aspect instructions by mapping them to `--preset` or `--set` when an exact tag exists.
 - For short Korean seeds, map concrete nouns or style hints to `--preset` and `--set` values first. For example, map "도시 패션", "시네마틱 소품", or "여러 컷" to the compact presets; map explicit hair, prop, aspect, lighting, and camera terms to `hair_style`, `prop`, `format`, `lighting`, `camera_type`, or `lens` when tag ids exist.
+- For neutral fashion, selfie, or portrait requests, map ordinary clothing to `wardrobe_style`, beauty terms to `makeup_style`, gaze/smile terms to `expression`, and body/crop requests to `subject_framing`. Keep these separate from adult-only `adult_context`, `fetish_styling`, and `body_framing`.
 - If a Korean seed has no exact tag for an important visual requirement, keep the closest generated base prompt and append that requirement as `Additional requirements: ...`; do not add LLM calls or hidden expansion logic inside the deterministic scripts.
 - Do not force non-photo requests through this photo generator. Poster, infographic, sticker, UI/layout design, typography-heavy graphic design, and illustration-only requests should be handled as direct prompt writing or by a more suitable skill/tool unless the user explicitly asks for a photoreal photographed version.
+- Treat ReactorPrompt export artifacts such as `카메라 메타데이터 있음`, `[MASTER PROMPT TEMPLATE]`, EXIF notes, scraper labels, or download bookkeeping as noise, not tag candidates.
+- Do not add graphic/design-only concepts such as poster layout, infographic structure, sticker sheet styling, typography systems, packaging layout, or illustration rendering into `photo_prompt_tags.json` unless the user explicitly asks for a photographed version of that subject.
 - For ordinary non-adult social/photo trend requests, prefer `clean_mirror_selfie_snapshot`, `retro_direct_flash_party_snapshot`, `candid_iphone_portrait`, or `creator_brand_profile` before using adult-compatible social presets.
 - For photoreal surreal requests, do not create or look for scene-specific presets such as `surreal_screen_portal_photo`. Use the closest existing photo preset plus `--surreal-mode on`, optionally with `--surreal-intensity subtle|moderate|bold` and `--set surreal_anchor=...`, `--set surreal_concept=...`, `--set scale_relation=...`, or `--set surreal_physics_detail=...`.
 - For broad random surreal requests, use `--surreal-mode on` without forced surreal slots so the generator randomly combines the surreal layer tags. Use `--surreal-mode auto --surreal-probability <0..1>` only when the user explicitly asks for a mixed batch where some outputs stay realistic and some become surreal.
