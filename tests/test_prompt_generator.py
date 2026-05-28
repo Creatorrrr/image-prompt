@@ -15,6 +15,44 @@ TAGS_PATH = SKILL_DIR / "assets" / "photo_prompt_tags.json"
 GENERATOR_PATH = SKILL_DIR / "scripts" / "prompt_generator.py"
 WRAPPER_PATH = SKILL_DIR / "scripts" / "generate_photo_prompt.py"
 
+CREATIVE_PRESET_IDS = {
+    "cinematic_fantasy_portrait",
+    "retro_era_fashion_editorial",
+    "surreal_contrast_editorial",
+}
+FANTASY_PROPS = {
+    "cosplay_prop_katana",
+    "cosplay_prop_broadsword",
+    "fantasy_costume_staff",
+    "glowing_lantern_prop",
+}
+COSMIC_EXTREME_LOCATIONS = {
+    "antarctic_ice_landscape",
+    "glacier_face_wall",
+    "volcanic_rim_dusk",
+    "salt_flats_mirror",
+    "deep_canyon_floor",
+    "milky_way_meadow_night",
+    "aurora_borealis_field",
+    "frozen_lake_surface",
+}
+ERA_WORLDS = {
+    "eighties_glam_editorial",
+    "nineties_grunge_editorial",
+    "y2k_chrome_editorial",
+}
+CONTRAST_PROPS = {
+    "melting_pastel_ice_cream_cone",
+    "oversized_lollipop_prop",
+    "glowing_lantern_prop",
+}
+SURREAL_LAYER_SLOTS = {
+    "surreal_concept",
+    "surreal_anchor",
+    "scale_relation",
+    "surreal_physics_detail",
+}
+
 
 def load_generator():
     spec = importlib.util.spec_from_file_location("photo_prompt_generator", GENERATOR_PATH)
@@ -276,6 +314,46 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertNotIn("thirst trap", prompt)
         self.assertNotIn("adult_context", item["choices"])
         self.assertNotIn("fetish_styling", item["choices"])
+
+    def test_creative_photo_presets_are_registered_and_non_adult(self):
+        preset_ids = {preset["id"] for preset in self.data["presets"]}
+        self.assertTrue(CREATIVE_PRESET_IDS.issubset(preset_ids))
+
+        for preset_id in CREATIVE_PRESET_IDS:
+            preset = next(preset for preset in self.data["presets"] if preset["id"] == preset_id)
+            self.assertLessEqual(preset["weight"], 0.6)
+            all_slots = preset.get("required_slots", []) + [
+                item["slot"] for item in preset.get("optional_slots", [])
+            ]
+            self.assertNotIn("adult_context", all_slots)
+            self.assertNotIn("fetish_styling", all_slots)
+            self.assertNotIn("caption_context", all_slots)
+
+            for seed in range(1, 4):
+                item = self.generate(preset_id, seed=seed, detail_level="compact")
+                self.assertNotIn("adult_context", item["choices"])
+                self.assertNotIn("fetish_styling", item["choices"])
+                self.assertNotIn("caption_context", item["choices"])
+
+    def test_cinematic_fantasy_portrait_uses_fantasy_prop_or_extreme_location(self):
+        item = self.generate("cinematic_fantasy_portrait", seed=3, detail_level="compact")
+        prop_id = item["choices"].get("prop", {}).get("id")
+        location_id = item["choices"].get("location", {}).get("id")
+
+        self.assertTrue(prop_id in FANTASY_PROPS or location_id in COSMIC_EXTREME_LOCATIONS)
+
+    def test_retro_era_fashion_editorial_uses_era_world(self):
+        item = self.generate("retro_era_fashion_editorial", seed=4, detail_level="compact")
+
+        self.assertIn(item["choices"]["world"]["id"], ERA_WORLDS)
+
+    def test_surreal_contrast_editorial_uses_photo_contrast_not_surreal_layer(self):
+        item = self.generate("surreal_contrast_editorial", seed=5, detail_level="compact")
+
+        self.assertIn(item["choices"]["location"]["id"], COSMIC_EXTREME_LOCATIONS)
+        self.assertIn(item["choices"]["prop"]["id"], CONTRAST_PROPS)
+        for slot in SURREAL_LAYER_SLOTS:
+            self.assertNotIn(slot, item["choices"])
 
     def test_product_commercial_excludes_food_subjects_but_food_editorial_keeps_them(self):
         product = self.generate("product_commercial", seed=1)

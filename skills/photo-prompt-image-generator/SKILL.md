@@ -155,10 +155,44 @@ python3 skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py \
   --trend-layer scrapbook_collage
 ```
 
+Generate a cinematic fantasy photo portrait with physical costume props:
+
+```bash
+python3 skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py \
+  --preset cinematic_fantasy_portrait \
+  --detail-level compact \
+  --plain \
+  --no-negative
+```
+
+Generate an 80s/90s/Y2K fashion editorial prompt:
+
+```bash
+python3 skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py \
+  --preset retro_era_fashion_editorial \
+  --detail-level compact \
+  --plain \
+  --no-negative
+```
+
+Generate an extreme-environment contrast photo editorial:
+
+```bash
+python3 skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py \
+  --preset surreal_contrast_editorial \
+  --detail-level compact \
+  --plain \
+  --no-negative
+```
+
 ## Prompt Handling
 
 - Prefer `prompt_en` for image tools.
 - For ReactorPrompt-like requests, social portrait prompt migration, or requests that ask for a compact comma-rich English prompt similar to an image gallery prompt, use `--detail-level compact` and prefer `compact_urban_fashion_portrait`, `compact_cinematic_prop_portrait`, or `compact_multicut_portrait_series`.
+- For physical fantasy, cosplay-prop, cinematic story portrait, cosmic night field, aurora, glacier, canyon, or nonfunctional costume weapon prop requests, use `cinematic_fantasy_portrait`. Keep weapons clearly framed as cosplay or nonfunctional props.
+- For 80s glam, 90s grunge, Y2K chrome, direct-flash retro, compact camera, or era fashion editorial requests, use `retro_era_fashion_editorial`.
+- For contrast-photo requests such as glam wardrobe in Antarctic ice, melting pastel ice cream in an extreme landscape, aurora field with editorial fashion, or glossy story props in harsh environments, use `surreal_contrast_editorial`.
+- `surreal_contrast_editorial` is not the same route as `--surreal-mode on`: it uses normal photo slots such as `location`, `wardrobe_style`, `prop`, `texture`, and `action`, and should not force `surreal_concept`, `surreal_anchor`, `scale_relation`, or `surreal_physics_detail`.
 - Preserve user-specified subject, location, format, camera, lighting, mood, and aspect instructions by mapping them to `--preset` or `--set` when an exact tag exists.
 - For short Korean seeds, map concrete nouns or style hints to `--preset` and `--set` values first. For example, map "도시 패션", "시네마틱 소품", or "여러 컷" to the compact presets; map explicit hair, prop, aspect, lighting, and camera terms to `hair_style`, `prop`, `format`, `lighting`, `camera_type`, or `lens` when tag ids exist.
 - For neutral fashion, selfie, or portrait requests, map ordinary clothing to `wardrobe_style`, beauty terms to `makeup_style`, gaze/smile terms to `expression`, and body/crop requests to `subject_framing`. Keep these separate from adult-only `adult_context`, `fetish_styling`, and `body_framing`.

@@ -1,6 +1,6 @@
 {
-  "version": "1.5",
-  "description": "Photo prompt tag dictionary for random Korean/English prompt generation. Version 1.5 adds neutral ReactorPrompt-style portrait slots for wardrobe, makeup, expression, subject framing, hair, props, and locations.",
+  "version": "1.6",
+  "description": "Photo prompt tag dictionary for random Korean/English prompt generation. Version 1.6 adds opt-in creative photo pattern tags and presets for fantasy, retro-era, and contrast editorial prompts.",
   "presets": [
     {
       "id": "street_documentary",
@@ -8335,6 +8335,866 @@
       }
     },
     {
+      "id": "cinematic_fantasy_portrait",
+      "ko": "시네마틱 판타지 포트레이트",
+      "en": "cinematic fantasy portrait",
+      "weight": 0.55,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "appearance_type",
+        "action",
+        "prop",
+        "location",
+        "lighting",
+        "camera_type",
+        "camera_direction",
+        "composition",
+        "lens",
+        "focus",
+        "color",
+        "mood",
+        "texture",
+        "format",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "person_origin",
+          "probability": 0.25
+        },
+        {
+          "slot": "hair_style",
+          "probability": 0.5
+        },
+        {
+          "slot": "makeup_style",
+          "probability": 0.35
+        },
+        {
+          "slot": "expression",
+          "probability": 0.4
+        },
+        {
+          "slot": "wardrobe_style",
+          "probability": 0.55
+        },
+        {
+          "slot": "world",
+          "probability": 0.45
+        },
+        {
+          "slot": "light_direction",
+          "probability": 0.45
+        },
+        {
+          "slot": "light_type",
+          "probability": 0.35
+        },
+        {
+          "slot": "motion",
+          "probability": 0.35
+        },
+        {
+          "slot": "subject_framing",
+          "probability": 0.3
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "film_still",
+            "concept_photo",
+            "magazine_feature",
+            "fashion_editorial"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "fashion",
+            "lifestyle"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "young_actor",
+            "fashion_model",
+            "kpop_idol_style_model",
+            "influencer_creator",
+            "idol_trainee"
+          ]
+        },
+        "appearance_type": {
+          "ids": [
+            "actor_like",
+            "fashion_model_like",
+            "idol_like",
+            "retro_film_protagonist",
+            "classic_elegant"
+          ]
+        },
+        "action": {
+          "ids": [
+            "posing_editorial",
+            "turning_back",
+            "standing_silence",
+            "bracing_against_cold_wind",
+            "holding_story_prop"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "cosplay_prop_katana",
+            "cosplay_prop_broadsword",
+            "fantasy_costume_staff",
+            "glowing_lantern_prop"
+          ]
+        },
+        "location": {
+          "ids": [
+            "milky_way_meadow_night",
+            "aurora_borealis_field",
+            "deep_canyon_floor",
+            "glacier_face_wall",
+            "volcanic_rim_dusk"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "chiaroscuro",
+            "rim_light",
+            "soft_window",
+            "hard_flash",
+            "low_key"
+          ]
+        },
+        "light_direction": {
+          "ids": [
+            "side_light_left",
+            "three_quarter_light",
+            "backlight",
+            "rim_light"
+          ]
+        },
+        "light_type": {
+          "ids": [
+            "narrow_spotlight",
+            "neon_sign_light",
+            "studio_strobe",
+            "led_panel"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "full_frame_mirrorless",
+            "medium_format_camera",
+            "compact_digital_camera"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "eye_level_front",
+            "eye_level_three_quarter",
+            "low_ground_angle"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "medium_close",
+            "low_angle",
+            "centered_symmetry",
+            "frame_within_frame"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "wide_24mm",
+            "35mm",
+            "50mm",
+            "85mm"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "eye_focus",
+            "shallow_depth",
+            "selective_foreground_focus"
+          ]
+        },
+        "motion": {
+          "ids": [
+            "stable_tripod",
+            "flash_freeze",
+            "intentional_motion_blur"
+          ]
+        },
+        "color": {
+          "ids": [
+            "teal_orange",
+            "cool_blue",
+            "muted",
+            "luxury_black_gold",
+            "film_faded"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "tense",
+            "elegant",
+            "dreamy",
+            "melancholic",
+            "raw"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "visible_cold_breath_frost",
+            "skin_texture",
+            "fine_grain",
+            "halation",
+            "clean_digital"
+          ]
+        },
+        "format": {
+          "ids": [
+            "vertical_9_16",
+            "portrait_3_4",
+            "portrait_4_5",
+            "story_cover_vertical",
+            "landscape_16_9"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "editorial_quality",
+            "high_detail",
+            "not_overdone"
+          ]
+        },
+        "wardrobe_style": {
+          "ids": [
+            "fantasy_layered_robe_costume",
+            "dark_fantasy_armor_costume",
+            "minimal_black_dress",
+            "street_jacket_boots"
+          ]
+        },
+        "world": {
+          "ids": [
+            "neon_noir",
+            "tech_noir",
+            "dystopia",
+            "dark_academia",
+            "liminal_space"
+          ]
+        },
+        "hair_style": {
+          "ids": [
+            "long_dark_wavy_hair",
+            "white_silver_long_hair",
+            "straight_black_hair_with_bangs",
+            "sleek_high_ponytail",
+            "short_bob_with_bangs"
+          ]
+        },
+        "makeup_style": {
+          "ids": [
+            "delicate_makeup_glossy_lips",
+            "clean_kbeauty_makeup",
+            "bold_editorial_makeup"
+          ]
+        },
+        "expression": {
+          "ids": [
+            "calm_intense_gaze",
+            "neutral_camera_gaze",
+            "confident_direct_gaze",
+            "composed_camera_look"
+          ]
+        },
+        "subject_framing": {
+          "ids": [
+            "full_body_framing",
+            "upper_body_framing",
+            "three_quarter_body_framing"
+          ]
+        }
+      }
+    },
+    {
+      "id": "retro_era_fashion_editorial",
+      "ko": "레트로 시대감 패션 에디토리얼",
+      "en": "retro era fashion editorial",
+      "weight": 0.55,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "appearance_type",
+        "world",
+        "wardrobe_style",
+        "action",
+        "location",
+        "lighting",
+        "camera_type",
+        "camera_direction",
+        "composition",
+        "lens",
+        "focus",
+        "motion",
+        "color",
+        "mood",
+        "texture",
+        "format",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "person_origin",
+          "probability": 0.25
+        },
+        {
+          "slot": "hair_style",
+          "probability": 0.5
+        },
+        {
+          "slot": "makeup_style",
+          "probability": 0.45
+        },
+        {
+          "slot": "expression",
+          "probability": 0.4
+        },
+        {
+          "slot": "prop",
+          "probability": 0.35
+        },
+        {
+          "slot": "subject_framing",
+          "probability": 0.28
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "fashion_editorial",
+            "magazine_feature",
+            "magazine_cover",
+            "paparazzi_flash_photo"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "fashion",
+            "portrait",
+            "lifestyle",
+            "paparazzi"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "fashion_model",
+            "fashion_influencer",
+            "young_actor",
+            "indie_musician",
+            "influencer_creator"
+          ]
+        },
+        "appearance_type": {
+          "ids": [
+            "fashion_model_like",
+            "retro_film_protagonist",
+            "classic_elegant",
+            "streetwear_style",
+            "influencer_like"
+          ]
+        },
+        "world": {
+          "ids": [
+            "eighties_glam_editorial",
+            "nineties_grunge_editorial",
+            "y2k_chrome_editorial"
+          ]
+        },
+        "wardrobe_style": {
+          "ids": [
+            "eighties_glam_dress_big_hair",
+            "nineties_slip_dress_layered",
+            "minimal_black_dress",
+            "crop_top_wide_pants",
+            "street_jacket_boots"
+          ]
+        },
+        "action": {
+          "ids": [
+            "posing_editorial",
+            "posing_cover",
+            "looking_camera",
+            "turning_back",
+            "standing_silence"
+          ]
+        },
+        "location": {
+          "ids": [
+            "quiet_cafe",
+            "convenience_store_night",
+            "luxury_hotel_corridor",
+            "backstage_room",
+            "rooftop_sunset",
+            "rainy_neon_alley",
+            "festival_backstage"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "hard_flash",
+            "studio_flash",
+            "softbox",
+            "rim_light",
+            "neon"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "disposable_film_camera",
+            "compact_digital_camera",
+            "instant_camera",
+            "large_format_camera",
+            "full_frame_mirrorless"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "eye_level_front",
+            "eye_level_three_quarter",
+            "high_observer_angle",
+            "dutch_tilt_direction"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "medium_close",
+            "centered_symmetry",
+            "paparazzi_diagonal_flash",
+            "handheld_candid",
+            "rule_of_thirds"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "phone_1x_main",
+            "wide_24mm"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "eye_focus",
+            "face_detection_focus",
+            "shallow_depth",
+            "slight_missed_focus"
+          ]
+        },
+        "motion": {
+          "ids": [
+            "stable_tripod",
+            "handheld_microshake",
+            "flash_freeze",
+            "social_snap_tilt"
+          ]
+        },
+        "color": {
+          "ids": [
+            "film_faded",
+            "muted",
+            "candy_color",
+            "neon_magenta_cyan",
+            "muted_paparazzi"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "nostalgic",
+            "celebrity_candid",
+            "glamorous_backstage",
+            "playful",
+            "elegant"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "compact_digicam_noise",
+            "fine_grain",
+            "flash_shadow_edges",
+            "halation",
+            "skin_texture",
+            "jpeg_social"
+          ]
+        },
+        "format": {
+          "ids": [
+            "vertical_9_16",
+            "portrait_3_4",
+            "portrait_4_5",
+            "story_cover_vertical",
+            "square_1_1"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "editorial_quality",
+            "high_detail",
+            "not_overdone",
+            "candid_imperfect"
+          ]
+        },
+        "hair_style": {
+          "ids": [
+            "long_wavy_black_hair",
+            "blonde_long_hair",
+            "pink_soft_waves",
+            "short_bob_with_bangs",
+            "long_dark_wavy_hair"
+          ]
+        },
+        "makeup_style": {
+          "ids": [
+            "bold_editorial_makeup",
+            "delicate_makeup_glossy_lips",
+            "clean_kbeauty_makeup",
+            "soft_coral_lip_makeup"
+          ]
+        },
+        "expression": {
+          "ids": [
+            "soft_smile",
+            "calm_intense_gaze",
+            "confident_direct_gaze",
+            "neutral_camera_gaze"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "vintage_film_camera_prop",
+            "compact_digital_camera",
+            "camera_held_as_prop",
+            "over_ear_headphones",
+            "shopping_bag_prop"
+          ]
+        },
+        "subject_framing": {
+          "ids": [
+            "full_body_framing",
+            "upper_body_framing",
+            "three_quarter_body_framing",
+            "close_up_face_crop"
+          ]
+        }
+      }
+    },
+    {
+      "id": "surreal_contrast_editorial",
+      "ko": "초현실 대비 포토 에디토리얼",
+      "en": "surreal contrast photo editorial",
+      "weight": 0.5,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "appearance_type",
+        "action",
+        "prop",
+        "location",
+        "wardrobe_style",
+        "lighting",
+        "camera_type",
+        "camera_direction",
+        "composition",
+        "lens",
+        "focus",
+        "color",
+        "mood",
+        "texture",
+        "format",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "person_origin",
+          "probability": 0.2
+        },
+        {
+          "slot": "hair_style",
+          "probability": 0.45
+        },
+        {
+          "slot": "makeup_style",
+          "probability": 0.45
+        },
+        {
+          "slot": "expression",
+          "probability": 0.4
+        },
+        {
+          "slot": "subject_framing",
+          "probability": 0.35
+        },
+        {
+          "slot": "light_direction",
+          "probability": 0.4
+        },
+        {
+          "slot": "light_type",
+          "probability": 0.3
+        },
+        {
+          "slot": "motion",
+          "probability": 0.28
+        },
+        {
+          "slot": "world",
+          "probability": 0.35
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "fashion_editorial",
+            "concept_photo",
+            "magazine_feature",
+            "film_still"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "fashion",
+            "portrait",
+            "lifestyle"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "fashion_model",
+            "young_actor",
+            "fashion_influencer",
+            "kpop_idol_style_model",
+            "influencer_creator"
+          ]
+        },
+        "appearance_type": {
+          "ids": [
+            "fashion_model_like",
+            "classic_elegant",
+            "actor_like",
+            "idol_like",
+            "luxury_beauty_style"
+          ]
+        },
+        "action": {
+          "ids": [
+            "bracing_against_cold_wind",
+            "holding_story_prop",
+            "posing_editorial",
+            "turning_back",
+            "standing_silence"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "melting_pastel_ice_cream_cone",
+            "oversized_lollipop_prop",
+            "glowing_lantern_prop"
+          ]
+        },
+        "location": {
+          "ids": [
+            "antarctic_ice_landscape",
+            "glacier_face_wall",
+            "volcanic_rim_dusk",
+            "salt_flats_mirror",
+            "deep_canyon_floor",
+            "milky_way_meadow_night",
+            "aurora_borealis_field",
+            "frozen_lake_surface"
+          ]
+        },
+        "wardrobe_style": {
+          "ids": [
+            "eighties_glam_dress_big_hair",
+            "minimal_black_dress",
+            "clean_blazer_trousers",
+            "street_jacket_boots",
+            "fantasy_layered_robe_costume"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "rim_light",
+            "chiaroscuro",
+            "golden_hour",
+            "blue_hour",
+            "softbox",
+            "low_key"
+          ]
+        },
+        "light_direction": {
+          "ids": [
+            "side_light_left",
+            "side_light_right",
+            "three_quarter_light",
+            "backlight"
+          ]
+        },
+        "light_type": {
+          "ids": [
+            "open_shade",
+            "narrow_spotlight",
+            "studio_strobe",
+            "streetlamp"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "full_frame_mirrorless",
+            "medium_format_camera",
+            "large_format_camera"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "eye_level_front",
+            "eye_level_three_quarter",
+            "low_ground_angle"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "centered_symmetry",
+            "medium_close",
+            "wide_establishing",
+            "negative_space",
+            "rule_of_thirds"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "wide_24mm"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "eye_focus",
+            "shallow_depth",
+            "selective_foreground_focus"
+          ]
+        },
+        "motion": {
+          "ids": [
+            "stable_tripod",
+            "intentional_motion_blur",
+            "frozen_action"
+          ]
+        },
+        "color": {
+          "ids": [
+            "cool_blue",
+            "muted",
+            "luxury_black_gold",
+            "pastel",
+            "teal_orange"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "dreamy",
+            "uncanny",
+            "tense",
+            "melancholic",
+            "elegant",
+            "raw"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "visible_cold_breath_frost",
+            "glossy_melting_surface_detail",
+            "skin_texture",
+            "fine_grain",
+            "halation"
+          ]
+        },
+        "format": {
+          "ids": [
+            "vertical_9_16",
+            "portrait_3_4",
+            "portrait_4_5",
+            "landscape_16_9",
+            "story_cover_vertical"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "editorial_quality",
+            "high_detail",
+            "not_overdone"
+          ]
+        },
+        "world": {
+          "ids": [
+            "eighties_glam_editorial",
+            "nineties_grunge_editorial",
+            "y2k_chrome_editorial",
+            "luxury_beauty",
+            "retro_futurism"
+          ]
+        },
+        "hair_style": {
+          "ids": [
+            "long_dark_wavy_hair",
+            "straight_black_hair_with_bangs",
+            "blonde_long_hair",
+            "white_silver_long_hair",
+            "sleek_high_ponytail"
+          ]
+        },
+        "makeup_style": {
+          "ids": [
+            "delicate_makeup_glossy_lips",
+            "clean_kbeauty_makeup",
+            "bold_editorial_makeup"
+          ]
+        },
+        "expression": {
+          "ids": [
+            "calm_intense_gaze",
+            "neutral_camera_gaze",
+            "confident_direct_gaze",
+            "composed_camera_look"
+          ]
+        },
+        "subject_framing": {
+          "ids": [
+            "full_body_framing",
+            "upper_body_framing",
+            "three_quarter_body_framing"
+          ]
+        }
+      }
+    },
+    {
       "id": "adult_fetish_fashion_editorial",
       "ko": "성인 페티시 패션 에디토리얼",
       "en": "adult fetish-fashion editorial",
@@ -12946,6 +13806,81 @@
         "for_any": [
           "human"
         ]
+      },
+      {
+        "id": "eighties_glam_dress_big_hair",
+        "ko": "스팽글과 구조적인 어깨, 풍성한 헤어가 어울리는 80년대 글램 드레스 스타일링",
+        "en": "80s glam dress styling with sequins, shoulder structure, and voluminous hair",
+        "weight": 0.42,
+        "tags": [
+          "human",
+          "wardrobe",
+          "fashion",
+          "editorial",
+          "retro",
+          "eighties",
+          "neutral",
+          "creative_photo"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "nineties_slip_dress_layered",
+        "ko": "핏되는 티셔츠 위에 레이어드한 90년대 슬립 드레스",
+        "en": "90s layered slip dress over a fitted tee",
+        "weight": 0.45,
+        "tags": [
+          "human",
+          "wardrobe",
+          "fashion",
+          "editorial",
+          "retro",
+          "nineties",
+          "neutral",
+          "creative_photo"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "fantasy_layered_robe_costume",
+        "ko": "벨트와 트림이 있는 판타지 코스프레 레이어드 로브",
+        "en": "fantasy-cosplay layered robe with belt and trim",
+        "weight": 0.36,
+        "tags": [
+          "human",
+          "wardrobe",
+          "costume",
+          "cosplay",
+          "fantasy",
+          "neutral",
+          "creative_photo"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "dark_fantasy_armor_costume",
+        "ko": "레이어드 원단 위에 올린 명확히 코스튬 등급의 다크 판타지 아머 피스",
+        "en": "clearly costume-grade dark fantasy armor pieces over layered fabric",
+        "weight": 0.32,
+        "tags": [
+          "human",
+          "wardrobe",
+          "costume",
+          "cosplay",
+          "fantasy",
+          "armor",
+          "neutral",
+          "creative_photo"
+        ],
+        "for_any": [
+          "human"
+        ]
       }
     ],
     "adult_context": [
@@ -14098,6 +15033,38 @@
         "for_any": [
           "human"
         ]
+      },
+      {
+        "id": "bracing_against_cold_wind",
+        "ko": "어깨를 움츠리고 찬 바람을 버티는",
+        "en": "bracing against cold wind with shoulders raised",
+        "weight": 0.48,
+        "tags": [
+          "human",
+          "weather",
+          "cold",
+          "cinematic",
+          "creative_photo"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "holding_story_prop",
+        "ko": "상징적인 이야기 소품을 들고 있는",
+        "en": "holding a visually symbolic story prop",
+        "weight": 0.45,
+        "tags": [
+          "human",
+          "prop",
+          "cinematic",
+          "editorial",
+          "creative_photo"
+        ],
+        "for_any": [
+          "human"
+        ]
       }
     ],
     "prop": [
@@ -14346,6 +15313,139 @@
           "cosplay",
           "cinematic",
           "toy"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "melting_pastel_ice_cream_cone",
+        "ko": "광택 있는 방울이 흐르는 녹는 파스텔 아이스크림 콘",
+        "en": "a melting pastel ice cream cone with glossy drips",
+        "weight": 0.5,
+        "tags": [
+          "human",
+          "prop",
+          "food_prop",
+          "surreal_contrast",
+          "creative_photo"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "oversized_lollipop_prop",
+        "ko": "크고 광택 있는 막대사탕 소품",
+        "en": "an oversized glossy lollipop prop",
+        "weight": 0.42,
+        "tags": [
+          "human",
+          "prop",
+          "candy",
+          "playful",
+          "creative_photo"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "cosplay_prop_katana",
+        "ko": "기능하지 않는 것이 분명한 코스프레용 카타나 소품",
+        "en": "a clearly nonfunctional cosplay katana prop with a wrapped saya",
+        "weight": 0.35,
+        "tags": [
+          "human",
+          "prop",
+          "cosplay",
+          "nonfunctional_weapon_prop",
+          "fantasy",
+          "creative_photo"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "cosplay_prop_broadsword",
+        "ko": "기능하지 않는 것이 분명한 판타지 복제 브로드소드 소품",
+        "en": "a clearly nonfunctional fantasy-replica broadsword prop",
+        "weight": 0.32,
+        "tags": [
+          "human",
+          "prop",
+          "cosplay",
+          "nonfunctional_weapon_prop",
+          "fantasy",
+          "creative_photo"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "fantasy_costume_staff",
+        "ko": "크리스털 장식이 달린 판타지 코스프레 지팡이 소품",
+        "en": "a fantasy cosplay staff prop with a crystal head",
+        "weight": 0.38,
+        "tags": [
+          "human",
+          "prop",
+          "cosplay",
+          "fantasy",
+          "story_prop",
+          "creative_photo"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "glowing_lantern_prop",
+        "ko": "한 손에 든 작은 배터리 조명 랜턴 소품",
+        "en": "a small battery-lit lantern prop held in one hand",
+        "weight": 0.45,
+        "tags": [
+          "human",
+          "prop",
+          "light_source",
+          "story_prop",
+          "cinematic",
+          "creative_photo"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "holographic_screen_prop",
+        "ko": "실제 광택 표면을 가진 홀로그래픽 스타일 휴대용 화면 소품",
+        "en": "a handheld holographic-style screen prop with a real glossy surface",
+        "weight": 0.36,
+        "tags": [
+          "human",
+          "prop",
+          "technology",
+          "screen",
+          "creative_photo"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "vintage_film_camera_prop",
+        "ko": "바디와 렌즈가 보이는 빈티지 필름 카메라 소품",
+        "en": "a vintage film camera prop with a visible body and lens",
+        "weight": 0.45,
+        "tags": [
+          "human",
+          "prop",
+          "camera",
+          "retro",
+          "editorial",
+          "creative_photo"
         ],
         "for_any": [
           "human"
@@ -15363,6 +16463,128 @@
           "cinematic",
           "fashion"
         ]
+      },
+      {
+        "id": "antarctic_ice_landscape",
+        "ko": "거센 바람이 부는 남극 얼음 지형",
+        "en": "windswept Antarctic ice landscape",
+        "phrase_ko": "거센 바람이 부는 남극 얼음 지형에서",
+        "phrase_en": "in a windswept Antarctic ice landscape",
+        "weight": 0.45,
+        "tags": [
+          "nature",
+          "ice",
+          "snow",
+          "extreme_environment",
+          "creative_photo"
+        ]
+      },
+      {
+        "id": "glacier_face_wall",
+        "ko": "푸른 크레바스 디테일이 보이는 거대한 빙하 벽",
+        "en": "towering glacier face with blue crevasse detail",
+        "phrase_ko": "푸른 크레바스 디테일이 보이는 거대한 빙하 벽 옆에서",
+        "phrase_en": "beside a towering glacier face with blue crevasse detail",
+        "weight": 0.42,
+        "tags": [
+          "nature",
+          "ice",
+          "extreme_environment",
+          "cinematic",
+          "creative_photo"
+        ]
+      },
+      {
+        "id": "volcanic_rim_dusk",
+        "ko": "현무암과 증기가 있는 해질녘 화산 분화구 가장자리",
+        "en": "volcanic rim at dusk with basalt rock and vent steam",
+        "phrase_ko": "현무암과 증기가 있는 해질녘 화산 분화구 가장자리에서",
+        "phrase_en": "on a volcanic rim at dusk with basalt rock and vent steam",
+        "weight": 0.38,
+        "tags": [
+          "nature",
+          "volcanic",
+          "dusk",
+          "extreme_environment",
+          "cinematic",
+          "creative_photo"
+        ]
+      },
+      {
+        "id": "salt_flats_mirror",
+        "ko": "하늘이 얕게 비치는 거울 같은 소금 평원",
+        "en": "reflective salt flat at dusk",
+        "phrase_ko": "하늘이 얕게 비치는 거울 같은 소금 평원 위에서",
+        "phrase_en": "on a reflective salt flat at dusk",
+        "weight": 0.42,
+        "tags": [
+          "nature",
+          "reflection",
+          "wide_open",
+          "dreamy",
+          "creative_photo"
+        ]
+      },
+      {
+        "id": "deep_canyon_floor",
+        "ko": "좁은 빛줄기가 내려오는 깊은 협곡 바닥",
+        "en": "deep canyon floor with narrow shafts of light",
+        "phrase_ko": "좁은 빛줄기가 내려오는 깊은 협곡 바닥에서",
+        "phrase_en": "on a deep canyon floor with narrow shafts of light",
+        "weight": 0.42,
+        "tags": [
+          "nature",
+          "canyon",
+          "dramatic_light",
+          "cinematic",
+          "creative_photo"
+        ]
+      },
+      {
+        "id": "milky_way_meadow_night",
+        "ko": "은하수 띠가 보이는 밤의 탁 트인 초원",
+        "en": "open meadow beneath a visible Milky Way band",
+        "phrase_ko": "은하수 띠가 보이는 밤의 탁 트인 초원에서",
+        "phrase_en": "in an open meadow beneath a visible Milky Way band",
+        "weight": 0.4,
+        "tags": [
+          "nature",
+          "night",
+          "cosmic",
+          "cinematic",
+          "creative_photo"
+        ]
+      },
+      {
+        "id": "aurora_borealis_field",
+        "ko": "초록 오로라가 흐르는 탁 트인 설원",
+        "en": "open snow field under green aurora arcs",
+        "phrase_ko": "초록 오로라가 흐르는 탁 트인 설원에서",
+        "phrase_en": "in an open snow field under green aurora arcs",
+        "weight": 0.4,
+        "tags": [
+          "nature",
+          "night",
+          "aurora",
+          "ice",
+          "cosmic",
+          "creative_photo"
+        ]
+      },
+      {
+        "id": "frozen_lake_surface",
+        "ko": "얇은 눈이 덮인 갈라진 얼어붙은 호수 표면",
+        "en": "cracked frozen lake surface with thin snow dusting",
+        "phrase_ko": "얇은 눈이 덮인 갈라진 얼어붙은 호수 표면 위에서",
+        "phrase_en": "on a cracked frozen lake surface with thin snow dusting",
+        "weight": 0.42,
+        "tags": [
+          "nature",
+          "ice",
+          "reflection",
+          "extreme_environment",
+          "creative_photo"
+        ]
       }
     ],
     "world": [
@@ -15647,6 +16869,46 @@
           "dark",
           "future",
           "ruin"
+        ]
+      },
+      {
+        "id": "eighties_glam_editorial",
+        "ko": "채도가 높은 80년대 매거진 글램 에디토리얼 무드",
+        "en": "saturated 80s magazine glam editorial mood",
+        "weight": 0.45,
+        "tags": [
+          "retro",
+          "fashion",
+          "editorial",
+          "eighties",
+          "creative_photo"
+        ]
+      },
+      {
+        "id": "nineties_grunge_editorial",
+        "ko": "채도를 낮춘 90년대 그런지 에디토리얼 무드",
+        "en": "desaturated 90s grunge editorial mood",
+        "weight": 0.42,
+        "tags": [
+          "retro",
+          "fashion",
+          "editorial",
+          "nineties",
+          "creative_photo"
+        ]
+      },
+      {
+        "id": "y2k_chrome_editorial",
+        "ko": "Y2K 크롬 패션 에디토리얼 무드",
+        "en": "Y2K chrome fashion editorial mood",
+        "weight": 0.42,
+        "tags": [
+          "retro",
+          "fashion",
+          "editorial",
+          "y2k",
+          "chrome",
+          "creative_photo"
         ]
       }
     ],
@@ -18672,6 +19934,32 @@
         "tags": [
           "retro",
           "social"
+        ]
+      },
+      {
+        "id": "visible_cold_breath_frost",
+        "ko": "보이는 찬 숨과 희미한 서리 디테일",
+        "en": "visible cold breath and faint frost detail",
+        "weight": 0.4,
+        "tags": [
+          "cold",
+          "frost",
+          "weather",
+          "extreme_environment",
+          "creative_photo"
+        ]
+      },
+      {
+        "id": "glossy_melting_surface_detail",
+        "ko": "주변광을 잡아내는 광택 있는 녹는 표면 질감",
+        "en": "glossy melting texture catching ambient light",
+        "weight": 0.4,
+        "tags": [
+          "glossy",
+          "melting",
+          "surface",
+          "prop_detail",
+          "creative_photo"
         ]
       }
     ],
