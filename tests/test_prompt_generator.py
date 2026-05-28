@@ -20,6 +20,262 @@ CREATIVE_PRESET_IDS = {
     "retro_era_fashion_editorial",
     "surreal_contrast_editorial",
 }
+REACTOR_EXPORT_PRESET_IDS = {
+    "hanbok_seasonal_editorial",
+    "wuxia_xianxia_portrait",
+    "joseon_period_portrait",
+    "hanfu_china_court_portrait",
+    "maid_cafe_cosplay_portrait",
+    "magical_girl_cosplay_portrait",
+    "mecha_pilot_cosplay_portrait",
+    "gothic_doll_cosplay_portrait",
+    "game_rpg_cosplay_portrait",
+    "casual_weapon_lifestyle",
+    "kpop_album_cover_y2k_glossy",
+    "kpop_dance_practice_room_mirror",
+    "tv_music_show_stage_screencap",
+    "korea_2000s_classroom_nostalgia",
+    "korean_yearbook_senior_portrait",
+    "wide_angle_mirror_selfie_editorial",
+    "high_angle_floor_selfie",
+    "korean_photobooth_strip",
+    "kbeauty_idol_skincare_campaign",
+    "soju_liquor_model_campaign",
+    "vacuum_packaging_concept_photo",
+    "action_figure_blister_product_photo",
+    "amigurumi_plush_catalog_photo",
+    "needle_felt_character_macro",
+    "noodle_lettering_food_topdown",
+    "cherry_blossom_romance_portrait",
+    "autumn_foliage_warm_portrait",
+    "flower_field_dreamcore_portrait",
+    "foggy_mist_atmospheric_portrait",
+    "blizzard_expedition_fashion_editorial",
+    "desert_dune_editorial",
+    "underwater_surface_portrait",
+    "pool_deck_swimwear_editorial",
+    "hotel_rooftop_dusk_editorial",
+    "subway_interior_candid",
+    "train_station_platform_portrait",
+    "elevator_steel_box_portrait",
+    "convenience_store_late_night",
+    "pc_bang_neon_session",
+    "karaoke_room_neon_friends",
+    "pojangmacha_street_food_night",
+    "gym_mirror_selfie_fitness",
+    "motorcycle_rider_portrait_dusk",
+    "esports_arena_live_show",
+    "dark_academia_library_portrait",
+    "double_exposure_silhouette_portrait",
+    "color_gel_split_lighting_studio",
+    "silhouette_window_backlight_portrait",
+    "infrared_aerochrome_dreamscape",
+    "tilt_shift_miniature_city",
+    "reflection_puddle_inverted_portrait",
+    "broken_glass_fragmented_portrait",
+    "photo_collage_cutout_y2k",
+    "vhs_camcorder_home_video",
+    "taxi_backseat_night_portrait",
+    "airplane_window_seat_lifestyle",
+    "crime_scene_yellow_tape_reportage",
+}
+NON_PHOTO_RESERVED_PRESET_IDS = {
+    "poster_advertising",
+    "infographic_savepic",
+    "messenger_sticker_sheet",
+    "children_picturebook_illustration",
+    "webtoon_panel_strip",
+    "toy_figure_render",
+    "poster_cinematic_cover",
+    "exploded_anatomy_diagram",
+    "ui_mock_screen_prompt",
+    "minimal_typography_art_print",
+}
+REACTOR_EXPORT_REPRESENTATIVE_CASES = {
+    "wuxia_xianxia_portrait": (
+        {
+            "costume_style": ["flowing_wuxia_robe"],
+            "prop": ["jian_sword_prop"],
+            "location": ["misty_xianxia_cliff"],
+        },
+        ["wuxia", "jian sword", "misty xianxia"],
+    ),
+    "kpop_album_cover_y2k_glossy": (
+        {
+            "world": ["kpop_y2k_album_world"],
+            "prop": ["glass_soda_bottle_prop"],
+            "format": ["square_album_jacket"],
+        },
+        ["K-pop", "Y2K", "square album jacket"],
+    ),
+    "korean_photobooth_strip": (
+        {
+            "format": ["nine_cut_grid"],
+            "prop": ["photobooth_remote_prop"],
+            "location": ["korean_photobooth_booth"],
+        },
+        ["Korean photobooth", "nine-cut"],
+    ),
+    "amigurumi_plush_catalog_photo": (
+        {
+            "subject": ["amigurumi_plush_doll"],
+            "texture": ["crochet_yarn_texture"],
+            "location": ["craft_catalog_tabletop"],
+        },
+        ["amigurumi", "crochet yarn"],
+    ),
+    "noodle_lettering_food_topdown": (
+        {
+            "subject": ["noodle_lettering_plate"],
+            "action": ["arranged_as_lettering"],
+            "camera_direction": ["top_down_90"],
+        },
+        ["noodle lettering", "top-down"],
+    ),
+    "double_exposure_silhouette_portrait": (
+        {
+            "composition": ["double_exposure_profile"],
+            "texture": ["layered_film_exposure"],
+            "mood": ["quiet_surreal_optical"],
+        },
+        ["double exposure", "layered film exposure"],
+    ),
+}
+REACTOR_SPECIALIZED_CONTEXT_TAGS = {
+    "lighting": {
+        "misty_backlight",
+        "oil_lamp_warm",
+        "stage_led_rgb",
+        "fluorescent_classroom_cool",
+        "photobooth_flash",
+        "beauty_white_studio_light",
+        "blizzard_whiteout_light",
+        "underwater_caustic_light",
+        "harsh_noon",
+        "neon_pc_monitor_glow",
+        "karaoke_blacklight_neon",
+        "cyan_magenta_split_light",
+        "infrared_aerochrome_light",
+        "window_blowout_backlight",
+        "subway_car_fluorescent_light",
+        "train_platform_fluorescent_light",
+        "convenience_store_cool_led_light",
+        "elevator_panel_overhead_light",
+        "gym_overhead_led_light",
+    },
+    "light_direction": {
+        "mist_backlight_direction",
+        "window_blowout_backlight",
+        "overhead_fluorescent_toplight",
+        "low_neon_side_light",
+    },
+    "light_type": {
+        "paper_lantern_light",
+        "oil_lamp_practical",
+        "broadcast_led_wall",
+        "school_fluorescent_tube",
+        "convenience_store_led",
+        "subway_train_fluorescent",
+        "elevator_panel_light",
+        "pojangmacha_tent_light",
+        "taxi_signal_light",
+        "airplane_window_daylight",
+    },
+    "motion": {
+        "fabric_drift",
+        "sleeve_wave_motion",
+        "robe_billow_motion",
+        "petal_swirl_motion",
+        "water_surface_ripple_motion",
+        "long_exposure_streak",
+        "vhs_interlace_smear",
+    },
+    "camera_type": {
+        "broadcast_tv_camera",
+        "vhs_camcorder_camera",
+        "photobooth_camera",
+    },
+    "camera_direction": {
+        "photobooth_front_direction",
+        "practice_mirror_wide_direction",
+        "broadcast_close_camera_direction",
+        "floor_high_angle_direction",
+        "taxi_backseat_window_direction",
+        "airplane_window_side_direction",
+    },
+    "composition": {
+        "square_album_cover_centered",
+        "photobooth_grid_strip",
+        "yearbook_centered_headshot",
+        "blister_pack_centered_product",
+        "vacuum_pack_flat_product",
+        "double_exposure_profile",
+        "split_color_gel_portrait",
+        "window_silhouette_negative_space",
+        "tilt_shift_overhead_city",
+        "puddle_inverted_reflection",
+        "broken_glass_fragments_frame",
+        "scrapbook_photo_cutout_layout",
+    },
+    "lens": {
+        "album_50mm_clean",
+        "photobooth_fixed_lens",
+        "topdown_macro_60mm",
+    },
+    "focus": {
+        "album_cover_eye_focus",
+        "photobooth_face_focus",
+        "craft_macro_focus",
+        "optical_layered_focus",
+    },
+    "texture": {
+        "silk_hanbok_texture",
+        "broadcast_camera_video",
+        "crochet_yarn_texture",
+        "needle_felt_fiber_texture",
+        "clear_plastic_packaging_glare",
+        "noodle_sauce_surface",
+        "snow_whiteout_grain",
+        "water_refraction_texture",
+        "layered_film_exposure",
+        "vhs_scanline_texture",
+        "aerochrome_film_texture",
+        "broken_glass_refraction",
+        "glitter_dust",
+    },
+    "format": {
+        "square_album_jacket",
+        "photobooth_strip_layout",
+        "broadcast_screencap_lower_third_safe",
+        "vhs_date_overlay_free",
+        "passport_centered_no_text",
+        "collage_cutout_photo_series",
+    },
+}
+CONTEXT_GUARD_GENERAL_PRESETS = {
+    "vintage_family_archive",
+    "corporate_startup_profile",
+}
+REACTOR_LOCAL_PRESET_EXPECTATIONS = {
+    "convenience_store_late_night": {
+        "subject": {"convenience_store_customer"},
+        "composition": {"handheld_candid", "medium_close", "wide_establishing", "rule_of_thirds"},
+        "light_type": {"convenience_store_led"},
+    },
+    "train_station_platform_portrait": {
+        "subject": {"train_platform_commuter"},
+        "composition": {"handheld_candid", "medium_close", "wide_establishing", "frame_within_frame"},
+        "light_type": {"subway_train_fluorescent", "streetlamp"},
+    },
+    "motorcycle_rider_portrait_dusk": {
+        "composition": {"handheld_candid", "medium_close", "wide_establishing", "rule_of_thirds"},
+        "light_type": {"streetlamp", "car_headlights", "neon_sign_light"},
+    },
+    "dark_academia_library_portrait": {
+        "composition": {"medium_close", "frame_within_frame", "centered_symmetric", "rule_of_thirds"},
+        "light_type": {"tungsten_practical", "candlelight", "oil_lamp_practical"},
+    },
+}
 FANTASY_PROPS = {
     "cosplay_prop_katana",
     "cosplay_prop_broadsword",
@@ -373,6 +629,98 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertIn(item["choices"]["prop"]["id"], CONTRAST_PROPS)
         for slot in SURREAL_LAYER_SLOTS:
             self.assertNotIn(slot, item["choices"])
+
+    def test_reactor_export_presets_are_registered_without_non_photo_presets(self):
+        preset_ids = {preset["id"] for preset in self.data["presets"]}
+
+        self.assertTrue(REACTOR_EXPORT_PRESET_IDS.issubset(preset_ids))
+        self.assertTrue(NON_PHOTO_RESERVED_PRESET_IDS.isdisjoint(preset_ids))
+
+        for preset_id in REACTOR_EXPORT_PRESET_IDS:
+            preset = next(preset for preset in self.data["presets"] if preset["id"] == preset_id)
+            self.assertLessEqual(preset["weight"], 0.6, preset_id)
+
+    def test_reactor_export_presets_generate_across_detail_levels(self):
+        for preset_id in sorted(REACTOR_EXPORT_PRESET_IDS):
+            for detail_level in ("detailed", "compact"):
+                with self.subTest(preset_id=preset_id, detail_level=detail_level):
+                    item = self.generate(
+                        preset_id,
+                        seed=1,
+                        detail_level=detail_level,
+                        include_negative=False,
+                    )
+                    prompt = item["prompt_en"]
+
+                    self.assertIn("prompt_en", item)
+                    self.assertIn("no text", prompt.lower())
+                    self.assertIn("watermark", prompt.lower())
+
+    def test_reactor_export_representative_presets_include_core_vocab(self):
+        for preset_id, (forced_choices, expected_phrases) in REACTOR_EXPORT_REPRESENTATIVE_CASES.items():
+            with self.subTest(preset_id=preset_id):
+                item = self.generate(
+                    preset_id,
+                    seed=1,
+                    detail_level="compact",
+                    include_negative=False,
+                    forced_choices=forced_choices,
+                )
+                prompt = item["prompt_en"]
+
+                for phrase in expected_phrases:
+                    self.assertIn(phrase, prompt)
+
+    def test_reactor_export_presets_do_not_leak_adult_only_slots(self):
+        adult_only_slots = {"adult_context", "fetish_styling", "body_framing", "caption_context"}
+
+        for preset_id in sorted(REACTOR_EXPORT_PRESET_IDS):
+            preset = next(preset for preset in self.data["presets"] if preset["id"] == preset_id)
+            all_slots = preset.get("required_slots", []) + [
+                item["slot"] for item in preset.get("optional_slots", [])
+            ]
+            self.assertTrue(adult_only_slots.isdisjoint(all_slots), preset_id)
+
+            with self.subTest(preset_id=preset_id):
+                for seed in range(1, 8):
+                    item = self.generate(preset_id, seed=seed, detail_level="compact")
+
+                    self.assertTrue(adult_only_slots.isdisjoint(item["choices"]), preset_id)
+
+    def test_reactor_export_specialized_tags_have_context_guards(self):
+        for slot, tag_ids in REACTOR_SPECIALIZED_CONTEXT_TAGS.items():
+            entries = {entry["id"]: entry for entry in self.data["slots"][slot]}
+            for tag_id in tag_ids:
+                with self.subTest(slot=slot, tag_id=tag_id):
+                    self.assertIn(tag_id, entries)
+                    self.assertTrue(entries[tag_id].get("requires_any_tags"), tag_id)
+
+    def test_general_presets_do_not_sample_specialized_reactor_context_tags(self):
+        for preset_id in sorted(CONTEXT_GUARD_GENERAL_PRESETS):
+            for seed in range(1, 81):
+                with self.subTest(preset_id=preset_id, seed=seed):
+                    item = self.generate(preset_id, seed=seed, detail_level="compact")
+
+                    for slot, disallowed_ids in REACTOR_SPECIALIZED_CONTEXT_TAGS.items():
+                        selected = item["choices"].get(slot, {}).get("id")
+                        self.assertNotIn(selected, disallowed_ids)
+
+    def test_reactor_local_presets_use_contextual_subjects_and_compositions(self):
+        presets = {preset["id"]: preset for preset in self.data["presets"]}
+        for preset_id, expectations in REACTOR_LOCAL_PRESET_EXPECTATIONS.items():
+            preset = presets[preset_id]
+            filters = preset.get("filters", {})
+            for slot, expected_ids in expectations.items():
+                with self.subTest(preset_id=preset_id, slot=slot):
+                    self.assertEqual(set(filters[slot]["ids"]), expected_ids)
+
+    def test_tilt_shift_miniature_city_uses_environment_subject(self):
+        item = self.generate("tilt_shift_miniature_city", seed=3, detail_level="compact")
+        subject = item["choices"]["subject"]
+
+        self.assertIn("environment", subject.get("kind", []) + subject.get("tags", []))
+        self.assertNotIn("human", subject.get("kind", []))
+        self.assertNotIn("pose, gaze, gesture", item["prompt_en"])
 
     def test_product_commercial_excludes_food_subjects_but_food_editorial_keeps_them(self):
         product = self.generate("product_commercial", seed=1)
