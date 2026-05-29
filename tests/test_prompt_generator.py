@@ -1,12 +1,16 @@
 from __future__ import annotations
 
+import hashlib
 import importlib.util
 import json
+import os
 import random
 import subprocess
 import sys
+import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -14,6 +18,8 @@ SKILL_DIR = ROOT / "skills" / "photo-prompt-image-generator"
 TAGS_PATH = SKILL_DIR / "assets" / "photo_prompt_tags.json"
 GENERATOR_PATH = SKILL_DIR / "scripts" / "prompt_generator.py"
 WRAPPER_PATH = SKILL_DIR / "scripts" / "generate_photo_prompt.py"
+VALIDATOR_PATH = SKILL_DIR / "scripts" / "validate_photo_prompt_dictionary.py"
+INDEX_BUILDER_PATH = SKILL_DIR / "scripts" / "build_semantic_index.py"
 
 CREATIVE_PRESET_IDS = {
     "cinematic_fantasy_portrait",
@@ -308,6 +314,67 @@ SURREAL_LAYER_SLOTS = {
     "scale_relation",
     "surreal_physics_detail",
 }
+EXPANDED_SLOT_IDS = {
+    "film_emulation",
+    "weather",
+    "time_of_day",
+    "wearable_accessory",
+    "facial_hair",
+    "surface_material",
+    "aesthetic_trend",
+}
+EXPANDED_PRESET_IDS = {
+    "analog_personal_brand_portrait",
+    "cinestill_neon_diner_portrait",
+    "cinematic_blue_hour_street",
+    "rainy_bus_stop_noir",
+    "film_wedding_afterparty_flash",
+    "quiet_luxury_founder_profile",
+    "office_siren_corporate_editorial",
+    "coquette_cafe_portrait",
+    "balletcore_rehearsal_room",
+    "gorpcore_mountain_lifestyle",
+    "night_laundromat_candid",
+    "hotel_corridor_liminal_portrait",
+    "aquarium_tunnel_portrait",
+    "botanical_greenhouse_editorial",
+    "documentary_craftsperson_workshop",
+    "product_packshot_white_sweep",
+    "product_flatlay_ingredient_story",
+    "cpg_shelf_lifestyle_hero",
+    "jewelry_macro_reflection",
+    "skincare_bathroom_countertop",
+    "cinematic_product_reflection_stage",
+    "creator_desk_setup_flatlay",
+}
+EXPANDED_FAMILY_IDS = {
+    "analog_film_family",
+    "weather_mood_portrait_family",
+    "product_surface_family",
+    "creator_branding_family",
+    "craft_workshop_family",
+    "transport_night_family",
+}
+EXPANDED_UNIQUE_TAG_IDS = {
+    "kodak_portra_400_look",
+    "cinestill_800t_halation",
+    "light_drizzle",
+    "time_blue_hour",
+    "wireframe_round_glasses",
+    "clean_shaven",
+    "white_marble_surface",
+    "quiet_luxury_aesthetic",
+    "smoky_eye_makeup",
+    "candid_laugh",
+    "two_block_korean_cut",
+    "rembrandt_lighting",
+    "probe_lens_macro",
+    "knee_up_framing",
+    "light_leak_burn",
+    "glassblower_artisan",
+    "laundromat_night",
+    "disposable_camera",
+}
 
 
 def load_generator():
@@ -317,6 +384,33 @@ def load_generator():
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
+
+
+def load_wrapper():
+    spec = importlib.util.spec_from_file_location("photo_prompt_generator_wrapper", WRAPPER_PATH)
+    if spec is None or spec.loader is None:
+        raise RuntimeError(f"Could not load wrapper module: {WRAPPER_PATH}")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def load_index_builder():
+    scripts_dir = str(SKILL_DIR / "scripts")
+    inserted = False
+    if scripts_dir not in sys.path:
+        sys.path.insert(0, scripts_dir)
+        inserted = True
+    try:
+        spec = importlib.util.spec_from_file_location("photo_prompt_index_builder", INDEX_BUILDER_PATH)
+        if spec is None or spec.loader is None:
+            raise RuntimeError(f"Could not load index builder module: {INDEX_BUILDER_PATH}")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        return module
+    finally:
+        if inserted:
+            sys.path.remove(scripts_dir)
 
 
 class PromptGeneratorRegressionTests(unittest.TestCase):
@@ -342,6 +436,20 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             surreal_intensity=kwargs.pop("surreal_intensity", "moderate"),
             reference_edit_mode=kwargs.pop("reference_edit_mode", "off"),
             trend_layer=kwargs.pop("trend_layer", "off"),
+            intent=kwargs.pop("intent", None),
+            selection_mode=kwargs.pop("selection_mode", "rule"),
+            novelty=kwargs.pop("novelty", "medium"),
+            filter_strictness=kwargs.pop("filter_strictness", None),
+            semantic_weight=kwargs.pop("semantic_weight", None),
+            semantic_profile=kwargs.pop("semantic_profile", None),
+            include_trace=kwargs.pop("include_trace", False),
+            llm_polish=kwargs.pop("llm_polish", "off"),
+            semantic_index=kwargs.pop("semantic_index", None),
+            gemini_api_key=kwargs.pop("gemini_api_key", None),
+            semantic_axis_mode=kwargs.pop("semantic_axis_mode", "auto"),
+            intent_axes=kwargs.pop("intent_axes", None),
+            intent_steering=kwargs.pop("intent_steering", None),
+            surreal_mode_explicit=kwargs.pop("surreal_mode_explicit", False),
         )
 
     def generate_langs(self, preset: str, langs: list[str], seed: int = 1, **kwargs):
@@ -361,7 +469,46 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             surreal_intensity=kwargs.pop("surreal_intensity", "moderate"),
             reference_edit_mode=kwargs.pop("reference_edit_mode", "off"),
             trend_layer=kwargs.pop("trend_layer", "off"),
+            intent=kwargs.pop("intent", None),
+            selection_mode=kwargs.pop("selection_mode", "rule"),
+            novelty=kwargs.pop("novelty", "medium"),
+            filter_strictness=kwargs.pop("filter_strictness", None),
+            semantic_weight=kwargs.pop("semantic_weight", None),
+            semantic_profile=kwargs.pop("semantic_profile", None),
+            include_trace=kwargs.pop("include_trace", False),
+            llm_polish=kwargs.pop("llm_polish", "off"),
+            semantic_index=kwargs.pop("semantic_index", None),
+            gemini_api_key=kwargs.pop("gemini_api_key", None),
+            semantic_axis_mode=kwargs.pop("semantic_axis_mode", "auto"),
+            intent_axes=kwargs.pop("intent_axes", None),
+            intent_steering=kwargs.pop("intent_steering", None),
+            surreal_mode_explicit=kwargs.pop("surreal_mode_explicit", False),
         )
+
+    def fake_gemini_vectors(self, texts, model=None, dimensions=768, api_key=None, **kwargs):
+        vectors = []
+        for text in texts:
+            digest = hashlib.sha256(str(text).encode("utf-8")).digest()
+            vector = [0.0] * dimensions
+            for index, byte in enumerate(digest):
+                vector[(byte + index) % dimensions] += 1.0 if index % 2 == 0 else -1.0
+            norm = sum(value * value for value in vector) ** 0.5
+            vectors.append([round(value / norm, 6) if norm else 0.0 for value in vector])
+        return vectors
+
+    def build_mock_semantic_index(self, dimensions: int = 768):
+        original_embedder = self.generator.embed_texts_with_gemini
+        self.generator.embed_texts_with_gemini = self.fake_gemini_vectors
+        try:
+            return self.generator.build_semantic_index_payload(
+                self.data,
+                provider="gemini",
+                model="gemini-embedding-2",
+                dimensions=dimensions,
+                api_key="test-api-key",
+            )
+        finally:
+            self.generator.embed_texts_with_gemini = original_embedder
 
     def test_nonhuman_subject_does_not_get_human_pose_guidance(self):
         item = self.generate(
@@ -484,6 +631,8 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "7",
                 "--lang",
                 "en",
+                "--selection-mode",
+                "rule",
                 "--plain",
                 "--no-negative",
             ],
@@ -919,6 +1068,803 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             "no text or watermark",
         ):
             self.assertIn(phrase, prompt)
+
+    def test_expanded_slots_presets_and_families_are_registered(self):
+        slots = self.data["slots"]
+        preset_ids = {preset["id"] for preset in self.data["presets"]}
+        family_ids = {family["id"] for family in self.data.get("preset_families", [])}
+
+        self.assertTrue(EXPANDED_SLOT_IDS.issubset(slots))
+        self.assertTrue(EXPANDED_PRESET_IDS.issubset(preset_ids))
+        self.assertTrue(EXPANDED_FAMILY_IDS.issubset(family_ids))
+
+    def test_expanded_tag_ids_do_not_add_new_global_duplicates(self):
+        all_ids = []
+        for entries in self.data["slots"].values():
+            all_ids.extend(entry["id"] for entry in entries)
+        all_ids.extend(preset["id"] for preset in self.data.get("presets", []))
+        all_ids.extend(recipe["id"] for recipe in self.data.get("recipes", []))
+
+        for tag_id in EXPANDED_UNIQUE_TAG_IDS:
+            self.assertEqual(all_ids.count(tag_id), 1, tag_id)
+
+    def test_new_cinestill_preset_renders_new_slots_without_preposition_duplication(self):
+        item = self.generate("cinestill_neon_diner_portrait", seed=1, include_negative=False)
+        prompt = item["prompt_en"]
+        choices = item["choices"]
+
+        for slot in ("film_emulation", "time_of_day", "weather", "aesthetic_trend"):
+            self.assertIn(slot, choices)
+        self.assertIn("CineStill 800T tungsten halation", prompt)
+        self.assertIn("blue-hour twilight", prompt)
+        self.assertIn("inside a retro diner booth", prompt)
+        self.assertNotIn("in inside", prompt)
+        self.assertNotEqual(choices.get("camera_type", {}).get("id"), "microscope_camera")
+
+    def test_product_surface_preset_renders_surface_and_stable_product_motion(self):
+        item = self.generate("product_packshot_white_sweep", seed=2, include_negative=False)
+        prompt = item["prompt_en"]
+        choices = item["choices"]
+
+        self.assertIn("surface_material", choices)
+        self.assertIn(choices["surface_material"]["en"], prompt)
+        self.assertEqual(choices.get("motion", {}).get("id"), "stable_tripod")
+        self.assertNotEqual(choices.get("location", {}).get("id"), "joseon_palace_interior")
+
+    def test_forced_new_human_detail_slots_render_on_existing_preset(self):
+        item = self.generate(
+            "street_documentary",
+            seed=42,
+            include_negative=False,
+            forced_choices={
+                "film_emulation": ["kodak_portra_400_look"],
+                "wearable_accessory": ["wireframe_round_glasses"],
+                "facial_hair": ["light_stubble"],
+            },
+        )
+        prompt = item["prompt_en"]
+
+        self.assertIn("Kodak Portra 400", prompt)
+        self.assertIn("thin wire-frame round glasses", prompt)
+        self.assertIn("light stubble", prompt)
+
+    def test_semantic_mode_is_deterministic_and_traced(self):
+        semantic_index = self.build_mock_semantic_index()
+        original_embedder = self.generator.embed_texts_with_gemini
+        self.generator.embed_texts_with_gemini = self.fake_gemini_vectors
+        try:
+            first = self.generate(
+                "street_documentary",
+                seed=42,
+                intent="rainy neon night street portrait",
+                selection_mode="semantic",
+                novelty="medium",
+                include_trace=True,
+                include_negative=False,
+                semantic_index=semantic_index,
+                gemini_api_key="test-api-key",
+            )
+            second = self.generate(
+                "street_documentary",
+                seed=42,
+                intent="rainy neon night street portrait",
+                selection_mode="semantic",
+                novelty="medium",
+                include_trace=True,
+                include_negative=False,
+                semantic_index=semantic_index,
+                gemini_api_key="test-api-key",
+            )
+        finally:
+            self.generator.embed_texts_with_gemini = original_embedder
+
+        self.assertEqual(first["prompt_en"], second["prompt_en"])
+        self.assertEqual(first["choices"], second["choices"])
+        self.assertEqual(first["semantic_trace"], second["semantic_trace"])
+        self.assertEqual(first["semantic_trace"]["selection_mode"], "semantic")
+        self.assertEqual(first["semantic_trace"]["intent"], "rainy neon night street portrait")
+        self.assertEqual(first["semantic_trace"]["embedding_provider"], "gemini")
+        self.assertEqual(first["semantic_trace"]["embedding_model"], "gemini-embedding-2")
+        self.assertEqual(first["semantic_trace"]["embedding_dimensions"], 768)
+        self.assertEqual(first["semantic_trace"]["filter_strictness"], "soft")
+        self.assertEqual(first["semantic_trace"]["semantic_weight"], 0.75)
+        self.assertEqual(first["semantic_trace"]["semantic_profile"], "balanced")
+        self.assertEqual(first["semantic_trace"]["semantic_axis_mode"], "auto")
+        self.assertIn("intent_axes", first["semantic_trace"])
+        self.assertIn("intent_steering", first["semantic_trace"])
+        self.assertIn("axis_coverage", first["semantic_trace"])
+        self.assertIn("surreal_activation_reason", first["semantic_trace"])
+        self.assertIsNone(first["semantic_trace"]["preset_score"])
+        self.assertEqual(first["semantic_trace"]["semantic_text_recipe"], self.generator.SEMANTIC_TEXT_RECIPE_VERSION)
+        self.assertIn("hard_rejected_count", first["semantic_trace"])
+        self.assertIn("soft_out_of_filter_selected_count", first["semantic_trace"])
+        self.assertGreaterEqual(len(first["semantic_trace"]["slot_scores"]), 1)
+
+    def test_semantic_preset_trace_includes_axis_breakdown_when_preset_is_not_forced(self):
+        semantic_index = self.build_mock_semantic_index()
+        original_embedder = self.generator.embed_texts_with_gemini
+        self.generator.embed_texts_with_gemini = self.fake_gemini_vectors
+        try:
+            item = self.generate(
+                None,
+                seed=7,
+                intent="urban + horror + fantasy + human portrait",
+                selection_mode="semantic",
+                include_trace=True,
+                include_negative=False,
+                semantic_index=semantic_index,
+                gemini_api_key="test-api-key",
+            )
+        finally:
+            self.generator.embed_texts_with_gemini = original_embedder
+
+        preset_score = item["semantic_trace"]["preset_score"]
+        self.assertIsNotNone(preset_score)
+        self.assertIn("intent_axes", preset_score)
+        self.assertIn("selected_summary", preset_score)
+        self.assertIn("axis_mean", preset_score["selected_summary"])
+        self.assertIn("axis_floor", preset_score["selected_summary"])
+        self.assertIn("axis_scores", preset_score["selected_summary"])
+        self.assertIn("preset_candidate_limit", preset_score)
+        self.assertIn("preset_weight_floor", preset_score)
+        top_ids = [entry["id"] for entry in preset_score["top"]]
+        self.assertEqual(len(top_ids), len(set(top_ids)))
+
+    def test_semantic_axis_family_detection_and_slot_routing(self):
+        self.assertEqual(self.generator.axis_families_for_text("urban city street"), ["urban"])
+        self.assertEqual(self.generator.axis_families_for_text("horror nightmare portrait"), ["human", "horror"])
+        context = {
+            "axis_vectors": [
+                {"text": "human portrait", "families": ["human"], "vector": [1.0, 0.0]},
+                {"text": "horror nightmare", "families": ["horror"], "vector": [0.0, 1.0]},
+            ]
+        }
+        self.assertEqual([item["text"] for item in self.generator.routed_axis_items(context, "subject")], ["human portrait"])
+        self.assertEqual([item["text"] for item in self.generator.routed_axis_items(context, "mood")], ["horror nightmare"])
+
+    def test_semantic_slot_routed_axis_outweighs_full_intent_centroid(self):
+        axis_vectors = [
+            {"text": "human portrait", "families": ["human"], "vector": [1.0, 0.0]},
+            {"text": "horror nightmare", "families": ["horror"], "vector": [0.0, 1.0]},
+        ]
+        context = {
+            "selection_mode": "semantic",
+            "semantic_profile": "balanced",
+            "semantic_weight": 1.0,
+            "novelty": "medium",
+            "query_vector": [0.7071, 0.7071],
+            "axis_vectors": axis_vectors,
+            "axis_coverage": self.generator.initial_axis_coverage(axis_vectors, "balanced"),
+            "picked_vectors": [],
+        }
+
+        human_weight, human_summary = self.generator.semantic_candidate_weight(
+            {"id": "specific_human", "weight": 1.0},
+            [1.0, 0.0],
+            context,
+            [],
+            {},
+            {},
+            "subject",
+        )
+        generic_weight, generic_summary = self.generator.semantic_candidate_weight(
+            {"id": "generic_centroid", "weight": 1.0},
+            [0.7071, 0.7071],
+            context,
+            [],
+            {},
+            {},
+            "subject",
+        )
+
+        self.assertGreater(human_weight, generic_weight)
+        self.assertEqual(human_summary["axis"]["routed_axis"], "human portrait")
+        self.assertGreater(human_summary["effective_query"], generic_summary["effective_query"])
+
+    def test_semantic_axis_coverage_bonus_prefers_deficit_axis(self):
+        axis_vectors = [
+            {"text": "human portrait", "families": ["human"], "vector": [1.0, 0.0]},
+            {"text": "horror nightmare", "families": ["horror"], "vector": [0.0, 1.0]},
+        ]
+        context = {
+            "selection_mode": "semantic",
+            "semantic_profile": "balanced",
+            "semantic_weight": 1.0,
+            "novelty": "medium",
+            "query_vector": [0.7071, 0.7071],
+            "axis_vectors": axis_vectors,
+            "axis_coverage": self.generator.initial_axis_coverage(axis_vectors, "balanced"),
+            "picked_vectors": [],
+        }
+        self.generator.update_axis_coverage(context, "subject", "specific_human", [1.0, 0.0])
+
+        _weight, summary = self.generator.semantic_candidate_weight(
+            {"id": "horror_mood", "weight": 1.0},
+            [0.0, 1.0],
+            context,
+            [],
+            {},
+            {},
+            "mood",
+        )
+
+        self.assertEqual(summary["axis"]["routed_axis"], "horror nightmare")
+        self.assertGreater(summary["axis"]["coverage_bonus"], 0.0)
+
+    def test_semantic_intent_steering_filters_subject_location_and_mood_pools(self):
+        context = {
+            "intent_steering": {"mode": "auto", "enabled": True, "families": ["human", "urban", "horror"], "decisions": []},
+            "axis_vectors": [
+                {"text": "human portrait", "families": ["human"], "vector": [1.0, 0.0]},
+                {"text": "urban street", "families": ["urban"], "vector": [0.0, 1.0]},
+                {"text": "horror nightmare", "families": ["horror"], "vector": [0.0, 0.5]},
+            ],
+        }
+        subjects = [
+            {"id": "robot", "tags": ["object"], "kind": ["object"]},
+            {"id": "commuter", "tags": ["human"], "kind": ["human"]},
+        ]
+        locations = [
+            {"id": "forest", "tags": ["nature"]},
+            {"id": "rainy_city_street", "tags": ["urban", "street"]},
+        ]
+        moods = [
+            {"id": "calm", "en": "calm and peaceful", "tags": []},
+            {"id": "uncanny", "en": "slightly uncanny and unfamiliar", "tags": []},
+        ]
+
+        self.assertEqual(
+            [item["id"] for item in self.generator.steer_semantic_candidate_pool("subject", subjects, context)],
+            ["commuter"],
+        )
+        self.assertEqual(
+            [item["id"] for item in self.generator.steer_semantic_candidate_pool("location", locations, context)],
+            ["rainy_city_street"],
+        )
+        self.assertEqual(
+            [item["id"] for item in self.generator.steer_semantic_candidate_pool("mood", moods, context)],
+            ["uncanny"],
+        )
+
+    def test_semantic_surreal_axis_auto_activates_unless_explicit_off(self):
+        context = {
+            "intent_steering": {"mode": "auto", "enabled": True, "families": ["fantasy"], "decisions": []},
+            "axis_vectors": [{"text": "fantasy surreal", "families": ["fantasy"], "vector": [1.0]}],
+        }
+        active = self.generator.should_activate_surreal_layer(
+            {},
+            random.Random(1),
+            "off",
+            0.0,
+            semantic_context=context,
+            mode_explicit=False,
+        )
+        self.assertTrue(active)
+        self.assertEqual(context["surreal_activation_reason"], "semantic_axis")
+
+        explicit_context = {
+            "intent_steering": {"mode": "auto", "enabled": True, "families": ["fantasy"], "decisions": []},
+            "axis_vectors": [{"text": "fantasy surreal", "families": ["fantasy"], "vector": [1.0]}],
+        }
+        active = self.generator.should_activate_surreal_layer(
+            {},
+            random.Random(1),
+            "off",
+            0.0,
+            semantic_context=explicit_context,
+            mode_explicit=True,
+        )
+        self.assertFalse(active)
+        self.assertEqual(explicit_context["surreal_activation_reason"], "explicit_off")
+
+    def test_intent_axis_extraction_modes(self):
+        explicit = self.generator.extract_intent_axes(
+            "urban horror fantasy human portrait",
+            explicit_axes=["urban city", "horror mood"],
+            semantic_axis_mode="auto",
+        )
+        self.assertEqual(explicit["source"], "explicit")
+        self.assertEqual([item["text"] for item in explicit["items"]], ["urban city", "horror mood"])
+
+        delimiter = self.generator.extract_intent_axes("urban + horror, fantasy and human", semantic_axis_mode="auto")
+        self.assertEqual(delimiter["source"], "delimiter")
+        self.assertEqual([item["text"] for item in delimiter["items"]], ["urban", "horror", "fantasy", "human"])
+
+        fallback = self.generator.extract_intent_axes("urban horror fantasy human portrait", semantic_axis_mode="auto")
+        self.assertEqual(fallback["source"], "fallback")
+        self.assertEqual(
+            [item["text"] for item in fallback["items"]],
+            ["human portrait", "urban city street", "horror fear nightmare", "fantasy magic surreal"],
+        )
+        self.assertIn("metropolitan environment", self.generator.semantic_axis_embedding_text("urban"))
+        self.assertIn("readable face", self.generator.semantic_axis_embedding_text("human portrait"))
+
+        single = self.generator.extract_intent_axes("quiet portrait", semantic_axis_mode="off")
+        self.assertEqual(single["source"], "off")
+        self.assertEqual([item["text"] for item in single["items"]], ["quiet portrait"])
+
+    def test_semantic_preset_similarity_can_outweigh_base_weight(self):
+        context = {"novelty": "medium", "selection_mode": "semantic"}
+        close_match = {"id": "cinestill_neon_diner_portrait", "weight": 1.0}
+        broad_default = {"id": "street_documentary", "weight": 3.0}
+
+        close_weight = self.generator.semantic_preset_candidate_weight(close_match, 0.80, context)
+        broad_weight = self.generator.semantic_preset_candidate_weight(broad_default, 0.50, context)
+
+        self.assertGreater(close_weight, broad_weight)
+
+    def test_semantic_preset_axis_floor_penalizes_single_axis_match(self):
+        context = {
+            "semantic_profile": "balanced",
+            "query_vector": [1.0, 1.0, 1.0, 1.0],
+            "axis_vectors": [
+                {"text": "urban", "source": "test", "vector": [1.0, 0.0, 0.0, 0.0]},
+                {"text": "horror", "source": "test", "vector": [0.0, 1.0, 0.0, 0.0]},
+                {"text": "fantasy", "source": "test", "vector": [0.0, 0.0, 1.0, 0.0]},
+                {"text": "human", "source": "test", "vector": [0.0, 0.0, 0.0, 1.0]},
+            ],
+        }
+
+        all_axis_score, all_axis = self.generator.semantic_preset_score_breakdown([1.0, 1.0, 1.0, 1.0], context)
+        one_axis_score, one_axis = self.generator.semantic_preset_score_breakdown([1.0, 0.0, 0.0, 0.0], context)
+
+        self.assertGreater(all_axis_score, one_axis_score)
+        self.assertEqual(all_axis["axis_floor"], 0.5)
+        self.assertEqual(one_axis["axis_floor"], 0.0)
+
+    def test_semantic_preset_single_axis_matches_overall_similarity(self):
+        context = {
+            "semantic_profile": "balanced",
+            "query_vector": [1.0, 1.0, 0.0],
+            "axis_vectors": [
+                {"text": "quiet portrait", "source": "off", "vector": [1.0, 1.0, 0.0]},
+            ],
+        }
+        score, summary = self.generator.semantic_preset_score_breakdown([1.0, 0.0, 0.0], context)
+
+        self.assertAlmostEqual(score, summary["overall"], places=4)
+        self.assertAlmostEqual(summary["overall"], summary["axis_mean"], places=4)
+        self.assertAlmostEqual(summary["overall"], summary["axis_floor"], places=4)
+
+    def test_semantic_preset_auto_excludes_adult_context_without_explicit_intent(self):
+        data = {
+            "version": "test",
+            "presets": [
+                {"id": "adult_test", "en": "adult test", "weight": 10, "required_slots": ["adult_context"]},
+                {"id": "safe_test", "en": "safe test", "weight": 1},
+            ],
+        }
+        context = {
+            "selection_mode": "semantic",
+            "intent": "urban horror fantasy human portrait",
+            "novelty": "medium",
+            "semantic_profile": "balanced",
+            "semantic_weight": 0.75,
+            "intent_axes": {"mode": "auto", "source": "fallback", "items": [{"text": "urban", "source": "fallback"}]},
+            "query_vector": [1.0, 0.0],
+            "axis_vectors": [{"text": "urban", "source": "fallback", "vector": [1.0, 0.0]}],
+            "index": {
+                "entries": {
+                    "preset:adult_test": {"vector": [1.0, 0.0]},
+                    "preset:safe_test": {"vector": [0.8, 0.2]},
+                }
+            },
+            "hard_rejected_count": 0,
+            "hard_rejected": [],
+        }
+
+        selected = self.generator.choose_preset(data, random.Random(1), None, context)
+
+        self.assertEqual(selected["id"], "safe_test")
+        self.assertEqual(context["hard_rejected_count"], 1)
+        self.assertEqual(context["preset_score"]["hard_rejected_by_reason"], {"adult_context": 1})
+
+    def test_semantic_soft_filter_can_select_intent_match_outside_preset_filter(self):
+        data = {
+            "version": "test",
+            "presets": [
+                {
+                    "id": "test_preset",
+                    "en": "test preset",
+                    "required_slots": ["location"],
+                    "filters": {"location": {"ids": ["in_filter_city"]}},
+                }
+            ],
+            "slots": {
+                "location": [
+                    {"id": "in_filter_city", "en": "a generic city street", "tags": ["urban"], "weight": 0.01},
+                    {"id": "out_filter_fog_castle", "en": "a haunted fog castle", "tags": ["fantasy"], "weight": 100},
+                ]
+            },
+        }
+        index = {
+            "provider": "gemini",
+            "dictionary_hash": self.generator.dictionary_hash(data),
+            "semantic_text_recipe": self.generator.SEMANTIC_TEXT_RECIPE_VERSION,
+            "embedding_model": "gemini-embedding-2",
+            "embedding_dimensions": 2,
+            "entries": {
+                "preset:test_preset": {"vector": [1.0, 0.0]},
+                "slot:location:in_filter_city": {"vector": [-1.0, 0.0]},
+                "slot:location:out_filter_fog_castle": {"vector": [1.0, 0.0]},
+            },
+        }
+        original_embedder = self.generator.embed_texts_with_gemini
+        self.generator.embed_texts_with_gemini = lambda *args, **kwargs: [[1.0, 0.0]]
+        try:
+            context = self.generator.make_semantic_context(
+                data,
+                "haunted fog castle",
+                "semantic",
+                "medium",
+                filter_strictness="soft",
+                semantic_weight=1.0,
+                semantic_profile="balanced",
+                semantic_index=index,
+                semantic_dimensions=2,
+                gemini_api_key="test-api-key",
+            )
+            selected = self.generator.choose_slot(
+                "location",
+                data,
+                data["presets"][0],
+                random.Random(2),
+                {},
+                semantic_context=context,
+            )
+        finally:
+            self.generator.embed_texts_with_gemini = original_embedder
+
+        self.assertEqual(selected["id"], "out_filter_fog_castle")
+        self.assertEqual(context["soft_out_of_filter_selected_count"], 1)
+        self.assertEqual(context["slot_scores"][0]["selected_filter"], "out")
+
+    def test_hybrid_hard_filter_keeps_preset_filter_boundary(self):
+        data = {
+            "version": "test",
+            "presets": [
+                {
+                    "id": "test_preset",
+                    "en": "test preset",
+                    "required_slots": ["location"],
+                    "filters": {"location": {"ids": ["in_filter_city"]}},
+                }
+            ],
+            "slots": {
+                "location": [
+                    {"id": "in_filter_city", "en": "a generic city street", "tags": ["urban"], "weight": 0.01},
+                    {"id": "out_filter_fog_castle", "en": "a haunted fog castle", "tags": ["fantasy"], "weight": 100},
+                ]
+            },
+        }
+        index = {
+            "provider": "gemini",
+            "dictionary_hash": self.generator.dictionary_hash(data),
+            "semantic_text_recipe": self.generator.SEMANTIC_TEXT_RECIPE_VERSION,
+            "embedding_model": "gemini-embedding-2",
+            "embedding_dimensions": 2,
+            "entries": {
+                "preset:test_preset": {"vector": [1.0, 0.0]},
+                "slot:location:in_filter_city": {"vector": [-1.0, 0.0]},
+                "slot:location:out_filter_fog_castle": {"vector": [1.0, 0.0]},
+            },
+        }
+        original_embedder = self.generator.embed_texts_with_gemini
+        self.generator.embed_texts_with_gemini = lambda *args, **kwargs: [[1.0, 0.0]]
+        try:
+            context = self.generator.make_semantic_context(
+                data,
+                "haunted fog castle",
+                "hybrid",
+                "medium",
+                filter_strictness="hard",
+                semantic_weight=0.35,
+                semantic_profile="conservative",
+                semantic_index=index,
+                semantic_dimensions=2,
+                gemini_api_key="test-api-key",
+            )
+            selected = self.generator.choose_slot(
+                "location",
+                data,
+                data["presets"][0],
+                random.Random(2),
+                {},
+                semantic_context=context,
+            )
+        finally:
+            self.generator.embed_texts_with_gemini = original_embedder
+
+        self.assertEqual(selected["id"], "in_filter_city")
+        self.assertEqual(context["soft_out_of_filter_selected_count"], 0)
+
+    def test_wrapper_defaults_to_semantic_mode(self):
+        wrapper = load_wrapper()
+
+        default_args = wrapper.build_forward_args(["--no-negative"])
+        self.assertIn("--selection-mode", default_args)
+        self.assertEqual(default_args[default_args.index("--selection-mode") + 1], "semantic")
+        self.assertIn("--intent", default_args)
+        self.assertEqual(default_args[default_args.index("--intent") + 1], wrapper.DEFAULT_SEMANTIC_INTENT)
+
+        explicit_intent_args = wrapper.build_forward_args(["--intent", "rainy neon night portrait", "--no-negative"])
+        self.assertEqual(explicit_intent_args[explicit_intent_args.index("--selection-mode") + 1], "semantic")
+        self.assertEqual(explicit_intent_args.count("--intent"), 1)
+        self.assertIn("rainy neon night portrait", explicit_intent_args)
+
+        rule_args = wrapper.build_forward_args(["--selection-mode", "rule", "--no-negative"])
+        self.assertNotIn("--intent", rule_args)
+
+    def test_llm_polish_strict_is_explicit_and_preserves_prompt_with_trace(self):
+        item = self.generate(
+            "compact_urban_fashion_portrait",
+            seed=31,
+            detail_level="compact",
+            include_negative=False,
+            include_trace=True,
+            llm_polish="strict",
+        )
+
+        self.assertEqual(item["polished_prompt_en"], item["prompt_en"])
+        self.assertEqual(item["rewrite_trace"]["mode"], "strict")
+        self.assertEqual(item["rewrite_trace"]["status"], "preserved")
+
+    def test_virtual_presets_are_hidden_unless_explicitly_requested(self):
+        base = subprocess.run(
+            [sys.executable, str(WRAPPER_PATH), "--list-presets", "--plain"],
+            cwd=ROOT,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        virtual = subprocess.run(
+            [sys.executable, str(WRAPPER_PATH), "--list-presets", "--include-virtual", "--plain"],
+            cwd=ROOT,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+
+        self.assertEqual(base.returncode, 0, base.stderr)
+        self.assertEqual(virtual.returncode, 0, virtual.stderr)
+        self.assertNotIn("virtual:rainy_neon_portrait_recipe", base.stdout)
+        self.assertIn("virtual:rainy_neon_portrait_recipe", virtual.stdout)
+
+    def test_dictionary_validator_rejects_unknown_facet_guard(self):
+        data = json.loads(TAGS_PATH.read_text(encoding="utf-8"))
+        data["slots"]["lighting"][0]["facets"] = {"time_of_day": ["night"]}
+        data["slots"]["lighting"][0]["hard_guards"] = {"exclude_facets": ["time_of_day:unknown_value"]}
+
+        with tempfile.TemporaryDirectory() as tmp:
+            invalid_path = Path(tmp) / "invalid_tags.json"
+            invalid_path.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
+            result = subprocess.run(
+                [sys.executable, str(VALIDATOR_PATH), "--tags", str(invalid_path)],
+                cwd=ROOT,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("unknown facet value", result.stderr)
+
+    def test_semantic_index_builder_records_gemini_metadata_and_entries(self):
+        original_embedder = self.generator.embed_texts_with_gemini
+        self.generator.embed_texts_with_gemini = self.fake_gemini_vectors
+        try:
+            payload = self.generator.build_semantic_index_payload(
+                self.data,
+                provider="gemini",
+                model="gemini-embedding-2",
+                dimensions=768,
+                api_key="test-api-key",
+            )
+        finally:
+            self.generator.embed_texts_with_gemini = original_embedder
+
+        self.assertEqual(payload["provider"], "gemini")
+        self.assertEqual(payload["embedding_model"], "gemini-embedding-2")
+        self.assertEqual(payload["embedding_dimensions"], 768)
+        self.assertEqual(payload["semantic_text_recipe"], self.generator.SEMANTIC_TEXT_RECIPE_VERSION)
+        self.assertIn("dictionary_hash", payload)
+        self.assertIn("preset:street_documentary", payload["entries"])
+        self.assertIn("slot:location:rainy_neon_alley", payload["entries"])
+        self.assertEqual(len(payload["entries"]["preset:street_documentary"]["vector"]), 768)
+
+    def test_semantic_index_builder_dry_run_does_not_require_api_key(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            out_path = Path(tmp) / "semantic_index.json"
+            env = os.environ.copy()
+            env.pop("GEMINI_API_KEY", None)
+            env.pop("GOOGLE_API_KEY", None)
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(INDEX_BUILDER_PATH),
+                    "--tags",
+                    str(TAGS_PATH),
+                    "--output",
+                    str(out_path),
+                    "--dry-run",
+                ],
+                cwd=ROOT,
+                env=env,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertFalse(out_path.exists())
+        self.assertIn("gemini-embedding-2", result.stdout)
+        self.assertIn("768", result.stdout)
+        self.assertIn("semantic-text-v2", result.stdout)
+
+    def test_semantic_index_builder_reuses_existing_vectors_after_tag_addition(self):
+        builder = load_index_builder()
+        base_data = {
+            "version": "test",
+            "presets": [{"id": "base_portrait", "en": "Base portrait", "ko": "기본 인물"}],
+            "recipes": [],
+            "slots": {
+                "subject": [{"id": "person", "en": "person", "ko": "사람"}],
+            },
+        }
+        updated_data = json.loads(json.dumps(base_data, ensure_ascii=False))
+        updated_data["slots"]["subject"].append({"id": "new_actor", "en": "new actor", "ko": "새 배우"})
+        embed_calls: list[list[str]] = []
+
+        def fake_embed(texts, model=None, dimensions=768, **kwargs):
+            embed_calls.append(list(texts))
+            return self.fake_gemini_vectors(texts, model=model, dimensions=dimensions, **kwargs)
+
+        original_embedder = builder.embed_texts_with_gemini
+        builder.embed_texts_with_gemini = fake_embed
+        try:
+            with tempfile.TemporaryDirectory() as tmp:
+                output = Path(tmp) / "semantic_index.json"
+                checkpoint = Path(tmp) / "semantic_index.json.partial"
+                first_payload = builder.build_resumable_index_payload(
+                    base_data,
+                    output=output,
+                    checkpoint=checkpoint,
+                    provider="gemini",
+                    model="gemini-embedding-2",
+                    dimensions=768,
+                    batch_size=1,
+                    request_interval=0,
+                    retry_attempts=0,
+                    retry_initial_delay=0,
+                    cache_indexes=[],
+                )
+                builder.write_payload(output, first_payload)
+                embed_calls.clear()
+
+                second_payload = builder.build_resumable_index_payload(
+                    updated_data,
+                    output=output,
+                    checkpoint=checkpoint,
+                    provider="gemini",
+                    model="gemini-embedding-2",
+                    dimensions=768,
+                    batch_size=1,
+                    request_interval=0,
+                    retry_attempts=0,
+                    retry_initial_delay=0,
+                    cache_indexes=[output],
+                )
+        finally:
+            builder.embed_texts_with_gemini = original_embedder
+
+        self.assertEqual(len(embed_calls), 1)
+        self.assertEqual(len(embed_calls[0]), 1)
+        self.assertIn("new_actor", embed_calls[0][0])
+        self.assertEqual(len(second_payload["entries"]), 3)
+        self.assertEqual(
+            second_payload["entries"]["preset:base_portrait"]["vector"],
+            first_payload["entries"]["preset:base_portrait"]["vector"],
+        )
+        self.assertNotEqual(second_payload["dictionary_hash"], first_payload["dictionary_hash"])
+
+    def test_semantic_index_builder_requires_api_key_for_real_build(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            out_path = Path(tmp) / "semantic_index.json"
+            env = os.environ.copy()
+            env.pop("GEMINI_API_KEY", None)
+            env.pop("GOOGLE_API_KEY", None)
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(INDEX_BUILDER_PATH),
+                    "--tags",
+                    str(TAGS_PATH),
+                    "--output",
+                    str(out_path),
+                    "--dimensions",
+                    "768",
+                ],
+                cwd=ROOT,
+                env=env,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertFalse(out_path.exists())
+        self.assertIn("GEMINI_API_KEY", result.stderr)
+
+    def test_rule_mode_does_not_import_gemini_dependency(self):
+        real_import = __import__
+
+        def block_google_genai(name, *args, **kwargs):
+            if name == "google" or name.startswith("google.genai"):
+                raise ImportError("blocked google.genai import")
+            return real_import(name, *args, **kwargs)
+
+        with mock.patch("builtins.__import__", side_effect=block_google_genai):
+            item = self.generate("street_documentary", seed=4, include_negative=False)
+
+        self.assertIn("prompt_en", item)
+
+    def test_gemini_embed_reports_missing_sdk(self):
+        real_import = __import__
+
+        def block_google_genai(name, *args, **kwargs):
+            if name == "google" or name.startswith("google.genai"):
+                raise ImportError("No module named google.genai")
+            return real_import(name, *args, **kwargs)
+
+        with mock.patch("builtins.__import__", side_effect=block_google_genai):
+            with self.assertRaisesRegex(RuntimeError, "google-genai"):
+                self.generator.embed_texts_with_gemini(
+                    ["rainy neon night street portrait"],
+                    model="gemini-embedding-2",
+                    dimensions=768,
+                    api_key="test-api-key",
+                )
+
+    def test_semantic_runtime_rejects_stale_index(self):
+        semantic_index = self.build_mock_semantic_index()
+        semantic_index["dictionary_hash"] = "stale"
+
+        with self.assertRaisesRegex(ValueError, "dictionary_hash"):
+            self.generate(
+                "street_documentary",
+                seed=42,
+                intent="rainy neon night street portrait",
+                selection_mode="semantic",
+                semantic_index=semantic_index,
+                gemini_api_key="test-api-key",
+            )
+
+    def test_semantic_runtime_rejects_stale_text_recipe(self):
+        semantic_index = self.build_mock_semantic_index()
+        semantic_index["semantic_text_recipe"] = "old-recipe"
+
+        with self.assertRaisesRegex(ValueError, "semantic_text_recipe"):
+            self.generate(
+                "street_documentary",
+                seed=42,
+                intent="rainy neon night street portrait",
+                selection_mode="semantic",
+                semantic_index=semantic_index,
+                gemini_api_key="test-api-key",
+            )
+
+    def test_semantic_runtime_rejects_dimension_mismatch(self):
+        semantic_index = self.build_mock_semantic_index(dimensions=16)
+
+        with self.assertRaisesRegex(ValueError, "embedding_dimensions"):
+            self.generate(
+                "street_documentary",
+                seed=42,
+                intent="rainy neon night street portrait",
+                selection_mode="semantic",
+                semantic_index=semantic_index,
+                gemini_api_key="test-api-key",
+            )
 
 
 if __name__ == "__main__":

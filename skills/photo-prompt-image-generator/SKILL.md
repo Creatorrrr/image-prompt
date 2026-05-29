@@ -13,14 +13,17 @@ Bundled resources:
 
 - `scripts/prompt_generator.py`: original prompt generator CLI.
 - `assets/photo_prompt_tags.json`: original tag dictionary.
+- `assets/photo_prompt_semantic_index.json`: Gemini Embedding 2 semantic index for the default intent-based selection path.
 - `scripts/generate_photo_prompt.py`: wrapper with project-local defaults.
+- `scripts/build_semantic_index.py`: rebuilds the Gemini semantic index after dictionary changes.
+- `scripts/validate_photo_prompt_dictionary.py`: validates optional semantic metadata and guards.
 
 Canonical project source path: `skills/photo-prompt-image-generator`.
 Agent compatibility path: `.agents/skills/photo-prompt-image-generator`, a symlink to the canonical skill folder.
 
 ## Default Workflow
 
-1. Generate one prompt with JSON output:
+1. Generate one prompt with JSON output. The wrapper defaults to semantic mode and uses a broad photographic intent when the user does not provide `--intent`:
 
 ```bash
 python3 skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py
@@ -45,6 +48,23 @@ Inspect slots:
 python3 skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py --show-slots --plain
 ```
 
+Validate dictionary metadata:
+
+```bash
+python3 skills/photo-prompt-image-generator/scripts/validate_photo_prompt_dictionary.py
+```
+
+Rebuild the semantic index after dictionary edits:
+
+```bash
+python3 -m pip install -r requirements.txt
+GEMINI_API_KEY=... \
+python3 skills/photo-prompt-image-generator/scripts/build_semantic_index.py --progress
+```
+
+The API key must come from `GEMINI_API_KEY` or `GOOGLE_API_KEY`; do not store it in the repository. The wrapper also loads these keys from a project `.env` file when present, without printing them. The semantic index uses `gemini-embedding-2` with 768 dimensions by default, and the builder paces requests to avoid Gemini 429 responses. Rule mode does not require the Gemini SDK or an API key.
+When the output semantic index already exists, the builder reuses compatible vectors whose entry key, embedding text, provider, model, dimensions, and semantic text recipe still match. Only new or changed entries are sent to Gemini. Use `--no-cache` only when you intentionally want to force a full rebuild.
+
 List tag ids for a slot:
 
 ```bash
@@ -61,6 +81,54 @@ Generate a reproducible prompt:
 
 ```bash
 python3 skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py --preset street_documentary --seed 42
+```
+
+Generate with an explicit semantic intent:
+
+```bash
+python3 skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py \
+  --preset street_documentary \
+  --intent "rainy neon night street portrait" \
+  --selection-mode semantic \
+  --include-trace
+```
+
+Semantic v2 controls:
+
+```bash
+python3 skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py \
+  --intent "urban horror fantasy human portrait" \
+  --selection-mode semantic \
+  --semantic-profile balanced \
+  --semantic-axis-mode auto \
+  --intent-steering auto \
+  --filter-strictness soft \
+  --semantic-weight 0.75 \
+  --include-trace
+```
+
+The wrapper defaults to `--selection-mode semantic`; use `--selection-mode rule` to force the original deterministic weighted path. `--intent` alone now uses semantic mode by default, while `--selection-mode rule --intent ...` is still rejected because rule mode does not use query embeddings.
+Semantic mode defaults to `--filter-strictness soft`, `--semantic-profile balanced`,
+`--semantic-axis-mode auto`, `--intent-steering auto`, and `--semantic-weight 0.75`; hybrid defaults to hard preset filters,
+conservative profile, automatic axis decomposition, intent steering, and weight `0.35`.
+Use repeated `--intent-axis "..."` values when the intent has explicit required semantic axes
+but you still want preset choice to remain semantic rather than forcing a specific preset or slot.
+Use `--intent-steering off` to keep semantic ranking without automatic human/urban/surreal slot steering.
+
+Evaluate semantic retrieval behavior:
+
+```bash
+python3 skills/photo-prompt-image-generator/scripts/eval_semantic.py --dry-run
+python3 skills/photo-prompt-image-generator/scripts/eval_semantic.py --mock-embeddings --limit 3
+```
+
+List virtual recipe presets:
+
+```bash
+python3 skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py \
+  --list-presets \
+  --include-virtual \
+  --plain
 ```
 
 Generate with the original shorter template style:
@@ -238,6 +306,12 @@ python3 skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py \
 ## Prompt Handling
 
 - Prefer `prompt_en` for image tools.
+- Default wrapper generation uses semantic mode with a broad built-in photographic intent. Passing `--intent` without `--selection-mode` also uses semantic mode. Use `--selection-mode rule` when the original deterministic weighted path is required.
+- Semantic dictionary metadata is optional and must not replace existing compatibility checks. Use `facets` and `hard_guards` for hard safety/context constraints; use `aliases`, `keywords`, and `embedding_text` as search material, not as rendered prompt text.
+- In semantic mode, preset filters are soft priors by default. Safety/context guards remain hard, while out-of-filter candidates can be selected only when intent similarity is strong enough. Use `--filter-strictness hard` to keep legacy filter boundaries.
+- Tags should remain image-relevant concept or phrase units. Do not split every word into a tag; put words and synonyms into `aliases`, `keywords`, or `embedding_text`.
+- If `photo_prompt_tags.json` or semantic text recipe code changes, run `validate_photo_prompt_dictionary.py`, rebuild `assets/photo_prompt_semantic_index.json`, then test the wrapper path. A stale semantic index should be treated as invalid for semantic mode, while rule mode remains usable.
+- `--llm-polish strict` is explicit and preserves the deterministic prompt in this repo-local implementation; do not add hidden runtime LLM calls to the default path.
 - For ReactorPrompt-like requests, social portrait prompt migration, or requests that ask for a compact comma-rich English prompt similar to an image gallery prompt, use `--detail-level compact` and prefer `compact_urban_fashion_portrait`, `compact_cinematic_prop_portrait`, or `compact_multicut_portrait_series`.
 - For ReactorPrompt export-inspired requests, first map the request to the most specific photo preset before falling back to broad presets. Useful families include `hanbok_seasonal_editorial`, `wuxia_xianxia_portrait`, `joseon_period_portrait`, `hanfu_china_court_portrait`, the cosplay-specific presets, K-pop presets, Korean local-space presets, craft/product presets, and optical-experiment presets.
 - For physical fantasy, cosplay-prop, cinematic story portrait, cosmic night field, aurora, glacier, canyon, or nonfunctional costume weapon prop requests, use `cinematic_fantasy_portrait`. Keep weapons clearly framed as cosplay or nonfunctional props.
@@ -304,6 +378,8 @@ Detailed English prompts should normally be at least 120 words when enough visua
 - `--n 1`
 - `--lang both`
 - `--detail-level detailed`
+- `--selection-mode semantic`
+- a broad default `--intent` when no explicit intent is provided
 - `--surreal-mode off`
 - `--reference-edit-mode off`
 - `--trend-layer off`

@@ -20,12 +20,16 @@ Usage examples:
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
+import math
+import os
 import random
 import re
 import sys
+import time
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Sequence, Set
+from typing import Any, Callable, Dict, List, Optional, Sequence, Set
 
 JsonDict = Dict[str, Any]
 Entry = Dict[str, Any]
@@ -51,6 +55,111 @@ TREND_LAYERS = (
     "retro_flash",
     "clean_brand_portrait",
 )
+SELECTION_MODES = ("rule", "semantic", "hybrid")
+DEFAULT_SELECTION_MODE = "semantic"
+DEFAULT_SEMANTIC_INTENT = (
+    "photorealistic image-ready photo prompt with coherent subject, location, "
+    "lighting, mood, camera, composition, texture, and format"
+)
+NOVELTY_LEVELS = ("low", "medium", "high")
+FILTER_STRICTNESS_MODES = ("hard", "soft", "off")
+SEMANTIC_PROFILES = ("conservative", "balanced", "exploratory")
+SEMANTIC_AXIS_MODES = ("auto", "off")
+INTENT_STEERING_MODES = ("auto", "off")
+LLM_POLISH_MODES = ("off", "strict")
+SEMANTIC_PROVIDER = "gemini"
+DEFAULT_SEMANTIC_DIMENSIONS = 768
+SEMANTIC_MODEL_ID = "gemini-embedding-2"
+SEMANTIC_TEXT_RECIPE_VERSION = "semantic-text-v2"
+
+SEMANTIC_PROFILE_CONFIGS: Dict[str, Dict[str, float]] = {
+    "conservative": {
+        "preset_window": 0.08,
+        "preset_candidate_limit": 5,
+        "preset_weight_floor": 0.86,
+        "preset_overall_weight": 0.35,
+        "preset_axis_mean_weight": 0.35,
+        "preset_axis_floor_weight": 0.30,
+        "axis_coverage_target": 0.70,
+        "axis_coverage_weight": 0.14,
+        "slot_window": 0.08,
+        "slot_candidate_limit": 5,
+        "slot_weight_floor": 0.86,
+        "filter_bonus": 0.12,
+        "filter_penalty": 0.55,
+        "temperature_multiplier": 1.2,
+    },
+    "balanced": {
+        "preset_window": 0.14,
+        "preset_candidate_limit": 8,
+        "preset_weight_floor": 0.82,
+        "preset_overall_weight": 0.45,
+        "preset_axis_mean_weight": 0.35,
+        "preset_axis_floor_weight": 0.20,
+        "axis_coverage_target": 0.68,
+        "axis_coverage_weight": 0.22,
+        "slot_window": 0.14,
+        "slot_candidate_limit": 8,
+        "slot_weight_floor": 0.82,
+        "filter_bonus": 0.18,
+        "filter_penalty": 0.35,
+        "temperature_multiplier": 1.0,
+    },
+    "exploratory": {
+        "preset_window": 0.24,
+        "preset_candidate_limit": 14,
+        "preset_weight_floor": 0.72,
+        "preset_overall_weight": 0.55,
+        "preset_axis_mean_weight": 0.30,
+        "preset_axis_floor_weight": 0.15,
+        "axis_coverage_target": 0.64,
+        "axis_coverage_weight": 0.28,
+        "slot_window": 0.24,
+        "slot_candidate_limit": 14,
+        "slot_weight_floor": 0.72,
+        "filter_bonus": 0.08,
+        "filter_penalty": 0.12,
+        "temperature_multiplier": 0.82,
+    },
+}
+
+SEMANTIC_AXIS_FAMILY_KEYWORDS: Dict[str, tuple[str, ...]] = {
+    "human": ("human", "person", "people", "portrait", "model", "actor", "commuter", "traveler", "인간", "사람", "인물"),
+    "urban": ("urban", "city", "street", "alley", "subway", "neon", "rooftop", "도시", "거리", "골목", "지하철"),
+    "horror": ("horror", "fear", "nightmare", "terror", "scary", "eerie", "uncanny", "noir", "gothic", "공포", "악몽", "두려움"),
+    "fantasy": ("fantasy", "magic", "magical", "surreal", "dream", "impossible", "환상", "마법", "초현실"),
+}
+
+SEMANTIC_AXIS_SLOT_ROUTES: Dict[str, tuple[str, ...]] = {
+    "human": ("subject", "appearance_type", "expression", "subject_framing"),
+    "urban": ("location", "world", "weather", "lighting"),
+    "horror": ("mood", "lighting", "light_shape", "weather", "color", "texture"),
+    "fantasy": ("surreal_concept", "surreal_anchor", "surreal_physics_detail", "mood"),
+}
+
+SEMANTIC_SLOT_CAPTION_TEMPLATES: Dict[str, str] = {
+    "subject": "Photo subject concept: {description}. It should retrieve visual subjects by identity, role, species, object type, and scene relevance.",
+    "location": "Photographic location concept: {description}. It should retrieve places by setting, environment, city or nature context, interior or exterior space, and atmosphere.",
+    "lighting": "Photographic lighting concept: {description}. It should retrieve light by source, mood, shadow behavior, color temperature, and photographic realism.",
+    "light_type": "Specific light-source concept: {description}. It should retrieve lamps, neon, flash, sun, screens, strobes, and practical light sources.",
+    "light_shape": "Light-shape concept: {description}. It should retrieve visible beam shapes, shadow patterns, edge light, caustics, diffusion, and photographic light geometry.",
+    "mood": "Image mood concept: {description}. It should retrieve emotional tone, genre feeling, tension, romance, nostalgia, horror, calm, or surreal atmosphere.",
+    "film_emulation": "Film and camera-emulation concept: {description}. It should retrieve analog film stocks, halation, grain, color cast, instant film, disposable camera, or CCD looks.",
+    "weather": "Weather and atmosphere concept: {description}. It should retrieve rain, fog, snow, humidity, frost, sea spray, heat haze, and environmental air effects.",
+    "surreal_concept": "Photoreal surreal event concept: {description}. It should retrieve impossible events that still look like real photographed scenes.",
+    "surreal_anchor": "Physical anchor for a photoreal surreal scene: {description}. It should retrieve the real object or surface where the impossible event is grounded.",
+}
+
+DEFAULT_FACET_VOCAB: JsonDict = {
+    "subject_kind": ["human", "animal", "object", "food", "environment", "plant", "sign"],
+    "place_type": ["urban", "street", "interior", "nature", "studio", "commercial", "transport", "home"],
+    "time_of_day": ["day", "night", "dawn", "dusk", "indoor_unspecified"],
+    "weather": ["clear", "rain", "snow", "fog", "underwater", "none"],
+    "lighting_family": ["natural_light", "artificial_light", "colored_light", "flash", "studio_light", "low_light"],
+    "mood_family": ["calm", "tense", "romantic", "surreal", "nostalgic", "commercial", "documentary"],
+    "camera_register": ["phone", "professional", "surveillance", "vintage", "studio", "macro"],
+    "safety_tier": ["general", "adult_compatible", "adult_only"],
+}
 
 
 # -----------------------------------------------------------------------------
@@ -109,6 +218,10 @@ def ensure_period(text: str) -> str:
     if text and text[-1] not in ".!?。":
         text += "."
     return text
+
+
+def has_cli_option(args: Sequence[str], name: str) -> bool:
+    return name in args or any(arg.startswith(name + "=") for arg in args)
 
 
 def article_for(phrase: str) -> str:
@@ -271,7 +384,1206 @@ def weighted_choice(pool: Sequence[Entry], rng: random.Random) -> Entry:
     return rng.choices(list(pool), weights=weights, k=1)[0]
 
 
-def choose_preset(data: JsonDict, rng: random.Random, preset_id: Optional[str] = None) -> JsonDict:
+def normalize_list(value: Any) -> List[str]:
+    if value is None:
+        return []
+    if isinstance(value, str):
+        return [value]
+    if isinstance(value, list):
+        return [str(x) for x in value]
+    return [str(value)]
+
+
+def semantic_description_for_entry(entry: Entry) -> str:
+    if entry.get("embedding_text"):
+        return " ".join(normalize_list(entry.get("embedding_text")))
+    if entry.get("en"):
+        return str(entry["en"])
+    if entry.get("ko"):
+        return str(entry["ko"])
+    return str(entry.get("id", ""))
+
+
+def semantic_caption_for_entry(entry: Entry, slot: Optional[str] = None) -> str:
+    description = semantic_description_for_entry(entry)
+    if slot:
+        template = SEMANTIC_SLOT_CAPTION_TEMPLATES.get(
+            slot,
+            "Photo prompt slot concept for {slot}: {description}. It should retrieve visually compatible photographic details for this slot.",
+        )
+        return template.format(slot=slot, description=description)
+    return (
+        f"Photo prompt preset concept: {description}. It should retrieve a coherent photographic recipe "
+        "including subject, place, lighting, camera, mood, and style."
+    )
+
+
+def dictionary_hash(data: JsonDict) -> str:
+    material = {
+        "version": data.get("version"),
+        "presets": data.get("presets", []),
+        "preset_families": data.get("preset_families", []),
+        "recipes": data.get("recipes", []),
+        "slots": data.get("slots", {}),
+        "facet_vocab": data.get("facet_vocab", {}),
+    }
+    payload = json.dumps(material, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()
+
+
+def semantic_text_for_entry(entry: Entry, slot: Optional[str] = None) -> str:
+    parts: List[str] = [semantic_caption_for_entry(entry, slot)]
+    for key in ("en", "ko"):
+        if entry.get(key):
+            parts.append(f"{key} label: {entry[key]}.")
+    for key in ("aliases", "keywords", "tags", "kind"):
+        values = normalize_list(entry.get(key))
+        if values:
+            parts.append(f"{key}: {', '.join(values)}.")
+    if slot:
+        parts.append(f"slot: {slot}.")
+    if entry.get("id"):
+        parts.append(f"stable id: {entry['id']}.")
+    facets = entry.get("facets", {}) or {}
+    if isinstance(facets, dict):
+        for key, values in facets.items():
+            normalized = normalize_list(values)
+            if normalized:
+                parts.append(f"facet {key}: {', '.join(normalized)}.")
+    return " ".join(parts)
+
+
+def cosine_similarity(a: Sequence[float], b: Sequence[float]) -> float:
+    if not a or not b:
+        return 0.0
+    numerator = sum(x * y for x, y in zip(a, b))
+    norm_a = math.sqrt(sum(x * x for x in a))
+    norm_b = math.sqrt(sum(y * y for y in b))
+    if norm_a <= 0 or norm_b <= 0:
+        return 0.0
+    return numerator / (norm_a * norm_b)
+
+
+def semantic_dimensions_value(dimensions: int) -> int:
+    try:
+        dims = int(dimensions)
+    except (TypeError, ValueError) as exc:
+        raise ValueError("embedding dimensions must be an integer") from exc
+    if dims < 1:
+        raise ValueError("embedding dimensions must be at least 1")
+    return dims
+
+
+def get_gemini_api_key(api_key: Optional[str] = None) -> str:
+    key = api_key or os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
+    if not key:
+        raise RuntimeError(
+            "GEMINI_API_KEY or GOOGLE_API_KEY is required for Gemini semantic embeddings."
+        )
+    return key
+
+
+def extract_embedding_values(response: Any) -> List[List[float]]:
+    embeddings = getattr(response, "embeddings", None)
+    if embeddings is None and isinstance(response, dict):
+        embeddings = response.get("embeddings")
+    if embeddings is None:
+        embedding = getattr(response, "embedding", None)
+        if embedding is None and isinstance(response, dict):
+            embedding = response.get("embedding")
+        embeddings = [embedding] if embedding is not None else []
+
+    values_list: List[List[float]] = []
+    for embedding in embeddings:
+        values = getattr(embedding, "values", None)
+        if values is None and isinstance(embedding, dict):
+            values = embedding.get("values")
+        if values is None:
+            raise RuntimeError("Gemini embedding response did not include vector values.")
+        values_list.append([float(value) for value in values])
+    return values_list
+
+
+def round_embedding_vector(vector: Sequence[float], dimensions: int) -> List[float]:
+    if len(vector) != dimensions:
+        raise ValueError(
+            f"Gemini returned {len(vector)} embedding dimensions, expected {dimensions}."
+        )
+    return [round(float(value), 6) for value in vector]
+
+
+def embed_texts_with_gemini(
+    texts: Sequence[str],
+    model: str = SEMANTIC_MODEL_ID,
+    dimensions: int = DEFAULT_SEMANTIC_DIMENSIONS,
+    api_key: Optional[str] = None,
+    retry_attempts: int = 4,
+    retry_initial_delay: float = 15.0,
+) -> List[List[float]]:
+    if not texts:
+        return []
+    dims = semantic_dimensions_value(dimensions)
+    key = get_gemini_api_key(api_key)
+
+    try:
+        from google import genai
+        from google.genai import types
+    except ImportError as exc:
+        raise RuntimeError(
+            "google-genai is required for Gemini semantic embeddings. "
+            "Install it with `python3 -m pip install -r requirements.txt`."
+        ) from exc
+
+    client = genai.Client(api_key=key)
+    config = types.EmbedContentConfig(
+        output_dimensionality=dims,
+        task_type="SEMANTIC_SIMILARITY",
+    )
+    response = None
+    attempts = max(1, int(retry_attempts) + 1)
+    for attempt in range(attempts):
+        try:
+            response = client.models.embed_content(
+                model=model,
+                contents=[str(text) for text in texts],
+                config=config,
+            )
+            break
+        except Exception as exc:
+            message = str(exc)
+            retryable = (
+                "429" in message
+                or "503" in message
+                or "RESOURCE_EXHAUSTED" in message
+                or "UNAVAILABLE" in message
+            )
+            if not retryable or attempt >= attempts - 1:
+                raise
+            delay = max(0.0, float(retry_initial_delay)) * (2 ** attempt)
+            if delay > 0:
+                time.sleep(delay)
+    if response is None:
+        raise RuntimeError("Gemini embedding request did not return a response.")
+    vectors = extract_embedding_values(response)
+    if len(vectors) != len(texts):
+        raise RuntimeError(
+            f"Gemini returned {len(vectors)} embeddings for {len(texts)} input texts."
+        )
+    return [round_embedding_vector(vector, dims) for vector in vectors]
+
+
+def semantic_entry_key(kind: str, entry: Entry, slot: Optional[str] = None) -> str:
+    if kind == "preset":
+        return f"preset:{entry.get('id')}"
+    if kind == "virtual_preset":
+        return f"preset:virtual:{entry.get('id')}"
+    return f"slot:{slot}:{entry.get('id')}"
+
+
+def iter_semantic_entries(data: JsonDict) -> List[tuple[str, str, Entry, Optional[str]]]:
+    entries: List[tuple[str, str, Entry, Optional[str]]] = []
+    for preset in data.get("presets", []):
+        key = semantic_entry_key("preset", preset)
+        entries.append((key, "preset", preset, None))
+    for recipe in data.get("recipes", []):
+        key = semantic_entry_key("virtual_preset", recipe)
+        entries.append((key, "virtual_preset", recipe, None))
+    for slot, slot_entries in data.get("slots", {}).items():
+        for entry in slot_entries:
+            key = semantic_entry_key("slot", entry, slot)
+            entries.append((key, "slot", entry, slot))
+    return entries
+
+
+def build_semantic_index_payload(
+    data: JsonDict,
+    dimensions: int = DEFAULT_SEMANTIC_DIMENSIONS,
+    provider: str = SEMANTIC_PROVIDER,
+    model: str = SEMANTIC_MODEL_ID,
+    api_key: Optional[str] = None,
+    batch_size: int = 1,
+    request_interval: float = 0.0,
+    retry_attempts: int = 4,
+    retry_initial_delay: float = 15.0,
+    progress_callback: Optional[Callable[[int, int], None]] = None,
+) -> JsonDict:
+    if provider != SEMANTIC_PROVIDER:
+        raise ValueError(f"Unsupported semantic provider '{provider}'. Only '{SEMANTIC_PROVIDER}' is supported.")
+    dims = semantic_dimensions_value(dimensions)
+    batch = max(1, int(batch_size))
+    rows = iter_semantic_entries(data)
+    texts = [semantic_text_for_entry(entry, slot) for _, _, entry, slot in rows]
+    vectors: List[List[float]] = []
+    for start in range(0, len(texts), batch):
+        vectors.extend(
+            embed_texts_with_gemini(
+                texts[start : start + batch],
+                model=model,
+                dimensions=dims,
+                api_key=api_key,
+                retry_attempts=retry_attempts,
+                retry_initial_delay=retry_initial_delay,
+            )
+        )
+        done = min(start + batch, len(texts))
+        if progress_callback:
+            progress_callback(done, len(texts))
+        if request_interval > 0 and done < len(texts):
+            time.sleep(request_interval)
+    if len(vectors) != len(rows):
+        raise RuntimeError(f"Expected {len(rows)} semantic vectors, received {len(vectors)}.")
+
+    entries: JsonDict = {}
+    for (key, kind, entry, slot), text, vector in zip(rows, texts, vectors):
+        entries[key] = {
+            "kind": kind,
+            "slot": slot,
+            "id": entry.get("id"),
+            "text": text,
+            "vector": vector,
+        }
+    return {
+        "provider": provider,
+        "dictionary_hash": dictionary_hash(data),
+        "semantic_text_recipe": SEMANTIC_TEXT_RECIPE_VERSION,
+        "embedding_model": model,
+        "embedding_dimensions": dims,
+        "entries": entries,
+    }
+
+
+def validate_semantic_index_metadata(
+    payload: JsonDict,
+    data: JsonDict,
+    provider: str = SEMANTIC_PROVIDER,
+    model: str = SEMANTIC_MODEL_ID,
+    dimensions: int = DEFAULT_SEMANTIC_DIMENSIONS,
+) -> None:
+    expected = dictionary_hash(data)
+    if payload.get("dictionary_hash") != expected:
+        raise ValueError(
+            "Semantic index dictionary_hash does not match the tag dictionary. "
+            "Regenerate it with build_semantic_index.py."
+        )
+    if payload.get("semantic_text_recipe") != SEMANTIC_TEXT_RECIPE_VERSION:
+        raise ValueError(
+            f"Semantic index semantic_text_recipe is {payload.get('semantic_text_recipe')!r}, "
+            f"expected {SEMANTIC_TEXT_RECIPE_VERSION!r}. Regenerate it with build_semantic_index.py."
+        )
+    if payload.get("provider", SEMANTIC_PROVIDER) != provider:
+        raise ValueError(
+            f"Semantic index provider is {payload.get('provider')!r}, expected {provider!r}."
+        )
+    if payload.get("embedding_model") != model:
+        raise ValueError(
+            f"Semantic index embedding_model is {payload.get('embedding_model')!r}, expected {model!r}."
+        )
+    expected_dims = semantic_dimensions_value(dimensions)
+    if int(payload.get("embedding_dimensions", -1)) != expected_dims:
+        raise ValueError(
+            f"Semantic index embedding_dimensions is {payload.get('embedding_dimensions')!r}, "
+            f"expected {expected_dims}."
+        )
+
+
+def load_semantic_index(
+    path: Optional[str | Path],
+    data: JsonDict,
+    semantic_index: Optional[JsonDict] = None,
+    provider: str = SEMANTIC_PROVIDER,
+    model: str = SEMANTIC_MODEL_ID,
+    dimensions: int = DEFAULT_SEMANTIC_DIMENSIONS,
+) -> JsonDict:
+    if semantic_index is not None:
+        payload = semantic_index
+    else:
+        if not path:
+            raise FileNotFoundError(
+                "Semantic index is required for semantic or hybrid selection. "
+                "Build it with build_semantic_index.py."
+            )
+        p = Path(path)
+        if not p.exists():
+            raise FileNotFoundError(f"Semantic index not found: {p}")
+        payload = json.loads(p.read_text(encoding="utf-8"))
+    validate_semantic_index_metadata(payload, data, provider, model, dimensions)
+    return payload
+
+
+def facet_tokens(entry: Entry) -> Set[str]:
+    tokens: Set[str] = set()
+    facets = entry.get("facets", {}) or {}
+    if not isinstance(facets, dict):
+        return tokens
+    for key, values in facets.items():
+        for value in normalize_list(values):
+            tokens.add(f"{key}:{value}")
+    return tokens
+
+
+def guard_values(entry: Entry, key: str) -> Set[str]:
+    guards = entry.get("hard_guards", {}) or {}
+    if not isinstance(guards, dict):
+        return set()
+    return set(normalize_list(guards.get(key)))
+
+
+def compatible_with_facet_guards(item: Entry, preset: JsonDict, picked: Dict[str, Entry]) -> bool:
+    context: Set[str] = set()
+    context |= facet_tokens(preset)
+    for entry in picked.values():
+        context |= facet_tokens(entry)
+    item_facets = facet_tokens(item)
+
+    preset_excludes = guard_values(preset, "exclude_facets")
+    if preset_excludes & item_facets:
+        return False
+
+    requires = guard_values(item, "requires_facets")
+    if requires and not requires.issubset(context | item_facets):
+        return False
+
+    excludes = guard_values(item, "exclude_facets")
+    if excludes & context:
+        return False
+
+    return True
+
+
+def novelty_settings(novelty: str) -> tuple[float, float]:
+    if novelty == "low":
+        return (1.8, 0.05)
+    if novelty == "high":
+        return (0.75, 0.45)
+    return (1.15, 0.18)
+
+
+def semantic_profile_config(profile: str) -> Dict[str, float]:
+    return SEMANTIC_PROFILE_CONFIGS.get(profile, SEMANTIC_PROFILE_CONFIGS["balanced"])
+
+
+def default_filter_strictness(selection_mode: str) -> str:
+    if selection_mode == "semantic":
+        return "soft"
+    return "hard"
+
+
+def default_semantic_profile(selection_mode: str) -> str:
+    if selection_mode == "semantic":
+        return "balanced"
+    return "conservative"
+
+
+def default_semantic_weight(selection_mode: str) -> float:
+    if selection_mode == "semantic":
+        return 0.75
+    if selection_mode == "hybrid":
+        return 0.35
+    return 0.0
+
+
+def default_intent_steering(selection_mode: str) -> str:
+    if selection_mode in {"semantic", "hybrid"}:
+        return "auto"
+    return "off"
+
+
+def resolve_semantic_runtime_options(
+    selection_mode: str,
+    filter_strictness: Optional[str],
+    semantic_weight: Optional[float],
+    semantic_profile: Optional[str],
+) -> tuple[str, float, str]:
+    resolved_filter = filter_strictness or default_filter_strictness(selection_mode)
+    resolved_profile = semantic_profile or default_semantic_profile(selection_mode)
+    resolved_weight = default_semantic_weight(selection_mode) if semantic_weight is None else float(semantic_weight)
+    if resolved_filter not in FILTER_STRICTNESS_MODES:
+        raise ValueError(f"Invalid filter_strictness '{resolved_filter}'.")
+    if resolved_profile not in SEMANTIC_PROFILES:
+        raise ValueError(f"Invalid semantic_profile '{resolved_profile}'.")
+    if not 0.0 <= resolved_weight <= 1.0:
+        raise ValueError("--semantic-weight must be between 0 and 1")
+    return resolved_filter, resolved_weight, resolved_profile
+
+
+def clean_intent_axis(text: str) -> str:
+    return clean_spaces(text.strip(" \t\r\n,;+/|"))
+
+
+def unique_axes(values: Sequence[str]) -> List[str]:
+    axes: List[str] = []
+    seen: Set[str] = set()
+    for value in values:
+        axis = clean_intent_axis(str(value))
+        key = axis.lower()
+        if axis and key not in seen:
+            axes.append(axis)
+            seen.add(key)
+    return axes[:6]
+
+
+def delimiter_intent_axes(intent: str) -> List[str]:
+    chunks = re.split(r"\s*(?:[,+|/;\n]+|\band\b|\bwith\b|및)\s*", intent, flags=re.IGNORECASE)
+    axes = unique_axes(chunks)
+    return axes if len(axes) > 1 else []
+
+
+def fallback_intent_axes(intent: str) -> List[str]:
+    lowered = intent.lower()
+    labels = {
+        "human": "human portrait",
+        "urban": "urban city street",
+        "horror": "horror fear nightmare",
+        "fantasy": "fantasy magic surreal",
+    }
+    return [labels[family] for family in labels if axis_text_has_family(lowered, family)][:6]
+
+
+def axis_text_has_family(text: str, family: str) -> bool:
+    lowered = text.lower()
+    return any(keyword in lowered for keyword in SEMANTIC_AXIS_FAMILY_KEYWORDS.get(family, ()))
+
+
+def axis_families_for_text(text: str) -> List[str]:
+    return [
+        family
+        for family in SEMANTIC_AXIS_FAMILY_KEYWORDS
+        if axis_text_has_family(text, family)
+    ]
+
+
+def semantic_axis_embedding_text(axis: str) -> str:
+    expansions = {
+        "human": "human person portrait subject, model or actor, readable face and body presence",
+        "urban": "urban city street location, alley, subway, neon, concrete, metropolitan environment",
+        "horror": "horror fear nightmare mood, eerie uncanny tension, analog horror unease, dark suspense",
+        "fantasy": "fantasy magic surreal impossible event, photoreal dreamlike phenomenon, supernatural atmosphere",
+    }
+    matched = [expansions[family] for family in axis_families_for_text(axis)]
+    if matched:
+        return "; ".join(matched)
+    return axis
+
+
+def extract_intent_axes(
+    intent: str,
+    explicit_axes: Optional[Sequence[str]] = None,
+    semantic_axis_mode: str = "auto",
+) -> JsonDict:
+    if semantic_axis_mode not in SEMANTIC_AXIS_MODES:
+        raise ValueError(f"Invalid semantic_axis_mode '{semantic_axis_mode}'.")
+    explicit = unique_axes(explicit_axes or [])
+    if explicit:
+        source = "explicit"
+        axes = explicit
+    elif semantic_axis_mode == "off":
+        source = "off"
+        axes = [clean_intent_axis(intent)]
+    else:
+        axes = delimiter_intent_axes(intent)
+        if axes:
+            source = "delimiter"
+        else:
+            axes = fallback_intent_axes(intent)
+            source = "fallback" if axes else "full_intent"
+    if not axes:
+        axes = [clean_intent_axis(intent)]
+        source = "full_intent"
+    return {
+        "mode": semantic_axis_mode,
+        "source": source,
+        "items": [{"text": axis, "source": source} for axis in axes[:6]],
+    }
+
+
+def embed_single_semantic_text(
+    text: str,
+    model: str,
+    dimensions: int,
+    api_key: Optional[str],
+) -> List[float]:
+    return embed_texts_with_gemini(
+        [text],
+        model=model,
+        dimensions=dimensions,
+        api_key=api_key,
+    )[0]
+
+
+def semantic_profile_float(context: JsonDict, key: str, default: float) -> float:
+    config = semantic_profile_config(str(context.get("semantic_profile", "balanced")))
+    try:
+        return float(config.get(key, default))
+    except (TypeError, ValueError):
+        return default
+
+
+def initial_axis_coverage(axis_vectors: Sequence[JsonDict], profile: str) -> JsonDict:
+    config = semantic_profile_config(profile)
+    target = float(config.get("axis_coverage_target", 0.68))
+    return {
+        "target": target,
+        "items": [
+            {
+                "index": index,
+                "text": item.get("text", ""),
+                "families": item.get("families", []),
+                "best_score": 0.0,
+                "best_slot": None,
+                "best_entry": None,
+            }
+            for index, item in enumerate(axis_vectors)
+        ],
+    }
+
+
+def semantic_axis_coverage_trace(context: JsonDict) -> JsonDict:
+    coverage = context.get("axis_coverage", {}) or {}
+    return {
+        "target": round(float(coverage.get("target", 0.0)), 4),
+        "items": [
+            {
+                "text": item.get("text", ""),
+                "families": item.get("families", []),
+                "best_score": round(float(item.get("best_score", 0.0)), 4),
+                "best_slot": item.get("best_slot"),
+                "best_entry": item.get("best_entry"),
+            }
+            for item in coverage.get("items", [])
+        ],
+    }
+
+
+def update_axis_coverage(context: JsonDict, slot: str, entry_id: str, vector: Sequence[float]) -> None:
+    coverage = context.get("axis_coverage")
+    if not coverage or not vector:
+        return
+    axis_vectors = context.get("axis_vectors", [])
+    for item in coverage.get("items", []):
+        index = int(item.get("index", -1))
+        if index < 0 or index >= len(axis_vectors):
+            continue
+        score = cosine_similarity(axis_vectors[index].get("vector", []), vector)
+        if score > float(item.get("best_score", 0.0)):
+            item["best_score"] = score
+            item["best_slot"] = slot
+            item["best_entry"] = entry_id
+
+
+def context_axis_families(context: JsonDict) -> Set[str]:
+    families: Set[str] = set()
+    for axis in context.get("axis_vectors", []):
+        families |= set(axis.get("families", []))
+    return families
+
+
+def intent_steering_enabled(context: Optional[JsonDict]) -> bool:
+    if not context:
+        return False
+    return context.get("intent_steering", {}).get("mode") == "auto"
+
+
+def make_semantic_context(
+    data: JsonDict,
+    intent: Optional[str],
+    selection_mode: str,
+    novelty: str,
+    filter_strictness: Optional[str] = None,
+    semantic_weight: Optional[float] = None,
+    semantic_profile: Optional[str] = None,
+    semantic_index_path: Optional[str | Path] = None,
+    semantic_index: Optional[JsonDict] = None,
+    semantic_provider: str = SEMANTIC_PROVIDER,
+    semantic_model: str = SEMANTIC_MODEL_ID,
+    semantic_dimensions: int = DEFAULT_SEMANTIC_DIMENSIONS,
+    gemini_api_key: Optional[str] = None,
+    semantic_axis_mode: str = "auto",
+    intent_axes: Optional[Sequence[str]] = None,
+    intent_steering: Optional[str] = None,
+) -> Optional[JsonDict]:
+    resolved_filter, resolved_weight, resolved_profile = resolve_semantic_runtime_options(
+        selection_mode,
+        filter_strictness,
+        semantic_weight,
+        semantic_profile,
+    )
+    if selection_mode == "rule":
+        return None
+    if not intent:
+        raise ValueError("--intent is required when --selection-mode is semantic or hybrid")
+    resolved_steering = intent_steering or default_intent_steering(selection_mode)
+    if resolved_steering not in INTENT_STEERING_MODES:
+        raise ValueError(f"Invalid intent_steering '{resolved_steering}'.")
+    index = load_semantic_index(
+        semantic_index_path,
+        data,
+        semantic_index,
+        semantic_provider,
+        semantic_model,
+        semantic_dimensions,
+    )
+    dimensions = int(index.get("embedding_dimensions", semantic_dimensions))
+    axis_payload = extract_intent_axes(intent, intent_axes, semantic_axis_mode)
+    query_vector = embed_single_semantic_text(
+        intent,
+        model=semantic_model,
+        dimensions=dimensions,
+        api_key=gemini_api_key,
+    )
+    axis_vectors = []
+    for item in axis_payload["items"]:
+        text = str(item["text"])
+        embedding_text = semantic_axis_embedding_text(text)
+        families = axis_families_for_text(text) or axis_families_for_text(embedding_text)
+        if clean_intent_axis(embedding_text).lower() == clean_intent_axis(intent).lower():
+            vector = query_vector
+        else:
+            vector = embed_single_semantic_text(
+                embedding_text,
+                model=semantic_model,
+                dimensions=dimensions,
+                api_key=gemini_api_key,
+            )
+        axis_vectors.append(
+            {
+                "text": text,
+                "embedding_text": embedding_text,
+                "source": item.get("source", axis_payload["source"]),
+                "families": families,
+                "vector": vector,
+            }
+        )
+    family_set = sorted({family for item in axis_vectors for family in item.get("families", [])})
+    return {
+        "selection_mode": selection_mode,
+        "intent": intent,
+        "novelty": novelty,
+        "filter_strictness": resolved_filter,
+        "semantic_weight": resolved_weight,
+        "semantic_profile": resolved_profile,
+        "index": index,
+        "query_vector": query_vector,
+        "semantic_axis_mode": semantic_axis_mode,
+        "intent_axes": axis_payload,
+        "axis_vectors": axis_vectors,
+        "axis_coverage": initial_axis_coverage(axis_vectors, resolved_profile),
+        "intent_steering": {
+            "mode": resolved_steering,
+            "enabled": resolved_steering == "auto",
+            "families": family_set,
+            "decisions": [],
+        },
+        "surreal_activation_reason": "not_evaluated",
+        "surreal_activation_active": False,
+        "slot_scores": [],
+        "preset_score": None,
+        "picked_vectors": [],
+        "hard_rejected_count": 0,
+        "hard_rejected": [],
+        "soft_out_of_filter_selected_count": 0,
+        "dictionary_hash": index.get("dictionary_hash"),
+        "semantic_text_recipe": index.get("semantic_text_recipe"),
+        "embedding_provider": index.get("provider", SEMANTIC_PROVIDER),
+        "embedding_model": index.get("embedding_model", SEMANTIC_MODEL_ID),
+        "embedding_dimensions": dimensions,
+    }
+
+
+def semantic_vector(context: JsonDict, key: str) -> List[float]:
+    entry = context["index"].get("entries", {}).get(key, {})
+    return entry.get("vector", [])
+
+
+def item_base_weight(item: Entry) -> float:
+    try:
+        return max(float(item.get("weight", 1)), 0.0)
+    except (TypeError, ValueError):
+        return 1.0
+
+
+def preset_filter_match(item: Entry, flt: Optional[JsonDict]) -> Optional[bool]:
+    if not flt:
+        return None
+    return bool(apply_filter([item], flt))
+
+
+def adult_semantic_tokens(item: Entry) -> Set[str]:
+    tokens = entry_tags(item) | entry_kinds(item)
+    item_id = str(item.get("id", ""))
+    if "adult" in item_id:
+        tokens.add("adult")
+    if "fetish" in item_id:
+        tokens.add("fetish")
+    return tokens
+
+
+def compatible_with_semantic_hard_guards(
+    item: Entry,
+    preset: JsonDict,
+    picked: Dict[str, Entry],
+    slot: str,
+) -> bool:
+    if not compatible_with_facet_guards(item, preset, picked):
+        return False
+    if not preset_uses_adult_context(preset):
+        tokens = adult_semantic_tokens(item)
+        if tokens & {"adult", "fetish", "suggestive"}:
+            return False
+        if slot in {"adult_context", "fetish_styling", "body_framing", "caption_context"}:
+            return False
+    return True
+
+
+def semantic_facet_match_score(item: Entry, preset: JsonDict, picked: Dict[str, Entry]) -> float:
+    item_facets = facet_tokens(item)
+    if not item_facets:
+        return 0.0
+    context = facet_tokens(preset)
+    for entry in picked.values():
+        context |= facet_tokens(entry)
+    if not context:
+        return 0.0
+    return len(item_facets & context) / max(len(item_facets), 1)
+
+
+def semantic_filter_factor(context: JsonDict, filter_match: Optional[bool]) -> float:
+    strictness = context.get("filter_strictness", "hard")
+    if strictness == "off" or filter_match is None:
+        return 1.0
+    config = semantic_profile_config(str(context.get("semantic_profile", "balanced")))
+    if filter_match:
+        return 1.0 + float(config["filter_bonus"])
+    return max(0.01, 1.0 - float(config["filter_penalty"]))
+
+
+def routed_axis_items(context: JsonDict, slot: str) -> List[JsonDict]:
+    routed_families = {
+        family
+        for family, slots in SEMANTIC_AXIS_SLOT_ROUTES.items()
+        if slot in slots
+    }
+    if not routed_families:
+        return []
+    return [
+        axis
+        for axis in context.get("axis_vectors", [])
+        if routed_families & set(axis.get("families", []))
+    ]
+
+
+def semantic_axis_relevance(vector: Sequence[float], context: JsonDict, slot: str) -> JsonDict:
+    axis_vectors = context.get("axis_vectors", [])
+    scored_axes = [
+        {
+            "text": axis.get("text", ""),
+            "families": axis.get("families", []),
+            "score": cosine_similarity(axis.get("vector", []), vector),
+        }
+        for axis in axis_vectors
+    ]
+    axis_max_item = max(scored_axes, key=lambda item: item["score"], default=None)
+    routed = [
+        item
+        for item in scored_axes
+        if set(item.get("families", [])) & {
+            family for family, slots in SEMANTIC_AXIS_SLOT_ROUTES.items() if slot in slots
+        }
+    ]
+    routed_item = max(routed, key=lambda item: item["score"], default=None)
+    return {
+        "axis_max": float(axis_max_item["score"]) if axis_max_item else 0.0,
+        "axis_max_text": axis_max_item.get("text") if axis_max_item else None,
+        "routed_axis_score": float(routed_item["score"]) if routed_item else None,
+        "routed_axis": routed_item.get("text") if routed_item else None,
+        "routed_families": sorted({family for item in routed for family in item.get("families", [])}),
+    }
+
+
+def semantic_axis_coverage_bonus(vector: Sequence[float], context: JsonDict, slot: str) -> float:
+    coverage = context.get("axis_coverage", {}) or {}
+    axis_vectors = context.get("axis_vectors", [])
+    if not coverage or not axis_vectors:
+        return 0.0
+    routed = routed_axis_items(context, slot)
+    routed_indices = {
+        index
+        for index, axis in enumerate(axis_vectors)
+        if any(axis is routed_axis for routed_axis in routed)
+    }
+    if not routed_indices:
+        routed_indices = set(range(len(axis_vectors)))
+    target = max(float(coverage.get("target", 0.68)), 0.01)
+    bonuses: List[float] = []
+    for item in coverage.get("items", []):
+        index = int(item.get("index", -1))
+        if index not in routed_indices or index < 0 or index >= len(axis_vectors):
+            continue
+        current = float(item.get("best_score", 0.0))
+        deficit = max(0.0, target - current) / target
+        if deficit <= 0:
+            continue
+        axis_score = max(0.0, cosine_similarity(axis_vectors[index].get("vector", []), vector))
+        bonuses.append(deficit * axis_score)
+    return sum(bonuses) / len(bonuses) if bonuses else 0.0
+
+
+def semantic_contextual_affinity(slot: str, vector: Sequence[float], context: JsonDict, picked: Dict[str, Entry]) -> float:
+    if slot != "surreal_anchor":
+        return 0.0
+    context_vectors: List[List[float]] = []
+    for context_slot in ("surreal_concept", "location"):
+        entry = picked.get(context_slot)
+        if entry:
+            context_vectors.append(semantic_vector(context, semantic_entry_key("slot", entry, context_slot)))
+    if not context_vectors:
+        return 0.0
+    return max(cosine_similarity(vector, context_vector) for context_vector in context_vectors)
+
+
+def semantic_candidate_weight(
+    item: Entry,
+    vector: Sequence[float],
+    context: JsonDict,
+    preset_vector: Sequence[float],
+    preset: JsonDict,
+    picked: Dict[str, Entry],
+    slot: str,
+    filter_match: Optional[bool] = None,
+) -> tuple[float, JsonDict]:
+    query_score = cosine_similarity(context["query_vector"], vector)
+    axis = semantic_axis_relevance(vector, context, slot)
+    axis_max = float(axis["axis_max"])
+    routed_axis_score = axis.get("routed_axis_score")
+    if routed_axis_score is not None:
+        effective_query_score = (0.72 * float(routed_axis_score)) + (0.18 * axis_max) + (0.10 * query_score)
+    else:
+        effective_query_score = max(query_score, (0.65 * axis_max) + (0.35 * query_score))
+    coverage_bonus = semantic_axis_coverage_bonus(vector, context, slot)
+    contextual_score = semantic_contextual_affinity(slot, vector, context, picked)
+    preset_score = cosine_similarity(preset_vector, vector) if preset_vector else 0.0
+    facet_score = semantic_facet_match_score(item, preset, picked)
+    redundancy = 0.0
+    if context.get("picked_vectors"):
+        redundancy = max(cosine_similarity(vector, picked) for picked in context["picked_vectors"])
+    temperature, novelty_scale = novelty_settings(context["novelty"])
+    temperature *= semantic_profile_config(str(context.get("semantic_profile", "balanced")))["temperature_multiplier"]
+    novelty_weight = 0.0
+    try:
+        novelty_weight = float(item.get("novelty_weight", 0.0))
+    except (TypeError, ValueError):
+        novelty_weight = 0.0
+
+    semantic_weight = float(context.get("semantic_weight", default_semantic_weight(context["selection_mode"])))
+    coverage_weight = semantic_profile_float(context, "axis_coverage_weight", 0.22)
+    relevance = (
+        (0.54 * effective_query_score)
+        + (0.18 * query_score)
+        + (0.18 * preset_score)
+        + (0.10 * facet_score)
+        + (coverage_weight * coverage_bonus)
+        + (0.12 * contextual_score)
+    )
+    redundancy_scale = 0.55 if slot in SURREAL_LAYER_SLOTS else 1.0
+    mmr_affinity = (semantic_weight * relevance) - ((1.0 - semantic_weight) * redundancy * redundancy_scale)
+    affinity = mmr_affinity + (novelty_scale * novelty_weight)
+    semantic_multiplier = math.exp(max(min(affinity, 3.0), -3.0) / max(temperature, 0.1))
+    base_power = max(0.15, 1.0 - (semantic_weight * 0.85))
+    weighted = (max(item_base_weight(item), 0.01) ** base_power) * (semantic_multiplier ** semantic_weight)
+    weighted *= semantic_filter_factor(context, filter_match)
+    return weighted, {
+        "id": item.get("id"),
+        "weight": round(weighted, 6),
+        "query": round(query_score, 4),
+        "effective_query": round(effective_query_score, 4),
+        "preset": round(preset_score, 4),
+        "facet": round(facet_score, 4),
+        "contextual": round(contextual_score, 4),
+        "relevance": round(relevance, 4),
+        "redundancy": round(redundancy, 4),
+        "axis": {
+            "axis_max": round(axis_max, 4),
+            "axis_max_text": axis.get("axis_max_text"),
+            "routed_axis": axis.get("routed_axis"),
+            "routed_score": None if routed_axis_score is None else round(float(routed_axis_score), 4),
+            "routed_families": axis.get("routed_families", []),
+            "coverage_bonus": round(coverage_bonus, 4),
+        },
+        "filter": "none" if filter_match is None else ("in" if filter_match else "out"),
+    }
+
+
+def semantic_preset_candidate_weight(preset: Entry, score: float, context: JsonDict) -> float:
+    temperature, novelty_scale = novelty_settings(context["novelty"])
+    temperature *= semantic_profile_config(str(context.get("semantic_profile", "balanced")))["temperature_multiplier"]
+    base = max(item_base_weight(preset), 0.01)
+    novelty_weight = 0.0
+    try:
+        novelty_weight = float(preset.get("novelty_weight", 0.0))
+    except (TypeError, ValueError):
+        novelty_weight = 0.0
+    affinity = max(min(score + (novelty_scale * novelty_weight), 3.0), -3.0)
+    semantic_weight = float(context.get("semantic_weight", default_semantic_weight(context["selection_mode"])))
+    return (base ** 0.35) * (math.exp(affinity / max(temperature * 0.45, 0.1)) ** semantic_weight)
+
+
+def semantic_preset_score_window(context: JsonDict) -> float:
+    base = semantic_profile_config(str(context.get("semantic_profile", "balanced")))["preset_window"]
+    novelty = context.get("novelty", "medium")
+    if novelty == "low":
+        return max(0.04, base * 0.65)
+    if novelty == "high":
+        return min(0.32, base * 1.35)
+    return base
+
+
+def semantic_preset_candidate_limit(context: JsonDict) -> int:
+    config = semantic_profile_config(str(context.get("semantic_profile", "balanced")))
+    limit = int(config.get("preset_candidate_limit", 8))
+    novelty = context.get("novelty", "medium")
+    if novelty == "low":
+        return max(3, int(round(limit * 0.7)))
+    if novelty == "high":
+        return max(limit + 2, int(round(limit * 1.35)))
+    return limit
+
+
+def semantic_preset_weight_floor(context: JsonDict) -> float:
+    config = semantic_profile_config(str(context.get("semantic_profile", "balanced")))
+    floor = float(config.get("preset_weight_floor", 0.82))
+    novelty = context.get("novelty", "medium")
+    if novelty == "low":
+        return min(0.94, floor + 0.06)
+    if novelty == "high":
+        return max(0.55, floor - 0.10)
+    return floor
+
+
+def semantic_preset_score_breakdown(vector: Sequence[float], context: JsonDict) -> tuple[float, JsonDict]:
+    overall = cosine_similarity(context["query_vector"], vector)
+    axis_vectors = context.get("axis_vectors") or [
+        {"text": context.get("intent", ""), "source": "full_intent", "vector": context["query_vector"]}
+    ]
+    axis_scores = [
+            {
+                "text": item.get("text", ""),
+                "embedding_text": item.get("embedding_text", item.get("text", "")),
+                "source": item.get("source", "full_intent"),
+                "score": cosine_similarity(item.get("vector", []), vector),
+            }
+        for item in axis_vectors
+    ]
+    raw_scores = [item["score"] for item in axis_scores]
+    axis_mean = sum(raw_scores) / len(raw_scores) if raw_scores else overall
+    axis_floor = min(raw_scores) if raw_scores else overall
+    config = semantic_profile_config(str(context.get("semantic_profile", "balanced")))
+    overall_weight = float(config.get("preset_overall_weight", 0.45))
+    axis_mean_weight = float(config.get("preset_axis_mean_weight", 0.35))
+    axis_floor_weight = float(config.get("preset_axis_floor_weight", 0.20))
+    total = max(overall_weight + axis_mean_weight + axis_floor_weight, 0.01)
+    semantic_score = (
+        (overall_weight * overall)
+        + (axis_mean_weight * axis_mean)
+        + (axis_floor_weight * axis_floor)
+    ) / total
+    return semantic_score, {
+        "query": round(overall, 4),
+        "overall": round(overall, 4),
+        "axis_mean": round(axis_mean, 4),
+        "axis_floor": round(axis_floor, 4),
+        "axis_scores": [
+            {
+                "text": item["text"],
+                "embedding_text": item["embedding_text"],
+                "source": item["source"],
+                "score": round(float(item["score"]), 4),
+            }
+            for item in axis_scores
+        ],
+        "semantic_score": round(semantic_score, 4),
+    }
+
+
+def semantic_intent_allows_adult_context(context: JsonDict) -> bool:
+    axis_text = " ".join(
+        str(item.get("text", ""))
+        for item in (context.get("intent_axes", {}) or {}).get("items", [])
+    )
+    text = f"{context.get('intent', '')} {axis_text}".lower()
+    adult_terms = {
+        "adult",
+        "fetish",
+        "boudoir",
+        "lingerie",
+        "sensual",
+        "suggestive",
+        "성인",
+        "페티시",
+    }
+    return any(term in text for term in adult_terms)
+
+
+def compatible_preset_with_semantic_hard_guards(preset: Entry, context: JsonDict) -> tuple[bool, Optional[str]]:
+    if preset_uses_adult_context(preset) and not semantic_intent_allows_adult_context(context):
+        return False, "adult_context"
+    tokens = facet_tokens(preset)
+    if "safety_tier:adult_only" in tokens and not semantic_intent_allows_adult_context(context):
+        return False, "adult_only"
+    return True, None
+
+
+def semantic_slot_score_window(context: JsonDict) -> float:
+    base = semantic_profile_config(str(context.get("semantic_profile", "balanced")))["slot_window"]
+    novelty = context.get("novelty", "medium")
+    if novelty == "low":
+        return max(0.04, base * 0.65)
+    if novelty == "high":
+        return min(0.34, base * 1.35)
+    return base
+
+
+def semantic_slot_candidate_limit(context: JsonDict) -> int:
+    config = semantic_profile_config(str(context.get("semantic_profile", "balanced")))
+    limit = int(config.get("slot_candidate_limit", 8))
+    novelty = context.get("novelty", "medium")
+    if novelty == "low":
+        return max(3, int(round(limit * 0.7)))
+    if novelty == "high":
+        return max(limit + 2, int(round(limit * 1.35)))
+    return limit
+
+
+def semantic_slot_weight_floor(context: JsonDict) -> float:
+    config = semantic_profile_config(str(context.get("semantic_profile", "balanced")))
+    floor = float(config.get("slot_weight_floor", 0.82))
+    novelty = context.get("novelty", "medium")
+    if novelty == "low":
+        return min(0.94, floor + 0.06)
+    if novelty == "high":
+        return max(0.55, floor - 0.10)
+    return floor
+
+
+def semantic_weighted_choice(
+    pool: Sequence[Entry],
+    rng: random.Random,
+    slot: str,
+    preset: JsonDict,
+    context: Optional[JsonDict],
+    forced: bool = False,
+    slot_filter: Optional[JsonDict] = None,
+    picked: Optional[Dict[str, Entry]] = None,
+) -> Entry:
+    if not context or forced:
+        return weighted_choice(pool, rng)
+
+    preset_key = semantic_entry_key("preset", preset)
+    preset_vector = semantic_vector(context, preset_key)
+    weights: List[float] = []
+    scored: List[JsonDict] = []
+    vectors: Dict[str, List[float]] = {}
+    scored_items: List[tuple[Entry, List[float], Optional[bool], float, float, JsonDict]] = []
+
+    for item in pool:
+        key = semantic_entry_key("slot", item, slot)
+        vector = semantic_vector(context, key)
+        vectors[str(item.get("id"))] = vector
+        filter_match = preset_filter_match(item, slot_filter)
+        weight, summary = semantic_candidate_weight(
+            item,
+            vector,
+            context,
+            preset_vector,
+            preset,
+            picked or {},
+            slot,
+            filter_match,
+        )
+        scored_items.append((item, vector, filter_match, weight, float(summary.get("effective_query", summary["query"])), summary))
+        scored.append(summary)
+
+    if context.get("filter_strictness") == "soft" and slot_filter:
+        best_query = max((query for _, _, _, _, query, _ in scored_items), default=0.0)
+        score_window = semantic_slot_score_window(context)
+        eligible = [
+            row
+            for row in scored_items
+            if row[2] is not False or row[4] >= best_query - score_window
+        ]
+    else:
+        score_window = None
+        eligible = scored_items
+
+    ordered = sorted(eligible, key=lambda row: row[3], reverse=True)
+    if ordered:
+        best_weight = max(ordered[0][3], 0.01)
+        floor = best_weight * semantic_slot_weight_floor(context)
+        floored = [row for row in ordered if row[3] >= floor]
+        limit = semantic_slot_candidate_limit(context)
+        minimum_size = 1 if context.get("filter_strictness") == "soft" and slot_filter else 3
+        minimum = min(minimum_size, len(ordered), limit)
+        candidates = floored[:limit]
+        if len(candidates) < minimum:
+            candidates = ordered[:minimum]
+    else:
+        candidates = []
+
+    for item, _vector, _filter_match, weight, _query, _summary in candidates:
+        weights.append(weight)
+
+    if sum(weights) <= 0:
+        selected = rng.choice([item for item, *_ in candidates] or list(pool))
+    else:
+        selected = rng.choices([item for item, *_ in candidates], weights=weights, k=1)[0]
+
+    selected_id = str(selected.get("id"))
+    if vectors.get(selected_id):
+        context["picked_vectors"].append(vectors[selected_id])
+        update_axis_coverage(context, slot, selected_id, vectors[selected_id])
+    selected_filter = preset_filter_match(selected, slot_filter)
+    if context.get("filter_strictness") == "soft" and selected_filter is False:
+        context["soft_out_of_filter_selected_count"] = int(context.get("soft_out_of_filter_selected_count", 0)) + 1
+    top_scores = sorted(scored, key=lambda item: item["weight"], reverse=True)[:5]
+    context["slot_scores"].append(
+        {
+            "slot": slot,
+            "selected": selected_id,
+            "top": top_scores,
+            "candidate_count": len(candidates),
+            "score_window": score_window,
+            "selected_filter": "none" if selected_filter is None else ("in" if selected_filter else "out"),
+        }
+    )
+    return selected
+
+
+def materialize_virtual_preset(data: JsonDict, preset_id: str) -> Optional[JsonDict]:
+    recipe_id = preset_id.removeprefix("virtual:")
+    recipe = next((item for item in data.get("recipes", []) if item.get("id") == recipe_id), None)
+    if not recipe:
+        return None
+    base = next((item for item in data.get("presets", []) if item.get("id") == recipe.get("base_preset")), None)
+    if not base:
+        return None
+    preset = dict(base)
+    preset["id"] = f"virtual:{recipe_id}"
+    preset["ko"] = recipe.get("ko", base.get("ko"))
+    preset["en"] = recipe.get("en", base.get("en"))
+    preset["weight"] = recipe.get("weight", base.get("weight", 1))
+    preset["semantic_anchor"] = recipe.get("semantic_anchor", recipe.get("embedding_text", ""))
+    preset["facets"] = recipe.get("facets", {})
+    preset["hard_guards"] = recipe.get("hard_guards", {})
+    filters = dict(base.get("filters", {}))
+    filters.update(recipe.get("filters", {}))
+    preset["filters"] = filters
+    return preset
+
+
+def choose_preset(
+    data: JsonDict,
+    rng: random.Random,
+    preset_id: Optional[str] = None,
+    semantic_context: Optional[JsonDict] = None,
+) -> JsonDict:
     presets = data.get("presets", [])
     if not presets:
         raise ValueError("No presets found in JSON.")
@@ -280,8 +1592,75 @@ def choose_preset(data: JsonDict, rng: random.Random, preset_id: Optional[str] =
         for p in presets:
             if p.get("id") == preset_id:
                 return p
+        virtual = materialize_virtual_preset(data, preset_id)
+        if virtual:
+            return virtual
         valid = ", ".join(p.get("id", "?") for p in presets)
         raise ValueError(f"Unknown preset '{preset_id}'. Available presets: {valid}")
+
+    if semantic_context:
+        scored_presets: List[tuple[JsonDict, float, float, JsonDict]] = []
+        summaries: List[JsonDict] = []
+        rejected_by_reason: Dict[str, int] = {}
+        for preset in presets:
+            allowed, reason = compatible_preset_with_semantic_hard_guards(preset, semantic_context)
+            if not allowed:
+                rejected_by_reason[str(reason or "hard_guard")] = rejected_by_reason.get(str(reason or "hard_guard"), 0) + 1
+                continue
+            vector = semantic_vector(semantic_context, semantic_entry_key("preset", preset))
+            score, score_summary = semantic_preset_score_breakdown(vector, semantic_context)
+            weight = semantic_preset_candidate_weight(preset, score, semantic_context)
+            summary = {"id": preset.get("id"), "weight": round(weight, 6), **score_summary}
+            scored_presets.append((preset, weight, score, summary))
+            summaries.append(summary)
+        rejected_count = sum(rejected_by_reason.values())
+        if rejected_count:
+            semantic_context["hard_rejected_count"] = int(semantic_context.get("hard_rejected_count", 0)) + rejected_count
+            semantic_context.setdefault("hard_rejected", []).append(
+                {"scope": "preset", "count": rejected_count, "reasons": rejected_by_reason}
+            )
+        best_score = max((score for _, _, score, _ in scored_presets), default=0.0)
+        score_window = semantic_preset_score_window(semantic_context)
+        window_candidates = [
+            (preset, weight, score, summary)
+            for preset, weight, score, summary in scored_presets
+            if score >= best_score - score_window
+        ]
+        limit = semantic_preset_candidate_limit(semantic_context)
+        ordered = sorted(window_candidates, key=lambda row: row[2], reverse=True)[:limit]
+        if ordered:
+            best_weight = max((row[1] for row in ordered), default=0.01)
+            floor = best_weight * semantic_preset_weight_floor(semantic_context)
+            candidates = [row for row in ordered if row[1] >= floor][:limit]
+            minimum = min(3, len(ordered), limit)
+            if len(candidates) < minimum:
+                candidates = ordered[:minimum]
+        else:
+            candidates = []
+        candidate_presets = [preset for preset, *_ in candidates]
+        candidate_weights = [weight for _, weight, *_ in candidates]
+        if candidate_presets and sum(candidate_weights) > 0:
+            selected = rng.choices(candidate_presets, weights=candidate_weights, k=1)[0]
+        else:
+            selected = weighted_choice(presets, rng)
+        summary_by_id = {str(summary.get("id")): summary for summary in summaries}
+        semantic_context["preset_score"] = {
+            "selected": selected.get("id"),
+            "selected_summary": summary_by_id.get(str(selected.get("id")), {}),
+            "intent_axes": semantic_context.get("intent_axes", {}),
+            "top": [
+                summary
+                for _, _, _, summary in sorted(candidates, key=lambda row: row[2], reverse=True)[:5]
+            ],
+            "candidate_count": len(candidates),
+            "window_candidate_count": len(window_candidates),
+            "score_window": score_window,
+            "preset_candidate_limit": semantic_preset_candidate_limit(semantic_context),
+            "preset_weight_floor": semantic_preset_weight_floor(semantic_context),
+            "hard_rejected_count": rejected_count,
+            "hard_rejected_by_reason": rejected_by_reason,
+        }
+        return selected
 
     return weighted_choice(presets, rng)
 
@@ -387,16 +1766,40 @@ def should_activate_surreal_layer(
     mode: str,
     probability: float,
     forced_choices: Optional[Dict[str, List[str]]] = None,
+    semantic_context: Optional[JsonDict] = None,
+    mode_explicit: bool = False,
 ) -> bool:
+    active = False
+    reason = "off"
     if has_forced_surreal_slot(forced_choices):
-        return True
-    if mode == "off":
-        return False
-    if mode == "on":
-        return True
-    if preset_uses_adult_context(preset):
-        return False
-    return rng.random() < max(0.0, min(1.0, probability))
+        active = True
+        reason = "forced_slot"
+    elif mode == "on":
+        active = True
+        reason = "explicit"
+    elif preset_uses_adult_context(preset):
+        active = False
+        reason = "adult_preset_blocked"
+    elif (
+        semantic_context
+        and intent_steering_enabled(semantic_context)
+        and not mode_explicit
+        and mode == "off"
+        and "fantasy" in context_axis_families(semantic_context)
+    ):
+        active = True
+        reason = "semantic_axis"
+    elif mode == "auto":
+        active = rng.random() < max(0.0, min(1.0, probability))
+        reason = "probability"
+    elif mode == "off" and mode_explicit:
+        active = False
+        reason = "explicit_off"
+
+    if semantic_context is not None:
+        semantic_context["surreal_activation_reason"] = reason
+        semantic_context["surreal_activation_active"] = active
+    return active
 
 
 def apply_surreal_layer(
@@ -406,11 +1809,12 @@ def apply_surreal_layer(
     picked: Dict[str, Entry],
     forced_choices: Optional[Dict[str, List[str]]] = None,
     intensity: str = "moderate",
+    semantic_context: Optional[JsonDict] = None,
 ) -> None:
     for slot in SURREAL_INTENSITY_SLOTS[intensity]:
         if slot in picked:
             continue
-        entry = choose_slot(slot, data, preset, rng, picked, forced_choices)
+        entry = choose_slot(slot, data, preset, rng, picked, forced_choices, semantic_context)
         if entry is not None:
             picked[slot] = entry
 
@@ -538,6 +1942,104 @@ def forced_required_subject_kinds(data: JsonDict, forced_choices: Dict[str, List
     return required
 
 
+def entry_has_human_signal(entry: Entry) -> bool:
+    tokens = entry_context_tokens(entry) | facet_tokens(entry)
+    return "human" in tokens or "subject_kind:human" in tokens
+
+
+def entry_has_urban_signal(entry: Entry) -> bool:
+    tokens = entry_context_tokens(entry) | facet_tokens(entry)
+    entry_id = str(entry.get("id", "")).lower()
+    return bool(
+        tokens & {"urban", "street", "city", "place_type:urban", "place_type:street"}
+        or any(fragment in entry_id for fragment in ("urban", "city", "street", "alley", "subway", "neon"))
+    )
+
+
+def entry_has_horror_signal(entry: Entry) -> bool:
+    tokens = entry_context_tokens(entry) | facet_tokens(entry)
+    blob = " ".join(
+        [
+            str(entry.get("id", "")),
+            str(entry.get("en", "")),
+            str(entry.get("ko", "")),
+        ]
+    ).lower()
+    horror_terms = {
+        "horror",
+        "fear",
+        "nightmare",
+        "terror",
+        "eerie",
+        "uncanny",
+        "tense",
+        "noir",
+        "gothic",
+        "dark",
+        "suspense",
+        "공포",
+        "악몽",
+    }
+    return bool(tokens & horror_terms or any(term in blob for term in horror_terms))
+
+
+def record_intent_steering(context: JsonDict, decision: JsonDict) -> None:
+    steering = context.setdefault("intent_steering", {"mode": "off", "enabled": False, "families": [], "decisions": []})
+    decisions = steering.setdefault("decisions", [])
+    signature = json.dumps(decision, ensure_ascii=False, sort_keys=True)
+    existing = {json.dumps(item, ensure_ascii=False, sort_keys=True) for item in decisions}
+    if signature not in existing:
+        decisions.append(decision)
+
+
+def steer_semantic_candidate_pool(
+    slot: str,
+    pool: Sequence[Entry],
+    context: Optional[JsonDict],
+) -> List[Entry]:
+    if not context or not intent_steering_enabled(context):
+        return list(pool)
+    families = context_axis_families(context)
+    steered: List[Entry] = []
+    reason = ""
+    if slot == "subject" and "human" in families:
+        steered = [item for item in pool if entry_has_human_signal(item)]
+        reason = "human_subject"
+    elif slot == "location" and "urban" in families:
+        steered = [item for item in pool if entry_has_urban_signal(item)]
+        reason = "urban_location"
+    elif slot == "mood" and "horror" in families:
+        steered = [item for item in pool if entry_has_horror_signal(item)]
+        reason = "horror_mood"
+    if steered:
+        record_intent_steering(
+            context,
+            {
+                "slot": slot,
+                "reason": reason,
+                "before": len(pool),
+                "after": len(steered),
+            },
+        )
+        return steered
+    return list(pool)
+
+
+def semantic_steering_slots(context: Optional[JsonDict], data: JsonDict) -> List[str]:
+    if not context or not intent_steering_enabled(context):
+        return []
+    available = set(data.get("slots", {}).keys())
+    families = context_axis_families(context)
+    wanted: List[str] = []
+    if "human" in families and "subject" in available:
+        wanted.append("subject")
+    if "urban" in families and "location" in available:
+        wanted.append("location")
+    if "horror" in families and "mood" in available:
+        wanted.append("mood")
+    return wanted
+
+
 def compatible_with_slot_context(slot: str, item: Entry, picked: Dict[str, Entry]) -> bool:
     context = picked_context_tokens(picked)
     scene_context = picked_scene_context_tokens(picked)
@@ -639,6 +2141,7 @@ def choose_slot(
     rng: random.Random,
     picked: Dict[str, Entry],
     forced_choices: Optional[Dict[str, List[str]]] = None,
+    semantic_context: Optional[JsonDict] = None,
 ) -> Optional[Entry]:
     slots = data.get("slots", {})
     if slot not in slots:
@@ -646,7 +2149,6 @@ def choose_slot(
 
     full_pool = list(slots[slot])
     filters = preset.get("filters", {}).get(slot)
-    pool = apply_filter(full_pool, filters)
 
     forced_ids = (forced_choices or {}).get(slot)
     forced = bool(forced_ids)
@@ -657,6 +2159,8 @@ def choose_slot(
             valid = ", ".join(x.get("id", "?") for x in full_pool[:30])
             raise ValueError(f"Unknown id for slot '{slot}': {forced_ids}. Example valid ids: {valid}")
         pool = forced_pool
+    else:
+        pool = list(full_pool)
 
     # If a human-only forced modifier is given, steer subject choice toward human.
     if slot == "subject" and not forced:
@@ -665,6 +2169,22 @@ def choose_slot(
             steered = [x for x in pool if entry_kinds(x) & required_kinds]
             if steered:
                 pool = steered
+
+    if semantic_context and not forced:
+        pool = steer_semantic_candidate_pool(slot, pool, semantic_context)
+
+    if semantic_context and not forced:
+        before_hard = len(pool)
+        pool = [item for item in pool if compatible_with_semantic_hard_guards(item, preset, picked, slot)]
+        rejected = before_hard - len(pool)
+        if rejected > 0:
+            semantic_context["hard_rejected_count"] = int(semantic_context.get("hard_rejected_count", 0)) + rejected
+            semantic_context.setdefault("hard_rejected", []).append({"slot": slot, "count": rejected})
+
+    if not semantic_context or forced or semantic_context.get("filter_strictness") == "hard":
+        filtered = apply_filter(pool, filters)
+        if filtered:
+            pool = filtered
 
     # Compatibility is generic, but action keeps the older generous fallback.
     compatible = compatible_with_picked(pool, picked, forced=forced, slot=slot)
@@ -694,7 +2214,16 @@ def choose_slot(
             return None
         pool = compatible_with_picked(full_pool, picked, forced=False, slot=slot) or full_pool
 
-    return weighted_choice(pool, rng)
+    return semantic_weighted_choice(
+        pool,
+        rng,
+        slot,
+        preset,
+        semantic_context,
+        forced=forced,
+        slot_filter=filters,
+        picked=picked,
+    )
 
 
 # -----------------------------------------------------------------------------
@@ -721,6 +2250,7 @@ def reinforce_detail_slots(
     rng: random.Random,
     picked: Dict[str, Entry],
     forced_choices: Optional[Dict[str, List[str]]] = None,
+    semantic_context: Optional[JsonDict] = None,
 ) -> None:
     """Add compatible high-signal slots so detailed prompts are consistently specific."""
     minimum_slots = {
@@ -747,7 +2277,7 @@ def reinforce_detail_slots(
         if slot in slot_groups["finish"] and group_count("finish") >= minimum_slots["finish"]:
             continue
 
-        entry = choose_slot(slot, data, preset, rng, picked, forced_choices)
+        entry = choose_slot(slot, data, preset, rng, picked, forced_choices, semantic_context)
         if entry is not None:
             picked[slot] = entry
 
@@ -760,6 +2290,8 @@ def build_fields(picked: Dict[str, Entry], lang: str) -> Dict[str, str]:
     hair = values.get("hair_style", "")
     makeup = values.get("makeup_style", "")
     expression = values.get("expression", "")
+    facial_hair = values.get("facial_hair", "")
+    accessory = values.get("wearable_accessory", "")
     wardrobe = values.get("wardrobe_style", "")
     costume = values.get("costume_style", "")
 
@@ -767,10 +2299,14 @@ def build_fields(picked: Dict[str, Entry], lang: str) -> Dict[str, str]:
         subject_mods = [values[s] for s in ("person_origin", "appearance_type") if values.get(s)]
         if hair:
             subject_mods.append(hair)
+        if facial_hair:
+            subject_mods.append(facial_hair + "의")
         if makeup:
             subject_mods.append(makeup)
         if expression:
             subject_mods.append(expression + "의")
+        if accessory:
+            subject_mods.append(accessory + josa(accessory, "을", "를") + " 착용한")
         if wardrobe:
             subject_mods.append(wardrobe + josa(wardrobe, "을", "를") + " 입은")
         if costume:
@@ -782,10 +2318,14 @@ def build_fields(picked: Dict[str, Entry], lang: str) -> Dict[str, str]:
         subject_suffixes = [values[s] for s in ("person_origin", "appearance_type") if values.get(s)]
         if hair:
             subject_suffixes.append(f"with {hair}")
+        if facial_hair:
+            subject_suffixes.append(f"with {facial_hair}")
         if makeup:
             subject_suffixes.append(f"with {makeup}")
         if expression:
             subject_suffixes.append(f"with {expression}")
+        if accessory:
+            subject_suffixes.append(f"wearing {accessory}")
         if wardrobe:
             subject_suffixes.append(f"wearing {wardrobe}")
         if costume:
@@ -798,7 +2338,12 @@ def build_fields(picked: Dict[str, Entry], lang: str) -> Dict[str, str]:
     if location_entry and lang == "ko":
         location_phrase = location_entry.get("phrase_ko") or (localize(location_entry, "ko") + "에서")
     elif location_entry:
-        location_phrase = location_entry.get("phrase_en") or ("in " + localize(location_entry, "en"))
+        raw_location = localize(location_entry, "en")
+        location_phrase = location_entry.get("phrase_en") or (
+            raw_location
+            if raw_location.lower().startswith(("in ", "inside ", "at ", "on ", "beside ", "near ", "under "))
+            else "in " + raw_location
+        )
     else:
         location_phrase = ""
 
@@ -815,6 +2360,8 @@ def build_fields(picked: Dict[str, Entry], lang: str) -> Dict[str, str]:
     )
     style_slots = (
         "world",
+        "aesthetic_trend",
+        "film_emulation",
         "color",
         "mood",
         "surreal_concept",
@@ -824,7 +2371,18 @@ def build_fields(picked: Dict[str, Entry], lang: str) -> Dict[str, str]:
         "adult_context",
         "caption_context",
     )
-    detail_slots = ("wardrobe_style", "makeup_style", "costume_style", "fetish_styling", "texture", "format", "quality")
+    detail_slots = (
+        "wearable_accessory",
+        "facial_hair",
+        "wardrobe_style",
+        "makeup_style",
+        "costume_style",
+        "fetish_styling",
+        "surface_material",
+        "texture",
+        "format",
+        "quality",
+    )
 
     lighting_parts = [values[s] for s in lighting_slots if values.get(s)]
     camera_parts = [values[s] for s in camera_slots if values.get(s)]
@@ -1115,6 +2673,9 @@ def build_prompt_sections(
     sections["action"] = selected(("action", "prop"))
     sections["scene"] = [
         fields.get("location_phrase") or values.get("location", ""),
+        values.get("time_of_day", ""),
+        values.get("weather", ""),
+        values.get("surface_material", ""),
         values.get("world", ""),
     ]
     sections["camera"] = selected(
@@ -1135,10 +2696,15 @@ def build_prompt_sections(
     sections["palette_mood"] = selected(("color", "mood", "adult_context", "caption_context"))
     sections["finish"] = selected(
         (
+            "film_emulation",
+            "aesthetic_trend",
+            "wearable_accessory",
+            "facial_hair",
             "wardrobe_style",
             "makeup_style",
             "costume_style",
             "fetish_styling",
+            "surface_material",
             "texture",
             "format",
             "quality",
@@ -1485,20 +3051,76 @@ def generate_once(
     surreal_intensity: str = "moderate",
     reference_edit_mode: str = "off",
     trend_layer: str = "off",
+    intent: Optional[str] = None,
+    selection_mode: str = "rule",
+    novelty: str = "medium",
+    filter_strictness: Optional[str] = None,
+    semantic_weight: Optional[float] = None,
+    semantic_profile: Optional[str] = None,
+    include_trace: bool = False,
+    llm_polish: str = "off",
+    semantic_index_path: Optional[str | Path] = None,
+    semantic_index: Optional[JsonDict] = None,
+    semantic_provider: str = SEMANTIC_PROVIDER,
+    semantic_model: str = SEMANTIC_MODEL_ID,
+    semantic_dimensions: int = DEFAULT_SEMANTIC_DIMENSIONS,
+    gemini_api_key: Optional[str] = None,
+    semantic_axis_mode: str = "auto",
+    intent_axes: Optional[Sequence[str]] = None,
+    intent_steering: Optional[str] = None,
+    surreal_mode_explicit: bool = False,
 ) -> JsonDict:
-    preset = choose_preset(data, rng, preset_id)
+    if intent and selection_mode == "rule":
+        raise ValueError("--intent cannot be used with --selection-mode rule")
+    semantic_context = make_semantic_context(
+        data,
+        intent,
+        selection_mode,
+        novelty,
+        filter_strictness,
+        semantic_weight,
+        semantic_profile,
+        semantic_index_path,
+        semantic_index,
+        semantic_provider,
+        semantic_model,
+        semantic_dimensions,
+        gemini_api_key,
+        semantic_axis_mode,
+        intent_axes,
+        intent_steering,
+    )
+    preset = choose_preset(data, rng, preset_id, semantic_context)
     picked: Dict[str, Entry] = {}
 
-    for slot in selected_slots_for_preset(preset, data, rng, forced_choices, priority_bias):
-        entry = choose_slot(slot, data, preset, rng, picked, forced_choices)
+    slots_to_pick = selected_slots_for_preset(preset, data, rng, forced_choices, priority_bias)
+    for slot in semantic_steering_slots(semantic_context, data):
+        if slot not in slots_to_pick:
+            slots_to_pick.append(slot)
+            if semantic_context:
+                record_intent_steering(
+                    semantic_context,
+                    {"slot": slot, "reason": "required_by_axis", "before": len(slots_to_pick) - 1, "after": len(slots_to_pick)},
+                )
+
+    for slot in slots_to_pick:
+        entry = choose_slot(slot, data, preset, rng, picked, forced_choices, semantic_context)
         if entry is not None:
             picked[slot] = entry
 
-    if should_activate_surreal_layer(preset, rng, surreal_mode, surreal_probability, forced_choices):
-        apply_surreal_layer(data, preset, rng, picked, forced_choices, surreal_intensity)
+    if should_activate_surreal_layer(
+        preset,
+        rng,
+        surreal_mode,
+        surreal_probability,
+        forced_choices,
+        semantic_context,
+        surreal_mode_explicit,
+    ):
+        apply_surreal_layer(data, preset, rng, picked, forced_choices, surreal_intensity, semantic_context)
 
     if detail_level == "detailed":
-        reinforce_detail_slots(data, preset, rng, picked, forced_choices)
+        reinforce_detail_slots(data, preset, rng, picked, forced_choices, semantic_context)
 
     result: JsonDict = {
         "preset_id": preset.get("id"),
@@ -1517,6 +3139,21 @@ def generate_once(
             trend_layer,
         )
 
+    if llm_polish == "strict":
+        for lang in langs:
+            result[f"polished_prompt_{lang}"] = result[f"prompt_{lang}"]
+        result["rewrite_trace"] = {
+            "mode": "strict",
+            "status": "preserved",
+            "provider": "none",
+            "fallback": False,
+            "preserved_anchors": [
+                f"{slot}:{entry.get('id')}"
+                for slot, entry in picked.items()
+                if entry.get("anchor") or slot in {"subject", "location", "lens", "lighting", "format"}
+            ],
+        }
+
     if include_negative:
         negative_entries = choose_negative_entries(data, rng, negative_count, has_surreal_layer(picked), picked)
         for lang in langs:
@@ -1532,6 +3169,48 @@ def generate_once(
                 "kind": entry.get("kind", []),
             }
             for slot, entry in picked.items()
+        }
+
+    if include_trace and semantic_context:
+        result["semantic_trace"] = {
+            "selection_mode": selection_mode,
+            "intent": intent,
+            "novelty": novelty,
+            "filter_strictness": semantic_context.get("filter_strictness"),
+            "semantic_weight": semantic_context.get("semantic_weight"),
+            "semantic_profile": semantic_context.get("semantic_profile"),
+            "semantic_axis_mode": semantic_context.get("semantic_axis_mode"),
+            "intent_axes": semantic_context.get("intent_axes"),
+            "intent_steering": semantic_context.get("intent_steering"),
+            "axis_coverage": semantic_axis_coverage_trace(semantic_context),
+            "surreal_activation_reason": semantic_context.get("surreal_activation_reason"),
+            "surreal_activation_active": semantic_context.get("surreal_activation_active"),
+            "dictionary_hash": semantic_context.get("dictionary_hash"),
+            "semantic_text_recipe": semantic_context.get("semantic_text_recipe"),
+            "embedding_provider": semantic_context.get("embedding_provider"),
+            "embedding_model": semantic_context.get("embedding_model"),
+            "embedding_dimensions": semantic_context.get("embedding_dimensions"),
+            "hard_rejected_count": semantic_context.get("hard_rejected_count", 0),
+            "hard_rejected": semantic_context.get("hard_rejected", []),
+            "soft_out_of_filter_selected_count": semantic_context.get("soft_out_of_filter_selected_count", 0),
+            "preset_score": semantic_context.get("preset_score"),
+            "slot_scores": semantic_context.get("slot_scores", []),
+        }
+    elif include_trace:
+        result["semantic_trace"] = {
+            "selection_mode": selection_mode,
+            "intent": intent,
+            "novelty": novelty,
+            "filter_strictness": filter_strictness,
+            "semantic_weight": semantic_weight,
+            "semantic_profile": semantic_profile,
+            "semantic_axis_mode": semantic_axis_mode,
+            "intent_axes": {"mode": semantic_axis_mode, "source": "none", "items": []},
+            "intent_steering": {"mode": intent_steering or "off", "enabled": False, "families": [], "decisions": []},
+            "axis_coverage": {"target": 0.0, "items": []},
+            "surreal_activation_reason": "none",
+            "surreal_activation_active": False,
+            "slot_scores": [],
         }
 
     return result
@@ -1562,11 +3241,16 @@ def print_plain(results: Sequence[JsonDict], langs: Sequence[str], include_negat
             print("choices:", json.dumps(compact, ensure_ascii=False))
 
 
-def list_presets(data: JsonDict) -> None:
+def list_presets(data: JsonDict, include_virtual: bool = False) -> None:
     for p in data.get("presets", []):
         ko = localize(p, "ko")
         en = localize(p, "en")
         print(f"{p.get('id')}: {ko} / {en}")
+    if include_virtual:
+        for recipe in data.get("recipes", []):
+            ko = localize(recipe, "ko")
+            en = localize(recipe, "en")
+            print(f"virtual:{recipe.get('id')}: {ko} / {en}")
 
 
 def show_slots(data: JsonDict) -> None:
@@ -1586,6 +3270,7 @@ def list_tags(data: JsonDict, slot: str) -> None:
 
 
 def main(argv: Optional[Sequence[str]] = None) -> int:
+    raw_args = list(argv or sys.argv[1:])
     parser = argparse.ArgumentParser(description="Random photo prompt generator using JSON-managed tags.")
     parser.add_argument("--tags", default="photo_prompt_tags.json", help="Path to tag JSON file.")
     parser.add_argument("--lang", choices=["ko", "en", "both"], default="both", help="Output language.")
@@ -1603,6 +3288,20 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     parser.add_argument("--surreal-intensity", choices=["subtle", "moderate", "bold"], default="moderate", help="How many surreal layer slots to add when the layer is active.")
     parser.add_argument("--reference-edit-mode", choices=REFERENCE_EDIT_MODES, default="off", help="Append reference-image editing instructions for uploaded-photo workflows.")
     parser.add_argument("--trend-layer", choices=TREND_LAYERS, default="off", help="Append a social trend layout layer without changing the base photo preset.")
+    parser.add_argument("--intent", default=None, help="Free-text visual intent for semantic selection. A broad photo intent is used when semantic/hybrid mode has no explicit intent.")
+    parser.add_argument("--selection-mode", choices=SELECTION_MODES, default=DEFAULT_SELECTION_MODE, help="Selection mode. semantic is the default; use rule for the original deterministic weighted path.")
+    parser.add_argument("--novelty", choices=NOVELTY_LEVELS, default="medium", help="Semantic sampling diversity level. Used only with semantic or hybrid selection.")
+    parser.add_argument("--filter-strictness", choices=FILTER_STRICTNESS_MODES, default=None, help="Preset filter behavior for semantic/hybrid selection. Defaults to soft for semantic and hard for hybrid/rule.")
+    parser.add_argument("--semantic-weight", type=float, default=None, help="0..1 blend weight for semantic scoring. Defaults by selection mode.")
+    parser.add_argument("--semantic-profile", choices=SEMANTIC_PROFILES, default=None, help="Semantic candidate window/profile. Defaults by selection mode.")
+    parser.add_argument("--semantic-axis-mode", choices=SEMANTIC_AXIS_MODES, default="auto", help="Intent-axis decomposition for semantic preset scoring. Use off to keep a single intent axis.")
+    parser.add_argument("--intent-axis", dest="intent_axes", action="append", default=[], help="Explicit semantic intent axis. Repeat to replace automatic axis extraction.")
+    parser.add_argument("--intent-steering", choices=INTENT_STEERING_MODES, default=None, help="Semantic axis-based slot steering. Defaults to auto for semantic/hybrid and off for rule.")
+    parser.add_argument("--semantic-index", default=None, help="Path to a precomputed semantic index JSON. Defaults to a sibling asset when present.")
+    parser.add_argument("--semantic-model", default=SEMANTIC_MODEL_ID, help="Gemini embedding model required by the semantic index.")
+    parser.add_argument("--semantic-dimensions", type=int, default=DEFAULT_SEMANTIC_DIMENSIONS, help="Gemini embedding dimensions required by the semantic index.")
+    parser.add_argument("--include-trace", action="store_true", help="Include semantic/rewrite trace metadata in JSON output.")
+    parser.add_argument("--llm-polish", choices=LLM_POLISH_MODES, default="off", help="Optional strict prompt polish contract. strict currently preserves the deterministic prompt unless a provider is wired explicitly.")
     parser.add_argument("--priority-bias", type=float, default=None, help="Optional-slot priority boost. Omit to use JSON setting.")
     parser.add_argument("--set", dest="set_values", action="append", default=[], help="Force a slot id, e.g. --set subject=fashion_model. Repeatable. Use commas to randomly choose among ids.")
     parser.add_argument("--set-json", default=None, help="Inline JSON or path to JSON file for forced slots, e.g. '{\"subject\":\"fashion_model\"}'.")
@@ -1611,14 +3310,15 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     parser.add_argument("--include-choices", action="store_true", help="Include chosen slot details in plain or JSON output.")
     parser.add_argument("--json-output", action="store_true", help="Print results as JSON.")
     parser.add_argument("--list-presets", action="store_true", help="List preset ids and exit.")
+    parser.add_argument("--include-virtual", action="store_true", help="Include virtual recipe presets when listing presets.")
     parser.add_argument("--show-slots", action="store_true", help="List slots, tag counts, and priorities then exit.")
     parser.add_argument("--list-tags", metavar="SLOT", help="List tag ids for a slot then exit.")
-    args = parser.parse_args(argv)
+    args = parser.parse_args(raw_args)
 
     data = load_json(args.tags)
 
     if args.list_presets:
-        list_presets(data)
+        list_presets(data, args.include_virtual)
         return 0
     if args.show_slots:
         show_slots(data)
@@ -1637,6 +3337,25 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     if args.n < 1:
         raise ValueError("--n must be at least 1")
 
+    selection_mode = args.selection_mode
+    resolved_intent = args.intent
+    if args.intent and selection_mode == "rule":
+        raise ValueError("--intent cannot be used with --selection-mode rule")
+    if selection_mode != "rule" and not resolved_intent:
+        resolved_intent = DEFAULT_SEMANTIC_INTENT
+    filter_strictness, semantic_weight, semantic_profile = resolve_semantic_runtime_options(
+        selection_mode,
+        args.filter_strictness,
+        args.semantic_weight,
+        args.semantic_profile,
+    )
+
+    semantic_index_path = args.semantic_index
+    if selection_mode != "rule" and semantic_index_path is None:
+        candidate = Path(args.tags).resolve().with_name("photo_prompt_semantic_index.json")
+        if candidate.exists():
+            semantic_index_path = str(candidate)
+
     results = [
         generate_once(
             data=data,
@@ -1654,6 +3373,21 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             surreal_intensity=args.surreal_intensity,
             reference_edit_mode=args.reference_edit_mode,
             trend_layer=args.trend_layer,
+            intent=resolved_intent,
+            selection_mode=selection_mode,
+            novelty=args.novelty,
+            filter_strictness=filter_strictness,
+            semantic_weight=semantic_weight,
+            semantic_profile=semantic_profile,
+            semantic_axis_mode=args.semantic_axis_mode,
+            intent_axes=args.intent_axes,
+            intent_steering=args.intent_steering,
+            surreal_mode_explicit=has_cli_option(raw_args, "--surreal-mode"),
+            include_trace=args.include_trace,
+            llm_polish=args.llm_polish,
+            semantic_index_path=semantic_index_path,
+            semantic_model=args.semantic_model,
+            semantic_dimensions=args.semantic_dimensions,
         )
         for _ in range(args.n)
     ]
