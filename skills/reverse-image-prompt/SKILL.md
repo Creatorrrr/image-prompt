@@ -25,20 +25,36 @@ Preserve the source image, not a corrected, beautified, safer-looking, more mode
    - If a detail is ambiguous, write `appears`, `suggests`, `visually reads as`, `likely`, `partially obscured`, or `ambiguous`.
 
 3. Silently analyze in this priority order:
-   1. Composition, aspect ratio, orientation, crop, subject scale, frame placement, and spatial layout.
-   2. Human appearance fidelity when people are visible: face, skin tone, broad apparent visual ancestry or race-coded appearance when visually evident, hair, visible body proportions, clothing-shaped silhouette, pose, and occlusion.
-   3. Pose mechanics, gesture, limb placement, hand placement, negative space, and crop boundaries.
-   4. Camera distance, height, angle, lens impression, perspective distortion, focus target, depth of field, sharpness, blur, camera shake, and optical behavior.
-   5. Lighting direction, atmosphere, color grading, contrast, highlights, shadows, flash behavior, and lighting-to-volume effects.
-   6. Background zoning, objects, depth layers, and environmental details.
-   7. Medium, texture, grain, noise, compression, imperfections, and processing artifacts.
+   1. Primary visual concept, perceived intent, and perceptual relationships: separately from any object inventory, identify what the image is arranged to make a viewer perceive. Form at least one literal object-level reading and, when visible relationships support it, one relationship/effect-level reading. Decide which reading is dominant and name the visible cues that force it, such as alignment, contour continuation, scale match, overlap, shared line, crop boundary, frame placement, contact point, foreground/background ordering, occlusion, replacement, reflection, screen-within-screen, mixed media, or scale contrast. If the relationship/effect reading is dominant, every object is subordinate to it and should be described by visual role, not only by category.
+   2. Composition, aspect ratio, orientation, crop, subject scale, frame placement, and spatial layout.
+   3. Human appearance fidelity when people are visible: face, skin tone, broad apparent visual ancestry or race-coded appearance when visually evident, hair, visible body proportions, clothing-shaped silhouette, pose, and occlusion.
+   4. Pose mechanics, gesture, limb placement, hand placement, negative space, and crop boundaries.
+   5. Camera distance, height, angle, lens impression, perspective distortion, focus target, depth of field, sharpness, blur, camera shake, and optical behavior.
+   6. Lighting direction, atmosphere, color grading, contrast, highlights, shadows, flash behavior, and lighting-to-volume effects.
+   7. Background zoning, objects, depth layers, and environmental details.
+   8. Medium, texture, grain, noise, compression, imperfections, and processing artifacts.
 
 4. Use approximate normalized coordinates when useful:
    - `x=0%` is the far left edge; `x=100%` is the far right edge.
    - `y=0%` is the top edge; `y=100%` is the bottom edge.
    - Use coordinates for major anchors such as face center, eye line, head, shoulders, torso, waist, hips, elbows, hands, knees, feet, held objects, important foreground/background objects, horizon line, light sources, highlights, shadows, focus zones, blur zones, crop edges, and occluding objects.
+   - Use coordinates for concept-critical relationships such as shared eye lines, centerlines, contour junctions, screen or frame edges, foreground contact points, overlap boundaries, replacement zones, and scale-reference points.
 
-5. Write only the required output sections:
+5. Before writing any output, lock the concept:
+   - Commit to the dominant reading in one internal sentence of perceived intent.
+   - Identify at least one literal object-level reading and one relationship/effect-level reading when the image contains overlaps, occlusion, scale contrast, framing, insertion, replacement, reflection, screen-within-screen, or mixed media.
+   - Name the visible cues that make the dominant reading work, such as alignment, contour continuation, scale match, overlap, shared line, crop boundary, frame placement, contact point, or foreground/background ordering.
+   - If the image contains an integrated illusion, replacement surface, reflection, screen- or frame-within-frame structure, mixed-media composite, scale-contrast interaction, subject/object completion, or any case where separate elements must read as one effect, build an internal Concept Spec. If the image is ordinary, do not invent a special relationship; use a one-line ordinary premise.
+   - In the Concept Spec, name the relationship type, contributing surfaces/elements and their visual roles, join geometry, completion/missing-side logic, coherence or realism ceiling, and the top 1-3 failure modes.
+   - Completion/missing-side logic must state what visible features each surface carries, what hidden or counterpart features another surface supplies, whether side references use subject-side or viewer-side perspective when that could be confused, and which shared lines, contours, proportions, or contact points must match.
+   - Coherence or realism ceiling must state whether the effect depends on implausibility, uncanniness, mixed-media contrast, low fidelity, or scale incongruity, so the scene is not normalized into a more plausible physical setup.
+   - Treat Concept Spec items as required content for `PROMPT:` section 2 and the relevant `RECOMMENDED SETTINGS:` locks. Treat failure modes as the first inputs to the negative prompt.
+
+6. Output gate before finalizing:
+   - Re-read the drafted `PROMPT:` as if the image is no longer available. If the text would recreate only the object inventory, but not the relationship/effect, revise it before emitting.
+   - If any Concept Spec item is missing from `PROMPT:` section 2 or the settings locks, revise before emitting.
+
+7. Write only the required output sections:
    - `PROMPT:`
    - `NEGATIVE PROMPT:`
    - `RECOMMENDED SETTINGS:`
@@ -51,7 +67,30 @@ Do not include hidden analysis, checklist text, caveats, explanations, or refere
 - Do not infer hidden anatomy, hidden objects, hidden clothing structure, hidden context, personality, intent, nationality, exact ethnicity, religion, measurements, sizes, age, weight, height, camera metadata, or private identity.
 - Do not correct image imperfections unless the user explicitly asks for an improved version.
 - Preserve imperfections when visible: softness, haze, low contrast, grain, digital noise, compression, motion blur, missed focus, underexposure, overexposure, backlight, clipped highlights, crushed shadows, casual framing, sensor artifacts, flash flattening, or low-resolution texture.
+- Do not resolve the image into the nearest plausible or more coherent scene. If the concept depends on illusion, mismatch, uncanny composite structure, mixed-media layering, scale incongruity, low fidelity, or a deliberately awkward capture, preserve that relationship above realism and plausibility. Do not promote a stylized, composited, inserted, reflected, or screen-contained element into a normal physical object unless it visibly is one.
 - For non-photographic images, adapt the same fidelity rules to the medium: virtual camera, perspective, stylized proportions, edge quality, linework, brush texture, value structure, cel shading, render quality, material treatment, paper/canvas texture, or game-engine look.
+
+## Primary Visual Concept and Perceptual Relationship Fidelity
+
+Before listing visible objects, identify the primary visible concept that makes the image recognizable. Treat this as the highest-priority fidelity target. The primary concept may be an illusion, a mixed-media relationship, a frame-within-frame structure, a scale contrast, an interaction, a deliberately imperfect capture mode, or another visible relationship between elements.
+
+Separate intent from inventory: an inventory lists what objects are present, while intent states what those objects are arranged to make the viewer perceive. When the two diverge, intent governs. Never let a complete object inventory substitute for the perceptual relationship; an image where every object is named but the intended relationship is absent has failed, even if no object is missing.
+
+Describe each concept-critical element by its visual role, not only by its object category. Examples of roles include replacement surface, continuation plane, occluder, scale anchor, foreground interaction target, UI frame, reflection, inserted image, stylized overlay, physical prop, or medium-contrast anchor.
+
+If two visible elements are meant to read as one continuous subject, preserve the alignment, scale, contour continuation, crop boundary, and feature proportions that create that perception. If one visible element replaces part of another subject, describe exactly which part is replaced, how the replacement aligns, and what would break the illusion.
+
+When a replacement, reflection, screen, frame, overlay, occluder, or continuation plane completes another element, write it as a construction recipe rather than a prop list. State what content each surface carries, what hidden or counterpart features the completing surface supplies, and how the union avoids duplicated or missing features across the seam. Preserve shared eye lines, centerlines, contact points, contour junctions, feature scale, crop boundaries, and medium contrast that make the surfaces fuse or interact.
+
+If side, direction, or mirrored/counterpart logic matters, state whether the description uses subject-side or viewer-side perspective and keep that perspective consistent. Do not let the generated result swap which side is visible, duplicate features on both sides, omit required counterpart features, or disconnect matching contours.
+
+If the intended relationship depends on implausibility, uncanniness, low fidelity, mixed rendering styles, a screen-within-screen structure, or scale contrast, preserve that coherence ceiling. Do not turn the relationship into a cleaner, more physically plausible, more realistic, or more unified scene when that would erase the visual premise.
+
+If the image does not contain a special illusion or relationship, do not invent one. In that case, use this section to identify the ordinary main visual premise, such as a specific portrait crop, product arrangement, gesture, environmental mood, or rendering style.
+
+When useful, use normalized coordinates for concept-critical relationships: shared eye lines, centerlines, contour junctions, screen or frame edges, foreground contact points, overlap boundaries, replacement zones, and scale-reference points.
+
+Appearance, body, clothing, and object fidelity serve the primary visual concept and must not outrank it. When descriptive detail competes with the perceptual relationship that makes the image recognizable, preserve the relationship first.
 
 ## Human Subject Fidelity
 
@@ -152,24 +191,26 @@ Write the final answer in English and output only these sections.
 
 Write a polished, detailed standalone image-generation prompt in this order:
 
-1. Overall image type, aspect ratio, orientation, realism level, medium/rendering type, and mood.
-2. Exact composition, crop, subject size, frame placement, bounding box, and approximate coordinates.
-3. Subject face and human appearance fidelity when people are visible.
-4. Subject visible body proportions and physique fidelity when people are visible, including adult calibration locks when relevant and safe.
-5. Exact pose, body orientation, head angle, gaze, shoulder line, torso lean, arms, elbows, wrists, hands, fingers, object grip, legs, stance, weight distribution, occlusion, negative space, crop boundaries, and pose landmark coordinates.
-6. Clothing, accessories, and held objects, including how they reveal, obscure, flatten, soften, follow, compress, stretch over, widen, narrow, or visually define the body or pose.
-7. Background by screen zones: left, right, top, bottom, foreground, midground, and background.
-8. Lighting, atmosphere, color grading, contrast, highlights, shadows, flash behavior if present, and lighting-to-volume effects.
-9. Camera position, distance, height, angle, rotation, lens impression, perspective distortion, subject-to-camera relationship, and perspective effects on apparent proportions.
-10. Focus target, focus accuracy, depth of field, sharpness, bokeh, foreground blur, background blur, low-detail areas, and which planes must remain sharp or blurred.
-11. Motion blur, camera shake, shutter behavior, ghosting, smear direction, low-light exposure, haze, rolling-shutter or slow-shutter effects if visible, and whether blur should be preserved or avoided.
-12. Film/camera/sensor or rendering look: grain, noise, compression, sharpening, halation, vignetting, light leaks, scan texture, dust, scratches, flash snapshot look, smartphone HDR, dynamic range, black-level handling, bright-fabric bloom, dark-fabric absorption, shadow response, highlight rolloff, or non-photographic medium artifacts.
-13. Critical fidelity locks: composition, crop, subject scale, face, calibrated body proportions when relevant, adult chest/upper-torso/waist/hip silhouette when relevant, occlusion, clothing fit, neckline/seams, lighting-to-volume, pose, camera/focus/blur, lighting, color, background, objects, and medium/rendering.
+1. Overall image type, aspect ratio, orientation, realism level, medium/rendering type, mood, and the primary visible concept in the first sentence.
+2. Concept-critical relationships: which elements create the main visual idea, their roles, construction recipe, alignment, overlap, scale relationship, continuity, replacement, completion/missing-side logic, seam or join geometry, feature-scale matching, interaction, medium contrast, coherence or realism ceiling, and what must remain true for the image to read correctly.
+3. Exact composition, crop, subject size, frame placement, bounding box, and approximate coordinates.
+4. Subject face and human appearance fidelity when people are visible.
+5. Subject visible body proportions and physique fidelity when people are visible, including adult calibration locks when relevant and safe.
+6. Exact pose, body orientation, head angle, gaze, shoulder line, torso lean, arms, elbows, wrists, hands, fingers, object grip, legs, stance, weight distribution, occlusion, negative space, crop boundaries, and pose landmark coordinates.
+7. Clothing, accessories, and held objects, including how they reveal, obscure, flatten, soften, follow, compress, stretch over, widen, narrow, or visually define the body or pose.
+8. Background by screen zones: left, right, top, bottom, foreground, midground, and background.
+9. Lighting, atmosphere, color grading, contrast, highlights, shadows, flash behavior if present, and lighting-to-volume effects.
+10. Camera position, distance, height, angle, rotation, lens impression, perspective distortion, subject-to-camera relationship, and perspective effects on apparent proportions.
+11. Focus target, focus accuracy, depth of field, sharpness, bokeh, foreground blur, background blur, low-detail areas, and which planes must remain sharp or blurred.
+12. Motion blur, camera shake, shutter behavior, ghosting, smear direction, low-light exposure, haze, rolling-shutter or slow-shutter effects if visible, and whether blur should be preserved or avoided.
+13. Film/camera/sensor or rendering look: grain, noise, compression, sharpening, halation, vignetting, light leaks, scan texture, dust, scratches, flash snapshot look, smartphone HDR, dynamic range, black-level handling, bright-fabric bloom, dark-fabric absorption, shadow response, highlight rolloff, or non-photographic medium artifacts.
+14. Critical fidelity locks: primary visual concept, perceptual relationships, composition, crop, subject scale, face, calibrated body proportions when relevant, adult chest/upper-torso/waist/hip silhouette when relevant, occlusion, clothing fit, neckline/seams, lighting-to-volume, pose, camera/focus/blur, lighting, color, background, objects, and medium/rendering.
 
 ### NEGATIVE PROMPT:
 
 Write concise, image-specific exclusions tailored to the actual image. Include only relevant drift risks, covering:
 
+- Primary-concept drift and concept-lock failure modes: all objects present but their visual relationship is wrong, concept-critical object treated as a generic prop, intended effect collapsed into separate unrelated objects, replacement/continuation/scale/interactions broken, fused surfaces rendered as separate stacked objects, completion seam misaligned, counterpart or missing-side logic swapped, duplicated, or omitted, feature proportions mismatched across a join, frame-within-frame lost, mixed-media contrast lost, intended implausibility or uncanniness normalized into a plausible realistic scene, stylized/composited/screen-contained element promoted into a normal physical object, ordinary scene replacing the intended visual premise, or a visually separate collage replacing a single integrated illusion.
 - Wrong crop, subject scale, placement, headroom, body crop, object placement, or foreground/midground/background order.
 - Wrong background, extra people, extra objects, duplicated objects, over-detailed blurred background, or wrong location type.
 - Wrong style or medium drift: cartoon, anime, illustration, 3D render, painting, sketch, vector art, glossy commercial look, fake cinematic look, fake vintage look when absent, overprocessed HDR, plastic skin, excessive retouching, AI-smoothed face or body.
@@ -195,6 +236,11 @@ Fill every field with source-specific values:
 - Style/rendering target:
 - Camera/film/rendering target:
 - Lighting/rendering target:
+- Primary visual concept locks:
+- Perceptual relationship locks:
+- Completion/seam continuity locks:
+- Scale/interaction anchor locks:
+- Coherence/realism ceiling locks:
 - Most important fidelity locks:
 - Face fidelity locks:
 - Body-proportion calibration locks:
