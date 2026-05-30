@@ -450,6 +450,11 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             intent_axes=kwargs.pop("intent_axes", None),
             intent_steering=kwargs.pop("intent_steering", None),
             surreal_mode_explicit=kwargs.pop("surreal_mode_explicit", False),
+            semantic_defaulted=kwargs.pop("semantic_defaulted", False),
+            intent_source=kwargs.pop("intent_source", "user"),
+            requested_selection_mode=kwargs.pop("requested_selection_mode", None),
+            batch_context=kwargs.pop("batch_context", None),
+            batch_index=kwargs.pop("batch_index", 0),
         )
 
     def generate_langs(self, preset: str, langs: list[str], seed: int = 1, **kwargs):
@@ -483,6 +488,11 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             intent_axes=kwargs.pop("intent_axes", None),
             intent_steering=kwargs.pop("intent_steering", None),
             surreal_mode_explicit=kwargs.pop("surreal_mode_explicit", False),
+            semantic_defaulted=kwargs.pop("semantic_defaulted", False),
+            intent_source=kwargs.pop("intent_source", "user"),
+            requested_selection_mode=kwargs.pop("requested_selection_mode", None),
+            batch_context=kwargs.pop("batch_context", None),
+            batch_index=kwargs.pop("batch_index", 0),
         )
 
     def fake_gemini_vectors(self, texts, model=None, dimensions=768, api_key=None, **kwargs):
@@ -1383,6 +1393,15 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertEqual(single["source"], "off")
         self.assertEqual([item["text"] for item in single["items"]], ["quiet portrait"])
 
+        default_axis = self.generator.extract_intent_axes(
+            self.generator.DEFAULT_SEMANTIC_INTENT,
+            semantic_axis_mode="auto",
+            intent_source="default",
+        )
+        self.assertEqual(default_axis["source"], "default_full_intent")
+        self.assertEqual(len(default_axis["items"]), 1)
+        self.assertEqual(default_axis["items"][0]["text"], self.generator.DEFAULT_SEMANTIC_INTENT)
+
     def test_semantic_preset_similarity_can_outweigh_base_weight(self):
         context = {"novelty": "medium", "selection_mode": "semantic"}
         close_match = {"id": "cinestill_neon_diner_portrait", "weight": 1.0}
@@ -1586,14 +1605,152 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertEqual(default_args[default_args.index("--selection-mode") + 1], "semantic")
         self.assertIn("--intent", default_args)
         self.assertEqual(default_args[default_args.index("--intent") + 1], wrapper.DEFAULT_SEMANTIC_INTENT)
+        self.assertIn("--default-intent", default_args)
+        self.assertIn("--semantic-default", default_args)
 
         explicit_intent_args = wrapper.build_forward_args(["--intent", "rainy neon night portrait", "--no-negative"])
         self.assertEqual(explicit_intent_args[explicit_intent_args.index("--selection-mode") + 1], "semantic")
         self.assertEqual(explicit_intent_args.count("--intent"), 1)
         self.assertIn("rainy neon night portrait", explicit_intent_args)
+        self.assertNotIn("--default-intent", explicit_intent_args)
+        self.assertNotIn("--semantic-default", explicit_intent_args)
 
         rule_args = wrapper.build_forward_args(["--selection-mode", "rule", "--no-negative"])
         self.assertNotIn("--intent", rule_args)
+        self.assertNotIn("--default-intent", rule_args)
+        self.assertNotIn("--semantic-default", rule_args)
+
+        explicit_axis_args = wrapper.build_forward_args(["--intent-axis", "urban", "--no-negative"])
+        self.assertIn("--intent", explicit_axis_args)
+        self.assertIn("--default-intent", explicit_axis_args)
+        self.assertNotIn("--semantic-default", explicit_axis_args)
+
+    def test_default_semantic_missing_index_falls_back_to_rule(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            missing_index = Path(tmp) / "missing_semantic_index.json"
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(WRAPPER_PATH),
+                    "--semantic-index",
+                    str(missing_index),
+                    "--include-trace",
+                    "--no-negative",
+                ],
+                cwd=ROOT,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn("semantic default fell back to rule mode", result.stderr)
+        payload = json.loads(result.stdout)
+        trace = payload[0]["semantic_trace"]
+        self.assertEqual(trace["selection_mode"], "rule")
+        self.assertEqual(trace["requested_selection_mode"], "semantic")
+        self.assertTrue(trace["semantic_defaulted"])
+        self.assertEqual(trace["intent_source"], "default")
+        self.assertIn("fallback_reason", trace)
+
+    def test_explicit_semantic_missing_index_still_fails(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            missing_index = Path(tmp) / "missing_semantic_index.json"
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(WRAPPER_PATH),
+                    "--selection-mode",
+                    "semantic",
+                    "--semantic-index",
+                    str(missing_index),
+                    "--no-negative",
+                ],
+                cwd=ROOT,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("Semantic index", result.stderr)
+
+    def test_explicit_intent_missing_index_still_fails(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            missing_index = Path(tmp) / "missing_semantic_index.json"
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(WRAPPER_PATH),
+                    "--intent",
+                    "rainy neon portrait",
+                    "--semantic-index",
+                    str(missing_index),
+                    "--no-negative",
+                ],
+                cwd=ROOT,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("Semantic index", result.stderr)
+
+    def test_batch_diversity_penalty_is_soft_and_forced_safe(self):
+        batch_context = self.generator.make_batch_context("semantic", "medium", 3)
+        context = {"batch_context": batch_context}
+        first_penalty, _ = self.generator.batch_diversity_penalty(context, "location", "rainy_neon_alley", [1.0, 0.0])
+        self.generator.record_batch_selection(batch_context, "location", "rainy_neon_alley", [1.0, 0.0])
+        repeated_penalty, summary = self.generator.batch_diversity_penalty(context, "location", "rainy_neon_alley", [1.0, 0.0])
+        forced_penalty, _ = self.generator.batch_diversity_penalty(context, "location", "rainy_neon_alley", [1.0, 0.0], forced=True)
+
+        self.assertEqual(first_penalty, 1.0)
+        self.assertLess(repeated_penalty, 1.0)
+        self.assertGreater(repeated_penalty, 0.0)
+        self.assertEqual(forced_penalty, 1.0)
+        self.assertEqual(summary["exact_count"], 1)
+
+    def test_semantic_batch_trace_records_shared_history(self):
+        semantic_index = self.build_mock_semantic_index()
+        batch_context = self.generator.make_batch_context("semantic", "medium", 2)
+        original_embedder = self.generator.embed_texts_with_gemini
+        self.generator.embed_texts_with_gemini = self.fake_gemini_vectors
+        try:
+            self.generator.set_batch_index(batch_context, 0)
+            first = self.generate(
+                None,
+                seed=55,
+                intent="urban, horror, fantasy, human portrait",
+                selection_mode="semantic",
+                include_trace=True,
+                include_negative=False,
+                semantic_index=semantic_index,
+                gemini_api_key="test-api-key",
+                batch_context=batch_context,
+                batch_index=0,
+            )
+            self.generator.set_batch_index(batch_context, 1)
+            second = self.generate(
+                None,
+                seed=56,
+                intent="urban, horror, fantasy, human portrait",
+                selection_mode="semantic",
+                include_trace=True,
+                include_negative=False,
+                semantic_index=semantic_index,
+                gemini_api_key="test-api-key",
+                batch_context=batch_context,
+                batch_index=1,
+            )
+        finally:
+            self.generator.embed_texts_with_gemini = original_embedder
+
+        self.assertEqual(first["semantic_trace"]["batch_index"], 0)
+        self.assertEqual(second["semantic_trace"]["batch_index"], 1)
+        self.assertTrue(second["semantic_trace"]["batch_diversity"]["enabled"])
+        self.assertGreater(second["semantic_trace"]["batch_history_summary"]["selected_count"], 0)
+        self.assertIn("batch_repetition_penalty", second["semantic_trace"])
 
     def test_llm_polish_strict_is_explicit_and_preserves_prompt_with_trace(self):
         item = self.generate(

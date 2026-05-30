@@ -79,11 +79,17 @@ def build_forward_args(argv: Sequence[str]) -> list[str]:
         args.extend(["--lang", "both"])
     if not has_option(args, "--detail-level"):
         args.extend(["--detail-level", "detailed"])
-    if not has_option(args, "--selection-mode"):
+    selection_mode_defaulted = not has_option(args, "--selection-mode")
+    intent_axis_explicit = has_option(args, "--intent-axis")
+    if selection_mode_defaulted:
         args.extend(["--selection-mode", DEFAULT_SELECTION_MODE])
     selection_mode = option_value(args, "--selection-mode") or DEFAULT_SELECTION_MODE
     if selection_mode in {"semantic", "hybrid"} and not has_option(args, "--intent"):
         args.extend(["--intent", DEFAULT_SEMANTIC_INTENT])
+        if not has_option(args, "--default-intent"):
+            args.append("--default-intent")
+        if selection_mode_defaulted and not intent_axis_explicit and not has_option(args, "--semantic-default"):
+            args.append("--semantic-default")
     if not plain and not has_option(args, "--json-output"):
         args.append("--json-output")
     if not no_negative and not has_option(args, "--include-negative"):

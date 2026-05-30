@@ -123,6 +123,39 @@ SEMANTIC_PROFILE_CONFIGS: Dict[str, Dict[str, float]] = {
     },
 }
 
+BATCH_DIVERSITY_TRACKED_SCOPES = ("preset", "subject", "location", "mood", "surreal_concept")
+BATCH_DIVERSITY_CONFIGS: Dict[str, Dict[str, Any]] = {
+    "low": {
+        "exact_decay": 0.84,
+        "similarity_weight": 0.12,
+        "similarity_threshold": 0.90,
+        "min_penalty": 0.58,
+        "scope_weights": {"preset": 0.75, "location": 0.85, "mood": 0.45, "subject": 0.35, "surreal_concept": 0.35},
+    },
+    "medium": {
+        "exact_decay": 0.66,
+        "similarity_weight": 0.26,
+        "similarity_threshold": 0.88,
+        "min_penalty": 0.38,
+        "scope_weights": {"preset": 1.0, "location": 1.0, "mood": 0.65, "subject": 0.45, "surreal_concept": 0.55},
+    },
+    "high": {
+        "exact_decay": 0.48,
+        "similarity_weight": 0.42,
+        "similarity_threshold": 0.84,
+        "min_penalty": 0.24,
+        "scope_weights": {"preset": 1.2, "location": 1.2, "mood": 1.0, "subject": 0.62, "surreal_concept": 0.82},
+    },
+}
+
+SLOT_TEMPERATURE_MULTIPLIERS: Dict[str, float] = {
+    "mood": 1.28,
+    "surreal_concept": 1.34,
+    "surreal_anchor": 1.28,
+    "texture": 1.24,
+    "light_shape": 1.22,
+}
+
 SEMANTIC_AXIS_FAMILY_KEYWORDS: Dict[str, tuple[str, ...]] = {
     "human": ("human", "person", "people", "portrait", "model", "actor", "commuter", "traveler", "인간", "사람", "인물"),
     "urban": ("urban", "city", "street", "alley", "subway", "neon", "rooftop", "도시", "거리", "골목", "지하철"),
@@ -869,6 +902,7 @@ def extract_intent_axes(
     intent: str,
     explicit_axes: Optional[Sequence[str]] = None,
     semantic_axis_mode: str = "auto",
+    intent_source: str = "user",
 ) -> JsonDict:
     if semantic_axis_mode not in SEMANTIC_AXIS_MODES:
         raise ValueError(f"Invalid semantic_axis_mode '{semantic_axis_mode}'.")
@@ -876,6 +910,9 @@ def extract_intent_axes(
     if explicit:
         source = "explicit"
         axes = explicit
+    elif intent_source == "default":
+        source = "default_full_intent"
+        axes = [clean_intent_axis(intent)]
     elif semantic_axis_mode == "off":
         source = "off"
         axes = [clean_intent_axis(intent)]
@@ -954,6 +991,104 @@ def semantic_axis_coverage_trace(context: JsonDict) -> JsonDict:
     }
 
 
+def make_batch_context(selection_mode: str, novelty: str, total_count: int = 1) -> Optional[JsonDict]:
+    if selection_mode not in {"semantic", "hybrid"} or total_count <= 1:
+        return None
+    config = BATCH_DIVERSITY_CONFIGS.get(novelty, BATCH_DIVERSITY_CONFIGS["medium"])
+    return {
+        "enabled": True,
+        "novelty": novelty,
+        "batch_index": 0,
+        "total_count": total_count,
+        "config": config,
+        "counts": {scope: {} for scope in BATCH_DIVERSITY_TRACKED_SCOPES},
+        "vectors": {scope: [] for scope in BATCH_DIVERSITY_TRACKED_SCOPES},
+        "selected": [],
+    }
+
+
+def set_batch_index(batch_context: Optional[JsonDict], batch_index: int) -> None:
+    if batch_context:
+        batch_context["batch_index"] = batch_index
+
+
+def batch_scope_weight(batch_context: JsonDict, scope: str) -> float:
+    scope_weights = batch_context.get("config", {}).get("scope_weights", {})
+    try:
+        return float(scope_weights.get(scope, 1.0))
+    except (TypeError, ValueError):
+        return 1.0
+
+
+def batch_history_summary(batch_context: Optional[JsonDict]) -> JsonDict:
+    if not batch_context or not batch_context.get("enabled"):
+        return {"enabled": False, "counts": {}, "selected_count": 0}
+    return {
+        "enabled": True,
+        "batch_index": int(batch_context.get("batch_index", 0)),
+        "total_count": int(batch_context.get("total_count", 0)),
+        "novelty": batch_context.get("novelty"),
+        "counts": {
+            scope: dict(sorted((ids or {}).items()))
+            for scope, ids in (batch_context.get("counts", {}) or {}).items()
+        },
+        "selected_count": len(batch_context.get("selected", [])),
+    }
+
+
+def batch_diversity_penalty(
+    context: Optional[JsonDict],
+    scope: str,
+    item_id: str,
+    vector: Sequence[float],
+    forced: bool = False,
+) -> tuple[float, JsonDict]:
+    batch_context = (context or {}).get("batch_context") if context else None
+    if forced or scope not in BATCH_DIVERSITY_TRACKED_SCOPES or not batch_context or not batch_context.get("enabled"):
+        return 1.0, {"scope": scope, "id": item_id, "penalty": 1.0, "reason": "disabled" if not batch_context else "forced_or_untracked"}
+    counts = batch_context.get("counts", {}).get(scope, {})
+    exact_count = int(counts.get(item_id, 0))
+    config = batch_context.get("config", {})
+    scope_weight = batch_scope_weight(batch_context, scope)
+    exact_decay = float(config.get("exact_decay", 0.66))
+    exact_factor = exact_decay ** (exact_count * scope_weight)
+    max_similarity = 0.0
+    for previous in batch_context.get("vectors", {}).get(scope, []):
+        max_similarity = max(max_similarity, cosine_similarity(vector, previous.get("vector", [])))
+    threshold = float(config.get("similarity_threshold", 0.88))
+    similarity_factor = 1.0
+    if max_similarity > threshold:
+        denominator = max(1.0 - threshold, 0.0001)
+        normalized = min(1.0, max(0.0, (max_similarity - threshold) / denominator))
+        similarity_factor = 1.0 - (float(config.get("similarity_weight", 0.26)) * scope_weight * normalized)
+    minimum = float(config.get("min_penalty", 0.38))
+    penalty = max(minimum, min(1.0, exact_factor * similarity_factor))
+    return penalty, {
+        "scope": scope,
+        "id": item_id,
+        "penalty": round(penalty, 4),
+        "exact_count": exact_count,
+        "max_similarity": round(max_similarity, 4),
+    }
+
+
+def record_batch_selection(
+    batch_context: Optional[JsonDict],
+    scope: str,
+    item_id: str,
+    vector: Sequence[float],
+    forced: bool = False,
+) -> None:
+    if forced or scope not in BATCH_DIVERSITY_TRACKED_SCOPES or not batch_context or not batch_context.get("enabled"):
+        return
+    counts = batch_context.setdefault("counts", {}).setdefault(scope, {})
+    counts[item_id] = int(counts.get(item_id, 0)) + 1
+    batch_context.setdefault("vectors", {}).setdefault(scope, []).append({"id": item_id, "vector": list(vector)})
+    batch_context.setdefault("selected", []).append(
+        {"batch_index": int(batch_context.get("batch_index", 0)), "scope": scope, "id": item_id}
+    )
+
+
 def update_axis_coverage(context: JsonDict, slot: str, entry_id: str, vector: Sequence[float]) -> None:
     coverage = context.get("axis_coverage")
     if not coverage or not vector:
@@ -1000,6 +1135,9 @@ def make_semantic_context(
     semantic_axis_mode: str = "auto",
     intent_axes: Optional[Sequence[str]] = None,
     intent_steering: Optional[str] = None,
+    intent_source: str = "user",
+    semantic_defaulted: bool = False,
+    batch_context: Optional[JsonDict] = None,
 ) -> Optional[JsonDict]:
     resolved_filter, resolved_weight, resolved_profile = resolve_semantic_runtime_options(
         selection_mode,
@@ -1023,7 +1161,7 @@ def make_semantic_context(
         semantic_dimensions,
     )
     dimensions = int(index.get("embedding_dimensions", semantic_dimensions))
-    axis_payload = extract_intent_axes(intent, intent_axes, semantic_axis_mode)
+    axis_payload = extract_intent_axes(intent, intent_axes, semantic_axis_mode, intent_source)
     query_vector = embed_single_semantic_text(
         intent,
         model=semantic_model,
@@ -1057,6 +1195,8 @@ def make_semantic_context(
     return {
         "selection_mode": selection_mode,
         "intent": intent,
+        "intent_source": intent_source,
+        "semantic_defaulted": semantic_defaulted,
         "novelty": novelty,
         "filter_strictness": resolved_filter,
         "semantic_weight": resolved_weight,
@@ -1081,6 +1221,8 @@ def make_semantic_context(
         "hard_rejected_count": 0,
         "hard_rejected": [],
         "soft_out_of_filter_selected_count": 0,
+        "batch_context": batch_context,
+        "batch_repetition_penalty": [],
         "dictionary_hash": index.get("dictionary_hash"),
         "semantic_text_recipe": index.get("semantic_text_recipe"),
         "embedding_provider": index.get("provider", SEMANTIC_PROVIDER),
@@ -1267,6 +1409,8 @@ def semantic_candidate_weight(
         redundancy = max(cosine_similarity(vector, picked) for picked in context["picked_vectors"])
     temperature, novelty_scale = novelty_settings(context["novelty"])
     temperature *= semantic_profile_config(str(context.get("semantic_profile", "balanced")))["temperature_multiplier"]
+    slot_temperature_multiplier = SLOT_TEMPERATURE_MULTIPLIERS.get(slot, 1.0)
+    temperature *= slot_temperature_multiplier
     novelty_weight = 0.0
     try:
         novelty_weight = float(item.get("novelty_weight", 0.0))
@@ -1290,6 +1434,8 @@ def semantic_candidate_weight(
     base_power = max(0.15, 1.0 - (semantic_weight * 0.85))
     weighted = (max(item_base_weight(item), 0.01) ** base_power) * (semantic_multiplier ** semantic_weight)
     weighted *= semantic_filter_factor(context, filter_match)
+    batch_penalty, batch_summary = batch_diversity_penalty(context, slot, str(item.get("id")), vector)
+    weighted *= batch_penalty
     return weighted, {
         "id": item.get("id"),
         "weight": round(weighted, 6),
@@ -1299,7 +1445,9 @@ def semantic_candidate_weight(
         "facet": round(facet_score, 4),
         "contextual": round(contextual_score, 4),
         "relevance": round(relevance, 4),
+        "temperature_multiplier": round(slot_temperature_multiplier, 4),
         "redundancy": round(redundancy, 4),
+        "batch_penalty": batch_summary,
         "axis": {
             "axis_max": round(axis_max, 4),
             "axis_max_text": axis.get("axis_max_text"),
@@ -1543,6 +1691,10 @@ def semantic_weighted_choice(
     if context.get("filter_strictness") == "soft" and selected_filter is False:
         context["soft_out_of_filter_selected_count"] = int(context.get("soft_out_of_filter_selected_count", 0)) + 1
     top_scores = sorted(scored, key=lambda item: item["weight"], reverse=True)[:5]
+    summary_by_id = {str(item.get("id")): item for item in scored}
+    selected_batch_penalty = summary_by_id.get(selected_id, {}).get("batch_penalty")
+    if selected_batch_penalty:
+        context.setdefault("batch_repetition_penalty", []).append(selected_batch_penalty)
     context["slot_scores"].append(
         {
             "slot": slot,
@@ -1551,6 +1703,7 @@ def semantic_weighted_choice(
             "candidate_count": len(candidates),
             "score_window": score_window,
             "selected_filter": "none" if selected_filter is None else ("in" if selected_filter else "out"),
+            "batch_penalty": selected_batch_penalty,
         }
     )
     return selected
@@ -1610,7 +1763,9 @@ def choose_preset(
             vector = semantic_vector(semantic_context, semantic_entry_key("preset", preset))
             score, score_summary = semantic_preset_score_breakdown(vector, semantic_context)
             weight = semantic_preset_candidate_weight(preset, score, semantic_context)
-            summary = {"id": preset.get("id"), "weight": round(weight, 6), **score_summary}
+            batch_penalty, batch_summary = batch_diversity_penalty(semantic_context, "preset", str(preset.get("id")), vector)
+            weight *= batch_penalty
+            summary = {"id": preset.get("id"), "weight": round(weight, 6), "batch_penalty": batch_summary, **score_summary}
             scored_presets.append((preset, weight, score, summary))
             summaries.append(summary)
         rejected_count = sum(rejected_by_reason.values())
@@ -1644,6 +1799,9 @@ def choose_preset(
         else:
             selected = weighted_choice(presets, rng)
         summary_by_id = {str(summary.get("id")): summary for summary in summaries}
+        selected_batch_penalty = summary_by_id.get(str(selected.get("id")), {}).get("batch_penalty")
+        if selected_batch_penalty:
+            semantic_context.setdefault("batch_repetition_penalty", []).append(selected_batch_penalty)
         semantic_context["preset_score"] = {
             "selected": selected.get("id"),
             "selected_summary": summary_by_id.get(str(selected.get("id")), {}),
@@ -1663,6 +1821,41 @@ def choose_preset(
         return selected
 
     return weighted_choice(presets, rng)
+
+
+def record_batch_generation(
+    semantic_context: Optional[JsonDict],
+    preset: JsonDict,
+    picked: Dict[str, Entry],
+    forced_choices: Optional[Dict[str, List[str]]] = None,
+    preset_forced: bool = False,
+) -> None:
+    if not semantic_context:
+        return
+    batch_context = semantic_context.get("batch_context")
+    if not batch_context or not batch_context.get("enabled"):
+        return
+    preset_id = str(preset.get("id"))
+    record_batch_selection(
+        batch_context,
+        "preset",
+        preset_id,
+        semantic_vector(semantic_context, semantic_entry_key("preset", preset)),
+        forced=preset_forced,
+    )
+    forced_slots = set((forced_choices or {}).keys())
+    for slot in BATCH_DIVERSITY_TRACKED_SCOPES:
+        if slot == "preset" or slot in forced_slots:
+            continue
+        entry = picked.get(slot)
+        if not entry:
+            continue
+        record_batch_selection(
+            batch_context,
+            slot,
+            str(entry.get("id")),
+            semantic_vector(semantic_context, semantic_entry_key("slot", entry, slot)),
+        )
 
 
 # -----------------------------------------------------------------------------
@@ -3069,27 +3262,47 @@ def generate_once(
     intent_axes: Optional[Sequence[str]] = None,
     intent_steering: Optional[str] = None,
     surreal_mode_explicit: bool = False,
+    semantic_defaulted: bool = False,
+    intent_source: str = "user",
+    requested_selection_mode: Optional[str] = None,
+    batch_context: Optional[JsonDict] = None,
+    batch_index: int = 0,
 ) -> JsonDict:
+    requested_selection_mode = requested_selection_mode or selection_mode
+    effective_selection_mode = selection_mode
+    fallback_reason: Optional[str] = None
     if intent and selection_mode == "rule":
         raise ValueError("--intent cannot be used with --selection-mode rule")
-    semantic_context = make_semantic_context(
-        data,
-        intent,
-        selection_mode,
-        novelty,
-        filter_strictness,
-        semantic_weight,
-        semantic_profile,
-        semantic_index_path,
-        semantic_index,
-        semantic_provider,
-        semantic_model,
-        semantic_dimensions,
-        gemini_api_key,
-        semantic_axis_mode,
-        intent_axes,
-        intent_steering,
-    )
+    try:
+        semantic_context = make_semantic_context(
+            data,
+            intent,
+            selection_mode,
+            novelty,
+            filter_strictness,
+            semantic_weight,
+            semantic_profile,
+            semantic_index_path,
+            semantic_index,
+            semantic_provider,
+            semantic_model,
+            semantic_dimensions,
+            gemini_api_key,
+            semantic_axis_mode,
+            intent_axes,
+            intent_steering,
+            intent_source,
+            semantic_defaulted,
+            batch_context,
+        )
+    except Exception as exc:
+        if semantic_defaulted and selection_mode != "rule":
+            fallback_reason = str(exc)
+            effective_selection_mode = "rule"
+            semantic_context = None
+            print(f"Warning: semantic default fell back to rule mode: {fallback_reason}", file=sys.stderr)
+        else:
+            raise
     preset = choose_preset(data, rng, preset_id, semantic_context)
     picked: Dict[str, Entry] = {}
 
@@ -3121,6 +3334,14 @@ def generate_once(
 
     if detail_level == "detailed":
         reinforce_detail_slots(data, preset, rng, picked, forced_choices, semantic_context)
+
+    record_batch_generation(
+        semantic_context,
+        preset,
+        picked,
+        forced_choices=forced_choices,
+        preset_forced=bool(preset_id),
+    )
 
     result: JsonDict = {
         "preset_id": preset.get("id"),
@@ -3173,8 +3394,11 @@ def generate_once(
 
     if include_trace and semantic_context:
         result["semantic_trace"] = {
-            "selection_mode": selection_mode,
+            "selection_mode": effective_selection_mode,
+            "requested_selection_mode": requested_selection_mode,
             "intent": intent,
+            "intent_source": semantic_context.get("intent_source", intent_source),
+            "semantic_defaulted": bool(semantic_context.get("semantic_defaulted", semantic_defaulted)),
             "novelty": novelty,
             "filter_strictness": semantic_context.get("filter_strictness"),
             "semantic_weight": semantic_context.get("semantic_weight"),
@@ -3195,11 +3419,23 @@ def generate_once(
             "soft_out_of_filter_selected_count": semantic_context.get("soft_out_of_filter_selected_count", 0),
             "preset_score": semantic_context.get("preset_score"),
             "slot_scores": semantic_context.get("slot_scores", []),
+            "batch_index": batch_index,
+            "batch_diversity": {
+                "enabled": bool((semantic_context.get("batch_context") or {}).get("enabled")),
+                "tracked_scopes": list(BATCH_DIVERSITY_TRACKED_SCOPES),
+                "novelty": novelty,
+            },
+            "batch_repetition_penalty": semantic_context.get("batch_repetition_penalty", []),
+            "batch_history_summary": batch_history_summary(semantic_context.get("batch_context")),
         }
     elif include_trace:
         result["semantic_trace"] = {
-            "selection_mode": selection_mode,
+            "selection_mode": effective_selection_mode,
+            "requested_selection_mode": requested_selection_mode,
             "intent": intent,
+            "intent_source": intent_source,
+            "semantic_defaulted": semantic_defaulted,
+            "fallback_reason": fallback_reason,
             "novelty": novelty,
             "filter_strictness": filter_strictness,
             "semantic_weight": semantic_weight,
@@ -3211,6 +3447,14 @@ def generate_once(
             "surreal_activation_reason": "none",
             "surreal_activation_active": False,
             "slot_scores": [],
+            "batch_index": batch_index,
+            "batch_diversity": {
+                "enabled": bool((batch_context or {}).get("enabled")),
+                "tracked_scopes": list(BATCH_DIVERSITY_TRACKED_SCOPES),
+                "novelty": novelty,
+            },
+            "batch_repetition_penalty": [],
+            "batch_history_summary": batch_history_summary(batch_context),
         }
 
     return result
@@ -3290,6 +3534,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     parser.add_argument("--trend-layer", choices=TREND_LAYERS, default="off", help="Append a social trend layout layer without changing the base photo preset.")
     parser.add_argument("--intent", default=None, help="Free-text visual intent for semantic selection. A broad photo intent is used when semantic/hybrid mode has no explicit intent.")
     parser.add_argument("--selection-mode", choices=SELECTION_MODES, default=DEFAULT_SELECTION_MODE, help="Selection mode. semantic is the default; use rule for the original deterministic weighted path.")
+    parser.add_argument("--default-intent", action="store_true", help=argparse.SUPPRESS)
+    parser.add_argument("--semantic-default", action="store_true", help=argparse.SUPPRESS)
     parser.add_argument("--novelty", choices=NOVELTY_LEVELS, default="medium", help="Semantic sampling diversity level. Used only with semantic or hybrid selection.")
     parser.add_argument("--filter-strictness", choices=FILTER_STRICTNESS_MODES, default=None, help="Preset filter behavior for semantic/hybrid selection. Defaults to soft for semantic and hard for hybrid/rule.")
     parser.add_argument("--semantic-weight", type=float, default=None, help="0..1 blend weight for semantic scoring. Defaults by selection mode.")
@@ -3338,11 +3584,27 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         raise ValueError("--n must be at least 1")
 
     selection_mode = args.selection_mode
+    selection_mode_explicit = has_cli_option(raw_args, "--selection-mode")
+    intent_explicit = has_cli_option(raw_args, "--intent")
+    intent_axis_explicit = bool(args.intent_axes)
     resolved_intent = args.intent
     if args.intent and selection_mode == "rule":
         raise ValueError("--intent cannot be used with --selection-mode rule")
+    semantic_defaulted = bool(
+        args.semantic_default
+        or (
+            selection_mode == DEFAULT_SELECTION_MODE
+            and not selection_mode_explicit
+            and not intent_explicit
+            and not intent_axis_explicit
+        )
+    )
+    intent_source = "user"
     if selection_mode != "rule" and not resolved_intent:
         resolved_intent = DEFAULT_SEMANTIC_INTENT
+        intent_source = "default"
+    elif selection_mode != "rule" and resolved_intent == DEFAULT_SEMANTIC_INTENT and (args.default_intent or semantic_defaulted or not intent_explicit):
+        intent_source = "default"
     filter_strictness, semantic_weight, semantic_profile = resolve_semantic_runtime_options(
         selection_mode,
         args.filter_strictness,
@@ -3356,41 +3618,49 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         if candidate.exists():
             semantic_index_path = str(candidate)
 
-    results = [
-        generate_once(
-            data=data,
-            rng=rng,
-            preset_id=args.preset,
-            langs=langs,
-            include_negative=args.include_negative,
-            negative_count=args.negative_count,
-            include_choices=args.include_choices,
-            forced_choices=forced_choices,
-            priority_bias=args.priority_bias,
-            detail_level=args.detail_level,
-            surreal_mode=args.surreal_mode,
-            surreal_probability=args.surreal_probability,
-            surreal_intensity=args.surreal_intensity,
-            reference_edit_mode=args.reference_edit_mode,
-            trend_layer=args.trend_layer,
-            intent=resolved_intent,
-            selection_mode=selection_mode,
-            novelty=args.novelty,
-            filter_strictness=filter_strictness,
-            semantic_weight=semantic_weight,
-            semantic_profile=semantic_profile,
-            semantic_axis_mode=args.semantic_axis_mode,
-            intent_axes=args.intent_axes,
-            intent_steering=args.intent_steering,
-            surreal_mode_explicit=has_cli_option(raw_args, "--surreal-mode"),
-            include_trace=args.include_trace,
-            llm_polish=args.llm_polish,
-            semantic_index_path=semantic_index_path,
-            semantic_model=args.semantic_model,
-            semantic_dimensions=args.semantic_dimensions,
+    batch_context = make_batch_context(selection_mode, args.novelty, args.n)
+    results = []
+    for batch_index in range(args.n):
+        set_batch_index(batch_context, batch_index)
+        results.append(
+            generate_once(
+                data=data,
+                rng=rng,
+                preset_id=args.preset,
+                langs=langs,
+                include_negative=args.include_negative,
+                negative_count=args.negative_count,
+                include_choices=args.include_choices,
+                forced_choices=forced_choices,
+                priority_bias=args.priority_bias,
+                detail_level=args.detail_level,
+                surreal_mode=args.surreal_mode,
+                surreal_probability=args.surreal_probability,
+                surreal_intensity=args.surreal_intensity,
+                reference_edit_mode=args.reference_edit_mode,
+                trend_layer=args.trend_layer,
+                intent=resolved_intent,
+                selection_mode=selection_mode,
+                novelty=args.novelty,
+                filter_strictness=filter_strictness,
+                semantic_weight=semantic_weight,
+                semantic_profile=semantic_profile,
+                semantic_axis_mode=args.semantic_axis_mode,
+                intent_axes=args.intent_axes,
+                intent_steering=args.intent_steering,
+                surreal_mode_explicit=has_cli_option(raw_args, "--surreal-mode"),
+                semantic_defaulted=semantic_defaulted,
+                intent_source=intent_source,
+                requested_selection_mode=selection_mode,
+                batch_context=batch_context,
+                batch_index=batch_index,
+                include_trace=args.include_trace,
+                llm_polish=args.llm_polish,
+                semantic_index_path=semantic_index_path,
+                semantic_model=args.semantic_model,
+                semantic_dimensions=args.semantic_dimensions,
+            )
         )
-        for _ in range(args.n)
-    ]
 
     if args.json_output:
         print(json.dumps(results, ensure_ascii=False, indent=2))

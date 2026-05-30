@@ -14,9 +14,13 @@ from typing import Any, Dict, List, Sequence
 from prompt_generator import (
     DEFAULT_SEMANTIC_DIMENSIONS,
     SEMANTIC_MODEL_ID,
+    SEMANTIC_TEXT_RECIPE_VERSION,
     build_semantic_index_payload,
     generate_once,
     load_json,
+    make_batch_context,
+    set_batch_index,
+    validate_semantic_index_metadata,
 )
 
 
@@ -79,7 +83,15 @@ MULTI_AXIS_PRESET_GUARDS: List[JsonDict] = [
 ]
 
 MULTI_AXIS_COVERAGE_CASES: List[JsonDict] = [
-    {"intent": "urban, horror, fantasy, human portrait", "runs": 10, "minimum_subject_diversity": 3}
+    {
+        "intent": "urban, horror, fantasy, human portrait",
+        "runs": 10,
+        "minimum_subject_diversity": 3,
+        "minimum_preset_diversity": 3,
+        "minimum_location_diversity": 4,
+        "minimum_mood_diversity": 2,
+        "minimum_surreal_concept_diversity": 3,
+    }
 ]
 
 
@@ -128,7 +140,25 @@ def has_urban_location(result: JsonDict) -> bool:
 
 
 def has_horror_atmosphere(result: JsonDict) -> bool:
-    horror_terms = {"horror", "fear", "nightmare", "terror", "eerie", "uncanny", "tense", "noir", "gothic", "dark", "suspense"}
+    horror_terms = {
+        "horror",
+        "fear",
+        "nightmare",
+        "terror",
+        "eerie",
+        "uncanny",
+        "tense",
+        "noir",
+        "gothic",
+        "dark",
+        "suspense",
+        "dread",
+        "ritual",
+        "occult",
+        "liminal",
+        "haunted",
+        "panic",
+    }
     for slot in ("mood", "lighting", "light_shape", "weather", "color", "texture"):
         choice = choice_payload(result, slot)
         tags = set(choice.get("tags", [])) | set(choice.get("kind", []))
@@ -136,6 +166,40 @@ def has_horror_atmosphere(result: JsonDict) -> bool:
         if tags & horror_terms or any(term in blob for term in horror_terms):
             return True
     return False
+
+
+def horror_terms_in_result(result: JsonDict) -> set[str]:
+    horror_terms = {
+        "horror",
+        "fear",
+        "nightmare",
+        "terror",
+        "eerie",
+        "uncanny",
+        "tense",
+        "noir",
+        "gothic",
+        "dark",
+        "suspense",
+        "dread",
+        "ritual",
+        "occult",
+        "liminal",
+        "haunted",
+        "panic",
+        "shadow",
+        "fog",
+        "grime",
+        "decay",
+    }
+    found: set[str] = set()
+    for slot in ("mood", "lighting", "light_shape", "weather", "color", "texture"):
+        choice = choice_payload(result, slot)
+        tags = set(choice.get("tags", [])) | set(choice.get("kind", []))
+        blob = text_blob(choice.get("id"), choice.get("en"), choice.get("ko"))
+        found |= tags & horror_terms
+        found |= {term for term in horror_terms if term in blob}
+    return found
 
 
 def has_surreal_layer(result: JsonDict) -> bool:
@@ -266,10 +330,13 @@ def evaluate_multi_axis_coverage(
     for case_index, case in enumerate(cases):
         runs = int(case.get("runs", 10))
         rows = []
+        rng = random.Random(seed + 2000 + (case_index * 100))
+        batch_context = make_batch_context("semantic", "medium", runs)
         for run_index in range(runs):
+            set_batch_index(batch_context, run_index)
             result = generate_once(
                 data=data,
-                rng=random.Random(seed + 2000 + (case_index * 100) + run_index),
+                rng=rng,
                 preset_id=None,
                 langs=["en"],
                 include_negative=False,
@@ -282,6 +349,8 @@ def evaluate_multi_axis_coverage(
                 include_trace=True,
                 semantic_index=semantic_index,
                 gemini_api_key=gemini_api_key,
+                batch_context=batch_context,
+                batch_index=run_index,
             )
             coverage = {
                 "human_subject": has_human_subject(result),
@@ -297,6 +366,7 @@ def evaluate_multi_axis_coverage(
                     "mood": choice_payload(result, "mood").get("id"),
                     "surreal_concept": choice_payload(result, "surreal_concept").get("id"),
                     "coverage": coverage,
+                    "horror_terms": sorted(horror_terms_in_result(result)),
                 }
             )
         category_rates = {
@@ -304,15 +374,39 @@ def evaluate_multi_axis_coverage(
             for key in ("human_subject", "urban_location", "horror_atmosphere", "surreal_layer")
         }
         unique_subjects = len({row.get("subject") for row in rows if row.get("subject")})
+        unique_presets = len({row.get("preset_id") for row in rows if row.get("preset_id")})
+        unique_locations = len({row.get("location") for row in rows if row.get("location")})
+        unique_moods = len({row.get("mood") for row in rows if row.get("mood")})
+        unique_surreal_concepts = len({row.get("surreal_concept") for row in rows if row.get("surreal_concept")})
+        unique_horror_terms = sorted({term for row in rows for term in row.get("horror_terms", [])})
+        minimum_subjects = int(case.get("minimum_subject_diversity", 1))
+        minimum_presets = int(case.get("minimum_preset_diversity", 1))
+        minimum_locations = int(case.get("minimum_location_diversity", 1))
+        minimum_moods = int(case.get("minimum_mood_diversity", 1))
+        minimum_surreal = int(case.get("minimum_surreal_concept_diversity", 1))
         results.append(
             {
                 "intent": case["intent"],
                 "runs": runs,
                 "category_rates": category_rates,
                 "unique_subjects": unique_subjects,
-                "minimum_subject_diversity": int(case.get("minimum_subject_diversity", 1)),
+                "unique_presets": unique_presets,
+                "unique_locations": unique_locations,
+                "unique_moods": unique_moods,
+                "unique_surreal_concepts": unique_surreal_concepts,
+                "unique_horror_terms": len(unique_horror_terms),
+                "horror_terms": unique_horror_terms,
+                "minimum_subject_diversity": minimum_subjects,
+                "minimum_preset_diversity": minimum_presets,
+                "minimum_location_diversity": minimum_locations,
+                "minimum_mood_diversity": minimum_moods,
+                "minimum_surreal_concept_diversity": minimum_surreal,
                 "passed": all(rate >= 0.9 for rate in category_rates.values())
-                and unique_subjects >= int(case.get("minimum_subject_diversity", 1)),
+                and unique_subjects >= minimum_subjects
+                and unique_presets >= minimum_presets
+                and unique_locations >= minimum_locations
+                and unique_moods >= minimum_moods
+                and unique_surreal_concepts >= minimum_surreal,
                 "results": rows,
             }
         )
@@ -331,10 +425,34 @@ def main() -> int:
     parser.add_argument("--limit", type=int, default=0, help="Limit golden cases for a quick run.")
     parser.add_argument("--mock-embeddings", action="store_true", help="Use deterministic mock embeddings for CI structure checks, not quality evaluation.")
     parser.add_argument("--dry-run", action="store_true", help="Print case counts and exit without generating prompts.")
+    parser.add_argument("--check-index", action="store_true", help="Validate semantic index metadata without embedding API calls.")
     args = parser.parse_args()
 
     data = load_json(args.tags)
     cases = GOLDEN_CASES[: args.limit] if args.limit else GOLDEN_CASES
+    if args.check_index:
+        semantic_index = json.loads(Path(args.semantic_index).read_text(encoding="utf-8"))
+        validate_semantic_index_metadata(
+            semantic_index,
+            data,
+            model=SEMANTIC_MODEL_ID,
+            dimensions=DEFAULT_SEMANTIC_DIMENSIONS,
+        )
+        print(
+            json.dumps(
+                {
+                    "status": "ok",
+                    "dictionary_hash": semantic_index.get("dictionary_hash"),
+                    "semantic_text_recipe": semantic_index.get("semantic_text_recipe"),
+                    "expected_semantic_text_recipe": SEMANTIC_TEXT_RECIPE_VERSION,
+                    "embedding_model": semantic_index.get("embedding_model"),
+                    "embedding_dimensions": semantic_index.get("embedding_dimensions"),
+                    "entry_count": len(semantic_index.get("entries", {})),
+                },
+                indent=2,
+            )
+        )
+        return 0
     if args.dry_run:
         print(
             json.dumps(
