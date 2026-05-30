@@ -120,6 +120,7 @@ Evaluate semantic retrieval behavior:
 ```bash
 python3 skills/photo-prompt-image-generator/scripts/eval_semantic.py --dry-run
 python3 skills/photo-prompt-image-generator/scripts/eval_semantic.py --mock-embeddings --limit 3
+python3 skills/photo-prompt-image-generator/scripts/eval_semantic.py --diversity-check --limit 1
 ```
 
 List virtual recipe presets:

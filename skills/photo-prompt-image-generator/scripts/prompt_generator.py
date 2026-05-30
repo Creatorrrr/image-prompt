@@ -82,6 +82,19 @@ SEMANTIC_PROFILE_CONFIGS: Dict[str, Dict[str, float]] = {
         "preset_axis_floor_weight": 0.30,
         "axis_coverage_target": 0.70,
         "axis_coverage_weight": 0.14,
+        "must_cover_weight": 0.30,
+        "cliche_penalty_weight": 0.18,
+        "routed_axis_floor": 0.16,
+        "routed_axis_floor_penalty": 0.58,
+        "coherence_conflict_penalty": 0.38,
+        "coherence_strong_boost": 1.22,
+        "coherence_ambient_boost": 1.06,
+        "cross_slot_affinity_weight": 0.12,
+        "contextual_redundancy_relief": 0.18,
+        "weak_horror_compensation_boost": 1.34,
+        "preset_family_strong_bonus": 0.045,
+        "preset_family_ambient_bonus": 0.015,
+        "preset_family_missing_penalty": 0.085,
         "slot_window": 0.08,
         "slot_candidate_limit": 5,
         "slot_weight_floor": 0.86,
@@ -98,6 +111,19 @@ SEMANTIC_PROFILE_CONFIGS: Dict[str, Dict[str, float]] = {
         "preset_axis_floor_weight": 0.20,
         "axis_coverage_target": 0.68,
         "axis_coverage_weight": 0.22,
+        "must_cover_weight": 0.42,
+        "cliche_penalty_weight": 0.24,
+        "routed_axis_floor": 0.10,
+        "routed_axis_floor_penalty": 0.68,
+        "coherence_conflict_penalty": 0.45,
+        "coherence_strong_boost": 1.18,
+        "coherence_ambient_boost": 1.05,
+        "cross_slot_affinity_weight": 0.16,
+        "contextual_redundancy_relief": 0.24,
+        "weak_horror_compensation_boost": 1.42,
+        "preset_family_strong_bonus": 0.035,
+        "preset_family_ambient_bonus": 0.012,
+        "preset_family_missing_penalty": 0.065,
         "slot_window": 0.14,
         "slot_candidate_limit": 8,
         "slot_weight_floor": 0.82,
@@ -114,6 +140,19 @@ SEMANTIC_PROFILE_CONFIGS: Dict[str, Dict[str, float]] = {
         "preset_axis_floor_weight": 0.15,
         "axis_coverage_target": 0.64,
         "axis_coverage_weight": 0.28,
+        "must_cover_weight": 0.50,
+        "cliche_penalty_weight": 0.18,
+        "routed_axis_floor": 0.02,
+        "routed_axis_floor_penalty": 0.78,
+        "coherence_conflict_penalty": 0.62,
+        "coherence_strong_boost": 1.12,
+        "coherence_ambient_boost": 1.03,
+        "cross_slot_affinity_weight": 0.20,
+        "contextual_redundancy_relief": 0.30,
+        "weak_horror_compensation_boost": 1.50,
+        "preset_family_strong_bonus": 0.025,
+        "preset_family_ambient_bonus": 0.008,
+        "preset_family_missing_penalty": 0.035,
         "slot_window": 0.24,
         "slot_candidate_limit": 14,
         "slot_weight_floor": 0.72,
@@ -123,37 +162,124 @@ SEMANTIC_PROFILE_CONFIGS: Dict[str, Dict[str, float]] = {
     },
 }
 
-BATCH_DIVERSITY_TRACKED_SCOPES = ("preset", "subject", "location", "mood", "surreal_concept")
+BATCH_DIVERSITY_TRACKED_SCOPES = (
+    "preset",
+    "subject",
+    "subject_group",
+    "location",
+    "location_tone",
+    "lighting",
+    "light_type",
+    "light_shape",
+    "genre",
+    "action",
+    "style",
+    "color",
+    "texture",
+    "lens",
+    "film_emulation",
+    "weather",
+    "camera_type",
+    "mood",
+    "surreal_concept",
+)
 BATCH_DIVERSITY_CONFIGS: Dict[str, Dict[str, Any]] = {
     "low": {
         "exact_decay": 0.84,
         "similarity_weight": 0.12,
         "similarity_threshold": 0.90,
         "min_penalty": 0.58,
-        "scope_weights": {"preset": 0.75, "location": 0.85, "mood": 0.45, "subject": 0.35, "surreal_concept": 0.35},
+        "scope_weights": {
+            "preset": 0.75,
+            "location": 0.85,
+            "location_tone": 0.35,
+            "lighting": 0.28,
+            "mood": 0.45,
+            "subject": 0.35,
+            "subject_group": 0.55,
+            "surreal_concept": 0.35,
+        },
     },
     "medium": {
         "exact_decay": 0.66,
         "similarity_weight": 0.26,
         "similarity_threshold": 0.88,
         "min_penalty": 0.38,
-        "scope_weights": {"preset": 1.0, "location": 1.0, "mood": 0.65, "subject": 0.45, "surreal_concept": 0.55},
+        "scope_weights": {
+            "preset": 1.0,
+            "location": 1.0,
+            "location_tone": 0.55,
+            "lighting": 0.55,
+            "mood": 0.65,
+            "subject": 0.45,
+            "subject_group": 0.85,
+            "surreal_concept": 0.55,
+        },
     },
     "high": {
         "exact_decay": 0.48,
         "similarity_weight": 0.42,
         "similarity_threshold": 0.84,
         "min_penalty": 0.24,
-        "scope_weights": {"preset": 1.2, "location": 1.2, "mood": 1.0, "subject": 0.62, "surreal_concept": 0.82},
+        "scope_weights": {
+            "preset": 1.2,
+            "location": 1.2,
+            "location_tone": 0.85,
+            "lighting": 0.85,
+            "mood": 1.0,
+            "subject": 0.62,
+            "subject_group": 1.15,
+            "surreal_concept": 0.82,
+        },
     },
 }
 
+CROSS_SLOT_AFFINITY_CONTEXT_SLOTS: Dict[str, tuple[str, ...]] = {
+    "lighting": ("location", "time_of_day", "weather", "mood"),
+    "light_type": ("location", "time_of_day", "weather", "mood", "lighting"),
+    "light_shape": ("location", "time_of_day", "weather", "mood", "lighting"),
+    "color": ("location", "time_of_day", "weather", "mood", "lighting"),
+    "texture": ("location", "weather", "mood", "lighting", "color"),
+    "wardrobe_style": ("subject", "location", "aesthetic_trend"),
+    "makeup_style": ("subject", "location", "aesthetic_trend", "wardrobe_style"),
+    "surreal_anchor": ("surreal_concept", "location"),
+}
+
+WEAK_HORROR_COMPENSATION_SLOTS = ("lighting", "light_shape", "weather", "texture", "color")
+
 SLOT_TEMPERATURE_MULTIPLIERS: Dict[str, float] = {
     "mood": 1.28,
+    "action": 1.18,
+    "genre": 1.12,
+    "style": 1.18,
+    "color": 1.26,
+    "lens": 1.16,
+    "lighting": 1.16,
+    "light_type": 1.18,
+    "film_emulation": 1.22,
+    "weather": 1.16,
     "surreal_concept": 1.34,
     "surreal_anchor": 1.28,
     "texture": 1.24,
     "light_shape": 1.22,
+}
+
+COHERENT_DIVERSITY_SLOTS = {
+    "genre",
+    "action",
+    "style",
+    "color",
+    "texture",
+    "lens",
+    "lighting",
+    "light_type",
+    "light_shape",
+    "film_emulation",
+    "weather",
+    "camera_type",
+    "composition",
+    "motion",
+    "focus",
 }
 
 SEMANTIC_AXIS_FAMILY_KEYWORDS: Dict[str, tuple[str, ...]] = {
@@ -161,6 +287,13 @@ SEMANTIC_AXIS_FAMILY_KEYWORDS: Dict[str, tuple[str, ...]] = {
     "urban": ("urban", "city", "street", "alley", "subway", "neon", "rooftop", "도시", "거리", "골목", "지하철"),
     "horror": ("horror", "fear", "nightmare", "terror", "scary", "eerie", "uncanny", "noir", "gothic", "공포", "악몽", "두려움"),
     "fantasy": ("fantasy", "magic", "magical", "surreal", "dream", "impossible", "환상", "마법", "초현실"),
+    "product": ("product", "commercial", "packshot", "catalog", "cpg", "제품", "상품", "커머셜"),
+    "jewelry": ("jewelry", "ring", "watch", "metal", "gem", "macro reflection", "주얼리", "반지", "시계"),
+    "craft": ("craft", "artisan", "craftsperson", "workshop", "glassblower", "ceramic", "공예", "장인", "작업장"),
+    "documentary": ("documentary", "reportage", "candid", "photojournalistic", "raw", "다큐", "기록", "현장"),
+    "wildlife": ("wildlife", "animal", "bird", "penguin", "eagle", "field", "nature", "야생동물", "동물", "자연"),
+    "food": ("food", "street food", "tteokbokki", "sushi", "bibimbap", "noodle", "meal", "음식", "푸드", "야식"),
+    "analog": ("analog", "film", "cinestill", "kodak", "portra", "tri-x", "digicam", "필름", "아날로그"),
 }
 
 SEMANTIC_AXIS_SLOT_ROUTES: Dict[str, tuple[str, ...]] = {
@@ -168,6 +301,13 @@ SEMANTIC_AXIS_SLOT_ROUTES: Dict[str, tuple[str, ...]] = {
     "urban": ("location", "world", "weather", "lighting"),
     "horror": ("mood", "lighting", "light_shape", "weather", "color", "texture"),
     "fantasy": ("surreal_concept", "surreal_anchor", "surreal_physics_detail", "mood"),
+    "product": ("subject", "genre", "surface_material", "lighting", "light_shape", "texture", "lens", "color"),
+    "jewelry": ("subject", "surface_material", "lighting", "light_shape", "texture", "lens", "color"),
+    "craft": ("subject", "location", "genre", "action", "lighting", "texture", "lens"),
+    "documentary": ("genre", "action", "camera_type", "lens", "composition", "texture", "mood"),
+    "wildlife": ("subject", "genre", "location", "weather", "lens", "motion", "texture"),
+    "food": ("subject", "genre", "location", "action", "lighting", "texture", "color"),
+    "analog": ("film_emulation", "camera_type", "texture", "color", "format"),
 }
 
 SEMANTIC_SLOT_CAPTION_TEMPLATES: Dict[str, str] = {
@@ -192,6 +332,86 @@ DEFAULT_FACET_VOCAB: JsonDict = {
     "mood_family": ["calm", "tense", "romantic", "surreal", "nostalgic", "commercial", "documentary"],
     "camera_register": ["phone", "professional", "surveillance", "vintage", "studio", "macro"],
     "safety_tier": ["general", "adult_compatible", "adult_only"],
+}
+
+VALID_SUBJECT_CATEGORIES = {"human", "animal", "food", "object", "sign", "plant", "environment", "generic"}
+VALID_PRESET_DOMAINS = {
+    "portrait",
+    "fashion",
+    "beauty",
+    "social",
+    "product",
+    "jewelry",
+    "food",
+    "wildlife",
+    "documentary",
+    "craft",
+    "street",
+    "urban",
+    "architecture",
+    "surreal",
+    "adult",
+}
+
+DEFAULT_SLOT_APPLICABILITY: JsonDict = {
+    "subject_category_overrides": {},
+    "preset_domain_overrides": {},
+    "slots": {
+        "person_origin": {
+            "subject_categories": ["human"],
+            "deny_domains": ["product", "jewelry", "food", "wildlife"],
+        },
+        "appearance_type": {
+            "subject_categories": ["human"],
+            "deny_domains": ["documentary", "craft", "wildlife", "product", "jewelry", "food"],
+        },
+        "hair_style": {
+            "subject_categories": ["human"],
+            "deny_domains": ["product", "jewelry", "food", "wildlife"],
+        },
+        "makeup_style": {
+            "subject_categories": ["human"],
+            "deny_domains": ["documentary", "craft", "wildlife", "product", "jewelry", "food"],
+        },
+        "facial_hair": {
+            "subject_categories": ["human"],
+            "deny_domains": ["product", "jewelry", "food", "wildlife"],
+        },
+        "wardrobe_style": {
+            "subject_categories": ["human"],
+            "deny_domains": ["documentary", "craft", "wildlife", "product", "jewelry", "food"],
+        },
+        "costume_style": {
+            "subject_categories": ["human"],
+            "deny_domains": ["documentary", "craft", "wildlife", "product", "jewelry", "food"],
+        },
+        "body_framing": {
+            "subject_categories": ["human"],
+            "deny_domains": ["product", "jewelry", "food", "wildlife"],
+        },
+        "fetish_styling": {
+            "subject_categories": ["human"],
+            "allow_domains": ["adult"],
+            "deny_domains": ["documentary", "craft", "wildlife", "product", "jewelry", "food"],
+            "require_domain_match": True,
+        },
+        "adult_context": {
+            "subject_categories": ["human"],
+            "allow_domains": ["adult"],
+            "deny_domains": ["documentary", "craft", "wildlife", "product", "jewelry", "food"],
+            "require_domain_match": True,
+        },
+        "expression": {
+            "subject_categories": ["human", "animal"],
+        },
+        "aesthetic_trend": {
+            "deny_domains": ["documentary", "craft", "wildlife"],
+        },
+        "surface_material": {
+            "subject_categories": ["object", "food", "plant", "environment", "sign"],
+            "allow_domains": ["product", "jewelry", "food", "architecture"],
+        },
+    },
 }
 
 
@@ -323,13 +543,53 @@ def picked_scene_context_tokens(picked: Dict[str, Entry]) -> Set[str]:
     return tokens
 
 
-def subject_category(picked: Dict[str, Entry]) -> str:
+def slot_applicability_from_source(source: Optional[JsonDict]) -> JsonDict:
+    configured = (source or {}).get("slot_applicability", {}) or {}
+    merged: JsonDict = {
+        "subject_category_overrides": dict(DEFAULT_SLOT_APPLICABILITY["subject_category_overrides"]),
+        "preset_domain_overrides": dict(DEFAULT_SLOT_APPLICABILITY["preset_domain_overrides"]),
+        "slots": {
+            slot: dict(policy)
+            for slot, policy in DEFAULT_SLOT_APPLICABILITY["slots"].items()
+        },
+    }
+    if not isinstance(configured, dict):
+        return merged
+    for key in ("subject_category_overrides", "preset_domain_overrides"):
+        if isinstance(configured.get(key), dict):
+            merged[key].update(configured[key])
+    if isinstance(configured.get("slots"), dict):
+        for slot, policy in configured["slots"].items():
+            if isinstance(policy, dict):
+                current = dict(merged["slots"].get(slot, {}))
+                current.update(policy)
+                merged["slots"][slot] = current
+    return merged
+
+
+def subject_category_overrides(source: Optional[JsonDict]) -> Dict[str, str]:
+    return {
+        str(entry_id): str(category)
+        for entry_id, category in (slot_applicability_from_source(source).get("subject_category_overrides", {}) or {}).items()
+    }
+
+
+def subject_category(picked: Dict[str, Entry], source: Optional[JsonDict] = None) -> str:
     subject = picked.get("subject")
     if not subject:
         return "generic"
 
-    tokens = entry_context_tokens(subject)
     subject_id = str(subject.get("id", ""))
+    override = subject_category_overrides(source).get(subject_id)
+    if override in VALID_SUBJECT_CATEGORIES:
+        return override
+
+    tokens = entry_context_tokens(subject) | facet_tokens(subject)
+    subject_id = str(subject.get("id", ""))
+    blob = " ".join(
+        str(subject.get(key, ""))
+        for key in ("id", "en", "ko", "embedding_text")
+    ).lower()
     if "human" in tokens:
         return "human"
     if "animal" in tokens:
@@ -338,13 +598,278 @@ def subject_category(picked: Dict[str, Entry]) -> str:
         return "food"
     if "sign" in subject_id or "screen" in tokens or "text" in tokens:
         return "sign"
+    object_signals = {
+        "object",
+        "product",
+        "vehicle",
+        "robot",
+        "technology",
+        "science",
+        "jewelry",
+        "watch",
+        "commercial",
+        "packshot",
+        "prop",
+    }
+    if tokens & object_signals or any(
+        fragment in blob
+        for fragment in ("jewelry", "ring", "watch", "wristwatch", "camera", "phone", "bottle", "product", "object")
+    ):
+        return "object"
+    plant_signals = {"plant", "botanical", "flower", "floral", "leaf", "leaves", "moss", "fungus", "mushroom"}
+    if tokens & plant_signals or any(fragment in blob for fragment in ("plant", "botanical", "flower", "leaf", "moss")):
+        return "plant"
     if tokens & {"landscape", "nature", "interior", "architecture", "urban"} and not tokens & {"object", "product", "vehicle"}:
         return "environment"
-    if tokens & {"plant", "macro"}:
-        return "plant"
-    if tokens & {"object", "product", "vehicle", "robot", "technology", "science"}:
-        return "object"
     return "generic"
+
+
+def infer_preset_domains(preset: JsonDict) -> Set[str]:
+    text = " ".join(
+        str(preset.get(key, ""))
+        for key in ("id", "en", "ko", "embedding_text")
+    ).lower()
+    text += " " + " ".join(str(item).lower() for item in normalize_list(preset.get("tags")) + normalize_list(preset.get("keywords")))
+    domain_terms: Dict[str, tuple[str, ...]] = {
+        "portrait": ("portrait", "profile", "selfie", "headshot", "인물"),
+        "fashion": ("fashion", "editorial", "runway", "wardrobe", "style", "패션"),
+        "beauty": ("beauty", "makeup", "skincare", "kbeauty", "뷰티"),
+        "social": ("social", "creator", "influencer", "tiktok", "instagram", "vlogger"),
+        "product": ("product", "packshot", "commercial", "cpg", "skincare", "catalog"),
+        "jewelry": ("jewelry", "ring", "macro_reflection"),
+        "food": ("food", "street_food", "pojangmacha", "tteokbokki", "cafe"),
+        "wildlife": ("wildlife", "animal", "nature_wildlife"),
+        "documentary": ("documentary", "reportage", "candid"),
+        "craft": ("craft", "craftsperson", "workshop", "artisan", "ceramic", "glassblowing"),
+        "street": ("street", "bus_stop", "subway", "alley", "pojangmacha"),
+        "urban": ("urban", "city", "neon", "hotel_corridor", "laundromat", "parking"),
+        "architecture": ("architecture", "real_estate", "interior", "brutalist"),
+        "surreal": ("surreal", "fantasy", "impossible", "dream"),
+        "adult": ("adult", "boudoir", "fetish", "lingerie"),
+    }
+    return {
+        domain
+        for domain, terms in domain_terms.items()
+        if any(term in text for term in terms)
+    }
+
+
+def preset_domains(preset: JsonDict, source: Optional[JsonDict]) -> Set[str]:
+    overrides = slot_applicability_from_source(source).get("preset_domain_overrides", {}) or {}
+    preset_id = str(preset.get("id", ""))
+    if preset_id in overrides:
+        return {str(domain) for domain in normalize_list(overrides[preset_id]) if str(domain) in VALID_PRESET_DOMAINS}
+    domains = infer_preset_domains(preset)
+    if preset_uses_adult_context(preset):
+        domains.add("adult")
+    return domains
+
+
+def make_generation_contract(
+    data: JsonDict,
+    preset: JsonDict,
+    picked: Dict[str, Entry],
+    forced_choices: Optional[Dict[str, List[str]]] = None,
+    surreal_enabled: bool = False,
+) -> JsonDict:
+    forced_slots = sorted((forced_choices or {}).keys())
+    domains = sorted(preset_domains(preset, data))
+    contract: JsonDict = {
+        "subject_category": subject_category(picked, data),
+        "preset_domains": domains,
+        "forced_slots": forced_slots,
+        "surreal_enabled": bool(surreal_enabled or any(slot in picked for slot in SURREAL_LAYER_SLOTS)),
+        "adult_allowed": bool("adult" in domains or preset_uses_adult_context(preset)),
+        "must_cover_axes": [],
+        "covered_axes": [],
+        "coverage_gaps": [],
+        "coverage_events": [],
+        "reselect_events": [],
+        "skipped_slots": [],
+        "render_suppressed_slots": [],
+        "fallback_blocked_slots": [],
+    }
+    return contract
+
+
+def refresh_generation_contract(
+    contract: Optional[JsonDict],
+    data: JsonDict,
+    preset: JsonDict,
+    picked: Dict[str, Entry],
+    forced_choices: Optional[Dict[str, List[str]]] = None,
+    surreal_enabled: Optional[bool] = None,
+) -> JsonDict:
+    if contract is None:
+        return make_generation_contract(data, preset, picked, forced_choices, surreal_enabled=bool(surreal_enabled))
+    contract["subject_category"] = subject_category(picked, data)
+    contract["preset_domains"] = sorted(preset_domains(preset, data))
+    contract["forced_slots"] = sorted((forced_choices or {}).keys())
+    if surreal_enabled is not None:
+        contract["surreal_enabled"] = bool(surreal_enabled)
+    if any(slot in picked for slot in SURREAL_LAYER_SLOTS):
+        contract["surreal_enabled"] = True
+    contract["adult_allowed"] = bool("adult" in set(contract.get("preset_domains", [])) or preset_uses_adult_context(preset))
+    for key in (
+        "must_cover_axes",
+        "covered_axes",
+        "coverage_gaps",
+        "coverage_events",
+        "reselect_events",
+        "skipped_slots",
+        "render_suppressed_slots",
+        "fallback_blocked_slots",
+    ):
+        contract.setdefault(key, [])
+    return contract
+
+
+def record_generation_contract_event(contract: Optional[JsonDict], key: str, event: JsonDict) -> None:
+    if contract is None:
+        return
+    events = contract.setdefault(key, [])
+    signature = json.dumps(event, ensure_ascii=False, sort_keys=True)
+    existing = {json.dumps(item, ensure_ascii=False, sort_keys=True) for item in events}
+    if signature not in existing:
+        events.append(event)
+
+
+def must_cover_enabled(context: Optional[JsonDict]) -> bool:
+    if not context or context.get("intent_source") == "default":
+        return False
+    intent_axes = context.get("intent_axes", {}) or {}
+    if intent_axes.get("source") == "default_full_intent":
+        return False
+    return bool(context.get("axis_vectors"))
+
+
+def axis_covered_by_item(item: JsonDict, target: float) -> bool:
+    strength = str(item.get("best_strength", "none"))
+    if strength in {"strong", "ambient"}:
+        return True
+    return float(item.get("best_score", 0.0)) >= target
+
+
+def sync_generation_contract_axis_coverage(contract: Optional[JsonDict], context: Optional[JsonDict]) -> None:
+    if contract is None:
+        return
+    if not must_cover_enabled(context):
+        contract["must_cover_axes"] = []
+        contract["covered_axes"] = []
+        contract["coverage_gaps"] = []
+        return
+    coverage = (context or {}).get("axis_coverage", {}) or {}
+    target = float(coverage.get("target", 0.0))
+    must_cover: List[JsonDict] = []
+    covered: List[JsonDict] = []
+    gaps: List[JsonDict] = []
+    for item in coverage.get("items", []):
+        row = {
+            "index": int(item.get("index", -1)),
+            "text": item.get("text", ""),
+            "families": item.get("families", []),
+            "target": round(target, 4),
+            "best_score": round(float(item.get("best_score", 0.0)), 4),
+            "best_slot": item.get("best_slot"),
+            "best_entry": item.get("best_entry"),
+            "best_strength": item.get("best_strength", "none"),
+        }
+        must_cover.append(row)
+        if axis_covered_by_item(item, target):
+            covered.append(row)
+        else:
+            gaps.append(row)
+    contract["must_cover_axes"] = must_cover
+    contract["covered_axes"] = covered
+    contract["coverage_gaps"] = gaps
+
+
+def slot_applicability_policy(data: JsonDict, slot: str) -> JsonDict:
+    return slot_applicability_from_source(data).get("slots", {}).get(slot, {}) or {}
+
+
+def slot_block_reason(
+    data: JsonDict,
+    slot: str,
+    generation_contract: Optional[JsonDict],
+    forced: bool = False,
+) -> Optional[str]:
+    if forced or generation_contract is None:
+        return None
+    policy = slot_applicability_policy(data, slot)
+    if not policy:
+        return None
+    subject_cat = str(generation_contract.get("subject_category", "generic"))
+    domains = set(generation_contract.get("preset_domains", []))
+    allowed_categories = set(normalize_list(policy.get("subject_categories")))
+    denied_categories = set(normalize_list(policy.get("deny_subject_categories")))
+    allowed_domains = set(normalize_list(policy.get("allow_domains")))
+    denied_domains = set(normalize_list(policy.get("deny_domains")))
+
+    if subject_cat in denied_categories:
+        return "subject_category_denied"
+    if allowed_categories and subject_cat not in allowed_categories:
+        return "subject_category_not_allowed"
+    if domains & denied_domains:
+        return "preset_domain_denied"
+    if policy.get("require_domain_match") and allowed_domains and not (domains & allowed_domains):
+        return "preset_domain_not_allowed"
+    return None
+
+
+def entry_block_reason(
+    item: Entry,
+    slot: str,
+    generation_contract: Optional[JsonDict],
+    forced: bool = False,
+) -> Optional[str]:
+    if forced or generation_contract is None:
+        return None
+    if not generation_contract.get("adult_allowed"):
+        tokens = adult_semantic_tokens(item)
+        if tokens & {"adult", "fetish", "suggestive"}:
+            return "adult_not_allowed"
+        if slot in {"adult_context", "fetish_styling"}:
+            return "adult_slot_not_allowed"
+    subject_cat = str(generation_contract.get("subject_category", "generic"))
+    if subject_cat in {"object", "food", "plant", "environment", "sign"} and slot in {"genre", "texture", "focus", "color"}:
+        tokens = entry_context_tokens(item) | facet_tokens(item)
+        blob = " ".join(str(item.get(key, "")) for key in ("id", "en", "ko", "embedding_text")).lower()
+        human_visual_terms = {"human", "portrait", "fashion", "beauty", "skin"}
+        if tokens & human_visual_terms or any(term in blob for term in human_visual_terms):
+            return "human_visual_signal_not_allowed"
+    if subject_cat in {"object", "food", "sign"} and slot in {"lighting", "light_direction", "light_type", "light_shape", "texture"}:
+        tokens = entry_context_tokens(item) | facet_tokens(item)
+        blob = " ".join(str(item.get(key, "")) for key in ("id", "en", "ko", "embedding_text")).lower()
+        plant_detail_terms = {"plant", "botanical", "leaf", "leaves", "stem", "stems", "spore", "spores"}
+        if tokens & plant_detail_terms or any(term in blob for term in plant_detail_terms):
+            return "plant_detail_signal_not_allowed"
+    return None
+
+
+def render_guarded_picked(
+    data: JsonDict,
+    preset: JsonDict,
+    picked: Dict[str, Entry],
+    generation_contract: Optional[JsonDict] = None,
+) -> Dict[str, Entry]:
+    if generation_contract is None:
+        return picked
+    visible: Dict[str, Entry] = {}
+    forced_slots = set(generation_contract.get("forced_slots", []))
+    for slot, entry in picked.items():
+        reason = slot_block_reason(data, slot, generation_contract, forced=slot in forced_slots)
+        if not reason:
+            reason = entry_block_reason(entry, slot, generation_contract, forced=slot in forced_slots)
+        if reason:
+            record_generation_contract_event(
+                generation_contract,
+                "render_suppressed_slots",
+                {"slot": slot, "id": entry.get("id"), "reason": reason},
+            )
+            continue
+        visible[slot] = entry
+    return visible
 
 
 def values_as_set(item: JsonDict, *keys: str) -> Set[str]:
@@ -868,13 +1393,29 @@ def fallback_intent_axes(intent: str) -> List[str]:
         "urban": "urban city street",
         "horror": "horror fear nightmare",
         "fantasy": "fantasy magic surreal",
+        "product": "product commercial packshot",
+        "jewelry": "jewelry macro reflection",
+        "craft": "craftsperson workshop documentary",
+        "documentary": "raw documentary reportage",
+        "wildlife": "wildlife animal nature documentary",
+        "food": "street food night food photography",
+        "analog": "analog film camera texture",
     }
     return [labels[family] for family in labels if axis_text_has_family(lowered, family)][:6]
 
 
 def axis_text_has_family(text: str, family: str) -> bool:
     lowered = text.lower()
-    return any(keyword in lowered for keyword in SEMANTIC_AXIS_FAMILY_KEYWORDS.get(family, ()))
+    for keyword in SEMANTIC_AXIS_FAMILY_KEYWORDS.get(family, ()):
+        token = str(keyword).lower()
+        if not token:
+            continue
+        if re.search(r"[a-z0-9]", token):
+            if re.search(rf"(?<![a-z0-9]){re.escape(token)}(?![a-z0-9])", lowered):
+                return True
+        elif token in lowered:
+            return True
+    return False
 
 
 def axis_families_for_text(text: str) -> List[str]:
@@ -891,6 +1432,13 @@ def semantic_axis_embedding_text(axis: str) -> str:
         "urban": "urban city street location, alley, subway, neon, concrete, metropolitan environment",
         "horror": "horror fear nightmare mood, eerie uncanny tension, analog horror unease, dark suspense",
         "fantasy": "fantasy magic surreal impossible event, photoreal dreamlike phenomenon, supernatural atmosphere",
+        "product": "product photography, commercial packshot, tactile surface, controlled studio light, object hero image",
+        "jewelry": "jewelry macro reflection, polished metal, ring or watch, glass surface, precise product detail",
+        "craft": "craftsperson artisan workshop, tools, hands, materials, documentary making process",
+        "documentary": "raw documentary reportage, candid real-world moment, observational camera, authentic texture",
+        "wildlife": "wildlife animal nature documentary, telephoto field photography, weather and natural behavior",
+        "food": "food photography, street food, steam, sauce, plate, edible texture, night market atmosphere",
+        "analog": "analog film emulation, grain, halation, disposable camera or CCD texture, Kodak and CineStill color",
     }
     matched = [expansions[family] for family in axis_families_for_text(axis)]
     if matched:
@@ -968,6 +1516,7 @@ def initial_axis_coverage(axis_vectors: Sequence[JsonDict], profile: str) -> Jso
                 "best_score": 0.0,
                 "best_slot": None,
                 "best_entry": None,
+                "best_strength": "none",
             }
             for index, item in enumerate(axis_vectors)
         ],
@@ -985,6 +1534,7 @@ def semantic_axis_coverage_trace(context: JsonDict) -> JsonDict:
                 "best_score": round(float(item.get("best_score", 0.0)), 4),
                 "best_slot": item.get("best_slot"),
                 "best_entry": item.get("best_entry"),
+                "best_strength": item.get("best_strength", "none"),
             }
             for item in coverage.get("items", [])
         ],
@@ -1072,6 +1622,33 @@ def batch_diversity_penalty(
     }
 
 
+def batch_group_diversity_penalty(
+    context: Optional[JsonDict],
+    slot: str,
+    item: Entry,
+    vector: Sequence[float],
+    forced: bool = False,
+) -> tuple[float, JsonDict]:
+    if forced or not context:
+        return 1.0, {"enabled": False, "events": []}
+    events: List[JsonDict] = []
+    factors: List[float] = []
+    if slot == "subject":
+        for group in entry_semantic_groups(item, slot, context):
+            factor, summary = batch_diversity_penalty(context, "subject_group", group, vector, forced=forced)
+            factors.append(factor)
+            events.append(summary)
+    elif slot == "location":
+        for tone in entry_location_tones(item, slot, context):
+            factor, summary = batch_diversity_penalty(context, "location_tone", tone, vector, forced=forced)
+            factors.append(factor)
+            events.append(summary)
+    if not factors:
+        return 1.0, {"enabled": False, "events": []}
+    factor = min(factors)
+    return factor, {"enabled": True, "penalty": round(factor, 4), "events": events}
+
+
 def record_batch_selection(
     batch_context: Optional[JsonDict],
     scope: str,
@@ -1089,7 +1666,31 @@ def record_batch_selection(
     )
 
 
-def update_axis_coverage(context: JsonDict, slot: str, entry_id: str, vector: Sequence[float]) -> None:
+def record_batch_group_selection(
+    semantic_context: JsonDict,
+    batch_context: Optional[JsonDict],
+    slot: str,
+    entry: Entry,
+    vector: Sequence[float],
+    forced: bool = False,
+) -> None:
+    if forced:
+        return
+    if slot == "subject":
+        for group in entry_semantic_groups(entry, slot, semantic_context):
+            record_batch_selection(batch_context, "subject_group", group, vector, forced=False)
+    elif slot == "location":
+        for tone in entry_location_tones(entry, slot, semantic_context):
+            record_batch_selection(batch_context, "location_tone", tone, vector, forced=False)
+
+
+def update_axis_coverage(
+    context: JsonDict,
+    slot: str,
+    entry_id: str,
+    vector: Sequence[float],
+    entry: Optional[Entry] = None,
+) -> None:
     coverage = context.get("axis_coverage")
     if not coverage or not vector:
         return
@@ -1099,10 +1700,21 @@ def update_axis_coverage(context: JsonDict, slot: str, entry_id: str, vector: Se
         if index < 0 or index >= len(axis_vectors):
             continue
         score = cosine_similarity(axis_vectors[index].get("vector", []), vector)
-        if score > float(item.get("best_score", 0.0)):
+        strength = "none"
+        families = axis_vectors[index].get("families", [])
+        if entry is not None:
+            for family in families:
+                strength = stronger_family_strength(
+                    strength,
+                    family_signal_strength(entry, str(family), coherence_rules_from_source(context), slot, context),
+                )
+        strength_rank = FAMILY_STRENGTH_RANK.get(strength, 0)
+        best_rank = FAMILY_STRENGTH_RANK.get(str(item.get("best_strength", "none")), 0)
+        if score > float(item.get("best_score", 0.0)) or strength_rank > best_rank:
             item["best_score"] = score
             item["best_slot"] = slot
             item["best_entry"] = entry_id
+            item["best_strength"] = strength
 
 
 def context_axis_families(context: JsonDict) -> Set[str]:
@@ -1110,6 +1722,299 @@ def context_axis_families(context: JsonDict) -> Set[str]:
     for axis in context.get("axis_vectors", []):
         families |= set(axis.get("families", []))
     return families
+
+
+FAMILY_STRENGTH_RANK = {"none": 0, "ambient": 1, "strong": 2}
+
+
+def semantic_metadata_from_source(source: Optional[JsonDict]) -> JsonDict:
+    if not source:
+        return {}
+    return source.get("semantic_metadata", {}) or {}
+
+
+def metadata_group_values(metadata: JsonDict, collection: str, entry_id: str) -> List[str]:
+    values: List[str] = []
+    for group, ids in (metadata.get(collection, {}) or {}).items():
+        if entry_id in set(normalize_list(ids)):
+            values.append(str(group))
+    return sorted(values)
+
+
+def entry_semantic_groups(entry: Entry, slot: str, source: Optional[JsonDict]) -> List[str]:
+    entry_id = str(entry.get("id", ""))
+    metadata = semantic_metadata_from_source(source)
+    values: Set[str] = set(normalize_list(entry.get("semantic_group")))
+    if slot == "subject":
+        values |= set(metadata_group_values(metadata, "subject_groups", entry_id))
+    return sorted(values)
+
+
+def entry_location_tones(entry: Entry, slot: str, source: Optional[JsonDict]) -> List[str]:
+    entry_id = str(entry.get("id", ""))
+    metadata = semantic_metadata_from_source(source)
+    values: Set[str] = set(normalize_list(entry.get("location_tone")))
+    if slot == "location":
+        values |= set(metadata_group_values(metadata, "location_tones", entry_id))
+    return sorted(values)
+
+
+def entry_axis_signals(entry: Entry, slot: str, source: Optional[JsonDict]) -> List[str]:
+    entry_id = str(entry.get("id", ""))
+    metadata = semantic_metadata_from_source(source)
+    values: Set[str] = set(normalize_list(entry.get("axis_signal")))
+    for signal, slot_map in (metadata.get("axis_signals", {}) or {}).items():
+        if not isinstance(slot_map, dict):
+            continue
+        ids = set(normalize_list(slot_map.get(slot))) | set(normalize_list(slot_map.get("*")))
+        if entry_id in ids:
+            values.add(str(signal))
+    return sorted(values)
+
+
+def metadata_family_signal_strength(entry: Entry, slot: str, family: str, source: Optional[JsonDict]) -> str:
+    signals = set(entry_axis_signals(entry, slot, source))
+    if f"{family}_strong" in signals:
+        return "strong"
+    if f"{family}_ambient" in signals:
+        return "ambient"
+    if family == "human" and "human_portrait" in signals:
+        return "strong"
+    return "none"
+
+
+def coherence_rules_from_source(source: JsonDict) -> JsonDict:
+    return source.get("coherence_rules", {}) or {}
+
+
+def coherence_family_rules(rules: JsonDict, family: str) -> JsonDict:
+    return (rules.get("family_strength", {}) or {}).get(family, {}) or {}
+
+
+def family_rule_id_set(rules: JsonDict, family: str, tier: str) -> Set[str]:
+    return set(normalize_list(coherence_family_rules(rules, family).get(tier)))
+
+
+def family_id_signal_strength(entry_id: str, family: str, rules: JsonDict) -> str:
+    if entry_id in family_rule_id_set(rules, family, "strong"):
+        return "strong"
+    if entry_id in family_rule_id_set(rules, family, "ambient"):
+        return "ambient"
+    return "none"
+
+
+def stronger_family_strength(left: str, right: str) -> str:
+    return left if FAMILY_STRENGTH_RANK.get(left, 0) >= FAMILY_STRENGTH_RANK.get(right, 0) else right
+
+
+def fallback_family_signal_strength(entry: Entry, family: str) -> str:
+    tokens = entry_context_tokens(entry) | facet_tokens(entry)
+    blob = " ".join(
+        str(entry.get(key, ""))
+        for key in ("id", "en", "ko", "embedding_text")
+    ).lower()
+    strong_by_family = {
+        "horror": {"horror", "dread", "ritual", "occult", "haunted", "panic", "terror", "nightmare", "fear", "cosmic"},
+        "fantasy": {"fantasy", "magic", "magical", "surreal", "impossible", "gravity", "object_world", "material"},
+        "urban": {"urban", "city", "street", "alley", "subway", "neon", "rooftop", "concrete"},
+        "human": {"human", "portrait", "person", "model", "actor", "commuter", "creator", "traveler"},
+        "product": {"product", "commercial", "packshot", "catalog", "surface", "object"},
+        "jewelry": {"jewelry", "ring", "watch", "metal", "macro", "reflection"},
+        "craft": {"craft", "artisan", "craftsperson", "workshop", "glassblower", "ceramic", "potter"},
+        "documentary": {"documentary", "reportage", "candid", "raw", "photojournalistic"},
+        "wildlife": {"wildlife", "animal", "penguin", "eagle", "horse", "nature", "telephoto"},
+        "food": {"food", "street_food", "tteokbokki", "sushi", "bibimbap", "noodle", "steam", "sauce"},
+        "analog": {"analog", "film", "cinestill", "kodak", "portra", "tri-x", "digicam", "halation"},
+    }
+    ambient_by_family = {
+        "horror": {"tense", "uncanny", "noir", "liminal", "dark", "shadow", "fog", "suspense", "gothic"},
+        "fantasy": {"dream", "dreamy", "reflection", "mirror", "screen", "scale", "cosplay"},
+        "urban": {"interior", "transport", "night", "market", "office", "parking"},
+        "human": {"fashion", "social", "lifestyle", "beauty", "ordinary"},
+        "product": {"studio", "macro", "glass", "metal", "reflection", "display"},
+        "jewelry": {"product", "studio", "glass", "polished", "highlight"},
+        "craft": {"tools", "hands", "material", "dust", "work"},
+        "documentary": {"handheld", "natural", "realism", "unpolished", "snapshot"},
+        "wildlife": {"field", "snow", "forest", "mist", "weather", "natural"},
+        "food": {"market", "table", "tent", "warm", "night", "plate"},
+        "analog": {"grain", "scratch", "dust", "faded", "compact", "vhs", "ccd"},
+    }
+    strong_terms = strong_by_family.get(family, set())
+    ambient_terms = ambient_by_family.get(family, set())
+    if tokens & strong_terms or any(term in blob for term in strong_terms):
+        return "strong"
+    if tokens & ambient_terms or any(term in blob for term in ambient_terms):
+        return "ambient"
+    return "none"
+
+
+def family_signal_strength(
+    entry: Entry,
+    family: str,
+    rules: Optional[JsonDict] = None,
+    slot: str = "",
+    source: Optional[JsonDict] = None,
+) -> str:
+    rules = rules or {}
+    entry_id = str(entry.get("id", ""))
+    explicit = family_id_signal_strength(entry_id, family, rules)
+    if explicit != "none":
+        return explicit
+    metadata_strength = metadata_family_signal_strength(entry, slot, family, source)
+    if metadata_strength != "none":
+        return metadata_strength
+    return fallback_family_signal_strength(entry, family)
+
+
+def entry_conflicts_with_family(
+    entry: Entry,
+    slot: str,
+    family: str,
+    rules: JsonDict,
+    source: Optional[JsonDict] = None,
+) -> bool:
+    family_conflicts = (rules.get("family_conflicts", {}) or {}).get(family, {}) or {}
+    if str(entry.get("id", "")) in set(normalize_list(family_conflicts.get(slot))):
+        return True
+    metadata = semantic_metadata_from_source(source)
+    tone_conflicts = ((metadata.get("family_tone_conflicts", {}) or {}).get(family, {}) or {})
+    if slot == "location":
+        location_tones = set(entry_location_tones(entry, slot, source))
+        if location_tones & set(normalize_list(tone_conflicts.get("location_tone"))):
+            return True
+    return False
+
+
+def preset_family_signal_strength(preset: Entry, family: str, rules: JsonDict, source: Optional[JsonDict] = None) -> str:
+    strength = family_signal_strength(preset, family, rules, "preset", source)
+    family_filter_slots = {"mood", "weather", "light_shape", "color", "texture"}
+    for slot, slot_filter in (preset.get("filters", {}) or {}).items():
+        if slot not in family_filter_slots:
+            continue
+        for entry_id in normalize_list(slot_filter.get("ids")):
+            strength = stronger_family_strength(strength, family_id_signal_strength(entry_id, family, rules))
+    return strength
+
+
+def semantic_coherence_factor(
+    item: Entry,
+    slot: str,
+    context: JsonDict,
+    picked: Dict[str, Entry],
+    routed_axis_score: Optional[float],
+) -> tuple[float, JsonDict]:
+    rules = coherence_rules_from_source(context)
+    if not rules:
+        return 1.0, {"factor": 1.0, "events": []}
+    active_families = sorted(context_axis_families(context))
+    if not active_families:
+        return 1.0, {"factor": 1.0, "events": []}
+    config = semantic_profile_config(str(context.get("semantic_profile", "balanced")))
+    factor = 1.0
+    events: List[JsonDict] = []
+    for family in active_families:
+        routed_slot = slot in SEMANTIC_AXIS_SLOT_ROUTES.get(family, ())
+        strength = family_signal_strength(item, family, rules, slot, context)
+        if routed_slot and strength == "strong":
+            boost = float(config.get("coherence_strong_boost", 1.18))
+            factor *= boost
+            events.append({"family": family, "type": "strength_boost", "strength": strength, "factor": round(boost, 4)})
+        elif routed_slot and strength == "ambient":
+            boost = float(config.get("coherence_ambient_boost", 1.05))
+            factor *= boost
+            events.append({"family": family, "type": "strength_boost", "strength": strength, "factor": round(boost, 4)})
+        elif routed_slot and routed_axis_score is not None:
+            floor = float(config.get("routed_axis_floor", 0.10))
+            if float(routed_axis_score) < floor:
+                penalty = float(config.get("routed_axis_floor_penalty", 0.68))
+                factor *= penalty
+                events.append(
+                    {
+                        "family": family,
+                        "type": "routed_axis_floor",
+                        "score": round(float(routed_axis_score), 4),
+                        "floor": round(floor, 4),
+                        "factor": round(penalty, 4),
+                    }
+                )
+        if entry_conflicts_with_family(item, slot, family, rules, context):
+            penalty = float(config.get("coherence_conflict_penalty", 0.45))
+            if context.get("filter_strictness") == "hard":
+                penalty = min(penalty, 0.25)
+            factor *= penalty
+            events.append({"family": family, "type": "family_conflict", "factor": round(penalty, 4)})
+    return factor, {"factor": round(factor, 4), "events": events}
+
+
+def picked_has_family_strength(
+    picked: Dict[str, Entry],
+    context: JsonDict,
+    family: str,
+    strength: str,
+    slots: Sequence[str],
+) -> bool:
+    rules = coherence_rules_from_source(context)
+    minimum_rank = FAMILY_STRENGTH_RANK.get(strength, 0)
+    return any(
+        FAMILY_STRENGTH_RANK.get(family_signal_strength(picked[slot], family, rules, slot, context), 0) >= minimum_rank
+        for slot in slots
+        if slot in picked
+    )
+
+
+def weak_horror_compensation_needed(context: JsonDict, picked: Dict[str, Entry]) -> bool:
+    if "horror" not in context_axis_families(context):
+        return False
+    mood = picked.get("mood")
+    if not mood:
+        return False
+    rules = coherence_rules_from_source(context)
+    mood_strength = family_signal_strength(mood, "horror", rules, "mood", context)
+    if mood_strength != "ambient":
+        return False
+    return not picked_has_family_strength(picked, context, "horror", "strong", WEAK_HORROR_COMPENSATION_SLOTS)
+
+
+def weak_horror_compensation_factor(
+    item: Entry,
+    slot: str,
+    context: JsonDict,
+    picked: Dict[str, Entry],
+) -> tuple[float, JsonDict]:
+    if slot not in WEAK_HORROR_COMPENSATION_SLOTS or not weak_horror_compensation_needed(context, picked):
+        return 1.0, {"active": False, "factor": 1.0}
+    rules = coherence_rules_from_source(context)
+    strength = family_signal_strength(item, "horror", rules, slot, context)
+    if strength != "strong":
+        return 1.0, {"active": True, "strength": strength, "factor": 1.0}
+    factor = semantic_profile_float(context, "weak_horror_compensation_boost", 1.42)
+    return factor, {"active": True, "strength": strength, "factor": round(factor, 4)}
+
+
+def semantic_preset_family_coverage(preset: Entry, context: JsonDict) -> tuple[float, JsonDict]:
+    rules = coherence_rules_from_source(context)
+    families = sorted(context_axis_families(context))
+    tracked = [family for family in families if family in (rules.get("family_strength", {}) or {})]
+    if len(families) < 2 or not tracked:
+        return 0.0, {"active": False, "families": []}
+    config = semantic_profile_config(str(context.get("semantic_profile", "balanced")))
+    adjustment = 0.0
+    rows: List[JsonDict] = []
+    for family in tracked:
+        strength = preset_family_signal_strength(preset, family, rules, context)
+        if strength == "strong":
+            delta = float(config.get("preset_family_strong_bonus", 0.035))
+        elif strength == "ambient":
+            delta = float(config.get("preset_family_ambient_bonus", 0.012))
+        else:
+            delta = -float(config.get("preset_family_missing_penalty", 0.065))
+        adjustment += delta
+        rows.append({"family": family, "strength": strength, "score_adjustment": round(delta, 4)})
+    return adjustment, {
+        "active": True,
+        "score_adjustment": round(adjustment, 4),
+        "families": rows,
+    }
 
 
 def intent_steering_enabled(context: Optional[JsonDict]) -> bool:
@@ -1202,6 +2107,8 @@ def make_semantic_context(
         "semantic_weight": resolved_weight,
         "semantic_profile": resolved_profile,
         "index": index,
+        "coherence_rules": data.get("coherence_rules", {}) or {},
+        "semantic_metadata": data.get("semantic_metadata", {}) or {},
         "query_vector": query_vector,
         "semantic_axis_mode": semantic_axis_mode,
         "intent_axes": axis_payload,
@@ -1215,6 +2122,7 @@ def make_semantic_context(
         },
         "surreal_activation_reason": "not_evaluated",
         "surreal_activation_active": False,
+        "weak_horror_compensation": {"status": "not_evaluated"},
         "slot_scores": [],
         "preset_score": None,
         "picked_vectors": [],
@@ -1369,17 +2277,117 @@ def semantic_axis_coverage_bonus(vector: Sequence[float], context: JsonDict, slo
     return sum(bonuses) / len(bonuses) if bonuses else 0.0
 
 
-def semantic_contextual_affinity(slot: str, vector: Sequence[float], context: JsonDict, picked: Dict[str, Entry]) -> float:
-    if slot != "surreal_anchor":
+def active_must_cover_bonus(
+    item: Entry,
+    vector: Sequence[float],
+    context: JsonDict,
+    slot: str,
+) -> tuple[float, JsonDict]:
+    active = context.get("active_must_cover_axis")
+    if not active:
+        return 0.0, {"active": False, "score": 0.0}
+    axis_index = int(active.get("index", -1))
+    axis_vectors = context.get("axis_vectors", [])
+    if axis_index < 0 or axis_index >= len(axis_vectors):
+        return 0.0, {"active": False, "score": 0.0}
+    families = set(axis_vectors[axis_index].get("families", []))
+    routed_slots = {routed_slot for family in families for routed_slot in SEMANTIC_AXIS_SLOT_ROUTES.get(family, ())}
+    if routed_slots and slot not in routed_slots:
+        return 0.0, {
+            "active": True,
+            "axis": active.get("text", ""),
+            "score": 0.0,
+            "reason": "slot_not_routed",
+        }
+    axis_score = max(0.0, cosine_similarity(axis_vectors[axis_index].get("vector", []), vector))
+    strength = "none"
+    for family in families:
+        strength = stronger_family_strength(
+            strength,
+            family_signal_strength(item, family, coherence_rules_from_source(context), slot, context),
+        )
+    strength_bonus = 0.0
+    if strength == "strong":
+        strength_bonus = 0.24
+    elif strength == "ambient":
+        strength_bonus = 0.11
+    score = min(1.2, axis_score + strength_bonus)
+    return score, {
+        "active": True,
+        "axis": active.get("text", ""),
+        "families": sorted(families),
+        "score": round(score, 4),
+        "axis_score": round(axis_score, 4),
+        "strength": strength,
+    }
+
+
+def entry_cliche_weight(item: Entry, slot: str, context: JsonDict) -> float:
+    raw = item.get("cliche_weight", 0.0)
+    metadata = semantic_metadata_from_source(context)
+    metadata_weights = ((metadata.get("cliche_weights", {}) or {}).get(slot, {}) or {})
+    if str(item.get("id", "")) in metadata_weights:
+        raw = metadata_weights[str(item.get("id", ""))]
+    try:
+        return max(0.0, min(1.0, float(raw)))
+    except (TypeError, ValueError):
         return 0.0
-    context_vectors: List[List[float]] = []
-    for context_slot in ("surreal_concept", "location"):
+
+
+def semantic_cliche_factor(item: Entry, slot: str, context: JsonDict, effective_query_score: float) -> tuple[float, JsonDict]:
+    cliche = entry_cliche_weight(item, slot, context)
+    if cliche <= 0.0 or slot not in COHERENT_DIVERSITY_SLOTS or effective_query_score < 0.78:
+        return 1.0, {"active": False, "factor": 1.0, "cliche_weight": round(cliche, 4)}
+    penalty_weight = semantic_profile_float(context, "cliche_penalty_weight", 0.24)
+    dominance = min(1.0, max(0.0, (effective_query_score - 0.78) / 0.22))
+    factor = max(0.58, 1.0 - (penalty_weight * cliche * dominance))
+    return factor, {
+        "active": True,
+        "factor": round(factor, 4),
+        "cliche_weight": round(cliche, 4),
+        "effective_query": round(effective_query_score, 4),
+    }
+
+
+def semantic_contextual_affinity(
+    slot: str,
+    item: Entry,
+    vector: Sequence[float],
+    context: JsonDict,
+    picked: Dict[str, Entry],
+) -> tuple[float, JsonDict]:
+    context_vectors: List[tuple[str, str, List[float]]] = []
+    for context_slot in CROSS_SLOT_AFFINITY_CONTEXT_SLOTS.get(slot, ()):
         entry = picked.get(context_slot)
         if entry:
-            context_vectors.append(semantic_vector(context, semantic_entry_key("slot", entry, context_slot)))
-    if not context_vectors:
-        return 0.0
-    return max(cosine_similarity(vector, context_vector) for context_vector in context_vectors)
+            context_vectors.append(
+                (
+                    context_slot,
+                    str(entry.get("id", "")),
+                    semantic_vector(context, semantic_entry_key("slot", entry, context_slot)),
+                )
+            )
+    scores = [
+        {
+            "slot": context_slot,
+            "id": entry_id,
+            "score": cosine_similarity(vector, context_vector),
+        }
+        for context_slot, entry_id, context_vector in context_vectors
+        if context_vector
+    ]
+    best = max(scores, key=lambda row: row["score"], default=None)
+    score = float(best["score"]) if best else 0.0
+    events: List[JsonDict] = []
+    if best:
+        events.append({"type": "picked_slot_affinity", **best, "score": round(float(best["score"]), 4)})
+    fantasy_bonus = 0.0
+    if slot == "surreal_anchor" and "fantasy" in context_axis_families(context):
+        if family_signal_strength(item, "fantasy", coherence_rules_from_source(context), slot, context) == "strong":
+            fantasy_bonus = 0.08
+            score += fantasy_bonus
+            events.append({"type": "fantasy_anchor_bonus", "score": round(fantasy_bonus, 4)})
+    return score, {"score": round(score, 4), "events": events}
 
 
 def semantic_candidate_weight(
@@ -1401,7 +2409,10 @@ def semantic_candidate_weight(
     else:
         effective_query_score = max(query_score, (0.65 * axis_max) + (0.35 * query_score))
     coverage_bonus = semantic_axis_coverage_bonus(vector, context, slot)
-    contextual_score = semantic_contextual_affinity(slot, vector, context, picked)
+    must_cover_bonus, must_cover_summary = active_must_cover_bonus(item, vector, context, slot)
+    contextual_score, contextual_summary = semantic_contextual_affinity(slot, item, vector, context, picked)
+    coherence_factor, coherence_summary = semantic_coherence_factor(item, slot, context, picked, routed_axis_score)
+    weak_horror_factor, weak_horror_summary = weak_horror_compensation_factor(item, slot, context, picked)
     preset_score = cosine_similarity(preset_vector, vector) if preset_vector else 0.0
     facet_score = semantic_facet_match_score(item, preset, picked)
     redundancy = 0.0
@@ -1419,23 +2430,48 @@ def semantic_candidate_weight(
 
     semantic_weight = float(context.get("semantic_weight", default_semantic_weight(context["selection_mode"])))
     coverage_weight = semantic_profile_float(context, "axis_coverage_weight", 0.22)
-    relevance = (
-        (0.54 * effective_query_score)
-        + (0.18 * query_score)
-        + (0.18 * preset_score)
-        + (0.10 * facet_score)
-        + (coverage_weight * coverage_bonus)
-        + (0.12 * contextual_score)
-    )
+    must_cover_weight = semantic_profile_float(context, "must_cover_weight", 0.42)
+    contextual_weight = semantic_profile_float(context, "cross_slot_affinity_weight", 0.16)
+    if slot in COHERENT_DIVERSITY_SLOTS and routed_axis_score is None:
+        relevance = (
+            (0.36 * effective_query_score)
+            + (0.12 * query_score)
+            + (0.24 * preset_score)
+            + (0.12 * facet_score)
+            + (coverage_weight * coverage_bonus)
+            + (contextual_weight * contextual_score)
+            + (must_cover_weight * must_cover_bonus)
+        )
+    else:
+        relevance = (
+            (0.50 * effective_query_score)
+            + (0.16 * query_score)
+            + (0.18 * preset_score)
+            + (0.10 * facet_score)
+            + (coverage_weight * coverage_bonus)
+            + (contextual_weight * contextual_score)
+            + (must_cover_weight * must_cover_bonus)
+        )
     redundancy_scale = 0.55 if slot in SURREAL_LAYER_SLOTS else 1.0
-    mmr_affinity = (semantic_weight * relevance) - ((1.0 - semantic_weight) * redundancy * redundancy_scale)
+    redundancy_relief = 1.0
+    if contextual_score > 0.65:
+        relief = semantic_profile_float(context, "contextual_redundancy_relief", 0.24)
+        redundancy_relief = max(0.58, 1.0 - (relief * min(1.0, (contextual_score - 0.65) / 0.35)))
+    effective_redundancy = redundancy * redundancy_scale * redundancy_relief
+    mmr_affinity = (semantic_weight * relevance) - ((1.0 - semantic_weight) * effective_redundancy)
     affinity = mmr_affinity + (novelty_scale * novelty_weight)
     semantic_multiplier = math.exp(max(min(affinity, 3.0), -3.0) / max(temperature, 0.1))
     base_power = max(0.15, 1.0 - (semantic_weight * 0.85))
     weighted = (max(item_base_weight(item), 0.01) ** base_power) * (semantic_multiplier ** semantic_weight)
     weighted *= semantic_filter_factor(context, filter_match)
+    weighted *= coherence_factor
+    weighted *= weak_horror_factor
+    cliche_factor, cliche_summary = semantic_cliche_factor(item, slot, context, effective_query_score)
+    weighted *= cliche_factor
     batch_penalty, batch_summary = batch_diversity_penalty(context, slot, str(item.get("id")), vector)
     weighted *= batch_penalty
+    batch_group_penalty, batch_group_summary = batch_group_diversity_penalty(context, slot, item, vector)
+    weighted *= batch_group_penalty
     return weighted, {
         "id": item.get("id"),
         "weight": round(weighted, 6),
@@ -1444,10 +2480,18 @@ def semantic_candidate_weight(
         "preset": round(preset_score, 4),
         "facet": round(facet_score, 4),
         "contextual": round(contextual_score, 4),
+        "cross_slot_affinity": contextual_summary,
+        "coherence": coherence_summary,
+        "weak_horror_compensation": weak_horror_summary,
+        "must_cover": must_cover_summary,
+        "cliche": cliche_summary,
         "relevance": round(relevance, 4),
         "temperature_multiplier": round(slot_temperature_multiplier, 4),
         "redundancy": round(redundancy, 4),
+        "effective_redundancy": round(effective_redundancy, 4),
+        "redundancy_relief": round(redundancy_relief, 4),
         "batch_penalty": batch_summary,
+        "batch_group_penalty": batch_group_summary,
         "axis": {
             "axis_max": round(axis_max, 4),
             "axis_max_text": axis.get("axis_max_text"),
@@ -1506,7 +2550,7 @@ def semantic_preset_weight_floor(context: JsonDict) -> float:
     return floor
 
 
-def semantic_preset_score_breakdown(vector: Sequence[float], context: JsonDict) -> tuple[float, JsonDict]:
+def semantic_preset_score_breakdown(vector: Sequence[float], context: JsonDict, preset: Optional[Entry] = None) -> tuple[float, JsonDict]:
     overall = cosine_similarity(context["query_vector"], vector)
     axis_vectors = context.get("axis_vectors") or [
         {"text": context.get("intent", ""), "source": "full_intent", "vector": context["query_vector"]}
@@ -1533,6 +2577,11 @@ def semantic_preset_score_breakdown(vector: Sequence[float], context: JsonDict) 
         + (axis_mean_weight * axis_mean)
         + (axis_floor_weight * axis_floor)
     ) / total
+    family_adjustment = 0.0
+    family_coverage: JsonDict = {"active": False, "families": []}
+    if preset is not None:
+        family_adjustment, family_coverage = semantic_preset_family_coverage(preset, context)
+        semantic_score += family_adjustment
     return semantic_score, {
         "query": round(overall, 4),
         "overall": round(overall, 4),
@@ -1548,6 +2597,7 @@ def semantic_preset_score_breakdown(vector: Sequence[float], context: JsonDict) 
             for item in axis_scores
         ],
         "semantic_score": round(semantic_score, 4),
+        "family_coverage": family_coverage,
     }
 
 
@@ -1589,9 +2639,11 @@ def semantic_slot_score_window(context: JsonDict) -> float:
     return base
 
 
-def semantic_slot_candidate_limit(context: JsonDict) -> int:
+def semantic_slot_candidate_limit(context: JsonDict, slot: Optional[str] = None) -> int:
     config = semantic_profile_config(str(context.get("semantic_profile", "balanced")))
     limit = int(config.get("slot_candidate_limit", 8))
+    if slot in COHERENT_DIVERSITY_SLOTS:
+        limit += 4
     novelty = context.get("novelty", "medium")
     if novelty == "low":
         return max(3, int(round(limit * 0.7)))
@@ -1600,9 +2652,11 @@ def semantic_slot_candidate_limit(context: JsonDict) -> int:
     return limit
 
 
-def semantic_slot_weight_floor(context: JsonDict) -> float:
+def semantic_slot_weight_floor(context: JsonDict, slot: Optional[str] = None) -> float:
     config = semantic_profile_config(str(context.get("semantic_profile", "balanced")))
     floor = float(config.get("slot_weight_floor", 0.82))
+    if slot in COHERENT_DIVERSITY_SLOTS:
+        floor = max(0.58, floor - 0.12)
     novelty = context.get("novelty", "medium")
     if novelty == "low":
         return min(0.94, floor + 0.06)
@@ -1664,9 +2718,9 @@ def semantic_weighted_choice(
     ordered = sorted(eligible, key=lambda row: row[3], reverse=True)
     if ordered:
         best_weight = max(ordered[0][3], 0.01)
-        floor = best_weight * semantic_slot_weight_floor(context)
+        floor = best_weight * semantic_slot_weight_floor(context, slot)
         floored = [row for row in ordered if row[3] >= floor]
-        limit = semantic_slot_candidate_limit(context)
+        limit = semantic_slot_candidate_limit(context, slot)
         minimum_size = 1 if context.get("filter_strictness") == "soft" and slot_filter else 3
         minimum = min(minimum_size, len(ordered), limit)
         candidates = floored[:limit]
@@ -1686,24 +2740,30 @@ def semantic_weighted_choice(
     selected_id = str(selected.get("id"))
     if vectors.get(selected_id):
         context["picked_vectors"].append(vectors[selected_id])
-        update_axis_coverage(context, slot, selected_id, vectors[selected_id])
+        update_axis_coverage(context, slot, selected_id, vectors[selected_id], selected)
     selected_filter = preset_filter_match(selected, slot_filter)
     if context.get("filter_strictness") == "soft" and selected_filter is False:
         context["soft_out_of_filter_selected_count"] = int(context.get("soft_out_of_filter_selected_count", 0)) + 1
     top_scores = sorted(scored, key=lambda item: item["weight"], reverse=True)[:5]
     summary_by_id = {str(item.get("id")): item for item in scored}
     selected_batch_penalty = summary_by_id.get(selected_id, {}).get("batch_penalty")
+    selected_batch_group_penalty = summary_by_id.get(selected_id, {}).get("batch_group_penalty")
     if selected_batch_penalty:
         context.setdefault("batch_repetition_penalty", []).append(selected_batch_penalty)
+    if selected_batch_group_penalty and selected_batch_group_penalty.get("enabled"):
+        context.setdefault("batch_repetition_penalty", []).append(selected_batch_group_penalty)
     context["slot_scores"].append(
         {
             "slot": slot,
             "selected": selected_id,
             "top": top_scores,
             "candidate_count": len(candidates),
+            "candidate_limit": semantic_slot_candidate_limit(context, slot),
+            "weight_floor": semantic_slot_weight_floor(context, slot),
             "score_window": score_window,
             "selected_filter": "none" if selected_filter is None else ("in" if selected_filter else "out"),
             "batch_penalty": selected_batch_penalty,
+            "batch_group_penalty": selected_batch_group_penalty,
         }
     )
     return selected
@@ -1761,7 +2821,7 @@ def choose_preset(
                 rejected_by_reason[str(reason or "hard_guard")] = rejected_by_reason.get(str(reason or "hard_guard"), 0) + 1
                 continue
             vector = semantic_vector(semantic_context, semantic_entry_key("preset", preset))
-            score, score_summary = semantic_preset_score_breakdown(vector, semantic_context)
+            score, score_summary = semantic_preset_score_breakdown(vector, semantic_context, preset)
             weight = semantic_preset_candidate_weight(preset, score, semantic_context)
             batch_penalty, batch_summary = batch_diversity_penalty(semantic_context, "preset", str(preset.get("id")), vector)
             weight *= batch_penalty
@@ -1845,17 +2905,21 @@ def record_batch_generation(
     )
     forced_slots = set((forced_choices or {}).keys())
     for slot in BATCH_DIVERSITY_TRACKED_SCOPES:
+        if slot in {"subject_group", "location_tone"}:
+            continue
         if slot == "preset" or slot in forced_slots:
             continue
         entry = picked.get(slot)
         if not entry:
             continue
+        vector = semantic_vector(semantic_context, semantic_entry_key("slot", entry, slot))
         record_batch_selection(
             batch_context,
             slot,
             str(entry.get("id")),
-            semantic_vector(semantic_context, semantic_entry_key("slot", entry, slot)),
+            vector,
         )
+        record_batch_group_selection(semantic_context, batch_context, slot, entry, vector, forced=False)
 
 
 # -----------------------------------------------------------------------------
@@ -2003,13 +3067,141 @@ def apply_surreal_layer(
     forced_choices: Optional[Dict[str, List[str]]] = None,
     intensity: str = "moderate",
     semantic_context: Optional[JsonDict] = None,
+    generation_contract: Optional[JsonDict] = None,
 ) -> None:
     for slot in SURREAL_INTENSITY_SLOTS[intensity]:
         if slot in picked:
             continue
-        entry = choose_slot(slot, data, preset, rng, picked, forced_choices, semantic_context)
+        entry = choose_slot(slot, data, preset, rng, picked, forced_choices, semantic_context, generation_contract)
         if entry is not None:
             picked[slot] = entry
+            refresh_generation_contract(generation_contract, data, preset, picked, forced_choices, surreal_enabled=True)
+            sync_generation_contract_axis_coverage(generation_contract, semantic_context)
+
+
+def apply_weak_horror_compensation(
+    data: JsonDict,
+    preset: JsonDict,
+    rng: random.Random,
+    picked: Dict[str, Entry],
+    forced_choices: Optional[Dict[str, List[str]]] = None,
+    semantic_context: Optional[JsonDict] = None,
+    generation_contract: Optional[JsonDict] = None,
+) -> None:
+    if not semantic_context:
+        return
+    trace: JsonDict = {
+        "status": "not_needed",
+        "reason": "strong_horror_present_or_not_applicable",
+        "candidate_slots": list(WEAK_HORROR_COMPENSATION_SLOTS),
+    }
+    if not weak_horror_compensation_needed(semantic_context, picked):
+        semantic_context["weak_horror_compensation"] = trace
+        return
+    forced_slots = set((forced_choices or {}).keys())
+    for slot in ("texture", "light_shape", "weather", "color", "lighting"):
+        if slot in picked or slot in forced_slots or slot not in data.get("slots", {}):
+            continue
+        entry = choose_slot(slot, data, preset, rng, picked, forced_choices, semantic_context, generation_contract)
+        if entry is None:
+            continue
+        picked[slot] = entry
+        refresh_generation_contract(generation_contract, data, preset, picked, forced_choices)
+        sync_generation_contract_axis_coverage(generation_contract, semantic_context)
+        strength = family_signal_strength(entry, "horror", coherence_rules_from_source(semantic_context), slot, semantic_context)
+        semantic_context["weak_horror_compensation"] = {
+            "status": "applied" if strength == "strong" else "attempted",
+            "slot": slot,
+            "selected": entry.get("id"),
+            "strength": strength,
+        }
+        return
+    semantic_context["weak_horror_compensation"] = {
+        "status": "blocked_by_forced_set" if forced_slots & set(WEAK_HORROR_COMPENSATION_SLOTS) else "blocked",
+        "reason": "no_available_compensation_slot",
+        "forced_slots": sorted(forced_slots & set(WEAK_HORROR_COMPENSATION_SLOTS)),
+    }
+
+
+def route_slots_for_axis_gap(gap: JsonDict) -> List[str]:
+    ordered: List[str] = []
+    for family in gap.get("families", []):
+        for slot in SEMANTIC_AXIS_SLOT_ROUTES.get(str(family), ()):
+            if slot not in ordered:
+                ordered.append(slot)
+    return ordered
+
+
+def apply_axis_coverage_compensation(
+    data: JsonDict,
+    preset: JsonDict,
+    rng: random.Random,
+    picked: Dict[str, Entry],
+    forced_choices: Optional[Dict[str, List[str]]] = None,
+    semantic_context: Optional[JsonDict] = None,
+    generation_contract: Optional[JsonDict] = None,
+) -> None:
+    if not semantic_context or generation_contract is None:
+        return
+    sync_generation_contract_axis_coverage(generation_contract, semantic_context)
+    gaps = list(generation_contract.get("coverage_gaps", []))
+    if not gaps:
+        return
+    forced_slots = set((forced_choices or {}).keys())
+    max_attempts = 4
+    attempts = 0
+    for gap in gaps:
+        if attempts >= max_attempts:
+            break
+        slots = route_slots_for_axis_gap(gap)
+        if not slots:
+            record_generation_contract_event(
+                generation_contract,
+                "reselect_events",
+                {"axis": gap.get("text"), "status": "skipped", "reason": "no_routed_slots"},
+            )
+            continue
+        selected = None
+        for slot in slots:
+            if slot in picked or slot in forced_slots or slot not in data.get("slots", {}):
+                continue
+            semantic_context["active_must_cover_axis"] = gap
+            try:
+                entry = choose_slot(slot, data, preset, rng, picked, forced_choices, semantic_context, generation_contract)
+            finally:
+                semantic_context.pop("active_must_cover_axis", None)
+            attempts += 1
+            if entry is None:
+                continue
+            picked[slot] = entry
+            refresh_generation_contract(generation_contract, data, preset, picked, forced_choices)
+            sync_generation_contract_axis_coverage(generation_contract, semantic_context)
+            selected = {"slot": slot, "id": entry.get("id")}
+            break
+        record_generation_contract_event(
+            generation_contract,
+            "reselect_events",
+            {
+                "axis": gap.get("text"),
+                "families": gap.get("families", []),
+                "status": "applied" if selected else "blocked",
+                "selected": selected,
+            },
+        )
+
+
+def selected_semantic_metadata_summary(picked: Dict[str, Entry], context: Optional[JsonDict]) -> JsonDict:
+    if not context:
+        return {}
+    return {
+        "subject_groups": entry_semantic_groups(picked["subject"], "subject", context) if "subject" in picked else [],
+        "location_tones": entry_location_tones(picked["location"], "location", context) if "location" in picked else [],
+        "axis_signals": {
+            slot: entry_axis_signals(entry, slot, context)
+            for slot, entry in picked.items()
+            if entry_axis_signals(entry, slot, context)
+        },
+    }
 
 
 def has_surreal_layer(picked: Dict[str, Entry]) -> bool:
@@ -2335,6 +3527,7 @@ def choose_slot(
     picked: Dict[str, Entry],
     forced_choices: Optional[Dict[str, List[str]]] = None,
     semantic_context: Optional[JsonDict] = None,
+    generation_contract: Optional[JsonDict] = None,
 ) -> Optional[Entry]:
     slots = data.get("slots", {})
     if slot not in slots:
@@ -2355,6 +3548,31 @@ def choose_slot(
     else:
         pool = list(full_pool)
 
+    block_reason = slot_block_reason(data, slot, generation_contract, forced=forced)
+    if block_reason:
+        record_generation_contract_event(
+            generation_contract,
+            "skipped_slots",
+            {
+                "slot": slot,
+                "reason": block_reason,
+                "subject_category": generation_contract.get("subject_category") if generation_contract else "generic",
+                "preset_domains": generation_contract.get("preset_domains", []) if generation_contract else [],
+            },
+        )
+        return None
+
+    if not forced:
+        before_contract = len(pool)
+        pool = [item for item in pool if not entry_block_reason(item, slot, generation_contract, forced=False)]
+        if before_contract > 0 and not pool:
+            record_generation_contract_event(
+                generation_contract,
+                "fallback_blocked_slots",
+                {"slot": slot, "reason": "entry_contract_empty", "rejected": before_contract},
+            )
+            return None
+
     # If a human-only forced modifier is given, steer subject choice toward human.
     if slot == "subject" and not forced:
         required_kinds = forced_required_subject_kinds(data, forced_choices or {})
@@ -2373,6 +3591,13 @@ def choose_slot(
         if rejected > 0:
             semantic_context["hard_rejected_count"] = int(semantic_context.get("hard_rejected_count", 0)) + rejected
             semantic_context.setdefault("hard_rejected", []).append({"slot": slot, "count": rejected})
+        if before_hard > 0 and not pool:
+            record_generation_contract_event(
+                generation_contract,
+                "fallback_blocked_slots",
+                {"slot": slot, "reason": "semantic_hard_guard_empty", "rejected": rejected},
+            )
+            return None
 
     if not semantic_context or forced or semantic_context.get("filter_strictness") == "hard":
         filtered = apply_filter(pool, filters)
@@ -2405,6 +3630,11 @@ def choose_slot(
     if not pool:
         if forced:
             return None
+        record_generation_contract_event(
+            generation_contract,
+            "fallback_blocked_slots",
+            {"slot": slot, "reason": "empty_candidate_pool"},
+        )
         pool = compatible_with_picked(full_pool, picked, forced=False, slot=slot) or full_pool
 
     return semantic_weighted_choice(
@@ -2444,6 +3674,7 @@ def reinforce_detail_slots(
     picked: Dict[str, Entry],
     forced_choices: Optional[Dict[str, List[str]]] = None,
     semantic_context: Optional[JsonDict] = None,
+    generation_contract: Optional[JsonDict] = None,
 ) -> None:
     """Add compatible high-signal slots so detailed prompts are consistently specific."""
     minimum_slots = {
@@ -2470,12 +3701,13 @@ def reinforce_detail_slots(
         if slot in slot_groups["finish"] and group_count("finish") >= minimum_slots["finish"]:
             continue
 
-        entry = choose_slot(slot, data, preset, rng, picked, forced_choices, semantic_context)
+        entry = choose_slot(slot, data, preset, rng, picked, forced_choices, semantic_context, generation_contract)
         if entry is not None:
             picked[slot] = entry
+            refresh_generation_contract(generation_contract, data, preset, picked, forced_choices)
 
 
-def build_fields(picked: Dict[str, Entry], lang: str) -> Dict[str, str]:
+def build_fields(picked: Dict[str, Entry], lang: str, data: Optional[JsonDict] = None) -> Dict[str, str]:
     values = {slot: localize(entry, lang) for slot, entry in picked.items()}
 
     subject = values.get("subject", "")
@@ -2704,8 +3936,11 @@ def render_scene_guidance(category: str, lang: str) -> str:
     return "show clear spatial depth, environmental structure, foreground, midground, and background cues"
 
 
-def render_finish_guidance(category: str, lang: str) -> str:
+def render_finish_guidance(category: str, lang: str, generation_contract: Optional[JsonDict] = None) -> str:
+    domains = set((generation_contract or {}).get("preset_domains", []))
     if lang == "ko":
+        if category == "human" and domains & {"documentary", "craft"}:
+            return "피부, 머리카락, 손, 작업복, 도구, 유리나 세라믹 같은 작업 재료, 먼지와 사용 흔적을 실제 다큐멘터리 질감으로 표현한다"
         guidance = {
             "human": "피부, 머리카락, 천, 금속, 유리, 메이크업, 액세서리 같은 소재 단서를 실제 질감으로 표현한다",
             "animal": "털, 깃, 눈, 발, 젖은 표면, 흙, 식물, 배경 질감을 실제 질감으로 표현한다",
@@ -2717,6 +3952,8 @@ def render_finish_guidance(category: str, lang: str) -> str:
         }
         return guidance.get(category, "보이는 소재 단서를 실제 사진 질감으로 표현한다")
 
+    if category == "human" and domains & {"documentary", "craft"}:
+        return "render skin, hair, hands, work clothing, tools, glass or ceramic work materials, dust, and signs of use with documentary photographic texture"
     guidance = {
         "human": "render skin, hair, fabric, metal, glass, makeup, and accessories with accurate material detail",
         "animal": "render fur, feathers, eyes, paws, moisture, soil, plants, and background texture with accurate detail",
@@ -2852,7 +4089,7 @@ def build_prompt_sections(
     reference_edit_mode: str = "off",
     trend_layer: str = "off",
 ) -> Dict[str, List[str]]:
-    fields = build_fields(picked, lang)
+    fields = build_fields(picked, lang, data)
     values = {slot: localize(entry, lang) for slot, entry in picked.items()}
 
     def selected(slots: Sequence[str]) -> List[str]:
@@ -2973,10 +4210,11 @@ def render_detailed_prompt(
     picked: Dict[str, Entry],
     lang: str,
     sections: Dict[str, List[str]],
+    generation_contract: Optional[JsonDict] = None,
 ) -> str:
-    fields = build_fields(picked, lang)
+    fields = build_fields(picked, lang, data)
     values = {slot: localize(entry, lang) for slot, entry in picked.items()}
-    category = subject_category(picked)
+    category = subject_category(picked, data)
 
     if lang == "ko":
         subject = section_text(sections, "subject", values.get("subject", "중심 피사체"))
@@ -2993,7 +4231,7 @@ def render_detailed_prompt(
         medium = values.get("medium", "실사 사진")
         subject_guidance = render_subject_guidance(category, lang)
         scene_guidance = render_scene_guidance(category, lang)
-        finish_guidance = render_finish_guidance(category, lang)
+        finish_guidance = render_finish_guidance(category, lang, generation_contract)
         prompt = " ".join(
             part
             for part in [
@@ -3025,7 +4263,7 @@ def render_detailed_prompt(
         medium = values.get("medium", "photograph")
         subject_guidance = render_subject_guidance(category, lang)
         scene_guidance = render_scene_guidance(category, lang)
-        finish_guidance = render_finish_guidance(category, lang)
+        finish_guidance = render_finish_guidance(category, lang, generation_contract)
         prompt = " ".join(
             part
             for part in [
@@ -3069,7 +4307,7 @@ def render_compact_prompt(
     sections: Dict[str, List[str]],
 ) -> str:
     values = {slot: localize(entry, lang) for slot, entry in picked.items()}
-    category = subject_category(picked)
+    category = subject_category(picked, data)
 
     def render_with_drops(drop_sections: Set[str]) -> str:
         content_parts: List[str] = []
@@ -3121,14 +4359,16 @@ def render_prompt(
     detail_level: str = "standard",
     reference_edit_mode: str = "off",
     trend_layer: str = "off",
+    generation_contract: Optional[JsonDict] = None,
 ) -> str:
-    sections = build_prompt_sections(data, preset, picked, lang, reference_edit_mode, trend_layer)
+    render_picked = render_guarded_picked(data, preset, picked, generation_contract)
+    sections = build_prompt_sections(data, preset, render_picked, lang, reference_edit_mode, trend_layer)
 
     if detail_level == "detailed":
-        return render_detailed_prompt(data, preset, picked, lang, sections)
+        return render_detailed_prompt(data, preset, render_picked, lang, sections, generation_contract)
 
     if detail_level == "compact":
-        return render_compact_prompt(data, preset, picked, lang, sections)
+        return render_compact_prompt(data, preset, render_picked, lang, sections)
 
     style = preset.get("template_style", "natural")
     templates_by_lang = data.get("templates", {}).get(style, {})
@@ -3147,7 +4387,7 @@ def render_prompt(
 
     ordered_templates = section_ordered_standard_templates(templates)
     template = rng.choice(ordered_templates or templates)
-    fields = build_fields(picked, lang)
+    fields = build_fields(render_picked, lang, data)
     prompt = template.format(**fields)
     prompt = ensure_standard_section_order(prompt, sections, fields, lang)
 
@@ -3178,7 +4418,7 @@ def choose_negative_entries(
     negative_pools = data.get("negative_prompt_pools", {})
     if negative_pools:
         pool_names = ["base"]
-        category = subject_category(picked)
+        category = subject_category(picked, data)
         context = picked_context_tokens(picked)
         core_context = picked_core_context_tokens(picked)
         if category == "human":
@@ -3305,6 +4545,10 @@ def generate_once(
             raise
     preset = choose_preset(data, rng, preset_id, semantic_context)
     picked: Dict[str, Entry] = {}
+    generation_contract = make_generation_contract(data, preset, picked, forced_choices)
+    if semantic_context is not None:
+        semantic_context["generation_contract"] = generation_contract
+        sync_generation_contract_axis_coverage(generation_contract, semantic_context)
 
     slots_to_pick = selected_slots_for_preset(preset, data, rng, forced_choices, priority_bias)
     for slot in semantic_steering_slots(semantic_context, data):
@@ -3317,11 +4561,13 @@ def generate_once(
                 )
 
     for slot in slots_to_pick:
-        entry = choose_slot(slot, data, preset, rng, picked, forced_choices, semantic_context)
+        entry = choose_slot(slot, data, preset, rng, picked, forced_choices, semantic_context, generation_contract)
         if entry is not None:
             picked[slot] = entry
+            refresh_generation_contract(generation_contract, data, preset, picked, forced_choices)
+            sync_generation_contract_axis_coverage(generation_contract, semantic_context)
 
-    if should_activate_surreal_layer(
+    surreal_active = should_activate_surreal_layer(
         preset,
         rng,
         surreal_mode,
@@ -3329,16 +4575,25 @@ def generate_once(
         forced_choices,
         semantic_context,
         surreal_mode_explicit,
-    ):
-        apply_surreal_layer(data, preset, rng, picked, forced_choices, surreal_intensity, semantic_context)
+    )
+    refresh_generation_contract(generation_contract, data, preset, picked, forced_choices, surreal_enabled=surreal_active)
+    sync_generation_contract_axis_coverage(generation_contract, semantic_context)
+    if surreal_active:
+        apply_surreal_layer(data, preset, rng, picked, forced_choices, surreal_intensity, semantic_context, generation_contract)
+
+    apply_weak_horror_compensation(data, preset, rng, picked, forced_choices, semantic_context, generation_contract)
+    apply_axis_coverage_compensation(data, preset, rng, picked, forced_choices, semantic_context, generation_contract)
 
     if detail_level == "detailed":
-        reinforce_detail_slots(data, preset, rng, picked, forced_choices, semantic_context)
+        reinforce_detail_slots(data, preset, rng, picked, forced_choices, semantic_context, generation_contract)
+        sync_generation_contract_axis_coverage(generation_contract, semantic_context)
+
+    render_picked = render_guarded_picked(data, preset, picked, generation_contract)
 
     record_batch_generation(
         semantic_context,
         preset,
-        picked,
+        render_picked,
         forced_choices=forced_choices,
         preset_forced=bool(preset_id),
     )
@@ -3358,6 +4613,7 @@ def generate_once(
             detail_level,
             reference_edit_mode,
             trend_layer,
+            generation_contract,
         )
 
     if llm_polish == "strict":
@@ -3376,7 +4632,7 @@ def generate_once(
         }
 
     if include_negative:
-        negative_entries = choose_negative_entries(data, rng, negative_count, has_surreal_layer(picked), picked)
+        negative_entries = choose_negative_entries(data, rng, negative_count, has_surreal_layer(render_picked), render_picked)
         for lang in langs:
             result[f"negative_{lang}"] = render_negative_prompt(negative_entries, lang)
 
@@ -3406,7 +4662,14 @@ def generate_once(
             "semantic_axis_mode": semantic_context.get("semantic_axis_mode"),
             "intent_axes": semantic_context.get("intent_axes"),
             "intent_steering": semantic_context.get("intent_steering"),
+            "generation_contract": generation_contract,
             "axis_coverage": semantic_axis_coverage_trace(semantic_context),
+            "semantic_groups": selected_semantic_metadata_summary(picked, semantic_context),
+            "coherence_scope": {
+                "family_conflicts": sorted((semantic_context.get("coherence_rules", {}).get("family_conflicts", {}) or {}).keys()),
+                "tone_conflicts": sorted((semantic_context.get("semantic_metadata", {}).get("family_tone_conflicts", {}) or {}).keys()),
+            },
+            "weak_horror_compensation": semantic_context.get("weak_horror_compensation", {"status": "not_evaluated"}),
             "surreal_activation_reason": semantic_context.get("surreal_activation_reason"),
             "surreal_activation_active": semantic_context.get("surreal_activation_active"),
             "dictionary_hash": semantic_context.get("dictionary_hash"),
@@ -3424,6 +4687,14 @@ def generate_once(
                 "enabled": bool((semantic_context.get("batch_context") or {}).get("enabled")),
                 "tracked_scopes": list(BATCH_DIVERSITY_TRACKED_SCOPES),
                 "novelty": novelty,
+            },
+            "batch_group_diversity": {
+                "enabled": bool((semantic_context.get("batch_context") or {}).get("enabled")),
+                "tracked_scopes": ["subject_group", "location_tone", "lighting"],
+                "counts": {
+                    scope: dict(((semantic_context.get("batch_context") or {}).get("counts", {}) or {}).get(scope, {}))
+                    for scope in ("subject_group", "location_tone", "lighting")
+                },
             },
             "batch_repetition_penalty": semantic_context.get("batch_repetition_penalty", []),
             "batch_history_summary": batch_history_summary(semantic_context.get("batch_context")),
@@ -3443,7 +4714,11 @@ def generate_once(
             "semantic_axis_mode": semantic_axis_mode,
             "intent_axes": {"mode": semantic_axis_mode, "source": "none", "items": []},
             "intent_steering": {"mode": intent_steering or "off", "enabled": False, "families": [], "decisions": []},
+            "generation_contract": generation_contract,
             "axis_coverage": {"target": 0.0, "items": []},
+            "semantic_groups": {},
+            "coherence_scope": {"family_conflicts": [], "tone_conflicts": []},
+            "weak_horror_compensation": {"status": "not_evaluated"},
             "surreal_activation_reason": "none",
             "surreal_activation_active": False,
             "slot_scores": [],
@@ -3452,6 +4727,11 @@ def generate_once(
                 "enabled": bool((batch_context or {}).get("enabled")),
                 "tracked_scopes": list(BATCH_DIVERSITY_TRACKED_SCOPES),
                 "novelty": novelty,
+            },
+            "batch_group_diversity": {
+                "enabled": bool((batch_context or {}).get("enabled")),
+                "tracked_scopes": ["subject_group", "location_tone", "lighting"],
+                "counts": {},
             },
             "batch_repetition_penalty": [],
             "batch_history_summary": batch_history_summary(batch_context),

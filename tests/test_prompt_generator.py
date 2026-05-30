@@ -1301,6 +1301,265 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertEqual(summary["axis"]["routed_axis"], "horror nightmare")
         self.assertGreater(summary["axis"]["coverage_bonus"], 0.0)
 
+    def test_semantic_coherence_rules_strength_and_conflict_factor(self):
+        rules = self.data["coherence_rules"]
+        soft_window = next(item for item in self.data["slots"]["lighting"] if item["id"] == "soft_window")
+        low_key = next(item for item in self.data["slots"]["lighting"] if item["id"] == "low_key")
+        quiet_dread = next(item for item in self.data["slots"]["mood"] if item["id"] == "quiet_dread")
+        context = {
+            "semantic_profile": "balanced",
+            "filter_strictness": "soft",
+            "axis_vectors": [{"text": "horror", "families": ["horror"], "vector": [1.0, 0.0]}],
+            "coherence_rules": rules,
+        }
+
+        conflict_factor, conflict_summary = self.generator.semantic_coherence_factor(
+            soft_window,
+            "lighting",
+            context,
+            {},
+            routed_axis_score=0.5,
+        )
+        strong_factor, strong_summary = self.generator.semantic_coherence_factor(
+            low_key,
+            "lighting",
+            context,
+            {},
+            routed_axis_score=0.5,
+        )
+
+        self.assertEqual(self.generator.family_signal_strength(quiet_dread, "horror", rules), "strong")
+        self.assertEqual(self.generator.family_signal_strength(soft_window, "horror", rules), "none")
+        self.assertLess(conflict_factor, 1.0)
+        self.assertGreater(strong_factor, 1.0)
+        self.assertEqual(conflict_summary["events"][0]["type"], "family_conflict")
+        self.assertEqual(strong_summary["events"][0]["type"], "strength_boost")
+
+    def test_semantic_preset_family_coverage_rewards_horror_signal(self):
+        rules = self.data["coherence_rules"]
+        context = {
+            "semantic_profile": "balanced",
+            "axis_vectors": [
+                {"text": "urban", "families": ["urban"], "vector": [1.0, 0.0]},
+                {"text": "horror", "families": ["horror"], "vector": [0.0, 1.0]},
+                {"text": "fantasy", "families": ["fantasy"], "vector": [0.5, 0.5]},
+                {"text": "human", "families": ["human"], "vector": [0.5, 0.0]},
+            ],
+            "coherence_rules": rules,
+        }
+        horror_preset = next(item for item in self.data["presets"] if item["id"] == "analog_horror_found_footage_portrait")
+        broad_preset = next(item for item in self.data["presets"] if item["id"] == "cinematic_fantasy_portrait")
+
+        horror_adjustment, horror_summary = self.generator.semantic_preset_family_coverage(horror_preset, context)
+        broad_adjustment, broad_summary = self.generator.semantic_preset_family_coverage(broad_preset, context)
+
+        self.assertGreater(horror_adjustment, broad_adjustment)
+        self.assertEqual(horror_summary["families"][0]["strength"], "strong")
+        self.assertEqual(broad_summary["families"][0]["strength"], "ambient")
+
+    def test_semantic_metadata_drives_group_and_tone_signals(self):
+        metadata = self.data["semantic_metadata"]
+        fashion_model = next(item for item in self.data["slots"]["subject"] if item["id"] == "fashion_model")
+        rooftop_sunset = next(item for item in self.data["slots"]["location"] if item["id"] == "rooftop_sunset")
+        mirror_space_fold = next(item for item in self.data["slots"]["surreal_concept"] if item["id"] == "mirror_space_fold")
+
+        context = {
+            "semantic_metadata": metadata,
+            "coherence_rules": self.data["coherence_rules"],
+        }
+
+        self.assertIn("fashion", self.generator.entry_semantic_groups(fashion_model, "subject", context))
+        self.assertIn("warm_sunset", self.generator.entry_location_tones(rooftop_sunset, "location", context))
+        self.assertEqual(
+            self.generator.family_signal_strength(mirror_space_fold, "fantasy", self.data["coherence_rules"], "surreal_concept", context),
+            "strong",
+        )
+
+    def test_semantic_group_batch_penalty_repeats_subject_group(self):
+        batch_context = self.generator.make_batch_context("semantic", "medium", 3)
+        context = {"batch_context": batch_context, "semantic_metadata": self.data["semantic_metadata"]}
+        fashion_model = next(item for item in self.data["slots"]["subject"] if item["id"] == "fashion_model")
+        influencer = next(item for item in self.data["slots"]["subject"] if item["id"] == "influencer_creator")
+
+        self.generator.record_batch_selection(batch_context, "subject_group", "fashion", [1.0, 0.0])
+        repeated_factor, repeated_summary = self.generator.batch_group_diversity_penalty(
+            context, "subject", fashion_model, [1.0, 0.0]
+        )
+        fresh_factor, fresh_summary = self.generator.batch_group_diversity_penalty(
+            context, "subject", influencer, [0.0, 1.0]
+        )
+
+        self.assertLess(repeated_factor, fresh_factor)
+        self.assertTrue(repeated_summary["enabled"])
+        self.assertEqual(fresh_factor, 1.0)
+        self.assertTrue(fresh_summary["enabled"])
+
+    def test_semantic_contextual_affinity_uses_picked_location_for_lighting(self):
+        location = next(item for item in self.data["slots"]["location"] if item["id"] == "rainy_neon_alley")
+        neon = next(item for item in self.data["slots"]["lighting"] if item["id"] == "neon")
+        context = {
+            "index": {
+                "entries": {
+                    self.generator.semantic_entry_key("slot", location, "location"): {"vector": [1.0, 0.0]},
+                    self.generator.semantic_entry_key("slot", neon, "lighting"): {"vector": [0.9, 0.1]},
+                }
+            },
+            "axis_vectors": [],
+            "semantic_metadata": self.data["semantic_metadata"],
+            "coherence_rules": self.data["coherence_rules"],
+        }
+
+        score, summary = self.generator.semantic_contextual_affinity("lighting", neon, [0.9, 0.1], context, {"location": location})
+
+        self.assertGreater(score, 0.9)
+        self.assertEqual(summary["events"][0]["slot"], "location")
+
+    def test_weak_horror_compensation_boosts_strong_horror_slot(self):
+        tense = next(item for item in self.data["slots"]["mood"] if item["id"] == "tense")
+        flashlight = next(item for item in self.data["slots"]["lighting"] if item["id"] == "single_flashlight_beam")
+        soft_window = next(item for item in self.data["slots"]["lighting"] if item["id"] == "soft_window")
+        context = {
+            "semantic_profile": "balanced",
+            "axis_vectors": [{"text": "horror", "families": ["horror"], "vector": [1.0, 0.0]}],
+            "coherence_rules": self.data["coherence_rules"],
+            "semantic_metadata": self.data["semantic_metadata"],
+        }
+        picked = {"mood": tense}
+
+        strong_factor, strong_summary = self.generator.weak_horror_compensation_factor(flashlight, "lighting", context, picked)
+        weak_factor, weak_summary = self.generator.weak_horror_compensation_factor(soft_window, "lighting", context, picked)
+
+        self.assertGreater(strong_factor, 1.0)
+        self.assertEqual(strong_summary["strength"], "strong")
+        self.assertEqual(weak_factor, 1.0)
+        self.assertTrue(weak_summary["active"])
+
+    def test_horror_location_tone_conflict_penalizes_warm_sunset(self):
+        rooftop_sunset = next(item for item in self.data["slots"]["location"] if item["id"] == "rooftop_sunset")
+        context = {
+            "semantic_profile": "balanced",
+            "filter_strictness": "soft",
+            "axis_vectors": [{"text": "horror", "families": ["horror"], "vector": [1.0, 0.0]}],
+            "coherence_rules": self.data["coherence_rules"],
+            "semantic_metadata": self.data["semantic_metadata"],
+        }
+
+        factor, summary = self.generator.semantic_coherence_factor(
+            rooftop_sunset,
+            "location",
+            context,
+            {},
+            routed_axis_score=0.5,
+        )
+
+        self.assertLess(factor, 1.0)
+        self.assertEqual(summary["events"][0]["type"], "family_conflict")
+
+    def test_horror_axis_does_not_penalize_fantasy_surreal_slot(self):
+        mirror_space_fold = next(item for item in self.data["slots"]["surreal_concept"] if item["id"] == "mirror_space_fold")
+        context = {
+            "semantic_profile": "balanced",
+            "filter_strictness": "soft",
+            "axis_vectors": [
+                {"text": "horror", "families": ["horror"], "vector": [1.0, 0.0]},
+                {"text": "fantasy", "families": ["fantasy"], "vector": [0.0, 1.0]},
+            ],
+            "coherence_rules": self.data["coherence_rules"],
+            "semantic_metadata": self.data["semantic_metadata"],
+        }
+
+        factor, summary = self.generator.semantic_coherence_factor(
+            mirror_space_fold,
+            "surreal_concept",
+            context,
+            {},
+            routed_axis_score=0.6,
+        )
+
+        self.assertGreater(factor, 1.0)
+        self.assertFalse(any(event["type"] == "family_conflict" for event in summary["events"]))
+
+    def test_product_macro_subject_is_not_classified_as_plant(self):
+        silver_ring = next(item for item in self.data["slots"]["subject"] if item["id"] == "silver_ring_jewelry")
+        mechanical_watch = next(item for item in self.data["slots"]["subject"] if item["id"] == "mechanical_watch")
+
+        self.assertEqual(self.generator.subject_category({"subject": silver_ring}, self.data), "object")
+        self.assertEqual(self.generator.subject_category({"subject": mechanical_watch}, self.data), "object")
+
+    def test_non_human_product_subject_skips_human_only_required_slots(self):
+        item = self.generate(
+            "pojangmacha_street_food_night",
+            seed=91,
+            forced_choices={"subject": ["street_food_tteokbokki"]},
+            include_trace=True,
+            include_negative=False,
+        )
+
+        choices = item["choices"]
+        self.assertNotIn("appearance_type", choices)
+        self.assertNotIn("wardrobe_style", choices)
+        self.assertNotIn("wearing", item["prompt_en"].lower())
+        skipped = item["semantic_trace"]["generation_contract"]["skipped_slots"]
+        self.assertIn("appearance_type", {row["slot"] for row in skipped})
+        self.assertIn("wardrobe_style", {row["slot"] for row in skipped})
+
+    def test_craft_documentary_blocks_fashion_modifier_slots(self):
+        item = self.generate(
+            "documentary_craftsperson_workshop",
+            seed=92,
+            forced_choices={"subject": ["glassblower_artisan"], "location": ["glassblowing_workshop"]},
+            include_trace=True,
+            include_negative=False,
+        )
+
+        choices = item["choices"]
+        self.assertNotIn("appearance_type", choices)
+        self.assertNotIn("aesthetic_trend", choices)
+        lowered = item["prompt_en"].lower()
+        self.assertNotIn("idol", lowered)
+        self.assertNotIn("fashion editorial", lowered)
+        skipped = item["semantic_trace"]["generation_contract"]["skipped_slots"]
+        self.assertIn("appearance_type", {row["slot"] for row in skipped})
+        self.assertIn("aesthetic_trend", {row["slot"] for row in skipped})
+
+    def test_forced_wardrobe_bypasses_generation_contract_and_renders(self):
+        item = self.generate(
+            "documentary_craftsperson_workshop",
+            seed=93,
+            forced_choices={
+                "subject": ["glassblower_artisan"],
+                "location": ["glassblowing_workshop"],
+                "wardrobe_style": ["clean_blazer_trousers"],
+            },
+            include_trace=True,
+            include_negative=False,
+        )
+
+        self.assertEqual(item["choices"]["wardrobe_style"]["id"], "clean_blazer_trousers")
+        self.assertIn("clean blazer", item["prompt_en"].lower())
+        suppressed = item["semantic_trace"]["generation_contract"]["render_suppressed_slots"]
+        self.assertNotIn("wardrobe_style", {row["slot"] for row in suppressed})
+
+    def test_applicability_blocked_slot_does_not_fall_back_to_full_pool(self):
+        preset = next(item for item in self.data["presets"] if item["id"] == "analog_personal_brand_portrait")
+        subject = next(item for item in self.data["slots"]["subject"] if item["id"] == "fashion_model")
+        picked = {"subject": subject}
+        contract = self.generator.make_generation_contract(self.data, preset, picked, {})
+
+        entry = self.generator.choose_slot(
+            "surface_material",
+            self.data,
+            preset,
+            random.Random(94),
+            picked,
+            {},
+            None,
+            contract,
+        )
+
+        self.assertIsNone(entry)
+        self.assertIn("surface_material", {row["slot"] for row in contract["skipped_slots"]})
+
     def test_semantic_intent_steering_filters_subject_location_and_mood_pools(self):
         context = {
             "intent_steering": {"mode": "auto", "enabled": True, "families": ["human", "urban", "horror"], "decisions": []},
@@ -1386,8 +1645,12 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             [item["text"] for item in fallback["items"]],
             ["human portrait", "urban city street", "horror fear nightmare", "fantasy magic surreal"],
         )
+        product_axes = self.generator.extract_intent_axes("jewelry macro reflection product", semantic_axis_mode="auto")
+        self.assertIn("product commercial packshot", [item["text"] for item in product_axes["items"]])
+        self.assertIn("jewelry macro reflection", [item["text"] for item in product_axes["items"]])
         self.assertIn("metropolitan environment", self.generator.semantic_axis_embedding_text("urban"))
         self.assertIn("readable face", self.generator.semantic_axis_embedding_text("human portrait"))
+        self.assertIn("polished metal", self.generator.semantic_axis_embedding_text("jewelry macro reflection"))
 
         single = self.generator.extract_intent_axes("quiet portrait", semantic_axis_mode="off")
         self.assertEqual(single["source"], "off")
@@ -1401,6 +1664,66 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertEqual(default_axis["source"], "default_full_intent")
         self.assertEqual(len(default_axis["items"]), 1)
         self.assertEqual(default_axis["items"][0]["text"], self.generator.DEFAULT_SEMANTIC_INTENT)
+
+    def test_generation_contract_tracks_must_cover_axes(self):
+        preset = next(item for item in self.data["presets"] if item["id"] == "jewelry_macro_reflection")
+        axis_vectors = [{"text": "product", "families": ["product"], "vector": [1.0, 0.0]}]
+        context = {
+            "intent_source": "user",
+            "intent_axes": {"source": "fallback", "items": [{"text": "product"}]},
+            "semantic_profile": "balanced",
+            "axis_vectors": axis_vectors,
+            "axis_coverage": self.generator.initial_axis_coverage(axis_vectors, "balanced"),
+            "coherence_rules": self.data.get("coherence_rules", {}),
+            "semantic_metadata": self.data.get("semantic_metadata", {}),
+        }
+        contract = self.generator.make_generation_contract(self.data, preset, {})
+        self.generator.sync_generation_contract_axis_coverage(contract, context)
+        self.assertEqual([item["text"] for item in contract["coverage_gaps"]], ["product"])
+
+        genre = next(item for item in self.data["slots"]["genre"] if item["id"] == "product")
+        self.generator.update_axis_coverage(context, "genre", "product", [1.0, 0.0], genre)
+        self.generator.sync_generation_contract_axis_coverage(contract, context)
+        self.assertEqual([item["text"] for item in contract["covered_axes"]], ["product"])
+        self.assertEqual(contract["coverage_gaps"], [])
+
+    def test_cliche_weight_softly_reduces_dominant_free_slot_candidate(self):
+        context = {
+            "selection_mode": "semantic",
+            "novelty": "medium",
+            "semantic_profile": "balanced",
+            "semantic_weight": 0.75,
+            "query_vector": [1.0, 0.0],
+            "axis_vectors": [],
+            "axis_coverage": self.generator.initial_axis_coverage([], "balanced"),
+            "picked_vectors": [],
+            "coherence_rules": {},
+            "semantic_metadata": {"cliche_weights": {"lighting": {"neon": 1.0}}},
+        }
+        preset = {}
+        neon = {"id": "neon", "en": "neon light", "weight": 1.0}
+        alternate = {"id": "alternate", "en": "alternate light", "weight": 1.0}
+        neon_weight, neon_summary = self.generator.semantic_candidate_weight(
+            neon, [1.0, 0.0], context, [], preset, {}, "lighting"
+        )
+        alternate_weight, alternate_summary = self.generator.semantic_candidate_weight(
+            alternate, [1.0, 0.0], context, [], preset, {}, "lighting"
+        )
+
+        self.assertLess(neon_weight, alternate_weight)
+        self.assertTrue(neon_summary["cliche"]["active"])
+        self.assertFalse(alternate_summary["cliche"]["active"])
+
+    def test_coherent_diversity_slots_use_wider_candidate_window(self):
+        context = {"semantic_profile": "balanced", "novelty": "medium"}
+        self.assertGreater(
+            self.generator.semantic_slot_candidate_limit(context, "texture"),
+            self.generator.semantic_slot_candidate_limit(context, "subject"),
+        )
+        self.assertLess(
+            self.generator.semantic_slot_weight_floor(context, "texture"),
+            self.generator.semantic_slot_weight_floor(context, "subject"),
+        )
 
     def test_semantic_preset_similarity_can_outweigh_base_weight(self):
         context = {"novelty": "medium", "selection_mode": "semantic"}
@@ -1805,6 +2128,60 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
 
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("unknown facet value", result.stderr)
+
+    def test_dictionary_validator_rejects_unknown_coherence_rule_id(self):
+        data = json.loads(TAGS_PATH.read_text(encoding="utf-8"))
+        data["coherence_rules"]["family_conflicts"]["horror"]["lighting"].append("missing_light_id")
+
+        with tempfile.TemporaryDirectory() as tmp:
+            invalid_path = Path(tmp) / "invalid_tags.json"
+            invalid_path.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
+            result = subprocess.run(
+                [sys.executable, str(VALIDATOR_PATH), "--tags", str(invalid_path)],
+                cwd=ROOT,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("coherence_rules.family_conflicts.horror.lighting: unknown id missing_light_id", result.stderr)
+
+    def test_dictionary_validator_rejects_unknown_semantic_metadata_id(self):
+        data = json.loads(TAGS_PATH.read_text(encoding="utf-8"))
+        data["semantic_metadata"]["subject_groups"]["fashion"].append("missing_subject_id")
+
+        with tempfile.TemporaryDirectory() as tmp:
+            invalid_path = Path(tmp) / "invalid_tags.json"
+            invalid_path.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
+            result = subprocess.run(
+                [sys.executable, str(VALIDATOR_PATH), "--tags", str(invalid_path)],
+                cwd=ROOT,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("semantic_metadata.subject_groups.fashion: unknown subject id missing_subject_id", result.stderr)
+
+    def test_dictionary_validator_rejects_unknown_slot_applicability_id(self):
+        data = json.loads(TAGS_PATH.read_text(encoding="utf-8"))
+        data["slot_applicability"]["subject_category_overrides"]["missing_subject_id"] = "object"
+
+        with tempfile.TemporaryDirectory() as tmp:
+            invalid_path = Path(tmp) / "invalid_tags.json"
+            invalid_path.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
+            result = subprocess.run(
+                [sys.executable, str(VALIDATOR_PATH), "--tags", str(invalid_path)],
+                cwd=ROOT,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("slot_applicability.subject_category_overrides: unknown subject id missing_subject_id", result.stderr)
 
     def test_semantic_index_builder_records_gemini_metadata_and_entries(self):
         original_embedder = self.generator.embed_texts_with_gemini
