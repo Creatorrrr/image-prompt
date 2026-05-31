@@ -29,7 +29,7 @@ Preserve the source image, not a corrected, beautified, safer-looking, more mode
    2. Composition, aspect ratio, orientation, crop, subject scale, frame placement, and spatial layout.
    3. Human appearance fidelity when people are visible: face, skin tone, broad apparent visual ancestry or race-coded appearance when visually evident, hair, visible body proportions, clothing-shaped silhouette, pose, and occlusion.
    4. Pose mechanics, gesture, limb placement, hand placement, negative space, and crop boundaries.
-   5. Camera distance, height, angle, lens impression, perspective distortion, focus target, depth of field, sharpness, blur, camera shake, and optical behavior.
+   5. Camera distance, height, angle, lens impression, perspective distortion, focus target, depth of field, focus clarity, blur, camera shake, and optical behavior.
    6. Lighting direction, atmosphere, color grading, contrast, highlights, visible shadows when relevant, shadow falloff, flash behavior, and lighting-to-volume effects.
    7. Background zoning, objects, depth layers, and environmental details.
    8. Medium, texture, grain, noise, compression, imperfections, and processing artifacts.
@@ -67,6 +67,7 @@ Do not include hidden analysis, checklist text, caveats, explanations, or refere
 - Do not infer hidden anatomy, hidden objects, hidden clothing structure, hidden context, personality, intent, nationality, exact ethnicity, religion, measurements, sizes, age, weight, height, camera metadata, or private identity.
 - Do not correct image imperfections unless the user explicitly asks for an improved version.
 - Preserve imperfections when visible: softness, haze, low contrast, grain, digital noise, compression, motion blur, missed focus, underexposure, overexposure, backlight, clipped highlights, crushed shadows, cast shadows, self-shadowing, contact shadows, casual framing, sensor artifacts, flash flattening, or low-resolution texture.
+- When the source image is soft, low-resolution, underexposed, compressed, noisy, or hazy, do not use absolute enhancement terms such as `high quality`, `sharp`, `sharpest`, `crisp`, `clean`, or `pristine` to describe focus, highlights, or recommended quality. Use source-faithful relative terms instead, such as `least soft`, `most in focus relative to the rest`, `retains the most detail`, `small dim highlight`, or `weak specular point`.
 - When light-created shadows materially affect likeness, composition, occlusion, or surface separation, preserve them instead of brightening, erasing, retouching, or normalizing them. Do not invent contours, body shape, surface detail, or environmental structure hidden by shadow.
 - Do not resolve the image into the nearest plausible or more coherent scene. If the concept depends on illusion, mismatch, uncanny composite structure, mixed-media layering, scale incongruity, low fidelity, or a deliberately awkward capture, preserve that relationship above realism and plausibility. Do not promote a stylized, composited, inserted, reflected, or screen-contained element into a normal physical object unless it visibly is one.
 - For non-photographic images, adapt the same fidelity rules to the medium: virtual camera, perspective, stylized proportions, edge quality, linework, brush texture, value structure, cel shading, render quality, material treatment, paper/canvas texture, or game-engine look.
@@ -159,7 +160,7 @@ For photographic images, describe how the camera captured the scene:
 - Wide-angle or close-camera foreground enlargement, edge stretching, foreshortening, barrel-like distortion, or minimal distortion only when visible.
 - Telephoto compression only when visible.
 - Low-angle elongation or high-angle compression only when visible.
-- Focus target, focus accuracy, depth of field, sharpness, bokeh, foreground blur, background blur, low-resolution softness, digital sharpening, compression, noise reduction, bloom, haze, and which planes remain sharp or blurred.
+- Focus target, focus accuracy, depth of field, focus clarity, bokeh, foreground blur, background blur, low-resolution softness, digital sharpening, compression, noise reduction, bloom, haze, and which planes are relatively most in focus or blurred.
 - Motion blur, camera shake, shutter behavior, ghosting, smear direction, rolling-shutter artifacts, or stable no-blur capture.
 - Camera/sensor/medium impression: smartphone rear-camera snapshot, front-camera selfie, compact camera, disposable-camera-like, 35mm-like film, instant-film-like, webcam, CCTV, low-light phone image, social-media compression, professional digital camera, documentary photo, clean digital photo, or other visible look.
 
@@ -205,7 +206,7 @@ Write a polished, detailed standalone image-generation prompt in this order:
 8. Background by screen zones: left, right, top, bottom, foreground, midground, and background.
 9. Lighting, atmosphere, color grading, contrast, highlights, notable shadow placement, falloff, receiving surfaces, visible cast shadows, self-shadowing, contact shadows when relevant, shadow edge quality and density only when they materially affect likeness, composition, or occlusion, flash behavior if present, and how shadows affect visible edges, separation, occlusion, and lighting-to-volume effects without inferring new structure.
 10. Camera position, distance, height, angle, rotation, lens impression, perspective distortion, subject-to-camera relationship, and perspective effects on apparent proportions.
-11. Focus target, focus accuracy, depth of field, sharpness, bokeh, foreground blur, background blur, low-detail areas, and which planes must remain sharp or blurred.
+11. Focus target, focus accuracy, depth of field, focus clarity, bokeh, foreground blur, background blur, low-detail areas, and which planes are relatively most in focus or blurred.
 12. Motion blur, camera shake, shutter behavior, ghosting, smear direction, low-light exposure, haze, rolling-shutter or slow-shutter effects if visible, and whether blur should be preserved or avoided.
 13. Film/camera/sensor or rendering look: grain, noise, compression, sharpening, halation, vignetting, light leaks, scan texture, dust, scratches, flash snapshot look, smartphone HDR, dynamic range, black-level handling, bright-fabric bloom, dark-fabric absorption, shadow response, highlight rolloff, or non-photographic medium artifacts.
 14. Critical fidelity locks: primary visual concept, perceptual relationships, composition, crop, subject scale, face, calibrated body proportions when relevant, adult chest/upper-torso/waist/hip silhouette when relevant, occlusion, clothing fit, neckline/seams, lighting-to-volume, pose, camera/focus/blur, lighting, color, background, objects, and medium/rendering.
@@ -236,7 +237,7 @@ Fill every field with source-specific values:
 
 - Aspect ratio:
 - Size:
-- Quality:
+- Quality/Fidelity: match the source fidelity; if the source is degraded, soft, compressed, noisy, hazy, or underexposed, state that directly and do not default to high quality.
 - Style/rendering target:
 - Camera/film/rendering target:
 - Lighting/rendering target:
@@ -253,6 +254,6 @@ Fill every field with source-specific values:
 - Clothing-fit, neckline, and seam locks:
 - Lighting-to-volume fidelity locks: include source-specific light direction plus only source-specific shadow details that materially affect likeness, composition, occlusion, or surface separation; avoid over-specifying minor shadows or inferring hidden structure from shadowed areas.
 - Pose fidelity locks:
-- Focus and depth-of-field locks:
+- Focus and depth-of-field locks: describe the relative focus hierarchy rather than absolute sharpness; for degraded sources, use phrasing like `eyes and face are the least soft area, still low-resolution and compression-softened`.
 - Motion blur and camera-shake locks:
 - Film/camera/sensor or medium artifact locks:
