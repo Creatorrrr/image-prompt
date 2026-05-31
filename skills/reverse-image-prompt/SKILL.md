@@ -30,7 +30,7 @@ Preserve the source image, not a corrected, beautified, safer-looking, more mode
    3. Human appearance fidelity when people are visible: face, skin tone, broad apparent visual ancestry or race-coded appearance when visually evident, hair, visible body proportions, clothing-shaped silhouette, pose, and occlusion.
    4. Pose mechanics, gesture, limb placement, hand placement, negative space, and crop boundaries.
    5. Camera distance, height, angle, lens impression, perspective distortion, focus target, depth of field, sharpness, blur, camera shake, and optical behavior.
-   6. Lighting direction, atmosphere, color grading, contrast, highlights, cast shadows, self-shadowing, contact shadows, occlusion shadows, shadow edge quality, shadow density, shadow direction, flash behavior, and lighting-to-volume effects.
+   6. Lighting direction, atmosphere, color grading, contrast, highlights, visible shadows when relevant, shadow falloff, flash behavior, and lighting-to-volume effects.
    7. Background zoning, objects, depth layers, and environmental details.
    8. Medium, texture, grain, noise, compression, imperfections, and processing artifacts.
 
@@ -67,7 +67,7 @@ Do not include hidden analysis, checklist text, caveats, explanations, or refere
 - Do not infer hidden anatomy, hidden objects, hidden clothing structure, hidden context, personality, intent, nationality, exact ethnicity, religion, measurements, sizes, age, weight, height, camera metadata, or private identity.
 - Do not correct image imperfections unless the user explicitly asks for an improved version.
 - Preserve imperfections when visible: softness, haze, low contrast, grain, digital noise, compression, motion blur, missed focus, underexposure, overexposure, backlight, clipped highlights, crushed shadows, cast shadows, self-shadowing, contact shadows, casual framing, sensor artifacts, flash flattening, or low-resolution texture.
-- Preserve light-created shadows instead of brightening, erasing, retouching, or normalizing them. Do not invent contours, body shape, surface detail, or environmental structure hidden by shadow.
+- When light-created shadows materially affect likeness, composition, occlusion, or surface separation, preserve them instead of brightening, erasing, retouching, or normalizing them. Do not invent contours, body shape, surface detail, or environmental structure hidden by shadow.
 - Do not resolve the image into the nearest plausible or more coherent scene. If the concept depends on illusion, mismatch, uncanny composite structure, mixed-media layering, scale incongruity, low fidelity, or a deliberately awkward capture, preserve that relationship above realism and plausibility. Do not promote a stylized, composited, inserted, reflected, or screen-contained element into a normal physical object unless it visibly is one.
 - For non-photographic images, adapt the same fidelity rules to the medium: virtual camera, perspective, stylized proportions, edge quality, linework, brush texture, value structure, cel shading, render quality, material treatment, paper/canvas texture, or game-engine look.
 
@@ -167,9 +167,9 @@ Describe lighting-to-volume:
 
 - Main light direction, intensity, softness, temperature, fill, bounce, rim light, backlight, flash, practical light, window light, screen light, neon, daylight, or ambient light when visible.
 - Highlight placement, shadow falloff, black-level handling, bright-fabric bloom, dark-fabric absorption, local contrast, haze, clipped highlights, lifted shadows, crushed shadows, underexposure, or overexposure.
-- For visible shadows, identify the apparent caster, receiving surface, shadow shape, edge softness or hardness, density, direction, falloff, and color cast when supported by visible evidence.
-- Distinguish self-shadowing on faces, hair, clothing, body contours, and objects from cast shadows made by clothing, folds, hair, arms, hands, props, architecture, background structures, or the frame boundary.
-- State whether shadows reveal form, hide form, flatten form, exaggerate volume, break up a contour, merge dark objects together, separate foreground from background, or obscure detail.
+- For visible shadows that materially affect likeness, composition, occlusion, or surface separation, note the apparent caster, receiving surface, shadow shape, edge softness or hardness, density, direction, falloff, and color cast when supported by visible evidence.
+- When useful, distinguish self-shadowing on visible surfaces such as faces, hair, clothing, body contours, and objects from cast shadows made by clothing, folds, hair, arms, hands, props, architecture, background structures, or the frame boundary.
+- State how shadows affect visible edges, detail, separation, and occlusion without inferring new structure from shadowed areas.
 - How lighting affects face structure, skin texture, clothing texture, object shape, visible body contour, and perceived body volume.
 - Do not relight the scene into cleaner, brighter, more commercial, more frontal, more beauty-oriented, more contrasty, more cinematic, more sculpted, more exposed, or more evenly lit lighting if that changes apparent proportions or face structure.
 
@@ -203,7 +203,7 @@ Write a polished, detailed standalone image-generation prompt in this order:
 6. Exact pose, body orientation, head angle, gaze, shoulder line, torso lean, arms, elbows, wrists, hands, fingers, object grip, legs, stance, weight distribution, occlusion, negative space, crop boundaries, and pose landmark coordinates.
 7. Clothing, accessories, and held objects, including how they reveal, obscure, flatten, soften, follow, compress, stretch over, widen, narrow, or visually define the body or pose.
 8. Background by screen zones: left, right, top, bottom, foreground, midground, and background.
-9. Lighting, atmosphere, color grading, contrast, highlights, shadow source/caster/receiver relationships, cast shadows, self-shadowing, contact shadows, shadow edge quality, shadow density, shadow position, shadow direction, flash behavior if present, and how shadows affect visible form, occlusion, and lighting-to-volume effects.
+9. Lighting, atmosphere, color grading, contrast, highlights, notable shadow placement, falloff, receiving surfaces, visible cast shadows, self-shadowing, contact shadows when relevant, shadow edge quality and density only when they materially affect likeness, composition, or occlusion, flash behavior if present, and how shadows affect visible edges, separation, occlusion, and lighting-to-volume effects without inferring new structure.
 10. Camera position, distance, height, angle, rotation, lens impression, perspective distortion, subject-to-camera relationship, and perspective effects on apparent proportions.
 11. Focus target, focus accuracy, depth of field, sharpness, bokeh, foreground blur, background blur, low-detail areas, and which planes must remain sharp or blurred.
 12. Motion blur, camera shake, shutter behavior, ghosting, smear direction, low-light exposure, haze, rolling-shutter or slow-shutter effects if visible, and whether blur should be preserved or avoided.
@@ -251,7 +251,7 @@ Fill every field with source-specific values:
 - Adult chest/upper-torso/waist/hip silhouette locks when relevant:
 - Occlusion fidelity locks:
 - Clothing-fit, neckline, and seam locks:
-- Lighting-to-volume fidelity locks: include source-specific light direction plus visible cast shadows, self-shadowing, contact shadows, shadow edge quality, shadow density, shadow direction, caster/receiver relationships, and shadow-hidden contours.
+- Lighting-to-volume fidelity locks: include source-specific light direction plus only source-specific shadow details that materially affect likeness, composition, occlusion, or surface separation; avoid over-specifying minor shadows or inferring hidden structure from shadowed areas.
 - Pose fidelity locks:
 - Focus and depth-of-field locks:
 - Motion blur and camera-shake locks:
