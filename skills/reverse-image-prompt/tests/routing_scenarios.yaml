@@ -1,0 +1,181 @@
+{
+  "scenarios": [
+    {
+      "id": "portrait",
+      "facets": {
+        "subjects": ["human"],
+        "medium": ["photographic"],
+        "relationships": ["ordinary"],
+        "detail_risks": ["face", "hands", "low-quality"]
+      },
+      "expect_includes": [
+        "core.visual-evidence",
+        "core.frame-coordinates",
+        "concept.primary-relationship",
+        "core.fidelity-discipline",
+        "core.background-color",
+        "core.pre-emit-gate",
+        "core.output-contract",
+        "subject.human",
+        "medium.photographic-capture",
+        "detail.pose-hands-gesture",
+        "detail.low-quality-artifacts"
+      ],
+      "required_anchors": ["face_fidelity", "aesthetic_upgrade", "face_exposure_budget"]
+    },
+    {
+      "id": "clothing-neckline-crop",
+      "facets": {
+        "subjects": ["human"],
+        "medium": ["photographic"],
+        "relationships": ["ordinary"],
+        "detail_risks": ["clothing", "neckline", "body-silhouette", "cropped-edges"]
+      },
+      "expect_includes": [
+        "subject.human",
+        "medium.photographic-capture",
+        "detail.clothing-fashion"
+      ],
+      "required_anchors": [
+        "face_fidelity",
+        "symmetric_large_body_lock",
+        "symmetric_moderate_body_lock",
+        "band_height_drift",
+        "garment_geometry"
+      ]
+    },
+    {
+      "id": "screenshot-ui",
+      "facets": {
+        "subjects": ["generic-object"],
+        "medium": ["screenshot-ui"],
+        "relationships": ["screen-frame-within-frame"],
+        "detail_risks": ["ui-text", "text-logo", "low-quality"]
+      },
+      "expect_includes": [
+        "medium.screenshot-ui",
+        "concept.screen-frame-within-frame",
+        "detail.text-logo-label",
+        "detail.low-quality-artifacts",
+        "subject.generic-object"
+      ],
+      "required_anchors": ["screenshot_ui_split", "absent_ui_controls", "low_legibility_text"]
+    },
+    {
+      "id": "phone-hand-occlusion",
+      "facets": {
+        "subjects": ["human"],
+        "medium": ["photographic"],
+        "relationships": ["occlusion", "screen-frame-within-frame"],
+        "detail_risks": ["hands", "gesture", "ui-text", "text-logo"]
+      },
+      "expect_includes": [
+        "subject.human",
+        "medium.photographic-capture",
+        "concept.occlusion-replacement",
+        "concept.screen-frame-within-frame",
+        "detail.pose-hands-gesture",
+        "detail.text-logo-label"
+      ],
+      "required_anchors": ["face_fidelity", "face_exposure_budget", "low_legibility_text"]
+    },
+    {
+      "id": "mirror-reflection",
+      "facets": {
+        "subjects": ["human"],
+        "medium": ["photographic"],
+        "relationships": ["reflection", "mirror"],
+        "detail_risks": ["clothing", "hands", "low-quality"]
+      },
+      "expect_includes": [
+        "subject.human",
+        "medium.photographic-capture",
+        "concept.reflection-mirror",
+        "detail.clothing-fashion",
+        "detail.pose-hands-gesture"
+      ],
+      "required_anchors": ["face_fidelity", "garment_geometry"]
+    },
+    {
+      "id": "miniature-in-real",
+      "facets": {
+        "subjects": ["generic-object"],
+        "medium": ["photographic"],
+        "relationships": ["scale-miniature"],
+        "detail_risks": ["low-quality", "small-props"]
+      },
+      "expect_includes": [
+        "subject.generic-object",
+        "medium.photographic-capture",
+        "concept.scale-miniature",
+        "detail.low-quality-artifacts"
+      ],
+      "required_anchors": ["miniature_scale", "endpoint_sensitive", "polish_amplifying"]
+    },
+    {
+      "id": "low-light-compressed",
+      "facets": {
+        "subjects": ["generic-object"],
+        "medium": ["photographic"],
+        "relationships": ["ordinary"],
+        "capture_quality": ["low-quality", "compressed", "underexposed", "noise"]
+      },
+      "expect_includes": [
+        "subject.generic-object",
+        "medium.photographic-capture",
+        "detail.low-quality-artifacts"
+      ],
+      "required_anchors": ["generic_subject_fallback"]
+    },
+    {
+      "id": "product-in-hand",
+      "facets": {
+        "subjects": ["product"],
+        "medium": ["photographic"],
+        "relationships": ["ordinary"],
+        "detail_risks": ["hands", "label", "text-logo"]
+      },
+      "expect_includes": [
+        "subject.product",
+        "medium.photographic-capture",
+        "detail.pose-hands-gesture",
+        "detail.text-logo-label"
+      ],
+      "required_anchors": ["low_legibility_text"]
+    },
+    {
+      "id": "document-chart-screenshot",
+      "facets": {
+        "subjects": ["document", "chart"],
+        "medium": ["screenshot-ui"],
+        "relationships": ["screen-frame-within-frame"],
+        "detail_risks": ["ui-text", "text-logo", "low-quality"]
+      },
+      "expect_includes": [
+        "subject.document-data-diagram",
+        "medium.screenshot-ui",
+        "concept.screen-frame-within-frame",
+        "detail.text-logo-label",
+        "detail.low-quality-artifacts"
+      ],
+      "required_anchors": ["screenshot_ui_split", "absent_ui_controls", "low_legibility_text"]
+    },
+    {
+      "id": "non-photographic-character",
+      "facets": {
+        "subjects": ["human"],
+        "medium": ["non-photographic"],
+        "relationships": ["ordinary"],
+        "style": ["stylized-character-maturity"],
+        "detail_risks": ["face", "clothing"]
+      },
+      "expect_includes": [
+        "subject.human",
+        "medium.non-photographic-rendering",
+        "style.stylized-character-maturity",
+        "detail.clothing-fashion"
+      ],
+      "required_anchors": ["face_fidelity", "maturity_anti_collapse", "garment_geometry"]
+    }
+  ]
+}

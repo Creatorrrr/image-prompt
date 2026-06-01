@@ -1,0 +1,903 @@
+{
+  "name": "reverse-image-prompt",
+  "architecture": "modular facet router",
+  "version": "2.1.0-tiered-routing",
+  "entrypoint": "SKILL.md",
+  "source": "generated from modules/*.md frontmatter by tools/gen_manifest.py",
+  "tiers": {
+    "0": "always-on core",
+    "1": "concept and relationship",
+    "2": "subject and medium",
+    "3": "detail-risk",
+    "4": "narrow style"
+  },
+  "required_core_modules": [
+    "core.visual-evidence",
+    "core.frame-coordinates",
+    "concept.primary-relationship",
+    "core.fidelity-discipline",
+    "core.background-color",
+    "core.pre-emit-gate",
+    "core.output-contract"
+  ],
+  "modules": [
+    {
+      "id": "core.visual-evidence",
+      "file": "modules/core.visual-evidence.md",
+      "type": "core",
+      "tier": 0,
+      "facet": "core",
+      "facet_values": [
+        "visual-evidence"
+      ],
+      "priority": 110,
+      "triggers": [
+        "any image"
+      ],
+      "avoid_when": [],
+      "dependencies": [],
+      "conflicts": [],
+      "provides_anchors": [
+        "standalone_reference_ban",
+        "visible_evidence_only"
+      ]
+    },
+    {
+      "id": "core.frame-coordinates",
+      "file": "modules/core.frame-coordinates.md",
+      "type": "core",
+      "tier": 0,
+      "facet": "core",
+      "facet_values": [
+        "frame-coordinates",
+        "aspect-ratio",
+        "coordinates",
+        "crop"
+      ],
+      "priority": 108,
+      "triggers": [
+        "any image"
+      ],
+      "avoid_when": [],
+      "dependencies": [
+        "core.visual-evidence"
+      ],
+      "conflicts": [],
+      "provides_anchors": [
+        "aspect_ratio_drift_major",
+        "normalized_coordinates"
+      ]
+    },
+    {
+      "id": "concept.primary-relationship",
+      "file": "modules/concept.primary-relationship.md",
+      "type": "concept",
+      "tier": 0,
+      "facet": "core",
+      "facet_values": [
+        "primary-relationship",
+        "concept-lock"
+      ],
+      "priority": 106,
+      "triggers": [
+        "any image"
+      ],
+      "avoid_when": [],
+      "dependencies": [
+        "core.visual-evidence",
+        "core.frame-coordinates"
+      ],
+      "conflicts": [],
+      "provides_anchors": [
+        "primary_visual_concept",
+        "concept_spec"
+      ]
+    },
+    {
+      "id": "core.fidelity-discipline",
+      "file": "modules/core.fidelity-discipline.md",
+      "type": "core",
+      "tier": 0,
+      "facet": "core",
+      "facet_values": [
+        "fidelity-discipline",
+        "anti-polish",
+        "anti-normalization"
+      ],
+      "priority": 104,
+      "triggers": [
+        "any image"
+      ],
+      "avoid_when": [],
+      "dependencies": [
+        "core.visual-evidence"
+      ],
+      "conflicts": [],
+      "provides_anchors": [
+        "anti_polish",
+        "broad_label_discipline",
+        "fidelity_ceiling"
+      ]
+    },
+    {
+      "id": "core.background-color",
+      "file": "modules/core.background-color.md",
+      "type": "core",
+      "tier": 0,
+      "facet": "core",
+      "facet_values": [
+        "background",
+        "color",
+        "palette",
+        "environment-zoning"
+      ],
+      "priority": 102,
+      "triggers": [
+        "any image"
+      ],
+      "avoid_when": [],
+      "dependencies": [
+        "core.visual-evidence",
+        "core.frame-coordinates"
+      ],
+      "conflicts": [],
+      "provides_anchors": [
+        "background_zoning",
+        "low_legibility_background",
+        "color_mood"
+      ]
+    },
+    {
+      "id": "core.pre-emit-gate",
+      "file": "modules/core.pre-emit-gate.md",
+      "type": "core",
+      "tier": 0,
+      "facet": "core",
+      "facet_values": [
+        "pre-emit-gate",
+        "final-output-gate"
+      ],
+      "priority": 100,
+      "triggers": [
+        "any image"
+      ],
+      "avoid_when": [],
+      "dependencies": [
+        "core.visual-evidence",
+        "core.frame-coordinates",
+        "concept.primary-relationship"
+      ],
+      "conflicts": [],
+      "provides_anchors": [
+        "coordinate_contradictions",
+        "secondary_detail_budget",
+        "output_gate",
+        "prompt_only_limits"
+      ]
+    },
+    {
+      "id": "core.output-contract",
+      "file": "modules/core.output-contract.md",
+      "type": "core",
+      "tier": 0,
+      "facet": "core",
+      "facet_values": [
+        "output-contract",
+        "prompt-negative-settings"
+      ],
+      "priority": 98,
+      "triggers": [
+        "any image"
+      ],
+      "avoid_when": [],
+      "dependencies": [
+        "core.visual-evidence",
+        "core.frame-coordinates",
+        "concept.primary-relationship",
+        "core.pre-emit-gate"
+      ],
+      "conflicts": [],
+      "provides_anchors": [
+        "output_sections",
+        "prompt_contract_16",
+        "negative_primary_concept",
+        "recommended_settings_aspect"
+      ]
+    },
+    {
+      "id": "concept.occlusion-replacement",
+      "file": "modules/concept.occlusion-replacement.md",
+      "type": "concept",
+      "tier": 1,
+      "facet": "relationship",
+      "facet_values": [
+        "occlusion",
+        "replacement",
+        "hidden-counterpart",
+        "foreground-blocking",
+        "partial-completion"
+      ],
+      "priority": 95,
+      "triggers": [
+        "opaque occluder, replacement surface, hidden features, foreground prop blocking subject"
+      ],
+      "avoid_when": [
+        "no occlusion or replacement logic"
+      ],
+      "dependencies": [
+        "concept.primary-relationship",
+        "core.frame-coordinates"
+      ],
+      "conflicts": [],
+      "provides_anchors": []
+    },
+    {
+      "id": "concept.reflection-mirror",
+      "file": "modules/concept.reflection-mirror.md",
+      "type": "concept",
+      "tier": 1,
+      "facet": "relationship",
+      "facet_values": [
+        "reflection",
+        "mirror",
+        "glass-reflection",
+        "water-reflection",
+        "duplicated-layer"
+      ],
+      "priority": 90,
+      "triggers": [
+        "mirror, reflective surface, water/glass reflection, duplicated reflected layer"
+      ],
+      "avoid_when": [
+        "no reflection or mirror logic"
+      ],
+      "dependencies": [
+        "concept.primary-relationship",
+        "core.frame-coordinates"
+      ],
+      "conflicts": [],
+      "provides_anchors": []
+    },
+    {
+      "id": "concept.screen-frame-within-frame",
+      "file": "modules/concept.screen-frame-within-frame.md",
+      "type": "concept",
+      "tier": 1,
+      "facet": "relationship",
+      "facet_values": [
+        "screen-frame-within-frame",
+        "phone-screen",
+        "poster-frame",
+        "inserted-image",
+        "contained-frame"
+      ],
+      "priority": 90,
+      "triggers": [
+        "phone, screen, poster, frame, UI, or image plane containing important content"
+      ],
+      "avoid_when": [
+        "no nested frame or screen-contained content"
+      ],
+      "dependencies": [
+        "concept.primary-relationship",
+        "core.frame-coordinates"
+      ],
+      "conflicts": [],
+      "provides_anchors": []
+    },
+    {
+      "id": "concept.scale-miniature",
+      "file": "modules/concept.scale-miniature.md",
+      "type": "concept",
+      "tier": 1,
+      "facet": "relationship",
+      "facet_values": [
+        "scale-miniature",
+        "miniature-in-real",
+        "toy-scale",
+        "figurine",
+        "small-figure-real-environment"
+      ],
+      "priority": 88,
+      "triggers": [
+        "small physical figure, toy, figurine, plush, miniature, or scale contrast in a real environment"
+      ],
+      "avoid_when": [
+        "ordinary full-scale subject with no scale contrast"
+      ],
+      "dependencies": [
+        "concept.primary-relationship",
+        "core.frame-coordinates"
+      ],
+      "conflicts": [],
+      "provides_anchors": [
+        "miniature_scale",
+        "endpoint_sensitive",
+        "polish_amplifying"
+      ]
+    },
+    {
+      "id": "concept.mixed-media-illusion",
+      "file": "modules/concept.mixed-media-illusion.md",
+      "type": "concept",
+      "tier": 1,
+      "facet": "relationship",
+      "facet_values": [
+        "mixed-media",
+        "illusion",
+        "sticker-overlay",
+        "decal",
+        "collage",
+        "medium-contrast"
+      ],
+      "priority": 84,
+      "triggers": [
+        "flat sticker, decal, graphic overlay, collage, medium contrast illusion, inserted graphic surface"
+      ],
+      "avoid_when": [
+        "single coherent medium with no mixed-media contrast"
+      ],
+      "dependencies": [
+        "concept.primary-relationship",
+        "core.frame-coordinates"
+      ],
+      "conflicts": [],
+      "provides_anchors": []
+    },
+    {
+      "id": "subject.human",
+      "file": "modules/subject.human.md",
+      "type": "subject",
+      "tier": 2,
+      "facet": "subject",
+      "facet_values": [
+        "human",
+        "person",
+        "portrait",
+        "face",
+        "body",
+        "human-like"
+      ],
+      "priority": 82,
+      "triggers": [
+        "visible person",
+        "visible human face, hair, skin, body silhouette, or portrait/body crop"
+      ],
+      "avoid_when": [
+        "no human subject or human-like figure"
+      ],
+      "dependencies": [
+        "core.visual-evidence",
+        "core.frame-coordinates",
+        "core.fidelity-discipline"
+      ],
+      "conflicts": [],
+      "provides_anchors": [
+        "face_fidelity",
+        "aesthetic_upgrade",
+        "symmetric_large_body_lock",
+        "symmetric_moderate_body_lock",
+        "face_exposure_budget"
+      ]
+    },
+    {
+      "id": "medium.screenshot-ui",
+      "file": "modules/medium.screenshot-ui.md",
+      "type": "medium",
+      "tier": 2,
+      "facet": "medium",
+      "facet_values": [
+        "screenshot-ui",
+        "screenshot",
+        "screen-recording",
+        "app-capture",
+        "social-video-frame",
+        "camera-preview-ui",
+        "ui-overlay"
+      ],
+      "priority": 76,
+      "triggers": [
+        "screenshot",
+        "screen recording",
+        "app capture",
+        "social-video frame",
+        "camera preview UI",
+        "visible status bar, control band, comment field, crop marks, UI overlay"
+      ],
+      "avoid_when": [
+        "pure photo with no UI overlay"
+      ],
+      "dependencies": [
+        "core.frame-coordinates",
+        "concept.screen-frame-within-frame",
+        "detail.text-logo-label"
+      ],
+      "conflicts": [
+        "medium.unspecified-visual"
+      ],
+      "provides_anchors": [
+        "screenshot_ui_split",
+        "absent_ui_controls"
+      ]
+    },
+    {
+      "id": "medium.non-photographic-rendering",
+      "file": "modules/medium.non-photographic-rendering.md",
+      "type": "medium",
+      "tier": 2,
+      "facet": "medium",
+      "facet_values": [
+        "non-photographic",
+        "illustration",
+        "painting",
+        "3d-render",
+        "anime",
+        "vector",
+        "cel-shading",
+        "game-engine"
+      ],
+      "priority": 72,
+      "triggers": [
+        "illustration, painting, 3D render, anime, vector, cel shading, game-engine image"
+      ],
+      "avoid_when": [
+        "clearly photographic source"
+      ],
+      "dependencies": [
+        "core.visual-evidence",
+        "core.frame-coordinates",
+        "core.fidelity-discipline"
+      ],
+      "conflicts": [
+        "medium.photographic-capture",
+        "medium.unspecified-visual"
+      ],
+      "provides_anchors": []
+    },
+    {
+      "id": "medium.photographic-capture",
+      "file": "modules/medium.photographic-capture.md",
+      "type": "medium",
+      "tier": 2,
+      "facet": "medium",
+      "facet_values": [
+        "photographic",
+        "photo",
+        "camera-capture",
+        "casual-phone",
+        "studio-photo",
+        "flash",
+        "low-light-photo"
+      ],
+      "priority": 72,
+      "triggers": [
+        "photographic camera, focus, exposure, lighting, lens, or capture behavior matters"
+      ],
+      "avoid_when": [
+        "clearly non-photographic source with no photo-like capture cues"
+      ],
+      "dependencies": [
+        "core.visual-evidence",
+        "core.frame-coordinates",
+        "core.fidelity-discipline"
+      ],
+      "conflicts": [
+        "medium.non-photographic-rendering",
+        "medium.unspecified-visual"
+      ],
+      "provides_anchors": []
+    },
+    {
+      "id": "subject.animal",
+      "file": "modules/subject.animal.md",
+      "type": "subject",
+      "tier": 2,
+      "facet": "subject",
+      "facet_values": [
+        "animal",
+        "pet",
+        "wildlife",
+        "creature-as-animal"
+      ],
+      "priority": 65,
+      "triggers": [
+        "animal, pet, wildlife, or creature treated visually as an animal"
+      ],
+      "avoid_when": [
+        "no animal-like subject"
+      ],
+      "dependencies": [
+        "core.visual-evidence",
+        "core.frame-coordinates"
+      ],
+      "conflicts": [],
+      "provides_anchors": []
+    },
+    {
+      "id": "subject.food",
+      "file": "modules/subject.food.md",
+      "type": "subject",
+      "tier": 2,
+      "facet": "subject",
+      "facet_values": [
+        "food",
+        "drink",
+        "plating",
+        "table-setting"
+      ],
+      "priority": 65,
+      "triggers": [
+        "food, drink, plating, table setting"
+      ],
+      "avoid_when": [
+        "no food/drink subject"
+      ],
+      "dependencies": [
+        "core.visual-evidence",
+        "core.frame-coordinates"
+      ],
+      "conflicts": [],
+      "provides_anchors": []
+    },
+    {
+      "id": "subject.product",
+      "file": "modules/subject.product.md",
+      "type": "subject",
+      "tier": 2,
+      "facet": "subject",
+      "facet_values": [
+        "product",
+        "package",
+        "object-arrangement",
+        "foreground-object",
+        "prop-anchor"
+      ],
+      "priority": 65,
+      "triggers": [
+        "product, package, object arrangement, prop as foreground anchor"
+      ],
+      "avoid_when": [
+        "no product/object fidelity requirement"
+      ],
+      "dependencies": [
+        "core.visual-evidence",
+        "core.frame-coordinates"
+      ],
+      "conflicts": [],
+      "provides_anchors": []
+    },
+    {
+      "id": "subject.architecture-interior",
+      "file": "modules/subject.architecture-interior.md",
+      "type": "subject",
+      "tier": 2,
+      "facet": "subject",
+      "facet_values": [
+        "architecture",
+        "interior",
+        "room",
+        "building",
+        "street-architecture",
+        "structure"
+      ],
+      "priority": 62,
+      "triggers": [
+        "building, interior, room, street architecture, structural perspective"
+      ],
+      "avoid_when": [
+        "no architectural or interior fidelity need"
+      ],
+      "dependencies": [
+        "core.visual-evidence",
+        "core.frame-coordinates",
+        "core.background-color"
+      ],
+      "conflicts": [],
+      "provides_anchors": []
+    },
+    {
+      "id": "subject.document-data-diagram",
+      "file": "modules/subject.document-data-diagram.md",
+      "type": "subject",
+      "tier": 2,
+      "facet": "subject",
+      "facet_values": [
+        "document",
+        "data",
+        "diagram",
+        "chart",
+        "map",
+        "poster",
+        "table",
+        "graph"
+      ],
+      "priority": 62,
+      "triggers": [
+        "document, poster, table, graph, chart, map, diagram, interface layout with data"
+      ],
+      "avoid_when": [
+        "no document/data/diagram subject"
+      ],
+      "dependencies": [
+        "core.visual-evidence",
+        "core.frame-coordinates",
+        "detail.text-logo-label"
+      ],
+      "conflicts": [],
+      "provides_anchors": []
+    },
+    {
+      "id": "subject.landscape-nature",
+      "file": "modules/subject.landscape-nature.md",
+      "type": "subject",
+      "tier": 2,
+      "facet": "subject",
+      "facet_values": [
+        "landscape",
+        "nature",
+        "outdoor",
+        "sea",
+        "sky",
+        "mountain",
+        "forest"
+      ],
+      "priority": 62,
+      "triggers": [
+        "outdoor land, sea, sky, weather, or nature scene"
+      ],
+      "avoid_when": [
+        "no landscape/nature subject"
+      ],
+      "dependencies": [
+        "core.visual-evidence",
+        "core.frame-coordinates",
+        "core.background-color"
+      ],
+      "conflicts": [],
+      "provides_anchors": []
+    },
+    {
+      "id": "subject.vehicle",
+      "file": "modules/subject.vehicle.md",
+      "type": "subject",
+      "tier": 2,
+      "facet": "subject",
+      "facet_values": [
+        "vehicle",
+        "car",
+        "bike",
+        "aircraft",
+        "boat",
+        "train",
+        "vehicle-interior"
+      ],
+      "priority": 62,
+      "triggers": [
+        "car, bike, aircraft, boat, train, vehicle interior or exterior"
+      ],
+      "avoid_when": [
+        "no vehicle subject"
+      ],
+      "dependencies": [
+        "core.visual-evidence",
+        "core.frame-coordinates"
+      ],
+      "conflicts": [],
+      "provides_anchors": []
+    },
+    {
+      "id": "subject.generic-object",
+      "file": "modules/subject.generic-object.md",
+      "type": "subject",
+      "tier": 2,
+      "facet": "subject",
+      "facet_values": [
+        "generic-object",
+        "ordinary-object",
+        "ordinary-scene",
+        "object",
+        "none"
+      ],
+      "priority": 50,
+      "triggers": [
+        "no specific subject module fits but a subject/ordinary-scene decision is still needed"
+      ],
+      "avoid_when": [
+        "a more specific subject module clearly applies"
+      ],
+      "dependencies": [
+        "core.visual-evidence",
+        "core.frame-coordinates"
+      ],
+      "conflicts": [],
+      "provides_anchors": [
+        "generic_subject_fallback"
+      ]
+    },
+    {
+      "id": "medium.unspecified-visual",
+      "file": "modules/medium.unspecified-visual.md",
+      "type": "medium",
+      "tier": 2,
+      "facet": "medium",
+      "facet_values": [
+        "unspecified",
+        "unknown-medium",
+        "medium-fallback"
+      ],
+      "priority": 40,
+      "triggers": [
+        "medium is ambiguous or not worth classifying"
+      ],
+      "avoid_when": [
+        "photographic, screenshot/UI, or non-photographic rendering medium is visibly clear"
+      ],
+      "dependencies": [
+        "core.visual-evidence",
+        "core.fidelity-discipline"
+      ],
+      "conflicts": [
+        "medium.photographic-capture",
+        "medium.non-photographic-rendering",
+        "medium.screenshot-ui"
+      ],
+      "provides_anchors": [
+        "unspecified_visual_medium"
+      ]
+    },
+    {
+      "id": "detail.clothing-fashion",
+      "file": "modules/detail.clothing-fashion.md",
+      "type": "detail",
+      "tier": 3,
+      "facet": "detail-risk",
+      "facet_values": [
+        "clothing",
+        "fashion",
+        "body-silhouette",
+        "neckline",
+        "straps",
+        "garment-geometry",
+        "band-height",
+        "accessories"
+      ],
+      "priority": 78,
+      "triggers": [
+        "important clothing silhouette, neckline, straps, exposed/covered bands, accessories"
+      ],
+      "avoid_when": [
+        "clothing is absent or visually unimportant"
+      ],
+      "dependencies": [
+        "core.frame-coordinates",
+        "core.fidelity-discipline"
+      ],
+      "conflicts": [],
+      "provides_anchors": [
+        "band_height_drift",
+        "garment_geometry"
+      ]
+    },
+    {
+      "id": "detail.pose-hands-gesture",
+      "file": "modules/detail.pose-hands-gesture.md",
+      "type": "detail",
+      "tier": 3,
+      "facet": "detail-risk",
+      "facet_values": [
+        "hands",
+        "pose",
+        "gesture",
+        "grip",
+        "contact",
+        "limb-mechanics",
+        "negative-space"
+      ],
+      "priority": 78,
+      "triggers": [
+        "sensitive visible pose, hands, grip, limb mechanics, contact gesture"
+      ],
+      "avoid_when": [
+        "hands/gesture/pose mechanics are not important or not visible"
+      ],
+      "dependencies": [
+        "core.frame-coordinates",
+        "core.fidelity-discipline"
+      ],
+      "conflicts": [],
+      "provides_anchors": []
+    },
+    {
+      "id": "detail.low-quality-artifacts",
+      "file": "modules/detail.low-quality-artifacts.md",
+      "type": "detail",
+      "tier": 3,
+      "facet": "detail-risk",
+      "facet_values": [
+        "low-quality",
+        "compressed",
+        "underexposed",
+        "motion-blurred",
+        "noise",
+        "haze",
+        "soft-focus",
+        "artifact",
+        "low-resolution"
+      ],
+      "priority": 70,
+      "triggers": [
+        "low-res, compression, blur, noise, underexposure, artifacts, casual capture"
+      ],
+      "avoid_when": [
+        "clean high-detail source without degradation"
+      ],
+      "dependencies": [
+        "core.visual-evidence",
+        "core.fidelity-discipline"
+      ],
+      "conflicts": [],
+      "provides_anchors": []
+    },
+    {
+      "id": "detail.text-logo-label",
+      "file": "modules/detail.text-logo-label.md",
+      "type": "detail",
+      "tier": 3,
+      "facet": "detail-risk",
+      "facet_values": [
+        "text-logo",
+        "text",
+        "logo",
+        "label",
+        "watermark",
+        "caption",
+        "ui-text",
+        "small-letters"
+      ],
+      "priority": 70,
+      "triggers": [
+        "text, logo-like mark, label, watermark, caption, UI text, small letters"
+      ],
+      "avoid_when": [
+        "no visible text or symbolic mark"
+      ],
+      "dependencies": [
+        "core.visual-evidence",
+        "core.frame-coordinates"
+      ],
+      "conflicts": [],
+      "provides_anchors": [
+        "low_legibility_text"
+      ]
+    },
+    {
+      "id": "style.stylized-character-maturity",
+      "file": "modules/style.stylized-character-maturity.md",
+      "type": "style",
+      "tier": 4,
+      "facet": "style",
+      "facet_values": [
+        "stylized-character-maturity",
+        "stylized-humanoid",
+        "cute-doll-like",
+        "toy-character",
+        "chibi-risk"
+      ],
+      "priority": 60,
+      "triggers": [
+        "stylized miniature humanoid where face maturity can drift younger or older"
+      ],
+      "avoid_when": [
+        "not stylized or no human-like character maturity risk"
+      ],
+      "dependencies": [
+        "core.fidelity-discipline",
+        "subject.human"
+      ],
+      "conflicts": [],
+      "provides_anchors": [
+        "maturity_anti_collapse"
+      ]
+    }
+  ]
+}
