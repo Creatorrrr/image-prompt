@@ -375,6 +375,105 @@ EXPANDED_UNIQUE_TAG_IDS = {
     "laundromat_night",
     "disposable_camera",
 }
+SOCIAL_CHARACTER_SLOT_IDS = {"hair_color", "capture_context"}
+SOCIAL_CHARACTER_PRESET_IDS = {
+    "garden_phone_backlight_portrait",
+    "gothic_curio_bunny_cosplay",
+    "anime_poster_low_angle_noir_fashion",
+    "gas_station_passenger_seat_lifestyle",
+    "blue_rimlight_character_cosplay",
+    "clean_uniform_vsign_selfie",
+    "adult_crouching_mirror_ribbon_fashion",
+    "botanical_greenhouse_soft_romance",
+    "phone_screen_face_overlay_cosplay",
+    "interactive_2_5d_living_room_pov",
+}
+SOCIAL_CHARACTER_TAG_IDS = {
+    "hair_color": {
+        "glossy_black_hair",
+        "soft_dark_brown_hair",
+        "silver_blonde_gothic_hair",
+        "pale_blue_cosplay_wig",
+        "mint_green_cosplay_wig",
+        "lavender_silver_character_hair",
+        "warm_auburn_brown_hair",
+    },
+    "capture_context": {
+        "front_camera_close_selfie",
+        "mirror_crouch_selfie_context",
+        "phone_screen_face_overlay_context",
+        "first_person_hand_interaction_context",
+        "passenger_seat_observed_candid",
+        "low_angle_dominance_capture",
+        "cosplay_reference_realism_context",
+        "botanical_editorial_portrait_context",
+        "social_perspective_trick_context",
+    },
+}
+SOCIAL_CHARACTER_EXISTING_SLOT_TAG_IDS = {
+    "action": {
+        "holding_phone_in_garden_backlight",
+        "holding_ornate_bottle_to_chest",
+        "looking_down_at_low_camera",
+        "passenger_seat_coffee_window_gaze",
+        "over_shoulder_floor_turn",
+        "front_camera_v_sign_cheek",
+        "seated_botanical_cheek_rest",
+        "phone_screen_face_overlay_pose",
+        "reacting_to_pov_hand_tail_pull",
+    },
+    "prop": {
+        "clear_case_smartphone",
+        "ornate_gothic_perfume_bottle",
+        "anime_poster_wall",
+        "takeaway_coffee_cup",
+        "phone_with_anime_face_screen",
+        "angel_halo_wings_tail_set",
+        "red_ribbon_leg_wrap_adult",
+        "lanyard_badge",
+    },
+    "location": {
+        "garden_cafe_path_backlight",
+        "gothic_glass_curio_cabinet",
+        "anime_poster_wall_interior",
+        "gas_station_car_passenger_seat_night",
+        "blue_rimlight_cosplay_studio",
+        "simple_indoor_selfie_room",
+        "plain_wall_mirror_selfie_room",
+        "botanical_greenhouse_deck_floor",
+        "otaku_living_room_sofa_tv",
+    },
+    "camera_direction": {
+        "extreme_low_angle_under_subject",
+        "passenger_seat_side_profile_view",
+        "phone_screen_overlay_close_pov",
+        "first_person_pov_hand_foreground",
+        "over_shoulder_back_seated",
+    },
+    "composition": {
+        "cheek_close_selfie_crop",
+        "crouching_mirror_full_body",
+    },
+    "lighting": {
+        "soft_overexposed_garden_backlight",
+        "cool_blue_character_rimlight",
+        "gas_station_fluorescent_car_mix",
+        "greenhouse_diffused_leaf_light",
+    },
+    "light_type": {
+        "phone_screen_face_glow",
+    },
+    "light_shape": {
+        "glass_curio_specular_sparkle",
+        "hairline_rim_glow",
+        "screen_rectangle_mask",
+        "leaf_foreground_bokeh",
+    },
+    "texture": {
+        "phone_beauty_filter_smoothing",
+        "cosplay_wig_fiber_detail",
+    },
+}
 
 
 def load_generator():
@@ -1087,6 +1186,150 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertTrue(EXPANDED_SLOT_IDS.issubset(slots))
         self.assertTrue(EXPANDED_PRESET_IDS.issubset(preset_ids))
         self.assertTrue(EXPANDED_FAMILY_IDS.issubset(family_ids))
+
+    def test_social_character_slots_presets_and_tags_are_registered(self):
+        slots = self.data["slots"]
+        preset_ids = {preset["id"] for preset in self.data["presets"]}
+
+        self.assertTrue(SOCIAL_CHARACTER_SLOT_IDS.issubset(slots))
+        self.assertTrue(SOCIAL_CHARACTER_PRESET_IDS.issubset(preset_ids))
+        for slot, expected_ids in SOCIAL_CHARACTER_TAG_IDS.items():
+            actual_ids = {entry["id"] for entry in slots[slot]}
+            self.assertTrue(expected_ids.issubset(actual_ids), slot)
+        for slot, expected_ids in SOCIAL_CHARACTER_EXISTING_SLOT_TAG_IDS.items():
+            actual_ids = {entry["id"] for entry in slots[slot]}
+            self.assertTrue(expected_ids.issubset(actual_ids), slot)
+
+    def test_social_character_slots_render_across_detail_levels(self):
+        forced = {
+            "subject": ["adult_cosplay_performer"],
+            "hair_color": ["mint_green_cosplay_wig"],
+            "capture_context": ["phone_screen_face_overlay_context"],
+            "action": ["phone_screen_face_overlay_pose"],
+            "prop": ["phone_with_anime_face_screen"],
+            "location": ["simple_indoor_selfie_room"],
+            "camera_direction": ["phone_screen_overlay_close_pov"],
+            "composition": ["cheek_close_selfie_crop"],
+            "light_type": ["phone_screen_face_glow"],
+            "texture": ["phone_beauty_filter_smoothing"],
+        }
+        expected = (
+            "mint-green cosplay wig color",
+            "smartphone screen used as a face-overlay perspective trick",
+            "phone screen showing an anime-style face aligned over the lower face",
+        )
+
+        for detail_level in ("detailed", "standard", "compact"):
+            with self.subTest(detail_level=detail_level):
+                item = self.generate(
+                    "phone_screen_face_overlay_cosplay",
+                    seed=61,
+                    detail_level=detail_level,
+                    forced_choices=forced,
+                    include_negative=False,
+                )
+                prompt = item["prompt_en"]
+                for phrase in expected:
+                    self.assertIn(phrase, prompt)
+
+    def test_botanical_greenhouse_uses_botanical_capture_context(self):
+        item = self.generate(
+            "botanical_greenhouse_soft_romance",
+            seed=64,
+            detail_level="compact",
+            include_negative=False,
+        )
+        prompt = item["prompt_en"].lower()
+
+        self.assertEqual(
+            item["choices"]["capture_context"]["id"],
+            "botanical_editorial_portrait_context",
+        )
+        self.assertIn("soft botanical editorial portrait capture context", prompt)
+        self.assertNotIn("cosplay reference", prompt)
+        self.assertNotIn("cosplay_reference_realism_context", json.dumps(item["choices"]))
+        self.assertNotIn("fireworks", prompt)
+
+    def test_social_character_light_filters_block_context_noise(self):
+        cases = [
+            (
+                "garden_phone_backlight_portrait",
+                701,
+                {"streetlamp"},
+                ("orange streetlamp", "streetlamp light"),
+            ),
+            (
+                "anime_poster_low_angle_noir_fashion",
+                703,
+                {"blacklight_uv", "pool_caustic_reflections"},
+                ("blacklight", "pool-caustic"),
+            ),
+            (
+                "gas_station_passenger_seat_lifestyle",
+                704,
+                {"screen_rectangle_mask"},
+                ("phone-screen light", "masking shape"),
+            ),
+        ]
+
+        for preset, seed, banned_ids, banned_phrases in cases:
+            with self.subTest(preset=preset):
+                item = self.generate(preset, seed=seed, detail_level="compact", include_negative=False)
+                selected_ids = {choice["id"] for choice in item["choices"].values()}
+                prompt = item["prompt_en"].lower()
+
+                self.assertFalse(selected_ids & banned_ids)
+                for phrase in banned_phrases:
+                    self.assertNotIn(phrase, prompt)
+
+    def test_compact_subject_modifiers_are_grouped_without_repeated_withs(self):
+        item = self.generate(
+            "garden_phone_backlight_portrait",
+            seed=701,
+            detail_level="compact",
+            include_negative=False,
+            forced_choices={
+                "subject": ["beauty_influencer"],
+                "appearance_type": ["kbeauty_influencer"],
+                "hair_style": ["long_dark_wavy_hair"],
+                "hair_color": ["glossy_black_hair"],
+                "makeup_style": ["minimal_no_makeup_look"],
+                "wardrobe_style": ["summer_dress_sneakers"],
+            },
+        )
+        subject_clause = item["prompt_en"].split(", holding", 1)[0]
+
+        self.assertIn(
+            "with K-beauty influencer styling, long dark wavy hair, glossy black hair color, minimal no-makeup look",
+            subject_clause,
+        )
+        self.assertNotIn("with K-beauty influencer styling with", subject_clause)
+        self.assertNotIn("with long dark wavy hair with", subject_clause)
+
+    def test_clean_uniform_selfie_blocks_adult_only_slots(self):
+        item = self.generate("clean_uniform_vsign_selfie", seed=62, detail_level="compact")
+        prompt = item["prompt_en"].lower()
+
+        self.assertNotIn("adult_context", item["choices"])
+        self.assertNotIn("fetish_styling", item["choices"])
+        self.assertNotIn("body_framing", item["choices"])
+        self.assertNotIn("adult", prompt)
+        self.assertNotIn("fetish", prompt)
+
+    def test_adult_ribbon_fashion_uses_adult_compatible_ribbon_context(self):
+        item = self.generate(
+            "adult_crouching_mirror_ribbon_fashion",
+            seed=63,
+            detail_level="compact",
+            include_negative=False,
+        )
+
+        self.assertEqual(item["choices"]["prop"]["id"], "red_ribbon_leg_wrap_adult")
+        ribbon = next(entry for entry in self.data["slots"]["prop"] if entry["id"] == "red_ribbon_leg_wrap_adult")
+        self.assertIn(
+            ribbon.get("facets", {}).get("safety_tier", [None])[0],
+            {"adult_compatible", "adult_only"},
+        )
 
     def test_expanded_tag_ids_do_not_add_new_global_duplicates(self):
         all_ids = []

@@ -1,5 +1,5 @@
 {
-  "version": "1.7",
+  "version": "1.8",
   "description": "Photo prompt tag dictionary for random Korean/English prompt generation. Version 1.7 expands ReactorPrompt export-inspired photo presets across Korean traditional, wuxia/hanfu, cosplay, K-pop, social selfie, local Korean spaces, craft/product, seasonal, transport, and optical-experiment photography while keeping poster, infographic, sticker, UI, and illustration-only layouts out of the photo preset surface.",
   "facet_vocab": {
     "subject_kind": [
@@ -109,6 +109,12 @@
       "ko": "야간 교통 공간 계열",
       "en": "transport night family",
       "embedding_text": "night transport spaces, bus stops, taxi interiors, stations, rain and neon"
+    },
+    {
+      "id": "social_character_realism_family",
+      "ko": "소셜 캐릭터 실사 계열",
+      "en": "social character realism family",
+      "embedding_text": "photoreal social selfie and cosplay character realism with phone perspective tricks, 2.5D props, car passenger seats, botanical romance, and gothic display portraits"
     }
   ],
   "recipes": [
@@ -4113,6 +4119,14 @@
         {
           "slot": "subject_framing",
           "probability": 0.28
+        },
+        {
+          "slot": "capture_context",
+          "probability": 0.4
+        },
+        {
+          "slot": "hair_color",
+          "probability": 0.45
         }
       ],
       "filters": {
@@ -4155,7 +4169,8 @@
             "taking_selfie",
             "doing_grwm",
             "checking_comments",
-            "holding_coffee_phone"
+            "holding_coffee_phone",
+            "front_camera_v_sign_cheek"
           ]
         },
         "location": {
@@ -4166,7 +4181,9 @@
             "cozy_apartment",
             "creator_room",
             "bathroom_mirror",
-            "clean_bathroom_tile_wall"
+            "clean_bathroom_tile_wall",
+            "simple_indoor_selfie_room",
+            "plain_wall_mirror_selfie_room"
           ]
         },
         "lighting": {
@@ -4195,7 +4212,9 @@
           "ids": [
             "mirror_selfie_composition",
             "phone_arm_length_selfie",
-            "vertical_centered_caption_space"
+            "vertical_centered_caption_space",
+            "cheek_close_selfie_crop",
+            "crouching_mirror_full_body"
           ]
         },
         "lens": {
@@ -4242,7 +4261,8 @@
             "phone_hdr_crispness",
             "jpeg_social",
             "compact_digicam_noise",
-            "skin_texture"
+            "skin_texture",
+            "phone_beauty_filter_smoothing"
           ]
         },
         "mood": {
@@ -4279,7 +4299,8 @@
             "compact_digital_camera",
             "camera_held_as_prop",
             "coffee_cup_prop",
-            "over_ear_headphones"
+            "over_ear_headphones",
+            "clear_case_smartphone"
           ]
         },
         "wardrobe_style": {
@@ -4313,6 +4334,18 @@
             "head_and_shoulders_crop",
             "close_up_face_crop",
             "three_quarter_body_framing"
+          ]
+        },
+        "capture_context": {
+          "ids": [
+            "front_camera_close_selfie",
+            "mirror_crouch_selfie_context"
+          ]
+        },
+        "hair_color": {
+          "ids": [
+            "glossy_black_hair",
+            "soft_dark_brown_hair"
           ]
         }
       }
@@ -5051,6 +5084,14 @@
         {
           "slot": "caption_context",
           "probability": 0.45
+        },
+        {
+          "slot": "capture_context",
+          "probability": 0.4
+        },
+        {
+          "slot": "light_type",
+          "probability": 0.45
         }
       ],
       "filters": {
@@ -5112,7 +5153,8 @@
           "ids": [
             "ring_light",
             "led_panel",
-            "studio_strobe"
+            "studio_strobe",
+            "phone_screen_face_glow"
           ]
         },
         "camera_type": {
@@ -5126,7 +5168,8 @@
           "ids": [
             "beauty_tight_face_crop",
             "extreme_close",
-            "medium_close"
+            "medium_close",
+            "cheek_close_selfie_crop"
           ]
         },
         "lens": {
@@ -5154,7 +5197,8 @@
           "ids": [
             "skin_texture",
             "front_camera_smoothing",
-            "fine_grain"
+            "fine_grain",
+            "phone_beauty_filter_smoothing"
           ]
         },
         "adult_context": {
@@ -5197,6 +5241,12 @@
             "casual_authentic",
             "aspirational_lifestyle",
             "dreamy"
+          ]
+        },
+        "capture_context": {
+          "ids": [
+            "front_camera_close_selfie",
+            "phone_screen_face_overlay_context"
           ]
         }
       }
@@ -7698,6 +7748,37 @@
             "polaroid",
             "fine_grain"
           ]
+        },
+        "composition": {
+          "ids": [
+            "centered_symmetry",
+            "rule_of_thirds",
+            "medium_close",
+            "frame_within_frame"
+          ]
+        },
+        "light_direction": {
+          "ids": [
+            "front_light",
+            "window_left_light",
+            "window_right_light",
+            "reflected_light"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "golden_hour",
+            "overcast",
+            "tungsten"
+          ]
+        },
+        "light_type": {
+          "ids": [
+            "direct_sun",
+            "open_shade",
+            "tungsten_practical"
+          ]
         }
       }
     },
@@ -8204,6 +8285,14 @@
         {
           "slot": "prop",
           "probability": 0.4
+        },
+        {
+          "slot": "hair_color",
+          "probability": 0.45
+        },
+        {
+          "slot": "capture_context",
+          "probability": 0.4
         }
       ],
       "filters": {
@@ -8295,7 +8384,10 @@
             "dance_studio",
             "festival_backstage",
             "rooftop_sunset",
-            "luxury_hotel_corridor"
+            "luxury_hotel_corridor",
+            "blue_rimlight_cosplay_studio",
+            "otaku_living_room_sofa_tv",
+            "anime_poster_wall_interior"
           ]
         },
         "lighting": {
@@ -8477,7 +8569,22 @@
           "ids": [
             "plush_doll",
             "smartphone_in_hand",
-            "flower_bouquet"
+            "flower_bouquet",
+            "phone_with_anime_face_screen",
+            "angel_halo_wings_tail_set"
+          ]
+        },
+        "hair_color": {
+          "ids": [
+            "pale_blue_cosplay_wig",
+            "mint_green_cosplay_wig",
+            "lavender_silver_character_hair"
+          ]
+        },
+        "capture_context": {
+          "ids": [
+            "cosplay_reference_realism_context",
+            "social_perspective_trick_context"
           ]
         }
       }
@@ -9381,6 +9488,10 @@
         {
           "slot": "world",
           "probability": 0.55
+        },
+        {
+          "slot": "capture_context",
+          "probability": 0.4
         }
       ],
       "filters": {
@@ -9462,7 +9573,8 @@
             "dark_studio",
             "white_studio",
             "luxury_hotel_corridor",
-            "festival_backstage"
+            "festival_backstage",
+            "plain_wall_mirror_selfie_room"
           ]
         },
         "lighting": {
@@ -9505,7 +9617,8 @@
             "low_angle",
             "beauty_tight_face_crop",
             "reflection",
-            "silhouette"
+            "silhouette",
+            "crouching_mirror_full_body"
           ]
         },
         "lens": {
@@ -9570,6 +9683,17 @@
           "ids": [
             "realistic_modern",
             "neon_noir"
+          ]
+        },
+        "capture_context": {
+          "ids": [
+            "mirror_crouch_selfie_context"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "red_ribbon_leg_wrap_adult",
+            "lanyard_badge"
           ]
         }
       }
@@ -12063,7 +12187,20 @@
         "format",
         "quality"
       ],
-      "optional_slots": [],
+      "optional_slots": [
+        {
+          "slot": "hair_color",
+          "probability": 0.45
+        },
+        {
+          "slot": "capture_context",
+          "probability": 0.4
+        },
+        {
+          "slot": "light_shape",
+          "probability": 0.45
+        }
+      ],
       "filters": {
         "appearance_type": {
           "ids": [
@@ -12221,12 +12358,14 @@
         },
         "prop": {
           "ids": [
-            "glowing_lantern_prop"
+            "glowing_lantern_prop",
+            "ornate_gothic_perfume_bottle"
           ]
         },
         "location": {
           "ids": [
-            "gothic_candle_studio"
+            "gothic_candle_studio",
+            "gothic_glass_curio_cabinet"
           ]
         },
         "light_type": {
@@ -12252,13 +12391,25 @@
         "light_shape": {
           "ids": [
             "small_point_light",
-            "volumetric_beams"
+            "volumetric_beams",
+            "glass_curio_specular_sparkle"
           ]
         },
         "motion": {
           "ids": [
             "stable_tripod",
             "fabric_drift"
+          ]
+        },
+        "hair_color": {
+          "ids": [
+            "silver_blonde_gothic_hair",
+            "lavender_silver_character_hair"
+          ]
+        },
+        "capture_context": {
+          "ids": [
+            "cosplay_reference_realism_context"
           ]
         }
       }
@@ -24162,12 +24313,22 @@
         "format",
         "quality"
       ],
-      "optional_slots": [],
+      "optional_slots": [
+        {
+          "slot": "hair_color",
+          "probability": 0.45
+        },
+        {
+          "slot": "light_shape",
+          "probability": 0.45
+        }
+      ],
       "filters": {
         "location": {
           "ids": [
             "botanical_greenhouse",
-            "rooftop_greenhouse"
+            "rooftop_greenhouse",
+            "botanical_greenhouse_deck_floor"
           ]
         },
         "weather": {
@@ -24187,7 +24348,8 @@
           "ids": [
             "soft_window",
             "golden_hour",
-            "overcast"
+            "overcast",
+            "greenhouse_diffused_leaf_light"
           ]
         },
         "medium": {
@@ -24293,6 +24455,22 @@
             "melancholic",
             "elegant",
             "playful"
+          ]
+        },
+        "hair_color": {
+          "ids": [
+            "warm_auburn_brown_hair",
+            "soft_dark_brown_hair"
+          ]
+        },
+        "action": {
+          "ids": [
+            "seated_botanical_cheek_rest"
+          ]
+        },
+        "light_shape": {
+          "ids": [
+            "leaf_foreground_bokeh"
           ]
         }
       },
@@ -26045,6 +26223,2095 @@
         ]
       },
       "embedding_text": "rainy neon occult noir human portrait, urban night ritual unease, supernatural horror in wet city light"
+    },
+    {
+      "id": "garden_phone_backlight_portrait",
+      "ko": "정원 역광 스마트폰 인물",
+      "en": "garden phone backlight portrait",
+      "weight": 0.7,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "appearance_type",
+        "hair_color",
+        "action",
+        "capture_context",
+        "location",
+        "lighting",
+        "camera_type",
+        "camera_direction",
+        "composition",
+        "lens",
+        "focus",
+        "color",
+        "mood",
+        "texture",
+        "format",
+        "quality",
+        "prop"
+      ],
+      "optional_slots": [
+        {
+          "slot": "light_direction",
+          "probability": 0.8
+        },
+        {
+          "slot": "light_type",
+          "probability": 0.55
+        },
+        {
+          "slot": "light_shape",
+          "probability": 0.75
+        },
+        {
+          "slot": "wardrobe_style",
+          "probability": 0.55
+        },
+        {
+          "slot": "makeup_style",
+          "probability": 0.45
+        },
+        {
+          "slot": "expression",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "social_media_post",
+            "smartphone_snapshot",
+            "urban_candid_photo",
+            "lifestyle_photo"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "creator_lifestyle",
+            "selfie_portrait",
+            "lifestyle"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "influencer_creator",
+            "beauty_influencer",
+            "fashion_influencer",
+            "young_actor"
+          ]
+        },
+        "appearance_type": {
+          "ids": [
+            "natural_everyday",
+            "kbeauty_influencer",
+            "idol_like",
+            "influencer_like"
+          ]
+        },
+        "hair_color": {
+          "ids": [
+            "glossy_black_hair",
+            "soft_dark_brown_hair",
+            "warm_auburn_brown_hair"
+          ]
+        },
+        "action": {
+          "ids": [
+            "holding_phone_in_garden_backlight"
+          ]
+        },
+        "capture_context": {
+          "ids": [
+            "front_camera_close_selfie"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "clear_case_smartphone",
+            "smartphone_in_hand"
+          ]
+        },
+        "location": {
+          "ids": [
+            "garden_cafe_path_backlight",
+            "quiet_cafe"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_overexposed_garden_backlight",
+            "soft_window",
+            "golden_hour"
+          ]
+        },
+        "light_direction": {
+          "ids": [
+            "backlight",
+            "rim_light",
+            "dappled_light"
+          ]
+        },
+        "light_type": {
+          "ids": [
+            "direct_sun",
+            "open_shade"
+          ]
+        },
+        "light_intensity": {
+          "ids": [
+            "soft_low_contrast",
+            "balanced_exposure",
+            "slightly_overexposed_edges"
+          ]
+        },
+        "light_shape": {
+          "ids": [
+            "hairline_rim_glow",
+            "leaf_foreground_bokeh",
+            "diffused_ambient"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "smartphone_camera",
+            "full_frame_mirrorless"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "eye_level_front",
+            "eye_level_three_quarter"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "medium_close",
+            "rule_of_thirds"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "phone_1x_main",
+            "50mm",
+            "85mm"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "face_detection_focus",
+            "eye_focus",
+            "shallow_depth"
+          ]
+        },
+        "color": {
+          "ids": [
+            "lush_green",
+            "phone_hdr_color",
+            "matte_pastel_editorial"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "calm",
+            "casual_authentic",
+            "dreamy"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "skin_texture",
+            "phone_hdr_crispness",
+            "fine_grain"
+          ]
+        },
+        "format": {
+          "ids": [
+            "portrait_4_5",
+            "vertical_9_16",
+            "portrait_3_4"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "phone_realism",
+            "authentic_creator",
+            "not_overdone"
+          ]
+        }
+      },
+      "facets": {
+        "safety_tier": [
+          "general"
+        ],
+        "place_type": [
+          "street"
+        ],
+        "lighting_family": [
+          "natural_light"
+        ],
+        "mood_family": [
+          "calm"
+        ]
+      },
+      "embedding_text": "garden phone backlight portrait, leafy outdoor cafe path, clear case smartphone in hand, soft overexposed natural backlight, social portrait realism"
+    },
+    {
+      "id": "gothic_curio_bunny_cosplay",
+      "ko": "고딕 진열장 토끼 코스프레",
+      "en": "gothic curio bunny cosplay",
+      "weight": 0.6,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "appearance_type",
+        "hair_color",
+        "action",
+        "capture_context",
+        "location",
+        "lighting",
+        "camera_type",
+        "camera_direction",
+        "composition",
+        "lens",
+        "focus",
+        "color",
+        "mood",
+        "texture",
+        "format",
+        "quality",
+        "costume_style",
+        "makeup_style",
+        "expression",
+        "prop",
+        "light_type",
+        "light_shape"
+      ],
+      "optional_slots": [
+        {
+          "slot": "light_direction",
+          "probability": 0.75
+        },
+        {
+          "slot": "light_intensity",
+          "probability": 0.6
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "cosplay_concept_photo",
+            "fashion_editorial",
+            "concept_photo"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "cosplay_concept",
+            "portrait",
+            "fashion",
+            "fine_art_portrait"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "adult_cosplay_performer",
+            "gothic_doll_cosplayer",
+            "adult_alt_fashion_creator"
+          ]
+        },
+        "appearance_type": {
+          "ids": [
+            "idol_like",
+            "classic_elegant",
+            "adult_alt_fetish_fashion"
+          ]
+        },
+        "hair_color": {
+          "ids": [
+            "silver_blonde_gothic_hair",
+            "lavender_silver_character_hair"
+          ]
+        },
+        "hair_style": {
+          "ids": [
+            "white_silver_long_hair",
+            "straight_black_hair_with_bangs"
+          ]
+        },
+        "makeup_style": {
+          "ids": [
+            "gothic_dark_makeup",
+            "graphic_eyeliner",
+            "euphoria_glitter_makeup"
+          ]
+        },
+        "expression": {
+          "ids": [
+            "emotional_teary_eyes",
+            "mysterious_half_smile",
+            "calm_intense_gaze"
+          ]
+        },
+        "costume_style": {
+          "ids": [
+            "bunny_girl_costume",
+            "gothic_lolita_dress",
+            "gothic_doll_lace_dress"
+          ]
+        },
+        "action": {
+          "ids": [
+            "holding_ornate_bottle_to_chest",
+            "gothic_doll_still_pose"
+          ]
+        },
+        "capture_context": {
+          "ids": [
+            "cosplay_reference_realism_context"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "ornate_gothic_perfume_bottle"
+          ]
+        },
+        "location": {
+          "ids": [
+            "gothic_glass_curio_cabinet",
+            "gothic_candle_studio"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "chiaroscuro",
+            "low_key",
+            "oil_lamp_warm"
+          ]
+        },
+        "light_intensity": {
+          "ids": [
+            "low_key_dim",
+            "deep_shadow_detail",
+            "harsh_high_contrast"
+          ]
+        },
+        "light_type": {
+          "ids": [
+            "tungsten_practical",
+            "candlelight",
+            "oil_lamp_practical"
+          ]
+        },
+        "light_shape": {
+          "ids": [
+            "glass_curio_specular_sparkle",
+            "small_point_light",
+            "diffused_ambient"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "full_frame_mirrorless",
+            "medium_format_camera"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "eye_level_front",
+            "eye_level_three_quarter"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "medium_close",
+            "centered_symmetric"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "50mm",
+            "85mm"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "eye_focus",
+            "shallow_depth"
+          ]
+        },
+        "color": {
+          "ids": [
+            "desaturated_cold_blue",
+            "luxury_black_gold",
+            "cool_blue"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "gothic_melancholy",
+            "haunted_melancholy",
+            "dreamy"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "cosplay_wig_fiber_detail",
+            "skin_texture",
+            "glitter_dust"
+          ]
+        },
+        "format": {
+          "ids": [
+            "portrait_4_5",
+            "vertical_9_16"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal_cosplay_realism",
+            "editorial_quality",
+            "high_detail"
+          ]
+        }
+      },
+      "embedding_text": "gothic bunny cosplay portrait in a glass curio cabinet room, ornate perfume bottle, dark lace, low key sparkling display, photoreal cosplay"
+    },
+    {
+      "id": "anime_poster_low_angle_noir_fashion",
+      "ko": "애니 포스터 로우앵글 누아르 패션",
+      "en": "anime poster low-angle noir fashion",
+      "weight": 0.6,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "appearance_type",
+        "hair_color",
+        "action",
+        "capture_context",
+        "location",
+        "lighting",
+        "camera_type",
+        "camera_direction",
+        "composition",
+        "lens",
+        "focus",
+        "color",
+        "mood",
+        "texture",
+        "format",
+        "quality",
+        "wardrobe_style",
+        "prop"
+      ],
+      "optional_slots": [
+        {
+          "slot": "light_direction",
+          "probability": 0.65
+        },
+        {
+          "slot": "light_shape",
+          "probability": 0.45
+        },
+        {
+          "slot": "makeup_style",
+          "probability": 0.35
+        },
+        {
+          "slot": "expression",
+          "probability": 0.6
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "fashion_editorial",
+            "social_media_post",
+            "cosplay_concept_photo"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "fashion",
+            "portrait",
+            "cosplay_concept"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "fashion_influencer",
+            "adult_cosplay_performer",
+            "cosplayer",
+            "young_actor"
+          ]
+        },
+        "appearance_type": {
+          "ids": [
+            "streetwear_style",
+            "idol_like",
+            "fashion_model_like"
+          ]
+        },
+        "hair_color": {
+          "ids": [
+            "glossy_black_hair",
+            "soft_dark_brown_hair"
+          ]
+        },
+        "hair_style": {
+          "ids": [
+            "straight_black_hair_with_bangs",
+            "long_dark_wavy_hair"
+          ]
+        },
+        "wardrobe_style": {
+          "ids": [
+            "minimal_black_dress",
+            "street_jacket_boots",
+            "black_leather_rider_outfit"
+          ]
+        },
+        "action": {
+          "ids": [
+            "looking_down_at_low_camera",
+            "posing_editorial"
+          ]
+        },
+        "capture_context": {
+          "ids": [
+            "low_angle_dominance_capture"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "anime_poster_wall"
+          ]
+        },
+        "location": {
+          "ids": [
+            "anime_poster_wall_interior"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "softbox",
+            "overcast",
+            "low_key"
+          ]
+        },
+        "light_type": {
+          "ids": [
+            "led_panel",
+            "fluorescent_ceiling",
+            "studio_strobe"
+          ]
+        },
+        "light_intensity": {
+          "ids": [
+            "low_key_dim",
+            "soft_low_contrast",
+            "balanced_exposure"
+          ]
+        },
+        "light_shape": {
+          "ids": [
+            "large_softbox_shape",
+            "strip_light_shape",
+            "diffused_ambient"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "smartphone_camera",
+            "full_frame_mirrorless"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "extreme_low_angle_under_subject",
+            "low_ground_angle",
+            "worms_eye"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "low_angle_hero",
+            "low_angle",
+            "worms_eye_view"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "phone_1x_main",
+            "28mm",
+            "35mm"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "face_detection_focus",
+            "eye_focus"
+          ]
+        },
+        "color": {
+          "ids": [
+            "muted",
+            "cool_blue",
+            "monochrome"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "elegant",
+            "uncanny",
+            "quiet_surreal_optical"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "clean_digital",
+            "phone_hdr_crispness"
+          ]
+        },
+        "format": {
+          "ids": [
+            "vertical_9_16",
+            "portrait_4_5"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "editorial_quality",
+            "not_overdone"
+          ]
+        }
+      },
+      "embedding_text": "anime poster low angle noir fashion portrait, black outfit, subject looking down at low camera, otaku interior, photoreal social fashion"
+    },
+    {
+      "id": "gas_station_passenger_seat_lifestyle",
+      "ko": "주유소 조수석 라이프스타일",
+      "en": "gas station passenger-seat lifestyle",
+      "weight": 0.65,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "appearance_type",
+        "hair_color",
+        "action",
+        "capture_context",
+        "location",
+        "lighting",
+        "camera_type",
+        "camera_direction",
+        "composition",
+        "lens",
+        "focus",
+        "color",
+        "mood",
+        "texture",
+        "format",
+        "quality",
+        "prop",
+        "light_type"
+      ],
+      "optional_slots": [
+        {
+          "slot": "light_direction",
+          "probability": 0.65
+        },
+        {
+          "slot": "light_shape",
+          "probability": 0.4
+        },
+        {
+          "slot": "wardrobe_style",
+          "probability": 0.6
+        },
+        {
+          "slot": "makeup_style",
+          "probability": 0.35
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "smartphone_snapshot",
+            "urban_candid_photo",
+            "lifestyle_photo"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "creator_lifestyle",
+            "transport_candid",
+            "lifestyle"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "influencer_creator",
+            "fashion_influencer",
+            "taxi_backseat_passenger",
+            "young_actor"
+          ]
+        },
+        "appearance_type": {
+          "ids": [
+            "natural_everyday",
+            "kbeauty_influencer",
+            "influencer_like"
+          ]
+        },
+        "hair_color": {
+          "ids": [
+            "glossy_black_hair",
+            "soft_dark_brown_hair"
+          ]
+        },
+        "action": {
+          "ids": [
+            "passenger_seat_coffee_window_gaze"
+          ]
+        },
+        "capture_context": {
+          "ids": [
+            "passenger_seat_observed_candid"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "takeaway_coffee_cup"
+          ]
+        },
+        "location": {
+          "ids": [
+            "gas_station_car_passenger_seat_night"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "gas_station_fluorescent_car_mix",
+            "fluorescent",
+            "headlights"
+          ]
+        },
+        "light_type": {
+          "ids": [
+            "fluorescent_ceiling",
+            "car_headlights",
+            "convenience_store_led"
+          ]
+        },
+        "light_intensity": {
+          "ids": [
+            "available_low_light",
+            "balanced_exposure",
+            "deep_shadow_detail"
+          ]
+        },
+        "light_shape": {
+          "ids": [
+            "diffused_ambient",
+            "small_point_light"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "smartphone_camera",
+            "full_frame_mirrorless"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "passenger_seat_side_profile_view",
+            "eye_level_three_quarter"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "frame_within_frame",
+            "medium_close"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "phone_1x_main",
+            "35mm",
+            "50mm"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "face_detection_focus",
+            "eye_focus"
+          ]
+        },
+        "color": {
+          "ids": [
+            "phone_hdr_color",
+            "muted",
+            "cool_blue"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "casual_authentic",
+            "luxury",
+            "local_night_candid"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "phone_hdr_crispness",
+            "skin_texture"
+          ]
+        },
+        "format": {
+          "ids": [
+            "portrait_4_5",
+            "vertical_9_16"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "phone_realism",
+            "authentic_creator",
+            "photoreal"
+          ]
+        }
+      },
+      "embedding_text": "late night gas station passenger seat lifestyle portrait, car interior, takeaway coffee, side profile window gaze, fluorescent night light"
+    },
+    {
+      "id": "blue_rimlight_character_cosplay",
+      "ko": "블루 림라이트 캐릭터 코스프레",
+      "en": "blue rimlight character cosplay",
+      "weight": 0.58,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "appearance_type",
+        "hair_color",
+        "action",
+        "capture_context",
+        "location",
+        "lighting",
+        "camera_type",
+        "camera_direction",
+        "composition",
+        "lens",
+        "focus",
+        "color",
+        "mood",
+        "texture",
+        "format",
+        "quality",
+        "costume_style",
+        "light_type",
+        "light_shape"
+      ],
+      "optional_slots": [
+        {
+          "slot": "hair_style",
+          "probability": 0.8
+        },
+        {
+          "slot": "makeup_style",
+          "probability": 0.5
+        },
+        {
+          "slot": "expression",
+          "probability": 0.6
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "cosplay_concept_photo",
+            "fashion_editorial",
+            "concept_photo"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "cosplay_concept",
+            "portrait",
+            "fashion"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "adult_cosplay_performer",
+            "magical_girl_cosplayer",
+            "kpop_idol_style_model",
+            "cosplayer"
+          ]
+        },
+        "appearance_type": {
+          "ids": [
+            "idol_like",
+            "fashion_model_like",
+            "kbeauty_influencer"
+          ]
+        },
+        "hair_color": {
+          "ids": [
+            "pale_blue_cosplay_wig",
+            "lavender_silver_character_hair"
+          ]
+        },
+        "hair_style": {
+          "ids": [
+            "short_bob_with_bangs",
+            "white_silver_long_hair",
+            "natural_loose_hair"
+          ]
+        },
+        "costume_style": {
+          "ids": [
+            "vtuber_avatar_cosplay",
+            "magical_girl_stage_costume",
+            "pastel_magical_girl_outfit"
+          ]
+        },
+        "action": {
+          "ids": [
+            "over_shoulder_floor_turn",
+            "turning_back"
+          ]
+        },
+        "capture_context": {
+          "ids": [
+            "cosplay_reference_realism_context"
+          ]
+        },
+        "location": {
+          "ids": [
+            "blue_rimlight_cosplay_studio"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "cool_blue_character_rimlight",
+            "blue_hour"
+          ]
+        },
+        "light_type": {
+          "ids": [
+            "led_panel",
+            "narrow_spotlight"
+          ]
+        },
+        "light_shape": {
+          "ids": [
+            "hairline_rim_glow",
+            "diffused_ambient"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "full_frame_mirrorless",
+            "smartphone_camera"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "over_shoulder_back_seated",
+            "high_observer_angle"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "medium_close",
+            "rule_of_thirds"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "50mm",
+            "85mm",
+            "phone_1x_main"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "eye_focus",
+            "shallow_depth",
+            "face_detection_focus"
+          ]
+        },
+        "color": {
+          "ids": [
+            "cool_blue",
+            "pastel",
+            "matte_pastel_editorial"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "dreamy",
+            "playful_sweet_cosplay",
+            "intimate"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "cosplay_wig_fiber_detail",
+            "skin_texture",
+            "fine_grain"
+          ]
+        },
+        "format": {
+          "ids": [
+            "vertical_9_16",
+            "portrait_4_5"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal_cosplay_realism",
+            "high_detail",
+            "not_overdone"
+          ]
+        }
+      },
+      "embedding_text": "blue rimlight character cosplay portrait, pale blue wig, seated over shoulder turn, dark studio, photoreal anime game character realism"
+    },
+    {
+      "id": "clean_uniform_vsign_selfie",
+      "ko": "클린 교복 브이 셀피",
+      "en": "clean uniform V-sign selfie",
+      "weight": 0.58,
+      "template_style": "natural",
+      "hard_guards": {
+        "exclude_facets": [
+          "safety_tier:adult_only",
+          "safety_tier:adult_compatible"
+        ]
+      },
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "appearance_type",
+        "hair_color",
+        "action",
+        "capture_context",
+        "location",
+        "lighting",
+        "camera_type",
+        "camera_direction",
+        "composition",
+        "lens",
+        "focus",
+        "color",
+        "mood",
+        "texture",
+        "format",
+        "quality",
+        "wardrobe_style"
+      ],
+      "optional_slots": [
+        {
+          "slot": "makeup_style",
+          "probability": 0.45
+        },
+        {
+          "slot": "expression",
+          "probability": 0.65
+        },
+        {
+          "slot": "light_type",
+          "probability": 0.4
+        },
+        {
+          "slot": "subject_framing",
+          "probability": 0.5
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "selfie_camera_photo",
+            "smartphone_snapshot",
+            "social_media_post"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "selfie_portrait",
+            "creator_lifestyle",
+            "shortform_social"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "student_creator",
+            "young_actor",
+            "school_uniform_alumni_model"
+          ]
+        },
+        "appearance_type": {
+          "ids": [
+            "campus_student_style",
+            "natural_everyday",
+            "kbeauty_influencer"
+          ]
+        },
+        "hair_color": {
+          "ids": [
+            "glossy_black_hair",
+            "soft_dark_brown_hair"
+          ]
+        },
+        "hair_style": {
+          "ids": [
+            "natural_loose_hair",
+            "straight_black_hair_with_bangs",
+            "loose_ponytail"
+          ]
+        },
+        "wardrobe_style": {
+          "ids": [
+            "school_uniform_2000s_korea"
+          ]
+        },
+        "makeup_style": {
+          "ids": [
+            "minimal_no_makeup_look",
+            "natural_makeup",
+            "clean_kbeauty_makeup"
+          ]
+        },
+        "expression": {
+          "ids": [
+            "bright_friendly_smile",
+            "soft_smile",
+            "neutral_camera_gaze"
+          ]
+        },
+        "action": {
+          "ids": [
+            "front_camera_v_sign_cheek"
+          ]
+        },
+        "capture_context": {
+          "ids": [
+            "front_camera_close_selfie"
+          ]
+        },
+        "location": {
+          "ids": [
+            "simple_indoor_selfie_room",
+            "classroom_interior",
+            "school_hallway"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "fluorescent_classroom_cool"
+          ]
+        },
+        "light_type": {
+          "ids": [
+            "fluorescent_ceiling",
+            "school_fluorescent_tube"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "front_facing_phone",
+            "smartphone_camera"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "arm_length_selfie_direction",
+            "eye_level_front"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "cheek_close_selfie_crop",
+            "medium_close"
+          ]
+        },
+        "subject_framing": {
+          "ids": [
+            "close_up_face_crop",
+            "head_and_shoulders_crop"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "front_camera_wide",
+            "phone_1x_main"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "face_detection_focus",
+            "phone_auto_focus"
+          ]
+        },
+        "color": {
+          "ids": [
+            "phone_hdr_color",
+            "bright_social_filter",
+            "classroom_cool_cyan"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "casual_authentic",
+            "youthful_bright",
+            "playful"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "phone_beauty_filter_smoothing",
+            "phone_hdr_crispness"
+          ]
+        },
+        "format": {
+          "ids": [
+            "vertical_9_16",
+            "portrait_4_5"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "phone_realism",
+            "authentic_creator",
+            "not_overdone"
+          ]
+        }
+      },
+      "embedding_text": "clean uniform V-sign selfie, close front camera face crop, school uniform styling, soft indoor light, non adult social photo"
+    },
+    {
+      "id": "adult_crouching_mirror_ribbon_fashion",
+      "ko": "성인 리본 미러 패션",
+      "en": "adult crouching mirror ribbon fashion",
+      "weight": 0.45,
+      "template_style": "natural",
+      "facets": {
+        "safety_tier": [
+          "adult_compatible"
+        ]
+      },
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "appearance_type",
+        "hair_color",
+        "action",
+        "capture_context",
+        "location",
+        "lighting",
+        "camera_type",
+        "camera_direction",
+        "composition",
+        "lens",
+        "focus",
+        "color",
+        "mood",
+        "texture",
+        "format",
+        "quality",
+        "adult_context",
+        "fetish_styling",
+        "prop",
+        "wardrobe_style"
+      ],
+      "optional_slots": [
+        {
+          "slot": "body_framing",
+          "probability": 0.8
+        },
+        {
+          "slot": "makeup_style",
+          "probability": 0.45
+        },
+        {
+          "slot": "expression",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "selfie_camera_photo",
+            "social_media_post",
+            "fashion_editorial"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "fetish_fashion_editorial",
+            "selfie_portrait",
+            "fashion"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "adult_alt_fashion_creator",
+            "adult_glamour_model",
+            "adult_cosplay_performer"
+          ]
+        },
+        "appearance_type": {
+          "ids": [
+            "adult_alt_fetish_fashion",
+            "adult_glamour_influencer",
+            "fashion_model_like"
+          ]
+        },
+        "hair_color": {
+          "ids": [
+            "glossy_black_hair",
+            "soft_dark_brown_hair"
+          ]
+        },
+        "wardrobe_style": {
+          "ids": [
+            "minimal_black_dress",
+            "black_leather_rider_outfit"
+          ]
+        },
+        "adult_context": {
+          "ids": [
+            "adult_fetish_fashion_context",
+            "adult_fit_check_body_check_context"
+          ]
+        },
+        "fetish_styling": {
+          "ids": [
+            "corset_bustier_layered",
+            "choker_gloves_high_heels",
+            "black_leather_harness_style"
+          ]
+        },
+        "body_framing": {
+          "ids": [
+            "legs_heels_framing",
+            "clothed_bodyline_emphasis",
+            "hands_nails_accessory_closeup"
+          ]
+        },
+        "action": {
+          "ids": [
+            "mirror_selfie"
+          ]
+        },
+        "capture_context": {
+          "ids": [
+            "mirror_crouch_selfie_context"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "red_ribbon_leg_wrap_adult"
+          ]
+        },
+        "location": {
+          "ids": [
+            "plain_wall_mirror_selfie_room"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "softbox",
+            "fluorescent",
+            "hard_flash"
+          ]
+        },
+        "light_type": {
+          "ids": [
+            "studio_strobe",
+            "fluorescent_ceiling",
+            "on_camera_flash"
+          ]
+        },
+        "light_intensity": {
+          "ids": [
+            "balanced_exposure",
+            "soft_low_contrast",
+            "high_key_bright"
+          ]
+        },
+        "light_shape": {
+          "ids": [
+            "large_softbox_shape",
+            "diffused_ambient",
+            "hard_flash_red_eye"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "smartphone_camera",
+            "front_facing_phone"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "mirror_view_direction"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "crouching_mirror_full_body",
+            "mirror_selfie_composition"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "phone_1x_main",
+            "front_camera_wide"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "phone_auto_focus",
+            "face_detection_focus"
+          ]
+        },
+        "color": {
+          "ids": [
+            "muted",
+            "phone_hdr_color",
+            "luxury_black_gold"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "glamorous_backstage",
+            "elegant"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "phone_hdr_crispness",
+            "skin_texture"
+          ]
+        },
+        "format": {
+          "ids": [
+            "vertical_9_16",
+            "portrait_4_5"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "phone_realism",
+            "editorial_quality",
+            "not_overdone"
+          ]
+        }
+      },
+      "embedding_text": "adult crouching mirror selfie fashion, black outfit, red ribbon leg wrap prop, mirror room, adult compatible editorial social photo"
+    },
+    {
+      "id": "botanical_greenhouse_soft_romance",
+      "ko": "보태니컬 온실 소프트 로맨스",
+      "en": "botanical greenhouse soft romance",
+      "weight": 0.65,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "appearance_type",
+        "hair_color",
+        "action",
+        "capture_context",
+        "location",
+        "lighting",
+        "camera_type",
+        "camera_direction",
+        "composition",
+        "lens",
+        "focus",
+        "color",
+        "mood",
+        "texture",
+        "format",
+        "quality",
+        "wardrobe_style",
+        "light_shape"
+      ],
+      "optional_slots": [
+        {
+          "slot": "makeup_style",
+          "probability": 0.45
+        },
+        {
+          "slot": "expression",
+          "probability": 0.55
+        },
+        {
+          "slot": "time_of_day",
+          "probability": 0.35
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "fashion_editorial",
+            "magazine_feature",
+            "lifestyle_photo"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "fashion",
+            "fine_art_portrait",
+            "lifestyle"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "fashion_model",
+            "beauty_influencer",
+            "young_actor"
+          ]
+        },
+        "appearance_type": {
+          "ids": [
+            "natural_everyday",
+            "classic_elegant",
+            "kbeauty_influencer"
+          ]
+        },
+        "hair_color": {
+          "ids": [
+            "warm_auburn_brown_hair",
+            "soft_dark_brown_hair"
+          ]
+        },
+        "wardrobe_style": {
+          "ids": [
+            "summer_dress_sneakers",
+            "nineties_slip_dress_layered"
+          ]
+        },
+        "action": {
+          "ids": [
+            "seated_botanical_cheek_rest"
+          ]
+        },
+        "capture_context": {
+          "ids": [
+            "botanical_editorial_portrait_context"
+          ]
+        },
+        "location": {
+          "ids": [
+            "botanical_greenhouse_deck_floor",
+            "botanical_greenhouse"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "greenhouse_diffused_leaf_light",
+            "soft_window",
+            "overcast"
+          ]
+        },
+        "light_type": {
+          "ids": [
+            "open_shade",
+            "direct_sun",
+            "led_panel"
+          ]
+        },
+        "light_intensity": {
+          "ids": [
+            "soft_low_contrast",
+            "balanced_exposure",
+            "slightly_overexposed_edges"
+          ]
+        },
+        "light_shape": {
+          "ids": [
+            "leaf_foreground_bokeh",
+            "diffused_ambient"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "full_frame_mirrorless",
+            "medium_format_camera"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "eye_level_three_quarter",
+            "high_observer_angle"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "frame_within_frame",
+            "medium_close",
+            "rule_of_thirds"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "85mm",
+            "50mm",
+            "70_200mm"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "shallow_depth",
+            "eye_focus"
+          ]
+        },
+        "color": {
+          "ids": [
+            "lush_green",
+            "matte_pastel_editorial",
+            "warm_earth"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "dreamy",
+            "intimate",
+            "calm"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "skin_texture",
+            "fine_grain"
+          ]
+        },
+        "format": {
+          "ids": [
+            "portrait_4_5",
+            "portrait_3_4"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "editorial_quality",
+            "high_detail"
+          ]
+        }
+      },
+      "embedding_text": "botanical greenhouse soft romance portrait, seated among tall grasses and white flowers, wooden deck, diffused leaf light, romantic fashion photo"
+    },
+    {
+      "id": "phone_screen_face_overlay_cosplay",
+      "ko": "스마트폰 얼굴 오버레이 코스프레",
+      "en": "phone screen face-overlay cosplay",
+      "weight": 0.62,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "appearance_type",
+        "hair_color",
+        "action",
+        "capture_context",
+        "location",
+        "lighting",
+        "camera_type",
+        "camera_direction",
+        "composition",
+        "lens",
+        "focus",
+        "color",
+        "mood",
+        "texture",
+        "format",
+        "quality",
+        "prop",
+        "light_type"
+      ],
+      "optional_slots": [
+        {
+          "slot": "hair_style",
+          "probability": 0.65
+        },
+        {
+          "slot": "makeup_style",
+          "probability": 0.45
+        },
+        {
+          "slot": "light_shape",
+          "probability": 0.8
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "selfie_camera_photo",
+            "smartphone_snapshot",
+            "social_media_post",
+            "cosplay_concept_photo"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "selfie_portrait",
+            "cosplay_concept",
+            "shortform_social"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "adult_cosplay_performer",
+            "cosplayer",
+            "beauty_influencer"
+          ]
+        },
+        "appearance_type": {
+          "ids": [
+            "tiktok_creator_style",
+            "idol_like",
+            "kbeauty_influencer"
+          ]
+        },
+        "hair_color": {
+          "ids": [
+            "mint_green_cosplay_wig",
+            "pale_blue_cosplay_wig",
+            "glossy_black_hair"
+          ]
+        },
+        "hair_style": {
+          "ids": [
+            "long_black_twin_tails",
+            "natural_loose_hair",
+            "straight_black_hair_with_bangs"
+          ]
+        },
+        "action": {
+          "ids": [
+            "phone_screen_face_overlay_pose"
+          ]
+        },
+        "capture_context": {
+          "ids": [
+            "phone_screen_face_overlay_context",
+            "social_perspective_trick_context"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "phone_with_anime_face_screen"
+          ]
+        },
+        "location": {
+          "ids": [
+            "simple_indoor_selfie_room"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "softbox"
+          ]
+        },
+        "light_type": {
+          "ids": [
+            "phone_screen_face_glow",
+            "led_panel"
+          ]
+        },
+        "light_shape": {
+          "ids": [
+            "screen_rectangle_mask"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "smartphone_camera",
+            "front_facing_phone"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "phone_screen_overlay_close_pov",
+            "arm_length_selfie_direction"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "cheek_close_selfie_crop",
+            "medium_close"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "phone_1x_main",
+            "front_camera_wide"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "phone_auto_focus",
+            "face_detection_focus"
+          ]
+        },
+        "color": {
+          "ids": [
+            "phone_hdr_color",
+            "bright_social_filter",
+            "lush_green"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "playful",
+            "energetic_shortform",
+            "casual_authentic"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "phone_beauty_filter_smoothing",
+            "cosplay_wig_fiber_detail",
+            "phone_hdr_crispness"
+          ]
+        },
+        "format": {
+          "ids": [
+            "vertical_9_16",
+            "portrait_4_5"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "phone_realism",
+            "authentic_creator",
+            "photoreal_cosplay_realism"
+          ]
+        }
+      },
+      "embedding_text": "phone screen anime face overlay cosplay selfie, smartphone screen aligned over lower face, green wig, social perspective trick, photoreal capture"
+    },
+    {
+      "id": "interactive_2_5d_living_room_pov",
+      "ko": "상호작용 2.5D 거실 POV",
+      "en": "interactive 2.5D living-room POV",
+      "weight": 0.5,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "appearance_type",
+        "hair_color",
+        "action",
+        "capture_context",
+        "location",
+        "lighting",
+        "camera_type",
+        "camera_direction",
+        "composition",
+        "lens",
+        "focus",
+        "color",
+        "mood",
+        "texture",
+        "format",
+        "quality",
+        "costume_style",
+        "prop"
+      ],
+      "optional_slots": [
+        {
+          "slot": "light_type",
+          "probability": 0.55
+        },
+        {
+          "slot": "light_shape",
+          "probability": 0.45
+        },
+        {
+          "slot": "motion",
+          "probability": 0.65
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "smartphone_snapshot",
+            "social_media_post",
+            "cosplay_concept_photo"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "cosplay_concept",
+            "creator_lifestyle",
+            "portrait",
+            "selfie_portrait"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "adult_cosplay_performer",
+            "magical_girl_cosplayer",
+            "cosplayer"
+          ]
+        },
+        "appearance_type": {
+          "ids": [
+            "idol_like",
+            "tiktok_creator_style",
+            "kbeauty_influencer"
+          ]
+        },
+        "hair_color": {
+          "ids": [
+            "lavender_silver_character_hair",
+            "pale_blue_cosplay_wig"
+          ]
+        },
+        "costume_style": {
+          "ids": [
+            "vtuber_avatar_cosplay",
+            "magical_girl_stage_costume",
+            "pastel_magical_girl_outfit"
+          ]
+        },
+        "action": {
+          "ids": [
+            "reacting_to_pov_hand_tail_pull"
+          ]
+        },
+        "capture_context": {
+          "ids": [
+            "first_person_hand_interaction_context"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "angel_halo_wings_tail_set"
+          ]
+        },
+        "location": {
+          "ids": [
+            "otaku_living_room_sofa_tv"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "tungsten",
+            "monitor_glow",
+            "soft_window"
+          ]
+        },
+        "light_type": {
+          "ids": [
+            "tungsten_practical",
+            "monitor_glow"
+          ]
+        },
+        "light_shape": {
+          "ids": [
+            "diffused_ambient",
+            "screen_rectangle_mask",
+            "volumetric_beams"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "smartphone_camera"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "first_person_pov_hand_foreground",
+            "eye_level_three_quarter"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "over_the_shoulder_dialogue",
+            "medium_close"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "phone_1x_main",
+            "smartphone"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "face_detection_focus",
+            "phone_auto_focus"
+          ]
+        },
+        "motion": {
+          "ids": [
+            "handheld_microshake",
+            "social_snap_tilt"
+          ]
+        },
+        "color": {
+          "ids": [
+            "pastel",
+            "creator_warm_filter",
+            "phone_hdr_color"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "playful_sweet_cosplay",
+            "playful",
+            "dreamy"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "cosplay_wig_fiber_detail",
+            "phone_hdr_crispness"
+          ]
+        },
+        "format": {
+          "ids": [
+            "vertical_9_16",
+            "portrait_4_5"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "phone_realism",
+            "photoreal_cosplay_realism",
+            "not_overdone"
+          ]
+        }
+      },
+      "embedding_text": "first person hand tail interaction, 2.5D cosplay character in living room sofa, halo wings pink tail, otaku TV background, photoreal POV"
     }
   ],
   "templates": {
@@ -30412,6 +32679,115 @@
         "embedding_text": "money-piece face-framing highlights"
       }
     ],
+    "hair_color": [
+      {
+        "id": "glossy_black_hair",
+        "ko": "윤기 있는 검은 머리색",
+        "en": "glossy black hair color",
+        "weight": 1.2,
+        "tags": [
+          "human",
+          "hair",
+          "portrait",
+          "natural"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "soft_dark_brown_hair",
+        "ko": "부드러운 다크 브라운 머리색",
+        "en": "soft dark-brown hair color",
+        "weight": 1.1,
+        "tags": [
+          "human",
+          "hair",
+          "portrait",
+          "natural"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "silver_blonde_gothic_hair",
+        "ko": "고딕 무드의 은빛 블론드 머리색",
+        "en": "silver-blonde gothic hair color",
+        "weight": 0.8,
+        "tags": [
+          "human",
+          "hair",
+          "gothic",
+          "cosplay"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "pale_blue_cosplay_wig",
+        "ko": "연한 파란색 코스프레 가발 컬러",
+        "en": "pale-blue cosplay wig color",
+        "weight": 0.85,
+        "tags": [
+          "human",
+          "hair",
+          "cosplay",
+          "character"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "mint_green_cosplay_wig",
+        "ko": "민트 그린 코스프레 가발 컬러",
+        "en": "mint-green cosplay wig color",
+        "weight": 0.75,
+        "tags": [
+          "human",
+          "hair",
+          "cosplay",
+          "character",
+          "phone_overlay"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "lavender_silver_character_hair",
+        "ko": "라벤더 실버 캐릭터풍 머리색",
+        "en": "lavender-silver character hair color",
+        "weight": 0.75,
+        "tags": [
+          "human",
+          "hair",
+          "cosplay",
+          "character",
+          "interactive_pov"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "warm_auburn_brown_hair",
+        "ko": "따뜻한 오번 브라운 머리색",
+        "en": "warm auburn-brown hair color",
+        "weight": 0.9,
+        "tags": [
+          "human",
+          "hair",
+          "portrait",
+          "botanical"
+        ],
+        "for_any": [
+          "human"
+        ]
+      }
+    ],
     "makeup_style": [
       {
         "id": "natural_makeup",
@@ -33006,7 +35382,8 @@
         "tags": [
           "social",
           "phone",
-          "interior"
+          "interior",
+          "mirror_crouch"
         ],
         "for_any": [
           "human"
@@ -33874,6 +36251,305 @@
         ],
         "for_any": [
           "environment"
+        ]
+      },
+      {
+        "id": "holding_phone_in_garden_backlight",
+        "ko": "정원 역광 속에서 투명 케이스 스마트폰을 들고 잠시 멈춰 선",
+        "en": "holding a clear-case smartphone in soft garden backlight",
+        "weight": 0.8,
+        "tags": [
+          "human",
+          "social",
+          "garden_backlight",
+          "phone",
+          "front_selfie",
+          "selfie"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "holding_ornate_bottle_to_chest",
+        "ko": "장식적인 병을 가슴 가까이 들고 정면을 응시하는",
+        "en": "holding an ornate bottle close to the chest while facing the camera",
+        "weight": 0.7,
+        "tags": [
+          "human",
+          "gothic_display",
+          "cosplay"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "looking_down_at_low_camera",
+        "ko": "아래의 카메라를 내려다보는 강한 포즈",
+        "en": "looking down toward a low camera with a dominant still pose",
+        "weight": 0.7,
+        "tags": [
+          "human",
+          "low_angle_social",
+          "fashion"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "passenger_seat_coffee_window_gaze",
+        "ko": "조수석에서 커피를 들고 창밖을 바라보는",
+        "en": "holding takeaway coffee in the passenger seat while gazing out the window",
+        "weight": 0.75,
+        "tags": [
+          "human",
+          "vehicle_passenger",
+          "coffee"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "over_shoulder_floor_turn",
+        "ko": "바닥에 앉아 어깨 너머로 돌아보는",
+        "en": "turning back over the shoulder while seated low on the floor",
+        "weight": 0.75,
+        "tags": [
+          "human",
+          "cosplay",
+          "character"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "front_camera_v_sign_cheek",
+        "ko": "전면 카메라 가까이에서 볼 옆 브이 포즈를 하는",
+        "en": "making a V-sign beside the cheek in a close front-camera selfie",
+        "weight": 0.8,
+        "tags": [
+          "human",
+          "social",
+          "front_selfie",
+          "selfie"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "seated_botanical_cheek_rest",
+        "ko": "식물 사이에 앉아 손을 뺨에 기대는",
+        "en": "seated among plants with both hands resting near the cheeks",
+        "weight": 0.75,
+        "tags": [
+          "human",
+          "botanical",
+          "romantic"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "phone_screen_face_overlay_pose",
+        "ko": "스마트폰 화면의 애니 얼굴을 실제 얼굴 위에 맞춰 드는",
+        "en": "aligning a phone screen showing an anime-style face over the lower face",
+        "weight": 0.7,
+        "tags": [
+          "human",
+          "phone_overlay",
+          "perspective_trick",
+          "cosplay"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "reacting_to_pov_hand_tail_pull",
+        "ko": "프레임 앞 1인칭 손의 장난스러운 접촉에 놀라 돌아보는",
+        "en": "turning back in surprise as a first-person hand playfully tugs a costume tail",
+        "weight": 0.55,
+        "tags": [
+          "human",
+          "interactive_pov",
+          "pov_hand",
+          "character"
+        ],
+        "for_any": [
+          "human"
+        ]
+      }
+    ],
+    "capture_context": [
+      {
+        "id": "front_camera_close_selfie",
+        "ko": "전면 카메라에 가까이 붙은 셀피 촬영 맥락",
+        "en": "front-camera close selfie capture context",
+        "weight": 1.0,
+        "tags": [
+          "human",
+          "social",
+          "selfie",
+          "phone"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "requires_any_tags": [
+          "front_selfie",
+          "selfie"
+        ]
+      },
+      {
+        "id": "mirror_crouch_selfie_context",
+        "ko": "쪼그려 앉은 거울 셀피 촬영 맥락",
+        "en": "crouching mirror-selfie capture context",
+        "weight": 0.8,
+        "tags": [
+          "human",
+          "social",
+          "mirror",
+          "mirror_crouch"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "requires_any_tags": [
+          "mirror_crouch"
+        ]
+      },
+      {
+        "id": "phone_screen_face_overlay_context",
+        "ko": "스마트폰 화면을 얼굴에 겹쳐 보이게 쓰는 원근 착시 촬영 맥락",
+        "en": "smartphone screen used as a face-overlay perspective trick",
+        "weight": 0.8,
+        "tags": [
+          "human",
+          "social",
+          "phone_overlay",
+          "perspective_trick"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "requires_any_tags": [
+          "phone_overlay"
+        ]
+      },
+      {
+        "id": "first_person_hand_interaction_context",
+        "ko": "1인칭 손이 프레임 앞에서 피사체와 상호작용하는 POV 촬영 맥락",
+        "en": "first-person hand interaction POV capture context",
+        "weight": 0.7,
+        "tags": [
+          "human",
+          "social",
+          "interactive_pov",
+          "pov_hand"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "requires_any_tags": [
+          "interactive_pov"
+        ]
+      },
+      {
+        "id": "passenger_seat_observed_candid",
+        "ko": "조수석에서 옆모습을 관찰하듯 찍은 캔디드 촬영 맥락",
+        "en": "passenger-seat observed candid capture context",
+        "weight": 0.75,
+        "tags": [
+          "human",
+          "social",
+          "vehicle_passenger"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "requires_any_tags": [
+          "vehicle_passenger"
+        ]
+      },
+      {
+        "id": "low_angle_dominance_capture",
+        "ko": "아래에서 올려다보는 강한 로우앵글 촬영 맥락",
+        "en": "low-angle dominance capture context",
+        "weight": 0.7,
+        "tags": [
+          "human",
+          "fashion",
+          "low_angle_social"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "requires_any_tags": [
+          "low_angle_social"
+        ]
+      },
+      {
+        "id": "cosplay_reference_realism_context",
+        "ko": "캐릭터 레퍼런스를 실사 코스프레로 해석한 촬영 맥락",
+        "en": "photoreal cosplay reference realism capture context",
+        "weight": 0.9,
+        "tags": [
+          "human",
+          "cosplay",
+          "character",
+          "photoreal"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "requires_any_tags": [
+          "cosplay",
+          "character"
+        ]
+      },
+      {
+        "id": "botanical_editorial_portrait_context",
+        "ko": "식물 사이의 부드러운 에디토리얼 인물 촬영 맥락",
+        "en": "soft botanical editorial portrait capture context",
+        "weight": 0.8,
+        "tags": [
+          "human",
+          "botanical",
+          "editorial",
+          "portrait",
+          "photoreal"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "requires_any_tags": [
+          "botanical",
+          "romantic"
+        ]
+      },
+      {
+        "id": "social_perspective_trick_context",
+        "ko": "소셜 미디어용 원근 착시 트릭 촬영 맥락",
+        "en": "social-media perspective-trick capture context",
+        "weight": 0.75,
+        "tags": [
+          "human",
+          "social",
+          "perspective_trick"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "requires_any_tags": [
+          "phone_overlay",
+          "interactive_pov",
+          "mirror_crouch"
         ]
       }
     ],
@@ -34906,6 +37582,129 @@
           "outdoor"
         ],
         "embedding_text": "a folded picnic blanket"
+      },
+      {
+        "id": "clear_case_smartphone",
+        "ko": "투명 케이스를 씌운 스마트폰",
+        "en": "a smartphone in a clear protective case",
+        "weight": 0.9,
+        "tags": [
+          "human",
+          "phone",
+          "social"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "ornate_gothic_perfume_bottle",
+        "ko": "토끼 장식이 달린 고딕풍 유리 향수병",
+        "en": "an ornate gothic glass perfume bottle with tiny rabbit ornaments",
+        "weight": 0.65,
+        "tags": [
+          "human",
+          "gothic_display",
+          "product",
+          "glass"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "anime_poster_wall",
+        "ko": "배경을 채우는 커다란 애니메이션 캐릭터 포스터",
+        "en": "a large anime character poster filling the background wall",
+        "weight": 0.65,
+        "tags": [
+          "human",
+          "cosplay",
+          "character",
+          "poster_wall"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "takeaway_coffee_cup",
+        "ko": "갈색 종이 슬리브의 테이크아웃 커피컵",
+        "en": "a takeaway coffee cup with a brown paper sleeve",
+        "weight": 0.8,
+        "tags": [
+          "human",
+          "coffee",
+          "lifestyle",
+          "vehicle_passenger"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "phone_with_anime_face_screen",
+        "ko": "하관을 가리도록 맞춘 애니메이션 얼굴 화면의 스마트폰",
+        "en": "a phone screen showing an anime-style face aligned over the lower face",
+        "weight": 0.7,
+        "tags": [
+          "human",
+          "phone_overlay",
+          "perspective_trick",
+          "cosplay"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "angel_halo_wings_tail_set",
+        "ko": "천사 헤일로와 작은 날개, 분홍색 꼬리 코스튬 세트",
+        "en": "an angel halo, small wings, and pink costume tail set",
+        "weight": 0.55,
+        "tags": [
+          "human",
+          "interactive_pov",
+          "character",
+          "cosplay"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "red_ribbon_leg_wrap_adult",
+        "ko": "성인 패션 화보용 붉은 리본 레그 랩 소품",
+        "en": "an adult fashion red ribbon leg-wrap prop",
+        "weight": 0.45,
+        "tags": [
+          "human",
+          "adult",
+          "fashion",
+          "mirror_crouch"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "facets": {
+          "safety_tier": [
+            "adult_compatible"
+          ]
+        }
+      },
+      {
+        "id": "lanyard_badge",
+        "ko": "목에 걸린 행사 사원증 랜야드",
+        "en": "a lanyard badge hanging from the neck",
+        "weight": 0.65,
+        "tags": [
+          "human",
+          "social",
+          "fashion"
+        ],
+        "for_any": [
+          "human"
+        ]
       }
     ],
     "fetish_styling": [
@@ -37330,6 +40129,115 @@
           "ballet"
         ],
         "embedding_text": "inside a ballet rehearsal studio"
+      },
+      {
+        "id": "garden_cafe_path_backlight",
+        "ko": "식물이 우거진 야외 카페 골목길",
+        "en": "a leafy outdoor cafe path with soft backlight",
+        "weight": 0.75,
+        "tags": [
+          "human",
+          "garden_backlight",
+          "street",
+          "day"
+        ]
+      },
+      {
+        "id": "gothic_glass_curio_cabinet",
+        "ko": "반짝이는 유리 장식품이 가득한 고딕풍 진열장 방",
+        "en": "a gothic glass curio-cabinet room filled with sparkling ornaments",
+        "weight": 0.55,
+        "tags": [
+          "human",
+          "gothic_display",
+          "interior",
+          "low_light"
+        ]
+      },
+      {
+        "id": "anime_poster_wall_interior",
+        "ko": "대형 애니메이션 포스터가 벽을 채운 실내 공간",
+        "en": "an interior with a large anime poster covering the wall behind the subject",
+        "weight": 0.6,
+        "tags": [
+          "human",
+          "cosplay",
+          "poster_wall",
+          "interior"
+        ]
+      },
+      {
+        "id": "gas_station_car_passenger_seat_night",
+        "ko": "심야 주유소에 정차한 차량의 조수석 내부",
+        "en": "inside a parked car passenger seat at a late-night gas station",
+        "weight": 0.65,
+        "tags": [
+          "human",
+          "vehicle_passenger",
+          "night",
+          "transport",
+          "urban"
+        ]
+      },
+      {
+        "id": "blue_rimlight_cosplay_studio",
+        "ko": "푸른 림라이트가 들어오는 어두운 코스프레 스튜디오",
+        "en": "a dark cosplay studio with blue rim light spilling from behind",
+        "weight": 0.55,
+        "tags": [
+          "human",
+          "cosplay",
+          "studio",
+          "colored_light"
+        ]
+      },
+      {
+        "id": "simple_indoor_selfie_room",
+        "ko": "단순한 실내 셀피 공간",
+        "en": "a simple indoor selfie room with a plain close background",
+        "weight": 0.8,
+        "tags": [
+          "human",
+          "front_selfie",
+          "interior",
+          "social"
+        ]
+      },
+      {
+        "id": "plain_wall_mirror_selfie_room",
+        "ko": "무채색 벽 앞의 전신 거울 셀피 공간",
+        "en": "a plain-wall mirror selfie room with neutral flooring",
+        "weight": 0.65,
+        "tags": [
+          "human",
+          "mirror_crouch",
+          "interior",
+          "social"
+        ]
+      },
+      {
+        "id": "botanical_greenhouse_deck_floor",
+        "ko": "식물과 들꽃이 둘러싼 온실 나무 데크 바닥",
+        "en": "a botanical greenhouse wooden deck floor surrounded by tall grasses and white flowers",
+        "weight": 0.65,
+        "tags": [
+          "human",
+          "botanical",
+          "greenhouse",
+          "day"
+        ]
+      },
+      {
+        "id": "otaku_living_room_sofa_tv",
+        "ko": "애니메이션 TV가 켜진 오타쿠 거실 소파 공간",
+        "en": "an otaku living-room sofa area with an anime TV playing in the background",
+        "weight": 0.5,
+        "tags": [
+          "human",
+          "interactive_pov",
+          "home",
+          "character"
+        ]
       }
     ],
     "world": [
@@ -38517,6 +41425,50 @@
             "general"
           ]
         }
+      },
+      {
+        "id": "soft_overexposed_garden_backlight",
+        "ko": "부드럽게 과노출된 정원 역광",
+        "en": "soft slightly overexposed garden backlight",
+        "weight": 0.75,
+        "tags": [
+          "natural_light",
+          "garden_backlight",
+          "day"
+        ]
+      },
+      {
+        "id": "cool_blue_character_rimlight",
+        "ko": "캐릭터 실루엣을 감싸는 차가운 푸른 림라이트",
+        "en": "cool blue rim light wrapping a character-like silhouette",
+        "weight": 0.6,
+        "tags": [
+          "colored_light",
+          "cosplay",
+          "character"
+        ]
+      },
+      {
+        "id": "gas_station_fluorescent_car_mix",
+        "ko": "주유소 형광등과 차량 실내광이 섞인 야간 조명",
+        "en": "mixed late-night gas-station fluorescent light and car interior glow",
+        "weight": 0.6,
+        "tags": [
+          "artificial_light",
+          "vehicle_passenger",
+          "night"
+        ]
+      },
+      {
+        "id": "greenhouse_diffused_leaf_light",
+        "ko": "온실 식물 사이로 퍼지는 부드러운 확산광",
+        "en": "soft diffused greenhouse light filtered through leaves",
+        "weight": 0.7,
+        "tags": [
+          "natural_light",
+          "botanical",
+          "day"
+        ]
       }
     ],
     "light_direction": [
@@ -39196,6 +42148,17 @@
           "weather"
         ],
         "embedding_text": "distant lightning flash"
+      },
+      {
+        "id": "phone_screen_face_glow",
+        "ko": "얼굴 가까이에서 비치는 스마트폰 화면광",
+        "en": "phone-screen glow cast close across the face",
+        "weight": 0.6,
+        "tags": [
+          "phone_overlay",
+          "phone",
+          "artificial_light"
+        ]
       }
     ],
     "light_intensity": [
@@ -39584,6 +42547,49 @@
             "general"
           ]
         }
+      },
+      {
+        "id": "glass_curio_specular_sparkle",
+        "ko": "유리 진열장 장식품에서 튀는 작은 반짝임",
+        "en": "tiny specular sparkles from glass curio-cabinet ornaments",
+        "weight": 0.55,
+        "tags": [
+          "gothic_display",
+          "glass",
+          "low_light"
+        ]
+      },
+      {
+        "id": "hairline_rim_glow",
+        "ko": "머리카락 가장자리를 따라 생기는 가느다란 림 글로우",
+        "en": "thin rim glow tracing the hairline edges",
+        "weight": 0.7,
+        "tags": [
+          "rim_light",
+          "hair",
+          "portrait"
+        ]
+      },
+      {
+        "id": "screen_rectangle_mask",
+        "ko": "스마트폰 화면이 만드는 직사각형 빛과 가림 형태",
+        "en": "rectangular phone-screen light and masking shape",
+        "weight": 0.55,
+        "tags": [
+          "phone_overlay",
+          "perspective_trick"
+        ]
+      },
+      {
+        "id": "leaf_foreground_bokeh",
+        "ko": "전경 잎과 풀잎이 흐릿하게 겹치는 보케 형태",
+        "en": "soft foreground leaf and grass bokeh shapes",
+        "weight": 0.65,
+        "tags": [
+          "botanical",
+          "greenhouse",
+          "natural_light"
+        ]
       }
     ],
     "camera_type": [
@@ -40098,6 +43104,59 @@
         "requires_any_tags": [
           "airplane",
           "airplane_window_clouds"
+        ]
+      },
+      {
+        "id": "extreme_low_angle_under_subject",
+        "ko": "피사체 아래에서 올려다보는 극단적 로우앵글 시점",
+        "en": "extreme low-angle view from below the subject",
+        "weight": 0.65,
+        "tags": [
+          "human",
+          "low_angle_social"
+        ]
+      },
+      {
+        "id": "passenger_seat_side_profile_view",
+        "ko": "조수석 안쪽에서 보는 측면 프로필 시점",
+        "en": "side-profile view from inside the passenger seat",
+        "weight": 0.65,
+        "tags": [
+          "human",
+          "vehicle_passenger"
+        ]
+      },
+      {
+        "id": "phone_screen_overlay_close_pov",
+        "ko": "스마트폰 화면이 얼굴 일부를 가리는 근접 POV 시점",
+        "en": "close POV with a phone screen covering part of the face",
+        "weight": 0.65,
+        "tags": [
+          "human",
+          "phone_overlay",
+          "perspective_trick"
+        ]
+      },
+      {
+        "id": "first_person_pov_hand_foreground",
+        "ko": "1인칭 손이 전경에 들어오는 POV 시점",
+        "en": "first-person POV with a hand visible in the foreground",
+        "weight": 0.55,
+        "tags": [
+          "human",
+          "interactive_pov",
+          "pov_hand"
+        ]
+      },
+      {
+        "id": "over_shoulder_back_seated",
+        "ko": "앉은 피사체의 등과 어깨 너머를 보는 시점",
+        "en": "over-the-shoulder rear view of a seated subject turning back",
+        "weight": 0.65,
+        "tags": [
+          "human",
+          "cosplay",
+          "character"
         ]
       }
     ],
@@ -40820,6 +43879,28 @@
           "layout"
         ],
         "embedding_text": "triptych three-panel photo sequence"
+      },
+      {
+        "id": "cheek_close_selfie_crop",
+        "ko": "볼과 손동작이 크게 들어오는 근접 셀피 크롭",
+        "en": "close selfie crop emphasizing cheek, hand gesture, and face proximity",
+        "weight": 0.75,
+        "tags": [
+          "human",
+          "front_selfie",
+          "social"
+        ]
+      },
+      {
+        "id": "crouching_mirror_full_body",
+        "ko": "쪼그린 포즈가 전신으로 보이는 거울 셀피 구도",
+        "en": "full-body crouching mirror-selfie composition",
+        "weight": 0.6,
+        "tags": [
+          "human",
+          "mirror_crouch",
+          "social"
+        ]
       }
     ],
     "subject_framing": [
@@ -44062,6 +47143,28 @@
             "general"
           ]
         }
+      },
+      {
+        "id": "phone_beauty_filter_smoothing",
+        "ko": "소셜 셀피 앱 특유의 부드러운 피부 보정 질감",
+        "en": "soft phone beauty-filter smoothing with visible selfie realism",
+        "weight": 0.6,
+        "tags": [
+          "human",
+          "social",
+          "phone"
+        ]
+      },
+      {
+        "id": "cosplay_wig_fiber_detail",
+        "ko": "코스프레 가발 섬유와 인조광택 디테일",
+        "en": "cosplay wig fiber detail with synthetic sheen",
+        "weight": 0.6,
+        "tags": [
+          "human",
+          "cosplay",
+          "hair"
+        ]
       }
     ],
     "format": [
@@ -46905,12 +50008,14 @@
     "facial_hair",
     "wearable_accessory",
     "hair_style",
+    "hair_color",
     "makeup_style",
     "expression",
     "costume_style",
     "wardrobe_style",
     "adult_context",
     "action",
+    "capture_context",
     "prop",
     "fetish_styling",
     "caption_context",
@@ -46990,7 +50095,9 @@
     "wearable_accessory": 1.6,
     "facial_hair": 1.1,
     "surface_material": 1.7,
-    "aesthetic_trend": 1.6
+    "aesthetic_trend": 1.6,
+    "hair_color": 1.4,
+    "capture_context": 2.4
   },
   "generation_settings": {
     "priority_bias": 0.45,
@@ -47027,6 +50134,16 @@
       {
         "slot": "light_shape",
         "probability": 0.28
+      },
+      {
+        "slot": "hair_color",
+        "probability": 0.32,
+        "requires_filter": true
+      },
+      {
+        "slot": "capture_context",
+        "probability": 0.18,
+        "requires_filter": true
       }
     ]
   },
@@ -47179,7 +50296,9 @@
         "mecha_pilot_cosplayer",
         "game_rpg_cosplayer",
         "wuxia_cosplay_model",
-        "historical_drama_actor"
+        "historical_drama_actor",
+        "adult_cosplay_performer",
+        "gothic_doll_cosplayer"
       ],
       "traveler": [
         "traveler_backpack",
@@ -47209,7 +50328,11 @@
         "rainy_bus_stop_shelter",
         "pojangmacha_tent_night",
         "pc_bang_neon_room",
-        "coin_karaoke_neon_room"
+        "coin_karaoke_neon_room",
+        "gas_station_car_passenger_seat_night",
+        "otaku_living_room_sofa_tv",
+        "gothic_glass_curio_cabinet",
+        "blue_rimlight_cosplay_studio"
       ],
       "urban_neon": [
         "rainy_neon_alley",
@@ -47260,7 +50383,10 @@
         "beach_boardwalk",
         "wildflower_field",
         "botanical_greenhouse",
-        "rooftop_greenhouse"
+        "rooftop_greenhouse",
+        "garden_cafe_path_backlight",
+        "botanical_greenhouse_deck_floor",
+        "simple_indoor_selfie_room"
       ],
       "cold": [
         "snow_field",
@@ -47586,6 +50712,109 @@
           "airport_traveler",
           "fashion_influencer"
         ]
+      },
+      "social_gimmick_strong": {
+        "capture_context": [
+          "phone_screen_face_overlay_context",
+          "social_perspective_trick_context",
+          "front_camera_close_selfie"
+        ],
+        "action": [
+          "phone_screen_face_overlay_pose",
+          "front_camera_v_sign_cheek"
+        ],
+        "prop": [
+          "phone_with_anime_face_screen",
+          "clear_case_smartphone"
+        ]
+      },
+      "interactive_pov_strong": {
+        "capture_context": [
+          "first_person_hand_interaction_context"
+        ],
+        "action": [
+          "reacting_to_pov_hand_tail_pull"
+        ],
+        "camera_direction": [
+          "first_person_pov_hand_foreground"
+        ],
+        "prop": [
+          "angel_halo_wings_tail_set"
+        ]
+      },
+      "subculture_cosplay_strong": {
+        "subject": [
+          "adult_cosplay_performer",
+          "cosplayer",
+          "gothic_doll_cosplayer",
+          "magical_girl_cosplayer"
+        ],
+        "hair_color": [
+          "pale_blue_cosplay_wig",
+          "mint_green_cosplay_wig",
+          "lavender_silver_character_hair",
+          "silver_blonde_gothic_hair"
+        ],
+        "costume_style": [
+          "vtuber_avatar_cosplay",
+          "bunny_girl_costume",
+          "gothic_lolita_dress",
+          "magical_girl_stage_costume"
+        ],
+        "texture": [
+          "cosplay_wig_fiber_detail"
+        ]
+      },
+      "vehicle_night_lifestyle_strong": {
+        "location": [
+          "gas_station_car_passenger_seat_night"
+        ],
+        "capture_context": [
+          "passenger_seat_observed_candid"
+        ],
+        "action": [
+          "passenger_seat_coffee_window_gaze"
+        ],
+        "lighting": [
+          "gas_station_fluorescent_car_mix"
+        ],
+        "prop": [
+          "takeaway_coffee_cup"
+        ]
+      },
+      "botanical_romance_strong": {
+        "location": [
+          "botanical_greenhouse_deck_floor",
+          "garden_cafe_path_backlight"
+        ],
+        "capture_context": [
+          "botanical_editorial_portrait_context"
+        ],
+        "lighting": [
+          "greenhouse_diffused_leaf_light",
+          "soft_overexposed_garden_backlight"
+        ],
+        "light_shape": [
+          "leaf_foreground_bokeh",
+          "hairline_rim_glow"
+        ],
+        "action": [
+          "seated_botanical_cheek_rest"
+        ]
+      },
+      "gothic_display_strong": {
+        "location": [
+          "gothic_glass_curio_cabinet"
+        ],
+        "prop": [
+          "ornate_gothic_perfume_bottle"
+        ],
+        "light_shape": [
+          "glass_curio_specular_sparkle"
+        ],
+        "action": [
+          "holding_ornate_bottle_to_chest"
+        ]
       }
     },
     "family_tone_conflicts": {
@@ -47626,6 +50855,15 @@
         "portrait": 0.55,
         "fashion": 0.45,
         "street": 0.35
+      },
+      "capture_context": {
+        "front_camera_close_selfie": 0.35,
+        "phone_screen_face_overlay_context": 0.15,
+        "first_person_hand_interaction_context": 0.2
+      },
+      "hair_color": {
+        "glossy_black_hair": 0.35,
+        "soft_dark_brown_hair": 0.3
       }
     }
   },
@@ -47701,6 +50939,53 @@
       "rainy_neon_occult_noir_portrait": [
         "portrait",
         "urban",
+        "surreal"
+      ],
+      "garden_phone_backlight_portrait": [
+        "portrait",
+        "social"
+      ],
+      "gothic_curio_bunny_cosplay": [
+        "portrait",
+        "fashion"
+      ],
+      "anime_poster_low_angle_noir_fashion": [
+        "portrait",
+        "fashion",
+        "social"
+      ],
+      "gas_station_passenger_seat_lifestyle": [
+        "portrait",
+        "social",
+        "urban"
+      ],
+      "blue_rimlight_character_cosplay": [
+        "portrait",
+        "fashion",
+        "social"
+      ],
+      "clean_uniform_vsign_selfie": [
+        "portrait",
+        "social"
+      ],
+      "adult_crouching_mirror_ribbon_fashion": [
+        "portrait",
+        "fashion",
+        "social",
+        "adult"
+      ],
+      "botanical_greenhouse_soft_romance": [
+        "portrait",
+        "fashion"
+      ],
+      "phone_screen_face_overlay_cosplay": [
+        "portrait",
+        "social",
+        "fashion"
+      ],
+      "interactive_2_5d_living_room_pov": [
+        "portrait",
+        "social",
         "surreal"
       ]
     },
@@ -47862,6 +51147,39 @@
           "food",
           "architecture"
         ]
+      },
+      "hair_color": {
+        "subject_categories": [
+          "human"
+        ],
+        "deny_domains": [
+          "product",
+          "jewelry",
+          "food",
+          "wildlife"
+        ]
+      },
+      "capture_context": {
+        "subject_categories": [
+          "human"
+        ],
+        "allow_domains": [
+          "portrait",
+          "fashion",
+          "beauty",
+          "social",
+          "adult"
+        ],
+        "deny_domains": [
+          "documentary",
+          "craft",
+          "wildlife",
+          "product",
+          "jewelry",
+          "food",
+          "architecture"
+        ],
+        "require_domain_match": true
       }
     }
   }

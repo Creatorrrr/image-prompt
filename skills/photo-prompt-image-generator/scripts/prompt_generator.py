@@ -240,8 +240,10 @@ CROSS_SLOT_AFFINITY_CONTEXT_SLOTS: Dict[str, tuple[str, ...]] = {
     "light_shape": ("location", "time_of_day", "weather", "mood", "lighting"),
     "color": ("location", "time_of_day", "weather", "mood", "lighting"),
     "texture": ("location", "weather", "mood", "lighting", "color"),
+        "hair_color": ("subject", "appearance_type", "hair_style", "costume_style", "aesthetic_trend"),
     "wardrobe_style": ("subject", "location", "aesthetic_trend"),
     "makeup_style": ("subject", "location", "aesthetic_trend", "wardrobe_style"),
+    "capture_context": ("action", "prop", "location", "camera_direction", "composition"),
     "surreal_anchor": ("surreal_concept", "location"),
 }
 
@@ -258,6 +260,8 @@ SLOT_TEMPERATURE_MULTIPLIERS: Dict[str, float] = {
     "light_type": 1.18,
     "film_emulation": 1.22,
     "weather": 1.16,
+    "hair_color": 1.12,
+    "capture_context": 1.18,
     "surreal_concept": 1.34,
     "surreal_anchor": 1.28,
     "texture": 1.24,
@@ -278,8 +282,10 @@ COHERENT_DIVERSITY_SLOTS = {
     "weather",
     "camera_type",
     "composition",
+    "capture_context",
     "motion",
     "focus",
+    "hair_color",
 }
 
 SEMANTIC_AXIS_FAMILY_KEYWORDS: Dict[str, tuple[str, ...]] = {
@@ -294,6 +300,12 @@ SEMANTIC_AXIS_FAMILY_KEYWORDS: Dict[str, tuple[str, ...]] = {
     "wildlife": ("wildlife", "animal", "bird", "penguin", "eagle", "field", "nature", "야생동물", "동물", "자연"),
     "food": ("food", "street food", "tteokbokki", "sushi", "bibimbap", "noodle", "meal", "음식", "푸드", "야식"),
     "analog": ("analog", "film", "cinestill", "kodak", "portra", "tri-x", "digicam", "필름", "아날로그"),
+    "social_gimmick": ("selfie", "phone screen", "face overlay", "perspective trick", "v-sign", "mirror selfie", "셀피", "스마트폰", "착시"),
+    "interactive_pov": ("first person", "pov hand", "interactive", "tail pull", "foreground hand", "1인칭", "손", "상호작용"),
+    "subculture_cosplay": ("cosplay", "anime", "otaku", "2.5d", "character", "wig", "코스프레", "애니", "오타쿠", "캐릭터"),
+    "vehicle_night_lifestyle": ("gas station", "passenger seat", "car interior", "takeaway coffee", "주유소", "조수석", "차량"),
+    "botanical_romance": ("botanical", "greenhouse", "garden backlight", "leaf bokeh", "온실", "식물", "정원"),
+    "gothic_display": ("gothic", "curio", "glass cabinet", "ornate bottle", "bunny", "고딕", "진열장", "유리"),
 }
 
 SEMANTIC_AXIS_SLOT_ROUTES: Dict[str, tuple[str, ...]] = {
@@ -308,6 +320,12 @@ SEMANTIC_AXIS_SLOT_ROUTES: Dict[str, tuple[str, ...]] = {
     "wildlife": ("subject", "genre", "location", "weather", "lens", "motion", "texture"),
     "food": ("subject", "genre", "location", "action", "lighting", "texture", "color"),
     "analog": ("film_emulation", "camera_type", "texture", "color", "format"),
+    "social_gimmick": ("capture_context", "action", "prop", "camera_direction", "composition", "texture"),
+    "interactive_pov": ("capture_context", "action", "prop", "camera_direction", "motion"),
+    "subculture_cosplay": ("subject", "appearance_type", "hair_color", "hair_style", "costume_style", "texture"),
+    "vehicle_night_lifestyle": ("location", "capture_context", "action", "prop", "lighting", "light_type"),
+    "botanical_romance": ("location", "lighting", "light_shape", "hair_color", "wardrobe_style", "mood"),
+    "gothic_display": ("location", "prop", "lighting", "light_shape", "mood", "hair_color"),
 }
 
 SEMANTIC_SLOT_CAPTION_TEMPLATES: Dict[str, str] = {
@@ -316,6 +334,8 @@ SEMANTIC_SLOT_CAPTION_TEMPLATES: Dict[str, str] = {
     "lighting": "Photographic lighting concept: {description}. It should retrieve light by source, mood, shadow behavior, color temperature, and photographic realism.",
     "light_type": "Specific light-source concept: {description}. It should retrieve lamps, neon, flash, sun, screens, strobes, and practical light sources.",
     "light_shape": "Light-shape concept: {description}. It should retrieve visible beam shapes, shadow patterns, edge light, caustics, diffusion, and photographic light geometry.",
+    "hair_color": "Hair-color concept: {description}. It should retrieve natural hair color, cosplay wig color, character hair color, and photographic hair-color cues.",
+    "capture_context": "Capture-context concept: {description}. It should retrieve social-photo capture grammar, selfie viewpoint, POV interaction, screen overlay tricks, mirror capture, and passenger-seat observation.",
     "mood": "Image mood concept: {description}. It should retrieve emotional tone, genre feeling, tension, romance, nostalgia, horror, calm, or surreal atmosphere.",
     "film_emulation": "Film and camera-emulation concept: {description}. It should retrieve analog film stocks, halation, grain, color cast, instant film, disposable camera, or CCD looks.",
     "weather": "Weather and atmosphere concept: {description}. It should retrieve rain, fog, snow, humidity, frost, sea spray, heat haze, and environmental air effects.",
@@ -369,6 +389,10 @@ DEFAULT_SLOT_APPLICABILITY: JsonDict = {
             "subject_categories": ["human"],
             "deny_domains": ["product", "jewelry", "food", "wildlife"],
         },
+        "hair_color": {
+            "subject_categories": ["human"],
+            "deny_domains": ["product", "jewelry", "food", "wildlife"],
+        },
         "makeup_style": {
             "subject_categories": ["human"],
             "deny_domains": ["documentary", "craft", "wildlife", "product", "jewelry", "food"],
@@ -399,6 +423,12 @@ DEFAULT_SLOT_APPLICABILITY: JsonDict = {
             "subject_categories": ["human"],
             "allow_domains": ["adult"],
             "deny_domains": ["documentary", "craft", "wildlife", "product", "jewelry", "food"],
+            "require_domain_match": True,
+        },
+        "capture_context": {
+            "subject_categories": ["human"],
+            "allow_domains": ["portrait", "fashion", "beauty", "social", "adult"],
+            "deny_domains": ["documentary", "craft", "wildlife", "product", "jewelry", "food", "architecture"],
             "require_domain_match": True,
         },
         "expression": {
@@ -1400,6 +1430,12 @@ def fallback_intent_axes(intent: str) -> List[str]:
         "wildlife": "wildlife animal nature documentary",
         "food": "street food night food photography",
         "analog": "analog film camera texture",
+        "social_gimmick": "social selfie phone screen perspective trick",
+        "interactive_pov": "first person interactive POV hand foreground",
+        "subculture_cosplay": "photoreal anime cosplay character realism",
+        "vehicle_night_lifestyle": "late night gas station car passenger seat lifestyle",
+        "botanical_romance": "botanical greenhouse garden soft romance portrait",
+        "gothic_display": "gothic glass curio cabinet ornate bottle portrait",
     }
     return [labels[family] for family in labels if axis_text_has_family(lowered, family)][:6]
 
@@ -1439,6 +1475,12 @@ def semantic_axis_embedding_text(axis: str) -> str:
         "wildlife": "wildlife animal nature documentary, telephoto field photography, weather and natural behavior",
         "food": "food photography, street food, steam, sauce, plate, edible texture, night market atmosphere",
         "analog": "analog film emulation, grain, halation, disposable camera or CCD texture, Kodak and CineStill color",
+        "social_gimmick": "social selfie capture grammar, smartphone screen face overlay, mirror selfie, V-sign, phone perspective trick",
+        "interactive_pov": "first-person POV interaction, foreground hand touching or tugging costume prop, lived-in phone capture",
+        "subculture_cosplay": "photoreal anime cosplay and 2.5D character realism, colorful wig, costume prop, otaku room or studio",
+        "vehicle_night_lifestyle": "late-night car interior lifestyle, gas station fluorescent light, passenger seat coffee candid",
+        "botanical_romance": "botanical greenhouse romance portrait, leafy garden backlight, soft diffused plant bokeh",
+        "gothic_display": "gothic curio cabinet portrait, ornate glass perfume bottle, bunny cosplay, low-key sparkling display",
     }
     matched = [expansions[family] for family in axis_families_for_text(axis)]
     if matched:
@@ -2998,6 +3040,8 @@ def optional_slot_specs(preset: JsonDict, data: JsonDict) -> List[JsonDict]:
             slot = spec["slot"]
             if slot in disabled or slot in already:
                 continue
+            if spec.get("requires_filter") and slot not in preset.get("filters", {}):
+                continue
             specs.append(spec)
             already.add(slot)
 
@@ -3535,6 +3579,7 @@ def choose_slot(
 
     full_pool = list(slots[slot])
     filters = preset.get("filters", {}).get(slot)
+    preset_required = slot in set(preset.get("required_slots", []))
 
     forced_ids = (forced_choices or {}).get(slot)
     forced = bool(forced_ids)
@@ -3614,8 +3659,15 @@ def choose_slot(
     elif forced:
         # Forced choices should already be in pool; allow them even if odd.
         pass
+    elif not preset_required:
+        record_generation_contract_event(
+            generation_contract,
+            "fallback_blocked_slots",
+            {"slot": slot, "reason": "optional_context_incompatible"},
+        )
+        return None
     else:
-        # Optional incompatible slots, such as person_origin for an animal subject, are skipped.
+        # Required slots with explicit compatibility metadata may still be skipped.
         if any(
             item.get("for_any")
             or item.get("exclude_for_any")
@@ -3629,6 +3681,13 @@ def choose_slot(
     # If preset filters are too narrow, fall back to the full slot.
     if not pool:
         if forced:
+            return None
+        if not preset_required:
+            record_generation_contract_event(
+                generation_contract,
+                "fallback_blocked_slots",
+                {"slot": slot, "reason": "optional_empty_candidate_pool"},
+            )
             return None
         record_generation_contract_event(
             generation_contract,
@@ -3713,6 +3772,7 @@ def build_fields(picked: Dict[str, Entry], lang: str, data: Optional[JsonDict] =
     subject = values.get("subject", "")
     action = values.get("action", "")
     hair = values.get("hair_style", "")
+    hair_color = values.get("hair_color", "")
     makeup = values.get("makeup_style", "")
     expression = values.get("expression", "")
     facial_hair = values.get("facial_hair", "")
@@ -3724,6 +3784,8 @@ def build_fields(picked: Dict[str, Entry], lang: str, data: Optional[JsonDict] =
         subject_mods = [values[s] for s in ("person_origin", "appearance_type") if values.get(s)]
         if hair:
             subject_mods.append(hair)
+        if hair_color:
+            subject_mods.append(hair_color)
         if facial_hair:
             subject_mods.append(facial_hair + "의")
         if makeup:
@@ -3740,21 +3802,40 @@ def build_fields(picked: Dict[str, Entry], lang: str, data: Optional[JsonDict] =
         subject_phrase = clean_spaces(f"{action} {subject_with_mods}")
         object_phrase = subject_phrase + josa(subject_phrase, "을", "를") if subject_phrase else ""
     else:
-        subject_suffixes = [values[s] for s in ("person_origin", "appearance_type") if values.get(s)]
+        subject_suffixes = []
+        with_details = []
+        wearing_details = []
+        for slot_name in ("person_origin", "appearance_type"):
+            value = values.get(slot_name)
+            if not value:
+                continue
+            lowered = value.lower()
+            if lowered.startswith("with "):
+                with_details.append(value[5:])
+            elif lowered.startswith("wearing "):
+                wearing_details.append(value[8:])
+            else:
+                subject_suffixes.append(value)
         if hair:
-            subject_suffixes.append(f"with {hair}")
+            with_details.append(hair)
+        if hair_color:
+            with_details.append(hair_color)
         if facial_hair:
-            subject_suffixes.append(f"with {facial_hair}")
+            with_details.append(facial_hair)
         if makeup:
-            subject_suffixes.append(f"with {makeup}")
+            with_details.append(makeup)
         if expression:
-            subject_suffixes.append(f"with {expression}")
+            with_details.append(expression)
         if accessory:
-            subject_suffixes.append(f"wearing {accessory}")
+            wearing_details.append(accessory)
         if wardrobe:
-            subject_suffixes.append(f"wearing {wardrobe}")
+            wearing_details.append(wardrobe)
         if costume:
-            subject_suffixes.append(f"wearing {costume}")
+            wearing_details.append(costume)
+        if with_details:
+            subject_suffixes.append("with " + unique_join(with_details))
+        if wearing_details:
+            subject_suffixes.append("wearing " + unique_join(wearing_details))
         subject_with_mods = clean_spaces(" ".join(([subject] if subject else []) + subject_suffixes))
         subject_phrase = clean_spaces(f"{subject_with_mods} {action}")
         object_phrase = subject_phrase
@@ -3775,6 +3856,7 @@ def build_fields(picked: Dict[str, Entry], lang: str, data: Optional[JsonDict] =
     lighting_slots = ("lighting", "light_direction", "light_type", "light_intensity", "light_shape")
     camera_slots = (
         "camera_type",
+        "capture_context",
         "camera_direction",
         "composition",
         "subject_framing",
@@ -4111,6 +4193,7 @@ def build_prompt_sections(
     sections["camera"] = selected(
         (
             "camera_type",
+            "capture_context",
             "camera_direction",
             "composition",
             "subject_framing",
