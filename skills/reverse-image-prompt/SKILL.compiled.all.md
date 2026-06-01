@@ -242,11 +242,14 @@ Always.
 ## Frame ratio audit
 
 - If file dimensions are available, compute the actual width:height relationship before drafting.
+- Treat verified file dimensions as invariants. When pixel width, pixel height, and width/height ratio are known, copy those values exactly wherever concrete size or ratio appears in `PROMPT:` or `RECOMMENDED SETTINGS:`. Do not infer, round, substitute a common ratio, use a preview size, or switch to a generator-preferred canvas because it looks close.
+- If dimensions are not verified, describe aspect and crop qualitatively or mark numeric values as approximate. Do not invent exact pixel dimensions for an unverified source.
 - Keep aspect ratio and output size conceptually separate. Report measured source dimensions as `width x height`, decimal width/height ratio, and nearest plain-language shape.
 - Do not normalize to common ratios such as `2:3`, `3:4`, `4:5`, `9:16`, `16:9`, or `1:1` unless the source is actually close.
 - If no standard ratio is close, use `source-specific portrait crop`, `source-specific landscape crop`, or `source-specific square-adjacent crop` with the approximate ratio.
 - Put measured frame treatment in the first sentence of `PROMPT:` before broad labels such as portrait, product shot, screenshot, or landscape.
 - Repeat measured ratio in `RECOMMENDED SETTINGS:` and list nearest standard size only as a fallback.
+- Before emitting, scan every size and ratio mention for consistency with verified metadata. Any mismatch is a hard fidelity failure to correct before final output.
 - Treat aspect-ratio drift as a major failure because it changes subject scale, edge crops, object placement, and visibility budgets.
 
 ## Normalized coordinates
@@ -268,8 +271,13 @@ For high-fidelity reconstruction, include a dedicated coordinate-lock passage in
 - frame-edge artifacts and crop boundaries
 - small text/mark locations
 - dominant overlap boundaries and occluder footprints
+- edge-adjacent subject visibility budgets, including whether hair/head outline, clothing, props, or background are cropped while important facial features remain inside the frame
 
 Coordinates describe placement and relative dominance, not only object presence.
+
+When a source depends on full-frame scale, describe the visible top/middle/bottom or left/center/right bands and the required negative space/context before salient local details. Explicitly prevent zooming into a high-salience face, hand, hair, prop, garment edge, text mark, UI control, or product detail when that would remove source-visible background, lower-frame, or edge evidence.
+
+For tight portraits, partial faces, selfies, and other edge-adjacent subjects, separate head/hair clipping from facial-feature clipping. If the frame cuts hair, head outline, shoulder, garment, prop, or background while keeping eyes, nose, mouth, cheek, chin, or jawline inside the image, state that distinction directly. Do not let an off-center or edge-biased face become a sliced half-face unless the source actually cuts through facial features. Lock which features are fully visible, which are hidden by hair/hand/shadow/object, and which are outside the frame.
 
 ## Consistency audit
 
@@ -528,9 +536,13 @@ Always. Apply this gate immediately before writing the final answer.
 ## Rules
 
 - Confirm that `PROMPT:` contains the primary visual concept, the relationship/effect reading when present, the source aspect ratio, crop, normalized coordinate locks, boundary locks, occlusion/completion logic, medium fidelity, and all required source-fidelity constraints.
+- Identify the highest-salience anchors that a generator is likely to over-enlarge, over-sharpen, beautify, complete, or promote into hero elements. Each such anchor should have a source-scale budget in affirmative prompt language: approximate frame area, edge distance, relative size against nearby anchors, and whether it is primary, co-primary, secondary, cropped, soft, or low-detail.
+- For repeated anchors such as faces, hair, hands, garment edges, UI marks, text, logos, straps, bags, small props, background structures, or product details, describe the measured role/footprint before texture. If repeated texture or material adjectives make a secondary/cropped element sound larger, cleaner, more complete, or more editorial than the source, compress the wording before emitting.
 - For coordinate-heavy prompts, audit internal contradictions before emitting. If face center, head mass, eye line, shoulder span, prop box, hand box, text mark, watermark, label, or background seam coordinates disagree with descriptive phrases such as `centered`, `slightly right`, `lower-left`, `near the face`, `below the cheek`, `wide`, `small`, `dominant`, or `secondary`, revise so the coordinates and plain-language placement describe the same image-plane layout.
 - For every secondary object, background element, UI mark, text mark, cropped garment/body region, prop, strap, reflection, or partial edge band, check whether it receives more words than its visible importance supports. If it does, shrink the wording and explicitly keep it secondary, partial, low-detail, or edge-adjacent.
 - Identify completion-prone regions before drafting: partially cropped bodies, partial garments, partial faces, partial text, partial posters/screens/reflections, cut-off limbs, and border-adjacent areas. Lock each such region as partial or cropped in `PROMPT:` and reject completing, recentering, expanding, or clarifying it in `NEGATIVE PROMPT:`.
+- For edge-adjacent or partial faces, check whether the draft confuses hair/head/garment/background crop with facial-feature crop. If the source keeps facial features inside frame, state that affirmatively and reject slicing through eyes, nose, mouth, cheek, chin, or jawline.
+- For close portraits with secondary clothing, check whether clothing wording could turn cropped lower-frame bands into a clean fashion, costume, or uniform outfit view. If so, compress clothing into measured partial bands and keep it secondary, cropped, occluded, or low-detail.
 - Check for concept omission: if all objects are listed but the intended relationship, occlusion, reflection, screen/frame, scale contrast, mixed-media effect, or ordinary premise is missing, rewrite before emitting.
 - Report prompt-only limits honestly when exact crop, pose, facial appearance, background fragments, UI/text placement, or small low-legibility details are unlikely to be reproduced from text alone.
 - Assume downstream image generation may use only the `PROMPT:` body. Any non-negotiable crop, camera, boundary, appearance, garment, occlusion, and medium-fidelity constraints must appear inside `PROMPT:` in affirmative visual language, not only in `NEGATIVE PROMPT:` or `RECOMMENDED SETTINGS:`.
@@ -1296,6 +1308,8 @@ Describe a fictional person with similar visible non-identifying appearance. Inc
 
 Do not identify the person. Do not upgrade the face into a more symmetrical, generic model-like, influencer-like, westernized, airbrushed, stylized, sanitized, brighter, or differently lit face.
 
+For edge-adjacent or partially cropped faces, describe visible feature status separately from hair, head outline, clothing, props, and frame-edge crop. State whether each important feature group is fully inside frame, partly hidden by hair/hand/shadow/object, or actually cut by the frame: eyes, brows, nose, mouth/lips, cheek edge, chin, jawline, ear, and neck when visible. If only hair or the outer head mass is cropped, prevent the generated face from being sliced through the eyes, nose, mouth, cheek, or chin.
+
 ## Body and silhouette
 
 Describe only visible image-plane proportions shaped by clothing, pose, crop, lens, focus, blur, lighting, shadow, and occlusion. Do not infer hidden anatomy under clothing, props, hands, arms, hair, shadow, blur, or crop.
@@ -1324,12 +1338,15 @@ Use symmetric calibration locks: preserve large visible features against reducti
 
 - Put face/hair/skin details after crop, primary concept, and coordinates.
 - For partial/occluded faces, create a face exposure budget: visible features, hidden features, frame area, occluders, shadows, blur, and tempting features that must remain absent or ambiguous.
+- For partial side-profile or profile-glimpse faces, describe visible geometry and ambiguity before attractive trait lists: nose/lip/chin contour, cheek plane, partial eyelid or hidden eye, softness, crop, and occlusion. Do not enumerate enough features to turn a small or secondary face fragment into a clean beauty portrait.
+- For windblown, motion-soft, or heavily occluding hair, describe mass groups, directional clumps, flyaway silhouettes, blur, and occlusion before strand-level texture. Do not repeat shine, gloss, volume, density, salon, or texture wording in ways that enlarges, sharpens, smooths, or glamorizes the hair beyond the source.
 - Preserve aesthetic face treatment: expression tension, mouth relaxation, gaze intensity, eye openness, eyelid shadow, skin sheen/matte quality, cosmetic strength, retouching level, candid/ordinary/glamorous/polished/uncanny/unfiltered reading.
+- For edge-adjacent faces, add a feature-visibility lock that distinguishes frame crop from occlusion: which facial features stay inside the image, which are blocked by hair/hand/shadow/object, and which are truly outside the frame.
 - For body silhouette, describe image-plane proportions and clothing-shaped silhouette without inventing hidden anatomy.
 
 ## Negative additions
 
-Reject wrong apparent age range, race-coded appearance when visible, skin tone, face shape, eyelid structure, eye spacing, nose structure, lips, jawline, chin, hair texture, hairline, facial texture, makeup level, face-defining light/shadow, body type, shoulder width, torso/waist/hip silhouette, limb thickness, occlusion drift, beauty drift, influencer face, airbrushed skin, generic model face, hidden anatomy invention, and lighting-caused proportion drift.
+Reject wrong apparent age range, race-coded appearance when visible, skin tone, face shape, eyelid structure, eye spacing, nose structure, lips, jawline, chin, hair texture, hairline, facial texture, makeup level, face-defining light/shadow, body type, shoulder width, torso/waist/hip silhouette, limb thickness, occlusion drift, beauty drift, influencer face, airbrushed skin, generic model face, hidden anatomy invention, and lighting-caused proportion drift. For edge-adjacent faces, reject confusing hair/head crop with facial-feature crop, slicing through eyes/nose/mouth/cheek/chin when those features are visible in the source, or revealing facial areas hidden by hair, hand, shadow, object, or crop.
 
 ## Settings additions
 
@@ -1566,6 +1583,7 @@ Describe photographic capture:
 - focus target, focus accuracy, depth of field, bokeh, foreground/background blur, low-resolution softness, sharpening, compression, noise reduction, bloom, haze
 - motion blur, camera shake, shutter behavior, ghosting, smear direction, rolling-shutter artifacts, or stable capture
 - camera/sensor/medium impression: smartphone rear-camera snapshot, front-camera selfie, compact camera, disposable-camera-like, instant-film-like, webcam, CCTV, low-light phone image, social-media compression, professional digital camera, documentary photo, clean digital photo, or other visible look
+- For casual phone, screenshot, social-video, or compressed outdoor captures, state the capture imperfection ceiling before beauty, fashion, scenic, studio, or product shorthand. Preserve handheld asymmetry, preview/compression softness, flattened distant layers, bloom, haze, clipped highlights, low-legibility marks, and ordinary non-editorial framing when visible.
 
 Describe lighting-to-volume:
 
@@ -2210,11 +2228,25 @@ Treat close upper-torso edges as measured boundary bands, not fashion labels. Lo
 
 Avoid broad labels such as `off-shoulder`, `low neckline`, `camisole`, `dress`, `lingerie`, `corset`, `crop top`, or `fashion portrait` if they would deepen, widen, clarify, center, tighten, reveal, or glamorize the garment beyond the source.
 
+For bottom-edge or side-edge clothing/body crops, distinguish a narrow visible band from a completed outfit or body region. If the source only shows a hem, waistband, partial pocket, side edge, lower garment strip, or crop-boundary gap, describe it as a bounded edge band with height/area and nearby anchors. Avoid wording that invites centered body construction, full pockets, completed legs, or a wider exposed/covered band than the source.
+
 For accessories such as chokers, collars, necklaces, straps, lace trim, bows, patches, pins, bags, or jewelry, describe only visible silhouette, density, low-legibility, shadow, and occlusion. Do not upgrade them into crisp ornate symmetrical fashion accessories unless visible.
+
+For straps, bags, chains, handles, and edge-adjacent accessories, lock footprint and crop before material detail. If the accessory is secondary or partly outside the frame, keep it partial, low-detail, and edge-bound in affirmative prompt language rather than relying only on the negative prompt.
+
+For close portraits or tight human crops where clothing is secondary below the face, create a secondary garment completion budget before using broad fashion labels:
+
+- visible garment bands and approximate frame ranges
+- whether collar, neckline, tie, ribbon, scarf, vest, jacket, sleeve, trim, button, patch, strap, or accessory is complete, partial, folded, cropped, occluded, or low-legibility
+- which garment parts are interrupted by chin, hair, hand, prop, shadow, blur, or bottom crop
+- whether symmetry, openings, knots, edges, seams, and trim should remain compressed or unclear instead of becoming clean outfit construction
+- how much lower torso is visible before the prompt would turn a close portrait into a fashion, costume, or uniform study
+
+Do not let secondary formal, uniform-like, costume-like, layered, or accessory-heavy clothing become a clean centered outfit view when the source uses it only as cropped lower-frame or side-frame bands. Use clothing category labels only after locking incomplete garment geometry, and keep the clothing secondary when the face, hand, prop, or crop is the real visual anchor.
 
 ## Negative additions
 
-Reject wrong neckline depth/width, strap position, sleeve position, seam placement, hem shift, deeper openings, larger exposed skin bands, tighter/looser fabric, more structured/corseted/lingerie-like garment, more revealing or more modest clothing, completed hidden garment regions, cleaner fashion-editorial styling, and accessory enlargement or sharpening.
+Reject wrong neckline depth/width, strap position, sleeve position, seam placement, hem shift, deeper openings, larger exposed skin bands, tighter/looser fabric, more structured/corseted/lingerie-like garment, more revealing or more modest clothing, completed hidden garment regions, cleaner fashion-editorial styling, and accessory enlargement or sharpening. For secondary clothing in close portraits, reject complete centered outfit views, overly symmetrical collars/necklines, clarified knots/openings/trim/buttons/patches, and lower torso expansion when the source clothing is cropped, compressed, occluded, or low-detail.
 
 ## Settings additions
 
@@ -2372,6 +2404,8 @@ Describe mechanics rather than generic pose labels:
 - negative space and crop boundaries
 - approximate pose landmark coordinates when helpful
 
+For side/back, over-shoulder, profile-glimpse, or partly turned human poses, preserve asymmetry separately from category labels. State which side profile, shoulder edge, torso twist, cropped limb, visible side/back/front plane, and hidden planes are present. Avoid summarizing as `back view`, `rear view`, `over shoulder`, or a generic fashion pose if that would square the body to camera, lose the visible face/profile evidence, or complete hidden regions.
+
 For contact gestures, describe the contact as a spatial relationship:
 
 - approximate size and angle of each contacting part
@@ -2500,6 +2534,8 @@ Load when degraded capture quality is visually important or when a generator is 
 - Calibrate underexposure. Distinguish fully crushed black regions from dark low-contrast regions that still show folds, edges, face planes, object silhouettes, or background detail.
 - Preserve haze, softness, noise, compression, and low-detail edges. Do not request `crisp`, `pristine`, `sharp`, `clean`, or `high quality` unless the source is actually clean.
 - Mention artifact distribution: edges, shadows, flat color areas, UI bands, background, skin/hair, text, motion direction.
+- For phone-video, screenshots, social-media captures, or compressed casual sources, promote visible imperfections into positive prompt constraints before any aesthetic or material polish. Name low-resolution edge softness, compression smearing, motion-soft groups, flattened background massing, haze, bloom, clipped highlights, low-legibility marks, and sensor/app artifacts when visible.
+- Treat distant or secondary background elements in degraded captures as massing and artifact planes before category labels. Lock them as blurred, low-legibility, compressed, partially cropped, or secondary unless the source clearly makes them the subject.
 
 ## Negative additions
 
@@ -2569,6 +2605,7 @@ Load when text, label marks, logo-like marks, signs, watermarks, UI text, chart 
 - Do not identify brands externally. Treat brand-like marks as visible graphic/text evidence unless the user explicitly asks for brand recognition and policy allows it.
 - For UI text, combine with `medium.screenshot-ui` and preserve small size, opacity, and placement.
 - For charts/documents, combine with `subject.document-data-diagram` and preserve layout before text content.
+- For tiny ambiguous UI marks, cropped controls, small badges, or low-confidence symbols, preserve position, size, opacity, edge distance, and ambiguity over exact icon identity. If the internal mark is unclear, call it an abstract or low-legibility mark rather than a named icon, logo, app control, or readable symbol.
 
 ## Negative additions
 

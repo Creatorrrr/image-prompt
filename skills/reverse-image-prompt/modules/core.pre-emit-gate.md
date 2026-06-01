@@ -1,6 +1,6 @@
 ---
 id: core.pre-emit-gate
-version: 2
+version: 3
 priority: 100
 type: core
 tier: 0
@@ -32,9 +32,13 @@ Always. Apply this gate immediately before writing the final answer.
 ## Rules
 
 - Confirm that `PROMPT:` contains the primary visual concept, the relationship/effect reading when present, the source aspect ratio, crop, normalized coordinate locks, boundary locks, occlusion/completion logic, medium fidelity, and all required source-fidelity constraints.
+- Identify the highest-salience anchors that a generator is likely to over-enlarge, over-sharpen, beautify, complete, or promote into hero elements. Each such anchor should have a source-scale budget in affirmative prompt language: approximate frame area, edge distance, relative size against nearby anchors, and whether it is primary, co-primary, secondary, cropped, soft, or low-detail.
+- For repeated anchors such as faces, hair, hands, garment edges, UI marks, text, logos, straps, bags, small props, background structures, or product details, describe the measured role/footprint before texture. If repeated texture or material adjectives make a secondary/cropped element sound larger, cleaner, more complete, or more editorial than the source, compress the wording before emitting.
 - For coordinate-heavy prompts, audit internal contradictions before emitting. If face center, head mass, eye line, shoulder span, prop box, hand box, text mark, watermark, label, or background seam coordinates disagree with descriptive phrases such as `centered`, `slightly right`, `lower-left`, `near the face`, `below the cheek`, `wide`, `small`, `dominant`, or `secondary`, revise so the coordinates and plain-language placement describe the same image-plane layout.
 - For every secondary object, background element, UI mark, text mark, cropped garment/body region, prop, strap, reflection, or partial edge band, check whether it receives more words than its visible importance supports. If it does, shrink the wording and explicitly keep it secondary, partial, low-detail, or edge-adjacent.
 - Identify completion-prone regions before drafting: partially cropped bodies, partial garments, partial faces, partial text, partial posters/screens/reflections, cut-off limbs, and border-adjacent areas. Lock each such region as partial or cropped in `PROMPT:` and reject completing, recentering, expanding, or clarifying it in `NEGATIVE PROMPT:`.
+- For edge-adjacent or partial faces, check whether the draft confuses hair/head/garment/background crop with facial-feature crop. If the source keeps facial features inside frame, state that affirmatively and reject slicing through eyes, nose, mouth, cheek, chin, or jawline.
+- For close portraits with secondary clothing, check whether clothing wording could turn cropped lower-frame bands into a clean fashion, costume, or uniform outfit view. If so, compress clothing into measured partial bands and keep it secondary, cropped, occluded, or low-detail.
 - Check for concept omission: if all objects are listed but the intended relationship, occlusion, reflection, screen/frame, scale contrast, mixed-media effect, or ordinary premise is missing, rewrite before emitting.
 - Report prompt-only limits honestly when exact crop, pose, facial appearance, background fragments, UI/text placement, or small low-legibility details are unlikely to be reproduced from text alone.
 - Assume downstream image generation may use only the `PROMPT:` body. Any non-negotiable crop, camera, boundary, appearance, garment, occlusion, and medium-fidelity constraints must appear inside `PROMPT:` in affirmative visual language, not only in `NEGATIVE PROMPT:` or `RECOMMENDED SETTINGS:`.

@@ -1,6 +1,6 @@
 ---
 id: detail.pose-hands-gesture
-version: 2
+version: 3
 priority: 78
 type: detail
 tier: 3
@@ -43,6 +43,8 @@ Describe mechanics rather than generic pose labels:
 - leg placement, knee bend, ankle/foot placement if visible
 - negative space and crop boundaries
 - approximate pose landmark coordinates when helpful
+
+For side/back, over-shoulder, profile-glimpse, or partly turned human poses, preserve asymmetry separately from category labels. State which side profile, shoulder edge, torso twist, cropped limb, visible side/back/front plane, and hidden planes are present. Avoid summarizing as `back view`, `rear view`, `over shoulder`, or a generic fashion pose if that would square the body to camera, lose the visible face/profile evidence, or complete hidden regions.
 
 For contact gestures, describe the contact as a spatial relationship:
 

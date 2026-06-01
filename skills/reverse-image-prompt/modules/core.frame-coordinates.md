@@ -1,6 +1,6 @@
 ---
 id: core.frame-coordinates
-version: 2
+version: 3
 priority: 108
 type: core
 tier: 0
@@ -30,11 +30,14 @@ Always.
 ## Frame ratio audit
 
 - If file dimensions are available, compute the actual width:height relationship before drafting.
+- Treat verified file dimensions as invariants. When pixel width, pixel height, and width/height ratio are known, copy those values exactly wherever concrete size or ratio appears in `PROMPT:` or `RECOMMENDED SETTINGS:`. Do not infer, round, substitute a common ratio, use a preview size, or switch to a generator-preferred canvas because it looks close.
+- If dimensions are not verified, describe aspect and crop qualitatively or mark numeric values as approximate. Do not invent exact pixel dimensions for an unverified source.
 - Keep aspect ratio and output size conceptually separate. Report measured source dimensions as `width x height`, decimal width/height ratio, and nearest plain-language shape.
 - Do not normalize to common ratios such as `2:3`, `3:4`, `4:5`, `9:16`, `16:9`, or `1:1` unless the source is actually close.
 - If no standard ratio is close, use `source-specific portrait crop`, `source-specific landscape crop`, or `source-specific square-adjacent crop` with the approximate ratio.
 - Put measured frame treatment in the first sentence of `PROMPT:` before broad labels such as portrait, product shot, screenshot, or landscape.
 - Repeat measured ratio in `RECOMMENDED SETTINGS:` and list nearest standard size only as a fallback.
+- Before emitting, scan every size and ratio mention for consistency with verified metadata. Any mismatch is a hard fidelity failure to correct before final output.
 - Treat aspect-ratio drift as a major failure because it changes subject scale, edge crops, object placement, and visibility budgets.
 
 ## Normalized coordinates
@@ -56,8 +59,13 @@ For high-fidelity reconstruction, include a dedicated coordinate-lock passage in
 - frame-edge artifacts and crop boundaries
 - small text/mark locations
 - dominant overlap boundaries and occluder footprints
+- edge-adjacent subject visibility budgets, including whether hair/head outline, clothing, props, or background are cropped while important facial features remain inside the frame
 
 Coordinates describe placement and relative dominance, not only object presence.
+
+When a source depends on full-frame scale, describe the visible top/middle/bottom or left/center/right bands and the required negative space/context before salient local details. Explicitly prevent zooming into a high-salience face, hand, hair, prop, garment edge, text mark, UI control, or product detail when that would remove source-visible background, lower-frame, or edge evidence.
+
+For tight portraits, partial faces, selfies, and other edge-adjacent subjects, separate head/hair clipping from facial-feature clipping. If the frame cuts hair, head outline, shoulder, garment, prop, or background while keeping eyes, nose, mouth, cheek, chin, or jawline inside the image, state that distinction directly. Do not let an off-center or edge-biased face become a sliced half-face unless the source actually cuts through facial features. Lock which features are fully visible, which are hidden by hair/hand/shadow/object, and which are outside the frame.
 
 ## Consistency audit
 

@@ -1,6 +1,6 @@
 ---
 id: detail.low-quality-artifacts
-version: 2
+version: 3
 priority: 70
 type: detail
 tier: 3
@@ -47,6 +47,8 @@ Load when degraded capture quality is visually important or when a generator is 
 - Calibrate underexposure. Distinguish fully crushed black regions from dark low-contrast regions that still show folds, edges, face planes, object silhouettes, or background detail.
 - Preserve haze, softness, noise, compression, and low-detail edges. Do not request `crisp`, `pristine`, `sharp`, `clean`, or `high quality` unless the source is actually clean.
 - Mention artifact distribution: edges, shadows, flat color areas, UI bands, background, skin/hair, text, motion direction.
+- For phone-video, screenshots, social-media captures, or compressed casual sources, promote visible imperfections into positive prompt constraints before any aesthetic or material polish. Name low-resolution edge softness, compression smearing, motion-soft groups, flattened background massing, haze, bloom, clipped highlights, low-legibility marks, and sensor/app artifacts when visible.
+- Treat distant or secondary background elements in degraded captures as massing and artifact planes before category labels. Lock them as blurred, low-legibility, compressed, partially cropped, or secondary unless the source clearly makes them the subject.
 
 ## Negative additions
 

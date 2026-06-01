@@ -1,6 +1,6 @@
 ---
 id: subject.human
-version: 2
+version: 3
 priority: 82
 type: subject
 tier: 2
@@ -52,6 +52,8 @@ Describe a fictional person with similar visible non-identifying appearance. Inc
 
 Do not identify the person. Do not upgrade the face into a more symmetrical, generic model-like, influencer-like, westernized, airbrushed, stylized, sanitized, brighter, or differently lit face.
 
+For edge-adjacent or partially cropped faces, describe visible feature status separately from hair, head outline, clothing, props, and frame-edge crop. State whether each important feature group is fully inside frame, partly hidden by hair/hand/shadow/object, or actually cut by the frame: eyes, brows, nose, mouth/lips, cheek edge, chin, jawline, ear, and neck when visible. If only hair or the outer head mass is cropped, prevent the generated face from being sliced through the eyes, nose, mouth, cheek, or chin.
+
 ## Body and silhouette
 
 Describe only visible image-plane proportions shaped by clothing, pose, crop, lens, focus, blur, lighting, shadow, and occlusion. Do not infer hidden anatomy under clothing, props, hands, arms, hair, shadow, blur, or crop.
@@ -80,12 +82,15 @@ Use symmetric calibration locks: preserve large visible features against reducti
 
 - Put face/hair/skin details after crop, primary concept, and coordinates.
 - For partial/occluded faces, create a face exposure budget: visible features, hidden features, frame area, occluders, shadows, blur, and tempting features that must remain absent or ambiguous.
+- For partial side-profile or profile-glimpse faces, describe visible geometry and ambiguity before attractive trait lists: nose/lip/chin contour, cheek plane, partial eyelid or hidden eye, softness, crop, and occlusion. Do not enumerate enough features to turn a small or secondary face fragment into a clean beauty portrait.
+- For windblown, motion-soft, or heavily occluding hair, describe mass groups, directional clumps, flyaway silhouettes, blur, and occlusion before strand-level texture. Do not repeat shine, gloss, volume, density, salon, or texture wording in ways that enlarges, sharpens, smooths, or glamorizes the hair beyond the source.
 - Preserve aesthetic face treatment: expression tension, mouth relaxation, gaze intensity, eye openness, eyelid shadow, skin sheen/matte quality, cosmetic strength, retouching level, candid/ordinary/glamorous/polished/uncanny/unfiltered reading.
+- For edge-adjacent faces, add a feature-visibility lock that distinguishes frame crop from occlusion: which facial features stay inside the image, which are blocked by hair/hand/shadow/object, and which are truly outside the frame.
 - For body silhouette, describe image-plane proportions and clothing-shaped silhouette without inventing hidden anatomy.
 
 ## Negative additions
 
-Reject wrong apparent age range, race-coded appearance when visible, skin tone, face shape, eyelid structure, eye spacing, nose structure, lips, jawline, chin, hair texture, hairline, facial texture, makeup level, face-defining light/shadow, body type, shoulder width, torso/waist/hip silhouette, limb thickness, occlusion drift, beauty drift, influencer face, airbrushed skin, generic model face, hidden anatomy invention, and lighting-caused proportion drift.
+Reject wrong apparent age range, race-coded appearance when visible, skin tone, face shape, eyelid structure, eye spacing, nose structure, lips, jawline, chin, hair texture, hairline, facial texture, makeup level, face-defining light/shadow, body type, shoulder width, torso/waist/hip silhouette, limb thickness, occlusion drift, beauty drift, influencer face, airbrushed skin, generic model face, hidden anatomy invention, and lighting-caused proportion drift. For edge-adjacent faces, reject confusing hair/head crop with facial-feature crop, slicing through eyes/nose/mouth/cheek/chin when those features are visible in the source, or revealing facial areas hidden by hair, hand, shadow, object, or crop.
 
 ## Settings additions
 

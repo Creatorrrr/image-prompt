@@ -1,6 +1,6 @@
 ---
 id: detail.text-logo-label
-version: 2
+version: 3
 priority: 70
 type: detail
 tier: 3
@@ -41,6 +41,7 @@ Load when text, label marks, logo-like marks, signs, watermarks, UI text, chart 
 - Do not identify brands externally. Treat brand-like marks as visible graphic/text evidence unless the user explicitly asks for brand recognition and policy allows it.
 - For UI text, combine with `medium.screenshot-ui` and preserve small size, opacity, and placement.
 - For charts/documents, combine with `subject.document-data-diagram` and preserve layout before text content.
+- For tiny ambiguous UI marks, cropped controls, small badges, or low-confidence symbols, preserve position, size, opacity, edge distance, and ambiguity over exact icon identity. If the internal mark is unclear, call it an abstract or low-legibility mark rather than a named icon, logo, app control, or readable symbol.
 
 ## Negative additions
 
