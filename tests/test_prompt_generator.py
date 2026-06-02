@@ -536,6 +536,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             reference_edit_mode=kwargs.pop("reference_edit_mode", "off"),
             trend_layer=kwargs.pop("trend_layer", "off"),
             intent=kwargs.pop("intent", None),
+            concept_locks=kwargs.pop("concept_locks", None),
             selection_mode=kwargs.pop("selection_mode", "rule"),
             novelty=kwargs.pop("novelty", "medium"),
             filter_strictness=kwargs.pop("filter_strictness", None),
@@ -574,6 +575,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             reference_edit_mode=kwargs.pop("reference_edit_mode", "off"),
             trend_layer=kwargs.pop("trend_layer", "off"),
             intent=kwargs.pop("intent", None),
+            concept_locks=kwargs.pop("concept_locks", None),
             selection_mode=kwargs.pop("selection_mode", "rule"),
             novelty=kwargs.pop("novelty", "medium"),
             filter_strictness=kwargs.pop("filter_strictness", None),
@@ -727,6 +729,53 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertIn("oversized silver toy pistol prop", prompt)
         self.assertIn("no text or watermark", prompt)
 
+    def test_concept_lock_is_rendered_before_generated_details(self):
+        concept = "방구석 집돌이, small lived-in bedroom, game controller, snacks, blanket"
+        semantic_index = self.build_mock_semantic_index()
+        original_embedder = self.generator.embed_texts_with_gemini
+        self.generator.embed_texts_with_gemini = self.fake_gemini_vectors
+        try:
+            item = self.generate(
+                "interior_lifestyle",
+                seed=20260602,
+                detail_level="detailed",
+                forced_choices={
+                    "subject": ["gamer_streamer"],
+                    "action": ["editing_laptop"],
+                    "location": ["cozy_apartment"],
+                    "lighting": ["monitor_glow"],
+                },
+                intent=concept,
+                selection_mode="semantic",
+                semantic_index=semantic_index,
+                gemini_api_key="test-api-key",
+                concept_locks=[concept],
+                include_trace=True,
+            )
+        finally:
+            self.generator.embed_texts_with_gemini = original_embedder
+
+        prompt = item["prompt_en"]
+        self.assertIn(f"Core concept lock: {concept}.", prompt)
+        self.assertIn("support for this concept, not a replacement", prompt)
+        self.assertLess(prompt.index("Core concept lock:"), prompt.index("Subject and state:"))
+        self.assertIn("editing content on a laptop", prompt)
+        self.assertEqual(item["semantic_trace"]["generation_contract"]["concept_locks"], [concept])
+
+    def test_compact_concept_lock_stays_label_free_and_single_paragraph(self):
+        concept = "quiet homebody in a small bedroom"
+        item = self.generate(
+            "compact_urban_fashion_portrait",
+            seed=12,
+            detail_level="compact",
+            concept_locks=[concept],
+        )
+
+        prompt = item["prompt_en"]
+        self.assertNotIn("\n", prompt)
+        self.assertNotIn("Core concept lock:", prompt)
+        self.assertIn(f"preserving the core concept of {concept}", prompt)
+
     def test_compact_detail_level_is_available_through_wrapper(self):
         result = subprocess.run(
             [
@@ -754,6 +803,33 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertIn("EN:", result.stdout)
         self.assertNotIn("Subject and state:", result.stdout)
+
+    def test_concept_lock_is_available_through_wrapper(self):
+        result = subprocess.run(
+            [
+                sys.executable,
+                str(WRAPPER_PATH),
+                "--preset",
+                "interior_lifestyle",
+                "--selection-mode",
+                "rule",
+                "--concept-lock",
+                "방구석 집돌이",
+                "--seed",
+                "7",
+                "--lang",
+                "en",
+                "--plain",
+                "--no-negative",
+            ],
+            cwd=ROOT,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn("Core concept lock: 방구석 집돌이", result.stdout)
 
     def test_compact_slots_presets_and_formats_are_registered(self):
         slots = self.data["slots"]
@@ -1465,6 +1541,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
 
     def test_semantic_axis_family_detection_and_slot_routing(self):
         self.assertEqual(self.generator.axis_families_for_text("urban city street"), ["urban"])
+        self.assertEqual(self.generator.axis_families_for_text("방구석 집돌이 작은 방 게임패드"), ["homebody_room"])
         self.assertEqual(self.generator.axis_families_for_text("horror nightmare portrait"), ["human", "horror"])
         context = {
             "axis_vectors": [
@@ -1838,6 +1915,249 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             ["uncanny"],
         )
 
+    def test_homebody_room_intent_steering_filters_drift_candidates(self):
+        context = {
+            "intent_steering": {"mode": "auto", "enabled": True, "families": ["homebody_room"], "decisions": []},
+            "axis_vectors": [
+                {"text": "homebody guy in a small bedroom", "families": ["homebody_room"], "vector": [1.0]},
+            ],
+        }
+
+        subjects = [
+            {"id": "young_barista", "en": "a young barista", "tags": ["human", "cafe"], "kind": ["human"]},
+            {"id": "traveler_backpack", "en": "a backpacking traveler", "tags": ["human", "travel"], "kind": ["human"]},
+            {"id": "gamer_streamer", "en": "a gaming streamer", "tags": ["human", "gaming", "interior"], "kind": ["human"]},
+        ]
+        locations = [
+            {"id": "rainy_city_street", "en": "a rainy city street", "tags": ["urban", "street"]},
+            {"id": "cozy_apartment", "en": "a cozy small apartment", "tags": ["interior", "home"]},
+            {"id": "small_messy_gaming_bedroom", "en": "a small cluttered gaming bedroom", "tags": ["interior", "home", "gaming"]},
+            {"id": "bedroom_mirror", "en": "a bedroom mirror", "tags": ["interior", "home", "social"]},
+        ]
+        actions = [
+            {"id": "live_streaming", "en": "hosting a live stream", "tags": ["social", "technology"]},
+            {"id": "checking_phone", "en": "checking a smartphone", "tags": ["daily"]},
+            {"id": "slouched_in_gaming_chair", "en": "slouched loosely in a gaming chair", "tags": ["gaming", "home"]},
+            {"id": "writing_notes", "en": "writing notes in a notebook", "tags": ["daily"]},
+        ]
+        props = [
+            {"id": "handheld_microphone", "en": "a handheld microphone", "tags": ["stage"]},
+            {"id": "gaming_keyboard_mouse_prop", "en": "an RGB keyboard and gaming mouse", "tags": ["gaming"]},
+            {"id": "game_controller_prop", "en": "a game controller held in both hands", "tags": ["gaming", "home"]},
+            {"id": "coffee_cup_prop", "en": "a ceramic coffee cup", "tags": ["home"]},
+        ]
+        lighting = [
+            {"id": "neon", "en": "neon light reflected on wet pavement", "tags": ["urban"]},
+            {"id": "monitor_glow", "en": "blue glow from computer monitors", "tags": ["technology", "interior"]},
+        ]
+
+        self.assertEqual(
+            [item["id"] for item in self.generator.steer_semantic_candidate_pool("subject", subjects, context)],
+            ["gamer_streamer"],
+        )
+        self.assertEqual(
+            [item["id"] for item in self.generator.steer_semantic_candidate_pool("location", locations, context)],
+            ["cozy_apartment", "small_messy_gaming_bedroom"],
+        )
+        self.assertEqual(
+            [item["id"] for item in self.generator.steer_semantic_candidate_pool("action", actions, context)],
+            ["slouched_in_gaming_chair"],
+        )
+        self.assertEqual(
+            [item["id"] for item in self.generator.steer_semantic_candidate_pool("prop", props, context)],
+            ["gaming_keyboard_mouse_prop", "game_controller_prop"],
+        )
+        self.assertEqual(
+            [item["id"] for item in self.generator.steer_semantic_candidate_pool("lighting", lighting, context)],
+            ["monitor_glow"],
+        )
+        self.assertIn(
+            {"slot": "prop", "reason": "homebody_room_prop", "before": 4, "after": 2, "tier": "core"},
+            context["intent_steering"]["decisions"],
+        )
+        self.assertIn("prop", self.generator.semantic_steering_slots(context, {"slots": {"prop": [], "subject": []}}))
+        self.assertEqual(
+            self.generator.compatible_preset_with_semantic_hard_guards({"id": "interior_lifestyle"}, context),
+            (True, None),
+        )
+        self.assertEqual(
+            self.generator.compatible_preset_with_semantic_hard_guards({"id": "selfie_mirror_snapshot"}, context),
+            (False, "homebody_room_preset"),
+        )
+        self.assertEqual(
+            self.generator.compatible_preset_with_semantic_hard_guards({"id": "creator_brand_profile"}, context),
+            (False, "homebody_room_preset"),
+        )
+        self.assertEqual(
+            self.generator.compatible_preset_with_semantic_hard_guards({"id": "gas_station_passenger_seat_lifestyle"}, context),
+            (False, "homebody_room_preset"),
+        )
+        self.assertEqual(
+            self.generator.compatible_preset_with_semantic_hard_guards({"id": "pc_bang_neon_session"}, context),
+            (False, "homebody_room_preset"),
+        )
+
+    def test_homebody_room_core_tags_and_drift_exclusions(self):
+        by_slot = {slot: {item["id"]: item for item in entries} for slot, entries in self.data["slots"].items()}
+
+        for entry_id in {
+            "game_controller_prop",
+            "messy_snacks_prop",
+            "rumpled_blanket_prop",
+            "instant_ramen_cup_prop",
+            "energy_drink_cans_prop",
+            "tangled_charging_cables_prop",
+            "gaming_headset_on_desk_prop",
+        }:
+            self.assertEqual(self.generator.homebody_room_signal_tier(by_slot["prop"][entry_id], "prop"), "core")
+
+        for entry_id in {"small_messy_gaming_bedroom", "dim_monitor_glow_bedroom", "floor_mattress_gaming_corner"}:
+            self.assertEqual(self.generator.homebody_room_signal_tier(by_slot["location"][entry_id], "location"), "core")
+        self.assertEqual(self.generator.homebody_room_signal_tier(by_slot["world"]["lived_in_homebody_room"], "world"), "core")
+
+        for slot, entry_id in [
+            ("prop", "coffee_cup_prop"),
+            ("prop", "takeaway_coffee_cup"),
+            ("action", "writing_notes"),
+            ("action", "pouring_coffee"),
+            ("location", "bedroom_mirror"),
+            ("location", "modern_apartment_living_room"),
+            ("world", "cozy_creator"),
+            ("world", "clean_social"),
+        ]:
+            self.assertIsNone(self.generator.homebody_room_signal_tier(by_slot[slot][entry_id], slot))
+
+    def test_homebody_concept_lock_promotes_core_slot_candidates(self):
+        context = {
+            "intent_steering": {"mode": "auto", "enabled": True, "families": ["homebody_room"], "decisions": []},
+            "generation_contract": {"concept_locks": ["방구석 집돌이, 작은 방, 모니터 빛, 게임패드, 간식, 담요"]},
+            "axis_vectors": [
+                {"text": "homebody guy in a small bedroom", "families": ["homebody_room"], "vector": [1.0]},
+            ],
+        }
+        by_slot = {slot: {item["id"]: item for item in entries} for slot, entries in self.data["slots"].items()}
+
+        props = [
+            by_slot["prop"]["gaming_keyboard_mouse_prop"],
+            by_slot["prop"]["game_controller_prop"],
+            by_slot["prop"]["messy_snacks_prop"],
+            by_slot["prop"]["rumpled_blanket_prop"],
+            by_slot["prop"]["energy_drink_cans_prop"],
+        ]
+        self.assertEqual(
+            [item["id"] for item in self.generator.steer_semantic_candidate_pool("prop", props, context)],
+            ["game_controller_prop", "messy_snacks_prop", "rumpled_blanket_prop"],
+        )
+        prop_decision = next(item for item in context["intent_steering"]["decisions"] if item["slot"] == "prop")
+        self.assertTrue(prop_decision["promoted_by_concept_lock"])
+        self.assertEqual(prop_decision["tier"], "core")
+
+        locations = [
+            by_slot["location"]["cozy_apartment"],
+            by_slot["location"]["small_messy_gaming_bedroom"],
+            by_slot["location"]["dim_monitor_glow_bedroom"],
+            by_slot["location"]["floor_mattress_gaming_corner"],
+        ]
+        self.assertEqual(
+            [item["id"] for item in self.generator.steer_semantic_candidate_pool("location", locations, context)],
+            ["small_messy_gaming_bedroom", "dim_monitor_glow_bedroom", "floor_mattress_gaming_corner"],
+        )
+
+    def test_homebody_prop_dedupes_detail_already_carried_by_action(self):
+        context = {
+            "intent_steering": {"mode": "auto", "enabled": True, "families": ["homebody_room"], "decisions": []},
+            "generation_contract": {"concept_locks": ["방구석 집돌이, 게임패드, 간식, 담요"]},
+            "axis_vectors": [
+                {"text": "homebody guy in a small bedroom", "families": ["homebody_room"], "vector": [1.0]},
+            ],
+        }
+        by_slot = {slot: {item["id"]: item for item in entries} for slot, entries in self.data["slots"].items()}
+        promoted = self.generator.steer_semantic_candidate_pool(
+            "prop",
+            [
+                by_slot["prop"]["game_controller_prop"],
+                by_slot["prop"]["messy_snacks_prop"],
+                by_slot["prop"]["rumpled_blanket_prop"],
+            ],
+            context,
+        )
+        deduped = self.generator.avoid_homebody_action_prop_redundancy(
+            promoted,
+            context,
+            {"action": by_slot["action"]["checking_game_controller"]},
+        )
+        self.assertEqual([item["id"] for item in deduped], ["messy_snacks_prop", "rumpled_blanket_prop"])
+        self.assertTrue(any(decision["reason"] == "homebody_room_prop_action_dedup" for decision in context["intent_steering"]["decisions"]))
+
+    def test_homebody_concept_lock_generation_uses_promoted_core_slots(self):
+        concept = "방구석 집돌이, 작은 방, 모니터 빛, 게임패드, 간식, 담요"
+        semantic_index = self.build_mock_semantic_index()
+        original_embedder = self.generator.embed_texts_with_gemini
+        self.generator.embed_texts_with_gemini = self.fake_gemini_vectors
+        try:
+            item = self.generate(
+                "interior_lifestyle",
+                seed=20260606,
+                intent="cozy homebody guy in a small lived-in bedroom at night, gaming desk, snacks, blanket",
+                concept_locks=[concept],
+                selection_mode="semantic",
+                semantic_index=semantic_index,
+                gemini_api_key="test-api-key",
+                intent_axes=["homebody guy in small bedroom", "gaming desk snacks blanket"],
+                include_trace=True,
+                include_negative=False,
+            )
+        finally:
+            self.generator.embed_texts_with_gemini = original_embedder
+
+        choices = item["choices"]
+        self.assertIn(choices["prop"]["id"], {"game_controller_prop", "messy_snacks_prop", "rumpled_blanket_prop"})
+        self.assertIn(
+            choices["location"]["id"],
+            {"small_messy_gaming_bedroom", "dim_monitor_glow_bedroom", "floor_mattress_gaming_corner"},
+        )
+        self.assertEqual(choices["light_shape"]["id"], "monitor_rectangle_glow")
+        if "world" in choices:
+            self.assertEqual(choices["world"]["id"], "lived_in_homebody_room")
+        chosen_ids = {entry["id"] for entry in choices.values()}
+        self.assertFalse(
+            chosen_ids
+            & {
+                "coffee_cup_prop",
+                "takeaway_coffee_cup",
+                "writing_notes",
+                "pouring_coffee",
+                "bedroom_mirror",
+                "modern_apartment_living_room",
+            }
+        )
+        decisions = item["semantic_trace"]["intent_steering"]["decisions"]
+        self.assertTrue(any(decision.get("slot") == "prop" and decision.get("promoted_by_concept_lock") for decision in decisions))
+
+    def test_homebody_room_core_pool_has_diverse_non_drift_candidates(self):
+        context = {
+            "intent_steering": {"mode": "auto", "enabled": True, "families": ["homebody_room"], "decisions": []},
+            "axis_vectors": [
+                {"text": "homebody guy in a small bedroom", "families": ["homebody_room"], "vector": [1.0]},
+            ],
+        }
+        drift_ids = {
+            "coffee_cup_prop",
+            "takeaway_coffee_cup",
+            "writing_notes",
+            "pouring_coffee",
+            "bedroom_mirror",
+            "modern_apartment_living_room",
+            "selfie_mirror_snapshot",
+            "creator_brand_profile",
+        }
+
+        for slot, minimum in {"prop": 7, "action": 4, "location": 4}.items():
+            steered = self.generator.steer_semantic_candidate_pool(slot, self.data["slots"][slot], context)
+            ids = {item["id"] for item in steered}
+            self.assertGreaterEqual(len(ids), minimum)
+            self.assertFalse(ids & drift_ids)
+
     def test_semantic_surreal_axis_auto_activates_unless_explicit_off(self):
         context = {
             "intent_steering": {"mode": "auto", "enabled": True, "families": ["fantasy"], "decisions": []},
@@ -1891,7 +2211,10 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         product_axes = self.generator.extract_intent_axes("jewelry macro reflection product", semantic_axis_mode="auto")
         self.assertIn("product commercial packshot", [item["text"] for item in product_axes["items"]])
         self.assertIn("jewelry macro reflection", [item["text"] for item in product_axes["items"]])
+        homebody_axes = self.generator.extract_intent_axes("방구석 집돌이 작은 방 게임패드", semantic_axis_mode="auto")
+        self.assertIn("homebody gamer in a small bedroom", [item["text"] for item in homebody_axes["items"]])
         self.assertIn("metropolitan environment", self.generator.semantic_axis_embedding_text("urban"))
+        self.assertIn("gaming desk", self.generator.semantic_axis_embedding_text("방구석 집돌이"))
         self.assertIn("readable face", self.generator.semantic_axis_embedding_text("human portrait"))
         self.assertIn("polished metal", self.generator.semantic_axis_embedding_text("jewelry macro reflection"))
 

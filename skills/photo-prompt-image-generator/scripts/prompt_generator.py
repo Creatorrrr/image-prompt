@@ -173,6 +173,7 @@ BATCH_DIVERSITY_TRACKED_SCOPES = (
     "light_shape",
     "genre",
     "action",
+    "prop",
     "style",
     "color",
     "texture",
@@ -195,6 +196,7 @@ BATCH_DIVERSITY_CONFIGS: Dict[str, Dict[str, Any]] = {
             "location_tone": 0.35,
             "lighting": 0.28,
             "mood": 0.45,
+            "prop": 0.5,
             "subject": 0.35,
             "subject_group": 0.55,
             "surreal_concept": 0.35,
@@ -211,6 +213,7 @@ BATCH_DIVERSITY_CONFIGS: Dict[str, Dict[str, Any]] = {
             "location_tone": 0.55,
             "lighting": 0.55,
             "mood": 0.65,
+            "prop": 0.9,
             "subject": 0.45,
             "subject_group": 0.85,
             "surreal_concept": 0.55,
@@ -227,6 +230,7 @@ BATCH_DIVERSITY_CONFIGS: Dict[str, Dict[str, Any]] = {
             "location_tone": 0.85,
             "lighting": 0.85,
             "mood": 1.0,
+            "prop": 1.1,
             "subject": 0.62,
             "subject_group": 1.15,
             "surreal_concept": 0.82,
@@ -271,6 +275,7 @@ SLOT_TEMPERATURE_MULTIPLIERS: Dict[str, float] = {
 COHERENT_DIVERSITY_SLOTS = {
     "genre",
     "action",
+    "prop",
     "style",
     "color",
     "texture",
@@ -290,6 +295,25 @@ COHERENT_DIVERSITY_SLOTS = {
 
 SEMANTIC_AXIS_FAMILY_KEYWORDS: Dict[str, tuple[str, ...]] = {
     "human": ("human", "person", "people", "portrait", "model", "actor", "commuter", "traveler", "인간", "사람", "인물"),
+    "homebody_room": (
+        "homebody",
+        "bedroom",
+        "small bedroom",
+        "cozy apartment",
+        "gaming desk",
+        "game controller",
+        "snacks",
+        "blanket",
+        "monitor glow",
+        "집돌이",
+        "방구석",
+        "침실",
+        "작은 방",
+        "게임패드",
+        "간식",
+        "담요",
+        "모니터",
+    ),
     "urban": ("urban", "city", "street", "alley", "subway", "neon", "rooftop", "도시", "거리", "골목", "지하철"),
     "horror": ("horror", "fear", "nightmare", "terror", "scary", "eerie", "uncanny", "noir", "gothic", "공포", "악몽", "두려움"),
     "fantasy": ("fantasy", "magic", "magical", "surreal", "dream", "impossible", "환상", "마법", "초현실"),
@@ -310,6 +334,20 @@ SEMANTIC_AXIS_FAMILY_KEYWORDS: Dict[str, tuple[str, ...]] = {
 
 SEMANTIC_AXIS_SLOT_ROUTES: Dict[str, tuple[str, ...]] = {
     "human": ("subject", "appearance_type", "expression", "subject_framing"),
+    "homebody_room": (
+        "medium",
+        "genre",
+        "subject",
+        "location",
+        "action",
+        "prop",
+        "wardrobe_style",
+        "lighting",
+        "light_type",
+        "light_shape",
+        "mood",
+        "texture",
+    ),
     "urban": ("location", "world", "weather", "lighting"),
     "horror": ("mood", "lighting", "light_shape", "weather", "color", "texture"),
     "fantasy": ("surreal_concept", "surreal_anchor", "surreal_physics_detail", "mood"),
@@ -701,6 +739,7 @@ def make_generation_contract(
     picked: Dict[str, Entry],
     forced_choices: Optional[Dict[str, List[str]]] = None,
     surreal_enabled: bool = False,
+    concept_locks: Optional[Sequence[str]] = None,
 ) -> JsonDict:
     forced_slots = sorted((forced_choices or {}).keys())
     domains = sorted(preset_domains(preset, data))
@@ -718,6 +757,7 @@ def make_generation_contract(
         "skipped_slots": [],
         "render_suppressed_slots": [],
         "fallback_blocked_slots": [],
+        "concept_locks": normalize_concept_locks(concept_locks),
     }
     return contract
 
@@ -729,12 +769,24 @@ def refresh_generation_contract(
     picked: Dict[str, Entry],
     forced_choices: Optional[Dict[str, List[str]]] = None,
     surreal_enabled: Optional[bool] = None,
+    concept_locks: Optional[Sequence[str]] = None,
 ) -> JsonDict:
     if contract is None:
-        return make_generation_contract(data, preset, picked, forced_choices, surreal_enabled=bool(surreal_enabled))
+        return make_generation_contract(
+            data,
+            preset,
+            picked,
+            forced_choices,
+            surreal_enabled=bool(surreal_enabled),
+            concept_locks=concept_locks,
+        )
     contract["subject_category"] = subject_category(picked, data)
     contract["preset_domains"] = sorted(preset_domains(preset, data))
     contract["forced_slots"] = sorted((forced_choices or {}).keys())
+    if concept_locks is not None:
+        contract["concept_locks"] = normalize_concept_locks(concept_locks)
+    else:
+        contract.setdefault("concept_locks", [])
     if surreal_enabled is not None:
         contract["surreal_enabled"] = bool(surreal_enabled)
     if any(slot in picked for slot in SURREAL_LAYER_SLOTS):
@@ -1420,6 +1472,7 @@ def fallback_intent_axes(intent: str) -> List[str]:
     lowered = intent.lower()
     labels = {
         "human": "human portrait",
+        "homebody_room": "homebody gamer in a small bedroom",
         "urban": "urban city street",
         "horror": "horror fear nightmare",
         "fantasy": "fantasy magic surreal",
@@ -1465,6 +1518,7 @@ def axis_families_for_text(text: str) -> List[str]:
 def semantic_axis_embedding_text(axis: str) -> str:
     expansions = {
         "human": "human person portrait subject, model or actor, readable face and body presence",
+        "homebody_room": "cozy homebody in a small lived-in bedroom or apartment, gaming desk, monitor glow, controller, snacks, blanket, quiet indoor lifestyle",
         "urban": "urban city street location, alley, subway, neon, concrete, metropolitan environment",
         "horror": "horror fear nightmare mood, eerie uncanny tension, analog horror unease, dark suspense",
         "fantasy": "fantasy magic surreal impossible event, photoreal dreamlike phenomenon, supernatural atmosphere",
@@ -1860,6 +1914,7 @@ def fallback_family_signal_strength(entry: Entry, family: str) -> str:
         "fantasy": {"fantasy", "magic", "magical", "surreal", "impossible", "gravity", "object_world", "material"},
         "urban": {"urban", "city", "street", "alley", "subway", "neon", "rooftop", "concrete"},
         "human": {"human", "portrait", "person", "model", "actor", "commuter", "creator", "traveler"},
+        "homebody_room": {"homebody", "bedroom", "apartment", "gamer", "gaming", "monitor", "desk", "blanket"},
         "product": {"product", "commercial", "packshot", "catalog", "surface", "object"},
         "jewelry": {"jewelry", "ring", "watch", "metal", "macro", "reflection"},
         "craft": {"craft", "artisan", "craftsperson", "workshop", "glassblower", "ceramic", "potter"},
@@ -1873,6 +1928,7 @@ def fallback_family_signal_strength(entry: Entry, family: str) -> str:
         "fantasy": {"dream", "dreamy", "reflection", "mirror", "screen", "scale", "cosplay"},
         "urban": {"interior", "transport", "night", "market", "office", "parking"},
         "human": {"fashion", "social", "lifestyle", "beauty", "ordinary"},
+        "homebody_room": {"home", "interior", "creator_room", "cozy", "casual", "quiet", "snacks", "controller"},
         "product": {"studio", "macro", "glass", "metal", "reflection", "display"},
         "jewelry": {"product", "studio", "glass", "polished", "highlight"},
         "craft": {"tools", "hands", "material", "dust", "work"},
@@ -2668,6 +2724,8 @@ def compatible_preset_with_semantic_hard_guards(preset: Entry, context: JsonDict
     tokens = facet_tokens(preset)
     if "safety_tier:adult_only" in tokens and not semantic_intent_allows_adult_context(context):
         return False, "adult_only"
+    if "homebody_room" in context_axis_families(context) and not preset_has_homebody_room_signal(preset):
+        return False, "homebody_room_preset"
     return True, None
 
 
@@ -3385,6 +3443,311 @@ def entry_has_urban_signal(entry: Entry) -> bool:
     )
 
 
+HOMEBODY_ROOM_CORE_SIGNAL_IDS: Dict[str, Set[str]] = {
+    "medium": {
+        "documentary_photo",
+        "lifestyle_photo",
+        "smartphone_snapshot",
+        "vhs_video_frame_photo",
+    },
+    "genre": {
+        "portrait",
+        "lifestyle",
+        "interior",
+    },
+    "subject": {
+        "gamer_streamer",
+    },
+    "world": {
+        "lived_in_homebody_room",
+    },
+    "location": {
+        "cozy_apartment",
+        "dim_monitor_glow_bedroom",
+        "esports_room",
+        "floor_mattress_gaming_corner",
+        "small_messy_gaming_bedroom",
+    },
+    "action": {
+        "checking_game_controller",
+        "eating_snacks_while_gaming",
+        "slouched_in_gaming_chair",
+        "wrapped_in_blanket_gaming",
+    },
+    "prop": {
+        "energy_drink_cans_prop",
+        "game_controller_prop",
+        "gaming_headset_on_desk_prop",
+        "gaming_keyboard_mouse_prop",
+        "instant_ramen_cup_prop",
+        "messy_snacks_prop",
+        "rumpled_blanket_prop",
+        "tangled_charging_cables_prop",
+    },
+    "wardrobe_style": {
+        "faded_hoodie_sweatpants",
+        "hoodie_shorts_sneakers",
+        "loose_pajama_homewear",
+    },
+    "lighting": {
+        "monitor_glow",
+        "tungsten",
+    },
+    "light_type": {
+        "monitor_glow",
+        "tungsten_practical",
+    },
+    "light_shape": {
+        "monitor_rectangle_glow",
+    },
+}
+
+
+HOMEBODY_ROOM_SUPPORT_SIGNAL_IDS: Dict[str, Set[str]] = {
+    "medium": {
+        "social_media_post",
+    },
+    "genre": {
+        "shortform_social",
+    },
+    "location": {
+        "bright_window_silhouette_room",
+        "pale_woven_floor_room",
+    },
+    "action": {
+        "checking_phone",
+        "looking_window",
+        "sleeping",
+        "standing_silence",
+    },
+    "prop": {
+        "over_ear_headphones",
+        "smartphone_in_hand",
+    },
+    "wardrobe_style": {
+        "knit_cardigan_jeans",
+    },
+    "lighting": {
+        "chiaroscuro_window_light",
+        "soft_window",
+        "window_blowout_backlight",
+    },
+    "light_shape": {
+        "blinds_stripes",
+        "diffused_ambient",
+        "screen_rectangle_mask",
+        "venetian_blind_shadows",
+        "window_rectangle",
+    },
+    "mood": {
+        "calm",
+        "intimate",
+        "casual_authentic",
+        "quiet_surreal_optical",
+        "nostalgic",
+    },
+    "texture": {
+        "fine_grain",
+        "rough_grain",
+        "halation",
+        "screen_grab_softness",
+        "cool_digicam_grain",
+        "vhs_noise",
+        "vhs_scanline_texture",
+        "light_leak_burn",
+    },
+}
+
+
+HOMEBODY_ROOM_SIGNAL_IDS: Dict[str, Set[str]] = {
+    slot: set(HOMEBODY_ROOM_CORE_SIGNAL_IDS.get(slot, set())) | set(HOMEBODY_ROOM_SUPPORT_SIGNAL_IDS.get(slot, set()))
+    for slot in set(HOMEBODY_ROOM_CORE_SIGNAL_IDS) | set(HOMEBODY_ROOM_SUPPORT_SIGNAL_IDS)
+}
+
+
+HOMEBODY_ROOM_PRESET_IDS: Set[str] = {
+    "interior_lifestyle",
+    "esports_streamer_room",
+    "vhs_camcorder_home_video",
+}
+
+
+HOMEBODY_ROOM_DENY_IDS: Set[str] = {
+    "pc_bang_neon_session",
+    "pc_bang_gamer",
+    "pc_bang_neon_room",
+    "gaming_pc_bang_session",
+    "creator_desk_setup_flatlay",
+    "creator_desk_setup",
+    "creator_brand_profile",
+    "clean_social",
+    "cozy_creator",
+    "clean_mirror_selfie_snapshot",
+    "selfie_mirror_snapshot",
+    "gas_station_passenger_seat_lifestyle",
+    "gas_station_car_passenger_seat_night",
+    "passenger_seat_coffee_window_gaze",
+    "floor_selfie_creator",
+    "bedroom_mirror",
+    "creator_room",
+    "modern_apartment_living_room",
+    "minimal_korean_living_room",
+    "plain_wall_mirror_selfie_room",
+    "simple_indoor_selfie_room",
+    "coffee_cup_prop",
+    "takeaway_coffee_cup",
+    "clear_case_smartphone",
+    "pouring_coffee",
+    "holding_coffee_phone",
+    "writing_notes",
+    "editing_laptop",
+    "high_angle_floor_selfie_pose",
+}
+
+
+HOMEBODY_CONCEPT_LOCK_PROMOTIONS: Dict[str, tuple[tuple[tuple[str, ...], tuple[str, ...]], ...]] = {
+    "prop": (
+        (("게임패드", "컨트롤러", "gamepad", "game controller", "controller"), ("game_controller_prop",)),
+        (("간식", "과자", "스낵", "snack", "snacks", "chips"), ("messy_snacks_prop",)),
+        (("라면", "ramen"), ("instant_ramen_cup_prop",)),
+        (("에너지드링크", "energy drink", "energy-drink"), ("energy_drink_cans_prop",)),
+        (("담요", "이불", "blanket"), ("rumpled_blanket_prop",)),
+    ),
+    "lighting": (
+        (("모니터", "스크린", "monitor", "screen"), ("monitor_glow",)),
+    ),
+    "light_type": (
+        (("모니터", "스크린", "monitor", "screen"), ("monitor_glow",)),
+    ),
+    "light_shape": (
+        (("모니터", "스크린", "monitor", "screen"), ("monitor_rectangle_glow",)),
+    ),
+    "location": (
+        (
+            ("작은 방", "좁은 방", "침실", "방구석", "small room", "small bedroom", "bedroom"),
+            ("small_messy_gaming_bedroom", "dim_monitor_glow_bedroom", "floor_mattress_gaming_corner"),
+        ),
+        (
+            ("모니터", "스크린", "monitor", "screen"),
+            ("dim_monitor_glow_bedroom", "small_messy_gaming_bedroom"),
+        ),
+    ),
+}
+
+
+HOMEBODY_REDUNDANT_ACTION_PROPS: Dict[str, Set[str]] = {
+    "checking_game_controller": {"game_controller_prop"},
+    "wrapped_in_blanket_gaming": {"rumpled_blanket_prop"},
+    "eating_snacks_while_gaming": {"energy_drink_cans_prop", "instant_ramen_cup_prop", "messy_snacks_prop"},
+}
+
+
+def preset_has_homebody_room_signal(preset: Entry) -> bool:
+    preset_id = str(preset.get("id", ""))
+    if preset_id in HOMEBODY_ROOM_DENY_IDS:
+        return False
+    if preset_id in HOMEBODY_ROOM_PRESET_IDS:
+        return True
+    blob = " ".join(str(preset.get(key, "")) for key in ("id", "en", "ko", "embedding_text", "semantic_anchor")).lower()
+    word_blob = re.sub(r"[_-]+", " ", blob)
+    return bool(
+        re.search(r"(?<![a-z0-9])(home|homebody|bedroom|gaming bedroom|streamer room|esports room)(?![a-z0-9])", word_blob)
+    )
+
+
+def homebody_room_signal_tier(entry: Entry, slot: str) -> Optional[str]:
+    entry_id = str(entry.get("id", ""))
+    if entry_id in HOMEBODY_ROOM_DENY_IDS:
+        return None
+    if entry_id in HOMEBODY_ROOM_CORE_SIGNAL_IDS.get(slot, set()):
+        return "core"
+    if entry_id in HOMEBODY_ROOM_SUPPORT_SIGNAL_IDS.get(slot, set()):
+        return "support"
+    if slot in HOMEBODY_ROOM_SIGNAL_IDS:
+        return None
+    tokens = entry_context_tokens(entry) | facet_tokens(entry)
+    blob = " ".join(str(entry.get(key, "")) for key in ("id", "en", "ko", "embedding_text")).lower()
+    word_blob = re.sub(r"[_-]+", " ", blob)
+    def has_word(*terms: str) -> bool:
+        return any(re.search(rf"(?<![a-z0-9]){re.escape(term)}(?![a-z0-9])", word_blob) for term in terms)
+    generic_terms = {"home", "interior", "gaming", "gamer", "monitor", "bedroom", "apartment", "desk", "blanket", "snacks"}
+    if slot == "subject":
+        return "support" if bool(tokens & {"gaming", "interior"} and ("gamer" in blob or "gaming" in blob)) else None
+    if slot == "medium":
+        return "support" if has_word("documentary", "lifestyle", "social", "smartphone", "vhs", "home") else None
+    if slot == "genre":
+        return "support" if has_word("portrait", "lifestyle", "interior", "shortform") else None
+    if slot == "location":
+        return "support" if has_word("apartment", "bedroom", "room", "desk", "esports", "home") else None
+    if slot in {"lighting", "light_type", "light_shape"}:
+        return "support" if has_word("monitor", "screen", "window", "tungsten", "ambient", "diffused", "lamp") else None
+    if slot == "action":
+        return "support" if bool(
+            tokens & {"home", "daily", "quiet", "gaming"}
+            or any(term in blob for term in ("checking", "sleep", "window", "phone", "floor"))
+        ) else None
+    if slot == "prop":
+        return "support" if bool(
+            tokens & {"gaming", "home"}
+            or has_word("keyboard", "mouse", "blanket", "snack", "snacks", "controller", "phone", "headphone", "smartphone")
+        ) else None
+    if slot == "wardrobe_style":
+        return "support" if bool(has_word("hoodie", "sweat", "cardigan", "jeans", "sneakers", "pajama")) else None
+    if slot == "mood":
+        return "support" if bool(tokens & {"quiet"} or any(term in blob for term in ("calm", "peaceful", "intimate", "casual", "quiet", "nostalgic"))) else None
+    if slot == "texture":
+        return "support" if has_word("halation", "screen", "digicam", "vhs", "light leak") else None
+    return "support" if any(term in blob for term in generic_terms) else None
+
+
+def entry_has_homebody_room_signal(entry: Entry, slot: str) -> bool:
+    return homebody_room_signal_tier(entry, slot) is not None
+
+
+def homebody_concept_lock_blob(context: Optional[JsonDict]) -> str:
+    contract = (context or {}).get("generation_contract", {}) or {}
+    locks = contract.get("concept_locks", []) or []
+    return " ".join(str(item) for item in locks if str(item).strip()).lower()
+
+
+def homebody_concept_lock_promoted_ids(context: Optional[JsonDict], slot: str) -> Set[str]:
+    blob = homebody_concept_lock_blob(context)
+    if not blob:
+        return set()
+    promoted: Set[str] = set()
+    for terms, ids in HOMEBODY_CONCEPT_LOCK_PROMOTIONS.get(slot, ()):
+        if any(term.lower() in blob for term in terms):
+            promoted.update(ids)
+    return promoted
+
+
+def avoid_homebody_action_prop_redundancy(
+    pool: Sequence[Entry],
+    context: Optional[JsonDict],
+    picked: Dict[str, Entry],
+) -> List[Entry]:
+    if not context or "homebody_room" not in context_axis_families(context):
+        return list(pool)
+    action_id = str((picked.get("action") or {}).get("id", ""))
+    redundant_ids = HOMEBODY_REDUNDANT_ACTION_PROPS.get(action_id, set())
+    if not redundant_ids:
+        return list(pool)
+    filtered = [item for item in pool if str(item.get("id")) not in redundant_ids]
+    if not filtered:
+        return list(pool)
+    record_intent_steering(
+        context,
+        {
+            "slot": "prop",
+            "reason": "homebody_room_prop_action_dedup",
+            "before": len(pool),
+            "after": len(filtered),
+            "tier": "core",
+        },
+    )
+    return filtered
+
+
 def entry_has_horror_signal(entry: Entry) -> bool:
     tokens = entry_context_tokens(entry) | facet_tokens(entry)
     blob = " ".join(
@@ -3434,22 +3797,60 @@ def steer_semantic_candidate_pool(
     if slot == "subject" and "human" in families:
         steered = [item for item in pool if entry_has_human_signal(item)]
         reason = "human_subject"
+    if "homebody_room" in families:
+        steered = []
+        reason = ""
+        promoted_ids = homebody_concept_lock_promoted_ids(context, slot)
+        promoted = [
+            item
+            for item in pool
+            if str(item.get("id")) in promoted_ids and homebody_room_signal_tier(item, slot) == "core"
+        ]
+        if promoted:
+            steered = promoted
+            reason = f"homebody_room_{slot}_concept_lock"
+            tier = "core"
+            promoted_by_concept_lock = True
+        else:
+            core_steered = [item for item in pool if homebody_room_signal_tier(item, slot) == "core"]
+            support_steered = [item for item in pool if homebody_room_signal_tier(item, slot) == "support"]
+            if core_steered:
+                steered = core_steered
+                reason = f"homebody_room_{slot}"
+                tier = "core"
+            elif support_steered:
+                steered = support_steered
+                reason = f"homebody_room_{slot}"
+                tier = "support"
+            else:
+                tier = ""
+            promoted_by_concept_lock = False
     elif slot == "location" and "urban" in families:
         steered = [item for item in pool if entry_has_urban_signal(item)]
         reason = "urban_location"
+        tier = ""
+        promoted_by_concept_lock = False
     elif slot == "mood" and "horror" in families:
         steered = [item for item in pool if entry_has_horror_signal(item)]
         reason = "horror_mood"
+        tier = ""
+        promoted_by_concept_lock = False
+    else:
+        tier = ""
+        promoted_by_concept_lock = False
     if steered:
-        record_intent_steering(
-            context,
-            {
-                "slot": slot,
-                "reason": reason,
-                "before": len(pool),
-                "after": len(steered),
-            },
-        )
+        decision = {
+            "slot": slot,
+            "reason": reason,
+            "before": len(pool),
+            "after": len(steered),
+        }
+        if tier:
+            decision["tier"] = tier
+        if promoted_by_concept_lock:
+            decision["promoted_by_concept_lock"] = True
+            decision["promoted_ids"] = sorted(homebody_concept_lock_promoted_ids(context, slot))
+        record_intent_steering(context, decision)
         return steered
     return list(pool)
 
@@ -3462,6 +3863,10 @@ def semantic_steering_slots(context: Optional[JsonDict], data: JsonDict) -> List
     wanted: List[str] = []
     if "human" in families and "subject" in available:
         wanted.append("subject")
+    if "homebody_room" in families:
+        for slot in SEMANTIC_AXIS_SLOT_ROUTES.get("homebody_room", ()):
+            if slot in available and slot not in wanted:
+                wanted.append(slot)
     if "urban" in families and "location" in available:
         wanted.append("location")
     if "horror" in families and "mood" in available:
@@ -3628,6 +4033,8 @@ def choose_slot(
 
     if semantic_context and not forced:
         pool = steer_semantic_candidate_pool(slot, pool, semantic_context)
+        if slot == "prop":
+            pool = avoid_homebody_action_prop_redundancy(pool, semantic_context, picked)
 
     if semantic_context and not forced:
         before_hard = len(pool)
@@ -4163,6 +4570,35 @@ def dedupe_parts(parts: Sequence[str]) -> List[str]:
     return unique
 
 
+def normalize_concept_locks(items: Optional[Sequence[str]]) -> List[str]:
+    if not items:
+        return []
+    return dedupe_parts(str(item) for item in items if str(item).strip())
+
+
+def concept_lock_text(generation_contract: Optional[JsonDict]) -> str:
+    return unique_join(normalize_concept_locks((generation_contract or {}).get("concept_locks", [])), "; ")
+
+
+def render_concept_lock_sentence(generation_contract: Optional[JsonDict], lang: str, compact: bool = False) -> str:
+    concept = concept_lock_text(generation_contract)
+    if not concept:
+        return ""
+    if compact:
+        if lang == "ko":
+            return f"원래 핵심 컨셉인 {concept}을 유지하고, 생성된 세부 요소는 그 컨셉을 보조하는 방향"
+        return f"preserving the core concept of {concept}, with generated details supporting rather than replacing it"
+    if lang == "ko":
+        return (
+            f"핵심 컨셉 잠금: {concept}. "
+            "아래의 피사체, 동작, 조명, 카메라 디테일은 이 컨셉을 대체하지 않고 보조해야 한다."
+        )
+    return (
+        f"Core concept lock: {concept}. "
+        "Treat every generated subject, action, lighting, and camera detail as support for this concept, not a replacement."
+    )
+
+
 def build_prompt_sections(
     data: JsonDict,
     preset: JsonDict,
@@ -4298,6 +4734,7 @@ def render_detailed_prompt(
     fields = build_fields(picked, lang, data)
     values = {slot: localize(entry, lang) for slot, entry in picked.items()}
     category = subject_category(picked, data)
+    concept_lock = render_concept_lock_sentence(generation_contract, lang)
 
     if lang == "ko":
         subject = section_text(sections, "subject", values.get("subject", "중심 피사체"))
@@ -4318,6 +4755,7 @@ def render_detailed_prompt(
         prompt = " ".join(
             part
             for part in [
+                concept_lock,
                 f"{medium}로 렌더링할 {genre}. "
                 f"중심 피사체와 상태: {subject_state}; {subject_guidance}. "
                 f"장면과 장소: {location}; {scene_guidance}. "
@@ -4350,6 +4788,7 @@ def render_detailed_prompt(
         prompt = " ".join(
             part
             for part in [
+                concept_lock,
                 f"Create {with_indefinite_article(medium)} in the style of {genre}. "
                 f"Subject and state: {subject_state}; {subject_guidance}. "
                 f"Scene and location: {location}; {scene_guidance}. "
@@ -4388,12 +4827,16 @@ def render_compact_prompt(
     picked: Dict[str, Entry],
     lang: str,
     sections: Dict[str, List[str]],
+    generation_contract: Optional[JsonDict] = None,
 ) -> str:
     values = {slot: localize(entry, lang) for slot, entry in picked.items()}
     category = subject_category(picked, data)
+    concept_lock = render_concept_lock_sentence(generation_contract, lang, compact=True)
 
     def render_with_drops(drop_sections: Set[str]) -> str:
         content_parts: List[str] = []
+        if concept_lock:
+            content_parts.append(concept_lock)
         for section in ("action", "scene", "camera", "lighting", "palette_mood", "finish", "special_layers"):
             if section in drop_sections:
                 continue
@@ -4451,7 +4894,7 @@ def render_prompt(
         return render_detailed_prompt(data, preset, render_picked, lang, sections, generation_contract)
 
     if detail_level == "compact":
-        return render_compact_prompt(data, preset, render_picked, lang, sections)
+        return render_compact_prompt(data, preset, render_picked, lang, sections, generation_contract)
 
     style = preset.get("template_style", "natural")
     templates_by_lang = data.get("templates", {}).get(style, {})
@@ -4473,6 +4916,10 @@ def render_prompt(
     fields = build_fields(render_picked, lang, data)
     prompt = template.format(**fields)
     prompt = ensure_standard_section_order(prompt, sections, fields, lang)
+
+    concept_lock = render_concept_lock_sentence(generation_contract, lang)
+    if concept_lock and concept_lock.lower() not in prompt.lower():
+        prompt = clean_spaces(f"{ensure_period(concept_lock)} {prompt}")
 
     additions: List[str] = []
     action = section_text(sections, "action")
@@ -4568,6 +5015,7 @@ def generate_once(
     reference_edit_mode: str = "off",
     trend_layer: str = "off",
     intent: Optional[str] = None,
+    concept_locks: Optional[Sequence[str]] = None,
     selection_mode: str = "rule",
     novelty: str = "medium",
     filter_strictness: Optional[str] = None,
@@ -4628,7 +5076,7 @@ def generate_once(
             raise
     preset = choose_preset(data, rng, preset_id, semantic_context)
     picked: Dict[str, Entry] = {}
-    generation_contract = make_generation_contract(data, preset, picked, forced_choices)
+    generation_contract = make_generation_contract(data, preset, picked, forced_choices, concept_locks=concept_locks)
     if semantic_context is not None:
         semantic_context["generation_contract"] = generation_contract
         sync_generation_contract_axis_coverage(generation_contract, semantic_context)
@@ -4896,6 +5344,13 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     parser.add_argument("--reference-edit-mode", choices=REFERENCE_EDIT_MODES, default="off", help="Append reference-image editing instructions for uploaded-photo workflows.")
     parser.add_argument("--trend-layer", choices=TREND_LAYERS, default="off", help="Append a social trend layout layer without changing the base photo preset.")
     parser.add_argument("--intent", default=None, help="Free-text visual intent for semantic selection. A broad photo intent is used when semantic/hybrid mode has no explicit intent.")
+    parser.add_argument(
+        "--concept-lock",
+        dest="concept_locks",
+        action="append",
+        default=[],
+        help="Verbatim core concept to keep visually dominant while generated slots add supporting detail. Repeatable.",
+    )
     parser.add_argument("--selection-mode", choices=SELECTION_MODES, default=DEFAULT_SELECTION_MODE, help="Selection mode. semantic is the default; use rule for the original deterministic weighted path.")
     parser.add_argument("--default-intent", action="store_true", help=argparse.SUPPRESS)
     parser.add_argument("--semantic-default", action="store_true", help=argparse.SUPPRESS)
@@ -5003,6 +5458,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                 reference_edit_mode=args.reference_edit_mode,
                 trend_layer=args.trend_layer,
                 intent=resolved_intent,
+                concept_locks=args.concept_locks,
                 selection_mode=selection_mode,
                 novelty=args.novelty,
                 filter_strictness=filter_strictness,
