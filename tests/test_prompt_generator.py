@@ -922,7 +922,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertNotIn("expression=cold_unreadable_stare", payload["forward_args"])
         self.assertNotIn("hiding in plain sight", " ".join(payload["forward_args"]))
 
-    def test_concept_recipe_explain_combines_role_and_assassin_mixin(self):
+    def test_concept_recipe_explain_combines_role_and_assassin_axes(self):
         payload = self.run_wrapper_json(
             "--concept",
             "닝닝 경찰 암살자",
@@ -939,24 +939,30 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertEqual(concept["name"], "닝닝")
         self.assertEqual(concept["applied_role"], "경찰")
         self.assertEqual(concept["applied_mixins"], ["암살자"])
-        self.assertEqual(len(concept["selected_bundles"]), 1)
-        bundle = concept["selected_bundles"][0]
-        self.assertEqual(bundle["mixin"], "암살자")
-        self.assertTrue(bundle["bundle_id"])
-        self.assertIn("weight", bundle)
+        self.assertEqual(concept["selected_bundles"], [])
+        self.assertEqual(len(concept["selected_axes"]), 1)
+        axis_record = concept["selected_axes"][0]
+        self.assertEqual(axis_record["mixin"], "암살자")
+        self.assertEqual(axis_record["role_profile"], "경찰")
+        self.assertGreaterEqual(axis_record["diversity_space"], 100)
+        for axis_name in ("archetype", "phase", "expression", "register", "environment", "tell"):
+            self.assertIn(axis_name, axis_record["axis_selection"])
+            sampled_axis = axis_record["sampled_axes"][axis_name]
+            self.assertEqual(sampled_axis["chosen"], axis_record["axis_selection"][axis_name])
+            self.assertIn(sampled_axis["chosen"], sampled_axis["pool"])
+            self.assertIn("token_basis", sampled_axis)
         self.assertEqual(concept["combined_forced_slots"]["costume_style"], ["police_uniform_costume"])
-        for slot in ("prop", "action", "location", "lighting", "mood", "composition"):
-            self.assertEqual(concept["combined_forced_slots"][slot], [bundle["set"][slot]])
-        self.assertEqual(concept["combined_forced_slots"]["expression"], ["cold_unreadable_stare"])
-        self.assertEqual(concept["combined_forced_slots"]["light_type"], ["narrow_spotlight"])
-        self.assertEqual(concept["combined_forced_slots"]["light_intensity"], ["deep_shadow_detail"])
-        self.assertEqual(concept["combined_forced_slots"]["color"], ["desaturated_cold_blue"])
+        for slot, selected_id in axis_record["set"].items():
+            self.assertEqual(concept["combined_forced_slots"][slot], [selected_id])
         self.assertIn("costume_style=police_uniform_costume", payload["forward_args"])
-        for slot in ("prop", "action", "location", "lighting", "mood", "composition"):
-            self.assertIn(f"{slot}={bundle['set'][slot]}", payload["forward_args"])
-        self.assertIn("expression=cold_unreadable_stare", payload["forward_args"])
+        for slot, selected_id in axis_record["set"].items():
+            self.assertIn(f"{slot}={selected_id}", payload["forward_args"])
         self.assertIn("role outfit is a cover identity/disguise for the assassin persona", payload["forward_args"])
         self.assertIn("the figure is hiding in plain sight: an ordinary cover identity concealing a different purpose", payload["forward_args"])
+        self.assertIn(
+            "the assassin layer is expressed through cover identity, surveillance, access, information transfer, or quiet departure rather than combat",
+            payload["forward_args"],
+        )
         self.assertIn("non-graphic staged character photo with no depicted injury, blood, victim, or violence", payload["forward_args"])
 
         repeated = self.run_wrapper_json(
@@ -981,10 +987,71 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             "--plain",
             "--no-negative",
         )
-        self.assertEqual(bundle["bundle_id"], repeated["concepts"][0]["selected_bundles"][0]["bundle_id"])
-        self.assertNotEqual(bundle["bundle_id"], changed_seed["concepts"][0]["selected_bundles"][0]["bundle_id"])
+        self.assertEqual(
+            axis_record["axis_selection"],
+            repeated["concepts"][0]["selected_axes"][0]["axis_selection"],
+        )
+        self.assertNotEqual(
+            axis_record["axis_selection"],
+            changed_seed["concepts"][0]["selected_axes"][0]["axis_selection"],
+        )
 
-    def test_assassin_concept_batch_uses_cohesive_bundles(self):
+    def test_assassin_concept_uses_mixin_preset_priority(self):
+        payload = self.run_wrapper_json(
+            "--concept",
+            "카리나 메이드 암살자",
+            "--explain-concept",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "1",
+            "--plain",
+            "--no-negative",
+        )
+
+        forward_args = payload["forward_args"]
+        preset_index = forward_args.index("--preset")
+        self.assertEqual(forward_args[preset_index + 1], "compact_cinematic_prop_portrait")
+        self.assertIn("costume_style=frill_apron_maid_costume", forward_args)
+        self.assertEqual(payload["concepts"][0]["applied_role"], "메이드")
+        self.assertEqual(payload["concepts"][0]["applied_mixins"], ["암살자"])
+
+    def test_assassin_concept_never_uses_smiling_expression(self):
+        concepts = [
+            "카리나 메이드 암살자",
+            "윈터 간호사 암살자",
+            "닝닝 경찰 암살자",
+            "지젤 광부 암살자",
+            "아일릿 원희 사복 여친 암살자",
+            "설윤 공주 암살자",
+            "유나 바니걸 암살자",
+        ]
+        smile_expressions = {
+            "soft_smile",
+            "bright_friendly_smile",
+            "relaxed_open_mouth_smile",
+            "mysterious_half_smile",
+            "warm_false_smile_cold_eyes",
+        }
+
+        for concept in concepts:
+            for seed in range(1, 9):
+                payload = self.run_wrapper_json(
+                    "--concept",
+                    concept,
+                    "--explain-concept",
+                    "--selection-mode",
+                    "rule",
+                    "--seed",
+                    str(seed),
+                    "--plain",
+                    "--no-negative",
+                )
+                forced_slots = payload["concepts"][0]["combined_forced_slots"]
+                self.assertIn("expression", forced_slots, msg=f"{concept} seed={seed}")
+                self.assertNotIn(forced_slots["expression"][0], smile_expressions, msg=f"{concept} seed={seed}")
+
+    def test_assassin_concept_batch_uses_diverse_cohesive_axes(self):
         cases = [
             ("카리나 메이드 암살자", 1),
             ("윈터 간호사 암살자", 1),
@@ -995,6 +1062,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             ("유나 바니걸 암살자", 8),
         ]
         banned_actions = {
+            "checking_phone",
             "turning_back",
             "over_shoulder_pose",
             "slow_walk_turnaround",
@@ -1005,13 +1073,30 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             "holding_real_weapon_reference_pose",
             "rpg_weapon_ready_pose",
         }
-        expected_common_slots = {
-            "expression": "cold_unreadable_stare",
-            "light_type": "narrow_spotlight",
-            "light_intensity": "deep_shadow_detail",
-            "color": "desaturated_cold_blue",
+        banned_props = {
+            "vintage_film_camera_prop",
         }
-        selected_bundle_ids = set()
+        banned_compositions = {
+            "paparazzi_diagonal_flash",
+        }
+        axis_values = {axis: set() for axis in ("archetype", "phase", "expression", "register", "environment", "tell")}
+        selected_axis_tuples = set()
+        expanded_archetypes = {
+            "target_acquisition",
+            "concealment_check",
+            "pre_position_stage",
+            "escape_route_stage",
+            "close_call_freeze",
+        }
+        occupational_tells = {
+            "service_cart_access",
+            "master_keyring",
+            "medical_chart_intel",
+            "duty_radio",
+            "work_tool_bag",
+            "court_letter",
+            "nightclub_service_tray",
+        }
         for concept, seed in cases:
             explanation = self.run_wrapper_json(
                 "--concept",
@@ -1025,8 +1110,14 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "--no-negative",
             )
             concept_payload = explanation["concepts"][0]
-            selected_bundle = concept_payload["selected_bundles"][0]
-            selected_bundle_ids.add(selected_bundle["bundle_id"])
+            self.assertEqual(concept_payload["selected_bundles"], [])
+            selected_axis = concept_payload["selected_axes"][0]
+            axis_selection = selected_axis["axis_selection"]
+            selected_axis_tuples.add(
+                tuple(axis_selection[axis] for axis in ("archetype", "phase", "expression", "register", "environment", "tell"))
+            )
+            for axis, value in axis_selection.items():
+                axis_values[axis].add(value)
 
             generated = self.run_wrapper_json(
                 "--concept",
@@ -1041,22 +1132,85 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "--include-choices",
             )
             item = generated[0]
-            for slot, expected_id in selected_bundle["set"].items():
-                self.assertEqual(item["choices"][slot]["id"], expected_id)
-            for slot, expected_id in expected_common_slots.items():
+            for slot, expected_id in selected_axis["set"].items():
                 self.assertEqual(item["choices"][slot]["id"], expected_id)
             self.assertNotIn(item["choices"]["action"]["id"], banned_actions)
+            self.assertNotIn(item["choices"]["prop"]["id"], banned_props)
+            self.assertNotIn(item["choices"]["composition"]["id"], banned_compositions)
 
             if "costume_style" in concept_payload["combined_forced_slots"]:
                 expected_costume = concept_payload["combined_forced_slots"]["costume_style"][0]
                 self.assertEqual(item["choices"]["costume_style"]["id"], expected_costume)
 
             self.assertIn("hiding in plain sight", item["prompt_en"])
-            self.assertIn("stillness and tight emotional control just before a mission", item["prompt_en"])
+            self.assertIn("cover identity, surveillance, access, information transfer, or quiet departure rather than combat", item["prompt_en"])
+            self.assertIn("a small wardrobe or behavior crack betrays that the ordinary role is a disguise", item["prompt_en"])
+            self.assertIn("deglamorize the styling into muted, functional, slightly worn realism", item["prompt_en"])
             self.assertIn("never drawn, aimed, brandished, or used", item["prompt_en"])
             self.assertIn("non-graphic staged character photo with no depicted injury, blood, victim, or violence", item["prompt_en"])
+            self.assertIn("never smiles at or poses for the camera", item["prompt_en"])
+            self.assertIn("avoid bright high-key idol-photobook or cosplay pin-up", item["prompt_en"])
+            self.assertIn("embedded in a real location", item["prompt_en"])
+            self.assertIn("occupational tools are repurposed for the cover identity", item["prompt_en"])
+            self.assertIn("the frame should clarify a mission phase beyond simple document handoff", item["prompt_en"])
 
-        self.assertGreaterEqual(len(selected_bundle_ids), 3)
+        self.assertGreaterEqual(len(selected_axis_tuples), 6)
+        self.assertGreaterEqual(len(axis_values["archetype"]), 4)
+        self.assertTrue(axis_values["archetype"] & expanded_archetypes)
+        self.assertGreaterEqual(len(axis_values["phase"]), 4)
+        self.assertGreaterEqual(len(axis_values["expression"]), 4)
+        self.assertGreaterEqual(len(axis_values["register"]), 3)
+        self.assertGreaterEqual(len(axis_values["environment"]), 5)
+        self.assertGreaterEqual(len(axis_values["tell"]), 4)
+        self.assertTrue(axis_values["tell"] & occupational_tells)
+
+    def test_assassin_princess_uses_historical_tells_only(self):
+        modern_tells = {
+            "wrong_badge",
+            "burner_phone",
+            "keycard_access",
+            "room_keycard",
+            "duty_radio",
+            "medical_chart_intel",
+            "service_cart_access",
+            "master_keyring",
+        }
+        allowed_tells = {"hairpin", "court_letter"}
+
+        for seed in range(1, 21):
+            payload = self.run_wrapper_json(
+                "--concept",
+                "설윤 공주 암살자",
+                "--explain-concept",
+                "--selection-mode",
+                "rule",
+                "--seed",
+                str(seed),
+                "--plain",
+                "--no-negative",
+            )
+            axis_selection = payload["concepts"][0]["selected_axes"][0]["axis_selection"]
+            self.assertIn(axis_selection["tell"], allowed_tells, msg=f"seed={seed}")
+            self.assertNotIn(axis_selection["tell"], modern_tells, msg=f"seed={seed}")
+
+    def test_assassin_expression_axis_varies_for_bunny_role(self):
+        expressions = set()
+        for seed in range(1, 21):
+            payload = self.run_wrapper_json(
+                "--concept",
+                "유나 바니걸 암살자",
+                "--explain-concept",
+                "--selection-mode",
+                "rule",
+                "--seed",
+                str(seed),
+                "--plain",
+                "--no-negative",
+            )
+            axis_selection = payload["concepts"][0]["selected_axes"][0]["axis_selection"]
+            expressions.add(axis_selection["expression"])
+
+        self.assertGreaterEqual(len(expressions), 3)
 
     def test_concept_recipe_generation_records_expanded_argv_in_provenance(self):
         result = subprocess.run(
@@ -1249,14 +1403,33 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "single_playing_card_calling_card_prop",
                 "black_leather_gloves_prop",
                 "sealed_mission_envelope_prop",
+                "surveillance_target_photo_prop",
+                "concealed_earpiece_coiled_wire",
+                "sharp_ornamental_hairpin_prop",
+                "compact_mirror_surveillance_prop",
+                "wrong_facing_id_badge_prop",
+                "burner_phone_prop",
+                "marked_route_map_prop",
+                "keycard_access_prop",
+                "room_keycard_prop",
             },
             "action": {
                 "weapon_low_ready_stance",
                 "concealed_holster_adjust_pose",
                 "doorframe_shadow_watch",
+                "public_seat_surveillance_wait",
+                "pretending_to_text_surveillance_pose",
+                "adjusting_covert_earpiece",
+                "hand_near_hidden_ornament_pose",
                 "staged_archery_draw_pose",
                 "blade_guarded_ready_pose",
                 "recorded_by_surveillance",
+                "checking_reflection_surveillance",
+                "crowd_blend_walkaway",
+                "dead_drop_handoff_pose",
+                "fake_badge_entry_pose",
+                "map_route_recon_pose",
+                "server_console_quiet_access",
             },
             "location": {
                 "maid_cafe_interior",
@@ -1267,17 +1440,44 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "joseon_palace_interior",
                 "luxury_hotel_corridor",
                 "yellow_tape_alley_reportage",
+                "quiet_cafe",
+                "hospital_waiting_room",
+                "server_room",
+                "airport_terminal",
+                "subway_car_inside",
+                "traditional_market",
+                "laundromat_night",
+                "rooftop_city",
+                "hotel_corridor_liminal",
+                "hotel_rooftop_dusk",
+                "luxury_hotel_lobby",
+                "rainy_neon_alley",
             },
             "lighting": {
                 "neon",
+                "low_key",
                 "flickering_fluorescent_horror",
                 "headlights",
                 "single_flashlight_beam",
                 "candlelight",
                 "rim_light",
                 "hard_flash",
+                "fluorescent",
+                "overcast",
+                "subway_car_fluorescent_light",
             },
-            "mood": {"clinical", "elegant", "uncanny", "reportage_tense_noir", "occult_noir"},
+            "mood": {
+                "clinical",
+                "elegant",
+                "uncanny",
+                "reportage_tense_noir",
+                "occult_noir",
+                "composed_cover_with_quiet_threat",
+                "daylight_cover_tension",
+                "quiet_domestic_stakeout",
+                "calm_exfiltration",
+                "tech_thriller_control",
+            },
             "composition": {
                 "cctv_corner_frame",
                 "paparazzi_diagonal_flash",
@@ -1285,11 +1485,52 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "frame_within_frame",
                 "silhouette",
                 "low_angle",
+                "over_shoulder_target_watch_frame",
+                "reflection",
+                "crowded_layers",
+                "centered_symmetry",
+                "negative_space",
+                "wide_establishing",
+                "puddle_inverted_reflection",
             },
-            "expression": {"cold_unreadable_stare"},
-            "light_type": {"narrow_spotlight"},
-            "light_intensity": {"deep_shadow_detail"},
-            "color": {"desaturated_cold_blue"},
+            "expression": {
+                "cold_unreadable_stare",
+                "off_frame_target_lock_gaze",
+                "sharp_side_glance_observation",
+                "warm_false_smile_cold_eyes",
+                "downcast_operational_focus",
+                "controlled_walkaway_calm",
+            },
+            "light_direction": {
+                "side_light_left",
+                "side_light_right",
+                "front_light",
+                "low_neon_side_light",
+                "overhead_fluorescent_toplight",
+                "top_light",
+            },
+            "light_type": {
+                "narrow_spotlight",
+                "fluorescent_ceiling",
+                "neon_sign_light",
+                "candlelight",
+                "subway_train_fluorescent",
+            },
+            "light_intensity": {
+                "deep_shadow_detail",
+                "high_key_bright",
+                "balanced_exposure",
+                "harsh_high_contrast",
+                "available_low_light",
+            },
+            "color": {
+                "desaturated_cold_blue",
+                "muted",
+                "clinical_white",
+                "neon_magenta_cyan",
+                "cross_processed_green",
+                "warm_earth",
+            },
         }
 
         for slot, ids in expected.items():
@@ -2950,6 +3191,11 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertIn("--intent", explicit_axis_args)
         self.assertIn("--default-intent", explicit_axis_args)
         self.assertNotIn("--semantic-default", explicit_axis_args)
+
+        concept_args = wrapper.build_forward_args(["--concept", "닝닝 경찰 암살자", "--no-negative"])
+        self.assertIn("--selection-mode", concept_args)
+        self.assertEqual(concept_args[concept_args.index("--selection-mode") + 1], "rule")
+        self.assertNotIn("--intent", concept_args)
 
     def test_default_semantic_missing_index_falls_back_to_rule(self):
         with tempfile.TemporaryDirectory() as tmp:

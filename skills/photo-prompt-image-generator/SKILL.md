@@ -160,7 +160,9 @@ python3 skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py \
   --explain-concept
 ```
 
-If the explanation looks right, rerun without `--explain-concept`. The wrapper expands `--concept` into deterministic generator args such as `--concept-lock`, `--preset`, `--set`, `--intent-axis`, `--additional-requirement`, and `--likeness-mode`.
+If the explanation looks right, rerun without `--explain-concept`. The wrapper expands `--concept` into deterministic generator args such as `--concept-lock`, `--preset`, `--set`, `--intent-axis`, `--additional-requirement`, and `--likeness-mode`. When `--concept` is provided and `--selection-mode` is not explicit, the wrapper defaults that call to rule mode because the recipe has already forced the core slots; pass `--selection-mode semantic` explicitly only when you intentionally want semantic retrieval on top of the recipe.
+
+For concepts that combine a role with `암살자`, the recipe resolver treats the role outfit as a cover identity and samples deterministic scene axes for archetype, mission phase, expression, register, environment, and cover-identity tell. The assassin layer should read through disguise, surveillance, target identification, access, occupational tools used in-context, pre-positioning, reflection, crowd blending, near-discovery suspense, or quiet exfiltration, not through graphic violence, visible victims, or drawn weapons. These concepts intentionally suppress camera-facing smiles, idol-photobook lighting, costume-showcase framing, and standalone cosplay-prop display; gaze should move off-frame, toward a task, a reflection, a route note, a bystander, a service door, or an architectural cover cue. Role profiles may restrict specific axes when needed, such as keeping historical princess concepts on period-appropriate tells rather than modern IDs or phones. The `암살자` mixin can also take preset priority over a role preset so strong costume roles still inherit a cinematic covert-photo register while keeping the role costume slot. Use `--explain-concept` to inspect `selected_axes`, legacy `selected_bundles`, `applied_role`, `applied_mixins`, and `combined_forced_slots` before rendering.
 
 Add unrepresented concrete requirements without manual prompt editing:
 
@@ -456,7 +458,7 @@ Detailed English prompts should normally be at least 120 words when enough visua
 - `--n 1`
 - `--lang both`
 - `--detail-level detailed`
-- `--selection-mode semantic`
+- `--selection-mode semantic` for ordinary non-concept generation; deterministic `--concept` recipe generation defaults to rule mode unless `--selection-mode` is explicit
 - a broad default `--intent` when no explicit intent is provided
 - `--surreal-mode off`
 - `--reference-edit-mode off`
