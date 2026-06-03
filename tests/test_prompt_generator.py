@@ -630,6 +630,17 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         finally:
             self.generator.embed_texts_with_gemini = original_embedder
 
+    def run_wrapper_json(self, *args: str):
+        result = subprocess.run(
+            [sys.executable, str(WRAPPER_PATH), *args],
+            cwd=ROOT,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        self.assertEqual(result.returncode, 0, result.stderr)
+        return json.loads(result.stdout)
+
     def test_nonhuman_subject_does_not_get_human_pose_guidance(self):
         item = self.generate(
             "street_documentary",
@@ -908,6 +919,144 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertIn("covered adult bunny-girl stage costume", payload["forward_args"])
         self.assertIn("--likeness-mode", payload["forward_args"])
         self.assertIn("inspired", payload["forward_args"])
+        self.assertNotIn("expression=cold_unreadable_stare", payload["forward_args"])
+        self.assertNotIn("hiding in plain sight", " ".join(payload["forward_args"]))
+
+    def test_concept_recipe_explain_combines_role_and_assassin_mixin(self):
+        payload = self.run_wrapper_json(
+            "--concept",
+            "닝닝 경찰 암살자",
+            "--explain-concept",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "1",
+            "--plain",
+            "--no-negative",
+        )
+
+        concept = payload["concepts"][0]
+        self.assertEqual(concept["name"], "닝닝")
+        self.assertEqual(concept["applied_role"], "경찰")
+        self.assertEqual(concept["applied_mixins"], ["암살자"])
+        self.assertEqual(len(concept["selected_bundles"]), 1)
+        bundle = concept["selected_bundles"][0]
+        self.assertEqual(bundle["mixin"], "암살자")
+        self.assertTrue(bundle["bundle_id"])
+        self.assertIn("weight", bundle)
+        self.assertEqual(concept["combined_forced_slots"]["costume_style"], ["police_uniform_costume"])
+        for slot in ("prop", "action", "location", "lighting", "mood", "composition"):
+            self.assertEqual(concept["combined_forced_slots"][slot], [bundle["set"][slot]])
+        self.assertEqual(concept["combined_forced_slots"]["expression"], ["cold_unreadable_stare"])
+        self.assertEqual(concept["combined_forced_slots"]["light_type"], ["narrow_spotlight"])
+        self.assertEqual(concept["combined_forced_slots"]["light_intensity"], ["deep_shadow_detail"])
+        self.assertEqual(concept["combined_forced_slots"]["color"], ["desaturated_cold_blue"])
+        self.assertIn("costume_style=police_uniform_costume", payload["forward_args"])
+        for slot in ("prop", "action", "location", "lighting", "mood", "composition"):
+            self.assertIn(f"{slot}={bundle['set'][slot]}", payload["forward_args"])
+        self.assertIn("expression=cold_unreadable_stare", payload["forward_args"])
+        self.assertIn("role outfit is a cover identity/disguise for the assassin persona", payload["forward_args"])
+        self.assertIn("the figure is hiding in plain sight: an ordinary cover identity concealing a different purpose", payload["forward_args"])
+        self.assertIn("non-graphic staged character photo with no depicted injury, blood, victim, or violence", payload["forward_args"])
+
+        repeated = self.run_wrapper_json(
+            "--concept",
+            "닝닝 경찰 암살자",
+            "--explain-concept",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "1",
+            "--plain",
+            "--no-negative",
+        )
+        changed_seed = self.run_wrapper_json(
+            "--concept",
+            "닝닝 경찰 암살자",
+            "--explain-concept",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "3",
+            "--plain",
+            "--no-negative",
+        )
+        self.assertEqual(bundle["bundle_id"], repeated["concepts"][0]["selected_bundles"][0]["bundle_id"])
+        self.assertNotEqual(bundle["bundle_id"], changed_seed["concepts"][0]["selected_bundles"][0]["bundle_id"])
+
+    def test_assassin_concept_batch_uses_cohesive_bundles(self):
+        cases = [
+            ("카리나 메이드 암살자", 1),
+            ("윈터 간호사 암살자", 1),
+            ("닝닝 경찰 암살자", 1),
+            ("지젤 광부 암살자", 1),
+            ("아일릿 원희 사복 여친 암살자", 1),
+            ("설윤 공주 암살자", 2),
+            ("유나 바니걸 암살자", 8),
+        ]
+        banned_actions = {
+            "turning_back",
+            "over_shoulder_pose",
+            "slow_walk_turnaround",
+            "window_silhouette_stand",
+            "weapon_low_ready_stance",
+            "blade_guarded_ready_pose",
+            "staged_archery_draw_pose",
+            "holding_real_weapon_reference_pose",
+            "rpg_weapon_ready_pose",
+        }
+        expected_common_slots = {
+            "expression": "cold_unreadable_stare",
+            "light_type": "narrow_spotlight",
+            "light_intensity": "deep_shadow_detail",
+            "color": "desaturated_cold_blue",
+        }
+        selected_bundle_ids = set()
+        for concept, seed in cases:
+            explanation = self.run_wrapper_json(
+                "--concept",
+                concept,
+                "--explain-concept",
+                "--selection-mode",
+                "rule",
+                "--seed",
+                str(seed),
+                "--plain",
+                "--no-negative",
+            )
+            concept_payload = explanation["concepts"][0]
+            selected_bundle = concept_payload["selected_bundles"][0]
+            selected_bundle_ids.add(selected_bundle["bundle_id"])
+
+            generated = self.run_wrapper_json(
+                "--concept",
+                concept,
+                "--selection-mode",
+                "rule",
+                "--seed",
+                str(seed),
+                "--lang",
+                "en",
+                "--no-negative",
+                "--include-choices",
+            )
+            item = generated[0]
+            for slot, expected_id in selected_bundle["set"].items():
+                self.assertEqual(item["choices"][slot]["id"], expected_id)
+            for slot, expected_id in expected_common_slots.items():
+                self.assertEqual(item["choices"][slot]["id"], expected_id)
+            self.assertNotIn(item["choices"]["action"]["id"], banned_actions)
+
+            if "costume_style" in concept_payload["combined_forced_slots"]:
+                expected_costume = concept_payload["combined_forced_slots"]["costume_style"][0]
+                self.assertEqual(item["choices"]["costume_style"]["id"], expected_costume)
+
+            self.assertIn("hiding in plain sight", item["prompt_en"])
+            self.assertIn("stillness and tight emotional control just before a mission", item["prompt_en"])
+            self.assertIn("never drawn, aimed, brandished, or used", item["prompt_en"])
+            self.assertIn("non-graphic staged character photo with no depicted injury, blood, victim, or violence", item["prompt_en"])
+
+        self.assertGreaterEqual(len(selected_bundle_ids), 3)
 
     def test_concept_recipe_generation_records_expanded_argv_in_provenance(self):
         result = subprocess.run(
@@ -1083,9 +1232,64 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
 
     def test_concept_recipe_supporting_tags_are_registered(self):
         expected = {
-            "costume_style": {"miner_workwear_hard_hat", "royal_princess_hanbok"},
-            "prop": {"nonfunctional_pickaxe_prop"},
-            "location": {"underground_mine_tunnel_set", "royal_princess_chamber"},
+            "costume_style": {
+                "frill_apron_maid_costume",
+                "nurse_uniform_costume",
+                "miner_workwear_hard_hat",
+                "royal_princess_hanbok",
+            },
+            "prop": {
+                "nonfunctional_pickaxe_prop",
+                "real_survival_knife",
+                "real_saber",
+                "real_longbow",
+                "real_holstered_service_pistol",
+                "deactivated_crossbow_display_prop",
+                "vintage_film_camera_prop",
+                "single_playing_card_calling_card_prop",
+                "black_leather_gloves_prop",
+                "sealed_mission_envelope_prop",
+            },
+            "action": {
+                "weapon_low_ready_stance",
+                "concealed_holster_adjust_pose",
+                "doorframe_shadow_watch",
+                "staged_archery_draw_pose",
+                "blade_guarded_ready_pose",
+                "recorded_by_surveillance",
+            },
+            "location": {
+                "maid_cafe_interior",
+                "hospital_corridor",
+                "underground_mine_tunnel_set",
+                "royal_princess_chamber",
+                "underground_parking_garage",
+                "joseon_palace_interior",
+                "luxury_hotel_corridor",
+                "yellow_tape_alley_reportage",
+            },
+            "lighting": {
+                "neon",
+                "flickering_fluorescent_horror",
+                "headlights",
+                "single_flashlight_beam",
+                "candlelight",
+                "rim_light",
+                "hard_flash",
+            },
+            "mood": {"clinical", "elegant", "uncanny", "reportage_tense_noir", "occult_noir"},
+            "composition": {
+                "cctv_corner_frame",
+                "paparazzi_diagonal_flash",
+                "broken_glass_fragments_frame",
+                "frame_within_frame",
+                "silhouette",
+                "low_angle",
+            },
+            "expression": {"cold_unreadable_stare"},
+            "light_type": {"narrow_spotlight"},
+            "light_intensity": {"deep_shadow_detail"},
+            "color": {"desaturated_cold_blue"},
         }
 
         for slot, ids in expected.items():

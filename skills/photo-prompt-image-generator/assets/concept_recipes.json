@@ -1,5 +1,35 @@
 {
   "roles": {
+    "메이드": {
+      "preset": "maid_cafe_cosplay_portrait",
+      "set": [
+        "costume_style=frill_apron_maid_costume",
+        "location=maid_cafe_interior"
+      ],
+      "additional": [
+        "adult maid-cafe costume styling with frilled apron details"
+      ],
+      "intent_axis": [
+        "adult maid-cafe cosplay portrait",
+        "frilled apron maid costume in a cafe interior"
+      ],
+      "likeness_mode": "inspired"
+    },
+    "간호사": {
+      "preset": "japanese_otaku_costume_portrait",
+      "set": [
+        "costume_style=nurse_uniform_costume",
+        "location=hospital_corridor"
+      ],
+      "additional": [
+        "adult nurse-uniform costume styling with clear medical-uniform details"
+      ],
+      "intent_axis": [
+        "adult nurse uniform cosplay portrait",
+        "cold hospital corridor atmosphere"
+      ],
+      "likeness_mode": "inspired"
+    },
     "경찰": {
       "preset": "japanese_otaku_costume_portrait",
       "set": [
@@ -68,6 +98,200 @@
       ],
       "intent_axis": [
         "casual girlfriend-style candid iPhone portrait"
+      ],
+      "likeness_mode": "inspired"
+    }
+  },
+  "mixins": {
+    "암살자": {
+      "preset": "compact_cinematic_prop_portrait",
+      "set": {
+        "expression": "cold_unreadable_stare",
+        "action": "standing_silence",
+        "composition": "frame_within_frame",
+        "lighting": "chiaroscuro_window_light",
+        "light_direction": "side_light_left",
+        "light_type": "narrow_spotlight",
+        "light_intensity": "deep_shadow_detail",
+        "color": "desaturated_cold_blue",
+        "mood": "tense"
+      },
+      "bundles": [
+        {
+          "id": "cafe_cover_identity",
+          "weight": 1,
+          "roles": [
+            "메이드"
+          ],
+          "set": {
+            "prop": "single_playing_card_calling_card_prop",
+            "action": "doorframe_shadow_watch",
+            "location": "maid_cafe_interior",
+            "lighting": "low_key",
+            "mood": "tense",
+            "composition": "cctv_corner_frame"
+          },
+          "additional": [
+            "the maid uniform is a flawless cover identity inside an ordinary cafe, with the stillness of someone waiting for a private mission cue",
+            "a single calling-card prop and doorway shadow framing create the threat through implication rather than a drawn weapon"
+          ],
+          "intent_axis": [
+            "covert operative hiding in plain sight inside a maid cafe cover identity",
+            "cold stillness under CCTV framing with a single calling card"
+          ]
+        },
+        {
+          "id": "hospital_corridor_infiltrator",
+          "weight": 1,
+          "roles": [
+            "간호사"
+          ],
+          "set": {
+            "prop": "black_leather_gloves_prop",
+            "action": "doorframe_shadow_watch",
+            "location": "hospital_corridor",
+            "lighting": "flickering_fluorescent_horror",
+            "mood": "clinical",
+            "composition": "frame_within_frame"
+          },
+          "additional": [
+            "the nurse uniform is a clinical cover identity, not a cheerful costume pose",
+            "black gloves, a doorframe, and a cold unreadable stare suggest controlled infiltration without showing injury, a target, or a weapon in use"
+          ],
+          "intent_axis": [
+            "clinical hospital corridor cover identity with emotional control",
+            "doorframe shadow surveillance portrait with black gloves"
+          ]
+        },
+        {
+          "id": "undercover_parking_identity",
+          "weight": 1,
+          "roles": [
+            "경찰",
+            "사복 여친"
+          ],
+          "set": {
+            "prop": "single_playing_card_calling_card_prop",
+            "action": "concealed_holster_adjust_pose",
+            "location": "underground_parking_garage",
+            "lighting": "headlights",
+            "mood": "reportage_tense_noir",
+            "composition": "cctv_corner_frame"
+          },
+          "additional": [
+            "the uniform or casual outfit reads as an undercover cover identity rather than official duty or casual dating",
+            "the concealed holster detail stays hidden and never becomes an aimed or drawn weapon; the calling card carries the mission trace"
+          ],
+          "intent_axis": [
+            "undercover parking garage surveillance portrait with hidden purpose",
+            "headlights CCTV frame and calling card mission trace"
+          ]
+        },
+        {
+          "id": "mine_shift_cover_identity",
+          "weight": 1,
+          "roles": [
+            "광부"
+          ],
+          "set": {
+            "prop": "black_leather_gloves_prop",
+            "action": "doorframe_shadow_watch",
+            "location": "underground_mine_tunnel_set",
+            "lighting": "single_flashlight_beam",
+            "mood": "tense",
+            "composition": "silhouette"
+          },
+          "additional": [
+            "the miner workwear is a practical cover identity, while the hands, posture, and stillness feel too controlled for ordinary labor",
+            "remove the heroic survival pose; the tension comes from a silent watcher hidden in the tunnel mouth"
+          ],
+          "intent_axis": [
+            "miner disguise hiding a covert observer in a mine tunnel",
+            "single flashlight silhouette and cold controlled stillness"
+          ]
+        },
+        {
+          "id": "palace_court_shadow",
+          "weight": 1,
+          "roles": [
+            "공주"
+          ],
+          "set": {
+            "prop": "sealed_mission_envelope_prop",
+            "action": "standing_silence",
+            "location": "joseon_palace_interior",
+            "lighting": "candlelight",
+            "mood": "occult_noir",
+            "composition": "frame_within_frame"
+          },
+          "additional": [
+            "the princess styling is a courtly cover identity, with elegance masking a private mission",
+            "a sealed mission envelope, candlelight, and half-shadow should replace combat posing as the main assassin signal"
+          ],
+          "intent_axis": [
+            "courtly cover identity with sealed mission trace",
+            "candlelit palace half-shadow and unreadable gaze"
+          ]
+        },
+        {
+          "id": "hotel_lounge_shadow_agent",
+          "weight": 1,
+          "roles": [
+            "바니걸"
+          ],
+          "set": {
+            "prop": "black_leather_gloves_prop",
+            "action": "standing_silence",
+            "location": "luxury_hotel_corridor",
+            "lighting": "rim_light",
+            "mood": "reportage_tense_noir",
+            "composition": "silhouette"
+          },
+          "additional": [
+            "the stage costume reads as a hotel-lounge cover identity, with a poised anonymous silhouette rather than a playful costume pin-up",
+            "black gloves, rim light, and distance from the camera create the covert-agent signal without any visible target"
+          ],
+          "intent_axis": [
+            "hotel lounge cover identity as a shadow agent silhouette",
+            "rim-lit anonymous stillness with black gloves"
+          ]
+        },
+        {
+          "id": "everyday_surveillance_tail",
+          "weight": 1,
+          "roles": [
+            "사복 여친",
+            "경찰"
+          ],
+          "set": {
+            "prop": "vintage_film_camera_prop",
+            "action": "checking_phone",
+            "location": "airport_terminal",
+            "lighting": "hard_flash",
+            "mood": "reportage_tense_noir",
+            "composition": "paparazzi_diagonal_flash"
+          },
+          "additional": [
+            "the casual girlfriend-style outfit is a hiding-in-plain-sight cover identity inside a public transit space",
+            "camera and phone details read as surveillance and mission timing, not tourist posing or social-media cuteness"
+          ],
+          "intent_axis": [
+            "everyday casual cover identity in an airport surveillance tail",
+            "paparazzi flash camera prop and phone timing as mission trace"
+          ]
+        }
+      ],
+      "additional": [
+        "the figure is hiding in plain sight: an ordinary cover identity concealing a different purpose",
+        "stillness and tight emotional control just before a mission, not an action, fight, or combat scene",
+        "if any weapon is present it stays fully concealed or holstered and is never drawn, aimed, brandished, or used",
+        "a subtle wrongness or quiet incongruity signals that the ordinary look is a disguise",
+        "observed surveillance feel through half-shadow, through-glass, doorway, or corner framing",
+        "non-graphic staged character photo with no depicted injury, blood, victim, or violence"
+      ],
+      "intent_axis": [
+        "covert assassin hiding in plain sight with a calm unreadable gaze",
+        "stillness before action under surveillance-noir framing, non-graphic"
       ],
       "likeness_mode": "inspired"
     }

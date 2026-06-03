@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import importlib.util
+import hashlib
 import json
 import os
 import sys
@@ -21,6 +22,19 @@ DEFAULT_SEMANTIC_INTENT = (
     "photorealistic image-ready photo prompt with coherent subject, location, "
     "lighting, mood, camera, composition, texture, and format"
 )
+BUNDLE_OVERRIDE_SLOTS = {
+    "prop",
+    "action",
+    "location",
+    "lighting",
+    "light_direction",
+    "light_type",
+    "light_intensity",
+    "color",
+    "mood",
+    "composition",
+    "expression",
+}
 
 
 def has_option(args: Sequence[str], name: str) -> bool:
@@ -97,6 +111,111 @@ def match_concept_role(concept: str, roles: dict[str, Any]) -> tuple[str | None,
     return None, stripped, {}
 
 
+def match_concept_mixins(concept: str, mixins: dict[str, Any]) -> list[tuple[str, dict[str, Any]]]:
+    stripped = concept.strip()
+    matches: list[tuple[str, dict[str, Any]]] = []
+    for mixin in sorted(mixins, key=len, reverse=True):
+        if mixin and mixin in stripped:
+            matches.append((mixin, dict(mixins[mixin] or {})))
+    return matches
+
+
+def concept_without_mixins(concept: str, mixin_names: Sequence[str]) -> str:
+    stripped = concept
+    for mixin in mixin_names:
+        stripped = stripped.replace(mixin, " ")
+    return " ".join(stripped.split())
+
+
+def split_forced_slot(raw: str) -> tuple[str, list[str]] | None:
+    if "=" not in raw:
+        return None
+    slot, ids_raw = raw.split("=", 1)
+    slot = slot.strip()
+    ids = [item.strip() for item in ids_raw.replace("|", ",").split(",") if item.strip()]
+    if not slot or not ids:
+        return None
+    return slot, ids
+
+
+def set_values_to_forced(set_values: Any) -> list[str]:
+    if isinstance(set_values, dict):
+        forced: list[str] = []
+        for slot, values in set_values.items():
+            ids = normalize_list(values)
+            if ids:
+                forced.append(f"{slot}={','.join(ids)}")
+        return forced
+    return normalize_list(set_values)
+
+
+def merge_forced_set_groups(set_groups: Sequence[tuple[Sequence[str], set[str]]]) -> list[str]:
+    by_slot: dict[str, list[str]] = {}
+    for forced_sets, override_slots in set_groups:
+        parsed_forced_sets: list[tuple[str, list[str]]] = []
+        for forced in forced_sets:
+            parsed = split_forced_slot(forced)
+            if parsed is None:
+                continue
+            parsed_forced_sets.append(parsed)
+
+        cleared_slots: set[str] = set()
+        for slot, ids in parsed_forced_sets:
+            if slot in override_slots and slot not in cleared_slots:
+                by_slot[slot] = []
+                cleared_slots.add(slot)
+            slot_pool = by_slot.setdefault(slot, [])
+            for item_id in ids:
+                if item_id not in slot_pool:
+                    slot_pool.append(item_id)
+    return [f"{slot}={','.join(ids)}" for slot, ids in by_slot.items()]
+
+
+def merge_recipe_sets(recipes: Sequence[dict[str, Any]]) -> list[str]:
+    return merge_forced_set_groups([(set_values_to_forced(recipe.get("set")), set()) for recipe in recipes])
+
+
+def forced_sets_to_mapping(forced_sets: Sequence[str]) -> dict[str, list[str]]:
+    mapping: dict[str, list[str]] = {}
+    for forced in forced_sets:
+        parsed = split_forced_slot(forced)
+        if parsed is None:
+            continue
+        slot, ids = parsed
+        mapping[slot] = ids
+    return mapping
+
+
+def select_bundle_for_mixin(
+    concept: str, mixin_name: str, mixin_recipe: dict[str, Any], args: Sequence[str], role: str | None
+) -> dict[str, Any] | None:
+    raw_bundles = mixin_recipe.get("bundles")
+    bundles = [dict(bundle) for bundle in raw_bundles if isinstance(bundle, dict)] if isinstance(raw_bundles, list) else []
+    if not bundles:
+        return None
+
+    if role:
+        role_bundles = [bundle for bundle in bundles if role in normalize_list(bundle.get("roles"))]
+        if role_bundles:
+            bundles = role_bundles
+
+    weights = [max(float(bundle.get("weight", 1) or 0), 0.0) for bundle in bundles]
+    total = sum(weights)
+    if total <= 0:
+        return dict(bundles[0])
+
+    seed = option_value(args, "--seed") or ""
+    token = f"{concept}|{mixin_name}|{seed}"
+    digest = hashlib.sha256(token.encode("utf-8")).digest()
+    threshold = int.from_bytes(digest[:8], "big") / 2**64 * total
+    cursor = 0.0
+    for bundle, weight in zip(bundles, weights):
+        cursor += weight
+        if threshold < cursor:
+            return dict(bundle)
+    return dict(bundles[-1])
+
+
 def add_option(args: list[str], name: str, value: str) -> None:
     if value:
         args.extend([name, value])
@@ -108,6 +227,7 @@ def resolve_concepts(args: Sequence[str], concepts: Sequence[str]) -> tuple[list
 
     recipes = load_concept_recipes()
     roles = recipes.get("roles", {}) or {}
+    mixins = recipes.get("mixins", {}) or {}
     resolved_args = list(args)
     explanations: list[dict[str, Any]] = []
     has_preset_value = has_option(resolved_args, "--preset")
@@ -117,25 +237,77 @@ def resolve_concepts(args: Sequence[str], concepts: Sequence[str]) -> tuple[list
         concept = concept.strip()
         if not concept:
             continue
-        role, name, recipe = match_concept_role(concept, roles)
+        mixin_matches = match_concept_mixins(concept, mixins)
+        role_concept = concept_without_mixins(concept, [mixin for mixin, _ in mixin_matches])
+        role, name, recipe = match_concept_role(role_concept or concept, roles)
+        selected_bundles: list[dict[str, Any]] = []
+        set_groups: list[tuple[Sequence[str], set[str]]] = []
+        applied_recipes = [recipe] if recipe else []
+        additional_requirements: list[str] = []
+        intent_axes: list[str] = []
+
+        if recipe:
+            set_groups.append((set_values_to_forced(recipe.get("set")), set()))
+            additional_requirements.extend(normalize_list(recipe.get("additional")))
+            intent_axes.extend(normalize_list(recipe.get("intent_axis")))
+
+        for mixin, mixin_recipe in mixin_matches:
+            applied_recipes.append(mixin_recipe)
+            selected_bundle = select_bundle_for_mixin(concept, mixin, mixin_recipe, args, role)
+            mixin_base_set = set_values_to_forced(mixin_recipe.get("set"))
+            additional_requirements.extend(normalize_list(mixin_recipe.get("additional")))
+            intent_axes.extend(normalize_list(mixin_recipe.get("intent_axis")))
+            if selected_bundle:
+                if mixin_base_set:
+                    set_groups.append((mixin_base_set, set()))
+                bundle_set = selected_bundle.get("set") if isinstance(selected_bundle.get("set"), dict) else {}
+                set_groups.append((set_values_to_forced(bundle_set), BUNDLE_OVERRIDE_SLOTS))
+                additional_requirements.extend(normalize_list(selected_bundle.get("additional")))
+                intent_axes.extend(normalize_list(selected_bundle.get("intent_axis")))
+                selected_bundles.append(
+                    {
+                        "mixin": mixin,
+                        "bundle_id": str(selected_bundle.get("id") or ""),
+                        "set": bundle_set,
+                        "weight": selected_bundle.get("weight", 1),
+                    }
+                )
+            else:
+                set_groups.append((mixin_base_set, set()))
+
+        if role and selected_bundles:
+            additional_requirements.append("role outfit is a cover identity/disguise for the assassin persona")
+
+        combined_sets = merge_forced_set_groups(set_groups)
         add_option(resolved_args, "--concept-lock", concept)
 
-        if recipe.get("preset") and not has_preset_value:
-            add_option(resolved_args, "--preset", str(recipe["preset"]))
+        preset = str(recipe.get("preset") or "")
+        if not preset:
+            preset = next(
+                (str(mixin_recipe.get("preset") or "") for _, mixin_recipe in mixin_matches if mixin_recipe.get("preset")),
+                "",
+            )
+        if preset and not has_preset_value:
+            add_option(resolved_args, "--preset", preset)
             has_preset_value = True
-        for forced in normalize_list(recipe.get("set")):
+        for forced in combined_sets:
             add_option(resolved_args, "--set", forced)
-        for requirement in normalize_list(recipe.get("additional")):
+        for requirement in additional_requirements:
             add_option(resolved_args, "--additional-requirement", requirement)
-        for axis in normalize_list(recipe.get("intent_axis")):
+        for axis in intent_axes:
             add_option(resolved_args, "--intent-axis", axis)
 
         likeness_mode = str(recipe.get("likeness_mode") or "")
+        if not likeness_mode:
+            likeness_mode = next(
+                (str(mixin_recipe.get("likeness_mode") or "") for _, mixin_recipe in mixin_matches if mixin_recipe.get("likeness_mode")),
+                "",
+            )
         if likeness_mode and not has_likeness_value:
             add_option(resolved_args, "--likeness-mode", likeness_mode)
             has_likeness_value = True
 
-        if not recipe:
+        if not applied_recipes:
             add_option(resolved_args, "--intent-axis", concept)
 
         explanations.append(
@@ -143,8 +315,13 @@ def resolve_concepts(args: Sequence[str], concepts: Sequence[str]) -> tuple[list
                 "concept": concept,
                 "name": name,
                 "role": role,
-                "matched": bool(recipe),
+                "applied_role": role,
+                "applied_mixins": [mixin for mixin, _ in mixin_matches],
+                "matched": bool(applied_recipes),
                 "recipe": recipe,
+                "mixins": {mixin: mixin_recipe for mixin, mixin_recipe in mixin_matches},
+                "selected_bundles": selected_bundles,
+                "combined_forced_slots": forced_sets_to_mapping(combined_sets),
             }
         )
 
