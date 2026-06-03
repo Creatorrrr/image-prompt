@@ -1,0 +1,97 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "PhotoPromptImageRun",
+  "type": "object",
+  "required": [
+    "ts",
+    "run_id",
+    "prompt_id",
+    "prompt_en",
+    "attempt",
+    "status"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "ts": {
+      "type": "string",
+      "description": "ISO8601 timestamp supplied by the caller"
+    },
+    "run_id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{16}$"
+    },
+    "concept": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "prompt_id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{16}$"
+    },
+    "negative_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[0-9a-f]{16}$"
+    },
+    "prompt_en": {
+      "type": "string"
+    },
+    "negative_en": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "argv": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "seed": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "attempt": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "retry_of": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "status": {
+      "enum": [
+        "success",
+        "safety_block",
+        "error"
+      ]
+    },
+    "failure_reason": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "image_paths": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "tool": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  }
+}

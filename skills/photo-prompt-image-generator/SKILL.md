@@ -14,7 +14,10 @@ Bundled resources:
 - `scripts/prompt_generator.py`: original prompt generator CLI.
 - `assets/photo_prompt_tags.json`: original tag dictionary.
 - `assets/photo_prompt_semantic_index.json`: Gemini Embedding 2 semantic index for the default intent-based selection path.
+- `assets/concept_recipes.json`: deterministic short Korean concept to generator-argv recipes.
+- `assets/run_ledger.schema.json`: schema for image-generation attempt records.
 - `scripts/generate_photo_prompt.py`: wrapper with project-local defaults.
+- `scripts/record_image_run.py`: validates and appends external image-generation attempts to the local run ledger.
 - `scripts/build_semantic_index.py`: rebuilds the Gemini semantic index after dictionary changes.
 - `scripts/validate_photo_prompt_dictionary.py`: validates optional semantic metadata and guards.
 
@@ -22,6 +25,25 @@ Canonical project source path: `skills/photo-prompt-image-generator`.
 Agent compatibility path: `.agents/skills/photo-prompt-image-generator`, a symlink to the canonical skill folder.
 
 ## Default Workflow
+
+0. For semantic-mode generation, prefer the project virtualenv when it exists:
+
+```bash
+.venv/bin/python skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py
+```
+
+If `.venv` is missing, `google-genai` cannot be imported, or generation prints `semantic default fell back to rule mode`, self-heal the local environment before continuing:
+
+```bash
+python3 -m venv .venv
+.venv/bin/python -m pip install -r requirements.txt
+.venv/bin/python - <<'PY'
+from google import genai
+print("google-genai ok")
+PY
+```
+
+Then rerun the original prompt command with `.venv/bin/python`. Do this directly without asking the user unless the install fails, the network is unavailable, or `GEMINI_API_KEY`/`GOOGLE_API_KEY` is missing from both the environment and the project `.env`.
 
 1. Generate one prompt with JSON output. The wrapper defaults to semantic mode and uses a broad photographic intent when the user does not provide `--intent`:
 
@@ -32,7 +54,9 @@ python3 skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py
 2. Use `prompt_en` as the primary image prompt unless the user explicitly wants Korean-only output.
 3. If a negative prompt is present, append it to the image request as `Avoid: ...`.
 4. Call the available image generation tool with the final prompt when the user asks to create, render, or generate an image.
-5. If the user asks only for prompts, return the generated prompt text and do not generate an image.
+5. If the user asks for unchanged retries, keep `prompt_en` and `negative_en` byte-for-byte unchanged for each retry. Use `provenance.prompt_id` as the identity for the prompt and retry failed attempts up to the requested budget before reporting remaining failures.
+6. Record each image-generation attempt with `scripts/record_image_run.py` when provenance matters, especially for safety/filter failures and retry chains.
+7. If the user asks only for prompts, return the generated prompt text and do not generate an image.
 
 ## Useful Commands
 
@@ -114,6 +138,56 @@ conservative profile, automatic axis decomposition, intent steering, and weight 
 Use repeated `--intent-axis "..."` values when the intent has explicit required semantic axes
 but you still want preset choice to remain semantic rather than forcing a specific preset or slot.
 Use `--intent-steering off` to keep semantic ranking without automatic human/urban/surreal slot steering.
+
+Generate concept-faithful variants where the original idea must stay visually dominant:
+
+```bash
+python3 skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py \
+  --intent "cozy homebody guy in a small lived-in bedroom at night, gaming desk, snacks, blanket" \
+  --concept-lock "방구석 집돌이 컨셉, 작은 방, 모니터 빛, 게임패드, 간식, 담요" \
+  --intent-axis "homebody guy in small bedroom" \
+  --intent-axis "gaming desk snacks blanket" \
+  --n 3
+```
+
+Use `--concept-lock` when the user provides a compact scene concept and wants diversity without drifting away from it. The locked concept is rendered near the front of the prompt, while generated subject, action, lighting, camera, texture, and format slots become supporting detail. Repeat `--concept-lock` for multiple non-negotiable scene anchors.
+
+Expand a short Korean concept through the recipe resolver before generation:
+
+```bash
+python3 skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py \
+  --concept "유나 바니걸" \
+  --explain-concept
+```
+
+If the explanation looks right, rerun without `--explain-concept`. The wrapper expands `--concept` into deterministic generator args such as `--concept-lock`, `--preset`, `--set`, `--intent-axis`, `--additional-requirement`, and `--likeness-mode`.
+
+Add unrepresented concrete requirements without manual prompt editing:
+
+```bash
+python3 skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py \
+  --preset cinematic_fantasy_portrait \
+  --concept-lock "지젤 광부" \
+  --additional-requirement "coal miner workwear" \
+  --additional-requirement "mining helmet with headlamp" \
+  --likeness-mode inspired
+```
+
+Record an image attempt after using the external image tool:
+
+```bash
+python3 skills/photo-prompt-image-generator/scripts/record_image_run.py \
+  --ts "2026-06-03T10:00:00+09:00" \
+  --concept "유나 바니걸" \
+  --prompt-en "$PROMPT_EN" \
+  --prompt-id "$PROMPT_ID" \
+  --attempt 1 \
+  --status safety_block \
+  --failure-reason "safety filter" \
+  --tool image_gen
+```
+
+The recorder recomputes `prompt_id` from `--prompt-en`; if it differs from `--prompt-id`, it exits without writing. On retries, pass the same prompt text and increment `--attempt`; use `--retry-of` with the previous `run_id` when available.
 
 Evaluate semantic retrieval behavior:
 
@@ -320,9 +394,10 @@ python3 skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py \
 - For contrast-photo requests such as glam wardrobe in Antarctic ice, melting pastel ice cream in an extreme landscape, aurora field with editorial fashion, or glossy story props in harsh environments, use `surreal_contrast_editorial`.
 - `surreal_contrast_editorial` is not the same route as `--surreal-mode on`: it uses normal photo slots such as `location`, `wardrobe_style`, `prop`, `texture`, and `action`, and should not force `surreal_concept`, `surreal_anchor`, `scale_relation`, or `surreal_physics_detail`.
 - Preserve user-specified subject, location, format, camera, lighting, mood, and aspect instructions by mapping them to `--preset` or `--set` when an exact tag exists.
-- For short Korean seeds, map concrete nouns or style hints to `--preset` and `--set` values first. For example, map "도시 패션", "시네마틱 소품", or "여러 컷" to the compact presets; map explicit hair, prop, aspect, lighting, and camera terms to `hair_style`, `prop`, `format`, `lighting`, `camera_type`, or `lens` when tag ids exist.
+- For short Korean seeds, pass the original seed through `--concept-lock` first, then map concrete nouns or style hints to `--preset` and `--set` values. For example, map "도시 패션", "시네마틱 소품", or "여러 컷" to the compact presets; map explicit hair, prop, aspect, lighting, and camera terms to `hair_style`, `prop`, `format`, `lighting`, `camera_type`, or `lens` when tag ids exist.
+- When the user asks for a spectrum of variants around one concept, use `--concept-lock` plus `--n`, `--seed`, and optional repeated `--intent-axis` values. Keep the locked concept stable and let only supporting slots vary.
 - For neutral fashion, selfie, or portrait requests, map ordinary clothing to `wardrobe_style`, beauty terms to `makeup_style`, gaze/smile terms to `expression`, and body/crop requests to `subject_framing`. Keep these separate from adult-only `adult_context`, `fetish_styling`, and `body_framing`.
-- If a Korean seed has no exact tag for an important visual requirement, keep the closest generated base prompt and append that requirement as `Additional requirements: ...`; do not add LLM calls or hidden expansion logic inside the deterministic scripts.
+- If a Korean seed has no exact tag for an important visual requirement, keep it in `--concept-lock` first; append `Additional requirements: ...` only for concrete details still not represented by tags. Do not add LLM calls or hidden expansion logic inside the deterministic scripts.
 - Do not force non-photo requests through this photo generator. Poster, infographic, sticker, UI/layout design, typography-heavy graphic design, webtoon/comic panel, game UI, and illustration-only requests should be handled as direct prompt writing or by a more suitable skill/tool unless the user explicitly asks for a photoreal photographed version.
 - Treat ReactorPrompt export artifacts such as `카메라 메타데이터 있음`, `[MASTER PROMPT TEMPLATE]`, EXIF notes, scraper labels, or download bookkeeping as noise, not tag candidates.
 - Do not add graphic/design-only concepts such as poster layout, infographic structure, sticker sheet styling, typography systems, UI screen layout, webtoon panel structure, or illustration rendering into `photo_prompt_tags.json` unless the user explicitly asks for a photographed version of that subject. Photographed packaging, craft objects, physical product boards, and real photo-collage surfaces are allowed only when rendered as real camera captures with `no text or watermark`.
@@ -359,13 +434,15 @@ Default generation uses `--detail-level detailed`. Apply this contract to both p
 
 The final image prompt should include:
 
+- concept lock: when `--concept-lock` is provided, render the original user concept near the beginning and treat all generated slot detail as support rather than replacement.
 - subject/state: who or what is shown, using subject-appropriate detail. Human prompts should describe pose, gesture, gaze, or motion intent; food/object/sign/environment prompts should describe form, material, placement, scale, readability, or spatial structure instead of human-only behavior.
 - scene/location: concrete setting, spatial depth, foreground/midground/background, and environmental structure.
 - camera/composition: camera type or viewpoint, framing, subject scale, lens, focus, and motion treatment when available.
 - lighting: source, direction, intensity, shadow/highlight behavior, reflections, and atmosphere when available.
 - color/mood: palette, emotional tone, genre/world context, and any social/editorial context selected by the preset.
 - texture/finish: material detail, grain or digital texture, output format/aspect, and realism/quality instructions.
-- user constraints: anything the user specified that is not represented by tags, appended as `Additional requirements: ...`.
+- user constraints: anything the user specified that is not represented by tags, passed through repeated `--additional-requirement` so it renders as `Additional requirements: ...` before `provenance.prompt_id` is computed.
+- likeness handling: when a concept names a public figure or idol, prefer `--likeness-mode inspired` so the rendered prompt asks for an original adult fictional person inspired by the style/vibe, not an exact likeness.
 
 Detailed prompts should avoid human-only phrasing for non-human subjects. For example, do not mention pose/gaze/gesture for food, signs, products, or landscapes unless a human is actually present.
 
@@ -387,4 +464,6 @@ Detailed English prompts should normally be at least 120 words when enough visua
 - `--json-output`
 - `--include-negative`
 
-Pass `--detail-level compact` explicitly for ReactorPrompt-style compact prompts. Pass `--plain` to disable JSON output. Pass `--no-negative` to omit negative prompts.
+Each JSON result includes a `provenance` block with `prompt_id`, `negative_id`, `generator_version`, `seed`, `batch_index`, `preset_id`, `selection_mode`, `concept_lock`, `additional_requirements`, `likeness_mode`, and the final forwarded `argv`.
+
+Pass `--detail-level compact` explicitly for ReactorPrompt-style compact prompts. Pass `--plain` to disable JSON output. Pass `--no-negative` to omit negative prompts. Pass `--concept "짧은 한국어 컨셉"` to use the local recipe resolver, and `--explain-concept` to inspect the resolved args without generating.

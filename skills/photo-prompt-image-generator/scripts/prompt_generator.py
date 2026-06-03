@@ -71,6 +71,8 @@ SEMANTIC_PROVIDER = "gemini"
 DEFAULT_SEMANTIC_DIMENSIONS = 768
 SEMANTIC_MODEL_ID = "gemini-embedding-2"
 SEMANTIC_TEXT_RECIPE_VERSION = "semantic-text-v2"
+GENERATOR_VERSION = "2026.06.0"
+LIKENESS_MODES = ("off", "inspired")
 
 SEMANTIC_PROFILE_CONFIGS: Dict[str, Dict[str, float]] = {
     "conservative": {
@@ -541,6 +543,12 @@ def ensure_period(text: str) -> str:
     return text
 
 
+def stable_text_id(text: Optional[str], length: int = 16) -> Optional[str]:
+    if text is None:
+        return None
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()[:length]
+
+
 def has_cli_option(args: Sequence[str], name: str) -> bool:
     return name in args or any(arg.startswith(name + "=") for arg in args)
 
@@ -740,6 +748,8 @@ def make_generation_contract(
     forced_choices: Optional[Dict[str, List[str]]] = None,
     surreal_enabled: bool = False,
     concept_locks: Optional[Sequence[str]] = None,
+    additional_requirements: Optional[Sequence[str]] = None,
+    likeness_mode: str = "off",
 ) -> JsonDict:
     forced_slots = sorted((forced_choices or {}).keys())
     domains = sorted(preset_domains(preset, data))
@@ -758,6 +768,8 @@ def make_generation_contract(
         "render_suppressed_slots": [],
         "fallback_blocked_slots": [],
         "concept_locks": normalize_concept_locks(concept_locks),
+        "additional_requirements": normalize_additional_requirements(additional_requirements),
+        "likeness_mode": likeness_mode,
     }
     return contract
 
@@ -770,6 +782,8 @@ def refresh_generation_contract(
     forced_choices: Optional[Dict[str, List[str]]] = None,
     surreal_enabled: Optional[bool] = None,
     concept_locks: Optional[Sequence[str]] = None,
+    additional_requirements: Optional[Sequence[str]] = None,
+    likeness_mode: Optional[str] = None,
 ) -> JsonDict:
     if contract is None:
         return make_generation_contract(
@@ -779,6 +793,8 @@ def refresh_generation_contract(
             forced_choices,
             surreal_enabled=bool(surreal_enabled),
             concept_locks=concept_locks,
+            additional_requirements=additional_requirements,
+            likeness_mode=likeness_mode or "off",
         )
     contract["subject_category"] = subject_category(picked, data)
     contract["preset_domains"] = sorted(preset_domains(preset, data))
@@ -787,6 +803,14 @@ def refresh_generation_contract(
         contract["concept_locks"] = normalize_concept_locks(concept_locks)
     else:
         contract.setdefault("concept_locks", [])
+    if additional_requirements is not None:
+        contract["additional_requirements"] = normalize_additional_requirements(additional_requirements)
+    else:
+        contract.setdefault("additional_requirements", [])
+    if likeness_mode is not None:
+        contract["likeness_mode"] = likeness_mode
+    else:
+        contract.setdefault("likeness_mode", "off")
     if surreal_enabled is not None:
         contract["surreal_enabled"] = bool(surreal_enabled)
     if any(slot in picked for slot in SURREAL_LAYER_SLOTS):
@@ -4599,6 +4623,52 @@ def render_concept_lock_sentence(generation_contract: Optional[JsonDict], lang: 
     )
 
 
+def normalize_additional_requirements(items: Optional[Sequence[str]]) -> List[str]:
+    return dedupe_parts(str(item) for item in items or [] if str(item).strip())
+
+
+def render_additional_requirements_sentence(items: Optional[Sequence[str]], lang: str) -> str:
+    requirements = normalize_additional_requirements(items)
+    if not requirements:
+        return ""
+    joined = "; ".join(clean_spaces(item).rstrip(".!?。") for item in requirements)
+    if lang == "ko":
+        return f"추가 요구사항: {joined}."
+    return f"Additional requirements: {joined}."
+
+
+def render_likeness_sentence(mode: str, lang: str) -> str:
+    if mode == "off":
+        return ""
+    if mode != "inspired":
+        raise ValueError(f"Unknown likeness mode: {mode}")
+    if lang == "ko":
+        return (
+            "묘사된 스타일과 분위기에서 영감을 받은 가상의 성인 인물이며, "
+            "특정 실존 인물의 정확한 외모 재현이 아니다."
+        )
+    return (
+        "Inspired by the described styling and vibe; an original adult fictional person, "
+        "not an exact likeness of any real individual."
+    )
+
+
+def append_render_contract_sentences(
+    prompt: str,
+    lang: str,
+    additional_requirements: Optional[Sequence[str]],
+    likeness_mode: str,
+) -> str:
+    additions = [
+        render_additional_requirements_sentence(additional_requirements, lang),
+        render_likeness_sentence(likeness_mode, lang),
+    ]
+    for addition in additions:
+        if addition and addition.lower() not in prompt.lower():
+            prompt = clean_spaces(f"{prompt} {ensure_period(addition)}")
+    return clean_spaces(prompt)
+
+
 def build_prompt_sections(
     data: JsonDict,
     preset: JsonDict,
@@ -4886,55 +4956,57 @@ def render_prompt(
     reference_edit_mode: str = "off",
     trend_layer: str = "off",
     generation_contract: Optional[JsonDict] = None,
+    additional_requirements: Optional[Sequence[str]] = None,
+    likeness_mode: str = "off",
 ) -> str:
     render_picked = render_guarded_picked(data, preset, picked, generation_contract)
     sections = build_prompt_sections(data, preset, render_picked, lang, reference_edit_mode, trend_layer)
 
     if detail_level == "detailed":
-        return render_detailed_prompt(data, preset, render_picked, lang, sections, generation_contract)
+        prompt = render_detailed_prompt(data, preset, render_picked, lang, sections, generation_contract)
+    elif detail_level == "compact":
+        prompt = render_compact_prompt(data, preset, render_picked, lang, sections, generation_contract)
+    else:
+        style = preset.get("template_style", "natural")
+        templates_by_lang = data.get("templates", {}).get(style, {})
+        templates = templates_by_lang.get(lang) or templates_by_lang.get("en")
 
-    if detail_level == "compact":
-        return render_compact_prompt(data, preset, render_picked, lang, sections, generation_contract)
+        if not templates:
+            # Safe fallback template if JSON has no template section.
+            if lang == "ko":
+                templates = [
+                    "{medium}. {location_phrase} {object_phrase} 담은 {genre}. {technique_sentence} {style_sentence} {detail_sentence}"
+                ]
+            else:
+                templates = [
+                    "{medium}. {genre} featuring {subject_phrase} {location_phrase}. {technique_sentence} {style_sentence} {detail_sentence}"
+                ]
 
-    style = preset.get("template_style", "natural")
-    templates_by_lang = data.get("templates", {}).get(style, {})
-    templates = templates_by_lang.get(lang) or templates_by_lang.get("en")
+        ordered_templates = section_ordered_standard_templates(templates)
+        template = rng.choice(ordered_templates or templates)
+        fields = build_fields(render_picked, lang, data)
+        prompt = template.format(**fields)
+        prompt = ensure_standard_section_order(prompt, sections, fields, lang)
 
-    if not templates:
-        # Safe fallback template if JSON has no template section.
-        if lang == "ko":
-            templates = [
-                "{medium}. {location_phrase} {object_phrase} 담은 {genre}. {technique_sentence} {style_sentence} {detail_sentence}"
-            ]
-        else:
-            templates = [
-                "{medium}. {genre} featuring {subject_phrase} {location_phrase}. {technique_sentence} {style_sentence} {detail_sentence}"
-            ]
+        concept_lock = render_concept_lock_sentence(generation_contract, lang)
+        if concept_lock and concept_lock.lower() not in prompt.lower():
+            prompt = clean_spaces(f"{ensure_period(concept_lock)} {prompt}")
 
-    ordered_templates = section_ordered_standard_templates(templates)
-    template = rng.choice(ordered_templates or templates)
-    fields = build_fields(render_picked, lang, data)
-    prompt = template.format(**fields)
-    prompt = ensure_standard_section_order(prompt, sections, fields, lang)
+        additions: List[str] = []
+        action = section_text(sections, "action")
+        if action and any(part.lower() not in prompt.lower() for part in sections.get("action", [])):
+            additions.append(("동작과 소품: " if lang == "ko" else "Action and prop: ") + action)
+        for special in sections.get("special_layers", []):
+            if special and special.lower() not in prompt.lower():
+                additions.append(special)
+        constraints = section_text(sections, "constraints")
+        if constraints and constraints.lower() not in prompt.lower():
+            additions.append(("제약: " if lang == "ko" else "Constraints: ") + constraints)
 
-    concept_lock = render_concept_lock_sentence(generation_contract, lang)
-    if concept_lock and concept_lock.lower() not in prompt.lower():
-        prompt = clean_spaces(f"{ensure_period(concept_lock)} {prompt}")
+        if additions:
+            prompt = clean_spaces(" ".join([prompt] + [ensure_period(part) for part in additions]))
 
-    additions: List[str] = []
-    action = section_text(sections, "action")
-    if action and any(part.lower() not in prompt.lower() for part in sections.get("action", [])):
-        additions.append(("동작과 소품: " if lang == "ko" else "Action and prop: ") + action)
-    for special in sections.get("special_layers", []):
-        if special and special.lower() not in prompt.lower():
-            additions.append(special)
-    constraints = section_text(sections, "constraints")
-    if constraints and constraints.lower() not in prompt.lower():
-        additions.append(("제약: " if lang == "ko" else "Constraints: ") + constraints)
-
-    if additions:
-        prompt = clean_spaces(" ".join([prompt] + [ensure_period(part) for part in additions]))
-    return clean_spaces(prompt)
+    return append_render_contract_sentences(prompt, lang, additional_requirements, likeness_mode)
 
 
 def choose_negative_entries(
@@ -5038,6 +5110,10 @@ def generate_once(
     requested_selection_mode: Optional[str] = None,
     batch_context: Optional[JsonDict] = None,
     batch_index: int = 0,
+    additional_requirements: Optional[Sequence[str]] = None,
+    likeness_mode: str = "off",
+    source_argv: Optional[Sequence[str]] = None,
+    seed: Optional[int] = None,
 ) -> JsonDict:
     requested_selection_mode = requested_selection_mode or selection_mode
     effective_selection_mode = selection_mode
@@ -5076,7 +5152,15 @@ def generate_once(
             raise
     preset = choose_preset(data, rng, preset_id, semantic_context)
     picked: Dict[str, Entry] = {}
-    generation_contract = make_generation_contract(data, preset, picked, forced_choices, concept_locks=concept_locks)
+    generation_contract = make_generation_contract(
+        data,
+        preset,
+        picked,
+        forced_choices,
+        concept_locks=concept_locks,
+        additional_requirements=additional_requirements,
+        likeness_mode=likeness_mode,
+    )
     if semantic_context is not None:
         semantic_context["generation_contract"] = generation_contract
         sync_generation_contract_axis_coverage(generation_contract, semantic_context)
@@ -5095,7 +5179,15 @@ def generate_once(
         entry = choose_slot(slot, data, preset, rng, picked, forced_choices, semantic_context, generation_contract)
         if entry is not None:
             picked[slot] = entry
-            refresh_generation_contract(generation_contract, data, preset, picked, forced_choices)
+            refresh_generation_contract(
+                generation_contract,
+                data,
+                preset,
+                picked,
+                forced_choices,
+                additional_requirements=additional_requirements,
+                likeness_mode=likeness_mode,
+            )
             sync_generation_contract_axis_coverage(generation_contract, semantic_context)
 
     surreal_active = should_activate_surreal_layer(
@@ -5107,7 +5199,16 @@ def generate_once(
         semantic_context,
         surreal_mode_explicit,
     )
-    refresh_generation_contract(generation_contract, data, preset, picked, forced_choices, surreal_enabled=surreal_active)
+    refresh_generation_contract(
+        generation_contract,
+        data,
+        preset,
+        picked,
+        forced_choices,
+        surreal_enabled=surreal_active,
+        additional_requirements=additional_requirements,
+        likeness_mode=likeness_mode,
+    )
     sync_generation_contract_axis_coverage(generation_contract, semantic_context)
     if surreal_active:
         apply_surreal_layer(data, preset, rng, picked, forced_choices, surreal_intensity, semantic_context, generation_contract)
@@ -5145,6 +5246,8 @@ def generate_once(
             reference_edit_mode,
             trend_layer,
             generation_contract,
+            additional_requirements,
+            likeness_mode,
         )
 
     if llm_polish == "strict":
@@ -5166,6 +5269,24 @@ def generate_once(
         negative_entries = choose_negative_entries(data, rng, negative_count, has_surreal_layer(render_picked), render_picked)
         for lang in langs:
             result[f"negative_{lang}"] = render_negative_prompt(negative_entries, lang)
+
+    prompt_for_id = result.get("prompt_en") or next((result.get(f"prompt_{lang}") for lang in langs if result.get(f"prompt_{lang}")), "")
+    negative_for_id = result.get("negative_en") if include_negative else None
+    result["provenance"] = {
+        "generator_version": GENERATOR_VERSION,
+        "prompt_id": stable_text_id(prompt_for_id) or "",
+        "negative_id": stable_text_id(negative_for_id),
+        "seed": seed,
+        "batch_index": batch_index,
+        "preset_id": preset.get("id"),
+        "selection_mode": effective_selection_mode,
+        "requested_selection_mode": requested_selection_mode,
+        "tags_hash": (semantic_context or {}).get("dictionary_hash"),
+        "concept_lock": normalize_concept_locks(concept_locks),
+        "additional_requirements": normalize_additional_requirements(additional_requirements),
+        "likeness_mode": likeness_mode,
+        "argv": list(source_argv or []),
+    }
 
     if include_choices:
         result["choices"] = {
@@ -5351,6 +5472,19 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         default=[],
         help="Verbatim core concept to keep visually dominant while generated slots add supporting detail. Repeatable.",
     )
+    parser.add_argument(
+        "--additional-requirement",
+        dest="additional_requirements",
+        action="append",
+        default=[],
+        help="Concrete requirement not represented by tags. Repeatable; rendered into the final prompt before prompt_id is computed.",
+    )
+    parser.add_argument(
+        "--likeness-mode",
+        choices=LIKENESS_MODES,
+        default="off",
+        help="Prompt-level real-person likeness handling. Use inspired for an original fictional person inspired by styling/vibe.",
+    )
     parser.add_argument("--selection-mode", choices=SELECTION_MODES, default=DEFAULT_SELECTION_MODE, help="Selection mode. semantic is the default; use rule for the original deterministic weighted path.")
     parser.add_argument("--default-intent", action="store_true", help=argparse.SUPPRESS)
     parser.add_argument("--semantic-default", action="store_true", help=argparse.SUPPRESS)
@@ -5478,6 +5612,10 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                 semantic_index_path=semantic_index_path,
                 semantic_model=args.semantic_model,
                 semantic_dimensions=args.semantic_dimensions,
+                additional_requirements=args.additional_requirements,
+                likeness_mode=args.likeness_mode,
+                source_argv=raw_args,
+                seed=args.seed,
             )
         )
 

@@ -18,6 +18,7 @@ SKILL_DIR = ROOT / "skills" / "photo-prompt-image-generator"
 TAGS_PATH = SKILL_DIR / "assets" / "photo_prompt_tags.json"
 GENERATOR_PATH = SKILL_DIR / "scripts" / "prompt_generator.py"
 WRAPPER_PATH = SKILL_DIR / "scripts" / "generate_photo_prompt.py"
+RECORD_RUN_PATH = SKILL_DIR / "scripts" / "record_image_run.py"
 VALIDATOR_PATH = SKILL_DIR / "scripts" / "validate_photo_prompt_dictionary.py"
 INDEX_BUILDER_PATH = SKILL_DIR / "scripts" / "build_semantic_index.py"
 
@@ -555,6 +556,10 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             requested_selection_mode=kwargs.pop("requested_selection_mode", None),
             batch_context=kwargs.pop("batch_context", None),
             batch_index=kwargs.pop("batch_index", 0),
+            additional_requirements=kwargs.pop("additional_requirements", None),
+            likeness_mode=kwargs.pop("likeness_mode", "off"),
+            source_argv=kwargs.pop("source_argv", None),
+            seed=seed,
         )
 
     def generate_langs(self, preset: str, langs: list[str], seed: int = 1, **kwargs):
@@ -594,6 +599,10 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             requested_selection_mode=kwargs.pop("requested_selection_mode", None),
             batch_context=kwargs.pop("batch_context", None),
             batch_index=kwargs.pop("batch_index", 0),
+            additional_requirements=kwargs.pop("additional_requirements", None),
+            likeness_mode=kwargs.pop("likeness_mode", "off"),
+            source_argv=kwargs.pop("source_argv", None),
+            seed=seed,
         )
 
     def fake_gemini_vectors(self, texts, model=None, dimensions=768, api_key=None, **kwargs):
@@ -776,6 +785,45 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertNotIn("Core concept lock:", prompt)
         self.assertIn(f"preserving the core concept of {concept}", prompt)
 
+    def test_provenance_ids_are_based_on_rendered_prompt_text(self):
+        source_argv = ["--preset", "compact_urban_fashion_portrait", "--seed", "31"]
+        item = self.generate(
+            "compact_urban_fashion_portrait",
+            seed=31,
+            detail_level="compact",
+            source_argv=source_argv,
+        )
+
+        provenance = item["provenance"]
+        self.assertRegex(provenance["prompt_id"], r"^[0-9a-f]{16}$")
+        self.assertEqual(provenance["prompt_id"], hashlib.sha256(item["prompt_en"].encode("utf-8")).hexdigest()[:16])
+        self.assertEqual(provenance["negative_id"], hashlib.sha256(item["negative_en"].encode("utf-8")).hexdigest()[:16])
+        self.assertEqual(provenance["seed"], 31)
+        self.assertEqual(provenance["argv"], source_argv)
+        self.assertEqual(provenance["preset_id"], item["preset_id"])
+
+    def test_additional_requirements_and_likeness_mode_are_rendered_before_hashing(self):
+        item = self.generate(
+            "compact_urban_fashion_portrait",
+            seed=32,
+            detail_level="compact",
+            additional_requirements=["coal miner workwear", "mining helmet with headlamp"],
+            likeness_mode="inspired",
+            include_trace=True,
+        )
+
+        prompt = item["prompt_en"]
+        self.assertIn("Additional requirements: coal miner workwear; mining helmet with headlamp.", prompt)
+        self.assertIn("an original adult fictional person, not an exact likeness", prompt)
+        self.assertEqual(item["provenance"]["prompt_id"], hashlib.sha256(prompt.encode("utf-8")).hexdigest()[:16])
+        self.assertEqual(item["provenance"]["additional_requirements"], ["coal miner workwear", "mining helmet with headlamp"])
+        self.assertEqual(item["provenance"]["likeness_mode"], "inspired")
+        self.assertEqual(
+            item["semantic_trace"]["generation_contract"]["additional_requirements"],
+            ["coal miner workwear", "mining helmet with headlamp"],
+        )
+        self.assertEqual(item["semantic_trace"]["generation_contract"]["likeness_mode"], "inspired")
+
     def test_compact_detail_level_is_available_through_wrapper(self):
         result = subprocess.run(
             [
@@ -831,6 +879,179 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertIn("Core concept lock: 방구석 집돌이", result.stdout)
 
+    def test_concept_recipe_explain_expands_korean_role_to_forward_args(self):
+        result = subprocess.run(
+            [
+                sys.executable,
+                str(WRAPPER_PATH),
+                "--concept",
+                "유나 바니걸",
+                "--explain-concept",
+                "--selection-mode",
+                "rule",
+                "--plain",
+                "--no-negative",
+            ],
+            cwd=ROOT,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+
+        self.assertEqual(result.returncode, 0, result.stderr)
+        payload = json.loads(result.stdout)
+        self.assertEqual(payload["concepts"][0]["name"], "유나")
+        self.assertEqual(payload["concepts"][0]["role"], "바니걸")
+        self.assertIn("--concept-lock", payload["forward_args"])
+        self.assertIn("유나 바니걸", payload["forward_args"])
+        self.assertIn("costume_style=bunny_girl_costume", payload["forward_args"])
+        self.assertIn("covered adult bunny-girl stage costume", payload["forward_args"])
+        self.assertIn("--likeness-mode", payload["forward_args"])
+        self.assertIn("inspired", payload["forward_args"])
+
+    def test_concept_recipe_generation_records_expanded_argv_in_provenance(self):
+        result = subprocess.run(
+            [
+                sys.executable,
+                str(WRAPPER_PATH),
+                "--concept",
+                "지젤 광부",
+                "--selection-mode",
+                "rule",
+                "--seed",
+                "9",
+                "--lang",
+                "en",
+                "--no-negative",
+            ],
+            cwd=ROOT,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+
+        self.assertEqual(result.returncode, 0, result.stderr)
+        payload = json.loads(result.stdout)
+        item = payload[0]
+        self.assertIn("Core concept lock: 지젤 광부", item["prompt_en"])
+        self.assertIn("Additional requirements: coal miner workwear", item["prompt_en"])
+        self.assertIn("miner workwear with a safety helmet and headlamp", item["prompt_en"])
+        self.assertIn("underground mine tunnel set", item["prompt_en"])
+        self.assertIn("not an exact likeness", item["prompt_en"])
+        self.assertIn("지젤 광부", item["provenance"]["concept_lock"])
+        self.assertTrue(
+            any("coal miner workwear" in requirement for requirement in item["provenance"]["additional_requirements"])
+        )
+        self.assertIn("costume_style=miner_workwear_hard_hat", item["provenance"]["argv"])
+        self.assertIn("location=underground_mine_tunnel_set", item["provenance"]["argv"])
+        self.assertIn("--concept-lock", item["provenance"]["argv"])
+        self.assertIn("--additional-requirement", item["provenance"]["argv"])
+
+    def test_record_image_run_ledger_preserves_prompt_hash_across_retries(self):
+        prompt = "Exact prompt text for unchanged retry"
+        prompt_id = hashlib.sha256(prompt.encode("utf-8")).hexdigest()[:16]
+        with tempfile.TemporaryDirectory() as tmpdir:
+            ledger = Path(tmpdir) / "runs.ndjson"
+            first = subprocess.run(
+                [
+                    sys.executable,
+                    str(RECORD_RUN_PATH),
+                    "--ts",
+                    "2026-06-03T10:00:00+09:00",
+                    "--concept",
+                    "유나 바니걸",
+                    "--prompt-en",
+                    prompt,
+                    "--prompt-id",
+                    prompt_id,
+                    "--attempt",
+                    "1",
+                    "--status",
+                    "safety_block",
+                    "--failure-reason",
+                    "safety filter",
+                    "--tool",
+                    "image_gen",
+                    "--ledger",
+                    str(ledger),
+                ],
+                cwd=ROOT,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+            self.assertEqual(first.returncode, 0, first.stderr)
+            first_payload = json.loads(first.stdout)
+
+            second = subprocess.run(
+                [
+                    sys.executable,
+                    str(RECORD_RUN_PATH),
+                    "--ts",
+                    "2026-06-03T10:01:00+09:00",
+                    "--concept",
+                    "유나 바니걸",
+                    "--prompt-en",
+                    prompt,
+                    "--prompt-id",
+                    prompt_id,
+                    "--attempt",
+                    "2",
+                    "--retry-of",
+                    first_payload["run_id"],
+                    "--status",
+                    "success",
+                    "--image-path",
+                    "/tmp/generated.png",
+                    "--tool",
+                    "image_gen",
+                    "--ledger",
+                    str(ledger),
+                ],
+                cwd=ROOT,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+            self.assertEqual(second.returncode, 0, second.stderr)
+
+            rows = [json.loads(line) for line in ledger.read_text(encoding="utf-8").splitlines()]
+            self.assertEqual(len(rows), 2)
+            self.assertEqual(rows[0]["prompt_id"], prompt_id)
+            self.assertEqual(rows[1]["prompt_id"], prompt_id)
+            self.assertEqual(rows[1]["retry_of"], rows[0]["run_id"])
+            self.assertEqual(rows[1]["image_paths"], ["/tmp/generated.png"])
+
+    def test_record_image_run_rejects_changed_prompt_text(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            ledger = Path(tmpdir) / "runs.ndjson"
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(RECORD_RUN_PATH),
+                    "--ts",
+                    "2026-06-03T10:00:00+09:00",
+                    "--prompt-en",
+                    "changed prompt",
+                    "--prompt-id",
+                    "0000000000000000",
+                    "--attempt",
+                    "1",
+                    "--status",
+                    "success",
+                    "--ledger",
+                    str(ledger),
+                ],
+                cwd=ROOT,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+
+            self.assertEqual(result.returncode, 2)
+            self.assertIn("prompt_id mismatch", result.stderr)
+            self.assertFalse(ledger.exists())
+
     def test_compact_slots_presets_and_formats_are_registered(self):
         slots = self.data["slots"]
         self.assertIn("prop", slots)
@@ -859,6 +1080,18 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "compact_multicut_portrait_series",
             }.issubset(preset_ids)
         )
+
+    def test_concept_recipe_supporting_tags_are_registered(self):
+        expected = {
+            "costume_style": {"miner_workwear_hard_hat", "royal_princess_hanbok"},
+            "prop": {"nonfunctional_pickaxe_prop"},
+            "location": {"underground_mine_tunnel_set", "royal_princess_chamber"},
+        }
+
+        for slot, ids in expected.items():
+            with self.subTest(slot=slot):
+                actual = {entry["id"] for entry in self.data["slots"][slot]}
+                self.assertTrue(ids.issubset(actual))
 
     def test_reactor_neutral_slots_are_visible_in_cli(self):
         result = subprocess.run(
