@@ -186,203 +186,13 @@ def forced_sets_to_mapping(forced_sets: Sequence[str]) -> dict[str, list[str]]:
     return mapping
 
 
-def normalize_id_list(value: Any) -> list[str]:
-    if value is None:
-        return []
-    if isinstance(value, list):
-        ids: list[str] = []
-        for item in value:
-            if isinstance(item, dict):
-                item_id = str(item.get("id") or "").strip()
-            else:
-                item_id = str(item).strip()
-            if item_id:
-                ids.append(item_id)
-        return ids
-    if isinstance(value, str) and value.strip():
-        return [value.strip()]
-    return []
-
-
-def intersect_preserve_order(primary: Sequence[str], allowed: Sequence[str]) -> list[str]:
-    allowed_set = set(allowed)
-    return [item for item in primary if item in allowed_set]
-
-
-def hash_fraction(token: str) -> float:
-    digest = hashlib.sha256(token.encode("utf-8")).digest()
-    return int.from_bytes(digest[:8], "big") / 2**64
-
-
-def select_weighted_axis_option(
-    axis_name: str,
-    axis_options: dict[str, Any],
-    candidate_ids: Sequence[str],
-    concept: str,
-    mixin_name: str,
-    seed: str,
-) -> tuple[str, dict[str, Any], dict[str, Any]] | None:
-    pool = [item_id for item_id in candidate_ids if item_id in axis_options]
-    if not pool:
-        pool = list(axis_options)
-    if not pool:
-        return None
-
-    weights = [max(float((axis_options.get(item_id) or {}).get("weight", 1) or 0), 0.0) for item_id in pool]
-    total = sum(weights)
-    token = f"axis|{concept}|{mixin_name}|{axis_name}|{seed}"
-    if total <= 0:
-        index = int(hash_fraction(token) * len(pool)) % len(pool)
-    else:
-        threshold = hash_fraction(token) * total
-        cursor = 0.0
-        index = len(pool) - 1
-        for candidate_index, weight in enumerate(weights):
-            cursor += weight
-            if threshold < cursor:
-                index = candidate_index
-                break
-
-    choice_id = pool[index]
-    option = dict(axis_options.get(choice_id) or {})
-    debug = {
-        "chosen": choice_id,
-        "pool": pool,
-        "index": index,
-        "weight": option.get("weight", 1),
-        "token_basis": f"axis|<concept>|<mixin>|{axis_name}|<seed>",
-        "set": option.get("set") if isinstance(option.get("set"), dict) else {},
-    }
-    return choice_id, option, debug
-
-
-def merge_axis_sets(selected_options: dict[str, dict[str, Any]], merge_order: Sequence[str]) -> dict[str, Any]:
-    merged: dict[str, Any] = {}
-    for axis_name in merge_order:
-        option = selected_options.get(axis_name)
-        if not option:
-            continue
-        option_set = option.get("set")
-        if not isinstance(option_set, dict):
-            continue
-        for slot, value in option_set.items():
-            merged[slot] = value
-    return merged
-
-
-def sample_axes_for_mixin(
-    concept: str, mixin_name: str, mixin_recipe: dict[str, Any], args: Sequence[str], role: str | None
-) -> dict[str, Any] | None:
-    axes = mixin_recipe.get("axes")
-    role_profiles = mixin_recipe.get("role_profiles")
-    if not isinstance(axes, dict) or not isinstance(role_profiles, dict):
-        return None
-
-    role_profile_raw = role_profiles.get(role or "") or role_profiles.get("default") or role_profiles.get("*")
-    if not isinstance(role_profile_raw, dict):
-        return None
-    role_profile = dict(role_profile_raw)
-    role_weights = role_profile.get("weights") if isinstance(role_profile.get("weights"), dict) else {}
-    strict_axes = set(normalize_id_list(role_profile.get("strict_axes")))
-
-    axis_order = ["archetype", "phase", "expression", "register", "environment", "tell"]
-    seed = option_value(args, "--seed") or ""
-    selected_ids: dict[str, str] = {}
-    selected_options: dict[str, dict[str, Any]] = {}
-    sampled_axes: dict[str, dict[str, Any]] = {}
-
-    for axis_name in axis_order:
-        axis_options_raw = axes.get(axis_name)
-        if not isinstance(axis_options_raw, dict):
-            continue
-        axis_options = {str(item_id): dict(option or {}) for item_id, option in axis_options_raw.items()}
-        axis_weight_overrides = role_weights.get(axis_name) if isinstance(role_weights.get(axis_name), dict) else {}
-        for item_id, weight in axis_weight_overrides.items():
-            if item_id not in axis_options:
-                continue
-            try:
-                axis_options[item_id]["weight"] = max(float(weight), 0.0)
-            except (TypeError, ValueError):
-                continue
-        profile_key = {
-            "archetype": "archetypes",
-            "phase": "phases",
-            "expression": "expressions",
-            "register": "registers",
-            "environment": "environments",
-            "tell": "tells",
-        }.get(axis_name, f"{axis_name}s")
-        profile_candidates = normalize_id_list(role_profile.get(profile_key))
-
-        if axis_name == "phase":
-            archetype_phases = normalize_id_list(selected_options.get("archetype", {}).get("phases"))
-            intersected_candidates = intersect_preserve_order(archetype_phases, profile_candidates)
-            if axis_name in strict_axes and profile_candidates:
-                candidate_ids = intersected_candidates or profile_candidates
-            else:
-                candidate_ids = (
-                    intersected_candidates
-                    or archetype_phases
-                    or profile_candidates
-                    or list(axis_options)
-                )
-        elif axis_name == "tell":
-            archetype_tells = normalize_id_list(selected_options.get("archetype", {}).get("tell_pool"))
-            intersected_candidates = intersect_preserve_order(archetype_tells, profile_candidates)
-            if axis_name in strict_axes and profile_candidates:
-                candidate_ids = intersected_candidates or profile_candidates
-            else:
-                candidate_ids = (
-                    intersected_candidates
-                    or archetype_tells
-                    or profile_candidates
-                    or list(axis_options)
-                )
-        else:
-            candidate_ids = profile_candidates or list(axis_options)
-
-        selected = select_weighted_axis_option(axis_name, axis_options, candidate_ids, concept, mixin_name, seed)
-        if selected is None:
-            continue
-        choice_id, option, debug = selected
-        selected_ids[axis_name] = choice_id
-        selected_options[axis_name] = option
-        sampled_axes[axis_name] = debug
-
-    if not sampled_axes:
-        return None
-
-    sampling = mixin_recipe.get("sampling") if isinstance(mixin_recipe.get("sampling"), dict) else {}
-    merge_order = normalize_id_list(sampling.get("merge_order")) or axis_order
-    selected_set = merge_axis_sets(selected_options, merge_order)
-    role_set_override = role_profile.get("set") if isinstance(role_profile.get("set"), dict) else {}
-    selected_set.update(role_set_override)
-    selected_additional: list[str] = []
-    selected_intent_axes: list[str] = []
-    diversity_space = 1
-    for axis_name in axis_order:
-        axis_debug = sampled_axes.get(axis_name)
-        if axis_debug:
-            diversity_space *= max(len(axis_debug.get("pool") or []), 1)
-        option = selected_options.get(axis_name)
-        if not option:
-            continue
-        selected_additional.extend(normalize_list(option.get("additional")))
-        selected_intent_axes.extend(normalize_list(option.get("intent_axis")))
-
-    return {
-        "mixin": mixin_name,
-        "role_profile": role,
-        "seed": seed,
-        "axis_selection": selected_ids,
-        "sampled_axes": sampled_axes,
-        "set": selected_set,
-        "additional": selected_additional,
-        "intent_axis": selected_intent_axes,
-        "merge_order": merge_order,
-        "diversity_space": diversity_space,
-        "role_set_override": role_set_override,
-    }
+def forced_set_slots(forced_sets: Sequence[str]) -> set[str]:
+    slots: set[str] = set()
+    for forced in forced_sets:
+        parsed = split_forced_slot(forced)
+        if parsed is not None:
+            slots.add(parsed[0])
+    return slots
 
 
 def select_bundle_for_mixin(
@@ -420,33 +230,12 @@ def add_option(args: list[str], name: str, value: str) -> None:
         args.extend([name, value])
 
 
-def concept_preset(recipe: dict[str, Any], mixin_matches: Sequence[tuple[str, dict[str, Any]]]) -> str:
-    priority_mixin_preset = next(
-        (
-            str(mixin_recipe.get("preset") or "")
-            for _, mixin_recipe in mixin_matches
-            if mixin_recipe.get("preset") and mixin_recipe.get("preset_priority") == "mixin"
-        ),
-        "",
-    )
-    if priority_mixin_preset:
-        return priority_mixin_preset
-
-    role_preset = str(recipe.get("preset") or "")
-    if role_preset:
-        return role_preset
-
-    return next(
-        (str(mixin_recipe.get("preset") or "") for _, mixin_recipe in mixin_matches if mixin_recipe.get("preset")),
-        "",
-    )
-
-
 def resolve_concepts(args: Sequence[str], concepts: Sequence[str]) -> tuple[list[str], list[dict[str, Any]]]:
     if not concepts:
         return list(args), []
 
     _, explicit_user_sets = extract_option_values(args, "--set")
+    explicit_user_set_slots = forced_set_slots(explicit_user_sets)
     recipes = load_concept_recipes()
     roles = recipes.get("roles", {}) or {}
     mixins = recipes.get("mixins", {}) or {}
@@ -463,7 +252,6 @@ def resolve_concepts(args: Sequence[str], concepts: Sequence[str]) -> tuple[list
         role_concept = concept_without_mixins(concept, [mixin for mixin, _ in mixin_matches])
         role, name, recipe = match_concept_role(role_concept or concept, roles)
         selected_bundles: list[dict[str, Any]] = []
-        selected_axes: list[dict[str, Any]] = []
         set_groups: list[tuple[Sequence[str], set[str]]] = []
         applied_recipes = [recipe] if recipe else []
         additional_requirements: list[str] = []
@@ -476,34 +264,17 @@ def resolve_concepts(args: Sequence[str], concepts: Sequence[str]) -> tuple[list
 
         for mixin, mixin_recipe in mixin_matches:
             applied_recipes.append(mixin_recipe)
+            selected_bundle = select_bundle_for_mixin(concept, mixin, mixin_recipe, args, role)
             mixin_base_set = set_values_to_forced(mixin_recipe.get("set"))
             additional_requirements.extend(normalize_list(mixin_recipe.get("additional")))
             intent_axes.extend(normalize_list(mixin_recipe.get("intent_axis")))
-            axis_selection = sample_axes_for_mixin(concept, mixin, mixin_recipe, args, role)
-            if axis_selection:
-                if mixin_base_set:
-                    set_groups.append((mixin_base_set, set()))
-                axis_set = axis_selection.get("set") if isinstance(axis_selection.get("set"), dict) else {}
-                set_groups.append((set_values_to_forced(axis_set), BUNDLE_OVERRIDE_SLOTS))
-                additional_requirements.extend(normalize_list(axis_selection.get("additional")))
-                intent_axes.extend(normalize_list(axis_selection.get("intent_axis")))
-                selected_axes.append(
-                    {
-                        "mixin": mixin,
-                        "role_profile": axis_selection.get("role_profile"),
-                        "seed": axis_selection.get("seed"),
-                        "axis_selection": axis_selection.get("axis_selection", {}),
-                        "sampled_axes": axis_selection.get("sampled_axes", {}),
-                        "set": axis_set,
-                        "merge_order": axis_selection.get("merge_order", []),
-                        "diversity_space": axis_selection.get("diversity_space", 0),
-                        "sampled_additional": axis_selection.get("additional", []),
-                        "role_set_override": axis_selection.get("role_set_override", {}),
-                    }
-                )
-                continue
-
-            selected_bundle = select_bundle_for_mixin(concept, mixin, mixin_recipe, args, role)
+            weapon_cues = mixin_recipe.get("weapon_cues")
+            if (
+                role
+                and isinstance(weapon_cues, dict)
+                and not (explicit_user_set_slots & {"prop", "action"})
+            ):
+                additional_requirements.extend(normalize_list(weapon_cues.get(role)))
             if selected_bundle:
                 if mixin_base_set:
                     set_groups.append((mixin_base_set, set()))
@@ -522,13 +293,18 @@ def resolve_concepts(args: Sequence[str], concepts: Sequence[str]) -> tuple[list
             else:
                 set_groups.append((mixin_base_set, set()))
 
-        if role and (selected_bundles or selected_axes):
+        if role and selected_bundles:
             additional_requirements.append("role outfit is a cover identity/disguise for the assassin persona")
 
         combined_sets = merge_forced_set_groups(set_groups)
         add_option(resolved_args, "--concept-lock", concept)
 
-        preset = concept_preset(recipe, mixin_matches)
+        preset = str(recipe.get("preset") or "")
+        if not preset:
+            preset = next(
+                (str(mixin_recipe.get("preset") or "") for _, mixin_recipe in mixin_matches if mixin_recipe.get("preset")),
+                "",
+            )
         if preset and not has_preset_value:
             add_option(resolved_args, "--preset", preset)
             has_preset_value = True
@@ -563,7 +339,6 @@ def resolve_concepts(args: Sequence[str], concepts: Sequence[str]) -> tuple[list
                 "recipe": recipe,
                 "mixins": {mixin: mixin_recipe for mixin, mixin_recipe in mixin_matches},
                 "selected_bundles": selected_bundles,
-                "selected_axes": selected_axes,
                 "combined_forced_slots": forced_sets_to_mapping(combined_sets),
             }
         )
@@ -607,7 +382,6 @@ def build_forward_args(argv: Sequence[str]) -> list[str]:
     no_negative = "--no-negative" in args
     args = remove_flag(remove_flag(args, "--plain"), "--no-negative")
     args, concepts = extract_option_values(args, "--concept")
-    concept_mode = bool(concepts)
     args, _ = extract_flag(args, "--explain-concept")
     args, _ = resolve_concepts(args, concepts)
 
@@ -622,7 +396,7 @@ def build_forward_args(argv: Sequence[str]) -> list[str]:
     selection_mode_defaulted = not has_option(args, "--selection-mode")
     intent_axis_explicit = has_option(args, "--intent-axis")
     if selection_mode_defaulted:
-        args.extend(["--selection-mode", "rule" if concept_mode else DEFAULT_SELECTION_MODE])
+        args.extend(["--selection-mode", DEFAULT_SELECTION_MODE])
     selection_mode = option_value(args, "--selection-mode") or DEFAULT_SELECTION_MODE
     if selection_mode in {"semantic", "hybrid"} and not has_option(args, "--intent"):
         args.extend(["--intent", DEFAULT_SEMANTIC_INTENT])

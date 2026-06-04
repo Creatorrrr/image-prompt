@@ -105,1361 +105,218 @@
   "mixins": {
     "암살자": {
       "preset": "compact_cinematic_prop_portrait",
-      "preset_priority": "mixin",
-      "set": {},
-      "axes": {
-        "archetype": {
-          "shadow_surveillance": {
-            "weight": 1,
-            "set": {
-              "action": "doorframe_shadow_watch",
-              "expression": "sharp_side_glance_observation"
-            },
-            "phases": [
-              "recon",
-              "wait_overwatch"
-            ],
-            "tell_pool": [
-              "earpiece_wire",
-              "gloves_indoors",
-              "calling_card",
-              "hairpin"
-            ],
-            "additional": [
-              "the assassin layer reads as a hidden watcher using architecture and timing, not as a combat pose"
-            ],
-            "intent_axis": [
-              "covert watcher using shadow, timing, and cover identity"
-            ]
+      "set": {
+        "expression": "cold_unreadable_stare",
+        "action": "standing_silence",
+        "composition": "frame_within_frame",
+        "lighting": "chiaroscuro_window_light",
+        "light_direction": "side_light_left",
+        "light_type": "narrow_spotlight",
+        "light_intensity": "deep_shadow_detail",
+        "color": "desaturated_cold_blue",
+        "mood": "tense"
+      },
+      "bundles": [
+        {
+          "id": "cafe_cover_identity",
+          "weight": 1,
+          "roles": [
+            "메이드"
+          ],
+          "set": {
+            "prop": "single_playing_card_calling_card_prop",
+            "action": "doorframe_shadow_watch",
+            "location": "maid_cafe_interior",
+            "lighting": "low_key",
+            "mood": "tense",
+            "composition": "cctv_corner_frame"
           },
-          "public_tail": {
-            "weight": 1,
-            "set": {
-              "action": "pretending_to_text_surveillance_pose",
-              "expression": "off_frame_target_lock_gaze"
-            },
-            "phases": [
-              "approach",
-              "wait_overwatch"
-            ],
-            "tell_pool": [
-              "earpiece_wire",
-              "target_photo",
-              "burner_phone",
-              "compact_reflection"
-            ],
-            "additional": [
-              "the scene is a tailing operation inside an ordinary public space, with attention aimed past the obvious prop"
-            ],
-            "intent_axis": [
-              "public tailing operation with a single off-frame point of attention"
-            ]
-          },
-          "reflection_recon": {
-            "weight": 1,
-            "set": {
-              "action": "checking_reflection_surveillance",
-              "expression": "sharp_side_glance_observation"
-            },
-            "phases": [
-              "recon",
-              "wait_overwatch"
-            ],
-            "tell_pool": [
-              "compact_reflection",
-              "earpiece_wire",
-              "target_photo",
-              "burner_phone"
-            ],
-            "additional": [
-              "reflection, glass, or a compact mirror turns an everyday gesture into surveillance"
-            ],
-            "intent_axis": [
-              "covert reconnaissance through reflected sightlines"
-            ]
-          },
-          "social_engineer": {
-            "weight": 0.8,
-            "set": {
-              "action": "fake_badge_entry_pose",
-              "expression": "off_frame_target_lock_gaze"
-            },
-            "phases": [
-              "approach",
-              "contact_blend"
-            ],
-            "tell_pool": [
-              "wrong_badge",
-              "keycard_access",
-              "sealed_envelope",
-              "room_keycard"
-            ],
-            "additional": [
-              "the cover identity stays a flat, closed-mouth professional courtesy with no camera smile; attention slips off-frame while one procedural detail is subtly wrong"
-            ],
-            "intent_axis": [
-              "social-engineering cover identity with a composed unsmiling professional mask"
-            ]
-          },
-          "infowar_dead_drop": {
-            "weight": 1,
-            "set": {
-              "action": "dead_drop_handoff_pose",
-              "expression": "downcast_operational_focus"
-            },
-            "phases": [
-              "debrief_dead_drop",
-              "recon"
-            ],
-            "tell_pool": [
-              "service_cart_access",
-              "medical_chart_intel",
-              "court_letter",
-              "sealed_envelope",
-              "marked_route_map",
-              "keycard_access",
-              "burner_phone"
-            ],
-            "additional": [
-              "the mission is implied through information transfer, a sealed item, or access credentials, never through harm"
-            ],
-            "intent_axis": [
-              "information tradecraft and dead-drop staging without violence"
-            ]
-          },
-          "exfil_blend": {
-            "weight": 1,
-            "set": {
-              "action": "crowd_blend_walkaway",
-              "expression": "controlled_walkaway_calm"
-            },
-            "phases": [
-              "exfil"
-            ],
-            "tell_pool": [
-              "gloves_indoors",
-              "burner_phone",
-              "compact_reflection",
-              "room_keycard"
-            ],
-            "additional": [
-              "the character is quietly leaving the scene by becoming ordinary again, with no depicted aftermath"
-            ],
-            "intent_axis": [
-              "calm exfiltration by blending into ordinary movement"
-            ]
-          },
-          "methodical_recon": {
-            "weight": 1,
-            "set": {
-              "action": "map_route_recon_pose",
-              "expression": "downcast_operational_focus"
-            },
-            "phases": [
-              "recon",
-              "routine_access"
-            ],
-            "tell_pool": [
-              "marked_route_map",
-              "keycard_access",
-              "sealed_envelope",
-              "wrong_badge"
-            ],
-            "additional": [
-              "the operative quality comes from route planning, access control, and unnatural precision"
-            ],
-            "intent_axis": [
-              "methodical route reconnaissance and access planning"
-            ]
-          },
-          "routine_access": {
-            "weight": 1,
-            "set": {
-              "action": "server_console_quiet_access",
-              "expression": "downcast_operational_focus"
-            },
-            "phases": [
-              "routine_access",
-              "recon"
-            ],
-            "tell_pool": [
-              "keycard_access",
-              "wrong_badge",
-              "burner_phone",
-              "earpiece_wire"
-            ],
-            "additional": [
-              "the scene reads like authorized routine access until the too-controlled behavior gives it away"
-            ],
-            "intent_axis": [
-              "quiet access-control thriller moment without weapons"
-            ]
-          },
-          "target_acquisition": {
-            "weight": 1.15,
-            "set": {
-              "action": "comparing_target_photo_to_crowd_pose",
-              "expression": "off_frame_target_lock_gaze"
-            },
-            "phases": [
-              "recon",
-              "approach"
-            ],
-            "tell_pool": [
-              "target_photo",
-              "compact_reflection",
-              "marked_route_map",
-              "burner_phone",
-              "duty_radio"
-            ],
-            "additional": [
-              "the subject is confirming a single off-frame target by matching a reference, never interacting with a victim"
-            ],
-            "intent_axis": [
-              "target identification through reference matching, no contact and no violence"
-            ]
-          },
-          "concealment_check": {
-            "weight": 1.1,
-            "set": {
-              "action": "discreet_concealment_adjust_pose",
-              "expression": "downcast_operational_focus"
-            },
-            "phases": [
-              "recon",
-              "approach",
-              "wait_overwatch"
-            ],
-            "tell_pool": [
-              "nightclub_service_tray",
-              "service_cart_access",
-              "medical_chart_intel",
-              "work_tool_bag",
-              "gloves_indoors",
-              "hairpin",
-              "master_keyring"
-            ],
-            "additional": [
-              "a concealed object under outerwear, in a work bag, or inside an occupational prop is checked by touch; nothing is drawn, shown, aimed, or used"
-            ],
-            "intent_axis": [
-              "covert readiness check with everything kept hidden and non-graphic"
-            ]
-          },
-          "pre_position_stage": {
-            "weight": 1.05,
-            "set": {
-              "action": "discreet_object_placement_pose",
-              "expression": "cold_unreadable_stare"
-            },
-            "phases": [
-              "recon",
-              "routine_access",
-              "contact_blend"
-            ],
-            "tell_pool": [
-              "service_cart_access",
-              "master_keyring",
-              "medical_chart_intel",
-              "court_letter",
-              "marked_route_map"
-            ],
-            "additional": [
-              "the operative is staging position or placing an ordinary-looking item for later, blending with the location's routine"
-            ],
-            "intent_axis": [
-              "pre-positioning and staging without any harmful act"
-            ]
-          },
-          "escape_route_stage": {
-            "weight": 1.05,
-            "set": {
-              "action": "checking_exit_stairwell_pose",
-              "expression": "calm_intense_gaze"
-            },
-            "phases": [
-              "approach",
-              "exfil"
-            ],
-            "tell_pool": [
-              "marked_route_map",
-              "room_keycard",
-              "burner_phone",
-              "master_keyring",
-              "duty_radio"
-            ],
-            "additional": [
-              "the subject is securing an exit path such as a stairwell, service door, or waiting vehicle with quiet urgency"
-            ],
-            "intent_axis": [
-              "escape-route reconnaissance distinct from final walkaway"
-            ]
-          },
-          "close_call_freeze": {
-            "weight": 0.95,
-            "set": {
-              "action": "sudden_still_against_wall_pose",
-              "expression": "tense_held_breath_alert"
-            },
-            "phases": [
-              "approach",
-              "wait_overwatch"
-            ],
-            "tell_pool": [
-              "medical_chart_intel",
-              "service_cart_access",
-              "earpiece_wire",
-              "gloves_indoors",
-              "compact_reflection",
-              "nightclub_service_tray",
-              "work_tool_bag"
-            ],
-            "additional": [
-              "a near-discovery moment: the subject freezes against cover, breath held, all tension and no action"
-            ],
-            "intent_axis": [
-              "tense near-miss beat that reads as suspense, not violence"
-            ]
-          }
+          "additional": [
+            "the maid uniform is a flawless cover identity inside an ordinary cafe, with the stillness of someone waiting for a private mission cue",
+            "a single calling-card prop and doorway shadow framing create the threat through implication rather than a drawn weapon",
+            "her gaze should avoid the camera and track an implied target through glass, a reflection, or a nearby customer in the crowd"
+          ],
+          "intent_axis": [
+            "covert operative hiding in plain sight inside a maid cafe cover identity",
+            "cold stillness under CCTV framing with a single calling card",
+            "reflection surveillance and an implied off-frame target inside an ordinary cafe"
+          ]
         },
-        "expression": {
-          "cold_operational_blank": {
-            "weight": 1,
-            "set": {
-              "expression": "cold_unreadable_stare"
-            },
-            "additional": [
-              "the face stays unreadable enough to feel professional rather than theatrical"
-            ]
+        {
+          "id": "hospital_corridor_infiltrator",
+          "weight": 1,
+          "roles": [
+            "간호사"
+          ],
+          "set": {
+            "prop": "black_leather_gloves_prop",
+            "action": "doorframe_shadow_watch",
+            "location": "hospital_corridor",
+            "lighting": "flickering_fluorescent_horror",
+            "mood": "clinical",
+            "composition": "frame_within_frame"
           },
-          "sharp_side_observation": {
-            "weight": 1,
-            "set": {
-              "expression": "sharp_side_glance_observation"
-            },
-            "additional": [
-              "the eyes track through the edge of the frame instead of posing for the camera"
-            ]
-          },
-          "off_frame_target_lock": {
-            "weight": 1,
-            "set": {
-              "expression": "off_frame_target_lock_gaze"
-            },
-            "additional": [
-              "attention is locked to a specific off-frame person or route point"
-            ]
-          },
-          "downcast_focus": {
-            "weight": 1,
-            "set": {
-              "expression": "downcast_operational_focus"
-            },
-            "additional": [
-              "the downcast look reads as procedure and timing, not shyness"
-            ]
-          },
-          "controlled_calm": {
-            "weight": 0.9,
-            "set": {
-              "expression": "controlled_walkaway_calm"
-            },
-            "additional": [
-              "the calm reads as controlled exit discipline rather than fashion aloofness"
-            ]
-          },
-          "held_breath_alert": {
-            "weight": 1,
-            "set": {
-              "expression": "tense_held_breath_alert"
-            },
-            "additional": [
-              "the face carries a near-discovery beat: breath held, jaw still, no exaggerated fear"
-            ]
-          },
-          "intense_microfocus": {
-            "weight": 0.85,
-            "set": {
-              "expression": "calm_intense_gaze"
-            },
-            "additional": [
-              "the expression is small and contained, with tension in the eyes rather than a performance pose"
-            ]
-          }
+          "additional": [
+            "the nurse uniform is a clinical cover identity, not a cheerful costume pose",
+            "black gloves, a doorframe, and a cold unreadable stare suggest controlled infiltration without showing injury, a target, or a weapon in use",
+            "a small cover-identity crack such as gloved hands, a wrong pause at the doorway, or a hidden prop under the chart should disturb the pretty medical-uniform image"
+          ],
+          "intent_axis": [
+            "clinical hospital corridor cover identity with emotional control",
+            "doorframe shadow surveillance portrait with black gloves",
+            "just-before-approach hospital infiltration with a concealed prop cue"
+          ]
         },
-        "phase": {
-          "recon": {
-            "weight": 1,
-            "set": {
-              "mood": "composed_cover_with_quiet_threat"
-            },
-            "additional": [
-              "the moment is reconnaissance before contact, focused on information and timing"
-            ]
+        {
+          "id": "undercover_parking_identity",
+          "weight": 1,
+          "roles": [
+            "경찰",
+            "사복 여친"
+          ],
+          "set": {
+            "prop": "single_playing_card_calling_card_prop",
+            "action": "concealed_holster_adjust_pose",
+            "location": "underground_parking_garage",
+            "lighting": "headlights",
+            "mood": "reportage_tense_noir",
+            "composition": "cctv_corner_frame"
           },
-          "approach": {
-            "weight": 1,
-            "set": {
-              "mood": "daylight_cover_tension"
-            },
-            "additional": [
-              "the subject is approaching through a cover role, keeping the tension under social normality"
-            ]
-          },
-          "wait_overwatch": {
-            "weight": 1,
-            "set": {
-              "mood": "tense"
-            },
-            "additional": [
-              "the stillness reads as waiting for a cue rather than posing for a fashion portrait"
-            ]
-          },
-          "contact_blend": {
-            "weight": 1,
-            "set": {
-              "mood": "daylight_cover_tension"
-            },
-            "additional": [
-              "the character blends into normal social contact while one detail betrays the cover identity"
-            ]
-          },
-          "exfil": {
-            "weight": 1,
-            "set": {
-              "mood": "calm_exfiltration"
-            },
-            "additional": [
-              "the frame suggests quiet departure, not action, pursuit, or aftermath"
-            ]
-          },
-          "debrief_dead_drop": {
-            "weight": 1,
-            "set": {
-              "mood": "quiet_domestic_stakeout"
-            },
-            "additional": [
-              "the scene centers on a small exchange of information hidden inside an ordinary task"
-            ]
-          },
-          "routine_access": {
-            "weight": 1,
-            "set": {
-              "mood": "tech_thriller_control"
-            },
-            "additional": [
-              "the tension comes from access, credentials, and routine behavior that feels too precise"
-            ]
-          }
+          "additional": [
+            "the uniform or casual outfit reads as an undercover cover identity rather than official duty or casual dating",
+            "the concealed holster detail stays hidden and never becomes an aimed or drawn weapon; the calling card carries the mission trace",
+            "headlights, CCTV angle, and a hand near the concealed prop should suggest an exit-route check or approach timing, not a heroic action pose"
+          ],
+          "intent_axis": [
+            "undercover parking garage surveillance portrait with hidden purpose",
+            "headlights CCTV frame and calling card mission trace",
+            "concealed holster and exit-route check before approaching an implied target"
+          ]
         },
-        "register": {
-          "cold_noir": {
-            "weight": 1,
-            "set": {
-              "lighting": "low_key",
-              "light_direction": "side_light_left",
-              "light_type": "narrow_spotlight",
-              "light_intensity": "deep_shadow_detail",
-              "color": "desaturated_cold_blue"
-            },
-            "intent_axis": [
-              "low-key noir cover identity lighting"
-            ]
+        {
+          "id": "mine_shift_cover_identity",
+          "weight": 1,
+          "roles": [
+            "광부"
+          ],
+          "set": {
+            "prop": "black_leather_gloves_prop",
+            "action": "doorframe_shadow_watch",
+            "location": "underground_mine_tunnel_set",
+            "lighting": "single_flashlight_beam",
+            "mood": "tense",
+            "composition": "silhouette"
           },
-          "clinical_bright": {
-            "weight": 0.7,
-            "set": {
-              "lighting": "fluorescent",
-              "light_direction": "overhead_fluorescent_toplight",
-              "light_type": "fluorescent_ceiling",
-              "light_intensity": "high_key_bright",
-              "color": "clinical_white"
-            },
-            "intent_axis": [
-              "bright clinical high-key infiltration lighting"
-            ]
-          },
-          "daylight_blend": {
-            "weight": 1,
-            "set": {
-              "lighting": "overcast",
-              "light_direction": "side_light_left",
-              "light_intensity": "balanced_exposure",
-              "color": "muted"
-            },
-            "intent_axis": [
-              "plain daylight hiding-in-public realism with directional shadow"
-            ]
-          },
-          "neon_reportage": {
-            "weight": 1,
-            "set": {
-              "lighting": "neon",
-              "light_direction": "low_neon_side_light",
-              "light_type": "neon_sign_light",
-              "light_intensity": "harsh_high_contrast",
-              "color": "neon_magenta_cyan"
-            },
-            "intent_axis": [
-              "neon reportage surveillance color"
-            ]
-          },
-          "domestic_liminal": {
-            "weight": 1,
-            "set": {
-              "lighting": "fluorescent",
-              "light_direction": "top_light",
-              "light_type": "fluorescent_ceiling",
-              "light_intensity": "balanced_exposure",
-              "color": "cross_processed_green"
-            },
-            "intent_axis": [
-              "ordinary liminal interior with quiet threat"
-            ]
-          },
-          "period_candle": {
-            "weight": 1,
-            "set": {
-              "lighting": "candlelight",
-              "light_direction": "side_light_right",
-              "light_type": "candlelight",
-              "light_intensity": "available_low_light",
-              "color": "warm_earth"
-            },
-            "intent_axis": [
-              "period candlelit court intrigue lighting"
-            ]
-          },
-          "subway_flat": {
-            "weight": 1,
-            "set": {
-              "lighting": "subway_car_fluorescent_light",
-              "light_direction": "overhead_fluorescent_toplight",
-              "light_type": "subway_train_fluorescent",
-              "light_intensity": "balanced_exposure",
-              "color": "clinical_white"
-            },
-            "intent_axis": [
-              "flat fluorescent public-transit surveillance lighting"
-            ]
-          }
+          "additional": [
+            "the miner workwear is a practical cover identity, while the hands, posture, and stillness feel too controlled for ordinary labor",
+            "remove the heroic survival pose; the tension comes from a silent watcher hidden in the tunnel mouth",
+            "the tool, gloves, tunnel shadow, and a background worker should read as crowd-blending cover and near-discovery tension rather than a survival scene"
+          ],
+          "intent_axis": [
+            "miner disguise hiding a covert observer in a mine tunnel",
+            "single flashlight silhouette and cold controlled stillness",
+            "mine tunnel cover identity with implied target presence and route awareness"
+          ]
         },
-        "environment": {
-          "maid_cafe_corner": {
-            "weight": 1,
-            "set": {
-              "location": "maid_cafe_interior",
-              "composition": "cctv_corner_frame"
-            }
+        {
+          "id": "palace_court_shadow",
+          "weight": 1,
+          "roles": [
+            "공주"
+          ],
+          "set": {
+            "prop": "sealed_mission_envelope_prop",
+            "action": "standing_silence",
+            "location": "joseon_palace_interior",
+            "lighting": "candlelight",
+            "mood": "occult_noir",
+            "composition": "frame_within_frame"
           },
-          "hotel_service_corridor_access": {
-            "weight": 1,
-            "set": {
-              "location": "hotel_service_corridor",
-              "composition": "frame_within_frame"
-            }
-          },
-          "quiet_cafe_day": {
-            "weight": 1,
-            "set": {
-              "location": "quiet_cafe",
-              "composition": "reflection"
-            }
-          },
-          "hospital_corridor_frame": {
-            "weight": 1,
-            "set": {
-              "location": "hospital_corridor",
-              "composition": "frame_within_frame"
-            }
-          },
-          "hospital_waiting_room_public": {
-            "weight": 1,
-            "set": {
-              "location": "hospital_waiting_room",
-              "composition": "crowded_layers"
-            }
-          },
-          "vip_hospital_room_access": {
-            "weight": 1,
-            "set": {
-              "location": "vip_hospital_room",
-              "composition": "frame_within_frame"
-            }
-          },
-          "parking_garage_cctv": {
-            "weight": 1,
-            "set": {
-              "location": "underground_parking_garage",
-              "composition": "cctv_corner_frame"
-            }
-          },
-          "airport_terminal_public": {
-            "weight": 1,
-            "set": {
-              "location": "airport_terminal",
-              "composition": "over_shoulder_target_watch_frame"
-            }
-          },
-          "subway_car_reflection": {
-            "weight": 1,
-            "set": {
-              "location": "subway_car_inside",
-              "composition": "reflection"
-            }
-          },
-          "traditional_market_crowd": {
-            "weight": 1,
-            "set": {
-              "location": "traditional_market",
-              "composition": "crowded_layers"
-            }
-          },
-          "mine_tunnel_silhouette": {
-            "weight": 1,
-            "set": {
-              "location": "underground_mine_tunnel_set",
-              "composition": "silhouette"
-            }
-          },
-          "laundromat_dead_drop": {
-            "weight": 1,
-            "set": {
-              "location": "laundromat_night",
-              "composition": "centered_symmetry"
-            }
-          },
-          "server_room_access": {
-            "weight": 1,
-            "set": {
-              "location": "server_room",
-              "composition": "centered_symmetry"
-            }
-          },
-          "palace_screen_shadow": {
-            "weight": 1,
-            "set": {
-              "location": "joseon_palace_interior",
-              "composition": "frame_within_frame"
-            }
-          },
-          "palace_banquet_corridor_shadow": {
-            "weight": 1,
-            "set": {
-              "location": "palace_banquet_corridor",
-              "composition": "over_shoulder_target_watch_frame"
-            }
-          },
-          "princess_chamber_letter": {
-            "weight": 1,
-            "set": {
-              "location": "royal_princess_chamber",
-              "composition": "negative_space"
-            }
-          },
-          "hotel_corridor_liminal": {
-            "weight": 1,
-            "set": {
-              "location": "hotel_corridor_liminal",
-              "composition": "silhouette"
-            }
-          },
-          "hotel_rooftop_dusk": {
-            "weight": 1,
-            "set": {
-              "location": "hotel_rooftop_dusk",
-              "composition": "negative_space"
-            }
-          },
-          "hotel_lobby_crowd": {
-            "weight": 1,
-            "set": {
-              "location": "luxury_hotel_lobby",
-              "composition": "crowded_layers"
-            }
-          },
-          "nightclub_backdoor_watch": {
-            "weight": 1,
-            "set": {
-              "location": "nightclub_service_backdoor",
-              "composition": "puddle_inverted_reflection"
-            }
-          },
-          "rooftop_city_overwatch": {
-            "weight": 1,
-            "set": {
-              "location": "rooftop_city",
-              "composition": "wide_establishing"
-            }
-          },
-          "rain_alley_reflection": {
-            "weight": 1,
-            "set": {
-              "location": "rainy_neon_alley",
-              "composition": "puddle_inverted_reflection"
-            }
-          }
+          "additional": [
+            "the princess styling is a courtly cover identity, with elegance masking a private mission",
+            "a sealed mission envelope, candlelight, and half-shadow should replace combat posing as the main assassin signal",
+            "a court ornament, hairpin glint, sleeve gesture, or reflected court guest may quietly break the beautiful royal portrait into a covert approach scene"
+          ],
+          "intent_axis": [
+            "courtly cover identity with sealed mission trace",
+            "candlelit palace half-shadow and unreadable gaze",
+            "royal disguise with a concealed ornament cue and implied target beyond the frame"
+          ]
         },
-        "tell": {
-          "earpiece_wire": {
-            "weight": 1,
-            "set": {
-              "prop": "concealed_earpiece_coiled_wire"
-            }
+        {
+          "id": "hotel_lounge_shadow_agent",
+          "weight": 1,
+          "roles": [
+            "바니걸"
+          ],
+          "set": {
+            "prop": "black_leather_gloves_prop",
+            "action": "standing_silence",
+            "location": "luxury_hotel_corridor",
+            "lighting": "rim_light",
+            "mood": "reportage_tense_noir",
+            "composition": "silhouette"
           },
-          "gloves_indoors": {
-            "weight": 1,
-            "set": {
-              "prop": "black_leather_gloves_prop"
-            }
+          "additional": [
+            "the stage costume reads as a hotel-lounge cover identity, with a poised anonymous silhouette rather than a playful costume pin-up",
+            "black gloves, rim light, and distance from the camera create the covert-agent signal without any visible target",
+            "the lounge crowd, service posture, and a glance toward a corridor or VIP table should imply blending in, approach timing, and an escape path"
+          ],
+          "intent_axis": [
+            "hotel lounge cover identity as a shadow agent silhouette",
+            "rim-lit anonymous stillness with black gloves",
+            "crowd-blending hotel cover identity with approach and exit-route tension"
+          ]
+        },
+        {
+          "id": "everyday_surveillance_tail",
+          "weight": 1,
+          "roles": [
+            "사복 여친",
+            "경찰"
+          ],
+          "set": {
+            "prop": "vintage_film_camera_prop",
+            "action": "checking_phone",
+            "location": "airport_terminal",
+            "lighting": "hard_flash",
+            "mood": "reportage_tense_noir",
+            "composition": "paparazzi_diagonal_flash"
           },
-          "target_photo": {
-            "weight": 0.6,
-            "set": {
-              "prop": "surveillance_target_photo_prop"
-            }
-          },
-          "calling_card": {
-            "weight": 1,
-            "set": {
-              "prop": "single_playing_card_calling_card_prop"
-            }
-          },
-          "sealed_envelope": {
-            "weight": 0.6,
-            "set": {
-              "prop": "sealed_mission_envelope_prop"
-            }
-          },
-          "compact_reflection": {
-            "weight": 1,
-            "set": {
-              "prop": "compact_mirror_surveillance_prop"
-            }
-          },
-          "wrong_badge": {
-            "weight": 1,
-            "set": {
-              "prop": "wrong_facing_id_badge_prop"
-            }
-          },
-          "burner_phone": {
-            "weight": 0.7,
-            "set": {
-              "prop": "burner_phone_prop"
-            }
-          },
-          "marked_route_map": {
-            "weight": 1,
-            "set": {
-              "prop": "marked_route_map_prop"
-            }
-          },
-          "keycard_access": {
-            "weight": 0.7,
-            "set": {
-              "prop": "keycard_access_prop"
-            }
-          },
-          "hairpin": {
-            "weight": 1,
-            "set": {
-              "prop": "sharp_ornamental_hairpin_prop"
-            }
-          },
-          "room_keycard": {
-            "weight": 1,
-            "set": {
-              "prop": "room_keycard_prop"
-            }
-          },
-          "service_cart_access": {
-            "weight": 1.2,
-            "set": {
-              "prop": "service_cart_hidden_compartment_prop"
-            }
-          },
-          "master_keyring": {
-            "weight": 1.15,
-            "set": {
-              "prop": "facility_master_keyring_prop"
-            }
-          },
-          "medical_chart_intel": {
-            "weight": 1.15,
-            "set": {
-              "prop": "patient_chart_marked_target_prop"
-            }
-          },
-          "duty_radio": {
-            "weight": 1.1,
-            "set": {
-              "prop": "police_duty_radio_prop"
-            }
-          },
-          "work_tool_bag": {
-            "weight": 1.15,
-            "set": {
-              "prop": "dusted_work_tool_bag_prop"
-            }
-          },
-          "court_letter": {
-            "weight": 1.2,
-            "set": {
-              "prop": "sealed_court_letter_prop"
-            }
-          },
-          "nightclub_service_tray": {
-            "weight": 1.2,
-            "set": {
-              "prop": "nightclub_service_tray_prop"
-            }
-          }
+          "additional": [
+            "the casual girlfriend-style outfit is a hiding-in-plain-sight cover identity inside a public transit space",
+            "camera and phone details read as surveillance and mission timing, not tourist posing or social-media cuteness",
+            "a reflection, earbud, phone screen, or crowd gap should imply surveillance of a single off-frame person while the subject remains ordinary"
+          ],
+          "intent_axis": [
+            "everyday casual cover identity in an airport surveillance tail",
+            "paparazzi flash camera prop and phone timing as mission trace",
+            "ordinary public-space disguise with reflection surveillance and crowd blending"
+          ]
         }
-      },
-      "role_profiles": {
-        "메이드": {
-          "archetypes": [
-            "shadow_surveillance",
-            "reflection_recon",
-            "target_acquisition",
-            "concealment_check",
-            "pre_position_stage",
-            "escape_route_stage",
-            "infowar_dead_drop",
-            "social_engineer"
-          ],
-          "expressions": [
-            "sharp_side_observation",
-            "off_frame_target_lock",
-            "downcast_focus",
-            "held_breath_alert",
-            "cold_operational_blank"
-          ],
-          "environments": [
-            "hotel_service_corridor_access",
-            "laundromat_dead_drop",
-            "quiet_cafe_day",
-            "hotel_lobby_crowd",
-            "maid_cafe_corner"
-          ],
-          "registers": [
-            "cold_noir",
-            "domestic_liminal",
-            "neon_reportage",
-            "daylight_blend"
-          ],
-          "tells": [
-            "calling_card",
-            "earpiece_wire",
-            "compact_reflection",
-            "service_cart_access",
-            "master_keyring",
-            "sealed_envelope",
-            "wrong_badge"
-          ],
-          "weights": {
-            "archetype": {
-              "shadow_surveillance": 1.35,
-              "reflection_recon": 1.35,
-              "target_acquisition": 1.2,
-              "concealment_check": 1.3,
-              "pre_position_stage": 1.45,
-              "escape_route_stage": 1.1,
-              "infowar_dead_drop": 1.15,
-              "social_engineer": 0.45
-            },
-            "expression": {
-              "sharp_side_observation": 1.3,
-              "off_frame_target_lock": 1.15,
-              "downcast_focus": 1,
-              "held_breath_alert": 1.1,
-              "cold_operational_blank": 1
-            },
-            "environment": {
-              "hotel_service_corridor_access": 1.55,
-              "laundromat_dead_drop": 1.25,
-              "quiet_cafe_day": 1.15,
-              "hotel_lobby_crowd": 1,
-              "maid_cafe_corner": 0.45
-            },
-            "register": {
-              "cold_noir": 1.25,
-              "domestic_liminal": 1.15,
-              "neon_reportage": 1.05,
-              "daylight_blend": 0.65
-            }
-          }
-        },
-        "간호사": {
-          "archetypes": [
-            "shadow_surveillance",
-            "target_acquisition",
-            "concealment_check",
-            "pre_position_stage",
-            "close_call_freeze",
-            "social_engineer",
-            "infowar_dead_drop",
-            "methodical_recon",
-            "routine_access"
-          ],
-          "expressions": [
-            "downcast_focus",
-            "cold_operational_blank",
-            "held_breath_alert",
-            "off_frame_target_lock",
-            "intense_microfocus"
-          ],
-          "environments": [
-            "vip_hospital_room_access",
-            "hospital_corridor_frame",
-            "hospital_waiting_room_public",
-            "server_room_access",
-            "laundromat_dead_drop"
-          ],
-          "registers": [
-            "clinical_bright",
-            "cold_noir",
-            "domestic_liminal",
-            "daylight_blend"
-          ],
-          "tells": [
-            "gloves_indoors",
-            "wrong_badge",
-            "medical_chart_intel",
-            "master_keyring",
-            "keycard_access",
-            "sealed_envelope",
-            "earpiece_wire",
-            "marked_route_map"
-          ],
-          "weights": {
-            "archetype": {
-              "target_acquisition": 1.25,
-              "concealment_check": 1.25,
-              "pre_position_stage": 1.3,
-              "close_call_freeze": 1.15,
-              "social_engineer": 0.45,
-              "infowar_dead_drop": 0.75
-            },
-            "expression": {
-              "downcast_focus": 1.3,
-              "cold_operational_blank": 1.15,
-              "held_breath_alert": 1.15,
-              "off_frame_target_lock": 1,
-              "intense_microfocus": 1
-            },
-            "environment": {
-              "vip_hospital_room_access": 1.45,
-              "hospital_corridor_frame": 1.2,
-              "hospital_waiting_room_public": 1,
-              "server_room_access": 0.75,
-              "laundromat_dead_drop": 0.45
-            },
-            "tell": {
-              "medical_chart_intel": 1.45,
-              "master_keyring": 1.2,
-              "sealed_envelope": 0.45,
-              "keycard_access": 0.7
-            }
-          }
-        },
-        "경찰": {
-          "archetypes": [
-            "public_tail",
-            "reflection_recon",
-            "target_acquisition",
-            "escape_route_stage",
-            "close_call_freeze",
-            "methodical_recon",
-            "exfil_blend",
-            "social_engineer"
-          ],
-          "expressions": [
-            "off_frame_target_lock",
-            "sharp_side_observation",
-            "intense_microfocus",
-            "held_breath_alert",
-            "controlled_calm"
-          ],
-          "environments": [
-            "airport_terminal_public",
-            "subway_car_reflection",
-            "parking_garage_cctv",
-            "traditional_market_crowd",
-            "rain_alley_reflection"
-          ],
-          "registers": [
-            "cold_noir",
-            "subway_flat",
-            "daylight_blend",
-            "neon_reportage"
-          ],
-          "tells": [
-            "earpiece_wire",
-            "wrong_badge",
-            "duty_radio",
-            "burner_phone",
-            "target_photo",
-            "compact_reflection",
-            "marked_route_map"
-          ],
-          "weights": {
-            "archetype": {
-              "public_tail": 1.3,
-              "reflection_recon": 1.25,
-              "target_acquisition": 1.35,
-              "escape_route_stage": 1.2,
-              "close_call_freeze": 1.1,
-              "methodical_recon": 1.2,
-              "exfil_blend": 1,
-              "social_engineer": 0.45
-            },
-            "expression": {
-              "off_frame_target_lock": 1.35,
-              "sharp_side_observation": 1.25,
-              "intense_microfocus": 1.1,
-              "held_breath_alert": 1,
-              "controlled_calm": 0.9
-            },
-            "register": {
-              "cold_noir": 1.25,
-              "subway_flat": 1,
-              "daylight_blend": 0.55,
-              "neon_reportage": 1.15
-            },
-            "tell": {
-              "duty_radio": 1.45,
-              "target_photo": 1.2,
-              "burner_phone": 0.7,
-              "wrong_badge": 0.8
-            }
-          }
-        },
-        "광부": {
-          "archetypes": [
-            "shadow_surveillance",
-            "target_acquisition",
-            "concealment_check",
-            "escape_route_stage",
-            "close_call_freeze",
-            "methodical_recon",
-            "exfil_blend",
-            "infowar_dead_drop"
-          ],
-          "expressions": [
-            "sharp_side_observation",
-            "cold_operational_blank",
-            "held_breath_alert",
-            "downcast_focus",
-            "controlled_calm"
-          ],
-          "environments": [
-            "mine_tunnel_silhouette",
-            "traditional_market_crowd",
-            "laundromat_dead_drop",
-            "rain_alley_reflection",
-            "rooftop_city_overwatch"
-          ],
-          "registers": [
-            "cold_noir",
-            "domestic_liminal",
-            "neon_reportage",
-            "daylight_blend"
-          ],
-          "tells": [
-            "gloves_indoors",
-            "work_tool_bag",
-            "marked_route_map",
-            "sealed_envelope",
-            "burner_phone",
-            "keycard_access"
-          ],
-          "weights": {
-            "archetype": {
-              "shadow_surveillance": 1.35,
-              "target_acquisition": 1.15,
-              "concealment_check": 1.35,
-              "escape_route_stage": 1.2,
-              "close_call_freeze": 1.25,
-              "infowar_dead_drop": 0.55
-            },
-            "expression": {
-              "sharp_side_observation": 1.25,
-              "cold_operational_blank": 1.2,
-              "held_breath_alert": 1.15,
-              "downcast_focus": 1,
-              "controlled_calm": 0.9
-            },
-            "environment": {
-              "mine_tunnel_silhouette": 1.65,
-              "traditional_market_crowd": 0.6,
-              "laundromat_dead_drop": 0.35,
-              "rain_alley_reflection": 0.8,
-              "rooftop_city_overwatch": 0.45
-            },
-            "tell": {
-              "work_tool_bag": 1.6,
-              "gloves_indoors": 1.2,
-              "sealed_envelope": 0.35,
-              "burner_phone": 0.55,
-              "keycard_access": 0.55
-            }
-          }
-        },
-        "공주": {
-          "archetypes": [
-            "shadow_surveillance",
-            "target_acquisition",
-            "concealment_check",
-            "pre_position_stage",
-            "close_call_freeze",
-            "social_engineer",
-            "methodical_recon",
-            "infowar_dead_drop",
-            "exfil_blend"
-          ],
-          "expressions": [
-            "cold_operational_blank",
-            "sharp_side_observation",
-            "downcast_focus",
-            "held_breath_alert",
-            "controlled_calm"
-          ],
-          "environments": [
-            "palace_screen_shadow",
-            "palace_banquet_corridor_shadow",
-            "princess_chamber_letter",
-            "rooftop_city_overwatch"
-          ],
-          "registers": [
-            "period_candle",
-            "cold_noir",
-            "daylight_blend"
-          ],
-          "tells": [
-            "hairpin",
-            "court_letter"
-          ],
-          "strict_axes": [
-            "tell"
-          ],
-          "weights": {
-            "archetype": {
-              "shadow_surveillance": 1.25,
-              "target_acquisition": 1,
-              "concealment_check": 1.35,
-              "pre_position_stage": 1.35,
-              "close_call_freeze": 1.1,
-              "social_engineer": 0.35,
-              "infowar_dead_drop": 0.55
-            },
-            "expression": {
-              "cold_operational_blank": 1.25,
-              "sharp_side_observation": 1.15,
-              "downcast_focus": 1,
-              "held_breath_alert": 1,
-              "controlled_calm": 0.9
-            },
-            "environment": {
-              "palace_screen_shadow": 1.15,
-              "palace_banquet_corridor_shadow": 1.45,
-              "princess_chamber_letter": 0.9,
-              "rooftop_city_overwatch": 0.45
-            },
-            "tell": {
-              "hairpin": 1.35,
-              "court_letter": 1.45
-            }
-          }
-        },
-        "바니걸": {
-          "archetypes": [
-            "reflection_recon",
-            "public_tail",
-            "target_acquisition",
-            "concealment_check",
-            "escape_route_stage",
-            "close_call_freeze",
-            "exfil_blend",
-            "infowar_dead_drop",
-            "social_engineer"
-          ],
-          "expressions": [
-            "off_frame_target_lock",
-            "sharp_side_observation",
-            "held_breath_alert",
-            "controlled_calm",
-            "intense_microfocus"
-          ],
-          "environments": [
-            "nightclub_backdoor_watch",
-            "hotel_corridor_liminal",
-            "laundromat_dead_drop",
-            "rain_alley_reflection",
-            "hotel_rooftop_dusk",
-            "hotel_lobby_crowd"
-          ],
-          "registers": [
-            "cold_noir",
-            "neon_reportage",
-            "domestic_liminal",
-            "daylight_blend"
-          ],
-          "tells": [
-            "gloves_indoors",
-            "earpiece_wire",
-            "nightclub_service_tray",
-            "room_keycard",
-            "sealed_envelope",
-            "burner_phone",
-            "compact_reflection"
-          ],
-          "weights": {
-            "archetype": {
-              "reflection_recon": 1.45,
-              "public_tail": 1.35,
-              "target_acquisition": 1.2,
-              "concealment_check": 1.25,
-              "escape_route_stage": 1.35,
-              "close_call_freeze": 1.2,
-              "exfil_blend": 1.2,
-              "infowar_dead_drop": 0.75,
-              "social_engineer": 0.2
-            },
-            "expression": {
-              "off_frame_target_lock": 1.25,
-              "sharp_side_observation": 1.2,
-              "held_breath_alert": 1.15,
-              "controlled_calm": 1,
-              "intense_microfocus": 1
-            },
-            "environment": {
-              "nightclub_backdoor_watch": 1.55,
-              "hotel_corridor_liminal": 1.35,
-              "laundromat_dead_drop": 0.75,
-              "rain_alley_reflection": 1.2,
-              "hotel_rooftop_dusk": 0.45,
-              "hotel_lobby_crowd": 0.55
-            },
-            "register": {
-              "cold_noir": 1.35,
-              "neon_reportage": 1.2,
-              "domestic_liminal": 1,
-              "daylight_blend": 0.3
-            },
-            "tell": {
-              "nightclub_service_tray": 1.45,
-              "earpiece_wire": 1.15,
-              "room_keycard": 1.05,
-              "sealed_envelope": 0.35,
-              "burner_phone": 0.65
-            }
-          }
-        },
-        "사복 여친": {
-          "archetypes": [
-            "public_tail",
-            "reflection_recon",
-            "target_acquisition",
-            "escape_route_stage",
-            "close_call_freeze",
-            "exfil_blend",
-            "infowar_dead_drop",
-            "social_engineer"
-          ],
-          "expressions": [
-            "downcast_focus",
-            "off_frame_target_lock",
-            "sharp_side_observation",
-            "held_breath_alert",
-            "controlled_calm"
-          ],
-          "environments": [
-            "subway_car_reflection",
-            "traditional_market_crowd",
-            "airport_terminal_public",
-            "laundromat_dead_drop",
-            "quiet_cafe_day",
-            "rain_alley_reflection"
-          ],
-          "registers": [
-            "daylight_blend",
-            "subway_flat",
-            "neon_reportage",
-            "domestic_liminal"
-          ],
-          "tells": [
-            "compact_reflection",
-            "burner_phone",
-            "target_photo",
-            "earpiece_wire",
-            "sealed_envelope",
-            "wrong_badge"
-          ],
-          "weights": {
-            "archetype": {
-              "public_tail": 1.35,
-              "reflection_recon": 1.35,
-              "target_acquisition": 1.35,
-              "escape_route_stage": 1.2,
-              "close_call_freeze": 1.1,
-              "exfil_blend": 1.05,
-              "infowar_dead_drop": 0.9,
-              "social_engineer": 0.35
-            },
-            "expression": {
-              "downcast_focus": 1.2,
-              "off_frame_target_lock": 1.25,
-              "sharp_side_observation": 1.15,
-              "held_breath_alert": 1,
-              "controlled_calm": 1
-            },
-            "register": {
-              "daylight_blend": 0.45,
-              "subway_flat": 1,
-              "neon_reportage": 1.25,
-              "domestic_liminal": 1.1
-            },
-            "tell": {
-              "target_photo": 1.35,
-              "compact_reflection": 1.25,
-              "burner_phone": 0.7,
-              "sealed_envelope": 0.5,
-              "wrong_badge": 0.6
-            }
-          }
-        }
-      },
-      "sampling": {
-        "merge_order": [
-          "register",
-          "archetype",
-          "phase",
-          "expression",
-          "environment",
-          "tell"
-        ]
-      },
+      ],
       "additional": [
         "the figure is hiding in plain sight: an ordinary cover identity concealing a different purpose",
-        "the assassin layer is expressed through cover identity, surveillance, access, information transfer, or quiet departure rather than combat",
-        "a small wardrobe or behavior crack betrays that the ordinary role is a disguise: an ID worn wrong, an earpiece wire, gloves indoors, or a stance too controlled for the job",
-        "deglamorize the styling into muted, functional, slightly worn realism rather than a fashion editorial, idol photobook, travel vlog, or cosplay pin-up",
-        "if any weapon is present it stays fully concealed or holstered and is never drawn, aimed, brandished, or used",
+        "stillness and tight emotional control just before a mission, not an action, fight, or combat scene",
+        "a role-appropriate weapon cue is subtly but visibly present as a partial sheath, holster grip, tool edge, tool head, or hairpin glint; never drawn, aimed, used, bloody, or shown with a victim",
         "a subtle wrongness or quiet incongruity signals that the ordinary look is a disguise",
-        "the scene must remain a staged character photo: no operational instructions, no explicit victim, and no depicted aftermath",
-        "non-graphic staged character photo with no depicted injury, blood, victim, or violence",
-        "the subject never smiles at or poses for the camera; the gaze is directed off-frame, to the side, or at a task, and the face stays composed and unsmiling",
-        "avoid bright high-key idol-photobook or cosplay pin-up lighting and framing; keep directional, available, or low-key light that carries shadow",
-        "the figure is embedded in a real location with at least one ambient bystander, reflection, or architectural cover element, not posed alone on a themed set",
-        "the themed cover costume is downplayed and partly obscured by environment, outerwear, or framing so it does not dominate the frame as a costume showcase",
-        "occupational tools are repurposed for the cover identity and used in-context, never displayed as standalone costume props; the location must be one this worker plausibly enters on the job",
-        "the frame should clarify a mission phase beyond simple document handoff: target identification, concealment check, pre-positioning, escape-route check, near-discovery suspense, surveillance, or quiet exfiltration"
+        "observed surveillance feel through half-shadow, through-glass, doorway, corner framing, reflection, or a crowd gap",
+        "the subject should not pose prettily for the camera; the gaze, hands, or body angle should point toward a task, an implied target, a concealed prop, or an exit route",
+        "non-graphic staged character photo with no depicted injury, blood, victim, or violence"
       ],
+      "weapon_cues": {
+        "메이드": "a slim sheathed utility blade sits partially visible beneath the apron tie; never drawn, aimed, used, bloody, or shown with a victim",
+        "간호사": "a slim sheathed utility blade rides partially visible at the hip under the uniform or jacket; never drawn, aimed, used, bloody, or shown with a victim",
+        "경찰": "a duty holster grip is partially visible at the belt as a quiet cover-identity tell; never drawn, aimed, used, bloody, or shown with a victim",
+        "광부": "a nonfunctional pickaxe tool head is subtly visible in-context as work equipment held low or shouldered; never drawn, aimed, used, bloody, or shown with a victim",
+        "사복 여친": "a compact sheathed blade peeks at the waistband or hoodie edge; never drawn, aimed, used, bloody, or shown with a victim",
+        "공주": "a phoenix hairpin catches a subtle metallic glint as the only weapon cue, with no firearm or modern weapon; never drawn, aimed, used, bloody, or shown with a victim",
+        "바니걸": "a slim sheathed blade is just visible along the garment seam or edge; never drawn, aimed, used, bloody, or shown with a victim"
+      },
       "intent_axis": [
-        "covert assassin hiding in plain sight through disguise, surveillance, information tradecraft, or quiet exfiltration",
-        "non-graphic staged character portrait where assassin identity is implied by subtle tradecraft details"
+        "covert assassin hiding in plain sight with a calm unreadable gaze",
+        "stillness before action under surveillance-noir framing, non-graphic",
+        "cover identity crack, implied target, concealed prop, reflection surveillance, and crowd blending"
       ],
       "likeness_mode": "inspired"
     }

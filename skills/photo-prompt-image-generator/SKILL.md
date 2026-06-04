@@ -160,18 +160,26 @@ python3 skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py \
   --explain-concept
 ```
 
-If the explanation looks right, rerun without `--explain-concept`. The wrapper expands `--concept` into deterministic generator args such as `--concept-lock`, `--preset`, `--set`, `--intent-axis`, `--additional-requirement`, and `--likeness-mode`. When `--concept` is provided and `--selection-mode` is not explicit, the wrapper defaults that call to rule mode because the recipe has already forced the core slots; pass `--selection-mode semantic` explicitly only when you intentionally want semantic retrieval on top of the recipe.
+If the explanation looks right, rerun without `--explain-concept`. The wrapper expands `--concept` into deterministic generator args such as `--concept-lock`, `--preset`, `--set`, `--intent-axis`, `--additional-requirement`, and `--likeness-mode`.
 
-For concepts that combine a role with `암살자`, the recipe resolver treats the role outfit as a cover identity and samples deterministic scene axes for archetype, mission phase, expression, register, environment, and cover-identity tell. The assassin layer should read through disguise, surveillance, target identification, access, occupational tools used in-context, pre-positioning, reflection, crowd blending, near-discovery suspense, or quiet exfiltration, not through graphic violence, visible victims, or drawn weapons. These concepts intentionally suppress camera-facing smiles, idol-photobook lighting, costume-showcase framing, and standalone cosplay-prop display; gaze should move off-frame, toward a task, a reflection, a route note, a bystander, a service door, or an architectural cover cue. Role profiles may restrict specific axes when needed, such as keeping historical princess concepts on period-appropriate tells rather than modern IDs or phones. The `암살자` mixin can also take preset priority over a role preset so strong costume roles still inherit a cinematic covert-photo register while keeping the role costume slot. Use `--explain-concept` to inspect `selected_axes`, legacy `selected_bundles`, `applied_role`, `applied_mixins`, and `combined_forced_slots` before rendering.
+For concepts that combine a role with `암살자`, the recipe resolver uses deterministic scene bundles. Keep the role outfit as a cover identity and let the assassin layer read through hiding in plain sight, off-frame gaze, concealed props, implied targets, reflection surveillance, cover-identity cracks, exit-route checks, crowd blending, and unsettling clues that break a pretty job or lifestyle editorial. The resolver automatically adds a role-specific subtle weapon cue as text, without replacing the bundle's `prop` or `action` scene slots. Do not turn these into graphic violence, visible victims, operational instructions, or drawn/aimed weapons.
 
-When the user asks for a weapon to be subtly visible in an `암살자` concept, keep the recipe intact and add explicit `--set` overrides plus an additional requirement instead of changing recipe pools. Use existing tags only:
+When the user asks for a weapon to be subtly visible in an `암살자` concept, keep the recipe intact and add explicit `--set` overrides plus an additional requirement instead of changing recipe pools. Use existing 39df660 tags only:
 
 - 메이드/간호사/사복 여친/바니걸: `--set prop=sheathed_utility_knife_prop --set action=concealed_holster_adjust_pose`
 - 경찰: `--set prop=real_holstered_service_pistol --set action=concealed_holster_adjust_pose`
 - 광부: `--set prop=nonfunctional_pickaxe_prop --set action=weapon_low_ready_stance`
-- 공주: `--set prop=sharp_ornamental_hairpin_prop --set action=hand_near_hidden_ornament_pose`
+- 공주: `--set prop=phoenix_hairpin_prop --set action=standing_silence`
 
-Also add `--additional-requirement "a role-appropriate weapon cue is visibly but subtly present as a partial sheath, holster grip, tool edge, or hairpin glint; never drawn, aimed, used, bloody, or shown with a victim"`.
+Also add a role-specific `--additional-requirement` rather than only a generic weapon phrase:
+
+- 메이드: `a slim sheathed utility blade sits partially visible beneath the apron tie; never drawn, aimed, used, bloody, or shown with a victim`
+- 간호사: `a slim sheathed utility blade rides partially visible at the hip under the uniform or jacket; never drawn, aimed, used, bloody, or shown with a victim`
+- 경찰: `a duty holster grip is partially visible at the belt as a quiet cover-identity tell; never drawn, aimed, used, bloody, or shown with a victim`
+- 광부: `a nonfunctional pickaxe tool head is subtly visible in-context as work equipment held low or shouldered; never drawn, aimed, used, bloody, or shown with a victim`
+- 사복 여친: `a compact sheathed blade peeks at the waistband or hoodie edge; never drawn, aimed, used, bloody, or shown with a victim`
+- 공주: `a phoenix hairpin catches a subtle metallic glint as the only weapon cue, with no firearm or modern weapon; never drawn, aimed, used, bloody, or shown with a victim`
+- 바니걸: `a slim sheathed blade is just visible along the garment seam or edge; never drawn, aimed, used, bloody, or shown with a victim`
 
 Add unrepresented concrete requirements without manual prompt editing:
 
@@ -467,7 +475,7 @@ Detailed English prompts should normally be at least 120 words when enough visua
 - `--n 1`
 - `--lang both`
 - `--detail-level detailed`
-- `--selection-mode semantic` for ordinary non-concept generation; deterministic `--concept` recipe generation defaults to rule mode unless `--selection-mode` is explicit
+- `--selection-mode semantic`
 - a broad default `--intent` when no explicit intent is provided
 - `--surreal-mode off`
 - `--reference-edit-mode off`
