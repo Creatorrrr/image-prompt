@@ -923,45 +923,79 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertNotIn("expression=cold_unreadable_stare", payload["forward_args"])
         self.assertNotIn("hiding in plain sight", " ".join(payload["forward_args"]))
 
-    def test_concept_recipe_expands_vampire_to_gothic_no_gore(self):
+    def test_concept_recipe_expands_vampire_as_non_graphic_mixin(self):
         payload = self.run_wrapper_json(
             "--concept",
             "흡혈귀",
             "--explain-concept",
             "--selection-mode",
             "rule",
+            "--seed",
+            "77",
             "--plain",
             "--no-negative",
         )
 
         concept = payload["concepts"][0]
-        self.assertEqual(concept["name"], "")
-        self.assertEqual(concept["role"], "흡혈귀")
-        self.assertEqual(concept["applied_role"], "흡혈귀")
+        self.assertEqual(concept["name"], "흡혈귀")
+        self.assertIsNone(concept["role"])
+        self.assertIsNone(concept["applied_role"])
+        self.assertEqual(concept["applied_mixins"], ["흡혈귀"])
         self.assertTrue(concept["matched"])
-        self.assertEqual(concept["recipe"]["preset"], "gothic_doll_cosplay_portrait")
+        self.assertEqual(concept["mixins"]["흡혈귀"]["preset"], "gothic_doll_cosplay_portrait")
         self.assertEqual(concept["combined_forced_slots"]["appearance_type"], ["classic_elegant"])
-        self.assertEqual(concept["combined_forced_slots"]["costume_style"], ["gothic_doll_lace_dress"])
-        self.assertEqual(concept["combined_forced_slots"]["mood"], ["gothic_melancholy"])
+        self.assertEqual(concept["combined_forced_slots"]["expression"], ["calm_intense_gaze"])
+        self.assertEqual(concept["combined_forced_slots"]["light_intensity"], ["deep_shadow_detail"])
+        self.assertEqual(len(concept["selected_bundles"]), 1)
+        bundle = concept["selected_bundles"][0]
+        self.assertEqual(bundle["mixin"], "흡혈귀")
+        self.assertTrue(bundle["bundle_id"].startswith("standalone_"))
         self.assertIn("--concept-lock", payload["forward_args"])
         self.assertIn("흡혈귀", payload["forward_args"])
-        self.assertIn("lighting=chiaroscuro", payload["forward_args"])
-        self.assertIn("color=luxury_black_gold", payload["forward_args"])
         joined = " ".join(payload["forward_args"])
         self.assertIn("immortal nocturnal aristocrat", joined)
+        self.assertIn("visible supernatural cues beyond gothic fashion", joined)
+        self.assertIn("reflection unease", joined)
         self.assertIn("no visible blood", joined)
         self.assertIn("no bared fangs", joined)
         self.assertIn("no visible victims", joined)
         self.assertIn("no gore", joined)
 
-    def test_vampire_concept_prompt_keeps_cliche_free_requirements(self):
+    def test_vampire_mixin_preserves_role_costume_without_assassin_note(self):
         payload = self.run_wrapper_json(
             "--concept",
-            "흡혈귀",
+            "카리나 메이드 흡혈귀",
+            "--explain-concept",
             "--selection-mode",
             "rule",
             "--seed",
-            "77",
+            "701",
+            "--plain",
+            "--no-negative",
+        )
+
+        concept = payload["concepts"][0]
+        self.assertEqual(concept["name"], "카리나")
+        self.assertEqual(concept["role"], "메이드")
+        self.assertEqual(concept["applied_role"], "메이드")
+        self.assertEqual(concept["applied_mixins"], ["흡혈귀"])
+        self.assertEqual(concept["combined_forced_slots"]["costume_style"], ["frill_apron_maid_costume"])
+        self.assertNotIn("gothic_doll_lace_dress", concept["combined_forced_slots"]["costume_style"])
+        self.assertEqual(len(concept["selected_bundles"]), 1)
+        self.assertEqual(concept["selected_bundles"][0]["mixin"], "흡혈귀")
+        joined = " ".join(payload["forward_args"])
+        self.assertIn("keep the role outfit readable", joined)
+        self.assertIn("no visible blood", joined)
+        self.assertNotIn("assassin persona", joined)
+
+    def test_vampire_concept_prompt_keeps_non_graphic_requirements(self):
+        payload = self.run_wrapper_json(
+            "--concept",
+            "설윤 공주 흡혈귀",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "706",
             "--lang",
             "en",
             "--no-negative",
@@ -970,17 +1004,56 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
 
         item = payload[0]
         self.assertEqual(item["choices"]["appearance_type"]["id"], "classic_elegant")
-        self.assertEqual(item["choices"]["costume_style"]["id"], "gothic_doll_lace_dress")
-        self.assertEqual(item["choices"]["lighting"]["id"], "chiaroscuro")
-        self.assertEqual(item["choices"]["color"]["id"], "luxury_black_gold")
-        self.assertEqual(item["choices"]["mood"]["id"], "gothic_melancholy")
-        self.assertIn("Core concept lock: 흡혈귀", item["prompt_en"])
+        self.assertEqual(item["choices"]["costume_style"]["id"], "royal_princess_hanbok")
+        self.assertIn("Core concept lock: 설윤 공주 흡혈귀", item["prompt_en"])
         self.assertIn("predatory stillness", item["prompt_en"])
-        self.assertIn("avoided daylight", item["prompt_en"])
+        self.assertIn("non-graphic vampire cues", item["prompt_en"])
+        self.assertIn("role outfit readable", item["prompt_en"])
         self.assertIn("no visible blood", item["prompt_en"])
         self.assertIn("no bared fangs", item["prompt_en"])
         self.assertIn("no visible victims", item["prompt_en"])
         self.assertIn("no gore", item["prompt_en"])
+        self.assertNotIn("assassin persona", item["prompt_en"])
+
+    def test_vampire_role_batch_uses_distinct_facet_bundles(self):
+        cases = [
+            ("카리나 메이드 흡혈귀", 701),
+            ("윈터 간호사 흡혈귀", 702),
+            ("닝닝 경찰 흡혈귀", 703),
+            ("지젤 광부 흡혈귀", 704),
+            ("아일릿 원희 사복 여친 흡혈귀", 705),
+            ("설윤 공주 흡혈귀", 706),
+            ("유나 바니걸 흡혈귀", 707),
+        ]
+        selected_bundle_ids = set()
+        selected_locations = set()
+        selected_lighting = set()
+        for concept, seed in cases:
+            explanation = self.run_wrapper_json(
+                "--concept",
+                concept,
+                "--explain-concept",
+                "--selection-mode",
+                "rule",
+                "--seed",
+                str(seed),
+                "--plain",
+                "--no-negative",
+            )
+            concept_payload = explanation["concepts"][0]
+            self.assertEqual(concept_payload["applied_mixins"], ["흡혈귀"])
+            selected_bundle = concept_payload["selected_bundles"][0]
+            selected_bundle_ids.add(selected_bundle["bundle_id"])
+            selected_locations.add(concept_payload["combined_forced_slots"]["location"][0])
+            selected_lighting.add(concept_payload["combined_forced_slots"]["lighting"][0])
+            self.assertNotEqual(
+                concept_payload["combined_forced_slots"].get("costume_style"),
+                ["gothic_doll_lace_dress"],
+            )
+
+        self.assertGreaterEqual(len(selected_bundle_ids), 5)
+        self.assertGreaterEqual(len(selected_locations), 4)
+        self.assertGreaterEqual(len(selected_lighting), 4)
 
     def test_concept_recipe_explain_combines_role_and_assassin_mixin(self):
         payload = self.run_wrapper_json(

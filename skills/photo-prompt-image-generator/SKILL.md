@@ -173,7 +173,19 @@ python3 skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py \
   --no-negative
 ```
 
-For existence/archetype concepts such as `흡혈귀`, prefer a role recipe that expands the seed into concrete photographic slots plus `Additional requirements` instead of relying on the image model's default genre cliches. The vampire recipe treats the concept as an immortal nocturnal aristocrat and communicates vampirism through predatory stillness, avoided daylight, reflection unease, withered-life cues, candlelit pallor, and a restrained crimson accent. Keep it non-graphic: no visible blood, exposed fangs, bite wounds, visible victims, gore, or feeding scene.
+For existence/archetype concepts such as `흡혈귀`, use the vampire concept mixin rather than a standalone role override when another role is present. The resolver should preserve the role outfit and readable job/costume identity, then add vampire facets through deterministic bundles: daylight refusal, mirror or reflection unease, moonlit pallor, bat-like shadows, withered-life cues, coffin-like geometry, antique portraits, or centuries-old stillness. This avoids the old failure mode where every result collapsed into black lace, candles, antique mirrors, and a generic gothic studio. Keep it non-graphic: no visible blood, exposed fangs, bite wounds, visible victims, gore, feeding scene, or graphic violence.
+
+For role + vampire concepts such as `카리나 메이드 흡혈귀`, pass the whole phrase as one `--concept` so the resolver can apply the role and the `흡혈귀` mixin together:
+
+```bash
+python3 skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py \
+  --concept "카리나 메이드 흡혈귀" \
+  --selection-mode rule \
+  --seed 701 \
+  --include-choices
+```
+
+Use `--explain-concept` to audit the selected vampire bundle. The expected shape is one applied role plus `applied_mixins: ["흡혈귀"]`; the selected bundle should vary location, lighting, action, mood, or composition while keeping `costume_style` from the role unless the concept is standalone `흡혈귀`.
 
 For concepts that combine a role with `암살자`, the recipe resolver uses deterministic scene bundles. Keep the role outfit as a cover identity and let the assassin layer read through hiding in plain sight, off-frame gaze, concealed props, implied targets, reflection surveillance, cover-identity cracks, exit-route checks, crowd blending, and unsettling clues that break a pretty job or lifestyle editorial. The resolver automatically adds a role-specific subtle weapon cue as text, without replacing the bundle's `prop` or `action` scene slots. Do not turn these into graphic violence, visible victims, operational instructions, or drawn/aimed weapons.
 
@@ -422,7 +434,7 @@ python3 skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py \
 - For ReactorPrompt-like requests, social portrait prompt migration, or requests that ask for a compact comma-rich English prompt similar to an image gallery prompt, use `--detail-level compact` and prefer `compact_urban_fashion_portrait`, `compact_cinematic_prop_portrait`, or `compact_multicut_portrait_series`.
 - For ReactorPrompt export-inspired requests, first map the request to the most specific photo preset before falling back to broad presets. Useful families include `hanbok_seasonal_editorial`, `wuxia_xianxia_portrait`, `joseon_period_portrait`, `hanfu_china_court_portrait`, the cosplay-specific presets, K-pop presets, Korean local-space presets, craft/product presets, and optical-experiment presets.
 - For physical fantasy, cosplay-prop, cinematic story portrait, cosmic night field, aurora, glacier, canyon, or nonfunctional costume weapon prop requests, use `cinematic_fantasy_portrait`. Keep weapons clearly framed as cosplay or nonfunctional props.
-- For vampire or similar supernatural archetype requests, use the `흡혈귀` concept recipe or the closest gothic/horror preset plus `--concept-lock`; express the creature through atmosphere, body language, light refusal, reflection unease, and room effects, not through gore, victims, feeding, exposed fangs, or visible blood.
+- For vampire or similar supernatural archetype requests, use the `흡혈귀` concept mixin or the closest gothic/horror preset plus `--concept-lock`; express the creature through atmosphere, body language, daylight refusal, mirror/reflection unease, moonlit pallor, withered-life cues, bat-like shadows, coffin-like geometry, antique portraits, and room effects, not through gore, victims, feeding, exposed fangs, or visible blood. Do not force a generic gothic dress or candle studio over a more specific role outfit.
 - For 80s glam, 90s grunge, Y2K chrome, direct-flash retro, compact camera, or era fashion editorial requests, use `retro_era_fashion_editorial`.
 - For contrast-photo requests such as glam wardrobe in Antarctic ice, melting pastel ice cream in an extreme landscape, aurora field with editorial fashion, or glossy story props in harsh environments, use `surreal_contrast_editorial`.
 - `surreal_contrast_editorial` is not the same route as `--surreal-mode on`: it uses normal photo slots such as `location`, `wardrobe_style`, `prop`, `texture`, and `action`, and should not force `surreal_concept`, `surreal_anchor`, `scale_relation`, or `surreal_physics_detail`.

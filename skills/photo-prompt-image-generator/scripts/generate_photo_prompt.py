@@ -207,6 +207,10 @@ def select_bundle_for_mixin(
         role_bundles = [bundle for bundle in bundles if role in normalize_list(bundle.get("roles"))]
         if role_bundles:
             bundles = role_bundles
+    else:
+        generic_bundles = [bundle for bundle in bundles if not normalize_list(bundle.get("roles"))]
+        if generic_bundles:
+            bundles = generic_bundles
 
     weights = [max(float(bundle.get("weight", 1) or 0), 0.0) for bundle in bundles]
     total = sum(weights)
@@ -293,7 +297,7 @@ def resolve_concepts(args: Sequence[str], concepts: Sequence[str]) -> tuple[list
             else:
                 set_groups.append((mixin_base_set, set()))
 
-        if role and selected_bundles:
+        if role and any(bundle.get("mixin") == "암살자" for bundle in selected_bundles):
             additional_requirements.append("role outfit is a cover identity/disguise for the assassin persona")
 
         combined_sets = merge_forced_set_groups(set_groups)

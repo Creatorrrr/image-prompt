@@ -100,35 +100,339 @@
         "casual girlfriend-style candid iPhone portrait"
       ],
       "likeness_mode": "inspired"
-    },
-    "흡혈귀": {
-      "preset": "gothic_doll_cosplay_portrait",
-      "set": [
-        "appearance_type=classic_elegant",
-        "costume_style=gothic_doll_lace_dress",
-        "expression=calm_intense_gaze",
-        "action=gothic_doll_still_pose",
-        "location=gothic_candle_studio",
-        "lighting=chiaroscuro",
-        "light_type=candlelight",
-        "light_intensity=deep_shadow_detail",
-        "color=luxury_black_gold",
-        "mood=gothic_melancholy"
-      ],
-      "additional": [
-        "vampire reinterpreted as an immortal nocturnal aristocrat: poised, refined, and defined by predatory stillness rather than a horror-movie monster pose",
-        "pale luminous porcelain complexion, timeless ageless presence, and old-world elegance under candlelight and faint moonlit accents",
-        "communicate vampirism through stillness, avoided daylight, mirror or reflection unease, withered flowers, and one restrained crimson accent rather than literal feeding",
-        "the mouth stays relaxed and closed with no teeth shown; no visible blood, no bared fangs, no bite wounds, no visible victims, no gore, and no graphic violence"
-      ],
-      "intent_axis": [
-        "immortal aristocratic vampire portrait with gothic nocturnal elegance",
-        "candlelit pallor, refined predatory stillness, mirror unease, and no gore"
-      ],
-      "likeness_mode": "inspired"
     }
   },
   "mixins": {
+    "흡혈귀": {
+      "preset": "gothic_doll_cosplay_portrait",
+      "set": {
+        "appearance_type": "classic_elegant",
+        "expression": "calm_intense_gaze",
+        "light_intensity": "deep_shadow_detail"
+      },
+      "bundles": [
+        {
+          "id": "maid_reflection_service",
+          "weight": 5,
+          "roles": [
+            "메이드"
+          ],
+          "set": {
+            "prop": "compact_mirror",
+            "action": "doorframe_shadow_watch",
+            "location": "maid_cafe_interior",
+            "lighting": "chiaroscuro_window_light",
+            "mood": "occult_noir",
+            "composition": "frame_within_frame",
+            "color": "luxury_black_gold"
+          },
+          "additional": [
+            "the maid outfit stays clearly readable, while the compact mirror or nearby glass gives a wrong, delayed, or missing reflection cue",
+            "service posture becomes unnaturally still at the doorway, as if the room has gone silent around an immortal nocturnal guest"
+          ],
+          "intent_axis": [
+            "vampire maid portrait with reflection unease inside a maid-cafe cover setting",
+            "doorway stillness, compact mirror wrongness, and nocturnal aristocratic service mood"
+          ]
+        },
+        {
+          "id": "nurse_night_shift_nocturne",
+          "weight": 5,
+          "roles": [
+            "간호사"
+          ],
+          "set": {
+            "action": "doorframe_shadow_watch",
+            "location": "hospital_corridor",
+            "lighting": "flickering_fluorescent_horror",
+            "mood": "clinical",
+            "composition": "frame_within_frame",
+            "color": "clinical_white"
+          },
+          "additional": [
+            "the nurse uniform stays readable under a deserted night-shift corridor, with medical red-cross details as the only restrained crimson accent",
+            "cold fluorescent light, a doorway pause, and unnaturally pale hands should imply a nocturnal being among clinical routines, without injury or feeding"
+          ],
+          "intent_axis": [
+            "vampire nurse portrait in an empty clinical night-shift corridor",
+            "cold fluorescent pallor, red-cross accent, and controlled predatory stillness"
+          ]
+        },
+        {
+          "id": "police_reflective_patrol",
+          "weight": 5,
+          "roles": [
+            "경찰"
+          ],
+          "set": {
+            "action": "looking_down_at_low_camera",
+            "location": "reflective_dark_corridor",
+            "lighting": "headlights",
+            "mood": "reportage_tense_noir",
+            "composition": "low_angle",
+            "color": "desaturated_cold_blue"
+          },
+          "additional": [
+            "the police uniform stays legible as a nocturnal patrol identity, while reflective walls or glass fail to behave normally around the subject",
+            "authority should feel ancient and predatory through a low viewpoint, long shadows, and breathless stillness rather than combat or threat display"
+          ],
+          "intent_axis": [
+            "vampire police portrait in reflective nocturnal patrol light",
+            "low-angle authority, broken reflection logic, and cold blue predatory stillness"
+          ]
+        },
+        {
+          "id": "miner_sunless_lair",
+          "weight": 5,
+          "roles": [
+            "광부"
+          ],
+          "set": {
+            "action": "standing_silence",
+            "location": "underground_mine_tunnel_set",
+            "lighting": "single_flashlight_beam",
+            "mood": "analog_horror_dread",
+            "composition": "silhouette",
+            "color": "desaturated_apocalypse"
+          },
+          "additional": [
+            "the miner workwear and nonfunctional pickaxe remain practical work details, but the mine reads as a sunless lair rather than an ordinary work site",
+            "dust, timber supports, and a single light beam should suggest crypt air, coffin-like geometry, and an immortal figure adapted to permanent darkness"
+          ],
+          "intent_axis": [
+            "vampire miner portrait in a sunless underground tunnel lair",
+            "single flashlight beam, crypt-like mine supports, and ancient stillness in darkness"
+          ]
+        },
+        {
+          "id": "casual_daylight_refusal",
+          "weight": 5,
+          "roles": [
+            "사복 여친"
+          ],
+          "set": {
+            "prop": "clear_case_smartphone",
+            "action": "window_silhouette_stand",
+            "location": "bright_window_silhouette_room",
+            "lighting": "window_blowout_backlight",
+            "mood": "haunted_melancholy",
+            "composition": "window_silhouette_negative_space",
+            "color": "bleach_bypass_silver"
+          },
+          "additional": [
+            "the casual everyday outfit stays visible, but the body avoids the blown-out window light as if daylight itself is dangerous",
+            "the phone or glossy surface should hint at unreliable reflection, turning a girlfriend-style candid moment into a quiet supernatural warning"
+          ],
+          "intent_axis": [
+            "casual vampire girlfriend portrait refusing daylight at a bright window",
+            "ordinary phone candid mood disrupted by missing reflection and haunted pallor"
+          ]
+        },
+        {
+          "id": "princess_moonlit_lineage",
+          "weight": 5,
+          "roles": [
+            "공주"
+          ],
+          "set": {
+            "prop": "paper_umbrella_prop",
+            "action": "standing_silence",
+            "location": "royal_princess_chamber",
+            "lighting": "moonlight",
+            "mood": "gothic_melancholy",
+            "composition": "centered_symmetry",
+            "color": "luxury_black_gold"
+          },
+          "additional": [
+            "the princess styling and tiara stay central, while the black umbrella or screen reads as a ceremonial barrier against moonlit or forbidden daylight",
+            "court flowers, old portraits, and still posture should imply an immortal royal lineage rather than a generic gothic princess"
+          ],
+          "intent_axis": [
+            "vampire princess portrait with moonlit royal lineage and daylight refusal",
+            "tiara, black umbrella, withered court flowers, and immortal aristocratic stillness"
+          ]
+        },
+        {
+          "id": "bunny_backstage_bat_shadow",
+          "weight": 5,
+          "roles": [
+            "바니걸"
+          ],
+          "set": {
+            "prop": "flower_bouquet",
+            "action": "standing_backstage",
+            "location": "blue_rimlight_cosplay_studio",
+            "lighting": "low_key",
+            "mood": "occult_noir",
+            "composition": "silhouette",
+            "color": "tungsten_cinestill_blue_red"
+          },
+          "additional": [
+            "the covered bunny-girl stage costume stays readable, but lace, ears, and backdrop shadows should form bat-wing-like shapes without becoming literal monster anatomy",
+            "the bouquet looks dry or withered, making the playful stage image feel like a nocturnal supernatural disguise"
+          ],
+          "intent_axis": [
+            "vampire bunny-girl stage portrait with bat-like lace shadows",
+            "playful costume interrupted by withered bouquet, occult noir backstage light, and nocturnal stillness"
+          ]
+        },
+        {
+          "id": "shared_broken_reflection_unease",
+          "weight": 0.25,
+          "roles": [
+            "메이드",
+            "간호사",
+            "경찰",
+            "사복 여친",
+            "공주",
+            "바니걸"
+          ],
+          "set": {
+            "prop": "compact_mirror",
+            "action": "standing_silence",
+            "location": "broken_mirror_fragment_studio",
+            "lighting": "chiaroscuro",
+            "mood": "occult_noir",
+            "composition": "broken_glass_fragments_frame",
+            "color": "monochrome"
+          },
+          "additional": [
+            "the role costume stays visible, but broken mirrors or glossy fragments show missing, delayed, or mismatched reflections around the subject",
+            "reflection wrongness must be the primary vampire cue, stronger than generic gothic fashion"
+          ],
+          "intent_axis": [
+            "role-preserving vampire portrait centered on broken mirror reflection unease",
+            "missing or mismatched reflection as the main non-graphic supernatural cue"
+          ]
+        },
+        {
+          "id": "shared_daylight_threshold_refusal",
+          "weight": 0.25,
+          "roles": [
+            "메이드",
+            "간호사",
+            "경찰",
+            "사복 여친",
+            "공주",
+            "바니걸"
+          ],
+          "set": {
+            "action": "window_silhouette_stand",
+            "location": "bright_window_silhouette_room",
+            "lighting": "window_blowout_backlight",
+            "mood": "haunted_melancholy",
+            "composition": "window_silhouette_negative_space",
+            "color": "bleach_bypass_silver"
+          },
+          "additional": [
+            "the role outfit remains readable at the edge of a bright window, while posture and framing show the subject refusing or retreating from daylight",
+            "make the blown-out window feel like a physical boundary the vampire will not cross"
+          ],
+          "intent_axis": [
+            "role-preserving vampire portrait at a daylight threshold",
+            "bright window refusal, negative space, and haunted pallor without gore"
+          ]
+        },
+        {
+          "id": "miner_puddle_reflection_tunnel",
+          "weight": 5,
+          "roles": [
+            "광부"
+          ],
+          "set": {
+            "action": "looking_through_puddle_reflection",
+            "location": "underground_mine_tunnel_set",
+            "lighting": "single_flashlight_beam",
+            "mood": "haunted_melancholy",
+            "composition": "puddle_inverted_reflection",
+            "color": "desaturated_cold_blue"
+          },
+          "additional": [
+            "the mine puddle reflection should look subtly wrong or incomplete, turning ordinary underground workwear into a vampire identity cue",
+            "keep the pickaxe or helmet context present through the role recipe while the reflection and sunless tunnel carry the supernatural meaning"
+          ],
+          "intent_axis": [
+            "vampire miner portrait with impossible puddle reflection inside a sunless tunnel",
+            "underground workwear, single flashlight beam, and reflection unease"
+          ]
+        },
+        {
+          "id": "standalone_broken_reflection",
+          "weight": 1,
+          "set": {
+            "costume_style": "gothic_doll_lace_dress",
+            "prop": "compact_mirror",
+            "action": "looking_through_puddle_reflection",
+            "location": "broken_mirror_fragment_studio",
+            "lighting": "chiaroscuro",
+            "mood": "occult_noir",
+            "composition": "broken_glass_fragments_frame",
+            "color": "monochrome"
+          },
+          "additional": [
+            "use broken mirror fragments, absent or distorted reflections, and a calm closed mouth to make the vampire identity visible without blood or fangs"
+          ],
+          "intent_axis": [
+            "standalone vampire portrait built around broken reflection unease",
+            "distorted mirror fragments, monochrome pallor, and non-graphic supernatural stillness"
+          ]
+        },
+        {
+          "id": "standalone_moonlit_aristocrat",
+          "weight": 1,
+          "set": {
+            "costume_style": "gothic_doll_lace_dress",
+            "action": "window_silhouette_stand",
+            "location": "bright_window_silhouette_room",
+            "lighting": "moonlight",
+            "mood": "haunted_melancholy",
+            "composition": "window_silhouette_negative_space",
+            "color": "desaturated_cold_blue"
+          },
+          "additional": [
+            "moonlit window negative space, old-world posture, and visible avoidance of bright light should read as an immortal nocturnal aristocrat"
+          ],
+          "intent_axis": [
+            "standalone moonlit vampire aristocrat avoiding bright window light",
+            "haunted pallor, negative space, and old-world nocturnal elegance"
+          ]
+        },
+        {
+          "id": "standalone_curio_nocturne",
+          "weight": 1,
+          "set": {
+            "costume_style": "gothic_doll_lace_dress",
+            "prop": "flower_bouquet",
+            "action": "standing_silence",
+            "location": "gothic_glass_curio_cabinet",
+            "lighting": "candlelit_ritual_light",
+            "mood": "gothic_melancholy",
+            "composition": "centered_symmetry",
+            "color": "luxury_black_gold"
+          },
+          "additional": [
+            "glass curios, withered flowers, and antique objects should imply centuries of collected time around a still nocturnal aristocrat"
+          ],
+          "intent_axis": [
+            "standalone vampire aristocrat surrounded by gothic curios and withered flowers",
+            "candlelit old-world elegance, collected centuries, and refined predatory stillness"
+          ]
+        }
+      ],
+      "additional": [
+        "vampire reinterpreted as an immortal nocturnal aristocrat: poised, refined, ageless, and defined by predatory stillness rather than a horror-movie monster pose",
+        "keep the role outfit readable; the vampire layer should alter posture, light, reflection behavior, room cues, and nearby objects rather than replacing the costume with a generic gothic doll dress",
+        "make at least two non-graphic vampire cues visible beyond black lace: daylight refusal, mirror or reflection unease, moonlit pallor, bat-like shadows, withered flowers, coffin-like geometry, antique portraits, or centuries-old stillness",
+        "use one restrained crimson accent only as eye catchlight, jewelry, medical cross, flower, or light, never as visible blood",
+        "the mouth stays relaxed and closed with no teeth shown; no visible blood, no bared fangs, no bite wounds, no visible victims, no gore, no feeding scene, and no graphic violence"
+      ],
+      "intent_axis": [
+        "non-graphic vampire portrait with visible supernatural cues beyond gothic fashion",
+        "daylight refusal, reflection unease, moonlit pallor, withered-life cues, and old-world predatory stillness",
+        "role outfit preserved while vampire identity appears through environment, light, posture, and room behavior"
+      ],
+      "likeness_mode": "inspired"
+    },
     "암살자": {
       "preset": "compact_cinematic_prop_portrait",
       "set": {
