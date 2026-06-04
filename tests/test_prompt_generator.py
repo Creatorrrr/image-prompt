@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import importlib.util
+import io
 import json
 import os
 import random
@@ -921,6 +922,65 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertIn("inspired", payload["forward_args"])
         self.assertNotIn("expression=cold_unreadable_stare", payload["forward_args"])
         self.assertNotIn("hiding in plain sight", " ".join(payload["forward_args"]))
+
+    def test_concept_recipe_expands_vampire_to_gothic_no_gore(self):
+        payload = self.run_wrapper_json(
+            "--concept",
+            "흡혈귀",
+            "--explain-concept",
+            "--selection-mode",
+            "rule",
+            "--plain",
+            "--no-negative",
+        )
+
+        concept = payload["concepts"][0]
+        self.assertEqual(concept["name"], "")
+        self.assertEqual(concept["role"], "흡혈귀")
+        self.assertEqual(concept["applied_role"], "흡혈귀")
+        self.assertTrue(concept["matched"])
+        self.assertEqual(concept["recipe"]["preset"], "gothic_doll_cosplay_portrait")
+        self.assertEqual(concept["combined_forced_slots"]["appearance_type"], ["classic_elegant"])
+        self.assertEqual(concept["combined_forced_slots"]["costume_style"], ["gothic_doll_lace_dress"])
+        self.assertEqual(concept["combined_forced_slots"]["mood"], ["gothic_melancholy"])
+        self.assertIn("--concept-lock", payload["forward_args"])
+        self.assertIn("흡혈귀", payload["forward_args"])
+        self.assertIn("lighting=chiaroscuro", payload["forward_args"])
+        self.assertIn("color=luxury_black_gold", payload["forward_args"])
+        joined = " ".join(payload["forward_args"])
+        self.assertIn("immortal nocturnal aristocrat", joined)
+        self.assertIn("no visible blood", joined)
+        self.assertIn("no bared fangs", joined)
+        self.assertIn("no visible victims", joined)
+        self.assertIn("no gore", joined)
+
+    def test_vampire_concept_prompt_keeps_cliche_free_requirements(self):
+        payload = self.run_wrapper_json(
+            "--concept",
+            "흡혈귀",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "77",
+            "--lang",
+            "en",
+            "--no-negative",
+            "--include-choices",
+        )
+
+        item = payload[0]
+        self.assertEqual(item["choices"]["appearance_type"]["id"], "classic_elegant")
+        self.assertEqual(item["choices"]["costume_style"]["id"], "gothic_doll_lace_dress")
+        self.assertEqual(item["choices"]["lighting"]["id"], "chiaroscuro")
+        self.assertEqual(item["choices"]["color"]["id"], "luxury_black_gold")
+        self.assertEqual(item["choices"]["mood"]["id"], "gothic_melancholy")
+        self.assertIn("Core concept lock: 흡혈귀", item["prompt_en"])
+        self.assertIn("predatory stillness", item["prompt_en"])
+        self.assertIn("avoided daylight", item["prompt_en"])
+        self.assertIn("no visible blood", item["prompt_en"])
+        self.assertIn("no bared fangs", item["prompt_en"])
+        self.assertIn("no visible victims", item["prompt_en"])
+        self.assertIn("no gore", item["prompt_en"])
 
     def test_concept_recipe_explain_combines_role_and_assassin_mixin(self):
         payload = self.run_wrapper_json(
@@ -3477,6 +3537,41 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertIn("768", result.stdout)
         self.assertIn("semantic-text-v2", result.stdout)
 
+    def test_semantic_index_builder_loads_project_env_file(self):
+        builder = load_index_builder()
+        with tempfile.TemporaryDirectory() as tmp:
+            env_path = Path(tmp) / ".env"
+            env_path.write_text(
+                "\n".join(
+                    [
+                        "GEMINI_API_KEY='from-env-file'",
+                        "GOOGLE_API_KEY=from-google-env-file",
+                        "IGNORED_KEY=ignored",
+                    ]
+                ),
+                encoding="utf-8",
+            )
+
+            with mock.patch.object(builder, "PROJECT_ROOT", Path(tmp)):
+                with mock.patch.dict(os.environ, {}, clear=True):
+                    builder.load_project_env()
+                    self.assertEqual(os.environ["GEMINI_API_KEY"], "from-env-file")
+                    self.assertEqual(os.environ["GOOGLE_API_KEY"], "from-google-env-file")
+                    self.assertNotIn("IGNORED_KEY", os.environ)
+
+                with mock.patch.dict(os.environ, {"GEMINI_API_KEY": "already-set"}, clear=True):
+                    builder.load_project_env()
+                    self.assertEqual(os.environ["GEMINI_API_KEY"], "already-set")
+                    self.assertEqual(os.environ["GOOGLE_API_KEY"], "from-google-env-file")
+
+    def test_semantic_index_builder_main_loads_project_env_before_running(self):
+        builder = load_index_builder()
+        with mock.patch.object(builder, "load_project_env") as load_env:
+            with mock.patch.object(sys, "argv", ["build_semantic_index.py", "--dry-run"]):
+                self.assertEqual(builder.main(), 0)
+
+        load_env.assert_called_once_with()
+
     def test_semantic_index_builder_reuses_existing_vectors_after_tag_addition(self):
         builder = load_index_builder()
         base_data = {
@@ -3544,7 +3639,65 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertNotEqual(second_payload["dictionary_hash"], first_payload["dictionary_hash"])
 
     def test_semantic_index_builder_requires_api_key_for_real_build(self):
+        builder = load_index_builder()
         with tempfile.TemporaryDirectory() as tmp:
+            out_path = Path(tmp) / "semantic_index.json"
+            with mock.patch.object(builder, "PROJECT_ROOT", Path(tmp)):
+                with mock.patch.dict(os.environ, {}, clear=True):
+                    with mock.patch.object(
+                        sys,
+                        "argv",
+                        [
+                            "build_semantic_index.py",
+                            "--tags",
+                            str(TAGS_PATH),
+                            "--output",
+                            str(out_path),
+                            "--dimensions",
+                            "768",
+                            "--request-interval",
+                            "0",
+                            "--retry-attempts",
+                            "0",
+                        ],
+                    ):
+                        with mock.patch("sys.stderr", new_callable=io.StringIO) as stderr:
+                            result = builder.main()
+
+        self.assertNotEqual(result, 0)
+        self.assertFalse(out_path.exists())
+        self.assertIn("GEMINI_API_KEY", stderr.getvalue())
+
+    def test_semantic_index_builder_subprocess_uses_project_env_file(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            source = Path(tmp) / "source"
+            target = source / "skills" / "photo-prompt-image-generator"
+            scripts = target / "scripts"
+            assets = target / "assets"
+            scripts.mkdir(parents=True)
+            assets.mkdir(parents=True)
+            (source / ".env").write_text("GEMINI_API_KEY=from-env-file\n", encoding="utf-8")
+            (scripts / "build_semantic_index.py").write_text(
+                INDEX_BUILDER_PATH.read_text(encoding="utf-8"),
+                encoding="utf-8",
+            )
+            (scripts / "prompt_generator.py").write_text(
+                GENERATOR_PATH.read_text(encoding="utf-8"),
+                encoding="utf-8",
+            )
+            tags_path = assets / "photo_prompt_tags.json"
+            tags_path.write_text(
+                json.dumps(
+                    {
+                        "version": "test",
+                        "presets": [],
+                        "recipes": [],
+                        "slots": {},
+                    },
+                    ensure_ascii=False,
+                ),
+                encoding="utf-8",
+            )
             out_path = Path(tmp) / "semantic_index.json"
             env = os.environ.copy()
             env.pop("GEMINI_API_KEY", None)
@@ -3552,24 +3705,23 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             result = subprocess.run(
                 [
                     sys.executable,
-                    str(INDEX_BUILDER_PATH),
+                    str(scripts / "build_semantic_index.py"),
                     "--tags",
-                    str(TAGS_PATH),
+                    str(tags_path),
                     "--output",
                     str(out_path),
-                    "--dimensions",
-                    "768",
                 ],
-                cwd=ROOT,
+                cwd=source,
                 env=env,
                 text=True,
                 capture_output=True,
                 check=False,
             )
 
-        self.assertNotEqual(result.returncode, 0)
-        self.assertFalse(out_path.exists())
-        self.assertIn("GEMINI_API_KEY", result.stderr)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertTrue(out_path.exists())
+            payload = json.loads(out_path.read_text(encoding="utf-8"))
+            self.assertEqual(payload["entries"], {})
 
     def test_rule_mode_does_not_import_gemini_dependency(self):
         real_import = __import__

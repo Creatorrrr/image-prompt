@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -22,6 +23,27 @@ from prompt_generator import (
     semantic_dimensions_value,
     semantic_text_for_entry,
 )
+
+
+SKILL_DIR = Path(__file__).resolve().parents[1]
+PROJECT_ROOT = SKILL_DIR.parents[1]
+
+
+def load_project_env() -> None:
+    env_path = PROJECT_ROOT / ".env"
+    if not env_path.exists():
+        return
+    for raw_line in env_path.read_text(encoding="utf-8").splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, value = line.split("=", 1)
+        key = key.strip()
+        if key not in {"GEMINI_API_KEY", "GOOGLE_API_KEY"} or key in os.environ:
+            continue
+        value = value.strip().strip("\"'")
+        if value:
+            os.environ[key] = value
 
 
 def base_payload(data, provider: str, model: str, dimensions: int) -> dict:
@@ -162,6 +184,7 @@ def build_resumable_index_payload(
 
 
 def main() -> int:
+    load_project_env()
     parser = argparse.ArgumentParser(description="Build a Gemini embedding semantic index JSON.")
     parser.add_argument("--tags", default=Path(__file__).resolve().parents[1] / "assets" / "photo_prompt_tags.json")
     parser.add_argument("--output", default=Path(__file__).resolve().parents[1] / "assets" / "photo_prompt_semantic_index.json")

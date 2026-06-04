@@ -86,7 +86,7 @@ GEMINI_API_KEY=... \
 python3 skills/photo-prompt-image-generator/scripts/build_semantic_index.py --progress
 ```
 
-The API key must come from `GEMINI_API_KEY` or `GOOGLE_API_KEY`; do not store it in the repository. The wrapper also loads these keys from a project `.env` file when present, without printing them. The semantic index uses `gemini-embedding-2` with 768 dimensions by default, and the builder paces requests to avoid Gemini 429 responses. Rule mode does not require the Gemini SDK or an API key.
+The API key must come from `GEMINI_API_KEY` or `GOOGLE_API_KEY`; do not store it in the repository. The wrapper and semantic index builder also load these keys from a project `.env` file when present, without printing them. The semantic index uses `gemini-embedding-2` with 768 dimensions by default, and the builder paces requests to avoid Gemini 429 responses. Rule mode does not require the Gemini SDK or an API key.
 When the output semantic index already exists, the builder reuses compatible vectors whose entry key, embedding text, provider, model, dimensions, and semantic text recipe still match. Only new or changed entries are sent to Gemini. Use `--no-cache` only when you intentionally want to force a full rebuild.
 
 List tag ids for a slot:
@@ -161,6 +161,19 @@ python3 skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py \
 ```
 
 If the explanation looks right, rerun without `--explain-concept`. The wrapper expands `--concept` into deterministic generator args such as `--concept-lock`, `--preset`, `--set`, `--intent-axis`, `--additional-requirement`, and `--likeness-mode`.
+
+Generate a concept-faithful vampire prompt that avoids blood-and-fang cliches:
+
+```bash
+python3 skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py \
+  --concept "흡혈귀" \
+  --selection-mode rule \
+  --detail-level compact \
+  --plain \
+  --no-negative
+```
+
+For existence/archetype concepts such as `흡혈귀`, prefer a role recipe that expands the seed into concrete photographic slots plus `Additional requirements` instead of relying on the image model's default genre cliches. The vampire recipe treats the concept as an immortal nocturnal aristocrat and communicates vampirism through predatory stillness, avoided daylight, reflection unease, withered-life cues, candlelit pallor, and a restrained crimson accent. Keep it non-graphic: no visible blood, exposed fangs, bite wounds, visible victims, gore, or feeding scene.
 
 For concepts that combine a role with `암살자`, the recipe resolver uses deterministic scene bundles. Keep the role outfit as a cover identity and let the assassin layer read through hiding in plain sight, off-frame gaze, concealed props, implied targets, reflection surveillance, cover-identity cracks, exit-route checks, crowd blending, and unsettling clues that break a pretty job or lifestyle editorial. The resolver automatically adds a role-specific subtle weapon cue as text, without replacing the bundle's `prop` or `action` scene slots. Do not turn these into graphic violence, visible victims, operational instructions, or drawn/aimed weapons.
 
@@ -409,6 +422,7 @@ python3 skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py \
 - For ReactorPrompt-like requests, social portrait prompt migration, or requests that ask for a compact comma-rich English prompt similar to an image gallery prompt, use `--detail-level compact` and prefer `compact_urban_fashion_portrait`, `compact_cinematic_prop_portrait`, or `compact_multicut_portrait_series`.
 - For ReactorPrompt export-inspired requests, first map the request to the most specific photo preset before falling back to broad presets. Useful families include `hanbok_seasonal_editorial`, `wuxia_xianxia_portrait`, `joseon_period_portrait`, `hanfu_china_court_portrait`, the cosplay-specific presets, K-pop presets, Korean local-space presets, craft/product presets, and optical-experiment presets.
 - For physical fantasy, cosplay-prop, cinematic story portrait, cosmic night field, aurora, glacier, canyon, or nonfunctional costume weapon prop requests, use `cinematic_fantasy_portrait`. Keep weapons clearly framed as cosplay or nonfunctional props.
+- For vampire or similar supernatural archetype requests, use the `흡혈귀` concept recipe or the closest gothic/horror preset plus `--concept-lock`; express the creature through atmosphere, body language, light refusal, reflection unease, and room effects, not through gore, victims, feeding, exposed fangs, or visible blood.
 - For 80s glam, 90s grunge, Y2K chrome, direct-flash retro, compact camera, or era fashion editorial requests, use `retro_era_fashion_editorial`.
 - For contrast-photo requests such as glam wardrobe in Antarctic ice, melting pastel ice cream in an extreme landscape, aurora field with editorial fashion, or glossy story props in harsh environments, use `surreal_contrast_editorial`.
 - `surreal_contrast_editorial` is not the same route as `--surreal-mode on`: it uses normal photo slots such as `location`, `wardrobe_style`, `prop`, `texture`, and `action`, and should not force `surreal_concept`, `surreal_anchor`, `scale_relation`, or `surreal_physics_detail`.
