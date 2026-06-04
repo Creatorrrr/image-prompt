@@ -808,6 +808,101 @@
       "provides_anchors": []
     },
     {
+      "id": "detail.tight-selfie-hierarchy",
+      "file": "modules/detail.tight-selfie-hierarchy.md",
+      "type": "detail",
+      "tier": 3,
+      "facet": "detail-risk",
+      "facet_values": [
+        "tight-selfie",
+        "selfie-hierarchy",
+        "face-hair-hierarchy",
+        "close-phone-selfie",
+        "cropped-upper-torso-selfie"
+      ],
+      "priority": 77,
+      "triggers": [
+        "tight human phone selfie where face, hair, crop, and lower-frame completion risk affect fidelity"
+      ],
+      "avoid_when": [
+        "not a tight human selfie",
+        "face and hair are not the primary image-plane anchors"
+      ],
+      "dependencies": [
+        "core.frame-coordinates",
+        "core.fidelity-discipline",
+        "subject.human",
+        "medium.photographic-capture"
+      ],
+      "conflicts": [],
+      "provides_anchors": [
+        "tight_selfie_hierarchy"
+      ]
+    },
+    {
+      "id": "detail.accessory-torso-budget",
+      "file": "modules/detail.accessory-torso-budget.md",
+      "type": "detail",
+      "tier": 3,
+      "facet": "detail-risk",
+      "facet_values": [
+        "accessory-torso-budget",
+        "measured-accessories",
+        "secondary-accessories",
+        "cropped-torso",
+        "lower-garment-band",
+        "cropped-garment-band"
+      ],
+      "priority": 76,
+      "triggers": [
+        "tight human crop where accessories, neckline, upper torso, or lower garment bands are visible but secondary"
+      ],
+      "avoid_when": [
+        "accessories and cropped torso/clothing are absent or central enough to be the main subject"
+      ],
+      "dependencies": [
+        "core.frame-coordinates",
+        "core.fidelity-discipline",
+        "subject.human",
+        "detail.clothing-fashion"
+      ],
+      "conflicts": [],
+      "provides_anchors": [
+        "accessory_torso_budget"
+      ]
+    },
+    {
+      "id": "detail.face-hand-gesture",
+      "file": "modules/detail.face-hand-gesture.md",
+      "type": "detail",
+      "tier": 3,
+      "facet": "detail-risk",
+      "facet_values": [
+        "face-hand-gesture",
+        "cheek-hand",
+        "partial-cheek-hand",
+        "hand-near-face",
+        "face-touching-hand"
+      ],
+      "priority": 75,
+      "triggers": [
+        "tight portrait or selfie where a hand touches, supports, frames, or partly occludes the face"
+      ],
+      "avoid_when": [
+        "no visible hand near the face"
+      ],
+      "dependencies": [
+        "core.frame-coordinates",
+        "core.fidelity-discipline",
+        "subject.human",
+        "detail.pose-hands-gesture"
+      ],
+      "conflicts": [],
+      "provides_anchors": [
+        "partial_cheek_hand_budget"
+      ]
+    },
+    {
       "id": "detail.low-quality-artifacts",
       "file": "modules/detail.low-quality-artifacts.md",
       "type": "detail",

@@ -79,7 +79,7 @@ detected_facets:
   medium: []          # photographic, screenshot-ui, non-photographic, unspecified
   relationships: []   # ordinary, occlusion, replacement, reflection, screen-frame-within-frame, scale-miniature, mixed-media
   capture_quality: [] # low-quality, compressed, underexposed, motion-blurred, flash, casual-phone
-  detail_risks: []    # face, body-silhouette, clothing, hands, text-logo, UI, small props, cropped edges
+  detail_risks: []    # face, body-silhouette, clothing, hands, text-logo, UI, small props, cropped edges, tight-selfie, face-hand-gesture, accessory-torso-budget
   style: []           # stylized-character-maturity or other narrow style risks
 ```
 
@@ -91,6 +91,7 @@ Routing rules:
 - Select at least one subject decision. If no subject module fits, load `subject.generic-object` to preserve an ordinary object/scene/none decision without inventing a category.
 - Apply dependencies from the manifest after initial selection. Examples: `medium.screenshot-ui` pulls `concept.screen-frame-within-frame` and `detail.text-logo-label`; `subject.document-data-diagram` pulls `detail.text-logo-label`.
 - Human images with visible hands, clothing geometry, or body-silhouette drift risk should add the corresponding detail-risk modules; do not rely on `subject.human` alone.
+- Tight human phone selfies where face/hair dominate should add `tight-selfie`; if face-touching hands or secondary accessories/cropped upper-torso clothing affect fidelity, also add `face-hand-gesture` and/or `accessory-torso-budget`.
 - Usually select 3-8 modules beyond the core, but do not omit a concept-critical relationship module to stay under budget.
 
 ## Conflict Priority
@@ -2507,6 +2508,101 @@ For ambiguous tiny UI edge marks that are not central to recognition, do not ove
 For secondary objects such as bags, straps, jewelry, tools, handheld items, furniture fragments, signs, UI controls, props, or cropped products, create a secondary-object budget. Lock edge distance, bounding box, overlap with the primary subject or containing surface, visible crop, occlusion, and relative size against nearby body, object, frame, or background anchors. If the object is secondary or edge-adjacent in the source, describe it as partial, tucked, compressed, low-priority, obscured, or low-detail as supported by evidence; prevent it from becoming larger, cleaner, front-facing, product-like, fully readable, or more central than the source.
 
 Identify completion-prone regions before drafting: partially cropped bodies, partial garments, partial faces, partial text, partial posters/screens/reflections, cut-off limbs, and border-adjacent areas. In `PROMPT:`, lock each such region as partial or cropped; in `NEGATIVE PROMPT:`, reject completing, recentering, expanding, or clarifying those regions.
+
+
+---
+
+# Included module: `detail.tight-selfie-hierarchy`
+
+# Detail: tight selfie hierarchy
+
+## When to load
+
+Load when a close human phone selfie is dominated by the face, hair, headwear, or upper-head crop, and generation is likely to normalize it into a balanced portrait, fashion image, outfit study, or cleaner head-and-shoulders shot.
+
+## Prompt additions
+
+When tight selfie framing makes the face and hair the primary anchors, state that hierarchy before describing clothing, accessories, or broad fashion labels.
+
+- Lead with image-plane priority: face and hair first; hand, accessories, shoulders, and lower-frame clothing second.
+- Preserve phone-selfie crop pressure, asymmetry, edge cuts, and high-face or close-face placement before aesthetic labels such as portrait, cosplay, fashion, beauty, editorial, or character reference.
+- If the face is phone-smoothed, sun-washed, filtered, doll-like, overexposed, low-contrast, or otherwise capture-treated, state that as a fidelity lock rather than improving it into natural skin or studio beauty lighting.
+- If bangs, fringe, hair, hat, hood, veil, or headwear cover the forehead, brows, eyelids, cheek, jaw, or frame edge, describe coverage and occlusion before strand or accessory texture. Reject exposed or completed hidden face regions when the source hides them.
+- For wigs, dyed hair, bright hair, or strongly lit hair, separate local hair color from shadow color. Lock highlight masses and shadow masses so the generator does not average the hair into a cleaner single color.
+- If a generated comparison drifts into a more natural selfie, centered portrait, or clearer outfit study, strengthen these generic hierarchy and crop locks instead of adding source-only trivia.
+
+## Negative additions
+
+Reject balanced head-and-shoulders portrait drift, fashion-editorial recentering, cleaned-up studio portrait lighting, reduced face/hair dominance, exposed hidden forehead or brows, completed hidden crop edges, and any prompt wording that lets secondary clothing or accessories overtake the face/hair hierarchy.
+
+## Settings additions
+
+- Primary visual concept locks: face and hair remain the first-order anchors; secondary objects stay source-sized.
+- Boundary and visibility-budget locks: preserve tight selfie edge cuts, high-face crop, side crops, and incomplete lower-frame regions.
+- Coherence/realism ceiling locks: keep the source phone-selfie capture treatment instead of upgrading into a polished portrait.
+
+
+---
+
+# Included module: `detail.accessory-torso-budget`
+
+# Detail: accessory and torso budgets
+
+## When to load
+
+Load when a tight human crop includes headpieces, bows, clips, chokers, necklaces, straps, lace, ruffles, garment trim, cropped shoulders, or upper-torso clothing that must remain secondary to the primary face, hand, prop, or crop concept.
+
+## Prompt additions
+
+Treat accessories and cropped torso regions as measured support budgets, not as invitations to complete a costume, outfit, glamour pose, or body-centered portrait.
+
+- Define each accessory footprint once: approximate frame location, scale relative to face/head, crop, occlusion, contrast, and legibility. Then keep it secondary unless it visibly dominates.
+- Avoid multiplying accessory adjectives after footprint is established. Extra detail on lace, jewelry, bows, nails, plaid, straps, or trim can enlarge or sharpen them.
+- For close portraits, prioritize face scale, eye line, chin line, hair edges, and crop boundaries over costume labels and accessory material.
+- For upper torso that is visible but secondary, prefer `cropped skin plane`, `covered torso plane`, `interrupted neckline`, `hair-overlapped torso edge`, `secondary shoulder edge`, `lower-frame garment band`, or `cropped garment edge band` when supported by the source.
+- Lock lower garment, collar, neckline, ruffle, strap, or trim bands by y-start, height, width, interruption, and crop. If the source shows only a bottom or side band, keep it as a band and do not complete it into a bodice, dress, uniform, corset, or full outfit view.
+- Preserve side-specific asymmetry for shoulders, straps, hair occlusion, accessory position, and edge cuts instead of normalizing into a symmetrical fashion portrait.
+
+## Negative additions
+
+Reject accessory enlargement, crisp ornate accessory upgrading, centered outfit views, complete costume construction, lower torso expansion, clarified hidden neckline, widened or deepened garment openings, cleaner symmetrical straps/collars, and clothing/body regions promoted beyond their visible source budget.
+
+## Settings additions
+
+- Clothing-fit, neckline, and seam locks: describe incomplete bands, cropped trims, interrupted necklines, and occluding hair/hand/props before category labels.
+- Boundary and visibility-budget locks: accessories and torso regions remain source-sized, cropped, interrupted, and secondary.
+- Body-proportion calibration locks: visible torso information remains limited to source-visible image-plane regions without hidden anatomy inference.
+
+
+---
+
+# Included module: `detail.face-hand-gesture`
+
+# Detail: face-hand gesture
+
+## When to load
+
+Load when a close portrait or selfie has a hand touching, supporting, pointing near, framing, hiding, or overlapping the face, especially when the hand is cropped, secondary, or likely to become a full pose or manicure subject.
+
+## Prompt additions
+
+Keep cheek-hand contact as a partial edge-cropped support gesture when that is what the source shows.
+
+- Describe the hand's contact geometry before nail, glove, sleeve, jewelry, or skin detail: which side it enters from, approximate bounding box, finger direction, wrist crop, contact point, overlap, and whether it supports, frames, presses, or merely hovers near the face.
+- If the hand is secondary to the face, say so directly. Keep it partial, cropped, low-detail, and source-sized instead of a centered foreground hand.
+- Use source-supported wording such as `partial fingertips tucked under the cheek/jaw`, `small fingers at the cheek edge`, `edge-cropped hand near the face`, or `cropped sleeve anchoring the gesture`.
+- Preserve the sleeve, glove, hair, face, or crop edge that bounds the hand. Do not let the generator reveal the full wrist, full palm, full arm, or a cleaner hand pose unless visible.
+- Keep nail and manicure details brief when they are not the subject; tiny decorations should stay low-legibility and source-sized.
+
+## Negative additions
+
+Reject full hand poses, peace signs, manicure-centered foregrounds, uncropped wrists, recentered hands, enlarged fingers, moved hands that reveal hidden cheek/jaw/neck areas, extra fingers, missing fingers, and hand gestures that no longer contact or frame the face as in the source.
+
+## Settings additions
+
+- Pose fidelity locks: preserve hand-to-face contact geometry, side, crop, and partial visibility.
+- Occlusion fidelity locks: keep face, sleeve, glove, hair, and crop boundaries as the hand's limiting anchors.
+- Focus and detail locks: hand/nail detail remains no sharper or more dominant than source visibility supports.
 
 
 ---

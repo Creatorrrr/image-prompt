@@ -79,7 +79,7 @@ detected_facets:
   medium: []          # photographic, screenshot-ui, non-photographic, unspecified
   relationships: []   # ordinary, occlusion, replacement, reflection, screen-frame-within-frame, scale-miniature, mixed-media
   capture_quality: [] # low-quality, compressed, underexposed, motion-blurred, flash, casual-phone
-  detail_risks: []    # face, body-silhouette, clothing, hands, text-logo, UI, small props, cropped edges
+  detail_risks: []    # face, body-silhouette, clothing, hands, text-logo, UI, small props, cropped edges, tight-selfie, face-hand-gesture, accessory-torso-budget
   style: []           # stylized-character-maturity or other narrow style risks
 ```
 
@@ -91,6 +91,7 @@ Routing rules:
 - Select at least one subject decision. If no subject module fits, load `subject.generic-object` to preserve an ordinary object/scene/none decision without inventing a category.
 - Apply dependencies from the manifest after initial selection. Examples: `medium.screenshot-ui` pulls `concept.screen-frame-within-frame` and `detail.text-logo-label`; `subject.document-data-diagram` pulls `detail.text-logo-label`.
 - Human images with visible hands, clothing geometry, or body-silhouette drift risk should add the corresponding detail-risk modules; do not rely on `subject.human` alone.
+- Tight human phone selfies where face/hair dominate should add `tight-selfie`; if face-touching hands or secondary accessories/cropped upper-torso clothing affect fidelity, also add `face-hand-gesture` and/or `accessory-torso-budget`.
 - Usually select 3-8 modules beyond the core, but do not omit a concept-critical relationship module to stay under budget.
 
 ## Conflict Priority
