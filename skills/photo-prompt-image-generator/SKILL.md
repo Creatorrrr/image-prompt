@@ -164,6 +164,15 @@ If the explanation looks right, rerun without `--explain-concept`. The wrapper e
 
 For concepts that combine a role with `암살자`, the recipe resolver treats the role outfit as a cover identity and samples deterministic scene axes for archetype, mission phase, expression, register, environment, and cover-identity tell. The assassin layer should read through disguise, surveillance, target identification, access, occupational tools used in-context, pre-positioning, reflection, crowd blending, near-discovery suspense, or quiet exfiltration, not through graphic violence, visible victims, or drawn weapons. These concepts intentionally suppress camera-facing smiles, idol-photobook lighting, costume-showcase framing, and standalone cosplay-prop display; gaze should move off-frame, toward a task, a reflection, a route note, a bystander, a service door, or an architectural cover cue. Role profiles may restrict specific axes when needed, such as keeping historical princess concepts on period-appropriate tells rather than modern IDs or phones. The `암살자` mixin can also take preset priority over a role preset so strong costume roles still inherit a cinematic covert-photo register while keeping the role costume slot. Use `--explain-concept` to inspect `selected_axes`, legacy `selected_bundles`, `applied_role`, `applied_mixins`, and `combined_forced_slots` before rendering.
 
+When the user asks for a weapon to be subtly visible in an `암살자` concept, keep the recipe intact and add explicit `--set` overrides plus an additional requirement instead of changing recipe pools. Use existing tags only:
+
+- 메이드/간호사/사복 여친/바니걸: `--set prop=sheathed_utility_knife_prop --set action=concealed_holster_adjust_pose`
+- 경찰: `--set prop=real_holstered_service_pistol --set action=concealed_holster_adjust_pose`
+- 광부: `--set prop=nonfunctional_pickaxe_prop --set action=weapon_low_ready_stance`
+- 공주: `--set prop=sharp_ornamental_hairpin_prop --set action=hand_near_hidden_ornament_pose`
+
+Also add `--additional-requirement "a role-appropriate weapon cue is visibly but subtly present as a partial sheath, holster grip, tool edge, or hairpin glint; never drawn, aimed, used, bloody, or shown with a victim"`.
+
 Add unrepresented concrete requirements without manual prompt editing:
 
 ```bash

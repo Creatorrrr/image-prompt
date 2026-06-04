@@ -1212,6 +1212,84 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
 
         self.assertGreaterEqual(len(expressions), 3)
 
+    def test_concept_explicit_set_overrides_recipe_slots(self):
+        visible_weapon_requirement = (
+            "a role-appropriate weapon cue is visibly but subtly present as a partial sheath, "
+            "holster grip, tool edge, or hairpin glint; never drawn, aimed, used, bloody, or shown with a victim"
+        )
+        payload = self.run_wrapper_json(
+            "--concept",
+            "카리나 메이드 암살자",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "3100",
+            "--lang",
+            "en",
+            "--no-negative",
+            "--include-choices",
+            "--set",
+            "prop=sheathed_utility_knife_prop",
+            "--set",
+            "action=concealed_holster_adjust_pose",
+            "--additional-requirement",
+            visible_weapon_requirement,
+        )
+
+        item = payload[0]
+        self.assertEqual(item["choices"]["prop"]["id"], "sheathed_utility_knife_prop")
+        self.assertEqual(item["choices"]["action"]["id"], "concealed_holster_adjust_pose")
+        self.assertIn(visible_weapon_requirement, item["prompt_en"])
+        set_values = [
+            value
+            for index, value in enumerate(item["provenance"]["argv"][1:], start=1)
+            if item["provenance"]["argv"][index - 1] == "--set"
+        ]
+        self.assertEqual(
+            set_values[-2:],
+            ["prop=sheathed_utility_knife_prop", "action=concealed_holster_adjust_pose"],
+        )
+
+    def test_assassin_visible_weapon_request_role_map_uses_existing_tags(self):
+        visible_weapon_requirement = (
+            "a role-appropriate weapon cue is visibly but subtly present as a partial sheath, "
+            "holster grip, tool edge, or hairpin glint; never drawn, aimed, used, bloody, or shown with a victim"
+        )
+        cases = [
+            ("카리나 메이드 암살자", "sheathed_utility_knife_prop", "concealed_holster_adjust_pose"),
+            ("윈터 간호사 암살자", "sheathed_utility_knife_prop", "concealed_holster_adjust_pose"),
+            ("닝닝 경찰 암살자", "real_holstered_service_pistol", "concealed_holster_adjust_pose"),
+            ("지젤 광부 암살자", "nonfunctional_pickaxe_prop", "weapon_low_ready_stance"),
+            ("아일릿 원희 사복 여친 암살자", "sheathed_utility_knife_prop", "concealed_holster_adjust_pose"),
+            ("설윤 공주 암살자", "sharp_ornamental_hairpin_prop", "hand_near_hidden_ornament_pose"),
+            ("유나 바니걸 암살자", "sheathed_utility_knife_prop", "concealed_holster_adjust_pose"),
+        ]
+
+        for concept, expected_prop, expected_action in cases:
+            with self.subTest(concept=concept):
+                payload = self.run_wrapper_json(
+                    "--concept",
+                    concept,
+                    "--selection-mode",
+                    "rule",
+                    "--seed",
+                    "3100",
+                    "--lang",
+                    "en",
+                    "--no-negative",
+                    "--include-choices",
+                    "--set",
+                    f"prop={expected_prop}",
+                    "--set",
+                    f"action={expected_action}",
+                    "--additional-requirement",
+                    visible_weapon_requirement,
+                )
+                item = payload[0]
+                self.assertEqual(item["choices"]["prop"]["id"], expected_prop)
+                self.assertEqual(item["choices"]["action"]["id"], expected_action)
+                self.assertIn(visible_weapon_requirement, item["prompt_en"])
+
     def test_concept_recipe_generation_records_expanded_argv_in_provenance(self):
         result = subprocess.run(
             [

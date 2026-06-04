@@ -446,6 +446,7 @@ def resolve_concepts(args: Sequence[str], concepts: Sequence[str]) -> tuple[list
     if not concepts:
         return list(args), []
 
+    _, explicit_user_sets = extract_option_values(args, "--set")
     recipes = load_concept_recipes()
     roles = recipes.get("roles", {}) or {}
     mixins = recipes.get("mixins", {}) or {}
@@ -566,6 +567,9 @@ def resolve_concepts(args: Sequence[str], concepts: Sequence[str]) -> tuple[list
                 "combined_forced_slots": forced_sets_to_mapping(combined_sets),
             }
         )
+
+    for forced in explicit_user_sets:
+        add_option(resolved_args, "--set", forced)
 
     return resolved_args, explanations
 
