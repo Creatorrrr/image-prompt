@@ -187,6 +187,33 @@ python3 skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py \
 
 Use `--explain-concept` to audit the selected vampire bundle. The expected shape is one applied role plus `applied_mixins: ["흡혈귀"]`; the selected bundle should vary location, lighting, action, mood, or composition while keeping `costume_style` from the role unless the concept is standalone `흡혈귀`.
 
+Generate a concept-faithful femme fatale prompt that treats the archetype as gaze, power, and danger rather than a generic sexy villain:
+
+```bash
+python3 skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py \
+  --concept "팜므파탈" \
+  --selection-mode rule \
+  --detail-level compact \
+  --plain \
+  --no-negative
+```
+
+For role + femme fatale concepts such as `카리나 메이드 팜므파탈`, pass the whole phrase as one `--concept` so the resolver can preserve the role outfit and add the `팜므파탈` mixin:
+
+```bash
+python3 skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py \
+  --concept "카리나 메이드 팜므파탈" \
+  --selection-mode rule \
+  --seed 812 \
+  --include-choices
+```
+
+Use the `팜므파탈` concept mixin for femme fatale or similar dangerous-intelligent-woman archetype requests. The mixin expresses the archetype through gaze reversal, power, and noir/symbolist visual grammar: cold unreadable stare, low-angle dominance framed around face and stance, chiaroscuro or low-key light, venetian-blind shadows, reflection/doubling, threshold framing, wilted-flower or poison omen, calling cards, gloves, mirrors, hairpins, or perfume bottles. Keep role outfits readable and let the femme fatale layer alter posture, gaze, light, framing, and symbolic props. Do not collapse the concept into lingerie, cleavage-centric framing, pin-up posing, come-hither/bedroom-eyes expression, parted-lips invitation, submissive availability, explicit content, visible victims, or depicted violence. The lethal quality is atmospheric and symbolic: agency, intelligence, control, danger, and the viewer becoming the observed one.
+
+Service- or fetish-coded roles such as `메이드`, `간호사`, and `바니걸` need explicit power-reversal cues: treat the outfit as a cover identity, disguise, institutional authority, or room-operator role, and make the viewer the mark, suspect, patient, or observed party. Tool/action-coded roles such as `광부` need leverage and control cues rather than survival-action posing; use withheld knowledge, route ownership, sealed envelopes, face-height gaze, low-key noir light, and distance from pin-up body angles.
+
+Use `--explain-concept` to audit the selected femme fatale bundle. The expected shape is either standalone `applied_mixins: ["팜므파탈"]` with no role, or one applied role plus `applied_mixins: ["팜므파탈"]`; role costumes should remain intact, and there should be no assassin weapon cue unless the user also explicitly includes `암살자`.
+
 For concepts that combine a role with `암살자`, the recipe resolver uses deterministic scene bundles. Keep the role outfit as a cover identity and let the assassin layer read through hiding in plain sight, off-frame gaze, concealed props, implied targets, reflection surveillance, cover-identity cracks, exit-route checks, crowd blending, and unsettling clues that break a pretty job or lifestyle editorial. The resolver automatically adds a role-specific subtle weapon cue as text, without replacing the bundle's `prop` or `action` scene slots. Do not turn these into graphic violence, visible victims, operational instructions, or drawn/aimed weapons.
 
 When the user asks for a weapon to be subtly visible in an `암살자` concept, keep the recipe intact and add explicit `--set` overrides plus an additional requirement instead of changing recipe pools. Use existing 39df660 tags only:
@@ -435,6 +462,7 @@ python3 skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py \
 - For ReactorPrompt export-inspired requests, first map the request to the most specific photo preset before falling back to broad presets. Useful families include `hanbok_seasonal_editorial`, `wuxia_xianxia_portrait`, `joseon_period_portrait`, `hanfu_china_court_portrait`, the cosplay-specific presets, K-pop presets, Korean local-space presets, craft/product presets, and optical-experiment presets.
 - For physical fantasy, cosplay-prop, cinematic story portrait, cosmic night field, aurora, glacier, canyon, or nonfunctional costume weapon prop requests, use `cinematic_fantasy_portrait`. Keep weapons clearly framed as cosplay or nonfunctional props.
 - For vampire or similar supernatural archetype requests, use the `흡혈귀` concept mixin or the closest gothic/horror preset plus `--concept-lock`; express the creature through atmosphere, body language, daylight refusal, mirror/reflection unease, moonlit pallor, withered-life cues, bat-like shadows, coffin-like geometry, antique portraits, and room effects, not through gore, victims, feeding, exposed fangs, or visible blood. Do not force a generic gothic dress or candle studio over a more specific role outfit.
+- For femme fatale or similar dangerous-intelligent-woman archetype requests, use the `팜므파탈` concept mixin or the closest noir/editorial preset plus `--concept-lock`; express the archetype through gaze reversal, authority, controlled stillness, noir/symbolist light, reflection/doubling, threshold framing, and quiet omen props. The concept is about agency, intelligence, danger, and the viewer being observed, not sexual availability. Do not rewrite it into lingerie, cleavage-centered framing, pin-up posing, bedroom eyes, come-hither gestures, explicit content, visible victims, or depicted violence. For service/fetish-coded or action-coded roles, add stronger power-reversal anchors so the role reads as a disguise, authority position, room-operator identity, or leverage holder rather than cosplay display.
 - For 80s glam, 90s grunge, Y2K chrome, direct-flash retro, compact camera, or era fashion editorial requests, use `retro_era_fashion_editorial`.
 - For contrast-photo requests such as glam wardrobe in Antarctic ice, melting pastel ice cream in an extreme landscape, aurora field with editorial fashion, or glossy story props in harsh environments, use `surreal_contrast_editorial`.
 - `surreal_contrast_editorial` is not the same route as `--surreal-mode on`: it uses normal photo slots such as `location`, `wardrobe_style`, `prop`, `texture`, and `action`, and should not force `surreal_concept`, `surreal_anchor`, `scale_relation`, or `surreal_physics_detail`.

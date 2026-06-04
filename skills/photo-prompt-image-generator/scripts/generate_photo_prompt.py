@@ -280,6 +280,10 @@ def resolve_concepts(args: Sequence[str], concepts: Sequence[str]) -> tuple[list
             ):
                 additional_requirements.extend(normalize_list(weapon_cues.get(role)))
             if selected_bundle:
+                bundle_preset = str(selected_bundle.get("preset") or "")
+                if bundle_preset and not has_preset_value:
+                    add_option(resolved_args, "--preset", bundle_preset)
+                    has_preset_value = True
                 if mixin_base_set:
                     set_groups.append((mixin_base_set, set()))
                 bundle_set = selected_bundle.get("set") if isinstance(selected_bundle.get("set"), dict) else {}
@@ -290,6 +294,7 @@ def resolve_concepts(args: Sequence[str], concepts: Sequence[str]) -> tuple[list
                     {
                         "mixin": mixin,
                         "bundle_id": str(selected_bundle.get("id") or ""),
+                        "preset": bundle_preset,
                         "set": bundle_set,
                         "weight": selected_bundle.get("weight", 1),
                     }

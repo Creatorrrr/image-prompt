@@ -1055,6 +1055,167 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertGreaterEqual(len(selected_locations), 4)
         self.assertGreaterEqual(len(selected_lighting), 4)
 
+    def test_concept_recipe_expands_femme_fatale_as_non_objectifying_mixin(self):
+        payload = self.run_wrapper_json(
+            "--concept",
+            "팜므파탈",
+            "--explain-concept",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "811",
+            "--plain",
+            "--no-negative",
+        )
+
+        concept = payload["concepts"][0]
+        self.assertEqual(concept["name"], "팜므파탈")
+        self.assertIsNone(concept["role"])
+        self.assertIsNone(concept["applied_role"])
+        self.assertEqual(concept["applied_mixins"], ["팜므파탈"])
+        self.assertTrue(concept["matched"])
+        self.assertEqual(concept["mixins"]["팜므파탈"]["preset"], "compact_cinematic_prop_portrait")
+        self.assertEqual(concept["combined_forced_slots"]["expression"], ["cold_unreadable_stare"])
+        self.assertEqual(concept["combined_forced_slots"]["action"], ["looking_down_at_low_camera"])
+        self.assertEqual(concept["combined_forced_slots"]["light_shape"], ["venetian_blind_shadows"])
+        self.assertEqual(len(concept["selected_bundles"]), 1)
+        bundle = concept["selected_bundles"][0]
+        self.assertEqual(bundle["mixin"], "팜므파탈")
+        self.assertTrue(bundle["bundle_id"].startswith("standalone_"))
+        joined = " ".join(payload["forward_args"])
+        self.assertIn("gaze reversal", joined)
+        self.assertIn("agency over availability", joined)
+        self.assertIn("not a sexy villainess stereotype", joined)
+        self.assertIn("never as an objectifying body angle", joined)
+        self.assertNotIn("assassin persona", joined)
+
+    def test_femme_fatale_mixin_preserves_role_costume_without_weapon_cue(self):
+        payload = self.run_wrapper_json(
+            "--concept",
+            "카리나 메이드 팜므파탈",
+            "--explain-concept",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "812",
+            "--plain",
+            "--no-negative",
+        )
+
+        concept = payload["concepts"][0]
+        self.assertEqual(concept["name"], "카리나")
+        self.assertEqual(concept["role"], "메이드")
+        self.assertEqual(concept["applied_role"], "메이드")
+        self.assertEqual(concept["applied_mixins"], ["팜므파탈"])
+        self.assertEqual(concept["combined_forced_slots"]["costume_style"], ["frill_apron_maid_costume"])
+        self.assertEqual(concept["combined_forced_slots"]["expression"], ["cold_unreadable_stare"])
+        self.assertEqual(concept["combined_forced_slots"]["prop"], ["ornate_gothic_perfume_bottle"])
+        self.assertEqual(len(concept["selected_bundles"]), 1)
+        self.assertEqual(concept["selected_bundles"][0]["mixin"], "팜므파탈")
+        joined = " ".join(payload["forward_args"])
+        self.assertIn("keep the role outfit readable", joined)
+        self.assertIn("the maid outfit stays readable", joined)
+        self.assertIn("poison omen", joined)
+        self.assertNotIn("sheathed utility blade", joined)
+        self.assertNotIn("holster grip", joined)
+        self.assertNotIn("assassin persona", joined)
+
+    def test_femme_fatale_concept_prompt_contains_agency_and_noir_guards(self):
+        payload = self.run_wrapper_json(
+            "--concept",
+            "설윤 공주 팜므파탈",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "816",
+            "--lang",
+            "en",
+            "--no-negative",
+            "--include-choices",
+        )
+
+        item = payload[0]
+        self.assertEqual(item["choices"]["costume_style"]["id"], "royal_princess_hanbok")
+        self.assertEqual(item["choices"]["expression"]["id"], "cold_unreadable_stare")
+        self.assertEqual(item["choices"]["action"]["id"], "looking_down_at_low_camera")
+        self.assertEqual(item["choices"]["prop"]["id"], "phoenix_hairpin_prop")
+        self.assertIn("Core concept lock: 설윤 공주 팜므파탈", item["prompt_en"])
+        self.assertIn("gaze reversal", item["prompt_en"])
+        self.assertIn("femme fatale reinterpreted as a powerful, intelligent, dangerous woman", item["prompt_en"])
+        self.assertIn("noir and symbolist grammar", item["prompt_en"])
+        self.assertIn("no nudity, no explicit or fetish content", item["prompt_en"])
+        self.assertIn("never as an objectifying body angle", item["prompt_en"])
+        self.assertIn("political power and lethal intelligence", item["prompt_en"])
+        self.assertNotIn("assassin persona", item["prompt_en"])
+
+    def test_femme_fatale_role_batch_uses_role_specific_bundles(self):
+        cases = [
+            ("카리나 메이드 팜므파탈", 812),
+            ("윈터 간호사 팜므파탈", 813),
+            ("닝닝 경찰 팜므파탈", 814),
+            ("지젤 광부 팜므파탈", 815),
+            ("아일릿 원희 사복 여친 팜므파탈", 816),
+            ("설윤 공주 팜므파탈", 817),
+            ("유나 바니걸 팜므파탈", 818),
+        ]
+        expected_slots_by_role = {
+            "간호사": {
+                "prop": ["black_leather_gloves_prop"],
+                "action": ["looking_down_at_low_camera"],
+                "mood": ["occult_noir"],
+                "composition": ["frame_within_frame"],
+                "color": ["desaturated_cold_blue"],
+            },
+            "광부": {
+                "prop": ["sealed_mission_envelope_prop"],
+                "action": ["looking_down_at_low_camera"],
+                "mood": ["occult_noir"],
+                "composition": ["low_angle"],
+            },
+            "바니걸": {
+                "prop": ["single_playing_card_calling_card_prop"],
+                "action": ["looking_down_at_low_camera"],
+                "location": ["glass_office"],
+                "lighting": ["low_key"],
+                "composition": ["frame_within_frame"],
+                "color": ["desaturated_cold_blue"],
+            },
+        }
+        selected_bundle_ids = set()
+        selected_locations = set()
+        for concept, seed in cases:
+            explanation = self.run_wrapper_json(
+                "--concept",
+                concept,
+                "--explain-concept",
+                "--selection-mode",
+                "rule",
+                "--seed",
+                str(seed),
+                "--plain",
+                "--no-negative",
+            )
+            concept_payload = explanation["concepts"][0]
+            self.assertEqual(concept_payload["applied_mixins"], ["팜므파탈"])
+            selected_bundle = concept_payload["selected_bundles"][0]
+            selected_bundle_ids.add(selected_bundle["bundle_id"])
+            selected_locations.add(concept_payload["combined_forced_slots"]["location"][0])
+            self.assertEqual(concept_payload["combined_forced_slots"]["expression"], ["cold_unreadable_stare"])
+            self.assertIn(
+                concept_payload["combined_forced_slots"]["composition"][0],
+                {"low_angle", "frame_within_frame", "silhouette", "centered_symmetry", "broken_glass_fragments_frame"},
+            )
+            role = concept_payload["role"]
+            for slot, ids in expected_slots_by_role.get(role, {}).items():
+                self.assertEqual(concept_payload["combined_forced_slots"][slot], ids)
+            if role in {"간호사", "바니걸"}:
+                self.assertEqual(selected_bundle["preset"], "compact_cinematic_prop_portrait")
+                preset_index = explanation["forward_args"].index("--preset")
+                self.assertEqual(explanation["forward_args"][preset_index + 1], "compact_cinematic_prop_portrait")
+
+        self.assertGreaterEqual(len(selected_bundle_ids), 6)
+        self.assertGreaterEqual(len(selected_locations), 5)
+
     def test_concept_recipe_explain_combines_role_and_assassin_mixin(self):
         payload = self.run_wrapper_json(
             "--concept",
@@ -1620,9 +1781,13 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "sealed_mission_envelope_prop",
                 "sheathed_utility_knife_prop",
                 "phoenix_hairpin_prop",
+                "ornate_gothic_perfume_bottle",
+                "compact_mirror",
+                "flower_bouquet",
             },
             "action": {
                 "standing_silence",
+                "looking_down_at_low_camera",
                 "weapon_low_ready_stance",
                 "concealed_holster_adjust_pose",
                 "doorframe_shadow_watch",
@@ -1638,7 +1803,12 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "underground_parking_garage",
                 "joseon_palace_interior",
                 "luxury_hotel_corridor",
+                "luxury_hotel_lobby",
                 "yellow_tape_alley_reportage",
+                "reflective_dark_corridor",
+                "mirrored_elevator_box",
+                "broken_mirror_fragment_studio",
+                "glass_office",
             },
             "lighting": {
                 "neon",
@@ -1648,6 +1818,9 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "candlelight",
                 "rim_light",
                 "hard_flash",
+                "chiaroscuro_window_light",
+                "low_key",
+                "chiaroscuro",
             },
             "mood": {"clinical", "elegant", "uncanny", "reportage_tense_noir", "occult_noir"},
             "composition": {
@@ -1657,11 +1830,16 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "frame_within_frame",
                 "silhouette",
                 "low_angle",
+                "centered_symmetry",
             },
             "expression": {"cold_unreadable_stare"},
+            "appearance_type": {"classic_elegant"},
+            "wardrobe_style": {"clean_blazer_trousers", "minimal_black_dress"},
+            "light_direction": {"side_light_left"},
+            "light_shape": {"venetian_blind_shadows"},
             "light_type": {"narrow_spotlight"},
             "light_intensity": {"deep_shadow_detail"},
-            "color": {"desaturated_cold_blue"},
+            "color": {"desaturated_cold_blue", "luxury_black_gold", "clinical_white", "tungsten_cinestill_blue_red", "monochrome"},
         }
 
         for slot, ids in expected.items():
