@@ -954,7 +954,8 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertIn("흡혈귀", payload["forward_args"])
         joined = " ".join(payload["forward_args"])
         self.assertIn("immortal nocturnal aristocrat", joined)
-        self.assertIn("visible supernatural cues beyond gothic fashion", joined)
+        self.assertIn("positive visible supernatural anchors beyond gothic fashion", joined)
+        self.assertIn("do not rely on absence cues alone", joined)
         self.assertIn("reflection unease", joined)
         self.assertIn("no visible blood", joined)
         self.assertIn("no bared fangs", joined)
@@ -983,8 +984,11 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertNotIn("gothic_doll_lace_dress", concept["combined_forced_slots"]["costume_style"])
         self.assertEqual(len(concept["selected_bundles"]), 1)
         self.assertEqual(concept["selected_bundles"][0]["mixin"], "흡혈귀")
+        self.assertEqual(concept["selected_bundles"][0]["bundle_id"], "maid_reflection_service")
         joined = " ".join(payload["forward_args"])
         self.assertIn("keep the role outfit readable", joined)
+        self.assertIn("open compact mirror faces the camera", joined)
+        self.assertIn("positive vampire anchor", joined)
         self.assertIn("no visible blood", joined)
         self.assertNotIn("assassin persona", joined)
 
@@ -1007,13 +1011,97 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertEqual(item["choices"]["costume_style"]["id"], "royal_princess_hanbok")
         self.assertIn("Core concept lock: 설윤 공주 흡혈귀", item["prompt_en"])
         self.assertIn("predatory stillness", item["prompt_en"])
-        self.assertIn("non-graphic vampire cues", item["prompt_en"])
+        self.assertIn("positive, visible non-graphic vampire identity anchors", item["prompt_en"])
         self.assertIn("role outfit readable", item["prompt_en"])
+        self.assertIn("moonlit bat silhouettes", item["prompt_en"])
+        self.assertIn("ruby eye catchlight", item["prompt_en"])
         self.assertIn("no visible blood", item["prompt_en"])
         self.assertIn("no bared fangs", item["prompt_en"])
         self.assertIn("no visible victims", item["prompt_en"])
         self.assertIn("no gore", item["prompt_en"])
         self.assertNotIn("assassin persona", item["prompt_en"])
+
+    def test_vampire_weak_role_prompts_include_positive_anchors(self):
+        miner = self.run_wrapper_json(
+            "--concept",
+            "지젤 광부 흡혈귀",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "704",
+            "--lang",
+            "en",
+            "--no-negative",
+            "--include-choices",
+        )[0]
+        self.assertEqual(miner["choices"]["costume_style"]["id"], "miner_workwear_hard_hat")
+        self.assertEqual(miner["choices"]["composition"]["id"], "puddle_inverted_reflection")
+        self.assertIn("small antique cup of dark red wine or ruby cameo", miner["prompt_en"])
+        self.assertIn("avoid generic mine horror", miner["prompt_en"])
+        self.assertIn("bat-wing-shaped shadow", miner["prompt_en"])
+        self.assertNotIn("analog_horror_dread", miner["prompt_en"])
+
+        police = self.run_wrapper_json(
+            "--concept",
+            "닝닝 경찰 흡혈귀",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "703",
+            "--lang",
+            "en",
+            "--no-negative",
+            "--include-choices",
+        )[0]
+        self.assertEqual(police["choices"]["subject"]["id"], "adult_cosplay_performer")
+        self.assertEqual(police["choices"]["costume_style"]["id"], "police_uniform_costume")
+        self.assertEqual(police["choices"]["prop"]["id"], "clear_umbrella")
+        self.assertEqual(police["choices"]["composition"]["id"], "reflection")
+        self.assertIn("clear umbrella, car glass, or reflective wall sits close to the subject", police["prompt_en"])
+        self.assertIn("no cute plush doll, mascot toy, or unrelated playful prop", police["prompt_en"])
+
+        casual = self.run_wrapper_json(
+            "--concept",
+            "아일릿 원희 사복 여친 흡혈귀",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "705",
+            "--lang",
+            "en",
+            "--no-negative",
+            "--include-choices",
+        )[0]
+        self.assertEqual(casual["provenance"]["preset_id"], "compact_urban_fashion_portrait")
+        self.assertEqual(casual["choices"]["subject"]["id"], "fashion_influencer")
+        self.assertEqual(casual["choices"]["wardrobe_style"]["id"], "hoodie_shorts_sneakers")
+        self.assertEqual(casual["choices"]["prop"]["id"], "clear_case_smartphone")
+        self.assertEqual(casual["choices"]["action"]["id"], "mirror_selfie")
+        self.assertEqual(casual["choices"]["composition"]["id"], "mirror_selfie_composition")
+        self.assertIn("heavy black curtain or narrow overbright window edge", casual["prompt_en"])
+        self.assertIn("mirror and phone screen should both visibly fail as normal reflections", casual["prompt_en"])
+        self.assertIn("ruby choker or antique cameo", casual["prompt_en"])
+        self.assertNotIn("work clothing, tools", casual["prompt_en"])
+
+        bunny = self.run_wrapper_json(
+            "--concept",
+            "유나 바니걸 흡혈귀",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "707",
+            "--lang",
+            "en",
+            "--no-negative",
+            "--include-choices",
+        )[0]
+        self.assertEqual(bunny["choices"]["subject"]["id"], "adult_cosplay_performer")
+        self.assertEqual(bunny["choices"]["costume_style"]["id"], "bunny_girl_costume")
+        self.assertEqual(bunny["choices"]["prop"]["id"], "compact_mirror")
+        self.assertEqual(bunny["choices"]["composition"]["id"], "reflection")
+        self.assertIn("bunny ears are pushed into deep shadow or silhouette", bunny["prompt_en"])
+        self.assertIn("compact mirror or vanity reflection near the face or hand", bunny["prompt_en"])
+        self.assertIn("ordinary nightclub or dark bunny-girl costume portrait", bunny["prompt_en"])
 
     def test_vampire_role_batch_uses_distinct_facet_bundles(self):
         cases = [
@@ -1043,6 +1131,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             concept_payload = explanation["concepts"][0]
             self.assertEqual(concept_payload["applied_mixins"], ["흡혈귀"])
             selected_bundle = concept_payload["selected_bundles"][0]
+            self.assertFalse(selected_bundle["bundle_id"].startswith("shared_"))
             selected_bundle_ids.add(selected_bundle["bundle_id"])
             selected_locations.add(concept_payload["combined_forced_slots"]["location"][0])
             selected_lighting.add(concept_payload["combined_forced_slots"]["lighting"][0])
@@ -1050,10 +1139,39 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 concept_payload["combined_forced_slots"].get("costume_style"),
                 ["gothic_doll_lace_dress"],
             )
+            if concept_payload["role"] == "사복 여친":
+                self.assertEqual(selected_bundle["bundle_id"], "casual_daylight_refusal")
+                self.assertEqual(selected_bundle["preset"], "compact_urban_fashion_portrait")
+                self.assertEqual(concept_payload["combined_forced_slots"]["subject"], ["fashion_influencer"])
+                self.assertEqual(concept_payload["combined_forced_slots"]["wardrobe_style"], ["hoodie_shorts_sneakers"])
+            if concept_payload["role"] == "광부":
+                self.assertIn(
+                    "small antique cup of dark red wine or ruby cameo",
+                    " ".join(explanation["forward_args"]),
+                )
 
         self.assertGreaterEqual(len(selected_bundle_ids), 5)
         self.assertGreaterEqual(len(selected_locations), 4)
         self.assertGreaterEqual(len(selected_lighting), 4)
+
+    def test_vampire_role_specific_bundle_selection_ignores_shared_fallbacks(self):
+        payload = self.run_wrapper_json(
+            "--concept",
+            "아일릿 원희 사복 여친 흡혈귀",
+            "--explain-concept",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "705",
+            "--plain",
+            "--no-negative",
+        )
+
+        concept = payload["concepts"][0]
+        selected_bundle = concept["selected_bundles"][0]
+        self.assertEqual(selected_bundle["bundle_id"], "casual_daylight_refusal")
+        self.assertEqual(selected_bundle["preset"], "compact_urban_fashion_portrait")
+        self.assertNotIn("shared_daylight_threshold_refusal", [selected_bundle["bundle_id"]])
 
     def test_concept_recipe_expands_femme_fatale_as_non_objectifying_mixin(self):
         payload = self.run_wrapper_json(
@@ -1834,7 +1952,8 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             },
             "expression": {"cold_unreadable_stare"},
             "appearance_type": {"classic_elegant"},
-            "wardrobe_style": {"clean_blazer_trousers", "minimal_black_dress"},
+            "subject": {"fashion_influencer"},
+            "wardrobe_style": {"clean_blazer_trousers", "minimal_black_dress", "hoodie_shorts_sneakers"},
             "light_direction": {"side_light_left"},
             "light_shape": {"venetian_blind_shadows"},
             "light_type": {"narrow_spotlight"},
