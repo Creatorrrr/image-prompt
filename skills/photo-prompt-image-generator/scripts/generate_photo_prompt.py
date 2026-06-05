@@ -33,6 +33,7 @@ BUNDLE_OVERRIDE_SLOTS = {
     "color",
     "mood",
     "composition",
+    "subject_framing",
     "expression",
 }
 

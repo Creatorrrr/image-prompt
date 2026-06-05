@@ -1196,15 +1196,17 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertEqual(concept["combined_forced_slots"]["expression"], ["cold_unreadable_stare"])
         self.assertEqual(concept["combined_forced_slots"]["action"], ["looking_down_at_low_camera"])
         self.assertEqual(concept["combined_forced_slots"]["light_shape"], ["venetian_blind_shadows"])
+        self.assertEqual(concept["combined_forced_slots"]["subject_framing"], ["upper_body_framing"])
         self.assertEqual(len(concept["selected_bundles"]), 1)
         bundle = concept["selected_bundles"][0]
         self.assertEqual(bundle["mixin"], "팜므파탈")
         self.assertTrue(bundle["bundle_id"].startswith("standalone_"))
         joined = " ".join(payload["forward_args"])
         self.assertIn("gaze reversal", joined)
+        self.assertIn("information-control anchor", joined)
         self.assertIn("agency over availability", joined)
         self.assertIn("not a sexy villainess stereotype", joined)
-        self.assertIn("never as an objectifying body angle", joined)
+        self.assertIn("never as an objectifying full-body or pin-up body angle", joined)
         self.assertNotIn("assassin persona", joined)
 
     def test_femme_fatale_mixin_preserves_role_costume_without_weapon_cue(self):
@@ -1228,12 +1230,14 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertEqual(concept["combined_forced_slots"]["costume_style"], ["frill_apron_maid_costume"])
         self.assertEqual(concept["combined_forced_slots"]["expression"], ["cold_unreadable_stare"])
         self.assertEqual(concept["combined_forced_slots"]["prop"], ["ornate_gothic_perfume_bottle"])
+        self.assertEqual(concept["combined_forced_slots"]["subject_framing"], ["upper_body_framing"])
         self.assertEqual(len(concept["selected_bundles"]), 1)
         self.assertEqual(concept["selected_bundles"][0]["mixin"], "팜므파탈")
         joined = " ".join(payload["forward_args"])
         self.assertIn("keep the role outfit readable", joined)
         self.assertIn("the maid outfit stays readable", joined)
         self.assertIn("poison omen", joined)
+        self.assertIn("guest book, key ring, or house ledger", joined)
         self.assertNotIn("sheathed utility blade", joined)
         self.assertNotIn("holster grip", joined)
         self.assertNotIn("assassin persona", joined)
@@ -1257,12 +1261,14 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertEqual(item["choices"]["expression"]["id"], "cold_unreadable_stare")
         self.assertEqual(item["choices"]["action"]["id"], "looking_down_at_low_camera")
         self.assertEqual(item["choices"]["prop"]["id"], "phoenix_hairpin_prop")
+        self.assertEqual(item["choices"]["subject_framing"]["id"], "upper_body_framing")
         self.assertIn("Core concept lock: 설윤 공주 팜므파탈", item["prompt_en"])
         self.assertIn("gaze reversal", item["prompt_en"])
         self.assertIn("femme fatale reinterpreted as a powerful, intelligent, dangerous woman", item["prompt_en"])
         self.assertIn("noir and symbolist grammar", item["prompt_en"])
+        self.assertIn("information-control anchor", item["prompt_en"])
         self.assertIn("no nudity, no explicit or fetish content", item["prompt_en"])
-        self.assertIn("never as an objectifying body angle", item["prompt_en"])
+        self.assertIn("never as an objectifying full-body or pin-up body angle", item["prompt_en"])
         self.assertIn("political power and lethal intelligence", item["prompt_en"])
         self.assertNotIn("assassin persona", item["prompt_en"])
 
@@ -1283,20 +1289,37 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "mood": ["occult_noir"],
                 "composition": ["frame_within_frame"],
                 "color": ["desaturated_cold_blue"],
+                "subject_framing": ["upper_body_framing"],
+            },
+            "경찰": {
+                "prop": ["single_playing_card_calling_card_prop"],
+                "action": ["holding_story_prop"],
+                "mood": ["reportage_tense_noir"],
+                "composition": ["medium_close"],
+                "subject_framing": ["head_and_shoulders_crop"],
             },
             "광부": {
                 "prop": ["sealed_mission_envelope_prop"],
                 "action": ["looking_down_at_low_camera"],
                 "mood": ["occult_noir"],
                 "composition": ["low_angle"],
+                "subject_framing": ["waist_up_framing"],
+            },
+            "사복 여친": {
+                "prop": ["clear_case_smartphone"],
+                "action": ["holding_story_prop"],
+                "mood": ["reportage_tense_noir"],
+                "composition": ["reflection"],
+                "subject_framing": ["upper_body_framing"],
             },
             "바니걸": {
                 "prop": ["single_playing_card_calling_card_prop"],
-                "action": ["looking_down_at_low_camera"],
+                "action": ["holding_story_prop"],
                 "location": ["glass_office"],
                 "lighting": ["low_key"],
-                "composition": ["frame_within_frame"],
+                "composition": ["medium_close"],
                 "color": ["desaturated_cold_blue"],
+                "subject_framing": ["upper_body_framing"],
             },
         }
         selected_bundle_ids = set()
@@ -1321,7 +1344,16 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             self.assertEqual(concept_payload["combined_forced_slots"]["expression"], ["cold_unreadable_stare"])
             self.assertIn(
                 concept_payload["combined_forced_slots"]["composition"][0],
-                {"low_angle", "frame_within_frame", "silhouette", "centered_symmetry", "broken_glass_fragments_frame"},
+                {"low_angle", "frame_within_frame", "silhouette", "centered_symmetry", "broken_glass_fragments_frame", "medium_close", "reflection"},
+            )
+            self.assertIn(
+                concept_payload["combined_forced_slots"]["subject_framing"][0],
+                {"upper_body_framing", "head_and_shoulders_crop", "waist_up_framing", "detail_crop_hands_accessories"},
+            )
+            self.assertFalse(
+                concept_payload["combined_forced_slots"]["action"][0] == "looking_down_at_low_camera"
+                and concept_payload["combined_forced_slots"]["composition"][0] == "low_angle"
+                and concept_payload["role"] in {"경찰", "바니걸", "사복 여친"},
             )
             role = concept_payload["role"]
             for slot, ids in expected_slots_by_role.get(role, {}).items():
@@ -1333,6 +1365,64 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
 
         self.assertGreaterEqual(len(selected_bundle_ids), 6)
         self.assertGreaterEqual(len(selected_locations), 5)
+
+    def test_femme_fatale_weak_roles_force_face_hands_and_information_anchors(self):
+        cases = [
+            (
+                "닝닝 경찰 팜므파탈",
+                814,
+                {
+                    "composition": "medium_close",
+                    "subject_framing": "head_and_shoulders_crop",
+                    "action": "holding_story_prop",
+                    "phrases": ["case-file evidence", "viewer is the suspect", "full-body uniform pose"],
+                },
+            ),
+            (
+                "아일릿 원희 사복 여친 팜므파탈",
+                816,
+                {
+                    "composition": "reflection",
+                    "subject_framing": "upper_body_framing",
+                    "action": "holding_story_prop",
+                    "prop": "clear_case_smartphone",
+                    "phrases": ["phone sits near her face or hand", "information advantage", "controlled gaze"],
+                },
+            ),
+            (
+                "유나 바니걸 팜므파탈",
+                818,
+                {
+                    "composition": "medium_close",
+                    "subject_framing": "upper_body_framing",
+                    "action": "holding_story_prop",
+                    "phrases": ["upper-body operator", "hidden ledger", "full-body side pose or pin-up body angle"],
+                },
+            ),
+        ]
+
+        for concept, seed, expected in cases:
+            item = self.run_wrapper_json(
+                "--concept",
+                concept,
+                "--selection-mode",
+                "rule",
+                "--seed",
+                str(seed),
+                "--lang",
+                "en",
+                "--no-negative",
+                "--include-choices",
+            )[0]
+            self.assertEqual(item["choices"]["composition"]["id"], expected["composition"])
+            self.assertEqual(item["choices"]["subject_framing"]["id"], expected["subject_framing"])
+            self.assertEqual(item["choices"]["action"]["id"], expected["action"])
+            if "prop" in expected:
+                self.assertEqual(item["choices"]["prop"]["id"], expected["prop"])
+            self.assertIn("information-control anchor", item["prompt_en"])
+            self.assertIn("face, eyes, hands, and symbolic evidence", item["prompt_en"])
+            for phrase in expected["phrases"]:
+                self.assertIn(phrase, item["prompt_en"])
 
     def test_concept_recipe_explain_combines_role_and_assassin_mixin(self):
         payload = self.run_wrapper_json(
