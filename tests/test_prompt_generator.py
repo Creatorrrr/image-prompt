@@ -1204,6 +1204,8 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         joined = " ".join(payload["forward_args"])
         self.assertIn("gaze reversal", joined)
         self.assertIn("information-control anchor", joined)
+        self.assertIn("magnetic, deliberate allure", joined)
+        self.assertIn("invitation itself is the trap", joined)
         self.assertIn("agency over availability", joined)
         self.assertIn("not a sexy villainess stereotype", joined)
         self.assertIn("never as an objectifying full-body or pin-up body angle", joined)
@@ -1267,6 +1269,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertIn("femme fatale reinterpreted as a powerful, intelligent, dangerous woman", item["prompt_en"])
         self.assertIn("noir and symbolist grammar", item["prompt_en"])
         self.assertIn("information-control anchor", item["prompt_en"])
+        self.assertIn("magnetic, deliberate allure", item["prompt_en"])
         self.assertIn("no nudity, no explicit or fetish content", item["prompt_en"])
         self.assertIn("never as an objectifying full-body or pin-up body angle", item["prompt_en"])
         self.assertIn("political power and lethal intelligence", item["prompt_en"])
@@ -1308,17 +1311,21 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             "사복 여친": {
                 "prop": ["clear_case_smartphone"],
                 "action": ["holding_story_prop"],
+                "location": ["taxi_backseat_seoul_night"],
+                "light_type": ["phone_screen_face_glow"],
                 "mood": ["reportage_tense_noir"],
-                "composition": ["reflection"],
+                "composition": ["over_shoulder_phone_screen"],
                 "subject_framing": ["upper_body_framing"],
             },
             "바니걸": {
-                "prop": ["single_playing_card_calling_card_prop"],
-                "action": ["holding_story_prop"],
-                "location": ["glass_office"],
-                "lighting": ["low_key"],
+                "prop": ["ornate_gothic_perfume_bottle"],
+                "action": ["holding_ornate_bottle_to_chest"],
+                "location": ["hotel_rooftop_dusk"],
+                "lighting": ["rim_light"],
+                "light_direction": ["rim_light"],
+                "mood": ["luxury"],
                 "composition": ["medium_close"],
-                "color": ["desaturated_cold_blue"],
+                "color": ["tungsten_cinestill_blue_red"],
                 "subject_framing": ["upper_body_framing"],
             },
         }
@@ -1344,7 +1351,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             self.assertEqual(concept_payload["combined_forced_slots"]["expression"], ["cold_unreadable_stare"])
             self.assertIn(
                 concept_payload["combined_forced_slots"]["composition"][0],
-                {"low_angle", "frame_within_frame", "silhouette", "centered_symmetry", "broken_glass_fragments_frame", "medium_close", "reflection"},
+                {"low_angle", "frame_within_frame", "silhouette", "centered_symmetry", "broken_glass_fragments_frame", "medium_close", "reflection", "over_shoulder_phone_screen"},
             )
             self.assertIn(
                 concept_payload["combined_forced_slots"]["subject_framing"][0],
@@ -1382,11 +1389,11 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "아일릿 원희 사복 여친 팜므파탈",
                 816,
                 {
-                    "composition": "reflection",
+                    "composition": "over_shoulder_phone_screen",
                     "subject_framing": "upper_body_framing",
                     "action": "holding_story_prop",
                     "prop": "clear_case_smartphone",
-                    "phrases": ["phone sits near her face or hand", "information advantage", "controlled gaze"],
+                    "phrases": ["dominant foreground anchor", "already knows the viewer's secret", "not an ordinary lifestyle selfie"],
                 },
             ),
             (
@@ -1395,8 +1402,9 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 {
                     "composition": "medium_close",
                     "subject_framing": "upper_body_framing",
-                    "action": "holding_story_prop",
-                    "phrases": ["upper-body operator", "hidden ledger", "full-body side pose or pin-up body angle"],
+                    "action": "holding_ornate_bottle_to_chest",
+                    "prop": "ornate_gothic_perfume_bottle",
+                    "phrases": ["allure itself is the weapon", "drawn into a trap", "full-body side pose or pin-up body angle"],
                 },
             ),
         ]
