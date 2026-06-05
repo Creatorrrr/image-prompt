@@ -1543,8 +1543,11 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertEqual(nurse["choices"]["costume_style"]["id"], "nurse_uniform_costume")
         self.assertEqual(nurse["choices"]["location"]["id"], "hospital_waiting_room")
         self.assertEqual(nurse["choices"]["prop"]["id"], "flower_bouquet")
+        self.assertEqual(nurse["choices"]["action"]["id"], "standing_silence")
+        self.assertEqual(nurse["choices"]["expression"]["id"], "eyes_closed_serene")
         self.assertIn("care-fatigue and quiet waiting", nurse["prompt_en"])
-        self.assertIn("wilted bouquet and unanswered phone glow", nurse["prompt_en"])
+        self.assertIn("wilted bouquet the single dominant anchor", nurse["prompt_en"])
+        self.assertIn("not actively held or checked", nurse["prompt_en"])
         self.assertIn("no syringes, IV lines, medication, pills", nurse["prompt_en"])
 
         casual = self.run_wrapper_json(
@@ -1564,7 +1567,10 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertEqual(casual["choices"]["prop"]["id"], "clear_case_smartphone")
         self.assertEqual(casual["choices"]["action"]["id"], "checking_phone")
         self.assertEqual(casual["choices"]["location"]["id"], "dim_monitor_glow_bedroom")
+        self.assertEqual(casual["choices"]["expression"]["id"], "shy_downward_glance")
         self.assertIn("unread-message waiting", casual["prompt_en"])
+        self.assertIn("not merely a tired person on a phone", casual["prompt_en"])
+        self.assertIn("read-but-unanswered chat", casual["prompt_en"])
         self.assertIn("adult original fictional person only", casual["prompt_en"])
         self.assertIn("never sexualized, never youthful-minor coded", casual["prompt_en"])
 
@@ -1584,6 +1590,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertEqual(bunny["choices"]["prop"]["id"], "compact_mirror")
         self.assertEqual(bunny["choices"]["location"]["id"], "makeup_vanity")
         self.assertEqual(bunny["choices"]["subject_framing"]["id"], "upper_body_framing")
+        self.assertEqual(bunny["choices"]["expression"]["id"], "neutral_camera_gaze")
         self.assertIn("fully covered adult stage costume", bunny["prompt_en"])
         self.assertIn("upper-body backstage exhaustion portrait", bunny["prompt_en"])
         self.assertIn("no pin-up pose", bunny["prompt_en"])
@@ -1602,6 +1609,15 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         selected_bundle_ids = set()
         selected_locations = set()
         selected_light_types = set()
+        selected_expressions = set()
+        allowed_menhera_expressions = {
+            "emotional_teary_eyes",
+            "neutral_camera_gaze",
+            "eyes_closed_serene",
+            "looking_away_pensive",
+            "shy_downward_glance",
+            "mysterious_half_smile",
+        }
 
         for concept, seed, expected_bundle_id in cases:
             explanation = self.run_wrapper_json(
@@ -1620,7 +1636,9 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             selected_bundle = concept_payload["selected_bundles"][0]
             self.assertEqual(selected_bundle["bundle_id"], expected_bundle_id)
             self.assertFalse(selected_bundle["bundle_id"].startswith("shared_"))
-            self.assertEqual(concept_payload["combined_forced_slots"]["expression"], ["emotional_teary_eyes"])
+            expression = concept_payload["combined_forced_slots"]["expression"][0]
+            self.assertIn(expression, allowed_menhera_expressions)
+            selected_expressions.add(expression)
             self.assertTrue(
                 {"costume_style", "wardrobe_style"} & set(concept_payload["combined_forced_slots"]),
                 concept_payload["combined_forced_slots"],
@@ -1636,8 +1654,107 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             self.assertNotIn("holster grip", joined)
 
         self.assertEqual(len(selected_bundle_ids), len(cases))
+        self.assertGreaterEqual(len(selected_expressions), 4)
         self.assertGreaterEqual(len(selected_locations), 6)
         self.assertGreaterEqual(len(selected_light_types), 4)
+
+    def test_menhera_weak_role_prompts_include_explicit_anxiety_anchors(self):
+        police = self.run_wrapper_json(
+            "--concept",
+            "닝닝 경찰 멘헤라",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "904",
+            "--lang",
+            "en",
+            "--no-negative",
+            "--include-choices",
+        )[0]
+        self.assertEqual(police["choices"]["costume_style"]["id"], "police_uniform_costume")
+        self.assertEqual(police["choices"]["composition"]["id"], "mirror_selfie_composition")
+        self.assertEqual(police["choices"]["expression"]["id"], "looking_away_pensive")
+        self.assertIn("must NOT read as a pretty police cosplay shoot", police["prompt_en"])
+        self.assertIn("gaze avoids her own reflection", police["prompt_en"])
+        self.assertIn("empty or one-sided chat", police["prompt_en"])
+        self.assertIn("undone or askew", police["prompt_en"])
+
+        miner = self.run_wrapper_json(
+            "--concept",
+            "지젤 광부 멘헤라",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "905",
+            "--lang",
+            "en",
+            "--no-negative",
+            "--include-choices",
+        )[0]
+        self.assertEqual(miner["choices"]["costume_style"]["id"], "miner_workwear_hard_hat")
+        self.assertEqual(miner["choices"]["location"]["id"], "underground_mine_tunnel_set")
+        self.assertEqual(miner["choices"]["expression"]["id"], "looking_away_pensive")
+        self.assertIn("discordant kawaii contrast", miner["prompt_en"])
+        self.assertIn("pastel sticker-covered phone case", miner["prompt_en"])
+        self.assertIn("pink ribbon tied to the helmet strap", miner["prompt_en"])
+
+        casual = self.run_wrapper_json(
+            "--concept",
+            "아일릿 원희 사복 여친 멘헤라",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "906",
+            "--lang",
+            "en",
+            "--no-negative",
+            "--include-choices",
+        )[0]
+        self.assertEqual(casual["choices"]["expression"]["id"], "shy_downward_glance")
+        self.assertEqual(casual["choices"]["prop"]["id"], "clear_case_smartphone")
+        self.assertIn("plush doll on the pillow", casual["prompt_en"])
+        self.assertIn("wilted bouquet on the nightstand", casual["prompt_en"])
+        self.assertIn("read-but-unanswered chat", casual["prompt_en"])
+        self.assertIn("contained and defensive", casual["prompt_en"])
+
+        princess = self.run_wrapper_json(
+            "--concept",
+            "설윤 공주 멘헤라",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "907",
+            "--lang",
+            "en",
+            "--no-negative",
+            "--include-choices",
+        )[0]
+        self.assertEqual(princess["choices"]["costume_style"]["id"], "royal_princess_hanbok")
+        self.assertEqual(princess["choices"]["light_type"]["id"], "phone_screen_face_glow")
+        self.assertEqual(princess["choices"]["expression"]["id"], "eyes_closed_serene")
+        self.assertIn("do NOT place a modern phone in the main silhouette", princess["prompt_en"])
+        self.assertIn("faint cold rectangular glow", princess["prompt_en"])
+        self.assertIn("dominant physical anchor", princess["prompt_en"])
+
+    def test_menhera_nurse_uses_single_dominant_anchor_without_active_phone_check(self):
+        nurse = self.run_wrapper_json(
+            "--concept",
+            "윈터 간호사 멘헤라",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "903",
+            "--lang",
+            "en",
+            "--no-negative",
+            "--include-choices",
+        )[0]
+
+        self.assertEqual(nurse["choices"]["prop"]["id"], "flower_bouquet")
+        self.assertEqual(nurse["choices"]["action"]["id"], "standing_silence")
+        self.assertNotEqual(nurse["choices"]["action"]["id"], "checking_phone")
+        self.assertIn("single dominant anchor", nurse["prompt_en"])
+        self.assertIn("dark phone lies face-down", nurse["prompt_en"])
 
     def test_concept_recipe_expands_yandere_as_non_graphic_mixin(self):
         payload = self.run_wrapper_json(
@@ -2380,6 +2497,16 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             self.assertEqual(rows[1]["prompt_id"], prompt_id)
             self.assertEqual(rows[1]["retry_of"], rows[0]["run_id"])
             self.assertEqual(rows[1]["image_paths"], ["/tmp/generated.png"])
+
+    def test_record_image_run_default_ledger_is_worktree_local_runs_file(self):
+        spec = importlib.util.spec_from_file_location("record_image_run", RECORD_RUN_PATH)
+        self.assertIsNotNone(spec)
+        self.assertIsNotNone(spec.loader)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+
+        self.assertEqual(module.PROJECT_ROOT, ROOT)
+        self.assertEqual(module.DEFAULT_LEDGER, ROOT / "runs" / "image_runs.ndjson")
 
     def test_record_image_run_rejects_changed_prompt_text(self):
         with tempfile.TemporaryDirectory() as tmpdir:
