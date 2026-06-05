@@ -1424,6 +1424,185 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             for phrase in expected["phrases"]:
                 self.assertIn(phrase, item["prompt_en"])
 
+    def test_concept_recipe_expands_menhera_as_non_graphic_mixin(self):
+        payload = self.run_wrapper_json(
+            "--concept",
+            "멘헤라",
+            "--explain-concept",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "901",
+            "--plain",
+            "--no-negative",
+        )
+
+        concept = payload["concepts"][0]
+        self.assertEqual(concept["name"], "멘헤라")
+        self.assertIsNone(concept["role"])
+        self.assertIsNone(concept["applied_role"])
+        self.assertEqual(concept["applied_mixins"], ["멘헤라"])
+        self.assertTrue(concept["matched"])
+        self.assertEqual(concept["mixins"]["멘헤라"]["preset"], "candid_iphone_portrait")
+        self.assertEqual(concept["combined_forced_slots"]["expression"], ["emotional_teary_eyes"])
+        self.assertEqual(concept["combined_forced_slots"]["makeup_style"], ["igari_blush"])
+        self.assertEqual(concept["combined_forced_slots"]["subject"], ["adult_alt_fashion_creator"])
+        self.assertEqual(concept["combined_forced_slots"]["prop"], ["clear_case_smartphone"])
+        self.assertEqual(concept["combined_forced_slots"]["light_type"], ["phone_screen_face_glow"])
+        self.assertEqual(len(concept["selected_bundles"]), 1)
+        bundle = concept["selected_bundles"][0]
+        self.assertEqual(bundle["mixin"], "멘헤라")
+        self.assertTrue(bundle["bundle_id"].startswith("standalone_"))
+        joined = " ".join(payload["forward_args"])
+        self.assertIn("yami-kawaii / jirai-kei internet-fashion mood", joined)
+        self.assertIn("not a medical diagnosis", joined)
+        self.assertIn("unread-message screen", joined)
+        self.assertIn("no self-harm", joined)
+        self.assertIn("no wounds, scars, cuts, blood", joined)
+        self.assertNotIn("assassin persona", joined)
+
+    def test_menhera_mixin_preserves_role_costume_without_assassin_note(self):
+        payload = self.run_wrapper_json(
+            "--concept",
+            "카리나 메이드 멘헤라",
+            "--explain-concept",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "902",
+            "--plain",
+            "--no-negative",
+        )
+
+        concept = payload["concepts"][0]
+        self.assertEqual(concept["name"], "카리나")
+        self.assertEqual(concept["role"], "메이드")
+        self.assertEqual(concept["applied_role"], "메이드")
+        self.assertEqual(concept["applied_mixins"], ["멘헤라"])
+        self.assertEqual(concept["combined_forced_slots"]["costume_style"], ["frill_apron_maid_costume"])
+        self.assertEqual(concept["combined_forced_slots"]["prop"], ["clear_case_smartphone"])
+        self.assertEqual(concept["combined_forced_slots"]["action"], ["checking_phone"])
+        self.assertEqual(concept["selected_bundles"][0]["bundle_id"], "maid_after_hours_overcare")
+        joined = " ".join(payload["forward_args"])
+        self.assertIn("keep the role outfit readable", joined)
+        self.assertIn("after-hours over-giving and quiet exhaustion", joined)
+        self.assertIn("never read as submissive sexual fantasy", joined)
+        self.assertNotIn("sheathed utility blade", joined)
+        self.assertNotIn("holster grip", joined)
+        self.assertNotIn("assassin persona", joined)
+
+    def test_menhera_sensitive_role_prompts_keep_safe_anchors(self):
+        nurse = self.run_wrapper_json(
+            "--concept",
+            "윈터 간호사 멘헤라",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "903",
+            "--lang",
+            "en",
+            "--no-negative",
+            "--include-choices",
+        )[0]
+        self.assertEqual(nurse["choices"]["costume_style"]["id"], "nurse_uniform_costume")
+        self.assertEqual(nurse["choices"]["location"]["id"], "hospital_waiting_room")
+        self.assertEqual(nurse["choices"]["prop"]["id"], "flower_bouquet")
+        self.assertIn("care-fatigue and quiet waiting", nurse["prompt_en"])
+        self.assertIn("wilted bouquet and unanswered phone glow", nurse["prompt_en"])
+        self.assertIn("no syringes, IV lines, medication, pills", nurse["prompt_en"])
+
+        casual = self.run_wrapper_json(
+            "--concept",
+            "아일릿 원희 사복 여친 멘헤라",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "904",
+            "--lang",
+            "en",
+            "--no-negative",
+            "--include-choices",
+        )[0]
+        self.assertEqual(casual["provenance"]["preset_id"], "candid_iphone_portrait")
+        self.assertEqual(casual["choices"]["subject"]["id"], "fashion_influencer")
+        self.assertEqual(casual["choices"]["prop"]["id"], "clear_case_smartphone")
+        self.assertEqual(casual["choices"]["action"]["id"], "checking_phone")
+        self.assertEqual(casual["choices"]["location"]["id"], "dim_monitor_glow_bedroom")
+        self.assertIn("unread-message waiting", casual["prompt_en"])
+        self.assertIn("adult original fictional person only", casual["prompt_en"])
+        self.assertIn("never sexualized, never youthful-minor coded", casual["prompt_en"])
+
+        bunny = self.run_wrapper_json(
+            "--concept",
+            "유나 바니걸 멘헤라",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "905",
+            "--lang",
+            "en",
+            "--no-negative",
+            "--include-choices",
+        )[0]
+        self.assertEqual(bunny["choices"]["costume_style"]["id"], "bunny_girl_costume")
+        self.assertEqual(bunny["choices"]["prop"]["id"], "compact_mirror")
+        self.assertEqual(bunny["choices"]["location"]["id"], "makeup_vanity")
+        self.assertEqual(bunny["choices"]["subject_framing"]["id"], "upper_body_framing")
+        self.assertIn("fully covered adult stage costume", bunny["prompt_en"])
+        self.assertIn("upper-body backstage exhaustion portrait", bunny["prompt_en"])
+        self.assertIn("no pin-up pose", bunny["prompt_en"])
+        self.assertIn("no cleavage-centered framing", bunny["prompt_en"])
+
+    def test_menhera_role_batch_uses_role_specific_bundles(self):
+        cases = [
+            ("카리나 메이드 멘헤라", 902, "maid_after_hours_overcare"),
+            ("윈터 간호사 멘헤라", 903, "nurse_waiting_room_burnout"),
+            ("닝닝 경찰 멘헤라", 904, "police_off_duty_mirror_wait"),
+            ("지젤 광부 멘헤라", 905, "miner_sunless_message_wait"),
+            ("아일릿 원희 사복 여친 멘헤라", 906, "casual_unread_message_glow"),
+            ("설윤 공주 멘헤라", 907, "princess_gilded_loneliness"),
+            ("유나 바니걸 멘헤라", 908, "bunny_backstage_exhaustion"),
+        ]
+        selected_bundle_ids = set()
+        selected_locations = set()
+        selected_light_types = set()
+
+        for concept, seed, expected_bundle_id in cases:
+            explanation = self.run_wrapper_json(
+                "--concept",
+                concept,
+                "--explain-concept",
+                "--selection-mode",
+                "rule",
+                "--seed",
+                str(seed),
+                "--plain",
+                "--no-negative",
+            )
+            concept_payload = explanation["concepts"][0]
+            self.assertEqual(concept_payload["applied_mixins"], ["멘헤라"])
+            selected_bundle = concept_payload["selected_bundles"][0]
+            self.assertEqual(selected_bundle["bundle_id"], expected_bundle_id)
+            self.assertFalse(selected_bundle["bundle_id"].startswith("shared_"))
+            self.assertEqual(concept_payload["combined_forced_slots"]["expression"], ["emotional_teary_eyes"])
+            self.assertTrue(
+                {"costume_style", "wardrobe_style"} & set(concept_payload["combined_forced_slots"]),
+                concept_payload["combined_forced_slots"],
+            )
+            selected_bundle_ids.add(selected_bundle["bundle_id"])
+            selected_locations.add(concept_payload["combined_forced_slots"]["location"][0])
+            selected_light_types.add(concept_payload["combined_forced_slots"]["light_type"][0])
+            joined = " ".join(explanation["forward_args"])
+            self.assertIn("not a medical diagnosis", joined)
+            self.assertIn("no self-harm", joined)
+            self.assertNotIn("assassin persona", joined)
+            self.assertNotIn("sheathed utility blade", joined)
+            self.assertNotIn("holster grip", joined)
+
+        self.assertEqual(len(selected_bundle_ids), len(cases))
+        self.assertGreaterEqual(len(selected_locations), 6)
+        self.assertGreaterEqual(len(selected_light_types), 4)
+
     def test_concept_recipe_explain_combines_role_and_assassin_mixin(self):
         payload = self.run_wrapper_json(
             "--concept",
@@ -2055,6 +2234,46 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             with self.subTest(slot=slot):
                 actual = {entry["id"] for entry in self.data["slots"][slot]}
                 self.assertTrue(ids.issubset(actual))
+
+    def test_all_concept_recipe_forced_slots_are_registered(self):
+        recipes = json.loads((SKILL_DIR / "assets" / "concept_recipes.json").read_text(encoding="utf-8"))
+        slot_ids = {slot: {entry["id"] for entry in entries} for slot, entries in self.data["slots"].items()}
+        missing: list[tuple[str, str, str]] = []
+
+        def normalize_values(value):
+            if isinstance(value, str):
+                return [value]
+            if isinstance(value, list):
+                return value
+            return []
+
+        def check_set(path: str, raw_set) -> None:
+            if isinstance(raw_set, dict):
+                items = raw_set.items()
+            elif isinstance(raw_set, list):
+                parsed_items = []
+                for raw in raw_set:
+                    if not isinstance(raw, str) or "=" not in raw:
+                        continue
+                    slot, values = raw.split("=", 1)
+                    parsed_items.append((slot.strip(), [item.strip() for item in values.replace("|", ",").split(",")]))
+                items = parsed_items
+            else:
+                return
+
+            for slot, values in items:
+                for value in normalize_values(values):
+                    if value and value not in slot_ids.get(slot, set()):
+                        missing.append((path, slot, value))
+
+        for role, recipe in recipes.get("roles", {}).items():
+            check_set(f"roles.{role}.set", recipe.get("set"))
+        for mixin, recipe in recipes.get("mixins", {}).items():
+            check_set(f"mixins.{mixin}.set", recipe.get("set"))
+            for bundle in recipe.get("bundles", []):
+                check_set(f"mixins.{mixin}.bundles.{bundle.get('id')}.set", bundle.get("set"))
+
+        self.assertEqual(missing, [])
 
     def test_reactor_neutral_slots_are_visible_in_cli(self):
         result = subprocess.run(
