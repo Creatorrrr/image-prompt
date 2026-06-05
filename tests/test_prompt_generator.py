@@ -955,6 +955,8 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         joined = " ".join(payload["forward_args"])
         self.assertIn("immortal nocturnal aristocrat", joined)
         self.assertIn("positive visible supernatural anchors beyond gothic fashion", joined)
+        self.assertIn("do not leave all vampire cues as distant background props", joined)
+        self.assertIn("first reading within a couple of seconds", joined)
         self.assertIn("do not rely on absence cues alone", joined)
         self.assertIn("reflection unease", joined)
         self.assertIn("no visible blood", joined)
@@ -981,6 +983,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertEqual(concept["applied_role"], "메이드")
         self.assertEqual(concept["applied_mixins"], ["흡혈귀"])
         self.assertEqual(concept["combined_forced_slots"]["costume_style"], ["frill_apron_maid_costume"])
+        self.assertEqual(concept["combined_forced_slots"]["subject_framing"], ["upper_body_framing"])
         self.assertNotIn("gothic_doll_lace_dress", concept["combined_forced_slots"]["costume_style"])
         self.assertEqual(len(concept["selected_bundles"]), 1)
         self.assertEqual(concept["selected_bundles"][0]["mixin"], "흡혈귀")
@@ -988,6 +991,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         joined = " ".join(payload["forward_args"])
         self.assertIn("keep the role outfit readable", joined)
         self.assertIn("open compact mirror faces the camera", joined)
+        self.assertIn("lit face and hands must be visible", joined)
         self.assertIn("positive vampire anchor", joined)
         self.assertIn("no visible blood", joined)
         self.assertNotIn("assassin persona", joined)
@@ -1009,12 +1013,15 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         item = payload[0]
         self.assertEqual(item["choices"]["appearance_type"]["id"], "classic_elegant")
         self.assertEqual(item["choices"]["costume_style"]["id"], "royal_princess_hanbok")
+        self.assertEqual(item["choices"]["subject_framing"]["id"], "waist_up_framing")
         self.assertIn("Core concept lock: 설윤 공주 흡혈귀", item["prompt_en"])
         self.assertIn("predatory stillness", item["prompt_en"])
         self.assertIn("positive, visible non-graphic vampire identity anchors", item["prompt_en"])
         self.assertIn("role outfit readable", item["prompt_en"])
         self.assertIn("moonlit bat silhouettes", item["prompt_en"])
         self.assertIn("ruby eye catchlight", item["prompt_en"])
+        self.assertIn("Eastern and Korean court-coded", item["prompt_en"])
+        self.assertIn("do not convert the look into a Western black-lace gothic gown", item["prompt_en"])
         self.assertIn("no visible blood", item["prompt_en"])
         self.assertIn("no bared fangs", item["prompt_en"])
         self.assertIn("no visible victims", item["prompt_en"])
@@ -1036,7 +1043,9 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         )[0]
         self.assertEqual(miner["choices"]["costume_style"]["id"], "miner_workwear_hard_hat")
         self.assertEqual(miner["choices"]["composition"]["id"], "puddle_inverted_reflection")
+        self.assertEqual(miner["choices"]["subject_framing"]["id"], "upper_body_framing")
         self.assertIn("small antique cup of dark red wine or ruby cameo", miner["prompt_en"])
+        self.assertIn("real subject's lit face or hand", miner["prompt_en"])
         self.assertIn("avoid generic mine horror", miner["prompt_en"])
         self.assertIn("bat-wing-shaped shadow", miner["prompt_en"])
         self.assertNotIn("analog_horror_dread", miner["prompt_en"])
@@ -1057,7 +1066,10 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertEqual(police["choices"]["costume_style"]["id"], "police_uniform_costume")
         self.assertEqual(police["choices"]["prop"]["id"], "clear_umbrella")
         self.assertEqual(police["choices"]["composition"]["id"], "reflection")
+        self.assertEqual(police["choices"]["subject_framing"]["id"], "upper_body_framing")
         self.assertIn("clear umbrella, car glass, or reflective wall sits close to the subject", police["prompt_en"])
+        self.assertIn("wrong reflection must sit in the foreground", police["prompt_en"])
+        self.assertIn("bat-wing shadow must connect visually", police["prompt_en"])
         self.assertIn("no cute plush doll, mascot toy, or unrelated playful prop", police["prompt_en"])
 
         casual = self.run_wrapper_json(
@@ -1078,8 +1090,10 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertEqual(casual["choices"]["prop"]["id"], "clear_case_smartphone")
         self.assertEqual(casual["choices"]["action"]["id"], "mirror_selfie")
         self.assertEqual(casual["choices"]["composition"]["id"], "mirror_selfie_composition")
+        self.assertEqual(casual["choices"]["subject_framing"]["id"], "waist_up_framing")
         self.assertIn("heavy black curtain or narrow overbright window edge", casual["prompt_en"])
         self.assertIn("mirror and phone screen should both visibly fail as normal reflections", casual["prompt_en"])
+        self.assertIn("face, phone hand, and wrong reflection must be readable", casual["prompt_en"])
         self.assertIn("ruby choker or antique cameo", casual["prompt_en"])
         self.assertNotIn("work clothing, tools", casual["prompt_en"])
 
@@ -1099,8 +1113,10 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertEqual(bunny["choices"]["costume_style"]["id"], "bunny_girl_costume")
         self.assertEqual(bunny["choices"]["prop"]["id"], "compact_mirror")
         self.assertEqual(bunny["choices"]["composition"]["id"], "reflection")
+        self.assertEqual(bunny["choices"]["subject_framing"]["id"], "upper_body_framing")
         self.assertIn("bunny ears are pushed into deep shadow or silhouette", bunny["prompt_en"])
         self.assertIn("compact mirror or vanity reflection near the face or hand", bunny["prompt_en"])
+        self.assertIn("face, hand, compact mirror, and failed reflection should be sharper", bunny["prompt_en"])
         self.assertIn("ordinary nightclub or dark bunny-girl costume portrait", bunny["prompt_en"])
 
     def test_vampire_role_batch_uses_distinct_facet_bundles(self):
@@ -1144,11 +1160,23 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 self.assertEqual(selected_bundle["preset"], "compact_urban_fashion_portrait")
                 self.assertEqual(concept_payload["combined_forced_slots"]["subject"], ["fashion_influencer"])
                 self.assertEqual(concept_payload["combined_forced_slots"]["wardrobe_style"], ["hoodie_shorts_sneakers"])
+                self.assertEqual(concept_payload["combined_forced_slots"]["subject_framing"], ["waist_up_framing"])
+            if concept_payload["role"] == "간호사":
+                self.assertEqual(concept_payload["combined_forced_slots"]["mood"], ["occult_noir"])
+                self.assertEqual(concept_payload["combined_forced_slots"]["subject_framing"], ["upper_body_framing"])
+            if concept_payload["role"] == "경찰":
+                self.assertEqual(concept_payload["combined_forced_slots"]["subject_framing"], ["upper_body_framing"])
             if concept_payload["role"] == "광부":
+                self.assertEqual(concept_payload["combined_forced_slots"]["subject_framing"], ["upper_body_framing"])
                 self.assertIn(
                     "small antique cup of dark red wine or ruby cameo",
                     " ".join(explanation["forward_args"]),
                 )
+            if concept_payload["role"] == "공주":
+                self.assertEqual(concept_payload["combined_forced_slots"]["costume_style"], ["royal_princess_hanbok"])
+                self.assertEqual(concept_payload["combined_forced_slots"]["subject_framing"], ["waist_up_framing"])
+            if concept_payload["role"] == "바니걸":
+                self.assertEqual(concept_payload["combined_forced_slots"]["subject_framing"], ["upper_body_framing"])
 
         self.assertGreaterEqual(len(selected_bundle_ids), 5)
         self.assertGreaterEqual(len(selected_locations), 4)
