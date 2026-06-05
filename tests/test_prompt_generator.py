@@ -1611,6 +1611,263 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertGreaterEqual(len(selected_locations), 6)
         self.assertGreaterEqual(len(selected_light_types), 4)
 
+    def test_concept_recipe_expands_yandere_as_non_graphic_mixin(self):
+        payload = self.run_wrapper_json(
+            "--concept",
+            "얀데레",
+            "--explain-concept",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "901",
+            "--plain",
+            "--no-negative",
+        )
+
+        concept = payload["concepts"][0]
+        self.assertEqual(concept["name"], "얀데레")
+        self.assertIsNone(concept["role"])
+        self.assertIsNone(concept["applied_role"])
+        self.assertEqual(concept["applied_mixins"], ["얀데레"])
+        self.assertTrue(concept["matched"])
+        self.assertEqual(concept["mixins"]["얀데레"]["preset"], "compact_cinematic_prop_portrait")
+        self.assertEqual(concept["combined_forced_slots"]["expression"], ["soft_smile"])
+        self.assertEqual(concept["combined_forced_slots"]["light_intensity"], ["deep_shadow_detail"])
+        self.assertIn(
+            concept["combined_forced_slots"]["subject_framing"][0],
+            {"close_up_face_crop", "head_and_shoulders_crop", "upper_body_framing"},
+        )
+        self.assertEqual(len(concept["selected_bundles"]), 1)
+        bundle = concept["selected_bundles"][0]
+        self.assertEqual(bundle["mixin"], "얀데레")
+        self.assertTrue(bundle["bundle_id"].startswith("standalone_"))
+        joined = " ".join(payload["forward_args"])
+        self.assertIn("soft, genuinely loving smile combined with hollow, fixed, unblinking eyes", joined)
+        self.assertIn("repeated photos", joined)
+        self.assertIn("red thread", joined)
+        self.assertIn("glass dome", joined)
+        self.assertIn("empty birdcage", joined)
+        self.assertIn("no weapon", joined)
+        self.assertIn("no visible captive or victim", joined)
+        self.assertIn("no minors and no sexual content", joined)
+
+    def test_yandere_mixin_preserves_role_costume_without_weapon_cue(self):
+        payload = self.run_wrapper_json(
+            "--concept",
+            "카리나 메이드 얀데레",
+            "--explain-concept",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "902",
+            "--plain",
+            "--no-negative",
+        )
+
+        concept = payload["concepts"][0]
+        self.assertEqual(concept["name"], "카리나")
+        self.assertEqual(concept["role"], "메이드")
+        self.assertEqual(concept["applied_role"], "메이드")
+        self.assertEqual(concept["applied_mixins"], ["얀데레"])
+        self.assertEqual(concept["combined_forced_slots"]["costume_style"], ["frill_apron_maid_costume"])
+        self.assertNotIn("gothic_doll_lace_dress", concept["combined_forced_slots"]["costume_style"])
+        self.assertEqual(concept["combined_forced_slots"]["expression"], ["soft_smile"])
+        self.assertEqual(concept["combined_forced_slots"]["prop"], ["instant_photo_stack"])
+        self.assertEqual(concept["combined_forced_slots"]["subject_framing"], ["head_and_shoulders_crop"])
+        self.assertEqual(len(concept["selected_bundles"]), 1)
+        self.assertEqual(concept["selected_bundles"][0]["bundle_id"], "maid_devotion_possession")
+        joined = " ".join(payload["forward_args"])
+        self.assertIn("the maid outfit stays clearly readable", joined)
+        self.assertIn("white-knuckled grip", joined)
+        self.assertIn("red thread runs from her finger", joined)
+        self.assertIn("no visible blood", joined)
+        self.assertIn("no weapon", joined)
+        self.assertNotIn("sheathed utility blade", joined)
+        self.assertNotIn("holster grip", joined)
+        self.assertNotIn("assassin persona", joined)
+
+    def test_yandere_concept_prompt_contains_paradox_and_safety_guards(self):
+        payload = self.run_wrapper_json(
+            "--concept",
+            "설윤 공주 얀데레",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "906",
+            "--lang",
+            "en",
+            "--no-negative",
+            "--include-choices",
+        )
+
+        item = payload[0]
+        self.assertEqual(item["choices"]["costume_style"]["id"], "royal_princess_hanbok")
+        self.assertEqual(item["choices"]["expression"]["id"], "soft_smile")
+        self.assertEqual(item["choices"]["prop"]["id"], "flower_bouquet")
+        self.assertEqual(item["choices"]["composition"]["id"], "centered_symmetry")
+        self.assertEqual(item["choices"]["subject_framing"]["id"], "upper_body_framing")
+        self.assertIn("Core concept lock: 설윤 공주 얀데레", item["prompt_en"])
+        self.assertIn("soft, genuinely loving smile combined with hollow, fixed, unblinking eyes", item["prompt_en"])
+        self.assertIn("empty gilded birdcage or glass dome", item["prompt_en"])
+        self.assertIn("no weapon", item["prompt_en"])
+        self.assertIn("no blood", item["prompt_en"])
+        self.assertIn("no victim", item["prompt_en"])
+        self.assertIn("no explicit or fetish content", item["prompt_en"])
+
+    def test_yandere_role_batch_uses_role_specific_bundles(self):
+        cases = [
+            ("카리나 메이드 얀데레", 902),
+            ("윈터 간호사 얀데레", 903),
+            ("닝닝 경찰 얀데레", 904),
+            ("지젤 광부 얀데레", 905),
+            ("아일릿 원희 사복 여친 얀데레", 906),
+            ("설윤 공주 얀데레", 907),
+            ("유나 바니걸 얀데레", 908),
+        ]
+        expected_slots_by_role = {
+            "메이드": {
+                "prop": ["instant_photo_stack"],
+                "action": ["doorframe_shadow_watch"],
+                "composition": ["frame_within_frame"],
+                "subject_framing": ["head_and_shoulders_crop"],
+            },
+            "간호사": {
+                "prop": ["instant_photo_stack"],
+                "location": ["hospital_corridor"],
+                "mood": ["quiet_dread"],
+                "subject_framing": ["head_and_shoulders_crop"],
+            },
+            "경찰": {
+                "prop": ["instant_photo_stack"],
+                "composition": ["medium_close"],
+                "subject_framing": ["head_and_shoulders_crop"],
+            },
+            "광부": {
+                "prop": ["instant_photo_stack"],
+                "location": ["underground_mine_tunnel_set"],
+                "lighting": ["single_flashlight_beam"],
+                "subject_framing": ["waist_up_framing"],
+            },
+            "사복 여친": {
+                "prop": ["instant_photo_stack"],
+                "action": ["mirror_selfie"],
+                "composition": ["extreme_close"],
+                "subject_framing": ["close_up_face_crop"],
+            },
+            "공주": {
+                "prop": ["flower_bouquet"],
+                "location": ["royal_princess_chamber"],
+                "composition": ["centered_symmetry"],
+                "subject_framing": ["upper_body_framing"],
+            },
+            "바니걸": {
+                "prop": ["compact_mirror"],
+                "location": ["makeup_vanity"],
+                "composition": ["reflection"],
+                "subject_framing": ["upper_body_framing"],
+            },
+        }
+        selected_bundle_ids = set()
+        selected_locations = set()
+        for concept, seed in cases:
+            explanation = self.run_wrapper_json(
+                "--concept",
+                concept,
+                "--explain-concept",
+                "--selection-mode",
+                "rule",
+                "--seed",
+                str(seed),
+                "--plain",
+                "--no-negative",
+            )
+            concept_payload = explanation["concepts"][0]
+            self.assertEqual(concept_payload["applied_mixins"], ["얀데레"])
+            selected_bundle = concept_payload["selected_bundles"][0]
+            self.assertEqual(selected_bundle["mixin"], "얀데레")
+            self.assertFalse(selected_bundle["bundle_id"].startswith("shared_"))
+            self.assertFalse(selected_bundle["bundle_id"].startswith("standalone_"))
+            selected_bundle_ids.add(selected_bundle["bundle_id"])
+            selected_locations.add(concept_payload["combined_forced_slots"]["location"][0])
+            self.assertEqual(concept_payload["combined_forced_slots"]["expression"], ["soft_smile"])
+            role = concept_payload["role"]
+            for slot, ids in expected_slots_by_role[role].items():
+                self.assertEqual(concept_payload["combined_forced_slots"][slot], ids)
+
+        self.assertGreaterEqual(len(selected_bundle_ids), 7)
+        self.assertGreaterEqual(len(selected_locations), 5)
+
+    def test_yandere_weak_roles_force_possession_anchors_and_safe_framing(self):
+        cases = [
+            (
+                "닝닝 경찰 얀데레",
+                904,
+                {
+                    "prop": "instant_photo_stack",
+                    "composition": "medium_close",
+                    "subject_framing": "head_and_shoulders_crop",
+                    "phrases": ["overprotective watchfulness", "repeated surveillance-like photos", "never a full-body pin-up pose"],
+                },
+            ),
+            (
+                "지젤 광부 얀데레",
+                905,
+                {
+                    "prop": "instant_photo_stack",
+                    "composition": "centered_symmetry",
+                    "subject_framing": "waist_up_framing",
+                    "phrases": ["sealed sanctuary", "private shrine", "never a threat"],
+                },
+            ),
+            (
+                "아일릿 원희 사복 여친 얀데레",
+                906,
+                {
+                    "prop": "instant_photo_stack",
+                    "composition": "extreme_close",
+                    "subject_framing": "close_up_face_crop",
+                    "phrases": [
+                        "not a real-person stalking scene",
+                        "no identifiable target",
+                        "no minors",
+                        "as if no personal space is allowed",
+                    ],
+                },
+            ),
+            (
+                "유나 바니걸 얀데레",
+                908,
+                {
+                    "prop": "compact_mirror",
+                    "composition": "reflection",
+                    "subject_framing": "upper_body_framing",
+                    "phrases": ["never becomes a pin-up", "you are my only audience", "no sexualized framing"],
+                },
+            ),
+        ]
+
+        for concept, seed, expected in cases:
+            item = self.run_wrapper_json(
+                "--concept",
+                concept,
+                "--selection-mode",
+                "rule",
+                "--seed",
+                str(seed),
+                "--lang",
+                "en",
+                "--no-negative",
+                "--include-choices",
+            )[0]
+            self.assertEqual(item["choices"]["prop"]["id"], expected["prop"])
+            self.assertEqual(item["choices"]["composition"]["id"], expected["composition"])
+            self.assertEqual(item["choices"]["subject_framing"]["id"], expected["subject_framing"])
+            self.assertIn("soft, genuinely loving smile combined with hollow, fixed, unblinking eyes", item["prompt_en"])
+            self.assertIn("no weapon", item["prompt_en"])
+            self.assertIn("no visible captive or victim", item["prompt_en"])
+            for phrase in expected["phrases"]:
+                self.assertIn(phrase, item["prompt_en"])
+
     def test_concept_recipe_explain_combines_role_and_assassin_mixin(self):
         payload = self.run_wrapper_json(
             "--concept",
