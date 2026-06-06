@@ -22,21 +22,7 @@ DEFAULT_SEMANTIC_INTENT = (
     "photorealistic image-ready photo prompt with coherent subject, location, "
     "lighting, mood, camera, composition, texture, and format"
 )
-BUNDLE_OVERRIDE_SLOTS = {
-    "prop",
-    "action",
-    "location",
-    "lighting",
-    "light_direction",
-    "light_type",
-    "light_intensity",
-    "color",
-    "mood",
-    "composition",
-    "subject_framing",
-    "expression",
-    "wardrobe_style",
-}
+CONCEPT_MODES = {"legacy", "soft"}
 
 
 def has_option(args: Sequence[str], name: str) -> bool:
@@ -91,11 +77,18 @@ def extract_flag(args: Sequence[str], name: str) -> tuple[list[str], bool]:
 def normalize_list(value: Any) -> list[str]:
     if value is None:
         return []
-    if isinstance(value, list):
+    if isinstance(value, (list, tuple, set)):
         return [str(item) for item in value if str(item).strip()]
     if isinstance(value, str) and value.strip():
         return [value]
     return []
+
+
+def resolve_concept_mode(values: Sequence[str]) -> str:
+    mode = str(values[-1]).strip() if values else "legacy"
+    if mode not in CONCEPT_MODES:
+        raise ValueError("--concept-mode must be one of: legacy, soft")
+    return mode
 
 
 def load_concept_recipes(path: Path = DEFAULT_CONCEPT_RECIPES) -> dict[str, Any]:
@@ -217,6 +210,56 @@ def forced_set_slots(forced_sets: Sequence[str]) -> set[str]:
     return slots
 
 
+def recipe_override_slots(
+    recipes: dict[str, Any],
+    mixin_recipe: dict[str, Any],
+    selected_bundle: dict[str, Any],
+) -> set[str]:
+    for source, keys in (
+        (selected_bundle, ("override_slots",)),
+        (mixin_recipe, ("bundle_override_slots", "override_slots")),
+        (recipes, ("bundle_override_slots", "override_slots")),
+    ):
+        for key in keys:
+            if key in source:
+                return set(normalize_list(source.get(key)))
+    return set()
+
+
+def conditional_additional_requirements(
+    recipe: dict[str, Any],
+    *,
+    role: str | None,
+    mixin: str | None = None,
+    selected_bundle: dict[str, Any] | None = None,
+    explicit_user_set_slots: set[str] | None = None,
+) -> list[str]:
+    rules = recipe.get("conditional_additional")
+    if not isinstance(rules, list):
+        return []
+    explicit_user_set_slots = explicit_user_set_slots or set()
+    selected_bundle = selected_bundle or {}
+    requirements: list[str] = []
+    for rule in rules:
+        if not isinstance(rule, dict):
+            continue
+        if rule.get("requires_role") and not role:
+            continue
+        if rule.get("requires_bundle") and not selected_bundle:
+            continue
+        rule_mixin = str(rule.get("mixin") or "")
+        if rule_mixin and rule_mixin != (mixin or ""):
+            continue
+        bundle_id = str(rule.get("bundle_id") or "")
+        if bundle_id and bundle_id != str(selected_bundle.get("id") or ""):
+            continue
+        blocked_slots = set(normalize_list(rule.get("unless_user_set_slots_any")))
+        if blocked_slots and explicit_user_set_slots & blocked_slots:
+            continue
+        requirements.extend(normalize_list(rule.get("text") or rule.get("additional")))
+    return requirements
+
+
 def select_bundle_for_mixin(
     concept: str, mixin_name: str, mixin_recipe: dict[str, Any], args: Sequence[str], role: str | None
 ) -> dict[str, Any] | None:
@@ -259,7 +302,13 @@ def add_option(args: list[str], name: str, value: str) -> None:
         args.extend([name, value])
 
 
-def resolve_concepts(args: Sequence[str], concepts: Sequence[str]) -> tuple[list[str], list[dict[str, Any]]]:
+def resolve_concepts(
+    args: Sequence[str],
+    concepts: Sequence[str],
+    concept_mode: str = "legacy",
+) -> tuple[list[str], list[dict[str, Any]]]:
+    if concept_mode not in CONCEPT_MODES:
+        raise ValueError("--concept-mode must be one of: legacy, soft")
     if not concepts:
         return list(args), []
 
@@ -289,6 +338,13 @@ def resolve_concepts(args: Sequence[str], concepts: Sequence[str]) -> tuple[list
         if recipe:
             set_groups.append((set_values_to_forced(recipe.get("set")), set()))
             additional_requirements.extend(normalize_list(recipe.get("additional")))
+            additional_requirements.extend(
+                conditional_additional_requirements(
+                    recipe,
+                    role=role,
+                    explicit_user_set_slots=explicit_user_set_slots,
+                )
+            )
             intent_axes.extend(normalize_list(recipe.get("intent_axis")))
 
         for mixin, mixin_recipe in mixin_matches:
@@ -311,14 +367,23 @@ def resolve_concepts(args: Sequence[str], concepts: Sequence[str]) -> tuple[list
                 additional_requirements.extend(normalize_list(weapon_cues.get(role)))
             if selected_bundle:
                 bundle_preset = str(selected_bundle.get("preset") or "")
-                if bundle_preset and not has_preset_value:
+                if concept_mode == "legacy" and bundle_preset and not has_preset_value:
                     add_option(resolved_args, "--preset", bundle_preset)
                     has_preset_value = True
                 if mixin_base_set:
                     set_groups.append((mixin_base_set, set()))
                 bundle_set = selected_bundle.get("set") if isinstance(selected_bundle.get("set"), dict) else {}
-                set_groups.append((set_values_to_forced(bundle_set), BUNDLE_OVERRIDE_SLOTS))
+                set_groups.append((set_values_to_forced(bundle_set), recipe_override_slots(recipes, mixin_recipe, selected_bundle)))
                 additional_requirements.extend(normalize_list(selected_bundle.get("additional")))
+                additional_requirements.extend(
+                    conditional_additional_requirements(
+                        mixin_recipe,
+                        role=role,
+                        mixin=mixin,
+                        selected_bundle=selected_bundle,
+                        explicit_user_set_slots=explicit_user_set_slots,
+                    )
+                )
                 intent_axes.extend(normalize_list(selected_bundle.get("intent_axis")))
                 selected_bundles.append(
                     {
@@ -333,9 +398,6 @@ def resolve_concepts(args: Sequence[str], concepts: Sequence[str]) -> tuple[list
             else:
                 set_groups.append((mixin_base_set, set()))
 
-        if role and any(bundle.get("mixin") == "암살자" for bundle in selected_bundles):
-            additional_requirements.append("role outfit is a cover identity/disguise for the assassin persona")
-
         combined_sets = merge_forced_set_groups(set_groups)
         add_option(resolved_args, "--concept-lock", concept)
 
@@ -345,13 +407,14 @@ def resolve_concepts(args: Sequence[str], concepts: Sequence[str]) -> tuple[list
                 (str(mixin_recipe.get("preset") or "") for _, mixin_recipe in mixin_matches if mixin_recipe.get("preset")),
                 "",
             )
-        if preset and not has_preset_value:
+        if concept_mode == "legacy" and preset and not has_preset_value:
             add_option(resolved_args, "--preset", preset)
             has_preset_value = True
-        for forced in combined_sets:
-            add_option(resolved_args, "--set", forced)
-        for requirement in additional_requirements:
-            add_option(resolved_args, "--additional-requirement", requirement)
+        if concept_mode == "legacy":
+            for forced in combined_sets:
+                add_option(resolved_args, "--set", forced)
+            for requirement in additional_requirements:
+                add_option(resolved_args, "--additional-requirement", requirement)
         for axis in intent_axes:
             add_option(resolved_args, "--intent-axis", axis)
 
@@ -361,7 +424,7 @@ def resolve_concepts(args: Sequence[str], concepts: Sequence[str]) -> tuple[list
                 (str(mixin_recipe.get("likeness_mode") or "") for _, mixin_recipe in mixin_matches if mixin_recipe.get("likeness_mode")),
                 "",
             )
-        if likeness_mode and not has_likeness_value:
+        if concept_mode == "legacy" and likeness_mode and not has_likeness_value:
             add_option(resolved_args, "--likeness-mode", likeness_mode)
             has_likeness_value = True
 
@@ -371,6 +434,7 @@ def resolve_concepts(args: Sequence[str], concepts: Sequence[str]) -> tuple[list
         explanations.append(
             {
                 "concept": concept,
+                "concept_mode": concept_mode,
                 "name": name,
                 "role": role,
                 "applied_role": role,
@@ -380,6 +444,7 @@ def resolve_concepts(args: Sequence[str], concepts: Sequence[str]) -> tuple[list
                 "mixins": {mixin: mixin_recipe for mixin, mixin_recipe in mixin_matches},
                 "selected_bundles": selected_bundles,
                 "combined_forced_slots": forced_sets_to_mapping(combined_sets),
+                "forced_slots_applied": concept_mode == "legacy",
             }
         )
 
@@ -422,8 +487,10 @@ def build_forward_args(argv: Sequence[str]) -> list[str]:
     no_negative = "--no-negative" in args
     args = remove_flag(remove_flag(args, "--plain"), "--no-negative")
     args, concepts = extract_option_values(args, "--concept")
+    args, concept_mode_values = extract_option_values(args, "--concept-mode")
+    concept_mode = resolve_concept_mode(concept_mode_values)
     args, _ = extract_flag(args, "--explain-concept")
-    args, _ = resolve_concepts(args, concepts)
+    args, _ = resolve_concepts(args, concepts, concept_mode)
 
     if not has_option(args, "--tags"):
         args[:0] = ["--tags", str(DEFAULT_TAGS)]
@@ -459,7 +526,10 @@ def main(argv: Sequence[str] | None = None) -> int:
     _, explain_concept = extract_flag(concept_args, "--explain-concept")
     if explain_concept:
         forward_args = build_forward_args(raw_args)
-        _, explanations = resolve_concepts(extract_flag(concept_args, "--explain-concept")[0], concepts)
+        explain_args = extract_flag(concept_args, "--explain-concept")[0]
+        explain_args, concept_mode_values = extract_option_values(explain_args, "--concept-mode")
+        concept_mode = resolve_concept_mode(concept_mode_values)
+        _, explanations = resolve_concepts(explain_args, concepts, concept_mode)
         print(json.dumps({"concepts": explanations, "forward_args": forward_args}, ensure_ascii=False, indent=2))
         return 0
     generator = load_generator()

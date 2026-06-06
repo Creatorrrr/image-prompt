@@ -53033,6 +53033,1644 @@
       }
     ]
   },
+  "semantic_policy": {
+    "version": "semantic-policy-v1",
+    "schema_version": 1,
+    "families": {
+      "human": {
+        "policy_id": "human-semantic-policy-v1",
+        "aliases": [
+          "actor",
+          "commuter",
+          "human",
+          "model",
+          "people",
+          "person",
+          "portrait",
+          "traveler",
+          "사람",
+          "인간",
+          "인물"
+        ],
+        "keywords": [
+          "actor",
+          "commuter",
+          "human",
+          "model",
+          "people",
+          "person",
+          "portrait",
+          "traveler",
+          "사람",
+          "인간",
+          "인물"
+        ],
+        "axis_label": "human portrait",
+        "axis_embedding_text": "human person portrait subject, model or actor, readable face and body presence",
+        "signal_lexicon": {
+          "strong": [
+            "human",
+            "portrait",
+            "person",
+            "model",
+            "actor",
+            "commuter",
+            "creator",
+            "traveler"
+          ],
+          "ambient": [
+            "fashion",
+            "social",
+            "lifestyle",
+            "beauty",
+            "ordinary"
+          ]
+        },
+        "steering_reason_labels": {
+          "subject": "human_subject"
+        },
+        "routed_slots": [
+          "subject",
+          "appearance_type",
+          "expression",
+          "subject_framing"
+        ],
+        "steering_slots": [
+          "subject"
+        ],
+        "preset_policy": {},
+        "slot_signals": {},
+        "concept_lock_promotions": {},
+        "redundancy_rules": [],
+        "coverage_repair": {}
+      },
+      "homebody_room": {
+        "policy_id": "homebody_room-semantic-policy-v1",
+        "aliases": [
+          "bedroom",
+          "blanket",
+          "cozy apartment",
+          "game controller",
+          "gaming desk",
+          "homebody",
+          "monitor glow",
+          "small bedroom",
+          "snacks",
+          "간식",
+          "게임패드",
+          "담요",
+          "모니터",
+          "방구석",
+          "작은 방",
+          "집돌이",
+          "침실"
+        ],
+        "keywords": [
+          "bedroom",
+          "blanket",
+          "cozy apartment",
+          "game controller",
+          "gaming desk",
+          "homebody",
+          "monitor glow",
+          "small bedroom",
+          "snacks",
+          "간식",
+          "게임패드",
+          "담요",
+          "모니터",
+          "방구석",
+          "작은 방",
+          "집돌이",
+          "침실"
+        ],
+        "axis_label": "homebody gamer in a small bedroom",
+        "axis_embedding_text": "cozy homebody in a small lived-in bedroom or apartment, gaming desk, monitor glow, controller, snacks, blanket, quiet indoor lifestyle",
+        "signal_lexicon": {
+          "strong": [
+            "homebody",
+            "bedroom",
+            "apartment",
+            "gamer",
+            "gaming",
+            "monitor",
+            "desk",
+            "blanket"
+          ],
+          "ambient": [
+            "home",
+            "interior",
+            "creator_room",
+            "cozy",
+            "casual",
+            "quiet",
+            "snacks",
+            "controller"
+          ]
+        },
+        "routed_slots": [
+          "medium",
+          "genre",
+          "subject",
+          "location",
+          "action",
+          "prop",
+          "wardrobe_style",
+          "lighting",
+          "light_type",
+          "light_shape",
+          "mood",
+          "texture"
+        ],
+        "steering_slots": [
+          "medium",
+          "genre",
+          "subject",
+          "location",
+          "action",
+          "prop",
+          "wardrobe_style",
+          "lighting",
+          "light_type",
+          "light_shape",
+          "mood",
+          "texture"
+        ],
+        "preset_policy": {
+          "policy_id": "homebody-room-preset-guard-v1",
+          "allow_ids": [
+            "esports_streamer_room",
+            "interior_lifestyle",
+            "vhs_camcorder_home_video"
+          ],
+          "deny_ids": [
+            "bedroom_mirror",
+            "clean_mirror_selfie_snapshot",
+            "clean_social",
+            "clear_case_smartphone",
+            "coffee_cup_prop",
+            "cozy_creator",
+            "creator_brand_profile",
+            "creator_desk_setup",
+            "creator_desk_setup_flatlay",
+            "creator_room",
+            "editing_laptop",
+            "floor_selfie_creator",
+            "gaming_pc_bang_session",
+            "gas_station_car_passenger_seat_night",
+            "gas_station_passenger_seat_lifestyle",
+            "high_angle_floor_selfie_pose",
+            "holding_coffee_phone",
+            "minimal_korean_living_room",
+            "modern_apartment_living_room",
+            "passenger_seat_coffee_window_gaze",
+            "pc_bang_gamer",
+            "pc_bang_neon_room",
+            "pc_bang_neon_session",
+            "plain_wall_mirror_selfie_room",
+            "pouring_coffee",
+            "selfie_mirror_snapshot",
+            "simple_indoor_selfie_room",
+            "takeaway_coffee_cup",
+            "writing_notes"
+          ],
+          "fallback_terms": [
+            "home",
+            "homebody",
+            "bedroom",
+            "gaming bedroom",
+            "streamer room",
+            "esports room"
+          ]
+        },
+        "slot_signals": {
+          "action": {
+            "core": [
+              "checking_game_controller",
+              "eating_snacks_while_gaming",
+              "slouched_in_gaming_chair",
+              "wrapped_in_blanket_gaming"
+            ],
+            "support": [
+              "checking_phone",
+              "looking_window",
+              "sleeping",
+              "standing_silence"
+            ],
+            "term_rules": {
+              "support": [
+                {
+                  "id": "homebody-action-support-token",
+                  "any_tokens": [
+                    "home",
+                    "daily",
+                    "quiet",
+                    "gaming"
+                  ]
+                },
+                {
+                  "id": "homebody-action-support-text",
+                  "any_terms": [
+                    "checking",
+                    "sleep",
+                    "window",
+                    "phone",
+                    "floor"
+                  ]
+                }
+              ]
+            }
+          },
+          "genre": {
+            "core": [
+              "interior",
+              "lifestyle",
+              "portrait"
+            ],
+            "support": [
+              "shortform_social"
+            ],
+            "term_rules": {
+              "support": [
+                {
+                  "id": "homebody-genre-support-words",
+                  "any_terms": [
+                    "portrait",
+                    "lifestyle",
+                    "interior",
+                    "shortform"
+                  ],
+                  "boundary": true
+                }
+              ]
+            }
+          },
+          "light_shape": {
+            "core": [
+              "monitor_rectangle_glow"
+            ],
+            "support": [
+              "blinds_stripes",
+              "diffused_ambient",
+              "screen_rectangle_mask",
+              "venetian_blind_shadows",
+              "window_rectangle"
+            ],
+            "term_rules": {
+              "support": [
+                {
+                  "id": "homebody-light-shape-support-words",
+                  "any_terms": [
+                    "monitor",
+                    "screen",
+                    "window",
+                    "tungsten",
+                    "ambient",
+                    "diffused",
+                    "lamp"
+                  ],
+                  "boundary": true
+                }
+              ]
+            }
+          },
+          "light_type": {
+            "core": [
+              "monitor_glow",
+              "tungsten_practical"
+            ],
+            "term_rules": {
+              "support": [
+                {
+                  "id": "homebody-light-type-support-words",
+                  "any_terms": [
+                    "monitor",
+                    "screen",
+                    "window",
+                    "tungsten",
+                    "ambient",
+                    "diffused",
+                    "lamp"
+                  ],
+                  "boundary": true
+                }
+              ]
+            }
+          },
+          "lighting": {
+            "core": [
+              "monitor_glow",
+              "tungsten"
+            ],
+            "support": [
+              "chiaroscuro_window_light",
+              "soft_window",
+              "window_blowout_backlight"
+            ],
+            "term_rules": {
+              "support": [
+                {
+                  "id": "homebody-lighting-support-words",
+                  "any_terms": [
+                    "monitor",
+                    "screen",
+                    "window",
+                    "tungsten",
+                    "ambient",
+                    "diffused",
+                    "lamp"
+                  ],
+                  "boundary": true
+                }
+              ]
+            }
+          },
+          "location": {
+            "core": [
+              "cozy_apartment",
+              "dim_monitor_glow_bedroom",
+              "esports_room",
+              "floor_mattress_gaming_corner",
+              "small_messy_gaming_bedroom"
+            ],
+            "support": [
+              "bright_window_silhouette_room",
+              "pale_woven_floor_room"
+            ],
+            "term_rules": {
+              "support": [
+                {
+                  "id": "homebody-location-support-words",
+                  "any_terms": [
+                    "apartment",
+                    "bedroom",
+                    "room",
+                    "desk",
+                    "esports",
+                    "home"
+                  ],
+                  "boundary": true
+                }
+              ]
+            }
+          },
+          "medium": {
+            "core": [
+              "documentary_photo",
+              "lifestyle_photo",
+              "smartphone_snapshot",
+              "vhs_video_frame_photo"
+            ],
+            "support": [
+              "social_media_post"
+            ],
+            "term_rules": {
+              "support": [
+                {
+                  "id": "homebody-medium-support-words",
+                  "any_terms": [
+                    "documentary",
+                    "lifestyle",
+                    "social",
+                    "smartphone",
+                    "vhs",
+                    "home"
+                  ],
+                  "boundary": true
+                }
+              ]
+            }
+          },
+          "mood": {
+            "support": [
+              "calm",
+              "casual_authentic",
+              "intimate",
+              "nostalgic",
+              "quiet_surreal_optical"
+            ],
+            "term_rules": {
+              "support": [
+                {
+                  "id": "homebody-mood-support-token",
+                  "any_tokens": [
+                    "quiet"
+                  ]
+                },
+                {
+                  "id": "homebody-mood-support-text",
+                  "any_terms": [
+                    "calm",
+                    "peaceful",
+                    "intimate",
+                    "casual",
+                    "quiet",
+                    "nostalgic"
+                  ]
+                }
+              ]
+            }
+          },
+          "prop": {
+            "core": [
+              "energy_drink_cans_prop",
+              "game_controller_prop",
+              "gaming_headset_on_desk_prop",
+              "gaming_keyboard_mouse_prop",
+              "instant_ramen_cup_prop",
+              "messy_snacks_prop",
+              "rumpled_blanket_prop",
+              "tangled_charging_cables_prop"
+            ],
+            "support": [
+              "over_ear_headphones",
+              "smartphone_in_hand"
+            ],
+            "term_rules": {
+              "support": [
+                {
+                  "id": "homebody-prop-support-token",
+                  "any_tokens": [
+                    "gaming",
+                    "home"
+                  ]
+                },
+                {
+                  "id": "homebody-prop-support-words",
+                  "any_terms": [
+                    "keyboard",
+                    "mouse",
+                    "blanket",
+                    "snack",
+                    "snacks",
+                    "controller",
+                    "phone",
+                    "headphone",
+                    "smartphone"
+                  ],
+                  "boundary": true
+                }
+              ]
+            }
+          },
+          "subject": {
+            "core": [
+              "gamer_streamer"
+            ],
+            "term_rules": {
+              "support": [
+                {
+                  "id": "homebody-subject-support-token-and-text",
+                  "any_tokens": [
+                    "gaming",
+                    "interior"
+                  ],
+                  "any_terms": [
+                    "gamer",
+                    "gaming"
+                  ]
+                }
+              ]
+            }
+          },
+          "texture": {
+            "support": [
+              "cool_digicam_grain",
+              "fine_grain",
+              "halation",
+              "light_leak_burn",
+              "rough_grain",
+              "screen_grab_softness",
+              "vhs_noise",
+              "vhs_scanline_texture"
+            ],
+            "term_rules": {
+              "support": [
+                {
+                  "id": "homebody-texture-support-words",
+                  "any_terms": [
+                    "halation",
+                    "screen",
+                    "digicam",
+                    "vhs",
+                    "light leak"
+                  ],
+                  "boundary": true
+                }
+              ]
+            }
+          },
+          "wardrobe_style": {
+            "core": [
+              "faded_hoodie_sweatpants",
+              "hoodie_shorts_sneakers",
+              "loose_pajama_homewear"
+            ],
+            "support": [
+              "knit_cardigan_jeans"
+            ],
+            "term_rules": {
+              "support": [
+                {
+                  "id": "homebody-wardrobe-support-words",
+                  "any_terms": [
+                    "hoodie",
+                    "sweat",
+                    "cardigan",
+                    "jeans",
+                    "sneakers",
+                    "pajama"
+                  ],
+                  "boundary": true
+                }
+              ]
+            }
+          },
+          "world": {
+            "core": [
+              "lived_in_homebody_room"
+            ]
+          }
+        },
+        "slot_signal_defaults": {
+          "support": [
+            {
+              "id": "homebody-default-support-terms",
+              "any_terms": [
+                "home",
+                "interior",
+                "gaming",
+                "gamer",
+                "monitor",
+                "bedroom",
+                "apartment",
+                "desk",
+                "blanket",
+                "snacks"
+              ]
+            }
+          ]
+        },
+        "concept_lock_promotions": {
+          "prop": [
+            {
+              "terms": [
+                "controller",
+                "game controller",
+                "gamepad",
+                "게임패드",
+                "컨트롤러"
+              ],
+              "ids": [
+                "game_controller_prop"
+              ]
+            },
+            {
+              "terms": [
+                "chips",
+                "snack",
+                "snacks",
+                "간식",
+                "과자",
+                "스낵"
+              ],
+              "ids": [
+                "messy_snacks_prop"
+              ]
+            },
+            {
+              "terms": [
+                "ramen",
+                "라면"
+              ],
+              "ids": [
+                "instant_ramen_cup_prop"
+              ]
+            },
+            {
+              "terms": [
+                "energy drink",
+                "energy-drink",
+                "에너지드링크"
+              ],
+              "ids": [
+                "energy_drink_cans_prop"
+              ]
+            },
+            {
+              "terms": [
+                "blanket",
+                "담요",
+                "이불"
+              ],
+              "ids": [
+                "rumpled_blanket_prop"
+              ]
+            }
+          ],
+          "lighting": [
+            {
+              "terms": [
+                "monitor",
+                "screen",
+                "모니터",
+                "스크린"
+              ],
+              "ids": [
+                "monitor_glow"
+              ]
+            }
+          ],
+          "light_type": [
+            {
+              "terms": [
+                "monitor",
+                "screen",
+                "모니터",
+                "스크린"
+              ],
+              "ids": [
+                "monitor_glow"
+              ]
+            }
+          ],
+          "light_shape": [
+            {
+              "terms": [
+                "monitor",
+                "screen",
+                "모니터",
+                "스크린"
+              ],
+              "ids": [
+                "monitor_rectangle_glow"
+              ]
+            }
+          ],
+          "location": [
+            {
+              "terms": [
+                "bedroom",
+                "small bedroom",
+                "small room",
+                "방구석",
+                "작은 방",
+                "좁은 방",
+                "침실"
+              ],
+              "ids": [
+                "small_messy_gaming_bedroom",
+                "dim_monitor_glow_bedroom",
+                "floor_mattress_gaming_corner"
+              ]
+            },
+            {
+              "terms": [
+                "monitor",
+                "screen",
+                "모니터",
+                "스크린"
+              ],
+              "ids": [
+                "dim_monitor_glow_bedroom",
+                "small_messy_gaming_bedroom"
+              ]
+            }
+          ]
+        },
+        "redundancy_rules": [
+          {
+            "when_slot": "action",
+            "when_id": "checking_game_controller",
+            "suppress": {
+              "prop": [
+                "game_controller_prop"
+              ]
+            }
+          },
+          {
+            "when_slot": "action",
+            "when_id": "wrapped_in_blanket_gaming",
+            "suppress": {
+              "prop": [
+                "rumpled_blanket_prop"
+              ]
+            }
+          },
+          {
+            "when_slot": "action",
+            "when_id": "eating_snacks_while_gaming",
+            "suppress": {
+              "prop": [
+                "energy_drink_cans_prop",
+                "instant_ramen_cup_prop",
+                "messy_snacks_prop"
+              ]
+            }
+          }
+        ],
+        "coverage_repair": {
+          "policy_id": "homebody-room-anchor-coverage-v1",
+          "min_anchors": 3,
+          "anchor_ids": [
+            "checking_game_controller",
+            "dim_monitor_glow_bedroom",
+            "eating_snacks_while_gaming",
+            "energy_drink_cans_prop",
+            "floor_mattress_gaming_corner",
+            "game_controller_prop",
+            "instant_ramen_cup_prop",
+            "messy_snacks_prop",
+            "monitor_glow",
+            "monitor_rectangle_glow",
+            "rumpled_blanket_prop",
+            "small_messy_gaming_bedroom",
+            "wrapped_in_blanket_gaming"
+          ]
+        }
+      },
+      "urban": {
+        "policy_id": "urban-semantic-policy-v1",
+        "aliases": [
+          "alley",
+          "city",
+          "neon",
+          "rooftop",
+          "street",
+          "subway",
+          "urban",
+          "거리",
+          "골목",
+          "도시",
+          "지하철"
+        ],
+        "keywords": [
+          "alley",
+          "city",
+          "neon",
+          "rooftop",
+          "street",
+          "subway",
+          "urban",
+          "거리",
+          "골목",
+          "도시",
+          "지하철"
+        ],
+        "axis_label": "urban city street",
+        "axis_embedding_text": "urban city street location, alley, subway, neon, concrete, metropolitan environment",
+        "signal_lexicon": {
+          "strong": [
+            "urban",
+            "city",
+            "street",
+            "alley",
+            "subway",
+            "neon",
+            "rooftop",
+            "concrete"
+          ],
+          "ambient": [
+            "interior",
+            "transport",
+            "night",
+            "market",
+            "office",
+            "parking"
+          ]
+        },
+        "steering_reason_labels": {
+          "location": "urban_location"
+        },
+        "routed_slots": [
+          "location",
+          "world",
+          "weather",
+          "lighting"
+        ],
+        "steering_slots": [
+          "location"
+        ],
+        "preset_policy": {},
+        "slot_signals": {},
+        "concept_lock_promotions": {},
+        "redundancy_rules": [],
+        "coverage_repair": {}
+      },
+      "horror": {
+        "policy_id": "horror-semantic-policy-v1",
+        "aliases": [
+          "eerie",
+          "fear",
+          "gothic",
+          "horror",
+          "nightmare",
+          "noir",
+          "scary",
+          "terror",
+          "uncanny",
+          "공포",
+          "두려움",
+          "악몽"
+        ],
+        "keywords": [
+          "eerie",
+          "fear",
+          "gothic",
+          "horror",
+          "nightmare",
+          "noir",
+          "scary",
+          "terror",
+          "uncanny",
+          "공포",
+          "두려움",
+          "악몽"
+        ],
+        "axis_label": "horror fear nightmare",
+        "axis_embedding_text": "horror fear nightmare mood, eerie uncanny tension, analog horror unease, dark suspense",
+        "signal_lexicon": {
+          "strong": [
+            "horror",
+            "dread",
+            "ritual",
+            "occult",
+            "haunted",
+            "panic",
+            "terror",
+            "nightmare",
+            "fear",
+            "cosmic"
+          ],
+          "ambient": [
+            "tense",
+            "uncanny",
+            "noir",
+            "liminal",
+            "dark",
+            "shadow",
+            "fog",
+            "suspense",
+            "gothic"
+          ]
+        },
+        "steering_reason_labels": {
+          "mood": "horror_mood"
+        },
+        "routed_slots": [
+          "mood",
+          "lighting",
+          "light_shape",
+          "weather",
+          "color",
+          "texture"
+        ],
+        "steering_slots": [
+          "mood"
+        ],
+        "preset_policy": {},
+        "slot_signals": {},
+        "concept_lock_promotions": {},
+        "redundancy_rules": [],
+        "coverage_repair": {
+          "policy_id": "horror-weak-anchor-repair-v1",
+          "min_anchors": 1,
+          "target_slots": [
+            "lighting",
+            "light_shape",
+            "weather",
+            "texture",
+            "color"
+          ],
+          "boost_profile_key": "weak_horror_compensation_boost",
+          "reason": "weak_horror_compensation"
+        }
+      },
+      "fantasy": {
+        "policy_id": "fantasy-semantic-policy-v1",
+        "aliases": [
+          "dream",
+          "fantasy",
+          "impossible",
+          "magic",
+          "magical",
+          "surreal",
+          "마법",
+          "초현실",
+          "환상"
+        ],
+        "keywords": [
+          "dream",
+          "fantasy",
+          "impossible",
+          "magic",
+          "magical",
+          "surreal",
+          "마법",
+          "초현실",
+          "환상"
+        ],
+        "axis_label": "fantasy magic surreal",
+        "axis_embedding_text": "fantasy magic surreal impossible event, photoreal dreamlike phenomenon, supernatural atmosphere",
+        "signal_lexicon": {
+          "strong": [
+            "fantasy",
+            "magic",
+            "magical",
+            "surreal",
+            "impossible",
+            "gravity",
+            "object_world",
+            "material"
+          ],
+          "ambient": [
+            "dream",
+            "dreamy",
+            "reflection",
+            "mirror",
+            "screen",
+            "scale",
+            "cosplay"
+          ]
+        },
+        "routed_slots": [
+          "surreal_concept",
+          "surreal_anchor",
+          "surreal_physics_detail",
+          "mood"
+        ],
+        "steering_slots": [],
+        "preset_policy": {},
+        "slot_signals": {},
+        "concept_lock_promotions": {},
+        "redundancy_rules": [],
+        "coverage_repair": {}
+      },
+      "product": {
+        "policy_id": "product-semantic-policy-v1",
+        "aliases": [
+          "catalog",
+          "commercial",
+          "cpg",
+          "packshot",
+          "product",
+          "상품",
+          "제품",
+          "커머셜"
+        ],
+        "keywords": [
+          "catalog",
+          "commercial",
+          "cpg",
+          "packshot",
+          "product",
+          "상품",
+          "제품",
+          "커머셜"
+        ],
+        "axis_label": "product commercial packshot",
+        "axis_embedding_text": "product photography, commercial packshot, tactile surface, controlled studio light, object hero image",
+        "signal_lexicon": {
+          "strong": [
+            "product",
+            "commercial",
+            "packshot",
+            "catalog",
+            "surface",
+            "object"
+          ],
+          "ambient": [
+            "studio",
+            "macro",
+            "glass",
+            "metal",
+            "reflection",
+            "display"
+          ]
+        },
+        "routed_slots": [
+          "subject",
+          "genre",
+          "surface_material",
+          "lighting",
+          "light_shape",
+          "texture",
+          "lens",
+          "color"
+        ],
+        "steering_slots": [],
+        "preset_policy": {},
+        "slot_signals": {},
+        "concept_lock_promotions": {},
+        "redundancy_rules": [],
+        "coverage_repair": {}
+      },
+      "jewelry": {
+        "policy_id": "jewelry-semantic-policy-v1",
+        "aliases": [
+          "gem",
+          "jewelry",
+          "macro reflection",
+          "metal",
+          "ring",
+          "watch",
+          "반지",
+          "시계",
+          "주얼리"
+        ],
+        "keywords": [
+          "gem",
+          "jewelry",
+          "macro reflection",
+          "metal",
+          "ring",
+          "watch",
+          "반지",
+          "시계",
+          "주얼리"
+        ],
+        "axis_label": "jewelry macro reflection",
+        "axis_embedding_text": "jewelry macro reflection, polished metal, ring or watch, glass surface, precise product detail",
+        "signal_lexicon": {
+          "strong": [
+            "jewelry",
+            "ring",
+            "watch",
+            "metal",
+            "macro",
+            "reflection"
+          ],
+          "ambient": [
+            "product",
+            "studio",
+            "glass",
+            "polished",
+            "highlight"
+          ]
+        },
+        "routed_slots": [
+          "subject",
+          "surface_material",
+          "lighting",
+          "light_shape",
+          "texture",
+          "lens",
+          "color"
+        ],
+        "steering_slots": [],
+        "preset_policy": {},
+        "slot_signals": {},
+        "concept_lock_promotions": {},
+        "redundancy_rules": [],
+        "coverage_repair": {}
+      },
+      "craft": {
+        "policy_id": "craft-semantic-policy-v1",
+        "aliases": [
+          "artisan",
+          "ceramic",
+          "craft",
+          "craftsperson",
+          "glassblower",
+          "workshop",
+          "공예",
+          "작업장",
+          "장인"
+        ],
+        "keywords": [
+          "artisan",
+          "ceramic",
+          "craft",
+          "craftsperson",
+          "glassblower",
+          "workshop",
+          "공예",
+          "작업장",
+          "장인"
+        ],
+        "axis_label": "craftsperson workshop documentary",
+        "axis_embedding_text": "craftsperson artisan workshop, tools, hands, materials, documentary making process",
+        "signal_lexicon": {
+          "strong": [
+            "craft",
+            "artisan",
+            "craftsperson",
+            "workshop",
+            "glassblower",
+            "ceramic",
+            "potter"
+          ],
+          "ambient": [
+            "tools",
+            "hands",
+            "material",
+            "dust",
+            "work"
+          ]
+        },
+        "routed_slots": [
+          "subject",
+          "location",
+          "genre",
+          "action",
+          "lighting",
+          "texture",
+          "lens"
+        ],
+        "steering_slots": [],
+        "preset_policy": {},
+        "slot_signals": {},
+        "concept_lock_promotions": {},
+        "redundancy_rules": [],
+        "coverage_repair": {}
+      },
+      "documentary": {
+        "policy_id": "documentary-semantic-policy-v1",
+        "aliases": [
+          "candid",
+          "documentary",
+          "photojournalistic",
+          "raw",
+          "reportage",
+          "기록",
+          "다큐",
+          "현장"
+        ],
+        "keywords": [
+          "candid",
+          "documentary",
+          "photojournalistic",
+          "raw",
+          "reportage",
+          "기록",
+          "다큐",
+          "현장"
+        ],
+        "axis_label": "raw documentary reportage",
+        "axis_embedding_text": "raw documentary reportage, candid real-world moment, observational camera, authentic texture",
+        "signal_lexicon": {
+          "strong": [
+            "documentary",
+            "reportage",
+            "candid",
+            "raw",
+            "photojournalistic"
+          ],
+          "ambient": [
+            "handheld",
+            "natural",
+            "realism",
+            "unpolished",
+            "snapshot"
+          ]
+        },
+        "routed_slots": [
+          "genre",
+          "action",
+          "camera_type",
+          "lens",
+          "composition",
+          "texture",
+          "mood"
+        ],
+        "steering_slots": [],
+        "preset_policy": {},
+        "slot_signals": {},
+        "concept_lock_promotions": {},
+        "redundancy_rules": [],
+        "coverage_repair": {}
+      },
+      "wildlife": {
+        "policy_id": "wildlife-semantic-policy-v1",
+        "aliases": [
+          "animal",
+          "bird",
+          "eagle",
+          "field",
+          "nature",
+          "penguin",
+          "wildlife",
+          "동물",
+          "야생동물",
+          "자연"
+        ],
+        "keywords": [
+          "animal",
+          "bird",
+          "eagle",
+          "field",
+          "nature",
+          "penguin",
+          "wildlife",
+          "동물",
+          "야생동물",
+          "자연"
+        ],
+        "axis_label": "wildlife animal nature documentary",
+        "axis_embedding_text": "wildlife animal nature documentary, telephoto field photography, weather and natural behavior",
+        "signal_lexicon": {
+          "strong": [
+            "wildlife",
+            "animal",
+            "penguin",
+            "eagle",
+            "horse",
+            "nature",
+            "telephoto"
+          ],
+          "ambient": [
+            "field",
+            "snow",
+            "forest",
+            "mist",
+            "weather",
+            "natural"
+          ]
+        },
+        "routed_slots": [
+          "subject",
+          "genre",
+          "location",
+          "weather",
+          "lens",
+          "motion",
+          "texture"
+        ],
+        "steering_slots": [],
+        "preset_policy": {},
+        "slot_signals": {},
+        "concept_lock_promotions": {},
+        "redundancy_rules": [],
+        "coverage_repair": {}
+      },
+      "food": {
+        "policy_id": "food-semantic-policy-v1",
+        "aliases": [
+          "bibimbap",
+          "food",
+          "meal",
+          "noodle",
+          "street food",
+          "sushi",
+          "tteokbokki",
+          "야식",
+          "음식",
+          "푸드"
+        ],
+        "keywords": [
+          "bibimbap",
+          "food",
+          "meal",
+          "noodle",
+          "street food",
+          "sushi",
+          "tteokbokki",
+          "야식",
+          "음식",
+          "푸드"
+        ],
+        "axis_label": "street food night food photography",
+        "axis_embedding_text": "food photography, street food, steam, sauce, plate, edible texture, night market atmosphere",
+        "signal_lexicon": {
+          "strong": [
+            "food",
+            "street_food",
+            "tteokbokki",
+            "sushi",
+            "bibimbap",
+            "noodle",
+            "steam",
+            "sauce"
+          ],
+          "ambient": [
+            "market",
+            "table",
+            "tent",
+            "warm",
+            "night",
+            "plate"
+          ]
+        },
+        "routed_slots": [
+          "subject",
+          "genre",
+          "location",
+          "action",
+          "lighting",
+          "texture",
+          "color"
+        ],
+        "steering_slots": [],
+        "preset_policy": {},
+        "slot_signals": {},
+        "concept_lock_promotions": {},
+        "redundancy_rules": [],
+        "coverage_repair": {}
+      },
+      "analog": {
+        "policy_id": "analog-semantic-policy-v1",
+        "aliases": [
+          "analog",
+          "cinestill",
+          "digicam",
+          "film",
+          "kodak",
+          "portra",
+          "tri-x",
+          "아날로그",
+          "필름"
+        ],
+        "keywords": [
+          "analog",
+          "cinestill",
+          "digicam",
+          "film",
+          "kodak",
+          "portra",
+          "tri-x",
+          "아날로그",
+          "필름"
+        ],
+        "axis_label": "analog film camera texture",
+        "axis_embedding_text": "analog film emulation, grain, halation, disposable camera or CCD texture, Kodak and CineStill color",
+        "signal_lexicon": {
+          "strong": [
+            "analog",
+            "film",
+            "cinestill",
+            "kodak",
+            "portra",
+            "tri-x",
+            "digicam",
+            "halation"
+          ],
+          "ambient": [
+            "grain",
+            "scratch",
+            "dust",
+            "faded",
+            "compact",
+            "vhs",
+            "ccd"
+          ]
+        },
+        "routed_slots": [
+          "film_emulation",
+          "camera_type",
+          "texture",
+          "color",
+          "format"
+        ],
+        "steering_slots": [],
+        "preset_policy": {},
+        "slot_signals": {},
+        "concept_lock_promotions": {},
+        "redundancy_rules": [],
+        "coverage_repair": {}
+      },
+      "social_gimmick": {
+        "policy_id": "social_gimmick-semantic-policy-v1",
+        "aliases": [
+          "face overlay",
+          "mirror selfie",
+          "perspective trick",
+          "phone screen",
+          "selfie",
+          "v-sign",
+          "셀피",
+          "스마트폰",
+          "착시"
+        ],
+        "keywords": [
+          "face overlay",
+          "mirror selfie",
+          "perspective trick",
+          "phone screen",
+          "selfie",
+          "v-sign",
+          "셀피",
+          "스마트폰",
+          "착시"
+        ],
+        "axis_label": "social selfie phone screen perspective trick",
+        "axis_embedding_text": "social selfie capture grammar, smartphone screen face overlay, mirror selfie, V-sign, phone perspective trick",
+        "routed_slots": [
+          "capture_context",
+          "action",
+          "prop",
+          "camera_direction",
+          "composition",
+          "texture"
+        ],
+        "steering_slots": [],
+        "preset_policy": {},
+        "slot_signals": {},
+        "concept_lock_promotions": {},
+        "redundancy_rules": [],
+        "coverage_repair": {}
+      },
+      "interactive_pov": {
+        "policy_id": "interactive_pov-semantic-policy-v1",
+        "aliases": [
+          "1인칭",
+          "first person",
+          "foreground hand",
+          "interactive",
+          "pov hand",
+          "tail pull",
+          "상호작용",
+          "손"
+        ],
+        "keywords": [
+          "1인칭",
+          "first person",
+          "foreground hand",
+          "interactive",
+          "pov hand",
+          "tail pull",
+          "상호작용",
+          "손"
+        ],
+        "axis_label": "first person interactive POV hand foreground",
+        "axis_embedding_text": "first-person POV interaction, foreground hand touching or tugging costume prop, lived-in phone capture",
+        "routed_slots": [
+          "capture_context",
+          "action",
+          "prop",
+          "camera_direction",
+          "motion"
+        ],
+        "steering_slots": [],
+        "preset_policy": {},
+        "slot_signals": {},
+        "concept_lock_promotions": {},
+        "redundancy_rules": [],
+        "coverage_repair": {}
+      },
+      "subculture_cosplay": {
+        "policy_id": "subculture_cosplay-semantic-policy-v1",
+        "aliases": [
+          "2.5d",
+          "anime",
+          "character",
+          "cosplay",
+          "otaku",
+          "wig",
+          "애니",
+          "오타쿠",
+          "캐릭터",
+          "코스프레"
+        ],
+        "keywords": [
+          "2.5d",
+          "anime",
+          "character",
+          "cosplay",
+          "otaku",
+          "wig",
+          "애니",
+          "오타쿠",
+          "캐릭터",
+          "코스프레"
+        ],
+        "axis_label": "photoreal anime cosplay character realism",
+        "axis_embedding_text": "photoreal anime cosplay and 2.5D character realism, colorful wig, costume prop, otaku room or studio",
+        "routed_slots": [
+          "subject",
+          "appearance_type",
+          "hair_color",
+          "hair_style",
+          "costume_style",
+          "texture"
+        ],
+        "steering_slots": [],
+        "preset_policy": {},
+        "slot_signals": {},
+        "concept_lock_promotions": {},
+        "redundancy_rules": [],
+        "coverage_repair": {}
+      },
+      "vehicle_night_lifestyle": {
+        "policy_id": "vehicle_night_lifestyle-semantic-policy-v1",
+        "aliases": [
+          "car interior",
+          "gas station",
+          "passenger seat",
+          "takeaway coffee",
+          "조수석",
+          "주유소",
+          "차량"
+        ],
+        "keywords": [
+          "car interior",
+          "gas station",
+          "passenger seat",
+          "takeaway coffee",
+          "조수석",
+          "주유소",
+          "차량"
+        ],
+        "axis_label": "late night gas station car passenger seat lifestyle",
+        "axis_embedding_text": "late-night car interior lifestyle, gas station fluorescent light, passenger seat coffee candid",
+        "routed_slots": [
+          "location",
+          "capture_context",
+          "action",
+          "prop",
+          "lighting",
+          "light_type"
+        ],
+        "steering_slots": [],
+        "preset_policy": {},
+        "slot_signals": {},
+        "concept_lock_promotions": {},
+        "redundancy_rules": [],
+        "coverage_repair": {}
+      },
+      "botanical_romance": {
+        "policy_id": "botanical_romance-semantic-policy-v1",
+        "aliases": [
+          "botanical",
+          "garden backlight",
+          "greenhouse",
+          "leaf bokeh",
+          "식물",
+          "온실",
+          "정원"
+        ],
+        "keywords": [
+          "botanical",
+          "garden backlight",
+          "greenhouse",
+          "leaf bokeh",
+          "식물",
+          "온실",
+          "정원"
+        ],
+        "axis_label": "botanical greenhouse garden soft romance portrait",
+        "axis_embedding_text": "botanical greenhouse romance portrait, leafy garden backlight, soft diffused plant bokeh",
+        "routed_slots": [
+          "location",
+          "lighting",
+          "light_shape",
+          "hair_color",
+          "wardrobe_style",
+          "mood"
+        ],
+        "steering_slots": [],
+        "preset_policy": {},
+        "slot_signals": {},
+        "concept_lock_promotions": {},
+        "redundancy_rules": [],
+        "coverage_repair": {}
+      },
+      "gothic_display": {
+        "policy_id": "gothic_display-semantic-policy-v1",
+        "aliases": [
+          "bunny",
+          "curio",
+          "glass cabinet",
+          "gothic",
+          "ornate bottle",
+          "고딕",
+          "유리",
+          "진열장"
+        ],
+        "keywords": [
+          "bunny",
+          "curio",
+          "glass cabinet",
+          "gothic",
+          "ornate bottle",
+          "고딕",
+          "유리",
+          "진열장"
+        ],
+        "axis_label": "gothic glass curio cabinet ornate bottle portrait",
+        "axis_embedding_text": "gothic curio cabinet portrait, ornate glass perfume bottle, bunny cosplay, low-key sparkling display",
+        "routed_slots": [
+          "location",
+          "prop",
+          "lighting",
+          "light_shape",
+          "mood",
+          "hair_color"
+        ],
+        "steering_slots": [],
+        "preset_policy": {},
+        "slot_signals": {},
+        "concept_lock_promotions": {},
+        "redundancy_rules": [],
+        "coverage_repair": {}
+      }
+    },
+    "steering_priority": [
+      "homebody_room",
+      "human",
+      "urban",
+      "horror"
+    ]
+  },
   "coherence_rules": {
     "family_strength": {
       "horror": {

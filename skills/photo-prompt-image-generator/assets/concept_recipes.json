@@ -1,4 +1,19 @@
 {
+  "bundle_override_slots": [
+    "action",
+    "color",
+    "composition",
+    "expression",
+    "light_direction",
+    "light_intensity",
+    "light_type",
+    "lighting",
+    "location",
+    "mood",
+    "prop",
+    "subject_framing",
+    "wardrobe_style"
+  ],
   "roles": {
     "메이드": {
       "preset": "maid_cafe_cosplay_portrait",
@@ -2606,7 +2621,14 @@
         "stillness before action under surveillance-noir framing, non-graphic",
         "cover identity crack, implied target, concealed prop, reflection surveillance, and crowd blending"
       ],
-      "likeness_mode": "inspired"
+      "likeness_mode": "inspired",
+      "conditional_additional": [
+        {
+          "requires_role": true,
+          "text": "role outfit is a cover identity/disguise for the assassin persona",
+          "requires_bundle": true
+        }
+      ]
     }
   }
 }

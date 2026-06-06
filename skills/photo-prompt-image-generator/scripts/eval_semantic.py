@@ -30,6 +30,9 @@ from prompt_generator import (
     make_batch_context,
     preset_family_signal_strength,
     semantic_metadata_from_source,
+    semantic_policy_digest,
+    semantic_policy_from_source,
+    semantic_policy_schema_version,
     set_batch_index,
     subject_category,
     validate_semantic_index_metadata,
@@ -893,6 +896,8 @@ def main() -> int:
                 {
                     "status": "ok",
                     "dictionary_hash": semantic_index.get("dictionary_hash"),
+                    "policy_schema_version": semantic_policy_schema_version(data),
+                    "semantic_policy_hash": semantic_policy_digest(semantic_policy_from_source(data)),
                     "semantic_text_recipe": semantic_index.get("semantic_text_recipe"),
                     "expected_semantic_text_recipe": SEMANTIC_TEXT_RECIPE_VERSION,
                     "embedding_model": semantic_index.get("embedding_model"),

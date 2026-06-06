@@ -253,8 +253,6 @@ CROSS_SLOT_AFFINITY_CONTEXT_SLOTS: Dict[str, tuple[str, ...]] = {
     "surreal_anchor": ("surreal_concept", "location"),
 }
 
-WEAK_HORROR_COMPENSATION_SLOTS = ("lighting", "light_shape", "weather", "texture", "color")
-
 SLOT_TEMPERATURE_MULTIPLIERS: Dict[str, float] = {
     "mood": 1.28,
     "action": 1.18,
@@ -293,79 +291,6 @@ COHERENT_DIVERSITY_SLOTS = {
     "motion",
     "focus",
     "hair_color",
-}
-
-SEMANTIC_AXIS_FAMILY_KEYWORDS: Dict[str, tuple[str, ...]] = {
-    "human": ("human", "person", "people", "portrait", "model", "actor", "commuter", "traveler", "인간", "사람", "인물"),
-    "homebody_room": (
-        "homebody",
-        "bedroom",
-        "small bedroom",
-        "cozy apartment",
-        "gaming desk",
-        "game controller",
-        "snacks",
-        "blanket",
-        "monitor glow",
-        "집돌이",
-        "방구석",
-        "침실",
-        "작은 방",
-        "게임패드",
-        "간식",
-        "담요",
-        "모니터",
-    ),
-    "urban": ("urban", "city", "street", "alley", "subway", "neon", "rooftop", "도시", "거리", "골목", "지하철"),
-    "horror": ("horror", "fear", "nightmare", "terror", "scary", "eerie", "uncanny", "noir", "gothic", "공포", "악몽", "두려움"),
-    "fantasy": ("fantasy", "magic", "magical", "surreal", "dream", "impossible", "환상", "마법", "초현실"),
-    "product": ("product", "commercial", "packshot", "catalog", "cpg", "제품", "상품", "커머셜"),
-    "jewelry": ("jewelry", "ring", "watch", "metal", "gem", "macro reflection", "주얼리", "반지", "시계"),
-    "craft": ("craft", "artisan", "craftsperson", "workshop", "glassblower", "ceramic", "공예", "장인", "작업장"),
-    "documentary": ("documentary", "reportage", "candid", "photojournalistic", "raw", "다큐", "기록", "현장"),
-    "wildlife": ("wildlife", "animal", "bird", "penguin", "eagle", "field", "nature", "야생동물", "동물", "자연"),
-    "food": ("food", "street food", "tteokbokki", "sushi", "bibimbap", "noodle", "meal", "음식", "푸드", "야식"),
-    "analog": ("analog", "film", "cinestill", "kodak", "portra", "tri-x", "digicam", "필름", "아날로그"),
-    "social_gimmick": ("selfie", "phone screen", "face overlay", "perspective trick", "v-sign", "mirror selfie", "셀피", "스마트폰", "착시"),
-    "interactive_pov": ("first person", "pov hand", "interactive", "tail pull", "foreground hand", "1인칭", "손", "상호작용"),
-    "subculture_cosplay": ("cosplay", "anime", "otaku", "2.5d", "character", "wig", "코스프레", "애니", "오타쿠", "캐릭터"),
-    "vehicle_night_lifestyle": ("gas station", "passenger seat", "car interior", "takeaway coffee", "주유소", "조수석", "차량"),
-    "botanical_romance": ("botanical", "greenhouse", "garden backlight", "leaf bokeh", "온실", "식물", "정원"),
-    "gothic_display": ("gothic", "curio", "glass cabinet", "ornate bottle", "bunny", "고딕", "진열장", "유리"),
-}
-
-SEMANTIC_AXIS_SLOT_ROUTES: Dict[str, tuple[str, ...]] = {
-    "human": ("subject", "appearance_type", "expression", "subject_framing"),
-    "homebody_room": (
-        "medium",
-        "genre",
-        "subject",
-        "location",
-        "action",
-        "prop",
-        "wardrobe_style",
-        "lighting",
-        "light_type",
-        "light_shape",
-        "mood",
-        "texture",
-    ),
-    "urban": ("location", "world", "weather", "lighting"),
-    "horror": ("mood", "lighting", "light_shape", "weather", "color", "texture"),
-    "fantasy": ("surreal_concept", "surreal_anchor", "surreal_physics_detail", "mood"),
-    "product": ("subject", "genre", "surface_material", "lighting", "light_shape", "texture", "lens", "color"),
-    "jewelry": ("subject", "surface_material", "lighting", "light_shape", "texture", "lens", "color"),
-    "craft": ("subject", "location", "genre", "action", "lighting", "texture", "lens"),
-    "documentary": ("genre", "action", "camera_type", "lens", "composition", "texture", "mood"),
-    "wildlife": ("subject", "genre", "location", "weather", "lens", "motion", "texture"),
-    "food": ("subject", "genre", "location", "action", "lighting", "texture", "color"),
-    "analog": ("film_emulation", "camera_type", "texture", "color", "format"),
-    "social_gimmick": ("capture_context", "action", "prop", "camera_direction", "composition", "texture"),
-    "interactive_pov": ("capture_context", "action", "prop", "camera_direction", "motion"),
-    "subculture_cosplay": ("subject", "appearance_type", "hair_color", "hair_style", "costume_style", "texture"),
-    "vehicle_night_lifestyle": ("location", "capture_context", "action", "prop", "lighting", "light_type"),
-    "botanical_romance": ("location", "lighting", "light_shape", "hair_color", "wardrobe_style", "mood"),
-    "gothic_display": ("location", "prop", "lighting", "light_shape", "mood", "hair_color"),
 }
 
 SEMANTIC_SLOT_CAPTION_TEMPLATES: Dict[str, str] = {
@@ -1095,6 +1020,86 @@ def dictionary_hash(data: JsonDict) -> str:
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
 
+def semantic_policy_from_source(source: Optional[JsonDict]) -> JsonDict:
+    if not source:
+        return {}
+    policy = source.get("semantic_policy", {}) or {}
+    return policy if isinstance(policy, dict) else {}
+
+
+def semantic_policy_digest(policy: Optional[JsonDict]) -> Optional[str]:
+    if not policy:
+        return None
+    payload = json.dumps(policy, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()[:16]
+
+
+def semantic_policy_schema_version(source: Optional[JsonDict]) -> Optional[int]:
+    policy = semantic_policy_from_source(source)
+    raw_version = policy.get("schema_version")
+    if raw_version is None:
+        return None
+    try:
+        return int(raw_version)
+    except (TypeError, ValueError):
+        return None
+
+
+def semantic_policy_family_config(source: Optional[JsonDict], family: str) -> JsonDict:
+    families = (semantic_policy_from_source(source).get("families", {}) or {})
+    config = families.get(family, {}) if isinstance(families, dict) else {}
+    return config if isinstance(config, dict) else {}
+
+
+def semantic_policy_family_names(source: Optional[JsonDict] = None) -> List[str]:
+    families = (semantic_policy_from_source(source).get("families", {}) or {})
+    if isinstance(families, dict) and families:
+        return list(families.keys())
+    return []
+
+
+def semantic_policy_id(source: Optional[JsonDict], family: str) -> str:
+    return str(semantic_policy_family_config(source, family).get("policy_id") or f"{family}-legacy-code-policy")
+
+
+def semantic_family_keywords(source: Optional[JsonDict], family: str) -> tuple[str, ...]:
+    config = semantic_policy_family_config(source, family)
+    configured = normalize_list(config.get("keywords")) + normalize_list(config.get("aliases"))
+    if configured:
+        return tuple(dict.fromkeys(configured))
+    return ()
+
+
+def semantic_family_axis_label(source: Optional[JsonDict], family: str) -> str:
+    label = semantic_policy_family_config(source, family).get("axis_label")
+    if label:
+        return str(label)
+    return family.replace("_", " ")
+
+
+def semantic_family_axis_embedding_text(source: Optional[JsonDict], family: str) -> str:
+    text = semantic_policy_family_config(source, family).get("axis_embedding_text")
+    if text:
+        return str(text)
+    return semantic_family_axis_label(source, family)
+
+
+def semantic_axis_route_slots(source: Optional[JsonDict], family: str) -> tuple[str, ...]:
+    config = semantic_policy_family_config(source, family)
+    routed_slots = normalize_list(config.get("routed_slots"))
+    if routed_slots:
+        return tuple(routed_slots)
+    return ()
+
+
+def semantic_axis_routed_families_for_slot(source: Optional[JsonDict], slot: str) -> Set[str]:
+    return {
+        family
+        for family in semantic_policy_family_names(source)
+        if slot in semantic_axis_route_slots(source, family)
+    }
+
+
 def semantic_text_for_entry(entry: Entry, slot: Optional[str] = None) -> str:
     parts: List[str] = [semantic_caption_for_entry(entry, slot)]
     for key in ("en", "ko"):
@@ -1492,34 +1497,18 @@ def delimiter_intent_axes(intent: str) -> List[str]:
     return axes if len(axes) > 1 else []
 
 
-def fallback_intent_axes(intent: str) -> List[str]:
+def fallback_intent_axes(intent: str, policy_source: Optional[JsonDict] = None) -> List[str]:
     lowered = intent.lower()
-    labels = {
-        "human": "human portrait",
-        "homebody_room": "homebody gamer in a small bedroom",
-        "urban": "urban city street",
-        "horror": "horror fear nightmare",
-        "fantasy": "fantasy magic surreal",
-        "product": "product commercial packshot",
-        "jewelry": "jewelry macro reflection",
-        "craft": "craftsperson workshop documentary",
-        "documentary": "raw documentary reportage",
-        "wildlife": "wildlife animal nature documentary",
-        "food": "street food night food photography",
-        "analog": "analog film camera texture",
-        "social_gimmick": "social selfie phone screen perspective trick",
-        "interactive_pov": "first person interactive POV hand foreground",
-        "subculture_cosplay": "photoreal anime cosplay character realism",
-        "vehicle_night_lifestyle": "late night gas station car passenger seat lifestyle",
-        "botanical_romance": "botanical greenhouse garden soft romance portrait",
-        "gothic_display": "gothic glass curio cabinet ornate bottle portrait",
-    }
-    return [labels[family] for family in labels if axis_text_has_family(lowered, family)][:6]
+    return [
+        semantic_family_axis_label(policy_source, family)
+        for family in semantic_policy_family_names(policy_source)
+        if axis_text_has_family(lowered, family, policy_source)
+    ][:6]
 
 
-def axis_text_has_family(text: str, family: str) -> bool:
+def axis_text_has_family(text: str, family: str, policy_source: Optional[JsonDict] = None) -> bool:
     lowered = text.lower()
-    for keyword in SEMANTIC_AXIS_FAMILY_KEYWORDS.get(family, ()):
+    for keyword in semantic_family_keywords(policy_source, family):
         token = str(keyword).lower()
         if not token:
             continue
@@ -1531,36 +1520,19 @@ def axis_text_has_family(text: str, family: str) -> bool:
     return False
 
 
-def axis_families_for_text(text: str) -> List[str]:
+def axis_families_for_text(text: str, policy_source: Optional[JsonDict] = None) -> List[str]:
     return [
         family
-        for family in SEMANTIC_AXIS_FAMILY_KEYWORDS
-        if axis_text_has_family(text, family)
+        for family in semantic_policy_family_names(policy_source)
+        if axis_text_has_family(text, family, policy_source)
     ]
 
 
-def semantic_axis_embedding_text(axis: str) -> str:
-    expansions = {
-        "human": "human person portrait subject, model or actor, readable face and body presence",
-        "homebody_room": "cozy homebody in a small lived-in bedroom or apartment, gaming desk, monitor glow, controller, snacks, blanket, quiet indoor lifestyle",
-        "urban": "urban city street location, alley, subway, neon, concrete, metropolitan environment",
-        "horror": "horror fear nightmare mood, eerie uncanny tension, analog horror unease, dark suspense",
-        "fantasy": "fantasy magic surreal impossible event, photoreal dreamlike phenomenon, supernatural atmosphere",
-        "product": "product photography, commercial packshot, tactile surface, controlled studio light, object hero image",
-        "jewelry": "jewelry macro reflection, polished metal, ring or watch, glass surface, precise product detail",
-        "craft": "craftsperson artisan workshop, tools, hands, materials, documentary making process",
-        "documentary": "raw documentary reportage, candid real-world moment, observational camera, authentic texture",
-        "wildlife": "wildlife animal nature documentary, telephoto field photography, weather and natural behavior",
-        "food": "food photography, street food, steam, sauce, plate, edible texture, night market atmosphere",
-        "analog": "analog film emulation, grain, halation, disposable camera or CCD texture, Kodak and CineStill color",
-        "social_gimmick": "social selfie capture grammar, smartphone screen face overlay, mirror selfie, V-sign, phone perspective trick",
-        "interactive_pov": "first-person POV interaction, foreground hand touching or tugging costume prop, lived-in phone capture",
-        "subculture_cosplay": "photoreal anime cosplay and 2.5D character realism, colorful wig, costume prop, otaku room or studio",
-        "vehicle_night_lifestyle": "late-night car interior lifestyle, gas station fluorescent light, passenger seat coffee candid",
-        "botanical_romance": "botanical greenhouse romance portrait, leafy garden backlight, soft diffused plant bokeh",
-        "gothic_display": "gothic curio cabinet portrait, ornate glass perfume bottle, bunny cosplay, low-key sparkling display",
-    }
-    matched = [expansions[family] for family in axis_families_for_text(axis)]
+def semantic_axis_embedding_text(axis: str, policy_source: Optional[JsonDict] = None) -> str:
+    matched = [
+        semantic_family_axis_embedding_text(policy_source, family)
+        for family in axis_families_for_text(axis, policy_source)
+    ]
     if matched:
         return "; ".join(matched)
     return axis
@@ -1571,6 +1543,7 @@ def extract_intent_axes(
     explicit_axes: Optional[Sequence[str]] = None,
     semantic_axis_mode: str = "auto",
     intent_source: str = "user",
+    policy_source: Optional[JsonDict] = None,
 ) -> JsonDict:
     if semantic_axis_mode not in SEMANTIC_AXIS_MODES:
         raise ValueError(f"Invalid semantic_axis_mode '{semantic_axis_mode}'.")
@@ -1589,7 +1562,7 @@ def extract_intent_axes(
         if axes:
             source = "delimiter"
         else:
-            axes = fallback_intent_axes(intent)
+            axes = fallback_intent_axes(intent, policy_source)
             source = "fallback" if axes else "full_intent"
     if not axes:
         axes = [clean_intent_axis(intent)]
@@ -1927,47 +1900,150 @@ def stronger_family_strength(left: str, right: str) -> str:
     return left if FAMILY_STRENGTH_RANK.get(left, 0) >= FAMILY_STRENGTH_RANK.get(right, 0) else right
 
 
-def fallback_family_signal_strength(entry: Entry, family: str) -> str:
+MATCH_RULE_KEYS = {
+    "id",
+    "any_terms",
+    "all_terms",
+    "any_tokens",
+    "all_tokens",
+    "boundary",
+    "match_fields",
+    "case_sensitive",
+}
+
+
+def entry_match_blob(entry: Entry, fields: Sequence[str], case_sensitive: bool = False) -> str:
+    blob = " ".join(str(entry.get(key, "")) for key in fields)
+    return blob if case_sensitive else blob.lower()
+
+
+def entry_word_blob(entry: Entry, fields: Sequence[str], case_sensitive: bool = False) -> str:
+    return re.sub(r"[_-]+", " ", entry_match_blob(entry, fields, case_sensitive))
+
+
+def normalize_match_rules(raw: Any) -> List[JsonDict]:
+    if raw is None:
+        return []
+    if isinstance(raw, str):
+        return [{"any_terms": [raw]}, {"any_tokens": [raw]}]
+    if isinstance(raw, dict):
+        if any(key in raw for key in MATCH_RULE_KEYS):
+            return [raw]
+        rules: List[JsonDict] = []
+        for value in raw.values():
+            rules.extend(normalize_match_rules(value))
+        return rules
+    if isinstance(raw, list):
+        if all(not isinstance(item, dict) for item in raw):
+            terms = normalize_list(raw)
+            return [{"any_terms": terms}, {"any_tokens": terms}] if terms else []
+        rules = []
+        for item in raw:
+            rules.extend(normalize_match_rules(item))
+        return rules
+    return []
+
+
+def evaluate_match(rule: Any, entry: Entry) -> JsonDict:
+    if isinstance(rule, str):
+        rule = {"any_terms": [rule]}
+    if not isinstance(rule, dict):
+        return {"matched": False, "matched_terms": [], "matched_tokens": []}
+    fields = normalize_list(rule.get("match_fields")) or ["id", "en", "ko", "embedding_text"]
+    case_sensitive = bool(rule.get("case_sensitive"))
+    boundary = bool(rule.get("boundary"))
+    blob = entry_word_blob(entry, fields, case_sensitive) if boundary else entry_match_blob(entry, fields, case_sensitive)
     tokens = entry_context_tokens(entry) | facet_tokens(entry)
-    blob = " ".join(
-        str(entry.get(key, ""))
-        for key in ("id", "en", "ko", "embedding_text")
-    ).lower()
-    strong_by_family = {
-        "horror": {"horror", "dread", "ritual", "occult", "haunted", "panic", "terror", "nightmare", "fear", "cosmic"},
-        "fantasy": {"fantasy", "magic", "magical", "surreal", "impossible", "gravity", "object_world", "material"},
-        "urban": {"urban", "city", "street", "alley", "subway", "neon", "rooftop", "concrete"},
-        "human": {"human", "portrait", "person", "model", "actor", "commuter", "creator", "traveler"},
-        "homebody_room": {"homebody", "bedroom", "apartment", "gamer", "gaming", "monitor", "desk", "blanket"},
-        "product": {"product", "commercial", "packshot", "catalog", "surface", "object"},
-        "jewelry": {"jewelry", "ring", "watch", "metal", "macro", "reflection"},
-        "craft": {"craft", "artisan", "craftsperson", "workshop", "glassblower", "ceramic", "potter"},
-        "documentary": {"documentary", "reportage", "candid", "raw", "photojournalistic"},
-        "wildlife": {"wildlife", "animal", "penguin", "eagle", "horse", "nature", "telephoto"},
-        "food": {"food", "street_food", "tteokbokki", "sushi", "bibimbap", "noodle", "steam", "sauce"},
-        "analog": {"analog", "film", "cinestill", "kodak", "portra", "tri-x", "digicam", "halation"},
+    if case_sensitive:
+        normalized_tokens = {str(token) for token in tokens}
+    else:
+        normalized_tokens = {str(token).lower() for token in tokens}
+
+    def normalize_term(term: str) -> str:
+        return str(term) if case_sensitive else str(term).lower()
+
+    def term_in_blob(term: str) -> bool:
+        token = normalize_term(term).strip()
+        if not token:
+            return False
+        if boundary:
+            return re.search(rf"(?<![a-z0-9]){re.escape(token)}(?![a-z0-9])", blob) is not None
+        return token in blob
+
+    any_terms = [normalize_term(term) for term in normalize_list(rule.get("any_terms")) if str(term).strip()]
+    all_terms = [normalize_term(term) for term in normalize_list(rule.get("all_terms")) if str(term).strip()]
+    any_tokens = [normalize_term(term) for term in normalize_list(rule.get("any_tokens")) if str(term).strip()]
+    all_tokens = [normalize_term(term) for term in normalize_list(rule.get("all_tokens")) if str(term).strip()]
+    matched_terms = sorted({term for term in any_terms + all_terms if term_in_blob(term)})
+    matched_tokens = sorted({term for term in any_tokens + all_tokens if term in normalized_tokens})
+    checks: List[bool] = []
+    if any_terms:
+        checks.append(bool(set(matched_terms) & set(any_terms)))
+    if all_terms:
+        checks.append(set(all_terms).issubset(set(matched_terms)))
+    if any_tokens:
+        checks.append(bool(set(matched_tokens) & set(any_tokens)))
+    if all_tokens:
+        checks.append(set(all_tokens).issubset(set(matched_tokens)))
+    matched = bool(checks) and all(checks)
+    return {
+        "matched": matched,
+        "matched_terms": matched_terms,
+        "matched_tokens": matched_tokens,
+        "matched_rule_id": str(rule.get("id") or "") or None,
     }
-    ambient_by_family = {
-        "horror": {"tense", "uncanny", "noir", "liminal", "dark", "shadow", "fog", "suspense", "gothic"},
-        "fantasy": {"dream", "dreamy", "reflection", "mirror", "screen", "scale", "cosplay"},
-        "urban": {"interior", "transport", "night", "market", "office", "parking"},
-        "human": {"fashion", "social", "lifestyle", "beauty", "ordinary"},
-        "homebody_room": {"home", "interior", "creator_room", "cozy", "casual", "quiet", "snacks", "controller"},
-        "product": {"studio", "macro", "glass", "metal", "reflection", "display"},
-        "jewelry": {"product", "studio", "glass", "polished", "highlight"},
-        "craft": {"tools", "hands", "material", "dust", "work"},
-        "documentary": {"handheld", "natural", "realism", "unpolished", "snapshot"},
-        "wildlife": {"field", "snow", "forest", "mist", "weather", "natural"},
-        "food": {"market", "table", "tent", "warm", "night", "plate"},
-        "analog": {"grain", "scratch", "dust", "faded", "compact", "vhs", "ccd"},
-    }
-    strong_terms = strong_by_family.get(family, set())
-    ambient_terms = ambient_by_family.get(family, set())
-    if tokens & strong_terms or any(term in blob for term in strong_terms):
-        return "strong"
-    if tokens & ambient_terms or any(term in blob for term in ambient_terms):
-        return "ambient"
-    return "none"
+
+
+def first_policy_match(raw_rules: Any, entry: Entry, matched_via: str) -> Optional[JsonDict]:
+    for index, rule in enumerate(normalize_match_rules(raw_rules)):
+        result = evaluate_match(rule, entry)
+        if not result.get("matched"):
+            continue
+        rule_id = result.get("matched_rule_id") or f"{matched_via}[{index}]"
+        return {
+            "matched_via": matched_via,
+            "matched_rule_id": rule_id,
+            "matched_terms": sorted(set(result.get("matched_terms", [])) | set(result.get("matched_tokens", []))),
+        }
+    return None
+
+
+def policy_signal_lexicon_strength(entry: Entry, family: str, source: Optional[JsonDict]) -> tuple[str, Optional[JsonDict]]:
+    lexicon = semantic_policy_family_config(source, family).get("signal_lexicon", {}) or {}
+    if not isinstance(lexicon, dict):
+        return "none", None
+    for tier in ("strong", "ambient"):
+        matched_via = f"semantic_policy.families.{family}.signal_lexicon.{tier}"
+        summary = first_policy_match(lexicon.get(tier), entry, matched_via)
+        if summary:
+            return tier, summary
+    return "none", None
+
+
+def family_signal_strength_summary(
+    entry: Entry,
+    family: str,
+    rules: Optional[JsonDict] = None,
+    slot: str = "",
+    source: Optional[JsonDict] = None,
+) -> tuple[str, Optional[JsonDict]]:
+    rules = rules or {}
+    entry_id = str(entry.get("id", ""))
+    explicit = family_id_signal_strength(entry_id, family, rules)
+    if explicit != "none":
+        return explicit, {
+            "matched_via": f"coherence_rules.family_strength.{family}.{explicit}",
+            "matched_rule_id": entry_id,
+            "matched_terms": [],
+        }
+    metadata_strength = metadata_family_signal_strength(entry, slot, family, source)
+    if metadata_strength != "none":
+        return metadata_strength, {
+            "matched_via": f"semantic_metadata.axis_signals.{family}_{metadata_strength}",
+            "matched_rule_id": entry_id,
+            "matched_terms": [],
+        }
+    return policy_signal_lexicon_strength(entry, family, source)
 
 
 def family_signal_strength(
@@ -1977,15 +2053,8 @@ def family_signal_strength(
     slot: str = "",
     source: Optional[JsonDict] = None,
 ) -> str:
-    rules = rules or {}
-    entry_id = str(entry.get("id", ""))
-    explicit = family_id_signal_strength(entry_id, family, rules)
-    if explicit != "none":
-        return explicit
-    metadata_strength = metadata_family_signal_strength(entry, slot, family, source)
-    if metadata_strength != "none":
-        return metadata_strength
-    return fallback_family_signal_strength(entry, family)
+    strength, _summary = family_signal_strength_summary(entry, family, rules, slot, source)
+    return strength
 
 
 def entry_conflicts_with_family(
@@ -2035,7 +2104,7 @@ def semantic_coherence_factor(
     factor = 1.0
     events: List[JsonDict] = []
     for family in active_families:
-        routed_slot = slot in SEMANTIC_AXIS_SLOT_ROUTES.get(family, ())
+        routed_slot = slot in semantic_axis_route_slots(context, family)
         strength = family_signal_strength(item, family, rules, slot, context)
         if routed_slot and strength == "strong":
             boost = float(config.get("coherence_strong_boost", 1.18))
@@ -2084,6 +2153,18 @@ def picked_has_family_strength(
     )
 
 
+def coverage_repair_config(context: Optional[JsonDict], family: str) -> JsonDict:
+    config = semantic_policy_family_config(context, family).get("coverage_repair", {}) or {}
+    return config if isinstance(config, dict) else {}
+
+
+def coverage_repair_slots(context: Optional[JsonDict], family: str) -> tuple[str, ...]:
+    configured = normalize_list(coverage_repair_config(context, family).get("target_slots"))
+    if configured:
+        return tuple(configured)
+    return ()
+
+
 def weak_horror_compensation_needed(context: JsonDict, picked: Dict[str, Entry]) -> bool:
     if "horror" not in context_axis_families(context):
         return False
@@ -2094,7 +2175,7 @@ def weak_horror_compensation_needed(context: JsonDict, picked: Dict[str, Entry])
     mood_strength = family_signal_strength(mood, "horror", rules, "mood", context)
     if mood_strength != "ambient":
         return False
-    return not picked_has_family_strength(picked, context, "horror", "strong", WEAK_HORROR_COMPENSATION_SLOTS)
+    return not picked_has_family_strength(picked, context, "horror", "strong", coverage_repair_slots(context, "horror"))
 
 
 def weak_horror_compensation_factor(
@@ -2103,7 +2184,7 @@ def weak_horror_compensation_factor(
     context: JsonDict,
     picked: Dict[str, Entry],
 ) -> tuple[float, JsonDict]:
-    if slot not in WEAK_HORROR_COMPENSATION_SLOTS or not weak_horror_compensation_needed(context, picked):
+    if slot not in coverage_repair_slots(context, "horror") or not weak_horror_compensation_needed(context, picked):
         return 1.0, {"active": False, "factor": 1.0}
     rules = coherence_rules_from_source(context)
     strength = family_signal_strength(item, "horror", rules, slot, context)
@@ -2188,7 +2269,8 @@ def make_semantic_context(
         semantic_dimensions,
     )
     dimensions = int(index.get("embedding_dimensions", semantic_dimensions))
-    axis_payload = extract_intent_axes(intent, intent_axes, semantic_axis_mode, intent_source)
+    semantic_policy = data.get("semantic_policy", {}) or {}
+    axis_payload = extract_intent_axes(intent, intent_axes, semantic_axis_mode, intent_source, data)
     query_vector = embed_single_semantic_text(
         intent,
         model=semantic_model,
@@ -2198,8 +2280,8 @@ def make_semantic_context(
     axis_vectors = []
     for item in axis_payload["items"]:
         text = str(item["text"])
-        embedding_text = semantic_axis_embedding_text(text)
-        families = axis_families_for_text(text) or axis_families_for_text(embedding_text)
+        embedding_text = semantic_axis_embedding_text(text, data)
+        families = axis_families_for_text(text, data) or axis_families_for_text(embedding_text, data)
         if clean_intent_axis(embedding_text).lower() == clean_intent_axis(intent).lower():
             vector = query_vector
         else:
@@ -2231,6 +2313,9 @@ def make_semantic_context(
         "index": index,
         "coherence_rules": data.get("coherence_rules", {}) or {},
         "semantic_metadata": data.get("semantic_metadata", {}) or {},
+        "semantic_policy": semantic_policy,
+        "policy_schema_version": semantic_policy_schema_version(data),
+        "semantic_policy_hash": semantic_policy_digest(semantic_policy),
         "query_vector": query_vector,
         "semantic_axis_mode": semantic_axis_mode,
         "intent_axes": axis_payload,
@@ -2329,11 +2414,7 @@ def semantic_filter_factor(context: JsonDict, filter_match: Optional[bool]) -> f
 
 
 def routed_axis_items(context: JsonDict, slot: str) -> List[JsonDict]:
-    routed_families = {
-        family
-        for family, slots in SEMANTIC_AXIS_SLOT_ROUTES.items()
-        if slot in slots
-    }
+    routed_families = semantic_axis_routed_families_for_slot(context, slot)
     if not routed_families:
         return []
     return [
@@ -2357,9 +2438,7 @@ def semantic_axis_relevance(vector: Sequence[float], context: JsonDict, slot: st
     routed = [
         item
         for item in scored_axes
-        if set(item.get("families", [])) & {
-            family for family, slots in SEMANTIC_AXIS_SLOT_ROUTES.items() if slot in slots
-        }
+        if set(item.get("families", [])) & semantic_axis_routed_families_for_slot(context, slot)
     ]
     routed_item = max(routed, key=lambda item: item["score"], default=None)
     return {
@@ -2413,7 +2492,7 @@ def active_must_cover_bonus(
     if axis_index < 0 or axis_index >= len(axis_vectors):
         return 0.0, {"active": False, "score": 0.0}
     families = set(axis_vectors[axis_index].get("families", []))
-    routed_slots = {routed_slot for family in families for routed_slot in SEMANTIC_AXIS_SLOT_ROUTES.get(family, ())}
+    routed_slots = {routed_slot for family in families for routed_slot in semantic_axis_route_slots(context, family)}
     if routed_slots and slot not in routed_slots:
         return 0.0, {
             "active": True,
@@ -2748,8 +2827,10 @@ def compatible_preset_with_semantic_hard_guards(preset: Entry, context: JsonDict
     tokens = facet_tokens(preset)
     if "safety_tier:adult_only" in tokens and not semantic_intent_allows_adult_context(context):
         return False, "adult_only"
-    if "homebody_room" in context_axis_families(context) and not preset_has_homebody_room_signal(preset):
-        return False, "homebody_room_preset"
+    for family in sorted(context_axis_families(context)):
+        preset_policy = family_preset_policy(context, family)
+        if preset_policy and not preset_has_family_policy_signal(preset, context, family):
+            return False, f"{family}_preset"
     return True, None
 
 
@@ -3205,6 +3286,81 @@ def apply_surreal_layer(
             sync_generation_contract_axis_coverage(generation_contract, semantic_context)
 
 
+def apply_coverage_repair(
+    data: JsonDict,
+    preset: JsonDict,
+    rng: random.Random,
+    picked: Dict[str, Entry],
+    family: str,
+    forced_choices: Optional[Dict[str, List[str]]] = None,
+    semantic_context: Optional[JsonDict] = None,
+    generation_contract: Optional[JsonDict] = None,
+) -> None:
+    if not semantic_context:
+        return
+    repair = coverage_repair_config(semantic_context, family)
+    candidate_slots = coverage_repair_slots(semantic_context, family)
+    trace_key = "weak_horror_compensation" if family == "horror" else f"{family}_coverage_repair"
+    trace: JsonDict = {
+        "status": "not_needed",
+        "reason": "strong_horror_present_or_not_applicable" if family == "horror" else "coverage_satisfied_or_not_applicable",
+        "reason_code": f"{family}_coverage_repair_not_needed",
+        "family": family,
+        "policy_id": str(repair.get("policy_id") or semantic_policy_id(semantic_context, family)),
+        "policy_schema_version": semantic_policy_schema_version(semantic_context),
+        "semantic_policy_hash": semantic_context.get("semantic_policy_hash"),
+        "matched_via": f"semantic_policy.families.{family}.coverage_repair",
+        "matched_terms": [],
+        "candidate_slots": list(candidate_slots),
+        "repair_attempts": [],
+    }
+    if family != "horror" or not weak_horror_compensation_needed(semantic_context, picked):
+        semantic_context[trace_key] = trace
+        return
+    forced_slots = set((forced_choices or {}).keys())
+    for slot in candidate_slots:
+        if slot in picked or slot in forced_slots or slot not in data.get("slots", {}):
+            continue
+        entry = choose_slot(slot, data, preset, rng, picked, forced_choices, semantic_context, generation_contract)
+        if entry is None:
+            trace["repair_attempts"].append({"slot": slot, "selected": None, "status": "empty"})
+            continue
+        picked[slot] = entry
+        refresh_generation_contract(generation_contract, data, preset, picked, forced_choices)
+        sync_generation_contract_axis_coverage(generation_contract, semantic_context)
+        strength = family_signal_strength(entry, "horror", coherence_rules_from_source(semantic_context), slot, semantic_context)
+        semantic_context[trace_key] = {
+            "status": "applied" if strength == "strong" else "attempted",
+            "reason_code": f"{family}_coverage_repair_selected",
+            "family": family,
+            "policy_id": trace["policy_id"],
+            "policy_schema_version": trace["policy_schema_version"],
+            "semantic_policy_hash": trace["semantic_policy_hash"],
+            "matched_via": trace["matched_via"],
+            "matched_terms": [],
+            "slot": slot,
+            "selected": entry.get("id"),
+            "strength": strength,
+            "repair_attempts": trace["repair_attempts"] + [
+                {"slot": slot, "selected": entry.get("id"), "strength": strength}
+            ],
+        }
+        return
+    semantic_context[trace_key] = {
+        "status": "blocked_by_forced_set" if forced_slots & set(candidate_slots) else "blocked",
+        "reason": "no_available_compensation_slot",
+        "reason_code": f"{family}_coverage_repair_blocked",
+        "family": family,
+        "policy_id": trace["policy_id"],
+        "policy_schema_version": trace["policy_schema_version"],
+        "semantic_policy_hash": trace["semantic_policy_hash"],
+        "matched_via": trace["matched_via"],
+        "matched_terms": [],
+        "forced_slots": sorted(forced_slots & set(candidate_slots)),
+        "repair_attempts": trace["repair_attempts"],
+    }
+
+
 def apply_weak_horror_compensation(
     data: JsonDict,
     preset: JsonDict,
@@ -3214,45 +3370,23 @@ def apply_weak_horror_compensation(
     semantic_context: Optional[JsonDict] = None,
     generation_contract: Optional[JsonDict] = None,
 ) -> None:
-    if not semantic_context:
-        return
-    trace: JsonDict = {
-        "status": "not_needed",
-        "reason": "strong_horror_present_or_not_applicable",
-        "candidate_slots": list(WEAK_HORROR_COMPENSATION_SLOTS),
-    }
-    if not weak_horror_compensation_needed(semantic_context, picked):
-        semantic_context["weak_horror_compensation"] = trace
-        return
-    forced_slots = set((forced_choices or {}).keys())
-    for slot in ("texture", "light_shape", "weather", "color", "lighting"):
-        if slot in picked or slot in forced_slots or slot not in data.get("slots", {}):
-            continue
-        entry = choose_slot(slot, data, preset, rng, picked, forced_choices, semantic_context, generation_contract)
-        if entry is None:
-            continue
-        picked[slot] = entry
-        refresh_generation_contract(generation_contract, data, preset, picked, forced_choices)
-        sync_generation_contract_axis_coverage(generation_contract, semantic_context)
-        strength = family_signal_strength(entry, "horror", coherence_rules_from_source(semantic_context), slot, semantic_context)
-        semantic_context["weak_horror_compensation"] = {
-            "status": "applied" if strength == "strong" else "attempted",
-            "slot": slot,
-            "selected": entry.get("id"),
-            "strength": strength,
-        }
-        return
-    semantic_context["weak_horror_compensation"] = {
-        "status": "blocked_by_forced_set" if forced_slots & set(WEAK_HORROR_COMPENSATION_SLOTS) else "blocked",
-        "reason": "no_available_compensation_slot",
-        "forced_slots": sorted(forced_slots & set(WEAK_HORROR_COMPENSATION_SLOTS)),
-    }
+    apply_coverage_repair(
+        data,
+        preset,
+        rng,
+        picked,
+        "horror",
+        forced_choices,
+        semantic_context,
+        generation_contract,
+    )
 
 
-def route_slots_for_axis_gap(gap: JsonDict) -> List[str]:
+def route_slots_for_axis_gap(gap: JsonDict, semantic_context: Optional[JsonDict] = None) -> List[str]:
     ordered: List[str] = []
+    source = semantic_context or (gap.get("semantic_context") if isinstance(gap.get("semantic_context"), dict) else None)
     for family in gap.get("families", []):
-        for slot in SEMANTIC_AXIS_SLOT_ROUTES.get(str(family), ()):
+        for slot in semantic_axis_route_slots(source, str(family)):
             if slot not in ordered:
                 ordered.append(slot)
     return ordered
@@ -3279,7 +3413,7 @@ def apply_axis_coverage_compensation(
     for gap in gaps:
         if attempts >= max_attempts:
             break
-        slots = route_slots_for_axis_gap(gap)
+        slots = route_slots_for_axis_gap(gap, semantic_context)
         if not slots:
             record_generation_contract_event(
                 generation_contract,
@@ -3453,279 +3587,115 @@ def forced_required_subject_kinds(data: JsonDict, forced_choices: Dict[str, List
     return required
 
 
-def entry_has_human_signal(entry: Entry) -> bool:
-    tokens = entry_context_tokens(entry) | facet_tokens(entry)
-    return "human" in tokens or "subject_kind:human" in tokens
+def family_preset_policy(context: Optional[JsonDict], family: str) -> JsonDict:
+    policy = semantic_policy_family_config(context, family).get("preset_policy", {}) or {}
+    return policy if isinstance(policy, dict) else {}
 
 
-def entry_has_urban_signal(entry: Entry) -> bool:
-    tokens = entry_context_tokens(entry) | facet_tokens(entry)
-    entry_id = str(entry.get("id", "")).lower()
-    return bool(
-        tokens & {"urban", "street", "city", "place_type:urban", "place_type:street"}
-        or any(fragment in entry_id for fragment in ("urban", "city", "street", "alley", "subway", "neon"))
-    )
+def family_preset_allow_ids(context: Optional[JsonDict], family: str) -> Set[str]:
+    ids = set(normalize_list(family_preset_policy(context, family).get("allow_ids")))
+    return ids
 
 
-HOMEBODY_ROOM_CORE_SIGNAL_IDS: Dict[str, Set[str]] = {
-    "medium": {
-        "documentary_photo",
-        "lifestyle_photo",
-        "smartphone_snapshot",
-        "vhs_video_frame_photo",
-    },
-    "genre": {
-        "portrait",
-        "lifestyle",
-        "interior",
-    },
-    "subject": {
-        "gamer_streamer",
-    },
-    "world": {
-        "lived_in_homebody_room",
-    },
-    "location": {
-        "cozy_apartment",
-        "dim_monitor_glow_bedroom",
-        "esports_room",
-        "floor_mattress_gaming_corner",
-        "small_messy_gaming_bedroom",
-    },
-    "action": {
-        "checking_game_controller",
-        "eating_snacks_while_gaming",
-        "slouched_in_gaming_chair",
-        "wrapped_in_blanket_gaming",
-    },
-    "prop": {
-        "energy_drink_cans_prop",
-        "game_controller_prop",
-        "gaming_headset_on_desk_prop",
-        "gaming_keyboard_mouse_prop",
-        "instant_ramen_cup_prop",
-        "messy_snacks_prop",
-        "rumpled_blanket_prop",
-        "tangled_charging_cables_prop",
-    },
-    "wardrobe_style": {
-        "faded_hoodie_sweatpants",
-        "hoodie_shorts_sneakers",
-        "loose_pajama_homewear",
-    },
-    "lighting": {
-        "monitor_glow",
-        "tungsten",
-    },
-    "light_type": {
-        "monitor_glow",
-        "tungsten_practical",
-    },
-    "light_shape": {
-        "monitor_rectangle_glow",
-    },
-}
+def family_preset_deny_ids(context: Optional[JsonDict], family: str) -> Set[str]:
+    ids = set(normalize_list(family_preset_policy(context, family).get("deny_ids")))
+    return ids
 
 
-HOMEBODY_ROOM_SUPPORT_SIGNAL_IDS: Dict[str, Set[str]] = {
-    "medium": {
-        "social_media_post",
-    },
-    "genre": {
-        "shortform_social",
-    },
-    "location": {
-        "bright_window_silhouette_room",
-        "pale_woven_floor_room",
-    },
-    "action": {
-        "checking_phone",
-        "looking_window",
-        "sleeping",
-        "standing_silence",
-    },
-    "prop": {
-        "over_ear_headphones",
-        "smartphone_in_hand",
-    },
-    "wardrobe_style": {
-        "knit_cardigan_jeans",
-    },
-    "lighting": {
-        "chiaroscuro_window_light",
-        "soft_window",
-        "window_blowout_backlight",
-    },
-    "light_shape": {
-        "blinds_stripes",
-        "diffused_ambient",
-        "screen_rectangle_mask",
-        "venetian_blind_shadows",
-        "window_rectangle",
-    },
-    "mood": {
-        "calm",
-        "intimate",
-        "casual_authentic",
-        "quiet_surreal_optical",
-        "nostalgic",
-    },
-    "texture": {
-        "fine_grain",
-        "rough_grain",
-        "halation",
-        "screen_grab_softness",
-        "cool_digicam_grain",
-        "vhs_noise",
-        "vhs_scanline_texture",
-        "light_leak_burn",
-    },
-}
+def family_preset_fallback_terms(context: Optional[JsonDict], family: str) -> List[str]:
+    terms = normalize_list(family_preset_policy(context, family).get("fallback_terms"))
+    return terms
 
 
-HOMEBODY_ROOM_SIGNAL_IDS: Dict[str, Set[str]] = {
-    slot: set(HOMEBODY_ROOM_CORE_SIGNAL_IDS.get(slot, set())) | set(HOMEBODY_ROOM_SUPPORT_SIGNAL_IDS.get(slot, set()))
-    for slot in set(HOMEBODY_ROOM_CORE_SIGNAL_IDS) | set(HOMEBODY_ROOM_SUPPORT_SIGNAL_IDS)
-}
-
-
-HOMEBODY_ROOM_PRESET_IDS: Set[str] = {
-    "interior_lifestyle",
-    "esports_streamer_room",
-    "vhs_camcorder_home_video",
-}
-
-
-HOMEBODY_ROOM_DENY_IDS: Set[str] = {
-    "pc_bang_neon_session",
-    "pc_bang_gamer",
-    "pc_bang_neon_room",
-    "gaming_pc_bang_session",
-    "creator_desk_setup_flatlay",
-    "creator_desk_setup",
-    "creator_brand_profile",
-    "clean_social",
-    "cozy_creator",
-    "clean_mirror_selfie_snapshot",
-    "selfie_mirror_snapshot",
-    "gas_station_passenger_seat_lifestyle",
-    "gas_station_car_passenger_seat_night",
-    "passenger_seat_coffee_window_gaze",
-    "floor_selfie_creator",
-    "bedroom_mirror",
-    "creator_room",
-    "modern_apartment_living_room",
-    "minimal_korean_living_room",
-    "plain_wall_mirror_selfie_room",
-    "simple_indoor_selfie_room",
-    "coffee_cup_prop",
-    "takeaway_coffee_cup",
-    "clear_case_smartphone",
-    "pouring_coffee",
-    "holding_coffee_phone",
-    "writing_notes",
-    "editing_laptop",
-    "high_angle_floor_selfie_pose",
-}
-
-
-HOMEBODY_CONCEPT_LOCK_PROMOTIONS: Dict[str, tuple[tuple[tuple[str, ...], tuple[str, ...]], ...]] = {
-    "prop": (
-        (("게임패드", "컨트롤러", "gamepad", "game controller", "controller"), ("game_controller_prop",)),
-        (("간식", "과자", "스낵", "snack", "snacks", "chips"), ("messy_snacks_prop",)),
-        (("라면", "ramen"), ("instant_ramen_cup_prop",)),
-        (("에너지드링크", "energy drink", "energy-drink"), ("energy_drink_cans_prop",)),
-        (("담요", "이불", "blanket"), ("rumpled_blanket_prop",)),
-    ),
-    "lighting": (
-        (("모니터", "스크린", "monitor", "screen"), ("monitor_glow",)),
-    ),
-    "light_type": (
-        (("모니터", "스크린", "monitor", "screen"), ("monitor_glow",)),
-    ),
-    "light_shape": (
-        (("모니터", "스크린", "monitor", "screen"), ("monitor_rectangle_glow",)),
-    ),
-    "location": (
-        (
-            ("작은 방", "좁은 방", "침실", "방구석", "small room", "small bedroom", "bedroom"),
-            ("small_messy_gaming_bedroom", "dim_monitor_glow_bedroom", "floor_mattress_gaming_corner"),
-        ),
-        (
-            ("모니터", "스크린", "monitor", "screen"),
-            ("dim_monitor_glow_bedroom", "small_messy_gaming_bedroom"),
-        ),
-    ),
-}
-
-
-HOMEBODY_REDUNDANT_ACTION_PROPS: Dict[str, Set[str]] = {
-    "checking_game_controller": {"game_controller_prop"},
-    "wrapped_in_blanket_gaming": {"rumpled_blanket_prop"},
-    "eating_snacks_while_gaming": {"energy_drink_cans_prop", "instant_ramen_cup_prop", "messy_snacks_prop"},
-}
-
-
-def preset_has_homebody_room_signal(preset: Entry) -> bool:
+def preset_has_family_policy_signal(preset: Entry, context: Optional[JsonDict], family: str) -> bool:
     preset_id = str(preset.get("id", ""))
-    if preset_id in HOMEBODY_ROOM_DENY_IDS:
+    if preset_id in family_preset_deny_ids(context, family):
         return False
-    if preset_id in HOMEBODY_ROOM_PRESET_IDS:
+    if preset_id in family_preset_allow_ids(context, family):
         return True
     blob = " ".join(str(preset.get(key, "")) for key in ("id", "en", "ko", "embedding_text", "semantic_anchor")).lower()
     word_blob = re.sub(r"[_-]+", " ", blob)
-    return bool(
-        re.search(r"(?<![a-z0-9])(home|homebody|bedroom|gaming bedroom|streamer room|esports room)(?![a-z0-9])", word_blob)
-    )
+    for term in family_preset_fallback_terms(context, family):
+        token = str(term).lower().strip()
+        if token and re.search(rf"(?<![a-z0-9]){re.escape(token)}(?![a-z0-9])", word_blob):
+            return True
+    return False
 
 
-def homebody_room_signal_tier(entry: Entry, slot: str) -> Optional[str]:
+def preset_has_homebody_room_signal(preset: Entry, context: Optional[JsonDict] = None) -> bool:
+    return preset_has_family_policy_signal(preset, context, "homebody_room")
+
+
+def family_slot_signal_config(context: Optional[JsonDict], family: str, slot: str) -> JsonDict:
+    signals = semantic_policy_family_config(context, family).get("slot_signals", {}) or {}
+    if not isinstance(signals, dict):
+        return {}
+    slot_config = signals.get(slot, {}) or {}
+    return slot_config if isinstance(slot_config, dict) else {}
+
+
+def family_slot_signal_ids(context: Optional[JsonDict], family: str, slot: str, tier: str) -> Set[str]:
+    ids = set(normalize_list(family_slot_signal_config(context, family, slot).get(tier)))
+    return ids
+
+
+def family_slot_has_explicit_signal_ids(context: Optional[JsonDict], family: str, slot: str) -> bool:
+    config = family_slot_signal_config(context, family, slot)
+    return bool(normalize_list(config.get("core")) or normalize_list(config.get("support")))
+
+
+def family_slot_term_rules(context: Optional[JsonDict], family: str, slot: str, tier: str) -> Any:
+    term_rules = family_slot_signal_config(context, family, slot).get("term_rules", {}) or {}
+    if not isinstance(term_rules, dict):
+        return []
+    return term_rules.get(tier)
+
+
+def family_slot_default_term_rules(context: Optional[JsonDict], family: str, tier: str) -> Any:
+    defaults = semantic_policy_family_config(context, family).get("slot_signal_defaults", {}) or {}
+    if not isinstance(defaults, dict):
+        return []
+    return defaults.get(tier)
+
+
+def slot_signal_tier_summary(
+    entry: Entry,
+    family: str,
+    slot: str,
+    context: Optional[JsonDict] = None,
+) -> tuple[Optional[str], Optional[JsonDict]]:
     entry_id = str(entry.get("id", ""))
-    if entry_id in HOMEBODY_ROOM_DENY_IDS:
-        return None
-    if entry_id in HOMEBODY_ROOM_CORE_SIGNAL_IDS.get(slot, set()):
-        return "core"
-    if entry_id in HOMEBODY_ROOM_SUPPORT_SIGNAL_IDS.get(slot, set()):
-        return "support"
-    if slot in HOMEBODY_ROOM_SIGNAL_IDS:
-        return None
-    tokens = entry_context_tokens(entry) | facet_tokens(entry)
-    blob = " ".join(str(entry.get(key, "")) for key in ("id", "en", "ko", "embedding_text")).lower()
-    word_blob = re.sub(r"[_-]+", " ", blob)
-    def has_word(*terms: str) -> bool:
-        return any(re.search(rf"(?<![a-z0-9]){re.escape(term)}(?![a-z0-9])", word_blob) for term in terms)
-    generic_terms = {"home", "interior", "gaming", "gamer", "monitor", "bedroom", "apartment", "desk", "blanket", "snacks"}
-    if slot == "subject":
-        return "support" if bool(tokens & {"gaming", "interior"} and ("gamer" in blob or "gaming" in blob)) else None
-    if slot == "medium":
-        return "support" if has_word("documentary", "lifestyle", "social", "smartphone", "vhs", "home") else None
-    if slot == "genre":
-        return "support" if has_word("portrait", "lifestyle", "interior", "shortform") else None
-    if slot == "location":
-        return "support" if has_word("apartment", "bedroom", "room", "desk", "esports", "home") else None
-    if slot in {"lighting", "light_type", "light_shape"}:
-        return "support" if has_word("monitor", "screen", "window", "tungsten", "ambient", "diffused", "lamp") else None
-    if slot == "action":
-        return "support" if bool(
-            tokens & {"home", "daily", "quiet", "gaming"}
-            or any(term in blob for term in ("checking", "sleep", "window", "phone", "floor"))
-        ) else None
-    if slot == "prop":
-        return "support" if bool(
-            tokens & {"gaming", "home"}
-            or has_word("keyboard", "mouse", "blanket", "snack", "snacks", "controller", "phone", "headphone", "smartphone")
-        ) else None
-    if slot == "wardrobe_style":
-        return "support" if bool(has_word("hoodie", "sweat", "cardigan", "jeans", "sneakers", "pajama")) else None
-    if slot == "mood":
-        return "support" if bool(tokens & {"quiet"} or any(term in blob for term in ("calm", "peaceful", "intimate", "casual", "quiet", "nostalgic"))) else None
-    if slot == "texture":
-        return "support" if has_word("halation", "screen", "digicam", "vhs", "light leak") else None
-    return "support" if any(term in blob for term in generic_terms) else None
+    if entry_id in family_preset_deny_ids(context, family):
+        return None, None
+    for tier in ("core", "support"):
+        if entry_id in family_slot_signal_ids(context, family, slot, tier):
+            return tier, {
+                "matched_via": f"semantic_policy.families.{family}.slot_signals.{slot}.{tier}",
+                "matched_rule_id": entry_id,
+                "matched_terms": [],
+            }
+    if family_slot_has_explicit_signal_ids(context, family, slot):
+        return None, None
+    for tier in ("core", "support"):
+        matched_via = f"semantic_policy.families.{family}.slot_signals.{slot}.term_rules.{tier}"
+        summary = first_policy_match(family_slot_term_rules(context, family, slot, tier), entry, matched_via)
+        if summary:
+            return tier, summary
+    for tier in ("core", "support"):
+        matched_via = f"semantic_policy.families.{family}.slot_signal_defaults.{tier}"
+        summary = first_policy_match(family_slot_default_term_rules(context, family, tier), entry, matched_via)
+        if summary:
+            return tier, summary
+    return None, None
 
 
-def entry_has_homebody_room_signal(entry: Entry, slot: str) -> bool:
-    return homebody_room_signal_tier(entry, slot) is not None
+def homebody_room_signal_tier(entry: Entry, slot: str, context: Optional[JsonDict] = None) -> Optional[str]:
+    tier, _summary = slot_signal_tier_summary(entry, "homebody_room", slot, context)
+    return tier
+
+
+def entry_has_homebody_room_signal(entry: Entry, slot: str, context: Optional[JsonDict] = None) -> bool:
+    return homebody_room_signal_tier(entry, slot, context) is not None
 
 
 def homebody_concept_lock_blob(context: Optional[JsonDict]) -> str:
@@ -3734,26 +3704,55 @@ def homebody_concept_lock_blob(context: Optional[JsonDict]) -> str:
     return " ".join(str(item) for item in locks if str(item).strip()).lower()
 
 
-def homebody_concept_lock_promoted_ids(context: Optional[JsonDict], slot: str) -> Set[str]:
+def family_concept_lock_promotion_rules(context: Optional[JsonDict], family: str, slot: str) -> List[JsonDict]:
+    promotions = semantic_policy_family_config(context, family).get("concept_lock_promotions", {}) or {}
+    configured = []
+    if isinstance(promotions, dict):
+        configured = [rule for rule in (promotions.get(slot, []) or []) if isinstance(rule, dict)]
+    return configured
+
+
+def family_concept_lock_promoted_ids(context: Optional[JsonDict], family: str, slot: str) -> Set[str]:
     blob = homebody_concept_lock_blob(context)
     if not blob:
         return set()
     promoted: Set[str] = set()
-    for terms, ids in HOMEBODY_CONCEPT_LOCK_PROMOTIONS.get(slot, ()):
+    for rule in family_concept_lock_promotion_rules(context, family, slot):
+        terms = normalize_list(rule.get("terms"))
+        ids = normalize_list(rule.get("ids"))
         if any(term.lower() in blob for term in terms):
             promoted.update(ids)
     return promoted
 
 
-def avoid_homebody_action_prop_redundancy(
+def homebody_concept_lock_promoted_ids(context: Optional[JsonDict], slot: str) -> Set[str]:
+    return family_concept_lock_promoted_ids(context, "homebody_room", slot)
+
+
+def family_redundancy_rules(context: Optional[JsonDict], family: str) -> List[JsonDict]:
+    rules = semantic_policy_family_config(context, family).get("redundancy_rules", []) or []
+    configured = [rule for rule in rules if isinstance(rule, dict)] if isinstance(rules, list) else []
+    return configured
+
+
+def apply_family_redundancy_rules(
+    slot: str,
     pool: Sequence[Entry],
     context: Optional[JsonDict],
     picked: Dict[str, Entry],
+    family: str,
 ) -> List[Entry]:
-    if not context or "homebody_room" not in context_axis_families(context):
+    if not context or family not in context_axis_families(context):
         return list(pool)
-    action_id = str((picked.get("action") or {}).get("id", ""))
-    redundant_ids = HOMEBODY_REDUNDANT_ACTION_PROPS.get(action_id, set())
+    redundant_ids: Set[str] = set()
+    for rule in family_redundancy_rules(context, family):
+        when_slot = str(rule.get("when_slot", ""))
+        when_id = str(rule.get("when_id", ""))
+        if str((picked.get(when_slot) or {}).get("id", "")) != when_id:
+            continue
+        suppress = rule.get("suppress", {}) or {}
+        if isinstance(suppress, dict):
+            redundant_ids.update(normalize_list(suppress.get(slot)))
     if not redundant_ids:
         return list(pool)
     filtered = [item for item in pool if str(item.get("id")) not in redundant_ids]
@@ -3762,41 +3761,28 @@ def avoid_homebody_action_prop_redundancy(
     record_intent_steering(
         context,
         {
-            "slot": "prop",
-            "reason": "homebody_room_prop_action_dedup",
+            "slot": slot,
+            "reason": f"{family}_{slot}_action_dedup",
+            "reason_code": f"{family}_{slot}_action_dedup",
+            "family": family,
             "before": len(pool),
             "after": len(filtered),
             "tier": "core",
+            "signal_tier": "core",
+            "matched_via": f"semantic_policy.families.{family}.redundancy_rules",
+            "matched_terms": [],
+            **policy_trace_fields(context, family),
         },
     )
     return filtered
 
 
-def entry_has_horror_signal(entry: Entry) -> bool:
-    tokens = entry_context_tokens(entry) | facet_tokens(entry)
-    blob = " ".join(
-        [
-            str(entry.get("id", "")),
-            str(entry.get("en", "")),
-            str(entry.get("ko", "")),
-        ]
-    ).lower()
-    horror_terms = {
-        "horror",
-        "fear",
-        "nightmare",
-        "terror",
-        "eerie",
-        "uncanny",
-        "tense",
-        "noir",
-        "gothic",
-        "dark",
-        "suspense",
-        "공포",
-        "악몽",
-    }
-    return bool(tokens & horror_terms or any(term in blob for term in horror_terms))
+def avoid_homebody_action_prop_redundancy(
+    pool: Sequence[Entry],
+    context: Optional[JsonDict],
+    picked: Dict[str, Entry],
+) -> List[Entry]:
+    return apply_family_redundancy_rules("prop", pool, context, picked, "homebody_room")
 
 
 def record_intent_steering(context: JsonDict, decision: JsonDict) -> None:
@@ -3808,6 +3794,136 @@ def record_intent_steering(context: JsonDict, decision: JsonDict) -> None:
         decisions.append(decision)
 
 
+def family_steering_slots(context: Optional[JsonDict], family: str) -> tuple[str, ...]:
+    configured = normalize_list(semantic_policy_family_config(context, family).get("steering_slots"))
+    return tuple(configured)
+
+
+def ordered_steering_families(context: JsonDict) -> List[str]:
+    active = context_axis_families(context)
+    priority = normalize_list(semantic_policy_from_source(context).get("steering_priority"))
+    ordered = [family for family in priority if family in active]
+    ordered.extend(sorted(family for family in active if family not in set(priority)))
+    return ordered
+
+
+def steering_signal_tier_summary(
+    entry: Entry,
+    family: str,
+    slot: str,
+    context: JsonDict,
+) -> tuple[Optional[str], Optional[JsonDict]]:
+    tier, summary = slot_signal_tier_summary(entry, family, slot, context)
+    if tier:
+        return tier, summary
+    if family_slot_has_explicit_signal_ids(context, family, slot):
+        return None, None
+    strength, summary = family_signal_strength_summary(entry, family, coherence_rules_from_source(context), slot, context)
+    if strength == "strong":
+        return "core", summary
+    if strength == "ambient":
+        return "support", summary
+    return None, None
+
+
+def steering_signal_tier(entry: Entry, family: str, slot: str, context: JsonDict) -> Optional[str]:
+    tier, _summary = steering_signal_tier_summary(entry, family, slot, context)
+    return tier
+
+
+def family_steering_reason_code(family: str, slot: str, concept_lock: bool = False) -> str:
+    if concept_lock:
+        return f"{family}_{slot}_concept_lock"
+    return f"{family}_{slot}"
+
+
+def family_steering_reason(context: Optional[JsonDict], family: str, slot: str, concept_lock: bool = False) -> str:
+    reason_code = family_steering_reason_code(family, slot, concept_lock)
+    labels = semantic_policy_family_config(context, family).get("steering_reason_labels", {}) or {}
+    if isinstance(labels, dict) and not concept_lock:
+        return str(labels.get(slot) or reason_code)
+    return reason_code
+
+
+def policy_trace_fields(context: Optional[JsonDict], family: str) -> JsonDict:
+    policy = semantic_policy_from_source(context)
+    return {
+        "policy_id": semantic_policy_id(context, family),
+        "policy_schema_version": semantic_policy_schema_version(context),
+        "semantic_policy_hash": (context or {}).get("semantic_policy_hash") or semantic_policy_digest(policy),
+    }
+
+
+def merge_match_summaries(summaries: Sequence[Optional[JsonDict]]) -> JsonDict:
+    usable = [summary for summary in summaries if summary]
+    if not usable:
+        return {}
+    matched_via = sorted({str(summary.get("matched_via")) for summary in usable if summary.get("matched_via")})
+    matched_rule_ids = sorted({str(summary.get("matched_rule_id")) for summary in usable if summary.get("matched_rule_id")})
+    matched_terms = sorted({str(term) for summary in usable for term in normalize_list(summary.get("matched_terms"))})
+    result: JsonDict = {
+        "matched_via": matched_via[0] if len(matched_via) == 1 else matched_via,
+        "matched_rule_id": matched_rule_ids[0] if len(matched_rule_ids) == 1 else matched_rule_ids,
+        "matched_terms": matched_terms,
+    }
+    return result
+
+
+def apply_family_steering(
+    slot: str,
+    pool: Sequence[Entry],
+    context: JsonDict,
+    family: str,
+) -> tuple[List[Entry], Optional[JsonDict]]:
+    if slot not in family_steering_slots(context, family):
+        return list(pool), None
+    promoted_ids = family_concept_lock_promoted_ids(context, family, slot)
+    signal_matches = [(item, *steering_signal_tier_summary(item, family, slot, context)) for item in pool]
+    promoted = [item for item, tier, _summary in signal_matches if str(item.get("id")) in promoted_ids and tier == "core"]
+    if promoted:
+        summaries = [summary for item, tier, summary in signal_matches if item in promoted and tier == "core"]
+        return promoted, {
+            "slot": slot,
+            "reason": family_steering_reason(context, family, slot, concept_lock=True),
+            "reason_code": family_steering_reason_code(family, slot, concept_lock=True),
+            "family": family,
+            "before": len(pool),
+            "after": len(promoted),
+            "tier": "core",
+            "signal_tier": "core",
+            "promoted_by_concept_lock": True,
+            "promoted_ids": sorted(promoted_ids),
+            **policy_trace_fields(context, family),
+            **merge_match_summaries(summaries),
+        }
+
+    core_steered = [item for item, tier, _summary in signal_matches if tier == "core"]
+    support_steered = [item for item, tier, _summary in signal_matches if tier == "support"]
+    if core_steered:
+        tier = "core"
+        steered = core_steered
+    elif support_steered:
+        tier = "support"
+        steered = support_steered
+    else:
+        return list(pool), None
+
+    summaries = [summary for item, item_tier, summary in signal_matches if item in steered and item_tier == tier]
+    decision = {
+        "slot": slot,
+        "reason": family_steering_reason(context, family, slot),
+        "reason_code": family_steering_reason_code(family, slot),
+        "family": family,
+        "before": len(pool),
+        "after": len(steered),
+        "tier": tier,
+        "signal_tier": tier,
+        **policy_trace_fields(context, family),
+        **merge_match_summaries(summaries),
+    }
+    return steered, decision
+
+
 def steer_semantic_candidate_pool(
     slot: str,
     pool: Sequence[Entry],
@@ -3815,67 +3931,11 @@ def steer_semantic_candidate_pool(
 ) -> List[Entry]:
     if not context or not intent_steering_enabled(context):
         return list(pool)
-    families = context_axis_families(context)
-    steered: List[Entry] = []
-    reason = ""
-    if slot == "subject" and "human" in families:
-        steered = [item for item in pool if entry_has_human_signal(item)]
-        reason = "human_subject"
-    if "homebody_room" in families:
-        steered = []
-        reason = ""
-        promoted_ids = homebody_concept_lock_promoted_ids(context, slot)
-        promoted = [
-            item
-            for item in pool
-            if str(item.get("id")) in promoted_ids and homebody_room_signal_tier(item, slot) == "core"
-        ]
-        if promoted:
-            steered = promoted
-            reason = f"homebody_room_{slot}_concept_lock"
-            tier = "core"
-            promoted_by_concept_lock = True
-        else:
-            core_steered = [item for item in pool if homebody_room_signal_tier(item, slot) == "core"]
-            support_steered = [item for item in pool if homebody_room_signal_tier(item, slot) == "support"]
-            if core_steered:
-                steered = core_steered
-                reason = f"homebody_room_{slot}"
-                tier = "core"
-            elif support_steered:
-                steered = support_steered
-                reason = f"homebody_room_{slot}"
-                tier = "support"
-            else:
-                tier = ""
-            promoted_by_concept_lock = False
-    elif slot == "location" and "urban" in families:
-        steered = [item for item in pool if entry_has_urban_signal(item)]
-        reason = "urban_location"
-        tier = ""
-        promoted_by_concept_lock = False
-    elif slot == "mood" and "horror" in families:
-        steered = [item for item in pool if entry_has_horror_signal(item)]
-        reason = "horror_mood"
-        tier = ""
-        promoted_by_concept_lock = False
-    else:
-        tier = ""
-        promoted_by_concept_lock = False
-    if steered:
-        decision = {
-            "slot": slot,
-            "reason": reason,
-            "before": len(pool),
-            "after": len(steered),
-        }
-        if tier:
-            decision["tier"] = tier
-        if promoted_by_concept_lock:
-            decision["promoted_by_concept_lock"] = True
-            decision["promoted_ids"] = sorted(homebody_concept_lock_promoted_ids(context, slot))
-        record_intent_steering(context, decision)
-        return steered
+    for family in ordered_steering_families(context):
+        steered, decision = apply_family_steering(slot, pool, context, family)
+        if decision:
+            record_intent_steering(context, decision)
+            return steered
     return list(pool)
 
 
@@ -3883,18 +3943,11 @@ def semantic_steering_slots(context: Optional[JsonDict], data: JsonDict) -> List
     if not context or not intent_steering_enabled(context):
         return []
     available = set(data.get("slots", {}).keys())
-    families = context_axis_families(context)
     wanted: List[str] = []
-    if "human" in families and "subject" in available:
-        wanted.append("subject")
-    if "homebody_room" in families:
-        for slot in SEMANTIC_AXIS_SLOT_ROUTES.get("homebody_room", ()):
+    for family in ordered_steering_families(context):
+        for slot in family_steering_slots(context, family):
             if slot in available and slot not in wanted:
                 wanted.append(slot)
-    if "urban" in families and "location" in available:
-        wanted.append("location")
-    if "horror" in families and "mood" in available:
-        wanted.append("mood")
     return wanted
 
 
@@ -5325,6 +5378,8 @@ def generate_once(
             "surreal_activation_reason": semantic_context.get("surreal_activation_reason"),
             "surreal_activation_active": semantic_context.get("surreal_activation_active"),
             "dictionary_hash": semantic_context.get("dictionary_hash"),
+            "policy_schema_version": semantic_context.get("policy_schema_version"),
+            "semantic_policy_hash": semantic_context.get("semantic_policy_hash"),
             "semantic_text_recipe": semantic_context.get("semantic_text_recipe"),
             "embedding_provider": semantic_context.get("embedding_provider"),
             "embedding_model": semantic_context.get("embedding_model"),
@@ -5373,6 +5428,8 @@ def generate_once(
             "weak_horror_compensation": {"status": "not_evaluated"},
             "surreal_activation_reason": "none",
             "surreal_activation_active": False,
+            "policy_schema_version": None,
+            "semantic_policy_hash": None,
             "slot_scores": [],
             "batch_index": batch_index,
             "batch_diversity": {

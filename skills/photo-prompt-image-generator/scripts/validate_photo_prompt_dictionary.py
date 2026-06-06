@@ -11,7 +11,6 @@ from typing import Any
 
 from prompt_generator import (
     DEFAULT_FACET_VOCAB,
-    SEMANTIC_AXIS_FAMILY_KEYWORDS,
     VALID_PRESET_DOMAINS,
     VALID_SUBJECT_CATEGORIES,
     load_json,
@@ -21,6 +20,18 @@ from prompt_generator import (
 
 VALID_AXIS_SIGNAL_SUFFIXES = {"strong", "ambient"}
 VALID_AXIS_SIGNAL_ALIASES = {"human_portrait"}
+VALID_MATCH_RULE_KEYS = {
+    "id",
+    "any_terms",
+    "all_terms",
+    "any_tokens",
+    "all_tokens",
+    "boundary",
+    "match_fields",
+    "case_sensitive",
+}
+VALID_MATCH_FIELDS = {"id", "en", "ko", "embedding_text", "semantic_anchor"}
+DEFAULT_CONCEPT_RECIPES = Path(__file__).resolve().parents[1] / "assets" / "concept_recipes.json"
 
 
 def merged_facet_vocab(data: dict[str, Any]) -> dict[str, set[str]]:
@@ -96,6 +107,23 @@ def entry_ids_by_slot(data: dict[str, Any]) -> dict[str, set[str]]:
     }
 
 
+def all_known_entry_ids(data: dict[str, Any]) -> set[str]:
+    by_slot = entry_ids_by_slot(data)
+    all_ids: set[str] = set()
+    for ids in by_slot.values():
+        all_ids |= ids
+    all_ids |= {str(preset.get("id")) for preset in data.get("presets", [])}
+    all_ids |= {str(recipe.get("id")) for recipe in data.get("recipes", [])}
+    all_ids |= {f"virtual:{recipe.get('id')}" for recipe in data.get("recipes", [])}
+    return all_ids
+
+
+def valid_semantic_families(data: dict[str, Any]) -> set[str]:
+    policy = data.get("semantic_policy", {}) or {}
+    families = (policy.get("families", {}) or {}) if isinstance(policy, dict) else {}
+    return {str(family) for family in families}
+
+
 def validate_coherence_rules(data: dict[str, Any], errors: list[str]) -> None:
     rules = data.get("coherence_rules", {}) or {}
     if rules and not isinstance(rules, dict):
@@ -104,13 +132,9 @@ def validate_coherence_rules(data: dict[str, Any], errors: list[str]) -> None:
     if not rules:
         return
 
-    valid_families = set(SEMANTIC_AXIS_FAMILY_KEYWORDS)
+    valid_families = valid_semantic_families(data)
     by_slot = entry_ids_by_slot(data)
-    all_ids = set()
-    for ids in by_slot.values():
-        all_ids |= ids
-    all_ids |= {str(preset.get("id")) for preset in data.get("presets", [])}
-    all_ids |= {str(recipe.get("id")) for recipe in data.get("recipes", [])}
+    all_ids = all_known_entry_ids(data)
 
     strengths = rules.get("family_strength", {}) or {}
     if strengths and not isinstance(strengths, dict):
@@ -163,7 +187,7 @@ def validate_semantic_metadata(data: dict[str, Any], errors: list[str]) -> None:
         return
 
     by_slot = entry_ids_by_slot(data)
-    valid_families = set(SEMANTIC_AXIS_FAMILY_KEYWORDS)
+    valid_families = valid_semantic_families(data)
 
     for key, slot in (("subject_groups", "subject"), ("location_tones", "location")):
         groups = metadata.get(key, {}) or {}
@@ -237,6 +261,378 @@ def validate_semantic_metadata(data: dict[str, Any], errors: list[str]) -> None:
                 errors.append(f"semantic_metadata.cliche_weights.{slot}.{entry_id}: must be between 0 and 1")
 
 
+def is_match_rule(value: Any) -> bool:
+    return isinstance(value, dict) and bool(set(value.keys()) & VALID_MATCH_RULE_KEYS)
+
+
+def validate_string_list(label: str, value: Any, errors: list[str]) -> None:
+    values = normalize_list(value)
+    if not values:
+        errors.append(f"{label}: at least one value is required")
+    for item in values:
+        if not str(item).strip():
+            errors.append(f"{label}: empty value")
+
+
+def validate_match_rule(label: str, rule: Any, errors: list[str]) -> None:
+    if isinstance(rule, str):
+        if not rule.strip():
+            errors.append(f"{label}: empty match term")
+        return
+    if not isinstance(rule, dict):
+        errors.append(f"{label}: must be a string or object")
+        return
+    for key in rule:
+        if key not in VALID_MATCH_RULE_KEYS:
+            errors.append(f"{label}: unknown match rule key {key}")
+    if not any(normalize_list(rule.get(key)) for key in ("any_terms", "all_terms", "any_tokens", "all_tokens")):
+        errors.append(f"{label}: any_terms, all_terms, any_tokens, or all_tokens is required")
+    for key in ("any_terms", "all_terms", "any_tokens", "all_tokens"):
+        if key in rule:
+            validate_string_list(f"{label}.{key}", rule.get(key), errors)
+    for key in ("boundary", "case_sensitive"):
+        if key in rule and not isinstance(rule.get(key), bool):
+            errors.append(f"{label}.{key}: must be a boolean")
+    for field in normalize_list(rule.get("match_fields")):
+        if field not in VALID_MATCH_FIELDS:
+            errors.append(f"{label}.match_fields: unknown field {field}")
+    if "id" in rule and not str(rule.get("id") or "").strip():
+        errors.append(f"{label}.id: must be non-empty")
+
+
+def validate_match_rules(label: str, rules: Any, errors: list[str]) -> None:
+    if rules is None:
+        errors.append(f"{label}: required")
+        return
+    if isinstance(rules, str) or is_match_rule(rules):
+        validate_match_rule(label, rules, errors)
+        return
+    if isinstance(rules, list):
+        if not rules:
+            errors.append(f"{label}: at least one rule is required")
+        for index, rule in enumerate(rules):
+            validate_match_rule(f"{label}[{index}]", rule, errors)
+        return
+    errors.append(f"{label}: must be a string, object, or list")
+
+
+def validate_semantic_policy(data: dict[str, Any], errors: list[str]) -> None:
+    policy = data.get("semantic_policy", {}) or {}
+    if policy and not isinstance(policy, dict):
+        errors.append("semantic_policy: must be an object")
+        return
+    if not policy:
+        return
+    try:
+        schema_version = int(policy.get("schema_version"))
+    except (TypeError, ValueError):
+        errors.append("semantic_policy.schema_version: must be 1")
+        schema_version = None
+    if schema_version != 1:
+        errors.append("semantic_policy.schema_version: must be 1")
+
+    families = policy.get("families", {}) or {}
+    if not isinstance(families, dict):
+        errors.append("semantic_policy.families: must be an object")
+        return
+
+    for family in normalize_list(policy.get("steering_priority")):
+        if family not in families:
+            errors.append(f"semantic_policy.steering_priority: unknown family {family}")
+
+    by_slot = entry_ids_by_slot(data)
+    all_ids = all_known_entry_ids(data)
+    valid_signal_tiers = {"core", "support", "strong", "ambient"}
+
+    for family, config in families.items():
+        family_label = f"semantic_policy.families.{family}"
+        if not isinstance(config, dict):
+            errors.append(f"{family_label}: must be an object")
+            continue
+        if not str(config.get("policy_id") or "").strip():
+            errors.append(f"{family_label}.policy_id: required")
+        if not (normalize_list(config.get("keywords")) or normalize_list(config.get("aliases"))):
+            errors.append(f"{family_label}: keywords or aliases are required")
+        for key in ("axis_label", "axis_embedding_text"):
+            if not str(config.get(key) or "").strip():
+                errors.append(f"{family_label}.{key}: required")
+        for key in ("routed_slots", "steering_slots"):
+            for slot in normalize_list(config.get(key)):
+                if slot not in by_slot:
+                    errors.append(f"{family_label}.{key}: unknown slot {slot}")
+
+        signal_lexicon = config.get("signal_lexicon", {}) or {}
+        if signal_lexicon and not isinstance(signal_lexicon, dict):
+            errors.append(f"{family_label}.signal_lexicon: must be an object")
+        elif isinstance(signal_lexicon, dict):
+            for tier, rules in signal_lexicon.items():
+                if tier not in {"strong", "ambient"}:
+                    errors.append(f"{family_label}.signal_lexicon: unknown tier {tier}")
+                    continue
+                validate_match_rules(f"{family_label}.signal_lexicon.{tier}", rules, errors)
+
+        reason_labels = config.get("steering_reason_labels", {}) or {}
+        if reason_labels and not isinstance(reason_labels, dict):
+            errors.append(f"{family_label}.steering_reason_labels: must be an object")
+        elif isinstance(reason_labels, dict):
+            for slot, label in reason_labels.items():
+                if slot not in by_slot:
+                    errors.append(f"{family_label}.steering_reason_labels: unknown slot {slot}")
+                if not str(label or "").strip():
+                    errors.append(f"{family_label}.steering_reason_labels.{slot}: must be non-empty")
+
+        preset_policy = config.get("preset_policy", {}) or {}
+        if preset_policy and not isinstance(preset_policy, dict):
+            errors.append(f"{family_label}.preset_policy: must be an object")
+        elif isinstance(preset_policy, dict):
+            allow_ids = set(normalize_list(preset_policy.get("allow_ids")))
+            deny_ids = set(normalize_list(preset_policy.get("deny_ids")))
+            overlap = allow_ids & deny_ids
+            if overlap:
+                errors.append(f"{family_label}.preset_policy: allow/deny overlap {sorted(overlap)}")
+            for key, ids in (("allow_ids", allow_ids), ("deny_ids", deny_ids)):
+                for entry_id in ids:
+                    if entry_id not in all_ids:
+                        errors.append(f"{family_label}.preset_policy.{key}: unknown id {entry_id}")
+
+        slot_signals = config.get("slot_signals", {}) or {}
+        if slot_signals and not isinstance(slot_signals, dict):
+            errors.append(f"{family_label}.slot_signals: must be an object")
+        elif isinstance(slot_signals, dict):
+            for slot, tiers in slot_signals.items():
+                slot_label = f"{family_label}.slot_signals.{slot}"
+                if slot not in by_slot:
+                    errors.append(f"{family_label}.slot_signals: unknown slot {slot}")
+                    continue
+                if not isinstance(tiers, dict):
+                    errors.append(f"{slot_label}: must be an object")
+                    continue
+                term_rules = tiers.get("term_rules", {}) or {}
+                if term_rules and not isinstance(term_rules, dict):
+                    errors.append(f"{slot_label}.term_rules: must be an object")
+                elif isinstance(term_rules, dict):
+                    for tier, rules in term_rules.items():
+                        if tier not in valid_signal_tiers:
+                            errors.append(f"{slot_label}.term_rules: unknown tier {tier}")
+                            continue
+                        validate_match_rules(f"{slot_label}.term_rules.{tier}", rules, errors)
+                tier_sets = {
+                    tier: set(normalize_list(ids))
+                    for tier, ids in tiers.items()
+                    if tier != "term_rules"
+                }
+                for tier, ids in tier_sets.items():
+                    if tier not in valid_signal_tiers:
+                        errors.append(f"{slot_label}: unknown tier {tier}")
+                        continue
+                    for entry_id in ids:
+                        if entry_id not in by_slot[slot]:
+                            errors.append(f"{slot_label}.{tier}: unknown {slot} id {entry_id}")
+                if tier_sets.get("core", set()) & tier_sets.get("support", set()):
+                    errors.append(f"{slot_label}: ids cannot be both core and support")
+
+        slot_defaults = config.get("slot_signal_defaults", {}) or {}
+        if slot_defaults and not isinstance(slot_defaults, dict):
+            errors.append(f"{family_label}.slot_signal_defaults: must be an object")
+        elif isinstance(slot_defaults, dict):
+            for tier, rules in slot_defaults.items():
+                if tier not in valid_signal_tiers:
+                    errors.append(f"{family_label}.slot_signal_defaults: unknown tier {tier}")
+                    continue
+                validate_match_rules(f"{family_label}.slot_signal_defaults.{tier}", rules, errors)
+
+        promotions = config.get("concept_lock_promotions", {}) or {}
+        if promotions and not isinstance(promotions, dict):
+            errors.append(f"{family_label}.concept_lock_promotions: must be an object")
+        elif isinstance(promotions, dict):
+            for slot, rules in promotions.items():
+                if slot not in by_slot:
+                    errors.append(f"{family_label}.concept_lock_promotions: unknown slot {slot}")
+                    continue
+                if not isinstance(rules, list):
+                    errors.append(f"{family_label}.concept_lock_promotions.{slot}: must be a list")
+                    continue
+                for index, rule in enumerate(rules):
+                    rule_label = f"{family_label}.concept_lock_promotions.{slot}[{index}]"
+                    if not isinstance(rule, dict):
+                        errors.append(f"{rule_label}: must be an object")
+                        continue
+                    if not normalize_list(rule.get("terms")):
+                        errors.append(f"{rule_label}.terms: required")
+                    ids = normalize_list(rule.get("ids"))
+                    if not ids:
+                        errors.append(f"{rule_label}.ids: required")
+                    for entry_id in ids:
+                        if entry_id not in by_slot[slot]:
+                            errors.append(f"{rule_label}.ids: unknown {slot} id {entry_id}")
+
+        redundancy_rules = config.get("redundancy_rules", []) or []
+        if redundancy_rules and not isinstance(redundancy_rules, list):
+            errors.append(f"{family_label}.redundancy_rules: must be a list")
+        elif isinstance(redundancy_rules, list):
+            for index, rule in enumerate(redundancy_rules):
+                rule_label = f"{family_label}.redundancy_rules[{index}]"
+                if not isinstance(rule, dict):
+                    errors.append(f"{rule_label}: must be an object")
+                    continue
+                when_slot = str(rule.get("when_slot") or "")
+                when_id = str(rule.get("when_id") or "")
+                if when_slot not in by_slot:
+                    errors.append(f"{rule_label}.when_slot: unknown slot {when_slot}")
+                elif when_id not in by_slot[when_slot]:
+                    errors.append(f"{rule_label}.when_id: unknown {when_slot} id {when_id}")
+                suppress = rule.get("suppress", {}) or {}
+                if not isinstance(suppress, dict):
+                    errors.append(f"{rule_label}.suppress: must be an object")
+                    continue
+                for slot, ids in suppress.items():
+                    if slot not in by_slot:
+                        errors.append(f"{rule_label}.suppress: unknown slot {slot}")
+                        continue
+                    for entry_id in normalize_list(ids):
+                        if entry_id not in by_slot[slot]:
+                            errors.append(f"{rule_label}.suppress.{slot}: unknown id {entry_id}")
+
+        repair = config.get("coverage_repair", {}) or {}
+        if repair and not isinstance(repair, dict):
+            errors.append(f"{family_label}.coverage_repair: must be an object")
+        elif isinstance(repair, dict):
+            for slot in normalize_list(repair.get("target_slots")):
+                if slot not in by_slot:
+                    errors.append(f"{family_label}.coverage_repair.target_slots: unknown slot {slot}")
+            for entry_id in normalize_list(repair.get("anchor_ids")):
+                if entry_id not in all_ids:
+                    errors.append(f"{family_label}.coverage_repair.anchor_ids: unknown id {entry_id}")
+            if "min_anchors" in repair:
+                try:
+                    int(repair.get("min_anchors"))
+                except (TypeError, ValueError):
+                    errors.append(f"{family_label}.coverage_repair.min_anchors: must be an integer")
+
+
+def parse_forced_set(raw: str) -> tuple[str, list[str]] | None:
+    if "=" not in raw:
+        return None
+    slot, ids_raw = raw.split("=", 1)
+    slot = slot.strip()
+    ids = [item.strip() for item in ids_raw.replace("|", ",").split(",") if item.strip()]
+    if not slot or not ids:
+        return None
+    return slot, ids
+
+
+def validate_recipe_set(label: str, set_value: Any, by_slot: dict[str, set[str]], errors: list[str]) -> None:
+    if not set_value:
+        return
+    forced_items: list[tuple[str, list[str]]] = []
+    if isinstance(set_value, dict):
+        forced_items = [(str(slot), normalize_list(ids)) for slot, ids in set_value.items()]
+    else:
+        for raw in normalize_list(set_value):
+            parsed = parse_forced_set(raw)
+            if parsed is None:
+                errors.append(f"{label}.set: invalid forced set {raw}")
+                continue
+            forced_items.append(parsed)
+    for slot, ids in forced_items:
+        if slot not in by_slot:
+            errors.append(f"{label}.set: unknown slot {slot}")
+            continue
+        for entry_id in ids:
+            if entry_id not in by_slot[slot]:
+                errors.append(f"{label}.set.{slot}: unknown id {entry_id}")
+
+
+def validate_recipe_slot_list(label: str, field: str, value: Any, by_slot: dict[str, set[str]], errors: list[str]) -> None:
+    for slot in normalize_list(value):
+        if slot not in by_slot:
+            errors.append(f"{label}.{field}: unknown slot {slot}")
+
+
+def validate_conditional_additional(label: str, recipe: dict[str, Any], by_slot: dict[str, set[str]], errors: list[str]) -> None:
+    rules = recipe.get("conditional_additional")
+    if rules is None:
+        return
+    if not isinstance(rules, list):
+        errors.append(f"{label}.conditional_additional: must be a list")
+        return
+    for index, rule in enumerate(rules):
+        rule_label = f"{label}.conditional_additional[{index}]"
+        if not isinstance(rule, dict):
+            errors.append(f"{rule_label}: must be an object")
+            continue
+        if not (normalize_list(rule.get("text")) or normalize_list(rule.get("additional"))):
+            errors.append(f"{rule_label}: text or additional is required")
+        for bool_key in ("requires_role", "requires_bundle"):
+            if bool_key in rule and not isinstance(rule.get(bool_key), bool):
+                errors.append(f"{rule_label}.{bool_key}: must be a boolean")
+        validate_recipe_slot_list(rule_label, "unless_user_set_slots_any", rule.get("unless_user_set_slots_any"), by_slot, errors)
+
+
+def validate_concept_recipe_entry(
+    label: str,
+    recipe: dict[str, Any],
+    data: dict[str, Any],
+    errors: list[str],
+) -> None:
+    by_slot = entry_ids_by_slot(data)
+    preset_ids = {str(preset.get("id")) for preset in data.get("presets", [])}
+    preset = str(recipe.get("preset") or "")
+    if preset and preset not in preset_ids:
+        errors.append(f"{label}.preset: unknown preset {preset}")
+    validate_recipe_set(label, recipe.get("set"), by_slot, errors)
+    validate_recipe_slot_list(label, "override_slots", recipe.get("override_slots"), by_slot, errors)
+    validate_recipe_slot_list(label, "bundle_override_slots", recipe.get("bundle_override_slots"), by_slot, errors)
+    validate_conditional_additional(label, recipe, by_slot, errors)
+
+
+def validate_concept_recipes(path: Path, data: dict[str, Any], errors: list[str]) -> None:
+    if not path.exists():
+        return
+    try:
+        recipes = json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        errors.append(f"concept_recipes: invalid JSON: {exc}")
+        return
+    if not isinstance(recipes, dict):
+        errors.append("concept_recipes: must be an object")
+        return
+    by_slot = entry_ids_by_slot(data)
+    validate_recipe_slot_list("concept_recipes", "bundle_override_slots", recipes.get("bundle_override_slots"), by_slot, errors)
+    validate_recipe_slot_list("concept_recipes", "override_slots", recipes.get("override_slots"), by_slot, errors)
+
+    roles = recipes.get("roles", {}) or {}
+    if roles and not isinstance(roles, dict):
+        errors.append("concept_recipes.roles: must be an object")
+    elif isinstance(roles, dict):
+        for role, recipe in roles.items():
+            if not isinstance(recipe, dict):
+                errors.append(f"concept_recipes.roles.{role}: must be an object")
+                continue
+            validate_concept_recipe_entry(f"concept_recipes.roles.{role}", recipe, data, errors)
+
+    mixins = recipes.get("mixins", {}) or {}
+    if mixins and not isinstance(mixins, dict):
+        errors.append("concept_recipes.mixins: must be an object")
+    elif isinstance(mixins, dict):
+        for mixin, recipe in mixins.items():
+            if not isinstance(recipe, dict):
+                errors.append(f"concept_recipes.mixins.{mixin}: must be an object")
+                continue
+            label = f"concept_recipes.mixins.{mixin}"
+            validate_concept_recipe_entry(label, recipe, data, errors)
+            bundles = recipe.get("bundles", []) or []
+            if bundles and not isinstance(bundles, list):
+                errors.append(f"{label}.bundles: must be a list")
+                continue
+            for index, bundle in enumerate(bundles):
+                bundle_label = f"{label}.bundles[{index}]"
+                if not isinstance(bundle, dict):
+                    errors.append(f"{bundle_label}: must be an object")
+                    continue
+                validate_concept_recipe_entry(bundle_label, bundle, data, errors)
+
+
 def validate_slot_applicability(data: dict[str, Any], errors: list[str]) -> None:
     config = data.get("slot_applicability", {}) or {}
     if config and not isinstance(config, dict):
@@ -304,6 +700,7 @@ def validate_slot_applicability(data: dict[str, Any], errors: list[str]) -> None
 def main() -> int:
     parser = argparse.ArgumentParser(description="Validate photo prompt dictionary semantic metadata.")
     parser.add_argument("--tags", default=Path(__file__).resolve().parents[1] / "assets" / "photo_prompt_tags.json")
+    parser.add_argument("--concept-recipes", default=DEFAULT_CONCEPT_RECIPES)
     args = parser.parse_args()
 
     data = load_json(args.tags)
@@ -312,8 +709,10 @@ def main() -> int:
 
     validate_filter_ids(data, errors)
     validate_coherence_rules(data, errors)
+    validate_semantic_policy(data, errors)
     validate_semantic_metadata(data, errors)
     validate_slot_applicability(data, errors)
+    validate_concept_recipes(Path(args.concept_recipes), data, errors)
     for label, entry in all_entries(data):
         validate_facets(label, entry, vocab, errors)
         validate_hard_guards(label, entry, vocab, errors)

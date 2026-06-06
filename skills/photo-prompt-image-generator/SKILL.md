@@ -90,6 +90,12 @@ python3 skills/photo-prompt-image-generator/scripts/build_semantic_index.py --pr
 
 The API key must come from `GEMINI_API_KEY` or `GOOGLE_API_KEY`; do not store it in the repository. The wrapper and semantic index builder also load these keys from a project `.env` file when present, without printing them. The semantic index uses `gemini-embedding-2` with 768 dimensions by default, and the builder paces requests to avoid Gemini 429 responses. Rule mode does not require the Gemini SDK or an API key.
 When the output semantic index already exists, the builder reuses compatible vectors whose entry key, embedding text, provider, model, dimensions, and semantic text recipe still match. Only new or changed entries are sent to Gemini. Use `--no-cache` only when you intentionally want to force a full rebuild.
+Policy-only edits under `semantic_policy` do not require a semantic index rebuild. `dictionary_hash` tracks the tag/preset/slot/facet fields that feed entry embedding text, while `semantic_policy_hash` is provenance for routing, signal lexicons, steering, coverage repair, and runtime axis text. Rebuild the index when entry text inputs or `SEMANTIC_TEXT_RECIPE_VERSION` change; do not rebuild solely because `signal_lexicon`, `slot_signals`, `coverage_repair`, or `axis_embedding_text` changed.
+
+Concept mode defaults:
+
+- `--concept-mode legacy` is the default and keeps behavior-compatible concept recipe expansion.
+- `--concept-mode soft` is opt-in. It forwards concept locks and intent axes without forced recipe slot sets, and should not become the default until real-embedding concept benchmarks pass.
 
 List tag ids for a slot:
 

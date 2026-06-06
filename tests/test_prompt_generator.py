@@ -923,6 +923,49 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertNotIn("expression=cold_unreadable_stare", payload["forward_args"])
         self.assertNotIn("hiding in plain sight", " ".join(payload["forward_args"]))
 
+    def test_concept_recipe_assassin_conditional_additional_is_data_driven(self):
+        payload = self.run_wrapper_json(
+            "--concept",
+            "메이드 암살자",
+            "--explain-concept",
+            "--selection-mode",
+            "rule",
+            "--plain",
+            "--no-negative",
+            "--seed",
+            "42",
+        )
+
+        concept = payload["concepts"][0]
+        self.assertEqual(concept["concept_mode"], "legacy")
+        self.assertEqual(concept["role"], "메이드")
+        self.assertEqual(concept["applied_mixins"], ["암살자"])
+        self.assertIn("role outfit is a cover identity/disguise for the assassin persona", payload["forward_args"])
+
+    def test_concept_recipe_soft_mode_keeps_lock_and_axes_without_forced_slots(self):
+        payload = self.run_wrapper_json(
+            "--concept",
+            "메이드 암살자",
+            "--concept-mode",
+            "soft",
+            "--explain-concept",
+            "--selection-mode",
+            "rule",
+            "--plain",
+            "--no-negative",
+            "--seed",
+            "42",
+        )
+
+        concept = payload["concepts"][0]
+        self.assertEqual(concept["concept_mode"], "soft")
+        self.assertFalse(concept["forced_slots_applied"])
+        self.assertIn("--concept-lock", payload["forward_args"])
+        self.assertIn("--intent-axis", payload["forward_args"])
+        self.assertNotIn("--preset", payload["forward_args"])
+        self.assertNotIn("--set", payload["forward_args"])
+        self.assertNotIn("--additional-requirement", payload["forward_args"])
+
     def test_concept_recipe_princess_base_uses_korean_court_lineage_language(self):
         payload = self.run_wrapper_json(
             "--concept",
@@ -4467,10 +4510,11 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertEqual(len(top_ids), len(set(top_ids)))
 
     def test_semantic_axis_family_detection_and_slot_routing(self):
-        self.assertEqual(self.generator.axis_families_for_text("urban city street"), ["urban"])
-        self.assertEqual(self.generator.axis_families_for_text("방구석 집돌이 작은 방 게임패드"), ["homebody_room"])
-        self.assertEqual(self.generator.axis_families_for_text("horror nightmare portrait"), ["human", "horror"])
+        self.assertEqual(self.generator.axis_families_for_text("urban city street", self.data), ["urban"])
+        self.assertEqual(self.generator.axis_families_for_text("방구석 집돌이 작은 방 게임패드", self.data), ["homebody_room"])
+        self.assertEqual(self.generator.axis_families_for_text("horror nightmare portrait", self.data), ["human", "horror"])
         context = {
+            "semantic_policy": self.data["semantic_policy"],
             "axis_vectors": [
                 {"text": "human portrait", "families": ["human"], "vector": [1.0, 0.0]},
                 {"text": "horror nightmare", "families": ["horror"], "vector": [0.0, 1.0]},
@@ -4485,6 +4529,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             {"text": "horror nightmare", "families": ["horror"], "vector": [0.0, 1.0]},
         ]
         context = {
+            "semantic_policy": self.data["semantic_policy"],
             "selection_mode": "semantic",
             "semantic_profile": "balanced",
             "semantic_weight": 1.0,
@@ -4524,6 +4569,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             {"text": "horror nightmare", "families": ["horror"], "vector": [0.0, 1.0]},
         ]
         context = {
+            "semantic_policy": self.data["semantic_policy"],
             "selection_mode": "semantic",
             "semantic_profile": "balanced",
             "semantic_weight": 1.0,
@@ -4554,6 +4600,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         low_key = next(item for item in self.data["slots"]["lighting"] if item["id"] == "low_key")
         quiet_dread = next(item for item in self.data["slots"]["mood"] if item["id"] == "quiet_dread")
         context = {
+            "semantic_policy": self.data["semantic_policy"],
             "semantic_profile": "balanced",
             "filter_strictness": "soft",
             "axis_vectors": [{"text": "horror", "families": ["horror"], "vector": [1.0, 0.0]}],
@@ -4582,9 +4629,40 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertEqual(conflict_summary["events"][0]["type"], "family_conflict")
         self.assertEqual(strong_summary["events"][0]["type"], "strength_boost")
 
+    def test_policy_match_rule_supports_terms_tokens_boundary_and_case(self):
+        entry = {
+            "id": "programmer_room",
+            "en": "Programmer in a Gaming Room",
+            "tags": ["gaming", "interior"],
+            "facets": {"style": ["casual"]},
+        }
+
+        combined = self.generator.evaluate_match(
+            {
+                "id": "subject-combined",
+                "any_tokens": ["gaming"],
+                "all_terms": ["room"],
+                "boundary": True,
+            },
+            entry,
+        )
+        self.assertTrue(combined["matched"])
+        self.assertEqual(combined["matched_rule_id"], "subject-combined")
+        self.assertIn("gaming", combined["matched_tokens"])
+        self.assertIn("room", combined["matched_terms"])
+
+        self.assertFalse(
+            self.generator.evaluate_match({"any_terms": ["gamer"], "boundary": True}, entry)["matched"]
+        )
+        self.assertTrue(self.generator.evaluate_match({"any_terms": ["gaming"]}, entry)["matched"])
+        self.assertFalse(
+            self.generator.evaluate_match({"any_terms": ["gaming"], "case_sensitive": True}, entry)["matched"]
+        )
+
     def test_semantic_preset_family_coverage_rewards_horror_signal(self):
         rules = self.data["coherence_rules"]
         context = {
+            "semantic_policy": self.data["semantic_policy"],
             "semantic_profile": "balanced",
             "axis_vectors": [
                 {"text": "urban", "families": ["urban"], "vector": [1.0, 0.0]},
@@ -4670,6 +4748,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             "axis_vectors": [{"text": "horror", "families": ["horror"], "vector": [1.0, 0.0]}],
             "coherence_rules": self.data["coherence_rules"],
             "semantic_metadata": self.data["semantic_metadata"],
+            "semantic_policy": self.data["semantic_policy"],
         }
         picked = {"mood": tense}
 
@@ -4684,6 +4763,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
     def test_horror_location_tone_conflict_penalizes_warm_sunset(self):
         rooftop_sunset = next(item for item in self.data["slots"]["location"] if item["id"] == "rooftop_sunset")
         context = {
+            "semantic_policy": self.data["semantic_policy"],
             "semantic_profile": "balanced",
             "filter_strictness": "soft",
             "axis_vectors": [{"text": "horror", "families": ["horror"], "vector": [1.0, 0.0]}],
@@ -4705,6 +4785,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
     def test_horror_axis_does_not_penalize_fantasy_surreal_slot(self):
         mirror_space_fold = next(item for item in self.data["slots"]["surreal_concept"] if item["id"] == "mirror_space_fold")
         context = {
+            "semantic_policy": self.data["semantic_policy"],
             "semantic_profile": "balanced",
             "filter_strictness": "soft",
             "axis_vectors": [
@@ -4809,6 +4890,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
 
     def test_semantic_intent_steering_filters_subject_location_and_mood_pools(self):
         context = {
+            "semantic_policy": self.data["semantic_policy"],
             "intent_steering": {"mode": "auto", "enabled": True, "families": ["human", "urban", "horror"], "decisions": []},
             "axis_vectors": [
                 {"text": "human portrait", "families": ["human"], "vector": [1.0, 0.0]},
@@ -4844,6 +4926,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
 
     def test_homebody_room_intent_steering_filters_drift_candidates(self):
         context = {
+            "semantic_policy": self.data["semantic_policy"],
             "intent_steering": {"mode": "auto", "enabled": True, "families": ["homebody_room"], "decisions": []},
             "axis_vectors": [
                 {"text": "homebody guy in a small bedroom", "families": ["homebody_room"], "vector": [1.0]},
@@ -4898,10 +4981,23 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             [item["id"] for item in self.generator.steer_semantic_candidate_pool("lighting", lighting, context)],
             ["monitor_glow"],
         )
-        self.assertIn(
-            {"slot": "prop", "reason": "homebody_room_prop", "before": 4, "after": 2, "tier": "core"},
-            context["intent_steering"]["decisions"],
+        prop_decision = next(
+            decision
+            for decision in context["intent_steering"]["decisions"]
+            if decision["slot"] == "prop" and decision["reason"] == "homebody_room_prop"
         )
+        self.assertEqual(
+            {key: prop_decision[key] for key in ("slot", "reason", "before", "after", "tier")},
+            {"slot": "prop", "reason": "homebody_room_prop", "before": 4, "after": 2, "tier": "core"},
+        )
+        self.assertEqual(prop_decision["family"], "homebody_room")
+        self.assertEqual(prop_decision["signal_tier"], "core")
+        self.assertIn("policy_id", prop_decision)
+        self.assertEqual(prop_decision["reason_code"], "homebody_room_prop")
+        self.assertEqual(prop_decision["policy_schema_version"], 1)
+        self.assertIn("semantic_policy_hash", prop_decision)
+        self.assertEqual(prop_decision["matched_via"], "semantic_policy.families.homebody_room.slot_signals.prop.core")
+        self.assertNotEqual(prop_decision["matched_via"], "default_fallback")
         self.assertIn("prop", self.generator.semantic_steering_slots(context, {"slots": {"prop": [], "subject": []}}))
         self.assertEqual(
             self.generator.compatible_preset_with_semantic_hard_guards({"id": "interior_lifestyle"}, context),
@@ -4926,6 +5022,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
 
     def test_homebody_room_core_tags_and_drift_exclusions(self):
         by_slot = {slot: {item["id"]: item for item in entries} for slot, entries in self.data["slots"].items()}
+        policy_context = {"semantic_policy": self.data["semantic_policy"]}
 
         for entry_id in {
             "game_controller_prop",
@@ -4936,11 +5033,11 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             "tangled_charging_cables_prop",
             "gaming_headset_on_desk_prop",
         }:
-            self.assertEqual(self.generator.homebody_room_signal_tier(by_slot["prop"][entry_id], "prop"), "core")
+            self.assertEqual(self.generator.homebody_room_signal_tier(by_slot["prop"][entry_id], "prop", policy_context), "core")
 
         for entry_id in {"small_messy_gaming_bedroom", "dim_monitor_glow_bedroom", "floor_mattress_gaming_corner"}:
-            self.assertEqual(self.generator.homebody_room_signal_tier(by_slot["location"][entry_id], "location"), "core")
-        self.assertEqual(self.generator.homebody_room_signal_tier(by_slot["world"]["lived_in_homebody_room"], "world"), "core")
+            self.assertEqual(self.generator.homebody_room_signal_tier(by_slot["location"][entry_id], "location", policy_context), "core")
+        self.assertEqual(self.generator.homebody_room_signal_tier(by_slot["world"]["lived_in_homebody_room"], "world", policy_context), "core")
 
         for slot, entry_id in [
             ("prop", "coffee_cup_prop"),
@@ -4952,10 +5049,11 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             ("world", "cozy_creator"),
             ("world", "clean_social"),
         ]:
-            self.assertIsNone(self.generator.homebody_room_signal_tier(by_slot[slot][entry_id], slot))
+            self.assertIsNone(self.generator.homebody_room_signal_tier(by_slot[slot][entry_id], slot, policy_context))
 
     def test_homebody_concept_lock_promotes_core_slot_candidates(self):
         context = {
+            "semantic_policy": self.data["semantic_policy"],
             "intent_steering": {"mode": "auto", "enabled": True, "families": ["homebody_room"], "decisions": []},
             "generation_contract": {"concept_locks": ["방구석 집돌이, 작은 방, 모니터 빛, 게임패드, 간식, 담요"]},
             "axis_vectors": [
@@ -4992,6 +5090,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
 
     def test_homebody_prop_dedupes_detail_already_carried_by_action(self):
         context = {
+            "semantic_policy": self.data["semantic_policy"],
             "intent_steering": {"mode": "auto", "enabled": True, "families": ["homebody_room"], "decisions": []},
             "generation_contract": {"concept_locks": ["방구석 집돌이, 게임패드, 간식, 담요"]},
             "axis_vectors": [
@@ -5063,6 +5162,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
 
     def test_homebody_room_core_pool_has_diverse_non_drift_candidates(self):
         context = {
+            "semantic_policy": self.data["semantic_policy"],
             "intent_steering": {"mode": "auto", "enabled": True, "families": ["homebody_room"], "decisions": []},
             "axis_vectors": [
                 {"text": "homebody guy in a small bedroom", "families": ["homebody_room"], "vector": [1.0]},
@@ -5125,25 +5225,25 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertEqual(explicit["source"], "explicit")
         self.assertEqual([item["text"] for item in explicit["items"]], ["urban city", "horror mood"])
 
-        delimiter = self.generator.extract_intent_axes("urban + horror, fantasy and human", semantic_axis_mode="auto")
+        delimiter = self.generator.extract_intent_axes("urban + horror, fantasy and human", semantic_axis_mode="auto", policy_source=self.data)
         self.assertEqual(delimiter["source"], "delimiter")
         self.assertEqual([item["text"] for item in delimiter["items"]], ["urban", "horror", "fantasy", "human"])
 
-        fallback = self.generator.extract_intent_axes("urban horror fantasy human portrait", semantic_axis_mode="auto")
+        fallback = self.generator.extract_intent_axes("urban horror fantasy human portrait", semantic_axis_mode="auto", policy_source=self.data)
         self.assertEqual(fallback["source"], "fallback")
         self.assertEqual(
             [item["text"] for item in fallback["items"]],
             ["human portrait", "urban city street", "horror fear nightmare", "fantasy magic surreal"],
         )
-        product_axes = self.generator.extract_intent_axes("jewelry macro reflection product", semantic_axis_mode="auto")
+        product_axes = self.generator.extract_intent_axes("jewelry macro reflection product", semantic_axis_mode="auto", policy_source=self.data)
         self.assertIn("product commercial packshot", [item["text"] for item in product_axes["items"]])
         self.assertIn("jewelry macro reflection", [item["text"] for item in product_axes["items"]])
-        homebody_axes = self.generator.extract_intent_axes("방구석 집돌이 작은 방 게임패드", semantic_axis_mode="auto")
+        homebody_axes = self.generator.extract_intent_axes("방구석 집돌이 작은 방 게임패드", semantic_axis_mode="auto", policy_source=self.data)
         self.assertIn("homebody gamer in a small bedroom", [item["text"] for item in homebody_axes["items"]])
-        self.assertIn("metropolitan environment", self.generator.semantic_axis_embedding_text("urban"))
-        self.assertIn("gaming desk", self.generator.semantic_axis_embedding_text("방구석 집돌이"))
-        self.assertIn("readable face", self.generator.semantic_axis_embedding_text("human portrait"))
-        self.assertIn("polished metal", self.generator.semantic_axis_embedding_text("jewelry macro reflection"))
+        self.assertIn("metropolitan environment", self.generator.semantic_axis_embedding_text("urban", self.data))
+        self.assertIn("gaming desk", self.generator.semantic_axis_embedding_text("방구석 집돌이", self.data))
+        self.assertIn("readable face", self.generator.semantic_axis_embedding_text("human portrait", self.data))
+        self.assertIn("polished metal", self.generator.semantic_axis_embedding_text("jewelry macro reflection", self.data))
 
         single = self.generator.extract_intent_axes("quiet portrait", semantic_axis_mode="off")
         self.assertEqual(single["source"], "off")
@@ -5162,6 +5262,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         preset = next(item for item in self.data["presets"] if item["id"] == "jewelry_macro_reflection")
         axis_vectors = [{"text": "product", "families": ["product"], "vector": [1.0, 0.0]}]
         context = {
+            "semantic_policy": self.data["semantic_policy"],
             "intent_source": "user",
             "intent_axes": {"source": "fallback", "items": [{"text": "product"}]},
             "semantic_profile": "balanced",
@@ -5658,6 +5759,51 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("semantic_metadata.subject_groups.fashion: unknown subject id missing_subject_id", result.stderr)
 
+    def test_dictionary_validator_rejects_unknown_semantic_policy_id(self):
+        data = json.loads(TAGS_PATH.read_text(encoding="utf-8"))
+        data["semantic_policy"]["families"]["homebody_room"]["slot_signals"]["prop"]["core"].append("missing_prop_id")
+
+        with tempfile.TemporaryDirectory() as tmp:
+            invalid_path = Path(tmp) / "invalid_tags.json"
+            invalid_path.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
+            result = subprocess.run(
+                [sys.executable, str(VALIDATOR_PATH), "--tags", str(invalid_path)],
+                cwd=ROOT,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn(
+            "semantic_policy.families.homebody_room.slot_signals.prop.core: unknown prop id missing_prop_id",
+            result.stderr,
+        )
+
+    def test_dictionary_validator_rejects_invalid_semantic_policy_match_rule(self):
+        data = json.loads(TAGS_PATH.read_text(encoding="utf-8"))
+        data["semantic_policy"]["families"]["human"]["signal_lexicon"]["strong"].append(
+            {"id": "bad-rule", "boundary": "yes"}
+        )
+
+        with tempfile.TemporaryDirectory() as tmp:
+            invalid_path = Path(tmp) / "invalid_tags.json"
+            invalid_path.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
+            result = subprocess.run(
+                [sys.executable, str(VALIDATOR_PATH), "--tags", str(invalid_path)],
+                cwd=ROOT,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn(
+            "semantic_policy.families.human.signal_lexicon.strong[8]: any_terms, all_terms, any_tokens, or all_tokens is required",
+            result.stderr,
+        )
+        self.assertIn("semantic_policy.families.human.signal_lexicon.strong[8].boundary: must be a boolean", result.stderr)
+
     def test_dictionary_validator_rejects_unknown_slot_applicability_id(self):
         data = json.loads(TAGS_PATH.read_text(encoding="utf-8"))
         data["slot_applicability"]["subject_category_overrides"]["missing_subject_id"] = "object"
@@ -5762,6 +5908,20 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 self.assertEqual(builder.main(), 0)
 
         load_env.assert_called_once_with()
+
+    def test_semantic_policy_only_change_does_not_change_dictionary_hash(self):
+        data = json.loads(json.dumps(self.data, ensure_ascii=False))
+        first_dictionary_hash = self.generator.dictionary_hash(data)
+        first_policy_hash = self.generator.semantic_policy_digest(self.generator.semantic_policy_from_source(data))
+
+        data["semantic_policy"]["families"]["human"]["signal_lexicon"]["strong"].append("face")
+        data["semantic_policy"]["families"]["human"]["axis_embedding_text"] += " close portrait axis"
+
+        self.assertEqual(self.generator.dictionary_hash(data), first_dictionary_hash)
+        self.assertNotEqual(
+            self.generator.semantic_policy_digest(self.generator.semantic_policy_from_source(data)),
+            first_policy_hash,
+        )
 
     def test_semantic_index_builder_reuses_existing_vectors_after_tag_addition(self):
         builder = load_index_builder()
