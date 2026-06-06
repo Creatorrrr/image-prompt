@@ -35,6 +35,7 @@ BUNDLE_OVERRIDE_SLOTS = {
     "composition",
     "subject_framing",
     "expression",
+    "wardrobe_style",
 }
 
 
@@ -109,6 +110,11 @@ def match_concept_role(concept: str, roles: dict[str, Any]) -> tuple[str | None,
         if stripped == role or stripped.endswith(role):
             name = stripped[: -len(role)].strip()
             return role, name, dict(roles[role] or {})
+        padded = f" {stripped} "
+        needle = f" {role} "
+        if needle in padded:
+            name = " ".join(stripped.replace(role, " ").split())
+            return role, name, dict(roles[role] or {})
     return None, stripped, {}
 
 
@@ -126,6 +132,21 @@ def concept_without_mixins(concept: str, mixin_names: Sequence[str]) -> str:
     for mixin in mixin_names:
         stripped = stripped.replace(mixin, " ")
     return " ".join(stripped.split())
+
+
+def select_mixin_intensity_variant(concept: str, mixin_recipe: dict[str, Any]) -> str | None:
+    variants = mixin_recipe.get("intensity_variants")
+    aliases = mixin_recipe.get("intensity_aliases")
+    if not isinstance(variants, dict) or not isinstance(aliases, dict):
+        return None
+
+    lowered = concept.lower()
+    for variant, raw_aliases in aliases.items():
+        if variant not in variants:
+            continue
+        if any(alias and alias.lower() in lowered for alias in normalize_list(raw_aliases)):
+            return str(variant)
+    return None
 
 
 def split_forced_slot(raw: str) -> tuple[str, list[str]] | None:
@@ -276,6 +297,11 @@ def resolve_concepts(args: Sequence[str], concepts: Sequence[str]) -> tuple[list
             mixin_base_set = set_values_to_forced(mixin_recipe.get("set"))
             additional_requirements.extend(normalize_list(mixin_recipe.get("additional")))
             intent_axes.extend(normalize_list(mixin_recipe.get("intent_axis")))
+            intensity_variant = select_mixin_intensity_variant(concept, mixin_recipe)
+            if intensity_variant:
+                variants = mixin_recipe.get("intensity_variants")
+                if isinstance(variants, dict):
+                    additional_requirements.extend(normalize_list(variants.get(intensity_variant)))
             weapon_cues = mixin_recipe.get("weapon_cues")
             if (
                 role
@@ -301,6 +327,7 @@ def resolve_concepts(args: Sequence[str], concepts: Sequence[str]) -> tuple[list
                         "preset": bundle_preset,
                         "set": bundle_set,
                         "weight": selected_bundle.get("weight", 1),
+                        "subtype": str(selected_bundle.get("subtype") or ""),
                     }
                 )
             else:
