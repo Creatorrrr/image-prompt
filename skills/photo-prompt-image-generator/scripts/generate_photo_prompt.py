@@ -7,6 +7,7 @@ import importlib.util
 import hashlib
 import json
 import os
+import re
 import sys
 from pathlib import Path
 from typing import Any, Sequence
@@ -23,6 +24,37 @@ DEFAULT_SEMANTIC_INTENT = (
     "lighting, mood, camera, composition, texture, and format"
 )
 CONCEPT_MODES = {"legacy", "soft"}
+DEFAULT_SOFT_ANCHOR_SLOTS = {
+    "appearance_type",
+    "costume_style",
+    "expression",
+    "location",
+    "prop",
+    "wardrobe_style",
+}
+DEFAULT_SOFT_FREE_SLOTS = {
+    "camera_direction",
+    "camera_type",
+    "color",
+    "composition",
+    "film_emulation",
+    "focus",
+    "format",
+    "genre",
+    "lens",
+    "light_direction",
+    "light_intensity",
+    "light_shape",
+    "light_type",
+    "lighting",
+    "medium",
+    "mood",
+    "motion",
+    "quality",
+    "texture",
+    "time_of_day",
+    "weather",
+}
 
 
 def has_option(args: Sequence[str], name: str) -> bool:
@@ -82,6 +114,157 @@ def normalize_list(value: Any) -> list[str]:
     if isinstance(value, str) and value.strip():
         return [value]
     return []
+
+
+def normalize_int(value: Any, default: int = 0) -> int:
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return default
+
+
+def recipe_soft_anchor_slots(recipes: dict[str, Any], recipe: dict[str, Any]) -> set[str]:
+    explicit = set(normalize_list(recipe.get("soft_anchor_slots")))
+    if explicit:
+        return explicit
+    defaults = recipes.get("soft_anchor_defaults", {}) if isinstance(recipes, dict) else {}
+    if isinstance(defaults, dict):
+        configured = set(normalize_list(defaults.get("anchor_slots")))
+        if configured:
+            return configured
+    return set(DEFAULT_SOFT_ANCHOR_SLOTS)
+
+
+def recipe_soft_free_slots(recipes: dict[str, Any], recipe: dict[str, Any]) -> set[str]:
+    explicit = set(normalize_list(recipe.get("soft_free_slots")))
+    if explicit:
+        return explicit
+    defaults = recipes.get("soft_anchor_defaults", {}) if isinstance(recipes, dict) else {}
+    if isinstance(defaults, dict):
+        configured = set(normalize_list(defaults.get("free_slots")))
+        if configured:
+            return configured
+    return set(DEFAULT_SOFT_FREE_SLOTS)
+
+
+def fallback_anchor_terms(slot: str, ids: Sequence[str]) -> list[str]:
+    slot_terms = [token for token in re_split_identifier(slot) if token not in {"style", "type"}]
+    id_terms: list[str] = []
+    for item_id in ids:
+        for token in re_split_identifier(item_id):
+            if token in {"costume", "style", "set", "prop", "portrait"}:
+                continue
+            id_terms.append(token)
+    seen: set[str] = set()
+    terms: list[str] = []
+    for term in [*slot_terms, *id_terms]:
+        if term and term not in seen:
+            seen.add(term)
+            terms.append(term)
+    return terms[:6]
+
+
+def re_split_identifier(value: str) -> list[str]:
+    return [token for token in re.split(r"[^A-Za-z0-9가-힣]+", str(value).lower()) if token]
+
+
+def anchor_terms_for_slot(recipe: dict[str, Any], slot: str, ids: Sequence[str]) -> list[str]:
+    configured = recipe.get("anchor_terms")
+    if isinstance(configured, dict):
+        terms = normalize_list(configured.get(slot))
+        if terms:
+            return terms
+    return fallback_anchor_terms(slot, ids)
+
+
+def soft_min_anchors_for_recipe(recipe: dict[str, Any], default: int) -> int:
+    value = normalize_int(recipe.get("soft_min_anchors"), default)
+    return max(0, value)
+
+
+def soft_anchor_specs_from_mapping(
+    recipes: dict[str, Any],
+    mapping: dict[str, list[str]],
+    recipe: dict[str, Any],
+    source: str,
+    explicit_user_set_slots: set[str],
+) -> list[dict[str, Any]]:
+    anchor_slots = recipe_soft_anchor_slots(recipes, recipe)
+    free_slots = recipe_soft_free_slots(recipes, recipe)
+    specs: list[dict[str, Any]] = []
+    for slot, ids in sorted(mapping.items()):
+        if slot in explicit_user_set_slots:
+            continue
+        if slot in free_slots and slot not in anchor_slots:
+            continue
+        if slot not in anchor_slots:
+            continue
+        clean_ids = [str(item_id) for item_id in ids if str(item_id).strip()]
+        if not clean_ids:
+            continue
+        specs.append(
+            {
+                "slot": slot,
+                "ids": clean_ids,
+                "terms": anchor_terms_for_slot(recipe, slot, clean_ids),
+                "source": source,
+                "required": True,
+            }
+        )
+    return specs
+
+
+def dedupe_soft_anchor_specs(specs: Sequence[dict[str, Any]]) -> list[dict[str, Any]]:
+    by_slot: dict[str, dict[str, Any]] = {}
+    for spec in specs:
+        slot = str(spec.get("slot") or "")
+        ids = normalize_list(spec.get("ids"))
+        if not slot or not ids:
+            continue
+        current = by_slot.setdefault(
+            slot,
+            {
+                "slot": slot,
+                "ids": [],
+                "terms": [],
+                "source": [],
+                "required": False,
+            },
+        )
+        for item_id in ids:
+            if item_id not in current["ids"]:
+                current["ids"].append(item_id)
+        for term in normalize_list(spec.get("terms")):
+            if term not in current["terms"]:
+                current["terms"].append(term)
+        source = str(spec.get("source") or "")
+        if source and source not in current["source"]:
+            current["source"].append(source)
+        current["required"] = bool(current["required"] or spec.get("required", True))
+    normalized = []
+    for spec in by_slot.values():
+        item = dict(spec)
+        item["source"] = "+".join(item["source"]) if item["source"] else "recipe"
+        normalized.append(item)
+    return sorted(normalized, key=lambda item: item["slot"])
+
+
+def build_soft_anchor_spec(
+    specs: Sequence[dict[str, Any]],
+    min_anchor_candidates: Sequence[int],
+    concept: str,
+) -> dict[str, Any]:
+    anchors = dedupe_soft_anchor_specs(specs)
+    positive_minima = [value for value in min_anchor_candidates if value > 0]
+    default_min = min(2, len(anchors)) if len(anchors) >= 2 else len(anchors)
+    min_anchors = max(positive_minima) if positive_minima else default_min
+    min_anchors = min(max(min_anchors, 0), len(anchors))
+    return {
+        "mode": "soft",
+        "concept": concept,
+        "min_anchors": min_anchors,
+        "anchors": anchors,
+    }
 
 
 def resolve_concept_mode(values: Sequence[str]) -> str:
@@ -334,9 +517,23 @@ def resolve_concepts(
         applied_recipes = [recipe] if recipe else []
         additional_requirements: list[str] = []
         intent_axes: list[str] = []
+        soft_anchor_specs: list[dict[str, Any]] = []
+        soft_min_anchor_candidates: list[int] = []
 
         if recipe:
-            set_groups.append((set_values_to_forced(recipe.get("set")), set()))
+            role_set = set_values_to_forced(recipe.get("set"))
+            set_groups.append((role_set, set()))
+            role_mapping = forced_sets_to_mapping(role_set)
+            soft_anchor_specs.extend(
+                soft_anchor_specs_from_mapping(
+                    recipes,
+                    role_mapping,
+                    recipe,
+                    "role",
+                    explicit_user_set_slots,
+                )
+            )
+            soft_min_anchor_candidates.append(soft_min_anchors_for_recipe(recipe, 1))
             additional_requirements.extend(normalize_list(recipe.get("additional")))
             additional_requirements.extend(
                 conditional_additional_requirements(
@@ -372,8 +569,31 @@ def resolve_concepts(
                     has_preset_value = True
                 if mixin_base_set:
                     set_groups.append((mixin_base_set, set()))
+                    soft_anchor_specs.extend(
+                        soft_anchor_specs_from_mapping(
+                            recipes,
+                            forced_sets_to_mapping(mixin_base_set),
+                            mixin_recipe,
+                            "mixin",
+                            explicit_user_set_slots,
+                        )
+                    )
+                    soft_min_anchor_candidates.append(soft_min_anchors_for_recipe(mixin_recipe, 1))
                 bundle_set = selected_bundle.get("set") if isinstance(selected_bundle.get("set"), dict) else {}
-                set_groups.append((set_values_to_forced(bundle_set), recipe_override_slots(recipes, mixin_recipe, selected_bundle)))
+                bundle_forced = set_values_to_forced(bundle_set)
+                set_groups.append((bundle_forced, recipe_override_slots(recipes, mixin_recipe, selected_bundle)))
+                soft_anchor_specs.extend(
+                    soft_anchor_specs_from_mapping(
+                        recipes,
+                        forced_sets_to_mapping(bundle_forced),
+                        selected_bundle,
+                        "bundle",
+                        explicit_user_set_slots,
+                    )
+                )
+                soft_min_anchor_candidates.append(
+                    soft_min_anchors_for_recipe(selected_bundle, 2 if role else 1)
+                )
                 additional_requirements.extend(normalize_list(selected_bundle.get("additional")))
                 additional_requirements.extend(
                     conditional_additional_requirements(
@@ -397,6 +617,17 @@ def resolve_concepts(
                 )
             else:
                 set_groups.append((mixin_base_set, set()))
+                if mixin_base_set:
+                    soft_anchor_specs.extend(
+                        soft_anchor_specs_from_mapping(
+                            recipes,
+                            forced_sets_to_mapping(mixin_base_set),
+                            mixin_recipe,
+                            "mixin",
+                            explicit_user_set_slots,
+                        )
+                    )
+                    soft_min_anchor_candidates.append(soft_min_anchors_for_recipe(mixin_recipe, 1))
 
         combined_sets = merge_forced_set_groups(set_groups)
         add_option(resolved_args, "--concept-lock", concept)
@@ -415,6 +646,14 @@ def resolve_concepts(
                 add_option(resolved_args, "--set", forced)
             for requirement in additional_requirements:
                 add_option(resolved_args, "--additional-requirement", requirement)
+        elif soft_anchor_specs:
+            soft_anchor_spec = build_soft_anchor_spec(soft_anchor_specs, soft_min_anchor_candidates, concept)
+            if soft_anchor_spec["anchors"] and soft_anchor_spec["min_anchors"] > 0:
+                add_option(
+                    resolved_args,
+                    "--soft-anchor-spec",
+                    json.dumps(soft_anchor_spec, ensure_ascii=False, separators=(",", ":")),
+                )
         for axis in intent_axes:
             add_option(resolved_args, "--intent-axis", axis)
 
@@ -444,6 +683,7 @@ def resolve_concepts(
                 "mixins": {mixin: mixin_recipe for mixin, mixin_recipe in mixin_matches},
                 "selected_bundles": selected_bundles,
                 "combined_forced_slots": forced_sets_to_mapping(combined_sets),
+                "soft_anchor_spec": build_soft_anchor_spec(soft_anchor_specs, soft_min_anchor_candidates, concept),
                 "forced_slots_applied": concept_mode == "legacy",
             }
         )

@@ -73,6 +73,10 @@ SEMANTIC_MODEL_ID = "gemini-embedding-2"
 SEMANTIC_TEXT_RECIPE_VERSION = "semantic-text-v2"
 GENERATOR_VERSION = "2026.06.0"
 LIKENESS_MODES = ("off", "inspired")
+SOFT_ANCHOR_WEIGHT_MULTIPLIER = 24.0
+SOFT_ANCHOR_PROMOTED_WEIGHT_MULTIPLIER = 36.0
+SOFT_ANCHOR_BODY_TERM_THRESHOLD = 0.5
+SOFT_ANCHOR_SELECTED_RATE_FLOOR = 0.80
 
 SEMANTIC_PROFILE_CONFIGS: Dict[str, Dict[str, float]] = {
     "conservative": {
@@ -675,6 +679,7 @@ def make_generation_contract(
     concept_locks: Optional[Sequence[str]] = None,
     additional_requirements: Optional[Sequence[str]] = None,
     likeness_mode: str = "off",
+    soft_anchor_spec: Optional[JsonDict] = None,
 ) -> JsonDict:
     forced_slots = sorted((forced_choices or {}).keys())
     domains = sorted(preset_domains(preset, data))
@@ -695,6 +700,8 @@ def make_generation_contract(
         "concept_locks": normalize_concept_locks(concept_locks),
         "additional_requirements": normalize_additional_requirements(additional_requirements),
         "likeness_mode": likeness_mode,
+        "soft_anchor_policy": soft_anchor_trace(normalize_soft_anchor_spec(soft_anchor_spec), picked),
+        "soft_anchor_repair": {"status": "not_evaluated", "repair_attempts": []},
     }
     return contract
 
@@ -709,6 +716,7 @@ def refresh_generation_contract(
     concept_locks: Optional[Sequence[str]] = None,
     additional_requirements: Optional[Sequence[str]] = None,
     likeness_mode: Optional[str] = None,
+    soft_anchor_spec: Optional[JsonDict] = None,
 ) -> JsonDict:
     if contract is None:
         return make_generation_contract(
@@ -720,6 +728,7 @@ def refresh_generation_contract(
             concept_locks=concept_locks,
             additional_requirements=additional_requirements,
             likeness_mode=likeness_mode or "off",
+            soft_anchor_spec=soft_anchor_spec,
         )
     contract["subject_category"] = subject_category(picked, data)
     contract["preset_domains"] = sorted(preset_domains(preset, data))
@@ -741,6 +750,11 @@ def refresh_generation_contract(
     if any(slot in picked for slot in SURREAL_LAYER_SLOTS):
         contract["surreal_enabled"] = True
     contract["adult_allowed"] = bool("adult" in set(contract.get("preset_domains", [])) or preset_uses_adult_context(preset))
+    if soft_anchor_spec is not None:
+        contract["soft_anchor_policy"] = soft_anchor_trace(normalize_soft_anchor_spec(soft_anchor_spec), picked)
+    else:
+        contract["soft_anchor_policy"] = soft_anchor_trace(contract.get("soft_anchor_policy", {}), picked)
+    contract.setdefault("soft_anchor_repair", {"status": "not_evaluated", "repair_attempts": []})
     for key in (
         "must_cover_axes",
         "covered_axes",
@@ -859,7 +873,8 @@ def entry_block_reason(
     if not generation_contract.get("adult_allowed"):
         tokens = adult_semantic_tokens(item)
         if tokens & {"adult", "fetish", "suggestive"}:
-            return "adult_not_allowed"
+            if str(item.get("id", "")) not in soft_anchor_all_ids(generation_contract.get("soft_anchor_policy")):
+                return "adult_not_allowed"
         if slot in {"adult_context", "fetish_styling"}:
             return "adult_slot_not_allowed"
     subject_cat = str(generation_contract.get("subject_category", "generic"))
@@ -2379,12 +2394,13 @@ def compatible_with_semantic_hard_guards(
     preset: JsonDict,
     picked: Dict[str, Entry],
     slot: str,
+    allow_adult_item: bool = False,
 ) -> bool:
     if not compatible_with_facet_guards(item, preset, picked):
         return False
     if not preset_uses_adult_context(preset):
         tokens = adult_semantic_tokens(item)
-        if tokens & {"adult", "fetish", "suggestive"}:
+        if tokens & {"adult", "fetish", "suggestive"} and not allow_adult_item:
             return False
         if slot in {"adult_context", "fetish_styling", "body_framing", "caption_context"}:
             return False
@@ -3464,6 +3480,190 @@ def selected_semantic_metadata_summary(picked: Dict[str, Entry], context: Option
     }
 
 
+def rendered_prompt_blob(result: JsonDict) -> str:
+    parts = [
+        str(value)
+        for key, value in result.items()
+        if key.startswith("prompt_") and value
+    ]
+    return "\n".join(parts).lower()
+
+
+def rendered_prompt_body_blob(result: JsonDict) -> str:
+    blob = "\n".join(str(value) for key, value in result.items() if key.startswith("prompt_") and value)
+    markers = [
+        "Subject and state:",
+        "Scene and location:",
+        "Scene and environment:",
+        "Camera and composition:",
+        "Lighting:",
+        "Light and atmosphere:",
+        "Texture, format, and finish:",
+        "Materials and finish:",
+    ]
+    offsets = [blob.find(marker) for marker in markers if blob.find(marker) >= 0]
+    if offsets:
+        blob = blob[min(offsets) :]
+    return blob.lower()
+
+
+def soft_anchor_body_term_rate(policy: JsonDict, picked: Dict[str, Entry], result: JsonDict) -> tuple[float, List[str], List[str]]:
+    selected_slots = selected_soft_anchor_slots(policy, picked)
+    terms: List[str] = []
+    for anchor in policy.get("anchors", []):
+        if anchor.get("slot") in selected_slots:
+            terms.extend(normalize_list(anchor.get("terms")))
+    normalized_terms = sorted({str(term).lower() for term in terms if str(term).strip()})
+    if not normalized_terms:
+        return (1.0 if selected_slots else 0.0), [], []
+    body = rendered_prompt_body_blob(result)
+    hits = sorted({term for term in normalized_terms if term in body})
+    missing = sorted(set(normalized_terms) - set(hits))
+    return len(hits) / max(len(normalized_terms), 1), hits, missing
+
+
+def evaluate_generation_quality(
+    generation_contract: Optional[JsonDict],
+    render_picked: Dict[str, Entry],
+    result: JsonDict,
+    semantic_context: Optional[JsonDict],
+) -> JsonDict:
+    contract = generation_contract or {}
+    checks: List[JsonDict] = []
+    fail_reasons: List[str] = []
+    warn_reasons: List[str] = []
+
+    forced_slots = set(contract.get("forced_slots", []) or [])
+    rendered_slots = set(render_picked)
+    missing_forced = sorted(forced_slots - rendered_slots)
+    suppressed_forced = [
+        event
+        for event in contract.get("render_suppressed_slots", []) or []
+        if event.get("slot") in forced_slots
+    ]
+    forced_status = "fail" if missing_forced or suppressed_forced else "pass"
+    if forced_status == "fail":
+        fail_reasons.append("forced_slot_not_rendered")
+    checks.append(
+        {
+            "id": "forced_slot_preserved",
+            "status": forced_status,
+            "missing_slots": missing_forced,
+            "suppressed": suppressed_forced,
+        }
+    )
+
+    prompt_blob = rendered_prompt_blob(result)
+    missing_locks = [
+        lock
+        for lock in normalize_concept_locks(contract.get("concept_locks", []))
+        if lock.lower() not in prompt_blob
+    ]
+    concept_status = "fail" if missing_locks else "pass"
+    if concept_status == "fail":
+        if (contract.get("soft_anchor_policy") or {}).get("enabled"):
+            warn_reasons.append("concept_lock_not_rendered")
+            concept_status = "warn"
+        else:
+            fail_reasons.append("concept_lock_not_rendered")
+    checks.append(
+        {
+            "id": "concept_lock_rendered",
+            "status": concept_status,
+            "missing": missing_locks,
+        }
+    )
+
+    must_cover = contract.get("must_cover_axes", []) or []
+    covered = contract.get("covered_axes", []) or []
+    coverage_rate = len(covered) / max(len(must_cover), 1) if must_cover else 1.0
+    coverage_status = "pass"
+    if contract.get("coverage_gaps"):
+        coverage_status = "warn"
+        warn_reasons.append("axis_coverage_gap")
+    checks.append(
+        {
+            "id": "axis_coverage",
+            "status": coverage_status,
+            "coverage_rate": round(coverage_rate, 4),
+            "must_cover_count": len(must_cover),
+            "covered_count": len(covered),
+            "gaps": contract.get("coverage_gaps", []),
+        }
+    )
+
+    soft_policy = contract.get("soft_anchor_policy", {}) or {}
+    if soft_policy.get("enabled"):
+        selected_slots = selected_soft_anchor_slots(soft_policy, render_picked)
+        min_anchors = int(soft_policy.get("min_anchors", 0))
+        required_anchor_count = soft_anchor_required_count(soft_policy)
+        anchor_slot_count = len(soft_anchor_slots(soft_policy))
+        missing_anchor_slots = [
+            slot
+            for slot in soft_anchor_slots(soft_policy)
+            if slot not in selected_slots
+        ]
+        soft_anchor_status = "pass" if len(selected_slots) >= required_anchor_count else "fail"
+        if soft_anchor_status == "fail":
+            fail_reasons.append("soft_anchor_minimum_not_selected")
+        checks.append(
+            {
+                "id": "soft_anchor_selected",
+                "status": soft_anchor_status,
+                "selected_anchor_count": len(selected_slots),
+                "min_anchors": min_anchors,
+                "required_anchor_count": required_anchor_count,
+                "selected_anchor_rate": round(len(selected_slots) / max(1, anchor_slot_count), 4),
+                "minimum_selected_anchor_rate": SOFT_ANCHOR_SELECTED_RATE_FLOOR,
+                "selected_anchor_slots": sorted(selected_slots),
+                "missing_anchor_slots": missing_anchor_slots,
+                "repair": contract.get("soft_anchor_repair", {}),
+            }
+        )
+
+        body_rate, body_hits, body_missing = soft_anchor_body_term_rate(soft_policy, render_picked, result)
+        body_status = "pass" if body_rate >= SOFT_ANCHOR_BODY_TERM_THRESHOLD else "fail"
+        if body_status == "fail":
+            fail_reasons.append("soft_anchor_terms_not_rendered")
+        checks.append(
+            {
+                "id": "soft_anchor_body_terms",
+                "status": body_status,
+                "body_anchor_term_rate": round(body_rate, 4),
+                "minimum_body_anchor_term_rate": SOFT_ANCHOR_BODY_TERM_THRESHOLD,
+                "hits": body_hits,
+                "missing": body_missing,
+            }
+        )
+
+    hard_blocked = [
+        event
+        for event in contract.get("fallback_blocked_slots", []) or []
+        if str(event.get("reason", "")).endswith("_empty") or event.get("reason") in {"entry_contract_empty", "semantic_hard_guard_empty"}
+    ]
+    hard_status = "fail" if any(event.get("slot") in forced_slots for event in hard_blocked) else "pass"
+    if hard_status == "fail":
+        fail_reasons.append("forced_slot_blocked_by_empty_pool")
+    checks.append(
+        {
+            "id": "hard_guard_empty_slot",
+            "status": hard_status,
+            "events": hard_blocked,
+        }
+    )
+
+    verdict = "fail" if fail_reasons else ("warn" if warn_reasons else "pass")
+    return {
+        "verdict": verdict,
+        "selection_mode": (semantic_context or {}).get("selection_mode", "rule"),
+        "semantic_relevance": "scored" if semantic_context else "not_evaluated",
+        "checks": checks,
+        "reasons": fail_reasons + warn_reasons,
+        "policy_schema_version": (semantic_context or {}).get("policy_schema_version"),
+        "semantic_policy_hash": (semantic_context or {}).get("semantic_policy_hash"),
+    }
+
+
 def has_surreal_layer(picked: Dict[str, Entry]) -> bool:
     return any(slot in picked for slot in SURREAL_LAYER_SLOTS)
 
@@ -3570,6 +3770,158 @@ def merge_forced_choices(*choices: Dict[str, List[str]]) -> Dict[str, List[str]]
         for slot, ids in choice.items():
             merged[slot] = list(ids)
     return merged
+
+
+def normalize_soft_anchor_spec(payload: Any) -> JsonDict:
+    if not payload:
+        return {"enabled": False, "mode": "soft", "min_anchors": 0, "anchors": []}
+    if isinstance(payload, list):
+        raw_anchors = payload
+        min_anchors = len(raw_anchors)
+        mode = "soft"
+        concept = ""
+    elif isinstance(payload, dict):
+        raw_anchors = payload.get("anchors", [])
+        min_anchors = payload.get("min_anchors", payload.get("soft_min_anchors", 0))
+        mode = str(payload.get("mode") or "soft")
+        concept = str(payload.get("concept") or "")
+    else:
+        raise ValueError("--soft-anchor-spec must be a JSON object or list")
+    if not isinstance(raw_anchors, list):
+        raise ValueError("--soft-anchor-spec anchors must be a list")
+
+    anchors: List[JsonDict] = []
+    seen_slots: Set[str] = set()
+    for raw in raw_anchors:
+        if not isinstance(raw, dict):
+            raise ValueError("--soft-anchor-spec anchor entries must be JSON objects")
+        slot = str(raw.get("slot") or "").strip()
+        ids = normalize_list(raw.get("ids"))
+        if not slot or not ids:
+            raise ValueError("--soft-anchor-spec anchor entries require slot and ids")
+        terms = normalize_list(raw.get("terms"))
+        source = str(raw.get("source") or "recipe")
+        anchors.append(
+            {
+                "slot": slot,
+                "ids": ids,
+                "terms": terms,
+                "source": source,
+                "required": bool(raw.get("required", True)),
+            }
+        )
+        seen_slots.add(slot)
+    try:
+        normalized_min = int(min_anchors)
+    except (TypeError, ValueError):
+        raise ValueError("--soft-anchor-spec min_anchors must be an integer")
+    normalized_min = min(max(normalized_min, 0), len(seen_slots))
+    return {
+        "enabled": bool(anchors and normalized_min > 0),
+        "mode": mode,
+        "concept": concept,
+        "min_anchors": normalized_min,
+        "anchors": anchors,
+    }
+
+
+def parse_soft_anchor_specs(items: Optional[Sequence[str]]) -> JsonDict:
+    merged: JsonDict = {"mode": "soft", "concept": "", "min_anchors": 0, "anchors": []}
+    for raw in items or []:
+        payload = json.loads(raw)
+        spec = normalize_soft_anchor_spec(payload)
+        if spec.get("concept") and not merged.get("concept"):
+            merged["concept"] = spec["concept"]
+        merged["min_anchors"] = max(int(merged.get("min_anchors", 0)), int(spec.get("min_anchors", 0)))
+        merged["anchors"].extend(spec.get("anchors", []))
+    return normalize_soft_anchor_spec(merged)
+
+
+def soft_anchor_slots(policy: Optional[JsonDict]) -> List[str]:
+    if not policy or not policy.get("enabled"):
+        return []
+    slots: List[str] = []
+    for anchor in policy.get("anchors", []):
+        slot = str(anchor.get("slot") or "")
+        if slot and slot not in slots:
+            slots.append(slot)
+    return slots
+
+
+def soft_anchor_ids_for_slot(policy: Optional[JsonDict], slot: str) -> Set[str]:
+    if not policy or not policy.get("enabled"):
+        return set()
+    ids: Set[str] = set()
+    for anchor in policy.get("anchors", []):
+        if anchor.get("slot") == slot:
+            ids.update(normalize_list(anchor.get("ids")))
+    return ids
+
+
+def soft_anchor_all_ids(policy: Optional[JsonDict]) -> Set[str]:
+    if not policy or not policy.get("enabled"):
+        return set()
+    ids: Set[str] = set()
+    for anchor in policy.get("anchors", []):
+        ids.update(normalize_list(anchor.get("ids")))
+    return ids
+
+
+def soft_anchor_required_count(policy: Optional[JsonDict]) -> int:
+    if not policy or not policy.get("enabled"):
+        return 0
+    anchor_count = len(soft_anchor_slots(policy))
+    configured_min = int(policy.get("min_anchors", 0) or 0)
+    if configured_min < 2:
+        return min(anchor_count, max(0, configured_min))
+    rate_floor = int(math.ceil(anchor_count * SOFT_ANCHOR_SELECTED_RATE_FLOOR))
+    return min(anchor_count, max(configured_min, rate_floor))
+
+
+def selected_soft_anchor_slots(policy: Optional[JsonDict], picked: Dict[str, Entry]) -> Set[str]:
+    selected: Set[str] = set()
+    if not policy or not policy.get("enabled"):
+        return selected
+    for slot in soft_anchor_slots(policy):
+        entry = picked.get(slot)
+        if not entry:
+            continue
+        if str(entry.get("id")) in soft_anchor_ids_for_slot(policy, slot):
+            selected.add(slot)
+    return selected
+
+
+def soft_anchor_trace(policy: Optional[JsonDict], picked: Optional[Dict[str, Entry]] = None) -> JsonDict:
+    if not policy or not policy.get("enabled"):
+        return {"enabled": False, "min_anchors": 0, "anchors": []}
+    picked = picked or {}
+    selected_slots = selected_soft_anchor_slots(policy, picked)
+    anchors: List[JsonDict] = []
+    for anchor in policy.get("anchors", []):
+        slot = str(anchor.get("slot") or "")
+        selected = picked.get(slot, {})
+        anchors.append(
+            {
+                "slot": slot,
+                "ids": normalize_list(anchor.get("ids")),
+                "terms": normalize_list(anchor.get("terms")),
+                "source": anchor.get("source", "recipe"),
+                "required": bool(anchor.get("required", True)),
+                "selected": selected.get("id"),
+                "matched": slot in selected_slots,
+            }
+        )
+    return {
+        "enabled": True,
+        "mode": policy.get("mode", "soft"),
+        "concept": policy.get("concept", ""),
+        "min_anchors": int(policy.get("min_anchors", 0)),
+        "required_anchor_count": soft_anchor_required_count(policy),
+        "selected_anchor_count": len(selected_slots),
+        "selected_anchor_slots": sorted(selected_slots),
+        "anchor_slot_count": len(soft_anchor_slots(policy)),
+        "anchors": anchors,
+    }
 
 
 def forced_required_subject_kinds(data: JsonDict, forced_choices: Dict[str, List[str]]) -> Set[str]:
@@ -3939,6 +4291,187 @@ def steer_semantic_candidate_pool(
     return list(pool)
 
 
+RULE_POLICY_WEIGHT_MULTIPLIERS = {
+    "core": 2.25,
+    "support": 1.45,
+    "promoted_core": 3.0,
+}
+
+
+def rule_policy_context(data: JsonDict, generation_contract: Optional[JsonDict]) -> Optional[JsonDict]:
+    if not generation_contract:
+        return None
+    locks = normalize_concept_locks(generation_contract.get("concept_locks", []))
+    if not locks:
+        return None
+    axis_vectors: List[JsonDict] = []
+    for lock in locks:
+        families = axis_families_for_text(lock, data)
+        if families:
+            axis_vectors.append({"text": lock, "families": families, "source": "concept_lock"})
+    family_set = sorted({family for axis in axis_vectors for family in axis.get("families", [])})
+    if not family_set:
+        return None
+    policy = semantic_policy_from_source(data)
+    return {
+        "selection_mode": "rule",
+        "intent": None,
+        "intent_source": "concept_lock",
+        "semantic_policy": policy,
+        "policy_schema_version": semantic_policy_schema_version(data),
+        "semantic_policy_hash": semantic_policy_digest(policy),
+        "coherence_rules": data.get("coherence_rules", {}) or {},
+        "semantic_metadata": data.get("semantic_metadata", {}) or {},
+        "semantic_profile": default_semantic_profile("rule"),
+        "axis_vectors": axis_vectors,
+        "generation_contract": generation_contract,
+        "intent_steering": {
+            "mode": "rule_concept_lock",
+            "enabled": True,
+            "families": family_set,
+            "decisions": [],
+        },
+    }
+
+
+def rule_policy_candidate_bias(
+    slot: str,
+    item: Entry,
+    context: JsonDict,
+) -> Optional[JsonDict]:
+    best: Optional[JsonDict] = None
+    for family in ordered_steering_families(context):
+        if slot not in family_steering_slots(context, family):
+            continue
+        tier, summary = steering_signal_tier_summary(item, family, slot, context)
+        if not tier:
+            continue
+        promoted = tier == "core" and str(item.get("id")) in family_concept_lock_promoted_ids(context, family, slot)
+        key = "promoted_core" if promoted else tier
+        factor = float(RULE_POLICY_WEIGHT_MULTIPLIERS.get(key, 1.0))
+        rank = 3 if promoted else FAMILY_STRENGTH_RANK.get(tier, 0)
+        candidate = {
+            "family": family,
+            "tier": tier,
+            "signal_tier": tier,
+            "factor": factor,
+            "rank": rank,
+            "promoted_by_concept_lock": promoted,
+            **policy_trace_fields(context, family),
+            **(summary or {}),
+        }
+        if best is None or int(candidate["rank"]) > int(best["rank"]) or factor > float(best["factor"]):
+            best = candidate
+    return best
+
+
+def apply_rule_policy_bias(
+    slot: str,
+    pool: Sequence[Entry],
+    data: JsonDict,
+    generation_contract: Optional[JsonDict],
+) -> List[Entry]:
+    context = rule_policy_context(data, generation_contract)
+    if not context:
+        return list(pool)
+    adjusted: List[Entry] = []
+    boosted: List[JsonDict] = []
+    for item in pool:
+        bias = rule_policy_candidate_bias(slot, item, context)
+        if not bias:
+            adjusted.append(item)
+            continue
+        base_weight = item_base_weight(item)
+        factor = float(bias.get("factor", 1.0))
+        copied = dict(item)
+        copied["weight"] = round(base_weight * factor, 6)
+        adjusted.append(copied)
+        boosted.append(
+            {
+                "id": item.get("id"),
+                "family": bias.get("family"),
+                "tier": bias.get("tier"),
+                "signal_tier": bias.get("signal_tier"),
+                "factor": round(factor, 4),
+                "base_weight": round(base_weight, 4),
+                "adjusted_weight": copied["weight"],
+                "promoted_by_concept_lock": bool(bias.get("promoted_by_concept_lock")),
+                "matched_via": bias.get("matched_via"),
+                "matched_rule_id": bias.get("matched_rule_id"),
+                "matched_terms": bias.get("matched_terms", []),
+            }
+        )
+    if boosted:
+        record_generation_contract_event(
+            generation_contract,
+            "rule_policy_bias",
+            {
+                "slot": slot,
+                "reason": "rule_policy_concept_lock_bias",
+                "reason_code": "rule_policy_concept_lock_bias",
+                "before": len(pool),
+                "after": len(adjusted),
+                "active_families": sorted(context_axis_families(context)),
+                "policy_schema_version": semantic_policy_schema_version(context),
+                "semantic_policy_hash": context.get("semantic_policy_hash"),
+                "boosted_count": len(boosted),
+                "boosted": boosted,
+            },
+        )
+    return adjusted
+
+
+def apply_soft_anchor_bias(
+    slot: str,
+    pool: Sequence[Entry],
+    semantic_context: Optional[JsonDict],
+    generation_contract: Optional[JsonDict],
+) -> List[Entry]:
+    policy = (generation_contract or {}).get("soft_anchor_policy", {})
+    ids = soft_anchor_ids_for_slot(policy, slot)
+    if not ids:
+        return list(pool)
+
+    adjusted: List[Entry] = []
+    promoted: List[JsonDict] = []
+    for item in pool:
+        item_id = str(item.get("id"))
+        if item_id not in ids:
+            adjusted.append(item)
+            continue
+        base_weight = item_base_weight(item)
+        factor = SOFT_ANCHOR_PROMOTED_WEIGHT_MULTIPLIER if item.get("anchor") else SOFT_ANCHOR_WEIGHT_MULTIPLIER
+        copied = dict(item)
+        copied["weight"] = round(base_weight * factor, 6)
+        adjusted.append(copied)
+        promoted.append(
+            {
+                "id": item_id,
+                "base_weight": round(base_weight, 4),
+                "factor": round(factor, 4),
+                "adjusted_weight": copied["weight"],
+            }
+        )
+
+    if promoted:
+        record_generation_contract_event(
+            generation_contract,
+            "soft_anchor_promotions",
+            {
+                "slot": slot,
+                "reason": "soft_anchor_candidate_promotion",
+                "reason_code": "soft_anchor_candidate_promotion",
+                "before": len(pool),
+                "after": len(adjusted),
+                "promoted_ids": sorted(item["id"] for item in promoted),
+                "promoted": promoted,
+                "policy_schema_version": (semantic_context or {}).get("policy_schema_version"),
+                "semantic_policy_hash": (semantic_context or {}).get("semantic_policy_hash"),
+            },
+        )
+    return adjusted
+
+
 def semantic_steering_slots(context: Optional[JsonDict], data: JsonDict) -> List[str]:
     if not context or not intent_steering_enabled(context):
         return []
@@ -4110,12 +4643,24 @@ def choose_slot(
 
     if semantic_context and not forced:
         pool = steer_semantic_candidate_pool(slot, pool, semantic_context)
+        pool = apply_soft_anchor_bias(slot, pool, semantic_context, generation_contract)
         if slot == "prop":
             pool = avoid_homebody_action_prop_redundancy(pool, semantic_context, picked)
 
     if semantic_context and not forced:
         before_hard = len(pool)
-        pool = [item for item in pool if compatible_with_semantic_hard_guards(item, preset, picked, slot)]
+        anchor_ids = soft_anchor_ids_for_slot((generation_contract or {}).get("soft_anchor_policy"), slot)
+        pool = [
+            item
+            for item in pool
+            if compatible_with_semantic_hard_guards(
+                item,
+                preset,
+                picked,
+                slot,
+                allow_adult_item=str(item.get("id", "")) in anchor_ids,
+            )
+        ]
         rejected = before_hard - len(pool)
         if rejected > 0:
             semantic_context["hard_rejected_count"] = int(semantic_context.get("hard_rejected_count", 0)) + rejected
@@ -4180,6 +4725,9 @@ def choose_slot(
         )
         pool = compatible_with_picked(full_pool, picked, forced=False, slot=slot) or full_pool
 
+    if not semantic_context and not forced:
+        pool = apply_rule_policy_bias(slot, pool, data, generation_contract)
+
     return semantic_weighted_choice(
         pool,
         rng,
@@ -4190,6 +4738,122 @@ def choose_slot(
         slot_filter=filters,
         picked=picked,
     )
+
+
+def soft_anchor_repair_candidates(
+    data: JsonDict,
+    preset: JsonDict,
+    slot: str,
+    ids: Set[str],
+    picked: Dict[str, Entry],
+    generation_contract: Optional[JsonDict],
+) -> List[Entry]:
+    if slot not in data.get("slots", {}):
+        return []
+    if slot_block_reason(data, slot, generation_contract, forced=False):
+        return []
+    current = picked.get(slot)
+    candidate_picked = dict(picked)
+    candidate_picked.pop(slot, None)
+    candidates = [item for item in data["slots"][slot] if str(item.get("id")) in ids]
+    candidates = [item for item in candidates if not entry_block_reason(item, slot, generation_contract, forced=False)]
+    candidates = [
+        item
+        for item in candidates
+        if compatible_with_semantic_hard_guards(
+            item,
+            preset,
+            candidate_picked,
+            slot,
+            allow_adult_item=str(item.get("id", "")) in ids,
+        )
+    ]
+    compatible = compatible_with_picked(candidates, candidate_picked, forced=False, slot=slot)
+    candidates = compatible or candidates
+    if current and str(current.get("id")) in ids:
+        return []
+    return candidates
+
+
+def apply_soft_anchor_repair(
+    data: JsonDict,
+    preset: JsonDict,
+    rng: random.Random,
+    picked: Dict[str, Entry],
+    forced_choices: Optional[Dict[str, List[str]]] = None,
+    semantic_context: Optional[JsonDict] = None,
+    generation_contract: Optional[JsonDict] = None,
+) -> None:
+    if not generation_contract:
+        return
+    policy = generation_contract.get("soft_anchor_policy", {})
+    if not policy or not policy.get("enabled"):
+        generation_contract["soft_anchor_repair"] = {"status": "not_applicable", "repair_attempts": []}
+        return
+    forced_slots = set((forced_choices or {}).keys())
+    min_anchors = int(policy.get("min_anchors", 0))
+    required_anchor_count = soft_anchor_required_count(policy)
+    selected = selected_soft_anchor_slots(policy, picked)
+    attempts: List[JsonDict] = []
+    if len(selected) >= required_anchor_count:
+        generation_contract["soft_anchor_repair"] = {
+            "status": "not_needed",
+            "selected_anchor_count": len(selected),
+            "min_anchors": min_anchors,
+            "required_anchor_count": required_anchor_count,
+            "repair_attempts": attempts,
+            "repair_result": "already_satisfied",
+            "policy_schema_version": (semantic_context or {}).get("policy_schema_version"),
+            "semantic_policy_hash": (semantic_context or {}).get("semantic_policy_hash"),
+        }
+        return
+
+    for slot in soft_anchor_slots(policy):
+        if len(selected) >= required_anchor_count:
+            break
+        if slot in forced_slots:
+            attempts.append({"slot": slot, "status": "skipped_forced_slot"})
+            continue
+        if slot in selected:
+            continue
+        ids = soft_anchor_ids_for_slot(policy, slot)
+        candidates = soft_anchor_repair_candidates(data, preset, slot, ids, picked, generation_contract)
+        if not candidates:
+            attempts.append({"slot": slot, "status": "blocked", "candidate_ids": sorted(ids)})
+            continue
+        biased_candidates = apply_soft_anchor_bias(slot, candidates, semantic_context, generation_contract)
+        selected_entry = semantic_weighted_choice(
+            biased_candidates,
+            rng,
+            slot,
+            preset,
+            semantic_context,
+            forced=False,
+            slot_filter=preset.get("filters", {}).get(slot),
+            picked={key: value for key, value in picked.items() if key != slot},
+        )
+        picked[slot] = selected_entry
+        selected = selected_soft_anchor_slots(policy, picked)
+        attempts.append(
+            {
+                "slot": slot,
+                "status": "reselected",
+                "selected": selected_entry.get("id"),
+                "candidate_ids": sorted(ids),
+            }
+        )
+
+    generation_contract["soft_anchor_repair"] = {
+        "status": "repaired" if len(selected) >= required_anchor_count else "failed",
+        "selected_anchor_count": len(selected),
+        "min_anchors": min_anchors,
+        "required_anchor_count": required_anchor_count,
+        "repair_attempts": attempts,
+        "repair_result": "satisfied" if len(selected) >= required_anchor_count else "insufficient_anchors",
+        "policy_schema_version": (semantic_context or {}).get("policy_schema_version"),
+        "semantic_policy_hash": (semantic_context or {}).get("semantic_policy_hash"),
+    }
+    refresh_generation_contract(generation_contract, data, preset, picked, forced_choices)
 
 
 # -----------------------------------------------------------------------------
@@ -5165,6 +5829,7 @@ def generate_once(
     batch_index: int = 0,
     additional_requirements: Optional[Sequence[str]] = None,
     likeness_mode: str = "off",
+    soft_anchor_spec: Optional[JsonDict] = None,
     source_argv: Optional[Sequence[str]] = None,
     seed: Optional[int] = None,
 ) -> JsonDict:
@@ -5213,12 +5878,16 @@ def generate_once(
         concept_locks=concept_locks,
         additional_requirements=additional_requirements,
         likeness_mode=likeness_mode,
+        soft_anchor_spec=soft_anchor_spec,
     )
     if semantic_context is not None:
         semantic_context["generation_contract"] = generation_contract
         sync_generation_contract_axis_coverage(generation_contract, semantic_context)
 
     slots_to_pick = selected_slots_for_preset(preset, data, rng, forced_choices, priority_bias)
+    for slot in soft_anchor_slots(generation_contract.get("soft_anchor_policy")):
+        if slot in data.get("slots", {}) and slot not in slots_to_pick:
+            slots_to_pick.append(slot)
     for slot in semantic_steering_slots(semantic_context, data):
         if slot not in slots_to_pick:
             slots_to_pick.append(slot)
@@ -5240,8 +5909,22 @@ def generate_once(
                 forced_choices,
                 additional_requirements=additional_requirements,
                 likeness_mode=likeness_mode,
+                soft_anchor_spec=soft_anchor_spec,
             )
             sync_generation_contract_axis_coverage(generation_contract, semantic_context)
+
+    apply_soft_anchor_repair(data, preset, rng, picked, forced_choices, semantic_context, generation_contract)
+    refresh_generation_contract(
+        generation_contract,
+        data,
+        preset,
+        picked,
+        forced_choices,
+        additional_requirements=additional_requirements,
+        likeness_mode=likeness_mode,
+        soft_anchor_spec=soft_anchor_spec,
+    )
+    sync_generation_contract_axis_coverage(generation_contract, semantic_context)
 
     surreal_active = should_activate_surreal_layer(
         preset,
@@ -5261,6 +5944,7 @@ def generate_once(
         surreal_enabled=surreal_active,
         additional_requirements=additional_requirements,
         likeness_mode=likeness_mode,
+        soft_anchor_spec=soft_anchor_spec,
     )
     sync_generation_contract_axis_coverage(generation_contract, semantic_context)
     if surreal_active:
@@ -5323,6 +6007,8 @@ def generate_once(
         for lang in langs:
             result[f"negative_{lang}"] = render_negative_prompt(negative_entries, lang)
 
+    result["quality"] = evaluate_generation_quality(generation_contract, render_picked, result, semantic_context)
+
     prompt_for_id = result.get("prompt_en") or next((result.get(f"prompt_{lang}") for lang in langs if result.get(f"prompt_{lang}")), "")
     negative_for_id = result.get("negative_en") if include_negative else None
     result["provenance"] = {
@@ -5368,6 +6054,8 @@ def generate_once(
             "intent_axes": semantic_context.get("intent_axes"),
             "intent_steering": semantic_context.get("intent_steering"),
             "generation_contract": generation_contract,
+            "soft_anchor_policy": generation_contract.get("soft_anchor_policy", {}),
+            "soft_anchor_repair": generation_contract.get("soft_anchor_repair", {}),
             "axis_coverage": semantic_axis_coverage_trace(semantic_context),
             "semantic_groups": selected_semantic_metadata_summary(picked, semantic_context),
             "coherence_scope": {
@@ -5555,6 +6243,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     parser.add_argument("--semantic-index", default=None, help="Path to a precomputed semantic index JSON. Defaults to a sibling asset when present.")
     parser.add_argument("--semantic-model", default=SEMANTIC_MODEL_ID, help="Gemini embedding model required by the semantic index.")
     parser.add_argument("--semantic-dimensions", type=int, default=DEFAULT_SEMANTIC_DIMENSIONS, help="Gemini embedding dimensions required by the semantic index.")
+    parser.add_argument("--soft-anchor-spec", dest="soft_anchor_specs", action="append", default=[], help=argparse.SUPPRESS)
     parser.add_argument("--include-trace", action="store_true", help="Include semantic/rewrite trace metadata in JSON output.")
     parser.add_argument("--llm-polish", choices=LLM_POLISH_MODES, default="off", help="Optional strict prompt polish contract. strict currently preserves the deterministic prompt unless a provider is wired explicitly.")
     parser.add_argument("--priority-bias", type=float, default=None, help="Optional-slot priority boost. Omit to use JSON setting.")
@@ -5588,6 +6277,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         parse_forced_choices(args.set_values),
         load_forced_choices_from_json(args.set_json),
     )
+    soft_anchor_spec = parse_soft_anchor_specs(args.soft_anchor_specs)
 
     if args.n < 1:
         raise ValueError("--n must be at least 1")
@@ -5671,6 +6361,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                 semantic_dimensions=args.semantic_dimensions,
                 additional_requirements=args.additional_requirements,
                 likeness_mode=args.likeness_mode,
+                soft_anchor_spec=soft_anchor_spec,
                 source_argv=raw_args,
                 seed=args.seed,
             )

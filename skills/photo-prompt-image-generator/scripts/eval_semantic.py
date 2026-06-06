@@ -10,9 +10,10 @@ import json
 import math
 import os
 import random
+import subprocess
 import sys
 from pathlib import Path
-from typing import Any, Dict, List, Sequence
+from typing import Any, Dict, List, Sequence, Set
 
 from prompt_generator import (
     DEFAULT_SEMANTIC_DIMENSIONS,
@@ -43,6 +44,7 @@ JsonDict = Dict[str, Any]
 
 DEFAULT_TAGS = Path(__file__).resolve().parents[1] / "assets" / "photo_prompt_tags.json"
 DEFAULT_INDEX = Path(__file__).resolve().parents[1] / "assets" / "photo_prompt_semantic_index.json"
+WRAPPER_PATH = Path(__file__).resolve().with_name("generate_photo_prompt.py")
 PROJECT_ROOT = Path(__file__).resolve().parents[1].parents[1]
 
 GOLDEN_CASES: List[JsonDict] = [
@@ -202,6 +204,71 @@ DIVERSITY_CHECK_CASES: List[JsonDict] = [
     },
 ]
 
+CONCEPT_BENCHMARK_CASES: List[JsonDict] = [
+    {
+        "name": "karina_maid_vampire",
+        "concept": "카리나 메이드 흡혈귀",
+        "prompt_terms": ["maid", "vampire", "reflection"],
+        "required_legacy_choices": {
+            "costume_style": ["frill_apron_maid_costume"],
+            "location": ["maid_cafe_interior"],
+        },
+    },
+    {
+        "name": "winter_nurse_yandere",
+        "concept": "윈터 간호사 얀데레",
+        "prompt_terms": ["nurse", "yandere", "hospital"],
+        "required_legacy_choices": {
+            "costume_style": ["nurse_uniform_costume"],
+            "location": ["hospital_corridor"],
+        },
+    },
+    {
+        "name": "ningning_police_femme_fatale",
+        "concept": "닝닝 경찰 팜므파탈",
+        "prompt_terms": ["police", "uniform"],
+        "required_legacy_choices": {
+            "costume_style": ["police_uniform_costume"],
+        },
+    },
+    {
+        "name": "giselle_miner_devil",
+        "concept": "지젤 광부 악마",
+        "prompt_terms": ["miner", "devil", "mine"],
+        "required_legacy_choices": {
+            "costume_style": ["miner_workwear_hard_hat"],
+            "location": ["underground_mine_tunnel_set"],
+            "prop": ["nonfunctional_pickaxe_prop", "sealed_mission_envelope_prop"],
+        },
+    },
+    {
+        "name": "illit_wonhee_casual_girlfriend_angel",
+        "concept": "아일릿 원희 사복 여친 천사",
+        "prompt_terms": ["girlfriend", "angel", "casual"],
+        "required_legacy_choices": {
+            "wardrobe_style": ["hoodie_shorts_sneakers"],
+            "prop": ["angel_halo_wings_tail_set"],
+        },
+    },
+    {
+        "name": "sullyoon_princess_vampire",
+        "concept": "설윤 공주 흡혈귀",
+        "prompt_terms": ["princess", "vampire", "hanbok"],
+        "required_legacy_choices": {
+            "costume_style": ["royal_princess_hanbok"],
+            "location": ["royal_princess_chamber"],
+        },
+    },
+    {
+        "name": "yuna_bunnygirl_menhera",
+        "concept": "유나 바니걸 멘헤라",
+        "prompt_terms": ["bunny", "menhera"],
+        "required_legacy_choices": {
+            "costume_style": ["bunny_girl_costume"],
+        },
+    },
+]
+
 
 def fake_vectors(texts: Sequence[str], dimensions: int = DEFAULT_SEMANTIC_DIMENSIONS, **_: Any) -> List[List[float]]:
     vectors = []
@@ -242,6 +309,16 @@ def dictionary_entry(data: JsonDict, slot: str, entry_id: str | None) -> JsonDic
 
 def text_blob(*parts: Any) -> str:
     return " ".join(str(part or "") for part in parts).lower()
+
+
+def normalize_list(value: Any) -> List[str]:
+    if value is None:
+        return []
+    if isinstance(value, str):
+        return [value]
+    if isinstance(value, list):
+        return [str(item) for item in value]
+    return [str(value)]
 
 
 def has_human_subject(result: JsonDict) -> bool:
@@ -526,6 +603,287 @@ def coverage_preservation_rate(contract: JsonDict) -> float:
     return len(covered) / max(len(must_cover), 1)
 
 
+def generated_prompt_body(prompt: str) -> str:
+    markers = [
+        "Subject and state:",
+        "Scene and environment:",
+        "Camera and composition:",
+        "Light and atmosphere:",
+        "Materials and finish:",
+    ]
+    offsets = [prompt.find(marker) for marker in markers if prompt.find(marker) >= 0]
+    if not offsets:
+        return prompt
+    return prompt[min(offsets) :]
+
+
+def prompt_term_rate(prompt: str, terms: Sequence[str]) -> tuple[float, List[str]]:
+    terms = [str(term).lower() for term in terms if str(term).strip()]
+    if not terms:
+        return 1.0, []
+    body = generated_prompt_body(prompt).lower()
+    hits = sorted({term for term in terms if term in body})
+    return len(hits) / max(len(terms), 1), hits
+
+
+def choice_anchor_rate(result: JsonDict, required: JsonDict) -> tuple[float, List[JsonDict]]:
+    if not required:
+        return 1.0, []
+    choices = choice_ids(result)
+    rows: List[JsonDict] = []
+    hits = 0
+    for slot, raw_ids in required.items():
+        expected = set(normalize_list(raw_ids))
+        selected = choices.get(slot)
+        matched = bool(selected and selected in expected)
+        hits += 1 if matched else 0
+        rows.append({"slot": slot, "selected": selected, "expected": sorted(expected), "matched": matched})
+    return hits / max(len(required), 1), rows
+
+
+def soft_anchor_metrics(result: JsonDict) -> tuple[float, List[JsonDict], float, List[str], List[str], List[str]]:
+    trace = result.get("semantic_trace", {}) or {}
+    contract = trace.get("generation_contract", {}) or {}
+    policy = contract.get("soft_anchor_policy", {}) or {}
+    anchors = policy.get("anchors", []) or []
+    if not policy.get("enabled") or not anchors:
+        return 1.0, [], 1.0, [], [], []
+    choices = choice_ids(result)
+    by_slot: Dict[str, Set[str]] = {}
+    term_by_slot: Dict[str, Set[str]] = {}
+    for anchor in anchors:
+        slot = str(anchor.get("slot") or "")
+        ids = {str(item_id) for item_id in normalize_list(anchor.get("ids"))}
+        if not slot or not ids:
+            continue
+        by_slot.setdefault(slot, set()).update(ids)
+        term_by_slot.setdefault(slot, set()).update(str(term).lower() for term in normalize_list(anchor.get("terms")))
+    rows: List[JsonDict] = []
+    matched_slots: Set[str] = set()
+    for slot, expected in sorted(by_slot.items()):
+        selected = choices.get(slot)
+        matched = bool(selected and selected in expected)
+        if matched:
+            matched_slots.add(slot)
+        rows.append({"slot": slot, "selected": selected, "expected": sorted(expected), "matched": matched})
+    selected_rate = len(matched_slots) / max(len(by_slot), 1)
+    terms = sorted({term for slot in matched_slots for term in term_by_slot.get(slot, set()) if term})
+    if not terms:
+        body_rate = 1.0 if matched_slots else 0.0
+        return selected_rate, rows, body_rate, [], [], []
+    body = generated_prompt_body(str(result.get("prompt_en", ""))).lower()
+    hits = sorted({term for term in terms if term in body})
+    missing = sorted(set(terms) - set(hits))
+    body_rate = len(hits) / max(len(terms), 1)
+    failures: List[str] = []
+    if selected_rate <= 0:
+        failures.append("no_soft_anchor_ids_selected")
+    if body_rate <= 0:
+        failures.append("no_soft_anchor_terms_rendered")
+    return selected_rate, rows, body_rate, hits, missing, failures
+
+
+def run_wrapper_concept(
+    *,
+    concept: str,
+    concept_mode: str,
+    seed: int,
+    tags_path: Path,
+    semantic_index_path: Path,
+) -> JsonDict:
+    command = [
+        sys.executable,
+        str(WRAPPER_PATH),
+        "--tags",
+        str(tags_path),
+        "--semantic-index",
+        str(semantic_index_path),
+        "--concept",
+        concept,
+        "--concept-mode",
+        concept_mode,
+        "--selection-mode",
+        "semantic",
+        "--seed",
+        str(seed),
+        "--n",
+        "1",
+        "--lang",
+        "en",
+        "--detail-level",
+        "detailed",
+        "--include-choices",
+        "--include-trace",
+        "--json-output",
+        "--no-negative",
+    ]
+    completed = subprocess.run(
+        command,
+        cwd=PROJECT_ROOT,
+        text=True,
+        capture_output=True,
+        check=False,
+        timeout=300,
+    )
+    if completed.returncode != 0:
+        raise RuntimeError(
+            "concept wrapper failed for "
+            f"{concept!r} mode={concept_mode!r} seed={seed}: {completed.stderr.strip() or completed.stdout.strip()}"
+        )
+    payload = json.loads(completed.stdout)
+    if isinstance(payload, list):
+        if not payload:
+            raise RuntimeError(f"concept wrapper returned no rows for {concept!r}")
+        return payload[0]
+    if isinstance(payload, dict) and "items" in payload and isinstance(payload["items"], list):
+        return payload["items"][0]
+    if isinstance(payload, dict):
+        return payload
+    raise RuntimeError(f"Unexpected concept wrapper payload for {concept!r}: {type(payload).__name__}")
+
+
+def evaluate_concept_benchmark(
+    cases: Sequence[JsonDict],
+    seed: int,
+    tags_path: Path,
+    semantic_index_path: Path,
+    runs: int = 2,
+    include_soft: bool = True,
+) -> JsonDict:
+    modes = ["legacy"] + (["soft"] if include_soft else [])
+    minimum_coverage = 0.85
+    minimum_prompt_anchor = 0.5
+    minimum_legacy_choice_anchor = 0.75
+    minimum_soft_selected_anchor = 0.60
+    minimum_soft_average_selected_anchor = 0.80
+    minimum_soft_body_anchor = 0.60
+    rows: List[JsonDict] = []
+    by_mode: Dict[str, List[JsonDict]] = {mode: [] for mode in modes}
+    for case_index, case in enumerate(cases):
+        for run_index in range(max(1, runs)):
+            run_seed = seed + 8000 + (case_index * 100) + run_index
+            for mode in modes:
+                result = run_wrapper_concept(
+                    concept=case["concept"],
+                    concept_mode=mode,
+                    seed=run_seed,
+                    tags_path=tags_path,
+                    semantic_index_path=semantic_index_path,
+                )
+                trace = result.get("semantic_trace", {}) or {}
+                contract = trace.get("generation_contract", {}) or {}
+                coverage_rate = coverage_preservation_rate(contract)
+                prompt_rate, prompt_hits = prompt_term_rate(str(result.get("prompt_en", "")), case.get("prompt_terms", []))
+                choice_rate, choice_rows = choice_anchor_rate(result, case.get("required_legacy_choices", {}) or {})
+                selected_anchor_rate, selected_anchor_rows, body_anchor_rate, body_anchor_hits, body_anchor_missing, soft_failures = soft_anchor_metrics(result)
+                choice_threshold = minimum_legacy_choice_anchor if mode == "legacy" else 0.0
+                if mode == "soft":
+                    passed = (
+                        coverage_rate >= minimum_coverage
+                        and selected_anchor_rate >= minimum_soft_selected_anchor
+                        and body_anchor_rate >= minimum_soft_body_anchor
+                    )
+                    if selected_anchor_rate < minimum_soft_selected_anchor:
+                        soft_failures.append("selected_anchor_rate_below_threshold")
+                    if body_anchor_rate < minimum_soft_body_anchor:
+                        soft_failures.append("body_anchor_term_rate_below_threshold")
+                else:
+                    passed = (
+                        coverage_rate >= minimum_coverage
+                        and prompt_rate >= minimum_prompt_anchor
+                        and choice_rate >= choice_threshold
+                    )
+                row = {
+                    "name": case.get("name", case["concept"]),
+                    "concept": case["concept"],
+                    "concept_mode": mode,
+                    "seed": run_seed,
+                    "preset_id": result.get("preset_id"),
+                    "coverage_rate": round(coverage_rate, 4),
+                    "minimum_coverage_rate": minimum_coverage,
+                    "prompt_anchor_rate": round(prompt_rate, 4),
+                    "minimum_prompt_anchor_rate": minimum_prompt_anchor,
+                    "prompt_anchor_hits": prompt_hits,
+                    "choice_anchor_rate": round(choice_rate, 4),
+                    "minimum_choice_anchor_rate": choice_threshold,
+                    "choice_anchors": choice_rows,
+                    "selected_anchor_rate": round(selected_anchor_rate, 4),
+                    "minimum_selected_anchor_rate": minimum_soft_selected_anchor if mode == "soft" else 0.0,
+                    "selected_anchors": selected_anchor_rows,
+                    "body_anchor_term_rate": round(body_anchor_rate, 4),
+                    "minimum_body_anchor_term_rate": minimum_soft_body_anchor if mode == "soft" else 0.0,
+                    "body_anchor_hits": body_anchor_hits,
+                    "body_anchor_missing": body_anchor_missing,
+                    "soft_anchor_failure_reasons": sorted(set(soft_failures)),
+                    "coverage_gaps": contract.get("coverage_gaps", []),
+                    "render_suppressed_slots": contract.get("render_suppressed_slots", []),
+                    "passed": passed,
+                }
+                rows.append(row)
+                by_mode[mode].append(row)
+    mode_summaries: List[JsonDict] = []
+    for mode, mode_rows in by_mode.items():
+        mode_summaries.append(
+            {
+                "concept_mode": mode,
+                "run_count": len(mode_rows),
+                "average_coverage_rate": round(
+                    sum(row["coverage_rate"] for row in mode_rows) / max(len(mode_rows), 1),
+                    4,
+                ),
+                "average_prompt_anchor_rate": round(
+                    sum(row["prompt_anchor_rate"] for row in mode_rows) / max(len(mode_rows), 1),
+                    4,
+                ),
+                "average_choice_anchor_rate": round(
+                    sum(row["choice_anchor_rate"] for row in mode_rows) / max(len(mode_rows), 1),
+                    4,
+                ),
+                "average_selected_anchor_rate": round(
+                    sum(row["selected_anchor_rate"] for row in mode_rows) / max(len(mode_rows), 1),
+                    4,
+                ),
+                "average_body_anchor_term_rate": round(
+                    sum(row["body_anchor_term_rate"] for row in mode_rows) / max(len(mode_rows), 1),
+                    4,
+                ),
+                "failed_run_count": sum(1 for row in mode_rows if not row["passed"]),
+            }
+        )
+    legacy_summary = next((item for item in mode_summaries if item["concept_mode"] == "legacy"), {})
+    soft_summary = next((item for item in mode_summaries if item["concept_mode"] == "soft"), None)
+    soft_coverage_drop = None
+    soft_promotion_ready = None
+    if soft_summary:
+        soft_coverage_drop = round(
+            float(legacy_summary.get("average_coverage_rate", 0.0))
+            - float(soft_summary.get("average_coverage_rate", 0.0)),
+            4,
+        )
+        soft_promotion_ready = (
+            soft_summary["average_coverage_rate"] >= minimum_coverage
+            and soft_summary["average_selected_anchor_rate"] >= minimum_soft_average_selected_anchor
+            and soft_summary["average_body_anchor_term_rate"] >= minimum_soft_body_anchor
+            and soft_coverage_drop <= 0.05
+            and soft_summary["failed_run_count"] == 0
+        )
+    return {
+        "case_count": len(cases),
+        "runs_per_case": max(1, runs),
+        "minimum_coverage_rate": minimum_coverage,
+        "minimum_prompt_anchor_rate": minimum_prompt_anchor,
+        "minimum_legacy_choice_anchor_rate": minimum_legacy_choice_anchor,
+        "minimum_soft_selected_anchor_rate": minimum_soft_selected_anchor,
+        "minimum_soft_average_selected_anchor_rate": minimum_soft_average_selected_anchor,
+        "minimum_soft_body_anchor_term_rate": minimum_soft_body_anchor,
+        "mode_summaries": mode_summaries,
+        "legacy_failed_run_count": int(legacy_summary.get("failed_run_count", 0)),
+        "soft_coverage_drop": soft_coverage_drop,
+        "soft_promotion_ready": soft_promotion_ready,
+        "results": rows,
+    }
+
+
 def evaluate_diversity_check(
     data: JsonDict,
     cases: Sequence[JsonDict],
@@ -659,6 +1017,7 @@ def evaluate_mode(
                 "preset_id": result.get("preset_id"),
                 "coverage": coverage(result, case),
                 "forbidden_hits": forbidden_hits(result, case),
+                "quality_verdict": (result.get("quality", {}) or {}).get("verdict"),
                 "choices": choice_ids(result),
             }
         )
@@ -666,6 +1025,7 @@ def evaluate_mode(
         "mode": mode,
         "average_coverage": round(sum(item["coverage"] for item in results) / max(len(results), 1), 4),
         "forbidden_case_count": sum(1 for item in results if item["forbidden_hits"]),
+        "quality_fail_count": sum(1 for item in results if item.get("quality_verdict") == "fail"),
         "unique_presets": len({item["preset_id"] for item in results}),
         "results": results,
     }
@@ -878,13 +1238,18 @@ def main() -> int:
     parser.add_argument("--bleed-check", action="store_true", help="Run cross-category leakage checks for product, craft, wildlife, and food scenarios.")
     parser.add_argument("--bleed-runs", type=int, default=10, help="Number of seeds per bleed-check case.")
     parser.add_argument("--diversity-check", action="store_true", help="Run V8 keyword preservation and free-slot diversity checks.")
+    parser.add_argument("--quality-gate", action="store_true", help="Run the real embedding quality gate for semantic concept benchmarks and regression checks.")
+    parser.add_argument("--quality-runs", type=int, default=2, help="Number of seeds per concept benchmark case for --quality-gate.")
+    parser.add_argument("--quality-require-soft", action="store_true", help="Make soft concept-mode promotion readiness a hard --quality-gate failure.")
     args = parser.parse_args()
 
     load_project_env()
     data = load_json(args.tags)
     cases = GOLDEN_CASES[: args.limit] if args.limit else GOLDEN_CASES
+    tags_path = Path(args.tags)
+    semantic_index_path = Path(args.semantic_index)
     if args.check_index:
-        semantic_index = json.loads(Path(args.semantic_index).read_text(encoding="utf-8"))
+        semantic_index = json.loads(semantic_index_path.read_text(encoding="utf-8"))
         validate_semantic_index_metadata(
             semantic_index,
             data,
@@ -918,6 +1283,7 @@ def main() -> int:
                     "multi_axis_coverage_cases": len(MULTI_AXIS_COVERAGE_CASES),
                     "bleed_check_cases": len(BLEED_CHECK_CASES),
                     "diversity_check_cases": len(DIVERSITY_CHECK_CASES),
+                    "concept_benchmark_cases": len(CONCEPT_BENCHMARK_CASES),
                 },
                 indent=2,
             )
@@ -926,7 +1292,14 @@ def main() -> int:
 
     import prompt_generator as generator_module
 
-    semantic_index = build_mock_index(data, generator_module) if args.mock_embeddings else json.loads(Path(args.semantic_index).read_text(encoding="utf-8"))
+    if args.quality_gate and args.mock_embeddings:
+        print("--quality-gate requires real embeddings; remove --mock-embeddings.", file=sys.stderr)
+        return 8
+    if args.quality_gate and not (os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")):
+        print("--quality-gate requires GEMINI_API_KEY or GOOGLE_API_KEY in the environment or project .env.", file=sys.stderr)
+        return 8
+
+    semantic_index = build_mock_index(data, generator_module) if args.mock_embeddings else json.loads(semantic_index_path.read_text(encoding="utf-8"))
     original_embed_texts = generator_module.embed_texts_with_gemini
     if args.mock_embeddings:
         generator_module.embed_texts_with_gemini = lambda texts, dimensions=DEFAULT_SEMANTIC_DIMENSIONS, **kwargs: fake_vectors(texts, dimensions=dimensions)
@@ -968,6 +1341,67 @@ def main() -> int:
             }
             print(json.dumps(summary, ensure_ascii=False, indent=2))
             return 0 if args.mock_embeddings or summary["diversity_check"]["failed_case_count"] == 0 else 7
+        if args.quality_gate:
+            concept_cases = CONCEPT_BENCHMARK_CASES[: args.limit] if args.limit else CONCEPT_BENCHMARK_CASES
+            diversity_cases = DIVERSITY_CHECK_CASES[: args.limit] if args.limit else DIVERSITY_CHECK_CASES
+            bleed_cases = BLEED_CHECK_CASES[: args.limit] if args.limit else BLEED_CHECK_CASES
+            summary = {
+                "quality_gate": {
+                    "real_embeddings_required": True,
+                    "mock_embeddings": False,
+                    "quality_runs": max(1, args.quality_runs),
+                    "soft_required": bool(args.quality_require_soft),
+                    "dictionary_hash": semantic_index.get("dictionary_hash"),
+                    "policy_schema_version": semantic_policy_schema_version(data),
+                    "semantic_policy_hash": semantic_policy_digest(semantic_policy_from_source(data)),
+                    "semantic_text_recipe": semantic_index.get("semantic_text_recipe"),
+                    "embedding_model": semantic_index.get("embedding_model"),
+                    "embedding_dimensions": semantic_index.get("embedding_dimensions"),
+                },
+                "concept_benchmark": evaluate_concept_benchmark(
+                    concept_cases,
+                    args.seed,
+                    tags_path,
+                    semantic_index_path,
+                    runs=max(1, args.quality_runs),
+                    include_soft=True,
+                ),
+                "diversity_check": evaluate_diversity_check(
+                    data,
+                    diversity_cases,
+                    args.seed,
+                    semantic_index,
+                    gemini_api_key,
+                ),
+                "bleed_check": evaluate_bleed_check(
+                    data,
+                    bleed_cases,
+                    args.seed,
+                    semantic_index,
+                    gemini_api_key,
+                    runs=max(1, min(args.bleed_runs, args.quality_runs)),
+                ),
+                "preset_guards": evaluate_preset_guards(data, MULTI_AXIS_PRESET_GUARDS, args.seed, semantic_index, gemini_api_key),
+                "multi_axis_coverage": evaluate_multi_axis_coverage(data, MULTI_AXIS_COVERAGE_CASES, args.seed, semantic_index, gemini_api_key),
+            }
+            legacy_passed = summary["concept_benchmark"]["legacy_failed_run_count"] == 0
+            soft_ready = bool(summary["concept_benchmark"].get("soft_promotion_ready"))
+            failed = (
+                not legacy_passed
+                or summary["diversity_check"]["failed_case_count"] > 0
+                or summary["bleed_check"]["failed_case_count"] > 0
+                or summary["preset_guards"]["blacklisted_case_count"] > 0
+                or summary["multi_axis_coverage"]["failed_case_count"] > 0
+                or (args.quality_require_soft and not soft_ready)
+            )
+            summary["quality_gate"]["legacy_passed"] = legacy_passed
+            summary["quality_gate"]["soft_promotion_ready"] = soft_ready
+            summary["quality_gate"]["passed"] = not failed
+            print(json.dumps(summary, ensure_ascii=False, indent=2))
+            if failed:
+                print("real semantic quality gate failed", file=sys.stderr)
+                return 9
+            return 0
         summary = {
             "warning": "mock embeddings are deterministic test doubles, not retrieval-quality evidence" if args.mock_embeddings else None,
             "modes": [
@@ -987,6 +1421,9 @@ def main() -> int:
         return 0
     semantic = next(item for item in summary["modes"] if item["mode"] == "semantic")
     rule = next(item for item in summary["modes"] if item["mode"] == "rule")
+    if any(item.get("quality_fail_count", 0) > 0 for item in summary["modes"]):
+        print("one or more generated prompts failed runtime quality checks", file=sys.stderr)
+        return 10
     if semantic["average_coverage"] < rule["average_coverage"]:
         print("semantic average coverage is below rule average coverage", file=sys.stderr)
         return 2

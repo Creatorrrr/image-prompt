@@ -559,6 +559,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             batch_index=kwargs.pop("batch_index", 0),
             additional_requirements=kwargs.pop("additional_requirements", None),
             likeness_mode=kwargs.pop("likeness_mode", "off"),
+            soft_anchor_spec=kwargs.pop("soft_anchor_spec", None),
             source_argv=kwargs.pop("source_argv", None),
             seed=seed,
         )
@@ -602,6 +603,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             batch_index=kwargs.pop("batch_index", 0),
             additional_requirements=kwargs.pop("additional_requirements", None),
             likeness_mode=kwargs.pop("likeness_mode", "off"),
+            soft_anchor_spec=kwargs.pop("soft_anchor_spec", None),
             source_argv=kwargs.pop("source_argv", None),
             seed=seed,
         )
@@ -962,9 +964,64 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertFalse(concept["forced_slots_applied"])
         self.assertIn("--concept-lock", payload["forward_args"])
         self.assertIn("--intent-axis", payload["forward_args"])
+        self.assertIn("--soft-anchor-spec", payload["forward_args"])
         self.assertNotIn("--preset", payload["forward_args"])
         self.assertNotIn("--set", payload["forward_args"])
         self.assertNotIn("--additional-requirement", payload["forward_args"])
+        spec_index = payload["forward_args"].index("--soft-anchor-spec") + 1
+        forwarded_spec = json.loads(payload["forward_args"][spec_index])
+        self.assertEqual(forwarded_spec["mode"], "soft")
+        self.assertEqual(forwarded_spec["concept"], "메이드 암살자")
+        self.assertGreaterEqual(forwarded_spec["min_anchors"], 2)
+        slots = {anchor["slot"] for anchor in forwarded_spec["anchors"]}
+        self.assertIn("costume_style", slots)
+        self.assertIn("expression", slots)
+        self.assertIn("prop", slots)
+        self.assertEqual(concept["soft_anchor_spec"], forwarded_spec)
+
+    def test_soft_anchor_spec_validation_and_bias_do_not_shrink_pool(self):
+        with self.assertRaisesRegex(ValueError, "min_anchors"):
+            self.generator.normalize_soft_anchor_spec(
+                {
+                    "min_anchors": "many",
+                    "anchors": [{"slot": "prop", "ids": ["compact_mirror"]}],
+                }
+            )
+
+        policy = self.generator.normalize_soft_anchor_spec(
+            {
+                "mode": "soft",
+                "concept": "흡혈귀",
+                "min_anchors": 1,
+                "anchors": [
+                    {
+                        "slot": "prop",
+                        "ids": ["compact_mirror"],
+                        "terms": ["compact mirror", "mirror"],
+                        "source": "mixin",
+                    }
+                ],
+            }
+        )
+        contract = {"soft_anchor_policy": self.generator.soft_anchor_trace(policy)}
+        pool = [
+            {"id": "compact_mirror", "en": "a compact mirror", "weight": 1.0},
+            {"id": "coffee_cup_prop", "en": "a paper coffee cup", "weight": 1.0},
+        ]
+
+        adjusted = self.generator.apply_soft_anchor_bias(
+            "prop",
+            pool,
+            {"policy_schema_version": 1, "semantic_policy_hash": "test-hash"},
+            contract,
+        )
+
+        self.assertEqual([item["id"] for item in adjusted], ["compact_mirror", "coffee_cup_prop"])
+        self.assertGreater(adjusted[0]["weight"], adjusted[1]["weight"])
+        self.assertEqual(pool[0]["weight"], 1.0)
+        events = contract.get("soft_anchor_promotions", [])
+        self.assertTrue(events)
+        self.assertEqual(events[0]["promoted_ids"], ["compact_mirror"])
 
     def test_concept_recipe_princess_base_uses_korean_court_lineage_language(self):
         payload = self.run_wrapper_json(
@@ -5086,6 +5143,65 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertEqual(
             [item["id"] for item in self.generator.steer_semantic_candidate_pool("location", locations, context)],
             ["small_messy_gaming_bedroom", "dim_monitor_glow_bedroom", "floor_mattress_gaming_corner"],
+        )
+
+    def test_rule_mode_rejects_intent_even_with_policy_available(self):
+        with self.assertRaisesRegex(ValueError, "--intent cannot be used with --selection-mode rule"):
+            self.generate(
+                "interior_lifestyle",
+                seed=20260606,
+                intent="homebody gamer in a small bedroom",
+                selection_mode="rule",
+                concept_locks=["방구석 집돌이, 작은 방, 모니터 빛, 게임패드"],
+                include_trace=True,
+            )
+
+    def test_rule_quality_reports_semantic_relevance_not_evaluated(self):
+        concept = "방구석 집돌이, 작은 방, 모니터 빛, 게임패드"
+        item = self.generate(
+            "interior_lifestyle",
+            seed=20260607,
+            selection_mode="rule",
+            concept_locks=[concept],
+            include_trace=True,
+            include_negative=False,
+        )
+
+        self.assertEqual(item["quality"]["semantic_relevance"], "not_evaluated")
+        self.assertIn(item["quality"]["verdict"], {"pass", "warn"})
+        concept_check = next(check for check in item["quality"]["checks"] if check["id"] == "concept_lock_rendered")
+        self.assertEqual(concept_check["status"], "pass")
+
+    def test_rule_policy_bias_uses_concept_lock_policy_without_filtering_pool(self):
+        concept = "방구석 집돌이, 작은 방, 모니터 빛, 게임패드, 간식, 담요"
+        preset = next(item for item in self.data["presets"] if item["id"] == "interior_lifestyle")
+        contract = self.generator.make_generation_contract(
+            self.data,
+            preset,
+            {},
+            {},
+            concept_locks=[concept],
+        )
+        by_slot = {slot: {item["id"]: item for item in entries} for slot, entries in self.data["slots"].items()}
+        props = [
+            by_slot["prop"]["coffee_cup_prop"],
+            by_slot["prop"]["game_controller_prop"],
+            by_slot["prop"]["messy_snacks_prop"],
+        ]
+
+        biased = self.generator.apply_rule_policy_bias("prop", props, self.data, contract)
+        weights = {item["id"]: float(item.get("weight", 1)) for item in biased}
+
+        self.assertEqual([item["id"] for item in biased], [item["id"] for item in props])
+        self.assertGreater(weights["game_controller_prop"], weights["coffee_cup_prop"])
+        self.assertGreater(weights["messy_snacks_prop"], weights["coffee_cup_prop"])
+        event = contract["rule_policy_bias"][0]
+        self.assertEqual(event["reason_code"], "rule_policy_concept_lock_bias")
+        self.assertIn("homebody_room", event["active_families"])
+        self.assertEqual(event["policy_schema_version"], 1)
+        self.assertIn("semantic_policy_hash", event)
+        self.assertTrue(
+            all(item.get("matched_via") != "default_fallback" for item in event["boosted"])
         )
 
     def test_homebody_prop_dedupes_detail_already_carried_by_action(self):

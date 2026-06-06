@@ -450,6 +450,14 @@ python3 skills/photo-prompt-image-generator/scripts/eval_semantic.py --mock-embe
 python3 skills/photo-prompt-image-generator/scripts/eval_semantic.py --diversity-check --limit 1
 ```
 
+Run the real semantic quality gate before treating semantic-policy or concept-mode changes as quality-improving evidence:
+
+```bash
+python3 skills/photo-prompt-image-generator/scripts/eval_semantic.py --quality-gate --quality-runs 2
+```
+
+`--quality-gate` requires real Gemini embeddings and a valid semantic index; it intentionally rejects `--mock-embeddings`. The gate reports legacy concept-mode pass/fail separately from soft concept-mode promotion readiness. Add `--quality-require-soft` only when a change is intended to promote `--concept-mode soft`. Rule mode still rejects `--intent`; with `--concept-lock`, it may use semantic-policy lexicons only as deterministic weighted-rule bias, not as semantic retrieval.
+
 List virtual recipe presets:
 
 ```bash
