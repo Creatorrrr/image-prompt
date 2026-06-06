@@ -1201,6 +1201,148 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertEqual(selected_bundle["preset"], "compact_urban_fashion_portrait")
         self.assertNotIn("shared_daylight_threshold_refusal", [selected_bundle["bundle_id"]])
 
+    def test_concept_recipe_expands_devil_as_non_graphic_mixin(self):
+        payload = self.run_wrapper_json(
+            "--concept",
+            "악마",
+            "--explain-concept",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "606",
+            "--plain",
+            "--no-negative",
+        )
+
+        concept = payload["concepts"][0]
+        self.assertEqual(concept["name"], "악마")
+        self.assertIsNone(concept["role"])
+        self.assertIsNone(concept["applied_role"])
+        self.assertEqual(concept["applied_mixins"], ["악마"])
+        self.assertTrue(concept["matched"])
+        self.assertEqual(concept["mixins"]["악마"]["preset"], "compact_cinematic_prop_portrait")
+        self.assertEqual(concept["combined_forced_slots"]["appearance_type"], ["classic_elegant"])
+        self.assertEqual(concept["combined_forced_slots"]["expression"], ["mysterious_half_smile"])
+        self.assertEqual(concept["combined_forced_slots"]["prop"], ["sealed_mission_envelope_prop"])
+        self.assertEqual(concept["combined_forced_slots"]["light_direction"], ["under_light"])
+        self.assertEqual(concept["combined_forced_slots"]["light_shape"], ["looming_wall_shadow"])
+        self.assertEqual(len(concept["selected_bundles"]), 1)
+        bundle = concept["selected_bundles"][0]
+        self.assertEqual(bundle["mixin"], "악마")
+        self.assertTrue(bundle["bundle_id"].startswith("standalone_"))
+        joined = " ".join(payload["forward_args"])
+        self.assertIn("devil/demon reinterpreted as temptation, contract, accusation", joined)
+        self.assertIn("visible devil identity anchors", joined)
+        self.assertIn("avoid product-commercial drift", joined)
+        self.assertIn("sealed bargain", joined)
+        self.assertIn("no visible blood", joined)
+        self.assertIn("harmed or restrained victims", joined)
+        self.assertIn("gore, wounds", joined)
+
+    def test_devil_mixin_preserves_role_costume_and_contract_anchor(self):
+        payload = self.run_wrapper_json(
+            "--concept",
+            "카리나 메이드 악마",
+            "--explain-concept",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "606",
+            "--plain",
+            "--no-negative",
+        )
+
+        concept = payload["concepts"][0]
+        self.assertEqual(concept["name"], "카리나")
+        self.assertEqual(concept["role"], "메이드")
+        self.assertEqual(concept["applied_role"], "메이드")
+        self.assertEqual(concept["applied_mixins"], ["악마"])
+        self.assertEqual(concept["combined_forced_slots"]["subject"], ["maid_cafe_performer"])
+        self.assertEqual(concept["combined_forced_slots"]["costume_style"], ["frill_apron_maid_costume"])
+        self.assertEqual(concept["combined_forced_slots"]["prop"], ["sealed_mission_envelope_prop"])
+        self.assertEqual(concept["combined_forced_slots"]["lighting"], ["candlelit_ritual_light"])
+        self.assertEqual(concept["combined_forced_slots"]["subject_framing"], ["upper_body_framing"])
+        self.assertEqual(concept["selected_bundles"][0]["bundle_id"], "maid_contract_service")
+        self.assertNotIn("gothic_doll_lace_dress", concept["combined_forced_slots"]["costume_style"])
+        joined = " ".join(payload["forward_args"])
+        self.assertIn("service cover identity", joined)
+        self.assertIn("quiet contract or bargain offered to the viewer", joined)
+        self.assertIn("horn-like or tail-like shadow", joined)
+        self.assertIn("before ordinary maid cosplay", joined)
+        self.assertNotIn("assassin persona", joined)
+
+    def test_devil_concept_prompt_avoids_product_commercial_drift(self):
+        item = self.run_wrapper_json(
+            "--concept",
+            "악마",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "606",
+            "--lang",
+            "en",
+            "--no-negative",
+            "--include-choices",
+        )[0]
+
+        self.assertNotEqual(item["provenance"]["preset_id"], "product_commercial")
+        self.assertNotEqual(item["choices"]["subject"]["id"], "ceramic_bowl")
+        self.assertEqual(item["choices"]["prop"]["id"], "sealed_mission_envelope_prop")
+        self.assertEqual(item["choices"]["light_direction"]["id"], "under_light")
+        self.assertEqual(item["choices"]["light_shape"]["id"], "looming_wall_shadow")
+        self.assertIn("Core concept lock: 악마", item["prompt_en"])
+        self.assertIn("devil/demon reinterpreted as temptation", item["prompt_en"])
+        self.assertIn("avoid product-commercial drift", item["prompt_en"])
+        self.assertIn("standalone devil as a quiet tempter", item["prompt_en"])
+        self.assertIn("sealed bargain", item["prompt_en"])
+        self.assertIn("no visible blood", item["prompt_en"])
+        self.assertIn("gore, wounds", item["prompt_en"])
+
+    def test_devil_role_batch_uses_role_specific_anchors(self):
+        cases = [
+            ("카리나 메이드 악마", 606, "maid_contract_service", "sealed_mission_envelope_prop"),
+            ("윈터 간호사 악마", 607, "nurse_accuser_chart", "logo_board_prop"),
+            ("닝닝 경찰 악마", 608, "police_adversary_dossier", "single_playing_card_calling_card_prop"),
+            ("지젤 광부 악마", 609, "miner_underworld_threshold", "glowing_lantern_prop"),
+            ("아일릿 원희 사복 여친 악마", 610, "casual_phone_temptation", "clear_case_smartphone"),
+            ("설윤 공주 악마", 611, "princess_fallen_light_decree", "sealed_mission_envelope_prop"),
+            ("유나 바니걸 악마", 612, "bunny_lure_mirror_trap", "compact_mirror"),
+        ]
+        selected_bundle_ids = set()
+        selected_props = set()
+        for concept, seed, expected_bundle, expected_prop in cases:
+            explanation = self.run_wrapper_json(
+                "--concept",
+                concept,
+                "--explain-concept",
+                "--selection-mode",
+                "rule",
+                "--seed",
+                str(seed),
+                "--plain",
+                "--no-negative",
+            )
+            concept_payload = explanation["concepts"][0]
+            selected_bundle = concept_payload["selected_bundles"][0]
+            self.assertEqual(concept_payload["applied_mixins"], ["악마"])
+            self.assertEqual(selected_bundle["bundle_id"], expected_bundle)
+            self.assertFalse(selected_bundle["bundle_id"].startswith("standalone_"))
+            self.assertEqual(concept_payload["combined_forced_slots"]["prop"], [expected_prop])
+            selected_bundle_ids.add(selected_bundle["bundle_id"])
+            selected_props.add(expected_prop)
+
+            if concept_payload["role"] == "사복 여친":
+                self.assertEqual(selected_bundle["preset"], "compact_urban_fashion_portrait")
+                self.assertEqual(concept_payload["combined_forced_slots"]["wardrobe_style"], ["hoodie_shorts_sneakers"])
+            if concept_payload["role"] == "공주":
+                self.assertEqual(concept_payload["combined_forced_slots"]["costume_style"], ["royal_princess_hanbok"])
+                self.assertEqual(concept_payload["combined_forced_slots"]["subject_framing"], ["waist_up_framing"])
+            if concept_payload["role"] == "바니걸":
+                self.assertEqual(concept_payload["combined_forced_slots"]["subject_framing"], ["head_and_shoulders_crop"])
+
+        self.assertEqual(len(selected_bundle_ids), len(cases))
+        self.assertGreaterEqual(len(selected_props), 5)
+
     def test_concept_recipe_expands_femme_fatale_as_non_objectifying_mixin(self):
         payload = self.run_wrapper_json(
             "--concept",
@@ -1776,10 +1918,10 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertEqual(concept["applied_mixins"], ["츤데레"])
         self.assertTrue(concept["matched"])
         self.assertEqual(concept["mixins"]["츤데레"]["preset"], "candid_iphone_portrait")
-        self.assertEqual(concept["combined_forced_slots"]["makeup_style"], ["igari_blush"])
+        self.assertEqual(concept["combined_forced_slots"]["makeup_style"], ["natural_makeup"])
         self.assertIn(
             concept["combined_forced_slots"]["expression"][0],
-            {"skeptical_side_eye", "looking_away_pensive"},
+            {"shy_downward_glance", "looking_away_pensive", "surprised_open_eyes"},
         )
         self.assertEqual(len(concept["selected_bundles"]), 1)
         bundle = concept["selected_bundles"][0]
@@ -1789,6 +1931,8 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         joined = " ".join(payload["forward_args"])
         self.assertIn("denial-vs-evidence contradiction", joined)
         self.assertIn("caring-evidence object", joined)
+        self.assertIn("side-eye is only one optional denial cue", joined)
+        self.assertIn("blush must remain photographic and restrained", joined)
         self.assertIn("never hoarded", joined)
         self.assertIn("explicitly NOT yandere", joined)
         self.assertIn("alive and embarrassed", joined)
@@ -1815,16 +1959,18 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertEqual(concept["applied_role"], "메이드")
         self.assertEqual(concept["applied_mixins"], ["츤데레"])
         self.assertEqual(concept["combined_forced_slots"]["costume_style"], ["frill_apron_maid_costume"])
-        self.assertEqual(concept["combined_forced_slots"]["expression"], ["skeptical_side_eye"])
-        self.assertEqual(concept["combined_forced_slots"]["makeup_style"], ["igari_blush"])
+        self.assertEqual(concept["combined_forced_slots"]["expression"], ["looking_away_pensive"])
+        self.assertEqual(concept["combined_forced_slots"]["makeup_style"], ["natural_makeup"])
         self.assertEqual(concept["combined_forced_slots"]["prop"], ["coffee_cup_prop"])
         self.assertEqual(concept["combined_forced_slots"]["composition"], ["over_the_shoulder_dialogue"])
         self.assertEqual(concept["selected_bundles"][0]["bundle_id"], "maid_extra_dessert_denial")
         self.assertEqual(concept["selected_bundles"][0]["subtype"], "verbal_denial")
         joined = " ".join(payload["forward_args"])
         self.assertIn("heart-latte coffee", joined)
-        self.assertIn("offered coffee or dessert", joined)
+        self.assertIn("post-eye-contact aversion", joined)
+        self.assertIn("without being thrust straight at the camera", joined)
         self.assertIn("warm comedic service", joined)
+        self.assertIn("no chest-forward posture", joined)
         self.assertIn("no possessive watching", joined)
         self.assertNotIn("assassin persona", joined)
         self.assertNotIn("sheathed utility", joined)
@@ -1847,11 +1993,12 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         item = payload[0]
         self.assertEqual(item["choices"]["costume_style"]["id"], "royal_princess_hanbok")
         self.assertEqual(item["choices"]["expression"]["id"], "looking_away_pensive")
-        self.assertEqual(item["choices"]["makeup_style"]["id"], "igari_blush")
+        self.assertEqual(item["choices"]["makeup_style"]["id"], "natural_makeup")
         self.assertEqual(item["choices"]["prop"]["id"], "phoenix_hairpin_prop")
         self.assertEqual(item["choices"]["composition"]["id"], "medium_close")
         self.assertIn("Core concept lock: 설윤 공주 츤데레", item["prompt_en"])
         self.assertIn("denial-vs-evidence contradiction", item["prompt_en"])
+        self.assertIn("faint ear-tip or nose-bridge warmth", item["prompt_en"])
         self.assertIn("preserve the royal princess hanbok and East-Asian court identity", item["prompt_en"])
         self.assertIn("warm personal gesture", item["prompt_en"])
         self.assertIn("no gaze-reversal trap", item["prompt_en"])
@@ -1871,25 +2018,42 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "윈터 간호사 츤데레",
                 1203,
                 "nurse_get_well_denial",
-                {"prop": ["flower_bouquet"], "location": ["hospital_waiting_room"]},
+                {
+                    "expression": ["shy_downward_glance"],
+                    "prop": ["logo_board_prop"],
+                    "location": ["hospital_waiting_room"],
+                    "subject_framing": ["upper_body_framing"],
+                },
             ),
             (
                 "닝닝 경찰 츤데레",
                 1204,
                 "police_shared_umbrella_denial",
-                {"prop": ["transparent_dome_umbrella"], "location": ["rainy_bus_stop_shelter"]},
+                {
+                    "expression": ["skeptical_side_eye"],
+                    "prop": ["transparent_dome_umbrella"],
+                    "location": ["rainy_bus_stop_shelter"],
+                    "lighting": ["soft_window"],
+                    "subject_framing": ["head_and_shoulders_crop"],
+                },
             ),
             (
                 "지젤 광부 츤데레",
                 1205,
                 "miner_shared_warmth_denial",
-                {"prop": ["coffee_cup_prop"], "lighting": ["single_flashlight_beam"]},
+                {
+                    "expression": ["looking_away_pensive"],
+                    "prop": ["picnic_blanket"],
+                    "lighting": ["single_flashlight_beam"],
+                    "subject_framing": ["head_and_shoulders_crop"],
+                },
             ),
             (
                 "아일릿 원희 사복 여친 츤데레",
                 1206,
                 "casual_lunchbox_denial",
                 {
+                    "expression": ["shy_downward_glance"],
                     "wardrobe_style": ["faded_hoodie_sweatpants"],
                     "prop": ["takeaway_coffee_cup"],
                     "location": ["cozy_apartment"],
@@ -1899,18 +2063,29 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "설윤 공주 츤데레",
                 1207,
                 "princess_kept_token_denial",
-                {"prop": ["phoenix_hairpin_prop"], "color": ["hanbok_pastel_seasonal"]},
+                {
+                    "expression": ["looking_away_pensive"],
+                    "prop": ["phoenix_hairpin_prop"],
+                    "color": ["hanbok_pastel_seasonal"],
+                },
             ),
             (
                 "유나 바니걸 츤데레",
                 1208,
                 "bunny_saved_drink_denial",
-                {"prop": ["takeaway_coffee_cup"], "action": ["standing_backstage"]},
+                {
+                    "expression": ["surprised_open_eyes"],
+                    "prop": ["paper_coffee_receipt"],
+                    "action": ["standing_backstage"],
+                    "composition": ["frame_within_frame"],
+                },
             ),
         ]
         selected_bundle_ids = set()
         selected_props = set()
+        selected_prop_ids = []
         selected_subtypes = set()
+        selected_expression_ids = []
         dark_drift_moods = {"occult_noir", "quiet_dread", "uncanny", "gothic_melancholy", "reportage_tense_noir"}
 
         for concept, seed, expected_bundle_id, expected_slots in cases:
@@ -1935,19 +2110,105 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             selected_bundle_ids.add(selected_bundle["bundle_id"])
             selected_subtypes.add(selected_bundle["subtype"])
             forced_slots = concept_payload["combined_forced_slots"]
-            self.assertEqual(forced_slots["makeup_style"], ["igari_blush"])
+            self.assertEqual(forced_slots["makeup_style"], ["natural_makeup"])
             self.assertNotIn(forced_slots["mood"][0], dark_drift_moods)
             selected_props.add(forced_slots["prop"][0])
+            selected_prop_ids.append(forced_slots["prop"][0])
+            selected_expression_ids.append(forced_slots["expression"][0])
             for slot, ids in expected_slots.items():
                 self.assertEqual(forced_slots[slot], ids)
             joined = " ".join(explanation["forward_args"])
             self.assertIn("caring-evidence object", joined)
+            self.assertIn("blush must remain photographic and restrained", joined)
             self.assertIn("never hoarded", joined)
             self.assertIn("explicitly NOT yandere", joined)
+            self.assertIn("costume-swap test", joined)
 
         self.assertEqual(len(selected_bundle_ids), len(cases))
         self.assertGreaterEqual(len(selected_subtypes), 4)
-        self.assertGreaterEqual(len(selected_props), 4)
+        self.assertGreaterEqual(len(selected_props), 6)
+        self.assertGreaterEqual(len(set(selected_expression_ids)), 4)
+        self.assertLessEqual(selected_expression_ids.count("skeptical_side_eye"), 1)
+        drink_props = {"coffee_cup_prop", "takeaway_coffee_cup"}
+        drink_anchored = sum(1 for prop_id in selected_prop_ids if prop_id in drink_props)
+        self.assertLessEqual(drink_anchored, 2)
+
+    def test_tsundere_nurse_bundle_uses_chart_anchor_not_bouquet(self):
+        payload = self.run_wrapper_json(
+            "--concept",
+            "윈터 간호사 츤데레",
+            "--explain-concept",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "1203",
+            "--plain",
+            "--no-negative",
+        )
+
+        concept = payload["concepts"][0]
+        self.assertEqual(concept["selected_bundles"][0]["bundle_id"], "nurse_get_well_denial")
+        self.assertEqual(concept["combined_forced_slots"]["prop"], ["logo_board_prop"])
+        joined = " ".join(payload["forward_args"])
+        self.assertIn("handover chart", joined)
+        self.assertIn("care checklist", joined)
+        self.assertIn("gaze lowered to the chart", joined)
+        self.assertIn("not a logo sign", joined)
+        self.assertIn("no pin-up nurse pose", joined)
+        self.assertIn("no full-figure uniform display", joined)
+
+    def test_tsundere_bunny_bundle_avoids_coffee_anchor(self):
+        payload = self.run_wrapper_json(
+            "--concept",
+            "유나 바니걸 츤데레",
+            "--explain-concept",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "1208",
+            "--plain",
+            "--no-negative",
+        )
+
+        concept = payload["concepts"][0]
+        forced = concept["combined_forced_slots"]
+        self.assertEqual(concept["selected_bundles"][0]["bundle_id"], "bunny_saved_drink_denial")
+        self.assertEqual(forced["prop"], ["paper_coffee_receipt"])
+        self.assertNotIn(forced["prop"][0], {"coffee_cup_prop", "takeaway_coffee_cup"})
+        joined = " ".join(payload["forward_args"])
+        self.assertIn("saved spare ticket", joined)
+        self.assertIn("caught mid-gesture", joined)
+        self.assertIn("vanity-mirror frame", joined)
+        self.assertIn("no full-body side pose", joined)
+        self.assertIn("no chest-forward posture", joined)
+
+    def test_tsundere_weak_roles_apply_costume_swap_frame_budget(self):
+        cases = [
+            ("닝닝 경찰 츤데레", 1204, "head_and_shoulders_crop"),
+            ("지젤 광부 츤데레", 1205, "head_and_shoulders_crop"),
+            ("유나 바니걸 츤데레", 1208, "head_and_shoulders_crop"),
+        ]
+
+        for concept, seed, expected_framing in cases:
+            payload = self.run_wrapper_json(
+                "--concept",
+                concept,
+                "--explain-concept",
+                "--selection-mode",
+                "rule",
+                "--seed",
+                str(seed),
+                "--plain",
+                "--no-negative",
+            )
+            concept_payload = payload["concepts"][0]
+            self.assertEqual(concept_payload["combined_forced_slots"]["subject_framing"], [expected_framing])
+            joined = " ".join(payload["forward_args"])
+            self.assertIn("costume-swap test", joined)
+            self.assertIn("face and hands holding the caring object", joined)
+            self.assertIn("restrained warmth", joined)
+            self.assertIn("no full-body costume display", joined)
+            self.assertIn("no chest-forward", joined)
 
     def test_tsundere_mid_string_role_uses_casual_girlfriend_bundle(self):
         payload = self.run_wrapper_json(
@@ -1972,7 +2233,8 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertEqual(concept["combined_forced_slots"]["prop"], ["takeaway_coffee_cup"])
         joined = " ".join(payload["forward_args"])
         self.assertIn("conservative everyday outfit", joined)
-        self.assertIn("offered object and the averted blushing face", joined)
+        self.assertIn("offered object and the lowered, flustered face", joined)
+        self.assertIn("without needing a big red blush", joined)
         self.assertIn("no phone-screen evidence", joined)
         self.assertNotIn("hoodie_shorts_sneakers", joined)
 
