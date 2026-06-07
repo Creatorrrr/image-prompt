@@ -22,6 +22,7 @@ WRAPPER_PATH = SKILL_DIR / "scripts" / "generate_photo_prompt.py"
 RECORD_RUN_PATH = SKILL_DIR / "scripts" / "record_image_run.py"
 VALIDATOR_PATH = SKILL_DIR / "scripts" / "validate_photo_prompt_dictionary.py"
 INDEX_BUILDER_PATH = SKILL_DIR / "scripts" / "build_semantic_index.py"
+EVAL_SEMANTIC_PATH = SKILL_DIR / "scripts" / "eval_semantic.py"
 
 CREATIVE_PRESET_IDS = {
     "cinematic_fantasy_portrait",
@@ -514,6 +515,15 @@ def load_index_builder():
             sys.path.remove(scripts_dir)
 
 
+def load_eval_semantic():
+    spec = importlib.util.spec_from_file_location("photo_prompt_eval_semantic", EVAL_SEMANTIC_PATH)
+    if spec is None or spec.loader is None:
+        raise RuntimeError(f"Could not load eval semantic module: {EVAL_SEMANTIC_PATH}")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
 class PromptGeneratorRegressionTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
@@ -967,7 +977,11 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertIn("--soft-anchor-spec", payload["forward_args"])
         self.assertNotIn("--preset", payload["forward_args"])
         self.assertNotIn("--set", payload["forward_args"])
-        self.assertNotIn("--additional-requirement", payload["forward_args"])
+        self.assertIn("--additional-requirement", payload["forward_args"])
+        self.assertNotIn(
+            "role outfit is a cover identity/disguise for the assassin persona",
+            payload["forward_args"],
+        )
         spec_index = payload["forward_args"].index("--soft-anchor-spec") + 1
         forwarded_spec = json.loads(payload["forward_args"][spec_index])
         self.assertEqual(forwarded_spec["mode"], "soft")
@@ -1022,6 +1036,407 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         events = contract.get("soft_anchor_promotions", [])
         self.assertTrue(events)
         self.assertEqual(events[0]["promoted_ids"], ["compact_mirror"])
+
+    def test_soft_anchor_critical_pool_constrains_candidate_window(self):
+        policy = self.generator.normalize_soft_anchor_spec(
+            {
+                "mode": "soft",
+                "concept": "경찰",
+                "min_anchors": 1,
+                "source_floors": {"role": 1},
+                "anchors": [
+                    {
+                        "slot": "costume_style",
+                        "ids": ["police_uniform_costume"],
+                        "pool": ["police_uniform_costume"],
+                        "terms": ["police"],
+                        "source": "role",
+                        "critical": True,
+                    }
+                ],
+            }
+        )
+        contract = {"soft_anchor_policy": self.generator.soft_anchor_trace(policy)}
+        pool = [
+            {"id": "police_uniform_costume", "en": "police uniform", "weight": 1.0},
+            {"id": "royal_princess_hanbok", "en": "princess hanbok", "weight": 99.0},
+        ]
+
+        adjusted = self.generator.apply_soft_anchor_bias(
+            "costume_style",
+            pool,
+            {"policy_schema_version": 1, "semantic_policy_hash": "test-hash"},
+            contract,
+        )
+
+        self.assertEqual([item["id"] for item in adjusted], ["police_uniform_costume"])
+        self.assertEqual(contract["soft_anchor_pool_constraints"][0]["reason_code"], "critical_soft_anchor_pool")
+
+    def test_soft_anchor_match_status_fails_critical_miss_even_with_min_anchor(self):
+        policy = self.generator.normalize_soft_anchor_spec(
+            {
+                "mode": "soft",
+                "concept": "광부 악마",
+                "min_anchors": 1,
+                "source_floors": {"role": 1, "mixin": 1},
+                "anchors": [
+                    {
+                        "slot": "costume_style",
+                        "ids": ["miner_workwear_hard_hat"],
+                        "pool": ["miner_workwear_hard_hat"],
+                        "terms": ["miner"],
+                        "source": "role",
+                        "critical": True,
+                    },
+                    {
+                        "slot": "prop",
+                        "ids": ["sealed_mission_envelope_prop"],
+                        "pool": ["sealed_mission_envelope_prop"],
+                        "terms": ["contract"],
+                        "source": "mixin",
+                    },
+                ],
+            }
+        )
+
+        status = self.generator.soft_anchor_match_status(
+            policy,
+            {
+                "costume_style": {"id": "royal_princess_hanbok"},
+                "prop": {"id": "sealed_mission_envelope_prop"},
+            },
+        )
+
+        self.assertFalse(status["passed"])
+        self.assertEqual(status["critical_missing"], ["costume_style"])
+        self.assertIn("critical_anchor_missing", status["failure_reasons"])
+
+    def test_soft_anchor_group_floor_does_not_cross_match_same_slot_sources(self):
+        policy = self.generator.normalize_soft_anchor_spec(
+            {
+                "mode": "soft",
+                "concept": "공주 흡혈귀",
+                "min_anchors": 1,
+                "group_floors": {"role_primary": 1, "mixin_primary": 1},
+                "anchors": [
+                    {
+                        "slot": "prop",
+                        "ids": ["round_fan_prop"],
+                        "pool": ["round_fan_prop"],
+                        "source": "role",
+                        "groups": ["role_primary"],
+                    },
+                    {
+                        "slot": "prop",
+                        "ids": ["compact_mirror"],
+                        "pool": ["compact_mirror"],
+                        "source": "mixin",
+                        "groups": ["mixin_primary"],
+                        "primary": True,
+                    },
+                ],
+            }
+        )
+
+        status = self.generator.soft_anchor_match_status(policy, {"prop": {"id": "round_fan_prop"}})
+
+        self.assertFalse(status["passed"])
+        self.assertEqual(status["group_counts"], {"role_primary": 1})
+        self.assertEqual(status["group_floor_misses"], [{"group": "mixin_primary", "matched": 0, "floor": 1}])
+        self.assertIn("anchor_group_floor_not_met:mixin_primary", status["failure_reasons"])
+
+    def test_concept_soft_spec_carries_v3_group_guard_and_priority_terms(self):
+        payload = self.run_wrapper_json(
+            "--concept",
+            "닝닝 경찰 팜므파탈",
+            "--concept-mode",
+            "soft",
+            "--explain-concept",
+            "--selection-mode",
+            "semantic",
+            "--plain",
+            "--no-negative",
+            "--seed",
+            "3103",
+        )
+
+        self.assertNotIn("--set", payload["forward_args"])
+        spec_index = payload["forward_args"].index("--soft-anchor-spec") + 1
+        forwarded_spec = json.loads(payload["forward_args"][spec_index])
+
+        self.assertEqual(forwarded_spec["group_floors"].get("mixin_primary"), 1)
+        self.assertEqual(forwarded_spec["source_floors"].get("role"), 1)
+        self.assertTrue(forwarded_spec["visual_guards"])
+        self.assertTrue(forwarded_spec["render_priority_terms"])
+        role_costume = [
+            anchor
+            for anchor in forwarded_spec["anchors"]
+            if anchor["slot"] == "costume_style" and "role_primary" in anchor.get("groups", [])
+        ]
+        self.assertTrue(role_costume)
+        self.assertIn("police_uniform_costume", role_costume[0]["pool"])
+        femme_prop = [
+            anchor
+            for anchor in forwarded_spec["anchors"]
+            if anchor["slot"] == "prop" and "mixin_primary" in anchor.get("groups", [])
+        ]
+        self.assertTrue(femme_prop)
+        self.assertIn("single_playing_card_calling_card_prop", femme_prop[0]["pool"])
+
+    def test_concept_soft_spec_carries_v4_anchor_variants_and_alias(self):
+        payload = self.run_wrapper_json(
+            "--concept",
+            "닝닝 경찰 팜프파탈",
+            "--concept-mode",
+            "soft",
+            "--explain-concept",
+            "--selection-mode",
+            "semantic",
+            "--plain",
+            "--no-negative",
+            "--seed",
+            "4104",
+        )
+
+        self.assertNotIn("--set", payload["forward_args"])
+        spec_index = payload["forward_args"].index("--soft-anchor-spec") + 1
+        forwarded_spec = json.loads(payload["forward_args"][spec_index])
+        self.assertEqual(forwarded_spec["concept"], "닝닝 경찰 팜므파탈")
+        femme_prop = [
+            anchor
+            for anchor in forwarded_spec["anchors"]
+            if anchor["slot"] == "prop" and anchor.get("variant_group") == "femme_fatale_leverage"
+        ]
+        self.assertTrue(femme_prop)
+        self.assertGreaterEqual(len(femme_prop[0]["pool"]), 2)
+        self.assertIn("wax_sealed_dossier_prop", femme_prop[0]["pool"])
+
+    def test_concept_soft_spec_carries_v5_render_constraints(self):
+        payload = self.run_wrapper_json(
+            "--concept",
+            "유나 바니걸 멘헤라",
+            "--concept-mode",
+            "soft",
+            "--explain-concept",
+            "--selection-mode",
+            "semantic",
+            "--plain",
+            "--no-negative",
+            "--seed",
+            "5105",
+        )
+
+        self.assertNotIn("--set", payload["forward_args"])
+        spec_index = payload["forward_args"].index("--soft-anchor-spec") + 1
+        forwarded_spec = json.loads(payload["forward_args"][spec_index])
+
+        subject_constraints = forwarded_spec["free_slot_constraints"].get("subject_framing", {})
+        self.assertIn("head_and_shoulders_crop", subject_constraints.get("allow_pool", []))
+        self.assertIn("full_body_framing", subject_constraints.get("deny_pool", []))
+        self.assertIn("bare shoulders", forwarded_spec["render_suppress_terms"])
+        self.assertIn("full-body costume display", forwarded_spec["render_suppress_terms"])
+        self.assertTrue(forwarded_spec["dual_read_requirement"].get("enabled"))
+        self.assertGreaterEqual(forwarded_spec["dual_read_requirement"].get("min_role_hits", 0), 1)
+        self.assertGreaterEqual(forwarded_spec["dual_read_requirement"].get("min_mixin_hits", 0), 1)
+        self.assertEqual(forwarded_spec.get("mixin_cue_budget"), 1)
+        self.assertIn("discouraged_axes", forwarded_spec["preset_affinity"])
+
+    def test_soft_body_first_guard_demotes_body_emphasis_candidates(self):
+        data = {
+            "semantic_policy": {
+                "schema_version": 1,
+                "soft_body_first_guard": {
+                    "slot": "body_framing",
+                    "demote_facets": ["soft_body_role:body_emphasis"],
+                    "demote_multiplier": 0.15,
+                },
+            }
+        }
+        context = {
+            "semantic_policy": data["semantic_policy"],
+            "policy_schema_version": 1,
+            "semantic_policy_hash": "test-policy",
+        }
+        contract = {
+            "soft_anchor_policy": self.generator.normalize_soft_anchor_spec(
+                {
+                    "mode": "soft",
+                    "concept": "간호사 얀데레",
+                    "min_anchors": 1,
+                    "anchors": [
+                        {
+                            "slot": "costume_style",
+                            "ids": ["nurse_uniform_costume"],
+                            "pool": ["nurse_uniform_costume"],
+                            "source": "role",
+                            "critical": True,
+                        }
+                    ],
+                }
+            )
+        }
+        pool = [
+            {
+                "id": "legs_heels_framing",
+                "weight": 1.0,
+                "facets": {"soft_body_role": ["body_emphasis"]},
+            },
+            {
+                "id": "hands_nails_accessory_closeup",
+                "weight": 1.0,
+                "facets": {"soft_body_role": ["narrative_safe"]},
+            },
+        ]
+
+        adjusted = self.generator.apply_soft_body_first_guard("body_framing", pool, context, contract)
+
+        weights = {item["id"]: item["weight"] for item in adjusted}
+        self.assertEqual(weights["legs_heels_framing"], 0.15)
+        self.assertEqual(weights["hands_nails_accessory_closeup"], 1.0)
+        self.assertTrue(contract["soft_body_first_guard_events"][0]["body_first_guard_applied"])
+
+    def test_soft_free_slot_constraints_narrow_pool_and_trace(self):
+        policy = self.generator.normalize_soft_anchor_spec(
+            {
+                "mode": "soft",
+                "concept": "멘헤라",
+                "min_anchors": 1,
+                "free_slot_constraints": {
+                    "subject_framing": {
+                        "allow_pool": ["head_and_shoulders_crop", "upper_body_framing"],
+                        "deny_pool": ["upper_body_framing"],
+                        "prefer_ids": ["head_and_shoulders_crop"],
+                    }
+                },
+                "anchors": [
+                    {
+                        "slot": "subject_framing",
+                        "ids": ["head_and_shoulders_crop"],
+                        "pool": ["head_and_shoulders_crop"],
+                        "source": "mixin",
+                    }
+                ],
+            }
+        )
+        contract = {"soft_anchor_policy": policy}
+        pool = [
+            {"id": "full_body_framing", "weight": 1.0},
+            {"id": "upper_body_framing", "weight": 1.0},
+            {"id": "head_and_shoulders_crop", "weight": 1.0},
+        ]
+
+        adjusted = self.generator.apply_soft_free_slot_constraints(
+            "subject_framing",
+            pool,
+            {"generation_contract": contract},
+            contract,
+        )
+
+        self.assertEqual([item["id"] for item in adjusted], ["head_and_shoulders_crop"])
+        self.assertGreater(adjusted[0]["weight"], 1.0)
+        event = contract["soft_free_slot_constraint_events"][0]
+        self.assertEqual(event["slot"], "subject_framing")
+        self.assertEqual(event["before"], 3)
+        self.assertEqual(event["after"], 1)
+
+    def test_soft_anchor_probability_floor_preserves_variant_candidates(self):
+        policy = self.generator.normalize_soft_anchor_spec(
+            {
+                "mode": "soft",
+                "concept": "팜므파탈",
+                "min_anchors": 1,
+                "anchors": [
+                    {
+                        "slot": "prop",
+                        "ids": ["single_playing_card_calling_card_prop"],
+                        "pool": ["single_playing_card_calling_card_prop", "wax_sealed_dossier_prop"],
+                        "source": "mixin",
+                        "primary": True,
+                        "variant_group": "femme_fatale_leverage",
+                    }
+                ],
+            }
+        )
+        context = {
+            "generation_contract": {"soft_anchor_policy": policy},
+            "semantic_policy": {
+                "soft_anchor_diversity": {
+                    "candidate_probability_floor": 0.2,
+                    "max_single_candidate_probability": 0.85,
+                }
+            },
+        }
+        candidates = [
+            ({"id": "single_playing_card_calling_card_prop"}, [], None, 100.0, 1.0, {}),
+            ({"id": "wax_sealed_dossier_prop"}, [], None, 1.0, 1.0, {}),
+        ]
+
+        weights, summary = self.generator.apply_soft_anchor_probability_floor("prop", candidates, [100.0, 1.0], context)
+
+        self.assertIsNotNone(summary)
+        self.assertGreaterEqual(weights[1], 20.0)
+        self.assertEqual(summary["anchor_variant_group"], "femme_fatale_leverage")
+
+    def test_soft_render_suppress_terms_extend_negative_prompt(self):
+        item = self.generate(
+            "street_documentary",
+            seed=5105,
+            include_negative=True,
+            soft_anchor_spec={
+                "mode": "soft",
+                "concept": "바니걸 멘헤라",
+                "min_anchors": 1,
+                "render_suppress_terms": ["bare shoulders", "full-body costume display"],
+                "anchors": [
+                    {
+                        "slot": "subject",
+                        "ids": ["fashion_influencer"],
+                        "pool": ["fashion_influencer"],
+                        "source": "role",
+                    }
+                ],
+            },
+        )
+
+        self.assertIn("bare shoulders", item["negative_en"])
+        self.assertIn("full-body costume display", item["negative_en"])
+
+    def test_forced_preset_affinity_records_policy_conflict(self):
+        item = self.generate(
+            "candid_iphone_portrait",
+            seed=5106,
+            include_negative=False,
+            include_trace=True,
+            soft_anchor_spec={
+                "mode": "soft",
+                "concept": "공주 츤데레",
+                "min_anchors": 1,
+                "preset_affinity": {"discouraged_presets": ["candid_iphone_portrait"]},
+                "anchors": [
+                    {
+                        "slot": "subject",
+                        "ids": ["fashion_influencer"],
+                        "pool": ["fashion_influencer"],
+                        "source": "role",
+                    }
+                ],
+            },
+        )
+
+        soft_check = next(check for check in item["quality"]["checks"] if check["id"] == "soft_preset_affinity")
+        self.assertEqual(soft_check["status"], "warn")
+        self.assertEqual(soft_check["policy_conflicts"][0]["selected"], "candid_iphone_portrait")
+
+    def test_visual_review_summary_reports_body_drift(self):
+        eval_semantic = load_eval_semantic()
+        summary = eval_semantic.summarize_visual_review(ROOT / "review_images" / "semantic_soft_v4_review" / "review.json")
+
+        self.assertEqual(summary["visual_review"]["case_count"], 7)
+        self.assertEqual(summary["visual_review"]["failed_case_count"], 1)
+        self.assertEqual(
+            summary["visual_review"]["field_summaries"]["body_drift"]["counts"].get("present"),
+            1,
+        )
 
     def test_concept_recipe_princess_base_uses_korean_court_lineage_language(self):
         payload = self.run_wrapper_json(
@@ -3880,10 +4295,19 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
 
         for role, recipe in recipes.get("roles", {}).items():
             check_set(f"roles.{role}.set", recipe.get("set"))
+            check_set(f"roles.{role}.anchor_pool", recipe.get("anchor_pool"))
+            check_set(f"roles.{role}.primary_anchor_pool", recipe.get("primary_anchor_pool"))
         for mixin, recipe in recipes.get("mixins", {}).items():
             check_set(f"mixins.{mixin}.set", recipe.get("set"))
+            check_set(f"mixins.{mixin}.anchor_pool", recipe.get("anchor_pool"))
+            check_set(f"mixins.{mixin}.primary_anchor_pool", recipe.get("primary_anchor_pool"))
             for bundle in recipe.get("bundles", []):
                 check_set(f"mixins.{mixin}.bundles.{bundle.get('id')}.set", bundle.get("set"))
+                check_set(f"mixins.{mixin}.bundles.{bundle.get('id')}.anchor_pool", bundle.get("anchor_pool"))
+                check_set(
+                    f"mixins.{mixin}.bundles.{bundle.get('id')}.primary_anchor_pool",
+                    bundle.get("primary_anchor_pool"),
+                )
 
         self.assertEqual(missing, [])
 

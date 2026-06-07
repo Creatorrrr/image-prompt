@@ -45,7 +45,9 @@
       "texture",
       "time_of_day",
       "weather"
-    ]
+    ],
+    "max_salience_cues": 2,
+    "anchor_variant_strategy": "seed_rotate"
   },
   "roles": {
     "메이드": {
@@ -78,7 +80,30 @@
         "adult maid-cafe cosplay portrait",
         "frilled apron maid costume in a cafe interior"
       ],
-      "likeness_mode": "inspired"
+      "likeness_mode": "inspired",
+      "anchor_pool": {
+        "costume_style": [
+          "frill_apron_maid_costume",
+          "akihabara_maid_cafe_uniform"
+        ],
+        "location": [
+          "maid_cafe_interior"
+        ]
+      },
+      "critical_anchor_slots": [
+        "costume_style",
+        "location"
+      ],
+      "anchor_floor": {
+        "role": 1
+      },
+      "safety_requirements": [
+        "adult subject only; maid outfit stays covered and service-role coded, not lingerie or fetish framing"
+      ],
+      "salience_cues": [
+        "maid apron or maid-cafe uniform remains a first-read costume anchor"
+      ],
+      "mixin_cue_budget": 2
     },
     "간호사": {
       "preset": "japanese_otaku_costume_portrait",
@@ -110,7 +135,28 @@
         "adult nurse uniform cosplay portrait",
         "cold hospital corridor atmosphere"
       ],
-      "likeness_mode": "inspired"
+      "likeness_mode": "inspired",
+      "anchor_pool": {
+        "costume_style": [
+          "nurse_uniform_costume"
+        ],
+        "location": [
+          "hospital_corridor",
+          "hospital_waiting_room"
+        ]
+      },
+      "critical_anchor_slots": [
+        "costume_style"
+      ],
+      "anchor_floor": {
+        "role": 1
+      },
+      "safety_requirements": [
+        "adult subject only; nurse uniform stays covered and clinical, not erotic nurse costume styling"
+      ],
+      "salience_cues": [
+        "covered nurse uniform with hospital or clinical context"
+      ]
     },
     "경찰": {
       "preset": "japanese_otaku_costume_portrait",
@@ -135,7 +181,65 @@
       "intent_axis": [
         "adult police uniform cosplay portrait"
       ],
-      "likeness_mode": "inspired"
+      "likeness_mode": "inspired",
+      "anchor_pool": {
+        "costume_style": [
+          "police_uniform_costume"
+        ]
+      },
+      "critical_anchor_slots": [
+        "costume_style"
+      ],
+      "anchor_floor": {
+        "role": 1
+      },
+      "safety_requirements": [
+        "adult subject only; police uniform must read as covered role costume, not striptease or fetish costume"
+      ],
+      "salience_cues": [
+        "clear police uniform silhouette with badge or structured patrol styling"
+      ],
+      "visual_guard": [
+        {
+          "id": "police_anti_pinup_soft_guard",
+          "reason": "keep police uniform as covered authority role rather than pin-up fashion pose",
+          "deny_ids": {
+            "action": [
+              "looking_down_at_low_camera",
+              "mirror_thirst_trap_pose",
+              "gym_mirror_fitcheck",
+              "body_roll_dance_loop"
+            ],
+            "composition": [
+              "low_angle",
+              "low_angle_hero",
+              "crouching_mirror_full_body"
+            ],
+            "subject_framing": [
+              "full_body_framing",
+              "three_quarter_body_framing",
+              "knee_up_framing"
+            ],
+            "wardrobe_style": [
+              "crop_top_wide_pants",
+              "street_jacket_boots",
+              "gym_athleisure_mirror_fit",
+              "pool_deck_swim_editorial"
+            ]
+          },
+          "prefer_ids": {
+            "composition": [
+              "medium_close",
+              "frame_within_frame"
+            ],
+            "subject_framing": [
+              "head_and_shoulders_crop",
+              "upper_body_framing",
+              "detail_crop_hands_accessories"
+            ]
+          }
+        }
+      ]
     },
     "광부": {
       "preset": "compact_cinematic_prop_portrait",
@@ -147,7 +251,6 @@
       ],
       "soft_anchor_slots": [
         "costume_style",
-        "prop",
         "location"
       ],
       "soft_min_anchors": 1,
@@ -174,7 +277,28 @@
         "coal miner workwear portrait",
         "underground mine tunnel with helmet headlamp"
       ],
-      "likeness_mode": "inspired"
+      "likeness_mode": "inspired",
+      "anchor_pool": {
+        "costume_style": [
+          "miner_workwear_hard_hat"
+        ],
+        "location": [
+          "underground_mine_tunnel_set"
+        ]
+      },
+      "critical_anchor_slots": [
+        "costume_style",
+        "location"
+      ],
+      "anchor_floor": {
+        "role": 1
+      },
+      "safety_requirements": [
+        "adult subject only; practical miner workwear and helmet stay covered and functional, not costume pin-up styling"
+      ],
+      "salience_cues": [
+        "hard hat, workwear, and underground mine tunnel are readable at first glance"
+      ]
     },
     "공주": {
       "preset": "joseon_period_portrait",
@@ -221,7 +345,29 @@
         "royal lineage and inherited rank, ceremonial court dignity",
         "Joseon royal palace chamber"
       ],
-      "likeness_mode": "inspired"
+      "likeness_mode": "inspired",
+      "anchor_pool": {
+        "costume_style": [
+          "royal_princess_hanbok"
+        ],
+        "location": [
+          "royal_princess_chamber",
+          "joseon_palace_interior"
+        ]
+      },
+      "critical_anchor_slots": [
+        "costume_style"
+      ],
+      "anchor_floor": {
+        "role": 1
+      },
+      "safety_requirements": [
+        "preserve Korean court/princess styling without converting it to Western gothic corset or lingerie styling"
+      ],
+      "salience_cues": [
+        "royal hanbok silhouette, tiara or court chamber identity"
+      ],
+      "mixin_cue_budget": 2
     },
     "바니걸": {
       "preset": "japanese_otaku_costume_portrait",
@@ -248,7 +394,61 @@
         "adult bunny-girl cosplay portrait",
         "covered non-explicit stage costume"
       ],
-      "likeness_mode": "inspired"
+      "likeness_mode": "inspired",
+      "anchor_pool": {
+        "costume_style": [
+          "bunny_girl_costume"
+        ]
+      },
+      "critical_anchor_slots": [
+        "costume_style"
+      ],
+      "anchor_floor": {
+        "role": 1
+      },
+      "safety_requirements": [
+        "adult subject only; bunny-girl costume must be covered stage cosplay, not lingerie focus, nudity, or explicit sexual posing"
+      ],
+      "salience_cues": [
+        "bunny ears and bow-tie stage costume read without erotic pose emphasis"
+      ],
+      "visual_guard": [
+        {
+          "id": "bunny_anti_body_display_soft_guard",
+          "reason": "keep bunny role readable without body-first stagewear display",
+          "deny_ids": {
+            "composition": [
+              "crouching_mirror_full_body",
+              "low_angle",
+              "low_angle_hero",
+              "mirror_selfie_composition"
+            ],
+            "subject_framing": [
+              "full_body_framing",
+              "three_quarter_body_framing",
+              "knee_up_framing"
+            ],
+            "action": [
+              "mirror_thirst_trap_pose",
+              "body_roll_dance_loop",
+              "gym_mirror_fitcheck"
+            ]
+          },
+          "prefer_ids": {
+            "composition": [
+              "medium_close",
+              "frame_within_frame",
+              "reflection"
+            ],
+            "subject_framing": [
+              "head_and_shoulders_crop",
+              "upper_body_framing",
+              "detail_crop_hands_accessories"
+            ]
+          }
+        }
+      ],
+      "mixin_cue_budget": 1
     },
     "사복 여친": {
       "preset": "candid_iphone_portrait",
@@ -275,7 +475,28 @@
       "intent_axis": [
         "casual girlfriend-style candid iPhone portrait"
       ],
-      "likeness_mode": "inspired"
+      "likeness_mode": "inspired",
+      "anchor_pool": {
+        "wardrobe_style": [
+          "hoodie_shorts_sneakers",
+          "knit_cardigan_jeans",
+          "summer_dress_sneakers",
+          "casual_bomber_jacket_miniskirt"
+        ]
+      },
+      "critical_anchor_slots": [
+        "wardrobe_style"
+      ],
+      "anchor_floor": {
+        "role": 1
+      },
+      "safety_requirements": [
+        "adult subject only; casual girlfriend styling stays everyday, candid, and non-erotic"
+      ],
+      "salience_cues": [
+        "everyday casual outfit remains the first-read role anchor"
+      ],
+      "mixin_cue_budget": 1
     }
   },
   "mixins": {
@@ -303,10 +524,12 @@
           "intense gaze"
         ],
         "prop": [
-          "mirror",
-          "umbrella",
-          "ruby",
-          "wine"
+          "failed reflection",
+          "bat-like shadow",
+          "ruby eye",
+          "ruby cameo",
+          "goblet",
+          "no reflection"
         ],
         "location": [
           "mirror",
@@ -336,12 +559,78 @@
             "the maid outfit stays clearly readable, while an open compact mirror faces the camera and shows an empty room, delayed silhouette, or mismatched reflection instead of a normal reflection",
             "service posture becomes unnaturally still at the doorway, as if the room has gone silent around an immortal nocturnal guest",
             "the subject's lit face and hands must be visible in the same frame as the open mirror, so the viewer can instantly compare the real maid against the failed reflection",
-            "add a positive vampire anchor near the subject, such as bat-wing-shaped lace shadow crossing the wall art close to the shoulder or a tiny ruby eye catchlight, so it is not only a gothic maid portrait"
+            "add a positive vampire anchor near the subject, such as bat-wing-shaped lace shadow crossing the wall art close to the shoulder or a tiny ruby eye catchlight, so it is not only a gothic maid portrait",
+            "the vampire cue must share the first-read area with the face, throat, hand, choker, mirror edge, or foreground reflection rather than sitting only in background decor",
+            "the ruby, reflection, bat-like shadow, or moon-pale cue must be visible before the image reads as ordinary maid cosplay"
           ],
           "intent_axis": [
             "vampire maid portrait with reflection unease inside a maid-cafe cover setting",
             "doorway stillness, visible compact mirror wrongness, bat-like shadow, and nocturnal aristocratic service mood"
-          ]
+          ],
+          "anchor_variants": {
+            "prop": {
+              "group": "vampire_subject_cue",
+              "options": [
+                "compact_mirror",
+                "antique_hand_mirror_no_reflection_prop",
+                "ornate_goblet_dark_liquid_prop",
+                "ruby_cameo_choker_prop",
+                "bat_shadow_lace_prop"
+              ],
+              "select": "seed_rotate"
+            }
+          },
+          "anchor_pool": {
+            "prop": [
+              "compact_mirror",
+              "antique_hand_mirror_no_reflection_prop",
+              "ornate_goblet_dark_liquid_prop",
+              "ruby_cameo_choker_prop",
+              "bat_shadow_lace_prop"
+            ]
+          },
+          "primary_anchor_pool": {
+            "prop": [
+              "compact_mirror",
+              "antique_hand_mirror_no_reflection_prop",
+              "ornate_goblet_dark_liquid_prop",
+              "ruby_cameo_choker_prop",
+              "bat_shadow_lace_prop"
+            ]
+          },
+          "anchor_terms": {
+            "prop": [
+              "failed reflection",
+              "bat-like shadow",
+              "ruby eye",
+              "ruby cameo",
+              "goblet",
+              "no reflection"
+            ]
+          },
+          "render_priority_terms": [
+            {
+              "id": "vampire_visible_cue",
+              "terms": [
+                "failed reflection",
+                "bat-like shadow",
+                "ruby eye",
+                "ruby cameo",
+                "goblet",
+                "no reflection"
+              ],
+              "min_hits": 1
+            }
+          ],
+          "free_slot_constraints": {
+            "subject_framing": {
+              "allow_pool": [
+                "head_and_shoulders_crop",
+                "upper_body_framing",
+                "detail_crop_hands_accessories"
+              ]
+            }
+          }
         },
         {
           "id": "nurse_night_shift_nocturne",
@@ -450,6 +739,61 @@
           "intent_axis": [
             "casual vampire girlfriend mirror selfie with a sealed daylight boundary",
             "ordinary hoodie phone candid mood disrupted by wrong mirror reflection, phone-screen reflection failure, ruby throat jewelry, crimson eye catchlight, and haunted pallor"
+          ],
+          "anchor_variants": {
+            "prop": {
+              "group": "vampire_subject_cue",
+              "options": [
+                "compact_mirror",
+                "antique_hand_mirror_no_reflection_prop",
+                "ornate_goblet_dark_liquid_prop",
+                "ruby_cameo_choker_prop",
+                "bat_shadow_lace_prop"
+              ],
+              "select": "seed_rotate"
+            }
+          },
+          "anchor_pool": {
+            "prop": [
+              "compact_mirror",
+              "antique_hand_mirror_no_reflection_prop",
+              "ornate_goblet_dark_liquid_prop",
+              "ruby_cameo_choker_prop",
+              "bat_shadow_lace_prop"
+            ]
+          },
+          "primary_anchor_pool": {
+            "prop": [
+              "compact_mirror",
+              "antique_hand_mirror_no_reflection_prop",
+              "ornate_goblet_dark_liquid_prop",
+              "ruby_cameo_choker_prop",
+              "bat_shadow_lace_prop"
+            ]
+          },
+          "anchor_terms": {
+            "prop": [
+              "failed reflection",
+              "bat-like shadow",
+              "ruby eye",
+              "ruby cameo",
+              "goblet",
+              "no reflection"
+            ]
+          },
+          "render_priority_terms": [
+            {
+              "id": "vampire_visible_cue",
+              "terms": [
+                "failed reflection",
+                "bat-like shadow",
+                "ruby eye",
+                "ruby cameo",
+                "goblet",
+                "no reflection"
+              ],
+              "min_hits": 1
+            }
           ]
         },
         {
@@ -505,6 +849,61 @@
           "intent_axis": [
             "vampire bunny-girl vanity portrait where bat-like shadows overpower the rabbit-ear silhouette",
             "playful stage costume interrupted by wrong compact-mirror reflection, withered bouquet, bat-like lace shadows, crimson eye catchlight, occult noir backstage light, and nocturnal stillness"
+          ],
+          "anchor_variants": {
+            "prop": {
+              "group": "vampire_subject_cue",
+              "options": [
+                "compact_mirror",
+                "antique_hand_mirror_no_reflection_prop",
+                "ornate_goblet_dark_liquid_prop",
+                "ruby_cameo_choker_prop",
+                "bat_shadow_lace_prop"
+              ],
+              "select": "seed_rotate"
+            }
+          },
+          "anchor_pool": {
+            "prop": [
+              "compact_mirror",
+              "antique_hand_mirror_no_reflection_prop",
+              "ornate_goblet_dark_liquid_prop",
+              "ruby_cameo_choker_prop",
+              "bat_shadow_lace_prop"
+            ]
+          },
+          "primary_anchor_pool": {
+            "prop": [
+              "compact_mirror",
+              "antique_hand_mirror_no_reflection_prop",
+              "ornate_goblet_dark_liquid_prop",
+              "ruby_cameo_choker_prop",
+              "bat_shadow_lace_prop"
+            ]
+          },
+          "anchor_terms": {
+            "prop": [
+              "failed reflection",
+              "bat-like shadow",
+              "ruby eye",
+              "ruby cameo",
+              "goblet",
+              "no reflection"
+            ]
+          },
+          "render_priority_terms": [
+            {
+              "id": "vampire_visible_cue",
+              "terms": [
+                "failed reflection",
+                "bat-like shadow",
+                "ruby eye",
+                "ruby cameo",
+                "goblet",
+                "no reflection"
+              ],
+              "min_hits": 1
+            }
           ]
         },
         {
@@ -535,6 +934,61 @@
           "intent_axis": [
             "role-preserving vampire portrait centered on broken mirror reflection unease",
             "missing or mismatched reflection, bat-like shadow, and ruby eye catchlight as non-graphic supernatural cues"
+          ],
+          "anchor_variants": {
+            "prop": {
+              "group": "vampire_subject_cue",
+              "options": [
+                "compact_mirror",
+                "antique_hand_mirror_no_reflection_prop",
+                "ornate_goblet_dark_liquid_prop",
+                "ruby_cameo_choker_prop",
+                "bat_shadow_lace_prop"
+              ],
+              "select": "seed_rotate"
+            }
+          },
+          "anchor_pool": {
+            "prop": [
+              "compact_mirror",
+              "antique_hand_mirror_no_reflection_prop",
+              "ornate_goblet_dark_liquid_prop",
+              "ruby_cameo_choker_prop",
+              "bat_shadow_lace_prop"
+            ]
+          },
+          "primary_anchor_pool": {
+            "prop": [
+              "compact_mirror",
+              "antique_hand_mirror_no_reflection_prop",
+              "ornate_goblet_dark_liquid_prop",
+              "ruby_cameo_choker_prop",
+              "bat_shadow_lace_prop"
+            ]
+          },
+          "anchor_terms": {
+            "prop": [
+              "failed reflection",
+              "bat-like shadow",
+              "ruby eye",
+              "ruby cameo",
+              "goblet",
+              "no reflection"
+            ]
+          },
+          "render_priority_terms": [
+            {
+              "id": "vampire_visible_cue",
+              "terms": [
+                "failed reflection",
+                "bat-like shadow",
+                "ruby eye",
+                "ruby cameo",
+                "goblet",
+                "no reflection"
+              ],
+              "min_hits": 1
+            }
           ]
         },
         {
@@ -612,6 +1066,61 @@
           "intent_axis": [
             "standalone vampire portrait built around broken reflection unease",
             "distorted mirror fragments, monochrome pallor, and non-graphic supernatural stillness"
+          ],
+          "anchor_variants": {
+            "prop": {
+              "group": "vampire_subject_cue",
+              "options": [
+                "compact_mirror",
+                "antique_hand_mirror_no_reflection_prop",
+                "ornate_goblet_dark_liquid_prop",
+                "ruby_cameo_choker_prop",
+                "bat_shadow_lace_prop"
+              ],
+              "select": "seed_rotate"
+            }
+          },
+          "anchor_pool": {
+            "prop": [
+              "compact_mirror",
+              "antique_hand_mirror_no_reflection_prop",
+              "ornate_goblet_dark_liquid_prop",
+              "ruby_cameo_choker_prop",
+              "bat_shadow_lace_prop"
+            ]
+          },
+          "primary_anchor_pool": {
+            "prop": [
+              "compact_mirror",
+              "antique_hand_mirror_no_reflection_prop",
+              "ornate_goblet_dark_liquid_prop",
+              "ruby_cameo_choker_prop",
+              "bat_shadow_lace_prop"
+            ]
+          },
+          "anchor_terms": {
+            "prop": [
+              "failed reflection",
+              "bat-like shadow",
+              "ruby eye",
+              "ruby cameo",
+              "goblet",
+              "no reflection"
+            ]
+          },
+          "render_priority_terms": [
+            {
+              "id": "vampire_visible_cue",
+              "terms": [
+                "failed reflection",
+                "bat-like shadow",
+                "ruby eye",
+                "ruby cameo",
+                "goblet",
+                "no reflection"
+              ],
+              "min_hits": 1
+            }
           ]
         },
         {
@@ -671,7 +1180,109 @@
         "daylight refusal, reflection unease, moonlit pallor, bat-like shadows, ruby eye catchlight, withered-life cues, and old-world predatory stillness",
         "role outfit preserved while vampire identity appears through environment, light, posture, and room behavior"
       ],
-      "likeness_mode": "inspired"
+      "likeness_mode": "inspired",
+      "anchor_pool": {
+        "expression": [
+          "calm_intense_gaze",
+          "cold_unreadable_stare"
+        ],
+        "prop": [
+          "compact_mirror",
+          "antique_hand_mirror_no_reflection_prop",
+          "ornate_goblet_dark_liquid_prop",
+          "ruby_cameo_choker_prop",
+          "bat_shadow_lace_prop"
+        ],
+        "location": [
+          "broken_mirror_fragment_studio",
+          "bright_window_silhouette_room",
+          "gothic_glass_curio_cabinet",
+          "maid_cafe_interior",
+          "underground_mine_tunnel_set",
+          "royal_princess_chamber"
+        ]
+      },
+      "critical_anchor_slots": [],
+      "anchor_floor": {
+        "mixin": 1
+      },
+      "safety_requirements": [
+        "vampire cues must be non-graphic: no blood, wounds, biting, victims, gore, or fang close-ups"
+      ],
+      "salience_cues": [
+        "visible vampire cue near the subject: failed reflection, bat-like shadow, ruby eye catchlight, daylight refusal, or moon-pale pallor"
+      ],
+      "primary_anchor_pool": {
+        "prop": [
+          "compact_mirror",
+          "antique_hand_mirror_no_reflection_prop",
+          "ornate_goblet_dark_liquid_prop",
+          "ruby_cameo_choker_prop",
+          "bat_shadow_lace_prop"
+        ]
+      },
+      "anchor_group_floor": {
+        "mixin_primary": 1
+      },
+      "anchor_groups": {
+        "prop": [
+          "mixin_primary"
+        ]
+      },
+      "render_priority_terms": [
+        {
+          "id": "vampire_visible_cue",
+          "terms": [
+            "failed reflection",
+            "bat-like shadow",
+            "ruby eye catchlight",
+            "daylight refusal",
+            "moon-pale pallor"
+          ],
+          "min_hits": 1
+        }
+      ],
+      "anchor_variants": {
+        "prop": {
+          "group": "vampire_subject_cue",
+          "options": [
+            "compact_mirror",
+            "antique_hand_mirror_no_reflection_prop",
+            "ornate_goblet_dark_liquid_prop",
+            "ruby_cameo_choker_prop",
+            "bat_shadow_lace_prop"
+          ],
+          "select": "seed_rotate"
+        }
+      },
+      "dual_read_requirement": {
+        "enabled": true,
+        "min_role_hits": 1,
+        "min_mixin_hits": 1
+      },
+      "free_slot_constraints": {
+        "subject_framing": {
+          "allow_pool": [
+            "head_and_shoulders_crop",
+            "upper_body_framing",
+            "close_up_face_crop",
+            "detail_crop_hands_accessories"
+          ],
+          "deny_pool": [
+            "full_body_framing",
+            "three_quarter_body_framing",
+            "knee_up_framing"
+          ]
+        },
+        "composition": {
+          "prefer_ids": [
+            "frame_within_frame",
+            "reflection",
+            "medium_close",
+            "broken_glass_fragments_frame"
+          ]
+        }
+      }
     },
     "악마": {
       "preset": "compact_cinematic_prop_portrait",
@@ -703,10 +1314,11 @@
           "story prop"
         ],
         "prop": [
-          "sealed mission envelope",
-          "sealed envelope",
           "contract",
-          "bargain"
+          "bargain",
+          "tarnished halo",
+          "sigil",
+          "fallen light"
         ],
         "location": [
           "threshold",
@@ -741,6 +1353,56 @@
           "intent_axis": [
             "devil maid as courteous contract tempter in a cafe cover identity",
             "sealed bargain envelope, candlelit ritual service, consent-and-debt atmosphere near face and hands"
+          ],
+          "anchor_variants": {
+            "prop": {
+              "group": "devil_symbolic_cue",
+              "options": [
+                "sealed_mission_envelope_prop",
+                "soul_contract_scroll_prop",
+                "tarnished_halo_ring_prop",
+                "ember_sigil_coin_prop"
+              ],
+              "select": "seed_rotate"
+            }
+          },
+          "anchor_pool": {
+            "prop": [
+              "sealed_mission_envelope_prop",
+              "soul_contract_scroll_prop",
+              "tarnished_halo_ring_prop",
+              "ember_sigil_coin_prop"
+            ]
+          },
+          "primary_anchor_pool": {
+            "prop": [
+              "sealed_mission_envelope_prop",
+              "soul_contract_scroll_prop",
+              "tarnished_halo_ring_prop",
+              "ember_sigil_coin_prop"
+            ]
+          },
+          "anchor_terms": {
+            "prop": [
+              "contract",
+              "bargain",
+              "tarnished halo",
+              "sigil",
+              "fallen light"
+            ]
+          },
+          "render_priority_terms": [
+            {
+              "id": "devil_cue",
+              "terms": [
+                "contract",
+                "bargain",
+                "tarnished halo",
+                "sigil",
+                "fallen light"
+              ],
+              "min_hits": 1
+            }
           ]
         },
         {
@@ -768,6 +1430,56 @@
           "intent_axis": [
             "devil nurse as fallen healer and accuser at a hospital threshold with a sealed judgement packet",
             "clinical corridor, tarnished halo, underlit procedural damnation, non-graphic psychological dread"
+          ],
+          "anchor_variants": {
+            "prop": {
+              "group": "devil_symbolic_cue",
+              "options": [
+                "sealed_mission_envelope_prop",
+                "soul_contract_scroll_prop",
+                "tarnished_halo_ring_prop",
+                "ember_sigil_coin_prop"
+              ],
+              "select": "seed_rotate"
+            }
+          },
+          "anchor_pool": {
+            "prop": [
+              "sealed_mission_envelope_prop",
+              "soul_contract_scroll_prop",
+              "tarnished_halo_ring_prop",
+              "ember_sigil_coin_prop"
+            ]
+          },
+          "primary_anchor_pool": {
+            "prop": [
+              "sealed_mission_envelope_prop",
+              "soul_contract_scroll_prop",
+              "tarnished_halo_ring_prop",
+              "ember_sigil_coin_prop"
+            ]
+          },
+          "anchor_terms": {
+            "prop": [
+              "contract",
+              "bargain",
+              "tarnished halo",
+              "sigil",
+              "fallen light"
+            ]
+          },
+          "render_priority_terms": [
+            {
+              "id": "devil_cue",
+              "terms": [
+                "contract",
+                "bargain",
+                "tarnished halo",
+                "sigil",
+                "fallen light"
+              ],
+              "min_hits": 1
+            }
           ]
         },
         {
@@ -795,6 +1507,56 @@
           "intent_axis": [
             "devil police as adversary and accuser in reflective nocturnal corridor",
             "badge-adjacent calling card, mismatched reflection, cold prosecutor stillness"
+          ],
+          "anchor_variants": {
+            "prop": {
+              "group": "devil_symbolic_cue",
+              "options": [
+                "sealed_mission_envelope_prop",
+                "soul_contract_scroll_prop",
+                "tarnished_halo_ring_prop",
+                "ember_sigil_coin_prop"
+              ],
+              "select": "seed_rotate"
+            }
+          },
+          "anchor_pool": {
+            "prop": [
+              "sealed_mission_envelope_prop",
+              "soul_contract_scroll_prop",
+              "tarnished_halo_ring_prop",
+              "ember_sigil_coin_prop"
+            ]
+          },
+          "primary_anchor_pool": {
+            "prop": [
+              "sealed_mission_envelope_prop",
+              "soul_contract_scroll_prop",
+              "tarnished_halo_ring_prop",
+              "ember_sigil_coin_prop"
+            ]
+          },
+          "anchor_terms": {
+            "prop": [
+              "contract",
+              "bargain",
+              "tarnished halo",
+              "sigil",
+              "fallen light"
+            ]
+          },
+          "render_priority_terms": [
+            {
+              "id": "devil_cue",
+              "terms": [
+                "contract",
+                "bargain",
+                "tarnished halo",
+                "sigil",
+                "fallen light"
+              ],
+              "min_hits": 1
+            }
           ]
         },
         {
@@ -822,6 +1584,56 @@
           "intent_axis": [
             "devil miner as underworld gatekeeper holding a sealed descent permit",
             "headlamp-lit route ownership, tarnished halo, low-angle liminal tunnel, non-graphic threshold dread"
+          ],
+          "anchor_variants": {
+            "prop": {
+              "group": "devil_symbolic_cue",
+              "options": [
+                "sealed_mission_envelope_prop",
+                "soul_contract_scroll_prop",
+                "tarnished_halo_ring_prop",
+                "ember_sigil_coin_prop"
+              ],
+              "select": "seed_rotate"
+            }
+          },
+          "anchor_pool": {
+            "prop": [
+              "sealed_mission_envelope_prop",
+              "soul_contract_scroll_prop",
+              "tarnished_halo_ring_prop",
+              "ember_sigil_coin_prop"
+            ]
+          },
+          "primary_anchor_pool": {
+            "prop": [
+              "sealed_mission_envelope_prop",
+              "soul_contract_scroll_prop",
+              "tarnished_halo_ring_prop",
+              "ember_sigil_coin_prop"
+            ]
+          },
+          "anchor_terms": {
+            "prop": [
+              "contract",
+              "bargain",
+              "tarnished halo",
+              "sigil",
+              "fallen light"
+            ]
+          },
+          "render_priority_terms": [
+            {
+              "id": "devil_cue",
+              "terms": [
+                "contract",
+                "bargain",
+                "tarnished halo",
+                "sigil",
+                "fallen light"
+              ],
+              "min_hits": 1
+            }
           ]
         },
         {
@@ -879,6 +1691,56 @@
           "intent_axis": [
             "devil princess as fallen light and sealed decree inside a Korean royal chamber",
             "hanbok preserved, tarnished halo glow, covenant envelope, proud refusal"
+          ],
+          "anchor_variants": {
+            "prop": {
+              "group": "devil_symbolic_cue",
+              "options": [
+                "sealed_mission_envelope_prop",
+                "soul_contract_scroll_prop",
+                "tarnished_halo_ring_prop",
+                "ember_sigil_coin_prop"
+              ],
+              "select": "seed_rotate"
+            }
+          },
+          "anchor_pool": {
+            "prop": [
+              "sealed_mission_envelope_prop",
+              "soul_contract_scroll_prop",
+              "tarnished_halo_ring_prop",
+              "ember_sigil_coin_prop"
+            ]
+          },
+          "primary_anchor_pool": {
+            "prop": [
+              "sealed_mission_envelope_prop",
+              "soul_contract_scroll_prop",
+              "tarnished_halo_ring_prop",
+              "ember_sigil_coin_prop"
+            ]
+          },
+          "anchor_terms": {
+            "prop": [
+              "contract",
+              "bargain",
+              "tarnished halo",
+              "sigil",
+              "fallen light"
+            ]
+          },
+          "render_priority_terms": [
+            {
+              "id": "devil_cue",
+              "terms": [
+                "contract",
+                "bargain",
+                "tarnished halo",
+                "sigil",
+                "fallen light"
+              ],
+              "min_hits": 1
+            }
           ]
         },
         {
@@ -906,6 +1768,56 @@
           "intent_axis": [
             "covered bunny-girl devil as lure-as-trap in backstage mirror framing",
             "compact mirror wrong reflection, delayed expression, underlit face, non-pin-up composition"
+          ],
+          "anchor_variants": {
+            "prop": {
+              "group": "devil_symbolic_cue",
+              "options": [
+                "sealed_mission_envelope_prop",
+                "soul_contract_scroll_prop",
+                "tarnished_halo_ring_prop",
+                "ember_sigil_coin_prop"
+              ],
+              "select": "seed_rotate"
+            }
+          },
+          "anchor_pool": {
+            "prop": [
+              "sealed_mission_envelope_prop",
+              "soul_contract_scroll_prop",
+              "tarnished_halo_ring_prop",
+              "ember_sigil_coin_prop"
+            ]
+          },
+          "primary_anchor_pool": {
+            "prop": [
+              "sealed_mission_envelope_prop",
+              "soul_contract_scroll_prop",
+              "tarnished_halo_ring_prop",
+              "ember_sigil_coin_prop"
+            ]
+          },
+          "anchor_terms": {
+            "prop": [
+              "contract",
+              "bargain",
+              "tarnished halo",
+              "sigil",
+              "fallen light"
+            ]
+          },
+          "render_priority_terms": [
+            {
+              "id": "devil_cue",
+              "terms": [
+                "contract",
+                "bargain",
+                "tarnished halo",
+                "sigil",
+                "fallen light"
+              ],
+              "min_hits": 1
+            }
           ]
         },
         {
@@ -929,6 +1841,56 @@
           "intent_axis": [
             "standalone devil contract temptation portrait",
             "sealed bargain, quiet half-smile, luxury corridor, non-graphic occult noir"
+          ],
+          "anchor_variants": {
+            "prop": {
+              "group": "devil_symbolic_cue",
+              "options": [
+                "sealed_mission_envelope_prop",
+                "soul_contract_scroll_prop",
+                "tarnished_halo_ring_prop",
+                "ember_sigil_coin_prop"
+              ],
+              "select": "seed_rotate"
+            }
+          },
+          "anchor_pool": {
+            "prop": [
+              "sealed_mission_envelope_prop",
+              "soul_contract_scroll_prop",
+              "tarnished_halo_ring_prop",
+              "ember_sigil_coin_prop"
+            ]
+          },
+          "primary_anchor_pool": {
+            "prop": [
+              "sealed_mission_envelope_prop",
+              "soul_contract_scroll_prop",
+              "tarnished_halo_ring_prop",
+              "ember_sigil_coin_prop"
+            ]
+          },
+          "anchor_terms": {
+            "prop": [
+              "contract",
+              "bargain",
+              "tarnished halo",
+              "sigil",
+              "fallen light"
+            ]
+          },
+          "render_priority_terms": [
+            {
+              "id": "devil_cue",
+              "terms": [
+                "contract",
+                "bargain",
+                "tarnished halo",
+                "sigil",
+                "fallen light"
+              ],
+              "min_hits": 1
+            }
           ]
         },
         {
@@ -1026,6 +1988,56 @@
           "intent_axis": [
             "standalone devil as shadow-self and mismatched reflection",
             "darker double, wrong expression, liminal corridor, reflective psychological horror, non-graphic"
+          ],
+          "anchor_variants": {
+            "prop": {
+              "group": "devil_symbolic_cue",
+              "options": [
+                "sealed_mission_envelope_prop",
+                "soul_contract_scroll_prop",
+                "tarnished_halo_ring_prop",
+                "ember_sigil_coin_prop"
+              ],
+              "select": "seed_rotate"
+            }
+          },
+          "anchor_pool": {
+            "prop": [
+              "sealed_mission_envelope_prop",
+              "soul_contract_scroll_prop",
+              "tarnished_halo_ring_prop",
+              "ember_sigil_coin_prop"
+            ]
+          },
+          "primary_anchor_pool": {
+            "prop": [
+              "sealed_mission_envelope_prop",
+              "soul_contract_scroll_prop",
+              "tarnished_halo_ring_prop",
+              "ember_sigil_coin_prop"
+            ]
+          },
+          "anchor_terms": {
+            "prop": [
+              "contract",
+              "bargain",
+              "tarnished halo",
+              "sigil",
+              "fallen light"
+            ]
+          },
+          "render_priority_terms": [
+            {
+              "id": "devil_cue",
+              "terms": [
+                "contract",
+                "bargain",
+                "tarnished halo",
+                "sigil",
+                "fallen light"
+              ],
+              "min_hits": 1
+            }
           ]
         },
         {
@@ -1071,7 +2083,72 @@
         "bargain, judgement, digital temptation, bureaucratic accusation, mismatched reflection, broken halo glow, liminal threshold, restrained literal demon trace",
         "role outfit preserved while devil identity appears through gaze, light, reflection, threshold, procedure, and bargain or judgement props"
       ],
-      "likeness_mode": "inspired"
+      "likeness_mode": "inspired",
+      "anchor_pool": {
+        "expression": [
+          "mysterious_half_smile",
+          "cold_unreadable_stare"
+        ],
+        "action": [
+          "holding_story_prop"
+        ],
+        "prop": [
+          "sealed_mission_envelope_prop",
+          "soul_contract_scroll_prop",
+          "tarnished_halo_ring_prop",
+          "ember_sigil_coin_prop"
+        ],
+        "location": [
+          "gothic_glass_curio_cabinet",
+          "underground_mine_tunnel_set"
+        ]
+      },
+      "critical_anchor_slots": [],
+      "anchor_floor": {
+        "mixin": 1
+      },
+      "safety_requirements": [
+        "devil cue must be symbolic and non-graphic: contract, bargain, shadow, or underlight; no gore, violence, or explicit demonic body horror"
+      ],
+      "salience_cues": [
+        "visible devil cue near the subject: contract envelope, bargain gesture, infernal underlight, horn-like shadow, or red glint"
+      ],
+      "anchor_variants": {
+        "prop": {
+          "group": "devil_symbolic_cue",
+          "options": [
+            "sealed_mission_envelope_prop",
+            "soul_contract_scroll_prop",
+            "tarnished_halo_ring_prop",
+            "ember_sigil_coin_prop"
+          ],
+          "select": "seed_rotate"
+        }
+      },
+      "primary_anchor_pool": {
+        "prop": [
+          "sealed_mission_envelope_prop",
+          "soul_contract_scroll_prop",
+          "tarnished_halo_ring_prop",
+          "ember_sigil_coin_prop"
+        ]
+      },
+      "render_priority_terms": [
+        {
+          "id": "devil_cue",
+          "terms": [
+            "contract",
+            "bargain",
+            "tarnished halo",
+            "sigil",
+            "fallen light"
+          ],
+          "min_hits": 1
+        }
+      ],
+      "anchor_group_floor": {
+        "mixin_primary": 1
+      }
     },
     "천사": {
       "preset": "candid_iphone_portrait",
@@ -1088,8 +2165,11 @@
         "prop": [
           "angel halo",
           "small wings",
-          "halo",
-          "wings"
+          "subtle wings",
+          "small halo",
+          "subtle angel wings",
+          "wing-shaped shadow",
+          "soft wing-shaped shadow"
         ]
       },
       "bundles": [
@@ -1113,12 +2193,63 @@
           "additional": [
             "the casual girlfriend-style outfit stays readable, while a small halo and subtle tiny wings create a gentle angel read without replacing the everyday candid mood",
             "make the angel cue visible near the head and shoulders in the same frame as the phone and face, so the image does not collapse into an ordinary beach-boardwalk snapshot",
-            "keep the angel archetype soft, protective, and non-religious: no monumental church staging, no giant fantasy wings, no glowing deity transformation, and no erotic costume framing"
+            "keep the angel archetype soft, protective, and non-religious: no monumental church staging, no giant fantasy wings, no glowing deity transformation, and no erotic costume framing",
+            "the image must read first as an ordinary adult casual girlfriend-style snapshot; the halo or wing shadow stays secondary and trace-like",
+            "no tail or fantasy creature appendage is visible"
           ],
           "intent_axis": [
             "casual girlfriend-style angel snapshot with visible halo and small wings",
             "soft protective angel cue, beach-boardwalk candid phone portrait, everyday outfit preserved"
-          ]
+          ],
+          "anchor_variants": {
+            "prop": {
+              "group": "angel_halo_wings",
+              "options": [
+                "angel_halo_wings_set",
+                "soft_wing_shadow_halo_prop"
+              ],
+              "select": "seed_rotate"
+            }
+          },
+          "anchor_pool": {
+            "prop": [
+              "angel_halo_wings_set",
+              "soft_wing_shadow_halo_prop"
+            ]
+          },
+          "primary_anchor_pool": {
+            "prop": [
+              "angel_halo_wings_set",
+              "soft_wing_shadow_halo_prop"
+            ]
+          },
+          "anchor_terms": {
+            "prop": [
+              "angel halo",
+              "small wings",
+              "subtle wings",
+              "small halo",
+              "subtle angel wings",
+              "wing-shaped shadow",
+              "soft wing-shaped shadow"
+            ]
+          },
+          "render_priority_terms": [
+            {
+              "id": "angel_halo_wings",
+              "terms": [
+                "angel halo",
+                "small halo",
+                "small wings",
+                "subtle wings",
+                "subtle angel wings",
+                "wing-shaped shadow",
+                "soft wing-shaped shadow"
+              ],
+              "min_hits": 1
+            }
+          ],
+          "mixin_cue_budget": 1
         },
         {
           "id": "shared_soft_halo_portrait",
@@ -1138,6 +2269,46 @@
           "intent_axis": [
             "soft angel portrait with visible halo and small wings",
             "protective calm light, non-graphic adult fictional fashion portrait"
+          ],
+          "anchor_variants": {
+            "prop": {
+              "group": "angel_halo_wings",
+              "options": [
+                "angel_halo_wings_set",
+                "soft_wing_shadow_halo_prop"
+              ],
+              "select": "seed_rotate"
+            }
+          },
+          "anchor_pool": {
+            "prop": [
+              "angel_halo_wings_set",
+              "soft_wing_shadow_halo_prop"
+            ]
+          },
+          "primary_anchor_pool": {
+            "prop": [
+              "angel_halo_wings_set",
+              "soft_wing_shadow_halo_prop"
+            ]
+          },
+          "anchor_terms": {
+            "prop": [
+              "angel halo",
+              "small wings",
+              "subtle wings"
+            ]
+          },
+          "render_priority_terms": [
+            {
+              "id": "angel_halo_wings",
+              "terms": [
+                "angel halo",
+                "small wings",
+                "subtle wings"
+              ],
+              "min_hits": 1
+            }
           ]
         }
       ],
@@ -1151,7 +2322,97 @@
         "soft protective angel portrait with visible halo and subtle wings",
         "role outfit preserved while angel identity appears through small halo, soft light, calm posture, and nearby wing cue"
       ],
-      "likeness_mode": "inspired"
+      "likeness_mode": "inspired",
+      "anchor_pool": {
+        "prop": [
+          "angel_halo_wings_set",
+          "soft_wing_shadow_halo_prop"
+        ]
+      },
+      "critical_anchor_slots": [
+        "prop"
+      ],
+      "anchor_floor": {
+        "mixin": 1
+      },
+      "safety_requirements": [
+        "angel cue should stay soft and non-religious, not erotic costume display or deity transformation"
+      ],
+      "salience_cues": [
+        "small halo or subtle wings visible near head and shoulders"
+      ],
+      "primary_anchor_pool": {
+        "prop": [
+          "angel_halo_wings_set",
+          "soft_wing_shadow_halo_prop"
+        ]
+      },
+      "anchor_group_floor": {
+        "mixin_primary": 1
+      },
+      "anchor_groups": {
+        "prop": [
+          "mixin_primary"
+        ]
+      },
+      "render_priority_terms": [
+        {
+          "id": "angel_halo_wings",
+          "terms": [
+            "angel halo",
+            "small halo",
+            "small wings",
+            "subtle wings",
+            "subtle angel wings",
+            "wing-shaped shadow",
+            "soft wing-shaped shadow"
+          ],
+          "min_hits": 1
+        }
+      ],
+      "anchor_variants": {
+        "prop": {
+          "group": "angel_halo_wings",
+          "options": [
+            "angel_halo_wings_set",
+            "soft_wing_shadow_halo_prop"
+          ],
+          "select": "seed_rotate"
+        }
+      },
+      "visual_guard": [
+        {
+          "id": "angel_tail_free_soft_guard",
+          "reason": "demote body-first framing when soft concept anchors are active",
+          "deny_facets": {
+            "body_framing": [
+              "soft_body_role:body_emphasis"
+            ]
+          }
+        }
+      ],
+      "dual_read_requirement": {
+        "enabled": true,
+        "min_role_hits": 1,
+        "min_mixin_hits": 1
+      },
+      "render_suppress_terms": [
+        "tail",
+        "devil tail",
+        "costume tail",
+        "erotic angel costume"
+      ],
+      "preset_affinity": {
+        "discouraged_axes": [
+          "fantasy costume",
+          "glamour"
+        ],
+        "preferred_axes": [
+          "casual",
+          "close",
+          "candid"
+        ]
+      }
     },
     "팜므파탈": {
       "preset": "compact_cinematic_prop_portrait",
@@ -1170,7 +2431,6 @@
       },
       "soft_anchor_slots": [
         "expression",
-        "action",
         "prop"
       ],
       "soft_min_anchors": 1,
@@ -1185,9 +2445,10 @@
         ],
         "prop": [
           "calling card",
-          "gloves",
-          "perfume",
-          "phone"
+          "dossier",
+          "signet token",
+          "access card",
+          "information-control"
         ]
       },
       "bundles": [
@@ -1214,6 +2475,17 @@
           "intent_axis": [
             "femme fatale in a maid disguise who controls the room and the viewer's gaze",
             "noir power reversal, poison-omen prop, guest-book leverage, and cold composed authority"
+          ],
+          "visual_guard": [
+            {
+              "id": "팜므파탈_bundle_body_first_soft_guard",
+              "reason": "demote body-first framing when soft concept anchors are active",
+              "deny_facets": {
+                "body_framing": [
+                  "soft_body_role:body_emphasis"
+                ]
+              }
+            }
           ]
         },
         {
@@ -1240,6 +2512,17 @@
           "intent_axis": [
             "femme fatale clinician who controls the outcome and the gaze",
             "clinical noir, withheld knowledge, reversed power, non-cosplay institutional uniform"
+          ],
+          "visual_guard": [
+            {
+              "id": "팜므파탈_bundle_body_first_soft_guard",
+              "reason": "demote body-first framing when soft concept anchors are active",
+              "deny_facets": {
+                "body_framing": [
+                  "soft_body_role:body_emphasis"
+                ]
+              }
+            }
           ]
         },
         {
@@ -1265,6 +2548,67 @@
           "intent_axis": [
             "femme fatale detective who turns the viewer into the suspect",
             "interrogation-room power, cold authority, noir control, case-file leverage, and face-and-hands framing"
+          ],
+          "anchor_variants": {
+            "prop": {
+              "group": "femme_fatale_leverage",
+              "options": [
+                "single_playing_card_calling_card_prop",
+                "wax_sealed_dossier_prop",
+                "engraved_signet_token_prop",
+                "security_access_card_prop"
+              ],
+              "select": "seed_rotate"
+            }
+          },
+          "anchor_pool": {
+            "prop": [
+              "single_playing_card_calling_card_prop",
+              "wax_sealed_dossier_prop",
+              "engraved_signet_token_prop",
+              "security_access_card_prop"
+            ]
+          },
+          "primary_anchor_pool": {
+            "prop": [
+              "single_playing_card_calling_card_prop",
+              "wax_sealed_dossier_prop",
+              "engraved_signet_token_prop",
+              "security_access_card_prop"
+            ]
+          },
+          "anchor_terms": {
+            "prop": [
+              "calling card",
+              "dossier",
+              "signet token",
+              "access card",
+              "information-control"
+            ]
+          },
+          "render_priority_terms": [
+            {
+              "id": "femme_fatale_leverage",
+              "terms": [
+                "calling card",
+                "dossier",
+                "signet token",
+                "access card",
+                "information-control"
+              ],
+              "min_hits": 1
+            }
+          ],
+          "visual_guard": [
+            {
+              "id": "팜므파탈_bundle_body_first_soft_guard",
+              "reason": "demote body-first framing when soft concept anchors are active",
+              "deny_facets": {
+                "body_framing": [
+                  "soft_body_role:body_emphasis"
+                ]
+              }
+            }
           ]
         },
         {
@@ -1290,6 +2634,17 @@
           "intent_axis": [
             "femme fatale who owns the underground world and its secrets, calm and unreadable",
             "half-lit face authority, leverage-in-hand power, noir underground control"
+          ],
+          "visual_guard": [
+            {
+              "id": "팜므파탈_bundle_body_first_soft_guard",
+              "reason": "demote body-first framing when soft concept anchors are active",
+              "deny_facets": {
+                "body_framing": [
+                  "soft_body_role:body_emphasis"
+                ]
+              }
+            }
           ]
         },
         {
@@ -1316,6 +2671,17 @@
           "intent_axis": [
             "femme fatale hiding behind an ordinary casual look, using intimacy as a trap she controls",
             "private taxi-backseat noir, double-life closeness, direct gaze, dominant phone-screen evidence, and information advantage"
+          ],
+          "visual_guard": [
+            {
+              "id": "팜므파탈_bundle_body_first_soft_guard",
+              "reason": "demote body-first framing when soft concept anchors are active",
+              "deny_facets": {
+                "body_framing": [
+                  "soft_body_role:body_emphasis"
+                ]
+              }
+            }
           ]
         },
         {
@@ -1341,6 +2707,17 @@
           "intent_axis": [
             "femme fatale court figure who rules through intelligence and danger",
             "candlelit palace power, omen ornament, centered authority, and reversed gaze"
+          ],
+          "visual_guard": [
+            {
+              "id": "팜므파탈_bundle_body_first_soft_guard",
+              "reason": "demote body-first framing when soft concept anchors are active",
+              "deny_facets": {
+                "body_framing": [
+                  "soft_body_role:body_emphasis"
+                ]
+              }
+            }
           ]
         },
         {
@@ -1368,6 +2745,17 @@
           "intent_axis": [
             "femme fatale lounge operator who turns the viewer into the mark through magnetic lure-as-weapon",
             "warm rim-light allure, poison-invitation omen, gaze reversal, covered stage identity, and face-and-hands framing"
+          ],
+          "visual_guard": [
+            {
+              "id": "팜므파탈_bundle_body_first_soft_guard",
+              "reason": "demote body-first framing when soft concept anchors are active",
+              "deny_facets": {
+                "body_framing": [
+                  "soft_body_role:body_emphasis"
+                ]
+              }
+            }
           ]
         },
         {
@@ -1398,6 +2786,17 @@
           "intent_axis": [
             "femme fatale built on mirror-doubling symbolism of duality and hidden intent",
             "noir reflection, monochrome, gaze reversal, and role-preserving power"
+          ],
+          "visual_guard": [
+            {
+              "id": "팜므파탈_bundle_body_first_soft_guard",
+              "reason": "demote body-first framing when soft concept anchors are active",
+              "deny_facets": {
+                "body_framing": [
+                  "soft_body_role:body_emphasis"
+                ]
+              }
+            }
           ]
         },
         {
@@ -1428,6 +2827,17 @@
           "intent_axis": [
             "femme fatale at a threshold as the symbol of impending downfall",
             "wilted-flower omen, noir doorway power, withheld intent, and reversed gaze"
+          ],
+          "visual_guard": [
+            {
+              "id": "팜므파탈_bundle_body_first_soft_guard",
+              "reason": "demote body-first framing when soft concept anchors are active",
+              "deny_facets": {
+                "body_framing": [
+                  "soft_body_role:body_emphasis"
+                ]
+              }
+            }
           ]
         },
         {
@@ -1450,6 +2860,67 @@
           "intent_axis": [
             "standalone femme fatale as a powerful dangerous intelligent subject in noir office light",
             "gaze reversal, chiaroscuro, glass reflections, calling-card omen, agency over availability"
+          ],
+          "anchor_variants": {
+            "prop": {
+              "group": "femme_fatale_leverage",
+              "options": [
+                "single_playing_card_calling_card_prop",
+                "wax_sealed_dossier_prop",
+                "engraved_signet_token_prop",
+                "security_access_card_prop"
+              ],
+              "select": "seed_rotate"
+            }
+          },
+          "anchor_pool": {
+            "prop": [
+              "single_playing_card_calling_card_prop",
+              "wax_sealed_dossier_prop",
+              "engraved_signet_token_prop",
+              "security_access_card_prop"
+            ]
+          },
+          "primary_anchor_pool": {
+            "prop": [
+              "single_playing_card_calling_card_prop",
+              "wax_sealed_dossier_prop",
+              "engraved_signet_token_prop",
+              "security_access_card_prop"
+            ]
+          },
+          "anchor_terms": {
+            "prop": [
+              "calling card",
+              "dossier",
+              "signet token",
+              "access card",
+              "information-control"
+            ]
+          },
+          "render_priority_terms": [
+            {
+              "id": "femme_fatale_leverage",
+              "terms": [
+                "calling card",
+                "dossier",
+                "signet token",
+                "access card",
+                "information-control"
+              ],
+              "min_hits": 1
+            }
+          ],
+          "visual_guard": [
+            {
+              "id": "팜므파탈_bundle_body_first_soft_guard",
+              "reason": "demote body-first framing when soft concept anchors are active",
+              "deny_facets": {
+                "body_framing": [
+                  "soft_body_role:body_emphasis"
+                ]
+              }
+            }
           ]
         },
         {
@@ -1472,6 +2943,17 @@
           "intent_axis": [
             "standalone symbolist femme fatale built from broken mirror fragments and withheld intent",
             "monochrome noir, duality, fatal attraction, agency, and non-objectifying mystery"
+          ],
+          "visual_guard": [
+            {
+              "id": "팜므파탈_bundle_body_first_soft_guard",
+              "reason": "demote body-first framing when soft concept anchors are active",
+              "deny_facets": {
+                "body_framing": [
+                  "soft_body_role:body_emphasis"
+                ]
+              }
+            }
           ]
         }
       ],
@@ -1493,7 +2975,133 @@
         "two legitimate registers: cold information-control authority, and magnetic lure-as-weapon where the invitation itself is the trap",
         "role outfit preserved while femme fatale identity appears through power, gaze, light, posture, and symbolic props"
       ],
-      "likeness_mode": "inspired"
+      "likeness_mode": "inspired",
+      "anchor_pool": {
+        "expression": [
+          "cold_unreadable_stare",
+          "confident_direct_gaze",
+          "mysterious_half_smile"
+        ],
+        "action": [
+          "looking_down_at_low_camera"
+        ],
+        "prop": [
+          "single_playing_card_calling_card_prop",
+          "wax_sealed_dossier_prop",
+          "engraved_signet_token_prop",
+          "security_access_card_prop"
+        ]
+      },
+      "critical_anchor_slots": [],
+      "anchor_floor": {
+        "mixin": 1
+      },
+      "safety_requirements": [
+        "femme-fatale cue should read as noir control and composed power, not explicit sexual posing or seduction-only framing"
+      ],
+      "salience_cues": [
+        "cold controlled gaze, face-and-hands framing, and a visible noir leverage prop such as a calling card"
+      ],
+      "primary_anchor_pool": {
+        "expression": [
+          "cold_unreadable_stare",
+          "confident_direct_gaze",
+          "mysterious_half_smile"
+        ],
+        "prop": [
+          "single_playing_card_calling_card_prop",
+          "wax_sealed_dossier_prop",
+          "engraved_signet_token_prop",
+          "security_access_card_prop"
+        ]
+      },
+      "anchor_group_floor": {
+        "mixin_primary": 1
+      },
+      "anchor_groups": {
+        "expression": [
+          "mixin_primary"
+        ],
+        "prop": [
+          "mixin_primary"
+        ]
+      },
+      "visual_guard": [
+        {
+          "id": "femme_fatale_anti_pinup_soft_guard",
+          "reason": "keep femme fatale as noir control rather than body-first display",
+          "deny_ids": {
+            "action": [
+              "looking_down_at_low_camera",
+              "mirror_thirst_trap_pose",
+              "gym_mirror_fitcheck",
+              "body_roll_dance_loop"
+            ],
+            "composition": [
+              "low_angle",
+              "low_angle_hero",
+              "crouching_mirror_full_body",
+              "concert_low_angle_crowd"
+            ],
+            "subject_framing": [
+              "full_body_framing",
+              "three_quarter_body_framing",
+              "knee_up_framing"
+            ],
+            "wardrobe_style": [
+              "crop_top_wide_pants",
+              "street_jacket_boots",
+              "gym_athleisure_mirror_fit",
+              "pool_deck_swim_editorial"
+            ]
+          },
+          "prefer_ids": {
+            "composition": [
+              "medium_close",
+              "frame_within_frame",
+              "reflection"
+            ],
+            "subject_framing": [
+              "head_and_shoulders_crop",
+              "upper_body_framing",
+              "detail_crop_hands_accessories"
+            ]
+          }
+        },
+        {
+          "id": "femme_fatale_body_first_soft_guard",
+          "reason": "demote body-first framing when soft concept anchors are active",
+          "deny_facets": {
+            "body_framing": [
+              "soft_body_role:body_emphasis"
+            ]
+          }
+        }
+      ],
+      "render_priority_terms": [
+        {
+          "id": "femme_fatale_leverage",
+          "terms": [
+            "calling card",
+            "noir leverage",
+            "controlled gaze",
+            "information-control"
+          ],
+          "min_hits": 1
+        }
+      ],
+      "anchor_variants": {
+        "prop": {
+          "group": "femme_fatale_leverage",
+          "options": [
+            "single_playing_card_calling_card_prop",
+            "wax_sealed_dossier_prop",
+            "engraved_signet_token_prop",
+            "security_access_card_prop"
+          ],
+          "select": "seed_rotate"
+        }
+      }
     },
     "멘헤라": {
       "preset": "candid_iphone_portrait",
@@ -1549,6 +3157,17 @@
           "intent_axis": [
             "menhera maid portrait as after-hours emotional over-giving and digital waiting",
             "empty maid-cafe interior, phone glow, one-sided chat, tired yami-kawaii styling, and non-sexual service exhaustion"
+          ],
+          "visual_guard": [
+            {
+              "id": "멘헤라_bundle_body_first_soft_guard",
+              "reason": "demote body-first framing when soft concept anchors are active",
+              "deny_facets": {
+                "body_framing": [
+                  "soft_body_role:body_emphasis"
+                ]
+              }
+            }
           ]
         },
         {
@@ -1578,6 +3197,17 @@
           "intent_axis": [
             "menhera nurse portrait about care-fatigue and waiting, not medical self-harm",
             "empty hospital waiting room, eyes closed from care-fatigue, cold fluorescent light, wilted bouquet as the single dominant anchor, and safe yami-kawaii melancholy"
+          ],
+          "visual_guard": [
+            {
+              "id": "멘헤라_bundle_body_first_soft_guard",
+              "reason": "demote body-first framing when soft concept anchors are active",
+              "deny_facets": {
+                "body_framing": [
+                  "soft_body_role:body_emphasis"
+                ]
+              }
+            }
           ]
         },
         {
@@ -1610,6 +3240,17 @@
           "intent_axis": [
             "off-duty police uniform menhera mirror selfie with phone glow and emotional containment",
             "private room, gaze avoidance, empty or one-sided chat, cracks in perfect uniform composure, safe digital dependency, and no weapon or violence cue"
+          ],
+          "visual_guard": [
+            {
+              "id": "멘헤라_bundle_body_first_soft_guard",
+              "reason": "demote body-first framing when soft concept anchors are active",
+              "deny_facets": {
+                "body_framing": [
+                  "soft_body_role:body_emphasis"
+                ]
+              }
+            }
           ]
         },
         {
@@ -1640,6 +3281,17 @@
           "intent_axis": [
             "menhera miner portrait as sunless isolation and unanswered digital waiting",
             "workwear preserved, tunnel darkness, phone-screen glow, discordant pastel kawaii charm or ribbon against grime, and safe quiet burnout without injury"
+          ],
+          "visual_guard": [
+            {
+              "id": "멘헤라_bundle_body_first_soft_guard",
+              "reason": "demote body-first framing when soft concept anchors are active",
+              "deny_facets": {
+                "body_framing": [
+                  "soft_body_role:body_emphasis"
+                ]
+              }
+            }
           ]
         },
         {
@@ -1672,6 +3324,17 @@
           "intent_axis": [
             "casual menhera girlfriend portrait about unread-message waiting and emotional dependency",
             "adult everyday outfit, phone glow on face, still bedroom, read-but-unanswered chat, bedside plush doll and wilted bouquet, defensive posture, non-sexual relationship anxiety"
+          ],
+          "visual_guard": [
+            {
+              "id": "멘헤라_bundle_body_first_soft_guard",
+              "reason": "demote body-first framing when soft concept anchors are active",
+              "deny_facets": {
+                "body_framing": [
+                  "soft_body_role:body_emphasis"
+                ]
+              }
+            }
           ]
         },
         {
@@ -1702,6 +3365,17 @@
           "intent_axis": [
             "menhera princess portrait as gilded loneliness with wilted bouquet and loosened ribbon",
             "ornate room, pastel stillness, window longing, hidden phone-screen glow as a subtle digital waiting cue, and safe symbolic emotional dependence"
+          ],
+          "visual_guard": [
+            {
+              "id": "멘헤라_bundle_body_first_soft_guard",
+              "reason": "demote body-first framing when soft concept anchors are active",
+              "deny_facets": {
+                "body_framing": [
+                  "soft_body_role:body_emphasis"
+                ]
+              }
+            }
           ]
         },
         {
@@ -1726,11 +3400,35 @@
           "additional": [
             "the fully covered adult stage costume stays readable, but the image is an upper-body backstage exhaustion portrait centered on face, hands, mirror, and tired eye makeup",
             "a compact mirror, ring-light catchlights, loosened ribbon, and dim phone glow near the mirror edge should show cute-but-fragile yami-kawaii melancholy without turning the stage outfit into display",
-            "no pin-up pose, no full-body body angle, no cleavage-centered framing, no come-hither expression, no nudity, no fetish staging, and no self-harm cue"
+            "no pin-up pose, no full-body body angle, no cleavage-centered framing, no come-hither expression, no nudity, no fetish staging, and no self-harm cue",
+            "keep the crop on face, teary eyes, hands, cuffs, ears, and compact mirror; do not make shoulder, bare back, chest, or bodyline the primary read",
+            "strictly avoid bare shoulders, cleavage, pin-up pose, side-hip display, and full-body costume display"
           ],
           "intent_axis": [
             "menhera stage-costume portrait as covered backstage exhaustion, not pin-up display",
             "upper-body vanity mirror framing, ring-light catchlights, dim phone glow, loosened ribbon, tired yami-kawaii styling, and non-sexual melancholy"
+          ],
+          "visual_guard": [
+            {
+              "id": "멘헤라_bundle_body_first_soft_guard",
+              "reason": "demote body-first framing when soft concept anchors are active",
+              "deny_facets": {
+                "body_framing": [
+                  "soft_body_role:body_emphasis"
+                ]
+              }
+            }
+          ],
+          "render_suppress_terms": [
+            "bare shoulders",
+            "cleavage",
+            "pin-up pose",
+            "side-hip display",
+            "full-body costume display",
+            "body-first framing",
+            "chest-forward crop",
+            "bare back",
+            "lingerie focus"
           ]
         },
         {
@@ -1763,6 +3461,17 @@
           "intent_axis": [
             "role-preserving menhera portrait built from broken mirror symbolism and unsent-message waiting",
             "safe emotional fracture through reflection, phone glow, and pastel melancholy"
+          ],
+          "visual_guard": [
+            {
+              "id": "멘헤라_bundle_body_first_soft_guard",
+              "reason": "demote body-first framing when soft concept anchors are active",
+              "deny_facets": {
+                "body_framing": [
+                  "soft_body_role:body_emphasis"
+                ]
+              }
+            }
           ]
         },
         {
@@ -1795,6 +3504,17 @@
           "intent_axis": [
             "role-preserving menhera portrait in a pastel room with phone glow and protective cute props",
             "attachment waiting, tired gaze, and safe yami-kawaii loneliness"
+          ],
+          "visual_guard": [
+            {
+              "id": "멘헤라_bundle_body_first_soft_guard",
+              "reason": "demote body-first framing when soft concept anchors are active",
+              "deny_facets": {
+                "body_framing": [
+                  "soft_body_role:body_emphasis"
+                ]
+              }
+            }
           ]
         },
         {
@@ -1822,6 +3542,17 @@
           "intent_axis": [
             "standalone non-graphic menhera portrait with unread-message phone glow in a dim bedroom",
             "adult yami-kawaii styling, tired eyes, digital waiting, pastel-black contrast, and safe emotional isolation"
+          ],
+          "visual_guard": [
+            {
+              "id": "멘헤라_bundle_body_first_soft_guard",
+              "reason": "demote body-first framing when soft concept anchors are active",
+              "deny_facets": {
+                "body_framing": [
+                  "soft_body_role:body_emphasis"
+                ]
+              }
+            }
           ]
         },
         {
@@ -1848,6 +3579,17 @@
           "intent_axis": [
             "standalone menhera portrait through wilted bouquet, vanity mirror, loosened ribbon, and pastel melancholy",
             "safe symbolic yami-kawaii emotional exhaustion without graphic or clinical cues"
+          ],
+          "visual_guard": [
+            {
+              "id": "멘헤라_bundle_body_first_soft_guard",
+              "reason": "demote body-first framing when soft concept anchors are active",
+              "deny_facets": {
+                "body_framing": [
+                  "soft_body_role:body_emphasis"
+                ]
+              }
+            }
           ]
         }
       ],
@@ -1866,7 +3608,189 @@
         "digital waiting and emotional dependence shown through phone glow, unread messages, teary or blank gaze, wilted flowers, cracked mirror, pastel or cold fluorescent light",
         "role outfit preserved while the menhera identity appears through expression, palette, props, and room mood"
       ],
-      "likeness_mode": "inspired"
+      "likeness_mode": "inspired",
+      "anchor_pool": {
+        "expression": [
+          "emotional_teary_eyes",
+          "looking_away_pensive"
+        ],
+        "prop": [
+          "clear_case_smartphone",
+          "compact_mirror"
+        ]
+      },
+      "critical_anchor_slots": [],
+      "anchor_floor": {
+        "mixin": 1
+      },
+      "safety_requirements": [
+        "menhera cue must stay yami-kawaii emotional styling: no self-harm, wounds, blood, pills, medical emergency, or explicit sexual distress framing"
+      ],
+      "salience_cues": [
+        "teary eyes, unread-message phone glow, compact mirror, or fragile pastel styling near the face"
+      ],
+      "primary_anchor_pool": {
+        "expression": [
+          "emotional_teary_eyes",
+          "looking_away_pensive"
+        ],
+        "prop": [
+          "clear_case_smartphone",
+          "compact_mirror"
+        ]
+      },
+      "anchor_group_floor": {
+        "mixin_primary": 1
+      },
+      "anchor_groups": {
+        "expression": [
+          "mixin_primary"
+        ],
+        "prop": [
+          "mixin_primary"
+        ]
+      },
+      "visual_guard": [
+        {
+          "id": "menhera_anti_body_display_soft_guard",
+          "reason": "keep yami-kawaii emotional cue near face, phone, or mirror rather than body-first costume display",
+          "deny_ids": {
+            "composition": [
+              "crouching_mirror_full_body",
+              "low_angle",
+              "low_angle_hero",
+              "mirror_selfie_composition"
+            ],
+            "subject_framing": [
+              "full_body_framing",
+              "three_quarter_body_framing",
+              "knee_up_framing"
+            ],
+            "action": [
+              "mirror_thirst_trap_pose",
+              "gym_mirror_fitcheck",
+              "body_roll_dance_loop"
+            ]
+          },
+          "prefer_ids": {
+            "composition": [
+              "medium_close",
+              "frame_within_frame",
+              "over_shoulder_phone_screen"
+            ],
+            "subject_framing": [
+              "head_and_shoulders_crop",
+              "upper_body_framing",
+              "detail_crop_hands_accessories"
+            ],
+            "prop": [
+              "clear_case_smartphone",
+              "compact_mirror"
+            ],
+            "expression": [
+              "emotional_teary_eyes",
+              "looking_away_pensive"
+            ]
+          }
+        },
+        {
+          "id": "menhera_body_first_soft_guard",
+          "reason": "demote body-first framing when soft concept anchors are active",
+          "deny_facets": {
+            "body_framing": [
+              "soft_body_role:body_emphasis"
+            ]
+          }
+        }
+      ],
+      "render_priority_terms": [
+        {
+          "id": "menhera_visible_affect",
+          "terms": [
+            "teary eyes",
+            "unread-message phone",
+            "phone glow",
+            "compact mirror",
+            "fragile pastel"
+          ],
+          "min_hits": 1
+        }
+      ],
+      "free_slot_constraints": {
+        "composition": {
+          "allow_pool": [
+            "medium_close",
+            "frame_within_frame",
+            "over_shoulder_phone_screen",
+            "cctv_corner_frame",
+            "scrapbook_photo_cutout_layout",
+            "over_the_shoulder_dialogue",
+            "beauty_tight_face_crop"
+          ],
+          "deny_pool": [
+            "wide_establishing",
+            "extreme_wide_environmental",
+            "phone_arm_length_selfie",
+            "mirror_selfie_composition",
+            "crouching_mirror_full_body",
+            "low_angle",
+            "low_angle_hero",
+            "concert_low_angle_crowd"
+          ]
+        },
+        "subject_framing": {
+          "allow_pool": [
+            "head_and_shoulders_crop",
+            "upper_body_framing",
+            "close_up_face_crop",
+            "detail_crop_hands_accessories"
+          ],
+          "deny_pool": [
+            "full_body_framing",
+            "three_quarter_body_framing",
+            "knee_up_framing",
+            "waist_up_framing"
+          ]
+        },
+        "camera_direction": {
+          "deny_pool": [
+            "low_ground_angle",
+            "extreme_low_angle_under_subject",
+            "practice_mirror_wide_direction",
+            "arm_length_selfie_direction"
+          ]
+        }
+      },
+      "render_suppress_terms": [
+        "bare shoulders",
+        "cleavage",
+        "pin-up pose",
+        "side-hip display",
+        "full-body costume display",
+        "body-first framing",
+        "chest-forward crop",
+        "erotic distress framing",
+        "lingerie focus"
+      ],
+      "dual_read_requirement": {
+        "enabled": true,
+        "min_role_hits": 1,
+        "min_mixin_hits": 1
+      },
+      "preset_affinity": {
+        "discouraged_axes": [
+          "full body",
+          "body",
+          "glamour",
+          "pinup"
+        ],
+        "preferred_axes": [
+          "close",
+          "vanity",
+          "mirror",
+          "phone"
+        ]
+      }
     },
     "츤데레": {
       "preset": "candid_iphone_portrait",
@@ -1905,7 +3829,95 @@
           "intent_axis": [
             "tsundere maid sliding an extra dessert or heart-latte coffee while denying she cares",
             "brusque service front, tiny huffed mouth, tray-hand tension, subtle ear-tip warmth, offered treat as caring evidence, warm cafe light"
-          ]
+          ],
+          "anchor_variants": {
+            "prop": {
+              "group": "tsundere_caring_object",
+              "options": [
+                "folded_care_note_prop",
+                "modest_wrapped_gift_prop",
+                "small_lunchbox_prop",
+                "embroidered_handkerchief_charm_prop"
+              ],
+              "select": "seed_rotate"
+            }
+          },
+          "anchor_pool": {
+            "prop": [
+              "folded_care_note_prop",
+              "modest_wrapped_gift_prop",
+              "small_lunchbox_prop",
+              "embroidered_handkerchief_charm_prop"
+            ],
+            "expression": [
+              "skeptical_side_eye",
+              "looking_away_pensive"
+            ]
+          },
+          "primary_anchor_pool": {
+            "prop": [
+              "folded_care_note_prop",
+              "modest_wrapped_gift_prop",
+              "small_lunchbox_prop",
+              "embroidered_handkerchief_charm_prop"
+            ],
+            "expression": [
+              "skeptical_side_eye",
+              "looking_away_pensive"
+            ]
+          },
+          "anchor_terms": {
+            "prop": [
+              "folded note",
+              "wrapped gift",
+              "lunchbox",
+              "handkerchief",
+              "charm"
+            ],
+            "expression": [
+              "skeptical side-eye",
+              "pensive look away",
+              "reluctant",
+              "pout",
+              "denying"
+            ]
+          },
+          "render_priority_terms": [
+            {
+              "id": "tsundere_caring_object",
+              "terms": [
+                "folded note",
+                "wrapped gift",
+                "lunchbox",
+                "handkerchief",
+                "charm"
+              ],
+              "min_hits": 1
+            },
+            {
+              "id": "tsundere_contradiction",
+              "terms": [
+                "skeptical side-eye",
+                "pensive look away",
+                "reluctant",
+                "pout",
+                "denying"
+              ],
+              "min_hits": 1
+            }
+          ],
+          "soft_anchor_slots": [
+            "expression",
+            "prop"
+          ],
+          "anchor_groups": {
+            "expression": [
+              "mixin_primary"
+            ]
+          },
+          "anchor_group_floor": {
+            "mixin_primary": 1
+          }
         },
         {
           "id": "nurse_get_well_denial",
@@ -1935,7 +3947,95 @@
           "intent_axis": [
             "tsundere nurse hiding practical care behind a brisk routine excuse",
             "handover chart or folded care note near face and hands, pursed lecture mouth, chart-tapping hand, subtle natural warmth, hopeful clinical light, no bouquet centerpiece or body display"
-          ]
+          ],
+          "anchor_variants": {
+            "prop": {
+              "group": "tsundere_caring_object",
+              "options": [
+                "folded_care_note_prop",
+                "modest_wrapped_gift_prop",
+                "small_lunchbox_prop",
+                "embroidered_handkerchief_charm_prop"
+              ],
+              "select": "seed_rotate"
+            }
+          },
+          "anchor_pool": {
+            "prop": [
+              "folded_care_note_prop",
+              "modest_wrapped_gift_prop",
+              "small_lunchbox_prop",
+              "embroidered_handkerchief_charm_prop"
+            ],
+            "expression": [
+              "skeptical_side_eye",
+              "looking_away_pensive"
+            ]
+          },
+          "primary_anchor_pool": {
+            "prop": [
+              "folded_care_note_prop",
+              "modest_wrapped_gift_prop",
+              "small_lunchbox_prop",
+              "embroidered_handkerchief_charm_prop"
+            ],
+            "expression": [
+              "skeptical_side_eye",
+              "looking_away_pensive"
+            ]
+          },
+          "anchor_terms": {
+            "prop": [
+              "folded note",
+              "wrapped gift",
+              "lunchbox",
+              "handkerchief",
+              "charm"
+            ],
+            "expression": [
+              "skeptical side-eye",
+              "pensive look away",
+              "reluctant",
+              "pout",
+              "denying"
+            ]
+          },
+          "render_priority_terms": [
+            {
+              "id": "tsundere_caring_object",
+              "terms": [
+                "folded note",
+                "wrapped gift",
+                "lunchbox",
+                "handkerchief",
+                "charm"
+              ],
+              "min_hits": 1
+            },
+            {
+              "id": "tsundere_contradiction",
+              "terms": [
+                "skeptical side-eye",
+                "pensive look away",
+                "reluctant",
+                "pout",
+                "denying"
+              ],
+              "min_hits": 1
+            }
+          ],
+          "soft_anchor_slots": [
+            "expression",
+            "prop"
+          ],
+          "anchor_groups": {
+            "expression": [
+              "mixin_primary"
+            ]
+          },
+          "anchor_group_floor": {
+            "mixin_primary": 1
+          }
         },
         {
           "id": "police_shared_umbrella_denial",
@@ -1966,7 +4066,95 @@
           "intent_axis": [
             "tsundere police returning a lost item or sharing an umbrella while insisting it means nothing",
             "stern front, embarrassed kindness, offered umbrella near face and hands, no weapon, coercion, sultry authority, or full-uniform display"
-          ]
+          ],
+          "anchor_variants": {
+            "prop": {
+              "group": "tsundere_caring_object",
+              "options": [
+                "folded_care_note_prop",
+                "modest_wrapped_gift_prop",
+                "small_lunchbox_prop",
+                "embroidered_handkerchief_charm_prop"
+              ],
+              "select": "seed_rotate"
+            }
+          },
+          "anchor_pool": {
+            "prop": [
+              "folded_care_note_prop",
+              "modest_wrapped_gift_prop",
+              "small_lunchbox_prop",
+              "embroidered_handkerchief_charm_prop"
+            ],
+            "expression": [
+              "skeptical_side_eye",
+              "looking_away_pensive"
+            ]
+          },
+          "primary_anchor_pool": {
+            "prop": [
+              "folded_care_note_prop",
+              "modest_wrapped_gift_prop",
+              "small_lunchbox_prop",
+              "embroidered_handkerchief_charm_prop"
+            ],
+            "expression": [
+              "skeptical_side_eye",
+              "looking_away_pensive"
+            ]
+          },
+          "anchor_terms": {
+            "prop": [
+              "folded note",
+              "wrapped gift",
+              "lunchbox",
+              "handkerchief",
+              "charm"
+            ],
+            "expression": [
+              "skeptical side-eye",
+              "pensive look away",
+              "reluctant",
+              "pout",
+              "denying"
+            ]
+          },
+          "render_priority_terms": [
+            {
+              "id": "tsundere_caring_object",
+              "terms": [
+                "folded note",
+                "wrapped gift",
+                "lunchbox",
+                "handkerchief",
+                "charm"
+              ],
+              "min_hits": 1
+            },
+            {
+              "id": "tsundere_contradiction",
+              "terms": [
+                "skeptical side-eye",
+                "pensive look away",
+                "reluctant",
+                "pout",
+                "denying"
+              ],
+              "min_hits": 1
+            }
+          ],
+          "soft_anchor_slots": [
+            "expression",
+            "prop"
+          ],
+          "anchor_groups": {
+            "expression": [
+              "mixin_primary"
+            ]
+          },
+          "anchor_group_floor": {
+            "mixin_primary": 1
+          }
         },
         {
           "id": "miner_shared_warmth_denial",
@@ -1995,7 +4183,95 @@
           "intent_axis": [
             "tsundere miner sharing a spare blanket or practical warmth in a cold tunnel while pretending it is annoyance",
             "headlamp warmth, offered blanket or note near face and hands, looking-away denial with restrained warmth, practical workwear, no survival horror or sultry workwear pose"
-          ]
+          ],
+          "anchor_variants": {
+            "prop": {
+              "group": "tsundere_caring_object",
+              "options": [
+                "folded_care_note_prop",
+                "modest_wrapped_gift_prop",
+                "small_lunchbox_prop",
+                "embroidered_handkerchief_charm_prop"
+              ],
+              "select": "seed_rotate"
+            }
+          },
+          "anchor_pool": {
+            "prop": [
+              "folded_care_note_prop",
+              "modest_wrapped_gift_prop",
+              "small_lunchbox_prop",
+              "embroidered_handkerchief_charm_prop"
+            ],
+            "expression": [
+              "skeptical_side_eye",
+              "looking_away_pensive"
+            ]
+          },
+          "primary_anchor_pool": {
+            "prop": [
+              "folded_care_note_prop",
+              "modest_wrapped_gift_prop",
+              "small_lunchbox_prop",
+              "embroidered_handkerchief_charm_prop"
+            ],
+            "expression": [
+              "skeptical_side_eye",
+              "looking_away_pensive"
+            ]
+          },
+          "anchor_terms": {
+            "prop": [
+              "folded note",
+              "wrapped gift",
+              "lunchbox",
+              "handkerchief",
+              "charm"
+            ],
+            "expression": [
+              "skeptical side-eye",
+              "pensive look away",
+              "reluctant",
+              "pout",
+              "denying"
+            ]
+          },
+          "render_priority_terms": [
+            {
+              "id": "tsundere_caring_object",
+              "terms": [
+                "folded note",
+                "wrapped gift",
+                "lunchbox",
+                "handkerchief",
+                "charm"
+              ],
+              "min_hits": 1
+            },
+            {
+              "id": "tsundere_contradiction",
+              "terms": [
+                "skeptical side-eye",
+                "pensive look away",
+                "reluctant",
+                "pout",
+                "denying"
+              ],
+              "min_hits": 1
+            }
+          ],
+          "soft_anchor_slots": [
+            "expression",
+            "prop"
+          ],
+          "anchor_groups": {
+            "expression": [
+              "mixin_primary"
+            ]
+          },
+          "anchor_group_floor": {
+            "mixin_primary": 1
+          }
         },
         {
           "id": "casual_lunchbox_denial",
@@ -2028,7 +4304,95 @@
           "intent_axis": [
             "tsundere casual girlfriend setting down a lunchbox or modest wrapped gift with a playful pout while denying it matters",
             "conservative everyday outfit, caring object beside a flustered face, bright kitchen light, comedic domestic warmth instead of sadness"
-          ]
+          ],
+          "anchor_variants": {
+            "prop": {
+              "group": "tsundere_caring_object",
+              "options": [
+                "folded_care_note_prop",
+                "modest_wrapped_gift_prop",
+                "small_lunchbox_prop",
+                "embroidered_handkerchief_charm_prop"
+              ],
+              "select": "seed_rotate"
+            }
+          },
+          "anchor_pool": {
+            "prop": [
+              "folded_care_note_prop",
+              "modest_wrapped_gift_prop",
+              "small_lunchbox_prop",
+              "embroidered_handkerchief_charm_prop"
+            ],
+            "expression": [
+              "skeptical_side_eye",
+              "looking_away_pensive"
+            ]
+          },
+          "primary_anchor_pool": {
+            "prop": [
+              "folded_care_note_prop",
+              "modest_wrapped_gift_prop",
+              "small_lunchbox_prop",
+              "embroidered_handkerchief_charm_prop"
+            ],
+            "expression": [
+              "skeptical_side_eye",
+              "looking_away_pensive"
+            ]
+          },
+          "anchor_terms": {
+            "prop": [
+              "folded note",
+              "wrapped gift",
+              "lunchbox",
+              "handkerchief",
+              "charm"
+            ],
+            "expression": [
+              "skeptical side-eye",
+              "pensive look away",
+              "reluctant",
+              "pout",
+              "denying"
+            ]
+          },
+          "render_priority_terms": [
+            {
+              "id": "tsundere_caring_object",
+              "terms": [
+                "folded note",
+                "wrapped gift",
+                "lunchbox",
+                "handkerchief",
+                "charm"
+              ],
+              "min_hits": 1
+            },
+            {
+              "id": "tsundere_contradiction",
+              "terms": [
+                "skeptical side-eye",
+                "pensive look away",
+                "reluctant",
+                "pout",
+                "denying"
+              ],
+              "min_hits": 1
+            }
+          ],
+          "soft_anchor_slots": [
+            "expression",
+            "prop"
+          ],
+          "anchor_groups": {
+            "expression": [
+              "mixin_primary"
+            ]
+          },
+          "anchor_group_floor": {
+            "mixin_primary": 1
+          }
         },
         {
           "id": "princess_kept_token_denial",
@@ -2052,11 +4416,106 @@
             "subtype: hidden-softness tsundere; the princess keeps formal distance through courtly haughtiness, a slightly raised chin, jaw-set mouth tension, fan or sleeve barrier, and a tiny embroidered charm, folded letter, or flower token clearly being returned or offered as proof of private care",
             "preserve the royal princess hanbok and East-Asian court identity; the tsundere layer changes gaze, chin angle, posture, hand tension, and the brisk offhand token offer rather than turning the role into demure courtly shyness or Western gothic melancholy",
             "the courtly token or phoenix hairpin must read as a warm personal gesture, not a weapon, power play, or political leverage",
-            "no demure courtly shyness, no graceful melancholy, no fragile maiden curl, no downcast curtsy, no soft sentimental ballad pose, no gothic gown conversion, no cold information-control authority, no gaze-reversal trap, no blood, no weapon use, no captive shown"
+            "no demure courtly shyness, no graceful melancholy, no fragile maiden curl, no downcast curtsy, no soft sentimental ballad pose, no gothic gown conversion, no cold information-control authority, no gaze-reversal trap, no blood, no weapon use, no captive shown",
+            "the first read must be active denial: raised chin, pursed mouth, guarded side glance, or brisk offhand handover before the care note reads as kindness",
+            "avoid selfie sweetness, demure service, or graceful courtly shyness; the note is offered reluctantly as a conflict object"
           ],
           "intent_axis": [
             "tsundere princess preserving formal distance while privately offering a handkerchief, letter, or charm",
             "hanbok preserved, haughty raised chin, fan or sleeve barrier, brisk offhand token offer, subtle warmth, warm palace light"
+          ],
+          "anchor_variants": {
+            "prop": {
+              "group": "tsundere_caring_object",
+              "options": [
+                "folded_care_note_prop",
+                "modest_wrapped_gift_prop",
+                "small_lunchbox_prop",
+                "embroidered_handkerchief_charm_prop"
+              ],
+              "select": "seed_rotate"
+            }
+          },
+          "anchor_pool": {
+            "prop": [
+              "folded_care_note_prop",
+              "modest_wrapped_gift_prop",
+              "small_lunchbox_prop",
+              "embroidered_handkerchief_charm_prop"
+            ],
+            "expression": [
+              "skeptical_side_eye",
+              "looking_away_pensive"
+            ]
+          },
+          "primary_anchor_pool": {
+            "prop": [
+              "folded_care_note_prop",
+              "modest_wrapped_gift_prop",
+              "small_lunchbox_prop",
+              "embroidered_handkerchief_charm_prop"
+            ],
+            "expression": [
+              "skeptical_side_eye",
+              "looking_away_pensive"
+            ]
+          },
+          "anchor_terms": {
+            "prop": [
+              "folded note",
+              "wrapped gift",
+              "lunchbox",
+              "handkerchief",
+              "charm"
+            ],
+            "expression": [
+              "skeptical side-eye",
+              "pensive look away",
+              "reluctant",
+              "pout",
+              "denying"
+            ]
+          },
+          "render_priority_terms": [
+            {
+              "id": "tsundere_caring_object",
+              "terms": [
+                "folded note",
+                "wrapped gift",
+                "lunchbox",
+                "handkerchief",
+                "charm"
+              ],
+              "min_hits": 1
+            },
+            {
+              "id": "tsundere_contradiction",
+              "terms": [
+                "skeptical side-eye",
+                "pensive look away",
+                "reluctant",
+                "pout",
+                "denying"
+              ],
+              "min_hits": 1
+            }
+          ],
+          "soft_anchor_slots": [
+            "expression",
+            "prop"
+          ],
+          "anchor_groups": {
+            "expression": [
+              "mixin_primary"
+            ]
+          },
+          "anchor_group_floor": {
+            "mixin_primary": 1
+          },
+          "render_suppress_terms": [
+            "soft selfie smile",
+            "demure compliance",
+            "graceful courtly shyness"
           ]
         },
         {
@@ -2088,7 +4547,95 @@
           "intent_axis": [
             "tsundere covered bunny-girl backstage portrait with a saved ticket or folded note offered while denying care",
             "caught mid-gesture, warm vanity light, vanity mirror frame, face-and-hands crop, non-pin-up covered costume"
-          ]
+          ],
+          "anchor_variants": {
+            "prop": {
+              "group": "tsundere_caring_object",
+              "options": [
+                "folded_care_note_prop",
+                "modest_wrapped_gift_prop",
+                "small_lunchbox_prop",
+                "embroidered_handkerchief_charm_prop"
+              ],
+              "select": "seed_rotate"
+            }
+          },
+          "anchor_pool": {
+            "prop": [
+              "folded_care_note_prop",
+              "modest_wrapped_gift_prop",
+              "small_lunchbox_prop",
+              "embroidered_handkerchief_charm_prop"
+            ],
+            "expression": [
+              "skeptical_side_eye",
+              "looking_away_pensive"
+            ]
+          },
+          "primary_anchor_pool": {
+            "prop": [
+              "folded_care_note_prop",
+              "modest_wrapped_gift_prop",
+              "small_lunchbox_prop",
+              "embroidered_handkerchief_charm_prop"
+            ],
+            "expression": [
+              "skeptical_side_eye",
+              "looking_away_pensive"
+            ]
+          },
+          "anchor_terms": {
+            "prop": [
+              "folded note",
+              "wrapped gift",
+              "lunchbox",
+              "handkerchief",
+              "charm"
+            ],
+            "expression": [
+              "skeptical side-eye",
+              "pensive look away",
+              "reluctant",
+              "pout",
+              "denying"
+            ]
+          },
+          "render_priority_terms": [
+            {
+              "id": "tsundere_caring_object",
+              "terms": [
+                "folded note",
+                "wrapped gift",
+                "lunchbox",
+                "handkerchief",
+                "charm"
+              ],
+              "min_hits": 1
+            },
+            {
+              "id": "tsundere_contradiction",
+              "terms": [
+                "skeptical side-eye",
+                "pensive look away",
+                "reluctant",
+                "pout",
+                "denying"
+              ],
+              "min_hits": 1
+            }
+          ],
+          "soft_anchor_slots": [
+            "expression",
+            "prop"
+          ],
+          "anchor_groups": {
+            "expression": [
+              "mixin_primary"
+            ]
+          },
+          "anchor_group_floor": {
+            "mixin_primary": 1
+          }
         },
         {
           "id": "standalone_lunchbox_handover",
@@ -2112,7 +4659,95 @@
           "intent_axis": [
             "standalone tsundere lunchbox or gift handover with a lowered gaze and restrained warmth",
             "defensive face, offered caring object, nostalgic warm light, adult subject"
-          ]
+          ],
+          "anchor_variants": {
+            "prop": {
+              "group": "tsundere_caring_object",
+              "options": [
+                "folded_care_note_prop",
+                "modest_wrapped_gift_prop",
+                "small_lunchbox_prop",
+                "embroidered_handkerchief_charm_prop"
+              ],
+              "select": "seed_rotate"
+            }
+          },
+          "anchor_pool": {
+            "prop": [
+              "folded_care_note_prop",
+              "modest_wrapped_gift_prop",
+              "small_lunchbox_prop",
+              "embroidered_handkerchief_charm_prop"
+            ],
+            "expression": [
+              "skeptical_side_eye",
+              "looking_away_pensive"
+            ]
+          },
+          "primary_anchor_pool": {
+            "prop": [
+              "folded_care_note_prop",
+              "modest_wrapped_gift_prop",
+              "small_lunchbox_prop",
+              "embroidered_handkerchief_charm_prop"
+            ],
+            "expression": [
+              "skeptical_side_eye",
+              "looking_away_pensive"
+            ]
+          },
+          "anchor_terms": {
+            "prop": [
+              "folded note",
+              "wrapped gift",
+              "lunchbox",
+              "handkerchief",
+              "charm"
+            ],
+            "expression": [
+              "skeptical side-eye",
+              "pensive look away",
+              "reluctant",
+              "pout",
+              "denying"
+            ]
+          },
+          "render_priority_terms": [
+            {
+              "id": "tsundere_caring_object",
+              "terms": [
+                "folded note",
+                "wrapped gift",
+                "lunchbox",
+                "handkerchief",
+                "charm"
+              ],
+              "min_hits": 1
+            },
+            {
+              "id": "tsundere_contradiction",
+              "terms": [
+                "skeptical side-eye",
+                "pensive look away",
+                "reluctant",
+                "pout",
+                "denying"
+              ],
+              "min_hits": 1
+            }
+          ],
+          "soft_anchor_slots": [
+            "expression",
+            "prop"
+          ],
+          "anchor_groups": {
+            "expression": [
+              "mixin_primary"
+            ]
+          },
+          "anchor_group_floor": {
+            "mixin_primary": 1
+          }
         },
         {
           "id": "standalone_shared_umbrella",
@@ -2136,7 +4771,95 @@
           "intent_axis": [
             "standalone tsundere shared umbrella at a rainy threshold",
             "cool scene, warm blush, reluctant caring object, non-possessive tenderness"
-          ]
+          ],
+          "anchor_variants": {
+            "prop": {
+              "group": "tsundere_caring_object",
+              "options": [
+                "folded_care_note_prop",
+                "modest_wrapped_gift_prop",
+                "small_lunchbox_prop",
+                "embroidered_handkerchief_charm_prop"
+              ],
+              "select": "seed_rotate"
+            }
+          },
+          "anchor_pool": {
+            "prop": [
+              "folded_care_note_prop",
+              "modest_wrapped_gift_prop",
+              "small_lunchbox_prop",
+              "embroidered_handkerchief_charm_prop"
+            ],
+            "expression": [
+              "skeptical_side_eye",
+              "looking_away_pensive"
+            ]
+          },
+          "primary_anchor_pool": {
+            "prop": [
+              "folded_care_note_prop",
+              "modest_wrapped_gift_prop",
+              "small_lunchbox_prop",
+              "embroidered_handkerchief_charm_prop"
+            ],
+            "expression": [
+              "skeptical_side_eye",
+              "looking_away_pensive"
+            ]
+          },
+          "anchor_terms": {
+            "prop": [
+              "folded note",
+              "wrapped gift",
+              "lunchbox",
+              "handkerchief",
+              "charm"
+            ],
+            "expression": [
+              "skeptical side-eye",
+              "pensive look away",
+              "reluctant",
+              "pout",
+              "denying"
+            ]
+          },
+          "render_priority_terms": [
+            {
+              "id": "tsundere_caring_object",
+              "terms": [
+                "folded note",
+                "wrapped gift",
+                "lunchbox",
+                "handkerchief",
+                "charm"
+              ],
+              "min_hits": 1
+            },
+            {
+              "id": "tsundere_contradiction",
+              "terms": [
+                "skeptical side-eye",
+                "pensive look away",
+                "reluctant",
+                "pout",
+                "denying"
+              ],
+              "min_hits": 1
+            }
+          ],
+          "soft_anchor_slots": [
+            "expression",
+            "prop"
+          ],
+          "anchor_groups": {
+            "expression": [
+              "mixin_primary"
+            ]
+          },
+          "anchor_group_floor": {
+            "mixin_primary": 1
+          }
         },
         {
           "id": "standalone_classroom_note",
@@ -2160,7 +4883,95 @@
           "intent_axis": [
             "standalone tsundere note handover with a lowered guarded gaze and restrained warmth",
             "nostalgic classroom light, offered paper token, defensive first read and sincerity leak"
-          ]
+          ],
+          "anchor_variants": {
+            "prop": {
+              "group": "tsundere_caring_object",
+              "options": [
+                "folded_care_note_prop",
+                "modest_wrapped_gift_prop",
+                "small_lunchbox_prop",
+                "embroidered_handkerchief_charm_prop"
+              ],
+              "select": "seed_rotate"
+            }
+          },
+          "anchor_pool": {
+            "prop": [
+              "folded_care_note_prop",
+              "modest_wrapped_gift_prop",
+              "small_lunchbox_prop",
+              "embroidered_handkerchief_charm_prop"
+            ],
+            "expression": [
+              "skeptical_side_eye",
+              "looking_away_pensive"
+            ]
+          },
+          "primary_anchor_pool": {
+            "prop": [
+              "folded_care_note_prop",
+              "modest_wrapped_gift_prop",
+              "small_lunchbox_prop",
+              "embroidered_handkerchief_charm_prop"
+            ],
+            "expression": [
+              "skeptical_side_eye",
+              "looking_away_pensive"
+            ]
+          },
+          "anchor_terms": {
+            "prop": [
+              "folded note",
+              "wrapped gift",
+              "lunchbox",
+              "handkerchief",
+              "charm"
+            ],
+            "expression": [
+              "skeptical side-eye",
+              "pensive look away",
+              "reluctant",
+              "pout",
+              "denying"
+            ]
+          },
+          "render_priority_terms": [
+            {
+              "id": "tsundere_caring_object",
+              "terms": [
+                "folded note",
+                "wrapped gift",
+                "lunchbox",
+                "handkerchief",
+                "charm"
+              ],
+              "min_hits": 1
+            },
+            {
+              "id": "tsundere_contradiction",
+              "terms": [
+                "skeptical side-eye",
+                "pensive look away",
+                "reluctant",
+                "pout",
+                "denying"
+              ],
+              "min_hits": 1
+            }
+          ],
+          "soft_anchor_slots": [
+            "expression",
+            "prop"
+          ],
+          "anchor_groups": {
+            "expression": [
+              "mixin_primary"
+            ]
+          },
+          "anchor_group_floor": {
+            "mixin_primary": 1
+          }
         }
       ],
       "additional": [
@@ -2189,7 +5000,153 @@
         "a caring object offered, returned, placed, or held as a soft barrier beside the averted face as proof that contradicts the cold words",
         "warm wholesome comedic-romantic grammar with alive embarrassed eyes, role outfit preserved"
       ],
-      "likeness_mode": "inspired"
+      "likeness_mode": "inspired",
+      "anchor_variants": {
+        "prop": {
+          "group": "tsundere_caring_object",
+          "options": [
+            "folded_care_note_prop",
+            "modest_wrapped_gift_prop",
+            "small_lunchbox_prop",
+            "embroidered_handkerchief_charm_prop"
+          ],
+          "select": "seed_rotate"
+        }
+      },
+      "anchor_pool": {
+        "prop": [
+          "folded_care_note_prop",
+          "modest_wrapped_gift_prop",
+          "small_lunchbox_prop",
+          "embroidered_handkerchief_charm_prop"
+        ],
+        "expression": [
+          "skeptical_side_eye",
+          "looking_away_pensive"
+        ]
+      },
+      "primary_anchor_pool": {
+        "prop": [
+          "folded_care_note_prop",
+          "modest_wrapped_gift_prop",
+          "small_lunchbox_prop",
+          "embroidered_handkerchief_charm_prop"
+        ],
+        "expression": [
+          "skeptical_side_eye",
+          "looking_away_pensive"
+        ]
+      },
+      "anchor_terms": {
+        "prop": [
+          "folded note",
+          "wrapped gift",
+          "lunchbox",
+          "handkerchief",
+          "charm"
+        ],
+        "expression": [
+          "skeptical side-eye",
+          "pensive look away",
+          "reluctant",
+          "pout",
+          "denying"
+        ]
+      },
+      "render_priority_terms": [
+        {
+          "id": "tsundere_caring_object",
+          "terms": [
+            "folded note",
+            "wrapped gift",
+            "lunchbox",
+            "handkerchief",
+            "charm"
+          ],
+          "min_hits": 1
+        },
+        {
+          "id": "tsundere_contradiction",
+          "terms": [
+            "skeptical side-eye",
+            "pensive look away",
+            "reluctant",
+            "pout",
+            "denying"
+          ],
+          "min_hits": 1
+        }
+      ],
+      "anchor_group_floor": {
+        "mixin_primary": 1
+      },
+      "soft_anchor_slots": [
+        "expression",
+        "prop"
+      ],
+      "anchor_groups": {
+        "expression": [
+          "mixin_primary"
+        ]
+      },
+      "free_slot_constraints": {
+        "composition": {
+          "allow_pool": [
+            "medium_close",
+            "frame_within_frame",
+            "over_the_shoulder_dialogue",
+            "rule_of_thirds"
+          ],
+          "deny_pool": [
+            "phone_arm_length_selfie",
+            "mirror_selfie_composition",
+            "crouching_mirror_full_body",
+            "wide_establishing",
+            "extreme_wide_environmental"
+          ]
+        },
+        "subject_framing": {
+          "allow_pool": [
+            "head_and_shoulders_crop",
+            "upper_body_framing",
+            "detail_crop_hands_accessories"
+          ],
+          "deny_pool": [
+            "full_body_framing",
+            "three_quarter_body_framing",
+            "knee_up_framing"
+          ]
+        }
+      },
+      "render_suppress_terms": [
+        "soft selfie smile",
+        "demure compliance",
+        "graceful courtly shyness",
+        "body-first framing",
+        "pin-up pose",
+        "sultry authority pose"
+      ],
+      "dual_read_requirement": {
+        "enabled": true,
+        "min_role_hits": 1,
+        "min_mixin_hits": 1
+      },
+      "preset_affinity": {
+        "discouraged_presets": [
+          "candid_iphone_portrait",
+          "clean_mirror_selfie_snapshot"
+        ],
+        "discouraged_axes": [
+          "selfie",
+          "mirror selfie",
+          "soft candid"
+        ],
+        "preferred_axes": [
+          "medium close",
+          "dialogue",
+          "portrait"
+        ]
+      }
     },
     "얀데레": {
       "preset": "compact_cinematic_prop_portrait",
@@ -2214,11 +5171,12 @@
           "fixed gaze"
         ],
         "prop": [
-          "smartphone",
-          "mirror",
-          "board",
-          "bouquet",
-          "photo"
+          "records board",
+          "chart evidence",
+          "care record",
+          "appointment ledger",
+          "surveillance evidence",
+          "repeated-message phone"
         ],
         "location": [
           "corridor",
@@ -2257,6 +5215,75 @@
           "intent_axis": [
             "shrine-surveillance yandere maid whose devotion has become possessive observation inside a maid-cafe cover setting",
             "hollow fixed half-smile, hard-shadowed empty eyes, doorway watching, compact mirror, overloaded same-person photo wall with dates, red-string routes, and shrine density"
+          ],
+          "anchor_variants": {
+            "prop": {
+              "group": "yandere_records_evidence",
+              "options": [
+                "logo_board_prop",
+                "clinical_chart_clipboard_prop",
+                "care_record_board_prop",
+                "appointment_ledger_prop",
+                "clear_case_smartphone",
+                "instant_photo_stack"
+              ],
+              "select": "seed_rotate"
+            }
+          },
+          "anchor_pool": {
+            "prop": [
+              "logo_board_prop",
+              "clinical_chart_clipboard_prop",
+              "care_record_board_prop",
+              "appointment_ledger_prop",
+              "clear_case_smartphone",
+              "instant_photo_stack"
+            ]
+          },
+          "primary_anchor_pool": {
+            "prop": [
+              "logo_board_prop",
+              "clinical_chart_clipboard_prop",
+              "care_record_board_prop",
+              "appointment_ledger_prop",
+              "clear_case_smartphone",
+              "instant_photo_stack"
+            ]
+          },
+          "anchor_terms": {
+            "prop": [
+              "records board",
+              "chart evidence",
+              "care record",
+              "appointment ledger",
+              "surveillance evidence",
+              "repeated-message phone"
+            ]
+          },
+          "render_priority_terms": [
+            {
+              "id": "yandere_evidence",
+              "terms": [
+                "records board",
+                "chart evidence",
+                "care record",
+                "appointment ledger",
+                "surveillance evidence",
+                "repeated-message phone"
+              ],
+              "min_hits": 1
+            }
+          ],
+          "visual_guard": [
+            {
+              "id": "얀데레_bundle_body_first_soft_guard",
+              "reason": "demote body-first framing when soft concept anchors are active",
+              "deny_facets": {
+                "body_framing": [
+                  "soft_body_role:body_emphasis"
+                ]
+              }
+            }
           ]
         },
         {
@@ -2283,11 +5310,54 @@
             "the bouquet is secondary; a chart-like paper, clipboard edge, or bedside note must become the dominant foreground evidence, showing repeated notes, call times, and one small same-person photo clipped like private patient evidence",
             "caretaking ownership must be visible in the foreground through chart-like evidence, empty bed edge, or corridor threshold near her hands, not through funeral-like flowers, eyes-closed sorrow, or generic hospital horror mood",
             "an empty wheelchair, made bed, or corridor threshold may imply watchful care, but no patient, victim, injury, restraint, or harmed person is shown",
-            "strictly non-graphic psychological tension: no visible blood, no weapon use, no gore, no wound, no self-harm, no syringe, no pills, no depicted violence or coercion"
+            "strictly non-graphic psychological tension: no visible blood, no weapon use, no gore, no wound, no self-harm, no syringe, no pills, no depicted violence or coercion",
+            "keep the face, watchful eyes, hands, and chart or records evidence close enough to read in the same crop",
+            "avoid a distant full-body hospital corridor portrait; the chart evidence must sit near the lit face or hands"
           ],
           "intent_axis": [
             "devotion-confinement yandere nurse whose care has turned into possessive control in an empty night ward",
             "open calm intense gaze, chart-like notes, clipped same-person photo, cold fluorescent control, implied watched person never shown"
+          ],
+          "visual_guard": [
+            {
+              "id": "얀데레_bundle_body_first_soft_guard",
+              "reason": "demote body-first framing when soft concept anchors are active",
+              "deny_facets": {
+                "body_framing": [
+                  "soft_body_role:body_emphasis"
+                ]
+              }
+            }
+          ],
+          "free_slot_constraints": {
+            "subject_framing": {
+              "allow_pool": [
+                "head_and_shoulders_crop",
+                "detail_crop_hands_accessories",
+                "upper_body_framing"
+              ],
+              "deny_pool": [
+                "full_body_framing",
+                "three_quarter_body_framing",
+                "knee_up_framing"
+              ]
+            },
+            "composition": {
+              "allow_pool": [
+                "medium_close",
+                "frame_within_frame"
+              ],
+              "deny_pool": [
+                "wide_establishing",
+                "extreme_wide_environmental"
+              ]
+            }
+          },
+          "render_suppress_terms": [
+            "full-body corridor shot",
+            "wide hospital corridor shot",
+            "eyes-closed grief",
+            "funeral bouquet dominance"
           ]
         },
         {
@@ -2313,11 +5383,112 @@
             "the simple board prop must be repurposed as a clinical chart or care-record board, not a brand logo: call times, repeated check marks, circled bed numbers, and one small same-person photo are clipped as private patient evidence",
             "the board, bed threshold, and corridor doorframe must be sharper and brighter than the uniform, so the image still reads as possessive care-control even if the nurse costume were replaced with plain clothes",
             "do not let a bouquet or phone selfie become the focal object in this variant; the chart/records board must carry the caretaking-control read before hospital ambience",
-            "the room reads as monitored caretaking turned possessive control, with an empty bed edge, controlled doorway, or records board as the confinement cue; no syringe, no pills, no blood, no patient, no restraint, no harmed person"
+            "the room reads as monitored caretaking turned possessive control, with an empty bed edge, controlled doorway, or records board as the confinement cue; no syringe, no pills, no blood, no patient, no restraint, no harmed person",
+            "keep the face, watchful eyes, hands, and chart or records evidence close enough to read in the same crop",
+            "avoid a distant full-body hospital corridor portrait; the chart evidence must sit near the lit face or hands"
           ],
           "intent_axis": [
             "caretaking-surveillance yandere nurse where a clinical chart board turns care into possessive monitoring",
             "open cold stare, doorway threshold, chart-like records board, call times, repeated check marks, no bouquet or phone-selfie dominance"
+          ],
+          "anchor_variants": {
+            "prop": {
+              "group": "yandere_records_evidence",
+              "options": [
+                "logo_board_prop",
+                "clinical_chart_clipboard_prop",
+                "care_record_board_prop",
+                "appointment_ledger_prop",
+                "clear_case_smartphone",
+                "instant_photo_stack"
+              ],
+              "select": "seed_rotate"
+            }
+          },
+          "anchor_pool": {
+            "prop": [
+              "logo_board_prop",
+              "clinical_chart_clipboard_prop",
+              "care_record_board_prop",
+              "appointment_ledger_prop",
+              "clear_case_smartphone",
+              "instant_photo_stack"
+            ]
+          },
+          "primary_anchor_pool": {
+            "prop": [
+              "logo_board_prop",
+              "clinical_chart_clipboard_prop",
+              "care_record_board_prop",
+              "appointment_ledger_prop",
+              "clear_case_smartphone",
+              "instant_photo_stack"
+            ]
+          },
+          "anchor_terms": {
+            "prop": [
+              "records board",
+              "chart evidence",
+              "care record",
+              "appointment ledger",
+              "surveillance evidence",
+              "repeated-message phone"
+            ]
+          },
+          "render_priority_terms": [
+            {
+              "id": "yandere_evidence",
+              "terms": [
+                "records board",
+                "chart evidence",
+                "care record",
+                "appointment ledger",
+                "surveillance evidence",
+                "repeated-message phone"
+              ],
+              "min_hits": 1
+            }
+          ],
+          "visual_guard": [
+            {
+              "id": "얀데레_bundle_body_first_soft_guard",
+              "reason": "demote body-first framing when soft concept anchors are active",
+              "deny_facets": {
+                "body_framing": [
+                  "soft_body_role:body_emphasis"
+                ]
+              }
+            }
+          ],
+          "free_slot_constraints": {
+            "subject_framing": {
+              "allow_pool": [
+                "head_and_shoulders_crop",
+                "detail_crop_hands_accessories",
+                "upper_body_framing"
+              ],
+              "deny_pool": [
+                "full_body_framing",
+                "three_quarter_body_framing",
+                "knee_up_framing"
+              ]
+            },
+            "composition": {
+              "allow_pool": [
+                "medium_close",
+                "frame_within_frame"
+              ],
+              "deny_pool": [
+                "wide_establishing",
+                "extreme_wide_environmental"
+              ]
+            }
+          },
+          "render_suppress_terms": [
+            "full-body corridor shot",
+            "wide hospital corridor shot",
+            "eyes-closed grief",
+            "funeral bouquet dominance"
           ]
         },
         {
@@ -2349,6 +5520,75 @@
           "intent_axis": [
             "surveillance-authority yandere police portrait where protection has become possessive monitoring",
             "CCTV-like framing, one-way-mirror evidence-room watchfulness, cold unreadable stare, badge-adjacent contact sheet, dates, red circles, movement arrows"
+          ],
+          "anchor_variants": {
+            "prop": {
+              "group": "yandere_records_evidence",
+              "options": [
+                "logo_board_prop",
+                "clinical_chart_clipboard_prop",
+                "care_record_board_prop",
+                "appointment_ledger_prop",
+                "clear_case_smartphone",
+                "instant_photo_stack"
+              ],
+              "select": "seed_rotate"
+            }
+          },
+          "anchor_pool": {
+            "prop": [
+              "logo_board_prop",
+              "clinical_chart_clipboard_prop",
+              "care_record_board_prop",
+              "appointment_ledger_prop",
+              "clear_case_smartphone",
+              "instant_photo_stack"
+            ]
+          },
+          "primary_anchor_pool": {
+            "prop": [
+              "logo_board_prop",
+              "clinical_chart_clipboard_prop",
+              "care_record_board_prop",
+              "appointment_ledger_prop",
+              "clear_case_smartphone",
+              "instant_photo_stack"
+            ]
+          },
+          "anchor_terms": {
+            "prop": [
+              "records board",
+              "chart evidence",
+              "care record",
+              "appointment ledger",
+              "surveillance evidence",
+              "repeated-message phone"
+            ]
+          },
+          "render_priority_terms": [
+            {
+              "id": "yandere_evidence",
+              "terms": [
+                "records board",
+                "chart evidence",
+                "care record",
+                "appointment ledger",
+                "surveillance evidence",
+                "repeated-message phone"
+              ],
+              "min_hits": 1
+            }
+          ],
+          "visual_guard": [
+            {
+              "id": "얀데레_bundle_body_first_soft_guard",
+              "reason": "demote body-first framing when soft concept anchors are active",
+              "deny_facets": {
+                "body_framing": [
+                  "soft_body_role:body_emphasis"
+                ]
+              }
+            }
           ]
         },
         {
@@ -2379,6 +5619,75 @@
           "intent_axis": [
             "confinement-shrine yandere miner portrait as a sealed underground sanctuary for obsessive devotion",
             "single flashlight beam, calm intense keepsake fixation, dirt-smudged same-person photo stack, side-niche shrine, claustrophobic mine stillness"
+          ],
+          "anchor_variants": {
+            "prop": {
+              "group": "yandere_records_evidence",
+              "options": [
+                "logo_board_prop",
+                "clinical_chart_clipboard_prop",
+                "care_record_board_prop",
+                "appointment_ledger_prop",
+                "clear_case_smartphone",
+                "instant_photo_stack"
+              ],
+              "select": "seed_rotate"
+            }
+          },
+          "anchor_pool": {
+            "prop": [
+              "logo_board_prop",
+              "clinical_chart_clipboard_prop",
+              "care_record_board_prop",
+              "appointment_ledger_prop",
+              "clear_case_smartphone",
+              "instant_photo_stack"
+            ]
+          },
+          "primary_anchor_pool": {
+            "prop": [
+              "logo_board_prop",
+              "clinical_chart_clipboard_prop",
+              "care_record_board_prop",
+              "appointment_ledger_prop",
+              "clear_case_smartphone",
+              "instant_photo_stack"
+            ]
+          },
+          "anchor_terms": {
+            "prop": [
+              "records board",
+              "chart evidence",
+              "care record",
+              "appointment ledger",
+              "surveillance evidence",
+              "repeated-message phone"
+            ]
+          },
+          "render_priority_terms": [
+            {
+              "id": "yandere_evidence",
+              "terms": [
+                "records board",
+                "chart evidence",
+                "care record",
+                "appointment ledger",
+                "surveillance evidence",
+                "repeated-message phone"
+              ],
+              "min_hits": 1
+            }
+          ],
+          "visual_guard": [
+            {
+              "id": "얀데레_bundle_body_first_soft_guard",
+              "reason": "demote body-first framing when soft concept anchors are active",
+              "deny_facets": {
+                "body_framing": [
+                  "soft_body_role:body_emphasis"
+                ]
+              }
+            }
           ]
         },
         {
@@ -2410,6 +5719,17 @@
           "intent_axis": [
             "buried-route yandere miner portrait where devotion becomes ownership of a sealed underground path",
             "headlamp-lit sealed route document, claim paper, side-niche marker, blocked tunnel frame, skeptical side-eye, no broad photo wall"
+          ],
+          "visual_guard": [
+            {
+              "id": "얀데레_bundle_body_first_soft_guard",
+              "reason": "demote body-first framing when soft concept anchors are active",
+              "deny_facets": {
+                "body_framing": [
+                  "soft_body_role:body_emphasis"
+                ]
+              }
+            }
           ]
         },
         {
@@ -2443,6 +5763,75 @@
           "intent_axis": [
             "digital-collapse yandere girlfriend archetype with ordinary casual styling and suffocating closeness",
             "emotional teary eyes, unfocused phone reflection, unanswered calls, locked contact screen, fictional adult subject only"
+          ],
+          "anchor_variants": {
+            "prop": {
+              "group": "yandere_records_evidence",
+              "options": [
+                "logo_board_prop",
+                "clinical_chart_clipboard_prop",
+                "care_record_board_prop",
+                "appointment_ledger_prop",
+                "clear_case_smartphone",
+                "instant_photo_stack"
+              ],
+              "select": "seed_rotate"
+            }
+          },
+          "anchor_pool": {
+            "prop": [
+              "logo_board_prop",
+              "clinical_chart_clipboard_prop",
+              "care_record_board_prop",
+              "appointment_ledger_prop",
+              "clear_case_smartphone",
+              "instant_photo_stack"
+            ]
+          },
+          "primary_anchor_pool": {
+            "prop": [
+              "logo_board_prop",
+              "clinical_chart_clipboard_prop",
+              "care_record_board_prop",
+              "appointment_ledger_prop",
+              "clear_case_smartphone",
+              "instant_photo_stack"
+            ]
+          },
+          "anchor_terms": {
+            "prop": [
+              "records board",
+              "chart evidence",
+              "care record",
+              "appointment ledger",
+              "surveillance evidence",
+              "repeated-message phone"
+            ]
+          },
+          "render_priority_terms": [
+            {
+              "id": "yandere_evidence",
+              "terms": [
+                "records board",
+                "chart evidence",
+                "care record",
+                "appointment ledger",
+                "surveillance evidence",
+                "repeated-message phone"
+              ],
+              "min_hits": 1
+            }
+          ],
+          "visual_guard": [
+            {
+              "id": "얀데레_bundle_body_first_soft_guard",
+              "reason": "demote body-first framing when soft concept anchors are active",
+              "deny_facets": {
+                "body_framing": [
+                  "soft_body_role:body_emphasis"
+                ]
+              }
+            }
           ]
         },
         {
@@ -2474,6 +5863,17 @@
           "intent_axis": [
             "gilded-confinement yandere princess portrait where royal devotion becomes ownership",
             "neutral courtly possession gaze, empty birdcage, glass-dome keepsake, sealed decree, wilted court flowers"
+          ],
+          "visual_guard": [
+            {
+              "id": "얀데레_bundle_body_first_soft_guard",
+              "reason": "demote body-first framing when soft concept anchors are active",
+              "deny_facets": {
+                "body_framing": [
+                  "soft_body_role:body_emphasis"
+                ]
+              }
+            }
           ]
         },
         {
@@ -2503,6 +5903,17 @@
           "intent_axis": [
             "decree-confinement yandere princess where royal love becomes ownership through sealed letters, birdcage symbolism, and court ritual",
             "cold unreadable court gaze, foreground decree, empty gilded birdcage, phoenix hairpin as possession marker, hanbok preserved"
+          ],
+          "visual_guard": [
+            {
+              "id": "얀데레_bundle_body_first_soft_guard",
+              "reason": "demote body-first framing when soft concept anchors are active",
+              "deny_facets": {
+                "body_framing": [
+                  "soft_body_role:body_emphasis"
+                ]
+              }
+            }
           ]
         },
         {
@@ -2533,6 +5944,75 @@
           "intent_axis": [
             "only-audience yandere bunny-girl portrait where one unseen guest occupies every reservation slot",
             "covered costume, backstage booking board, single-name waitlist, circled performance times, calm intense fixed gaze, non-pin-up framing"
+          ],
+          "anchor_variants": {
+            "prop": {
+              "group": "yandere_records_evidence",
+              "options": [
+                "logo_board_prop",
+                "clinical_chart_clipboard_prop",
+                "care_record_board_prop",
+                "appointment_ledger_prop",
+                "clear_case_smartphone",
+                "instant_photo_stack"
+              ],
+              "select": "seed_rotate"
+            }
+          },
+          "anchor_pool": {
+            "prop": [
+              "logo_board_prop",
+              "clinical_chart_clipboard_prop",
+              "care_record_board_prop",
+              "appointment_ledger_prop",
+              "clear_case_smartphone",
+              "instant_photo_stack"
+            ]
+          },
+          "primary_anchor_pool": {
+            "prop": [
+              "logo_board_prop",
+              "clinical_chart_clipboard_prop",
+              "care_record_board_prop",
+              "appointment_ledger_prop",
+              "clear_case_smartphone",
+              "instant_photo_stack"
+            ]
+          },
+          "anchor_terms": {
+            "prop": [
+              "records board",
+              "chart evidence",
+              "care record",
+              "appointment ledger",
+              "surveillance evidence",
+              "repeated-message phone"
+            ]
+          },
+          "render_priority_terms": [
+            {
+              "id": "yandere_evidence",
+              "terms": [
+                "records board",
+                "chart evidence",
+                "care record",
+                "appointment ledger",
+                "surveillance evidence",
+                "repeated-message phone"
+              ],
+              "min_hits": 1
+            }
+          ],
+          "visual_guard": [
+            {
+              "id": "얀데레_bundle_body_first_soft_guard",
+              "reason": "demote body-first framing when soft concept anchors are active",
+              "deny_facets": {
+                "body_framing": [
+                  "soft_body_role:body_emphasis"
+                ]
+              }
+            }
           ]
         },
         {
@@ -2563,6 +6043,75 @@
           "intent_axis": [
             "performance-log yandere bunny-girl backstage portrait where one unseen audience member is possessed through reservation records",
             "covered costume, cold stare, booking-board reservation times, mirror notes, face-and-hands crop, no broad photo wall"
+          ],
+          "anchor_variants": {
+            "prop": {
+              "group": "yandere_records_evidence",
+              "options": [
+                "logo_board_prop",
+                "clinical_chart_clipboard_prop",
+                "care_record_board_prop",
+                "appointment_ledger_prop",
+                "clear_case_smartphone",
+                "instant_photo_stack"
+              ],
+              "select": "seed_rotate"
+            }
+          },
+          "anchor_pool": {
+            "prop": [
+              "logo_board_prop",
+              "clinical_chart_clipboard_prop",
+              "care_record_board_prop",
+              "appointment_ledger_prop",
+              "clear_case_smartphone",
+              "instant_photo_stack"
+            ]
+          },
+          "primary_anchor_pool": {
+            "prop": [
+              "logo_board_prop",
+              "clinical_chart_clipboard_prop",
+              "care_record_board_prop",
+              "appointment_ledger_prop",
+              "clear_case_smartphone",
+              "instant_photo_stack"
+            ]
+          },
+          "anchor_terms": {
+            "prop": [
+              "records board",
+              "chart evidence",
+              "care record",
+              "appointment ledger",
+              "surveillance evidence",
+              "repeated-message phone"
+            ]
+          },
+          "render_priority_terms": [
+            {
+              "id": "yandere_evidence",
+              "terms": [
+                "records board",
+                "chart evidence",
+                "care record",
+                "appointment ledger",
+                "surveillance evidence",
+                "repeated-message phone"
+              ],
+              "min_hits": 1
+            }
+          ],
+          "visual_guard": [
+            {
+              "id": "얀데레_bundle_body_first_soft_guard",
+              "reason": "demote body-first framing when soft concept anchors are active",
+              "deny_facets": {
+                "body_framing": [
+                  "soft_body_role:body_emphasis"
+                ]
+              }
+            }
           ]
         },
         {
@@ -2596,6 +6145,75 @@
           "intent_axis": [
             "role-preserving yandere portrait centered on an oversaturated same-person investigation shrine wall",
             "overlapping photos, dates, movement notes, red-string routes, low-intensity static defacement, claustrophobic room evidence"
+          ],
+          "anchor_variants": {
+            "prop": {
+              "group": "yandere_records_evidence",
+              "options": [
+                "logo_board_prop",
+                "clinical_chart_clipboard_prop",
+                "care_record_board_prop",
+                "appointment_ledger_prop",
+                "clear_case_smartphone",
+                "instant_photo_stack"
+              ],
+              "select": "seed_rotate"
+            }
+          },
+          "anchor_pool": {
+            "prop": [
+              "logo_board_prop",
+              "clinical_chart_clipboard_prop",
+              "care_record_board_prop",
+              "appointment_ledger_prop",
+              "clear_case_smartphone",
+              "instant_photo_stack"
+            ]
+          },
+          "primary_anchor_pool": {
+            "prop": [
+              "logo_board_prop",
+              "clinical_chart_clipboard_prop",
+              "care_record_board_prop",
+              "appointment_ledger_prop",
+              "clear_case_smartphone",
+              "instant_photo_stack"
+            ]
+          },
+          "anchor_terms": {
+            "prop": [
+              "records board",
+              "chart evidence",
+              "care record",
+              "appointment ledger",
+              "surveillance evidence",
+              "repeated-message phone"
+            ]
+          },
+          "render_priority_terms": [
+            {
+              "id": "yandere_evidence",
+              "terms": [
+                "records board",
+                "chart evidence",
+                "care record",
+                "appointment ledger",
+                "surveillance evidence",
+                "repeated-message phone"
+              ],
+              "min_hits": 1
+            }
+          ],
+          "visual_guard": [
+            {
+              "id": "얀데레_bundle_body_first_soft_guard",
+              "reason": "demote body-first framing when soft concept anchors are active",
+              "deny_facets": {
+                "body_framing": [
+                  "soft_body_role:body_emphasis"
+                ]
+              }
+            }
           ]
         },
         {
@@ -2629,6 +6247,17 @@
           "intent_axis": [
             "role-preserving yandere portrait built on glass-dome preservation and birdcage symbolism",
             "kept keepsake under glass, empty birdcage, wilted flower, possessive stillness"
+          ],
+          "visual_guard": [
+            {
+              "id": "얀데레_bundle_body_first_soft_guard",
+              "reason": "demote body-first framing when soft concept anchors are active",
+              "deny_facets": {
+                "body_framing": [
+                  "soft_body_role:body_emphasis"
+                ]
+              }
+            }
           ]
         },
         {
@@ -2653,6 +6282,75 @@
           "intent_axis": [
             "standalone yandere built from red-thread possession and repeated-photo devotion",
             "loving smile with hollow stare, suffocating closeness, symbolic non-graphic obsession"
+          ],
+          "anchor_variants": {
+            "prop": {
+              "group": "yandere_records_evidence",
+              "options": [
+                "logo_board_prop",
+                "clinical_chart_clipboard_prop",
+                "care_record_board_prop",
+                "appointment_ledger_prop",
+                "clear_case_smartphone",
+                "instant_photo_stack"
+              ],
+              "select": "seed_rotate"
+            }
+          },
+          "anchor_pool": {
+            "prop": [
+              "logo_board_prop",
+              "clinical_chart_clipboard_prop",
+              "care_record_board_prop",
+              "appointment_ledger_prop",
+              "clear_case_smartphone",
+              "instant_photo_stack"
+            ]
+          },
+          "primary_anchor_pool": {
+            "prop": [
+              "logo_board_prop",
+              "clinical_chart_clipboard_prop",
+              "care_record_board_prop",
+              "appointment_ledger_prop",
+              "clear_case_smartphone",
+              "instant_photo_stack"
+            ]
+          },
+          "anchor_terms": {
+            "prop": [
+              "records board",
+              "chart evidence",
+              "care record",
+              "appointment ledger",
+              "surveillance evidence",
+              "repeated-message phone"
+            ]
+          },
+          "render_priority_terms": [
+            {
+              "id": "yandere_evidence",
+              "terms": [
+                "records board",
+                "chart evidence",
+                "care record",
+                "appointment ledger",
+                "surveillance evidence",
+                "repeated-message phone"
+              ],
+              "min_hits": 1
+            }
+          ],
+          "visual_guard": [
+            {
+              "id": "얀데레_bundle_body_first_soft_guard",
+              "reason": "demote body-first framing when soft concept anchors are active",
+              "deny_facets": {
+                "body_framing": [
+                  "soft_body_role:body_emphasis"
+                ]
+              }
+            }
           ]
         },
         {
@@ -2678,6 +6376,17 @@
           "intent_axis": [
             "standalone yandere as sealed glass-dome preservation of love",
             "emotional teary eyes, keepsake under glass, wilted flower, empty birdcage, beautiful but suffocating stillness"
+          ],
+          "visual_guard": [
+            {
+              "id": "얀데레_bundle_body_first_soft_guard",
+              "reason": "demote body-first framing when soft concept anchors are active",
+              "deny_facets": {
+                "body_framing": [
+                  "soft_body_role:body_emphasis"
+                ]
+              }
+            }
           ]
         },
         {
@@ -2704,6 +6413,75 @@
           "intent_axis": [
             "standalone yandere surveillance room with environment-scale obsessive evidence",
             "cold unreadable stare, extreme-wide photo wall, route maps, date labels, red-string paths, unread-message screenshots"
+          ],
+          "anchor_variants": {
+            "prop": {
+              "group": "yandere_records_evidence",
+              "options": [
+                "logo_board_prop",
+                "clinical_chart_clipboard_prop",
+                "care_record_board_prop",
+                "appointment_ledger_prop",
+                "clear_case_smartphone",
+                "instant_photo_stack"
+              ],
+              "select": "seed_rotate"
+            }
+          },
+          "anchor_pool": {
+            "prop": [
+              "logo_board_prop",
+              "clinical_chart_clipboard_prop",
+              "care_record_board_prop",
+              "appointment_ledger_prop",
+              "clear_case_smartphone",
+              "instant_photo_stack"
+            ]
+          },
+          "primary_anchor_pool": {
+            "prop": [
+              "logo_board_prop",
+              "clinical_chart_clipboard_prop",
+              "care_record_board_prop",
+              "appointment_ledger_prop",
+              "clear_case_smartphone",
+              "instant_photo_stack"
+            ]
+          },
+          "anchor_terms": {
+            "prop": [
+              "records board",
+              "chart evidence",
+              "care record",
+              "appointment ledger",
+              "surveillance evidence",
+              "repeated-message phone"
+            ]
+          },
+          "render_priority_terms": [
+            {
+              "id": "yandere_evidence",
+              "terms": [
+                "records board",
+                "chart evidence",
+                "care record",
+                "appointment ledger",
+                "surveillance evidence",
+                "repeated-message phone"
+              ],
+              "min_hits": 1
+            }
+          ],
+          "visual_guard": [
+            {
+              "id": "얀데레_bundle_body_first_soft_guard",
+              "reason": "demote body-first framing when soft concept anchors are active",
+              "deny_facets": {
+                "body_framing": [
+                  "soft_body_role:body_emphasis"
+                ]
+              }
+            }
           ]
         }
       ],
@@ -2749,7 +6527,221 @@
           "weapon"
         ]
       },
-      "likeness_mode": "inspired"
+      "likeness_mode": "inspired",
+      "anchor_pool": {
+        "expression": [
+          "mysterious_half_smile",
+          "cold_unreadable_stare",
+          "calm_intense_gaze"
+        ],
+        "prop": [
+          "logo_board_prop",
+          "clinical_chart_clipboard_prop",
+          "care_record_board_prop",
+          "appointment_ledger_prop",
+          "clear_case_smartphone",
+          "instant_photo_stack"
+        ],
+        "location": [
+          "maid_cafe_interior",
+          "hospital_corridor",
+          "bedroom_mirror"
+        ]
+      },
+      "critical_anchor_slots": [],
+      "anchor_floor": {
+        "mixin": 1
+      },
+      "safety_requirements": [
+        "yandere cue must stay psychological and non-violent: no weapon threat, gore, injury, stalking crime scene, or victim imagery"
+      ],
+      "salience_cues": [
+        "possessive stillness with visible records board, repeated-message phone, surveillance evidence, or chart evidence"
+      ],
+      "primary_anchor_pool": {
+        "expression": [
+          "mysterious_half_smile",
+          "cold_unreadable_stare",
+          "calm_intense_gaze"
+        ],
+        "prop": [
+          "logo_board_prop",
+          "clinical_chart_clipboard_prop",
+          "care_record_board_prop",
+          "appointment_ledger_prop",
+          "clear_case_smartphone",
+          "instant_photo_stack"
+        ],
+        "composition": [
+          "frame_within_frame",
+          "over_shoulder_phone_screen",
+          "cctv_corner_frame",
+          "scrapbook_photo_cutout_layout"
+        ]
+      },
+      "anchor_group_floor": {
+        "mixin_primary": 1
+      },
+      "anchor_groups": {
+        "expression": [
+          "mixin_primary"
+        ],
+        "prop": [
+          "mixin_primary"
+        ],
+        "composition": [
+          "mixin_primary"
+        ]
+      },
+      "visual_guard": [
+        {
+          "id": "yandere_evidence_first_soft_guard",
+          "reason": "make possessive evidence visible and avoid generic hospital grief or body display",
+          "deny_ids": {
+            "action": [
+              "mirror_thirst_trap_pose",
+              "gym_mirror_fitcheck",
+              "body_roll_dance_loop"
+            ],
+            "subject_framing": [
+              "full_body_framing",
+              "three_quarter_body_framing"
+            ],
+            "composition": [
+              "low_angle",
+              "low_angle_hero",
+              "crouching_mirror_full_body"
+            ]
+          },
+          "prefer_ids": {
+            "prop": [
+              "logo_board_prop",
+              "clinical_chart_clipboard_prop",
+              "care_record_board_prop",
+              "appointment_ledger_prop",
+              "clear_case_smartphone",
+              "instant_photo_stack"
+            ],
+            "composition": [
+              "frame_within_frame",
+              "over_shoulder_phone_screen",
+              "cctv_corner_frame",
+              "scrapbook_photo_cutout_layout"
+            ],
+            "subject_framing": [
+              "head_and_shoulders_crop",
+              "upper_body_framing",
+              "detail_crop_hands_accessories"
+            ]
+          }
+        },
+        {
+          "id": "yandere_body_first_soft_guard",
+          "reason": "demote body-first framing when soft concept anchors are active",
+          "deny_facets": {
+            "body_framing": [
+              "soft_body_role:body_emphasis"
+            ]
+          }
+        }
+      ],
+      "render_priority_terms": [
+        {
+          "id": "yandere_evidence",
+          "terms": [
+            "records board",
+            "repeated-message phone",
+            "surveillance evidence",
+            "chart evidence",
+            "possession evidence"
+          ],
+          "min_hits": 1
+        }
+      ],
+      "anchor_variants": {
+        "prop": {
+          "group": "yandere_records_evidence",
+          "options": [
+            "logo_board_prop",
+            "clinical_chart_clipboard_prop",
+            "care_record_board_prop",
+            "appointment_ledger_prop",
+            "clear_case_smartphone",
+            "instant_photo_stack"
+          ],
+          "select": "seed_rotate"
+        }
+      },
+      "free_slot_constraints": {
+        "composition": {
+          "allow_pool": [
+            "medium_close",
+            "frame_within_frame",
+            "over_shoulder_phone_screen",
+            "cctv_corner_frame",
+            "scrapbook_photo_cutout_layout",
+            "over_the_shoulder_dialogue",
+            "beauty_tight_face_crop"
+          ],
+          "deny_pool": [
+            "wide_establishing",
+            "extreme_wide_environmental",
+            "phone_arm_length_selfie",
+            "mirror_selfie_composition",
+            "crouching_mirror_full_body",
+            "low_angle",
+            "low_angle_hero",
+            "concert_low_angle_crowd"
+          ]
+        },
+        "subject_framing": {
+          "allow_pool": [
+            "head_and_shoulders_crop",
+            "upper_body_framing",
+            "close_up_face_crop",
+            "detail_crop_hands_accessories"
+          ],
+          "deny_pool": [
+            "full_body_framing",
+            "three_quarter_body_framing",
+            "knee_up_framing",
+            "waist_up_framing"
+          ]
+        },
+        "camera_direction": {
+          "deny_pool": [
+            "low_ground_angle",
+            "extreme_low_angle_under_subject",
+            "practice_mirror_wide_direction",
+            "arm_length_selfie_direction"
+          ]
+        }
+      },
+      "render_suppress_terms": [
+        "full-body corridor shot",
+        "wide corridor shot",
+        "pin-up pose",
+        "body display",
+        "flirty selfie"
+      ],
+      "dual_read_requirement": {
+        "enabled": true,
+        "min_role_hits": 1,
+        "min_mixin_hits": 1
+      },
+      "preset_affinity": {
+        "discouraged_axes": [
+          "selfie",
+          "body",
+          "glamour"
+        ],
+        "preferred_axes": [
+          "close",
+          "surveillance",
+          "hospital",
+          "cinematic"
+        ]
+      }
     },
     "암살자": {
       "preset": "compact_cinematic_prop_portrait",
@@ -3006,5 +6998,8 @@
         }
       ]
     }
+  },
+  "aliases": {
+    "팜프파탈": "팜므파탈"
   }
 }

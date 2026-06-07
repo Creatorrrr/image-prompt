@@ -641,22 +641,51 @@ def choice_anchor_rate(result: JsonDict, required: JsonDict) -> tuple[float, Lis
     return hits / max(len(required), 1), rows
 
 
-def soft_anchor_metrics(result: JsonDict) -> tuple[float, List[JsonDict], float, List[str], List[str], List[str]]:
+def soft_anchor_metrics(result: JsonDict) -> tuple[float, List[JsonDict], float, List[str], List[str], List[str], JsonDict]:
     trace = result.get("semantic_trace", {}) or {}
     contract = trace.get("generation_contract", {}) or {}
     policy = contract.get("soft_anchor_policy", {}) or {}
     anchors = policy.get("anchors", []) or []
     if not policy.get("enabled") or not anchors:
-        return 1.0, [], 1.0, [], [], []
+        return 1.0, [], 1.0, [], [], [], {
+            "critical_anchor_match_rate": 1.0,
+            "role_anchor_match_rate": 1.0,
+            "mixin_salience_match_rate": 1.0,
+            "primary_anchor_match_rate": 1.0,
+            "anchor_group_match_rate": 1.0,
+            "visual_guard_violation_count": 0,
+            "render_priority_term_rate": 1.0,
+            "body_first_drift_rate": 0.0,
+            "critical_term_missing": [],
+            "critical_missing": [],
+            "source_floor_misses": [],
+            "anchor_group_misses": [],
+        }
     choices = choice_ids(result)
     by_slot: Dict[str, Set[str]] = {}
+    critical_by_slot: Dict[str, Set[str]] = {}
+    role_slots: Set[str] = set()
+    mixin_slots: Set[str] = set()
+    primary_slots: Set[str] = set()
+    grouped_slots: Set[str] = set()
     term_by_slot: Dict[str, Set[str]] = {}
     for anchor in anchors:
         slot = str(anchor.get("slot") or "")
-        ids = {str(item_id) for item_id in normalize_list(anchor.get("ids"))}
+        ids = {str(item_id) for item_id in normalize_list(anchor.get("pool")) or normalize_list(anchor.get("ids"))}
         if not slot or not ids:
             continue
         by_slot.setdefault(slot, set()).update(ids)
+        if anchor.get("critical"):
+            critical_by_slot.setdefault(slot, set()).update(ids)
+        sources = {part for part in str(anchor.get("source") or "").split("+") if part}
+        if "role" in sources:
+            role_slots.add(slot)
+        if "mixin" in sources:
+            mixin_slots.add(slot)
+        if anchor.get("primary"):
+            primary_slots.add(slot)
+        if normalize_list(anchor.get("groups")):
+            grouped_slots.add(slot)
         term_by_slot.setdefault(slot, set()).update(str(term).lower() for term in normalize_list(anchor.get("terms")))
     rows: List[JsonDict] = []
     matched_slots: Set[str] = set()
@@ -667,20 +696,215 @@ def soft_anchor_metrics(result: JsonDict) -> tuple[float, List[JsonDict], float,
             matched_slots.add(slot)
         rows.append({"slot": slot, "selected": selected, "expected": sorted(expected), "matched": matched})
     selected_rate = len(matched_slots) / max(len(by_slot), 1)
-    terms = sorted({term for slot in matched_slots for term in term_by_slot.get(slot, set()) if term})
-    if not terms:
+    critical_matched = {
+        slot
+        for slot, expected in critical_by_slot.items()
+        if choices.get(slot) and choices.get(slot) in expected
+    }
+    role_matched = {slot for slot in role_slots if slot in matched_slots}
+    mixin_matched = {slot for slot in mixin_slots if slot in matched_slots}
+    primary_matched = {slot for slot in primary_slots if slot in matched_slots}
+    grouped_matched = {slot for slot in grouped_slots if slot in matched_slots}
+    critical_anchor_match_rate = len(critical_matched) / max(len(critical_by_slot), 1)
+    role_anchor_match_rate = len(role_matched) / max(len(role_slots), 1)
+    mixin_salience_match_rate = len(mixin_matched) / max(len(mixin_slots), 1)
+    primary_anchor_match_rate = len(primary_matched) / max(len(primary_slots), 1)
+    anchor_group_match_rate = len(grouped_matched) / max(len(grouped_slots), 1)
+    quality = (result.get("quality", {}) or {})
+    checks = quality.get("checks", []) or []
+    visual_guard_check = next((check for check in checks if check.get("id") == "soft_visual_guard"), {}) or {}
+    render_priority_check = next((check for check in checks if check.get("id") == "soft_render_priority_terms"), {}) or {}
+    body_first_check = next((check for check in checks if check.get("id") == "soft_body_first_guard"), {}) or {}
+    visual_guard_violations = visual_guard_check.get("violations", []) or []
+    body_first_drift_rate = 1.0 if body_first_check.get("status") == "fail" else 0.0
+    priority_groups = render_priority_check.get("groups", []) or []
+    render_priority_term_rate = (
+        sum(1 for group in priority_groups if group.get("matched")) / max(len(priority_groups), 1)
+        if priority_groups
+        else 1.0
+    )
+    critical_term_slots = set(critical_by_slot)
+    term_groups = [
+        (slot, sorted(term_by_slot.get(slot, set())))
+        for slot in sorted(matched_slots | critical_term_slots)
+        if term_by_slot.get(slot)
+    ]
+    if not term_groups:
         body_rate = 1.0 if matched_slots else 0.0
-        return selected_rate, rows, body_rate, [], [], []
+        return selected_rate, rows, body_rate, [], [], [], {
+            "critical_anchor_match_rate": critical_anchor_match_rate,
+            "role_anchor_match_rate": role_anchor_match_rate,
+            "mixin_salience_match_rate": mixin_salience_match_rate,
+            "primary_anchor_match_rate": primary_anchor_match_rate,
+            "anchor_group_match_rate": anchor_group_match_rate,
+            "visual_guard_violation_count": len(visual_guard_violations),
+            "render_priority_term_rate": render_priority_term_rate,
+            "body_first_drift_rate": body_first_drift_rate,
+            "critical_term_missing": [],
+            "critical_missing": sorted(set(critical_by_slot) - critical_matched),
+            "source_floor_misses": [],
+            "anchor_group_misses": [],
+        }
     body = generated_prompt_body(str(result.get("prompt_en", ""))).lower()
-    hits = sorted({term for term in terms if term in body})
-    missing = sorted(set(terms) - set(hits))
-    body_rate = len(hits) / max(len(terms), 1)
+    hits: List[str] = []
+    missing: List[str] = []
+    matched_term_groups = 0
+    for slot, terms in term_groups:
+        matched_terms = [term for term in terms if term in body]
+        if matched_terms:
+            matched_term_groups += 1
+            hits.extend(matched_terms)
+        else:
+            missing.append(f"{slot}:{'|'.join(terms)}")
+    hits = sorted(set(hits))
+    missing = sorted(set(missing))
+    body_rate = matched_term_groups / max(len(term_groups), 1)
     failures: List[str] = []
     if selected_rate <= 0:
         failures.append("no_soft_anchor_ids_selected")
     if body_rate <= 0:
         failures.append("no_soft_anchor_terms_rendered")
-    return selected_rate, rows, body_rate, hits, missing, failures
+    match_status = policy.get("match_status", {}) or {}
+    critical_missing = sorted(set(match_status.get("critical_missing", [])) or (set(critical_by_slot) - critical_matched))
+    source_floor_misses = match_status.get("source_floor_misses", []) or []
+    anchor_group_misses = match_status.get("group_floor_misses", []) or []
+    failures.extend(match_status.get("failure_reasons", []) or [])
+    if visual_guard_violations:
+        failures.append("visual_guard_violation")
+    if render_priority_term_rate < 1.0:
+        failures.append("render_priority_term_missing")
+    return selected_rate, rows, body_rate, hits, missing, failures, {
+        "critical_anchor_match_rate": critical_anchor_match_rate,
+        "role_anchor_match_rate": role_anchor_match_rate,
+        "mixin_salience_match_rate": mixin_salience_match_rate,
+        "primary_anchor_match_rate": primary_anchor_match_rate,
+        "anchor_group_match_rate": anchor_group_match_rate,
+        "visual_guard_violation_count": len(visual_guard_violations),
+        "render_priority_term_rate": render_priority_term_rate,
+        "body_first_drift_rate": body_first_drift_rate,
+        "critical_term_missing": sorted(
+            f"{slot}:{'|'.join(sorted(term_by_slot.get(slot, set())))}"
+            for slot in critical_term_slots
+            if term_by_slot.get(slot) and not any(term in hits for term in term_by_slot.get(slot, set()))
+        ),
+        "critical_missing": critical_missing,
+        "source_floor_misses": source_floor_misses,
+        "anchor_group_misses": anchor_group_misses,
+    }
+
+
+def selected_anchor_variants(result: JsonDict) -> List[JsonDict]:
+    trace = result.get("semantic_trace", {}) or {}
+    contract = trace.get("generation_contract", {}) or {}
+    policy = contract.get("soft_anchor_policy", {}) or {}
+    choices = choice_ids(result)
+    rows: List[JsonDict] = []
+    seen: Set[tuple[str, str, str]] = set()
+    for anchor in policy.get("anchors", []) or []:
+        group = str(anchor.get("variant_group") or "")
+        slot = str(anchor.get("slot") or "")
+        selected = choices.get(slot)
+        pool = set(normalize_list(anchor.get("pool")) or normalize_list(anchor.get("ids")))
+        key = (group, slot, str(selected))
+        if group and slot and selected and selected in pool and key not in seen:
+            seen.add(key)
+            rows.append({"group": group, "slot": slot, "selected": selected})
+    return rows
+
+
+def anchor_variant_diversity(rows: Sequence[JsonDict]) -> JsonDict:
+    variants = [variant for row in rows for variant in row.get("anchor_variants", []) or []]
+    if not variants:
+        return {
+            "anchor_variant_diversity_rate": 1.0,
+            "anchor_variant_top1_dominance": 0.0,
+            "anchor_variant_unique_count": 0,
+            "anchor_variant_total_count": 0,
+            "anchor_variant_group_metrics": {},
+        }
+    group_metrics: Dict[str, JsonDict] = {}
+    for group in sorted({str(item.get("group")) for item in variants if item.get("group")}):
+        selected = [str(item.get("selected")) for item in variants if item.get("group") == group and item.get("selected")]
+        counts = Counter(selected)
+        total = len(selected)
+        unique = len(counts)
+        group_metrics[group] = {
+            "total": total,
+            "unique": unique,
+            "diversity_rate": round(unique / max(total, 1), 4),
+            "top1_dominance": round(max(counts.values(), default=0) / max(total, 1), 4),
+            "top": counts.most_common(5),
+        }
+    all_selected = [str(item.get("selected")) for item in variants if item.get("selected")]
+    counts = Counter(all_selected)
+    return {
+        "anchor_variant_diversity_rate": round(len(counts) / max(len(all_selected), 1), 4),
+        "anchor_variant_top1_dominance": round(max(counts.values(), default=0) / max(len(all_selected), 1), 4),
+        "anchor_variant_unique_count": len(counts),
+        "anchor_variant_total_count": len(all_selected),
+        "anchor_variant_group_metrics": group_metrics,
+    }
+
+
+VISUAL_REVIEW_FIELDS = (
+    "dual_read",
+    "archetype_first_read",
+    "body_drift",
+    "preset_conflict",
+    "role_anchor",
+    "mixin_anchor",
+)
+
+
+def load_visual_review(path: Path) -> JsonDict:
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if isinstance(payload, list):
+        return {"cases": payload}
+    if isinstance(payload, dict):
+        if isinstance(payload.get("cases"), list):
+            return payload
+        if isinstance(payload.get("results"), list):
+            payload["cases"] = payload["results"]
+            return payload
+    raise ValueError("--visual-review must point to a list or an object with cases/results")
+
+
+def summarize_visual_review(path: Path) -> JsonDict:
+    payload = load_visual_review(path)
+    cases = [case for case in payload.get("cases", []) if isinstance(case, dict)]
+    field_summaries: JsonDict = {}
+    failed_cases: List[JsonDict] = []
+    for field in VISUAL_REVIEW_FIELDS:
+        counts: Counter[str] = Counter(str(case.get(field, "missing") or "missing") for case in cases)
+        pass_count = counts.get("pass", 0) + counts.get("none", 0)
+        field_summaries[field] = {
+            "counts": dict(sorted(counts.items())),
+            "pass_rate": round(pass_count / max(len(cases), 1), 4),
+        }
+    for case in cases:
+        failures: List[str] = []
+        if case.get("dual_read") == "fail":
+            failures.append("dual_read")
+        if case.get("archetype_first_read") == "fail":
+            failures.append("archetype_first_read")
+        if case.get("body_drift") == "present":
+            failures.append("body_drift")
+        if case.get("role_anchor") == "fail":
+            failures.append("role_anchor")
+        if case.get("mixin_anchor") == "fail":
+            failures.append("mixin_anchor")
+        if failures:
+            failed_cases.append({"case": case.get("case") or case.get("concept"), "failures": failures})
+    return {
+        "visual_review": {
+            "path": str(path),
+            "case_count": len(cases),
+            "field_summaries": field_summaries,
+            "failed_case_count": len(failed_cases),
+            "failed_cases": failed_cases,
+            "passed": not failed_cases,
+        }
+    }
 
 
 def run_wrapper_concept(
@@ -775,18 +999,55 @@ def evaluate_concept_benchmark(
                 coverage_rate = coverage_preservation_rate(contract)
                 prompt_rate, prompt_hits = prompt_term_rate(str(result.get("prompt_en", "")), case.get("prompt_terms", []))
                 choice_rate, choice_rows = choice_anchor_rate(result, case.get("required_legacy_choices", {}) or {})
-                selected_anchor_rate, selected_anchor_rows, body_anchor_rate, body_anchor_hits, body_anchor_missing, soft_failures = soft_anchor_metrics(result)
+                (
+                    selected_anchor_rate,
+                    selected_anchor_rows,
+                    body_anchor_rate,
+                    body_anchor_hits,
+                    body_anchor_missing,
+                    soft_failures,
+                    soft_anchor_detail,
+                ) = soft_anchor_metrics(result)
                 choice_threshold = minimum_legacy_choice_anchor if mode == "legacy" else 0.0
                 if mode == "soft":
                     passed = (
                         coverage_rate >= minimum_coverage
                         and selected_anchor_rate >= minimum_soft_selected_anchor
                         and body_anchor_rate >= minimum_soft_body_anchor
+                        and soft_anchor_detail["critical_anchor_match_rate"] >= 1.0
+                        and soft_anchor_detail["role_anchor_match_rate"] >= 0.90
+                        and soft_anchor_detail["mixin_salience_match_rate"] >= 0.80
+                        and soft_anchor_detail["primary_anchor_match_rate"] >= 0.85
+                        and soft_anchor_detail["anchor_group_match_rate"] >= 0.85
+                        and soft_anchor_detail["visual_guard_violation_count"] == 0
+                        and soft_anchor_detail["render_priority_term_rate"] >= 0.60
+                        and soft_anchor_detail["body_first_drift_rate"] <= 0.05
+                        and not soft_anchor_detail["critical_missing"]
+                        and not soft_anchor_detail["source_floor_misses"]
+                        and not soft_anchor_detail["anchor_group_misses"]
                     )
                     if selected_anchor_rate < minimum_soft_selected_anchor:
                         soft_failures.append("selected_anchor_rate_below_threshold")
                     if body_anchor_rate < minimum_soft_body_anchor:
                         soft_failures.append("body_anchor_term_rate_below_threshold")
+                    if soft_anchor_detail["critical_anchor_match_rate"] < 1.0:
+                        soft_failures.append("critical_anchor_missing")
+                    if soft_anchor_detail["role_anchor_match_rate"] < 0.90:
+                        soft_failures.append("role_anchor_floor_missed")
+                    if soft_anchor_detail["mixin_salience_match_rate"] < 0.80:
+                        soft_failures.append("mixin_salience_floor_missed")
+                    if soft_anchor_detail["source_floor_misses"]:
+                        soft_failures.append("source_floor_missed")
+                    if soft_anchor_detail["anchor_group_misses"]:
+                        soft_failures.append("anchor_group_floor_missed")
+                    if soft_anchor_detail["visual_guard_violation_count"] > 0:
+                        soft_failures.append("visual_guard_violation")
+                    if soft_anchor_detail["primary_anchor_match_rate"] < 0.85:
+                        soft_failures.append("primary_anchor_rate_below_threshold")
+                    if soft_anchor_detail["render_priority_term_rate"] < 0.60:
+                        soft_failures.append("render_priority_term_rate_below_threshold")
+                    if soft_anchor_detail["body_first_drift_rate"] > 0.05:
+                        soft_failures.append("body_first_framing_present")
                 else:
                     passed = (
                         coverage_rate >= minimum_coverage
@@ -814,7 +1075,20 @@ def evaluate_concept_benchmark(
                     "minimum_body_anchor_term_rate": minimum_soft_body_anchor if mode == "soft" else 0.0,
                     "body_anchor_hits": body_anchor_hits,
                     "body_anchor_missing": body_anchor_missing,
+                    "critical_anchor_match_rate": round(soft_anchor_detail["critical_anchor_match_rate"], 4),
+                    "role_anchor_match_rate": round(soft_anchor_detail["role_anchor_match_rate"], 4),
+                    "mixin_salience_match_rate": round(soft_anchor_detail["mixin_salience_match_rate"], 4),
+                    "primary_anchor_match_rate": round(soft_anchor_detail["primary_anchor_match_rate"], 4),
+                    "anchor_group_match_rate": round(soft_anchor_detail["anchor_group_match_rate"], 4),
+                    "visual_guard_violation_count": soft_anchor_detail["visual_guard_violation_count"],
+                    "render_priority_term_rate": round(soft_anchor_detail["render_priority_term_rate"], 4),
+                    "body_first_drift_rate": round(soft_anchor_detail["body_first_drift_rate"], 4),
+                    "critical_term_missing": soft_anchor_detail["critical_term_missing"],
+                    "critical_anchor_missing": soft_anchor_detail["critical_missing"],
+                    "source_floor_misses": soft_anchor_detail["source_floor_misses"],
+                    "anchor_group_misses": soft_anchor_detail["anchor_group_misses"],
                     "soft_anchor_failure_reasons": sorted(set(soft_failures)),
+                    "anchor_variants": selected_anchor_variants(result),
                     "coverage_gaps": contract.get("coverage_gaps", []),
                     "render_suppressed_slots": contract.get("render_suppressed_slots", []),
                     "passed": passed,
@@ -823,6 +1097,7 @@ def evaluate_concept_benchmark(
                 by_mode[mode].append(row)
     mode_summaries: List[JsonDict] = []
     for mode, mode_rows in by_mode.items():
+        variant_diversity = anchor_variant_diversity(mode_rows) if mode == "soft" else {}
         mode_summaries.append(
             {
                 "concept_mode": mode,
@@ -847,6 +1122,11 @@ def evaluate_concept_benchmark(
                     sum(row["body_anchor_term_rate"] for row in mode_rows) / max(len(mode_rows), 1),
                     4,
                 ),
+                "average_body_first_drift_rate": round(
+                    sum(row.get("body_first_drift_rate", 0.0) for row in mode_rows) / max(len(mode_rows), 1),
+                    4,
+                ),
+                **variant_diversity,
                 "failed_run_count": sum(1 for row in mode_rows if not row["passed"]),
             }
         )
@@ -864,6 +1144,8 @@ def evaluate_concept_benchmark(
             soft_summary["average_coverage_rate"] >= minimum_coverage
             and soft_summary["average_selected_anchor_rate"] >= minimum_soft_average_selected_anchor
             and soft_summary["average_body_anchor_term_rate"] >= minimum_soft_body_anchor
+            and soft_summary.get("average_body_first_drift_rate", 0.0) <= 0.05
+            and soft_summary.get("anchor_variant_diversity_rate", 1.0) >= 0.70
             and soft_coverage_drop <= 0.05
             and soft_summary["failed_run_count"] == 0
         )
@@ -1241,9 +1523,15 @@ def main() -> int:
     parser.add_argument("--quality-gate", action="store_true", help="Run the real embedding quality gate for semantic concept benchmarks and regression checks.")
     parser.add_argument("--quality-runs", type=int, default=2, help="Number of seeds per concept benchmark case for --quality-gate.")
     parser.add_argument("--quality-require-soft", action="store_true", help="Make soft concept-mode promotion readiness a hard --quality-gate failure.")
+    parser.add_argument("--visual-review", default=None, help="Summarize a manual visual review JSON without embedding/API calls.")
     args = parser.parse_args()
 
     load_project_env()
+    if args.visual_review:
+        summary = summarize_visual_review(Path(args.visual_review))
+        print(json.dumps(summary, ensure_ascii=False, indent=2))
+        return 0 if summary["visual_review"]["passed"] else 10
+
     data = load_json(args.tags)
     cases = GOLDEN_CASES[: args.limit] if args.limit else GOLDEN_CASES
     tags_path = Path(args.tags)

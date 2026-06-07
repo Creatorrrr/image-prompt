@@ -75,7 +75,8 @@ GENERATOR_VERSION = "2026.06.0"
 LIKENESS_MODES = ("off", "inspired")
 SOFT_ANCHOR_WEIGHT_MULTIPLIER = 24.0
 SOFT_ANCHOR_PROMOTED_WEIGHT_MULTIPLIER = 36.0
-SOFT_ANCHOR_BODY_TERM_THRESHOLD = 0.5
+SOFT_ANCHOR_CRITICAL_WEIGHT_MULTIPLIER = 64.0
+SOFT_ANCHOR_BODY_TERM_THRESHOLD = 0.60
 SOFT_ANCHOR_SELECTED_RATE_FLOOR = 0.80
 
 SEMANTIC_PROFILE_CONFIGS: Dict[str, Dict[str, float]] = {
@@ -424,6 +425,45 @@ def load_json(path: str | Path) -> JsonDict:
         raise FileNotFoundError(f"Tag JSON not found: {p}")
     with p.open("r", encoding="utf-8") as f:
         return json.load(f)
+
+
+def load_anchor_diversity_ledger(path: Optional[str]) -> JsonDict:
+    if not path:
+        return {}
+    ledger_path = Path(path)
+    if not ledger_path.exists():
+        return {}
+    try:
+        payload = json.loads(ledger_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+    return payload if isinstance(payload, dict) else {}
+
+
+def save_anchor_diversity_ledger(path: Optional[str], ledger: JsonDict) -> None:
+    if not path:
+        return
+    ledger_path = Path(path)
+    ledger_path.parent.mkdir(parents=True, exist_ok=True)
+    ledger_path.write_text(json.dumps(ledger, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+
+def update_anchor_diversity_ledger(ledger: JsonDict, result: JsonDict) -> None:
+    trace = result.get("semantic_trace", {}) or {}
+    contract = trace.get("generation_contract", {}) or {}
+    policy = contract.get("soft_anchor_policy", {}) or {}
+    if not policy.get("enabled"):
+        return
+    choices = choice_ids(result)
+    for anchor in policy.get("anchors", []) or []:
+        group = str(anchor.get("variant_group") or "")
+        slot = str(anchor.get("slot") or "")
+        selected = choices.get(slot)
+        pool = set(normalize_list(anchor.get("pool")) or normalize_list(anchor.get("ids")))
+        if not group or not slot or not selected or selected not in pool:
+            continue
+        slot_counts = ledger.setdefault(slot, {})
+        slot_counts[selected] = int(slot_counts.get(selected, 0)) + 1
 
 
 def localize(item: JsonDict, lang: str) -> str:
@@ -903,10 +943,15 @@ def render_guarded_picked(
         return picked
     visible: Dict[str, Entry] = {}
     forced_slots = set(generation_contract.get("forced_slots", []))
+    soft_policy = generation_contract.get("soft_anchor_policy")
     for slot, entry in picked.items():
-        reason = slot_block_reason(data, slot, generation_contract, forced=slot in forced_slots)
+        protected = slot in forced_slots or (
+            soft_anchor_critical_slot(soft_policy, slot)
+            and str(entry.get("id", "")) in soft_anchor_pool_for_slot(soft_policy, slot, critical_only=True)
+        )
+        reason = slot_block_reason(data, slot, generation_contract, forced=protected)
         if not reason:
-            reason = entry_block_reason(entry, slot, generation_contract, forced=slot in forced_slots)
+            reason = entry_block_reason(entry, slot, generation_contract, forced=protected)
         if reason:
             record_generation_contract_event(
                 generation_contract,
@@ -1071,6 +1116,18 @@ def semantic_policy_family_names(source: Optional[JsonDict] = None) -> List[str]
     if isinstance(families, dict) and families:
         return list(families.keys())
     return []
+
+
+def semantic_policy_float(source: Optional[JsonDict], path: Sequence[str], default: float) -> float:
+    node: Any = semantic_policy_from_source(source)
+    for key in path:
+        if not isinstance(node, dict):
+            return default
+        node = node.get(key)
+    try:
+        return float(node)
+    except (TypeError, ValueError):
+        return default
 
 
 def semantic_policy_id(source: Optional[JsonDict], family: str) -> str:
@@ -2953,6 +3010,10 @@ def semantic_weighted_choice(
     for item, _vector, _filter_match, weight, _query, _summary in candidates:
         weights.append(weight)
 
+    anchor_probability_summary: Optional[JsonDict] = None
+    if context and not forced:
+        weights, anchor_probability_summary = apply_soft_anchor_probability_floor(slot, candidates, weights, context)
+
     if sum(weights) <= 0:
         selected = rng.choice([item for item, *_ in candidates] or list(pool))
     else:
@@ -2985,6 +3046,7 @@ def semantic_weighted_choice(
             "selected_filter": "none" if selected_filter is None else ("in" if selected_filter else "out"),
             "batch_penalty": selected_batch_penalty,
             "batch_group_penalty": selected_batch_group_penalty,
+            "anchor_probability_floor": anchor_probability_summary,
         }
     )
     return selected
@@ -3012,11 +3074,75 @@ def materialize_virtual_preset(data: JsonDict, preset_id: str) -> Optional[JsonD
     return preset
 
 
+def preset_affinity_blob(preset: JsonDict, data: JsonDict) -> str:
+    parts: List[str] = [
+        str(preset.get("id", "")),
+        str(preset.get("en", "")),
+        str(preset.get("ko", "")),
+        " ".join(normalize_list(preset.get("tags"))),
+        " ".join(sorted(preset_domains(preset, data))),
+    ]
+    return " ".join(part.lower() for part in parts if part)
+
+
+def preset_affinity_matches(preset: JsonDict, data: JsonDict, ids: Sequence[str], axes: Sequence[str]) -> List[str]:
+    preset_id = str(preset.get("id") or "")
+    matches = [item for item in normalize_list(ids) if item == preset_id]
+    blob = preset_affinity_blob(preset, data)
+    for axis in normalize_list(axes):
+        axis_text = str(axis).lower().replace("_", " ")
+        if axis_text and axis_text in blob.replace("_", " "):
+            matches.append(str(axis))
+    return sorted(set(matches))
+
+
+def soft_preset_affinity_factor(preset: JsonDict, policy: Optional[JsonDict], data: JsonDict) -> tuple[float, JsonDict]:
+    affinity = (policy or {}).get("preset_affinity", {}) or {}
+    if not affinity:
+        return 1.0, {"applied": False}
+    preferred = preset_affinity_matches(
+        preset,
+        data,
+        normalize_list(affinity.get("preferred_presets")),
+        normalize_list(affinity.get("preferred_axes")),
+    )
+    discouraged = preset_affinity_matches(
+        preset,
+        data,
+        normalize_list(affinity.get("discouraged_presets")),
+        normalize_list(affinity.get("discouraged_axes")),
+    )
+    factor = 1.0
+    if preferred:
+        factor *= 1.35
+    if discouraged:
+        factor *= 0.35
+    return factor, {
+        "applied": bool(preferred or discouraged),
+        "factor": round(factor, 4),
+        "preferred_matches": preferred,
+        "discouraged_matches": discouraged,
+    }
+
+
+def soft_preset_affinity_status(preset: JsonDict, policy: Optional[JsonDict], data: JsonDict, forced: bool) -> JsonDict:
+    factor, summary = soft_preset_affinity_factor(preset, policy, data)
+    if not forced or not summary.get("discouraged_matches"):
+        return {"status": "pass", "forced": forced, **summary}
+    return {
+        "status": "warn",
+        "forced": True,
+        "policy_conflict": "preset_concept_conflict",
+        **summary,
+    }
+
+
 def choose_preset(
     data: JsonDict,
     rng: random.Random,
     preset_id: Optional[str] = None,
     semantic_context: Optional[JsonDict] = None,
+    soft_anchor_spec: Optional[JsonDict] = None,
 ) -> JsonDict:
     presets = data.get("presets", [])
     if not presets:
@@ -3033,6 +3159,7 @@ def choose_preset(
         raise ValueError(f"Unknown preset '{preset_id}'. Available presets: {valid}")
 
     if semantic_context:
+        soft_policy = normalize_soft_anchor_spec(soft_anchor_spec)
         scored_presets: List[tuple[JsonDict, float, float, JsonDict]] = []
         summaries: List[JsonDict] = []
         rejected_by_reason: Dict[str, int] = {}
@@ -3044,9 +3171,17 @@ def choose_preset(
             vector = semantic_vector(semantic_context, semantic_entry_key("preset", preset))
             score, score_summary = semantic_preset_score_breakdown(vector, semantic_context, preset)
             weight = semantic_preset_candidate_weight(preset, score, semantic_context)
+            affinity_factor, affinity_summary = soft_preset_affinity_factor(preset, soft_policy, data)
+            weight *= affinity_factor
             batch_penalty, batch_summary = batch_diversity_penalty(semantic_context, "preset", str(preset.get("id")), vector)
             weight *= batch_penalty
-            summary = {"id": preset.get("id"), "weight": round(weight, 6), "batch_penalty": batch_summary, **score_summary}
+            summary = {
+                "id": preset.get("id"),
+                "weight": round(weight, 6),
+                "batch_penalty": batch_summary,
+                "soft_preset_affinity": affinity_summary,
+                **score_summary,
+            }
             scored_presets.append((preset, weight, score, summary))
             summaries.append(summary)
         rejected_count = sum(rejected_by_reason.values())
@@ -3509,17 +3644,26 @@ def rendered_prompt_body_blob(result: JsonDict) -> str:
 
 def soft_anchor_body_term_rate(policy: JsonDict, picked: Dict[str, Entry], result: JsonDict) -> tuple[float, List[str], List[str]]:
     selected_slots = selected_soft_anchor_slots(policy, picked)
-    terms: List[str] = []
+    term_groups: List[tuple[str, List[str]]] = []
     for anchor in policy.get("anchors", []):
-        if anchor.get("slot") in selected_slots:
-            terms.extend(normalize_list(anchor.get("terms")))
-    normalized_terms = sorted({str(term).lower() for term in terms if str(term).strip()})
-    if not normalized_terms:
+        if anchor.get("critical") or anchor.get("slot") in selected_slots:
+            terms = sorted({str(term).lower() for term in normalize_list(anchor.get("terms")) if str(term).strip()})
+            if terms:
+                term_groups.append((str(anchor.get("slot") or ""), terms))
+    if not term_groups:
         return (1.0 if selected_slots else 0.0), [], []
     body = rendered_prompt_body_blob(result)
-    hits = sorted({term for term in normalized_terms if term in body})
-    missing = sorted(set(normalized_terms) - set(hits))
-    return len(hits) / max(len(normalized_terms), 1), hits, missing
+    hits: List[str] = []
+    missing: List[str] = []
+    matched_groups = 0
+    for slot, terms in term_groups:
+        matched_terms = [term for term in terms if term in body]
+        if matched_terms:
+            matched_groups += 1
+            hits.extend(matched_terms)
+        else:
+            missing.append(f"{slot}:{'|'.join(terms)}")
+    return matched_groups / max(len(term_groups), 1), sorted(set(hits)), sorted(set(missing))
 
 
 def evaluate_generation_quality(
@@ -3594,30 +3738,48 @@ def evaluate_generation_quality(
 
     soft_policy = contract.get("soft_anchor_policy", {}) or {}
     if soft_policy.get("enabled"):
-        selected_slots = selected_soft_anchor_slots(soft_policy, render_picked)
+        match_status = soft_anchor_match_status(soft_policy, render_picked)
+        selected_slots = set(match_status.get("selected_anchor_slots", []))
         min_anchors = int(soft_policy.get("min_anchors", 0))
-        required_anchor_count = soft_anchor_required_count(soft_policy)
-        anchor_slot_count = len(soft_anchor_slots(soft_policy))
+        required_anchor_count = int(match_status.get("required_anchor_count", soft_anchor_required_count(soft_policy)))
+        anchor_slot_count = int(match_status.get("anchor_slot_count", len(soft_anchor_slots(soft_policy))))
         missing_anchor_slots = [
             slot
             for slot in soft_anchor_slots(soft_policy)
             if slot not in selected_slots
         ]
-        soft_anchor_status = "pass" if len(selected_slots) >= required_anchor_count else "fail"
+        soft_anchor_status = "pass" if match_status.get("passed") else "fail"
         if soft_anchor_status == "fail":
-            fail_reasons.append("soft_anchor_minimum_not_selected")
+            fail_reasons.extend(match_status.get("failure_reasons", []) or ["soft_anchor_minimum_not_selected"])
         checks.append(
             {
                 "id": "soft_anchor_selected",
                 "status": soft_anchor_status,
-                "selected_anchor_count": len(selected_slots),
+                "selected_anchor_count": match_status.get("selected_anchor_count", len(selected_slots)),
                 "min_anchors": min_anchors,
                 "required_anchor_count": required_anchor_count,
-                "selected_anchor_rate": round(len(selected_slots) / max(1, anchor_slot_count), 4),
+                "selected_anchor_rate": match_status.get("selected_anchor_rate", round(len(selected_slots) / max(1, anchor_slot_count), 4)),
                 "minimum_selected_anchor_rate": SOFT_ANCHOR_SELECTED_RATE_FLOOR,
                 "selected_anchor_slots": sorted(selected_slots),
                 "missing_anchor_slots": missing_anchor_slots,
+                "critical_missing": match_status.get("critical_missing", []),
+                "source_floor_misses": match_status.get("source_floor_misses", []),
+                "anchor_group_misses": match_status.get("group_floor_misses", []),
+                "salience_matches": match_status.get("salience_matches", 0),
+                "salience_floor": match_status.get("salience_floor", 0),
+                "failure_reasons": match_status.get("failure_reasons", []),
                 "repair": contract.get("soft_anchor_repair", {}),
+            }
+        )
+
+        guard_status = soft_visual_guard_status(soft_policy, render_picked)
+        if not guard_status.get("passed"):
+            fail_reasons.append("soft_visual_guard_violation")
+        checks.append(
+            {
+                "id": "soft_visual_guard",
+                "status": "pass" if guard_status.get("passed") else "fail",
+                "violations": guard_status.get("violations", []),
             }
         )
 
@@ -3633,6 +3795,56 @@ def evaluate_generation_quality(
                 "minimum_body_anchor_term_rate": SOFT_ANCHOR_BODY_TERM_THRESHOLD,
                 "hits": body_hits,
                 "missing": body_missing,
+            }
+        )
+
+        priority_status = render_priority_term_status(soft_policy, result)
+        if not priority_status.get("passed"):
+            fail_reasons.append("render_priority_term_missing")
+        checks.append(
+            {
+                "id": "soft_render_priority_terms",
+                "status": "pass" if priority_status.get("passed") else "fail",
+                "groups": priority_status.get("groups", []),
+                "missing": priority_status.get("missing", []),
+            }
+        )
+
+        preset_conflicts = contract.get("policy_conflicts", []) or []
+        if preset_conflicts:
+            warn_reasons.append("preset_concept_conflict")
+        checks.append(
+            {
+                "id": "soft_preset_affinity",
+                "status": "warn" if preset_conflicts else "pass",
+                "policy_conflicts": preset_conflicts,
+            }
+        )
+
+        dual_status = dual_read_term_status(soft_policy, result)
+        if not dual_status.get("passed"):
+            warn_reasons.append("dual_read_terms_weak")
+        checks.append(
+            {
+                "id": "soft_dual_read_terms",
+                "status": "pass" if dual_status.get("passed") else "warn",
+                **dual_status,
+            }
+        )
+
+        body_slot = str((semantic_policy_from_source(semantic_context).get("soft_body_first_guard", {}) or {}).get("slot") or "body_framing")
+        body_entry = render_picked.get(body_slot)
+        body_tokens = facet_tokens(body_entry) if body_entry else set()
+        body_first = "soft_body_role:body_emphasis" in body_tokens
+        if body_first:
+            fail_reasons.append("body_first_framing_present")
+        checks.append(
+            {
+                "id": "soft_body_first_guard",
+                "status": "fail" if body_first else "pass",
+                "slot": body_slot,
+                "selected": body_entry.get("id") if body_entry else None,
+                "body_first_guard_applied": bool(contract.get("soft_body_first_guard_events")),
             }
         )
 
@@ -3774,17 +3986,49 @@ def merge_forced_choices(*choices: Dict[str, List[str]]) -> Dict[str, List[str]]
 
 def normalize_soft_anchor_spec(payload: Any) -> JsonDict:
     if not payload:
-        return {"enabled": False, "mode": "soft", "min_anchors": 0, "anchors": []}
+        return {
+            "enabled": False,
+            "mode": "soft",
+            "min_anchors": 0,
+            "anchors": [],
+            "source_floors": {},
+            "group_floors": {},
+            "salience_floor": 0,
+            "visual_guards": [],
+            "render_priority_terms": [],
+            "free_slot_constraints": {},
+            "render_suppress_terms": [],
+            "dual_read_requirement": {},
+            "preset_affinity": {},
+        }
     if isinstance(payload, list):
         raw_anchors = payload
         min_anchors = len(raw_anchors)
         mode = "soft"
         concept = ""
+        raw_source_floors = {}
+        raw_group_floors = {}
+        raw_salience_floor = 0
+        raw_visual_guards = []
+        raw_render_priority_terms = []
+        raw_free_slot_constraints = {}
+        raw_render_suppress_terms = []
+        raw_dual_read_requirement = {}
+        raw_preset_affinity = {}
     elif isinstance(payload, dict):
         raw_anchors = payload.get("anchors", [])
         min_anchors = payload.get("min_anchors", payload.get("soft_min_anchors", 0))
         mode = str(payload.get("mode") or "soft")
         concept = str(payload.get("concept") or "")
+        raw_source_floors = payload.get("source_floors", payload.get("anchor_floor", {})) or {}
+        raw_group_floors = payload.get("group_floors", payload.get("anchor_group_floor", {})) or {}
+        raw_salience_floor = payload.get("salience_floor", 0)
+        raw_visual_guards = payload.get("visual_guards", []) or []
+        raw_render_priority_terms = payload.get("render_priority_terms", []) or []
+        raw_free_slot_constraints = payload.get("free_slot_constraints", {}) or {}
+        raw_render_suppress_terms = payload.get("render_suppress_terms", []) or []
+        raw_dual_read_requirement = payload.get("dual_read_requirement", {}) or {}
+        raw_preset_affinity = payload.get("preset_affinity", {}) or {}
     else:
         raise ValueError("--soft-anchor-spec must be a JSON object or list")
     if not isinstance(raw_anchors, list):
@@ -3800,14 +4044,21 @@ def normalize_soft_anchor_spec(payload: Any) -> JsonDict:
         if not slot or not ids:
             raise ValueError("--soft-anchor-spec anchor entries require slot and ids")
         terms = normalize_list(raw.get("terms"))
+        pool = normalize_list(raw.get("pool")) or list(ids)
         source = str(raw.get("source") or "recipe")
         anchors.append(
             {
                 "slot": slot,
                 "ids": ids,
+                "pool": pool,
                 "terms": terms,
                 "source": source,
                 "required": bool(raw.get("required", True)),
+                "critical": bool(raw.get("critical", False)),
+                "groups": normalize_list(raw.get("groups")),
+                "primary": bool(raw.get("primary", False)),
+                "variant_group": str(raw.get("variant_group") or ""),
+                "variant_strategy": str(raw.get("variant_strategy") or ""),
             }
         )
         seen_slots.add(slot)
@@ -3816,11 +4067,49 @@ def normalize_soft_anchor_spec(payload: Any) -> JsonDict:
     except (TypeError, ValueError):
         raise ValueError("--soft-anchor-spec min_anchors must be an integer")
     normalized_min = min(max(normalized_min, 0), len(seen_slots))
+    source_floors: JsonDict = {}
+    if isinstance(raw_source_floors, dict):
+        for source, value in raw_source_floors.items():
+            try:
+                normalized_value = int(value)
+            except (TypeError, ValueError):
+                raise ValueError("--soft-anchor-spec source_floors values must be integers")
+            if normalized_value > 0:
+                source_floors[str(source)] = normalized_value
+    group_floors: JsonDict = {}
+    if isinstance(raw_group_floors, dict):
+        for group, value in raw_group_floors.items():
+            try:
+                normalized_value = int(value)
+            except (TypeError, ValueError):
+                raise ValueError("--soft-anchor-spec group_floors values must be integers")
+            if normalized_value > 0:
+                group_floors[str(group)] = normalized_value
+    try:
+        salience_floor = int(raw_salience_floor)
+    except (TypeError, ValueError):
+        raise ValueError("--soft-anchor-spec salience_floor must be an integer")
+    salience_floor = max(0, salience_floor)
+    visual_guards = normalize_soft_visual_guards(raw_visual_guards)
+    render_priority_terms = normalize_render_priority_terms(raw_render_priority_terms)
+    free_slot_constraints = normalize_soft_free_slot_constraints(raw_free_slot_constraints)
+    render_suppress_terms = normalize_list(raw_render_suppress_terms)
+    dual_read_requirement = normalize_dual_read_requirement(raw_dual_read_requirement)
+    preset_affinity = normalize_soft_preset_affinity(raw_preset_affinity)
     return {
         "enabled": bool(anchors and normalized_min > 0),
         "mode": mode,
         "concept": concept,
         "min_anchors": normalized_min,
+        "source_floors": source_floors,
+        "group_floors": group_floors,
+        "salience_floor": salience_floor,
+        "visual_guards": visual_guards,
+        "render_priority_terms": render_priority_terms,
+        "free_slot_constraints": free_slot_constraints,
+        "render_suppress_terms": render_suppress_terms,
+        "dual_read_requirement": dual_read_requirement,
+        "preset_affinity": preset_affinity,
         "anchors": anchors,
     }
 
@@ -3833,8 +4122,144 @@ def parse_soft_anchor_specs(items: Optional[Sequence[str]]) -> JsonDict:
         if spec.get("concept") and not merged.get("concept"):
             merged["concept"] = spec["concept"]
         merged["min_anchors"] = max(int(merged.get("min_anchors", 0)), int(spec.get("min_anchors", 0)))
+        merged.setdefault("source_floors", {})
+        for source, value in (spec.get("source_floors", {}) or {}).items():
+            merged["source_floors"][source] = max(int(merged["source_floors"].get(source, 0)), int(value))
+        merged.setdefault("group_floors", {})
+        for group, value in (spec.get("group_floors", {}) or {}).items():
+            merged["group_floors"][group] = max(int(merged["group_floors"].get(group, 0)), int(value))
+        merged["salience_floor"] = max(int(merged.get("salience_floor", 0)), int(spec.get("salience_floor", 0)))
+        merged.setdefault("visual_guards", [])
+        for guard in spec.get("visual_guards", []) or []:
+            if guard not in merged["visual_guards"]:
+                merged["visual_guards"].append(guard)
+        merged.setdefault("render_priority_terms", [])
+        for group in spec.get("render_priority_terms", []) or []:
+            if group not in merged["render_priority_terms"]:
+                merged["render_priority_terms"].append(group)
+        merged.setdefault("free_slot_constraints", {})
+        for slot, constraint in (spec.get("free_slot_constraints", {}) or {}).items():
+            if isinstance(constraint, dict):
+                merged["free_slot_constraints"].setdefault(slot, {}).update(constraint)
+        merged.setdefault("render_suppress_terms", [])
+        for term in normalize_list(spec.get("render_suppress_terms")):
+            if term not in merged["render_suppress_terms"]:
+                merged["render_suppress_terms"].append(term)
+        if spec.get("dual_read_requirement"):
+            merged["dual_read_requirement"] = spec.get("dual_read_requirement")
+        if spec.get("preset_affinity"):
+            merged.setdefault("preset_affinity", {}).update(spec.get("preset_affinity") or {})
         merged["anchors"].extend(spec.get("anchors", []))
     return normalize_soft_anchor_spec(merged)
+
+
+def normalize_slot_id_map(raw: Any) -> JsonDict:
+    if not isinstance(raw, dict):
+        return {}
+    normalized: JsonDict = {}
+    for slot, ids in raw.items():
+        values = normalize_list(ids)
+        if values:
+            normalized[str(slot)] = values
+    return normalized
+
+
+def normalize_soft_free_slot_constraints(raw: Any) -> JsonDict:
+    if not isinstance(raw, dict):
+        return {}
+    normalized: JsonDict = {}
+    for slot, constraint in raw.items():
+        if not isinstance(constraint, dict):
+            continue
+        row: JsonDict = {}
+        for key in ("allow_pool", "deny_pool", "prefer_ids"):
+            values = normalize_list(constraint.get(key))
+            if values:
+                row[key] = values
+        if row:
+            normalized[str(slot)] = row
+    return normalized
+
+
+def normalize_soft_preset_affinity(raw: Any) -> JsonDict:
+    if not isinstance(raw, dict):
+        return {}
+    normalized: JsonDict = {}
+    for key in ("preferred_presets", "discouraged_presets", "preferred_axes", "discouraged_axes"):
+        values = normalize_list(raw.get(key))
+        if values:
+            normalized[key] = values
+    return normalized
+
+
+def normalize_dual_read_requirement(raw: Any) -> JsonDict:
+    if not isinstance(raw, dict):
+        return {}
+    role_terms = normalize_list(raw.get("role_terms"))
+    mixin_terms = normalize_list(raw.get("mixin_terms"))
+    if not role_terms and not mixin_terms and raw.get("enabled") is not False:
+        return {}
+    return {
+        "enabled": bool(raw.get("enabled", True)),
+        "role_terms": role_terms,
+        "mixin_terms": mixin_terms,
+        "min_role_hits": max(1, int(raw.get("min_role_hits", 1) or 1)),
+        "min_mixin_hits": max(1, int(raw.get("min_mixin_hits", 1) or 1)),
+    }
+
+
+def normalize_soft_visual_guards(raw: Any) -> List[JsonDict]:
+    if isinstance(raw, dict):
+        raw_guards = [raw]
+    elif isinstance(raw, list):
+        raw_guards = [guard for guard in raw if isinstance(guard, dict)]
+    else:
+        raw_guards = []
+    guards: List[JsonDict] = []
+    for index, guard in enumerate(raw_guards):
+        deny_ids = normalize_slot_id_map(guard.get("deny_ids") or guard.get("deny"))
+        prefer_ids = normalize_slot_id_map(guard.get("prefer_ids") or guard.get("prefer"))
+        deny_facets = normalize_slot_id_map(guard.get("deny_facets"))
+        if not deny_ids and not prefer_ids and not deny_facets:
+            continue
+        guards.append(
+            {
+                "id": str(guard.get("id") or f"visual_guard_{index}"),
+                "reason": str(guard.get("reason") or "soft_visual_guard"),
+                "deny_ids": deny_ids,
+                "prefer_ids": prefer_ids,
+                "deny_facets": deny_facets,
+            }
+        )
+    return guards
+
+
+def normalize_render_priority_terms(raw: Any) -> List[JsonDict]:
+    if isinstance(raw, dict):
+        raw_groups = [raw]
+    elif isinstance(raw, list):
+        raw_groups = raw
+    elif isinstance(raw, str):
+        raw_groups = [raw]
+    else:
+        raw_groups = []
+    groups: List[JsonDict] = []
+    for index, group in enumerate(raw_groups):
+        if isinstance(group, dict):
+            terms = normalize_list(group.get("terms"))
+            raw_min_hits = group.get("min_hits", 1)
+            group_id = str(group.get("id") or f"priority_{index}")
+        else:
+            terms = normalize_list(group)
+            raw_min_hits = 1
+            group_id = f"priority_{index}"
+        try:
+            min_hits = int(raw_min_hits)
+        except (TypeError, ValueError):
+            min_hits = 1
+        if terms:
+            groups.append({"id": group_id, "terms": terms, "min_hits": max(1, min_hits)})
+    return groups
 
 
 def soft_anchor_slots(policy: Optional[JsonDict]) -> List[str]:
@@ -3858,6 +4283,29 @@ def soft_anchor_ids_for_slot(policy: Optional[JsonDict], slot: str) -> Set[str]:
     return ids
 
 
+def soft_anchor_pool_for_slot(policy: Optional[JsonDict], slot: str, critical_only: bool = False) -> Set[str]:
+    if not policy or not policy.get("enabled"):
+        return set()
+    ids: Set[str] = set()
+    for anchor in policy.get("anchors", []):
+        if anchor.get("slot") != slot:
+            continue
+        if critical_only and not bool(anchor.get("critical")):
+            continue
+        ids.update(normalize_list(anchor.get("pool")) or normalize_list(anchor.get("ids")))
+    return ids
+
+
+def soft_anchor_entries_for_slot(policy: Optional[JsonDict], slot: str) -> List[JsonDict]:
+    if not policy or not policy.get("enabled"):
+        return []
+    return [anchor for anchor in policy.get("anchors", []) if anchor.get("slot") == slot]
+
+
+def soft_anchor_critical_slot(policy: Optional[JsonDict], slot: str) -> bool:
+    return bool(soft_anchor_pool_for_slot(policy, slot, critical_only=True))
+
+
 def soft_anchor_all_ids(policy: Optional[JsonDict]) -> Set[str]:
     if not policy or not policy.get("enabled"):
         return set()
@@ -3867,15 +4315,31 @@ def soft_anchor_all_ids(policy: Optional[JsonDict]) -> Set[str]:
     return ids
 
 
+def soft_anchor_variant_group_for_slot(policy: Optional[JsonDict], slot: str) -> str:
+    if not policy or not policy.get("enabled"):
+        return ""
+    for anchor in policy.get("anchors", []):
+        if anchor.get("slot") == slot and str(anchor.get("variant_group") or ""):
+            return str(anchor.get("variant_group") or "")
+    return ""
+
+
 def soft_anchor_required_count(policy: Optional[JsonDict]) -> int:
     if not policy or not policy.get("enabled"):
         return 0
     anchor_count = len(soft_anchor_slots(policy))
     configured_min = int(policy.get("min_anchors", 0) or 0)
-    if configured_min < 2:
-        return min(anchor_count, max(0, configured_min))
     rate_floor = int(math.ceil(anchor_count * SOFT_ANCHOR_SELECTED_RATE_FLOOR))
-    return min(anchor_count, max(configured_min, rate_floor))
+    critical_slots = {str(anchor.get("slot")) for anchor in policy.get("anchors", []) if anchor.get("critical")}
+    source_floor_total = 0
+    for value in (policy.get("source_floors", {}) or {}).values():
+        try:
+            floor_value = int(value)
+        except (TypeError, ValueError):
+            continue
+        if floor_value > 0:
+            source_floor_total += floor_value
+    return min(anchor_count, max(configured_min, rate_floor, len(critical_slots), source_floor_total))
 
 
 def selected_soft_anchor_slots(policy: Optional[JsonDict], picked: Dict[str, Entry]) -> Set[str]:
@@ -3886,9 +4350,118 @@ def selected_soft_anchor_slots(policy: Optional[JsonDict], picked: Dict[str, Ent
         entry = picked.get(slot)
         if not entry:
             continue
-        if str(entry.get("id")) in soft_anchor_ids_for_slot(policy, slot):
+        if str(entry.get("id")) in soft_anchor_pool_for_slot(policy, slot):
             selected.add(slot)
     return selected
+
+
+def soft_anchor_sources(source: Any) -> Set[str]:
+    return {part for part in str(source or "recipe").split("+") if part}
+
+
+def soft_anchor_match_status(policy: Optional[JsonDict], picked: Dict[str, Entry]) -> JsonDict:
+    if not policy or not policy.get("enabled"):
+        return {"enabled": False, "passed": True, "failure_reasons": []}
+    anchors = policy.get("anchors", []) or []
+    selected_slots = selected_soft_anchor_slots(policy, picked)
+    matched_anchors: List[JsonDict] = []
+    missing_anchors: List[JsonDict] = []
+    source_counts: Dict[str, int] = {}
+    source_totals: Dict[str, int] = {}
+    group_counts: Dict[str, int] = {}
+    group_totals: Dict[str, int] = {}
+    critical_missing: List[str] = []
+    salience_matches = 0
+    salience_total = 0
+    for anchor in anchors:
+        slot = str(anchor.get("slot") or "")
+        pool_ids = set(normalize_list(anchor.get("pool")) or normalize_list(anchor.get("ids")))
+        selected = picked.get(slot, {})
+        selected_id = str(selected.get("id") or "")
+        matched = bool(selected_id and selected_id in pool_ids)
+        sources = soft_anchor_sources(anchor.get("source"))
+        groups = set(normalize_list(anchor.get("groups")))
+        row = {
+            "slot": slot,
+            "selected": selected_id,
+            "expected": sorted(pool_ids),
+            "source": anchor.get("source", "recipe"),
+            "critical": bool(anchor.get("critical")),
+                "groups": sorted(groups),
+                "primary": bool(anchor.get("primary")),
+                "variant_group": str(anchor.get("variant_group") or ""),
+                "variant_strategy": str(anchor.get("variant_strategy") or ""),
+                "matched": matched,
+            }
+        if matched:
+            matched_anchors.append(row)
+        else:
+            missing_anchors.append(row)
+        if anchor.get("critical") and not matched:
+            critical_missing.append(slot)
+        for source in sources:
+            source_totals[source] = source_totals.get(source, 0) + 1
+            if matched:
+                source_counts[source] = source_counts.get(source, 0) + 1
+        if "mixin" in sources:
+            salience_total += 1
+            if matched:
+                salience_matches += 1
+        for group in groups:
+            group_totals[group] = group_totals.get(group, 0) + 1
+            if matched:
+                group_counts[group] = group_counts.get(group, 0) + 1
+
+    source_floor_misses: List[JsonDict] = []
+    for source, raw_floor in (policy.get("source_floors", {}) or {}).items():
+        floor = int(raw_floor)
+        matched = int(source_counts.get(source, 0))
+        if matched < floor:
+            source_floor_misses.append({"source": source, "matched": matched, "floor": floor})
+    group_floor_misses: List[JsonDict] = []
+    for group, raw_floor in (policy.get("group_floors", {}) or {}).items():
+        floor = int(raw_floor)
+        matched = int(group_counts.get(group, 0))
+        if matched < floor:
+            group_floor_misses.append({"group": group, "matched": matched, "floor": floor})
+
+    anchor_slot_count = len(soft_anchor_slots(policy))
+    selected_rate = len(selected_slots) / max(1, anchor_slot_count)
+    min_anchors = soft_anchor_required_count(policy)
+    salience_floor = min(int(policy.get("salience_floor", 0) or 0), salience_total)
+    failure_reasons: List[str] = []
+    if critical_missing:
+        failure_reasons.append("critical_anchor_missing")
+    for miss in source_floor_misses:
+        failure_reasons.append(f"source_floor_not_met:{miss['source']}")
+    for miss in group_floor_misses:
+        failure_reasons.append(f"anchor_group_floor_not_met:{miss['group']}")
+    if salience_matches < salience_floor:
+        failure_reasons.append("mixin_salience_floor_not_met")
+    if len(selected_slots) < min_anchors or selected_rate < SOFT_ANCHOR_SELECTED_RATE_FLOOR:
+        failure_reasons.append("selected_anchor_rate_below_floor")
+    return {
+        "enabled": True,
+        "passed": not failure_reasons,
+        "failure_reasons": sorted(set(failure_reasons)),
+        "selected_anchor_count": len(selected_slots),
+        "required_anchor_count": min_anchors,
+        "selected_anchor_slots": sorted(selected_slots),
+        "anchor_slot_count": anchor_slot_count,
+        "selected_anchor_rate": round(selected_rate, 4),
+        "critical_missing": sorted(set(critical_missing)),
+        "source_counts": source_counts,
+        "source_totals": source_totals,
+        "source_floor_misses": source_floor_misses,
+        "group_counts": group_counts,
+        "group_totals": group_totals,
+        "group_floor_misses": group_floor_misses,
+        "salience_matches": salience_matches,
+        "salience_total": salience_total,
+        "salience_floor": salience_floor,
+        "matched_anchors": matched_anchors,
+        "missing_anchors": missing_anchors,
+    }
 
 
 def soft_anchor_trace(policy: Optional[JsonDict], picked: Optional[Dict[str, Entry]] = None) -> JsonDict:
@@ -3904,23 +4477,363 @@ def soft_anchor_trace(policy: Optional[JsonDict], picked: Optional[Dict[str, Ent
             {
                 "slot": slot,
                 "ids": normalize_list(anchor.get("ids")),
+                "pool": normalize_list(anchor.get("pool")) or normalize_list(anchor.get("ids")),
                 "terms": normalize_list(anchor.get("terms")),
                 "source": anchor.get("source", "recipe"),
                 "required": bool(anchor.get("required", True)),
+                "critical": bool(anchor.get("critical", False)),
+                "groups": normalize_list(anchor.get("groups")),
+                "primary": bool(anchor.get("primary")),
+                "variant_group": str(anchor.get("variant_group") or ""),
+                "variant_strategy": str(anchor.get("variant_strategy") or ""),
                 "selected": selected.get("id"),
                 "matched": slot in selected_slots,
             }
         )
+    status = soft_anchor_match_status(policy, picked)
     return {
         "enabled": True,
         "mode": policy.get("mode", "soft"),
         "concept": policy.get("concept", ""),
         "min_anchors": int(policy.get("min_anchors", 0)),
+        "source_floors": policy.get("source_floors", {}) or {},
+        "group_floors": policy.get("group_floors", {}) or {},
+        "salience_floor": int(policy.get("salience_floor", 0) or 0),
+        "visual_guards": policy.get("visual_guards", []) or [],
+        "render_priority_terms": policy.get("render_priority_terms", []) or [],
+        "free_slot_constraints": policy.get("free_slot_constraints", {}) or {},
+        "render_suppress_terms": policy.get("render_suppress_terms", []) or [],
+        "dual_read_requirement": policy.get("dual_read_requirement", {}) or {},
+        "preset_affinity": policy.get("preset_affinity", {}) or {},
         "required_anchor_count": soft_anchor_required_count(policy),
         "selected_anchor_count": len(selected_slots),
         "selected_anchor_slots": sorted(selected_slots),
         "anchor_slot_count": len(soft_anchor_slots(policy)),
+        "match_status": status,
         "anchors": anchors,
+    }
+
+
+def entry_matches_guard_facets(item: Entry, raw_facets: Sequence[str]) -> bool:
+    tokens = facet_tokens(item)
+    for raw in raw_facets:
+        token = str(raw)
+        if ":" in token:
+            key, value = token.split(":", 1)
+            facets = item.get("facets", {}) or {}
+            if value in normalize_list(facets.get(key)):
+                return True
+        elif token in tokens:
+            return True
+    return False
+
+
+def soft_visual_guard_for_slot(policy: Optional[JsonDict], slot: str) -> JsonDict:
+    deny_ids: Set[str] = set()
+    prefer_ids: Set[str] = set()
+    deny_facets: Set[str] = set()
+    guard_ids: List[str] = []
+    for guard in (policy or {}).get("visual_guards", []) or []:
+        deny_ids.update(normalize_list((guard.get("deny_ids", {}) or {}).get(slot)))
+        prefer_ids.update(normalize_list((guard.get("prefer_ids", {}) or {}).get(slot)))
+        deny_facets.update(normalize_list((guard.get("deny_facets", {}) or {}).get(slot)))
+        if (guard.get("deny_ids", {}) or {}).get(slot) or (guard.get("prefer_ids", {}) or {}).get(slot) or (guard.get("deny_facets", {}) or {}).get(slot):
+            guard_ids.append(str(guard.get("id") or "visual_guard"))
+    return {"deny_ids": deny_ids, "prefer_ids": prefer_ids, "deny_facets": deny_facets, "guard_ids": guard_ids}
+
+
+def apply_soft_body_first_guard(
+    slot: str,
+    pool: Sequence[Entry],
+    semantic_context: Optional[JsonDict],
+    generation_contract: Optional[JsonDict],
+) -> List[Entry]:
+    policy = (generation_contract or {}).get("soft_anchor_policy", {})
+    if not policy or not policy.get("enabled") or not semantic_context:
+        return list(pool)
+    guard_slot = str((semantic_policy_from_source(semantic_context).get("soft_body_first_guard", {}) or {}).get("slot") or "body_framing")
+    if slot != guard_slot:
+        return list(pool)
+    if not any(anchor.get("critical") for anchor in policy.get("anchors", []) or []):
+        return list(pool)
+    guard_policy = (semantic_policy_from_source(semantic_context).get("soft_body_first_guard", {}) or {})
+    demote_facets = normalize_list(guard_policy.get("demote_facets")) or ["soft_body_role:body_emphasis"]
+    try:
+        multiplier = float(guard_policy.get("demote_multiplier", 0.15))
+    except (TypeError, ValueError):
+        multiplier = 0.15
+    multiplier = min(max(multiplier, 0.0), 1.0)
+    adjusted: List[Entry] = []
+    demoted: List[str] = []
+    for item in pool:
+        if entry_matches_guard_facets(item, demote_facets):
+            copied = dict(item)
+            base_weight = item_base_weight(item)
+            copied["weight"] = round(base_weight * multiplier, 6)
+            adjusted.append(copied)
+            demoted.append(str(item.get("id")))
+        else:
+            adjusted.append(item)
+    if demoted:
+        record_generation_contract_event(
+            generation_contract,
+            "soft_body_first_guard_events",
+            {
+                "slot": slot,
+                "reason": "soft_body_first_guard",
+                "reason_code": "soft_body_first_guard",
+                "body_first_guard_applied": True,
+                "demote_facets": demote_facets,
+                "demote_multiplier": round(multiplier, 4),
+                "demoted_ids": sorted(set(demoted)),
+                "policy_schema_version": semantic_policy_schema_version(semantic_context),
+                "semantic_policy_hash": semantic_context.get("semantic_policy_hash"),
+            },
+        )
+    return adjusted
+
+
+def apply_soft_free_slot_constraints(
+    slot: str,
+    pool: Sequence[Entry],
+    semantic_context: Optional[JsonDict],
+    generation_contract: Optional[JsonDict],
+) -> List[Entry]:
+    policy = (generation_contract or {}).get("soft_anchor_policy", {})
+    if not policy or not policy.get("enabled"):
+        return list(pool)
+    constraints = policy.get("free_slot_constraints", {}) or {}
+    constraint = constraints.get(slot)
+    if not isinstance(constraint, dict):
+        return list(pool)
+    original_pool = list(pool)
+    allow_ids = set(normalize_list(constraint.get("allow_pool")))
+    deny_ids = set(normalize_list(constraint.get("deny_pool")))
+    prefer_ids = set(normalize_list(constraint.get("prefer_ids")))
+    constrained = [item for item in original_pool if str(item.get("id", "")) not in deny_ids]
+    if allow_ids:
+        allowed = [item for item in constrained if str(item.get("id", "")) in allow_ids]
+        if allowed:
+            constrained = allowed
+    adjusted: List[Entry] = []
+    boosted: List[str] = []
+    for item in constrained:
+        item_id = str(item.get("id", ""))
+        if item_id not in prefer_ids:
+            adjusted.append(item)
+            continue
+        copied = dict(item)
+        copied["weight"] = round(item_base_weight(item) * SOFT_ANCHOR_PROMOTED_WEIGHT_MULTIPLIER, 6)
+        adjusted.append(copied)
+        boosted.append(item_id)
+    if len(adjusted) != len(original_pool) or boosted:
+        record_generation_contract_event(
+            generation_contract,
+            "soft_free_slot_constraint_events",
+            {
+                "slot": slot,
+                "reason": "soft_free_slot_constraints",
+                "reason_code": "soft_free_slot_constraints",
+                "before": len(original_pool),
+                "after": len(adjusted),
+                "allow_pool": sorted(allow_ids),
+                "deny_pool": sorted(deny_ids),
+                "preferred_ids": sorted(prefer_ids),
+                "boosted_ids": sorted(set(boosted)),
+                "policy_schema_version": (semantic_context or {}).get("policy_schema_version"),
+                "semantic_policy_hash": (semantic_context or {}).get("semantic_policy_hash"),
+            },
+        )
+    return adjusted or original_pool
+
+
+def apply_soft_visual_guard(
+    slot: str,
+    pool: Sequence[Entry],
+    semantic_context: Optional[JsonDict],
+    generation_contract: Optional[JsonDict],
+) -> List[Entry]:
+    policy = (generation_contract or {}).get("soft_anchor_policy", {})
+    guard = soft_visual_guard_for_slot(policy, slot)
+    deny_ids: Set[str] = guard["deny_ids"]
+    prefer_ids: Set[str] = guard["prefer_ids"]
+    deny_facets: Set[str] = guard["deny_facets"]
+    if not deny_ids and not prefer_ids and not deny_facets:
+        return list(pool)
+    original_pool = list(pool)
+    filtered = [
+        item
+        for item in original_pool
+        if str(item.get("id", "")) not in deny_ids and not entry_matches_guard_facets(item, sorted(deny_facets))
+    ]
+    if filtered:
+        pool = filtered
+    adjusted: List[Entry] = []
+    boosted: List[JsonDict] = []
+    for item in pool:
+        item_id = str(item.get("id", ""))
+        if item_id not in prefer_ids:
+            adjusted.append(item)
+            continue
+        copied = dict(item)
+        base_weight = item_base_weight(item)
+        copied["weight"] = round(base_weight * SOFT_ANCHOR_PROMOTED_WEIGHT_MULTIPLIER, 6)
+        adjusted.append(copied)
+        boosted.append({"id": item_id, "base_weight": round(base_weight, 4), "adjusted_weight": copied["weight"]})
+    if len(filtered) != len(original_pool) or boosted:
+        record_generation_contract_event(
+            generation_contract,
+            "soft_visual_guard_events",
+            {
+                "slot": slot,
+                "reason": "soft_visual_guard",
+                "reason_code": "soft_visual_guard",
+                "before": len(original_pool),
+                "after": len(adjusted),
+                "guard_ids": sorted(set(guard["guard_ids"])),
+                "denied_ids": sorted(deny_ids),
+                "preferred_ids": sorted(prefer_ids),
+                "boosted_ids": sorted(item["id"] for item in boosted),
+                "policy_schema_version": (semantic_context or {}).get("policy_schema_version"),
+                "semantic_policy_hash": (semantic_context or {}).get("semantic_policy_hash"),
+            },
+        )
+    return adjusted
+
+
+def soft_anchor_repeat_factor(
+    slot: str,
+    item_id: str,
+    semantic_context: Optional[JsonDict],
+    policy: Optional[JsonDict],
+) -> tuple[float, JsonDict]:
+    variant_group = soft_anchor_variant_group_for_slot(policy, slot)
+    if not variant_group or not semantic_context:
+        return 1.0, {"enabled": False, "reason": "not_variant_anchor"}
+    config = (semantic_policy_from_source(semantic_context).get("soft_anchor_diversity", {}) or {})
+    if config.get("enabled") is False:
+        return 1.0, {"enabled": False, "reason": "policy_disabled"}
+    batch_decay = semantic_policy_float(semantic_context, ("soft_anchor_diversity", "batch_repeat_decay"), 0.45)
+    ledger_decay = semantic_policy_float(semantic_context, ("soft_anchor_diversity", "ledger_repeat_decay"), 0.5)
+    batch_context = semantic_context.get("batch_context") or {}
+    batch_count = int(((batch_context.get("counts", {}) or {}).get(slot, {}) or {}).get(item_id, 0))
+    ledger = semantic_context.get("anchor_diversity_ledger") or {}
+    ledger_counts = ledger.get(slot, {}) if isinstance(ledger, dict) else {}
+    ledger_count = int((ledger_counts or {}).get(item_id, 0))
+    factor = (batch_decay ** batch_count) * (ledger_decay ** ledger_count)
+    factor = max(0.05, min(1.0, factor))
+    return factor, {
+        "enabled": bool(config.get("enabled", True)),
+        "slot": slot,
+        "id": item_id,
+        "anchor_variant_group": variant_group,
+        "diversity_penalty_applied": factor < 1.0,
+        "repeat_penalty_source": "batch+ledger" if batch_count and ledger_count else ("batch" if batch_count else ("ledger" if ledger_count else "none")),
+        "batch_count": batch_count,
+        "ledger_count": ledger_count,
+        "factor": round(factor, 4),
+    }
+
+
+def apply_soft_anchor_probability_floor(
+    slot: str,
+    candidates: Sequence[tuple[Entry, List[float], Optional[bool], float, float, JsonDict]],
+    weights: List[float],
+    context: Optional[JsonDict],
+) -> tuple[List[float], Optional[JsonDict]]:
+    policy = ((context or {}).get("generation_contract", {}) or {}).get("soft_anchor_policy", {})
+    variant_group = soft_anchor_variant_group_for_slot(policy, slot)
+    if not variant_group or len(candidates) < 2 or not weights:
+        return weights, None
+    anchor_ids = soft_anchor_pool_for_slot(policy, slot)
+    anchor_indexes = [index for index, row in enumerate(candidates) if str(row[0].get("id")) in anchor_ids]
+    if len(anchor_indexes) < 2:
+        return weights, None
+    total_before = sum(max(weight, 0.0) for weight in weights)
+    top_before = max(weights[index] for index in anchor_indexes) / max(total_before, 0.000001)
+    floor_ratio = semantic_policy_float(context, ("soft_anchor_diversity", "candidate_probability_floor"), 0.08)
+    max_top = semantic_policy_float(context, ("soft_anchor_diversity", "max_single_candidate_probability"), 0.85)
+    adjusted = list(weights)
+    anchor_max = max(weights[index] for index in anchor_indexes)
+    floor_weight = anchor_max * max(0.0, min(floor_ratio, 0.5))
+    for index in anchor_indexes:
+        adjusted[index] = max(adjusted[index], floor_weight)
+    total_after = sum(max(weight, 0.0) for weight in adjusted)
+    top_after = max(adjusted[index] for index in anchor_indexes) / max(total_after, 0.000001)
+    if top_after > max_top and max_top > 0:
+        top_weight = max(adjusted[index] for index in anchor_indexes)
+        for index in anchor_indexes:
+            if adjusted[index] == top_weight:
+                adjusted[index] = top_weight * max_top
+                break
+        total_after = sum(max(weight, 0.0) for weight in adjusted)
+        top_after = max(adjusted[index] for index in anchor_indexes) / max(total_after, 0.000001)
+    return adjusted, {
+        "slot": slot,
+        "anchor_variant_group": variant_group,
+        "candidate_probability_floor": round(floor_ratio, 4),
+        "max_single_candidate_probability": round(max_top, 4),
+        "top1_probability_before": round(top_before, 4),
+        "top1_probability_after": round(top_after, 4),
+        "candidate_ids": [str(candidates[index][0].get("id")) for index in anchor_indexes],
+    }
+
+
+def soft_visual_guard_status(policy: Optional[JsonDict], picked: Dict[str, Entry]) -> JsonDict:
+    violations: List[JsonDict] = []
+    if not policy or not policy.get("enabled"):
+        return {"passed": True, "violations": []}
+    for slot, entry in picked.items():
+        guard = soft_visual_guard_for_slot(policy, slot)
+        item_id = str(entry.get("id", ""))
+        if item_id in guard["deny_ids"]:
+            violations.append({"slot": slot, "id": item_id, "reason": "deny_ids", "guard_ids": sorted(set(guard["guard_ids"]))})
+        if guard["deny_facets"] and entry_matches_guard_facets(entry, sorted(guard["deny_facets"])):
+            violations.append({"slot": slot, "id": item_id, "reason": "deny_facets", "guard_ids": sorted(set(guard["guard_ids"]))})
+    return {"passed": not violations, "violations": violations}
+
+
+def render_priority_term_status(policy: Optional[JsonDict], result: JsonDict) -> JsonDict:
+    groups = (policy or {}).get("render_priority_terms", []) or []
+    if not groups:
+        return {"passed": True, "groups": [], "missing": []}
+    body = rendered_prompt_body_blob(result)
+    rows: List[JsonDict] = []
+    missing: List[JsonDict] = []
+    for group in groups:
+        terms = [str(term).lower() for term in normalize_list(group.get("terms")) if str(term).strip()]
+        min_hits = max(1, int(group.get("min_hits", 1) or 1))
+        hits = sorted({term for term in terms if term in body})
+        row = {"id": group.get("id", ""), "terms": terms, "hits": hits, "min_hits": min_hits, "matched": len(hits) >= min_hits}
+        rows.append(row)
+        if not row["matched"]:
+            missing.append(row)
+    return {"passed": not missing, "groups": rows, "missing": missing}
+
+
+def dual_read_term_status(policy: Optional[JsonDict], result: JsonDict) -> JsonDict:
+    requirement = (policy or {}).get("dual_read_requirement", {}) or {}
+    if not requirement or requirement.get("enabled") is False:
+        return {"passed": True, "enabled": False}
+    body = rendered_prompt_body_blob(result)
+    role_terms = [str(term).lower() for term in normalize_list(requirement.get("role_terms"))]
+    mixin_terms = [str(term).lower() for term in normalize_list(requirement.get("mixin_terms"))]
+    role_hits = sorted({term for term in role_terms if term and term in body})
+    mixin_hits = sorted({term for term in mixin_terms if term and term in body})
+    min_role = max(1, int(requirement.get("min_role_hits", 1) or 1)) if role_terms else 0
+    min_mixin = max(1, int(requirement.get("min_mixin_hits", 1) or 1)) if mixin_terms else 0
+    passed = len(role_hits) >= min_role and len(mixin_hits) >= min_mixin
+    return {
+        "passed": passed,
+        "enabled": True,
+        "role_hits": role_hits,
+        "mixin_hits": mixin_hits,
+        "min_role_hits": min_role,
+        "min_mixin_hits": min_mixin,
+        "missing": {
+            "role_terms": [] if len(role_hits) >= min_role else role_terms,
+            "mixin_terms": [] if len(mixin_hits) >= min_mixin else mixin_terms,
+        },
     }
 
 
@@ -4428,9 +5341,30 @@ def apply_soft_anchor_bias(
     generation_contract: Optional[JsonDict],
 ) -> List[Entry]:
     policy = (generation_contract or {}).get("soft_anchor_policy", {})
-    ids = soft_anchor_ids_for_slot(policy, slot)
+    ids = soft_anchor_pool_for_slot(policy, slot)
+    critical_ids = soft_anchor_pool_for_slot(policy, slot, critical_only=True)
     if not ids:
         return list(pool)
+
+    original_pool = list(pool)
+    if critical_ids:
+        constrained = [item for item in original_pool if str(item.get("id")) in critical_ids]
+        if constrained:
+            pool = constrained
+            record_generation_contract_event(
+                generation_contract,
+                "soft_anchor_pool_constraints",
+                {
+                    "slot": slot,
+                    "reason": "critical_soft_anchor_pool",
+                    "reason_code": "critical_soft_anchor_pool",
+                    "before": len(original_pool),
+                    "after": len(constrained),
+                    "pool_ids": sorted(critical_ids),
+                    "policy_schema_version": (semantic_context or {}).get("policy_schema_version"),
+                    "semantic_policy_hash": (semantic_context or {}).get("semantic_policy_hash"),
+                },
+            )
 
     adjusted: List[Entry] = []
     promoted: List[JsonDict] = []
@@ -4440,7 +5374,12 @@ def apply_soft_anchor_bias(
             adjusted.append(item)
             continue
         base_weight = item_base_weight(item)
-        factor = SOFT_ANCHOR_PROMOTED_WEIGHT_MULTIPLIER if item.get("anchor") else SOFT_ANCHOR_WEIGHT_MULTIPLIER
+        if item_id in critical_ids:
+            factor = SOFT_ANCHOR_CRITICAL_WEIGHT_MULTIPLIER
+        else:
+            factor = SOFT_ANCHOR_PROMOTED_WEIGHT_MULTIPLIER if item.get("anchor") else SOFT_ANCHOR_WEIGHT_MULTIPLIER
+        repeat_factor, repeat_summary = soft_anchor_repeat_factor(slot, item_id, semantic_context, policy)
+        factor *= repeat_factor
         copied = dict(item)
         copied["weight"] = round(base_weight * factor, 6)
         adjusted.append(copied)
@@ -4450,6 +5389,8 @@ def apply_soft_anchor_bias(
                 "base_weight": round(base_weight, 4),
                 "factor": round(factor, 4),
                 "adjusted_weight": copied["weight"],
+                "anchor_variant_group": soft_anchor_variant_group_for_slot(policy, slot),
+                "diversity": repeat_summary,
             }
         )
 
@@ -4461,10 +5402,11 @@ def apply_soft_anchor_bias(
                 "slot": slot,
                 "reason": "soft_anchor_candidate_promotion",
                 "reason_code": "soft_anchor_candidate_promotion",
-                "before": len(pool),
+                "before": len(original_pool),
                 "after": len(adjusted),
                 "promoted_ids": sorted(item["id"] for item in promoted),
                 "promoted": promoted,
+                "anchor_variant_group": soft_anchor_variant_group_for_slot(policy, slot),
                 "policy_schema_version": (semantic_context or {}).get("policy_schema_version"),
                 "semantic_policy_hash": (semantic_context or {}).get("semantic_policy_hash"),
             },
@@ -4608,7 +5550,9 @@ def choose_slot(
     else:
         pool = list(full_pool)
 
-    block_reason = slot_block_reason(data, slot, generation_contract, forced=forced)
+    soft_policy = (generation_contract or {}).get("soft_anchor_policy")
+    critical_soft_anchor_slot = soft_anchor_critical_slot(soft_policy, slot)
+    block_reason = slot_block_reason(data, slot, generation_contract, forced=forced or critical_soft_anchor_slot)
     if block_reason:
         record_generation_contract_event(
             generation_contract,
@@ -4643,13 +5587,16 @@ def choose_slot(
 
     if semantic_context and not forced:
         pool = steer_semantic_candidate_pool(slot, pool, semantic_context)
+        pool = apply_soft_free_slot_constraints(slot, pool, semantic_context, generation_contract)
+        pool = apply_soft_body_first_guard(slot, pool, semantic_context, generation_contract)
+        pool = apply_soft_visual_guard(slot, pool, semantic_context, generation_contract)
         pool = apply_soft_anchor_bias(slot, pool, semantic_context, generation_contract)
         if slot == "prop":
             pool = avoid_homebody_action_prop_redundancy(pool, semantic_context, picked)
 
     if semantic_context and not forced:
         before_hard = len(pool)
-        anchor_ids = soft_anchor_ids_for_slot((generation_contract or {}).get("soft_anchor_policy"), slot)
+        anchor_ids = soft_anchor_pool_for_slot((generation_contract or {}).get("soft_anchor_policy"), slot)
         pool = [
             item
             for item in pool
@@ -4750,7 +5697,12 @@ def soft_anchor_repair_candidates(
 ) -> List[Entry]:
     if slot not in data.get("slots", {}):
         return []
-    if slot_block_reason(data, slot, generation_contract, forced=False):
+    if slot_block_reason(
+        data,
+        slot,
+        generation_contract,
+        forced=soft_anchor_critical_slot((generation_contract or {}).get("soft_anchor_policy"), slot),
+    ):
         return []
     current = picked.get(slot)
     candidate_picked = dict(picked)
@@ -4793,34 +5745,61 @@ def apply_soft_anchor_repair(
     forced_slots = set((forced_choices or {}).keys())
     min_anchors = int(policy.get("min_anchors", 0))
     required_anchor_count = soft_anchor_required_count(policy)
-    selected = selected_soft_anchor_slots(policy, picked)
+    status = soft_anchor_match_status(policy, picked)
     attempts: List[JsonDict] = []
-    if len(selected) >= required_anchor_count:
+    if status.get("passed"):
         generation_contract["soft_anchor_repair"] = {
             "status": "not_needed",
-            "selected_anchor_count": len(selected),
+            "selected_anchor_count": status.get("selected_anchor_count", 0),
             "min_anchors": min_anchors,
             "required_anchor_count": required_anchor_count,
             "repair_attempts": attempts,
             "repair_result": "already_satisfied",
+            "match_status": status,
             "policy_schema_version": (semantic_context or {}).get("policy_schema_version"),
             "semantic_policy_hash": (semantic_context or {}).get("semantic_policy_hash"),
         }
         return
 
+    ordered_slots: List[str] = []
+    for slot in status.get("critical_missing", []) or []:
+        if slot not in ordered_slots:
+            ordered_slots.append(slot)
+    for miss in status.get("group_floor_misses", []) or []:
+        group = str(miss.get("group") or "")
+        for anchor in policy.get("anchors", []) or []:
+            slot = str(anchor.get("slot") or "")
+            if group in normalize_list(anchor.get("groups")) and slot not in ordered_slots:
+                ordered_slots.append(slot)
+    for miss in status.get("source_floor_misses", []) or []:
+        source = str(miss.get("source") or "")
+        for anchor in policy.get("anchors", []) or []:
+            slot = str(anchor.get("slot") or "")
+            if source in soft_anchor_sources(anchor.get("source")) and slot not in ordered_slots:
+                ordered_slots.append(slot)
     for slot in soft_anchor_slots(policy):
-        if len(selected) >= required_anchor_count:
+        if slot not in ordered_slots:
+            ordered_slots.append(slot)
+
+    for slot in ordered_slots:
+        status = soft_anchor_match_status(policy, picked)
+        if status.get("passed"):
             break
         if slot in forced_slots:
             attempts.append({"slot": slot, "status": "skipped_forced_slot"})
             continue
-        if slot in selected:
+        if slot in status.get("selected_anchor_slots", []) and slot not in status.get("critical_missing", []):
             continue
-        ids = soft_anchor_ids_for_slot(policy, slot)
+        ids = soft_anchor_pool_for_slot(policy, slot, critical_only=slot in (status.get("critical_missing", []) or []))
+        if not ids:
+            ids = soft_anchor_pool_for_slot(policy, slot)
         candidates = soft_anchor_repair_candidates(data, preset, slot, ids, picked, generation_contract)
         if not candidates:
             attempts.append({"slot": slot, "status": "blocked", "candidate_ids": sorted(ids)})
             continue
+        candidates = apply_soft_free_slot_constraints(slot, candidates, semantic_context, generation_contract)
+        candidates = apply_soft_body_first_guard(slot, candidates, semantic_context, generation_contract)
+        candidates = apply_soft_visual_guard(slot, candidates, semantic_context, generation_contract)
         biased_candidates = apply_soft_anchor_bias(slot, candidates, semantic_context, generation_contract)
         selected_entry = semantic_weighted_choice(
             biased_candidates,
@@ -4833,23 +5812,26 @@ def apply_soft_anchor_repair(
             picked={key: value for key, value in picked.items() if key != slot},
         )
         picked[slot] = selected_entry
-        selected = selected_soft_anchor_slots(policy, picked)
+        status = soft_anchor_match_status(policy, picked)
         attempts.append(
             {
                 "slot": slot,
                 "status": "reselected",
                 "selected": selected_entry.get("id"),
                 "candidate_ids": sorted(ids),
+                "match_status": status,
             }
         )
 
+    status = soft_anchor_match_status(policy, picked)
     generation_contract["soft_anchor_repair"] = {
-        "status": "repaired" if len(selected) >= required_anchor_count else "failed",
-        "selected_anchor_count": len(selected),
+        "status": "repaired" if status.get("passed") else "failed",
+        "selected_anchor_count": status.get("selected_anchor_count", 0),
         "min_anchors": min_anchors,
         "required_anchor_count": required_anchor_count,
         "repair_attempts": attempts,
-        "repair_result": "satisfied" if len(selected) >= required_anchor_count else "insufficient_anchors",
+        "repair_result": "satisfied" if status.get("passed") else "insufficient_anchors",
+        "match_status": status,
         "policy_schema_version": (semantic_context or {}).get("policy_schema_version"),
         "semantic_policy_hash": (semantic_context or {}).get("semantic_policy_hash"),
     }
@@ -5787,6 +6769,20 @@ def render_negative_prompt(entries: Sequence[Entry], lang: str) -> str:
     return ", ".join(localize(x, lang) for x in entries)
 
 
+def soft_render_suppress_negative_entries(policy: Optional[JsonDict]) -> List[Entry]:
+    if not policy or not policy.get("enabled"):
+        return []
+    entries: List[Entry] = []
+    seen: Set[str] = set()
+    for term in normalize_list(policy.get("render_suppress_terms")):
+        key = term.strip()
+        if not key or key.lower() in seen:
+            continue
+        seen.add(key.lower())
+        entries.append({"id": f"soft_suppress_{stable_text_id(key)}", "en": key, "ko": key})
+    return entries
+
+
 def generate_once(
     data: JsonDict,
     rng: random.Random,
@@ -5832,6 +6828,7 @@ def generate_once(
     soft_anchor_spec: Optional[JsonDict] = None,
     source_argv: Optional[Sequence[str]] = None,
     seed: Optional[int] = None,
+    anchor_diversity_ledger: Optional[JsonDict] = None,
 ) -> JsonDict:
     requested_selection_mode = requested_selection_mode or selection_mode
     effective_selection_mode = selection_mode
@@ -5868,7 +6865,7 @@ def generate_once(
             print(f"Warning: semantic default fell back to rule mode: {fallback_reason}", file=sys.stderr)
         else:
             raise
-    preset = choose_preset(data, rng, preset_id, semantic_context)
+    preset = choose_preset(data, rng, preset_id, semantic_context, soft_anchor_spec=soft_anchor_spec)
     picked: Dict[str, Entry] = {}
     generation_contract = make_generation_contract(
         data,
@@ -5880,7 +6877,24 @@ def generate_once(
         likeness_mode=likeness_mode,
         soft_anchor_spec=soft_anchor_spec,
     )
+    affinity_status = soft_preset_affinity_status(
+        preset,
+        generation_contract.get("soft_anchor_policy"),
+        data,
+        forced=bool(preset_id),
+    )
+    if affinity_status.get("status") == "warn":
+        generation_contract.setdefault("policy_conflicts", []).append(
+            {
+                "slot": "preset",
+                "selected": preset.get("id"),
+                "reason": affinity_status.get("policy_conflict"),
+                "discouraged_matches": affinity_status.get("discouraged_matches", []),
+            }
+        )
     if semantic_context is not None:
+        if anchor_diversity_ledger is not None:
+            semantic_context["anchor_diversity_ledger"] = anchor_diversity_ledger
         semantic_context["generation_contract"] = generation_contract
         sync_generation_contract_axis_coverage(generation_contract, semantic_context)
 
@@ -6004,6 +7018,14 @@ def generate_once(
 
     if include_negative:
         negative_entries = choose_negative_entries(data, rng, negative_count, has_surreal_layer(render_picked), render_picked)
+        soft_suppress_entries = soft_render_suppress_negative_entries(generation_contract.get("soft_anchor_policy"))
+        if soft_suppress_entries:
+            existing = {localize(entry, "en").lower() for entry in negative_entries}
+            for entry in soft_suppress_entries:
+                if localize(entry, "en").lower() not in existing:
+                    negative_entries.append(entry)
+                    existing.add(localize(entry, "en").lower())
+            generation_contract["soft_render_suppress_terms"] = [localize(entry, "en") for entry in soft_suppress_entries]
         for lang in langs:
             result[f"negative_{lang}"] = render_negative_prompt(negative_entries, lang)
 
@@ -6244,6 +7266,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     parser.add_argument("--semantic-model", default=SEMANTIC_MODEL_ID, help="Gemini embedding model required by the semantic index.")
     parser.add_argument("--semantic-dimensions", type=int, default=DEFAULT_SEMANTIC_DIMENSIONS, help="Gemini embedding dimensions required by the semantic index.")
     parser.add_argument("--soft-anchor-spec", dest="soft_anchor_specs", action="append", default=[], help=argparse.SUPPRESS)
+    parser.add_argument("--soft-requirement", dest="soft_requirements", action="append", default=[], help=argparse.SUPPRESS)
+    parser.add_argument("--anchor-diversity-ledger", default=None, help=argparse.SUPPRESS)
     parser.add_argument("--include-trace", action="store_true", help="Include semantic/rewrite trace metadata in JSON output.")
     parser.add_argument("--llm-polish", choices=LLM_POLISH_MODES, default="off", help="Optional strict prompt polish contract. strict currently preserves the deterministic prompt unless a provider is wired explicitly.")
     parser.add_argument("--priority-bias", type=float, default=None, help="Optional-slot priority boost. Omit to use JSON setting.")
@@ -6278,6 +7302,12 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         load_forced_choices_from_json(args.set_json),
     )
     soft_anchor_spec = parse_soft_anchor_specs(args.soft_anchor_specs)
+    effective_additional_requirements = list(args.additional_requirements)
+    effective_additional_requirements.extend(
+        f"Soft visual guidance: {requirement}"
+        for requirement in args.soft_requirements
+        if str(requirement).strip()
+    )
 
     if args.n < 1:
         raise ValueError("--n must be at least 1")
@@ -6318,54 +7348,59 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             semantic_index_path = str(candidate)
 
     batch_context = make_batch_context(selection_mode, args.novelty, args.n)
+    anchor_diversity_ledger = load_anchor_diversity_ledger(args.anchor_diversity_ledger)
     results = []
     for batch_index in range(args.n):
         set_batch_index(batch_context, batch_index)
-        results.append(
-            generate_once(
-                data=data,
-                rng=rng,
-                preset_id=args.preset,
-                langs=langs,
-                include_negative=args.include_negative,
-                negative_count=args.negative_count,
-                include_choices=args.include_choices,
-                forced_choices=forced_choices,
-                priority_bias=args.priority_bias,
-                detail_level=args.detail_level,
-                surreal_mode=args.surreal_mode,
-                surreal_probability=args.surreal_probability,
-                surreal_intensity=args.surreal_intensity,
-                reference_edit_mode=args.reference_edit_mode,
-                trend_layer=args.trend_layer,
-                intent=resolved_intent,
-                concept_locks=args.concept_locks,
-                selection_mode=selection_mode,
-                novelty=args.novelty,
-                filter_strictness=filter_strictness,
-                semantic_weight=semantic_weight,
-                semantic_profile=semantic_profile,
-                semantic_axis_mode=args.semantic_axis_mode,
-                intent_axes=args.intent_axes,
-                intent_steering=args.intent_steering,
-                surreal_mode_explicit=has_cli_option(raw_args, "--surreal-mode"),
-                semantic_defaulted=semantic_defaulted,
-                intent_source=intent_source,
-                requested_selection_mode=selection_mode,
-                batch_context=batch_context,
-                batch_index=batch_index,
-                include_trace=args.include_trace,
-                llm_polish=args.llm_polish,
-                semantic_index_path=semantic_index_path,
-                semantic_model=args.semantic_model,
-                semantic_dimensions=args.semantic_dimensions,
-                additional_requirements=args.additional_requirements,
-                likeness_mode=args.likeness_mode,
-                soft_anchor_spec=soft_anchor_spec,
-                source_argv=raw_args,
-                seed=args.seed,
-            )
+        result = generate_once(
+            data=data,
+            rng=rng,
+            preset_id=args.preset,
+            langs=langs,
+            include_negative=args.include_negative,
+            negative_count=args.negative_count,
+            include_choices=args.include_choices,
+            forced_choices=forced_choices,
+            priority_bias=args.priority_bias,
+            detail_level=args.detail_level,
+            surreal_mode=args.surreal_mode,
+            surreal_probability=args.surreal_probability,
+            surreal_intensity=args.surreal_intensity,
+            reference_edit_mode=args.reference_edit_mode,
+            trend_layer=args.trend_layer,
+            intent=resolved_intent,
+            concept_locks=args.concept_locks,
+            selection_mode=selection_mode,
+            novelty=args.novelty,
+            filter_strictness=filter_strictness,
+            semantic_weight=semantic_weight,
+            semantic_profile=semantic_profile,
+            semantic_axis_mode=args.semantic_axis_mode,
+            intent_axes=args.intent_axes,
+            intent_steering=args.intent_steering,
+            surreal_mode_explicit=has_cli_option(raw_args, "--surreal-mode"),
+            semantic_defaulted=semantic_defaulted,
+            intent_source=intent_source,
+            requested_selection_mode=selection_mode,
+            batch_context=batch_context,
+            batch_index=batch_index,
+            include_trace=args.include_trace,
+            llm_polish=args.llm_polish,
+            semantic_index_path=semantic_index_path,
+            semantic_model=args.semantic_model,
+            semantic_dimensions=args.semantic_dimensions,
+            additional_requirements=effective_additional_requirements,
+            likeness_mode=args.likeness_mode,
+            soft_anchor_spec=soft_anchor_spec,
+            source_argv=raw_args,
+            seed=args.seed,
+            anchor_diversity_ledger=anchor_diversity_ledger if args.anchor_diversity_ledger else None,
         )
+        results.append(result)
+        if args.anchor_diversity_ledger:
+            update_anchor_diversity_ledger(anchor_diversity_ledger, result)
+    if args.anchor_diversity_ledger:
+        save_anchor_diversity_ledger(args.anchor_diversity_ledger, anchor_diversity_ledger)
 
     if args.json_output:
         print(json.dumps(results, ensure_ascii=False, indent=2))

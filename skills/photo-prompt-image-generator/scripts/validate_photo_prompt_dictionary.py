@@ -331,6 +331,42 @@ def validate_semantic_policy(data: dict[str, Any], errors: list[str]) -> None:
     if schema_version != 1:
         errors.append("semantic_policy.schema_version: must be 1")
 
+    soft_body_guard = policy.get("soft_body_first_guard", {}) or {}
+    by_slot = entry_ids_by_slot(data)
+    vocab = merged_facet_vocab(data)
+    if soft_body_guard:
+        if not isinstance(soft_body_guard, dict):
+            errors.append("semantic_policy.soft_body_first_guard: must be an object")
+        else:
+            slot = str(soft_body_guard.get("slot") or "")
+            if slot and slot not in by_slot:
+                errors.append(f"semantic_policy.soft_body_first_guard.slot: unknown slot {slot}")
+            for token in normalize_list(soft_body_guard.get("demote_facets")):
+                validate_guard_token("semantic_policy.soft_body_first_guard.demote_facets", token, vocab, errors)
+            if "demote_multiplier" in soft_body_guard:
+                try:
+                    value = float(soft_body_guard.get("demote_multiplier"))
+                except (TypeError, ValueError):
+                    errors.append("semantic_policy.soft_body_first_guard.demote_multiplier: must be numeric")
+                else:
+                    if not 0.0 <= value <= 1.0:
+                        errors.append("semantic_policy.soft_body_first_guard.demote_multiplier: must be between 0 and 1")
+
+    soft_diversity = policy.get("soft_anchor_diversity", {}) or {}
+    if soft_diversity:
+        if not isinstance(soft_diversity, dict):
+            errors.append("semantic_policy.soft_anchor_diversity: must be an object")
+        else:
+            for key in ("candidate_probability_floor", "max_single_candidate_probability", "batch_repeat_decay", "ledger_repeat_decay"):
+                if key in soft_diversity:
+                    try:
+                        value = float(soft_diversity.get(key))
+                    except (TypeError, ValueError):
+                        errors.append(f"semantic_policy.soft_anchor_diversity.{key}: must be numeric")
+                        continue
+                    if not 0.0 <= value <= 1.0:
+                        errors.append(f"semantic_policy.soft_anchor_diversity.{key}: must be between 0 and 1")
+
     families = policy.get("families", {}) or {}
     if not isinstance(families, dict):
         errors.append("semantic_policy.families: must be an object")
@@ -340,7 +376,6 @@ def validate_semantic_policy(data: dict[str, Any], errors: list[str]) -> None:
         if family not in families:
             errors.append(f"semantic_policy.steering_priority: unknown family {family}")
 
-    by_slot = entry_ids_by_slot(data)
     all_ids = all_known_entry_ids(data)
     valid_signal_tiers = {"core", "support", "strong", "ambient"}
 
@@ -583,6 +618,199 @@ def validate_concept_recipe_entry(
     validate_recipe_set(label, recipe.get("set"), by_slot, errors)
     validate_recipe_slot_list(label, "override_slots", recipe.get("override_slots"), by_slot, errors)
     validate_recipe_slot_list(label, "bundle_override_slots", recipe.get("bundle_override_slots"), by_slot, errors)
+    validate_recipe_slot_list(label, "soft_anchor_slots", recipe.get("soft_anchor_slots"), by_slot, errors)
+    validate_recipe_slot_list(label, "soft_free_slots", recipe.get("soft_free_slots"), by_slot, errors)
+    validate_recipe_slot_list(label, "critical_anchor_slots", recipe.get("critical_anchor_slots"), by_slot, errors)
+    anchor_pool = recipe.get("anchor_pool") or {}
+    if anchor_pool and not isinstance(anchor_pool, dict):
+        errors.append(f"{label}.anchor_pool: must be an object")
+    elif isinstance(anchor_pool, dict):
+        for slot, ids in anchor_pool.items():
+            if slot not in by_slot:
+                errors.append(f"{label}.anchor_pool: unknown slot {slot}")
+                continue
+            for entry_id in normalize_list(ids):
+                if entry_id not in by_slot[slot]:
+                    errors.append(f"{label}.anchor_pool.{slot}: unknown id {entry_id}")
+    primary_anchor_pool = recipe.get("primary_anchor_pool") or {}
+    if primary_anchor_pool and not isinstance(primary_anchor_pool, dict):
+        errors.append(f"{label}.primary_anchor_pool: must be an object")
+    elif isinstance(primary_anchor_pool, dict):
+        for slot, ids in primary_anchor_pool.items():
+            if slot not in by_slot:
+                errors.append(f"{label}.primary_anchor_pool: unknown slot {slot}")
+                continue
+            for entry_id in normalize_list(ids):
+                if entry_id not in by_slot[slot]:
+                    errors.append(f"{label}.primary_anchor_pool.{slot}: unknown id {entry_id}")
+                if slot == "prop" and entry_id == "angel_halo_wings_tail_set" and "천사" in label:
+                    errors.append(f"{label}.primary_anchor_pool.{slot}: angel soft primary pool must use tail-free halo/wings prop")
+    anchor_variants = recipe.get("anchor_variants") or {}
+    if anchor_variants and not isinstance(anchor_variants, dict):
+        errors.append(f"{label}.anchor_variants: must be an object")
+    elif isinstance(anchor_variants, dict):
+        for slot, variant in anchor_variants.items():
+            variant_label = f"{label}.anchor_variants.{slot}"
+            if slot not in by_slot:
+                errors.append(f"{label}.anchor_variants: unknown slot {slot}")
+                continue
+            if not isinstance(variant, dict):
+                errors.append(f"{variant_label}: must be an object")
+                continue
+            if not str(variant.get("group") or "").strip():
+                errors.append(f"{variant_label}.group: required")
+            options = normalize_list(variant.get("options"))
+            if len(options) < 2:
+                errors.append(f"{variant_label}.options: at least two values are required")
+            for entry_id in options:
+                if entry_id not in by_slot[slot]:
+                    errors.append(f"{variant_label}.options: unknown id {entry_id}")
+                if slot == "prop" and entry_id == "angel_halo_wings_tail_set" and "천사" in label:
+                    errors.append(f"{variant_label}.options: angel soft variants must use tail-free halo/wings prop")
+            if "select" in variant and str(variant.get("select")) not in {"seed_rotate", "weighted"}:
+                errors.append(f"{variant_label}.select: must be seed_rotate or weighted")
+    anchor_terms = recipe.get("anchor_terms") or {}
+    if anchor_terms and not isinstance(anchor_terms, dict):
+        errors.append(f"{label}.anchor_terms: must be an object")
+    elif isinstance(anchor_terms, dict):
+        for slot, terms in anchor_terms.items():
+            if slot not in by_slot:
+                errors.append(f"{label}.anchor_terms: unknown slot {slot}")
+            for term in normalize_list(terms):
+                if not str(term).strip():
+                    errors.append(f"{label}.anchor_terms.{slot}: empty term")
+    anchor_floor = recipe.get("anchor_floor") or {}
+    if anchor_floor and not isinstance(anchor_floor, dict):
+        errors.append(f"{label}.anchor_floor: must be an object")
+    elif isinstance(anchor_floor, dict):
+        for source, value in anchor_floor.items():
+            if str(source) not in {"role", "mixin", "bundle"}:
+                errors.append(f"{label}.anchor_floor: unknown source {source}")
+            if not isinstance(value, int) or value < 0:
+                errors.append(f"{label}.anchor_floor.{source}: must be a non-negative integer")
+    anchor_group_floor = recipe.get("anchor_group_floor") or {}
+    if anchor_group_floor and not isinstance(anchor_group_floor, dict):
+        errors.append(f"{label}.anchor_group_floor: must be an object")
+    elif isinstance(anchor_group_floor, dict):
+        for group, value in anchor_group_floor.items():
+            if not str(group).strip():
+                errors.append(f"{label}.anchor_group_floor: empty group")
+            if not isinstance(value, int) or value < 0:
+                errors.append(f"{label}.anchor_group_floor.{group}: must be a non-negative integer")
+    anchor_groups = recipe.get("anchor_groups") or {}
+    if anchor_groups and not isinstance(anchor_groups, dict):
+        errors.append(f"{label}.anchor_groups: must be an object")
+    elif isinstance(anchor_groups, dict):
+        for slot, groups in anchor_groups.items():
+            if slot not in by_slot:
+                errors.append(f"{label}.anchor_groups: unknown slot {slot}")
+            for group in normalize_list(groups):
+                if not str(group).strip():
+                    errors.append(f"{label}.anchor_groups.{slot}: empty group")
+    visual_guard = recipe.get("visual_guard")
+    guards = [visual_guard] if isinstance(visual_guard, dict) else (visual_guard or [])
+    if visual_guard is not None and not isinstance(visual_guard, (dict, list)):
+        errors.append(f"{label}.visual_guard: must be an object or list")
+    elif isinstance(guards, list):
+        for index, guard in enumerate(guards):
+            guard_label = f"{label}.visual_guard[{index}]"
+            if not isinstance(guard, dict):
+                errors.append(f"{guard_label}: must be an object")
+                continue
+            for key in ("deny_ids", "prefer_ids"):
+                raw_map = guard.get(key) or {}
+                if raw_map and not isinstance(raw_map, dict):
+                    errors.append(f"{guard_label}.{key}: must be an object")
+                    continue
+                for slot, ids in raw_map.items():
+                    if slot not in by_slot:
+                        errors.append(f"{guard_label}.{key}: unknown slot {slot}")
+                        continue
+                    for entry_id in normalize_list(ids):
+                        if entry_id not in by_slot[slot]:
+                            errors.append(f"{guard_label}.{key}.{slot}: unknown id {entry_id}")
+            raw_facets = guard.get("deny_facets") or {}
+            if raw_facets and not isinstance(raw_facets, dict):
+                errors.append(f"{guard_label}.deny_facets: must be an object")
+            elif isinstance(raw_facets, dict):
+                vocab = merged_facet_vocab(data)
+                for slot, tokens in raw_facets.items():
+                    if slot not in by_slot:
+                        errors.append(f"{guard_label}.deny_facets: unknown slot {slot}")
+                        continue
+                    for token in normalize_list(tokens):
+                        validate_guard_token(f"{guard_label}.deny_facets.{slot}", token, vocab, errors)
+    render_priority_terms = recipe.get("render_priority_terms")
+    term_groups = [render_priority_terms] if isinstance(render_priority_terms, dict) else (render_priority_terms or [])
+    if render_priority_terms is not None and not isinstance(render_priority_terms, (dict, list, str)):
+        errors.append(f"{label}.render_priority_terms: must be a string, object, or list")
+    elif isinstance(term_groups, list):
+        for index, group in enumerate(term_groups):
+            if isinstance(group, dict):
+                if not normalize_list(group.get("terms")):
+                    errors.append(f"{label}.render_priority_terms[{index}].terms: required")
+                if "min_hits" in group and (not isinstance(group.get("min_hits"), int) or group.get("min_hits") < 1):
+                    errors.append(f"{label}.render_priority_terms[{index}].min_hits: must be a positive integer")
+            elif not normalize_list(group):
+                errors.append(f"{label}.render_priority_terms[{index}]: empty value")
+    if "soft_min_anchors" in recipe and (not isinstance(recipe.get("soft_min_anchors"), int) or recipe.get("soft_min_anchors") < 0):
+        errors.append(f"{label}.soft_min_anchors: must be a non-negative integer")
+    if "mixin_cue_budget" in recipe and (not isinstance(recipe.get("mixin_cue_budget"), int) or recipe.get("mixin_cue_budget") < 0):
+        errors.append(f"{label}.mixin_cue_budget: must be a non-negative integer")
+    free_slot_constraints = recipe.get("free_slot_constraints") or {}
+    if free_slot_constraints and not isinstance(free_slot_constraints, dict):
+        errors.append(f"{label}.free_slot_constraints: must be an object")
+    elif isinstance(free_slot_constraints, dict):
+        for slot, constraint in free_slot_constraints.items():
+            constraint_label = f"{label}.free_slot_constraints.{slot}"
+            if slot not in by_slot:
+                errors.append(f"{label}.free_slot_constraints: unknown slot {slot}")
+                continue
+            if not isinstance(constraint, dict):
+                errors.append(f"{constraint_label}: must be an object")
+                continue
+            for key in ("allow_pool", "deny_pool", "prefer_ids"):
+                for entry_id in normalize_list(constraint.get(key)):
+                    if entry_id not in by_slot[slot]:
+                        errors.append(f"{constraint_label}.{key}: unknown id {entry_id}")
+    render_suppress_terms = recipe.get("render_suppress_terms")
+    if render_suppress_terms is not None and not isinstance(render_suppress_terms, (list, str)):
+        errors.append(f"{label}.render_suppress_terms: must be a string or list of strings")
+    for term in normalize_list(render_suppress_terms):
+        if not str(term).strip():
+            errors.append(f"{label}.render_suppress_terms: empty value")
+    dual_read = recipe.get("dual_read_requirement") or {}
+    if dual_read and not isinstance(dual_read, dict):
+        errors.append(f"{label}.dual_read_requirement: must be an object")
+    elif isinstance(dual_read, dict):
+        if "enabled" in dual_read and not isinstance(dual_read.get("enabled"), bool):
+            errors.append(f"{label}.dual_read_requirement.enabled: must be a boolean")
+        for key in ("role_terms", "mixin_terms"):
+            for term in normalize_list(dual_read.get(key)):
+                if not str(term).strip():
+                    errors.append(f"{label}.dual_read_requirement.{key}: empty value")
+        for key in ("min_role_hits", "min_mixin_hits"):
+            if key in dual_read and (not isinstance(dual_read.get(key), int) or dual_read.get(key) < 1):
+                errors.append(f"{label}.dual_read_requirement.{key}: must be a positive integer")
+    preset_affinity = recipe.get("preset_affinity") or {}
+    if preset_affinity and not isinstance(preset_affinity, dict):
+        errors.append(f"{label}.preset_affinity: must be an object")
+    elif isinstance(preset_affinity, dict):
+        for key in ("preferred_presets", "discouraged_presets"):
+            for preset_id in normalize_list(preset_affinity.get(key)):
+                if preset_id not in preset_ids:
+                    errors.append(f"{label}.preset_affinity.{key}: unknown preset {preset_id}")
+        for key in ("preferred_axes", "discouraged_axes"):
+            for axis in normalize_list(preset_affinity.get(key)):
+                if not str(axis).strip():
+                    errors.append(f"{label}.preset_affinity.{key}: empty value")
+    for key in ("safety_requirements", "salience_cues"):
+        raw = recipe.get(key)
+        if raw is not None and not isinstance(raw, (list, str)):
+            errors.append(f"{label}.{key}: must be a string or list of strings")
+        for item in normalize_list(raw):
+            if not str(item).strip():
+                errors.append(f"{label}.{key}: empty value")
     validate_conditional_additional(label, recipe, by_slot, errors)
 
 

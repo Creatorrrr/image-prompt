@@ -177,6 +177,138 @@ def anchor_terms_for_slot(recipe: dict[str, Any], slot: str, ids: Sequence[str])
     return fallback_anchor_terms(slot, ids)
 
 
+def anchor_pool_for_slot(recipe: dict[str, Any], slot: str, ids: Sequence[str]) -> list[str]:
+    configured = recipe.get("anchor_pool")
+    if isinstance(configured, dict):
+        pool = normalize_list(configured.get(slot))
+        if pool:
+            return pool
+    return [str(item_id) for item_id in ids if str(item_id).strip()]
+
+
+def primary_anchor_pool_for_slot(recipe: dict[str, Any], slot: str) -> list[str]:
+    configured = recipe.get("primary_anchor_pool")
+    if isinstance(configured, dict):
+        return normalize_list(configured.get(slot))
+    return []
+
+
+def anchor_variant_for_slot(recipe: dict[str, Any], slot: str) -> dict[str, Any]:
+    configured = recipe.get("anchor_variants")
+    if not isinstance(configured, dict):
+        return {}
+    variant = configured.get(slot)
+    return variant if isinstance(variant, dict) else {}
+
+
+def critical_anchor_slots_for_recipe(recipe: dict[str, Any]) -> set[str]:
+    return set(normalize_list(recipe.get("critical_anchor_slots")))
+
+
+def default_anchor_groups(source: str, primary: bool = False) -> list[str]:
+    groups: list[str] = []
+    if source == "role":
+        groups.append("role_primary")
+    if source in {"mixin", "bundle"} and primary:
+        groups.append("mixin_primary")
+    return groups
+
+
+def anchor_groups_for_slot(recipe: dict[str, Any], source: str, slot: str, primary: bool = False) -> list[str]:
+    configured = recipe.get("anchor_groups")
+    groups: list[str] = []
+    if isinstance(configured, dict):
+        groups.extend(normalize_list(configured.get(slot)))
+    groups.extend(group for group in default_anchor_groups(source, primary=primary) if group not in groups)
+    return groups
+
+
+def anchor_floor_for_recipe(recipe: dict[str, Any]) -> dict[str, int]:
+    floors = recipe.get("anchor_floor") or {}
+    if not isinstance(floors, dict):
+        return {}
+    normalized: dict[str, int] = {}
+    for source, value in floors.items():
+        number = normalize_int(value, 0)
+        if number > 0:
+            normalized[str(source)] = number
+    return normalized
+
+
+def anchor_group_floor_for_recipe(recipe: dict[str, Any]) -> dict[str, int]:
+    floors = recipe.get("anchor_group_floor") or {}
+    if not isinstance(floors, dict):
+        return {}
+    normalized: dict[str, int] = {}
+    for group, value in floors.items():
+        number = normalize_int(value, 0)
+        if number > 0:
+            normalized[str(group)] = number
+    return normalized
+
+
+def visual_guards_for_recipe(recipe: dict[str, Any]) -> list[dict[str, Any]]:
+    raw = recipe.get("visual_guard")
+    if isinstance(raw, dict):
+        return [raw]
+    if isinstance(raw, list):
+        return [guard for guard in raw if isinstance(guard, dict)]
+    return []
+
+
+def free_slot_constraints_for_recipe(recipe: dict[str, Any]) -> dict[str, Any]:
+    raw = recipe.get("free_slot_constraints")
+    return raw if isinstance(raw, dict) else {}
+
+
+def render_suppress_terms_for_recipe(recipe: dict[str, Any]) -> list[str]:
+    return normalize_list(recipe.get("render_suppress_terms"))
+
+
+def dual_read_requirement_for_recipe(recipe: dict[str, Any]) -> dict[str, Any]:
+    raw = recipe.get("dual_read_requirement")
+    return raw if isinstance(raw, dict) else {}
+
+
+def preset_affinity_for_recipe(recipe: dict[str, Any]) -> dict[str, Any]:
+    raw = recipe.get("preset_affinity")
+    return raw if isinstance(raw, dict) else {}
+
+
+def mixin_cue_budget_for_recipe(recipe: dict[str, Any]) -> int:
+    value = normalize_int(recipe.get("mixin_cue_budget"), 0)
+    return max(0, value)
+
+
+def render_priority_terms_for_recipe(recipe: dict[str, Any]) -> list[dict[str, Any]]:
+    raw = recipe.get("render_priority_terms")
+    groups: list[dict[str, Any]] = []
+    if isinstance(raw, dict):
+        raw = [raw]
+    if isinstance(raw, list):
+        for index, item in enumerate(raw):
+            if isinstance(item, dict):
+                terms = normalize_list(item.get("terms"))
+                min_hits = max(1, normalize_int(item.get("min_hits"), 1))
+                if terms:
+                    groups.append({"id": str(item.get("id") or f"priority_{index}"), "terms": terms, "min_hits": min_hits})
+            else:
+                terms = normalize_list(item)
+                if terms:
+                    groups.append({"id": f"priority_{index}", "terms": terms, "min_hits": 1})
+    elif isinstance(raw, str):
+        groups.append({"id": "priority_0", "terms": [raw], "min_hits": 1})
+    return groups
+
+
+def soft_safety_requirements_for_recipe(recipe: dict[str, Any]) -> list[str]:
+    return normalize_list(recipe.get("safety_requirements"))
+
+
+def soft_salience_cues_for_recipe(recipe: dict[str, Any]) -> list[str]:
+    return normalize_list(recipe.get("salience_cues"))
+
+
 def soft_min_anchors_for_recipe(recipe: dict[str, Any], default: int) -> int:
     value = normalize_int(recipe.get("soft_min_anchors"), default)
     return max(0, value)
@@ -191,7 +323,18 @@ def soft_anchor_specs_from_mapping(
 ) -> list[dict[str, Any]]:
     anchor_slots = recipe_soft_anchor_slots(recipes, recipe)
     free_slots = recipe_soft_free_slots(recipes, recipe)
+    critical_slots = critical_anchor_slots_for_recipe(recipe)
+    floors = anchor_floor_for_recipe(recipe)
+    group_floors = anchor_group_floor_for_recipe(recipe)
+    visual_guards = visual_guards_for_recipe(recipe)
+    render_priority_terms = render_priority_terms_for_recipe(recipe)
+    free_slot_constraints = free_slot_constraints_for_recipe(recipe)
+    render_suppress_terms = render_suppress_terms_for_recipe(recipe)
+    dual_read_requirement = dual_read_requirement_for_recipe(recipe)
+    preset_affinity = preset_affinity_for_recipe(recipe)
+    mixin_cue_budget = mixin_cue_budget_for_recipe(recipe)
     specs: list[dict[str, Any]] = []
+    mapped_slots: set[str] = set()
     for slot, ids in sorted(mapping.items()):
         if slot in explicit_user_set_slots:
             continue
@@ -202,49 +345,172 @@ def soft_anchor_specs_from_mapping(
         clean_ids = [str(item_id) for item_id in ids if str(item_id).strip()]
         if not clean_ids:
             continue
+        mapped_slots.add(slot)
+        variant = anchor_variant_for_slot(recipe, slot)
+        variant_options = normalize_list(variant.get("options")) if variant else []
+        variant_group = str(variant.get("group") or "") if variant else ""
+        primary_pool = primary_anchor_pool_for_slot(recipe, slot)
+        pool = primary_pool or variant_options or anchor_pool_for_slot(recipe, slot, clean_ids)
         specs.append(
             {
                 "slot": slot,
                 "ids": clean_ids,
+                "pool": pool,
                 "terms": anchor_terms_for_slot(recipe, slot, clean_ids),
                 "source": source,
                 "required": True,
+                "critical": slot in critical_slots,
+                "source_floors": floors,
+                "groups": anchor_groups_for_slot(recipe, source, slot, primary=bool(primary_pool)),
+                "primary": bool(primary_pool),
+                "variant_group": variant_group,
+                "variant_strategy": str(variant.get("select") or "") if variant else "",
+                "group_floors": group_floors,
+                "visual_guards": visual_guards,
+                "render_priority_terms": render_priority_terms,
+                "free_slot_constraints": free_slot_constraints,
+                "render_suppress_terms": render_suppress_terms,
+                "dual_read_requirement": dual_read_requirement,
+                "preset_affinity": preset_affinity,
+                "mixin_cue_budget": mixin_cue_budget,
             }
         )
+    primary_pool = recipe.get("primary_anchor_pool")
+    if isinstance(primary_pool, dict):
+        for slot, ids in sorted(primary_pool.items()):
+            if slot in mapped_slots or slot in explicit_user_set_slots:
+                continue
+            if slot in free_slots and slot not in anchor_slots:
+                continue
+            if slot not in anchor_slots:
+                continue
+            clean_ids = normalize_list(ids)
+            if not clean_ids:
+                continue
+            variant = anchor_variant_for_slot(recipe, slot)
+            variant_group = str(variant.get("group") or "") if variant else ""
+            specs.append(
+                {
+                    "slot": slot,
+                    "ids": clean_ids,
+                    "pool": clean_ids,
+                    "terms": anchor_terms_for_slot(recipe, slot, clean_ids),
+                    "source": source,
+                    "required": True,
+                    "critical": slot in critical_slots,
+                    "source_floors": floors,
+                    "groups": anchor_groups_for_slot(recipe, source, slot, primary=True),
+                    "primary": True,
+                    "variant_group": variant_group,
+                    "variant_strategy": str(variant.get("select") or "") if variant else "",
+                    "group_floors": group_floors,
+                    "visual_guards": visual_guards,
+                    "render_priority_terms": render_priority_terms,
+                    "free_slot_constraints": free_slot_constraints,
+                    "render_suppress_terms": render_suppress_terms,
+                    "dual_read_requirement": dual_read_requirement,
+                    "preset_affinity": preset_affinity,
+                    "mixin_cue_budget": mixin_cue_budget,
+                }
+            )
     return specs
 
 
 def dedupe_soft_anchor_specs(specs: Sequence[dict[str, Any]]) -> list[dict[str, Any]]:
-    by_slot: dict[str, dict[str, Any]] = {}
+    by_key: dict[tuple[str, bool, str, tuple[str, ...], bool], dict[str, Any]] = {}
+    critical_slots = {str(spec.get("slot") or "") for spec in specs if spec.get("critical")}
     for spec in specs:
         slot = str(spec.get("slot") or "")
         ids = normalize_list(spec.get("ids"))
         if not slot or not ids:
             continue
-        current = by_slot.setdefault(
-            slot,
+        critical = bool(spec.get("critical"))
+        if slot in critical_slots and not critical:
+            continue
+        source = str(spec.get("source") or "")
+        groups_key = tuple(sorted(normalize_list(spec.get("groups"))))
+        primary = bool(spec.get("primary", False))
+        key = (slot, critical, source, groups_key, primary)
+        current = by_key.setdefault(
+            key,
             {
                 "slot": slot,
                 "ids": [],
+                "pool": [],
                 "terms": [],
                 "source": [],
                 "required": False,
+                "critical": critical,
+                "source_floors": {},
+                "groups": [],
+                "primary": primary,
+                "variant_group": "",
+                "variant_strategy": "",
+                "group_floors": {},
+                "visual_guards": [],
+                "render_priority_terms": [],
+                "free_slot_constraints": {},
+                "render_suppress_terms": [],
+                "dual_read_requirement": {},
+                "preset_affinity": {},
+                "mixin_cue_budget": 0,
             },
         )
         for item_id in ids:
             if item_id not in current["ids"]:
                 current["ids"].append(item_id)
+        for item_id in normalize_list(spec.get("pool")) or ids:
+            if item_id not in current["pool"]:
+                current["pool"].append(item_id)
         for term in normalize_list(spec.get("terms")):
             if term not in current["terms"]:
                 current["terms"].append(term)
-        source = str(spec.get("source") or "")
         if source and source not in current["source"]:
             current["source"].append(source)
         current["required"] = bool(current["required"] or spec.get("required", True))
+        current["primary"] = bool(current["primary"] or primary)
+        if not current["variant_group"] and str(spec.get("variant_group") or ""):
+            current["variant_group"] = str(spec.get("variant_group") or "")
+        if not current["variant_strategy"] and str(spec.get("variant_strategy") or ""):
+            current["variant_strategy"] = str(spec.get("variant_strategy") or "")
+        for group in normalize_list(spec.get("groups")):
+            if group not in current["groups"]:
+                current["groups"].append(group)
+        for floor_source, value in (spec.get("source_floors", {}) or {}).items():
+            current["source_floors"][floor_source] = max(
+                normalize_int(current["source_floors"].get(floor_source), 0),
+                normalize_int(value, 0),
+            )
+        for group, value in (spec.get("group_floors", {}) or {}).items():
+            current["group_floors"][group] = max(
+                normalize_int(current["group_floors"].get(group), 0),
+                normalize_int(value, 0),
+            )
+        for guard in spec.get("visual_guards", []) or []:
+            if guard not in current["visual_guards"]:
+                current["visual_guards"].append(guard)
+        for group in spec.get("render_priority_terms", []) or []:
+            if group not in current["render_priority_terms"]:
+                current["render_priority_terms"].append(group)
+        for slot, constraint in (spec.get("free_slot_constraints", {}) or {}).items():
+            if isinstance(constraint, dict):
+                current["free_slot_constraints"].setdefault(slot, {}).update(constraint)
+        for term in normalize_list(spec.get("render_suppress_terms")):
+            if term not in current["render_suppress_terms"]:
+                current["render_suppress_terms"].append(term)
+        if spec.get("dual_read_requirement"):
+            current["dual_read_requirement"].update(spec.get("dual_read_requirement") or {})
+        if spec.get("preset_affinity"):
+            current["preset_affinity"].update(spec.get("preset_affinity") or {})
+        current["mixin_cue_budget"] = max(
+            normalize_int(current.get("mixin_cue_budget"), 0),
+            normalize_int(spec.get("mixin_cue_budget"), 0),
+        )
     normalized = []
-    for spec in by_slot.values():
+    for spec in by_key.values():
         item = dict(spec)
         item["source"] = "+".join(item["source"]) if item["source"] else "recipe"
+        item["source_floors"] = {key: value for key, value in item["source_floors"].items() if value > 0}
         normalized.append(item)
     return sorted(normalized, key=lambda item: item["slot"])
 
@@ -255,14 +521,81 @@ def build_soft_anchor_spec(
     concept: str,
 ) -> dict[str, Any]:
     anchors = dedupe_soft_anchor_specs(specs)
+    source_floors: dict[str, int] = {}
+    group_floors: dict[str, int] = {}
+    visual_guards: list[dict[str, Any]] = []
+    render_priority_terms: list[dict[str, Any]] = []
+    free_slot_constraints: dict[str, Any] = {}
+    render_suppress_terms: list[str] = []
+    dual_read_requirement: dict[str, Any] = {}
+    preset_affinity: dict[str, Any] = {}
+    mixin_cue_budgets: list[int] = []
+    for anchor in anchors:
+        for source, value in (anchor.get("source_floors", {}) or {}).items():
+            source_floors[source] = max(normalize_int(source_floors.get(source), 0), normalize_int(value, 0))
+        anchor.pop("source_floors", None)
+        for group, value in (anchor.get("group_floors", {}) or {}).items():
+            group_floors[group] = max(normalize_int(group_floors.get(group), 0), normalize_int(value, 0))
+        anchor.pop("group_floors", None)
+        for guard in anchor.pop("visual_guards", []) or []:
+            if guard not in visual_guards:
+                visual_guards.append(guard)
+        for group in anchor.pop("render_priority_terms", []) or []:
+            if group not in render_priority_terms:
+                render_priority_terms.append(group)
+        for slot, constraint in (anchor.pop("free_slot_constraints", {}) or {}).items():
+            if isinstance(constraint, dict):
+                free_slot_constraints.setdefault(slot, {}).update(constraint)
+        for term in normalize_list(anchor.pop("render_suppress_terms", [])):
+            if term not in render_suppress_terms:
+                render_suppress_terms.append(term)
+        if anchor.get("dual_read_requirement"):
+            dual_read_requirement.update(anchor.pop("dual_read_requirement") or {})
+        else:
+            anchor.pop("dual_read_requirement", None)
+        if anchor.get("preset_affinity"):
+            preset_affinity.update(anchor.pop("preset_affinity") or {})
+        else:
+            anchor.pop("preset_affinity", None)
+        budget = normalize_int(anchor.pop("mixin_cue_budget", 0), 0)
+        if budget > 0:
+            mixin_cue_budgets.append(budget)
+    if not source_floors:
+        sources = {source for anchor in anchors for source in str(anchor.get("source") or "").split("+")}
+        if "role" in sources:
+            source_floors["role"] = 1
+        if "mixin" in sources:
+            source_floors["mixin"] = 1
     positive_minima = [value for value in min_anchor_candidates if value > 0]
     default_min = min(2, len(anchors)) if len(anchors) >= 2 else len(anchors)
     min_anchors = max(positive_minima) if positive_minima else default_min
     min_anchors = min(max(min_anchors, 0), len(anchors))
+    salience_floor = 1 if any("mixin" in str(anchor.get("source") or "").split("+") for anchor in anchors) else 0
+    role_terms: list[str] = []
+    mixin_terms: list[str] = []
+    for anchor in anchors:
+        target = role_terms if "role" in str(anchor.get("source") or "").split("+") else mixin_terms
+        for term in normalize_list(anchor.get("terms")):
+            if term not in target:
+                target.append(term)
+    if role_terms and mixin_terms:
+        dual_read_requirement.setdefault("enabled", True)
+        dual_read_requirement.setdefault("role_terms", role_terms[:8])
+        dual_read_requirement.setdefault("mixin_terms", mixin_terms[:8])
     return {
         "mode": "soft",
         "concept": concept,
         "min_anchors": min_anchors,
+        "source_floors": source_floors,
+        "group_floors": group_floors,
+        "salience_floor": salience_floor,
+        "visual_guards": visual_guards,
+        "render_priority_terms": render_priority_terms,
+        "free_slot_constraints": free_slot_constraints,
+        "render_suppress_terms": render_suppress_terms,
+        "dual_read_requirement": dual_read_requirement,
+        "preset_affinity": preset_affinity,
+        "mixin_cue_budget": min(mixin_cue_budgets) if mixin_cue_budgets else 0,
         "anchors": anchors,
     }
 
@@ -278,6 +611,19 @@ def load_concept_recipes(path: Path = DEFAULT_CONCEPT_RECIPES) -> dict[str, Any]
     if not path.exists():
         return {"roles": {}}
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def canonicalize_concept(concept: str, recipes: dict[str, Any]) -> str:
+    aliases = recipes.get("aliases", {}) if isinstance(recipes, dict) else {}
+    if not isinstance(aliases, dict):
+        return concept
+    normalized = concept
+    for alias, canonical in sorted(aliases.items(), key=lambda item: len(str(item[0])), reverse=True):
+        alias_text = str(alias or "").strip()
+        canonical_text = str(canonical or "").strip()
+        if alias_text and canonical_text:
+            normalized = normalized.replace(alias_text, canonical_text)
+    return normalized
 
 
 def match_concept_role(concept: str, roles: dict[str, Any]) -> tuple[str | None, str, dict[str, Any]]:
@@ -509,6 +855,7 @@ def resolve_concepts(
         concept = concept.strip()
         if not concept:
             continue
+        concept = canonicalize_concept(concept, recipes)
         mixin_matches = match_concept_mixins(concept, mixins)
         role_concept = concept_without_mixins(concept, [mixin for mixin, _ in mixin_matches])
         role, name, recipe = match_concept_role(role_concept or concept, roles)
@@ -516,6 +863,9 @@ def resolve_concepts(
         set_groups: list[tuple[Sequence[str], set[str]]] = []
         applied_recipes = [recipe] if recipe else []
         additional_requirements: list[str] = []
+        soft_safety_requirements: list[str] = []
+        soft_salience_cues: list[str] = []
+        soft_mixin_cue_budgets: list[int] = []
         intent_axes: list[str] = []
         soft_anchor_specs: list[dict[str, Any]] = []
         soft_min_anchor_candidates: list[int] = []
@@ -535,6 +885,11 @@ def resolve_concepts(
             )
             soft_min_anchor_candidates.append(soft_min_anchors_for_recipe(recipe, 1))
             additional_requirements.extend(normalize_list(recipe.get("additional")))
+            soft_safety_requirements.extend(soft_safety_requirements_for_recipe(recipe))
+            soft_salience_cues.extend(soft_salience_cues_for_recipe(recipe))
+            budget = mixin_cue_budget_for_recipe(recipe)
+            if budget > 0:
+                soft_mixin_cue_budgets.append(budget)
             additional_requirements.extend(
                 conditional_additional_requirements(
                     recipe,
@@ -549,6 +904,8 @@ def resolve_concepts(
             selected_bundle = select_bundle_for_mixin(concept, mixin, mixin_recipe, args, role)
             mixin_base_set = set_values_to_forced(mixin_recipe.get("set"))
             additional_requirements.extend(normalize_list(mixin_recipe.get("additional")))
+            soft_safety_requirements.extend(soft_safety_requirements_for_recipe(mixin_recipe))
+            soft_salience_cues.extend(soft_salience_cues_for_recipe(mixin_recipe))
             intent_axes.extend(normalize_list(mixin_recipe.get("intent_axis")))
             intensity_variant = select_mixin_intensity_variant(concept, mixin_recipe)
             if intensity_variant:
@@ -595,6 +952,11 @@ def resolve_concepts(
                     soft_min_anchors_for_recipe(selected_bundle, 2 if role else 1)
                 )
                 additional_requirements.extend(normalize_list(selected_bundle.get("additional")))
+                soft_safety_requirements.extend(soft_safety_requirements_for_recipe(selected_bundle))
+                soft_salience_cues.extend(soft_salience_cues_for_recipe(selected_bundle))
+                budget = mixin_cue_budget_for_recipe(selected_bundle)
+                if budget > 0:
+                    soft_mixin_cue_budgets.append(budget)
                 additional_requirements.extend(
                     conditional_additional_requirements(
                         mixin_recipe,
@@ -654,6 +1016,14 @@ def resolve_concepts(
                     "--soft-anchor-spec",
                     json.dumps(soft_anchor_spec, ensure_ascii=False, separators=(",", ":")),
                 )
+                for requirement in dict.fromkeys(soft_safety_requirements):
+                    add_option(resolved_args, "--additional-requirement", requirement)
+                defaults = recipes.get("soft_anchor_defaults", {}) if isinstance(recipes, dict) else {}
+                max_salience = normalize_int(defaults.get("max_salience_cues") if isinstance(defaults, dict) else None, 2)
+                if soft_mixin_cue_budgets:
+                    max_salience = min(max_salience, min(soft_mixin_cue_budgets))
+                for cue in list(dict.fromkeys(soft_salience_cues))[: max(0, max_salience)]:
+                    add_option(resolved_args, "--soft-requirement", cue)
         for axis in intent_axes:
             add_option(resolved_args, "--intent-axis", axis)
 
