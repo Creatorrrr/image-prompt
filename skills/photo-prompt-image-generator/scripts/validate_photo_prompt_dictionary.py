@@ -341,8 +341,13 @@ def validate_semantic_policy(data: dict[str, Any], errors: list[str]) -> None:
             slot = str(soft_body_guard.get("slot") or "")
             if slot and slot not in by_slot:
                 errors.append(f"semantic_policy.soft_body_first_guard.slot: unknown slot {slot}")
+            for guard_slot in normalize_list(soft_body_guard.get("slots")):
+                if guard_slot not in by_slot:
+                    errors.append(f"semantic_policy.soft_body_first_guard.slots: unknown slot {guard_slot}")
             for token in normalize_list(soft_body_guard.get("demote_facets")):
                 validate_guard_token("semantic_policy.soft_body_first_guard.demote_facets", token, vocab, errors)
+            for token in normalize_list(soft_body_guard.get("prefer_facets")):
+                validate_guard_token("semantic_policy.soft_body_first_guard.prefer_facets", token, vocab, errors)
             if "demote_multiplier" in soft_body_guard:
                 try:
                     value = float(soft_body_guard.get("demote_multiplier"))
@@ -351,6 +356,21 @@ def validate_semantic_policy(data: dict[str, Any], errors: list[str]) -> None:
                 else:
                     if not 0.0 <= value <= 1.0:
                         errors.append("semantic_policy.soft_body_first_guard.demote_multiplier: must be between 0 and 1")
+            per_slot_multiplier = soft_body_guard.get("per_slot_multiplier") or {}
+            if per_slot_multiplier and not isinstance(per_slot_multiplier, dict):
+                errors.append("semantic_policy.soft_body_first_guard.per_slot_multiplier: must be an object")
+            elif isinstance(per_slot_multiplier, dict):
+                for multiplier_slot, raw_value in per_slot_multiplier.items():
+                    if multiplier_slot not in by_slot:
+                        errors.append(f"semantic_policy.soft_body_first_guard.per_slot_multiplier: unknown slot {multiplier_slot}")
+                        continue
+                    try:
+                        value = float(raw_value)
+                    except (TypeError, ValueError):
+                        errors.append(f"semantic_policy.soft_body_first_guard.per_slot_multiplier.{multiplier_slot}: must be numeric")
+                    else:
+                        if not 0.0 <= value <= 1.0:
+                            errors.append(f"semantic_policy.soft_body_first_guard.per_slot_multiplier.{multiplier_slot}: must be between 0 and 1")
 
     soft_diversity = policy.get("soft_anchor_diversity", {}) or {}
     if soft_diversity:
@@ -779,6 +799,26 @@ def validate_concept_recipe_entry(
     for term in normalize_list(render_suppress_terms):
         if not str(term).strip():
             errors.append(f"{label}.render_suppress_terms: empty value")
+    render_directives = recipe.get("render_directives")
+    directive_items = [render_directives] if isinstance(render_directives, dict) else (render_directives or [])
+    if render_directives is not None and not isinstance(render_directives, (dict, list)):
+        errors.append(f"{label}.render_directives: must be an object or list")
+    elif isinstance(directive_items, list):
+        for index, directive in enumerate(directive_items):
+            directive_label = f"{label}.render_directives[{index}]"
+            if not isinstance(directive, dict):
+                errors.append(f"{directive_label}: must be an object")
+                continue
+            if not normalize_list(directive.get("cue_terms")):
+                errors.append(f"{directive_label}.cue_terms: required")
+            for term in normalize_list(directive.get("cue_terms")):
+                if not str(term).strip():
+                    errors.append(f"{directive_label}.cue_terms: empty value")
+            if not str(directive.get("positive_clause") or "").strip():
+                errors.append(f"{directive_label}.positive_clause: required")
+            for term in normalize_list(directive.get("suppress_terms")):
+                if not str(term).strip():
+                    errors.append(f"{directive_label}.suppress_terms: empty value")
     dual_read = recipe.get("dual_read_requirement") or {}
     if dual_read and not isinstance(dual_read, dict):
         errors.append(f"{label}.dual_read_requirement: must be an object")

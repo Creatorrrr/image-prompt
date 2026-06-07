@@ -853,6 +853,10 @@ VISUAL_REVIEW_FIELDS = (
     "preset_conflict",
     "role_anchor",
     "mixin_anchor",
+    "body_coverage_guard",
+    "render_modality",
+    "framing_constraint",
+    "body_emphasis_survived",
 )
 
 
@@ -889,6 +893,14 @@ def summarize_visual_review(path: Path) -> JsonDict:
             failures.append("archetype_first_read")
         if case.get("body_drift") == "present":
             failures.append("body_drift")
+        if case.get("body_coverage_guard") == "fail":
+            failures.append("body_coverage_guard")
+        if case.get("render_modality") == "fail":
+            failures.append("render_modality")
+        if case.get("framing_constraint") == "fail":
+            failures.append("framing_constraint")
+        if case.get("body_emphasis_survived") in {"yes", "present", "fail"}:
+            failures.append("body_emphasis_survived")
         if case.get("role_anchor") == "fail":
             failures.append("role_anchor")
         if case.get("mixin_anchor") == "fail":

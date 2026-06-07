@@ -1241,6 +1241,54 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertEqual(forwarded_spec.get("mixin_cue_budget"), 1)
         self.assertIn("discouraged_axes", forwarded_spec["preset_affinity"])
 
+    def test_concept_soft_spec_carries_v6_render_directives(self):
+        payload = self.run_wrapper_json(
+            "--concept",
+            "카리나 메이드 흡혈귀",
+            "--concept-mode",
+            "soft",
+            "--explain-concept",
+            "--selection-mode",
+            "semantic",
+            "--plain",
+            "--no-negative",
+            "--seed",
+            "6106",
+        )
+
+        spec_index = payload["forward_args"].index("--soft-anchor-spec") + 1
+        forwarded_spec = json.loads(payload["forward_args"][spec_index])
+        directive_ids = {directive["id"] for directive in forwarded_spec["render_directives"]}
+
+        self.assertIn("vampire_cast_shadow_not_wings", directive_ids)
+        vampire_directive = next(
+            directive
+            for directive in forwarded_spec["render_directives"]
+            if directive["id"] == "vampire_cast_shadow_not_wings"
+        )
+        self.assertIn("flat dark shadow", vampire_directive["positive_clause"])
+        self.assertIn("physical wings", vampire_directive["suppress_terms"])
+
+        angel_payload = self.run_wrapper_json(
+            "--concept",
+            "아일릿 원희 사복 여친 천사",
+            "--concept-mode",
+            "soft",
+            "--explain-concept",
+            "--selection-mode",
+            "semantic",
+            "--plain",
+            "--no-negative",
+            "--seed",
+            "6107",
+        )
+        angel_spec_index = angel_payload["forward_args"].index("--soft-anchor-spec") + 1
+        angel_spec = json.loads(angel_payload["forward_args"][angel_spec_index])
+        self.assertIn(
+            "angel_trace_shadow_not_costume",
+            {directive["id"] for directive in angel_spec["render_directives"]},
+        )
+
     def test_soft_body_first_guard_demotes_body_emphasis_candidates(self):
         data = {
             "semantic_policy": {
@@ -1295,6 +1343,65 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertEqual(weights["hands_nails_accessory_closeup"], 1.0)
         self.assertTrue(contract["soft_body_first_guard_events"][0]["body_first_guard_applied"])
 
+    def test_soft_body_first_guard_supports_slots_prefer_and_per_slot_multiplier(self):
+        context = {
+            "semantic_policy": {
+                "schema_version": 1,
+                "soft_body_first_guard": {
+                    "slots": ["wardrobe_style", "subject_framing"],
+                    "slot": "body_framing",
+                    "demote_facets": ["soft_body_role:body_emphasis"],
+                    "prefer_facets": ["soft_body_role:narrative_safe"],
+                    "demote_multiplier": 0.5,
+                    "per_slot_multiplier": {"wardrobe_style": 0.2},
+                },
+            },
+            "policy_schema_version": 1,
+            "semantic_policy_hash": "test-policy",
+        }
+        contract = {
+            "soft_anchor_policy": self.generator.normalize_soft_anchor_spec(
+                {
+                    "mode": "soft",
+                    "concept": "광부 악마",
+                    "min_anchors": 1,
+                    "anchors": [
+                        {
+                            "slot": "costume_style",
+                            "ids": ["miner_workwear_hard_hat"],
+                            "pool": ["miner_workwear_hard_hat"],
+                            "source": "role",
+                            "critical": True,
+                        }
+                    ],
+                }
+            )
+        }
+        pool = [
+            {
+                "id": "street_jacket_boots",
+                "weight": 1.0,
+                "facets": {"soft_body_role": ["body_emphasis"]},
+            },
+            {
+                "id": "knit_cardigan_jeans",
+                "weight": 1.0,
+                "facets": {"soft_body_role": ["narrative_safe"]},
+            },
+            {"id": "neutral_wardrobe", "weight": 1.0},
+        ]
+
+        adjusted = self.generator.apply_soft_body_first_guard("wardrobe_style", pool, context, contract)
+
+        weights = {item["id"]: item["weight"] for item in adjusted}
+        self.assertEqual(weights["street_jacket_boots"], 0.2)
+        self.assertGreater(weights["knit_cardigan_jeans"], 1.0)
+        event = contract["soft_body_first_guard_events"][0]
+        self.assertEqual(event["slot"], "wardrobe_style")
+        self.assertIn("wardrobe_style", event["guard_slots"])
+        self.assertEqual(event["demoted_ids"], ["street_jacket_boots"])
+        self.assertEqual(event["preferred_ids"], ["knit_cardigan_jeans"])
+
     def test_soft_free_slot_constraints_narrow_pool_and_trace(self):
         policy = self.generator.normalize_soft_anchor_spec(
             {
@@ -1338,6 +1445,44 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertEqual(event["slot"], "subject_framing")
         self.assertEqual(event["before"], 3)
         self.assertEqual(event["after"], 1)
+
+    def test_soft_free_slot_constraints_add_constrained_slot_to_generation(self):
+        semantic_index = self.build_mock_semantic_index()
+        original_embedder = self.generator.embed_texts_with_gemini
+        self.generator.embed_texts_with_gemini = self.fake_gemini_vectors
+        try:
+            item = self.generate(
+                "street_documentary",
+                seed=6101,
+                include_negative=False,
+                intent="간호사 얀데레",
+                selection_mode="semantic",
+                semantic_index=semantic_index,
+                gemini_api_key="test-api-key",
+                soft_anchor_spec={
+                    "mode": "soft",
+                    "concept": "간호사 얀데레",
+                    "min_anchors": 1,
+                    "free_slot_constraints": {
+                        "subject_framing": {
+                            "allow_pool": ["head_and_shoulders_crop"],
+                            "deny_pool": ["full_body_framing"],
+                        }
+                    },
+                    "anchors": [
+                        {
+                            "slot": "subject",
+                            "ids": ["fashion_influencer"],
+                            "pool": ["fashion_influencer"],
+                            "source": "role",
+                        }
+                    ],
+                },
+            )
+        finally:
+            self.generator.embed_texts_with_gemini = original_embedder
+
+        self.assertEqual(item["choices"]["subject_framing"]["id"], "head_and_shoulders_crop")
 
     def test_soft_anchor_probability_floor_preserves_variant_candidates(self):
         policy = self.generator.normalize_soft_anchor_spec(
@@ -1401,6 +1546,42 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertIn("bare shoulders", item["negative_en"])
         self.assertIn("full-body costume display", item["negative_en"])
 
+    def test_soft_render_directive_injects_positive_clause_and_negative_terms(self):
+        item = self.generate(
+            "compact_cinematic_prop_portrait",
+            seed=6102,
+            include_negative=True,
+            forced_choices={"prop": ["bat_shadow_lace_prop"]},
+            soft_anchor_spec={
+                "mode": "soft",
+                "concept": "메이드 흡혈귀",
+                "min_anchors": 1,
+                "render_directives": [
+                    {
+                        "id": "vampire_cast_shadow_not_wings",
+                        "cue_terms": ["bat-wing-shaped lace shadow"],
+                        "render_as": "cast_shadow",
+                        "positive_clause": "the bat-wing motif appears only as a flat dark shadow cast onto a nearby wall",
+                        "suppress_terms": ["physical wings", "wing prop"],
+                    }
+                ],
+                "anchors": [
+                    {
+                        "slot": "prop",
+                        "ids": ["bat_shadow_lace_prop"],
+                        "pool": ["bat_shadow_lace_prop"],
+                        "source": "mixin",
+                    }
+                ],
+            },
+        )
+
+        self.assertIn("flat dark shadow cast onto a nearby wall", item["prompt_en"])
+        self.assertIn("physical wings", item["negative_en"])
+        self.assertIn("wing prop", item["negative_en"])
+        directive_check = next(check for check in item["quality"]["checks"] if check["id"] == "soft_render_directives")
+        self.assertEqual(directive_check["render_directive_count"], 1)
+
     def test_forced_preset_affinity_records_policy_conflict(self):
         item = self.generate(
             "candid_iphone_portrait",
@@ -1437,6 +1618,51 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             summary["visual_review"]["field_summaries"]["body_drift"]["counts"].get("present"),
             1,
         )
+
+    def test_visual_review_summary_reports_v6_fields(self):
+        eval_semantic = load_eval_semantic()
+        with tempfile.TemporaryDirectory() as tmp:
+            review_path = Path(tmp) / "review.json"
+            review_path.write_text(
+                json.dumps(
+                    {
+                        "cases": [
+                            {
+                                "case": "카리나 메이드 흡혈귀",
+                                "dual_read": "pass",
+                                "archetype_first_read": "pass",
+                                "body_drift": "none",
+                                "role_anchor": "pass",
+                                "mixin_anchor": "pass",
+                                "body_coverage_guard": "pass",
+                                "render_modality": "fail",
+                                "framing_constraint": "pass",
+                                "body_emphasis_survived": "no",
+                            },
+                            {
+                                "case": "유나 바니걸 멘헤라",
+                                "dual_read": "pass",
+                                "archetype_first_read": "pass",
+                                "body_drift": "none",
+                                "role_anchor": "pass",
+                                "mixin_anchor": "pass",
+                                "body_coverage_guard": "pass",
+                                "render_modality": "pass",
+                                "framing_constraint": "pass",
+                                "body_emphasis_survived": "yes",
+                            },
+                        ]
+                    },
+                    ensure_ascii=False,
+                ),
+                encoding="utf-8",
+            )
+            summary = eval_semantic.summarize_visual_review(review_path)
+
+        self.assertEqual(summary["visual_review"]["case_count"], 2)
+        self.assertEqual(summary["visual_review"]["failed_case_count"], 2)
+        self.assertEqual(summary["visual_review"]["field_summaries"]["render_modality"]["counts"]["fail"], 1)
+        self.assertEqual(summary["visual_review"]["field_summaries"]["body_emphasis_survived"]["counts"]["yes"], 1)
 
     def test_concept_recipe_princess_base_uses_korean_court_lineage_language(self):
         payload = self.run_wrapper_json(

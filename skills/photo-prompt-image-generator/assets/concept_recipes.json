@@ -156,7 +156,22 @@
       ],
       "salience_cues": [
         "covered nurse uniform with hospital or clinical context"
-      ]
+      ],
+      "free_slot_constraints": {
+        "subject_framing": {
+          "deny_pool": [
+            "full_body_framing",
+            "three_quarter_body_framing",
+            "knee_up_framing"
+          ],
+          "prefer_ids": [
+            "head_and_shoulders_crop",
+            "upper_body_framing",
+            "close_up_face_crop",
+            "detail_crop_hands_accessories"
+          ]
+        }
+      }
     },
     "경찰": {
       "preset": "japanese_otaku_costume_portrait",
@@ -298,7 +313,22 @@
       ],
       "salience_cues": [
         "hard hat, workwear, and underground mine tunnel are readable at first glance"
-      ]
+      ],
+      "free_slot_constraints": {
+        "subject_framing": {
+          "deny_pool": [
+            "full_body_framing",
+            "three_quarter_body_framing",
+            "knee_up_framing"
+          ],
+          "prefer_ids": [
+            "head_and_shoulders_crop",
+            "upper_body_framing",
+            "close_up_face_crop",
+            "detail_crop_hands_accessories"
+          ]
+        }
+      }
     },
     "공주": {
       "preset": "joseon_period_portrait",
@@ -448,7 +478,22 @@
           }
         }
       ],
-      "mixin_cue_budget": 1
+      "mixin_cue_budget": 1,
+      "free_slot_constraints": {
+        "subject_framing": {
+          "deny_pool": [
+            "full_body_framing",
+            "three_quarter_body_framing",
+            "knee_up_framing"
+          ],
+          "prefer_ids": [
+            "head_and_shoulders_crop",
+            "upper_body_framing",
+            "close_up_face_crop",
+            "detail_crop_hands_accessories"
+          ]
+        }
+      }
     },
     "사복 여친": {
       "preset": "candid_iphone_portrait",
@@ -1282,7 +1327,27 @@
             "broken_glass_fragments_frame"
           ]
         }
-      }
+      },
+      "render_directives": [
+        {
+          "id": "vampire_cast_shadow_not_wings",
+          "cue_terms": [
+            "bat-wing-shaped lace shadow",
+            "bat-like shadow",
+            "bat-wing shadow",
+            "bat shadow"
+          ],
+          "render_as": "cast_shadow",
+          "positive_clause": "the bat-wing motif appears only as a flat dark shadow cast onto a nearby wall, floor, shoulder-side surface, or lace screen, with no physical wings, no wing props, and no costume attachment on the back",
+          "suppress_terms": [
+            "physical wings",
+            "wing prop",
+            "cosplay wings",
+            "3D wing attachment",
+            "wings on back"
+          ]
+        }
+      ]
     },
     "악마": {
       "preset": "compact_cinematic_prop_portrait",
@@ -2249,7 +2314,27 @@
               "min_hits": 1
             }
           ],
-          "mixin_cue_budget": 1
+          "mixin_cue_budget": 1,
+          "render_directives": [
+            {
+              "id": "angel_trace_shadow_not_costume",
+              "cue_terms": [
+                "soft wing-shaped shadow",
+                "wing-shaped shadow",
+                "subtle angel wings",
+                "small wings",
+                "small halo"
+              ],
+              "render_as": "light_shadow_trace",
+              "positive_clause": "the angel cue appears as a small halo plus a visible wing-shaped light or shadow trace on the background surface near the shoulders, not as large physical wings, not as a back-mounted costume piece, and not as a fantasy transformation",
+              "suppress_terms": [
+                "large physical wings",
+                "back-mounted wings",
+                "costume wings",
+                "giant fantasy wings"
+              ]
+            }
+          ]
         },
         {
           "id": "shared_soft_halo_portrait",
@@ -2412,7 +2497,27 @@
           "close",
           "candid"
         ]
-      }
+      },
+      "render_directives": [
+        {
+          "id": "angel_trace_shadow_not_costume",
+          "cue_terms": [
+            "soft wing-shaped shadow",
+            "wing-shaped shadow",
+            "subtle angel wings",
+            "small wings",
+            "small halo"
+          ],
+          "render_as": "light_shadow_trace",
+          "positive_clause": "the angel cue appears as a small halo plus a visible wing-shaped light or shadow trace on the background surface near the shoulders, not as large physical wings, not as a back-mounted costume piece, and not as a fantasy transformation",
+          "suppress_terms": [
+            "large physical wings",
+            "back-mounted wings",
+            "costume wings",
+            "giant fantasy wings"
+          ]
+        }
+      ]
     },
     "팜므파탈": {
       "preset": "compact_cinematic_prop_portrait",

@@ -265,6 +265,32 @@ def render_suppress_terms_for_recipe(recipe: dict[str, Any]) -> list[str]:
     return normalize_list(recipe.get("render_suppress_terms"))
 
 
+def render_directives_for_recipe(recipe: dict[str, Any]) -> list[dict[str, Any]]:
+    raw = recipe.get("render_directives")
+    if isinstance(raw, dict):
+        raw = [raw]
+    if not isinstance(raw, list):
+        return []
+    directives: list[dict[str, Any]] = []
+    for index, item in enumerate(raw):
+        if not isinstance(item, dict):
+            continue
+        cue_terms = normalize_list(item.get("cue_terms"))
+        positive_clause = str(item.get("positive_clause") or "").strip()
+        if not cue_terms or not positive_clause:
+            continue
+        directives.append(
+            {
+                "id": str(item.get("id") or f"render_directive_{index}"),
+                "cue_terms": cue_terms,
+                "render_as": str(item.get("render_as") or ""),
+                "positive_clause": positive_clause,
+                "suppress_terms": normalize_list(item.get("suppress_terms")),
+            }
+        )
+    return directives
+
+
 def dual_read_requirement_for_recipe(recipe: dict[str, Any]) -> dict[str, Any]:
     raw = recipe.get("dual_read_requirement")
     return raw if isinstance(raw, dict) else {}
@@ -330,6 +356,7 @@ def soft_anchor_specs_from_mapping(
     render_priority_terms = render_priority_terms_for_recipe(recipe)
     free_slot_constraints = free_slot_constraints_for_recipe(recipe)
     render_suppress_terms = render_suppress_terms_for_recipe(recipe)
+    render_directives = render_directives_for_recipe(recipe)
     dual_read_requirement = dual_read_requirement_for_recipe(recipe)
     preset_affinity = preset_affinity_for_recipe(recipe)
     mixin_cue_budget = mixin_cue_budget_for_recipe(recipe)
@@ -370,6 +397,7 @@ def soft_anchor_specs_from_mapping(
                 "render_priority_terms": render_priority_terms,
                 "free_slot_constraints": free_slot_constraints,
                 "render_suppress_terms": render_suppress_terms,
+                "render_directives": render_directives,
                 "dual_read_requirement": dual_read_requirement,
                 "preset_affinity": preset_affinity,
                 "mixin_cue_budget": mixin_cue_budget,
@@ -408,6 +436,7 @@ def soft_anchor_specs_from_mapping(
                     "render_priority_terms": render_priority_terms,
                     "free_slot_constraints": free_slot_constraints,
                     "render_suppress_terms": render_suppress_terms,
+                    "render_directives": render_directives,
                     "dual_read_requirement": dual_read_requirement,
                     "preset_affinity": preset_affinity,
                     "mixin_cue_budget": mixin_cue_budget,
@@ -451,6 +480,7 @@ def dedupe_soft_anchor_specs(specs: Sequence[dict[str, Any]]) -> list[dict[str, 
                 "render_priority_terms": [],
                 "free_slot_constraints": {},
                 "render_suppress_terms": [],
+                "render_directives": [],
                 "dual_read_requirement": {},
                 "preset_affinity": {},
                 "mixin_cue_budget": 0,
@@ -498,6 +528,10 @@ def dedupe_soft_anchor_specs(specs: Sequence[dict[str, Any]]) -> list[dict[str, 
         for term in normalize_list(spec.get("render_suppress_terms")):
             if term not in current["render_suppress_terms"]:
                 current["render_suppress_terms"].append(term)
+        for directive in spec.get("render_directives", []) or []:
+            current.setdefault("render_directives", [])
+            if directive not in current["render_directives"]:
+                current["render_directives"].append(directive)
         if spec.get("dual_read_requirement"):
             current["dual_read_requirement"].update(spec.get("dual_read_requirement") or {})
         if spec.get("preset_affinity"):
@@ -527,6 +561,7 @@ def build_soft_anchor_spec(
     render_priority_terms: list[dict[str, Any]] = []
     free_slot_constraints: dict[str, Any] = {}
     render_suppress_terms: list[str] = []
+    render_directives: list[dict[str, Any]] = []
     dual_read_requirement: dict[str, Any] = {}
     preset_affinity: dict[str, Any] = {}
     mixin_cue_budgets: list[int] = []
@@ -549,6 +584,9 @@ def build_soft_anchor_spec(
         for term in normalize_list(anchor.pop("render_suppress_terms", [])):
             if term not in render_suppress_terms:
                 render_suppress_terms.append(term)
+        for directive in anchor.pop("render_directives", []) or []:
+            if isinstance(directive, dict) and directive not in render_directives:
+                render_directives.append(directive)
         if anchor.get("dual_read_requirement"):
             dual_read_requirement.update(anchor.pop("dual_read_requirement") or {})
         else:
@@ -593,6 +631,7 @@ def build_soft_anchor_spec(
         "render_priority_terms": render_priority_terms,
         "free_slot_constraints": free_slot_constraints,
         "render_suppress_terms": render_suppress_terms,
+        "render_directives": render_directives,
         "dual_read_requirement": dual_read_requirement,
         "preset_affinity": preset_affinity,
         "mixin_cue_budget": min(mixin_cue_budgets) if mixin_cue_budgets else 0,

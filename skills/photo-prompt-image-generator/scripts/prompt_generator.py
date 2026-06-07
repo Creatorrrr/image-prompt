@@ -3832,19 +3832,43 @@ def evaluate_generation_quality(
             }
         )
 
-        body_slot = str((semantic_policy_from_source(semantic_context).get("soft_body_first_guard", {}) or {}).get("slot") or "body_framing")
-        body_entry = render_picked.get(body_slot)
-        body_tokens = facet_tokens(body_entry) if body_entry else set()
-        body_first = "soft_body_role:body_emphasis" in body_tokens
+        guard_policy = (semantic_policy_from_source(semantic_context).get("soft_body_first_guard", {}) or {})
+        guard_slots = normalize_list(guard_policy.get("slots"))
+        legacy_guard_slot = str(guard_policy.get("slot") or "").strip()
+        if legacy_guard_slot and legacy_guard_slot not in guard_slots:
+            guard_slots.append(legacy_guard_slot)
+        if not guard_slots:
+            guard_slots = ["body_framing"]
+        demote_facets = normalize_list(guard_policy.get("demote_facets")) or ["soft_body_role:body_emphasis"]
+        protected_ids = soft_anchor_all_ids(soft_policy)
+        body_emphasis_survivors: List[JsonDict] = []
+        for guard_slot in guard_slots:
+            body_entry = render_picked.get(guard_slot)
+            if not body_entry or str(body_entry.get("id") or "") in protected_ids:
+                continue
+            if entry_matches_guard_facets(body_entry, demote_facets):
+                body_emphasis_survivors.append({"slot": guard_slot, "id": body_entry.get("id")})
+        body_first = bool(body_emphasis_survivors)
         if body_first:
             fail_reasons.append("body_first_framing_present")
         checks.append(
             {
                 "id": "soft_body_first_guard",
                 "status": "fail" if body_first else "pass",
-                "slot": body_slot,
-                "selected": body_entry.get("id") if body_entry else None,
+                "guard_slots": guard_slots,
+                "body_emphasis_survived": body_emphasis_survivors,
                 "body_first_guard_applied": bool(contract.get("soft_body_first_guard_events")),
+                "events": contract.get("soft_body_first_guard_events", []),
+            }
+        )
+
+        directive_events = contract.get("soft_render_directive_events", []) or []
+        checks.append(
+            {
+                "id": "soft_render_directives",
+                "status": "pass",
+                "events": directive_events,
+                "render_directive_count": len(directive_events),
             }
         )
 
@@ -3998,6 +4022,7 @@ def normalize_soft_anchor_spec(payload: Any) -> JsonDict:
             "render_priority_terms": [],
             "free_slot_constraints": {},
             "render_suppress_terms": [],
+            "render_directives": [],
             "dual_read_requirement": {},
             "preset_affinity": {},
         }
@@ -4013,6 +4038,7 @@ def normalize_soft_anchor_spec(payload: Any) -> JsonDict:
         raw_render_priority_terms = []
         raw_free_slot_constraints = {}
         raw_render_suppress_terms = []
+        raw_render_directives = []
         raw_dual_read_requirement = {}
         raw_preset_affinity = {}
     elif isinstance(payload, dict):
@@ -4027,6 +4053,7 @@ def normalize_soft_anchor_spec(payload: Any) -> JsonDict:
         raw_render_priority_terms = payload.get("render_priority_terms", []) or []
         raw_free_slot_constraints = payload.get("free_slot_constraints", {}) or {}
         raw_render_suppress_terms = payload.get("render_suppress_terms", []) or []
+        raw_render_directives = payload.get("render_directives", []) or []
         raw_dual_read_requirement = payload.get("dual_read_requirement", {}) or {}
         raw_preset_affinity = payload.get("preset_affinity", {}) or {}
     else:
@@ -4094,6 +4121,7 @@ def normalize_soft_anchor_spec(payload: Any) -> JsonDict:
     render_priority_terms = normalize_render_priority_terms(raw_render_priority_terms)
     free_slot_constraints = normalize_soft_free_slot_constraints(raw_free_slot_constraints)
     render_suppress_terms = normalize_list(raw_render_suppress_terms)
+    render_directives = normalize_soft_render_directives(raw_render_directives)
     dual_read_requirement = normalize_dual_read_requirement(raw_dual_read_requirement)
     preset_affinity = normalize_soft_preset_affinity(raw_preset_affinity)
     return {
@@ -4108,6 +4136,7 @@ def normalize_soft_anchor_spec(payload: Any) -> JsonDict:
         "render_priority_terms": render_priority_terms,
         "free_slot_constraints": free_slot_constraints,
         "render_suppress_terms": render_suppress_terms,
+        "render_directives": render_directives,
         "dual_read_requirement": dual_read_requirement,
         "preset_affinity": preset_affinity,
         "anchors": anchors,
@@ -4145,6 +4174,10 @@ def parse_soft_anchor_specs(items: Optional[Sequence[str]]) -> JsonDict:
         for term in normalize_list(spec.get("render_suppress_terms")):
             if term not in merged["render_suppress_terms"]:
                 merged["render_suppress_terms"].append(term)
+        merged.setdefault("render_directives", [])
+        for directive in spec.get("render_directives", []) or []:
+            if directive not in merged["render_directives"]:
+                merged["render_directives"].append(directive)
         if spec.get("dual_read_requirement"):
             merged["dual_read_requirement"] = spec.get("dual_read_requirement")
         if spec.get("preset_affinity"):
@@ -4190,6 +4223,32 @@ def normalize_soft_preset_affinity(raw: Any) -> JsonDict:
         if values:
             normalized[key] = values
     return normalized
+
+
+def normalize_soft_render_directives(raw: Any) -> List[JsonDict]:
+    if isinstance(raw, dict):
+        raw_items = [raw]
+    elif isinstance(raw, list):
+        raw_items = [item for item in raw if isinstance(item, dict)]
+    else:
+        raw_items = []
+    directives: List[JsonDict] = []
+    for index, item in enumerate(raw_items):
+        cue_terms = normalize_list(item.get("cue_terms"))
+        positive_clause = str(item.get("positive_clause") or "").strip()
+        suppress_terms = normalize_list(item.get("suppress_terms"))
+        if not cue_terms or not positive_clause:
+            continue
+        directives.append(
+            {
+                "id": str(item.get("id") or f"render_directive_{index}"),
+                "cue_terms": cue_terms,
+                "render_as": str(item.get("render_as") or ""),
+                "positive_clause": positive_clause,
+                "suppress_terms": suppress_terms,
+            }
+        )
+    return directives
 
 
 def normalize_dual_read_requirement(raw: Any) -> JsonDict:
@@ -4503,6 +4562,7 @@ def soft_anchor_trace(policy: Optional[JsonDict], picked: Optional[Dict[str, Ent
         "render_priority_terms": policy.get("render_priority_terms", []) or [],
         "free_slot_constraints": policy.get("free_slot_constraints", {}) or {},
         "render_suppress_terms": policy.get("render_suppress_terms", []) or [],
+        "render_directives": policy.get("render_directives", []) or [],
         "dual_read_requirement": policy.get("dual_read_requirement", {}) or {},
         "preset_affinity": policy.get("preset_affinity", {}) or {},
         "required_anchor_count": soft_anchor_required_count(policy),
@@ -4551,20 +4611,33 @@ def apply_soft_body_first_guard(
     policy = (generation_contract or {}).get("soft_anchor_policy", {})
     if not policy or not policy.get("enabled") or not semantic_context:
         return list(pool)
-    guard_slot = str((semantic_policy_from_source(semantic_context).get("soft_body_first_guard", {}) or {}).get("slot") or "body_framing")
-    if slot != guard_slot:
+    guard_policy = (semantic_policy_from_source(semantic_context).get("soft_body_first_guard", {}) or {})
+    guard_slots = normalize_list(guard_policy.get("slots"))
+    legacy_slot = str(guard_policy.get("slot") or "").strip()
+    if legacy_slot and legacy_slot not in guard_slots:
+        guard_slots.append(legacy_slot)
+    if not guard_slots:
+        guard_slots = ["body_framing"]
+    if slot not in guard_slots:
         return list(pool)
     if not any(anchor.get("critical") for anchor in policy.get("anchors", []) or []):
         return list(pool)
-    guard_policy = (semantic_policy_from_source(semantic_context).get("soft_body_first_guard", {}) or {})
     demote_facets = normalize_list(guard_policy.get("demote_facets")) or ["soft_body_role:body_emphasis"]
+    prefer_facets = normalize_list(guard_policy.get("prefer_facets"))
     try:
         multiplier = float(guard_policy.get("demote_multiplier", 0.15))
     except (TypeError, ValueError):
         multiplier = 0.15
+    per_slot_multiplier = guard_policy.get("per_slot_multiplier", {}) or {}
+    if isinstance(per_slot_multiplier, dict) and slot in per_slot_multiplier:
+        try:
+            multiplier = float(per_slot_multiplier.get(slot))
+        except (TypeError, ValueError):
+            multiplier = multiplier
     multiplier = min(max(multiplier, 0.0), 1.0)
     adjusted: List[Entry] = []
     demoted: List[str] = []
+    preferred: List[str] = []
     for item in pool:
         if entry_matches_guard_facets(item, demote_facets):
             copied = dict(item)
@@ -4572,9 +4645,14 @@ def apply_soft_body_first_guard(
             copied["weight"] = round(base_weight * multiplier, 6)
             adjusted.append(copied)
             demoted.append(str(item.get("id")))
+        elif prefer_facets and entry_matches_guard_facets(item, prefer_facets):
+            copied = dict(item)
+            copied["weight"] = round(item_base_weight(item) * SOFT_ANCHOR_PROMOTED_WEIGHT_MULTIPLIER, 6)
+            adjusted.append(copied)
+            preferred.append(str(item.get("id")))
         else:
             adjusted.append(item)
-    if demoted:
+    if demoted or preferred:
         record_generation_contract_event(
             generation_contract,
             "soft_body_first_guard_events",
@@ -4583,9 +4661,12 @@ def apply_soft_body_first_guard(
                 "reason": "soft_body_first_guard",
                 "reason_code": "soft_body_first_guard",
                 "body_first_guard_applied": True,
+                "guard_slots": guard_slots,
                 "demote_facets": demote_facets,
+                "prefer_facets": prefer_facets,
                 "demote_multiplier": round(multiplier, 4),
                 "demoted_ids": sorted(set(demoted)),
+                "preferred_ids": sorted(set(preferred)),
                 "policy_schema_version": semantic_policy_schema_version(semantic_context),
                 "semantic_policy_hash": semantic_context.get("semantic_policy_hash"),
             },
@@ -6783,6 +6864,65 @@ def soft_render_suppress_negative_entries(policy: Optional[JsonDict]) -> List[En
     return entries
 
 
+def render_directive_match_blob(picked: Dict[str, Entry], policy: Optional[JsonDict]) -> str:
+    parts: List[str] = []
+    for slot, entry in picked.items():
+        parts.append(slot)
+        parts.append(str(entry.get("id") or ""))
+        parts.append(localize(entry, "en"))
+        parts.append(localize(entry, "ko"))
+        parts.extend(normalize_list(entry.get("tags")))
+        parts.extend(normalize_list(entry.get("keywords")))
+        parts.extend(normalize_list(entry.get("aliases")))
+        parts.append(str(entry.get("embedding_text") or ""))
+    for anchor in (policy or {}).get("anchors", []) or []:
+        parts.extend(normalize_list(anchor.get("terms")))
+        parts.extend(normalize_list(anchor.get("ids")))
+        parts.extend(normalize_list(anchor.get("pool")))
+    return " ".join(str(part).lower() for part in parts if str(part).strip())
+
+
+def soft_render_directive_events(policy: Optional[JsonDict], picked: Dict[str, Entry]) -> List[JsonDict]:
+    if not policy or not policy.get("enabled"):
+        return []
+    blob = render_directive_match_blob(picked, policy)
+    events: List[JsonDict] = []
+    for directive in policy.get("render_directives", []) or []:
+        cue_terms = normalize_list(directive.get("cue_terms"))
+        matched_terms = [term for term in cue_terms if str(term).strip() and str(term).lower() in blob]
+        if not matched_terms:
+            continue
+        positive_clause = str(directive.get("positive_clause") or "").strip()
+        if not positive_clause:
+            continue
+        events.append(
+            {
+                "id": str(directive.get("id") or "render_directive"),
+                "cue_matched": True,
+                "matched_terms": matched_terms,
+                "render_as": str(directive.get("render_as") or ""),
+                "positive_clause": positive_clause,
+                "positive_clause_injected": True,
+                "suppress_terms": normalize_list(directive.get("suppress_terms")),
+                "suppress_terms_injected": bool(normalize_list(directive.get("suppress_terms"))),
+            }
+        )
+    return events
+
+
+def soft_render_directive_negative_entries(events: Sequence[JsonDict]) -> List[Entry]:
+    entries: List[Entry] = []
+    seen: Set[str] = set()
+    for event in events:
+        for term in normalize_list(event.get("suppress_terms")):
+            key = term.strip()
+            if not key or key.lower() in seen:
+                continue
+            seen.add(key.lower())
+            entries.append({"id": f"soft_directive_suppress_{stable_text_id(key)}", "en": key, "ko": key})
+    return entries
+
+
 def generate_once(
     data: JsonDict,
     rng: random.Random,
@@ -6902,6 +7042,9 @@ def generate_once(
     for slot in soft_anchor_slots(generation_contract.get("soft_anchor_policy")):
         if slot in data.get("slots", {}) and slot not in slots_to_pick:
             slots_to_pick.append(slot)
+    for slot in (generation_contract.get("soft_anchor_policy", {}) or {}).get("free_slot_constraints", {}) or {}:
+        if slot in data.get("slots", {}) and slot not in slots_to_pick:
+            slots_to_pick.append(slot)
     for slot in semantic_steering_slots(semantic_context, data):
         if slot not in slots_to_pick:
             slots_to_pick.append(slot)
@@ -6972,6 +7115,31 @@ def generate_once(
         sync_generation_contract_axis_coverage(generation_contract, semantic_context)
 
     render_picked = render_guarded_picked(data, preset, picked, generation_contract)
+    directive_events = soft_render_directive_events(generation_contract.get("soft_anchor_policy"), render_picked)
+    effective_additional_requirements = normalize_additional_requirements(additional_requirements)
+    if directive_events:
+        for event in directive_events:
+            record_generation_contract_event(
+                generation_contract,
+                "soft_render_directive_events",
+                {
+                    "id": event.get("id"),
+                    "cue_matched": True,
+                    "matched_terms": event.get("matched_terms", []),
+                    "render_as": event.get("render_as", ""),
+                    "positive_clause_injected": True,
+                    "suppress_terms_injected": bool(event.get("suppress_terms")),
+                },
+            )
+            clause = str(event.get("positive_clause") or "").strip()
+            if clause and clause not in effective_additional_requirements:
+                effective_additional_requirements.append(clause)
+        generation_contract["soft_render_directive_suppress_terms"] = [
+            term
+            for event in directive_events
+            for term in normalize_list(event.get("suppress_terms"))
+        ]
+    generation_contract["additional_requirements"] = effective_additional_requirements
 
     record_batch_generation(
         semantic_context,
@@ -6997,7 +7165,7 @@ def generate_once(
             reference_edit_mode,
             trend_layer,
             generation_contract,
-            additional_requirements,
+            effective_additional_requirements,
             likeness_mode,
         )
 
@@ -7019,6 +7187,7 @@ def generate_once(
     if include_negative:
         negative_entries = choose_negative_entries(data, rng, negative_count, has_surreal_layer(render_picked), render_picked)
         soft_suppress_entries = soft_render_suppress_negative_entries(generation_contract.get("soft_anchor_policy"))
+        soft_suppress_entries.extend(soft_render_directive_negative_entries(directive_events))
         if soft_suppress_entries:
             existing = {localize(entry, "en").lower() for entry in negative_entries}
             for entry in soft_suppress_entries:
@@ -7044,7 +7213,7 @@ def generate_once(
         "requested_selection_mode": requested_selection_mode,
         "tags_hash": (semantic_context or {}).get("dictionary_hash"),
         "concept_lock": normalize_concept_locks(concept_locks),
-        "additional_requirements": normalize_additional_requirements(additional_requirements),
+        "additional_requirements": effective_additional_requirements,
         "likeness_mode": likeness_mode,
         "argv": list(source_argv or []),
     }
