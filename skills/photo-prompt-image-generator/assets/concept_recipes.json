@@ -7102,9 +7102,579 @@
           "requires_bundle": true
         }
       ]
+    },
+    "로봇": {
+      "preset": "service_android_role_unit",
+      "set": {
+        "surface_material": "matte_synthetic_skin_surface",
+        "expression": "present_but_empty_gaze",
+        "action": "command_standby",
+        "prop": "serial_spec_plate_prop",
+        "composition": "medium_close",
+        "light_shape": "scan_grid_projection",
+        "texture": "matte_synthetic_skin_pore"
+      },
+      "soft_anchor_slots": [
+        "subject",
+        "surface_material",
+        "prop",
+        "action",
+        "expression",
+        "composition",
+        "light_shape",
+        "texture"
+      ],
+      "soft_min_anchors": 2,
+      "bundle_override_slots": [
+        "subject",
+        "surface_material",
+        "prop",
+        "action",
+        "expression",
+        "composition",
+        "light_shape",
+        "texture",
+        "mood"
+      ],
+      "anchor_terms": {
+        "subject": [
+          "robot",
+          "android",
+          "machine body",
+          "synthetic being"
+        ],
+        "surface_material": [
+          "synthetic skin",
+          "robot casing",
+          "transparent shell",
+          "liquid metal",
+          "biohybrid surface"
+        ],
+        "prop": [
+          "serial number",
+          "actuator port",
+          "charging cable",
+          "diagnostic readout",
+          "dock contacts"
+        ],
+        "action": [
+          "command standby",
+          "diagnostic routine",
+          "charging dock",
+          "boot sequence"
+        ],
+        "expression": [
+          "empty machine gaze",
+          "optical iris",
+          "programmed expression"
+        ],
+        "composition": [
+          "exposed joint",
+          "sensor eye",
+          "segmented limb",
+          "machine silhouette"
+        ],
+        "light_shape": [
+          "scan grid",
+          "registration crosshair",
+          "status LED array"
+        ],
+        "texture": [
+          "synthetic skin pores",
+          "brushed alloy",
+          "cable fibers",
+          "liquid metal"
+        ]
+      },
+      "anchor_pool": {
+        "subject": [
+          "service_android_unit",
+          "gynoid_companion_unit",
+          "cyborg_partial_prosthetic",
+          "humanoid_labor_robot",
+          "soft_silicone_robot",
+          "liquid_metal_robot",
+          "bio_hybrid_organism_unit",
+          "drone_swarm_collective",
+          "ceramic_automaton_figure",
+          "sentient_room_system"
+        ],
+        "surface_material": [
+          "matte_synthetic_skin_surface",
+          "transparent_polycarbonate_surface",
+          "worn_alloy_surface",
+          "soft_polymer_surface",
+          "liquid_metal_gel_surface",
+          "bio_tissue_substrate_surface",
+          "ceramic_porcelain_casing_surface"
+        ],
+        "prop": [
+          "serial_spec_plate_prop",
+          "exposed_actuator_port_prop",
+          "charging_tether_prop",
+          "wrist_port_charging_lead_prop",
+          "diagnostic_readout_prop",
+          "docking_contacts_prop",
+          "maintenance_tag_prop"
+        ],
+        "action": [
+          "command_standby",
+          "running_diagnostics",
+          "charging_docked",
+          "present_empty_gaze_standby",
+          "system_boot_sequence"
+        ],
+        "expression": [
+          "present_but_empty_gaze",
+          "optical_iris_stare",
+          "micro_precise_microexpression"
+        ],
+        "composition": [
+          "exposed_joint_detail_crop",
+          "sensor_eye_macro",
+          "segmented_limb_macro",
+          "medium_close"
+        ],
+        "light_shape": [
+          "scan_grid_projection",
+          "registration_crosshair",
+          "status_led_array_pattern"
+        ],
+        "texture": [
+          "matte_synthetic_skin_pore",
+          "brushed_alloy_microscratch",
+          "woven_cable_fiber_texture",
+          "liquid_metal_specular_texture"
+        ]
+      },
+      "primary_anchor_pool": {
+        "prop": [
+          "exposed_actuator_port_prop",
+          "wrist_port_charging_lead_prop",
+          "diagnostic_readout_prop",
+          "serial_spec_plate_prop"
+        ],
+        "surface_material": [
+          "matte_synthetic_skin_surface",
+          "transparent_polycarbonate_surface",
+          "worn_alloy_surface",
+          "soft_polymer_surface",
+          "liquid_metal_gel_surface"
+        ]
+      },
+      "anchor_floor": {
+        "mixin": 2
+      },
+      "anchor_group_floor": {
+        "mixin_primary": 1
+      },
+      "anchor_groups": {
+        "prop": [
+          "mixin_primary"
+        ],
+        "surface_material": [
+          "mixin_primary"
+        ]
+      },
+      "render_priority_terms": [
+        {
+          "id": "robot_visible_proof",
+          "terms": [
+            "exposed actuator",
+            "charging cable",
+            "diagnostic readout",
+            "serial number",
+            "optical iris",
+            "scan grid",
+            "robot casing",
+            "synthetic skin"
+          ],
+          "min_hits": 2
+        }
+      ],
+      "render_directives": [
+        {
+          "id": "robot_not_only_skin_patch",
+          "cue_terms": [
+            "robot",
+            "android",
+            "cyborg",
+            "synthetic being"
+          ],
+          "render_as": "visible_system_identity",
+          "positive_clause": "show robot identity through at least two different visible proof families: material surface, exposed joint or actuator, power/charging interface, diagnostic/status interface, machine behavior, nonhuman form, or environment-as-system cues",
+          "suppress_terms": [
+            "only a small metal patch under skin",
+            "only decorative circuit makeup",
+            "pure cosplay armor without machine function"
+          ]
+        }
+      ],
+      "free_slot_constraints": {
+        "subject_framing": {
+          "prefer_ids": [
+            "head_and_shoulders_crop",
+            "upper_body_framing",
+            "detail_crop_hands_accessories"
+          ],
+          "deny_pool": [
+            "full_body_framing",
+            "three_quarter_body_framing",
+            "knee_up_framing"
+          ]
+        },
+        "composition": {
+          "prefer_ids": [
+            "medium_close",
+            "exposed_joint_detail_crop",
+            "sensor_eye_macro",
+            "segmented_limb_macro",
+            "frame_within_frame"
+          ]
+        }
+      },
+      "render_suppress_terms": [
+        "generic cyborg skin patch only",
+        "decorative circuit tattoo only",
+        "ordinary cosplay armor",
+        "unexplained metallic makeup"
+      ],
+      "dual_read_requirement": {
+        "enabled": true,
+        "min_role_hits": 1,
+        "min_mixin_hits": 2
+      },
+      "safety_requirements": [
+        "robot proof should be non-graphic and manufactured: no gore, wounds, torn flesh, body horror, dismemberment, or injury emphasis"
+      ],
+      "salience_cues": [
+        "robot identity is readable through visible actuator, charging port, serial plate, diagnostic UI, optical iris, scan grid, or nonhuman machine body"
+      ],
+      "additional": [
+        "treat the robot concept broadly: the body can be humanoid android, partial cyborg, nonhumanoid machine, soft robot, liquid metal system, biohybrid organism, swarm, exoskeleton, sentient environment, or mythic automaton depending on the chosen bundle",
+        "do not rely on a single small exposed metal patch; include multiple robot proof families such as manufactured material, actuator structure, power or command interface, diagnostic readout, machine behavior, nonhuman scale, or system environment",
+        "the role costume or social role must remain readable, but the robot identity should be equally readable at first glance through function, construction, power, sensors, or controlled behavior",
+        "keep machine details non-graphic: clean ports, transparent shells, actuator joints, cables, LEDs, scan grids, and diagnostic panels rather than wounds or torn skin"
+      ],
+      "intent_axis": [
+        "broad robot identity beyond cyborg skin patch: android, cyborg, nonhumanoid, soft/liquid, biohybrid, swarm, exoskeleton, sentient environment, or automaton",
+        "visible robot proof through surface construction, deep structure, power interface, command behavior, diagnostics, sensors, and machine environment",
+        "role identity preserved while artificial-being ontology is visually dominant"
+      ],
+      "likeness_mode": "inspired",
+      "bundles": [
+        {
+          "id": "maid_service_android",
+          "weight": 5,
+          "roles": [
+            "메이드"
+          ],
+          "preset": "service_android_role_unit",
+          "set": {
+            "subject": "service_android_unit",
+            "surface_material": "matte_synthetic_skin_surface",
+            "prop": [
+              "wrist_port_charging_lead_prop",
+              "serial_spec_plate_prop"
+            ],
+            "action": "command_standby",
+            "expression": "present_but_empty_gaze",
+            "composition": "exposed_joint_detail_crop",
+            "light_shape": "scan_grid_projection",
+            "texture": "matte_synthetic_skin_pore",
+            "mood": "controlled_obedience"
+          },
+          "additional": [
+            "the maid uniform stays readable, but the service role reads as programmed labor: a wrist charging lead, unit serial plate, and command-standby posture are visible near the tray hand or apron edge",
+            "show clean actuator seams at wrist, elbow, or neck rather than injury; the apron and service pose become part of the machine labor system"
+          ],
+          "intent_axis": [
+            "service android maid as manufactured labor unit with command standby, wrist charging port, serial plate, and exposed actuator proof"
+          ]
+        },
+        {
+          "id": "nurse_care_unit",
+          "weight": 5,
+          "roles": [
+            "간호사"
+          ],
+          "preset": "maintenance_charging_bay",
+          "set": {
+            "subject": "care_medical_android",
+            "surface_material": "transparent_polycarbonate_surface",
+            "prop": [
+              "diagnostic_readout_prop",
+              "exposed_actuator_port_prop"
+            ],
+            "action": "running_diagnostics",
+            "expression": "optical_iris_stare",
+            "composition": "sensor_eye_macro",
+            "light_shape": "registration_crosshair",
+            "texture": "woven_cable_fiber_texture",
+            "mood": "clinical_machine"
+          },
+          "additional": [
+            "the nurse uniform and hospital context remain clear, while the care android is shown through optical iris lenses, diagnostic patient-status UI, transparent forearm shell, and calibration marks",
+            "the clinical machine reading should come from sensors, care protocol, and diagnostics rather than horror or injury cues"
+          ],
+          "intent_axis": [
+            "medical care android nurse with optical iris, diagnostic readout, transparent casing, clinical protocol, and non-graphic machine proof"
+          ]
+        },
+        {
+          "id": "police_sentinel_node",
+          "weight": 5,
+          "roles": [
+            "경찰"
+          ],
+          "preset": "surveillance_sentinel_node_preset",
+          "set": {
+            "subject": "telepresence_avatar_robot",
+            "surface_material": "worn_alloy_surface",
+            "prop": [
+              "diagnostic_readout_prop",
+              "serial_spec_plate_prop"
+            ],
+            "action": "recorded_by_surveillance",
+            "expression": "optical_iris_stare",
+            "composition": "cctv_corner_frame",
+            "light_shape": "registration_crosshair",
+            "texture": "brushed_alloy_microscratch",
+            "mood": "controlled_obedience",
+            "location": "reflective_dark_corridor"
+          },
+          "additional": [
+            "the police identity reads as an autonomous patrol/sentinel system: uniform insignia or badge language is present on a human-scale telepresence patrol body with lidar, registration crosshair, status LEDs, and command authority",
+            "avoid ordinary police cosplay by making surveillance optics, command interface, and manufactured casing visible in the first-read area while preserving a readable patrol-uniform silhouette"
+          ],
+          "intent_axis": [
+            "police robot as human-scale telepresence patrol sentinel with uniform authority, sensor cluster, cctv framing, registration crosshair, and controlled command behavior"
+          ]
+        },
+        {
+          "id": "miner_labor_unit",
+          "weight": 5,
+          "roles": [
+            "광부"
+          ],
+          "preset": "industrial_labor_unit",
+          "set": {
+            "subject": "humanoid_labor_robot",
+            "surface_material": "worn_alloy_surface",
+            "prop": [
+              "nonfunctional_pickaxe_prop",
+              "maintenance_tag_prop",
+              "exposed_actuator_port_prop"
+            ],
+            "action": "repetitive_assembly_task",
+            "expression": "present_but_empty_gaze",
+            "composition": "segmented_limb_macro",
+            "light_shape": "scan_grid_projection",
+            "texture": "brushed_alloy_microscratch",
+            "mood": "controlled_obedience"
+          },
+          "additional": [
+            "the miner helmet, headlamp, and workwear remain readable, but the body reads as a labor robot through scratched alloy casing, hydraulic limb joints, maintenance tag, and repetitive industrial task posture",
+            "the mine should feel like a work system built around replaceable machine labor, not just a human in a costume"
+          ],
+          "intent_axis": [
+            "miner robot as industrial labor unit with hard hat, alloy casing, actuator limbs, maintenance tag, and repetitive work command logic"
+          ]
+        },
+        {
+          "id": "casual_seamless_companion",
+          "weight": 5,
+          "roles": [
+            "사복 여친"
+          ],
+          "preset": "uncanny_seamless_companion",
+          "set": {
+            "subject": "gynoid_companion_unit",
+            "surface_material": "matte_synthetic_skin_surface",
+            "prop": [
+              "wrist_port_charging_lead_prop",
+              "clear_case_smartphone"
+            ],
+            "action": "present_empty_gaze_standby",
+            "expression": "micro_precise_microexpression",
+            "composition": "sensor_eye_macro",
+            "light_shape": "status_led_array_pattern",
+            "texture": "matte_synthetic_skin_pore",
+            "mood": "synthetic_calm",
+            "location": "cozy_apartment"
+          },
+          "additional": [
+            "the casual girlfriend-style outfit stays everyday and candid in an ordinary apartment, but the companion reads as a seamless social android through too-perfect microexpression, synthetic skin pores, wrist charging port, phone reflection mismatch, and small status LED cues",
+            "make the robot identity quiet but unmistakable; it should feel like social intimacy scripted by a machine system rather than a lab-only robot display"
+          ],
+          "intent_axis": [
+            "seamless companion android in casual girlfriend-style candid photo, synthetic skin pores, wrist port, phone reflection, and programmed social mimicry"
+          ]
+        },
+        {
+          "id": "princess_mythic_automaton",
+          "weight": 5,
+          "roles": [
+            "공주"
+          ],
+          "preset": "mythic_automaton_court",
+          "set": {
+            "subject": "ceramic_automaton_figure",
+            "surface_material": "ceramic_porcelain_casing_surface",
+            "prop": [
+              "serial_spec_plate_prop",
+              "maintenance_tag_prop"
+            ],
+            "action": "command_standby",
+            "expression": "present_but_empty_gaze",
+            "composition": "centered_symmetry",
+            "light_shape": "registration_crosshair",
+            "texture": "porcelain_ceramic_glaze_texture",
+            "mood": "synthetic_calm"
+          },
+          "additional": [
+            "the Korean court princess hanbok identity stays dominant, but the princess is reimagined as a delicate porcelain automaton: glazed ceramic skin, clockwork seams, tiny royal serial plate, and ceremonial command-standby posture",
+            "preserve East-Asian palace and hanbok language; the robot layer should feel like mythic artificial life inside royal protocol, not Western sci-fi armor"
+          ],
+          "intent_axis": [
+            "Korean princess as porcelain court automaton with hanbok, ceramic casing, clockwork seams, serial plate, and ritual command posture"
+          ]
+        },
+        {
+          "id": "bunny_stage_hardware_unit",
+          "weight": 5,
+          "roles": [
+            "바니걸"
+          ],
+          "preset": "service_android_role_unit",
+          "set": {
+            "subject": "service_android_unit",
+            "surface_material": "transparent_polycarbonate_surface",
+            "prop": [
+              "exposed_actuator_port_prop",
+              "serial_spec_plate_prop"
+            ],
+            "action": "system_boot_sequence",
+            "expression": "optical_iris_stare",
+            "composition": "exposed_joint_detail_crop",
+            "light_shape": "status_led_array_pattern",
+            "texture": "woven_cable_fiber_texture",
+            "mood": "synthetic_calm",
+            "location": "makeup_vanity"
+          },
+          "additional": [
+            "the covered bunny-girl stage costume remains readable in a backstage vanity setting, while transparent casing, optical iris, exposed actuator port, and boot-sequence status LEDs reveal a stage-service robot underneath",
+            "keep the framing non-explicit and proof-focused: hardware, status display, and synthetic structure should read before body display"
+          ],
+          "intent_axis": [
+            "stage-service android in covered bunny-girl costume, transparent casing, exposed actuator port, optical iris, and boot status LEDs"
+          ]
+        },
+        {
+          "id": "standalone_nonhumanoid_machine",
+          "weight": 1,
+          "preset": "nonhumanoid_machine_subject",
+          "set": {
+            "subject": "quadruped_utility_robot",
+            "surface_material": "worn_alloy_surface",
+            "prop": "docking_contacts_prop",
+            "action": "running_diagnostics",
+            "composition": "nonhumanoid_full_silhouette",
+            "texture": "brushed_alloy_microscratch",
+            "light_shape": "scan_grid_projection"
+          },
+          "additional": [
+            "show a robot without human silhouette: articulated legs, sensor head, docking contacts, scan-grid projection, and machine posture are the main identity cues"
+          ],
+          "intent_axis": [
+            "nonhumanoid utility robot with articulated body, sensor head, diagnostics, and visible docking contacts"
+          ]
+        },
+        {
+          "id": "standalone_swarm_system",
+          "weight": 1,
+          "preset": "swarm_unit_collective",
+          "set": {
+            "subject": "drone_swarm_collective",
+            "action": "synchronized_swarm_motion",
+            "composition": "swarm_repetition_grid",
+            "light_shape": "status_led_array_pattern",
+            "texture": "brushed_alloy_microscratch"
+          },
+          "additional": [
+            "the robot is a distributed collective rather than one body: many small units form synchronized motion and a visible swarm pattern"
+          ],
+          "intent_axis": [
+            "robot as distributed swarm collective, many units, synchronized motion, and system-level body"
+          ]
+        },
+        {
+          "id": "standalone_environment_system",
+          "weight": 1,
+          "preset": "environment_as_robot_space",
+          "set": {
+            "subject": "sentient_room_system",
+            "prop": "diagnostic_readout_prop",
+            "action": "system_boot_sequence",
+            "composition": "extreme_wide_environmental",
+            "light_shape": "scan_grid_projection",
+            "texture": "clean_digital"
+          },
+          "additional": [
+            "the robot is the environment itself: walls, cameras, vents, doors, furniture, and lights behave as one distributed machine body"
+          ],
+          "intent_axis": [
+            "environment as robot, room-sized machine body, distributed sensors, and system boot sequence"
+          ]
+        },
+        {
+          "id": "standalone_soft_liquid_robot",
+          "weight": 1,
+          "preset": "soft_liquid_robot",
+          "set": {
+            "subject": "liquid_metal_robot",
+            "surface_material": "liquid_metal_gel_surface",
+            "action": "running_diagnostics",
+            "composition": "macro_detail",
+            "texture": "liquid_metal_specular_texture",
+            "light_shape": "registration_crosshair"
+          },
+          "additional": [
+            "the robot form is soft or liquid rather than hard metal: reflective flowing body, changing silhouette, containment field, and diagnostic registration marks"
+          ],
+          "intent_axis": [
+            "soft liquid robot with morphing surface, reflective gel, diagnostic marks, and non-rigid machine body"
+          ]
+        },
+        {
+          "id": "standalone_biohybrid_robot",
+          "weight": 1,
+          "preset": "biohybrid_organism_subject",
+          "set": {
+            "subject": "bio_hybrid_organism_unit",
+            "surface_material": "bio_tissue_substrate_surface",
+            "prop": "diagnostic_readout_prop",
+            "action": "system_boot_sequence",
+            "composition": "segmented_limb_macro",
+            "texture": "woven_cable_fiber_texture",
+            "light_shape": "scan_grid_projection"
+          },
+          "additional": [
+            "the robot is bio-fused artificial life: cultured tissue substrate, neural interface fibers, transparent lab containment, and diagnostic boot sequence"
+          ],
+          "intent_axis": [
+            "biohybrid robot organism with cultured tissue, machine fibers, lab diagnostics, and artificial life ambiguity"
+          ]
+        }
+      ]
     }
   },
   "aliases": {
-    "팜프파탈": "팜므파탈"
+    "팜프파탈": "팜므파탈",
+    "안드로이드": "로봇",
+    "사이보그": "로봇",
+    "자동인형": "로봇",
+    "인조인간": "로봇",
+    "휴머노이드": "로봇"
   }
 }

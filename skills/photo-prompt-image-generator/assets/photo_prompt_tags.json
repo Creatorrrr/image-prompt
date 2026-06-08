@@ -1,6 +1,6 @@
 {
-  "version": "1.10",
-  "description": "Photo prompt tag dictionary for random Korean/English prompt generation. Version 1.10 adds real weapon visual taxonomy tags alongside nonfunctional prop and arms-museum display tags, keeping the dictionary focused on photographic subject matter rather than procedural weapon operation.",
+  "version": "1.11",
+  "description": "Photo prompt tag dictionary for random Korean/English prompt generation. Version 1.11 adds a broad robot and artificial-being taxonomy across androids, cyborgs, nonhumanoid machines, soft/liquid robots, biohybrids, swarms, exoskeletons, sentient environments, automata, diagnostics, charging systems, and role-preserving robot prompt anchors.",
   "facet_vocab": {
     "subject_kind": [
       "human",
@@ -9,7 +9,8 @@
       "food",
       "environment",
       "plant",
-      "sign"
+      "sign",
+      "robot"
     ],
     "place_type": [
       "urban",
@@ -19,7 +20,11 @@
       "studio",
       "commercial",
       "transport",
-      "home"
+      "home",
+      "laboratory",
+      "industrial",
+      "space",
+      "infrastructure"
     ],
     "time_of_day": [
       "day",
@@ -42,7 +47,8 @@
       "colored_light",
       "flash",
       "studio_light",
-      "low_light"
+      "low_light",
+      "diagnostic_light"
     ],
     "mood_family": [
       "calm",
@@ -51,7 +57,10 @@
       "surreal",
       "nostalgic",
       "commercial",
-      "documentary"
+      "documentary",
+      "clinical",
+      "uncanny",
+      "operational"
     ],
     "camera_register": [
       "phone",
@@ -69,6 +78,51 @@
     "soft_body_role": [
       "body_emphasis",
       "narrative_safe"
+    ],
+    "robot_form": [
+      "humanoid_android",
+      "partial_cyborg",
+      "zoomorphic_nonhumanoid",
+      "fixed_installation",
+      "modular",
+      "swarm",
+      "soft_liquid",
+      "bio_hybrid",
+      "micro_nano",
+      "telepresence",
+      "exoskeleton",
+      "environment_as_robot",
+      "autonomous_vehicle",
+      "mythic_automaton"
+    ],
+    "robot_degree": [
+      "human_looking_controlled",
+      "partial_cyborg",
+      "android_mimicry",
+      "full_machine",
+      "distributed_system"
+    ],
+    "robot_proof_family": [
+      "surface_construction",
+      "deep_structural",
+      "form_scale",
+      "behavior_control",
+      "power_command",
+      "environment_system",
+      "uncanny"
+    ],
+    "robot_metaphor": [
+      "robota_labor",
+      "made_body",
+      "autonomy_vs_command",
+      "mirror_of_humanity",
+      "uncanny_valley",
+      "mythic_artificial_life",
+      "tool",
+      "companion",
+      "weapon",
+      "body_extension",
+      "environment_as_robot"
     ]
   },
   "preset_families": [
@@ -119,6 +173,12 @@
       "ko": "소셜 캐릭터 실사 계열",
       "en": "social character realism family",
       "embedding_text": "photoreal social selfie and cosplay character realism with phone perspective tricks, 2.5D props, car passenger seats, botanical romance, and gothic display portraits"
+    },
+    {
+      "id": "robot_artificial_being_family",
+      "ko": "로봇과 인공 존재 계열",
+      "en": "robot and artificial being family",
+      "embedding_text": "robots, androids, cyborgs, soft robots, swarm machines, biohybrid systems, automata, charging bays, diagnostics labs, and artificial life photography"
     }
   ],
   "recipes": [
@@ -28403,6 +28463,2756 @@
         }
       },
       "embedding_text": "first person hand tail interaction, 2.5D cosplay character in living room sofa, halo wings pink tail, otaku TV background, photoreal POV"
+    },
+    {
+      "id": "nonhumanoid_machine_subject",
+      "ko": "비인간형 로봇 피사체",
+      "en": "nonhumanoid machine subject",
+      "weight": 0.9,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "texture"
+      ],
+      "optional_slots": [
+        {
+          "slot": "surface_material",
+          "probability": 0.85
+        },
+        {
+          "slot": "light_type",
+          "probability": 0.7
+        },
+        {
+          "slot": "light_shape",
+          "probability": 0.75
+        },
+        {
+          "slot": "world",
+          "probability": 0.45
+        },
+        {
+          "slot": "format",
+          "probability": 0.35
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "robotics_engineering_record",
+            "scientific_record",
+            "object_concept_photo"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "robotics",
+            "technology",
+            "science",
+            "object_concept"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "quadruped_utility_robot",
+            "fixed_industrial_robot_arm",
+            "modular_reconfigurable_robot",
+            "autonomous_vehicle_entity",
+            "surveillance_sentinel_node"
+          ]
+        },
+        "action": {
+          "ids": [
+            "running_diagnostics",
+            "command_standby",
+            "repetitive_assembly_task",
+            "system_boot_sequence",
+            "charging_docked"
+          ]
+        },
+        "location": {
+          "ids": [
+            "robot_charging_bay",
+            "robot_assembly_line",
+            "diagnostics_lab",
+            "industrial_mecha_hangar"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "lab_led",
+            "monitor_glow",
+            "fluorescent",
+            "low_key"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "nonhumanoid_full_silhouette",
+            "exposed_joint_detail_crop",
+            "segmented_limb_macro",
+            "medium_close",
+            "frame_within_frame"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "macro_100mm",
+            "probe_lens_macro"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "clinical_machine",
+            "synthetic_calm",
+            "controlled_obedience",
+            "uncanny"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "object_catalog_realism",
+            "not_overdone"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "brushed_alloy_microscratch",
+            "woven_cable_fiber_texture",
+            "macro_detail",
+            "clean_digital"
+          ]
+        },
+        "surface_material": {
+          "ids": [
+            "worn_alloy_surface",
+            "transparent_polycarbonate_surface",
+            "woven_cable_fiber_surface"
+          ]
+        },
+        "light_type": {
+          "ids": [
+            "calibration_projector_glow",
+            "status_led_glow",
+            "charging_indicator_glow",
+            "scan_line_light"
+          ]
+        },
+        "light_shape": {
+          "ids": [
+            "scan_grid_projection",
+            "registration_crosshair",
+            "status_led_array_pattern"
+          ]
+        },
+        "world": {
+          "ids": [
+            "automated_machine_civilization",
+            "distributed_ai_system_world",
+            "cyberpunk",
+            "tech_noir"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "full_frame_mirrorless",
+            "dslr_camera",
+            "medium_format_camera"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "eye_level_front",
+            "eye_level_three_quarter",
+            "side_profile_view",
+            "high_observer_angle"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "eye_focus",
+            "face_detection_focus",
+            "deep_focus",
+            "macro_focus_stack"
+          ]
+        },
+        "motion": {
+          "ids": [
+            "stable_tripod",
+            "handheld_microshake",
+            "flash_freeze"
+          ]
+        },
+        "light_direction": {
+          "ids": [
+            "front_light",
+            "three_quarter_light",
+            "side_light_left",
+            "side_light_right",
+            "top_light",
+            "rim_light"
+          ]
+        }
+      }
+    },
+    {
+      "id": "service_android_role_unit",
+      "ko": "서비스 안드로이드 역할 유닛",
+      "en": "service android role unit",
+      "weight": 0.95,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "expression",
+        "prop"
+      ],
+      "optional_slots": [
+        {
+          "slot": "texture",
+          "probability": 0.85
+        },
+        {
+          "slot": "light_type",
+          "probability": 0.55
+        },
+        {
+          "slot": "light_shape",
+          "probability": 0.55
+        },
+        {
+          "slot": "subject_framing",
+          "probability": 0.65
+        },
+        {
+          "slot": "world",
+          "probability": 0.4
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "synthetic_being_portrait_photo",
+            "robotics_engineering_record",
+            "concept_photo"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "robotics",
+            "portrait",
+            "technology",
+            "sci_fi_city"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "service_android_unit",
+            "care_medical_android",
+            "gynoid_companion_unit",
+            "telepresence_avatar_robot"
+          ]
+        },
+        "action": {
+          "ids": [
+            "command_standby",
+            "running_diagnostics",
+            "present_empty_gaze_standby",
+            "charging_docked"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "serial_spec_plate_prop",
+            "wrist_port_charging_lead_prop",
+            "diagnostic_readout_prop",
+            "exposed_actuator_port_prop"
+          ]
+        },
+        "expression": {
+          "ids": [
+            "present_but_empty_gaze",
+            "optical_iris_stare",
+            "micro_precise_microexpression"
+          ]
+        },
+        "location": {
+          "ids": [
+            "robot_charging_bay",
+            "diagnostics_lab",
+            "server_room",
+            "glass_office"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "lab_led",
+            "monitor_glow",
+            "softbox",
+            "fluorescent",
+            "low_key"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "medium_close",
+            "sensor_eye_macro",
+            "exposed_joint_detail_crop",
+            "frame_within_frame",
+            "reflection"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "50mm",
+            "85mm",
+            "macro_100mm",
+            "105mm_macro"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "synthetic_calm",
+            "controlled_obedience",
+            "clinical_machine",
+            "uncanny"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "not_overdone",
+            "photoreal_cosplay_realism"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "matte_synthetic_skin_pore",
+            "woven_cable_fiber_texture",
+            "clean_digital"
+          ]
+        },
+        "light_type": {
+          "ids": [
+            "status_led_glow",
+            "charging_indicator_glow",
+            "calibration_projector_glow"
+          ]
+        },
+        "light_shape": {
+          "ids": [
+            "scan_grid_projection",
+            "registration_crosshair",
+            "status_led_array_pattern"
+          ]
+        },
+        "subject_framing": {
+          "ids": [
+            "head_and_shoulders_crop",
+            "upper_body_framing",
+            "detail_crop_hands_accessories"
+          ]
+        },
+        "world": {
+          "ids": [
+            "post_human_android_world",
+            "automated_machine_civilization",
+            "tech_noir",
+            "realistic_modern"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "full_frame_mirrorless",
+            "dslr_camera",
+            "medium_format_camera"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "eye_level_front",
+            "eye_level_three_quarter",
+            "side_profile_view",
+            "high_observer_angle"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "eye_focus",
+            "face_detection_focus",
+            "deep_focus",
+            "macro_focus_stack"
+          ]
+        },
+        "motion": {
+          "ids": [
+            "stable_tripod",
+            "handheld_microshake",
+            "flash_freeze"
+          ]
+        },
+        "light_direction": {
+          "ids": [
+            "front_light",
+            "three_quarter_light",
+            "side_light_left",
+            "side_light_right",
+            "top_light",
+            "rim_light"
+          ]
+        }
+      }
+    },
+    {
+      "id": "industrial_labor_unit",
+      "ko": "산업 노동 로봇 유닛",
+      "en": "industrial labor robot unit",
+      "weight": 0.85,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "prop",
+        "texture"
+      ],
+      "optional_slots": [
+        {
+          "slot": "surface_material",
+          "probability": 0.75
+        },
+        {
+          "slot": "light_shape",
+          "probability": 0.55
+        },
+        {
+          "slot": "world",
+          "probability": 0.35
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "robotics_engineering_record",
+            "documentary_photo",
+            "scientific_record"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "robotics",
+            "documentary",
+            "technology",
+            "science"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "humanoid_labor_robot",
+            "fixed_industrial_robot_arm",
+            "powered_exoskeleton_frame",
+            "modular_reconfigurable_robot"
+          ]
+        },
+        "action": {
+          "ids": [
+            "repetitive_assembly_task",
+            "command_standby",
+            "running_diagnostics"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "maintenance_tag_prop",
+            "exposed_actuator_port_prop",
+            "diagnostic_readout_prop"
+          ]
+        },
+        "location": {
+          "ids": [
+            "robot_assembly_line",
+            "industrial_mecha_hangar",
+            "underground_mine_tunnel_set",
+            "diagnostics_lab"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "single_flashlight_beam",
+            "lab_led",
+            "fluorescent",
+            "low_key"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "exposed_joint_detail_crop",
+            "segmented_limb_macro",
+            "medium_close",
+            "wide_establishing"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "macro_100mm",
+            "24_70_event_zoom"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "controlled_obedience",
+            "clinical_machine",
+            "raw",
+            "tense"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "candid_imperfect"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "brushed_alloy_microscratch",
+            "woven_cable_fiber_texture",
+            "wet_concrete_grime",
+            "rust_concrete"
+          ]
+        },
+        "surface_material": {
+          "ids": [
+            "worn_alloy_surface",
+            "transparent_polycarbonate_surface",
+            "woven_cable_fiber_surface"
+          ]
+        },
+        "light_shape": {
+          "ids": [
+            "scan_grid_projection",
+            "registration_crosshair"
+          ]
+        },
+        "world": {
+          "ids": [
+            "automated_machine_civilization",
+            "dieselpunk",
+            "tech_noir"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "full_frame_mirrorless",
+            "dslr_camera",
+            "medium_format_camera"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "eye_level_front",
+            "eye_level_three_quarter",
+            "side_profile_view",
+            "high_observer_angle"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "eye_focus",
+            "face_detection_focus",
+            "deep_focus",
+            "macro_focus_stack"
+          ]
+        },
+        "motion": {
+          "ids": [
+            "stable_tripod",
+            "handheld_microshake",
+            "flash_freeze"
+          ]
+        },
+        "light_direction": {
+          "ids": [
+            "front_light",
+            "three_quarter_light",
+            "side_light_left",
+            "side_light_right",
+            "top_light",
+            "rim_light"
+          ]
+        }
+      }
+    },
+    {
+      "id": "uncanny_seamless_companion",
+      "ko": "매끄러운 동반자형 로봇",
+      "en": "uncanny seamless companion android",
+      "weight": 0.82,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "expression",
+        "prop"
+      ],
+      "optional_slots": [
+        {
+          "slot": "texture",
+          "probability": 0.9
+        },
+        {
+          "slot": "capture_context",
+          "probability": 0.35
+        },
+        {
+          "slot": "subject_framing",
+          "probability": 0.8
+        },
+        {
+          "slot": "light_type",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "synthetic_being_portrait_photo",
+            "smartphone_snapshot",
+            "lifestyle_photo"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "robotics",
+            "portrait",
+            "lifestyle",
+            "creator_lifestyle"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "gynoid_companion_unit",
+            "service_android_unit",
+            "telepresence_avatar_robot"
+          ]
+        },
+        "action": {
+          "ids": [
+            "present_empty_gaze_standby",
+            "command_standby",
+            "checking_phone"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "wrist_port_charging_lead_prop",
+            "serial_spec_plate_prop",
+            "clear_case_smartphone",
+            "diagnostic_readout_prop"
+          ]
+        },
+        "expression": {
+          "ids": [
+            "present_but_empty_gaze",
+            "micro_precise_microexpression",
+            "optical_iris_stare"
+          ]
+        },
+        "location": {
+          "ids": [
+            "cozy_apartment",
+            "glass_office",
+            "simple_indoor_selfie_room",
+            "robot_charging_bay"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "monitor_glow",
+            "blue_hour",
+            "lab_led"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "medium_close",
+            "reflection",
+            "sensor_eye_macro",
+            "frame_within_frame"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "50mm",
+            "85mm",
+            "smartphone",
+            "macro_100mm"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "synthetic_calm",
+            "uncanny",
+            "intimate",
+            "melancholic"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "not_overdone",
+            "phone_realism",
+            "high_detail"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "matte_synthetic_skin_pore",
+            "clean_digital",
+            "woven_cable_fiber_texture"
+          ]
+        },
+        "subject_framing": {
+          "ids": [
+            "head_and_shoulders_crop",
+            "upper_body_framing",
+            "close_up_face_crop",
+            "detail_crop_hands_accessories"
+          ]
+        },
+        "light_type": {
+          "ids": [
+            "status_led_glow",
+            "charging_indicator_glow"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "full_frame_mirrorless",
+            "dslr_camera",
+            "medium_format_camera"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "eye_level_front",
+            "eye_level_three_quarter",
+            "side_profile_view",
+            "high_observer_angle"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "eye_focus",
+            "face_detection_focus",
+            "deep_focus",
+            "macro_focus_stack"
+          ]
+        },
+        "motion": {
+          "ids": [
+            "stable_tripod",
+            "handheld_microshake",
+            "flash_freeze"
+          ]
+        },
+        "light_direction": {
+          "ids": [
+            "front_light",
+            "three_quarter_light",
+            "side_light_left",
+            "side_light_right",
+            "top_light",
+            "rim_light"
+          ]
+        }
+      }
+    },
+    {
+      "id": "mythic_automaton_court",
+      "ko": "신화적 자동인형 궁정",
+      "en": "mythic automaton court",
+      "weight": 0.72,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "surface_material",
+        "texture"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.65
+        },
+        {
+          "slot": "world",
+          "probability": 0.55
+        },
+        {
+          "slot": "light_shape",
+          "probability": 0.35
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "traditional_editorial_photo",
+            "fine_art_print",
+            "concept_photo"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "robotics",
+            "fine_art_portrait",
+            "traditional_portrait",
+            "artificial_life"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "ceramic_automaton_figure",
+            "bronze_guardian_automaton"
+          ]
+        },
+        "action": {
+          "ids": [
+            "command_standby",
+            "standing_silence",
+            "system_boot_sequence"
+          ]
+        },
+        "location": {
+          "ids": [
+            "royal_princess_chamber",
+            "joseon_palace_interior",
+            "diagnostics_lab"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "moonlight",
+            "chiaroscuro_window_light",
+            "low_key",
+            "oil_lamp_warm"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "centered_symmetry",
+            "centered_symmetric",
+            "medium_close",
+            "exposed_joint_detail_crop"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "synthetic_calm",
+            "elegant",
+            "uncanny",
+            "controlled_obedience"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "editorial_quality",
+            "high_detail"
+          ]
+        },
+        "surface_material": {
+          "ids": [
+            "ceramic_porcelain_casing_surface",
+            "bronze_patina_surface"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "porcelain_ceramic_glaze_texture",
+            "brushed_alloy_microscratch",
+            "macro_detail"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "serial_spec_plate_prop",
+            "maintenance_tag_prop",
+            "diagnostic_readout_prop"
+          ]
+        },
+        "world": {
+          "ids": [
+            "post_human_android_world",
+            "retro_futurism",
+            "automated_machine_civilization"
+          ]
+        },
+        "light_shape": {
+          "ids": [
+            "registration_crosshair",
+            "status_led_array_pattern"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "full_frame_mirrorless",
+            "dslr_camera",
+            "medium_format_camera"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "eye_level_front",
+            "eye_level_three_quarter",
+            "side_profile_view",
+            "high_observer_angle"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "eye_focus",
+            "face_detection_focus",
+            "deep_focus",
+            "macro_focus_stack"
+          ]
+        },
+        "motion": {
+          "ids": [
+            "stable_tripod",
+            "handheld_microshake",
+            "flash_freeze"
+          ]
+        },
+        "light_direction": {
+          "ids": [
+            "front_light",
+            "three_quarter_light",
+            "side_light_left",
+            "side_light_right",
+            "top_light",
+            "rim_light"
+          ]
+        }
+      }
+    },
+    {
+      "id": "surveillance_sentinel_node_preset",
+      "ko": "감시 센티넬 노드",
+      "en": "surveillance sentinel node",
+      "weight": 0.75,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "light_type"
+      ],
+      "optional_slots": [
+        {
+          "slot": "light_shape",
+          "probability": 0.8
+        },
+        {
+          "slot": "camera_type",
+          "probability": 0.75
+        },
+        {
+          "slot": "texture",
+          "probability": 0.65
+        },
+        {
+          "slot": "world",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "cctv_frame",
+            "bodycam_frame",
+            "robotics_engineering_record"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "robotics",
+            "technology",
+            "reportage_noir",
+            "science"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "surveillance_sentinel_node",
+            "sentient_room_system",
+            "drone_swarm_collective"
+          ]
+        },
+        "action": {
+          "ids": [
+            "recorded_by_surveillance",
+            "command_standby",
+            "running_diagnostics",
+            "system_boot_sequence"
+          ]
+        },
+        "location": {
+          "ids": [
+            "server_room",
+            "underground_parking_garage",
+            "reflective_dark_corridor",
+            "diagnostics_lab"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "monitor_glow",
+            "fluorescent",
+            "low_key",
+            "lab_led"
+          ]
+        },
+        "light_type": {
+          "ids": [
+            "scan_line_light",
+            "status_led_glow",
+            "calibration_projector_glow"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "cctv_corner_frame",
+            "frame_within_frame",
+            "wide_establishing",
+            "swarm_repetition_grid"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "wide_24mm",
+            "35mm",
+            "16_35mm"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "clinical_machine",
+            "tense",
+            "reportage_tense_noir",
+            "controlled_obedience"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "candid_imperfect",
+            "high_detail"
+          ]
+        },
+        "light_shape": {
+          "ids": [
+            "scan_grid_projection",
+            "registration_crosshair",
+            "status_led_array_pattern"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "cctv_camera",
+            "bodycam_camera",
+            "thermal_camera",
+            "webcam_camera"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "clean_digital",
+            "brushed_alloy_microscratch",
+            "dust_on_lens"
+          ]
+        },
+        "world": {
+          "ids": [
+            "distributed_ai_system_world",
+            "tech_noir",
+            "cyberpunk"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "cctv_corner_direction",
+            "high_observer_angle",
+            "eye_level_front"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "deep_focus",
+            "zone_focus_street",
+            "face_detection_focus"
+          ]
+        },
+        "motion": {
+          "ids": [
+            "cctv_fixed_static",
+            "stable_tripod"
+          ]
+        },
+        "light_direction": {
+          "ids": [
+            "top_light",
+            "front_light",
+            "three_quarter_light"
+          ]
+        }
+      }
+    },
+    {
+      "id": "swarm_unit_collective",
+      "ko": "군집 로봇 집합체",
+      "en": "swarm robot collective",
+      "weight": 0.75,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "light_shape"
+      ],
+      "optional_slots": [
+        {
+          "slot": "texture",
+          "probability": 0.7
+        },
+        {
+          "slot": "world",
+          "probability": 0.45
+        },
+        {
+          "slot": "weather",
+          "probability": 0.25
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "drone_photo",
+            "robotics_engineering_record",
+            "scientific_record"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "robotics",
+            "technology",
+            "science",
+            "sci_fi_city"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "drone_swarm_collective",
+            "nano_swarm_visualization"
+          ]
+        },
+        "action": {
+          "ids": [
+            "synchronized_swarm_motion",
+            "running_diagnostics",
+            "system_boot_sequence"
+          ]
+        },
+        "location": {
+          "ids": [
+            "diagnostics_lab",
+            "robot_assembly_line",
+            "orbital_station_interior",
+            "rooftop_city"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "lab_led",
+            "monitor_glow",
+            "neon",
+            "volumetric"
+          ]
+        },
+        "light_shape": {
+          "ids": [
+            "scan_grid_projection",
+            "status_led_array_pattern",
+            "registration_crosshair"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "swarm_repetition_grid",
+            "wide_establishing",
+            "extreme_wide_environmental"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "wide_24mm",
+            "16_35mm",
+            "macro_100mm",
+            "drone_topdown"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "clinical_machine",
+            "controlled_obedience",
+            "synthetic_calm"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "optical_photo_realism"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "brushed_alloy_microscratch",
+            "clean_digital",
+            "macro_detail"
+          ]
+        },
+        "world": {
+          "ids": [
+            "distributed_ai_system_world",
+            "automated_machine_civilization",
+            "cyberpunk"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "drone_camera_type",
+            "full_frame_mirrorless",
+            "dslr_camera"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "high_observer_angle",
+            "drone_oblique_direction",
+            "top_down_90",
+            "eye_level_front"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "deep_focus",
+            "zone_focus_street",
+            "macro_focus_stack"
+          ]
+        },
+        "motion": {
+          "ids": [
+            "drone_smooth_hover",
+            "stable_tripod",
+            "long_exposure_trails"
+          ]
+        },
+        "light_direction": {
+          "ids": [
+            "top_light",
+            "rim_light",
+            "three_quarter_light"
+          ]
+        }
+      }
+    },
+    {
+      "id": "soft_liquid_robot",
+      "ko": "소프트/액체 로봇",
+      "en": "soft or liquid robot",
+      "weight": 0.76,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "surface_material",
+        "texture"
+      ],
+      "optional_slots": [
+        {
+          "slot": "light_type",
+          "probability": 0.55
+        },
+        {
+          "slot": "light_shape",
+          "probability": 0.5
+        },
+        {
+          "slot": "world",
+          "probability": 0.35
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "scientific_record",
+            "robotics_engineering_record",
+            "optical_experiment_photo"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "robotics",
+            "artificial_life",
+            "science",
+            "optical_experiment"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "soft_silicone_robot",
+            "liquid_metal_robot",
+            "bio_hybrid_organism_unit"
+          ]
+        },
+        "action": {
+          "ids": [
+            "running_diagnostics",
+            "system_boot_sequence",
+            "command_standby"
+          ]
+        },
+        "location": {
+          "ids": [
+            "diagnostics_lab",
+            "biolab",
+            "laboratory"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "lab_led",
+            "underwater_caustic_light",
+            "monitor_glow",
+            "softbox"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "macro_detail",
+            "segmented_limb_macro",
+            "medium_close",
+            "reflection"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "macro_100mm",
+            "105mm_macro",
+            "probe_lens_macro"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "clinical_machine",
+            "synthetic_calm",
+            "uncanny"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "optical_photo_realism",
+            "high_detail"
+          ]
+        },
+        "surface_material": {
+          "ids": [
+            "soft_polymer_surface",
+            "liquid_metal_gel_surface",
+            "bio_tissue_substrate_surface",
+            "electroactive_responsive_surface"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "liquid_metal_specular_texture",
+            "woven_cable_fiber_texture",
+            "macro_detail",
+            "glass_refraction"
+          ]
+        },
+        "light_type": {
+          "ids": [
+            "calibration_projector_glow",
+            "status_led_glow"
+          ]
+        },
+        "light_shape": {
+          "ids": [
+            "scan_grid_projection",
+            "registration_crosshair"
+          ]
+        },
+        "world": {
+          "ids": [
+            "distributed_ai_system_world",
+            "post_human_android_world"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "full_frame_mirrorless",
+            "medium_format_camera",
+            "microscope_camera"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "eye_level_front",
+            "side_profile_view",
+            "top_down_90",
+            "high_observer_angle"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "macro_focus_stack",
+            "craft_macro_focus",
+            "selective_foreground_focus",
+            "deep_focus"
+          ]
+        },
+        "motion": {
+          "ids": [
+            "stable_tripod",
+            "flash_freeze"
+          ]
+        },
+        "light_direction": {
+          "ids": [
+            "front_light",
+            "three_quarter_light",
+            "top_light",
+            "reflected_light"
+          ]
+        }
+      }
+    },
+    {
+      "id": "environment_as_robot_space",
+      "ko": "환경 자체가 로봇인 공간",
+      "en": "environment as robot space",
+      "weight": 0.72,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "light_shape"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.65
+        },
+        {
+          "slot": "world",
+          "probability": 0.65
+        },
+        {
+          "slot": "texture",
+          "probability": 0.6
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "architecture_magazine_photo",
+            "robotics_engineering_record",
+            "scientific_record"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "robotics",
+            "architecture",
+            "technology",
+            "science"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "sentient_room_system",
+            "surveillance_sentinel_node"
+          ]
+        },
+        "action": {
+          "ids": [
+            "system_boot_sequence",
+            "running_diagnostics",
+            "recorded_by_surveillance",
+            "command_standby"
+          ]
+        },
+        "location": {
+          "ids": [
+            "server_room",
+            "diagnostics_lab",
+            "robot_charging_bay",
+            "glass_office"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "monitor_glow",
+            "lab_led",
+            "fluorescent",
+            "low_key"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "extreme_wide_environmental",
+            "wide_establishing",
+            "frame_within_frame",
+            "cctv_corner_frame"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "wide_24mm",
+            "16_35mm",
+            "35mm"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "clinical_machine",
+            "controlled_obedience",
+            "synthetic_calm",
+            "tense"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "not_overdone"
+          ]
+        },
+        "light_shape": {
+          "ids": [
+            "scan_grid_projection",
+            "status_led_array_pattern",
+            "registration_crosshair"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "diagnostic_readout_prop",
+            "calibration_target_prop",
+            "docking_contacts_prop"
+          ]
+        },
+        "world": {
+          "ids": [
+            "distributed_ai_system_world",
+            "automated_machine_civilization",
+            "tech_noir"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "clean_digital",
+            "brushed_alloy_microscratch",
+            "woven_cable_fiber_texture"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "full_frame_mirrorless",
+            "dslr_camera",
+            "cctv_camera"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "eye_level_front",
+            "high_observer_angle",
+            "cctv_corner_direction"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "deep_focus",
+            "zone_focus_street"
+          ]
+        },
+        "motion": {
+          "ids": [
+            "stable_tripod",
+            "cctv_fixed_static"
+          ]
+        },
+        "light_direction": {
+          "ids": [
+            "top_light",
+            "front_light",
+            "three_quarter_light"
+          ]
+        }
+      }
+    },
+    {
+      "id": "exoskeleton_operator_rig",
+      "ko": "외골격 조작 리그",
+      "en": "exoskeleton operator rig",
+      "weight": 0.7,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "prop",
+        "texture"
+      ],
+      "optional_slots": [
+        {
+          "slot": "light_shape",
+          "probability": 0.5
+        },
+        {
+          "slot": "surface_material",
+          "probability": 0.5
+        },
+        {
+          "slot": "subject_framing",
+          "probability": 0.55
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "robotics_engineering_record",
+            "documentary_photo",
+            "concept_photo"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "robotics",
+            "technology",
+            "documentary"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "powered_exoskeleton_frame",
+            "cyborg_partial_prosthetic",
+            "humanoid_labor_robot"
+          ]
+        },
+        "action": {
+          "ids": [
+            "running_diagnostics",
+            "command_standby",
+            "repetitive_assembly_task"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "exposed_actuator_port_prop",
+            "diagnostic_readout_prop",
+            "maintenance_tag_prop"
+          ]
+        },
+        "location": {
+          "ids": [
+            "diagnostics_lab",
+            "robot_assembly_line",
+            "industrial_mecha_hangar"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "lab_led",
+            "single_flashlight_beam",
+            "fluorescent"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "segmented_limb_macro",
+            "exposed_joint_detail_crop",
+            "medium_close"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "macro_100mm"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "controlled_obedience",
+            "clinical_machine",
+            "raw"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "candid_imperfect"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "woven_cable_fiber_texture",
+            "brushed_alloy_microscratch",
+            "macro_detail"
+          ]
+        },
+        "light_shape": {
+          "ids": [
+            "registration_crosshair",
+            "scan_grid_projection"
+          ]
+        },
+        "surface_material": {
+          "ids": [
+            "worn_alloy_surface",
+            "woven_cable_fiber_surface",
+            "transparent_polycarbonate_surface"
+          ]
+        },
+        "subject_framing": {
+          "ids": [
+            "upper_body_framing",
+            "detail_crop_hands_accessories",
+            "head_and_shoulders_crop"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "full_frame_mirrorless",
+            "dslr_camera",
+            "medium_format_camera"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "eye_level_front",
+            "eye_level_three_quarter",
+            "side_profile_view",
+            "high_observer_angle"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "eye_focus",
+            "face_detection_focus",
+            "deep_focus",
+            "macro_focus_stack"
+          ]
+        },
+        "motion": {
+          "ids": [
+            "stable_tripod",
+            "handheld_microshake",
+            "flash_freeze"
+          ]
+        },
+        "light_direction": {
+          "ids": [
+            "front_light",
+            "three_quarter_light",
+            "side_light_left",
+            "side_light_right",
+            "top_light",
+            "rim_light"
+          ]
+        }
+      }
+    },
+    {
+      "id": "maintenance_charging_bay",
+      "ko": "정비 충전 베이 로봇",
+      "en": "maintenance charging bay robot",
+      "weight": 0.78,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "prop",
+        "light_type"
+      ],
+      "optional_slots": [
+        {
+          "slot": "light_shape",
+          "probability": 0.7
+        },
+        {
+          "slot": "texture",
+          "probability": 0.7
+        },
+        {
+          "slot": "subject_framing",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "robotics_engineering_record",
+            "synthetic_being_portrait_photo",
+            "scientific_record"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "robotics",
+            "technology",
+            "portrait",
+            "science"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "service_android_unit",
+            "care_medical_android",
+            "gynoid_companion_unit",
+            "humanoid_labor_robot"
+          ]
+        },
+        "action": {
+          "ids": [
+            "charging_docked",
+            "system_boot_sequence",
+            "running_diagnostics",
+            "command_standby"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "charging_tether_prop",
+            "wrist_port_charging_lead_prop",
+            "docking_contacts_prop",
+            "diagnostic_readout_prop"
+          ]
+        },
+        "location": {
+          "ids": [
+            "robot_charging_bay",
+            "diagnostics_lab",
+            "server_room"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "lab_led",
+            "monitor_glow",
+            "fluorescent",
+            "low_key"
+          ]
+        },
+        "light_type": {
+          "ids": [
+            "charging_indicator_glow",
+            "status_led_glow",
+            "calibration_projector_glow"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "medium_close",
+            "frame_within_frame",
+            "exposed_joint_detail_crop",
+            "sensor_eye_macro"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "clinical_machine",
+            "synthetic_calm",
+            "controlled_obedience"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "not_overdone"
+          ]
+        },
+        "light_shape": {
+          "ids": [
+            "status_led_array_pattern",
+            "scan_grid_projection"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "matte_synthetic_skin_pore",
+            "brushed_alloy_microscratch",
+            "woven_cable_fiber_texture"
+          ]
+        },
+        "subject_framing": {
+          "ids": [
+            "head_and_shoulders_crop",
+            "upper_body_framing",
+            "detail_crop_hands_accessories"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "full_frame_mirrorless",
+            "dslr_camera",
+            "medium_format_camera"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "eye_level_front",
+            "eye_level_three_quarter",
+            "side_profile_view",
+            "high_observer_angle"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "eye_focus",
+            "face_detection_focus",
+            "deep_focus",
+            "macro_focus_stack"
+          ]
+        },
+        "motion": {
+          "ids": [
+            "stable_tripod",
+            "handheld_microshake",
+            "flash_freeze"
+          ]
+        },
+        "light_direction": {
+          "ids": [
+            "front_light",
+            "three_quarter_light",
+            "side_light_left",
+            "side_light_right",
+            "top_light",
+            "rim_light"
+          ]
+        }
+      }
+    },
+    {
+      "id": "biohybrid_organism_subject",
+      "ko": "바이오 융합 로봇 유기체",
+      "en": "biohybrid robotic organism",
+      "weight": 0.68,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "surface_material",
+        "texture"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.55
+        },
+        {
+          "slot": "light_shape",
+          "probability": 0.45
+        },
+        {
+          "slot": "world",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "scientific_record",
+            "robotics_engineering_record",
+            "fine_art_print"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "artificial_life",
+            "robotics",
+            "science",
+            "technology"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "bio_hybrid_organism_unit",
+            "soft_silicone_robot"
+          ]
+        },
+        "action": {
+          "ids": [
+            "running_diagnostics",
+            "system_boot_sequence",
+            "command_standby"
+          ]
+        },
+        "location": {
+          "ids": [
+            "biolab",
+            "diagnostics_lab",
+            "laboratory"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "lab_led",
+            "monitor_glow",
+            "softbox",
+            "underwater_caustic_light"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "macro_detail",
+            "segmented_limb_macro",
+            "medium_close"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "macro_100mm",
+            "105mm_macro",
+            "probe_lens_macro"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "clinical_machine",
+            "uncanny",
+            "synthetic_calm"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "optical_photo_realism",
+            "high_detail"
+          ]
+        },
+        "surface_material": {
+          "ids": [
+            "bio_tissue_substrate_surface",
+            "transparent_polycarbonate_surface",
+            "soft_polymer_surface"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "woven_cable_fiber_texture",
+            "macro_detail",
+            "glass_refraction"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "diagnostic_readout_prop",
+            "calibration_target_prop"
+          ]
+        },
+        "light_shape": {
+          "ids": [
+            "scan_grid_projection",
+            "registration_crosshair"
+          ]
+        },
+        "world": {
+          "ids": [
+            "post_human_android_world",
+            "distributed_ai_system_world"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "full_frame_mirrorless",
+            "medium_format_camera",
+            "microscope_camera"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "eye_level_front",
+            "side_profile_view",
+            "top_down_90",
+            "high_observer_angle"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "macro_focus_stack",
+            "craft_macro_focus",
+            "selective_foreground_focus",
+            "deep_focus"
+          ]
+        },
+        "motion": {
+          "ids": [
+            "stable_tripod",
+            "flash_freeze"
+          ]
+        },
+        "light_direction": {
+          "ids": [
+            "front_light",
+            "three_quarter_light",
+            "top_light",
+            "reflected_light"
+          ]
+        }
+      }
+    },
+    {
+      "id": "micro_nano_system_scale",
+      "ko": "마이크로/나노 로봇 스케일",
+      "en": "micro or nanobot system scale",
+      "weight": 0.65,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "texture"
+      ],
+      "optional_slots": [
+        {
+          "slot": "surface_material",
+          "probability": 0.45
+        },
+        {
+          "slot": "light_shape",
+          "probability": 0.65
+        },
+        {
+          "slot": "format",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "scientific_record",
+            "optical_experiment_photo",
+            "robotics_engineering_record"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "robotics",
+            "science",
+            "technology",
+            "optical_experiment"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "nano_swarm_visualization",
+            "drone_swarm_collective"
+          ]
+        },
+        "action": {
+          "ids": [
+            "synchronized_swarm_motion",
+            "running_diagnostics",
+            "system_boot_sequence"
+          ]
+        },
+        "location": {
+          "ids": [
+            "diagnostics_lab",
+            "laboratory",
+            "biolab"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "lab_led",
+            "monitor_glow",
+            "softbox"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "swarm_repetition_grid",
+            "macro_detail",
+            "sensor_eye_macro"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "macro_100mm",
+            "105mm_macro",
+            "probe_lens_macro",
+            "topdown_macro_60mm"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "clinical_machine",
+            "synthetic_calm"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "optical_photo_realism",
+            "high_detail"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "macro_detail",
+            "clean_digital",
+            "liquid_metal_specular_texture"
+          ]
+        },
+        "surface_material": {
+          "ids": [
+            "transparent_polycarbonate_surface",
+            "liquid_metal_gel_surface"
+          ]
+        },
+        "light_shape": {
+          "ids": [
+            "scan_grid_projection",
+            "registration_crosshair"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "full_frame_mirrorless",
+            "medium_format_camera",
+            "microscope_camera"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "eye_level_front",
+            "side_profile_view",
+            "top_down_90",
+            "high_observer_angle"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "macro_focus_stack",
+            "craft_macro_focus",
+            "selective_foreground_focus",
+            "deep_focus"
+          ]
+        },
+        "motion": {
+          "ids": [
+            "stable_tripod",
+            "flash_freeze"
+          ]
+        },
+        "light_direction": {
+          "ids": [
+            "front_light",
+            "three_quarter_light",
+            "top_light",
+            "reflected_light"
+          ]
+        }
+      }
+    },
+    {
+      "id": "telepresence_remote_unit",
+      "ko": "원격현전 로봇 유닛",
+      "en": "telepresence remote robot unit",
+      "weight": 0.66,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "prop"
+      ],
+      "optional_slots": [
+        {
+          "slot": "light_type",
+          "probability": 0.65
+        },
+        {
+          "slot": "capture_context",
+          "probability": 0.35
+        },
+        {
+          "slot": "world",
+          "probability": 0.4
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "synthetic_being_portrait_photo",
+            "robotics_engineering_record",
+            "social_media_post"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "robotics",
+            "technology",
+            "portrait",
+            "creator_lifestyle"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "telepresence_avatar_robot",
+            "service_android_unit",
+            "surveillance_sentinel_node"
+          ]
+        },
+        "action": {
+          "ids": [
+            "command_standby",
+            "running_diagnostics",
+            "system_boot_sequence"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "diagnostic_readout_prop",
+            "serial_spec_plate_prop",
+            "calibration_target_prop"
+          ]
+        },
+        "location": {
+          "ids": [
+            "server_room",
+            "glass_office",
+            "robot_charging_bay",
+            "diagnostics_lab"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "monitor_glow",
+            "lab_led",
+            "fluorescent",
+            "soft_window"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "medium_close",
+            "frame_within_frame",
+            "cctv_corner_frame"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "smartphone"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "clinical_machine",
+            "synthetic_calm",
+            "controlled_obedience"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "phone_realism"
+          ]
+        },
+        "light_type": {
+          "ids": [
+            "status_led_glow",
+            "scan_line_light"
+          ]
+        },
+        "capture_context": {
+          "ids": [
+            "front_camera_close_selfie",
+            "passenger_seat_observed_candid"
+          ]
+        },
+        "world": {
+          "ids": [
+            "distributed_ai_system_world",
+            "realistic_modern",
+            "tech_noir"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "full_frame_mirrorless",
+            "dslr_camera",
+            "medium_format_camera"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "eye_level_front",
+            "eye_level_three_quarter",
+            "side_profile_view",
+            "high_observer_angle"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "eye_focus",
+            "face_detection_focus",
+            "deep_focus",
+            "macro_focus_stack"
+          ]
+        },
+        "motion": {
+          "ids": [
+            "stable_tripod",
+            "handheld_microshake",
+            "flash_freeze"
+          ]
+        },
+        "light_direction": {
+          "ids": [
+            "front_light",
+            "three_quarter_light",
+            "side_light_left",
+            "side_light_right",
+            "top_light",
+            "rim_light"
+          ]
+        }
+      }
+    },
+    {
+      "id": "deepsea_space_ops_unit",
+      "ko": "심해/우주 작업 로봇 유닛",
+      "en": "deep-space operations robot unit",
+      "weight": 0.64,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "prop",
+        "texture"
+      ],
+      "optional_slots": [
+        {
+          "slot": "surface_material",
+          "probability": 0.6
+        },
+        {
+          "slot": "light_type",
+          "probability": 0.55
+        },
+        {
+          "slot": "world",
+          "probability": 0.55
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "robotics_engineering_record",
+            "scientific_record",
+            "film_still"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "robotics",
+            "technology",
+            "sci_fi_city",
+            "science"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "autonomous_vehicle_entity",
+            "quadruped_utility_robot",
+            "modular_reconfigurable_robot"
+          ]
+        },
+        "action": {
+          "ids": [
+            "command_standby",
+            "running_diagnostics",
+            "charging_docked"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "docking_contacts_prop",
+            "diagnostic_readout_prop",
+            "maintenance_tag_prop"
+          ]
+        },
+        "location": {
+          "ids": [
+            "orbital_station_interior",
+            "industrial_mecha_hangar",
+            "diagnostics_lab"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "volumetric",
+            "lab_led",
+            "single_flashlight_beam",
+            "monitor_glow"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "wide_establishing",
+            "nonhumanoid_full_silhouette",
+            "extreme_wide_environmental",
+            "exposed_joint_detail_crop"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "wide_24mm",
+            "16_35mm",
+            "35mm"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "clinical_machine",
+            "tense",
+            "synthetic_calm"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "not_overdone"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "brushed_alloy_microscratch",
+            "wet_concrete_grime",
+            "clean_digital"
+          ]
+        },
+        "surface_material": {
+          "ids": [
+            "worn_alloy_surface",
+            "transparent_polycarbonate_surface"
+          ]
+        },
+        "light_type": {
+          "ids": [
+            "status_led_glow",
+            "charging_indicator_glow"
+          ]
+        },
+        "world": {
+          "ids": [
+            "automated_machine_civilization",
+            "distributed_ai_system_world",
+            "retro_futurism"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "full_frame_mirrorless",
+            "dslr_camera",
+            "medium_format_camera"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "eye_level_front",
+            "eye_level_three_quarter",
+            "side_profile_view",
+            "high_observer_angle"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "eye_focus",
+            "face_detection_focus",
+            "deep_focus",
+            "macro_focus_stack"
+          ]
+        },
+        "motion": {
+          "ids": [
+            "stable_tripod",
+            "handheld_microshake",
+            "flash_freeze"
+          ]
+        },
+        "light_direction": {
+          "ids": [
+            "front_light",
+            "three_quarter_light",
+            "side_light_left",
+            "side_light_right",
+            "top_light",
+            "rim_light"
+          ]
+        }
+      }
     }
   ],
   "templates": {
@@ -28978,6 +31788,53 @@
           "music",
           "stage"
         ]
+      },
+      {
+        "id": "robotics_engineering_record",
+        "ko": "로보틱스 엔지니어링 기록 사진",
+        "en": "a robotics engineering record photograph",
+        "weight": 0.95,
+        "tags": [
+          "robot",
+          "technology",
+          "science",
+          "documentary"
+        ],
+        "aliases": [
+          "robotics",
+          "engineering",
+          "record"
+        ],
+        "keywords": [
+          "robot",
+          "machine",
+          "engineering",
+          "diagnostics"
+        ],
+        "embedding_text": "robotics engineering record photograph with machine details, diagnostics, and laboratory documentation"
+      },
+      {
+        "id": "synthetic_being_portrait_photo",
+        "ko": "합성 존재 인물 사진",
+        "en": "a synthetic-being portrait photograph",
+        "weight": 1.0,
+        "tags": [
+          "robot",
+          "portrait",
+          "technology",
+          "sci_fi"
+        ],
+        "aliases": [
+          "android portrait",
+          "synthetic being"
+        ],
+        "keywords": [
+          "android",
+          "cyborg",
+          "robot portrait",
+          "artificial person"
+        ],
+        "embedding_text": "photoreal portrait of a synthetic being, android, cyborg, or artificial person with visible robotic evidence"
       }
     ],
     "genre": [
@@ -29493,6 +32350,50 @@
           "documentary",
           "urban"
         ]
+      },
+      {
+        "id": "robotics",
+        "ko": "로보틱스",
+        "en": "robotics photography",
+        "weight": 1.0,
+        "tags": [
+          "robot",
+          "technology",
+          "science"
+        ],
+        "aliases": [
+          "robotics",
+          "robots"
+        ],
+        "keywords": [
+          "robot",
+          "android",
+          "machine",
+          "automation"
+        ],
+        "embedding_text": "robotics photography focused on robots, androids, automation, actuators, sensors, and machine behavior"
+      },
+      {
+        "id": "artificial_life",
+        "ko": "인공 생명",
+        "en": "artificial life photography",
+        "weight": 0.9,
+        "tags": [
+          "robot",
+          "sci_fi",
+          "bio",
+          "surreal"
+        ],
+        "aliases": [
+          "artificial life",
+          "synthetic life"
+        ],
+        "keywords": [
+          "biohybrid",
+          "synthetic organism",
+          "artificial life"
+        ],
+        "embedding_text": "artificial life photography with biohybrid robots, synthetic organisms, soft machines, and living-machine ambiguity"
       }
     ],
     "subject": [
@@ -31830,6 +34731,866 @@
           "street_food"
         ],
         "embedding_text": "Korean street-food tteokbokki"
+      },
+      {
+        "id": "service_android_unit",
+        "ko": "서비스 안드로이드 유닛",
+        "en": "a service android unit",
+        "weight": 0.95,
+        "tags": [
+          "robot",
+          "human",
+          "technology",
+          "portrait"
+        ],
+        "kind": [
+          "robot",
+          "human"
+        ],
+        "aliases": [
+          "service android unit",
+          "robot",
+          "humanoid android"
+        ],
+        "keywords": [
+          "robot",
+          "android",
+          "machine",
+          "humanoid android",
+          "android mimicry"
+        ],
+        "embedding_text": "humanlike service android built for routine labor with synthetic skin, actuator seams, serial marks, and a controlled standby posture",
+        "facets": {
+          "subject_kind": [
+            "robot"
+          ],
+          "robot_form": [
+            "humanoid_android"
+          ],
+          "robot_degree": [
+            "android_mimicry"
+          ],
+          "robot_metaphor": [
+            "robota_labor"
+          ]
+        }
+      },
+      {
+        "id": "care_medical_android",
+        "ko": "의료 돌봄 안드로이드",
+        "en": "a care medical android",
+        "weight": 0.95,
+        "tags": [
+          "robot",
+          "human",
+          "medical",
+          "technology"
+        ],
+        "kind": [
+          "robot",
+          "human"
+        ],
+        "aliases": [
+          "care medical android",
+          "robot",
+          "humanoid android"
+        ],
+        "keywords": [
+          "robot",
+          "android",
+          "machine",
+          "humanoid android",
+          "android mimicry"
+        ],
+        "embedding_text": "medical care android with clean clinical casing, sensor eyes, diagnostic panels, and gentle programmed bedside behavior",
+        "facets": {
+          "subject_kind": [
+            "robot"
+          ],
+          "robot_form": [
+            "humanoid_android"
+          ],
+          "robot_degree": [
+            "android_mimicry"
+          ],
+          "robot_metaphor": [
+            "companion"
+          ]
+        }
+      },
+      {
+        "id": "humanoid_labor_robot",
+        "ko": "노동형 휴머노이드 로봇",
+        "en": "a humanoid labor robot",
+        "weight": 0.95,
+        "tags": [
+          "robot",
+          "human",
+          "industrial",
+          "technology"
+        ],
+        "kind": [
+          "robot",
+          "human"
+        ],
+        "aliases": [
+          "humanoid labor robot",
+          "robot",
+          "humanoid android"
+        ],
+        "keywords": [
+          "robot",
+          "android",
+          "machine",
+          "humanoid android",
+          "full machine"
+        ],
+        "embedding_text": "humanoid labor robot with reinforced limbs, utility joints, tool ports, and repetitive work posture",
+        "facets": {
+          "subject_kind": [
+            "robot"
+          ],
+          "robot_form": [
+            "humanoid_android"
+          ],
+          "robot_degree": [
+            "full_machine"
+          ],
+          "robot_metaphor": [
+            "robota_labor"
+          ]
+        }
+      },
+      {
+        "id": "gynoid_companion_unit",
+        "ko": "인간처럼 매끄러운 동반자형 안드로이드",
+        "en": "a seamless humanlike companion android",
+        "weight": 0.95,
+        "tags": [
+          "robot",
+          "human",
+          "portrait",
+          "uncanny"
+        ],
+        "kind": [
+          "robot",
+          "human"
+        ],
+        "aliases": [
+          "gynoid companion unit",
+          "robot",
+          "humanoid android"
+        ],
+        "keywords": [
+          "robot",
+          "android",
+          "machine",
+          "humanoid android",
+          "human looking controlled"
+        ],
+        "embedding_text": "seamless humanlike companion android with subtle synthetic pores, precise empty gaze, wrist port, and uncanny social mimicry",
+        "facets": {
+          "subject_kind": [
+            "robot"
+          ],
+          "robot_form": [
+            "humanoid_android"
+          ],
+          "robot_degree": [
+            "human_looking_controlled"
+          ],
+          "robot_metaphor": [
+            "mirror_of_humanity"
+          ]
+        }
+      },
+      {
+        "id": "cyborg_partial_prosthetic",
+        "ko": "부분 사이보그 인물",
+        "en": "a partially cyborg person",
+        "weight": 0.95,
+        "tags": [
+          "robot",
+          "human",
+          "cyborg",
+          "technology"
+        ],
+        "kind": [
+          "robot",
+          "human"
+        ],
+        "aliases": [
+          "cyborg partial prosthetic",
+          "robot",
+          "partial cyborg"
+        ],
+        "keywords": [
+          "robot",
+          "android",
+          "machine",
+          "partial cyborg",
+          "partial cyborg"
+        ],
+        "embedding_text": "partially cyborg person with robotic prosthetic limbs, subdermal interface plates, sensor implants, and visible human-machine boundaries",
+        "facets": {
+          "subject_kind": [
+            "robot"
+          ],
+          "robot_form": [
+            "partial_cyborg"
+          ],
+          "robot_degree": [
+            "partial_cyborg"
+          ],
+          "robot_metaphor": [
+            "body_extension"
+          ]
+        }
+      },
+      {
+        "id": "quadruped_utility_robot",
+        "ko": "네 발 보행 유틸리티 로봇",
+        "en": "a quadruped utility robot",
+        "weight": 0.95,
+        "tags": [
+          "robot",
+          "object",
+          "industrial",
+          "technology"
+        ],
+        "kind": [
+          "robot",
+          "object"
+        ],
+        "aliases": [
+          "quadruped utility robot",
+          "robot",
+          "zoomorphic nonhumanoid"
+        ],
+        "keywords": [
+          "robot",
+          "android",
+          "machine",
+          "zoomorphic nonhumanoid",
+          "full machine"
+        ],
+        "embedding_text": "four-legged utility robot with articulated legs, sensor head, rugged casing, and practical inspection behavior",
+        "facets": {
+          "subject_kind": [
+            "robot"
+          ],
+          "robot_form": [
+            "zoomorphic_nonhumanoid"
+          ],
+          "robot_degree": [
+            "full_machine"
+          ],
+          "robot_metaphor": [
+            "tool"
+          ]
+        }
+      },
+      {
+        "id": "fixed_industrial_robot_arm",
+        "ko": "고정식 산업용 로봇 팔",
+        "en": "a fixed industrial robot arm",
+        "weight": 0.95,
+        "tags": [
+          "robot",
+          "object",
+          "industrial",
+          "automation"
+        ],
+        "kind": [
+          "robot",
+          "object"
+        ],
+        "aliases": [
+          "fixed industrial robot arm",
+          "robot",
+          "fixed installation"
+        ],
+        "keywords": [
+          "robot",
+          "android",
+          "machine",
+          "fixed installation",
+          "full machine"
+        ],
+        "embedding_text": "fixed industrial robot arm bolted to the floor with exposed joints, grippers, calibration marks, and repetitive assembly logic",
+        "facets": {
+          "subject_kind": [
+            "robot"
+          ],
+          "robot_form": [
+            "fixed_installation"
+          ],
+          "robot_degree": [
+            "full_machine"
+          ],
+          "robot_metaphor": [
+            "robota_labor"
+          ]
+        }
+      },
+      {
+        "id": "modular_reconfigurable_robot",
+        "ko": "모듈식 재구성 로봇",
+        "en": "a modular reconfigurable robot",
+        "weight": 0.95,
+        "tags": [
+          "robot",
+          "object",
+          "modular",
+          "technology"
+        ],
+        "kind": [
+          "robot",
+          "object"
+        ],
+        "aliases": [
+          "modular reconfigurable robot",
+          "robot",
+          "modular"
+        ],
+        "keywords": [
+          "robot",
+          "android",
+          "machine",
+          "modular",
+          "full machine"
+        ],
+        "embedding_text": "modular reconfigurable robot built from interchangeable blocks, magnetic joints, exposed bus contacts, and shifting silhouette",
+        "facets": {
+          "subject_kind": [
+            "robot"
+          ],
+          "robot_form": [
+            "modular"
+          ],
+          "robot_degree": [
+            "full_machine"
+          ],
+          "robot_metaphor": [
+            "tool"
+          ]
+        }
+      },
+      {
+        "id": "drone_swarm_collective",
+        "ko": "군집 드론 로봇 집합체",
+        "en": "a drone swarm collective",
+        "weight": 0.95,
+        "tags": [
+          "robot",
+          "object",
+          "swarm",
+          "technology"
+        ],
+        "kind": [
+          "robot",
+          "object"
+        ],
+        "aliases": [
+          "drone swarm collective",
+          "robot",
+          "swarm"
+        ],
+        "keywords": [
+          "robot",
+          "android",
+          "machine",
+          "swarm",
+          "distributed system"
+        ],
+        "embedding_text": "collective swarm of small drones moving as one distributed robotic body with synchronized lights and formation behavior",
+        "facets": {
+          "subject_kind": [
+            "robot"
+          ],
+          "robot_form": [
+            "swarm"
+          ],
+          "robot_degree": [
+            "distributed_system"
+          ],
+          "robot_metaphor": [
+            "autonomy_vs_command"
+          ]
+        }
+      },
+      {
+        "id": "soft_silicone_robot",
+        "ko": "부드러운 실리콘 소프트 로봇",
+        "en": "a soft silicone robot",
+        "weight": 0.95,
+        "tags": [
+          "robot",
+          "object",
+          "soft",
+          "bio"
+        ],
+        "kind": [
+          "robot",
+          "object"
+        ],
+        "aliases": [
+          "soft silicone robot",
+          "robot",
+          "soft liquid"
+        ],
+        "keywords": [
+          "robot",
+          "android",
+          "machine",
+          "soft liquid",
+          "full machine"
+        ],
+        "embedding_text": "soft silicone robot with flexible pneumatic limbs, translucent polymer channels, gentle deformation, and lab test motion",
+        "facets": {
+          "subject_kind": [
+            "robot"
+          ],
+          "robot_form": [
+            "soft_liquid"
+          ],
+          "robot_degree": [
+            "full_machine"
+          ],
+          "robot_metaphor": [
+            "tool"
+          ]
+        }
+      },
+      {
+        "id": "liquid_metal_robot",
+        "ko": "액체 금속 로봇",
+        "en": "a liquid-metal robot",
+        "weight": 0.95,
+        "tags": [
+          "robot",
+          "object",
+          "liquid",
+          "sci_fi"
+        ],
+        "kind": [
+          "robot",
+          "object"
+        ],
+        "aliases": [
+          "liquid metal robot",
+          "robot",
+          "soft liquid"
+        ],
+        "keywords": [
+          "robot",
+          "android",
+          "machine",
+          "soft liquid",
+          "full machine"
+        ],
+        "embedding_text": "liquid-metal robot with reflective flowing body, temporary limbs, magnetic containment fields, and changing silhouette",
+        "facets": {
+          "subject_kind": [
+            "robot"
+          ],
+          "robot_form": [
+            "soft_liquid"
+          ],
+          "robot_degree": [
+            "full_machine"
+          ],
+          "robot_metaphor": [
+            "mythic_artificial_life"
+          ]
+        }
+      },
+      {
+        "id": "bio_hybrid_organism_unit",
+        "ko": "바이오 하이브리드 로봇 유닛",
+        "en": "a bio-hybrid robotic organism",
+        "weight": 0.95,
+        "tags": [
+          "robot",
+          "object",
+          "bio",
+          "science"
+        ],
+        "kind": [
+          "robot",
+          "object"
+        ],
+        "aliases": [
+          "bio hybrid organism unit",
+          "robot",
+          "bio hybrid"
+        ],
+        "keywords": [
+          "robot",
+          "android",
+          "machine",
+          "bio hybrid",
+          "full machine"
+        ],
+        "embedding_text": "bio-hybrid robotic organism with cultured tissue, transparent growth chamber, neural interface fibers, and synthetic life ambiguity",
+        "facets": {
+          "subject_kind": [
+            "robot"
+          ],
+          "robot_form": [
+            "bio_hybrid"
+          ],
+          "robot_degree": [
+            "full_machine"
+          ],
+          "robot_metaphor": [
+            "mythic_artificial_life"
+          ]
+        }
+      },
+      {
+        "id": "nano_swarm_visualization",
+        "ko": "나노봇 군집 시각화",
+        "en": "a nanobot swarm visualization",
+        "weight": 0.95,
+        "tags": [
+          "robot",
+          "object",
+          "micro",
+          "swarm"
+        ],
+        "kind": [
+          "robot",
+          "object"
+        ],
+        "aliases": [
+          "nano swarm visualization",
+          "robot",
+          "micro nano"
+        ],
+        "keywords": [
+          "robot",
+          "android",
+          "machine",
+          "micro nano",
+          "distributed system"
+        ],
+        "embedding_text": "nanobot swarm visualization as countless micro machines forming patterns across a surface under macro scientific light",
+        "facets": {
+          "subject_kind": [
+            "robot"
+          ],
+          "robot_form": [
+            "micro_nano"
+          ],
+          "robot_degree": [
+            "distributed_system"
+          ],
+          "robot_metaphor": [
+            "environment_as_robot"
+          ]
+        }
+      },
+      {
+        "id": "telepresence_avatar_robot",
+        "ko": "원격현전 아바타 로봇",
+        "en": "a telepresence avatar robot",
+        "weight": 0.95,
+        "tags": [
+          "robot",
+          "human",
+          "remote",
+          "technology"
+        ],
+        "kind": [
+          "robot",
+          "human"
+        ],
+        "aliases": [
+          "telepresence avatar robot",
+          "robot",
+          "telepresence"
+        ],
+        "keywords": [
+          "robot",
+          "android",
+          "machine",
+          "telepresence",
+          "android mimicry"
+        ],
+        "embedding_text": "telepresence avatar robot with camera eyes, speaker grille, remote operator status light, and a body used as a social interface",
+        "facets": {
+          "subject_kind": [
+            "robot"
+          ],
+          "robot_form": [
+            "telepresence"
+          ],
+          "robot_degree": [
+            "android_mimicry"
+          ],
+          "robot_metaphor": [
+            "companion"
+          ]
+        }
+      },
+      {
+        "id": "powered_exoskeleton_frame",
+        "ko": "동력 외골격 프레임",
+        "en": "a powered exoskeleton frame",
+        "weight": 0.95,
+        "tags": [
+          "robot",
+          "human",
+          "exoskeleton",
+          "industrial"
+        ],
+        "kind": [
+          "robot",
+          "human"
+        ],
+        "aliases": [
+          "powered exoskeleton frame",
+          "robot",
+          "exoskeleton"
+        ],
+        "keywords": [
+          "robot",
+          "android",
+          "machine",
+          "exoskeleton",
+          "partial cyborg"
+        ],
+        "embedding_text": "powered exoskeleton frame with servo joints, load-bearing braces, battery pack, and human body-extension mechanics",
+        "facets": {
+          "subject_kind": [
+            "robot"
+          ],
+          "robot_form": [
+            "exoskeleton"
+          ],
+          "robot_degree": [
+            "partial_cyborg"
+          ],
+          "robot_metaphor": [
+            "body_extension"
+          ]
+        }
+      },
+      {
+        "id": "sentient_room_system",
+        "ko": "방 전체가 하나의 로봇인 지능형 공간",
+        "en": "a sentient room-sized robotic system",
+        "weight": 0.95,
+        "tags": [
+          "robot",
+          "environment",
+          "interior",
+          "ai"
+        ],
+        "kind": [
+          "robot",
+          "environment"
+        ],
+        "aliases": [
+          "sentient room system",
+          "robot",
+          "environment as robot"
+        ],
+        "keywords": [
+          "robot",
+          "android",
+          "machine",
+          "environment as robot",
+          "distributed system"
+        ],
+        "embedding_text": "room-sized robotic environment where walls, cameras, vents, lights, and furniture act as one distributed machine body",
+        "facets": {
+          "subject_kind": [
+            "robot"
+          ],
+          "robot_form": [
+            "environment_as_robot"
+          ],
+          "robot_degree": [
+            "distributed_system"
+          ],
+          "robot_metaphor": [
+            "environment_as_robot"
+          ]
+        }
+      },
+      {
+        "id": "autonomous_vehicle_entity",
+        "ko": "자율 이동 로봇 차량",
+        "en": "an autonomous robotic vehicle entity",
+        "weight": 0.95,
+        "tags": [
+          "robot",
+          "object",
+          "vehicle",
+          "technology"
+        ],
+        "kind": [
+          "robot",
+          "object"
+        ],
+        "aliases": [
+          "autonomous vehicle entity",
+          "robot",
+          "autonomous vehicle"
+        ],
+        "keywords": [
+          "robot",
+          "android",
+          "machine",
+          "autonomous vehicle",
+          "full machine"
+        ],
+        "embedding_text": "autonomous robotic vehicle with lidar sensors, sealed cockpit, charging contacts, and self-directed machine presence",
+        "facets": {
+          "subject_kind": [
+            "robot"
+          ],
+          "robot_form": [
+            "autonomous_vehicle"
+          ],
+          "robot_degree": [
+            "full_machine"
+          ],
+          "robot_metaphor": [
+            "tool"
+          ]
+        }
+      },
+      {
+        "id": "ceramic_automaton_figure",
+        "ko": "도자기 자동인형",
+        "en": "a ceramic automaton figure",
+        "weight": 0.95,
+        "tags": [
+          "robot",
+          "object",
+          "mythic",
+          "fantasy"
+        ],
+        "kind": [
+          "robot",
+          "object"
+        ],
+        "aliases": [
+          "ceramic automaton figure",
+          "robot",
+          "mythic automaton"
+        ],
+        "keywords": [
+          "robot",
+          "android",
+          "machine",
+          "mythic automaton",
+          "full machine"
+        ],
+        "embedding_text": "ceramic automaton figure with porcelain casing, clockwork seams, delicate joints, and ancient artificial-life aura",
+        "facets": {
+          "subject_kind": [
+            "robot"
+          ],
+          "robot_form": [
+            "mythic_automaton"
+          ],
+          "robot_degree": [
+            "full_machine"
+          ],
+          "robot_metaphor": [
+            "mythic_artificial_life"
+          ]
+        }
+      },
+      {
+        "id": "bronze_guardian_automaton",
+        "ko": "청동 수호 자동기계",
+        "en": "a bronze guardian automaton",
+        "weight": 0.95,
+        "tags": [
+          "robot",
+          "object",
+          "mythic",
+          "fantasy"
+        ],
+        "kind": [
+          "robot",
+          "object"
+        ],
+        "aliases": [
+          "bronze guardian automaton",
+          "robot",
+          "mythic automaton"
+        ],
+        "keywords": [
+          "robot",
+          "android",
+          "machine",
+          "mythic automaton",
+          "full machine"
+        ],
+        "embedding_text": "bronze guardian automaton with patina plates, gear joints, temple scale, and ceremonial defense presence",
+        "facets": {
+          "subject_kind": [
+            "robot"
+          ],
+          "robot_form": [
+            "mythic_automaton"
+          ],
+          "robot_degree": [
+            "full_machine"
+          ],
+          "robot_metaphor": [
+            "weapon"
+          ]
+        }
+      },
+      {
+        "id": "surveillance_sentinel_node",
+        "ko": "감시 센티넬 노드 로봇",
+        "en": "a surveillance sentinel node robot",
+        "weight": 0.95,
+        "tags": [
+          "robot",
+          "object",
+          "surveillance",
+          "technology"
+        ],
+        "kind": [
+          "robot",
+          "object"
+        ],
+        "aliases": [
+          "surveillance sentinel node",
+          "robot",
+          "fixed installation"
+        ],
+        "keywords": [
+          "robot",
+          "android",
+          "machine",
+          "fixed installation",
+          "distributed system"
+        ],
+        "embedding_text": "surveillance sentinel node with camera cluster, tracking lidar, wall-mounted body, and command-system gaze",
+        "facets": {
+          "subject_kind": [
+            "robot"
+          ],
+          "robot_form": [
+            "fixed_installation"
+          ],
+          "robot_degree": [
+            "distributed_system"
+          ],
+          "robot_metaphor": [
+            "autonomy_vs_command"
+          ]
+        }
       }
     ],
     "person_origin": [
@@ -33917,6 +37678,101 @@
           "stealth"
         ],
         "embedding_text": "a cold unreadable stare with no emotion, controlled and cinematic"
+      },
+      {
+        "id": "present_but_empty_gaze",
+        "ko": "존재감은 있지만 비어 있는 눈빛",
+        "en": "a present but empty machine gaze",
+        "weight": 0.95,
+        "tags": [
+          "robot",
+          "uncanny",
+          "portrait"
+        ],
+        "for_any": [
+          "robot",
+          "human"
+        ],
+        "aliases": [
+          "empty machine gaze",
+          "android stare"
+        ],
+        "keywords": [
+          "robot",
+          "android",
+          "empty gaze",
+          "uncanny"
+        ],
+        "embedding_text": "present but empty machine gaze, social face held a little too precisely, android uncanny-valley expression",
+        "facets": {
+          "robot_proof_family": [
+            "uncanny",
+            "behavior_control"
+          ]
+        }
+      },
+      {
+        "id": "optical_iris_stare",
+        "ko": "광학 홍채 렌즈가 드러나는 응시",
+        "en": "a stare with visible optical iris lenses",
+        "weight": 0.85,
+        "tags": [
+          "robot",
+          "sensor",
+          "portrait"
+        ],
+        "for_any": [
+          "robot",
+          "human"
+        ],
+        "aliases": [
+          "optical iris",
+          "sensor eyes"
+        ],
+        "keywords": [
+          "robot",
+          "optical iris",
+          "lens eye",
+          "sensor"
+        ],
+        "embedding_text": "robot stare with visible optical iris lenses, tiny sensor rings, calibrated pupils, and nonhuman visual apparatus",
+        "facets": {
+          "robot_proof_family": [
+            "surface_construction",
+            "behavior_control"
+          ]
+        }
+      },
+      {
+        "id": "micro_precise_microexpression",
+        "ko": "너무 정밀한 미세 표정",
+        "en": "an overly precise micro-expression",
+        "weight": 0.8,
+        "tags": [
+          "robot",
+          "uncanny",
+          "portrait"
+        ],
+        "for_any": [
+          "robot",
+          "human"
+        ],
+        "aliases": [
+          "precise microexpression",
+          "uncanny smile"
+        ],
+        "keywords": [
+          "robot",
+          "microexpression",
+          "controlled face"
+        ],
+        "embedding_text": "overly precise micro-expression that feels programmed, symmetrical, and slightly too controlled for a human face",
+        "facets": {
+          "robot_proof_family": [
+            "uncanny",
+            "behavior_control"
+          ]
+        }
       }
     ],
     "costume_style": [
@@ -37365,6 +41221,242 @@
         "for_any": [
           "human"
         ]
+      },
+      {
+        "id": "charging_docked",
+        "ko": "충전 도크에 연결된",
+        "en": "connected to a charging dock",
+        "weight": 1.0,
+        "tags": [
+          "robot",
+          "power",
+          "maintenance"
+        ],
+        "for_any": [
+          "robot",
+          "human",
+          "object"
+        ],
+        "aliases": [
+          "charging",
+          "docked"
+        ],
+        "keywords": [
+          "robot",
+          "charging",
+          "dock",
+          "battery"
+        ],
+        "embedding_text": "robot connected to a charging dock with visible cables, status lights, and power dependency",
+        "facets": {
+          "robot_proof_family": [
+            "power_command"
+          ]
+        }
+      },
+      {
+        "id": "running_diagnostics",
+        "ko": "진단 루틴을 실행하는",
+        "en": "running a visible diagnostic routine",
+        "weight": 0.95,
+        "tags": [
+          "robot",
+          "diagnostic",
+          "technology"
+        ],
+        "for_any": [
+          "robot",
+          "human",
+          "object"
+        ],
+        "aliases": [
+          "diagnostics",
+          "self test"
+        ],
+        "keywords": [
+          "robot",
+          "diagnostics",
+          "self-test",
+          "status"
+        ],
+        "embedding_text": "robot running a visible diagnostic routine with status readouts, test posture, calibration marks, and measured stillness",
+        "facets": {
+          "robot_proof_family": [
+            "behavior_control"
+          ]
+        }
+      },
+      {
+        "id": "command_standby",
+        "ko": "명령 대기 상태로 정지한",
+        "en": "standing in command-standby mode",
+        "weight": 1.0,
+        "tags": [
+          "robot",
+          "standby",
+          "control"
+        ],
+        "for_any": [
+          "robot",
+          "human",
+          "object"
+        ],
+        "aliases": [
+          "command standby",
+          "awaiting command"
+        ],
+        "keywords": [
+          "robot",
+          "command",
+          "standby",
+          "controlled"
+        ],
+        "embedding_text": "robot in command-standby mode, controlled posture, idle status light, and obedient paused behavior",
+        "facets": {
+          "robot_proof_family": [
+            "behavior_control",
+            "power_command"
+          ]
+        }
+      },
+      {
+        "id": "synchronized_swarm_motion",
+        "ko": "군집 동작을 동기화하는",
+        "en": "moving in synchronized swarm formation",
+        "weight": 0.9,
+        "tags": [
+          "robot",
+          "swarm",
+          "motion"
+        ],
+        "for_any": [
+          "robot",
+          "object"
+        ],
+        "aliases": [
+          "swarm motion",
+          "synchronized formation"
+        ],
+        "keywords": [
+          "robot",
+          "swarm",
+          "formation",
+          "distributed"
+        ],
+        "embedding_text": "many small robots moving in synchronized swarm formation as one distributed machine body",
+        "facets": {
+          "robot_proof_family": [
+            "form_scale",
+            "behavior_control"
+          ],
+          "robot_form": [
+            "swarm"
+          ]
+        }
+      },
+      {
+        "id": "repetitive_assembly_task",
+        "ko": "반복 조립 작업을 수행하는",
+        "en": "performing a repetitive assembly task",
+        "weight": 0.9,
+        "tags": [
+          "robot",
+          "labor",
+          "industrial"
+        ],
+        "for_any": [
+          "robot",
+          "human",
+          "object"
+        ],
+        "aliases": [
+          "assembly task",
+          "repetitive labor"
+        ],
+        "keywords": [
+          "robot",
+          "labor",
+          "assembly",
+          "automation"
+        ],
+        "embedding_text": "robot performing repetitive assembly labor with precise repeated motion, tool alignment, and manufacturing rhythm",
+        "facets": {
+          "robot_proof_family": [
+            "behavior_control"
+          ],
+          "robot_metaphor": [
+            "robota_labor"
+          ]
+        }
+      },
+      {
+        "id": "system_boot_sequence",
+        "ko": "시스템 부팅 시퀀스 중인",
+        "en": "midway through a system boot sequence",
+        "weight": 0.86,
+        "tags": [
+          "robot",
+          "boot",
+          "technology"
+        ],
+        "for_any": [
+          "robot",
+          "human",
+          "object",
+          "environment"
+        ],
+        "aliases": [
+          "boot sequence",
+          "startup"
+        ],
+        "keywords": [
+          "robot",
+          "boot",
+          "startup",
+          "status"
+        ],
+        "embedding_text": "robot midway through a system boot sequence with startup indicators, half-lit sensors, and initialization posture",
+        "facets": {
+          "robot_proof_family": [
+            "power_command",
+            "behavior_control"
+          ]
+        }
+      },
+      {
+        "id": "present_empty_gaze_standby",
+        "ko": "존재하지만 비어 있는 눈빛으로 대기하는",
+        "en": "waiting with a present but empty machine gaze",
+        "weight": 0.92,
+        "tags": [
+          "robot",
+          "uncanny",
+          "portrait"
+        ],
+        "for_any": [
+          "robot",
+          "human"
+        ],
+        "aliases": [
+          "empty machine gaze",
+          "android standby"
+        ],
+        "keywords": [
+          "robot",
+          "empty gaze",
+          "standby",
+          "uncanny"
+        ],
+        "embedding_text": "humanlike robot waiting with a present but empty machine gaze, social mimicry, precise stillness, and controlled face",
+        "facets": {
+          "robot_proof_family": [
+            "uncanny",
+            "behavior_control"
+          ],
+          "robot_degree": [
+            "human_looking_controlled"
+          ]
+        }
       }
     ],
     "capture_context": [
@@ -41094,6 +45186,279 @@
           "care"
         ],
         "embedding_text": "embroidered handkerchief or charm offered with formal denial as a tsundere caring object"
+      },
+      {
+        "id": "serial_spec_plate_prop",
+        "ko": "기체 일련번호와 사양판",
+        "en": "a visible unit serial-number spec plate",
+        "weight": 1.0,
+        "tags": [
+          "robot",
+          "prop",
+          "machine",
+          "identity"
+        ],
+        "for_any": [
+          "robot",
+          "human",
+          "object"
+        ],
+        "aliases": [
+          "serial plate",
+          "spec plate"
+        ],
+        "keywords": [
+          "robot",
+          "serial number",
+          "spec plate",
+          "unit id"
+        ],
+        "embedding_text": "visible robot unit serial-number spec plate, manufacturer label, model code, and artificial body identity marker",
+        "facets": {
+          "robot_proof_family": [
+            "surface_construction",
+            "power_command"
+          ]
+        }
+      },
+      {
+        "id": "exposed_actuator_port_prop",
+        "ko": "노출된 액추에이터 점검 포트",
+        "en": "an exposed actuator inspection port",
+        "weight": 1.0,
+        "tags": [
+          "robot",
+          "prop",
+          "joint",
+          "mechanical"
+        ],
+        "for_any": [
+          "robot",
+          "human",
+          "object"
+        ],
+        "aliases": [
+          "actuator port",
+          "inspection port"
+        ],
+        "keywords": [
+          "robot",
+          "actuator",
+          "joint",
+          "servo"
+        ],
+        "embedding_text": "exposed actuator inspection port near a wrist, elbow, neck, or limb joint revealing servo mechanics and cable routing",
+        "facets": {
+          "robot_proof_family": [
+            "deep_structural",
+            "surface_construction"
+          ]
+        }
+      },
+      {
+        "id": "charging_tether_prop",
+        "ko": "충전 테더 케이블",
+        "en": "a charging tether cable",
+        "weight": 0.95,
+        "tags": [
+          "robot",
+          "prop",
+          "power",
+          "cable"
+        ],
+        "for_any": [
+          "robot",
+          "human",
+          "object"
+        ],
+        "aliases": [
+          "charging tether",
+          "power cable"
+        ],
+        "keywords": [
+          "robot",
+          "charging",
+          "battery",
+          "tether"
+        ],
+        "embedding_text": "charging tether cable connected to a robot body, visible power status and docked maintenance state",
+        "facets": {
+          "robot_proof_family": [
+            "power_command"
+          ]
+        }
+      },
+      {
+        "id": "wrist_port_charging_lead_prop",
+        "ko": "손목 포트에 연결된 충전 리드",
+        "en": "a charging lead plugged into a wrist port",
+        "weight": 0.95,
+        "tags": [
+          "robot",
+          "prop",
+          "power",
+          "humanlike"
+        ],
+        "for_any": [
+          "robot",
+          "human"
+        ],
+        "aliases": [
+          "wrist port",
+          "charging lead"
+        ],
+        "keywords": [
+          "robot",
+          "wrist port",
+          "charging",
+          "android"
+        ],
+        "embedding_text": "small charging lead plugged into a synthetic wrist port, clear android body-interface detail near the hand",
+        "facets": {
+          "robot_proof_family": [
+            "power_command",
+            "surface_construction"
+          ],
+          "robot_degree": [
+            "human_looking_controlled"
+          ]
+        }
+      },
+      {
+        "id": "diagnostic_readout_prop",
+        "ko": "로봇 진단 판독 화면",
+        "en": "a robot diagnostic readout screen",
+        "weight": 0.95,
+        "tags": [
+          "robot",
+          "prop",
+          "screen",
+          "diagnostic"
+        ],
+        "for_any": [
+          "robot",
+          "human",
+          "object",
+          "environment"
+        ],
+        "aliases": [
+          "diagnostic readout",
+          "status screen"
+        ],
+        "keywords": [
+          "robot",
+          "diagnostics",
+          "readout",
+          "status"
+        ],
+        "embedding_text": "robot diagnostic readout screen showing status, calibration, battery, joint errors, or command queue beside the subject",
+        "facets": {
+          "robot_proof_family": [
+            "power_command",
+            "behavior_control"
+          ]
+        }
+      },
+      {
+        "id": "calibration_target_prop",
+        "ko": "시야 보정 타깃 마커",
+        "en": "a sensor calibration target marker",
+        "weight": 0.85,
+        "tags": [
+          "robot",
+          "prop",
+          "sensor",
+          "calibration"
+        ],
+        "for_any": [
+          "robot",
+          "object",
+          "environment"
+        ],
+        "aliases": [
+          "calibration target",
+          "sensor marker"
+        ],
+        "keywords": [
+          "robot",
+          "calibration",
+          "sensor",
+          "target"
+        ],
+        "embedding_text": "sensor calibration target marker placed near a robot to prove machine vision, measurement, and controlled perception",
+        "facets": {
+          "robot_proof_family": [
+            "behavior_control"
+          ]
+        }
+      },
+      {
+        "id": "docking_contacts_prop",
+        "ko": "충전 도킹 접점",
+        "en": "visible charging dock contact pads",
+        "weight": 0.9,
+        "tags": [
+          "robot",
+          "prop",
+          "dock",
+          "power"
+        ],
+        "for_any": [
+          "robot",
+          "object",
+          "environment"
+        ],
+        "aliases": [
+          "docking contacts",
+          "charging pads"
+        ],
+        "keywords": [
+          "robot",
+          "dock",
+          "charging",
+          "contacts"
+        ],
+        "embedding_text": "visible charging dock contact pads, magnetic latch points, and maintenance cradle details around a robot body",
+        "facets": {
+          "robot_proof_family": [
+            "power_command",
+            "environment_system"
+          ]
+        }
+      },
+      {
+        "id": "maintenance_tag_prop",
+        "ko": "정비 태그와 점검 씰",
+        "en": "a maintenance tag and inspection seal",
+        "weight": 0.85,
+        "tags": [
+          "robot",
+          "prop",
+          "maintenance",
+          "industrial"
+        ],
+        "for_any": [
+          "robot",
+          "object",
+          "human"
+        ],
+        "aliases": [
+          "maintenance tag",
+          "inspection seal"
+        ],
+        "keywords": [
+          "robot",
+          "maintenance",
+          "inspection",
+          "service"
+        ],
+        "embedding_text": "maintenance tag and inspection seal attached to a robot body, showing it as manufactured, serviced, and controlled equipment",
+        "facets": {
+          "robot_proof_family": [
+            "surface_construction",
+            "power_command"
+          ]
+        }
       }
     ],
     "fetish_styling": [
@@ -43798,6 +48163,144 @@
           "home",
           "character"
         ]
+      },
+      {
+        "id": "robot_charging_bay",
+        "ko": "로봇 충전 베이",
+        "en": "a robot charging bay",
+        "phrase_en": "inside a robot charging bay",
+        "phrase_ko": "로봇 충전 베이 안에서",
+        "weight": 1.0,
+        "tags": [
+          "robot",
+          "interior",
+          "technology",
+          "industrial"
+        ],
+        "aliases": [
+          "charging bay",
+          "robot dock"
+        ],
+        "keywords": [
+          "robot",
+          "charging",
+          "dock",
+          "maintenance"
+        ],
+        "embedding_text": "robot charging bay with dock contacts, power tethers, status lights, maintenance rails, and parked synthetic bodies",
+        "facets": {
+          "place_type": [
+            "interior",
+            "industrial"
+          ],
+          "robot_proof_family": [
+            "power_command",
+            "environment_system"
+          ]
+        }
+      },
+      {
+        "id": "robot_assembly_line",
+        "ko": "로봇 조립 라인",
+        "en": "a robot assembly line",
+        "phrase_en": "on a robot assembly line",
+        "phrase_ko": "로봇 조립 라인에서",
+        "weight": 0.95,
+        "tags": [
+          "robot",
+          "factory",
+          "industrial",
+          "technology"
+        ],
+        "aliases": [
+          "assembly line",
+          "robot factory"
+        ],
+        "keywords": [
+          "robot",
+          "assembly",
+          "factory",
+          "automation"
+        ],
+        "embedding_text": "robot assembly line with unfinished bodies, industrial arms, conveyor belts, calibration stations, and repeated manufactured forms",
+        "facets": {
+          "place_type": [
+            "industrial"
+          ],
+          "robot_proof_family": [
+            "environment_system",
+            "form_scale"
+          ]
+        }
+      },
+      {
+        "id": "diagnostics_lab",
+        "ko": "로봇 진단 연구실",
+        "en": "a robotics diagnostics laboratory",
+        "phrase_en": "inside a robotics diagnostics laboratory",
+        "phrase_ko": "로봇 진단 연구실 안에서",
+        "weight": 0.95,
+        "tags": [
+          "robot",
+          "laboratory",
+          "science",
+          "technology"
+        ],
+        "aliases": [
+          "diagnostics lab",
+          "robotics lab"
+        ],
+        "keywords": [
+          "robot",
+          "diagnostics",
+          "laboratory",
+          "calibration"
+        ],
+        "embedding_text": "robotics diagnostics laboratory with sensor calibration charts, status monitors, articulated test rigs, and clean lab lighting",
+        "facets": {
+          "place_type": [
+            "laboratory",
+            "interior"
+          ],
+          "robot_proof_family": [
+            "behavior_control",
+            "environment_system"
+          ]
+        }
+      },
+      {
+        "id": "orbital_station_interior",
+        "ko": "궤도 스테이션 내부",
+        "en": "an orbital station interior",
+        "phrase_en": "inside an orbital station interior",
+        "phrase_ko": "궤도 스테이션 내부에서",
+        "weight": 0.8,
+        "tags": [
+          "robot",
+          "space",
+          "technology",
+          "sci_fi"
+        ],
+        "aliases": [
+          "orbital station",
+          "space station interior"
+        ],
+        "keywords": [
+          "robot",
+          "orbital",
+          "space",
+          "autonomous operations"
+        ],
+        "embedding_text": "orbital station interior for autonomous robots, sealed hatches, maintenance rails, diagnostic panels, and weightless industrial space work",
+        "facets": {
+          "place_type": [
+            "space",
+            "interior"
+          ],
+          "robot_proof_family": [
+            "environment_system"
+          ]
+        }
       }
     ],
     "world": [
@@ -44202,6 +48705,90 @@
           "experimental",
           "fine_art"
         ]
+      },
+      {
+        "id": "automated_machine_civilization",
+        "ko": "자동화 기계 문명",
+        "en": "an automated machine civilization",
+        "weight": 0.85,
+        "tags": [
+          "robot",
+          "sci_fi",
+          "industrial"
+        ],
+        "aliases": [
+          "machine civilization"
+        ],
+        "keywords": [
+          "robot",
+          "automation",
+          "machine civilization"
+        ],
+        "embedding_text": "automated machine civilization where logistics, work, service, and architecture are controlled by robots and mechanical systems",
+        "facets": {
+          "robot_metaphor": [
+            "robota_labor",
+            "tool"
+          ]
+        }
+      },
+      {
+        "id": "distributed_ai_system_world",
+        "ko": "분산 AI 시스템 세계",
+        "en": "a distributed AI system world",
+        "weight": 0.82,
+        "tags": [
+          "robot",
+          "ai",
+          "distributed",
+          "sci_fi"
+        ],
+        "aliases": [
+          "distributed AI world"
+        ],
+        "keywords": [
+          "robot",
+          "distributed AI",
+          "system"
+        ],
+        "embedding_text": "distributed AI system world where rooms, vehicles, drones, sensors, and bodies act as one machine intelligence",
+        "facets": {
+          "robot_form": [
+            "environment_as_robot"
+          ],
+          "robot_degree": [
+            "distributed_system"
+          ]
+        }
+      },
+      {
+        "id": "post_human_android_world",
+        "ko": "포스트휴먼 안드로이드 세계",
+        "en": "a post-human android world",
+        "weight": 0.82,
+        "tags": [
+          "robot",
+          "android",
+          "posthuman",
+          "sci_fi"
+        ],
+        "aliases": [
+          "post-human android world"
+        ],
+        "keywords": [
+          "robot",
+          "android",
+          "posthuman"
+        ],
+        "embedding_text": "post-human android world with synthetic people, manufactured bodies, humanlike social mimicry, and artificial identity systems",
+        "facets": {
+          "robot_form": [
+            "humanoid_android"
+          ],
+          "robot_metaphor": [
+            "mirror_of_humanity"
+          ]
+        }
       }
     ],
     "lighting": [
@@ -45733,6 +50320,119 @@
           "phone",
           "artificial_light"
         ]
+      },
+      {
+        "id": "calibration_projector_glow",
+        "ko": "보정 프로젝터 빛",
+        "en": "calibration-projector glow",
+        "weight": 0.82,
+        "tags": [
+          "robot",
+          "light",
+          "calibration"
+        ],
+        "aliases": [
+          "calibration projector"
+        ],
+        "keywords": [
+          "robot",
+          "calibration",
+          "projector"
+        ],
+        "embedding_text": "calibration-projector glow cast across robot sensors, joints, and measurement targets",
+        "facets": {
+          "lighting_family": [
+            "diagnostic_light"
+          ],
+          "robot_proof_family": [
+            "behavior_control"
+          ]
+        }
+      },
+      {
+        "id": "status_led_glow",
+        "ko": "상태 LED 발광",
+        "en": "status LED glow",
+        "weight": 0.9,
+        "tags": [
+          "robot",
+          "light",
+          "status_led"
+        ],
+        "aliases": [
+          "status LED"
+        ],
+        "keywords": [
+          "robot",
+          "status",
+          "LED"
+        ],
+        "embedding_text": "small status LED glow on a robot body indicating power, command state, and machine presence",
+        "facets": {
+          "lighting_family": [
+            "diagnostic_light"
+          ],
+          "robot_proof_family": [
+            "power_command"
+          ]
+        }
+      },
+      {
+        "id": "charging_indicator_glow",
+        "ko": "충전 표시등 빛",
+        "en": "charging indicator glow",
+        "weight": 0.86,
+        "tags": [
+          "robot",
+          "light",
+          "charging"
+        ],
+        "aliases": [
+          "charging indicator"
+        ],
+        "keywords": [
+          "robot",
+          "charging",
+          "indicator"
+        ],
+        "embedding_text": "charging indicator glow from a docked robot body, cable port, or battery module",
+        "facets": {
+          "lighting_family": [
+            "diagnostic_light"
+          ],
+          "robot_proof_family": [
+            "power_command"
+          ]
+        }
+      },
+      {
+        "id": "scan_line_light",
+        "ko": "스캔 라인 빛",
+        "en": "scan-line light",
+        "weight": 0.86,
+        "tags": [
+          "robot",
+          "light",
+          "scan"
+        ],
+        "aliases": [
+          "scan line"
+        ],
+        "keywords": [
+          "robot",
+          "scan",
+          "sensor",
+          "lidar"
+        ],
+        "embedding_text": "thin scan-line light passing over a robot subject, sensor field, or lidar measurement plane",
+        "facets": {
+          "lighting_family": [
+            "diagnostic_light"
+          ],
+          "robot_proof_family": [
+            "behavior_control"
+          ]
+        }
       }
     ],
     "light_intensity": [
@@ -46178,6 +50878,92 @@
           "greenhouse",
           "natural_light"
         ]
+      },
+      {
+        "id": "scan_grid_projection",
+        "ko": "스캔 그리드 투사광",
+        "en": "a projected scan grid",
+        "weight": 0.88,
+        "tags": [
+          "robot",
+          "light_shape",
+          "scan_grid"
+        ],
+        "aliases": [
+          "scan grid"
+        ],
+        "keywords": [
+          "robot",
+          "scan grid",
+          "calibration"
+        ],
+        "embedding_text": "projected scan grid crossing a robot body or room, proving sensor calibration and machine vision geometry",
+        "facets": {
+          "lighting_family": [
+            "diagnostic_light"
+          ],
+          "robot_proof_family": [
+            "behavior_control"
+          ]
+        }
+      },
+      {
+        "id": "registration_crosshair",
+        "ko": "등록 크로스헤어 조명",
+        "en": "registration crosshair light marks",
+        "weight": 0.82,
+        "tags": [
+          "robot",
+          "light_shape",
+          "crosshair"
+        ],
+        "aliases": [
+          "registration crosshair"
+        ],
+        "keywords": [
+          "robot",
+          "crosshair",
+          "registration",
+          "calibration"
+        ],
+        "embedding_text": "registration crosshair light marks over robot joints, face, or workspace for calibration and tracking",
+        "facets": {
+          "lighting_family": [
+            "diagnostic_light"
+          ],
+          "robot_proof_family": [
+            "behavior_control"
+          ]
+        }
+      },
+      {
+        "id": "status_led_array_pattern",
+        "ko": "상태 LED 배열 패턴",
+        "en": "status LED array pattern",
+        "weight": 0.82,
+        "tags": [
+          "robot",
+          "light_shape",
+          "led_array"
+        ],
+        "aliases": [
+          "LED array"
+        ],
+        "keywords": [
+          "robot",
+          "status LEDs",
+          "array"
+        ],
+        "embedding_text": "status LED array pattern on a robot chassis, dock, wall panel, or sensor cluster",
+        "facets": {
+          "lighting_family": [
+            "diagnostic_light"
+          ],
+          "robot_proof_family": [
+            "power_command",
+            "environment_system"
+          ]
+        }
       }
     ],
     "camera_type": [
@@ -47489,6 +52275,148 @@
           "mirror_crouch",
           "social"
         ]
+      },
+      {
+        "id": "nonhumanoid_full_silhouette",
+        "ko": "비인간형 전체 실루엣",
+        "en": "a full silhouette of a nonhumanoid robot form",
+        "weight": 0.85,
+        "tags": [
+          "robot",
+          "composition",
+          "silhouette"
+        ],
+        "aliases": [
+          "nonhumanoid silhouette"
+        ],
+        "keywords": [
+          "robot",
+          "nonhumanoid",
+          "silhouette"
+        ],
+        "embedding_text": "full silhouette composition emphasizing a nonhumanoid robot form, machine posture, and unfamiliar body plan",
+        "facets": {
+          "robot_proof_family": [
+            "form_scale"
+          ]
+        }
+      },
+      {
+        "id": "exposed_joint_detail_crop",
+        "ko": "노출 관절 디테일 크롭",
+        "en": "a detail crop of exposed robotic joints",
+        "weight": 0.9,
+        "tags": [
+          "robot",
+          "detail",
+          "joint",
+          "macro"
+        ],
+        "aliases": [
+          "exposed joint detail",
+          "robot joint crop"
+        ],
+        "keywords": [
+          "robot",
+          "joint",
+          "actuator",
+          "detail"
+        ],
+        "embedding_text": "detail crop of exposed robotic joints, actuator seams, servo mechanics, cable channels, and manufactured body construction",
+        "facets": {
+          "robot_proof_family": [
+            "deep_structural",
+            "surface_construction"
+          ]
+        }
+      },
+      {
+        "id": "sensor_eye_macro",
+        "ko": "센서 눈 매크로",
+        "en": "a macro composition of sensor eyes",
+        "weight": 0.8,
+        "tags": [
+          "robot",
+          "macro",
+          "sensor",
+          "portrait"
+        ],
+        "aliases": [
+          "sensor eye macro",
+          "optical iris macro"
+        ],
+        "keywords": [
+          "robot",
+          "sensor eye",
+          "macro",
+          "optical iris"
+        ],
+        "embedding_text": "macro composition of robot sensor eyes, optical iris rings, calibration reflections, and nonhuman perception hardware",
+        "facets": {
+          "robot_proof_family": [
+            "behavior_control",
+            "surface_construction"
+          ]
+        }
+      },
+      {
+        "id": "segmented_limb_macro",
+        "ko": "분절된 로봇 팔다리 매크로",
+        "en": "a macro view of segmented robotic limbs",
+        "weight": 0.82,
+        "tags": [
+          "robot",
+          "macro",
+          "limb",
+          "mechanical"
+        ],
+        "aliases": [
+          "segmented limb macro"
+        ],
+        "keywords": [
+          "robot",
+          "segmented limb",
+          "servo",
+          "macro"
+        ],
+        "embedding_text": "macro view of segmented robotic limbs, ring joints, actuator pistons, and layered artificial muscles",
+        "facets": {
+          "robot_proof_family": [
+            "deep_structural",
+            "form_scale"
+          ]
+        }
+      },
+      {
+        "id": "swarm_repetition_grid",
+        "ko": "군집 반복 그리드 구성",
+        "en": "a repetition grid of many robot units",
+        "weight": 0.8,
+        "tags": [
+          "robot",
+          "swarm",
+          "grid",
+          "composition"
+        ],
+        "aliases": [
+          "swarm grid",
+          "repetition grid"
+        ],
+        "keywords": [
+          "robot",
+          "swarm",
+          "many units",
+          "distributed"
+        ],
+        "embedding_text": "repetition-grid composition showing many robot units or drones arranged as a distributed system rather than one body",
+        "facets": {
+          "robot_proof_family": [
+            "form_scale"
+          ],
+          "robot_form": [
+            "swarm"
+          ]
+        }
       }
     ],
     "subject_framing": [
@@ -49874,6 +54802,92 @@
             "general"
           ]
         }
+      },
+      {
+        "id": "synthetic_calm",
+        "ko": "합성적인 평온함",
+        "en": "synthetic calm",
+        "weight": 0.9,
+        "tags": [
+          "robot",
+          "calm",
+          "uncanny"
+        ],
+        "aliases": [
+          "synthetic calm"
+        ],
+        "keywords": [
+          "robot",
+          "calm",
+          "android"
+        ],
+        "embedding_text": "synthetic calm, emotionally quiet but too precisely regulated, like a machine imitating composure",
+        "facets": {
+          "mood_family": [
+            "calm",
+            "uncanny"
+          ],
+          "robot_proof_family": [
+            "uncanny"
+          ]
+        }
+      },
+      {
+        "id": "controlled_obedience",
+        "ko": "통제된 복종감",
+        "en": "controlled obedience",
+        "weight": 0.82,
+        "tags": [
+          "robot",
+          "command",
+          "controlled"
+        ],
+        "aliases": [
+          "controlled obedience"
+        ],
+        "keywords": [
+          "robot",
+          "command",
+          "obedience"
+        ],
+        "embedding_text": "controlled obedience mood, command hierarchy, standby posture, service labor, and autonomy under constraint",
+        "facets": {
+          "mood_family": [
+            "operational"
+          ],
+          "robot_metaphor": [
+            "autonomy_vs_command",
+            "robota_labor"
+          ]
+        }
+      },
+      {
+        "id": "clinical_machine",
+        "ko": "임상적인 기계감",
+        "en": "clinical machine detachment",
+        "weight": 0.82,
+        "tags": [
+          "robot",
+          "clinical",
+          "machine"
+        ],
+        "aliases": [
+          "clinical machine"
+        ],
+        "keywords": [
+          "robot",
+          "clinical",
+          "diagnostic"
+        ],
+        "embedding_text": "clinical machine detachment with diagnostics, clean light, measured posture, and non-emotional engineered presence",
+        "facets": {
+          "mood_family": [
+            "clinical"
+          ],
+          "robot_proof_family": [
+            "behavior_control"
+          ]
+        }
       }
     ],
     "surreal_concept": [
@@ -50813,6 +55827,147 @@
           "cosplay",
           "hair"
         ]
+      },
+      {
+        "id": "matte_synthetic_skin_pore",
+        "ko": "무광 합성 피부의 미세 모공 질감",
+        "en": "matte synthetic-skin pore texture",
+        "weight": 0.9,
+        "tags": [
+          "robot",
+          "texture",
+          "synthetic_skin",
+          "portrait"
+        ],
+        "aliases": [
+          "synthetic skin pore"
+        ],
+        "keywords": [
+          "robot",
+          "synthetic skin",
+          "pores"
+        ],
+        "embedding_text": "matte synthetic-skin pore texture with subtle molded seams and artificial humanlike surface detail",
+        "facets": {
+          "robot_proof_family": [
+            "surface_construction"
+          ],
+          "robot_degree": [
+            "human_looking_controlled"
+          ]
+        }
+      },
+      {
+        "id": "brushed_alloy_microscratch",
+        "ko": "브러시드 합금 미세 스크래치 질감",
+        "en": "brushed alloy microscratch texture",
+        "weight": 0.9,
+        "tags": [
+          "robot",
+          "texture",
+          "metal",
+          "industrial"
+        ],
+        "aliases": [
+          "brushed alloy",
+          "microscratches"
+        ],
+        "keywords": [
+          "robot",
+          "alloy",
+          "scratches"
+        ],
+        "embedding_text": "brushed alloy microscratch texture on a used robot casing, with wear marks and practical metal surface detail",
+        "facets": {
+          "robot_proof_family": [
+            "surface_construction"
+          ]
+        }
+      },
+      {
+        "id": "porcelain_ceramic_glaze_texture",
+        "ko": "포슬린 세라믹 유약 질감",
+        "en": "porcelain ceramic glaze texture",
+        "weight": 0.8,
+        "tags": [
+          "robot",
+          "texture",
+          "ceramic",
+          "automaton"
+        ],
+        "aliases": [
+          "ceramic glaze"
+        ],
+        "keywords": [
+          "robot",
+          "porcelain",
+          "ceramic",
+          "automaton"
+        ],
+        "embedding_text": "porcelain ceramic glaze texture with fine cracks, joint seams, and delicate automaton casing detail",
+        "facets": {
+          "robot_form": [
+            "mythic_automaton"
+          ],
+          "robot_proof_family": [
+            "surface_construction"
+          ]
+        }
+      },
+      {
+        "id": "liquid_metal_specular_texture",
+        "ko": "액체 금속 반사 질감",
+        "en": "liquid-metal specular texture",
+        "weight": 0.84,
+        "tags": [
+          "robot",
+          "texture",
+          "liquid_metal"
+        ],
+        "aliases": [
+          "liquid metal specular"
+        ],
+        "keywords": [
+          "robot",
+          "liquid metal",
+          "reflective"
+        ],
+        "embedding_text": "liquid-metal specular texture with reflective flowing highlights, soft shape boundaries, and morphing machine material",
+        "facets": {
+          "robot_form": [
+            "soft_liquid"
+          ],
+          "robot_proof_family": [
+            "form_scale"
+          ]
+        }
+      },
+      {
+        "id": "woven_cable_fiber_texture",
+        "ko": "직조 케이블 섬유 질감",
+        "en": "woven cable-fiber texture",
+        "weight": 0.84,
+        "tags": [
+          "robot",
+          "texture",
+          "cable",
+          "fiber"
+        ],
+        "aliases": [
+          "cable fiber texture"
+        ],
+        "keywords": [
+          "robot",
+          "fiber optic",
+          "cable",
+          "synthetic muscle"
+        ],
+        "embedding_text": "woven cable-fiber texture like exposed synthetic muscles, fiber optic veins, and bundled machine tendons",
+        "facets": {
+          "robot_proof_family": [
+            "deep_structural"
+          ]
+        }
       }
     ],
     "format": [
@@ -53060,6 +58215,358 @@
           "plant",
           "sign"
         ]
+      },
+      {
+        "id": "matte_synthetic_skin_surface",
+        "ko": "무광 합성 피부 표면",
+        "en": "a matte synthetic skin surface",
+        "weight": 1.0,
+        "tags": [
+          "surface",
+          "robot",
+          "synthetic_skin",
+          "humanlike"
+        ],
+        "for_any": [
+          "robot",
+          "human",
+          "object"
+        ],
+        "aliases": [
+          "synthetic skin",
+          "matte skin"
+        ],
+        "keywords": [
+          "robot",
+          "android",
+          "synthetic skin",
+          "surface"
+        ],
+        "embedding_text": "matte synthetic skin surface with subtle pores, molded seams, and artificial humanlike material",
+        "facets": {
+          "robot_proof_family": [
+            "surface_construction"
+          ],
+          "robot_degree": [
+            "human_looking_controlled"
+          ]
+        }
+      },
+      {
+        "id": "worn_alloy_surface",
+        "ko": "마모된 합금 외장 표면",
+        "en": "a worn alloy casing surface",
+        "weight": 0.95,
+        "tags": [
+          "surface",
+          "robot",
+          "metal",
+          "industrial"
+        ],
+        "for_any": [
+          "robot",
+          "object"
+        ],
+        "aliases": [
+          "worn alloy",
+          "scratched metal"
+        ],
+        "keywords": [
+          "robot",
+          "alloy",
+          "casing",
+          "industrial"
+        ],
+        "embedding_text": "worn alloy robot casing with scratches, dents, serial marks, and practical machine use",
+        "facets": {
+          "robot_proof_family": [
+            "surface_construction"
+          ],
+          "robot_degree": [
+            "full_machine"
+          ]
+        }
+      },
+      {
+        "id": "ceramic_porcelain_casing_surface",
+        "ko": "도자기 포슬린 로봇 외장",
+        "en": "a porcelain ceramic robot casing surface",
+        "weight": 0.85,
+        "tags": [
+          "surface",
+          "robot",
+          "ceramic",
+          "automaton"
+        ],
+        "for_any": [
+          "robot",
+          "object"
+        ],
+        "aliases": [
+          "porcelain casing",
+          "ceramic automaton"
+        ],
+        "keywords": [
+          "robot",
+          "ceramic",
+          "porcelain",
+          "automaton"
+        ],
+        "embedding_text": "porcelain ceramic casing for a delicate automaton, glazed surface, hairline seams, and clockwork joints",
+        "facets": {
+          "robot_proof_family": [
+            "surface_construction"
+          ],
+          "robot_form": [
+            "mythic_automaton"
+          ]
+        }
+      },
+      {
+        "id": "bronze_patina_surface",
+        "ko": "청동 녹청 로봇 표면",
+        "en": "a bronze patina robot surface",
+        "weight": 0.85,
+        "tags": [
+          "surface",
+          "robot",
+          "bronze",
+          "automaton"
+        ],
+        "for_any": [
+          "robot",
+          "object"
+        ],
+        "aliases": [
+          "bronze patina",
+          "ancient automaton"
+        ],
+        "keywords": [
+          "robot",
+          "bronze",
+          "patina",
+          "guardian"
+        ],
+        "embedding_text": "aged bronze patina surface on a guardian automaton with rivets, gear seams, and ceremonial machine weight",
+        "facets": {
+          "robot_proof_family": [
+            "surface_construction"
+          ],
+          "robot_form": [
+            "mythic_automaton"
+          ]
+        }
+      },
+      {
+        "id": "transparent_polycarbonate_surface",
+        "ko": "투명 폴리카보네이트 외피",
+        "en": "a transparent polycarbonate shell",
+        "weight": 0.9,
+        "tags": [
+          "surface",
+          "robot",
+          "transparent",
+          "technology"
+        ],
+        "for_any": [
+          "robot",
+          "object"
+        ],
+        "aliases": [
+          "transparent shell",
+          "polycarbonate"
+        ],
+        "keywords": [
+          "robot",
+          "transparent",
+          "sensor",
+          "inner structure"
+        ],
+        "embedding_text": "transparent polycarbonate robot shell revealing internal cables, sensors, coolant tubes, and stacked circuits",
+        "facets": {
+          "robot_proof_family": [
+            "deep_structural"
+          ],
+          "robot_degree": [
+            "full_machine"
+          ]
+        }
+      },
+      {
+        "id": "soft_polymer_surface",
+        "ko": "부드러운 고분자 소프트 로봇 표면",
+        "en": "a soft polymer robot surface",
+        "weight": 0.9,
+        "tags": [
+          "surface",
+          "robot",
+          "soft",
+          "polymer"
+        ],
+        "for_any": [
+          "robot",
+          "object"
+        ],
+        "aliases": [
+          "soft polymer",
+          "soft robot"
+        ],
+        "keywords": [
+          "robot",
+          "soft robot",
+          "polymer",
+          "pneumatic"
+        ],
+        "embedding_text": "soft polymer robot surface with flexible pneumatic channels, deforming edges, and silicone lab material",
+        "facets": {
+          "robot_proof_family": [
+            "form_scale"
+          ],
+          "robot_form": [
+            "soft_liquid"
+          ]
+        }
+      },
+      {
+        "id": "liquid_metal_gel_surface",
+        "ko": "액체 금속 겔 표면",
+        "en": "a liquid metal gel surface",
+        "weight": 0.88,
+        "tags": [
+          "surface",
+          "robot",
+          "liquid_metal",
+          "sci_fi"
+        ],
+        "for_any": [
+          "robot",
+          "object"
+        ],
+        "aliases": [
+          "liquid metal",
+          "mercury-like gel"
+        ],
+        "keywords": [
+          "robot",
+          "liquid metal",
+          "gel",
+          "morphing"
+        ],
+        "embedding_text": "liquid metal gel robot surface, reflective flowing membrane, self-healing seams, and changing shape",
+        "facets": {
+          "robot_proof_family": [
+            "form_scale"
+          ],
+          "robot_form": [
+            "soft_liquid"
+          ]
+        }
+      },
+      {
+        "id": "woven_cable_fiber_surface",
+        "ko": "직조 케이블 섬유 표면",
+        "en": "a woven cable-fiber surface",
+        "weight": 0.86,
+        "tags": [
+          "surface",
+          "robot",
+          "cable",
+          "fiber"
+        ],
+        "for_any": [
+          "robot",
+          "object",
+          "human"
+        ],
+        "aliases": [
+          "cable fiber",
+          "fiber optic veins"
+        ],
+        "keywords": [
+          "robot",
+          "cables",
+          "fiber optics",
+          "synthetic muscles"
+        ],
+        "embedding_text": "woven cable-fiber surface like synthetic muscles and fiber-optic veins under a robot exterior",
+        "facets": {
+          "robot_proof_family": [
+            "deep_structural"
+          ],
+          "robot_degree": [
+            "partial_cyborg"
+          ]
+        }
+      },
+      {
+        "id": "bio_tissue_substrate_surface",
+        "ko": "배양 조직 기질 표면",
+        "en": "a cultured bio-tissue substrate surface",
+        "weight": 0.82,
+        "tags": [
+          "surface",
+          "robot",
+          "bio",
+          "tissue"
+        ],
+        "for_any": [
+          "robot",
+          "object"
+        ],
+        "aliases": [
+          "bio tissue",
+          "cultured substrate"
+        ],
+        "keywords": [
+          "robot",
+          "biohybrid",
+          "cultured tissue",
+          "synthetic organism"
+        ],
+        "embedding_text": "cultured bio-tissue substrate integrated with micro-circuit fibers, wet lab membranes, and biohybrid machine structure",
+        "facets": {
+          "robot_proof_family": [
+            "deep_structural"
+          ],
+          "robot_form": [
+            "bio_hybrid"
+          ]
+        }
+      },
+      {
+        "id": "electroactive_responsive_surface",
+        "ko": "전기활성 반응성 표면",
+        "en": "an electroactive responsive robot surface",
+        "weight": 0.82,
+        "tags": [
+          "surface",
+          "robot",
+          "responsive",
+          "smart_material"
+        ],
+        "for_any": [
+          "robot",
+          "object"
+        ],
+        "aliases": [
+          "electroactive surface",
+          "responsive material"
+        ],
+        "keywords": [
+          "robot",
+          "smart material",
+          "status pattern",
+          "responsive skin"
+        ],
+        "embedding_text": "electroactive responsive robot surface with changing status patterns, smart-material ripples, and controlled motion response",
+        "facets": {
+          "robot_proof_family": [
+            "behavior_control"
+          ],
+          "robot_form": [
+            "soft_liquid"
+          ]
+        }
       }
     ],
     "aesthetic_trend": [
@@ -55424,13 +60931,449 @@
         "concept_lock_promotions": {},
         "redundancy_rules": [],
         "coverage_repair": {}
+      },
+      "robot": {
+        "policy_id": "robot_artificial_being_v1",
+        "aliases": [
+          "robot",
+          "android",
+          "cyborg",
+          "automaton",
+          "AI body",
+          "machine person",
+          "synthetic being",
+          "로봇",
+          "안드로이드",
+          "사이보그",
+          "자동인형"
+        ],
+        "keywords": [
+          "robot",
+          "robotic",
+          "android",
+          "cyborg",
+          "automaton",
+          "mechanical body",
+          "synthetic skin",
+          "actuator",
+          "servo",
+          "sensor",
+          "charging dock",
+          "diagnostics",
+          "swarm",
+          "soft robot",
+          "biohybrid",
+          "nanobot",
+          "telepresence"
+        ],
+        "axis_label": "robot/artificial being identity",
+        "axis_embedding_text": "robots and artificial beings across humanoid androids, cyborg bodies, nonhumanoid machines, soft liquid robots, swarm systems, biohybrid organisms, telepresence avatars, exoskeletons, sentient rooms, and mythic automata",
+        "signal_lexicon": {
+          "strong": [
+            {
+              "any_terms": [
+                "robot",
+                "robotic",
+                "android",
+                "cyborg",
+                "automaton",
+                "nanobot",
+                "biohybrid",
+                "soft robot",
+                "liquid metal robot",
+                "telepresence robot",
+                "exoskeleton"
+              ],
+              "match_fields": [
+                "id",
+                "en",
+                "ko",
+                "embedding_text",
+                "semantic_anchor"
+              ]
+            },
+            {
+              "any_terms": [
+                "로봇",
+                "안드로이드",
+                "사이보그",
+                "자동인형"
+              ],
+              "match_fields": [
+                "ko",
+                "embedding_text"
+              ]
+            }
+          ],
+          "ambient": [
+            {
+              "any_terms": [
+                "actuator",
+                "servo",
+                "sensor",
+                "diagnostic",
+                "charging dock",
+                "status LED",
+                "synthetic skin",
+                "machine gaze",
+                "calibration"
+              ],
+              "match_fields": [
+                "id",
+                "en",
+                "embedding_text"
+              ]
+            }
+          ]
+        },
+        "steering_reason_labels": {
+          "subject": "robot subject identity",
+          "action": "robot behavior or control state",
+          "prop": "visible robot proof object",
+          "surface_material": "robot material proof",
+          "texture": "robot surface or internal texture",
+          "location": "robot environment",
+          "light_shape": "diagnostic light geometry",
+          "mood": "artificial-being mood"
+        },
+        "routed_slots": [
+          "subject",
+          "action",
+          "prop",
+          "surface_material",
+          "texture",
+          "location",
+          "light_type",
+          "light_shape",
+          "mood",
+          "world",
+          "composition"
+        ],
+        "steering_slots": [
+          "subject",
+          "action",
+          "prop",
+          "surface_material",
+          "texture",
+          "location",
+          "light_type",
+          "light_shape",
+          "mood",
+          "world",
+          "composition"
+        ],
+        "preset_policy": {
+          "allow_ids": [
+            "nonhumanoid_machine_subject",
+            "service_android_role_unit",
+            "industrial_labor_unit",
+            "uncanny_seamless_companion",
+            "mythic_automaton_court",
+            "surveillance_sentinel_node_preset",
+            "swarm_unit_collective",
+            "soft_liquid_robot",
+            "environment_as_robot_space",
+            "exoskeleton_operator_rig",
+            "maintenance_charging_bay",
+            "biohybrid_organism_subject",
+            "micro_nano_system_scale",
+            "telepresence_remote_unit",
+            "deepsea_space_ops_unit",
+            "science_documentary",
+            "cyberpunk_city",
+            "mecha_pilot_cosplay_portrait"
+          ]
+        },
+        "slot_signals": {
+          "subject": {
+            "core": [
+              "service_android_unit",
+              "care_medical_android",
+              "humanoid_labor_robot",
+              "gynoid_companion_unit",
+              "cyborg_partial_prosthetic",
+              "quadruped_utility_robot",
+              "fixed_industrial_robot_arm",
+              "modular_reconfigurable_robot",
+              "drone_swarm_collective",
+              "soft_silicone_robot",
+              "liquid_metal_robot",
+              "bio_hybrid_organism_unit",
+              "nano_swarm_visualization",
+              "telepresence_avatar_robot",
+              "powered_exoskeleton_frame",
+              "sentient_room_system",
+              "autonomous_vehicle_entity",
+              "ceramic_automaton_figure",
+              "bronze_guardian_automaton",
+              "surveillance_sentinel_node"
+            ],
+            "term_rules": {
+              "ambient": {
+                "any_terms": [
+                  "robot",
+                  "android",
+                  "cyborg",
+                  "automaton"
+                ],
+                "match_fields": [
+                  "id",
+                  "en",
+                  "ko",
+                  "embedding_text"
+                ]
+              }
+            }
+          },
+          "action": {
+            "core": [
+              "charging_docked",
+              "running_diagnostics",
+              "command_standby",
+              "synchronized_swarm_motion",
+              "repetitive_assembly_task",
+              "system_boot_sequence",
+              "present_empty_gaze_standby"
+            ]
+          },
+          "prop": {
+            "core": [
+              "serial_spec_plate_prop",
+              "exposed_actuator_port_prop",
+              "charging_tether_prop",
+              "wrist_port_charging_lead_prop",
+              "diagnostic_readout_prop",
+              "calibration_target_prop",
+              "docking_contacts_prop",
+              "maintenance_tag_prop"
+            ]
+          },
+          "surface_material": {
+            "core": [
+              "matte_synthetic_skin_surface",
+              "worn_alloy_surface",
+              "ceramic_porcelain_casing_surface",
+              "bronze_patina_surface",
+              "transparent_polycarbonate_surface",
+              "soft_polymer_surface",
+              "liquid_metal_gel_surface",
+              "woven_cable_fiber_surface",
+              "bio_tissue_substrate_surface",
+              "electroactive_responsive_surface"
+            ]
+          },
+          "texture": {
+            "core": [
+              "matte_synthetic_skin_pore",
+              "brushed_alloy_microscratch",
+              "porcelain_ceramic_glaze_texture",
+              "liquid_metal_specular_texture",
+              "woven_cable_fiber_texture"
+            ]
+          },
+          "location": {
+            "core": [
+              "robot_charging_bay",
+              "robot_assembly_line",
+              "diagnostics_lab",
+              "orbital_station_interior"
+            ],
+            "support": [
+              "industrial_mecha_hangar",
+              "server_room",
+              "laboratory",
+              "biolab",
+              "hospital_corridor",
+              "underground_mine_tunnel_set"
+            ]
+          },
+          "light_type": {
+            "core": [
+              "calibration_projector_glow",
+              "status_led_glow",
+              "charging_indicator_glow",
+              "scan_line_light"
+            ]
+          },
+          "light_shape": {
+            "core": [
+              "scan_grid_projection",
+              "registration_crosshair",
+              "status_led_array_pattern"
+            ]
+          },
+          "mood": {
+            "core": [
+              "synthetic_calm",
+              "controlled_obedience",
+              "clinical_machine"
+            ],
+            "support": [
+              "uncanny"
+            ]
+          },
+          "world": {
+            "core": [
+              "automated_machine_civilization",
+              "distributed_ai_system_world",
+              "post_human_android_world"
+            ],
+            "support": [
+              "cyberpunk",
+              "tech_noir",
+              "retro_futurism"
+            ]
+          },
+          "composition": {
+            "core": [
+              "nonhumanoid_full_silhouette",
+              "exposed_joint_detail_crop",
+              "sensor_eye_macro",
+              "segmented_limb_macro",
+              "swarm_repetition_grid"
+            ],
+            "support": [
+              "medium_close",
+              "frame_within_frame",
+              "reflection",
+              "macro_detail"
+            ]
+          }
+        },
+        "concept_lock_promotions": {
+          "subject": [
+            {
+              "terms": [
+                "android",
+                "안드로이드",
+                "humanlike robot",
+                "휴머노이드",
+                "로봇"
+              ],
+              "ids": [
+                "service_android_unit",
+                "gynoid_companion_unit",
+                "humanoid_labor_robot",
+                "cyborg_partial_prosthetic"
+              ]
+            },
+            {
+              "terms": [
+                "cyborg",
+                "사이보그"
+              ],
+              "ids": [
+                "cyborg_partial_prosthetic",
+                "powered_exoskeleton_frame"
+              ]
+            },
+            {
+              "terms": [
+                "soft robot",
+                "액체",
+                "liquid",
+                "soft"
+              ],
+              "ids": [
+                "soft_silicone_robot",
+                "liquid_metal_robot"
+              ]
+            },
+            {
+              "terms": [
+                "swarm",
+                "군집",
+                "nano",
+                "나노"
+              ],
+              "ids": [
+                "drone_swarm_collective",
+                "nano_swarm_visualization"
+              ]
+            },
+            {
+              "terms": [
+                "biohybrid",
+                "바이오"
+              ],
+              "ids": [
+                "bio_hybrid_organism_unit"
+              ]
+            },
+            {
+              "terms": [
+                "automaton",
+                "자동인형",
+                "princess",
+                "공주"
+              ],
+              "ids": [
+                "ceramic_automaton_figure",
+                "bronze_guardian_automaton"
+              ]
+            }
+          ],
+          "prop": [
+            {
+              "terms": [
+                "robot",
+                "로봇",
+                "android",
+                "cyborg"
+              ],
+              "ids": [
+                "serial_spec_plate_prop",
+                "exposed_actuator_port_prop",
+                "charging_tether_prop",
+                "diagnostic_readout_prop",
+                "wrist_port_charging_lead_prop"
+              ]
+            }
+          ],
+          "action": [
+            {
+              "terms": [
+                "robot",
+                "로봇",
+                "android"
+              ],
+              "ids": [
+                "command_standby",
+                "running_diagnostics",
+                "charging_docked",
+                "present_empty_gaze_standby"
+              ]
+            }
+          ]
+        },
+        "coverage_repair": {
+          "target_slots": [
+            "subject",
+            "action",
+            "prop",
+            "surface_material",
+            "texture",
+            "location",
+            "light_shape"
+          ],
+          "anchor_ids": [
+            "service_android_unit",
+            "exposed_actuator_port_prop",
+            "charging_tether_prop",
+            "matte_synthetic_skin_pore",
+            "scan_grid_projection",
+            "robot_charging_bay"
+          ],
+          "min_anchors": 2
+        }
       }
     },
     "steering_priority": [
       "homebody_room",
       "human",
       "urban",
-      "horror"
+      "horror",
+      "robot"
     ],
     "soft_body_first_guard": {
       "slots": [
@@ -55508,6 +61451,86 @@
           "film_faded",
           "tungsten_cinestill_blue_red",
           "venetian_blind_shadows"
+        ]
+      },
+      "robot": {
+        "strong": [
+          "robotics",
+          "artificial_life",
+          "robotics_engineering_record",
+          "synthetic_being_portrait_photo",
+          "service_android_unit",
+          "care_medical_android",
+          "humanoid_labor_robot",
+          "gynoid_companion_unit",
+          "cyborg_partial_prosthetic",
+          "quadruped_utility_robot",
+          "fixed_industrial_robot_arm",
+          "modular_reconfigurable_robot",
+          "drone_swarm_collective",
+          "soft_silicone_robot",
+          "liquid_metal_robot",
+          "bio_hybrid_organism_unit",
+          "nano_swarm_visualization",
+          "telepresence_avatar_robot",
+          "powered_exoskeleton_frame",
+          "sentient_room_system",
+          "autonomous_vehicle_entity",
+          "ceramic_automaton_figure",
+          "bronze_guardian_automaton",
+          "surveillance_sentinel_node",
+          "charging_docked",
+          "running_diagnostics",
+          "command_standby",
+          "synchronized_swarm_motion",
+          "repetitive_assembly_task",
+          "system_boot_sequence",
+          "present_empty_gaze_standby",
+          "serial_spec_plate_prop",
+          "exposed_actuator_port_prop",
+          "charging_tether_prop",
+          "wrist_port_charging_lead_prop",
+          "diagnostic_readout_prop",
+          "docking_contacts_prop",
+          "robot_charging_bay",
+          "robot_assembly_line",
+          "diagnostics_lab",
+          "scan_grid_projection",
+          "registration_crosshair",
+          "status_led_array_pattern",
+          "nonhumanoid_machine_subject",
+          "service_android_role_unit",
+          "industrial_labor_unit",
+          "uncanny_seamless_companion",
+          "swarm_unit_collective",
+          "soft_liquid_robot",
+          "environment_as_robot_space",
+          "maintenance_charging_bay",
+          "biohybrid_organism_subject"
+        ],
+        "ambient": [
+          "matte_synthetic_skin_surface",
+          "worn_alloy_surface",
+          "transparent_polycarbonate_surface",
+          "soft_polymer_surface",
+          "liquid_metal_gel_surface",
+          "woven_cable_fiber_surface",
+          "bio_tissue_substrate_surface",
+          "electroactive_responsive_surface",
+          "matte_synthetic_skin_pore",
+          "brushed_alloy_microscratch",
+          "liquid_metal_specular_texture",
+          "woven_cable_fiber_texture",
+          "calibration_projector_glow",
+          "status_led_glow",
+          "charging_indicator_glow",
+          "scan_line_light",
+          "synthetic_calm",
+          "controlled_obedience",
+          "clinical_machine",
+          "automated_machine_civilization",
+          "distributed_ai_system_world",
+          "post_human_android_world"
         ]
       }
     },
@@ -55630,6 +61653,28 @@
         "student_creator",
         "school_uniform_alumni_model",
         "yearbook_portrait_sitter"
+      ],
+      "robot": [
+        "service_android_unit",
+        "care_medical_android",
+        "humanoid_labor_robot",
+        "gynoid_companion_unit",
+        "cyborg_partial_prosthetic",
+        "quadruped_utility_robot",
+        "fixed_industrial_robot_arm",
+        "modular_reconfigurable_robot",
+        "drone_swarm_collective",
+        "soft_silicone_robot",
+        "liquid_metal_robot",
+        "bio_hybrid_organism_unit",
+        "nano_swarm_visualization",
+        "telepresence_avatar_robot",
+        "powered_exoskeleton_frame",
+        "sentient_room_system",
+        "autonomous_vehicle_entity",
+        "ceramic_automaton_figure",
+        "bronze_guardian_automaton",
+        "surveillance_sentinel_node"
       ]
     },
     "location_tones": {
@@ -55723,6 +61768,16 @@
         "hotel_corridor_liminal",
         "underground_parking_garage",
         "hospital_waiting_room"
+      ],
+      "robotics_lab": [
+        "robot_charging_bay",
+        "robot_assembly_line",
+        "diagnostics_lab",
+        "orbital_station_interior",
+        "industrial_mecha_hangar",
+        "server_room",
+        "laboratory",
+        "biolab"
       ]
     },
     "axis_signals": {
@@ -56131,6 +62186,118 @@
         "action": [
           "holding_ornate_bottle_to_chest"
         ]
+      },
+      "robot_strong": {
+        "genre": [
+          "robotics",
+          "artificial_life",
+          "technology"
+        ],
+        "subject": [
+          "service_android_unit",
+          "care_medical_android",
+          "humanoid_labor_robot",
+          "gynoid_companion_unit",
+          "cyborg_partial_prosthetic",
+          "quadruped_utility_robot",
+          "fixed_industrial_robot_arm",
+          "modular_reconfigurable_robot",
+          "drone_swarm_collective",
+          "soft_silicone_robot",
+          "liquid_metal_robot",
+          "bio_hybrid_organism_unit",
+          "nano_swarm_visualization",
+          "telepresence_avatar_robot",
+          "powered_exoskeleton_frame",
+          "sentient_room_system",
+          "autonomous_vehicle_entity",
+          "ceramic_automaton_figure",
+          "bronze_guardian_automaton",
+          "surveillance_sentinel_node"
+        ],
+        "action": [
+          "charging_docked",
+          "running_diagnostics",
+          "command_standby",
+          "synchronized_swarm_motion",
+          "repetitive_assembly_task",
+          "system_boot_sequence",
+          "present_empty_gaze_standby"
+        ],
+        "prop": [
+          "serial_spec_plate_prop",
+          "exposed_actuator_port_prop",
+          "charging_tether_prop",
+          "wrist_port_charging_lead_prop",
+          "diagnostic_readout_prop",
+          "calibration_target_prop",
+          "docking_contacts_prop",
+          "maintenance_tag_prop"
+        ],
+        "surface_material": [
+          "matte_synthetic_skin_surface",
+          "worn_alloy_surface",
+          "ceramic_porcelain_casing_surface",
+          "bronze_patina_surface",
+          "transparent_polycarbonate_surface",
+          "soft_polymer_surface",
+          "liquid_metal_gel_surface",
+          "woven_cable_fiber_surface",
+          "bio_tissue_substrate_surface",
+          "electroactive_responsive_surface"
+        ],
+        "texture": [
+          "matte_synthetic_skin_pore",
+          "brushed_alloy_microscratch",
+          "porcelain_ceramic_glaze_texture",
+          "liquid_metal_specular_texture",
+          "woven_cable_fiber_texture"
+        ],
+        "light_shape": [
+          "scan_grid_projection",
+          "registration_crosshair",
+          "status_led_array_pattern"
+        ],
+        "location": [
+          "robot_charging_bay",
+          "robot_assembly_line",
+          "diagnostics_lab",
+          "orbital_station_interior"
+        ]
+      },
+      "robot_ambient": {
+        "world": [
+          "automated_machine_civilization",
+          "distributed_ai_system_world",
+          "post_human_android_world",
+          "cyberpunk",
+          "tech_noir",
+          "retro_futurism"
+        ],
+        "lighting": [
+          "lab_led",
+          "monitor_glow",
+          "fluorescent",
+          "low_key"
+        ],
+        "light_type": [
+          "calibration_projector_glow",
+          "status_led_glow",
+          "charging_indicator_glow",
+          "scan_line_light"
+        ],
+        "mood": [
+          "synthetic_calm",
+          "controlled_obedience",
+          "clinical_machine",
+          "uncanny"
+        ],
+        "composition": [
+          "exposed_joint_detail_crop",
+          "sensor_eye_macro",
+          "segmented_limb_macro",
+          "swarm_repetition_grid"
+        ]
       }
     },
     "family_tone_conflicts": {
@@ -56209,7 +62376,27 @@
       "koi_pond": "animal",
       "penguin_colony": "animal",
       "moth_macro": "animal",
-      "coral_reef": "environment"
+      "coral_reef": "environment",
+      "service_android_unit": "human",
+      "care_medical_android": "human",
+      "humanoid_labor_robot": "human",
+      "gynoid_companion_unit": "human",
+      "cyborg_partial_prosthetic": "human",
+      "telepresence_avatar_robot": "human",
+      "powered_exoskeleton_frame": "human",
+      "quadruped_utility_robot": "object",
+      "fixed_industrial_robot_arm": "object",
+      "modular_reconfigurable_robot": "object",
+      "drone_swarm_collective": "object",
+      "soft_silicone_robot": "object",
+      "liquid_metal_robot": "object",
+      "bio_hybrid_organism_unit": "object",
+      "nano_swarm_visualization": "object",
+      "autonomous_vehicle_entity": "object",
+      "ceramic_automaton_figure": "object",
+      "bronze_guardian_automaton": "object",
+      "surveillance_sentinel_node": "object",
+      "sentient_room_system": "environment"
     },
     "preset_domain_overrides": {
       "jewelry_macro_reflection": [
@@ -56309,6 +62496,66 @@
       "interactive_2_5d_living_room_pov": [
         "portrait",
         "social",
+        "surreal"
+      ],
+      "nonhumanoid_machine_subject": [
+        "product",
+        "documentary"
+      ],
+      "service_android_role_unit": [
+        "portrait",
+        "fashion"
+      ],
+      "industrial_labor_unit": [
+        "documentary",
+        "product"
+      ],
+      "uncanny_seamless_companion": [
+        "portrait",
+        "social"
+      ],
+      "mythic_automaton_court": [
+        "portrait",
+        "surreal"
+      ],
+      "surveillance_sentinel_node_preset": [
+        "documentary",
+        "urban"
+      ],
+      "swarm_unit_collective": [
+        "documentary",
+        "surreal"
+      ],
+      "soft_liquid_robot": [
+        "product",
+        "surreal"
+      ],
+      "environment_as_robot_space": [
+        "architecture",
+        "surreal"
+      ],
+      "exoskeleton_operator_rig": [
+        "documentary",
+        "portrait"
+      ],
+      "maintenance_charging_bay": [
+        "portrait",
+        "documentary"
+      ],
+      "biohybrid_organism_subject": [
+        "product",
+        "surreal"
+      ],
+      "micro_nano_system_scale": [
+        "product",
+        "documentary"
+      ],
+      "telepresence_remote_unit": [
+        "portrait",
+        "social"
+      ],
+      "deepsea_space_ops_unit": [
+        "documentary",
         "surreal"
       ]
     },
