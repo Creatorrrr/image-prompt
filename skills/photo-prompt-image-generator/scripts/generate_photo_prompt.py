@@ -301,6 +301,15 @@ def preset_affinity_for_recipe(recipe: dict[str, Any]) -> dict[str, Any]:
     return raw if isinstance(raw, dict) else {}
 
 
+def soft_repair_policy_for_recipe(recipe: dict[str, Any]) -> dict[str, Any]:
+    raw = recipe.get("soft_repair_policy")
+    return raw if isinstance(raw, dict) else {}
+
+
+def safety_negative_floor_for_recipe(recipe: dict[str, Any]) -> list[str]:
+    return normalize_list(recipe.get("safety_negative_floor"))
+
+
 def mixin_cue_budget_for_recipe(recipe: dict[str, Any]) -> int:
     value = normalize_int(recipe.get("mixin_cue_budget"), 0)
     return max(0, value)
@@ -317,7 +326,16 @@ def render_priority_terms_for_recipe(recipe: dict[str, Any]) -> list[dict[str, A
                 terms = normalize_list(item.get("terms"))
                 min_hits = max(1, normalize_int(item.get("min_hits"), 1))
                 if terms:
-                    groups.append({"id": str(item.get("id") or f"priority_{index}"), "terms": terms, "min_hits": min_hits})
+                    groups.append(
+                        {
+                            "id": str(item.get("id") or f"priority_{index}"),
+                            "group": str(item.get("group") or item.get("id") or f"priority_{index}"),
+                            "tier": str(item.get("tier") or "required"),
+                            "terms": terms,
+                            "min_hits": min_hits,
+                            "target_slots": normalize_list(item.get("target_slots")),
+                        }
+                    )
             else:
                 terms = normalize_list(item)
                 if terms:
@@ -359,6 +377,8 @@ def soft_anchor_specs_from_mapping(
     render_directives = render_directives_for_recipe(recipe)
     dual_read_requirement = dual_read_requirement_for_recipe(recipe)
     preset_affinity = preset_affinity_for_recipe(recipe)
+    soft_repair_policy = soft_repair_policy_for_recipe(recipe)
+    safety_negative_floor = safety_negative_floor_for_recipe(recipe)
     mixin_cue_budget = mixin_cue_budget_for_recipe(recipe)
     specs: list[dict[str, Any]] = []
     mapped_slots: set[str] = set()
@@ -400,6 +420,8 @@ def soft_anchor_specs_from_mapping(
                 "render_directives": render_directives,
                 "dual_read_requirement": dual_read_requirement,
                 "preset_affinity": preset_affinity,
+                "soft_repair_policy": soft_repair_policy,
+                "safety_negative_floor": safety_negative_floor,
                 "mixin_cue_budget": mixin_cue_budget,
             }
         )
@@ -439,6 +461,8 @@ def soft_anchor_specs_from_mapping(
                     "render_directives": render_directives,
                     "dual_read_requirement": dual_read_requirement,
                     "preset_affinity": preset_affinity,
+                    "soft_repair_policy": soft_repair_policy,
+                    "safety_negative_floor": safety_negative_floor,
                     "mixin_cue_budget": mixin_cue_budget,
                 }
             )
@@ -483,6 +507,8 @@ def dedupe_soft_anchor_specs(specs: Sequence[dict[str, Any]]) -> list[dict[str, 
                 "render_directives": [],
                 "dual_read_requirement": {},
                 "preset_affinity": {},
+                "soft_repair_policy": {},
+                "safety_negative_floor": [],
                 "mixin_cue_budget": 0,
             },
         )
@@ -536,6 +562,11 @@ def dedupe_soft_anchor_specs(specs: Sequence[dict[str, Any]]) -> list[dict[str, 
             current["dual_read_requirement"].update(spec.get("dual_read_requirement") or {})
         if spec.get("preset_affinity"):
             current["preset_affinity"].update(spec.get("preset_affinity") or {})
+        if spec.get("soft_repair_policy"):
+            current.setdefault("soft_repair_policy", {}).update(spec.get("soft_repair_policy") or {})
+        for term in normalize_list(spec.get("safety_negative_floor")):
+            if term not in current.setdefault("safety_negative_floor", []):
+                current["safety_negative_floor"].append(term)
         current["mixin_cue_budget"] = max(
             normalize_int(current.get("mixin_cue_budget"), 0),
             normalize_int(spec.get("mixin_cue_budget"), 0),
@@ -564,6 +595,8 @@ def build_soft_anchor_spec(
     render_directives: list[dict[str, Any]] = []
     dual_read_requirement: dict[str, Any] = {}
     preset_affinity: dict[str, Any] = {}
+    soft_repair_policy: dict[str, Any] = {}
+    safety_negative_floor: list[str] = []
     mixin_cue_budgets: list[int] = []
     for anchor in anchors:
         for source, value in (anchor.get("source_floors", {}) or {}).items():
@@ -595,6 +628,13 @@ def build_soft_anchor_spec(
             preset_affinity.update(anchor.pop("preset_affinity") or {})
         else:
             anchor.pop("preset_affinity", None)
+        if anchor.get("soft_repair_policy"):
+            soft_repair_policy.update(anchor.pop("soft_repair_policy") or {})
+        else:
+            anchor.pop("soft_repair_policy", None)
+        for term in normalize_list(anchor.pop("safety_negative_floor", [])):
+            if term not in safety_negative_floor:
+                safety_negative_floor.append(term)
         budget = normalize_int(anchor.pop("mixin_cue_budget", 0), 0)
         if budget > 0:
             mixin_cue_budgets.append(budget)
@@ -634,6 +674,8 @@ def build_soft_anchor_spec(
         "render_directives": render_directives,
         "dual_read_requirement": dual_read_requirement,
         "preset_affinity": preset_affinity,
+        "soft_repair_policy": soft_repair_policy,
+        "safety_negative_floor": safety_negative_floor,
         "mixin_cue_budget": min(mixin_cue_budgets) if mixin_cue_budgets else 0,
         "anchors": anchors,
     }

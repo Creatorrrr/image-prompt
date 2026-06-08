@@ -715,12 +715,40 @@ def soft_anchor_metrics(result: JsonDict) -> tuple[float, List[JsonDict], float,
     visual_guard_check = next((check for check in checks if check.get("id") == "soft_visual_guard"), {}) or {}
     render_priority_check = next((check for check in checks if check.get("id") == "soft_render_priority_terms"), {}) or {}
     body_first_check = next((check for check in checks if check.get("id") == "soft_body_first_guard"), {}) or {}
+    free_constraint_check = next((check for check in checks if check.get("id") == "soft_free_slot_constraints"), {}) or {}
+    repair_check = next((check for check in checks if check.get("id") == "soft_anchor_repair"), {}) or {}
     visual_guard_violations = visual_guard_check.get("violations", []) or []
+    free_slot_constraint_violations = free_constraint_check.get("violations", []) or []
     body_first_drift_rate = 1.0 if body_first_check.get("status") == "fail" else 0.0
     priority_groups = render_priority_check.get("groups", []) or []
     render_priority_term_rate = (
         sum(1 for group in priority_groups if group.get("matched")) / max(len(priority_groups), 1)
         if priority_groups
+        else 1.0
+    )
+    required_priority_groups = [group for group in priority_groups if str(group.get("tier", "required")) == "required"]
+    required_render_priority_pass_rate = (
+        sum(1 for group in required_priority_groups if group.get("matched")) / max(len(required_priority_groups), 1)
+        if required_priority_groups
+        else 1.0
+    )
+    repair_state = repair_check.get("repair", {}) or {}
+    repair_status = str(repair_state.get("post_render_status") or repair_state.get("status") or "")
+    soft_repair_success_rate = 1.0 if repair_status in {"not_needed", "not_applicable", "repaired", "already_satisfied"} else 0.0
+    active_denial_groups = [
+        group for group in priority_groups if str(group.get("group") or group.get("id") or "") == "tsundere_active_denial"
+    ]
+    active_denial_pass_rate = (
+        sum(1 for group in active_denial_groups if group.get("matched")) / max(len(active_denial_groups), 1)
+        if active_denial_groups
+        else 1.0
+    )
+    robot_deep_groups = [
+        group for group in priority_groups if str(group.get("group") or group.get("id") or "") == "robot_deep_structural"
+    ]
+    robot_deep_structural_pass_rate = (
+        sum(1 for group in robot_deep_groups if group.get("matched")) / max(len(robot_deep_groups), 1)
+        if robot_deep_groups
         else 1.0
     )
     critical_term_slots = set(critical_by_slot)
@@ -739,6 +767,11 @@ def soft_anchor_metrics(result: JsonDict) -> tuple[float, List[JsonDict], float,
             "anchor_group_match_rate": anchor_group_match_rate,
             "visual_guard_violation_count": len(visual_guard_violations),
             "render_priority_term_rate": render_priority_term_rate,
+            "required_render_priority_pass_rate": required_render_priority_pass_rate,
+            "soft_repair_success_rate": soft_repair_success_rate,
+            "active_denial_pass_rate": active_denial_pass_rate,
+            "robot_deep_structural_pass_rate": robot_deep_structural_pass_rate,
+            "free_slot_constraint_violation_count": len(free_slot_constraint_violations),
             "body_first_drift_rate": body_first_drift_rate,
             "critical_term_missing": [],
             "critical_missing": sorted(set(critical_by_slot) - critical_matched),
@@ -773,6 +806,10 @@ def soft_anchor_metrics(result: JsonDict) -> tuple[float, List[JsonDict], float,
         failures.append("visual_guard_violation")
     if render_priority_term_rate < 1.0:
         failures.append("render_priority_term_missing")
+    if required_render_priority_pass_rate < 1.0:
+        failures.append("required_render_priority_term_missing")
+    if free_slot_constraint_violations:
+        failures.append("free_slot_constraint_violation")
     return selected_rate, rows, body_rate, hits, missing, failures, {
         "critical_anchor_match_rate": critical_anchor_match_rate,
         "role_anchor_match_rate": role_anchor_match_rate,
@@ -781,6 +818,11 @@ def soft_anchor_metrics(result: JsonDict) -> tuple[float, List[JsonDict], float,
         "anchor_group_match_rate": anchor_group_match_rate,
         "visual_guard_violation_count": len(visual_guard_violations),
         "render_priority_term_rate": render_priority_term_rate,
+        "required_render_priority_pass_rate": required_render_priority_pass_rate,
+        "soft_repair_success_rate": soft_repair_success_rate,
+        "active_denial_pass_rate": active_denial_pass_rate,
+        "robot_deep_structural_pass_rate": robot_deep_structural_pass_rate,
+        "free_slot_constraint_violation_count": len(free_slot_constraint_violations),
         "body_first_drift_rate": body_first_drift_rate,
         "critical_term_missing": sorted(
             f"{slot}:{'|'.join(sorted(term_by_slot.get(slot, set())))}"
@@ -1033,6 +1075,11 @@ def evaluate_concept_benchmark(
                         and soft_anchor_detail["anchor_group_match_rate"] >= 0.85
                         and soft_anchor_detail["visual_guard_violation_count"] == 0
                         and soft_anchor_detail["render_priority_term_rate"] >= 0.60
+                        and soft_anchor_detail["required_render_priority_pass_rate"] >= 0.90
+                        and soft_anchor_detail["soft_repair_success_rate"] >= 0.80
+                        and soft_anchor_detail["active_denial_pass_rate"] >= 1.0
+                        and soft_anchor_detail["robot_deep_structural_pass_rate"] >= 1.0
+                        and soft_anchor_detail["free_slot_constraint_violation_count"] == 0
                         and soft_anchor_detail["body_first_drift_rate"] <= 0.05
                         and not soft_anchor_detail["critical_missing"]
                         and not soft_anchor_detail["source_floor_misses"]
@@ -1058,6 +1105,16 @@ def evaluate_concept_benchmark(
                         soft_failures.append("primary_anchor_rate_below_threshold")
                     if soft_anchor_detail["render_priority_term_rate"] < 0.60:
                         soft_failures.append("render_priority_term_rate_below_threshold")
+                    if soft_anchor_detail["required_render_priority_pass_rate"] < 0.90:
+                        soft_failures.append("required_render_priority_rate_below_threshold")
+                    if soft_anchor_detail["soft_repair_success_rate"] < 0.80:
+                        soft_failures.append("soft_repair_failed")
+                    if soft_anchor_detail["active_denial_pass_rate"] < 1.0:
+                        soft_failures.append("active_denial_missing")
+                    if soft_anchor_detail["robot_deep_structural_pass_rate"] < 1.0:
+                        soft_failures.append("robot_deep_structural_missing")
+                    if soft_anchor_detail["free_slot_constraint_violation_count"] > 0:
+                        soft_failures.append("free_slot_constraint_violation")
                     if soft_anchor_detail["body_first_drift_rate"] > 0.05:
                         soft_failures.append("body_first_framing_present")
                 else:
@@ -1094,6 +1151,11 @@ def evaluate_concept_benchmark(
                     "anchor_group_match_rate": round(soft_anchor_detail["anchor_group_match_rate"], 4),
                     "visual_guard_violation_count": soft_anchor_detail["visual_guard_violation_count"],
                     "render_priority_term_rate": round(soft_anchor_detail["render_priority_term_rate"], 4),
+                    "required_render_priority_pass_rate": round(soft_anchor_detail["required_render_priority_pass_rate"], 4),
+                    "soft_repair_success_rate": round(soft_anchor_detail["soft_repair_success_rate"], 4),
+                    "active_denial_pass_rate": round(soft_anchor_detail["active_denial_pass_rate"], 4),
+                    "robot_deep_structural_pass_rate": round(soft_anchor_detail["robot_deep_structural_pass_rate"], 4),
+                    "free_slot_constraint_violation_count": soft_anchor_detail["free_slot_constraint_violation_count"],
                     "body_first_drift_rate": round(soft_anchor_detail["body_first_drift_rate"], 4),
                     "critical_term_missing": soft_anchor_detail["critical_term_missing"],
                     "critical_anchor_missing": soft_anchor_detail["critical_missing"],
@@ -1138,6 +1200,23 @@ def evaluate_concept_benchmark(
                     sum(row.get("body_first_drift_rate", 0.0) for row in mode_rows) / max(len(mode_rows), 1),
                     4,
                 ),
+                "average_required_render_priority_pass_rate": round(
+                    sum(row.get("required_render_priority_pass_rate", 1.0) for row in mode_rows) / max(len(mode_rows), 1),
+                    4,
+                ),
+                "average_soft_repair_success_rate": round(
+                    sum(row.get("soft_repair_success_rate", 1.0) for row in mode_rows) / max(len(mode_rows), 1),
+                    4,
+                ),
+                "average_active_denial_pass_rate": round(
+                    sum(row.get("active_denial_pass_rate", 1.0) for row in mode_rows) / max(len(mode_rows), 1),
+                    4,
+                ),
+                "average_robot_deep_structural_pass_rate": round(
+                    sum(row.get("robot_deep_structural_pass_rate", 1.0) for row in mode_rows) / max(len(mode_rows), 1),
+                    4,
+                ),
+                "free_slot_constraint_violation_count": sum(row.get("free_slot_constraint_violation_count", 0) for row in mode_rows),
                 **variant_diversity,
                 "failed_run_count": sum(1 for row in mode_rows if not row["passed"]),
             }
@@ -1157,6 +1236,11 @@ def evaluate_concept_benchmark(
             and soft_summary["average_selected_anchor_rate"] >= minimum_soft_average_selected_anchor
             and soft_summary["average_body_anchor_term_rate"] >= minimum_soft_body_anchor
             and soft_summary.get("average_body_first_drift_rate", 0.0) <= 0.05
+            and soft_summary.get("average_required_render_priority_pass_rate", 1.0) >= 0.90
+            and soft_summary.get("average_soft_repair_success_rate", 1.0) >= 0.80
+            and soft_summary.get("average_active_denial_pass_rate", 1.0) >= 1.0
+            and soft_summary.get("average_robot_deep_structural_pass_rate", 1.0) >= 1.0
+            and soft_summary.get("free_slot_constraint_violation_count", 0) == 0
             and soft_summary.get("anchor_variant_diversity_rate", 1.0) >= 0.70
             and soft_coverage_drop <= 0.05
             and soft_summary["failed_run_count"] == 0

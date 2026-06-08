@@ -3832,6 +3832,17 @@ def evaluate_generation_quality(
             }
         )
 
+        free_constraint_violations = soft_free_slot_constraint_violations(soft_policy, render_picked)
+        if free_constraint_violations:
+            fail_reasons.append("soft_free_slot_constraint_violation")
+        checks.append(
+            {
+                "id": "soft_free_slot_constraints",
+                "status": "pass" if not free_constraint_violations else "fail",
+                "violations": free_constraint_violations,
+            }
+        )
+
         guard_policy = (semantic_policy_from_source(semantic_context).get("soft_body_first_guard", {}) or {})
         guard_slots = normalize_list(guard_policy.get("slots"))
         legacy_guard_slot = str(guard_policy.get("slot") or "").strip()
@@ -3839,15 +3850,7 @@ def evaluate_generation_quality(
             guard_slots.append(legacy_guard_slot)
         if not guard_slots:
             guard_slots = ["body_framing"]
-        demote_facets = normalize_list(guard_policy.get("demote_facets")) or ["soft_body_role:body_emphasis"]
-        protected_ids = soft_anchor_all_ids(soft_policy)
-        body_emphasis_survivors: List[JsonDict] = []
-        for guard_slot in guard_slots:
-            body_entry = render_picked.get(guard_slot)
-            if not body_entry or str(body_entry.get("id") or "") in protected_ids:
-                continue
-            if entry_matches_guard_facets(body_entry, demote_facets):
-                body_emphasis_survivors.append({"slot": guard_slot, "id": body_entry.get("id")})
+        body_emphasis_survivors = soft_body_first_survivors(soft_policy, render_picked, semantic_context)
         body_first = bool(body_emphasis_survivors)
         if body_first:
             fail_reasons.append("body_first_framing_present")
@@ -3859,6 +3862,15 @@ def evaluate_generation_quality(
                 "body_emphasis_survived": body_emphasis_survivors,
                 "body_first_guard_applied": bool(contract.get("soft_body_first_guard_events")),
                 "events": contract.get("soft_body_first_guard_events", []),
+            }
+        )
+
+        repair_state = contract.get("soft_anchor_repair", {}) or {}
+        checks.append(
+            {
+                "id": "soft_anchor_repair",
+                "status": "pass" if repair_state.get("post_render_status") in {None, "", "not_needed", "repaired"} and repair_state.get("status") != "failed" else "fail",
+                "repair": repair_state,
             }
         )
 
@@ -4025,6 +4037,8 @@ def normalize_soft_anchor_spec(payload: Any) -> JsonDict:
             "render_directives": [],
             "dual_read_requirement": {},
             "preset_affinity": {},
+            "soft_repair_policy": normalize_soft_repair_policy({}),
+            "safety_negative_floor": [],
         }
     if isinstance(payload, list):
         raw_anchors = payload
@@ -4041,6 +4055,8 @@ def normalize_soft_anchor_spec(payload: Any) -> JsonDict:
         raw_render_directives = []
         raw_dual_read_requirement = {}
         raw_preset_affinity = {}
+        raw_soft_repair_policy = {}
+        raw_safety_negative_floor = []
     elif isinstance(payload, dict):
         raw_anchors = payload.get("anchors", [])
         min_anchors = payload.get("min_anchors", payload.get("soft_min_anchors", 0))
@@ -4056,6 +4072,8 @@ def normalize_soft_anchor_spec(payload: Any) -> JsonDict:
         raw_render_directives = payload.get("render_directives", []) or []
         raw_dual_read_requirement = payload.get("dual_read_requirement", {}) or {}
         raw_preset_affinity = payload.get("preset_affinity", {}) or {}
+        raw_soft_repair_policy = payload.get("soft_repair_policy", {}) or {}
+        raw_safety_negative_floor = payload.get("safety_negative_floor", []) or []
     else:
         raise ValueError("--soft-anchor-spec must be a JSON object or list")
     if not isinstance(raw_anchors, list):
@@ -4124,6 +4142,8 @@ def normalize_soft_anchor_spec(payload: Any) -> JsonDict:
     render_directives = normalize_soft_render_directives(raw_render_directives)
     dual_read_requirement = normalize_dual_read_requirement(raw_dual_read_requirement)
     preset_affinity = normalize_soft_preset_affinity(raw_preset_affinity)
+    soft_repair_policy = normalize_soft_repair_policy(raw_soft_repair_policy)
+    safety_negative_floor = normalize_list(raw_safety_negative_floor)
     return {
         "enabled": bool(anchors and normalized_min > 0),
         "mode": mode,
@@ -4139,6 +4159,8 @@ def normalize_soft_anchor_spec(payload: Any) -> JsonDict:
         "render_directives": render_directives,
         "dual_read_requirement": dual_read_requirement,
         "preset_affinity": preset_affinity,
+        "soft_repair_policy": soft_repair_policy,
+        "safety_negative_floor": safety_negative_floor,
         "anchors": anchors,
     }
 
@@ -4182,6 +4204,12 @@ def parse_soft_anchor_specs(items: Optional[Sequence[str]]) -> JsonDict:
             merged["dual_read_requirement"] = spec.get("dual_read_requirement")
         if spec.get("preset_affinity"):
             merged.setdefault("preset_affinity", {}).update(spec.get("preset_affinity") or {})
+        if spec.get("soft_repair_policy"):
+            merged.setdefault("soft_repair_policy", {}).update(spec.get("soft_repair_policy") or {})
+        merged.setdefault("safety_negative_floor", [])
+        for term in normalize_list(spec.get("safety_negative_floor")):
+            if term not in merged["safety_negative_floor"]:
+                merged["safety_negative_floor"].append(term)
         merged["anchors"].extend(spec.get("anchors", []))
     return normalize_soft_anchor_spec(merged)
 
@@ -4308,17 +4336,65 @@ def normalize_render_priority_terms(raw: Any) -> List[JsonDict]:
             terms = normalize_list(group.get("terms"))
             raw_min_hits = group.get("min_hits", 1)
             group_id = str(group.get("id") or f"priority_{index}")
+            tier = str(group.get("tier") or "required").strip() or "required"
+            group_name = str(group.get("group") or group_id).strip() or group_id
+            target_slots = normalize_list(group.get("target_slots"))
         else:
             terms = normalize_list(group)
             raw_min_hits = 1
             group_id = f"priority_{index}"
+            tier = "required"
+            group_name = group_id
+            target_slots = []
         try:
             min_hits = int(raw_min_hits)
         except (TypeError, ValueError):
             min_hits = 1
         if terms:
-            groups.append({"id": group_id, "terms": terms, "min_hits": max(1, min_hits)})
+            groups.append(
+                {
+                    "id": group_id,
+                    "group": group_name,
+                    "tier": tier if tier in {"required", "support"} else "required",
+                    "terms": terms,
+                    "min_hits": max(1, min_hits),
+                    "target_slots": target_slots,
+                }
+            )
     return groups
+
+
+def normalize_soft_repair_policy(raw: Any) -> JsonDict:
+    if not isinstance(raw, dict):
+        raw = {}
+    try:
+        max_attempts = int(raw.get("max_attempts", 2))
+    except (TypeError, ValueError):
+        max_attempts = 2
+    trigger_checks = normalize_list(raw.get("trigger_checks")) or [
+        "required_render_priority_missing",
+        "dual_read_missing",
+        "body_first_survivor",
+        "free_slot_constraint_violation",
+    ]
+    target_slots = normalize_list(raw.get("target_slots")) or [
+        "subject_framing",
+        "composition",
+        "action",
+        "prop",
+        "body_framing",
+    ]
+    strategy = str(raw.get("strategy") or "prefer_then_reselect")
+    if strategy not in {"prefer_then_reselect"}:
+        strategy = "prefer_then_reselect"
+    return {
+        "enabled": bool(raw.get("enabled", True)),
+        "max_attempts": max(0, max_attempts),
+        "trigger_checks": trigger_checks,
+        "target_slots": target_slots,
+        "strategy": strategy,
+        "fail_open": bool(raw.get("fail_open", False)),
+    }
 
 
 def soft_anchor_slots(policy: Optional[JsonDict]) -> List[str]:
@@ -4565,6 +4641,8 @@ def soft_anchor_trace(policy: Optional[JsonDict], picked: Optional[Dict[str, Ent
         "render_directives": policy.get("render_directives", []) or [],
         "dual_read_requirement": policy.get("dual_read_requirement", {}) or {},
         "preset_affinity": policy.get("preset_affinity", {}) or {},
+        "soft_repair_policy": policy.get("soft_repair_policy", {}) or normalize_soft_repair_policy({}),
+        "safety_negative_floor": policy.get("safety_negative_floor", []) or [],
         "required_anchor_count": soft_anchor_required_count(policy),
         "selected_anchor_count": len(selected_slots),
         "selected_anchor_slots": sorted(selected_slots),
@@ -4885,9 +4963,21 @@ def render_priority_term_status(policy: Optional[JsonDict], result: JsonDict) ->
         terms = [str(term).lower() for term in normalize_list(group.get("terms")) if str(term).strip()]
         min_hits = max(1, int(group.get("min_hits", 1) or 1))
         hits = sorted({term for term in terms if term in body})
-        row = {"id": group.get("id", ""), "terms": terms, "hits": hits, "min_hits": min_hits, "matched": len(hits) >= min_hits}
+        tier = str(group.get("tier") or "required")
+        if tier not in {"required", "support"}:
+            tier = "required"
+        row = {
+            "id": group.get("id", ""),
+            "group": group.get("group") or group.get("id", ""),
+            "tier": tier,
+            "terms": terms,
+            "hits": hits,
+            "min_hits": min_hits,
+            "target_slots": normalize_list(group.get("target_slots")),
+            "matched": len(hits) >= min_hits,
+        }
         rows.append(row)
-        if not row["matched"]:
+        if tier == "required" and not row["matched"]:
             missing.append(row)
     return {"passed": not missing, "groups": rows, "missing": missing}
 
@@ -5806,6 +5896,252 @@ def soft_anchor_repair_candidates(
     if current and str(current.get("id")) in ids:
         return []
     return candidates
+
+
+def soft_free_slot_constraint_violations(policy: Optional[JsonDict], picked: Dict[str, Entry]) -> List[JsonDict]:
+    if not policy or not policy.get("enabled"):
+        return []
+    violations: List[JsonDict] = []
+    for slot, constraint in (policy.get("free_slot_constraints", {}) or {}).items():
+        if not isinstance(constraint, dict):
+            continue
+        entry = picked.get(slot)
+        if not entry:
+            continue
+        entry_id = str(entry.get("id") or "")
+        allow_ids = set(normalize_list(constraint.get("allow_pool")))
+        deny_ids = set(normalize_list(constraint.get("deny_pool")))
+        if entry_id in deny_ids:
+            violations.append({"slot": slot, "id": entry_id, "reason": "deny_pool"})
+        if allow_ids and entry_id not in allow_ids:
+            violations.append({"slot": slot, "id": entry_id, "reason": "outside_allow_pool"})
+    return violations
+
+
+def soft_body_first_survivors(
+    policy: Optional[JsonDict],
+    picked: Dict[str, Entry],
+    semantic_context: Optional[JsonDict],
+) -> List[JsonDict]:
+    if not policy or not policy.get("enabled") or not semantic_context:
+        return []
+    guard_policy = (semantic_policy_from_source(semantic_context).get("soft_body_first_guard", {}) or {})
+    guard_slots = normalize_list(guard_policy.get("slots"))
+    legacy_guard_slot = str(guard_policy.get("slot") or "").strip()
+    if legacy_guard_slot and legacy_guard_slot not in guard_slots:
+        guard_slots.append(legacy_guard_slot)
+    if not guard_slots:
+        guard_slots = ["body_framing"]
+    demote_facets = normalize_list(guard_policy.get("demote_facets")) or ["soft_body_role:body_emphasis"]
+    protected_ids = soft_anchor_all_ids(policy)
+    survivors: List[JsonDict] = []
+    for guard_slot in guard_slots:
+        entry = picked.get(guard_slot)
+        if not entry or str(entry.get("id") or "") in protected_ids:
+            continue
+        if entry_matches_guard_facets(entry, demote_facets):
+            survivors.append({"slot": guard_slot, "id": entry.get("id"), "reason": "body_emphasis_survived"})
+    return survivors
+
+
+def soft_repair_candidate_ids_for_slot(policy: JsonDict, slot: str) -> Set[str]:
+    ids = set(soft_anchor_pool_for_slot(policy, slot))
+    constraint = (policy.get("free_slot_constraints", {}) or {}).get(slot)
+    if isinstance(constraint, dict):
+        ids.update(normalize_list(constraint.get("prefer_ids")))
+        ids.update(normalize_list(constraint.get("allow_pool")))
+    guard = soft_visual_guard_for_slot(policy, slot)
+    ids.update(guard.get("prefer_ids", set()))
+    return {item for item in ids if item}
+
+
+def soft_post_render_repair_triggers(
+    policy: Optional[JsonDict],
+    picked: Dict[str, Entry],
+    result: JsonDict,
+    semantic_context: Optional[JsonDict],
+) -> List[JsonDict]:
+    if not policy or not policy.get("enabled"):
+        return []
+    repair_policy = policy.get("soft_repair_policy", {}) or {}
+    enabled_checks = set(normalize_list(repair_policy.get("trigger_checks")))
+    triggers: List[JsonDict] = []
+    priority_status = render_priority_term_status(policy, result)
+    if "required_render_priority_missing" in enabled_checks:
+        for group in priority_status.get("missing", []) or []:
+            target_slots = normalize_list(group.get("target_slots"))
+            if not target_slots:
+                group_name = str(group.get("group") or group.get("id") or "")
+                for anchor in policy.get("anchors", []) or []:
+                    if group_name and group_name in normalize_list(anchor.get("groups")):
+                        slot = str(anchor.get("slot") or "")
+                        if slot and slot not in target_slots:
+                            target_slots.append(slot)
+            triggers.append(
+                {
+                    "reason": "required_render_priority_missing",
+                    "group": group.get("group") or group.get("id"),
+                    "id": group.get("id"),
+                    "target_slots": target_slots,
+                    "missing_terms": group.get("terms", []),
+                }
+            )
+    dual_status = dual_read_term_status(policy, result)
+    if "dual_read_missing" in enabled_checks and not dual_status.get("passed"):
+        triggers.append(
+            {
+                "reason": "dual_read_missing",
+                "target_slots": ["subject_framing", "composition", "action", "prop"],
+                "missing": dual_status.get("missing", {}),
+            }
+        )
+    if "body_first_survivor" in enabled_checks:
+        survivors = soft_body_first_survivors(policy, picked, semantic_context)
+        if survivors:
+            triggers.append(
+                {
+                    "reason": "body_first_survivor",
+                    "target_slots": ["subject_framing", "composition", "action", "prop", "body_framing"],
+                    "survivors": survivors,
+                }
+            )
+    if "free_slot_constraint_violation" in enabled_checks:
+        violations = soft_free_slot_constraint_violations(policy, picked)
+        if violations:
+            triggers.append(
+                {
+                    "reason": "free_slot_constraint_violation",
+                    "target_slots": [str(item.get("slot")) for item in violations if item.get("slot")],
+                    "violations": violations,
+                }
+            )
+    return triggers
+
+
+def apply_soft_post_render_repair(
+    data: JsonDict,
+    preset: JsonDict,
+    rng: random.Random,
+    picked: Dict[str, Entry],
+    result: JsonDict,
+    forced_choices: Optional[Dict[str, List[str]]] = None,
+    semantic_context: Optional[JsonDict] = None,
+    generation_contract: Optional[JsonDict] = None,
+) -> bool:
+    if not generation_contract:
+        return False
+    policy = generation_contract.get("soft_anchor_policy", {})
+    if not policy or not policy.get("enabled"):
+        return False
+    repair_policy = policy.get("soft_repair_policy", {}) or normalize_soft_repair_policy({})
+    if repair_policy.get("enabled") is False:
+        return False
+    max_attempts = int(repair_policy.get("max_attempts", 2) or 0)
+    if max_attempts <= 0:
+        return False
+    triggers = soft_post_render_repair_triggers(policy, picked, result, semantic_context)
+    if not triggers:
+        current = generation_contract.get("soft_anchor_repair", {}) or {}
+        if current.get("status") in {"not_needed", "not_evaluated"}:
+            current.update({"post_render_status": "not_needed", "post_render_triggers": []})
+            generation_contract["soft_anchor_repair"] = current
+        return False
+
+    forced_slots = set((forced_choices or {}).keys())
+    default_targets = normalize_list(repair_policy.get("target_slots")) or ["subject_framing", "composition", "action", "prop", "body_framing"]
+    ordered_slots: List[str] = []
+    for trigger in triggers:
+        for slot in normalize_list(trigger.get("target_slots")):
+            if slot and slot not in ordered_slots:
+                ordered_slots.append(slot)
+    for slot in default_targets:
+        if slot and slot not in ordered_slots:
+            ordered_slots.append(slot)
+
+    attempts: List[JsonDict] = []
+    changed = False
+    for slot in ordered_slots:
+        if len(attempts) >= max_attempts:
+            break
+        if slot in forced_slots or slot not in data.get("slots", {}):
+            attempts.append({"slot": slot, "status": "skipped_forced_or_unknown"})
+            continue
+        if slot == "costume_style" and soft_anchor_critical_slot(policy, slot):
+            attempts.append({"slot": slot, "status": "skipped_role_critical_costume"})
+            continue
+        ids = soft_repair_candidate_ids_for_slot(policy, slot)
+        if ids:
+            candidates = soft_anchor_repair_candidates(data, preset, slot, ids, picked, generation_contract)
+        else:
+            candidate_picked = dict(picked)
+            candidate_picked.pop(slot, None)
+            candidates = [item for item in data.get("slots", {}).get(slot, []) if not entry_block_reason(item, slot, generation_contract, forced=False)]
+            candidates = compatible_with_picked(candidates, candidate_picked, forced=False, slot=slot) or candidates
+        if not candidates:
+            attempts.append({"slot": slot, "status": "blocked", "candidate_ids": sorted(ids)})
+            continue
+        candidates = apply_soft_free_slot_constraints(slot, candidates, semantic_context, generation_contract)
+        candidates = apply_soft_body_first_guard(slot, candidates, semantic_context, generation_contract)
+        candidates = apply_soft_visual_guard(slot, candidates, semantic_context, generation_contract)
+        candidates = apply_soft_anchor_bias(slot, candidates, semantic_context, generation_contract)
+        before_id = str((picked.get(slot) or {}).get("id") or "")
+        selected_entry = semantic_weighted_choice(
+            candidates,
+            rng,
+            slot,
+            preset,
+            semantic_context,
+            forced=False,
+            slot_filter=preset.get("filters", {}).get(slot),
+            picked={key: value for key, value in picked.items() if key != slot},
+        )
+        after_id = str(selected_entry.get("id") or "")
+        if after_id == before_id and len(candidates) > 1:
+            alternatives = [item for item in candidates if str(item.get("id") or "") != before_id]
+            if alternatives:
+                selected_entry = semantic_weighted_choice(
+                    alternatives,
+                    rng,
+                    slot,
+                    preset,
+                    semantic_context,
+                    forced=False,
+                    slot_filter=preset.get("filters", {}).get(slot),
+                    picked={key: value for key, value in picked.items() if key != slot},
+                )
+                after_id = str(selected_entry.get("id") or "")
+        picked[slot] = selected_entry
+        changed = changed or after_id != before_id
+        attempts.append(
+            {
+                "slot": slot,
+                "status": "reselected" if after_id != before_id else "kept",
+                "before": before_id,
+                "after": after_id,
+                "candidate_ids": sorted(ids) if ids else [str(item.get("id")) for item in candidates],
+            }
+        )
+
+    current = generation_contract.get("soft_anchor_repair", {}) or {}
+    current.update(
+        {
+            "post_render_status": "repaired" if changed else "failed",
+            "post_render_triggers": triggers,
+            "repair_trigger": [trigger.get("reason") for trigger in triggers],
+            "repair_target_slots": ordered_slots,
+            "post_render_attempts": attempts,
+            "repair_result": "post_render_reselected" if changed else "post_render_unresolved",
+            "unresolved_required_groups": [
+                trigger.get("group")
+                for trigger in triggers
+                if trigger.get("reason") == "required_render_priority_missing"
+            ],
+        }
+    )
+    generation_contract["soft_anchor_repair"] = current
+    if changed:
+        refresh_generation_contract(generation_contract, data, preset, picked, forced_choices)
+    return changed
 
 
 def apply_soft_anchor_repair(
@@ -6855,7 +7191,7 @@ def soft_render_suppress_negative_entries(policy: Optional[JsonDict]) -> List[En
         return []
     entries: List[Entry] = []
     seen: Set[str] = set()
-    for term in normalize_list(policy.get("render_suppress_terms")):
+    for term in normalize_list(policy.get("render_suppress_terms")) + normalize_list(policy.get("safety_negative_floor")):
         key = term.strip()
         if not key or key.lower() in seen:
             continue
@@ -7141,14 +7477,6 @@ def generate_once(
         ]
     generation_contract["additional_requirements"] = effective_additional_requirements
 
-    record_batch_generation(
-        semantic_context,
-        preset,
-        render_picked,
-        forced_choices=forced_choices,
-        preset_forced=bool(preset_id),
-    )
-
     result: JsonDict = {
         "preset_id": preset.get("id"),
         "preset": {lang: localize(preset, lang) for lang in langs},
@@ -7168,6 +7496,77 @@ def generate_once(
             effective_additional_requirements,
             likeness_mode,
         )
+
+    if apply_soft_post_render_repair(
+        data,
+        preset,
+        rng,
+        picked,
+        result,
+        forced_choices,
+        semantic_context,
+        generation_contract,
+    ):
+        refresh_generation_contract(
+            generation_contract,
+            data,
+            preset,
+            picked,
+            forced_choices,
+            surreal_enabled=surreal_active,
+            additional_requirements=additional_requirements,
+            likeness_mode=likeness_mode,
+            soft_anchor_spec=soft_anchor_spec,
+        )
+        sync_generation_contract_axis_coverage(generation_contract, semantic_context)
+        render_picked = render_guarded_picked(data, preset, picked, generation_contract)
+        directive_events = soft_render_directive_events(generation_contract.get("soft_anchor_policy"), render_picked)
+        effective_additional_requirements = normalize_additional_requirements(additional_requirements)
+        if directive_events:
+            for event in directive_events:
+                record_generation_contract_event(
+                    generation_contract,
+                    "soft_render_directive_events",
+                    {
+                        "id": event.get("id"),
+                        "cue_matched": True,
+                        "matched_terms": event.get("matched_terms", []),
+                        "render_as": event.get("render_as", ""),
+                        "positive_clause_injected": True,
+                        "suppress_terms_injected": bool(event.get("suppress_terms")),
+                    },
+                )
+                clause = str(event.get("positive_clause") or "").strip()
+                if clause and clause not in effective_additional_requirements:
+                    effective_additional_requirements.append(clause)
+            generation_contract["soft_render_directive_suppress_terms"] = [
+                term
+                for event in directive_events
+                for term in normalize_list(event.get("suppress_terms"))
+            ]
+        generation_contract["additional_requirements"] = effective_additional_requirements
+        for lang in langs:
+            result[f"prompt_{lang}"] = render_prompt(
+                data,
+                preset,
+                picked,
+                lang,
+                rng,
+                detail_level,
+                reference_edit_mode,
+                trend_layer,
+                generation_contract,
+                effective_additional_requirements,
+                likeness_mode,
+            )
+
+    record_batch_generation(
+        semantic_context,
+        preset,
+        render_picked,
+        forced_choices=forced_choices,
+        preset_forced=bool(preset_id),
+    )
 
     if llm_polish == "strict":
         for lang in langs:

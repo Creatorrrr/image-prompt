@@ -771,6 +771,17 @@ def validate_concept_recipe_entry(
                     errors.append(f"{label}.render_priority_terms[{index}].terms: required")
                 if "min_hits" in group and (not isinstance(group.get("min_hits"), int) or group.get("min_hits") < 1):
                     errors.append(f"{label}.render_priority_terms[{index}].min_hits: must be a positive integer")
+                if "tier" in group and str(group.get("tier")) not in {"required", "support"}:
+                    errors.append(f"{label}.render_priority_terms[{index}].tier: must be required or support")
+                if "group" in group and not str(group.get("group") or "").strip():
+                    errors.append(f"{label}.render_priority_terms[{index}].group: must be non-empty")
+                validate_recipe_slot_list(
+                    f"{label}.render_priority_terms[{index}]",
+                    "target_slots",
+                    group.get("target_slots"),
+                    by_slot,
+                    errors,
+                )
             elif not normalize_list(group):
                 errors.append(f"{label}.render_priority_terms[{index}]: empty value")
     if "soft_min_anchors" in recipe and (not isinstance(recipe.get("soft_min_anchors"), int) or recipe.get("soft_min_anchors") < 0):
@@ -799,6 +810,35 @@ def validate_concept_recipe_entry(
     for term in normalize_list(render_suppress_terms):
         if not str(term).strip():
             errors.append(f"{label}.render_suppress_terms: empty value")
+    safety_negative_floor = recipe.get("safety_negative_floor")
+    if safety_negative_floor is not None and not isinstance(safety_negative_floor, (list, str)):
+        errors.append(f"{label}.safety_negative_floor: must be a string or list of strings")
+    for term in normalize_list(safety_negative_floor):
+        if not str(term).strip():
+            errors.append(f"{label}.safety_negative_floor: empty value")
+    soft_repair_policy = recipe.get("soft_repair_policy") or {}
+    if soft_repair_policy and not isinstance(soft_repair_policy, dict):
+        errors.append(f"{label}.soft_repair_policy: must be an object")
+    elif isinstance(soft_repair_policy, dict):
+        if "max_attempts" in soft_repair_policy and (
+            not isinstance(soft_repair_policy.get("max_attempts"), int) or soft_repair_policy.get("max_attempts") < 0
+        ):
+            errors.append(f"{label}.soft_repair_policy.max_attempts: must be a non-negative integer")
+        if "enabled" in soft_repair_policy and not isinstance(soft_repair_policy.get("enabled"), bool):
+            errors.append(f"{label}.soft_repair_policy.enabled: must be a boolean")
+        if "fail_open" in soft_repair_policy and not isinstance(soft_repair_policy.get("fail_open"), bool):
+            errors.append(f"{label}.soft_repair_policy.fail_open: must be a boolean")
+        if "strategy" in soft_repair_policy and str(soft_repair_policy.get("strategy")) not in {"prefer_then_reselect"}:
+            errors.append(f"{label}.soft_repair_policy.strategy: must be prefer_then_reselect")
+        for check in normalize_list(soft_repair_policy.get("trigger_checks")):
+            if check not in {
+                "required_render_priority_missing",
+                "dual_read_missing",
+                "body_first_survivor",
+                "free_slot_constraint_violation",
+            }:
+                errors.append(f"{label}.soft_repair_policy.trigger_checks: unknown check {check}")
+        validate_recipe_slot_list(label, "soft_repair_policy.target_slots", soft_repair_policy.get("target_slots"), by_slot, errors)
     render_directives = recipe.get("render_directives")
     directive_items = [render_directives] if isinstance(render_directives, dict) else (render_directives or [])
     if render_directives is not None and not isinstance(render_directives, (dict, list)):

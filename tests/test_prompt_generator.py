@@ -1488,6 +1488,115 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             {directive["id"] for directive in angel_spec["render_directives"]},
         )
 
+    def test_concept_soft_spec_carries_v7_repair_and_gothloli_robot(self):
+        payload = self.run_wrapper_json(
+            "--concept",
+            "아이유 고스로리 로봇",
+            "--concept-mode",
+            "soft",
+            "--explain-concept",
+            "--selection-mode",
+            "semantic",
+            "--plain",
+            "--no-negative",
+            "--seed",
+            "7107",
+        )
+
+        concept = payload["concepts"][0]
+        self.assertEqual(concept["name"], "아이유")
+        self.assertEqual(concept["role"], "고스로리")
+        self.assertEqual(concept["applied_mixins"], ["로봇"])
+        self.assertFalse(concept["forced_slots_applied"])
+        self.assertNotIn("--set", payload["forward_args"])
+
+        spec_index = payload["forward_args"].index("--soft-anchor-spec") + 1
+        forwarded_spec = json.loads(payload["forward_args"][spec_index])
+        render_groups = {
+            group.get("group")
+            for group in forwarded_spec.get("render_priority_terms", [])
+            if group.get("tier") == "required"
+        }
+        self.assertIn("robot_deep_structural", render_groups)
+        self.assertEqual(forwarded_spec["soft_repair_policy"]["max_attempts"], 2)
+        self.assertIn("required_render_priority_missing", forwarded_spec["soft_repair_policy"]["trigger_checks"])
+        self.assertIn("body horror", forwarded_spec["safety_negative_floor"])
+        self.assertIn("service_android_role_unit", forwarded_spec["preset_affinity"]["preferred_presets"])
+
+    def test_soft_post_render_repair_reselects_required_group_without_costume_demote(self):
+        def entry(slot: str, item_id: str):
+            return next(item for item in self.data["slots"][slot] if item["id"] == item_id)
+
+        preset = next(item for item in self.data["presets"] if item["id"] == "compact_cinematic_prop_portrait")
+        policy = self.generator.normalize_soft_anchor_spec(
+            {
+                "mode": "soft",
+                "concept": "간호사 얀데레",
+                "min_anchors": 1,
+                "soft_repair_policy": {
+                    "enabled": True,
+                    "max_attempts": 2,
+                    "trigger_checks": ["required_render_priority_missing"],
+                    "target_slots": ["costume_style", "prop"],
+                    "strategy": "prefer_then_reselect",
+                    "fail_open": False,
+                },
+                "render_priority_terms": [
+                    {
+                        "id": "yandere_evidence",
+                        "group": "yandere_records_evidence",
+                        "tier": "required",
+                        "terms": ["clinical chart"],
+                        "min_hits": 1,
+                        "target_slots": ["prop"],
+                    }
+                ],
+                "anchors": [
+                    {
+                        "slot": "costume_style",
+                        "ids": ["nurse_uniform_costume"],
+                        "pool": ["nurse_uniform_costume"],
+                        "source": "role",
+                        "critical": True,
+                    },
+                    {
+                        "slot": "prop",
+                        "ids": ["clinical_chart_clipboard_prop"],
+                        "pool": ["clinical_chart_clipboard_prop"],
+                        "source": "mixin",
+                        "groups": ["mixin_primary", "yandere_records_evidence"],
+                        "primary": True,
+                    },
+                ],
+            }
+        )
+        picked = {
+            "costume_style": entry("costume_style", "nurse_uniform_costume"),
+            "prop": entry("prop", "compact_mirror"),
+        }
+        contract = {"soft_anchor_policy": policy}
+        result = {"prompt_en": "A covered nurse portrait with a compact mirror, no chart evidence."}
+
+        changed = self.generator.apply_soft_post_render_repair(
+            self.data,
+            preset,
+            random.Random(7),
+            picked,
+            result,
+            forced_choices=None,
+            semantic_context=None,
+            generation_contract=contract,
+        )
+
+        self.assertTrue(changed)
+        self.assertEqual(picked["costume_style"]["id"], "nurse_uniform_costume")
+        self.assertEqual(picked["prop"]["id"], "clinical_chart_clipboard_prop")
+        repair = contract["soft_anchor_repair"]
+        self.assertEqual(repair["post_render_status"], "repaired")
+        self.assertIn("yandere_records_evidence", repair["unresolved_required_groups"])
+        self.assertEqual(repair["post_render_attempts"][0]["slot"], "prop")
+        self.assertEqual(repair["post_render_attempts"][0]["status"], "reselected")
+
     def test_soft_body_first_guard_demotes_body_emphasis_candidates(self):
         data = {
             "semantic_policy": {

@@ -55,7 +55,26 @@
       "weather"
     ],
     "max_salience_cues": 2,
-    "anchor_variant_strategy": "seed_rotate"
+    "anchor_variant_strategy": "seed_rotate",
+    "soft_repair_policy": {
+      "enabled": true,
+      "max_attempts": 2,
+      "trigger_checks": [
+        "required_render_priority_missing",
+        "dual_read_missing",
+        "body_first_survivor",
+        "free_slot_constraint_violation"
+      ],
+      "target_slots": [
+        "subject_framing",
+        "composition",
+        "action",
+        "prop",
+        "body_framing"
+      ],
+      "strategy": "prefer_then_reselect",
+      "fail_open": false
+    }
   },
   "roles": {
     "메이드": {
@@ -111,7 +130,26 @@
       "salience_cues": [
         "maid apron or maid-cafe uniform remains a first-read costume anchor"
       ],
-      "mixin_cue_budget": 2
+      "mixin_cue_budget": 2,
+      "soft_repair_policy": {
+        "enabled": true,
+        "max_attempts": 2,
+        "trigger_checks": [
+          "required_render_priority_missing",
+          "dual_read_missing",
+          "body_first_survivor",
+          "free_slot_constraint_violation"
+        ],
+        "target_slots": [
+          "subject_framing",
+          "composition",
+          "action",
+          "prop",
+          "body_framing"
+        ],
+        "strategy": "prefer_then_reselect",
+        "fail_open": false
+      }
     },
     "간호사": {
       "preset": "japanese_otaku_costume_portrait",
@@ -178,7 +216,85 @@
             "close_up_face_crop",
             "detail_crop_hands_accessories"
           ]
+        },
+        "composition": {
+          "deny_pool": [
+            "phone_arm_length_selfie",
+            "mirror_selfie_composition",
+            "crouching_mirror_full_body",
+            "low_angle",
+            "low_angle_hero",
+            "concert_low_angle_crowd"
+          ],
+          "prefer_ids": [
+            "medium_close",
+            "frame_within_frame",
+            "beauty_tight_face_crop"
+          ]
+        },
+        "action": {
+          "deny_pool": [
+            "turning_back",
+            "over_shoulder_pose",
+            "slow_walk_turnaround",
+            "over_shoulder_floor_turn",
+            "reacting_to_pov_hand_tail_pull"
+          ]
+        },
+        "body_framing": {
+          "deny_pool": [
+            "over_shoulder_hip_line",
+            "clothed_bodyline_emphasis",
+            "legs_heels_framing"
+          ],
+          "prefer_ids": [
+            "hands_nails_accessory_closeup"
+          ]
         }
+      },
+      "soft_repair_policy": {
+        "enabled": true,
+        "max_attempts": 2,
+        "trigger_checks": [
+          "required_render_priority_missing",
+          "dual_read_missing",
+          "body_first_survivor",
+          "free_slot_constraint_violation"
+        ],
+        "target_slots": [
+          "subject_framing",
+          "composition",
+          "action",
+          "prop",
+          "body_framing"
+        ],
+        "strategy": "prefer_then_reselect",
+        "fail_open": false
+      },
+      "safety_negative_floor": [
+        "erotic nurse costume",
+        "thirst-trap nurse",
+        "pin-up nurse",
+        "medical emergency",
+        "patient distress"
+      ],
+      "preset_affinity": {
+        "discouraged_presets": [
+          "adult_boundary_social_stress_test",
+          "adult_fetish_fashion_editorial"
+        ],
+        "preferred_axes": [
+          "covered nurse uniform",
+          "clinical chart",
+          "face and hands",
+          "professional role"
+        ],
+        "discouraged_axes": [
+          "erotic nurse",
+          "pin-up",
+          "medical horror",
+          "body display"
+        ]
       }
     },
     "경찰": {
@@ -262,7 +378,26 @@
             ]
           }
         }
-      ]
+      ],
+      "soft_repair_policy": {
+        "enabled": true,
+        "max_attempts": 2,
+        "trigger_checks": [
+          "required_render_priority_missing",
+          "dual_read_missing",
+          "body_first_survivor",
+          "free_slot_constraint_violation"
+        ],
+        "target_slots": [
+          "subject_framing",
+          "composition",
+          "action",
+          "prop",
+          "body_framing"
+        ],
+        "strategy": "prefer_then_reselect",
+        "fail_open": false
+      }
     },
     "광부": {
       "preset": "compact_cinematic_prop_portrait",
@@ -335,7 +470,60 @@
             "close_up_face_crop",
             "detail_crop_hands_accessories"
           ]
+        },
+        "composition": {
+          "deny_pool": [
+            "phone_arm_length_selfie",
+            "mirror_selfie_composition",
+            "crouching_mirror_full_body",
+            "low_angle",
+            "low_angle_hero",
+            "concert_low_angle_crowd"
+          ],
+          "prefer_ids": [
+            "medium_close",
+            "frame_within_frame",
+            "beauty_tight_face_crop"
+          ]
+        },
+        "action": {
+          "deny_pool": [
+            "turning_back",
+            "over_shoulder_pose",
+            "slow_walk_turnaround",
+            "over_shoulder_floor_turn",
+            "reacting_to_pov_hand_tail_pull"
+          ]
+        },
+        "body_framing": {
+          "deny_pool": [
+            "over_shoulder_hip_line",
+            "clothed_bodyline_emphasis",
+            "legs_heels_framing"
+          ],
+          "prefer_ids": [
+            "hands_nails_accessory_closeup"
+          ]
         }
+      },
+      "soft_repair_policy": {
+        "enabled": true,
+        "max_attempts": 2,
+        "trigger_checks": [
+          "required_render_priority_missing",
+          "dual_read_missing",
+          "body_first_survivor",
+          "free_slot_constraint_violation"
+        ],
+        "target_slots": [
+          "subject_framing",
+          "composition",
+          "action",
+          "prop",
+          "body_framing"
+        ],
+        "strategy": "prefer_then_reselect",
+        "fail_open": false
       }
     },
     "공주": {
@@ -405,7 +593,26 @@
       "salience_cues": [
         "royal hanbok silhouette, tiara or court chamber identity"
       ],
-      "mixin_cue_budget": 2
+      "mixin_cue_budget": 2,
+      "soft_repair_policy": {
+        "enabled": true,
+        "max_attempts": 2,
+        "trigger_checks": [
+          "required_render_priority_missing",
+          "dual_read_missing",
+          "body_first_survivor",
+          "free_slot_constraint_violation"
+        ],
+        "target_slots": [
+          "subject_framing",
+          "composition",
+          "action",
+          "prop",
+          "body_framing"
+        ],
+        "strategy": "prefer_then_reselect",
+        "fail_open": false
+      }
     },
     "바니걸": {
       "preset": "japanese_otaku_costume_portrait",
@@ -500,8 +707,69 @@
             "close_up_face_crop",
             "detail_crop_hands_accessories"
           ]
+        },
+        "composition": {
+          "deny_pool": [
+            "phone_arm_length_selfie",
+            "mirror_selfie_composition",
+            "crouching_mirror_full_body",
+            "low_angle",
+            "low_angle_hero",
+            "concert_low_angle_crowd"
+          ],
+          "prefer_ids": [
+            "medium_close",
+            "frame_within_frame",
+            "beauty_tight_face_crop"
+          ]
+        },
+        "action": {
+          "deny_pool": [
+            "turning_back",
+            "over_shoulder_pose",
+            "slow_walk_turnaround",
+            "over_shoulder_floor_turn",
+            "reacting_to_pov_hand_tail_pull"
+          ]
+        },
+        "body_framing": {
+          "deny_pool": [
+            "over_shoulder_hip_line",
+            "clothed_bodyline_emphasis",
+            "legs_heels_framing"
+          ],
+          "prefer_ids": [
+            "hands_nails_accessory_closeup"
+          ]
         }
-      }
+      },
+      "soft_repair_policy": {
+        "enabled": true,
+        "max_attempts": 2,
+        "trigger_checks": [
+          "required_render_priority_missing",
+          "dual_read_missing",
+          "body_first_survivor",
+          "free_slot_constraint_violation"
+        ],
+        "target_slots": [
+          "subject_framing",
+          "composition",
+          "action",
+          "prop",
+          "body_framing"
+        ],
+        "strategy": "prefer_then_reselect",
+        "fail_open": false
+      },
+      "safety_negative_floor": [
+        "lingerie focus",
+        "bare shoulders",
+        "cleavage",
+        "pin-up pose",
+        "full-body costume display",
+        "body-first framing"
+      ]
     },
     "사복 여친": {
       "preset": "candid_iphone_portrait",
@@ -549,7 +817,75 @@
       "salience_cues": [
         "everyday casual outfit remains the first-read role anchor"
       ],
-      "mixin_cue_budget": 1
+      "mixin_cue_budget": 1,
+      "soft_repair_policy": {
+        "enabled": true,
+        "max_attempts": 2,
+        "trigger_checks": [
+          "required_render_priority_missing",
+          "dual_read_missing",
+          "body_first_survivor",
+          "free_slot_constraint_violation"
+        ],
+        "target_slots": [
+          "subject_framing",
+          "composition",
+          "action",
+          "prop",
+          "body_framing"
+        ],
+        "strategy": "prefer_then_reselect",
+        "fail_open": false
+      },
+      "free_slot_constraints": {
+        "subject_framing": {
+          "deny_pool": [
+            "full_body_framing",
+            "three_quarter_body_framing",
+            "knee_up_framing"
+          ],
+          "prefer_ids": [
+            "head_and_shoulders_crop",
+            "upper_body_framing",
+            "close_up_face_crop",
+            "detail_crop_hands_accessories"
+          ]
+        },
+        "composition": {
+          "deny_pool": [
+            "phone_arm_length_selfie",
+            "mirror_selfie_composition",
+            "crouching_mirror_full_body",
+            "low_angle",
+            "low_angle_hero",
+            "concert_low_angle_crowd"
+          ],
+          "prefer_ids": [
+            "medium_close",
+            "frame_within_frame",
+            "beauty_tight_face_crop"
+          ]
+        },
+        "action": {
+          "deny_pool": [
+            "turning_back",
+            "over_shoulder_pose",
+            "slow_walk_turnaround",
+            "over_shoulder_floor_turn",
+            "reacting_to_pov_hand_tail_pull"
+          ]
+        },
+        "body_framing": {
+          "deny_pool": [
+            "over_shoulder_hip_line",
+            "clothed_bodyline_emphasis",
+            "legs_heels_framing"
+          ],
+          "prefer_ids": [
+            "hands_nails_accessory_closeup"
+          ]
+        }
+      }
     },
     "승무원": {
       "preset": "flight_attendant_service_portrait",
@@ -935,6 +1271,148 @@
         "specimen case, lab light, and observation-room context keep the role readable"
       ],
       "mixin_cue_budget": 2
+    },
+    "고스로리": {
+      "preset": "gothic_doll_cosplay_portrait",
+      "set": [
+        "subject=gothic_doll_cosplayer",
+        "costume_style=gothic_lolita_dress",
+        "makeup_style=gothic_dark_makeup",
+        "prop=ornate_gothic_perfume_bottle",
+        "location=gothic_glass_curio_cabinet"
+      ],
+      "soft_anchor_slots": [
+        "costume_style",
+        "makeup_style",
+        "prop",
+        "location"
+      ],
+      "soft_min_anchors": 1,
+      "anchor_terms": {
+        "costume_style": [
+          "gothic Lolita",
+          "gothic lolita dress",
+          "black lace dress"
+        ],
+        "makeup_style": [
+          "gothic makeup",
+          "dark makeup"
+        ],
+        "prop": [
+          "gothic perfume bottle",
+          "glass ornament"
+        ],
+        "location": [
+          "gothic curio cabinet",
+          "glass curio"
+        ]
+      },
+      "additional": [
+        "adult gothic-lolita fashion styling with black lace dress, doll-like stillness, and ornate glass curio details"
+      ],
+      "intent_axis": [
+        "adult gothic lolita dress portrait with black lace and gothic doll styling",
+        "gothic glass curio cabinet room with ornate perfume bottle and dark makeup"
+      ],
+      "likeness_mode": "inspired",
+      "anchor_pool": {
+        "costume_style": [
+          "gothic_lolita_dress",
+          "gothic_doll_lace_dress"
+        ],
+        "makeup_style": [
+          "gothic_dark_makeup"
+        ],
+        "prop": [
+          "ornate_gothic_perfume_bottle"
+        ],
+        "location": [
+          "gothic_glass_curio_cabinet"
+        ]
+      },
+      "critical_anchor_slots": [
+        "costume_style"
+      ],
+      "anchor_floor": {
+        "role": 1
+      },
+      "safety_requirements": [
+        "adult subject only; gothic-lolita dress remains fashion/costume styling, not lingerie or fetish framing"
+      ],
+      "salience_cues": [
+        "gothic Lolita silhouette, black lace dress, and gothic makeup stay readable"
+      ],
+      "mixin_cue_budget": 2,
+      "free_slot_constraints": {
+        "subject_framing": {
+          "deny_pool": [
+            "full_body_framing",
+            "three_quarter_body_framing",
+            "knee_up_framing"
+          ],
+          "prefer_ids": [
+            "head_and_shoulders_crop",
+            "upper_body_framing",
+            "detail_crop_hands_accessories",
+            "close_up_face_crop"
+          ]
+        },
+        "composition": {
+          "prefer_ids": [
+            "medium_close",
+            "frame_within_frame",
+            "beauty_tight_face_crop"
+          ],
+          "deny_pool": [
+            "wide_establishing",
+            "extreme_wide_environmental",
+            "crouching_mirror_full_body",
+            "phone_arm_length_selfie",
+            "mirror_selfie_composition",
+            "low_angle",
+            "low_angle_hero",
+            "concert_low_angle_crowd"
+          ]
+        },
+        "action": {
+          "deny_pool": [
+            "turning_back",
+            "over_shoulder_pose",
+            "slow_walk_turnaround",
+            "over_shoulder_floor_turn",
+            "reacting_to_pov_hand_tail_pull"
+          ]
+        },
+        "body_framing": {
+          "deny_pool": [
+            "over_shoulder_hip_line",
+            "clothed_bodyline_emphasis",
+            "legs_heels_framing"
+          ],
+          "prefer_ids": [
+            "hands_nails_accessory_closeup"
+          ]
+        }
+      },
+      "soft_repair_policy": {
+        "enabled": true,
+        "max_attempts": 2,
+        "trigger_checks": [
+          "required_render_priority_missing",
+          "dual_read_missing",
+          "body_first_survivor",
+          "free_slot_constraint_violation"
+        ],
+        "target_slots": [
+          "subject_framing",
+          "composition",
+          "action",
+          "prop",
+          "body_framing"
+        ],
+        "strategy": "prefer_then_reselect",
+        "fail_open": false
+      }
     }
   },
   "mixins": {
@@ -1677,7 +2155,15 @@
             "daylight refusal",
             "moon-pale pallor"
           ],
-          "min_hits": 1
+          "min_hits": 1,
+          "tier": "required",
+          "group": "vampire_subject_cue",
+          "target_slots": [
+            "prop",
+            "light_shape",
+            "location",
+            "composition"
+          ]
         }
       ],
       "anchor_variants": {
@@ -1710,6 +2196,12 @@
             "full_body_framing",
             "three_quarter_body_framing",
             "knee_up_framing"
+          ],
+          "prefer_ids": [
+            "head_and_shoulders_crop",
+            "upper_body_framing",
+            "close_up_face_crop",
+            "detail_crop_hands_accessories"
           ]
         },
         "composition": {
@@ -1717,7 +2209,36 @@
             "frame_within_frame",
             "reflection",
             "medium_close",
-            "broken_glass_fragments_frame"
+            "broken_glass_fragments_frame",
+            "beauty_tight_face_crop",
+            "over_the_shoulder_dialogue"
+          ],
+          "deny_pool": [
+            "phone_arm_length_selfie",
+            "mirror_selfie_composition",
+            "crouching_mirror_full_body",
+            "low_angle",
+            "low_angle_hero",
+            "concert_low_angle_crowd"
+          ]
+        },
+        "action": {
+          "deny_pool": [
+            "turning_back",
+            "over_shoulder_pose",
+            "slow_walk_turnaround",
+            "over_shoulder_floor_turn",
+            "reacting_to_pov_hand_tail_pull"
+          ]
+        },
+        "body_framing": {
+          "deny_pool": [
+            "over_shoulder_hip_line",
+            "clothed_bodyline_emphasis",
+            "legs_heels_framing"
+          ],
+          "prefer_ids": [
+            "hands_nails_accessory_closeup"
           ]
         }
       },
@@ -1740,6 +2261,34 @@
             "wings on back"
           ]
         }
+      ],
+      "soft_repair_policy": {
+        "enabled": true,
+        "max_attempts": 2,
+        "trigger_checks": [
+          "required_render_priority_missing",
+          "dual_read_missing",
+          "body_first_survivor",
+          "free_slot_constraint_violation"
+        ],
+        "target_slots": [
+          "subject_framing",
+          "composition",
+          "action",
+          "prop",
+          "body_framing"
+        ],
+        "strategy": "prefer_then_reselect",
+        "fail_open": false
+      },
+      "safety_negative_floor": [
+        "visible blood",
+        "fang bite",
+        "bite wound",
+        "feeding scene",
+        "victim",
+        "gore",
+        "physical wings"
       ]
     },
     "악마": {
@@ -2845,7 +3394,14 @@
             "wing-shaped shadow",
             "soft wing-shaped shadow"
           ],
-          "min_hits": 1
+          "min_hits": 1,
+          "tier": "required",
+          "group": "angel_visible_trace",
+          "target_slots": [
+            "prop",
+            "light_shape",
+            "composition"
+          ]
         }
       ],
       "anchor_variants": {
@@ -2910,7 +3466,82 @@
             "giant fantasy wings"
           ]
         }
-      ]
+      ],
+      "soft_repair_policy": {
+        "enabled": true,
+        "max_attempts": 2,
+        "trigger_checks": [
+          "required_render_priority_missing",
+          "dual_read_missing",
+          "body_first_survivor",
+          "free_slot_constraint_violation"
+        ],
+        "target_slots": [
+          "subject_framing",
+          "composition",
+          "action",
+          "prop",
+          "body_framing"
+        ],
+        "strategy": "prefer_then_reselect",
+        "fail_open": false
+      },
+      "safety_negative_floor": [
+        "tail",
+        "demon tail",
+        "wing costume backpack",
+        "body-first angel idol costume"
+      ],
+      "free_slot_constraints": {
+        "subject_framing": {
+          "deny_pool": [
+            "full_body_framing",
+            "three_quarter_body_framing",
+            "knee_up_framing"
+          ],
+          "prefer_ids": [
+            "head_and_shoulders_crop",
+            "upper_body_framing",
+            "close_up_face_crop",
+            "detail_crop_hands_accessories"
+          ]
+        },
+        "action": {
+          "deny_pool": [
+            "turning_back",
+            "over_shoulder_pose",
+            "slow_walk_turnaround",
+            "over_shoulder_floor_turn",
+            "reacting_to_pov_hand_tail_pull"
+          ]
+        },
+        "composition": {
+          "deny_pool": [
+            "phone_arm_length_selfie",
+            "mirror_selfie_composition",
+            "crouching_mirror_full_body",
+            "low_angle",
+            "low_angle_hero",
+            "concert_low_angle_crowd"
+          ],
+          "prefer_ids": [
+            "medium_close",
+            "frame_within_frame",
+            "beauty_tight_face_crop",
+            "over_the_shoulder_dialogue"
+          ]
+        },
+        "body_framing": {
+          "deny_pool": [
+            "over_shoulder_hip_line",
+            "clothed_bodyline_emphasis",
+            "legs_heels_framing"
+          ],
+          "prefer_ids": [
+            "hands_nails_accessory_closeup"
+          ]
+        }
+      }
     },
     "팜므파탈": {
       "preset": "compact_cinematic_prop_portrait",
@@ -3585,7 +4216,15 @@
             "controlled gaze",
             "information-control"
           ],
-          "min_hits": 1
+          "min_hits": 1,
+          "tier": "required",
+          "group": "femme_fatale_leverage",
+          "target_slots": [
+            "prop",
+            "composition",
+            "expression",
+            "action"
+          ]
         }
       ],
       "anchor_variants": {
@@ -3598,6 +4237,81 @@
             "security_access_card_prop"
           ],
           "select": "seed_rotate"
+        }
+      },
+      "soft_repair_policy": {
+        "enabled": true,
+        "max_attempts": 2,
+        "trigger_checks": [
+          "required_render_priority_missing",
+          "dual_read_missing",
+          "body_first_survivor",
+          "free_slot_constraint_violation"
+        ],
+        "target_slots": [
+          "subject_framing",
+          "composition",
+          "action",
+          "prop",
+          "body_framing"
+        ],
+        "strategy": "prefer_then_reselect",
+        "fail_open": false
+      },
+      "safety_negative_floor": [
+        "pin-up pose",
+        "striptease framing",
+        "body-first authority pose",
+        "low-angle body dominance"
+      ],
+      "free_slot_constraints": {
+        "subject_framing": {
+          "deny_pool": [
+            "full_body_framing",
+            "three_quarter_body_framing",
+            "knee_up_framing"
+          ],
+          "prefer_ids": [
+            "head_and_shoulders_crop",
+            "upper_body_framing",
+            "close_up_face_crop",
+            "detail_crop_hands_accessories"
+          ]
+        },
+        "action": {
+          "deny_pool": [
+            "turning_back",
+            "over_shoulder_pose",
+            "slow_walk_turnaround",
+            "over_shoulder_floor_turn",
+            "reacting_to_pov_hand_tail_pull"
+          ]
+        },
+        "composition": {
+          "deny_pool": [
+            "phone_arm_length_selfie",
+            "mirror_selfie_composition",
+            "crouching_mirror_full_body",
+            "low_angle",
+            "low_angle_hero",
+            "concert_low_angle_crowd"
+          ],
+          "prefer_ids": [
+            "medium_close",
+            "frame_within_frame",
+            "beauty_tight_face_crop",
+            "over_the_shoulder_dialogue"
+          ]
+        },
+        "body_framing": {
+          "deny_pool": [
+            "over_shoulder_hip_line",
+            "clothed_bodyline_emphasis",
+            "legs_heels_framing"
+          ],
+          "prefer_ids": [
+            "hands_nails_accessory_closeup"
+          ]
         }
       }
     },
@@ -4211,7 +4925,15 @@
             "compact mirror",
             "fragile pastel"
           ],
-          "min_hits": 1
+          "min_hits": 1,
+          "tier": "required",
+          "group": "menhera_subject_adjacent_cue",
+          "target_slots": [
+            "expression",
+            "prop",
+            "composition",
+            "light_type"
+          ]
         }
       ],
       "free_slot_constraints": {
@@ -4234,6 +4956,12 @@
             "low_angle",
             "low_angle_hero",
             "concert_low_angle_crowd"
+          ],
+          "prefer_ids": [
+            "medium_close",
+            "frame_within_frame",
+            "beauty_tight_face_crop",
+            "over_the_shoulder_dialogue"
           ]
         },
         "subject_framing": {
@@ -4248,6 +4976,12 @@
             "three_quarter_body_framing",
             "knee_up_framing",
             "waist_up_framing"
+          ],
+          "prefer_ids": [
+            "head_and_shoulders_crop",
+            "upper_body_framing",
+            "close_up_face_crop",
+            "detail_crop_hands_accessories"
           ]
         },
         "camera_direction": {
@@ -4256,6 +4990,25 @@
             "extreme_low_angle_under_subject",
             "practice_mirror_wide_direction",
             "arm_length_selfie_direction"
+          ]
+        },
+        "action": {
+          "deny_pool": [
+            "turning_back",
+            "over_shoulder_pose",
+            "slow_walk_turnaround",
+            "over_shoulder_floor_turn",
+            "reacting_to_pov_hand_tail_pull"
+          ]
+        },
+        "body_framing": {
+          "deny_pool": [
+            "over_shoulder_hip_line",
+            "clothed_bodyline_emphasis",
+            "legs_heels_framing"
+          ],
+          "prefer_ids": [
+            "hands_nails_accessory_closeup"
           ]
         }
       },
@@ -4288,7 +5041,34 @@
           "mirror",
           "phone"
         ]
-      }
+      },
+      "soft_repair_policy": {
+        "enabled": true,
+        "max_attempts": 2,
+        "trigger_checks": [
+          "required_render_priority_missing",
+          "dual_read_missing",
+          "body_first_survivor",
+          "free_slot_constraint_violation"
+        ],
+        "target_slots": [
+          "subject_framing",
+          "composition",
+          "action",
+          "prop",
+          "body_framing"
+        ],
+        "strategy": "prefer_then_reselect",
+        "fail_open": false
+      },
+      "safety_negative_floor": [
+        "self-harm",
+        "pills",
+        "wounds",
+        "medical emergency",
+        "erotic distress",
+        "sexualized vulnerability"
+      ]
     },
     "츤데레": {
       "preset": "candid_iphone_portrait",
@@ -5554,29 +6334,67 @@
       "render_priority_terms": [
         {
           "id": "tsundere_caring_object",
+          "group": "tsundere_caring_object",
+          "tier": "required",
           "terms": [
             "folded note",
             "wrapped gift",
             "lunchbox",
             "handkerchief",
-            "charm"
+            "charm",
+            "care note",
+            "small token"
           ],
-          "min_hits": 1
+          "min_hits": 1,
+          "target_slots": [
+            "prop",
+            "action"
+          ]
         },
         {
-          "id": "tsundere_contradiction",
+          "id": "tsundere_active_denial",
+          "group": "tsundere_active_denial",
+          "tier": "required",
+          "terms": [
+            "huffed",
+            "pursed",
+            "suppressed pout",
+            "raised chin",
+            "brisk",
+            "dismissive",
+            "denying",
+            "scold",
+            "reluctant",
+            "offhand"
+          ],
+          "min_hits": 1,
+          "target_slots": [
+            "expression",
+            "action",
+            "composition"
+          ]
+        },
+        {
+          "id": "tsundere_side_eye_support",
+          "group": "tsundere_passive_expression",
+          "tier": "support",
           "terms": [
             "skeptical side-eye",
             "pensive look away",
-            "reluctant",
-            "pout",
-            "denying"
+            "averted face",
+            "guarded side glance"
           ],
-          "min_hits": 1
+          "min_hits": 1,
+          "target_slots": [
+            "expression",
+            "composition"
+          ]
         }
       ],
       "anchor_group_floor": {
-        "mixin_primary": 1
+        "mixin_primary": 1,
+        "tsundere_caring_object": 1,
+        "tsundere_active_denial": 1
       },
       "soft_anchor_slots": [
         "expression",
@@ -5584,7 +6402,12 @@
       ],
       "anchor_groups": {
         "expression": [
-          "mixin_primary"
+          "mixin_primary",
+          "tsundere_active_denial"
+        ],
+        "prop": [
+          "mixin_primary",
+          "tsundere_caring_object"
         ]
       },
       "free_slot_constraints": {
@@ -5600,7 +6423,16 @@
             "mirror_selfie_composition",
             "crouching_mirror_full_body",
             "wide_establishing",
-            "extreme_wide_environmental"
+            "extreme_wide_environmental",
+            "low_angle",
+            "low_angle_hero",
+            "concert_low_angle_crowd"
+          ],
+          "prefer_ids": [
+            "medium_close",
+            "frame_within_frame",
+            "beauty_tight_face_crop",
+            "over_the_shoulder_dialogue"
           ]
         },
         "subject_framing": {
@@ -5613,6 +6445,31 @@
             "full_body_framing",
             "three_quarter_body_framing",
             "knee_up_framing"
+          ],
+          "prefer_ids": [
+            "head_and_shoulders_crop",
+            "upper_body_framing",
+            "close_up_face_crop",
+            "detail_crop_hands_accessories"
+          ]
+        },
+        "action": {
+          "deny_pool": [
+            "turning_back",
+            "over_shoulder_pose",
+            "slow_walk_turnaround",
+            "over_shoulder_floor_turn",
+            "reacting_to_pov_hand_tail_pull"
+          ]
+        },
+        "body_framing": {
+          "deny_pool": [
+            "over_shoulder_hip_line",
+            "clothed_bodyline_emphasis",
+            "legs_heels_framing"
+          ],
+          "prefer_ids": [
+            "hands_nails_accessory_closeup"
           ]
         }
       },
@@ -5644,7 +6501,32 @@
           "dialogue",
           "portrait"
         ]
-      }
+      },
+      "soft_repair_policy": {
+        "enabled": true,
+        "max_attempts": 2,
+        "trigger_checks": [
+          "required_render_priority_missing",
+          "dual_read_missing",
+          "body_first_survivor",
+          "free_slot_constraint_violation"
+        ],
+        "target_slots": [
+          "prop",
+          "expression",
+          "action",
+          "subject_framing",
+          "composition"
+        ],
+        "strategy": "prefer_then_reselect",
+        "fail_open": false
+      },
+      "safety_negative_floor": [
+        "surveillance evidence",
+        "photo wall",
+        "sultry authority pose",
+        "body-first framing"
+      ]
     },
     "얀데레": {
       "preset": "compact_cinematic_prop_portrait",
@@ -7153,7 +8035,14 @@
             "chart evidence",
             "possession evidence"
           ],
-          "min_hits": 1
+          "min_hits": 1,
+          "tier": "required",
+          "group": "yandere_records_evidence",
+          "target_slots": [
+            "prop",
+            "composition",
+            "action"
+          ]
         }
       ],
       "anchor_variants": {
@@ -7190,6 +8079,12 @@
             "low_angle",
             "low_angle_hero",
             "concert_low_angle_crowd"
+          ],
+          "prefer_ids": [
+            "medium_close",
+            "frame_within_frame",
+            "beauty_tight_face_crop",
+            "over_the_shoulder_dialogue"
           ]
         },
         "subject_framing": {
@@ -7204,6 +8099,12 @@
             "three_quarter_body_framing",
             "knee_up_framing",
             "waist_up_framing"
+          ],
+          "prefer_ids": [
+            "head_and_shoulders_crop",
+            "upper_body_framing",
+            "close_up_face_crop",
+            "detail_crop_hands_accessories"
           ]
         },
         "camera_direction": {
@@ -7212,6 +8113,25 @@
             "extreme_low_angle_under_subject",
             "practice_mirror_wide_direction",
             "arm_length_selfie_direction"
+          ]
+        },
+        "action": {
+          "deny_pool": [
+            "turning_back",
+            "over_shoulder_pose",
+            "slow_walk_turnaround",
+            "over_shoulder_floor_turn",
+            "reacting_to_pov_hand_tail_pull"
+          ]
+        },
+        "body_framing": {
+          "deny_pool": [
+            "over_shoulder_hip_line",
+            "clothed_bodyline_emphasis",
+            "legs_heels_framing"
+          ],
+          "prefer_ids": [
+            "hands_nails_accessory_closeup"
           ]
         }
       },
@@ -7231,15 +8151,52 @@
         "discouraged_axes": [
           "selfie",
           "body",
-          "glamour"
+          "glamour",
+          "hospital horror"
         ],
         "preferred_axes": [
           "close",
           "surveillance",
           "hospital",
-          "cinematic"
+          "cinematic",
+          "records evidence",
+          "surveillance evidence",
+          "face and hands"
+        ],
+        "discouraged_presets": [
+          "adult_boundary_social_stress_test",
+          "adult_fetish_fashion_editorial",
+          "clean_mirror_selfie_snapshot"
         ]
-      }
+      },
+      "soft_repair_policy": {
+        "enabled": true,
+        "max_attempts": 2,
+        "trigger_checks": [
+          "required_render_priority_missing",
+          "dual_read_missing",
+          "body_first_survivor",
+          "free_slot_constraint_violation"
+        ],
+        "target_slots": [
+          "subject_framing",
+          "composition",
+          "action",
+          "prop",
+          "body_framing"
+        ],
+        "strategy": "prefer_then_reselect",
+        "fail_open": false
+      },
+      "safety_negative_floor": [
+        "weapon threat",
+        "visible victim",
+        "captivity scene",
+        "stalking crime scene",
+        "violent restraint",
+        "blood",
+        "injury"
+      ]
     },
     "암살자": {
       "preset": "compact_cinematic_prop_portrait",
@@ -8217,19 +9174,32 @@
         "mixin": 2
       },
       "anchor_group_floor": {
-        "mixin_primary": 1
+        "mixin_primary": 1,
+        "robot_deep_structural": 1
       },
       "anchor_groups": {
         "prop": [
-          "mixin_primary"
+          "mixin_primary",
+          "robot_deep_structural"
         ],
         "surface_material": [
-          "mixin_primary"
+          "mixin_primary",
+          "robot_deep_structural"
+        ],
+        "composition": [
+          "mixin_primary",
+          "robot_deep_structural"
+        ],
+        "texture": [
+          "mixin_primary",
+          "robot_deep_structural"
         ]
       },
       "render_priority_terms": [
         {
           "id": "robot_visible_proof",
+          "group": "robot_visible_proof",
+          "tier": "required",
           "terms": [
             "exposed actuator",
             "charging cable",
@@ -8240,7 +9210,41 @@
             "robot casing",
             "synthetic skin"
           ],
-          "min_hits": 2
+          "min_hits": 2,
+          "target_slots": [
+            "subject",
+            "surface_material",
+            "prop",
+            "action",
+            "expression",
+            "composition",
+            "light_shape",
+            "texture"
+          ]
+        },
+        {
+          "id": "robot_deep_structural",
+          "group": "robot_deep_structural",
+          "tier": "required",
+          "terms": [
+            "exposed actuator",
+            "actuator port",
+            "charging cable",
+            "diagnostic readout",
+            "robot casing",
+            "exposed joint",
+            "segmented limb",
+            "transparent shell",
+            "serial plate",
+            "dock contacts"
+          ],
+          "min_hits": 1,
+          "target_slots": [
+            "prop",
+            "composition",
+            "surface_material",
+            "texture"
+          ]
         }
       ],
       "render_directives": [
@@ -8522,6 +9526,37 @@
           ]
         },
         {
+          "id": "gothloli_curio_automaton",
+          "weight": 7,
+          "roles": [
+            "고스로리"
+          ],
+          "preset": "gothic_doll_cosplay_portrait",
+          "set": {
+            "subject": "ceramic_automaton_figure",
+            "surface_material": "ceramic_porcelain_casing_surface",
+            "prop": [
+              "ornate_gothic_perfume_bottle",
+              "exposed_actuator_port_prop",
+              "diagnostic_readout_prop"
+            ],
+            "action": "running_diagnostics",
+            "expression": "optical_iris_stare",
+            "composition": "exposed_joint_detail_crop",
+            "light_shape": "scan_grid_projection",
+            "texture": "brushed_alloy_microscratch",
+            "location": "gothic_glass_curio_cabinet",
+            "mood": "uncanny"
+          },
+          "additional": [
+            "the gothic-lolita dress and glass curio cabinet remain readable, while the doll-like subject is visibly a made automaton through porcelain casing, optical iris, exposed actuator port, diagnostic readout, and a clean joint closeup",
+            "robot proof must be structural and near the face or hands, not only decorative lace, jewelry, makeup, or a small skin patch"
+          ],
+          "intent_axis": [
+            "gothic lolita automaton in a glass curio cabinet, black lace dress preserved with porcelain casing, optical iris, exposed actuator, and diagnostic proof"
+          ]
+        },
+        {
           "id": "standalone_nonhumanoid_machine",
           "weight": 1,
           "preset": "nonhumanoid_machine_subject",
@@ -8617,6 +9652,63 @@
             "biohybrid robot organism with cultured tissue, machine fibers, lab diagnostics, and artificial life ambiguity"
           ]
         }
+      ],
+      "soft_repair_policy": {
+        "enabled": true,
+        "max_attempts": 2,
+        "trigger_checks": [
+          "required_render_priority_missing",
+          "dual_read_missing",
+          "body_first_survivor",
+          "free_slot_constraint_violation"
+        ],
+        "target_slots": [
+          "prop",
+          "composition",
+          "surface_material",
+          "subject_framing",
+          "action",
+          "light_shape"
+        ],
+        "strategy": "prefer_then_reselect",
+        "fail_open": false
+      },
+      "preset_affinity": {
+        "preferred_presets": [
+          "service_android_role_unit",
+          "maintenance_charging_bay",
+          "compact_cinematic_prop_portrait"
+        ],
+        "discouraged_presets": [
+          "adult_boundary_social_stress_test",
+          "adult_fetish_fashion_editorial",
+          "clean_mirror_selfie_snapshot",
+          "candid_iphone_portrait"
+        ],
+        "preferred_axes": [
+          "robot",
+          "android",
+          "diagnostic",
+          "actuator",
+          "charging",
+          "assembly",
+          "made body"
+        ],
+        "discouraged_axes": [
+          "glamour",
+          "selfie",
+          "ordinary cosplay",
+          "doll-only",
+          "lifestyle"
+        ]
+      },
+      "safety_negative_floor": [
+        "wounds",
+        "blood",
+        "gore",
+        "torn flesh",
+        "body horror",
+        "human injury"
       ]
     },
     "구미호": {
@@ -9340,7 +10432,11 @@
     "에스퍼": "초능력자",
     "사이킥": "초능력자",
     "마도사": "마법사",
-    "위치": "마녀"
+    "위치": "마녀",
+    "고딕로리": "고스로리",
+    "고스 로리": "고스로리",
+    "고딕 로리타": "고스로리",
+    "고스로리룩": "고스로리"
   },
   "mixin_diversity_policy": {
     "암살자": {
