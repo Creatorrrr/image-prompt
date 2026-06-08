@@ -100,9 +100,12 @@ Concept mode defaults:
 Expanded concept coverage:
 
 - Professional and uniform roles now include `승무원`, `소방관`, `보안요원`, `요리사`, `군장교`, `학생`, `무녀`, `기록가`, and `연구원` in addition to the older role recipes. Pass the full short phrase as one `--concept`, for example `카리나 무녀 구미호` or `윈터 연구원 데이터망령`, so the resolver can keep the role anchor and apply the mixin on top.
+- Additional role recipes now include `교사`, `의사`, `형사`, `탐정`, `비서`, `발레리나`, `댄서`, `바텐더`, `사진작가`, `기사`, `퇴마사`, `음양사`, `아이돌`, `가수`, `우주비행사`, `사제`, `수도자`, `마술사`, `큐레이터`, `재단사`, `플로리스트`, `기상캐스터`, `아나운서`, and `호텔리어`. These roles should preserve readable workplace, costume, action, and prop anchors even when a strong archetype mixin is layered on top.
 - New folklore and speculative mixins include `구미호`, `원귀`, `인어`, `마녀`, `선녀`, `도깨비`, `데이터망령`, `환경침식`, `외계인`, `초능력자`, `마법사`, `수인`, `용인`, `사신`, `광대`, `리빙돌`, `해적`, and `여신`. These are visible-anchor recipes, not vibe words: they should add face/hand/prop/location evidence such as fox-fire, talismans, glitching screens, UI projection, moss, archive dust, levitating objects, star maps, animal traits, scale skin, hourglasses, greasepaint, porcelain joints, ship-deck objects, or sacred backlight.
 - New personality-register mixins include `청순`, `쿨뷰티`, `도도`, `발랄`, `연상`, `보이시`, `걸크러시`, `몽환`, and `터프`. Use them to steer expression, makeup, posture, wardrobe, mood, and documentary surface detail without replacing the main role.
+- Additional relationship, temperament, divine, and mythic mixins include `쿨데레`, `단데레`, `소악마`, `첫사랑`, `여왕`, `성녀`, `늑대인간`, `요정`, `정령`, `드래곤족`, and `유령신부`. These use anchor families, forbidden slot values, and safety floors so the prompt has visible evidence while avoiding accidental role replacement, sexualized framing, or graphic-horror drift.
 - Additional preset/tag families cover seasonal events, symbolic destination locations, era worlds, dynamic motion, digital glitch entities, professional observation spaces, environmental transformation, manual labor and trades, sports action, underwater submersion, technical forensics, 7080 Korean retro, scientific imaging, live music, working-animal partnership, architectural geometry, maritime labor, subculture scenes, generational documentary, night-sky long exposure, and mythic archetypes.
+- New psychological, evidence-room, celestial, ceremonial, fairytale, relationship-POV, dream, folk-threshold, noir-investigation, backstage, and memory-world presets are intended for concept-diverse outputs. Prefer one dominant interpretive axis per prompt, then add two to four concrete anchors such as pinboards, birdcage shadows, stained glass, threshold light, shared umbrellas, ritual objects, or case files.
 
 Safety and salience rules for the expanded concepts:
 
@@ -113,6 +116,9 @@ Safety and salience rules for the expanded concepts:
 - `환경침식` is symbolic environmental transformation: moss, paper dust, crystals, petals, or reclaimed rooms. Do not turn it into body horror, decay wounds, infection, or gore.
 - `수인`, `용인`, `사신`, `광대`, `리빙돌`, `해적`, and `여신` should be visible through non-graphic, near-field anchors: ears/tail plus fur texture, horns plus scale skin, hourglass and shadowed face, greasepaint contradiction, porcelain joints, salt-weathered ship props, or radiant disc/metallic gold light. Do not rely on prose-only archetype labels.
 - `걸크러시`, `몽환`, and `터프` are persona registers, not costume replacements. Keep role identity intact and express the register through stride, gaze, wardrobe layers, backlight, halation, workwear, weathering, or hard documentary light.
+- `쿨데레`, `단데레`, `소악마`, and `첫사랑` are relationship or temperament registers. Make them legible through gaze, distance, object exchange, classroom or memory props, crossed arms, averted looks, or small strategic props; do not turn them into generic glamour styling.
+- Divine or sacred mixins such as `성녀`, `여신`, `사제`, and `수도자` should use light, posture, icon panels, votive candles, modest costume language, and ritual distance. Avoid parody, sacrilege, sacrifice, gore, or sexualized religious costume cues.
+- Mythic body traits such as `늑대인간`, `요정`, `정령`, `드래곤족`, and `유령신부` need concrete but non-graphic evidence: silhouette, ears, scale texture, translucent glow, wing-like fabric, withered bouquet, veil, or other near-field material traces. Avoid body horror, wounds, or monster-attack framing unless the user explicitly requests a safe non-graphic horror variant.
 
 List tag ids for a slot:
 

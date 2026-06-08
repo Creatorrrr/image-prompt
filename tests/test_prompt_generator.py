@@ -5009,6 +5009,12 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "living_doll_lace_joint_costume",
                 "dragonkin_scale_robe_costume",
                 "beastkin_tailored_folk_costume",
+                "detective_trench_coat_costume",
+                "secretary_office_uniform",
+                "ballet_rehearsal_wrap_costume",
+                "knight_armor_cloak_costume",
+                "saint_modest_robe_costume",
+                "ghost_bride_veil_dress",
             },
             "prop": {
                 "shaman_bells_prop",
@@ -5032,6 +5038,14 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "stage_reservation_log_prop",
                 "chart_records_board_prop",
                 "cctv_monitor_stack_prop",
+                "obsession_photo_wall_prop",
+                "red_string_pinboard_prop",
+                "two_coffee_cups_prop",
+                "returned_lost_item_prop",
+                "votive_candle_row_prop",
+                "evidence_corkboard_prop",
+                "case_file_folder_prop",
+                "dragon_orb_prop",
             },
             "location": {
                 "airplane_cabin_aisle",
@@ -5053,6 +5067,11 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "temple_gilded_hall",
                 "circus_backstage_tent",
                 "sailing_ship_deck",
+                "overloaded_evidence_bedroom",
+                "stained_glass_chapel",
+                "detective_office_caseboard",
+                "dragon_court_hall",
+                "ghost_bride_window_room",
             },
             "texture": {
                 "pixel_drift_edges",
@@ -5088,11 +5107,35 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "uv_blacklight",
                 "temple_disc_backlight",
                 "bright_window_silhouette_light",
+                "phone_screen_face_glow",
+                "bioluminescent_grotto_light",
             },
             "surface_material": {
                 "porcelain_doll_joint_surface",
                 "salt_weathered_leather_surface",
                 "gold_leaf_skin_surface",
+                "dragon_scale_surface",
+                "translucent_spirit_glow_surface",
+            },
+            "expression": {
+                "dissociated_blank_calm",
+                "huffy_pout",
+                "flustered_glance_away",
+                "knowing_lidded_gaze",
+                "quiet_yearning",
+                "predatory_calm_lidded",
+            },
+            "composition": {
+                "shrine_wall_overload_frame",
+                "birdcage_bar_frame",
+                "halo_backlight_centered",
+                "caseboard_over_shoulder_frame",
+            },
+            "light_shape": {
+                "god_ray_volumetric_shaft",
+                "stained_glass_color_cast",
+                "halo_aura_bloom",
+                "birdcage_bar_shadows",
             },
         }
         for slot, ids in expected_slot_ids.items():
@@ -5112,6 +5155,16 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "무녀",
                 "기록가",
                 "연구원",
+                "교사",
+                "의사",
+                "형사",
+                "탐정",
+                "비서",
+                "발레리나",
+                "아이돌",
+                "사제",
+                "수도자",
+                "호텔리어",
             }.issubset(recipes["roles"])
         )
         self.assertTrue(
@@ -5143,13 +5196,30 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "걸크러시",
                 "몽환",
                 "터프",
+                "쿨데레",
+                "단데레",
+                "소악마",
+                "첫사랑",
+                "여왕",
+                "성녀",
+                "늑대인간",
+                "요정",
+                "정령",
+                "드래곤족",
+                "유령신부",
             }.issubset(recipes["mixins"])
         )
         self.assertEqual(recipes["aliases"]["사서"], "기록가")
         self.assertEqual(recipes["aliases"]["글리치"], "데이터망령")
-        self.assertEqual(recipes["aliases"]["늑대인간"], "수인")
+        self.assertEqual(recipes["aliases"]["늑대인간"], "늑대인간")
         self.assertEqual(recipes["aliases"]["걸크"], "걸크러시")
         self.assertEqual(recipes["aliases"]["저승사자"], "사신")
+        self.assertEqual(recipes["aliases"]["쿠데레"], "쿨데레")
+        self.assertEqual(recipes["aliases"]["선생님"], "교사")
+        self.assertIn("concept_safety", recipes)
+        self.assertIn("dark_non_graphic", recipes["concept_safety"])
+        self.assertIn("anchor_families", recipes["mixins"]["성녀"])
+        self.assertIn("forbidden_slot_values", recipes["mixins"]["소악마"])
 
         robot_bundle_ids = {bundle["id"] for bundle in recipes["mixins"]["로봇"]["bundles"]}
         self.assertTrue(
@@ -5252,6 +5322,61 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                     "prop": {"serial_spec_plate_prop", "diagnostic_readout_prop"},
                     "composition": {"exposed_joint_detail_crop"},
                     "light_shape": {"status_led_array_pattern"},
+                },
+            ),
+            (
+                "카리나 교사 첫사랑",
+                "교사",
+                "첫사랑",
+                "korea_2000s_classroom_nostalgia",
+                {
+                    "subject": {"teacher_role_model"},
+                    "costume_style": {"teacher_blazer_uniform"},
+                    "location": {"classroom_interior"},
+                    "prop": {"blackboard_chalk_prop", "pressed_flower_bookmark_token"},
+                    "expression": {"quiet_yearning"},
+                    "mood": {"bittersweet_nostalgia"},
+                },
+            ),
+            (
+                "윈터 사제 성녀",
+                "사제",
+                "성녀",
+                "stained_glass_cathedral_portrait",
+                {
+                    "subject": {"priest_role_model", "saint_role_model"},
+                    "costume_style": {"priest_black_cassock_costume", "saint_modest_robe_costume"},
+                    "location": {"cathedral_nave_interior"},
+                    "prop": {"votive_candle_row_prop"},
+                    "light_shape": {"stained_glass_color_cast"},
+                    "mood": {"sacred_stillness"},
+                },
+            ),
+            (
+                "닝닝 형사 소악마",
+                "형사",
+                "소악마",
+                "detective_caseboard_noir_portrait",
+                {
+                    "subject": {"detective_role_model"},
+                    "costume_style": {"detective_trench_coat_costume"},
+                    "location": {"detective_office_caseboard"},
+                    "prop": {"evidence_corkboard_prop", "chess_endgame_board_prop"},
+                    "expression": {"playful_smirk"},
+                    "mood": {"ominous_seduction"},
+                },
+            ),
+            (
+                "지젤 기사 드래곤족",
+                "기사",
+                "드래곤족",
+                "cinematic_fantasy_portrait",
+                {
+                    "subject": {"knight_role_model", "dragon_lineage_subject"},
+                    "costume_style": {"knight_armor_cloak_costume", "dragon_scale_court_costume"},
+                    "location": {"castle_armory_hall"},
+                    "prop": {"heraldic_shield_prop", "dragon_orb_prop"},
+                    "surface_material": {"dragon_scale_surface"},
                 },
             ),
             (

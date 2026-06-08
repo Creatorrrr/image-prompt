@@ -604,6 +604,47 @@ def validate_recipe_slot_list(label: str, field: str, value: Any, by_slot: dict[
             errors.append(f"{label}.{field}: unknown slot {slot}")
 
 
+def validate_anchor_families(label: str, recipe: dict[str, Any], by_slot: dict[str, set[str]], errors: list[str]) -> None:
+    families = recipe.get("anchor_families") or {}
+    if families and not isinstance(families, dict):
+        errors.append(f"{label}.anchor_families: must be an object")
+        return
+    if not isinstance(families, dict):
+        return
+    for family, spec in families.items():
+        family_label = f"{label}.anchor_families.{family}"
+        if not str(family).strip():
+            errors.append(f"{label}.anchor_families: empty family name")
+        if not isinstance(spec, dict):
+            errors.append(f"{family_label}: must be an object")
+            continue
+        slots = normalize_list(spec.get("slots"))
+        terms = normalize_list(spec.get("terms"))
+        if not slots and not terms:
+            errors.append(f"{family_label}: slots or terms are required")
+        for slot in slots:
+            if slot not in by_slot:
+                errors.append(f"{family_label}.slots: unknown slot {slot}")
+        if "min_hits" in spec and (not isinstance(spec.get("min_hits"), int) or spec.get("min_hits") < 1):
+            errors.append(f"{family_label}.min_hits: must be a positive integer")
+
+
+def validate_forbidden_slot_values(label: str, recipe: dict[str, Any], by_slot: dict[str, set[str]], errors: list[str]) -> None:
+    forbidden = recipe.get("forbidden_slot_values") or {}
+    if forbidden and not isinstance(forbidden, dict):
+        errors.append(f"{label}.forbidden_slot_values: must be an object")
+        return
+    if not isinstance(forbidden, dict):
+        return
+    for slot, ids in forbidden.items():
+        if slot not in by_slot:
+            errors.append(f"{label}.forbidden_slot_values: unknown slot {slot}")
+            continue
+        for entry_id in normalize_list(ids):
+            if entry_id not in by_slot[slot]:
+                errors.append(f"{label}.forbidden_slot_values.{slot}: unknown id {entry_id}")
+
+
 def validate_conditional_additional(label: str, recipe: dict[str, Any], by_slot: dict[str, set[str]], errors: list[str]) -> None:
     rules = recipe.get("conditional_additional")
     if rules is None:
@@ -635,12 +676,16 @@ def validate_concept_recipe_entry(
     preset = str(recipe.get("preset") or "")
     if preset and preset not in preset_ids:
         errors.append(f"{label}.preset: unknown preset {preset}")
+    if "register" in recipe and not isinstance(recipe.get("register"), bool):
+        errors.append(f"{label}.register: must be a boolean")
     validate_recipe_set(label, recipe.get("set"), by_slot, errors)
     validate_recipe_slot_list(label, "override_slots", recipe.get("override_slots"), by_slot, errors)
     validate_recipe_slot_list(label, "bundle_override_slots", recipe.get("bundle_override_slots"), by_slot, errors)
     validate_recipe_slot_list(label, "soft_anchor_slots", recipe.get("soft_anchor_slots"), by_slot, errors)
     validate_recipe_slot_list(label, "soft_free_slots", recipe.get("soft_free_slots"), by_slot, errors)
     validate_recipe_slot_list(label, "critical_anchor_slots", recipe.get("critical_anchor_slots"), by_slot, errors)
+    validate_anchor_families(label, recipe, by_slot, errors)
+    validate_forbidden_slot_values(label, recipe, by_slot, errors)
     anchor_pool = recipe.get("anchor_pool") or {}
     if anchor_pool and not isinstance(anchor_pool, dict):
         errors.append(f"{label}.anchor_pool: must be an object")
@@ -909,6 +954,20 @@ def validate_concept_recipes(path: Path, data: dict[str, Any], errors: list[str]
     validate_recipe_slot_list("concept_recipes", "bundle_override_slots", recipes.get("bundle_override_slots"), by_slot, errors)
     validate_recipe_slot_list("concept_recipes", "override_slots", recipes.get("override_slots"), by_slot, errors)
 
+    concept_safety = recipes.get("concept_safety", {}) or {}
+    if concept_safety and not isinstance(concept_safety, dict):
+        errors.append("concept_recipes.concept_safety: must be an object")
+    elif isinstance(concept_safety, dict):
+        for pool, terms in concept_safety.items():
+            if not str(pool).strip():
+                errors.append("concept_recipes.concept_safety: empty pool name")
+            normalized_terms = normalize_list(terms)
+            if not normalized_terms:
+                errors.append(f"concept_recipes.concept_safety.{pool}: at least one term is required")
+            for term in normalized_terms:
+                if not str(term).strip():
+                    errors.append(f"concept_recipes.concept_safety.{pool}: empty term")
+
     roles = recipes.get("roles", {}) or {}
     if roles and not isinstance(roles, dict):
         errors.append("concept_recipes.roles: must be an object")
@@ -939,6 +998,34 @@ def validate_concept_recipes(path: Path, data: dict[str, Any], errors: list[str]
                     errors.append(f"{bundle_label}: must be an object")
                     continue
                 validate_concept_recipe_entry(bundle_label, bundle, data, errors)
+
+    diversity_policy = recipes.get("mixin_diversity_policy", {}) or {}
+    if diversity_policy and not isinstance(diversity_policy, dict):
+        errors.append("concept_recipes.mixin_diversity_policy: must be an object")
+    elif isinstance(diversity_policy, dict):
+        known_mixins = set(mixins.keys()) if isinstance(mixins, dict) else set()
+        for mixin, policy in diversity_policy.items():
+            policy_label = f"concept_recipes.mixin_diversity_policy.{mixin}"
+            if mixin not in known_mixins:
+                errors.append(f"concept_recipes.mixin_diversity_policy: unknown mixin {mixin}")
+                continue
+            if not isinstance(policy, dict):
+                errors.append(f"{policy_label}: must be an object")
+                continue
+            axes = normalize_list(policy.get("aspect_axes"))
+            if "aspect_axes" in policy and not axes:
+                errors.append(f"{policy_label}.aspect_axes: at least one axis is required when present")
+            for axis in axes:
+                if not str(axis).strip():
+                    errors.append(f"{policy_label}.aspect_axes: empty axis")
+            for key in ("min_distinct_aspects_per_batch",):
+                if key in policy and (not isinstance(policy.get(key), int) or policy.get(key) < 1):
+                    errors.append(f"{policy_label}.{key}: must be a positive integer")
+            for key in ("max_same_prop_ratio", "max_same_composition_ratio", "max_same_location_ratio", "ledger_repeat_decay", "batch_repeat_decay"):
+                if key in policy and not isinstance(policy.get(key), (int, float)):
+                    errors.append(f"{policy_label}.{key}: must be numeric")
+            if "prefer_bundle_rotation" in policy and not isinstance(policy.get("prefer_bundle_rotation"), bool):
+                errors.append(f"{policy_label}.prefer_bundle_rotation: must be a boolean")
 
 
 def validate_slot_applicability(data: dict[str, Any], errors: list[str]) -> None:

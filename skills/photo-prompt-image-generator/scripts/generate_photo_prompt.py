@@ -723,10 +723,12 @@ def match_concept_role(concept: str, roles: dict[str, Any]) -> tuple[str | None,
 
 def match_concept_mixins(concept: str, mixins: dict[str, Any]) -> list[tuple[str, dict[str, Any]]]:
     stripped = concept.strip()
+    remaining = stripped
     matches: list[tuple[str, dict[str, Any]]] = []
     for mixin in sorted(mixins, key=len, reverse=True):
-        if mixin and mixin in stripped:
+        if mixin and mixin in remaining:
             matches.append((mixin, dict(mixins[mixin] or {})))
+            remaining = remaining.replace(mixin, " ")
     return matches
 
 
