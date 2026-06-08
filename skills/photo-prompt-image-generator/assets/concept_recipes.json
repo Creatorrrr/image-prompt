@@ -16,7 +16,11 @@
     "camera_direction",
     "capture_context",
     "lens",
-    "wearable_accessory"
+    "wearable_accessory",
+    "texture",
+    "surface_material",
+    "world",
+    "aesthetic_trend"
   ],
   "soft_anchor_defaults": {
     "anchor_slots": [
@@ -546,6 +550,391 @@
         "everyday casual outfit remains the first-read role anchor"
       ],
       "mixin_cue_budget": 1
+    },
+    "승무원": {
+      "preset": "flight_attendant_service_portrait",
+      "set": [
+        "subject=flight_attendant_role_model",
+        "costume_style=flight_attendant_uniform_costume",
+        "location=airplane_cabin_aisle",
+        "action=cabin_service_pause"
+      ],
+      "soft_anchor_slots": [
+        "costume_style",
+        "location",
+        "action"
+      ],
+      "soft_min_anchors": 1,
+      "anchor_terms": {
+        "costume_style": [
+          "flight attendant uniform",
+          "cabin crew"
+        ],
+        "location": [
+          "airplane cabin aisle",
+          "cabin"
+        ],
+        "action": [
+          "cabin service"
+        ]
+      },
+      "additional": [
+        "adult flight-attendant role identity stays readable through cabin-crew uniform, airplane aisle, and service posture; do not turn it into generic travel fashion"
+      ],
+      "intent_axis": [
+        "adult flight attendant portrait, cabin crew uniform, airplane aisle, controlled service authority"
+      ],
+      "likeness_mode": "inspired",
+      "safety_requirements": [
+        "adult subject only; covered professional cabin-crew uniform, no fetishized uniform framing"
+      ],
+      "salience_cues": [
+        "airplane cabin and cabin-crew uniform must read at first glance"
+      ],
+      "mixin_cue_budget": 2
+    },
+    "소방관": {
+      "preset": "firefighter_station_portrait",
+      "set": [
+        "subject=firefighter_role_model",
+        "costume_style=firefighter_turnout_gear_costume",
+        "location=fire_station_bay",
+        "action=holding_firefighter_helmet"
+      ],
+      "soft_anchor_slots": [
+        "costume_style",
+        "location",
+        "action"
+      ],
+      "soft_min_anchors": 1,
+      "anchor_terms": {
+        "costume_style": [
+          "firefighter turnout gear",
+          "helmet"
+        ],
+        "location": [
+          "fire station"
+        ],
+        "action": [
+          "holding firefighter helmet"
+        ]
+      },
+      "additional": [
+        "adult firefighter identity stays grounded in protective turnout gear, helmet, and station bay; no disaster victims, burns, gore, or injury focus"
+      ],
+      "intent_axis": [
+        "adult firefighter portrait, turnout gear, fire-station vehicle bay, calm emergency authority"
+      ],
+      "likeness_mode": "inspired",
+      "safety_requirements": [
+        "adult subject only; non-graphic emergency-responder portrait, no visible casualties or injuries"
+      ],
+      "salience_cues": [
+        "helmet and protective firefighter gear remain the first-read role anchors"
+      ],
+      "mixin_cue_budget": 2
+    },
+    "보안요원": {
+      "preset": "security_guard_watch_portrait",
+      "set": [
+        "subject=security_guard_role_model",
+        "costume_style=security_guard_uniform_costume",
+        "location=security_control_room",
+        "action=checking_security_monitors"
+      ],
+      "soft_anchor_slots": [
+        "costume_style",
+        "location",
+        "action"
+      ],
+      "soft_min_anchors": 1,
+      "anchor_terms": {
+        "costume_style": [
+          "security guard uniform"
+        ],
+        "location": [
+          "security control room"
+        ],
+        "action": [
+          "checking security monitors"
+        ]
+      },
+      "additional": [
+        "adult security-guard identity reads as surveillance work and controlled access authority, not generic dark-suit fashion"
+      ],
+      "intent_axis": [
+        "adult security guard portrait, control room, surveillance monitors, controlled watchfulness"
+      ],
+      "likeness_mode": "inspired",
+      "safety_requirements": [
+        "adult subject only; professional guard uniform and non-graphic surveillance setting"
+      ],
+      "salience_cues": [
+        "security monitors, badge language, and guard uniform keep the role readable"
+      ],
+      "mixin_cue_budget": 2
+    },
+    "요리사": {
+      "preset": "chef_kitchen_service_portrait",
+      "set": [
+        "subject=chef_role_model",
+        "costume_style=chef_white_coat_costume",
+        "location=professional_kitchen_pass",
+        "action=serving_from_kitchen_pass"
+      ],
+      "soft_anchor_slots": [
+        "costume_style",
+        "location",
+        "action"
+      ],
+      "soft_min_anchors": 1,
+      "anchor_terms": {
+        "costume_style": [
+          "chef coat",
+          "white chef jacket"
+        ],
+        "location": [
+          "professional kitchen pass"
+        ],
+        "action": [
+          "serving from kitchen pass"
+        ]
+      },
+      "additional": [
+        "adult chef identity stays grounded in a real professional kitchen pass and white coat; avoid food-commercial still life replacing the person"
+      ],
+      "intent_axis": [
+        "adult chef portrait, professional kitchen pass, white coat, controlled service tension"
+      ],
+      "likeness_mode": "inspired",
+      "safety_requirements": [
+        "adult subject only; professional kitchen portrait, no injury or unsafe kitchen action"
+      ],
+      "salience_cues": [
+        "chef coat and kitchen pass remain visible role anchors"
+      ],
+      "mixin_cue_budget": 2
+    },
+    "군장교": {
+      "preset": "military_officer_formal_portrait",
+      "set": [
+        "subject=military_officer_role_model",
+        "costume_style=military_officer_dress_uniform",
+        "action=standing_silence",
+        "composition=centered_symmetry"
+      ],
+      "soft_anchor_slots": [
+        "costume_style",
+        "composition",
+        "action"
+      ],
+      "soft_min_anchors": 1,
+      "anchor_terms": {
+        "costume_style": [
+          "military officer dress uniform"
+        ],
+        "composition": [
+          "centered symmetry"
+        ],
+        "action": [
+          "standing silence"
+        ]
+      },
+      "additional": [
+        "adult officer identity reads as formal command and ceremony; avoid active combat, weapons emphasis, propaganda poster language, or battlefield harm"
+      ],
+      "intent_axis": [
+        "adult military officer formal portrait, dress uniform, command posture, restrained authority"
+      ],
+      "likeness_mode": "inspired",
+      "safety_requirements": [
+        "adult subject only; ceremonial uniform portrait, no active combat or graphic violence"
+      ],
+      "salience_cues": [
+        "formal officer uniform and command posture remain first-read anchors"
+      ],
+      "mixin_cue_budget": 2
+    },
+    "학생": {
+      "preset": "adult_school_uniform_reference_portrait",
+      "set": [
+        "subject=adult_school_uniform_cosplay_model",
+        "costume_style=adult_school_uniform_cosplay_costume",
+        "location=school_reference_studio",
+        "makeup_style=clean_pure_makeup"
+      ],
+      "soft_anchor_slots": [
+        "costume_style",
+        "location",
+        "makeup_style"
+      ],
+      "soft_min_anchors": 1,
+      "anchor_terms": {
+        "costume_style": [
+          "adult school-uniform cosplay"
+        ],
+        "location": [
+          "reference studio"
+        ],
+        "makeup_style": [
+          "clean pure makeup"
+        ]
+      },
+      "additional": [
+        "the student concept must be clearly adult-only cosplay/reference styling, not a minor-coded school scene; keep clothing covered and neutral"
+      ],
+      "intent_axis": [
+        "adult-only school-uniform cosplay reference portrait, covered neutral styling, non-minor coding"
+      ],
+      "likeness_mode": "inspired",
+      "safety_requirements": [
+        "adult subject only; no minor-coded framing, no sexualized school uniform treatment"
+      ],
+      "salience_cues": [
+        "adult reference-studio context and covered school-uniform cosplay keep the concept safe and readable"
+      ],
+      "mixin_cue_budget": 1
+    },
+    "무녀": {
+      "preset": "modern_shaman_ritual_portrait",
+      "set": [
+        "subject=modern_shaman_performer",
+        "costume_style=modern_shaman_ritual_costume",
+        "location=traditional_shrine_interior",
+        "prop=shaman_bells_prop,five_color_silk_strip_prop",
+        "action=holding_shaman_bells"
+      ],
+      "soft_anchor_slots": [
+        "costume_style",
+        "location",
+        "prop",
+        "action"
+      ],
+      "soft_min_anchors": 2,
+      "anchor_terms": {
+        "costume_style": [
+          "shaman ritual costume",
+          "mudang"
+        ],
+        "location": [
+          "traditional shrine"
+        ],
+        "prop": [
+          "shaman bells",
+          "five-color silk"
+        ],
+        "action": [
+          "holding shaman bells"
+        ]
+      },
+      "additional": [
+        "render modern Korean shaman imagery respectfully as ritual portrait language with bells, five-color silk, and shrine context; no caricature, mockery, gore, or occult shock value"
+      ],
+      "intent_axis": [
+        "modern Korean shaman portrait, mudang ritual bells, five-color silk, traditional shrine, respectful folk unease"
+      ],
+      "likeness_mode": "inspired",
+      "safety_requirements": [
+        "adult subject only; respectful non-graphic folk ritual depiction, no religious caricature or gore"
+      ],
+      "salience_cues": [
+        "shaman bells, five-color silk, and shrine context must read near the subject"
+      ],
+      "mixin_cue_budget": 2
+    },
+    "기록가": {
+      "preset": "archivist_library_observation",
+      "set": [
+        "subject=archivist_role_model",
+        "costume_style=archivist_apron_gloves_costume",
+        "location=grand_archive_hall",
+        "prop=archive_box_prop,white_cotton_gloves_prop",
+        "action=organizing_old_manuscripts"
+      ],
+      "soft_anchor_slots": [
+        "costume_style",
+        "location",
+        "prop",
+        "action"
+      ],
+      "soft_min_anchors": 2,
+      "anchor_terms": {
+        "location": [
+          "archive hall"
+        ],
+        "prop": [
+          "archive box",
+          "white gloves"
+        ],
+        "action": [
+          "old manuscripts"
+        ]
+      },
+      "additional": [
+        "archivist identity reads through archival work, old records, white gloves, and quiet information control; avoid generic library fashion only"
+      ],
+      "intent_axis": [
+        "adult archivist portrait, grand archive hall, old manuscripts, white gloves, archival suspense"
+      ],
+      "likeness_mode": "inspired",
+      "safety_requirements": [
+        "adult subject only; archival portrait with no destructive handling of documents"
+      ],
+      "salience_cues": [
+        "old manuscripts, white gloves, or archive boxes keep the role readable"
+      ],
+      "mixin_cue_budget": 2
+    },
+    "연구원": {
+      "preset": "researcher_clinical_observation",
+      "set": [
+        "subject=clinical_researcher_role_model",
+        "costume_style=clinical_lab_coat_professional",
+        "location=clinical_observation_lab",
+        "prop=glass_specimen_case_prop",
+        "action=observing_specimen_case",
+        "lighting=clean_laboratory_fluorescent"
+      ],
+      "soft_anchor_slots": [
+        "costume_style",
+        "location",
+        "prop",
+        "action",
+        "lighting"
+      ],
+      "soft_min_anchors": 2,
+      "anchor_terms": {
+        "location": [
+          "clinical observation lab"
+        ],
+        "prop": [
+          "specimen case"
+        ],
+        "action": [
+          "observing specimen"
+        ],
+        "lighting": [
+          "laboratory fluorescent"
+        ],
+        "costume_style": [
+          "professional clinical lab coat",
+          "lab coat"
+        ]
+      },
+      "additional": [
+        "researcher identity reads as clinical observation and controlled evidence, not horror doctor cosplay; keep lab details sterile and non-graphic"
+      ],
+      "intent_axis": [
+        "adult clinical researcher portrait, professional clinical lab coat, sterile observation lab, specimen case, one-way mirror, controlled scientific tension"
+      ],
+      "likeness_mode": "inspired",
+      "safety_requirements": [
+        "adult subject only; sterile non-graphic lab setting, no body horror or injury"
+      ],
+      "salience_cues": [
+        "specimen case, lab light, and observation-room context keep the role readable"
+      ],
+      "mixin_cue_budget": 2
     }
   },
   "mixins": {
@@ -8229,6 +8618,691 @@
           ]
         }
       ]
+    },
+    "구미호": {
+      "preset": "folk_creature_threshold_portrait",
+      "set": {
+        "expression": "golden_fox_eye_gaze",
+        "prop": "fox_fire_wisp_prop",
+        "lighting": "moonlit_folk_ritual_light",
+        "mood": "folk_ritual_unease",
+        "world": "folk_threshold_world",
+        "composition": "cornea_reflection_closeup"
+      },
+      "soft_anchor_slots": [
+        "expression",
+        "prop",
+        "lighting",
+        "mood"
+      ],
+      "soft_min_anchors": 2,
+      "anchor_terms": {
+        "expression": [
+          "golden fox-eye gaze"
+        ],
+        "prop": [
+          "fox-fire wisp"
+        ],
+        "world": [
+          "folk threshold"
+        ]
+      },
+      "additional": [
+        "gumiho identity should read through fox-like gaze, fox-fire, folk threshold atmosphere, and controlled temptation rather than animal ears alone"
+      ],
+      "intent_axis": [
+        "gumiho folklore allure, golden fox-eye gaze, fox-fire wisp, folk threshold, intelligent danger"
+      ],
+      "safety_requirements": [
+        "adult subject only; non-graphic folklore, no animalized fetish framing"
+      ],
+      "salience_cues": [
+        "fox-fire or golden fox-eye gaze must appear near the face or hand"
+      ]
+    },
+    "원귀": {
+      "preset": "folk_creature_threshold_portrait",
+      "set": {
+        "costume_style": "white_sobok_burial_dress",
+        "prop": "sealed_talisman_paper_prop",
+        "lighting": "moonlit_folk_ritual_light",
+        "mood": "folk_ritual_unease",
+        "composition": "through_frosted_glass_frame",
+        "world": "folk_threshold_world"
+      },
+      "soft_anchor_slots": [
+        "costume_style",
+        "prop",
+        "composition",
+        "mood"
+      ],
+      "soft_min_anchors": 2,
+      "anchor_terms": {
+        "costume_style": [
+          "white sobok"
+        ],
+        "prop": [
+          "talisman paper"
+        ],
+        "composition": [
+          "frosted glass"
+        ]
+      },
+      "additional": [
+        "vengeful-spirit identity is quiet and non-graphic: white sobok-like silhouette, talisman paper, threshold glass, cold stillness; no wounds, gore, or horror violence"
+      ],
+      "intent_axis": [
+        "Korean ghost or vengeful spirit, white sobok silhouette, talisman seal, threshold unease, non-graphic stillness"
+      ],
+      "safety_requirements": [
+        "no gore, wounds, corpses, or violence; folk ghost should be symbolic and non-graphic"
+      ],
+      "salience_cues": [
+        "talisman paper or white sobok-like silhouette must remain visible"
+      ]
+    },
+    "인어": {
+      "preset": "folk_creature_threshold_portrait",
+      "set": {
+        "prop": "mermaid_scale_shell_prop",
+        "texture": "iridescent_scale_skin_texture",
+        "surface_material": "iridescent_scale_skin_surface",
+        "lighting": "underwater_caustic_light",
+        "mood": "pure_serene_softness",
+        "composition": "medium_close"
+      },
+      "soft_anchor_slots": [
+        "prop",
+        "texture",
+        "lighting",
+        "mood"
+      ],
+      "soft_min_anchors": 2,
+      "anchor_terms": {
+        "prop": [
+          "scale-and-shell charm"
+        ],
+        "texture": [
+          "iridescent scale"
+        ],
+        "lighting": [
+          "underwater caustic"
+        ]
+      },
+      "additional": [
+        "mermaid or siren identity should be suggested by scale texture, shell charm, water-light pattern, and alluring distance; avoid body-first swimsuit framing"
+      ],
+      "intent_axis": [
+        "mermaid or siren, iridescent scales, shell charm, water caustics, distant songlike allure"
+      ],
+      "safety_requirements": [
+        "adult subject only; no body-first swimsuit framing or explicit aquatic nudity"
+      ],
+      "salience_cues": [
+        "scale or shell cue must sit near face, hand, collar, or foreground reflection"
+      ]
+    },
+    "마녀": {
+      "preset": "folk_creature_threshold_portrait",
+      "set": {
+        "costume_style": "witch_robe_wide_hat",
+        "prop": "grimoire_candle_prop",
+        "mood": "folk_ritual_unease",
+        "aesthetic_trend": "whimsigoth_aesthetic",
+        "composition": "lace_partial_occlusion_frame",
+        "light_type": "ritual_candle_cluster"
+      },
+      "soft_anchor_slots": [
+        "costume_style",
+        "prop",
+        "light_type",
+        "mood"
+      ],
+      "soft_min_anchors": 2,
+      "anchor_terms": {
+        "costume_style": [
+          "witch robe"
+        ],
+        "prop": [
+          "grimoire"
+        ],
+        "aesthetic_trend": [
+          "whimsigoth"
+        ]
+      },
+      "additional": [
+        "witch identity reads through grimoire, candle cluster, hat or robe silhouette, and learned ritual authority; avoid caricatured Halloween costume alone"
+      ],
+      "intent_axis": [
+        "witch portrait, grimoire, candlelit ritual authority, whimsigoth mood, learned occult intelligence"
+      ],
+      "safety_requirements": [
+        "adult subject only; symbolic magic with no gore, sacrifice, or depicted harm"
+      ],
+      "salience_cues": [
+        "grimoire or candle cluster must be close to the hands or face"
+      ]
+    },
+    "선녀": {
+      "preset": "folk_creature_threshold_portrait",
+      "set": {
+        "costume_style": "celestial_silk_ribbon_robe",
+        "prop": "single_feather_trace_prop",
+        "texture": "fine_silk_ribbon_texture",
+        "lighting": "lantern_rows_warm_light",
+        "mood": "pure_serene_softness",
+        "world": "folk_threshold_world"
+      },
+      "soft_anchor_slots": [
+        "costume_style",
+        "prop",
+        "texture",
+        "mood"
+      ],
+      "soft_min_anchors": 2,
+      "anchor_terms": {
+        "costume_style": [
+          "celestial silk robe"
+        ],
+        "prop": [
+          "single feather"
+        ],
+        "texture": [
+          "silk ribbon"
+        ]
+      },
+      "additional": [
+        "celestial maiden identity should feel airy, remote, and dignified through silk ribbons, feather trace, and soft threshold light; do not reduce it to generic angel wings"
+      ],
+      "intent_axis": [
+        "celestial maiden, silk ribbon robe, feather trace, serene distance, folk threshold"
+      ],
+      "safety_requirements": [
+        "adult subject only; dignified covered styling, no eroticized myth framing"
+      ],
+      "salience_cues": [
+        "silk ribbon or feather trace should be visible near the body line"
+      ]
+    },
+    "도깨비": {
+      "preset": "folk_creature_threshold_portrait",
+      "set": {
+        "prop": "sealed_talisman_paper_prop",
+        "lighting": "lantern_rows_warm_light",
+        "mood": "folk_ritual_unease",
+        "world": "folk_threshold_world",
+        "composition": "door_chain_gap_frame",
+        "expression": "mysterious_half_smile"
+      },
+      "soft_anchor_slots": [
+        "prop",
+        "lighting",
+        "mood",
+        "composition"
+      ],
+      "soft_min_anchors": 2,
+      "anchor_terms": {
+        "prop": [
+          "talisman"
+        ],
+        "composition": [
+          "door-chain gap"
+        ],
+        "mood": [
+          "folk ritual unease"
+        ]
+      },
+      "additional": [
+        "dokkaebi or oni identity should read as trickster threshold energy: talisman, lantern, sly smile, door-gap framing; no grotesque monster caricature"
+      ],
+      "intent_axis": [
+        "dokkaebi trickster threshold, lantern warmth, talisman cue, sly smile, uncanny bargain"
+      ],
+      "safety_requirements": [
+        "non-graphic folklore trickster; avoid caricature, gore, or monster-body shock"
+      ],
+      "salience_cues": [
+        "talisman, lantern, or door-gap cue must appear as a clear visual anchor"
+      ]
+    },
+    "데이터망령": {
+      "preset": "digital_glitch_entity_portrait",
+      "set": {
+        "prop": "glitching_phone_screen_prop",
+        "lighting": "monitor_flicker_pattern",
+        "light_type": "ui_projection_on_skin",
+        "composition": "security_cam_ultrawide",
+        "texture": [
+          "pixel_drift_edges",
+          "localized_chromatic_glitch"
+        ],
+        "motion": "pixel_afterimage_trail",
+        "mood": "digital_dislocation",
+        "world": "digital_afterimage_world"
+      },
+      "soft_anchor_slots": [
+        "prop",
+        "lighting",
+        "light_type",
+        "texture",
+        "composition"
+      ],
+      "soft_min_anchors": 2,
+      "anchor_terms": {
+        "prop": [
+          "glitching phone screen"
+        ],
+        "texture": [
+          "pixel-drift edges",
+          "chromatic glitch"
+        ],
+        "light_type": [
+          "UI projection"
+        ]
+      },
+      "additional": [
+        "data ghost identity reads through localized UI projection, pixel-drift edges, glitching phone or monitor, and security-camera displacement; keep the face and eyes anatomically clean and sharp"
+      ],
+      "intent_axis": [
+        "data ghost or digital glitch entity, UI projection, pixel-drift edge, chromatic glitch, monitor flicker, surveillance displacement"
+      ],
+      "safety_requirements": [
+        "glitch effects must not corrupt face anatomy, eyes, hands, or text; no broken-image artifacts masquerading as style"
+      ],
+      "salience_cues": [
+        "glitching phone screen, UI projection, or pixel-drift edge must sit near the face or hand"
+      ]
+    },
+    "환경침식": {
+      "preset": "environmental_erosion_portrait",
+      "set": {
+        "texture": [
+          "moss_surface_detail",
+          "pressed_paper_archive_dust"
+        ],
+        "surface_material": "moss_attached_surface",
+        "location": "moss_reclaimed_room",
+        "action": "lightly_touching_moss_wall",
+        "mood": "environmental_absorption",
+        "world": "reclaimed_nature_interior_world",
+        "composition": "through_frosted_glass_frame"
+      },
+      "soft_anchor_slots": [
+        "texture",
+        "surface_material",
+        "location",
+        "action",
+        "mood"
+      ],
+      "soft_min_anchors": 2,
+      "anchor_terms": {
+        "texture": [
+          "moss surface",
+          "paper dust"
+        ],
+        "location": [
+          "moss-reclaimed room"
+        ],
+        "action": [
+          "touching moss-covered wall"
+        ]
+      },
+      "additional": [
+        "environmental erosion is symbolic and non-graphic: moss, paper dust, mineral growth, or petals slowly overtake fabric and walls; no body horror, wounds, rot, or injury"
+      ],
+      "intent_axis": [
+        "environmental erosion transformation, moss, paper dust, mineral growth, room reclaiming the subject non-graphically"
+      ],
+      "safety_requirements": [
+        "no body horror, gore, decay wounds, infection, or injury; transformation remains environmental and symbolic"
+      ],
+      "salience_cues": [
+        "moss, paper dust, or mineral growth should be visible on nearby wall, sleeve edge, prop, or foreground"
+      ]
+    },
+    "청순": {
+      "preset": "compact_urban_fashion_portrait",
+      "set": {
+        "appearance_type": "pure_serene_presence",
+        "makeup_style": "clean_pure_makeup",
+        "expression": "gentle_pure_gaze",
+        "mood": "pure_serene_softness",
+        "lighting": "soft_window"
+      },
+      "soft_anchor_slots": [
+        "appearance_type",
+        "makeup_style",
+        "expression",
+        "mood"
+      ],
+      "soft_min_anchors": 2,
+      "anchor_terms": {
+        "makeup_style": [
+          "clean pure makeup"
+        ],
+        "expression": [
+          "gentle pure gaze"
+        ]
+      },
+      "additional": [
+        "pure concept should read as clarity, restraint, clean light, and gentle gaze rather than childishness or naivete"
+      ],
+      "intent_axis": [
+        "pure serene beauty, clean makeup, gentle gaze, soft window light, restrained dignity"
+      ],
+      "safety_requirements": [
+        "adult subject only; no childlike or minor-coded styling"
+      ],
+      "salience_cues": [
+        "clean makeup and gentle gaze keep the personality register readable"
+      ]
+    },
+    "쿨뷰티": {
+      "preset": "compact_cinematic_prop_portrait",
+      "set": {
+        "expression": "aloof_composed_gaze",
+        "mood": "aloof_cool_beauty",
+        "makeup_style": "graphic_eyeliner_sharp",
+        "lighting": "low_key",
+        "composition": "medium_close"
+      },
+      "soft_anchor_slots": [
+        "expression",
+        "mood",
+        "makeup_style"
+      ],
+      "soft_min_anchors": 2,
+      "anchor_terms": {
+        "expression": [
+          "aloof composed gaze"
+        ],
+        "mood": [
+          "cool beauty"
+        ],
+        "makeup_style": [
+          "graphic eyeliner"
+        ]
+      },
+      "additional": [
+        "cool-beauty register reads as restraint, distance, clean geometry, and unreadable composure rather than generic glamour"
+      ],
+      "intent_axis": [
+        "cool beauty, aloof composed gaze, graphic eyeliner, controlled distance, sleek low-key portrait"
+      ],
+      "safety_requirements": [
+        "adult subject only; cool beauty through expression and framing rather than body display"
+      ],
+      "salience_cues": [
+        "aloof gaze and clean close framing keep the register readable"
+      ]
+    },
+    "도도": {
+      "preset": "compact_cinematic_prop_portrait",
+      "set": {
+        "expression": "chin_up_haughty_look",
+        "mood": "haughty_elegance",
+        "action": "looking_down_at_low_camera",
+        "composition": "low_angle",
+        "lighting": "chiaroscuro_window_light"
+      },
+      "soft_anchor_slots": [
+        "expression",
+        "mood",
+        "action",
+        "composition"
+      ],
+      "soft_min_anchors": 2,
+      "anchor_terms": {
+        "expression": [
+          "chin-up haughty look"
+        ],
+        "composition": [
+          "low angle"
+        ]
+      },
+      "additional": [
+        "haughty register should read through raised chin, command of the frame, and elegant distance, not hostility or caricature"
+      ],
+      "intent_axis": [
+        "haughty elegant presence, chin-up gaze, low-angle control, poised distance"
+      ],
+      "safety_requirements": [
+        "adult subject only; no humiliation or coercive framing"
+      ],
+      "salience_cues": [
+        "raised chin and low-angle control keep the register readable"
+      ]
+    },
+    "발랄": {
+      "preset": "dynamic_motion_portrait",
+      "set": {
+        "expression": "bright_refreshing_grin",
+        "mood": "refreshing_bright_charm",
+        "action": "mid_jump_freeze_pose",
+        "motion": "fabric_motion_frozen",
+        "lighting": "stage_motion_flash"
+      },
+      "soft_anchor_slots": [
+        "expression",
+        "mood",
+        "action",
+        "motion"
+      ],
+      "soft_min_anchors": 2,
+      "anchor_terms": {
+        "expression": [
+          "bright refreshing grin"
+        ],
+        "action": [
+          "mid-jump freeze"
+        ]
+      },
+      "additional": [
+        "bright playful register reads through motion, timing, and open expression; keep the face sharp and avoid childish coding"
+      ],
+      "intent_axis": [
+        "bright playful charm, mid-jump freeze, refreshing grin, kinetic portrait energy"
+      ],
+      "safety_requirements": [
+        "adult subject only; energetic but not minor-coded"
+      ],
+      "salience_cues": [
+        "bright expression and motion cue keep the register readable"
+      ]
+    },
+    "연상": {
+      "preset": "compact_cinematic_prop_portrait",
+      "set": {
+        "subject": "mature_elegant_model",
+        "appearance_type": "mature_elegant_presence",
+        "expression": "mature_knowing_smile",
+        "mood": "mature_poised_elegance",
+        "wardrobe_style": "old_money_tailored_layers"
+      },
+      "soft_anchor_slots": [
+        "appearance_type",
+        "expression",
+        "mood",
+        "wardrobe_style"
+      ],
+      "soft_min_anchors": 2,
+      "anchor_terms": {
+        "appearance_type": [
+          "mature elegant presence"
+        ],
+        "expression": [
+          "mature knowing smile"
+        ]
+      },
+      "additional": [
+        "mature older-sister register should read as poise, discretion, and assured social control, not age caricature or dominance cliché"
+      ],
+      "intent_axis": [
+        "mature elegant older-sister aura, poised smile, tailored layers, social confidence"
+      ],
+      "safety_requirements": [
+        "adult subject only; respectful mature styling"
+      ],
+      "salience_cues": [
+        "poised expression and tailored styling keep the register readable"
+      ]
+    },
+    "보이시": {
+      "preset": "compact_urban_fashion_portrait",
+      "set": {
+        "subject": "androgynous_style_model",
+        "appearance_type": "androgynous_cool_presence",
+        "wardrobe_style": "tomboy_oversized_layers",
+        "aesthetic_trend": "tomboy_aesthetic",
+        "expression": "aloof_composed_gaze"
+      },
+      "soft_anchor_slots": [
+        "appearance_type",
+        "wardrobe_style",
+        "aesthetic_trend",
+        "expression"
+      ],
+      "soft_min_anchors": 2,
+      "anchor_terms": {
+        "appearance_type": [
+          "androgynous cool"
+        ],
+        "wardrobe_style": [
+          "tomboy oversized layers"
+        ]
+      },
+      "additional": [
+        "boyish register reads through androgynous tailoring, relaxed posture, and cool restraint, not loss of femininity or caricature"
+      ],
+      "intent_axis": [
+        "boyish tomboy styling, androgynous cool presence, oversized layers, relaxed controlled charm"
+      ],
+      "safety_requirements": [
+        "adult subject only; respectful androgynous styling"
+      ],
+      "salience_cues": [
+        "tomboy layers or androgynous cool expression keep the register readable"
+      ]
+    },
+    "외계인": {
+      "preset": "digital_glitch_entity_portrait",
+      "set": {
+        "subject": "alien_visitor_subject",
+        "surface_material": "soft_luminous_alien_skin_surface",
+        "prop": "star_map_tablet_prop",
+        "action": "studying_star_map_tablet",
+        "mood": "digital_dislocation",
+        "light_type": "ui_projection_on_skin"
+      },
+      "soft_anchor_slots": [
+        "subject",
+        "surface_material",
+        "prop",
+        "action"
+      ],
+      "soft_min_anchors": 2,
+      "anchor_terms": {
+        "subject": [
+          "alien visitor"
+        ],
+        "prop": [
+          "star-map tablet"
+        ],
+        "surface_material": [
+          "luminous alien skin"
+        ]
+      },
+      "additional": [
+        "alien identity should be subtle and humanlike: unfamiliar star-map tablet, soft luminous surface, calm nonhuman gaze; avoid monster horror or parody prosthetics"
+      ],
+      "intent_axis": [
+        "humanlike alien visitor, star-map tablet, soft luminous surface, calm otherworldly gaze"
+      ],
+      "safety_requirements": [
+        "non-graphic sci-fi identity; no body horror or grotesque transformation"
+      ],
+      "salience_cues": [
+        "star-map tablet or luminous surface should be visible near the hands or face"
+      ]
+    },
+    "초능력자": {
+      "preset": "dynamic_motion_portrait",
+      "set": {
+        "subject": "esper_subject",
+        "prop": "levitating_teacup_prop",
+        "action": "levitating_small_objects",
+        "composition": "cornea_reflection_closeup",
+        "lighting": "rim_light",
+        "mood": "sterile_observation"
+      },
+      "soft_anchor_slots": [
+        "subject",
+        "prop",
+        "action",
+        "composition"
+      ],
+      "soft_min_anchors": 2,
+      "anchor_terms": {
+        "prop": [
+          "levitating teacup"
+        ],
+        "action": [
+          "levitating small objects"
+        ]
+      },
+      "additional": [
+        "psychic identity reads through one clear levitating object, focused stillness, and subtle environmental response; avoid superhero blasts or destruction"
+      ],
+      "intent_axis": [
+        "psychic esper portrait, small levitating object, focused stillness, restrained supernatural force"
+      ],
+      "safety_requirements": [
+        "non-graphic psychic display; no destruction, harm, or combat impact"
+      ],
+      "salience_cues": [
+        "one levitating object near the hands or eyes must make the power readable"
+      ]
+    },
+    "마법사": {
+      "preset": "folk_creature_threshold_portrait",
+      "set": {
+        "costume_style": "witch_robe_wide_hat",
+        "prop": "grimoire_candle_prop",
+        "mood": "archival_suspense",
+        "aesthetic_trend": "light_academia_aesthetic",
+        "composition": "hands_only_detail_frame",
+        "light_type": "ritual_candle_cluster"
+      },
+      "soft_anchor_slots": [
+        "costume_style",
+        "prop",
+        "light_type",
+        "aesthetic_trend"
+      ],
+      "soft_min_anchors": 2,
+      "anchor_terms": {
+        "prop": [
+          "grimoire"
+        ],
+        "aesthetic_trend": [
+          "light academia"
+        ],
+        "composition": [
+          "hands-only detail"
+        ]
+      },
+      "additional": [
+        "wizard identity should feel scholarly and controlled through grimoire, candle, hand detail, and knowledge ritual rather than explosive fantasy effects"
+      ],
+      "intent_axis": [
+        "wizard or mage, scholarly magic, grimoire, candlelit hands, controlled knowledge ritual"
+      ],
+      "safety_requirements": [
+        "symbolic magic only; no gore, sacrifice, combat, or injury"
+      ],
+      "salience_cues": [
+        "grimoire or spellbook in hand detail keeps the wizard concept readable"
+      ]
     }
   },
   "aliases": {
@@ -8237,7 +9311,36 @@
     "사이보그": "로봇",
     "자동인형": "로봇",
     "인조인간": "로봇",
-    "휴머노이드": "로봇"
+    "휴머노이드": "로봇",
+    "스튜어디스": "승무원",
+    "캐빈크루": "승무원",
+    "소방": "소방관",
+    "보안": "보안요원",
+    "경비원": "보안요원",
+    "셰프": "요리사",
+    "쉐프": "요리사",
+    "장교": "군장교",
+    "성인 학생": "학생",
+    "교복": "학생",
+    "무당": "무녀",
+    "사서": "기록가",
+    "아키비스트": "기록가",
+    "리서처": "연구원",
+    "사이렌": "인어",
+    "디지털 유령": "데이터망령",
+    "디지털망령": "데이터망령",
+    "데이터 유령": "데이터망령",
+    "글리치": "데이터망령",
+    "환경 침식": "환경침식",
+    "자연침식": "환경침식",
+    "누님": "연상",
+    "쿨 뷰티": "쿨뷰티",
+    "도깨비불": "도깨비",
+    "오니": "도깨비",
+    "에스퍼": "초능력자",
+    "사이킥": "초능력자",
+    "마도사": "마법사",
+    "위치": "마녀"
   },
   "mixin_diversity_policy": {
     "암살자": {

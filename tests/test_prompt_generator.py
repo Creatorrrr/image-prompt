@@ -4766,6 +4766,201 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 actual = {entry["id"] for entry in self.data["slots"][slot]}
                 self.assertTrue(ids.issubset(actual))
 
+    def test_expanded_viewpoint_presets_tags_and_recipes_are_registered(self):
+        preset_ids = {preset["id"] for preset in self.data["presets"]}
+        self.assertTrue(
+            {
+                "flight_attendant_service_portrait",
+                "modern_shaman_ritual_portrait",
+                "archivist_library_observation",
+                "digital_glitch_entity_portrait",
+                "environmental_erosion_portrait",
+                "era_costume_editorial",
+                "dynamic_motion_portrait",
+            }.issubset(preset_ids)
+        )
+
+        family_ids = {family["id"] for family in self.data["preset_families"]}
+        self.assertTrue(
+            {
+                "seasonal_event_family",
+                "folk_mystic_family",
+                "professional_observation_family",
+                "era_world_family",
+                "dynamic_motion_family",
+                "digital_entity_family",
+                "environmental_transformation_family",
+            }.issubset(family_ids)
+        )
+
+        expected_slot_ids = {
+            "subject": {
+                "flight_attendant_role_model",
+                "modern_shaman_performer",
+                "archivist_role_model",
+                "clinical_researcher_role_model",
+                "alien_visitor_subject",
+                "esper_subject",
+            },
+            "costume_style": {
+                "flight_attendant_uniform_costume",
+                "modern_shaman_ritual_costume",
+                "adult_school_uniform_cosplay_costume",
+                "clinical_lab_coat_professional",
+                "witch_robe_wide_hat",
+                "celestial_silk_ribbon_robe",
+            },
+            "prop": {
+                "shaman_bells_prop",
+                "five_color_silk_strip_prop",
+                "fox_fire_wisp_prop",
+                "glitching_phone_screen_prop",
+                "archive_box_prop",
+                "levitating_teacup_prop",
+            },
+            "location": {
+                "airplane_cabin_aisle",
+                "traditional_shrine_interior",
+                "grand_archive_hall",
+                "clinical_observation_lab",
+                "glitch_monitor_room",
+                "moss_reclaimed_room",
+            },
+            "texture": {
+                "pixel_drift_edges",
+                "localized_chromatic_glitch",
+                "moss_surface_detail",
+                "pressed_paper_archive_dust",
+            },
+            "aesthetic_trend": {
+                "dark_feminine_aesthetic",
+                "old_money_aesthetic",
+                "light_academia_aesthetic",
+                "whimsigoth_aesthetic",
+                "tomboy_aesthetic",
+            },
+        }
+        for slot, ids in expected_slot_ids.items():
+            with self.subTest(slot=slot):
+                actual = {entry["id"] for entry in self.data["slots"][slot]}
+                self.assertTrue(ids.issubset(actual))
+
+        recipes = json.loads((SKILL_DIR / "assets" / "concept_recipes.json").read_text(encoding="utf-8"))
+        self.assertTrue(
+            {
+                "승무원",
+                "소방관",
+                "보안요원",
+                "요리사",
+                "군장교",
+                "학생",
+                "무녀",
+                "기록가",
+                "연구원",
+            }.issubset(recipes["roles"])
+        )
+        self.assertTrue(
+            {
+                "구미호",
+                "원귀",
+                "인어",
+                "마녀",
+                "선녀",
+                "도깨비",
+                "데이터망령",
+                "환경침식",
+                "청순",
+                "쿨뷰티",
+                "도도",
+                "발랄",
+                "연상",
+                "보이시",
+                "외계인",
+                "초능력자",
+                "마법사",
+            }.issubset(recipes["mixins"])
+        )
+        self.assertEqual(recipes["aliases"]["사서"], "기록가")
+        self.assertEqual(recipes["aliases"]["글리치"], "데이터망령")
+
+    def test_expanded_concepts_resolve_role_mixin_and_visible_anchors(self):
+        cases = [
+            (
+                "카리나 무녀 구미호",
+                "무녀",
+                "구미호",
+                "modern_shaman_ritual_portrait",
+                {
+                    "subject": {"modern_shaman_performer"},
+                    "costume_style": {"modern_shaman_ritual_costume"},
+                    "prop": {"shaman_bells_prop", "five_color_silk_strip_prop", "fox_fire_wisp_prop"},
+                    "expression": {"golden_fox_eye_gaze"},
+                    "lighting": {"moonlit_folk_ritual_light"},
+                },
+            ),
+            (
+                "윈터 연구원 데이터망령",
+                "연구원",
+                "데이터망령",
+                "researcher_clinical_observation",
+                {
+                    "subject": {"clinical_researcher_role_model"},
+                    "costume_style": {"clinical_lab_coat_professional"},
+                    "location": {"clinical_observation_lab"},
+                    "prop": {"glass_specimen_case_prop", "glitching_phone_screen_prop"},
+                    "light_type": {"ui_projection_on_skin"},
+                    "texture": {"pixel_drift_edges", "localized_chromatic_glitch"},
+                },
+            ),
+            (
+                "설윤 승무원 쿨뷰티",
+                "승무원",
+                "쿨뷰티",
+                "flight_attendant_service_portrait",
+                {
+                    "subject": {"flight_attendant_role_model"},
+                    "costume_style": {"flight_attendant_uniform_costume"},
+                    "location": {"airplane_cabin_aisle"},
+                    "expression": {"aloof_composed_gaze"},
+                    "makeup_style": {"graphic_eyeliner_sharp"},
+                },
+            ),
+            (
+                "지젤 기록가 환경침식",
+                "기록가",
+                "환경침식",
+                "archivist_library_observation",
+                {
+                    "subject": {"archivist_role_model"},
+                    "location": {"grand_archive_hall", "moss_reclaimed_room"},
+                    "action": {"organizing_old_manuscripts", "lightly_touching_moss_wall"},
+                    "texture": {"moss_surface_detail", "pressed_paper_archive_dust"},
+                    "surface_material": {"moss_attached_surface"},
+                },
+            ),
+        ]
+
+        for concept, expected_role, expected_mixin, expected_preset, expected_slots in cases:
+            with self.subTest(concept=concept):
+                payload = self.run_wrapper_json(
+                    "--concept",
+                    concept,
+                    "--selection-mode",
+                    "rule",
+                    "--seed",
+                    "17",
+                    "--explain-concept",
+                )
+                explanation = payload["concepts"][0]
+                self.assertEqual(explanation["role"], expected_role)
+                self.assertEqual(explanation["applied_mixins"], [expected_mixin])
+                preset_index = payload["forward_args"].index("--preset")
+                self.assertEqual(payload["forward_args"][preset_index + 1], expected_preset)
+                forced = explanation["combined_forced_slots"]
+                for slot, expected_ids in expected_slots.items():
+                    self.assertTrue(expected_ids.issubset(set(forced.get(slot, []))), (slot, forced))
+                self.assertGreaterEqual(explanation["soft_anchor_spec"]["min_anchors"], 2)
+
     def test_all_concept_recipe_forced_slots_are_registered(self):
         recipes = json.loads((SKILL_DIR / "assets" / "concept_recipes.json").read_text(encoding="utf-8"))
         slot_ids = {slot: {entry["id"] for entry in entries} for slot, entries in self.data["slots"].items()}

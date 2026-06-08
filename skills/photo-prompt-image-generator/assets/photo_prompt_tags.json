@@ -1,6 +1,6 @@
 {
-  "version": "1.11",
-  "description": "Photo prompt tag dictionary for random Korean/English prompt generation. Version 1.11 adds a broad robot and artificial-being taxonomy across androids, cyborgs, nonhumanoid machines, soft/liquid robots, biohybrids, swarms, exoskeletons, sentient environments, automata, diagnostics, charging systems, and role-preserving robot prompt anchors.",
+  "version": "1.12",
+  "description": "Photographic prompt dictionary with expanded concept-role, folklore, personality, season, era, digital-entity, and environmental-transformation coverage for semantic and recipe-driven prompt generation.",
   "facet_vocab": {
     "subject_kind": [
       "human",
@@ -239,6 +239,48 @@
       "ko": "데드드롭 신호 계열",
       "en": "dead drop signal family",
       "embedding_text": "quiet nonviolent signal objects such as bookmarks, chess pieces, tickets, napkins, chalk marks and sealed envelopes in narrative portrait scenes"
+    },
+    {
+      "id": "seasonal_event_family",
+      "ko": "계절·이벤트 포트레이트 계열",
+      "en": "seasonal event portrait family",
+      "embedding_text": "cherry blossom paths, autumn leaves, Christmas markets, Halloween streets, Lunar New Year rooms, first snow and event-coded portrait settings"
+    },
+    {
+      "id": "folk_mystic_family",
+      "ko": "민속·주술·요괴 계열",
+      "en": "folk mystic creature family",
+      "embedding_text": "Korean and East Asian folklore, gumiho, shaman ritual, shrine, talisman, lantern, ghostly threshold, non-graphic uncanny ritual portraiture"
+    },
+    {
+      "id": "professional_observation_family",
+      "ko": "전문직·관찰 공간 계열",
+      "en": "professional observation family",
+      "embedding_text": "flight attendant, firefighter, security guard, chef, military officer, archivist and laboratory researcher portrayed through real workspaces and controlled professional authority"
+    },
+    {
+      "id": "era_world_family",
+      "ko": "시대·문화권 에디토리얼 계열",
+      "en": "era and world editorial family",
+      "embedding_text": "1920s ballroom, Victorian gothic parlor, western frontier station, 1970s disco, Belle Epoque salon, Renaissance portrait staging"
+    },
+    {
+      "id": "dynamic_motion_family",
+      "ko": "동작·순간 포착 계열",
+      "en": "dynamic motion portrait family",
+      "embedding_text": "mid-jump freeze frames, skirt spins, hair flips, dance leaps, running toward camera and kinetic portrait gestures with sharp faces"
+    },
+    {
+      "id": "digital_entity_family",
+      "ko": "디지털 글리치 존재 계열",
+      "en": "digital glitch entity family",
+      "embedding_text": "data ghost, UI projection, pixel-drift edges, chromatic glitch, monitor flicker, security-camera dislocation without broken-face artifacts"
+    },
+    {
+      "id": "environmental_transformation_family",
+      "ko": "환경 침식·변형 계열",
+      "en": "environmental transformation family",
+      "embedding_text": "moss, salt crystal, paper dust, vines, petals or mineral growth overtaking costume and props in non-graphic symbolic transformation"
     }
   ],
   "recipes": [
@@ -32655,6 +32697,1744 @@
           ]
         }
       }
+    },
+    {
+      "id": "flight_attendant_service_portrait",
+      "ko": "승무원 서비스 포트레이트",
+      "en": "flight attendant service portrait",
+      "weight": 0.7,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "costume_style",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.35
+        },
+        {
+          "slot": "world",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "fashion_editorial",
+            "film_still",
+            "magazine_feature"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "lifestyle",
+            "cinematic"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "flight_attendant_role_model"
+          ]
+        },
+        "action": {
+          "ids": [
+            "cabin_service_pause",
+            "looking_camera",
+            "standing_silence"
+          ]
+        },
+        "costume_style": {
+          "ids": [
+            "flight_attendant_uniform_costume"
+          ]
+        },
+        "location": {
+          "ids": [
+            "airplane_cabin_aisle"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "fluorescent",
+            "low_key"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "eye_level_three_quarter",
+            "low_ground_angle",
+            "eye_level_front"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "medium_close",
+            "frame_within_frame",
+            "centered_symmetry"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "50mm",
+            "35mm"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "professional_detachment",
+            "aloof_cool_beauty",
+            "mature_poised_elegance"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail"
+          ]
+        }
+      },
+      "embedding_text": "adult flight attendant cabin-crew uniform, airplane cabin aisle, service authority, controlled gaze"
+    },
+    {
+      "id": "firefighter_station_portrait",
+      "ko": "소방관 스테이션 포트레이트",
+      "en": "firefighter station portrait",
+      "weight": 0.68,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "costume_style",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "documentary_photo",
+            "film_still",
+            "magazine_feature"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "documentary",
+            "cinematic"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "firefighter_role_model"
+          ]
+        },
+        "action": {
+          "ids": [
+            "holding_firefighter_helmet",
+            "standing_silence"
+          ]
+        },
+        "costume_style": {
+          "ids": [
+            "firefighter_turnout_gear_costume"
+          ]
+        },
+        "location": {
+          "ids": [
+            "fire_station_bay"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "hard_flash",
+            "low_key",
+            "single_flashlight_beam"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "eye_level_three_quarter",
+            "low_ground_angle"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "medium_close",
+            "rule_of_thirds",
+            "frame_within_frame"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "professional_detachment",
+            "near_discovery_tension"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail"
+          ]
+        }
+      },
+      "embedding_text": "adult firefighter in turnout gear at fire station bay, calm emergency responder portrait"
+    },
+    {
+      "id": "security_guard_watch_portrait",
+      "ko": "보안요원 감시 포트레이트",
+      "en": "security guard watch portrait",
+      "weight": 0.68,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "costume_style",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.55
+        },
+        {
+          "slot": "light_type",
+          "probability": 0.5
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "film_still",
+            "concept_photo",
+            "documentary_photo"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "reportage_noir",
+            "cinematic"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "security_guard_role_model"
+          ]
+        },
+        "action": {
+          "ids": [
+            "checking_security_monitors",
+            "recorded_by_surveillance",
+            "looking_camera"
+          ]
+        },
+        "costume_style": {
+          "ids": [
+            "security_guard_uniform_costume"
+          ]
+        },
+        "location": {
+          "ids": [
+            "security_control_room"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "monitor_flicker_pattern",
+            "low_key",
+            "fluorescent"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "cctv_corner_direction",
+            "eye_level_three_quarter"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "security_cam_ultrawide",
+            "one_way_mirror_frame",
+            "medium_close"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "wide_24mm",
+            "35mm"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "public_place_paranoia",
+            "professional_detachment",
+            "digital_dislocation"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail"
+          ]
+        }
+      },
+      "embedding_text": "adult security guard in a control room, monitor flicker, surveillance composition and professional watchfulness"
+    },
+    {
+      "id": "chef_kitchen_service_portrait",
+      "ko": "셰프 주방 서비스 포트레이트",
+      "en": "chef kitchen service portrait",
+      "weight": 0.66,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "costume_style",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.45
+        },
+        {
+          "slot": "texture",
+          "probability": 0.35
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "documentary_photo",
+            "magazine_feature",
+            "film_still"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "lifestyle",
+            "documentary"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "chef_role_model"
+          ]
+        },
+        "action": {
+          "ids": [
+            "serving_from_kitchen_pass",
+            "looking_camera"
+          ]
+        },
+        "costume_style": {
+          "ids": [
+            "chef_white_coat_costume"
+          ]
+        },
+        "location": {
+          "ids": [
+            "professional_kitchen_pass"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "fluorescent",
+            "low_key",
+            "soft_window"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "eye_level_three_quarter",
+            "eye_level_front"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "medium_close",
+            "frame_within_frame",
+            "hands_only_detail_frame"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "50mm",
+            "35mm"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "professional_detachment",
+            "mature_poised_elegance"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail"
+          ]
+        }
+      },
+      "embedding_text": "adult chef in professional kitchen pass, white coat, service tension and composed authority"
+    },
+    {
+      "id": "military_officer_formal_portrait",
+      "ko": "군장교 정복 포트레이트",
+      "en": "military officer formal portrait",
+      "weight": 0.64,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "costume_style",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "color",
+          "probability": 0.4
+        },
+        {
+          "slot": "world",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "fashion_editorial",
+            "film_still",
+            "magazine_feature"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "cinematic",
+            "period_drama"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "military_officer_role_model"
+          ]
+        },
+        "action": {
+          "ids": [
+            "standing_silence",
+            "looking_down_at_low_camera"
+          ]
+        },
+        "costume_style": {
+          "ids": [
+            "military_officer_dress_uniform"
+          ]
+        },
+        "location": {
+          "ids": [
+            "courtroom_gallery",
+            "vintage_train_compartment",
+            "hotel_lobby"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "chiaroscuro_window_light",
+            "low_key",
+            "rim_light"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "low_ground_angle",
+            "eye_level_three_quarter"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "centered_symmetry",
+            "low_angle",
+            "medium_close"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "50mm",
+            "35mm"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "mature_poised_elegance",
+            "haughty_elegance",
+            "professional_detachment"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail"
+          ]
+        }
+      },
+      "embedding_text": "adult military officer dress uniform, formal command portrait with restrained authority"
+    },
+    {
+      "id": "adult_school_uniform_reference_portrait",
+      "ko": "성인 교복 레퍼런스 포트레이트",
+      "en": "adult school-uniform reference portrait",
+      "weight": 0.62,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "costume_style",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "makeup_style",
+          "probability": 0.5
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "fashion_editorial",
+            "concept_photo",
+            "magazine_feature"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "fashion",
+            "lifestyle"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "adult_school_uniform_cosplay_model"
+          ]
+        },
+        "action": {
+          "ids": [
+            "standing_silence",
+            "looking_camera"
+          ]
+        },
+        "costume_style": {
+          "ids": [
+            "adult_school_uniform_cosplay_costume"
+          ]
+        },
+        "location": {
+          "ids": [
+            "school_reference_studio"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "beauty_white_studio_light"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "eye_level_three_quarter",
+            "eye_level_front"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "centered_symmetry",
+            "medium_close",
+            "yearbook_centered_headshot"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "50mm",
+            "album_50mm_clean"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "pure_serene_softness",
+            "refreshing_bright_charm"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail"
+          ]
+        }
+      },
+      "embedding_text": "adult-only school uniform cosplay reference portrait in a neutral studio, covered styling and non-minor coding"
+    },
+    {
+      "id": "modern_shaman_ritual_portrait",
+      "ko": "현대 무녀 의식 포트레이트",
+      "en": "modern shaman ritual portrait",
+      "weight": 0.72,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "costume_style",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.75
+        },
+        {
+          "slot": "light_type",
+          "probability": 0.65
+        },
+        {
+          "slot": "texture",
+          "probability": 0.35
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "film_still",
+            "concept_photo",
+            "fashion_editorial"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "cinematic",
+            "fantasy"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "modern_shaman_performer"
+          ]
+        },
+        "action": {
+          "ids": [
+            "holding_shaman_bells",
+            "standing_with_folk_threshold_stillness"
+          ]
+        },
+        "costume_style": {
+          "ids": [
+            "modern_shaman_ritual_costume"
+          ]
+        },
+        "location": {
+          "ids": [
+            "traditional_shrine_interior",
+            "misty_mountain_altar"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "moonlit_folk_ritual_light",
+            "lantern_rows_warm_light",
+            "candlelight"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "eye_level_three_quarter",
+            "low_ground_angle"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "centered_symmetry",
+            "frame_within_frame",
+            "through_frosted_glass_frame"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "50mm",
+            "35mm"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "folk_ritual_unease",
+            "mature_poised_elegance"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail"
+          ]
+        }
+      },
+      "embedding_text": "modern Korean shaman, mudang ritual bells, five-color silk, traditional shrine, non-graphic folk unease"
+    },
+    {
+      "id": "archivist_library_observation",
+      "ko": "기록가 도서관 관찰 포트레이트",
+      "en": "archivist library observation portrait",
+      "weight": 0.68,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "costume_style",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.75
+        },
+        {
+          "slot": "light_type",
+          "probability": 0.55
+        },
+        {
+          "slot": "texture",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "documentary_photo",
+            "film_still",
+            "magazine_feature"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "documentary",
+            "cinematic"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "archivist_role_model"
+          ]
+        },
+        "action": {
+          "ids": [
+            "organizing_old_manuscripts",
+            "scanning_microfilm"
+          ]
+        },
+        "costume_style": {
+          "ids": [
+            "archivist_apron_gloves_costume",
+            "dark_academia_tweed_outfit"
+          ]
+        },
+        "location": {
+          "ids": [
+            "grand_archive_hall",
+            "restoration_lab",
+            "library_reading_room"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "low_key"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "eye_level_three_quarter",
+            "top_down_90"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "hands_only_detail_frame",
+            "medium_close",
+            "frame_within_frame"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "50mm",
+            "topdown_macro_60mm"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "archival_suspense",
+            "professional_detachment"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail"
+          ]
+        }
+      },
+      "embedding_text": "archivist or librarian in grand archive hall, old manuscripts, white gloves, microfilm and archival suspense"
+    },
+    {
+      "id": "researcher_clinical_observation",
+      "ko": "연구원 임상 관찰 포트레이트",
+      "en": "clinical researcher observation portrait",
+      "weight": 0.66,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "costume_style",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.7
+        },
+        {
+          "slot": "light_type",
+          "probability": 0.5
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "concept_photo",
+            "film_still",
+            "documentary_photo"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "cinematic",
+            "documentary"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "clinical_researcher_role_model"
+          ]
+        },
+        "action": {
+          "ids": [
+            "observing_specimen_case",
+            "standing_silence"
+          ]
+        },
+        "costume_style": {
+          "ids": [
+            "clinical_lab_coat_professional"
+          ]
+        },
+        "location": {
+          "ids": [
+            "clinical_observation_lab"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "clean_laboratory_fluorescent",
+            "low_key"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "eye_level_three_quarter",
+            "eye_level_front"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "specimen_case_reflection_frame",
+            "one_way_mirror_frame",
+            "medium_close"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "50mm",
+            "probe_lens_macro"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "sterile_observation",
+            "professional_detachment"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail"
+          ]
+        }
+      },
+      "embedding_text": "clinical researcher in sterile observation lab, specimen case, one-way mirror and controlled scientific tension"
+    },
+    {
+      "id": "seasonal_event_portrait",
+      "ko": "계절 이벤트 포트레이트",
+      "en": "seasonal event portrait",
+      "weight": 0.62,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.65
+        },
+        {
+          "slot": "weather",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "fashion_editorial",
+            "street_snapshot",
+            "film_still"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "lifestyle",
+            "fashion"
+          ]
+        },
+        "subject": {
+          "tags_any": [
+            "human"
+          ]
+        },
+        "action": {
+          "ids": [
+            "looking_camera",
+            "standing_silence",
+            "holding_story_prop"
+          ]
+        },
+        "location": {
+          "ids": [
+            "cherry_blossom_path",
+            "autumn_foliage_park",
+            "christmas_market_lights",
+            "halloween_decorated_street",
+            "lunar_new_year_hanok_room"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "first_snow_evening_light",
+            "lantern_rows_warm_light",
+            "soft_window",
+            "neon"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "eye_level_three_quarter",
+            "eye_level_front"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "medium_close",
+            "rule_of_thirds",
+            "frame_within_frame"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "50mm",
+            "35mm"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "festive_warmth",
+            "refreshing_bright_charm",
+            "pure_serene_softness"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail"
+          ]
+        }
+      },
+      "embedding_text": "seasonal event portrait with cherry blossoms, autumn leaves, Christmas lights, Halloween street or Lunar New Year hanok room"
+    },
+    {
+      "id": "folk_creature_threshold_portrait",
+      "ko": "민속 존재 문턱 포트레이트",
+      "en": "folk creature threshold portrait",
+      "weight": 0.68,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.75
+        },
+        {
+          "slot": "world",
+          "probability": 0.65
+        },
+        {
+          "slot": "texture",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "film_still",
+            "concept_photo",
+            "fashion_editorial"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "fantasy",
+            "cinematic"
+          ]
+        },
+        "subject": {
+          "tags_any": [
+            "human"
+          ]
+        },
+        "action": {
+          "ids": [
+            "standing_with_folk_threshold_stillness",
+            "holding_shaman_bells",
+            "looking_camera"
+          ]
+        },
+        "location": {
+          "ids": [
+            "traditional_shrine_interior",
+            "misty_mountain_altar",
+            "temple_lantern_hall",
+            "cathedral_nave_interior"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "moonlit_folk_ritual_light",
+            "lantern_rows_warm_light",
+            "candlelight"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "eye_level_three_quarter",
+            "low_ground_angle"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "through_frosted_glass_frame",
+            "door_chain_gap_frame",
+            "centered_symmetry",
+            "lace_partial_occlusion_frame"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "50mm",
+            "35mm"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "folk_ritual_unease",
+            "pure_serene_softness",
+            "haughty_elegance"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail"
+          ]
+        }
+      },
+      "embedding_text": "folk threshold portrait for gumiho, ghost, mermaid, witch, celestial or oni concepts using visible non-graphic subject-adjacent anchors"
+    },
+    {
+      "id": "digital_glitch_entity_portrait",
+      "ko": "디지털 글리치 존재 포트레이트",
+      "en": "digital glitch entity portrait",
+      "weight": 0.7,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.65
+        },
+        {
+          "slot": "light_type",
+          "probability": 0.65
+        },
+        {
+          "slot": "texture",
+          "probability": 0.75
+        },
+        {
+          "slot": "motion",
+          "probability": 0.55
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "concept_photo",
+            "film_still",
+            "fashion_editorial"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "sci_fi_city",
+            "cinematic"
+          ]
+        },
+        "subject": {
+          "tags_any": [
+            "human"
+          ]
+        },
+        "action": {
+          "ids": [
+            "glitch_afterimage_standstill",
+            "looking_camera"
+          ]
+        },
+        "location": {
+          "ids": [
+            "glitch_monitor_room",
+            "security_control_room"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "monitor_flicker_pattern",
+            "low_key"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "eye_level_three_quarter",
+            "cctv_corner_direction"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "security_cam_ultrawide",
+            "cornea_reflection_closeup",
+            "one_way_mirror_frame",
+            "medium_close"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "digital_dislocation",
+            "sterile_observation"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail"
+          ]
+        }
+      },
+      "embedding_text": "data ghost or digital glitch entity, monitor flicker, UI projection, pixel-drift edges and chromatic glitch without broken-face artifacts"
+    },
+    {
+      "id": "environmental_erosion_portrait",
+      "ko": "환경 침식 포트레이트",
+      "en": "environmental erosion portrait",
+      "weight": 0.66,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "texture",
+          "probability": 0.85
+        },
+        {
+          "slot": "surface_material",
+          "probability": 0.45
+        },
+        {
+          "slot": "world",
+          "probability": 0.65
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "concept_photo",
+            "film_still",
+            "fashion_editorial"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "fantasy",
+            "cinematic"
+          ]
+        },
+        "subject": {
+          "tags_any": [
+            "human"
+          ]
+        },
+        "action": {
+          "ids": [
+            "lightly_touching_moss_wall",
+            "standing_silence",
+            "looking_camera"
+          ]
+        },
+        "location": {
+          "ids": [
+            "moss_reclaimed_room",
+            "botanical_greenhouse_deck_floor"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "greenhouse_diffused_leaf_light",
+            "moonlit_folk_ritual_light"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "eye_level_three_quarter",
+            "eye_level_front"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "medium_close",
+            "frame_within_frame",
+            "through_frosted_glass_frame"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "50mm",
+            "35mm"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "environmental_absorption",
+            "folk_ritual_unease"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail"
+          ]
+        }
+      },
+      "embedding_text": "environmental erosion portrait where moss, crystals, paper dust or organic growth symbolically overtakes the scene without gore"
+    },
+    {
+      "id": "era_costume_editorial",
+      "ko": "시대 의상 에디토리얼",
+      "en": "era costume editorial",
+      "weight": 0.62,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "costume_style",
+          "probability": 0.8
+        },
+        {
+          "slot": "world",
+          "probability": 0.85
+        },
+        {
+          "slot": "texture",
+          "probability": 0.35
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "fashion_editorial",
+            "film_still",
+            "magazine_feature"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "fashion",
+            "period_drama"
+          ]
+        },
+        "subject": {
+          "tags_any": [
+            "human"
+          ]
+        },
+        "action": {
+          "ids": [
+            "standing_silence",
+            "looking_camera",
+            "watching_from_balcony_shadow"
+          ]
+        },
+        "location": {
+          "ids": [
+            "roaring_20s_ballroom",
+            "victorian_mansion_parlor",
+            "western_frontier_station",
+            "seventies_disco_floor",
+            "vintage_train_compartment"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "chandelier_warm_pools",
+            "candlelight",
+            "rim_light",
+            "stage_motion_flash"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "eye_level_three_quarter",
+            "low_ground_angle"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "centered_symmetry",
+            "medium_close",
+            "chandelier_high_watch_frame"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "50mm",
+            "35mm"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "haughty_elegance",
+            "mature_poised_elegance",
+            "archival_suspense"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail"
+          ]
+        }
+      },
+      "embedding_text": "era editorial portrait across 1920s, Victorian gothic, western frontier, 1970s disco, Belle Epoque and Renaissance worlds"
+    },
+    {
+      "id": "dynamic_motion_portrait",
+      "ko": "다이내믹 모션 포트레이트",
+      "en": "dynamic motion portrait",
+      "weight": 0.62,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "motion",
+          "probability": 0.85
+        },
+        {
+          "slot": "wardrobe_style",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "fashion_editorial",
+            "film_still",
+            "magazine_feature"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "fashion",
+            "cinematic"
+          ]
+        },
+        "subject": {
+          "tags_any": [
+            "human"
+          ]
+        },
+        "action": {
+          "ids": [
+            "mid_jump_freeze_pose",
+            "spinning_skirt_motion_pose",
+            "hair_flip_motion_pose",
+            "running_toward_camera_motion",
+            "dance_leap_midair"
+          ]
+        },
+        "location": {
+          "ids": [
+            "seventies_disco_floor",
+            "cherry_blossom_path",
+            "hotel_rooftop_dusk",
+            "subway_platform"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "stage_motion_flash",
+            "hard_flash",
+            "rim_light",
+            "neon"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "low_ground_angle",
+            "eye_level_three_quarter"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "dynamic_diagonal_action_frame",
+            "low_angle",
+            "medium_close"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "wide_24mm"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "refreshing_bright_charm",
+            "haughty_elegance"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail"
+          ]
+        }
+      },
+      "embedding_text": "dynamic action portrait with midair freeze, hair motion, diagonal framing, sharp face and kinetic body language"
+    },
+    {
+      "id": "cinematic_destination_portrait",
+      "ko": "상징적 목적지 포트레이트",
+      "en": "cinematic destination portrait",
+      "weight": 0.62,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.45
+        },
+        {
+          "slot": "world",
+          "probability": 0.55
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "film_still",
+            "fashion_editorial",
+            "concept_photo"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "cinematic",
+            "lifestyle"
+          ]
+        },
+        "subject": {
+          "tags_any": [
+            "human"
+          ]
+        },
+        "action": {
+          "ids": [
+            "looking_camera",
+            "standing_silence",
+            "holding_story_prop"
+          ]
+        },
+        "location": {
+          "ids": [
+            "cathedral_nave_interior",
+            "temple_lantern_hall",
+            "ferris_wheel_cabin_night",
+            "onsen_robe_veranda",
+            "vintage_train_compartment",
+            "observatory_dome_room",
+            "courtroom_gallery"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "lantern_rows_warm_light",
+            "low_key",
+            "soft_window",
+            "moonlit_folk_ritual_light"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "eye_level_three_quarter",
+            "low_ground_angle"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "frame_within_frame",
+            "centered_symmetry",
+            "door_chain_gap_frame"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "mature_poised_elegance",
+            "archival_suspense",
+            "folk_ritual_unease"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail"
+          ]
+        }
+      },
+      "embedding_text": "cinematic destination portrait in cathedral, temple, ferris wheel, onsen, vintage train, observatory or courtroom settings"
     }
   ],
   "templates": {
@@ -37087,6 +38867,387 @@
             "autonomy_vs_command"
           ]
         }
+      },
+      {
+        "id": "flight_attendant_role_model",
+        "ko": "승무원 역할의 성인 인물",
+        "en": "an adult flight attendant role model",
+        "weight": 0.95,
+        "tags": [
+          "human",
+          "occupation",
+          "service",
+          "aviation"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "kind": [
+          "human"
+        ],
+        "aliases": [
+          "flight attendant",
+          "cabin crew",
+          "승무원"
+        ],
+        "keywords": [
+          "flight attendant",
+          "cabin crew",
+          "aviation service"
+        ],
+        "embedding_text": "adult flight attendant in professional cabin-crew uniform, service authority, airplane cabin"
+      },
+      {
+        "id": "firefighter_role_model",
+        "ko": "소방관 역할의 성인 인물",
+        "en": "an adult firefighter role model",
+        "weight": 0.95,
+        "tags": [
+          "human",
+          "occupation",
+          "emergency",
+          "uniform"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "kind": [
+          "human"
+        ],
+        "aliases": [
+          "firefighter",
+          "fire fighter",
+          "소방관"
+        ],
+        "keywords": [
+          "firefighter",
+          "emergency responder",
+          "fire station"
+        ],
+        "embedding_text": "adult firefighter in turnout gear, helmet and calm emergency-response presence"
+      },
+      {
+        "id": "security_guard_role_model",
+        "ko": "보안요원 역할의 성인 인물",
+        "en": "an adult security guard role model",
+        "weight": 0.92,
+        "tags": [
+          "human",
+          "occupation",
+          "security",
+          "surveillance"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "kind": [
+          "human"
+        ],
+        "aliases": [
+          "security guard",
+          "보안요원",
+          "guard"
+        ],
+        "keywords": [
+          "security guard",
+          "surveillance",
+          "control room"
+        ],
+        "embedding_text": "adult security guard with badge, earpiece, camera monitors and controlled watchfulness"
+      },
+      {
+        "id": "chef_role_model",
+        "ko": "요리사 역할의 성인 인물",
+        "en": "an adult chef role model",
+        "weight": 0.92,
+        "tags": [
+          "human",
+          "occupation",
+          "kitchen",
+          "service"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "kind": [
+          "human"
+        ],
+        "aliases": [
+          "chef",
+          "cook",
+          "셰프",
+          "요리사"
+        ],
+        "keywords": [
+          "chef",
+          "professional kitchen",
+          "white coat"
+        ],
+        "embedding_text": "adult chef in a professional kitchen with service-pass authority"
+      },
+      {
+        "id": "military_officer_role_model",
+        "ko": "군장교 역할의 성인 인물",
+        "en": "an adult military officer role model",
+        "weight": 0.9,
+        "tags": [
+          "human",
+          "occupation",
+          "uniform",
+          "formal"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "kind": [
+          "human"
+        ],
+        "aliases": [
+          "military officer",
+          "군장교",
+          "장교"
+        ],
+        "keywords": [
+          "military officer",
+          "formal uniform",
+          "command"
+        ],
+        "embedding_text": "adult military officer in formal ceremonial uniform, command posture and restrained authority"
+      },
+      {
+        "id": "adult_school_uniform_cosplay_model",
+        "ko": "성인 교복 코스프레 모델",
+        "en": "an adult school-uniform cosplay model",
+        "weight": 0.86,
+        "tags": [
+          "human",
+          "cosplay",
+          "uniform",
+          "adult"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "kind": [
+          "human"
+        ],
+        "aliases": [
+          "adult school uniform cosplay",
+          "성인 교복",
+          "학생 컨셉"
+        ],
+        "keywords": [
+          "adult only",
+          "school uniform cosplay",
+          "reference studio"
+        ],
+        "embedding_text": "adult performer wearing clearly adult-coded school-uniform cosplay in a reference portrait"
+      },
+      {
+        "id": "modern_shaman_performer",
+        "ko": "현대 무녀 컨셉의 성인 인물",
+        "en": "an adult modern shaman performer",
+        "weight": 0.9,
+        "tags": [
+          "human",
+          "folk",
+          "ritual",
+          "korean"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "kind": [
+          "human"
+        ],
+        "aliases": [
+          "modern shaman",
+          "mudang",
+          "무녀",
+          "무당"
+        ],
+        "keywords": [
+          "shaman",
+          "mudang",
+          "ritual bells",
+          "five-color silk"
+        ],
+        "embedding_text": "adult modern Korean shaman performer with bells, five-color silk and restrained ritual presence"
+      },
+      {
+        "id": "archivist_role_model",
+        "ko": "기록가 역할의 성인 인물",
+        "en": "an adult archivist role model",
+        "weight": 0.9,
+        "tags": [
+          "human",
+          "occupation",
+          "archive",
+          "library"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "kind": [
+          "human"
+        ],
+        "aliases": [
+          "archivist",
+          "librarian",
+          "기록가",
+          "사서"
+        ],
+        "keywords": [
+          "archive",
+          "librarian",
+          "white gloves",
+          "manuscripts"
+        ],
+        "embedding_text": "adult archivist or librarian handling old records, archive boxes and white cotton gloves"
+      },
+      {
+        "id": "clinical_researcher_role_model",
+        "ko": "임상 연구원 역할의 성인 인물",
+        "en": "an adult clinical researcher role model",
+        "weight": 0.9,
+        "tags": [
+          "human",
+          "occupation",
+          "science",
+          "clinical"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "kind": [
+          "human"
+        ],
+        "aliases": [
+          "clinical researcher",
+          "researcher",
+          "연구원"
+        ],
+        "keywords": [
+          "lab coat",
+          "clinical observation",
+          "specimen"
+        ],
+        "embedding_text": "adult clinical researcher in a sterile observation lab with specimen case and controlled gaze"
+      },
+      {
+        "id": "androgynous_style_model",
+        "ko": "보이시한 양성적 스타일의 성인 모델",
+        "en": "an adult androgynous style model",
+        "weight": 0.84,
+        "tags": [
+          "human",
+          "fashion",
+          "androgynous",
+          "cool"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "kind": [
+          "human"
+        ],
+        "aliases": [
+          "androgynous",
+          "boyish",
+          "보이시"
+        ],
+        "keywords": [
+          "androgynous",
+          "boyish",
+          "tomboy"
+        ],
+        "embedding_text": "adult androgynous style model with boyish tailoring and cool restraint"
+      },
+      {
+        "id": "mature_elegant_model",
+        "ko": "성숙하고 우아한 성인 모델",
+        "en": "a mature elegant adult model",
+        "weight": 0.84,
+        "tags": [
+          "human",
+          "fashion",
+          "elegant",
+          "mature"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "kind": [
+          "human"
+        ],
+        "aliases": [
+          "mature elegance",
+          "연상",
+          "누님"
+        ],
+        "keywords": [
+          "mature",
+          "elegant",
+          "older-sister aura"
+        ],
+        "embedding_text": "mature elegant adult model with poised older-sister confidence"
+      },
+      {
+        "id": "alien_visitor_subject",
+        "ko": "외계 방문자 분위기의 성인 인물",
+        "en": "an adult alien visitor subject",
+        "weight": 0.82,
+        "tags": [
+          "human",
+          "sci_fi",
+          "alien",
+          "uncanny"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "kind": [
+          "human"
+        ],
+        "aliases": [
+          "alien visitor",
+          "외계인"
+        ],
+        "keywords": [
+          "alien",
+          "visitor",
+          "otherworldly"
+        ],
+        "embedding_text": "adult humanlike alien visitor with otherworldly calm, subtle nonhuman gaze and unfamiliar styling"
+      },
+      {
+        "id": "esper_subject",
+        "ko": "초능력자 분위기의 성인 인물",
+        "en": "an adult esper subject",
+        "weight": 0.82,
+        "tags": [
+          "human",
+          "sci_fi",
+          "psychic",
+          "supernatural"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "kind": [
+          "human"
+        ],
+        "aliases": [
+          "esper",
+          "psychic",
+          "초능력자"
+        ],
+        "keywords": [
+          "esper",
+          "psychic",
+          "telekinesis"
+        ],
+        "embedding_text": "adult psychic esper subject with levitating small objects and concentrated stillness"
       }
     ],
     "person_origin": [
@@ -37746,6 +39907,78 @@
         ],
         "for_any": [
           "human"
+        ]
+      },
+      {
+        "id": "androgynous_cool_presence",
+        "ko": "보이시하고 차가운 존재감",
+        "en": "androgynous cool presence",
+        "weight": 0.82,
+        "tags": [
+          "human",
+          "appearance",
+          "androgynous",
+          "cool"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "androgynous cool",
+          "boyish cool"
+        ],
+        "keywords": [
+          "androgynous",
+          "boyish",
+          "cool"
+        ]
+      },
+      {
+        "id": "mature_elegant_presence",
+        "ko": "성숙하고 우아한 존재감",
+        "en": "mature elegant presence",
+        "weight": 0.82,
+        "tags": [
+          "human",
+          "appearance",
+          "mature",
+          "elegant"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "mature elegance",
+          "older sister aura"
+        ],
+        "keywords": [
+          "mature",
+          "elegant",
+          "poised"
+        ]
+      },
+      {
+        "id": "pure_serene_presence",
+        "ko": "청순하고 고요한 존재감",
+        "en": "pure serene presence",
+        "weight": 0.82,
+        "tags": [
+          "human",
+          "appearance",
+          "pure",
+          "soft"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "pure serene",
+          "청순"
+        ],
+        "keywords": [
+          "pure",
+          "serene",
+          "clean"
         ]
       }
     ],
@@ -38808,6 +41041,51 @@
           "party"
         ],
         "embedding_text": "glitter-accent party makeup"
+      },
+      {
+        "id": "graphic_eyeliner_sharp",
+        "ko": "선명한 그래픽 아이라이너",
+        "en": "sharp graphic eyeliner",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "makeup",
+          "sharp"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "graphic eyeliner"
+        ],
+        "keywords": [
+          "graphic eyeliner",
+          "sharp",
+          "makeup"
+        ]
+      },
+      {
+        "id": "clean_pure_makeup",
+        "ko": "맑고 청순한 클린 메이크업",
+        "en": "clean pure makeup",
+        "weight": 0.8,
+        "tags": [
+          "human",
+          "makeup",
+          "clean",
+          "pure"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "clean pure makeup"
+        ],
+        "keywords": [
+          "clean makeup",
+          "pure",
+          "natural"
+        ]
       }
     ],
     "expression": [
@@ -39269,6 +41547,145 @@
             "behavior_control"
           ]
         }
+      },
+      {
+        "id": "chin_up_haughty_look",
+        "ko": "턱을 살짝 든 도도한 시선",
+        "en": "a chin-up haughty look",
+        "weight": 0.82,
+        "tags": [
+          "human",
+          "expression",
+          "haughty"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "haughty look",
+          "도도한 시선"
+        ],
+        "keywords": [
+          "haughty",
+          "chin up",
+          "proud"
+        ]
+      },
+      {
+        "id": "golden_fox_eye_gaze",
+        "ko": "금빛 여우 같은 눈빛",
+        "en": "a golden fox-eye gaze",
+        "weight": 0.8,
+        "tags": [
+          "human",
+          "expression",
+          "folk",
+          "fox"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "fox eye gaze",
+          "구미호 눈빛"
+        ],
+        "keywords": [
+          "fox",
+          "gumiho",
+          "golden eyes"
+        ]
+      },
+      {
+        "id": "bright_refreshing_grin",
+        "ko": "발랄하고 산뜻한 웃음",
+        "en": "a bright refreshing grin",
+        "weight": 0.8,
+        "tags": [
+          "human",
+          "expression",
+          "bright"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "refreshing grin",
+          "발랄한 웃음"
+        ],
+        "keywords": [
+          "bright",
+          "playful",
+          "refreshing"
+        ]
+      },
+      {
+        "id": "aloof_composed_gaze",
+        "ko": "차갑고 침착한 쿨뷰티 시선",
+        "en": "an aloof composed gaze",
+        "weight": 0.84,
+        "tags": [
+          "human",
+          "expression",
+          "cool"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "cool beauty gaze",
+          "쿨뷰티"
+        ],
+        "keywords": [
+          "aloof",
+          "cool beauty",
+          "composed"
+        ]
+      },
+      {
+        "id": "gentle_pure_gaze",
+        "ko": "청순하고 부드러운 시선",
+        "en": "a gentle pure gaze",
+        "weight": 0.8,
+        "tags": [
+          "human",
+          "expression",
+          "pure"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "pure gaze",
+          "청순한 시선"
+        ],
+        "keywords": [
+          "pure",
+          "gentle",
+          "serene"
+        ]
+      },
+      {
+        "id": "mature_knowing_smile",
+        "ko": "여유로운 연상미의 미소",
+        "en": "a mature knowing smile",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "expression",
+          "mature"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "knowing smile",
+          "누님 미소"
+        ],
+        "keywords": [
+          "mature",
+          "knowing",
+          "poised"
+        ]
       }
     ],
     "costume_style": [
@@ -40079,6 +42496,377 @@
         "for_any": [
           "human"
         ]
+      },
+      {
+        "id": "firefighter_turnout_gear_costume",
+        "ko": "성인 소방관 방화복 스타일",
+        "en": "adult firefighter turnout-gear styling",
+        "weight": 0.88,
+        "tags": [
+          "human",
+          "uniform",
+          "emergency",
+          "protective"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "firefighter gear",
+          "turnout gear",
+          "소방관 방화복"
+        ],
+        "keywords": [
+          "firefighter",
+          "helmet",
+          "turnout gear"
+        ]
+      },
+      {
+        "id": "chef_white_coat_costume",
+        "ko": "성인 셰프 화이트 코트 스타일",
+        "en": "adult chef white coat styling",
+        "weight": 0.88,
+        "tags": [
+          "human",
+          "uniform",
+          "kitchen",
+          "professional"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "chef coat",
+          "white chef jacket",
+          "셰프 코트"
+        ],
+        "keywords": [
+          "chef",
+          "kitchen",
+          "white coat"
+        ]
+      },
+      {
+        "id": "military_officer_dress_uniform",
+        "ko": "성인 군장교 정복 스타일",
+        "en": "adult military officer dress-uniform styling",
+        "weight": 0.86,
+        "tags": [
+          "human",
+          "uniform",
+          "formal",
+          "command"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "military dress uniform",
+          "officer uniform",
+          "장교 정복"
+        ],
+        "keywords": [
+          "military officer",
+          "dress uniform",
+          "command"
+        ]
+      },
+      {
+        "id": "adult_school_uniform_cosplay_costume",
+        "ko": "성인 교복 코스프레 스타일",
+        "en": "adult school-uniform cosplay styling",
+        "weight": 0.82,
+        "tags": [
+          "human",
+          "cosplay",
+          "uniform",
+          "adult"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "adult school uniform cosplay",
+          "성인 교복 코스프레"
+        ],
+        "keywords": [
+          "adult only",
+          "school uniform",
+          "cosplay"
+        ]
+      },
+      {
+        "id": "modern_shaman_ritual_costume",
+        "ko": "현대 무녀 의식복 스타일",
+        "en": "modern shaman ritual costume styling",
+        "weight": 0.86,
+        "tags": [
+          "human",
+          "folk",
+          "ritual",
+          "korean"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "mudang costume",
+          "shaman ritual costume",
+          "무녀 의상"
+        ],
+        "keywords": [
+          "shaman",
+          "mudang",
+          "ritual costume",
+          "five-color silk"
+        ]
+      },
+      {
+        "id": "archivist_apron_gloves_costume",
+        "ko": "기록 보존 앞치마와 장갑 스타일",
+        "en": "archivist apron and gloves styling",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "archive",
+          "library",
+          "professional"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "archivist apron",
+          "librarian gloves",
+          "기록가 앞치마"
+        ],
+        "keywords": [
+          "archivist",
+          "apron",
+          "white gloves"
+        ]
+      },
+      {
+        "id": "teacher_blazer_uniform",
+        "ko": "성인 교사 블레이저 유니폼 스타일",
+        "en": "adult teacher blazer uniform styling",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "uniform",
+          "education",
+          "adult"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "teacher blazer",
+          "교사 블레이저"
+        ],
+        "keywords": [
+          "adult teacher",
+          "blazer",
+          "education"
+        ]
+      },
+      {
+        "id": "flapper_beaded_dress",
+        "ko": "1920년대 플래퍼 비즈 드레스",
+        "en": "1920s flapper beaded dress",
+        "weight": 0.75,
+        "tags": [
+          "human",
+          "era",
+          "1920s",
+          "fashion"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "flapper dress",
+          "beaded dress"
+        ],
+        "keywords": [
+          "1920s",
+          "flapper",
+          "gatsby"
+        ]
+      },
+      {
+        "id": "victorian_gothic_dress",
+        "ko": "빅토리안 고딕 드레스",
+        "en": "Victorian gothic dress",
+        "weight": 0.75,
+        "tags": [
+          "human",
+          "era",
+          "gothic",
+          "fashion"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "Victorian gothic dress"
+        ],
+        "keywords": [
+          "Victorian",
+          "gothic",
+          "period"
+        ]
+      },
+      {
+        "id": "western_frontier_outfit",
+        "ko": "서부 개척시대 프런티어 의상",
+        "en": "western frontier outfit",
+        "weight": 0.72,
+        "tags": [
+          "human",
+          "era",
+          "western",
+          "frontier"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "western frontier outfit"
+        ],
+        "keywords": [
+          "western",
+          "frontier",
+          "period"
+        ]
+      },
+      {
+        "id": "seventies_disco_outfit",
+        "ko": "1970년대 디스코 의상",
+        "en": "1970s disco outfit",
+        "weight": 0.72,
+        "tags": [
+          "human",
+          "era",
+          "disco",
+          "fashion"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "70s disco outfit"
+        ],
+        "keywords": [
+          "1970s",
+          "disco",
+          "retro"
+        ]
+      },
+      {
+        "id": "witch_robe_wide_hat",
+        "ko": "넓은 모자와 마녀 로브",
+        "en": "witch robe with a wide-brim hat",
+        "weight": 0.72,
+        "tags": [
+          "human",
+          "fantasy",
+          "witch",
+          "costume"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "witch robe",
+          "wide witch hat",
+          "마녀 로브"
+        ],
+        "keywords": [
+          "witch",
+          "hat",
+          "magic"
+        ]
+      },
+      {
+        "id": "celestial_silk_ribbon_robe",
+        "ko": "선녀풍 천상 실크 리본 의상",
+        "en": "celestial silk ribbon robe",
+        "weight": 0.72,
+        "tags": [
+          "human",
+          "fantasy",
+          "celestial",
+          "folk"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "celestial robe",
+          "선녀 의상"
+        ],
+        "keywords": [
+          "celestial",
+          "fairy",
+          "silk ribbon"
+        ]
+      },
+      {
+        "id": "white_sobok_burial_dress",
+        "ko": "하얀 소복풍 원귀 의상",
+        "en": "white sobok-inspired ghost dress",
+        "weight": 0.7,
+        "tags": [
+          "human",
+          "folk",
+          "ghost",
+          "costume"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "white sobok",
+          "원귀 소복"
+        ],
+        "keywords": [
+          "ghost",
+          "sobok",
+          "white dress"
+        ]
+      },
+      {
+        "id": "clinical_lab_coat_professional",
+        "ko": "전문 임상 연구원 흰 실험복",
+        "en": "professional clinical lab coat",
+        "weight": 0.88,
+        "tags": [
+          "human",
+          "uniform",
+          "medical",
+          "clinical",
+          "lab_coat",
+          "professional"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "professional lab coat",
+          "clinical lab coat",
+          "researcher lab coat",
+          "연구원 실험복"
+        ],
+        "keywords": [
+          "clinical researcher",
+          "lab coat",
+          "professional",
+          "medical",
+          "researcher"
+        ],
+        "embedding_text": "professional clinical researcher lab coat, real sterile laboratory uniform, not cosplay"
       }
     ],
     "wardrobe_style": [
@@ -40513,6 +43301,117 @@
         ],
         "for_any": [
           "human"
+        ]
+      },
+      {
+        "id": "old_money_tailored_layers",
+        "ko": "올드머니풍 테일러드 레이어",
+        "en": "old-money tailored layers",
+        "weight": 0.8,
+        "tags": [
+          "human",
+          "fashion",
+          "old_money"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "old money style"
+        ],
+        "keywords": [
+          "old money",
+          "tailored",
+          "quiet luxury"
+        ]
+      },
+      {
+        "id": "tomboy_oversized_layers",
+        "ko": "보이시한 오버사이즈 레이어",
+        "en": "tomboy oversized layers",
+        "weight": 0.8,
+        "tags": [
+          "human",
+          "fashion",
+          "tomboy",
+          "androgynous"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "tomboy oversized layers",
+          "보이시"
+        ],
+        "keywords": [
+          "tomboy",
+          "boyish",
+          "oversized"
+        ]
+      },
+      {
+        "id": "dark_feminine_black_layers",
+        "ko": "다크 페미닌 블랙 레이어",
+        "en": "dark feminine black layers",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "fashion",
+          "dark_feminine"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "dark feminine"
+        ],
+        "keywords": [
+          "dark feminine",
+          "black layers"
+        ]
+      },
+      {
+        "id": "light_academia_knit_layers",
+        "ko": "라이트 아카데미아 니트 레이어",
+        "en": "light academia knit layers",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "fashion",
+          "academia"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "light academia"
+        ],
+        "keywords": [
+          "light academia",
+          "knit",
+          "scholarly"
+        ]
+      },
+      {
+        "id": "coastal_grandmother_linen_layers",
+        "ko": "해안가 린넨 레이어 스타일",
+        "en": "coastal grandmother linen layers",
+        "weight": 0.7,
+        "tags": [
+          "human",
+          "fashion",
+          "coastal"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "coastal grandmother"
+        ],
+        "keywords": [
+          "linen",
+          "coastal",
+          "relaxed"
         ]
       }
     ],
@@ -43249,6 +46148,272 @@
           "human",
           "tense",
           "surveillance"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "organizing_old_manuscripts",
+        "ko": "오래된 원고를 정리하는",
+        "en": "organizing old manuscripts",
+        "weight": 0.82,
+        "tags": [
+          "human",
+          "archive",
+          "hands"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "scanning_microfilm",
+        "ko": "마이크로필름을 확인하는",
+        "en": "scanning microfilm",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "archive",
+          "technology"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "observing_specimen_case",
+        "ko": "표본 케이스를 관찰하는",
+        "en": "observing a specimen case",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "clinical",
+          "science"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "holding_shaman_bells",
+        "ko": "무녀 방울을 들고 정지한",
+        "en": "holding shaman ritual bells",
+        "weight": 0.82,
+        "tags": [
+          "human",
+          "folk",
+          "ritual"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "mid_jump_freeze_pose",
+        "ko": "점프 중간에 멈춘 듯한 포즈",
+        "en": "mid-jump freeze pose",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "motion",
+          "dynamic"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "spinning_skirt_motion_pose",
+        "ko": "치맛자락이 회전하는 포즈",
+        "en": "spinning-skirt motion pose",
+        "weight": 0.74,
+        "tags": [
+          "human",
+          "motion",
+          "fashion"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "martial_arts_guard_stance",
+        "ko": "무술 가드 자세",
+        "en": "martial-arts guard stance",
+        "weight": 0.74,
+        "tags": [
+          "human",
+          "motion",
+          "stance"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "hair_flip_motion_pose",
+        "ko": "머리카락을 넘기는 순간",
+        "en": "hair-flip motion pose",
+        "weight": 0.74,
+        "tags": [
+          "human",
+          "motion",
+          "fashion"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "running_toward_camera_motion",
+        "ko": "카메라를 향해 뛰어오는",
+        "en": "running toward the camera",
+        "weight": 0.74,
+        "tags": [
+          "human",
+          "motion",
+          "dynamic"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "dance_leap_midair",
+        "ko": "공중에 떠오른 댄스 점프",
+        "en": "a midair dance leap",
+        "weight": 0.74,
+        "tags": [
+          "human",
+          "motion",
+          "dance"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "standing_with_folk_threshold_stillness",
+        "ko": "민속적 문턱 앞에서 정지한",
+        "en": "standing with folk-threshold stillness",
+        "weight": 0.82,
+        "tags": [
+          "human",
+          "folk",
+          "threshold"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "checking_security_monitors",
+        "ko": "보안 모니터를 확인하는",
+        "en": "checking security monitors",
+        "weight": 0.8,
+        "tags": [
+          "human",
+          "security",
+          "surveillance"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "serving_from_kitchen_pass",
+        "ko": "주방 패스에서 접시를 내미는",
+        "en": "serving from a kitchen pass",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "kitchen",
+          "service"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "holding_firefighter_helmet",
+        "ko": "소방 헬멧을 들고 선",
+        "en": "holding a firefighter helmet",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "emergency",
+          "uniform"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "cabin_service_pause",
+        "ko": "객실 서비스 중 잠시 멈춘",
+        "en": "pausing during cabin service",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "aviation",
+          "service"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "glitch_afterimage_standstill",
+        "ko": "글리치 잔상 속에 정지한",
+        "en": "standing still inside glitch afterimages",
+        "weight": 0.82,
+        "tags": [
+          "human",
+          "digital",
+          "glitch"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "lightly_touching_moss_wall",
+        "ko": "이끼 낀 벽에 손을 얹은",
+        "en": "lightly touching a moss-covered wall",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "nature",
+          "transformation"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "levitating_small_objects",
+        "ko": "작은 물건들을 떠오르게 하는",
+        "en": "levitating small objects",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "psychic",
+          "supernatural"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "studying_star_map_tablet",
+        "ko": "낯선 별자리 태블릿을 살피는",
+        "en": "studying an unfamiliar star-map tablet",
+        "weight": 0.72,
+        "tags": [
+          "human",
+          "alien",
+          "sci_fi"
         ],
         "for_any": [
           "human"
@@ -47682,6 +50847,492 @@
         "for_any": [
           "human"
         ]
+      },
+      {
+        "id": "shaman_bells_prop",
+        "ko": "무녀 방울 소품",
+        "en": "shaman ritual bells",
+        "weight": 0.88,
+        "tags": [
+          "human",
+          "prop",
+          "folk",
+          "ritual"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "shaman bells",
+          "mudang bells"
+        ],
+        "keywords": [
+          "shaman",
+          "bells",
+          "ritual"
+        ]
+      },
+      {
+        "id": "five_color_silk_strip_prop",
+        "ko": "오방색 비단 띠",
+        "en": "five-color silk strips",
+        "weight": 0.86,
+        "tags": [
+          "human",
+          "prop",
+          "folk",
+          "korean"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "five-color silk",
+          "오방색"
+        ],
+        "keywords": [
+          "five color",
+          "silk",
+          "shaman"
+        ]
+      },
+      {
+        "id": "folding_fan_shaman_art_prop",
+        "ko": "부채형 무속 소품",
+        "en": "a folding fan used as a shamanic art prop",
+        "weight": 0.8,
+        "tags": [
+          "human",
+          "prop",
+          "folk",
+          "ritual"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "shaman fan"
+        ],
+        "keywords": [
+          "fan",
+          "shaman",
+          "ritual"
+        ]
+      },
+      {
+        "id": "fox_fire_wisp_prop",
+        "ko": "작은 여우불 소품",
+        "en": "a small fox-fire wisp",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "prop",
+          "folk",
+          "fox"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "fox fire",
+          "구미호 여우불"
+        ],
+        "keywords": [
+          "fox fire",
+          "gumiho",
+          "wisp"
+        ]
+      },
+      {
+        "id": "sealed_talisman_paper_prop",
+        "ko": "봉인 부적 종이",
+        "en": "a sealed talisman paper charm",
+        "weight": 0.82,
+        "tags": [
+          "human",
+          "prop",
+          "folk",
+          "talisman"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "talisman paper",
+          "부적"
+        ],
+        "keywords": [
+          "talisman",
+          "paper charm",
+          "seal"
+        ]
+      },
+      {
+        "id": "archive_box_prop",
+        "ko": "오래된 기록 보관 상자",
+        "en": "an old archive box",
+        "weight": 0.82,
+        "tags": [
+          "human",
+          "prop",
+          "archive"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "archive box"
+        ],
+        "keywords": [
+          "archive",
+          "box",
+          "record"
+        ]
+      },
+      {
+        "id": "microfilm_reader_prop",
+        "ko": "마이크로필름 리더기",
+        "en": "a microfilm reader",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "prop",
+          "archive",
+          "technology"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "microfilm reader"
+        ],
+        "keywords": [
+          "microfilm",
+          "archive",
+          "reader"
+        ]
+      },
+      {
+        "id": "white_cotton_gloves_prop",
+        "ko": "흰 면장갑",
+        "en": "white cotton gloves",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "prop",
+          "archive"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "white cotton gloves"
+        ],
+        "keywords": [
+          "archive",
+          "gloves",
+          "preservation"
+        ]
+      },
+      {
+        "id": "glass_specimen_case_prop",
+        "ko": "유리 표본 케이스",
+        "en": "a glass specimen case",
+        "weight": 0.8,
+        "tags": [
+          "human",
+          "prop",
+          "science",
+          "clinical"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "specimen case"
+        ],
+        "keywords": [
+          "specimen",
+          "case",
+          "lab"
+        ]
+      },
+      {
+        "id": "glitching_phone_screen_prop",
+        "ko": "글리치가 이는 휴대폰 화면",
+        "en": "a glitching phone screen",
+        "weight": 0.82,
+        "tags": [
+          "human",
+          "prop",
+          "digital",
+          "glitch"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "glitching phone",
+          "data ghost phone"
+        ],
+        "keywords": [
+          "glitch",
+          "phone screen",
+          "data ghost"
+        ]
+      },
+      {
+        "id": "cracked_data_card_prop",
+        "ko": "금이 간 데이터 카드",
+        "en": "a cracked data card",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "prop",
+          "digital"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "cracked data card"
+        ],
+        "keywords": [
+          "data card",
+          "glitch",
+          "digital"
+        ]
+      },
+      {
+        "id": "christmas_lights_prop",
+        "ko": "작은 크리스마스 전구",
+        "en": "small Christmas lights",
+        "weight": 0.72,
+        "tags": [
+          "human",
+          "prop",
+          "seasonal",
+          "winter"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "Christmas lights"
+        ],
+        "keywords": [
+          "Christmas",
+          "lights",
+          "winter"
+        ]
+      },
+      {
+        "id": "halloween_jack_o_lantern_prop",
+        "ko": "할로윈 잭오랜턴 소품",
+        "en": "a Halloween jack-o-lantern prop",
+        "weight": 0.72,
+        "tags": [
+          "human",
+          "prop",
+          "seasonal",
+          "halloween"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "jack-o-lantern"
+        ],
+        "keywords": [
+          "Halloween",
+          "pumpkin",
+          "seasonal"
+        ]
+      },
+      {
+        "id": "cherry_blossom_branch_prop",
+        "ko": "벚꽃 가지 소품",
+        "en": "a cherry blossom branch prop",
+        "weight": 0.72,
+        "tags": [
+          "human",
+          "prop",
+          "seasonal",
+          "spring"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "cherry blossom branch"
+        ],
+        "keywords": [
+          "cherry blossom",
+          "spring",
+          "branch"
+        ]
+      },
+      {
+        "id": "lunar_new_year_lantern_prop",
+        "ko": "설날 홍등 소품",
+        "en": "a Lunar New Year lantern prop",
+        "weight": 0.72,
+        "tags": [
+          "human",
+          "prop",
+          "seasonal",
+          "lunar_new_year"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "Lunar New Year lantern"
+        ],
+        "keywords": [
+          "Lunar New Year",
+          "lantern",
+          "hanok"
+        ]
+      },
+      {
+        "id": "wide_brim_witch_hat_prop",
+        "ko": "넓은 마녀 모자",
+        "en": "a wide-brim witch hat",
+        "weight": 0.72,
+        "tags": [
+          "human",
+          "prop",
+          "witch",
+          "fantasy"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "witch hat"
+        ],
+        "keywords": [
+          "witch",
+          "hat",
+          "magic"
+        ]
+      },
+      {
+        "id": "grimoire_candle_prop",
+        "ko": "마도서와 촛불 소품",
+        "en": "a grimoire and candle prop",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "prop",
+          "magic",
+          "fantasy"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "grimoire",
+          "spellbook"
+        ],
+        "keywords": [
+          "grimoire",
+          "magic",
+          "candle"
+        ]
+      },
+      {
+        "id": "mermaid_scale_shell_prop",
+        "ko": "비늘과 조개 장식",
+        "en": "a scale-and-shell charm",
+        "weight": 0.72,
+        "tags": [
+          "human",
+          "prop",
+          "mermaid",
+          "fantasy"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "scale shell charm"
+        ],
+        "keywords": [
+          "mermaid",
+          "scale",
+          "shell"
+        ]
+      },
+      {
+        "id": "single_feather_trace_prop",
+        "ko": "작은 깃털 흔적",
+        "en": "a single feather trace",
+        "weight": 0.7,
+        "tags": [
+          "human",
+          "prop",
+          "celestial",
+          "folk"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "single feather"
+        ],
+        "keywords": [
+          "feather",
+          "celestial",
+          "trace"
+        ]
+      },
+      {
+        "id": "levitating_teacup_prop",
+        "ko": "떠오르는 찻잔",
+        "en": "a levitating teacup",
+        "weight": 0.72,
+        "tags": [
+          "human",
+          "prop",
+          "psychic",
+          "supernatural"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "levitating cup"
+        ],
+        "keywords": [
+          "psychic",
+          "telekinesis",
+          "levitation"
+        ]
+      },
+      {
+        "id": "star_map_tablet_prop",
+        "ko": "낯선 별자리 태블릿",
+        "en": "an unfamiliar star-map tablet",
+        "weight": 0.72,
+        "tags": [
+          "human",
+          "prop",
+          "alien",
+          "sci_fi"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "star map tablet"
+        ],
+        "keywords": [
+          "alien",
+          "star map",
+          "tablet"
+        ]
       }
     ],
     "fetish_styling": [
@@ -50808,6 +54459,357 @@
         ],
         "phrase_en": "in a hotel lobby",
         "phrase_ko": "호텔 로비에서"
+      },
+      {
+        "id": "airplane_cabin_aisle",
+        "ko": "비행기 객실 통로",
+        "en": "an airplane cabin aisle",
+        "weight": 0.95,
+        "tags": [
+          "interior",
+          "aviation",
+          "service"
+        ],
+        "phrase_en": "in an airplane cabin aisle",
+        "phrase_ko": "비행기 객실 통로에서"
+      },
+      {
+        "id": "fire_station_bay",
+        "ko": "소방서 차고",
+        "en": "a fire-station vehicle bay",
+        "weight": 0.92,
+        "tags": [
+          "interior",
+          "emergency",
+          "station"
+        ],
+        "phrase_en": "in a fire-station vehicle bay",
+        "phrase_ko": "소방서 차고에서"
+      },
+      {
+        "id": "security_control_room",
+        "ko": "보안 관제실",
+        "en": "a security control room",
+        "weight": 0.92,
+        "tags": [
+          "interior",
+          "surveillance",
+          "security"
+        ],
+        "phrase_en": "inside a security control room",
+        "phrase_ko": "보안 관제실 안에서"
+      },
+      {
+        "id": "professional_kitchen_pass",
+        "ko": "전문 주방 패스 앞",
+        "en": "a professional kitchen pass",
+        "weight": 0.9,
+        "tags": [
+          "interior",
+          "kitchen",
+          "service"
+        ],
+        "phrase_en": "at a professional kitchen pass",
+        "phrase_ko": "전문 주방 패스 앞에서"
+      },
+      {
+        "id": "school_reference_studio",
+        "ko": "성인 교복 코스프레 레퍼런스 스튜디오",
+        "en": "an adult school-uniform cosplay reference studio",
+        "weight": 0.82,
+        "tags": [
+          "interior",
+          "studio",
+          "cosplay"
+        ],
+        "phrase_en": "in an adult school-uniform reference studio",
+        "phrase_ko": "성인 교복 코스프레 레퍼런스 스튜디오에서"
+      },
+      {
+        "id": "traditional_shrine_interior",
+        "ko": "전통 신당 내부",
+        "en": "a traditional shrine interior",
+        "weight": 0.9,
+        "tags": [
+          "interior",
+          "folk",
+          "ritual"
+        ],
+        "phrase_en": "inside a traditional shrine",
+        "phrase_ko": "전통 신당 내부에서"
+      },
+      {
+        "id": "misty_mountain_altar",
+        "ko": "안개 낀 산중 제단",
+        "en": "a misty mountain altar",
+        "weight": 0.86,
+        "tags": [
+          "outdoor",
+          "folk",
+          "ritual"
+        ],
+        "phrase_en": "at a misty mountain altar",
+        "phrase_ko": "안개 낀 산중 제단에서"
+      },
+      {
+        "id": "grand_archive_hall",
+        "ko": "거대한 기록 보관실",
+        "en": "a grand archive hall",
+        "weight": 0.9,
+        "tags": [
+          "interior",
+          "archive",
+          "library"
+        ],
+        "phrase_en": "in a grand archive hall",
+        "phrase_ko": "거대한 기록 보관실에서"
+      },
+      {
+        "id": "restoration_lab",
+        "ko": "문서 복원 연구실",
+        "en": "a document restoration lab",
+        "weight": 0.86,
+        "tags": [
+          "interior",
+          "archive",
+          "lab"
+        ],
+        "phrase_en": "in a document restoration lab",
+        "phrase_ko": "문서 복원 연구실에서"
+      },
+      {
+        "id": "clinical_observation_lab",
+        "ko": "임상 관찰 연구실",
+        "en": "a clinical observation lab",
+        "weight": 0.86,
+        "tags": [
+          "interior",
+          "clinical",
+          "lab"
+        ],
+        "phrase_en": "inside a clinical observation lab",
+        "phrase_ko": "임상 관찰 연구실 안에서"
+      },
+      {
+        "id": "autumn_foliage_park",
+        "ko": "단풍이 깊은 공원",
+        "en": "an autumn foliage park",
+        "weight": 0.82,
+        "tags": [
+          "outdoor",
+          "seasonal",
+          "autumn"
+        ],
+        "phrase_en": "in an autumn foliage park",
+        "phrase_ko": "단풍이 깊은 공원에서"
+      },
+      {
+        "id": "christmas_market_lights",
+        "ko": "크리스마스 마켓 조명 거리",
+        "en": "a Christmas-market street of lights",
+        "weight": 0.82,
+        "tags": [
+          "outdoor",
+          "seasonal",
+          "winter"
+        ],
+        "phrase_en": "at a Christmas-market street of lights",
+        "phrase_ko": "크리스마스 마켓 조명 거리에서"
+      },
+      {
+        "id": "halloween_decorated_street",
+        "ko": "할로윈 장식 거리",
+        "en": "a Halloween-decorated street",
+        "weight": 0.82,
+        "tags": [
+          "outdoor",
+          "seasonal",
+          "halloween"
+        ],
+        "phrase_en": "on a Halloween-decorated street",
+        "phrase_ko": "할로윈 장식 거리에서"
+      },
+      {
+        "id": "lunar_new_year_hanok_room",
+        "ko": "설날 한옥 방",
+        "en": "a Lunar New Year hanok room",
+        "weight": 0.82,
+        "tags": [
+          "interior",
+          "seasonal",
+          "hanok"
+        ],
+        "phrase_en": "in a Lunar New Year hanok room",
+        "phrase_ko": "설날 한옥 방에서"
+      },
+      {
+        "id": "cathedral_nave_interior",
+        "ko": "성당 네이브 내부",
+        "en": "a cathedral nave interior",
+        "weight": 0.78,
+        "tags": [
+          "interior",
+          "religious",
+          "architecture"
+        ],
+        "phrase_en": "inside a cathedral nave",
+        "phrase_ko": "성당 네이브 내부에서"
+      },
+      {
+        "id": "temple_lantern_hall",
+        "ko": "사찰 등불 회랑",
+        "en": "a temple lantern hall",
+        "weight": 0.8,
+        "tags": [
+          "interior",
+          "religious",
+          "lantern"
+        ],
+        "phrase_en": "in a temple lantern hall",
+        "phrase_ko": "사찰 등불 회랑에서"
+      },
+      {
+        "id": "ferris_wheel_cabin_night",
+        "ko": "밤의 관람차 객실",
+        "en": "a ferris-wheel cabin at night",
+        "weight": 0.78,
+        "tags": [
+          "interior",
+          "night",
+          "date"
+        ],
+        "phrase_en": "inside a ferris-wheel cabin at night",
+        "phrase_ko": "밤의 관람차 객실에서"
+      },
+      {
+        "id": "onsen_robe_veranda",
+        "ko": "온천 여관 베란다",
+        "en": "an onsen-inn veranda",
+        "weight": 0.78,
+        "tags": [
+          "interior",
+          "travel",
+          "quiet"
+        ],
+        "phrase_en": "on an onsen-inn veranda",
+        "phrase_ko": "온천 여관 베란다에서"
+      },
+      {
+        "id": "vintage_train_compartment",
+        "ko": "빈티지 열차 객실",
+        "en": "a vintage train compartment",
+        "weight": 0.82,
+        "tags": [
+          "interior",
+          "transport",
+          "period"
+        ],
+        "phrase_en": "inside a vintage train compartment",
+        "phrase_ko": "빈티지 열차 객실에서"
+      },
+      {
+        "id": "observatory_dome_room",
+        "ko": "천문대 돔 관측실",
+        "en": "an observatory dome room",
+        "weight": 0.78,
+        "tags": [
+          "interior",
+          "science",
+          "night"
+        ],
+        "phrase_en": "inside an observatory dome room",
+        "phrase_ko": "천문대 돔 관측실에서"
+      },
+      {
+        "id": "courtroom_gallery",
+        "ko": "법정 방청석",
+        "en": "a courtroom gallery",
+        "weight": 0.78,
+        "tags": [
+          "interior",
+          "institutional",
+          "noir"
+        ],
+        "phrase_en": "in a courtroom gallery",
+        "phrase_ko": "법정 방청석에서"
+      },
+      {
+        "id": "victorian_mansion_parlor",
+        "ko": "빅토리안 저택 응접실",
+        "en": "a Victorian mansion parlor",
+        "weight": 0.78,
+        "tags": [
+          "interior",
+          "period",
+          "gothic"
+        ],
+        "phrase_en": "in a Victorian mansion parlor",
+        "phrase_ko": "빅토리안 저택 응접실에서"
+      },
+      {
+        "id": "roaring_20s_ballroom",
+        "ko": "1920년대 무도회장",
+        "en": "a roaring-1920s ballroom",
+        "weight": 0.78,
+        "tags": [
+          "interior",
+          "period",
+          "1920s"
+        ],
+        "phrase_en": "in a roaring-1920s ballroom",
+        "phrase_ko": "1920년대 무도회장에서"
+      },
+      {
+        "id": "western_frontier_station",
+        "ko": "서부 개척시대 역참",
+        "en": "a western frontier station",
+        "weight": 0.72,
+        "tags": [
+          "outdoor",
+          "period",
+          "western"
+        ],
+        "phrase_en": "at a western frontier station",
+        "phrase_ko": "서부 개척시대 역참에서"
+      },
+      {
+        "id": "seventies_disco_floor",
+        "ko": "1970년대 디스코 플로어",
+        "en": "a 1970s disco floor",
+        "weight": 0.72,
+        "tags": [
+          "interior",
+          "period",
+          "retro"
+        ],
+        "phrase_en": "on a 1970s disco floor",
+        "phrase_ko": "1970년대 디스코 플로어에서"
+      },
+      {
+        "id": "glitch_monitor_room",
+        "ko": "글리치 모니터 방",
+        "en": "a glitching monitor room",
+        "weight": 0.82,
+        "tags": [
+          "interior",
+          "digital",
+          "glitch"
+        ],
+        "phrase_en": "in a room of glitching monitors",
+        "phrase_ko": "글리치 모니터 방에서"
+      },
+      {
+        "id": "moss_reclaimed_room",
+        "ko": "이끼가 침식한 방",
+        "en": "a moss-reclaimed room",
+        "weight": 0.78,
+        "tags": [
+          "interior",
+          "nature",
+          "transformation"
+        ],
+        "phrase_en": "inside a moss-reclaimed room",
+        "phrase_ko": "이끼가 침식한 방에서"
       }
     ],
     "world": [
@@ -51392,6 +55394,174 @@
           "realistic",
           "signal",
           "tense"
+        ]
+      },
+      {
+        "id": "roaring_1920s_gatsby_world",
+        "ko": "광란의 1920년대 개츠비풍 세계",
+        "en": "roaring 1920s Gatsby world",
+        "weight": 0.78,
+        "tags": [
+          "period",
+          "1920s",
+          "luxury"
+        ],
+        "aliases": [
+          "1920s Gatsby"
+        ],
+        "keywords": [
+          "1920s",
+          "gatsby",
+          "ballroom"
+        ]
+      },
+      {
+        "id": "victorian_gothic_world",
+        "ko": "빅토리안 고딕 세계",
+        "en": "Victorian gothic world",
+        "weight": 0.78,
+        "tags": [
+          "period",
+          "gothic"
+        ],
+        "aliases": [
+          "Victorian gothic"
+        ],
+        "keywords": [
+          "Victorian",
+          "gothic",
+          "mansion"
+        ]
+      },
+      {
+        "id": "western_frontier_world",
+        "ko": "서부 개척시대 세계",
+        "en": "western frontier world",
+        "weight": 0.72,
+        "tags": [
+          "period",
+          "western"
+        ],
+        "aliases": [
+          "western frontier"
+        ],
+        "keywords": [
+          "western",
+          "frontier"
+        ]
+      },
+      {
+        "id": "seventies_disco_world",
+        "ko": "1970년대 디스코 세계",
+        "en": "1970s disco world",
+        "weight": 0.72,
+        "tags": [
+          "period",
+          "retro",
+          "disco"
+        ],
+        "aliases": [
+          "70s disco"
+        ],
+        "keywords": [
+          "1970s",
+          "disco",
+          "retro"
+        ]
+      },
+      {
+        "id": "belle_epoque_salon_world",
+        "ko": "벨 에포크 살롱 세계",
+        "en": "Belle Epoque salon world",
+        "weight": 0.72,
+        "tags": [
+          "period",
+          "salon",
+          "european"
+        ],
+        "aliases": [
+          "Belle Epoque"
+        ],
+        "keywords": [
+          "Belle Epoque",
+          "salon",
+          "period"
+        ]
+      },
+      {
+        "id": "renaissance_portrait_world",
+        "ko": "르네상스 초상화 세계",
+        "en": "Renaissance portrait world",
+        "weight": 0.72,
+        "tags": [
+          "period",
+          "renaissance",
+          "portrait"
+        ],
+        "aliases": [
+          "Renaissance portrait"
+        ],
+        "keywords": [
+          "Renaissance",
+          "portrait",
+          "old master"
+        ]
+      },
+      {
+        "id": "folk_threshold_world",
+        "ko": "민속 경계와 문턱의 세계",
+        "en": "folk-threshold world",
+        "weight": 0.82,
+        "tags": [
+          "folk",
+          "threshold",
+          "uncanny"
+        ],
+        "aliases": [
+          "folk threshold"
+        ],
+        "keywords": [
+          "folk",
+          "threshold",
+          "ritual"
+        ]
+      },
+      {
+        "id": "digital_afterimage_world",
+        "ko": "디지털 잔상 세계",
+        "en": "digital afterimage world",
+        "weight": 0.82,
+        "tags": [
+          "digital",
+          "glitch",
+          "sci_fi"
+        ],
+        "aliases": [
+          "digital afterimage"
+        ],
+        "keywords": [
+          "data ghost",
+          "glitch",
+          "afterimage"
+        ]
+      },
+      {
+        "id": "reclaimed_nature_interior_world",
+        "ko": "자연이 실내를 침식한 세계",
+        "en": "reclaimed nature interior world",
+        "weight": 0.78,
+        "tags": [
+          "nature",
+          "interior",
+          "transformation"
+        ],
+        "aliases": [
+          "reclaimed nature interior"
+        ],
+        "keywords": [
+          "moss",
+          "erosion",
+          "reclaimed room"
         ]
       }
     ],
@@ -52362,6 +56532,72 @@
           "service",
           "clinical"
         ]
+      },
+      {
+        "id": "moonlit_folk_ritual_light",
+        "ko": "달빛이 섞인 민속 의식광",
+        "en": "moonlit folk ritual light",
+        "weight": 0.82,
+        "tags": [
+          "night",
+          "folk",
+          "ritual"
+        ]
+      },
+      {
+        "id": "clean_laboratory_fluorescent",
+        "ko": "깨끗한 실험실 형광등",
+        "en": "clean laboratory fluorescent light",
+        "weight": 0.82,
+        "tags": [
+          "interior",
+          "clinical",
+          "lab"
+        ]
+      },
+      {
+        "id": "monitor_flicker_pattern",
+        "ko": "모니터 깜박임 조명",
+        "en": "monitor-flicker lighting pattern",
+        "weight": 0.82,
+        "tags": [
+          "interior",
+          "digital",
+          "glitch"
+        ]
+      },
+      {
+        "id": "lantern_rows_warm_light",
+        "ko": "따뜻한 등불 행렬 조명",
+        "en": "warm rows of lantern light",
+        "weight": 0.82,
+        "tags": [
+          "interior",
+          "lantern",
+          "warm"
+        ]
+      },
+      {
+        "id": "first_snow_evening_light",
+        "ko": "첫눈이 내리는 저녁빛",
+        "en": "first-snow evening light",
+        "weight": 0.78,
+        "tags": [
+          "outdoor",
+          "winter",
+          "soft"
+        ]
+      },
+      {
+        "id": "stage_motion_flash",
+        "ko": "움직임을 얼리는 스테이지 플래시",
+        "en": "stage flash freezing motion",
+        "weight": 0.78,
+        "tags": [
+          "stage",
+          "motion",
+          "flash"
+        ]
       }
     ],
     "light_direction": [
@@ -53165,6 +57401,59 @@
             "behavior_control"
           ]
         }
+      },
+      {
+        "id": "ui_projection_on_skin",
+        "ko": "피부 위 UI 프로젝션",
+        "en": "UI projection cast onto skin",
+        "weight": 0.8,
+        "tags": [
+          "digital",
+          "projection",
+          "sci_fi"
+        ]
+      },
+      {
+        "id": "ritual_candle_cluster",
+        "ko": "의식용 촛불 군집",
+        "en": "a cluster of ritual candles",
+        "weight": 0.8,
+        "tags": [
+          "folk",
+          "ritual",
+          "candle"
+        ]
+      },
+      {
+        "id": "archive_desk_lamp",
+        "ko": "기록실 책상 램프",
+        "en": "an archive desk lamp",
+        "weight": 0.78,
+        "tags": [
+          "interior",
+          "archive"
+        ]
+      },
+      {
+        "id": "festival_lantern_light",
+        "ko": "축제 홍등 조명",
+        "en": "festival lantern light",
+        "weight": 0.78,
+        "tags": [
+          "festival",
+          "lantern",
+          "warm"
+        ]
+      },
+      {
+        "id": "operating_observation_light",
+        "ko": "관찰실 오버헤드 조명",
+        "en": "overhead observation-room light",
+        "weight": 0.78,
+        "tags": [
+          "clinical",
+          "interior"
+        ]
       }
     ],
     "light_intensity": [
@@ -55416,6 +59705,105 @@
           "high_society",
           "surveillance"
         ]
+      },
+      {
+        "id": "cornea_reflection_closeup",
+        "ko": "각막 반사 클로즈업",
+        "en": "cornea-reflection close-up",
+        "weight": 0.82,
+        "tags": [
+          "portrait",
+          "closeup",
+          "reflection"
+        ]
+      },
+      {
+        "id": "lace_partial_occlusion_frame",
+        "ko": "레이스가 부분적으로 가리는 프레임",
+        "en": "partial lace occlusion frame",
+        "weight": 0.8,
+        "tags": [
+          "portrait",
+          "occlusion",
+          "fashion"
+        ]
+      },
+      {
+        "id": "through_frosted_glass_frame",
+        "ko": "불투명 유리 너머 프레임",
+        "en": "through-frosted-glass frame",
+        "weight": 0.8,
+        "tags": [
+          "interior",
+          "occlusion",
+          "mystery"
+        ]
+      },
+      {
+        "id": "one_way_mirror_frame",
+        "ko": "원웨이 미러 관찰 프레임",
+        "en": "one-way mirror observation frame",
+        "weight": 0.82,
+        "tags": [
+          "interior",
+          "surveillance",
+          "reflection"
+        ]
+      },
+      {
+        "id": "security_cam_ultrawide",
+        "ko": "보안 카메라 초광각 구도",
+        "en": "security-camera ultrawide framing",
+        "weight": 0.82,
+        "tags": [
+          "surveillance",
+          "wide",
+          "security"
+        ]
+      },
+      {
+        "id": "door_chain_gap_frame",
+        "ko": "문 체인 틈새 프레임",
+        "en": "door-chain gap frame",
+        "weight": 0.78,
+        "tags": [
+          "threshold",
+          "occlusion",
+          "tense"
+        ]
+      },
+      {
+        "id": "peephole_circular_frame",
+        "ko": "도어스코프 원형 프레임",
+        "en": "peephole circular frame",
+        "weight": 0.78,
+        "tags": [
+          "threshold",
+          "surveillance",
+          "circular"
+        ]
+      },
+      {
+        "id": "dynamic_diagonal_action_frame",
+        "ko": "대각선 동작 프레임",
+        "en": "dynamic diagonal action frame",
+        "weight": 0.8,
+        "tags": [
+          "motion",
+          "dynamic",
+          "portrait"
+        ]
+      },
+      {
+        "id": "specimen_case_reflection_frame",
+        "ko": "표본 케이스 반사 프레임",
+        "en": "specimen-case reflection frame",
+        "weight": 0.78,
+        "tags": [
+          "clinical",
+          "reflection",
+          "lab"
+        ]
       }
     ],
     "subject_framing": [
@@ -56756,6 +61144,47 @@
           "crowd",
           "street"
         ]
+      },
+      {
+        "id": "fabric_motion_frozen",
+        "ko": "천 움직임이 정지된 순간",
+        "en": "frozen fabric motion",
+        "weight": 0.72,
+        "tags": [
+          "motion",
+          "fashion"
+        ]
+      },
+      {
+        "id": "hair_motion_arc",
+        "ko": "머리카락이 호를 그리는 움직임",
+        "en": "hair motion arc",
+        "weight": 0.72,
+        "tags": [
+          "motion",
+          "portrait"
+        ]
+      },
+      {
+        "id": "limb_motion_blur_face_sharp",
+        "ko": "팔다리는 흔들리고 얼굴은 선명한 움직임",
+        "en": "limb motion blur with a sharp face",
+        "weight": 0.72,
+        "tags": [
+          "motion",
+          "portrait"
+        ]
+      },
+      {
+        "id": "pixel_afterimage_trail",
+        "ko": "픽셀 잔상 트레일",
+        "en": "pixel afterimage trail",
+        "weight": 0.72,
+        "tags": [
+          "digital",
+          "glitch",
+          "motion"
+        ]
       }
     ],
     "color": [
@@ -58030,6 +62459,119 @@
           "tense",
           "exit_route"
         ]
+      },
+      {
+        "id": "folk_ritual_unease",
+        "ko": "민속 의식의 불온함",
+        "en": "folk ritual unease",
+        "weight": 0.84,
+        "tags": [
+          "folk",
+          "ritual",
+          "uncanny"
+        ]
+      },
+      {
+        "id": "archival_suspense",
+        "ko": "기록실 서스펜스",
+        "en": "archival suspense",
+        "weight": 0.82,
+        "tags": [
+          "archive",
+          "tense"
+        ]
+      },
+      {
+        "id": "sterile_observation",
+        "ko": "멸균된 관찰 긴장감",
+        "en": "sterile observation tension",
+        "weight": 0.82,
+        "tags": [
+          "clinical",
+          "tense"
+        ]
+      },
+      {
+        "id": "digital_dislocation",
+        "ko": "디지털 이탈감",
+        "en": "digital dislocation",
+        "weight": 0.84,
+        "tags": [
+          "digital",
+          "glitch",
+          "uncanny"
+        ]
+      },
+      {
+        "id": "environmental_absorption",
+        "ko": "환경에 흡수되는 듯한 정서",
+        "en": "environmental absorption",
+        "weight": 0.82,
+        "tags": [
+          "nature",
+          "transformation",
+          "uncanny"
+        ]
+      },
+      {
+        "id": "mature_poised_elegance",
+        "ko": "성숙하고 여유로운 우아함",
+        "en": "mature poised elegance",
+        "weight": 0.8,
+        "tags": [
+          "mature",
+          "elegant"
+        ]
+      },
+      {
+        "id": "aloof_cool_beauty",
+        "ko": "차갑고 도회적인 쿨뷰티",
+        "en": "aloof cool beauty",
+        "weight": 0.82,
+        "tags": [
+          "cool",
+          "beauty"
+        ]
+      },
+      {
+        "id": "refreshing_bright_charm",
+        "ko": "산뜻하고 발랄한 매력",
+        "en": "refreshing bright charm",
+        "weight": 0.78,
+        "tags": [
+          "bright",
+          "playful"
+        ]
+      },
+      {
+        "id": "festive_warmth",
+        "ko": "행사장의 따뜻한 들뜸",
+        "en": "festive warmth",
+        "weight": 0.76,
+        "tags": [
+          "seasonal",
+          "warm"
+        ]
+      },
+      {
+        "id": "haughty_elegance",
+        "ko": "도도하고 높은 격의 우아함",
+        "en": "haughty elegance",
+        "weight": 0.8,
+        "tags": [
+          "haughty",
+          "elegant"
+        ]
+      },
+      {
+        "id": "pure_serene_softness",
+        "ko": "청순하고 고요한 부드러움",
+        "en": "pure serene softness",
+        "weight": 0.78,
+        "tags": [
+          "pure",
+          "serene"
+        ]
       }
     ],
     "surreal_concept": [
@@ -59110,6 +63652,92 @@
             "deep_structural"
           ]
         }
+      },
+      {
+        "id": "pixel_drift_edges",
+        "ko": "픽셀처럼 밀려난 가장자리",
+        "en": "pixel-drift edges",
+        "weight": 0.82,
+        "tags": [
+          "digital",
+          "glitch"
+        ]
+      },
+      {
+        "id": "localized_chromatic_glitch",
+        "ko": "국소적 색수차 글리치",
+        "en": "localized chromatic glitch",
+        "weight": 0.82,
+        "tags": [
+          "digital",
+          "glitch"
+        ]
+      },
+      {
+        "id": "moss_surface_detail",
+        "ko": "이끼 표면 디테일",
+        "en": "moss surface detail",
+        "weight": 0.78,
+        "tags": [
+          "nature",
+          "green",
+          "transformation"
+        ]
+      },
+      {
+        "id": "salt_crystal_surface",
+        "ko": "소금 결정 표면",
+        "en": "salt-crystal surface texture",
+        "weight": 0.76,
+        "tags": [
+          "mineral",
+          "crystal",
+          "transformation"
+        ]
+      },
+      {
+        "id": "pressed_paper_archive_dust",
+        "ko": "눌린 종이와 기록 먼지 질감",
+        "en": "pressed-paper archive dust texture",
+        "weight": 0.78,
+        "tags": [
+          "archive",
+          "paper",
+          "dust"
+        ]
+      },
+      {
+        "id": "lacquered_wood_patina",
+        "ko": "옻칠 목재의 낡은 광택",
+        "en": "lacquered wood patina",
+        "weight": 0.72,
+        "tags": [
+          "wood",
+          "period",
+          "patina"
+        ]
+      },
+      {
+        "id": "iridescent_scale_skin_texture",
+        "ko": "무지갯빛 비늘 피부 질감",
+        "en": "iridescent scale-skin texture",
+        "weight": 0.72,
+        "tags": [
+          "fantasy",
+          "mermaid",
+          "scale"
+        ]
+      },
+      {
+        "id": "fine_silk_ribbon_texture",
+        "ko": "가는 비단 리본 질감",
+        "en": "fine silk-ribbon texture",
+        "weight": 0.72,
+        "tags": [
+          "fabric",
+          "silk",
+          "folk"
+        ]
       }
     ],
     "format": [
@@ -61855,6 +66483,97 @@
             "soft_liquid"
           ]
         }
+      },
+      {
+        "id": "iridescent_scale_skin_surface",
+        "ko": "무지갯빛 비늘 표면",
+        "en": "iridescent scale skin surface",
+        "weight": 0.72,
+        "tags": [
+          "surface",
+          "fantasy",
+          "mermaid"
+        ],
+        "for_any": [
+          "human",
+          "object"
+        ],
+        "aliases": [
+          "iridescent scales"
+        ],
+        "keywords": [
+          "mermaid",
+          "scale",
+          "iridescent"
+        ]
+      },
+      {
+        "id": "moss_attached_surface",
+        "ko": "이끼가 달라붙은 표면",
+        "en": "moss-attached surface",
+        "weight": 0.72,
+        "tags": [
+          "surface",
+          "nature",
+          "transformation"
+        ],
+        "for_any": [
+          "human",
+          "object",
+          "plant"
+        ],
+        "aliases": [
+          "moss attached"
+        ],
+        "keywords": [
+          "moss",
+          "environmental erosion"
+        ]
+      },
+      {
+        "id": "salt_crystal_attached_surface",
+        "ko": "소금 결정이 맺힌 표면",
+        "en": "salt-crystal attached surface",
+        "weight": 0.7,
+        "tags": [
+          "surface",
+          "mineral",
+          "transformation"
+        ],
+        "for_any": [
+          "human",
+          "object"
+        ],
+        "aliases": [
+          "salt crystal surface"
+        ],
+        "keywords": [
+          "salt crystal",
+          "mineral",
+          "erosion"
+        ]
+      },
+      {
+        "id": "soft_luminous_alien_skin_surface",
+        "ko": "부드럽게 빛나는 외계 피부 표면",
+        "en": "soft luminous alien skin surface",
+        "weight": 0.7,
+        "tags": [
+          "surface",
+          "alien",
+          "sci_fi"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "alien luminous skin"
+        ],
+        "keywords": [
+          "alien",
+          "luminous",
+          "nonhuman"
+        ]
       }
     ],
     "aesthetic_trend": [
@@ -62137,6 +66856,159 @@
           "fashion"
         ],
         "embedding_text": "soft grunge worn-in styling"
+      },
+      {
+        "id": "dark_feminine_aesthetic",
+        "ko": "다크 페미닌 미학",
+        "en": "dark feminine aesthetic",
+        "weight": 0.78,
+        "tags": [
+          "aesthetic",
+          "fashion",
+          "dark"
+        ],
+        "aliases": [
+          "dark feminine"
+        ],
+        "keywords": [
+          "dark feminine",
+          "black lace",
+          "noir"
+        ]
+      },
+      {
+        "id": "old_money_aesthetic",
+        "ko": "올드머니 미학",
+        "en": "old-money aesthetic",
+        "weight": 0.78,
+        "tags": [
+          "aesthetic",
+          "fashion",
+          "luxury"
+        ],
+        "aliases": [
+          "old money"
+        ],
+        "keywords": [
+          "old money",
+          "tailored",
+          "quiet luxury"
+        ]
+      },
+      {
+        "id": "chinoiserie_aesthetic",
+        "ko": "시누아즈리 미학",
+        "en": "chinoiserie aesthetic",
+        "weight": 0.72,
+        "tags": [
+          "aesthetic",
+          "ornamental",
+          "east_asian"
+        ],
+        "aliases": [
+          "chinoiserie"
+        ],
+        "keywords": [
+          "chinoiserie",
+          "porcelain",
+          "ornament"
+        ]
+      },
+      {
+        "id": "light_academia_aesthetic",
+        "ko": "라이트 아카데미아 미학",
+        "en": "light academia aesthetic",
+        "weight": 0.74,
+        "tags": [
+          "aesthetic",
+          "academia",
+          "soft"
+        ],
+        "aliases": [
+          "light academia"
+        ],
+        "keywords": [
+          "light academia",
+          "books",
+          "cream"
+        ]
+      },
+      {
+        "id": "whimsigoth_aesthetic",
+        "ko": "윔지거스 미학",
+        "en": "whimsigoth aesthetic",
+        "weight": 0.74,
+        "tags": [
+          "aesthetic",
+          "witchy",
+          "celestial"
+        ],
+        "aliases": [
+          "whimsigoth"
+        ],
+        "keywords": [
+          "whimsigoth",
+          "celestial",
+          "witchy"
+        ]
+      },
+      {
+        "id": "tomboy_aesthetic",
+        "ko": "보이시 톰보이 미학",
+        "en": "tomboy aesthetic",
+        "weight": 0.74,
+        "tags": [
+          "aesthetic",
+          "androgynous",
+          "fashion"
+        ],
+        "aliases": [
+          "tomboy",
+          "boyish"
+        ],
+        "keywords": [
+          "tomboy",
+          "boyish",
+          "androgynous"
+        ]
+      },
+      {
+        "id": "eclectic_grandpa_aesthetic",
+        "ko": "에클레틱 그랜파 미학",
+        "en": "eclectic grandpa aesthetic",
+        "weight": 0.68,
+        "tags": [
+          "aesthetic",
+          "vintage",
+          "layered"
+        ],
+        "aliases": [
+          "eclectic grandpa"
+        ],
+        "keywords": [
+          "eclectic grandpa",
+          "vintage",
+          "layered"
+        ]
+      },
+      {
+        "id": "coastal_grandmother_aesthetic",
+        "ko": "코스탈 그랜마더 미학",
+        "en": "coastal grandmother aesthetic",
+        "weight": 0.68,
+        "tags": [
+          "aesthetic",
+          "coastal",
+          "linen"
+        ],
+        "aliases": [
+          "coastal grandmother"
+        ],
+        "keywords": [
+          "coastal grandmother",
+          "linen",
+          "soft"
+        ]
       }
     ]
   },
@@ -64654,6 +69526,1266 @@
           ],
           "min_anchors": 2
         }
+      },
+      "digital_entity": {
+        "policy_id": "digital-entity-semantic-policy-v1",
+        "aliases": [
+          "data ghost",
+          "digital ghost",
+          "glitch",
+          "pixel drift",
+          "UI projection",
+          "monitor flicker",
+          "데이터망령",
+          "디지털 유령",
+          "글리치"
+        ],
+        "keywords": [
+          "data ghost",
+          "digital ghost",
+          "glitch",
+          "glitching",
+          "pixel",
+          "pixel drift",
+          "chromatic glitch",
+          "UI projection",
+          "monitor flicker",
+          "afterimage",
+          "데이터망령",
+          "글리치"
+        ],
+        "axis_label": "digital glitch entity",
+        "axis_embedding_text": "data ghost, digital ghost, UI projection, pixel drift, chromatic glitch, monitor flicker, security camera dislocation, glitching phone screen",
+        "signal_lexicon": {
+          "strong": [
+            "data ghost",
+            "digital ghost",
+            "glitch",
+            "pixel drift",
+            "chromatic glitch",
+            "UI projection",
+            "glitching phone",
+            "monitor flicker",
+            "데이터망령",
+            "글리치"
+          ],
+          "ambient": [
+            "digital",
+            "afterimage",
+            "surveillance",
+            "screen",
+            "monitor",
+            "pixel"
+          ]
+        },
+        "routed_slots": [
+          "subject",
+          "prop",
+          "lighting",
+          "light_type",
+          "composition",
+          "texture",
+          "motion",
+          "mood",
+          "world",
+          "location"
+        ],
+        "steering_slots": [
+          "prop",
+          "lighting",
+          "light_type",
+          "composition",
+          "texture",
+          "motion",
+          "mood",
+          "world",
+          "location"
+        ],
+        "preset_policy": {
+          "allow_ids": [
+            "digital_glitch_entity_portrait",
+            "researcher_clinical_observation",
+            "security_guard_watch_portrait"
+          ],
+          "fallback_terms": [
+            "data ghost",
+            "digital glitch",
+            "glitch entity",
+            "pixel drift"
+          ]
+        },
+        "slot_signals": {
+          "prop": {
+            "core": [
+              "glitching_phone_screen_prop",
+              "cracked_data_card_prop"
+            ]
+          },
+          "lighting": {
+            "core": [
+              "monitor_flicker_pattern"
+            ]
+          },
+          "light_type": {
+            "core": [
+              "ui_projection_on_skin",
+              "status_led_glow",
+              "scan_line_light"
+            ]
+          },
+          "composition": {
+            "core": [
+              "security_cam_ultrawide",
+              "cornea_reflection_closeup",
+              "one_way_mirror_frame"
+            ]
+          },
+          "texture": {
+            "core": [
+              "pixel_drift_edges",
+              "localized_chromatic_glitch"
+            ],
+            "support": [
+              "clean_digital"
+            ]
+          },
+          "motion": {
+            "core": [
+              "pixel_afterimage_trail"
+            ]
+          },
+          "mood": {
+            "core": [
+              "digital_dislocation"
+            ]
+          },
+          "world": {
+            "core": [
+              "digital_afterimage_world"
+            ]
+          },
+          "location": {
+            "core": [
+              "glitch_monitor_room"
+            ],
+            "support": [
+              "security_control_room",
+              "clinical_observation_lab"
+            ]
+          }
+        },
+        "concept_lock_promotions": {},
+        "redundancy_rules": [],
+        "coverage_repair": {}
+      },
+      "clinical_observation": {
+        "policy_id": "clinical-observation-semantic-policy-v1",
+        "aliases": [
+          "clinical researcher",
+          "researcher",
+          "observation lab",
+          "specimen case",
+          "sterile lab",
+          "연구원",
+          "임상",
+          "관찰실"
+        ],
+        "keywords": [
+          "clinical researcher",
+          "researcher",
+          "clinical",
+          "observation lab",
+          "specimen",
+          "sterile lab",
+          "one-way mirror",
+          "laboratory",
+          "연구원",
+          "임상",
+          "관찰"
+        ],
+        "axis_label": "clinical researcher observation",
+        "axis_embedding_text": "adult clinical researcher, sterile observation laboratory, specimen case, one-way mirror, clean fluorescent light, controlled scientific tension",
+        "signal_lexicon": {
+          "strong": [
+            "clinical researcher",
+            "observation lab",
+            "specimen case",
+            "sterile lab",
+            "researcher",
+            "연구원"
+          ],
+          "ambient": [
+            "clinical",
+            "laboratory",
+            "specimen",
+            "observation",
+            "science"
+          ]
+        },
+        "routed_slots": [
+          "subject",
+          "location",
+          "prop",
+          "action",
+          "lighting",
+          "light_type",
+          "composition",
+          "mood",
+          "costume_style"
+        ],
+        "steering_slots": [
+          "subject",
+          "location",
+          "prop",
+          "action",
+          "lighting",
+          "light_type",
+          "composition",
+          "mood",
+          "costume_style"
+        ],
+        "preset_policy": {
+          "allow_ids": [
+            "researcher_clinical_observation"
+          ],
+          "fallback_terms": [
+            "clinical researcher",
+            "observation lab",
+            "specimen case"
+          ]
+        },
+        "slot_signals": {
+          "subject": {
+            "core": [
+              "clinical_researcher_role_model",
+              "scientist"
+            ]
+          },
+          "location": {
+            "core": [
+              "clinical_observation_lab"
+            ],
+            "support": [
+              "laboratory",
+              "biolab"
+            ]
+          },
+          "prop": {
+            "core": [
+              "glass_specimen_case_prop"
+            ]
+          },
+          "action": {
+            "core": [
+              "observing_specimen_case"
+            ]
+          },
+          "lighting": {
+            "core": [
+              "clean_laboratory_fluorescent",
+              "lab_led"
+            ]
+          },
+          "light_type": {
+            "core": [
+              "operating_observation_light"
+            ]
+          },
+          "composition": {
+            "core": [
+              "specimen_case_reflection_frame",
+              "one_way_mirror_frame"
+            ]
+          },
+          "mood": {
+            "core": [
+              "sterile_observation",
+              "professional_detachment"
+            ]
+          },
+          "costume_style": {
+            "core": [
+              "clinical_lab_coat_professional"
+            ]
+          }
+        },
+        "concept_lock_promotions": {},
+        "redundancy_rules": [],
+        "coverage_repair": {}
+      },
+      "folk_mystic": {
+        "policy_id": "folk-mystic-semantic-policy-v1",
+        "aliases": [
+          "gumiho",
+          "shaman",
+          "mudang",
+          "folk ritual",
+          "talisman",
+          "ghost",
+          "dokkaebi",
+          "witch",
+          "celestial maiden",
+          "구미호",
+          "무녀",
+          "무당",
+          "원귀",
+          "도깨비",
+          "마녀",
+          "선녀"
+        ],
+        "keywords": [
+          "gumiho",
+          "fox fire",
+          "shaman",
+          "mudang",
+          "folk ritual",
+          "talisman",
+          "ghost",
+          "dokkaebi",
+          "oni",
+          "witch",
+          "celestial",
+          "siren",
+          "mermaid",
+          "구미호",
+          "무녀",
+          "무당",
+          "원귀",
+          "도깨비",
+          "마녀",
+          "선녀",
+          "인어"
+        ],
+        "axis_label": "folk mystic threshold",
+        "axis_embedding_text": "East Asian folklore and ritual portrait, gumiho fox-fire, mudang shaman bells, talisman paper, ghost threshold, witch grimoire, celestial silk, non-graphic mystic unease",
+        "signal_lexicon": {
+          "strong": [
+            "gumiho",
+            "fox fire",
+            "shaman",
+            "mudang",
+            "folk ritual",
+            "talisman",
+            "dokkaebi",
+            "witch",
+            "구미호",
+            "무녀",
+            "무당",
+            "원귀",
+            "도깨비",
+            "마녀"
+          ],
+          "ambient": [
+            "folk",
+            "ritual",
+            "lantern",
+            "threshold",
+            "ghost",
+            "celestial",
+            "mermaid",
+            "siren"
+          ]
+        },
+        "routed_slots": [
+          "subject",
+          "costume_style",
+          "prop",
+          "location",
+          "lighting",
+          "light_type",
+          "composition",
+          "mood",
+          "world",
+          "texture",
+          "expression"
+        ],
+        "steering_slots": [
+          "subject",
+          "costume_style",
+          "prop",
+          "location",
+          "lighting",
+          "light_type",
+          "composition",
+          "mood",
+          "world",
+          "texture",
+          "expression"
+        ],
+        "preset_policy": {
+          "allow_ids": [
+            "modern_shaman_ritual_portrait",
+            "folk_creature_threshold_portrait"
+          ],
+          "fallback_terms": [
+            "gumiho",
+            "shaman",
+            "folk ritual",
+            "talisman",
+            "dokkaebi",
+            "witch"
+          ]
+        },
+        "slot_signals": {
+          "subject": {
+            "core": [
+              "modern_shaman_performer"
+            ]
+          },
+          "costume_style": {
+            "core": [
+              "modern_shaman_ritual_costume",
+              "white_sobok_burial_dress",
+              "witch_robe_wide_hat",
+              "celestial_silk_ribbon_robe"
+            ]
+          },
+          "expression": {
+            "core": [
+              "golden_fox_eye_gaze"
+            ]
+          },
+          "prop": {
+            "core": [
+              "shaman_bells_prop",
+              "five_color_silk_strip_prop",
+              "fox_fire_wisp_prop",
+              "sealed_talisman_paper_prop",
+              "grimoire_candle_prop",
+              "single_feather_trace_prop",
+              "mermaid_scale_shell_prop"
+            ]
+          },
+          "location": {
+            "core": [
+              "traditional_shrine_interior",
+              "misty_mountain_altar",
+              "temple_lantern_hall"
+            ]
+          },
+          "lighting": {
+            "core": [
+              "moonlit_folk_ritual_light",
+              "lantern_rows_warm_light"
+            ]
+          },
+          "light_type": {
+            "core": [
+              "ritual_candle_cluster",
+              "festival_lantern_light"
+            ]
+          },
+          "composition": {
+            "core": [
+              "through_frosted_glass_frame",
+              "door_chain_gap_frame",
+              "cornea_reflection_closeup",
+              "lace_partial_occlusion_frame"
+            ]
+          },
+          "mood": {
+            "core": [
+              "folk_ritual_unease",
+              "pure_serene_softness",
+              "haughty_elegance"
+            ]
+          },
+          "world": {
+            "core": [
+              "folk_threshold_world"
+            ]
+          },
+          "texture": {
+            "support": [
+              "fine_silk_ribbon_texture",
+              "iridescent_scale_skin_texture"
+            ]
+          }
+        },
+        "concept_lock_promotions": {},
+        "redundancy_rules": [],
+        "coverage_repair": {}
+      },
+      "environmental_transformation": {
+        "policy_id": "environmental-transformation-semantic-policy-v1",
+        "aliases": [
+          "environmental erosion",
+          "moss",
+          "reclaimed room",
+          "crystal growth",
+          "paper dust",
+          "환경침식",
+          "이끼",
+          "침식"
+        ],
+        "keywords": [
+          "environmental erosion",
+          "moss",
+          "reclaimed",
+          "crystal",
+          "salt crystal",
+          "paper dust",
+          "mineral growth",
+          "petals",
+          "organic growth",
+          "환경침식",
+          "이끼",
+          "침식"
+        ],
+        "axis_label": "environmental erosion transformation",
+        "axis_embedding_text": "symbolic environmental transformation, moss, paper dust, mineral growth, reclaimed room, non-graphic environmental absorption",
+        "signal_lexicon": {
+          "strong": [
+            "environmental erosion",
+            "moss",
+            "reclaimed room",
+            "paper dust",
+            "mineral growth",
+            "환경침식",
+            "이끼"
+          ],
+          "ambient": [
+            "nature",
+            "organic",
+            "crystal",
+            "growth",
+            "transformation",
+            "absorbed"
+          ]
+        },
+        "routed_slots": [
+          "location",
+          "action",
+          "texture",
+          "surface_material",
+          "mood",
+          "world",
+          "composition"
+        ],
+        "steering_slots": [
+          "location",
+          "action",
+          "texture",
+          "surface_material",
+          "mood",
+          "world",
+          "composition"
+        ],
+        "preset_policy": {
+          "allow_ids": [
+            "environmental_erosion_portrait"
+          ],
+          "fallback_terms": [
+            "environmental erosion",
+            "moss reclaimed",
+            "paper dust",
+            "mineral growth"
+          ]
+        },
+        "slot_signals": {
+          "location": {
+            "core": [
+              "moss_reclaimed_room"
+            ],
+            "support": [
+              "botanical_greenhouse_deck_floor"
+            ]
+          },
+          "action": {
+            "core": [
+              "lightly_touching_moss_wall"
+            ]
+          },
+          "texture": {
+            "core": [
+              "moss_surface_detail",
+              "pressed_paper_archive_dust",
+              "salt_crystal_surface"
+            ]
+          },
+          "surface_material": {
+            "core": [
+              "moss_attached_surface",
+              "salt_crystal_attached_surface"
+            ]
+          },
+          "mood": {
+            "core": [
+              "environmental_absorption"
+            ]
+          },
+          "world": {
+            "core": [
+              "reclaimed_nature_interior_world"
+            ]
+          },
+          "composition": {
+            "support": [
+              "through_frosted_glass_frame",
+              "frame_within_frame"
+            ]
+          }
+        },
+        "concept_lock_promotions": {},
+        "redundancy_rules": [],
+        "coverage_repair": {}
+      },
+      "professional_role": {
+        "policy_id": "professional-role-semantic-policy-v1",
+        "aliases": [
+          "flight attendant",
+          "firefighter",
+          "security guard",
+          "chef",
+          "military officer",
+          "archivist",
+          "librarian",
+          "professional role",
+          "승무원",
+          "소방관",
+          "보안요원",
+          "요리사",
+          "군장교",
+          "기록가",
+          "사서"
+        ],
+        "keywords": [
+          "flight attendant",
+          "cabin crew",
+          "firefighter",
+          "security guard",
+          "chef",
+          "military officer",
+          "archivist",
+          "librarian",
+          "professional kitchen",
+          "fire station",
+          "control room",
+          "승무원",
+          "소방관",
+          "보안요원",
+          "요리사",
+          "군장교",
+          "기록가",
+          "사서"
+        ],
+        "axis_label": "professional role identity",
+        "axis_embedding_text": "adult professional role portrait with readable uniform, workplace, action and role authority: flight attendant, firefighter, security guard, chef, military officer, archivist",
+        "signal_lexicon": {
+          "strong": [
+            "flight attendant",
+            "firefighter",
+            "security guard",
+            "chef",
+            "military officer",
+            "archivist",
+            "librarian",
+            "승무원",
+            "소방관",
+            "보안요원",
+            "요리사",
+            "군장교",
+            "기록가"
+          ],
+          "ambient": [
+            "uniform",
+            "professional",
+            "workplace",
+            "service",
+            "authority"
+          ]
+        },
+        "routed_slots": [
+          "subject",
+          "costume_style",
+          "location",
+          "action",
+          "prop",
+          "mood"
+        ],
+        "steering_slots": [
+          "subject",
+          "costume_style",
+          "location",
+          "action",
+          "prop",
+          "mood"
+        ],
+        "preset_policy": {
+          "allow_ids": [
+            "flight_attendant_service_portrait",
+            "firefighter_station_portrait",
+            "security_guard_watch_portrait",
+            "chef_kitchen_service_portrait",
+            "military_officer_formal_portrait",
+            "archivist_library_observation"
+          ],
+          "fallback_terms": [
+            "flight attendant",
+            "firefighter",
+            "security guard",
+            "chef",
+            "military officer",
+            "archivist"
+          ]
+        },
+        "slot_signals": {
+          "subject": {
+            "core": [
+              "flight_attendant_role_model",
+              "firefighter_role_model",
+              "security_guard_role_model",
+              "chef_role_model",
+              "military_officer_role_model",
+              "archivist_role_model"
+            ]
+          },
+          "costume_style": {
+            "core": [
+              "flight_attendant_uniform_costume",
+              "firefighter_turnout_gear_costume",
+              "security_guard_uniform_costume",
+              "chef_white_coat_costume",
+              "military_officer_dress_uniform",
+              "archivist_apron_gloves_costume"
+            ]
+          },
+          "location": {
+            "core": [
+              "airplane_cabin_aisle",
+              "fire_station_bay",
+              "security_control_room",
+              "professional_kitchen_pass",
+              "grand_archive_hall"
+            ]
+          },
+          "action": {
+            "core": [
+              "cabin_service_pause",
+              "holding_firefighter_helmet",
+              "checking_security_monitors",
+              "serving_from_kitchen_pass",
+              "organizing_old_manuscripts"
+            ]
+          },
+          "prop": {
+            "support": [
+              "archive_box_prop",
+              "white_cotton_gloves_prop"
+            ]
+          },
+          "mood": {
+            "support": [
+              "professional_detachment",
+              "mature_poised_elegance"
+            ]
+          }
+        },
+        "concept_lock_promotions": {},
+        "redundancy_rules": [],
+        "coverage_repair": {}
+      },
+      "seasonal_event": {
+        "policy_id": "seasonal-event-semantic-policy-v1",
+        "aliases": [
+          "cherry blossom",
+          "autumn foliage",
+          "Christmas",
+          "Halloween",
+          "Lunar New Year",
+          "first snow",
+          "벚꽃",
+          "단풍",
+          "크리스마스",
+          "할로윈",
+          "설날",
+          "첫눈"
+        ],
+        "keywords": [
+          "cherry blossom",
+          "autumn foliage",
+          "Christmas",
+          "Halloween",
+          "Lunar New Year",
+          "first snow",
+          "festival lantern",
+          "벚꽃",
+          "단풍",
+          "크리스마스",
+          "할로윈",
+          "설날",
+          "첫눈"
+        ],
+        "axis_label": "seasonal event portrait",
+        "axis_embedding_text": "seasonal event portrait with cherry blossoms, autumn foliage, Christmas lights, Halloween street, Lunar New Year hanok room or first snow evening light",
+        "signal_lexicon": {
+          "strong": [
+            "cherry blossom",
+            "autumn foliage",
+            "Christmas",
+            "Halloween",
+            "Lunar New Year",
+            "first snow",
+            "벚꽃",
+            "단풍",
+            "크리스마스",
+            "할로윈",
+            "설날"
+          ],
+          "ambient": [
+            "seasonal",
+            "festival",
+            "winter",
+            "spring",
+            "autumn"
+          ]
+        },
+        "routed_slots": [
+          "location",
+          "prop",
+          "lighting",
+          "light_type",
+          "mood",
+          "weather"
+        ],
+        "steering_slots": [
+          "location",
+          "prop",
+          "lighting",
+          "light_type",
+          "mood",
+          "weather"
+        ],
+        "preset_policy": {
+          "allow_ids": [
+            "seasonal_event_portrait"
+          ],
+          "fallback_terms": [
+            "cherry blossom",
+            "Christmas",
+            "Halloween",
+            "Lunar New Year",
+            "first snow"
+          ]
+        },
+        "slot_signals": {
+          "location": {
+            "core": [
+              "cherry_blossom_path",
+              "autumn_foliage_park",
+              "christmas_market_lights",
+              "halloween_decorated_street",
+              "lunar_new_year_hanok_room"
+            ]
+          },
+          "prop": {
+            "core": [
+              "christmas_lights_prop",
+              "halloween_jack_o_lantern_prop",
+              "cherry_blossom_branch_prop",
+              "lunar_new_year_lantern_prop"
+            ]
+          },
+          "lighting": {
+            "core": [
+              "first_snow_evening_light",
+              "lantern_rows_warm_light"
+            ]
+          },
+          "light_type": {
+            "core": [
+              "festival_lantern_light"
+            ]
+          },
+          "mood": {
+            "core": [
+              "festive_warmth",
+              "refreshing_bright_charm"
+            ]
+          }
+        },
+        "concept_lock_promotions": {},
+        "redundancy_rules": [],
+        "coverage_repair": {}
+      },
+      "era_world": {
+        "policy_id": "era-world-semantic-policy-v1",
+        "aliases": [
+          "1920s",
+          "Victorian",
+          "western frontier",
+          "1970s disco",
+          "Belle Epoque",
+          "Renaissance",
+          "시대극",
+          "빅토리안",
+          "디스코"
+        ],
+        "keywords": [
+          "1920s",
+          "Gatsby",
+          "Victorian",
+          "western frontier",
+          "1970s",
+          "disco",
+          "Belle Epoque",
+          "Renaissance",
+          "period",
+          "시대극",
+          "빅토리안",
+          "디스코"
+        ],
+        "axis_label": "era world editorial",
+        "axis_embedding_text": "era costume editorial across roaring 1920s, Victorian gothic, western frontier, 1970s disco, Belle Epoque salon and Renaissance portrait worlds",
+        "signal_lexicon": {
+          "strong": [
+            "1920s",
+            "Gatsby",
+            "Victorian",
+            "western frontier",
+            "1970s disco",
+            "Belle Epoque",
+            "Renaissance",
+            "시대극"
+          ],
+          "ambient": [
+            "period",
+            "retro",
+            "gothic",
+            "ballroom",
+            "salon"
+          ]
+        },
+        "routed_slots": [
+          "world",
+          "location",
+          "costume_style",
+          "lighting",
+          "composition",
+          "mood",
+          "texture"
+        ],
+        "steering_slots": [
+          "world",
+          "location",
+          "costume_style",
+          "lighting",
+          "composition",
+          "mood",
+          "texture"
+        ],
+        "preset_policy": {
+          "allow_ids": [
+            "era_costume_editorial"
+          ],
+          "fallback_terms": [
+            "1920s",
+            "Victorian",
+            "western frontier",
+            "1970s disco",
+            "Belle Epoque",
+            "Renaissance"
+          ]
+        },
+        "slot_signals": {
+          "world": {
+            "core": [
+              "roaring_1920s_gatsby_world",
+              "victorian_gothic_world",
+              "western_frontier_world",
+              "seventies_disco_world",
+              "belle_epoque_salon_world",
+              "renaissance_portrait_world"
+            ]
+          },
+          "location": {
+            "core": [
+              "roaring_20s_ballroom",
+              "victorian_mansion_parlor",
+              "western_frontier_station",
+              "seventies_disco_floor",
+              "vintage_train_compartment"
+            ]
+          },
+          "costume_style": {
+            "core": [
+              "flapper_beaded_dress",
+              "victorian_gothic_dress",
+              "western_frontier_outfit",
+              "seventies_disco_outfit"
+            ]
+          },
+          "mood": {
+            "support": [
+              "haughty_elegance",
+              "mature_poised_elegance"
+            ]
+          }
+        },
+        "concept_lock_promotions": {},
+        "redundancy_rules": [],
+        "coverage_repair": {}
+      },
+      "dynamic_motion": {
+        "policy_id": "dynamic-motion-semantic-policy-v1",
+        "aliases": [
+          "dynamic motion",
+          "mid-jump",
+          "hair flip",
+          "dance leap",
+          "running toward camera",
+          "spinning skirt",
+          "motion portrait",
+          "점프",
+          "움직임",
+          "댄스"
+        ],
+        "keywords": [
+          "dynamic motion",
+          "mid-jump",
+          "hair flip",
+          "dance leap",
+          "running",
+          "spinning",
+          "freeze pose",
+          "motion blur",
+          "점프",
+          "움직임",
+          "댄스"
+        ],
+        "axis_label": "dynamic motion portrait",
+        "axis_embedding_text": "dynamic motion portrait with mid-jump freeze, spinning skirt, hair flip, dance leap, running toward camera, sharp face and kinetic diagonal framing",
+        "signal_lexicon": {
+          "strong": [
+            "dynamic motion",
+            "mid-jump",
+            "hair flip",
+            "dance leap",
+            "running toward camera",
+            "motion portrait",
+            "점프",
+            "움직임"
+          ],
+          "ambient": [
+            "motion",
+            "dynamic",
+            "dance",
+            "freeze",
+            "kinetic"
+          ]
+        },
+        "routed_slots": [
+          "action",
+          "motion",
+          "lighting",
+          "composition",
+          "camera_direction",
+          "mood"
+        ],
+        "steering_slots": [
+          "action",
+          "motion",
+          "lighting",
+          "composition",
+          "camera_direction",
+          "mood"
+        ],
+        "preset_policy": {
+          "allow_ids": [
+            "dynamic_motion_portrait"
+          ],
+          "fallback_terms": [
+            "dynamic motion",
+            "mid-jump",
+            "hair flip",
+            "dance leap"
+          ]
+        },
+        "slot_signals": {
+          "action": {
+            "core": [
+              "mid_jump_freeze_pose",
+              "spinning_skirt_motion_pose",
+              "hair_flip_motion_pose",
+              "running_toward_camera_motion",
+              "dance_leap_midair"
+            ]
+          },
+          "motion": {
+            "core": [
+              "fabric_motion_frozen",
+              "hair_motion_arc",
+              "limb_motion_blur_face_sharp"
+            ]
+          },
+          "lighting": {
+            "core": [
+              "stage_motion_flash",
+              "hard_flash"
+            ]
+          },
+          "composition": {
+            "core": [
+              "dynamic_diagonal_action_frame"
+            ]
+          },
+          "mood": {
+            "support": [
+              "refreshing_bright_charm"
+            ]
+          }
+        },
+        "concept_lock_promotions": {},
+        "redundancy_rules": [],
+        "coverage_repair": {}
+      },
+      "personality_register": {
+        "policy_id": "personality-register-semantic-policy-v1",
+        "aliases": [
+          "pure",
+          "cool beauty",
+          "haughty",
+          "bright playful",
+          "mature elegance",
+          "boyish",
+          "tomboy",
+          "청순",
+          "쿨뷰티",
+          "도도",
+          "발랄",
+          "연상",
+          "보이시"
+        ],
+        "keywords": [
+          "pure",
+          "serene",
+          "cool beauty",
+          "aloof",
+          "haughty",
+          "bright",
+          "playful",
+          "mature elegance",
+          "boyish",
+          "tomboy",
+          "androgynous",
+          "청순",
+          "쿨뷰티",
+          "도도",
+          "발랄",
+          "연상",
+          "보이시"
+        ],
+        "axis_label": "personality register portrait",
+        "axis_embedding_text": "personality register through expression, makeup, mood and wardrobe: pure serenity, cool beauty, haughty elegance, bright charm, mature poise, boyish tomboy style",
+        "signal_lexicon": {
+          "strong": [
+            "cool beauty",
+            "haughty",
+            "bright playful",
+            "mature elegance",
+            "boyish",
+            "tomboy",
+            "청순",
+            "쿨뷰티",
+            "도도",
+            "발랄",
+            "연상",
+            "보이시"
+          ],
+          "ambient": [
+            "pure",
+            "serene",
+            "aloof",
+            "elegant",
+            "playful",
+            "androgynous"
+          ]
+        },
+        "routed_slots": [
+          "appearance_type",
+          "expression",
+          "makeup_style",
+          "mood",
+          "wardrobe_style",
+          "aesthetic_trend",
+          "lighting",
+          "composition"
+        ],
+        "steering_slots": [
+          "appearance_type",
+          "expression",
+          "makeup_style",
+          "mood",
+          "wardrobe_style",
+          "aesthetic_trend"
+        ],
+        "preset_policy": {
+          "allow_ids": [
+            "compact_urban_fashion_portrait",
+            "compact_cinematic_prop_portrait",
+            "dynamic_motion_portrait"
+          ],
+          "fallback_terms": [
+            "cool beauty",
+            "haughty",
+            "bright playful",
+            "mature elegance",
+            "boyish"
+          ]
+        },
+        "slot_signals": {
+          "appearance_type": {
+            "core": [
+              "pure_serene_presence",
+              "androgynous_cool_presence",
+              "mature_elegant_presence"
+            ]
+          },
+          "expression": {
+            "core": [
+              "gentle_pure_gaze",
+              "aloof_composed_gaze",
+              "chin_up_haughty_look",
+              "bright_refreshing_grin",
+              "mature_knowing_smile"
+            ]
+          },
+          "makeup_style": {
+            "core": [
+              "clean_pure_makeup",
+              "graphic_eyeliner_sharp",
+              "red_lip_classic"
+            ]
+          },
+          "mood": {
+            "core": [
+              "pure_serene_softness",
+              "aloof_cool_beauty",
+              "haughty_elegance",
+              "refreshing_bright_charm",
+              "mature_poised_elegance"
+            ]
+          },
+          "wardrobe_style": {
+            "core": [
+              "old_money_tailored_layers",
+              "tomboy_oversized_layers",
+              "dark_feminine_black_layers",
+              "light_academia_knit_layers"
+            ]
+          },
+          "aesthetic_trend": {
+            "core": [
+              "dark_feminine_aesthetic",
+              "old_money_aesthetic",
+              "light_academia_aesthetic",
+              "tomboy_aesthetic"
+            ]
+          }
+        },
+        "concept_lock_promotions": {},
+        "redundancy_rules": [],
+        "coverage_repair": {}
       }
     },
     "steering_priority": [

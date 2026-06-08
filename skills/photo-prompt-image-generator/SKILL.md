@@ -97,6 +97,21 @@ Concept mode defaults:
 - `--concept-mode legacy` is the default and keeps behavior-compatible concept recipe expansion.
 - `--concept-mode soft` is opt-in. It forwards concept locks and intent axes without forced recipe slot sets, and should not become the default until real-embedding concept benchmarks pass.
 
+Expanded concept coverage:
+
+- Professional and uniform roles now include `승무원`, `소방관`, `보안요원`, `요리사`, `군장교`, `학생`, `무녀`, `기록가`, and `연구원` in addition to the older role recipes. Pass the full short phrase as one `--concept`, for example `카리나 무녀 구미호` or `윈터 연구원 데이터망령`, so the resolver can keep the role anchor and apply the mixin on top.
+- New folklore and speculative mixins include `구미호`, `원귀`, `인어`, `마녀`, `선녀`, `도깨비`, `데이터망령`, `환경침식`, `외계인`, `초능력자`, and `마법사`. These are visible-anchor recipes, not vibe words: they should add face/hand/prop/location evidence such as fox-fire, talismans, glitching screens, UI projection, moss, archive dust, levitating objects, or star maps.
+- New personality-register mixins include `청순`, `쿨뷰티`, `도도`, `발랄`, `연상`, and `보이시`. Use them to steer expression, makeup, posture, wardrobe, and mood without replacing the main role.
+- Additional preset/tag families cover seasonal events, symbolic destination locations, era worlds, dynamic motion, digital glitch entities, professional observation spaces, and environmental transformation.
+
+Safety and salience rules for the expanded concepts:
+
+- `학생` always means adult-only school-uniform cosplay/reference styling. Keep it covered, neutral, and explicitly non-minor-coded.
+- Uniform roles should read as professional authority or role identity, not fetish framing. Preserve the uniform, workplace, and action anchors.
+- Folk, shamanic, ghost, witch, and religious-threshold imagery should be respectful and non-graphic: no caricature, gore, sacrifice, victims, or shock-horror injury cues.
+- `데이터망령` and other glitch concepts must keep the face, eyes, hands, and text clean. Glitch should live in localized UI projection, phone/monitor evidence, pixel-drift edges, or surveillance framing.
+- `환경침식` is symbolic environmental transformation: moss, paper dust, crystals, petals, or reclaimed rooms. Do not turn it into body horror, decay wounds, infection, or gore.
+
 List tag ids for a slot:
 
 ```bash
