@@ -887,6 +887,12 @@ def select_bundle_for_mixin(
                 bundle for bundle in role_bundles if not str(bundle.get("id") or "").startswith("shared_")
             ]
             bundles = role_specific_bundles or role_bundles
+        else:
+            generic_bundles = [bundle for bundle in bundles if not normalize_list(bundle.get("roles"))]
+            if generic_bundles:
+                bundles = generic_bundles
+            else:
+                return None
     else:
         generic_bundles = [bundle for bundle in bundles if not normalize_list(bundle.get("roles"))]
         if generic_bundles:

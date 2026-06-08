@@ -5301,7 +5301,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "유령신부",
             }.issubset(recipes["mixins"])
         )
-        self.assertEqual(recipes["aliases"]["사서"], "기록가")
+        self.assertEqual(recipes["aliases"]["사서"], "도서관 사서")
         self.assertEqual(recipes["aliases"]["글리치"], "데이터망령")
         self.assertEqual(recipes["aliases"]["늑대인간"], "늑대인간")
         self.assertEqual(recipes["aliases"]["걸크"], "걸크러시")
@@ -5506,6 +5506,223 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 for slot, expected_ids in expected_slots.items():
                     self.assertTrue(expected_ids.issubset(set(forced.get(slot, []))), (slot, forced))
                 self.assertGreaterEqual(explanation["soft_anchor_spec"]["min_anchors"], 2)
+
+    def test_wide_archetype_presets_tags_roles_and_mixins_are_registered(self):
+        preset_ids = {preset["id"] for preset in self.data["presets"]}
+        family_ids = {family["id"] for family in self.data.get("preset_families", [])}
+        self.assertTrue(
+            {
+                "contract_exchange_table_portrait",
+                "judgement_packet_portrait",
+                "digital_void_server_room_preset",
+                "urban_shrine_convenience_preset",
+                "oracle_vision_portrait",
+                "two_person_rival_reflection",
+                "transformation_midstage_portrait",
+                "feral_moon_threshold_portrait",
+                "obsessive_collection_shelf",
+                "gravity_defiance_portrait",
+            }.issubset(preset_ids)
+        )
+        self.assertTrue(
+            {
+                "contract_symbolic_exchange_family",
+                "modern_power_authority_family",
+                "surveillance_control_family",
+                "digital_void_family",
+                "urban_folk_shrine_family",
+                "psychological_double_family",
+                "obsessive_collection_family",
+                "gravity_defiance_family",
+            }.issubset(family_ids)
+        )
+
+        expected_slot_ids = {
+            "prop": {
+                "red_seal_contract_prop",
+                "soul_ledger_book_prop",
+                "corrupted_receipt_prop",
+                "sealed_verdict_packet_prop",
+                "scrying_mirror_prop",
+                "encrypted_drive_prop",
+                "auction_gavel_prop",
+                "calculator_ledger_prop",
+            },
+            "action": {
+                "signing_invisible_contract",
+                "stamping_verdict_packet",
+                "watching_offscreen_monitor",
+                "awed_upward_gaze",
+                "dealing_cards_precisely",
+                "reviewing_ledger_columns",
+            },
+            "location": {
+                "corporate_high_floor_office",
+                "server_room_aisle",
+                "surveillance_control_room",
+                "urban_shrine_corner",
+                "archive_stacks",
+                "casino_table_room",
+                "insurance_claims_office",
+            },
+            "composition": {
+                "first_person_contract_handoff",
+                "document_foreground_face_background",
+                "mirror_mismatch_same_frame",
+                "cctv_low_corner_view",
+                "low_angle_authority_frame",
+                "leaf_foreground_bokeh",
+            },
+            "lighting": {
+                "archive_desk_lamp",
+                "god_ray_threshold_light",
+                "threshold_sliver_light",
+                "server_rack_blue_light",
+                "phone_notification_pulse",
+            },
+            "mood": {
+                "procedural_damnation",
+                "friendly_unease",
+                "bureaucratic_horror",
+                "technological_haunting",
+                "predatory_stillness",
+                "urban_legend_wrongness",
+            },
+            "subject": {
+                "prosecutor_role_model",
+                "judge_role_model",
+                "lawyer_role_model",
+                "hacker_operator",
+                "call_center_agent",
+                "casino_dealer_role_model",
+                "accountant_role_model",
+            },
+        }
+        for slot, expected_ids in expected_slot_ids.items():
+            with self.subTest(slot=slot):
+                actual = {entry["id"] for entry in self.data["slots"][slot]}
+                self.assertTrue(expected_ids.issubset(actual), slot)
+
+        recipes = json.loads((SKILL_DIR / "assets" / "concept_recipes.json").read_text(encoding="utf-8"))
+        self.assertTrue(
+            {
+                "검사",
+                "판사",
+                "변호사",
+                "해커",
+                "콜센터 상담원",
+                "카지노 딜러",
+                "경매사",
+                "역무원",
+                "회계사",
+                "보험조사원",
+            }.issubset(recipes["roles"])
+        )
+        self.assertTrue(
+            {
+                "트릭스터",
+                "현자",
+                "방랑자",
+                "구원자",
+                "배신자",
+                "수집가",
+                "권력자",
+                "예언자",
+                "치유자",
+                "계약자",
+                "도시전설",
+            }.issubset(recipes["mixins"])
+        )
+
+    def test_role_specific_mixin_bundles_preserve_role_anchors_and_do_not_leak(self):
+        miko = self.run_wrapper_json(
+            "--concept",
+            "카리나 무녀 구미호",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "17",
+            "--explain-concept",
+        )["concepts"][0]
+        self.assertEqual(miko["selected_bundles"][0]["bundle_id"], "gumiho_무녀_facet")
+        self.assertTrue(
+            {
+                "shaman_bells_prop",
+                "five_color_silk_strip_prop",
+                "fox_fire_wisp_prop",
+            }.issubset(set(miko["combined_forced_slots"]["prop"]))
+        )
+
+        archivist = self.run_wrapper_json(
+            "--concept",
+            "지젤 기록가 환경침식",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "17",
+            "--explain-concept",
+        )["concepts"][0]
+        self.assertEqual(archivist["selected_bundles"], [])
+        self.assertEqual(archivist["combined_forced_slots"]["location"][0], "grand_archive_hall")
+
+        researcher = self.run_wrapper_json(
+            "--concept",
+            "윈터 연구원 데이터망령",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "17",
+            "--explain-concept",
+        )["concepts"][0]
+        self.assertEqual(researcher["role"], "연구원")
+        self.assertEqual(researcher["selected_bundles"], [])
+        self.assertEqual(researcher["combined_forced_slots"]["location"][0], "clinical_observation_lab")
+
+    def test_new_roles_and_archetypes_resolve_to_visible_slots(self):
+        cases = [
+            (
+                "카리나 검사 계약자",
+                "검사",
+                "계약자",
+                {"subject": {"prosecutor_role_model"}, "prop": {"sealed_verdict_packet_prop", "red_seal_contract_prop"}},
+            ),
+            (
+                "윈터 해커 도시전설",
+                "해커",
+                "도시전설",
+                {"subject": {"hacker_operator"}, "location": {"server_room_aisle", "midnight_convenience_store_aisle"}, "prop": {"encrypted_drive_prop", "corrupted_receipt_prop"}},
+            ),
+            (
+                "닝닝 회계사 권력자",
+                "회계사",
+                "권력자",
+                {"subject": {"accountant_role_model"}, "prop": {"calculator_ledger_prop"}, "composition": {"low_angle_authority_frame"}},
+            ),
+            (
+                "지젤 사서 현자",
+                "도서관 사서",
+                "현자",
+                {"prop": {"soul_ledger_book_prop"}, "lighting": {"archive_desk_lamp"}},
+            ),
+        ]
+
+        for concept, expected_role, expected_mixin, expected_slots in cases:
+            with self.subTest(concept=concept):
+                payload = self.run_wrapper_json(
+                    "--concept",
+                    concept,
+                    "--selection-mode",
+                    "rule",
+                    "--seed",
+                    "23",
+                    "--explain-concept",
+                )
+                explanation = payload["concepts"][0]
+                self.assertEqual(explanation["role"], expected_role)
+                self.assertEqual(explanation["applied_mixins"], [expected_mixin])
+                forced = explanation["combined_forced_slots"]
+                for slot, expected_ids in expected_slots.items():
+                    self.assertTrue(expected_ids.issubset(set(forced.get(slot, []))), (slot, forced))
 
     def test_all_concept_recipe_forced_slots_are_registered(self):
         recipes = json.loads((SKILL_DIR / "assets" / "concept_recipes.json").read_text(encoding="utf-8"))
