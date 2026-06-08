@@ -281,6 +281,36 @@
       "ko": "환경 침식·변형 계열",
       "en": "environmental transformation family",
       "embedding_text": "moss, salt crystal, paper dust, vines, petals or mineral growth overtaking costume and props in non-graphic symbolic transformation"
+    },
+    {
+      "id": "viewpoint_anchor_family",
+      "ko": "시점·전경 앵커 계열",
+      "en": "viewpoint and foreground anchor family",
+      "embedding_text": "first-person hands, object POV, phone reflection, hidden camera, split diopter, witness-box and table-edge viewpoints that make concept anchors visible near face, hands, foreground, mirror, or screen"
+    },
+    {
+      "id": "noir_investigation_family",
+      "ko": "느와르 조사·증언 계열",
+      "en": "noir investigation and testimony family",
+      "embedding_text": "detective case files, interrogation rooms, court witness stand, newsroom deadlines, blinds shadows, press badges and nonviolent evidence pressure"
+    },
+    {
+      "id": "time_memory_exile_family",
+      "ko": "시간·기억·망명 계열",
+      "en": "time memory and exile family",
+      "embedding_text": "time loops, old clocks, passports, departure gates, border checkpoints, ferry terminals, archive dust, anachronistic devices and quiet displacement"
+    },
+    {
+      "id": "performance_role_family",
+      "ko": "무대·퍼포먼스 역할 계열",
+      "en": "performance role family",
+      "embedding_text": "ballerina, cheerleader, racing pit, backstage vanity, stage followspot, rehearsal room and adult performance roles with safe visible costume anchors"
+    },
+    {
+      "id": "occult_scholarly_family",
+      "ko": "오컬트 학술·점술 계열",
+      "en": "occult scholarly and divination family",
+      "embedding_text": "tarot, crystal ball, alchemy vial, brass astrolabe, candlelit scholarly ritual and non-graphic symbolic occult portraiture"
     }
   ],
   "recipes": [
@@ -34435,6 +34465,2254 @@
         }
       },
       "embedding_text": "cinematic destination portrait in cathedral, temple, ferris wheel, onsen, vintage train, observatory or courtroom settings"
+    },
+    {
+      "id": "cyborg_seamline_closeup_portrait",
+      "ko": "사이보그 심리스 클로즈업 포트레이트",
+      "en": "cyborg seamline close-up portrait",
+      "weight": 0.62,
+      "template_style": "portrait",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.65
+        },
+        {
+          "slot": "surface_material",
+          "probability": 0.8
+        },
+        {
+          "slot": "light_shape",
+          "probability": 0.7
+        }
+      ],
+      "filters": {
+        "subject": {
+          "ids": [
+            "cyborg_partial_prosthetic",
+            "service_android_unit"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "cornea_reflection_closeup",
+            "sensor_eye_macro"
+          ]
+        },
+        "light_type": {
+          "ids": [
+            "hud_screen_glow",
+            "ui_projection_on_skin"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "matte_synthetic_skin_pore",
+            "terminal_scanline_green_texture"
+          ]
+        }
+      },
+      "embedding_text": "close-up cyborg or android portrait with visible seamlines, HUD glow, eye reflection and hand or temple technology anchor"
+    },
+    {
+      "id": "haunted_mirror_apparition_portrait",
+      "ko": "거울 유령 어긋남 포트레이트",
+      "en": "haunted mirror apparition portrait",
+      "weight": 0.62,
+      "template_style": "portrait",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.65
+        },
+        {
+          "slot": "world",
+          "probability": 0.5
+        },
+        {
+          "slot": "texture",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "subject": {
+          "ids": [
+            "doppelganger_subject"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "mirror_mismatch_comparison",
+            "phone_screen_reflection_compare"
+          ]
+        },
+        "location": {
+          "ids": [
+            "mirror_test_studio",
+            "bridal_dressing_room"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "twin_presence_unease",
+            "haunted_melancholy"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "mirror_silvering_edge_texture"
+          ]
+        }
+      },
+      "embedding_text": "haunted mirror portrait where real subject and mismatched reflection appear in the same frame"
+    },
+    {
+      "id": "noir_detective_blinds_portrait",
+      "ko": "블라인드 그림자의 느와르 탐정 포트레이트",
+      "en": "noir detective blinds portrait",
+      "weight": 0.62,
+      "template_style": "portrait",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "costume_style",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.65
+        },
+        {
+          "slot": "world",
+          "probability": 0.5
+        },
+        {
+          "slot": "texture",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "subject": {
+          "ids": [
+            "noir_detective_role_model"
+          ]
+        },
+        "action": {
+          "ids": [
+            "reading_case_file_low_light"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "case_file_folder_prop"
+          ]
+        },
+        "location": {
+          "ids": [
+            "noir_interrogation_room",
+            "detective_office_rain_window"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "blinds_shadow_face_bars"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "venetian_blind_slat_light"
+          ]
+        }
+      },
+      "embedding_text": "noir detective with case file, rain window, interrogation room, venetian blind shadow bars across the face"
+    },
+    {
+      "id": "contract_demon_waxseal_portrait",
+      "ko": "계약 악마 왁스실 포트레이트",
+      "en": "contract demon wax-seal portrait",
+      "weight": 0.62,
+      "template_style": "portrait",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.65
+        },
+        {
+          "slot": "world",
+          "probability": 0.5
+        },
+        {
+          "slot": "texture",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "prop": {
+          "ids": [
+            "soul_contract_scroll_prop",
+            "sealed_mission_envelope_prop"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "single_candle_flicker_light",
+            "candlelit_ritual_light"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "occult_noir"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "doorway_threshold_half_shadow",
+            "frame_within_frame"
+          ]
+        }
+      },
+      "embedding_text": "symbolic contract demon portrait with wax seal, candle, threshold shadow, and non-graphic bargain cues"
+    },
+    {
+      "id": "witch_greenhouse_ritual_portrait",
+      "ko": "온실 마녀 의식 포트레이트",
+      "en": "witch greenhouse ritual portrait",
+      "weight": 0.62,
+      "template_style": "portrait",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.65
+        },
+        {
+          "slot": "world",
+          "probability": 0.5
+        },
+        {
+          "slot": "texture",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "costume_style": {
+          "ids": [
+            "witch_robe_wide_hat"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "grimoire_candle_prop",
+            "alchemy_glass_vial_prop"
+          ]
+        },
+        "location": {
+          "ids": [
+            "alchemy_workshop_table",
+            "botanical_greenhouse"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "single_candle_flicker_light"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "occult_scholarly_calm",
+            "folk_ritual_unease"
+          ]
+        }
+      },
+      "embedding_text": "witch or mage portrait in greenhouse or alchemy workspace with grimoire, vial, candle and scholarly ritual authority"
+    },
+    {
+      "id": "reaper_joseon_ledger_portrait",
+      "ko": "조선 저승사자 명부 포트레이트",
+      "en": "Joseon underworld messenger ledger portrait",
+      "weight": 0.62,
+      "template_style": "portrait",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "costume_style",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.65
+        },
+        {
+          "slot": "world",
+          "probability": 0.5
+        },
+        {
+          "slot": "texture",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "subject": {
+          "ids": [
+            "underworld_messenger_subject"
+          ]
+        },
+        "costume_style": {
+          "ids": [
+            "underworld_messenger_black_hanbok"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "name_ledger_book_prop",
+            "extinguishing_candle_prop"
+          ]
+        },
+        "location": {
+          "ids": [
+            "funeral_registry_hall",
+            "hanok_inner_court"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "underworld_calm"
+          ]
+        }
+      },
+      "embedding_text": "Korean underworld messenger in black hanbok with name ledger and extinguishing candle at a cold threshold"
+    },
+    {
+      "id": "doppelganger_phone_reflection_portrait",
+      "ko": "폰 반사 도플갱어 포트레이트",
+      "en": "doppelganger phone-reflection portrait",
+      "weight": 0.62,
+      "template_style": "portrait",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.65
+        },
+        {
+          "slot": "world",
+          "probability": 0.5
+        },
+        {
+          "slot": "texture",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "subject": {
+          "ids": [
+            "doppelganger_subject"
+          ]
+        },
+        "action": {
+          "ids": [
+            "inspecting_own_reflection_mismatch"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "phone_screen_reflection_compare",
+            "mirror_mismatch_comparison"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "clear_case_smartphone"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "twin_presence_unease"
+          ]
+        }
+      },
+      "embedding_text": "doppelganger portrait comparing real face with wrong reflection in phone screen or mirror"
+    },
+    {
+      "id": "time_loop_train_window_portrait",
+      "ko": "열차 창 타임루프 포트레이트",
+      "en": "time-loop train-window portrait",
+      "weight": 0.62,
+      "template_style": "portrait",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.65
+        },
+        {
+          "slot": "world",
+          "probability": 0.5
+        },
+        {
+          "slot": "texture",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "subject": {
+          "ids": [
+            "time_traveler_subject"
+          ]
+        },
+        "action": {
+          "ids": [
+            "checking_pocket_watch_time_loop"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "pocket_watch_time_loop_prop",
+            "retro_future_device_prop"
+          ]
+        },
+        "location": {
+          "ids": [
+            "old_clock_train_compartment",
+            "vintage_train_compartment"
+          ]
+        },
+        "light_shape": {
+          "ids": [
+            "clockface_shadow_pattern"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "anachronistic_wonder"
+          ]
+        }
+      },
+      "embedding_text": "time traveler portrait inside old train compartment with pocket watch, clock shadow and anachronistic device"
+    },
+    {
+      "id": "memory_archive_polaroid_portrait",
+      "ko": "기억 아카이브 폴라로이드 포트레이트",
+      "en": "memory archive Polaroid portrait",
+      "weight": 0.62,
+      "template_style": "portrait",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.65
+        },
+        {
+          "slot": "world",
+          "probability": 0.5
+        },
+        {
+          "slot": "texture",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "subject": {
+          "ids": [
+            "archivist_role_model"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "archive_box_prop",
+            "old_key_prop"
+          ]
+        },
+        "location": {
+          "ids": [
+            "grand_archive_hall"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "old_paper_fiber_texture",
+            "pressed_paper_archive_dust"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "archival_suspense"
+          ]
+        }
+      },
+      "embedding_text": "memory archive portrait with old paper fiber, archive box, Polaroid feeling and hand-held evidence anchor"
+    },
+    {
+      "id": "spy_hotel_corridor_surveillance",
+      "ko": "호텔 복도 스파이 감시 포트레이트",
+      "en": "spy hotel-corridor surveillance portrait",
+      "weight": 0.62,
+      "template_style": "portrait",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "costume_style",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.65
+        },
+        {
+          "slot": "world",
+          "probability": 0.5
+        },
+        {
+          "slot": "texture",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "subject": {
+          "ids": [
+            "spy_cover_role_model"
+          ]
+        },
+        "costume_style": {
+          "ids": [
+            "spy_tailored_cover_suit"
+          ]
+        },
+        "action": {
+          "ids": [
+            "adjusting_earpiece_glance_aside"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "earpiece_comm_device",
+            "hotel_keycard_prop"
+          ]
+        },
+        "location": {
+          "ids": [
+            "hotel_back_corridor",
+            "luxury_hotel_corridor"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "from_table_edge_hidden_camera",
+            "elevator_corner_camera_direction"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "surveillance_paranoia"
+          ]
+        }
+      },
+      "embedding_text": "spy in hotel corridor with earpiece, keycard, hidden camera viewpoint and cover identity tension"
+    },
+    {
+      "id": "journalist_midnight_newsroom_portrait",
+      "ko": "심야 뉴스룸 기자 포트레이트",
+      "en": "midnight newsroom journalist portrait",
+      "weight": 0.62,
+      "template_style": "portrait",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "costume_style",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.65
+        },
+        {
+          "slot": "world",
+          "probability": 0.5
+        },
+        {
+          "slot": "texture",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "subject": {
+          "ids": [
+            "investigative_journalist_role_model"
+          ]
+        },
+        "costume_style": {
+          "ids": [
+            "journalist_field_jacket_costume"
+          ]
+        },
+        "action": {
+          "ids": [
+            "taking_notes_press_badge"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "press_badge_notebook_prop"
+          ]
+        },
+        "location": {
+          "ids": [
+            "newsroom_after_midnight"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "newsroom_monitor_glow"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "deadline_paranoia",
+            "truth_under_pressure"
+          ]
+        }
+      },
+      "embedding_text": "investigative journalist in midnight newsroom with press badge notebook and monitor glow"
+    },
+    {
+      "id": "courtroom_witness_flash_portrait",
+      "ko": "법정 증인 플래시 포트레이트",
+      "en": "courtroom witness flash portrait",
+      "weight": 0.62,
+      "template_style": "portrait",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "costume_style",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.65
+        },
+        {
+          "slot": "world",
+          "probability": 0.5
+        },
+        {
+          "slot": "texture",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "subject": {
+          "ids": [
+            "court_witness_role_model"
+          ]
+        },
+        "costume_style": {
+          "ids": [
+            "court_witness_formal_suit"
+          ]
+        },
+        "action": {
+          "ids": [
+            "holding_court_summons"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "court_summons_paper_prop"
+          ]
+        },
+        "location": {
+          "ids": [
+            "courtroom_witness_stand",
+            "courtroom_gallery"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "witness_box_front_direction"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "truth_under_pressure"
+          ]
+        }
+      },
+      "embedding_text": "courtroom witness with summons paper, witness stand, frontal pressure and documentary flash tension"
+    },
+    {
+      "id": "airport_departure_exile_portrait",
+      "ko": "공항 출국 망명자 포트레이트",
+      "en": "airport departure exile portrait",
+      "weight": 0.62,
+      "template_style": "portrait",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "costume_style",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.65
+        },
+        {
+          "slot": "world",
+          "probability": 0.5
+        },
+        {
+          "slot": "texture",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "subject": {
+          "ids": [
+            "exile_traveler_subject"
+          ]
+        },
+        "costume_style": {
+          "ids": [
+            "exile_travel_layers_costume"
+          ]
+        },
+        "action": {
+          "ids": [
+            "holding_passport_at_departure"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "passport_with_old_stamp_prop"
+          ]
+        },
+        "location": {
+          "ids": [
+            "airport_departure_gate",
+            "border_checkpoint_waiting_room"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "exile_melancholy"
+          ]
+        }
+      },
+      "embedding_text": "exile traveler at airport departure or border checkpoint holding old stamped passport with quiet displacement"
+    },
+    {
+      "id": "ferry_terminal_fog_portrait",
+      "ko": "안개 낀 터미널 이별 포트레이트",
+      "en": "foggy ferry-terminal departure portrait",
+      "weight": 0.62,
+      "template_style": "portrait",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.65
+        },
+        {
+          "slot": "world",
+          "probability": 0.5
+        },
+        {
+          "slot": "texture",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "subject": {
+          "ids": [
+            "exile_traveler_subject"
+          ]
+        },
+        "location": {
+          "ids": [
+            "ferry_terminal_fog"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "passport_with_old_stamp_prop",
+            "train_ticket_stub_prop"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "exile_melancholy"
+          ]
+        },
+        "weather": {
+          "ids": [
+            "dense_fog_bank"
+          ]
+        }
+      },
+      "embedding_text": "foggy ferry terminal portrait with passport or ticket, departure melancholy and liminal water-travel atmosphere"
+    },
+    {
+      "id": "library_archive_dust_light_portrait",
+      "ko": "아카이브 먼지광 포트레이트",
+      "en": "library archive dust-light portrait",
+      "weight": 0.62,
+      "template_style": "portrait",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.65
+        },
+        {
+          "slot": "world",
+          "probability": 0.5
+        },
+        {
+          "slot": "texture",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "subject": {
+          "ids": [
+            "archivist_role_model"
+          ]
+        },
+        "location": {
+          "ids": [
+            "grand_archive_hall"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "archive_box_prop",
+            "case_file_folder_prop"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "old_paper_fiber_texture",
+            "pressed_paper_archive_dust"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "archive_desk_lamp_light"
+          ]
+        }
+      },
+      "embedding_text": "archive library portrait with dust light, old paper fiber, white gloves and evidence folder"
+    },
+    {
+      "id": "temple_incense_ritual_portrait",
+      "ko": "사찰 향연기 의식 포트레이트",
+      "en": "temple incense ritual portrait",
+      "weight": 0.62,
+      "template_style": "portrait",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.65
+        },
+        {
+          "slot": "world",
+          "probability": 0.5
+        },
+        {
+          "slot": "texture",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "subject": {
+          "ids": [
+            "modern_shaman_performer"
+          ]
+        },
+        "location": {
+          "ids": [
+            "temple_lantern_hall",
+            "traditional_shrine_interior"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "incense_smoke_stick_prop",
+            "shaman_bells_prop"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "incense_haze_diffusion",
+            "moonlit_folk_ritual_light"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "folk_ritual_unease"
+          ]
+        }
+      },
+      "embedding_text": "respectful temple or shrine ritual portrait with incense smoke, bells, lanterns and non-graphic folk threshold"
+    },
+    {
+      "id": "industrial_workshop_sparks_portrait",
+      "ko": "산업 작업장 불꽃 포트레이트",
+      "en": "industrial workshop sparks portrait",
+      "weight": 0.62,
+      "template_style": "portrait",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "costume_style",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.65
+        },
+        {
+          "slot": "world",
+          "probability": 0.5
+        },
+        {
+          "slot": "texture",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "subject": {
+          "ids": [
+            "mechanic_role_model"
+          ]
+        },
+        "costume_style": {
+          "ids": [
+            "mechanic_coverall_costume"
+          ]
+        },
+        "action": {
+          "ids": [
+            "repairing_small_machine"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "wrench_tool_prop"
+          ]
+        },
+        "location": {
+          "ids": [
+            "mechanic_garage_workbench"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "garage_spark_light"
+          ]
+        }
+      },
+      "embedding_text": "mechanic or technician portrait in industrial workshop with wrench, machine parts and spark light"
+    },
+    {
+      "id": "vintage_darkroom_red_safelight_portrait",
+      "ko": "암실 레드 세이프라이트 포트레이트",
+      "en": "vintage darkroom red-safelight portrait",
+      "weight": 0.62,
+      "template_style": "portrait",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.65
+        },
+        {
+          "slot": "world",
+          "probability": 0.5
+        },
+        {
+          "slot": "texture",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "subject": {
+          "ids": [
+            "investigative_journalist_role_model",
+            "archivist_role_model"
+          ]
+        },
+        "location": {
+          "ids": [
+            "vintage_darkroom"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "red_safelight_darkroom"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "old_paper_fiber_texture"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "table_edge_hidden_camera_frame",
+            "object_pov_table_edge_frame"
+          ]
+        }
+      },
+      "embedding_text": "vintage photo darkroom portrait with red safelight, paper fiber, evidence prints and object POV"
+    },
+    {
+      "id": "cyber_clinic_stasis_portrait",
+      "ko": "사이버 클리닉 정지장 포트레이트",
+      "en": "cyber clinic stasis portrait",
+      "weight": 0.62,
+      "template_style": "portrait",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.65
+        },
+        {
+          "slot": "world",
+          "probability": 0.5
+        },
+        {
+          "slot": "texture",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "subject": {
+          "ids": [
+            "clinical_researcher_role_model",
+            "care_medical_android"
+          ]
+        },
+        "location": {
+          "ids": [
+            "clinical_observation_lab",
+            "diagnostics_lab"
+          ]
+        },
+        "light_type": {
+          "ids": [
+            "hud_screen_glow",
+            "operating_observation_light"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "specimen_case_reflection_frame",
+            "one_way_mirror_frame"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "sterile_observation"
+          ]
+        }
+      },
+      "embedding_text": "cyber clinic stasis portrait with observation light, specimen reflection, lab coat or android care cues"
+    },
+    {
+      "id": "lost_expedition_ruins_portrait",
+      "ko": "실종 탐사대 유적 포트레이트",
+      "en": "lost expedition ruins portrait",
+      "weight": 0.62,
+      "template_style": "portrait",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.65
+        },
+        {
+          "slot": "world",
+          "probability": 0.5
+        },
+        {
+          "slot": "texture",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "subject": {
+          "ids": [
+            "exile_traveler_subject",
+            "alchemist_role_model"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "old_key_prop",
+            "brass_astrolabe_prop"
+          ]
+        },
+        "location": {
+          "ids": [
+            "rpg_ruin_studio_set",
+            "western_frontier_station"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "archival_suspense"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "old_paper_fiber_texture"
+          ]
+        }
+      },
+      "embedding_text": "lost expedition ruins portrait with old key, astrolabe, archive dust and non-graphic adventure mystery"
+    },
+    {
+      "id": "security_badge_id_photo_portrait",
+      "ko": "보안 배지 ID 포트레이트",
+      "en": "security badge ID portrait",
+      "weight": 0.62,
+      "template_style": "portrait",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.65
+        },
+        {
+          "slot": "world",
+          "probability": 0.5
+        },
+        {
+          "slot": "texture",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "subject": {
+          "ids": [
+            "security_guard_role_model",
+            "spy_cover_role_model"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "security_access_card_prop",
+            "earpiece_comm_device"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "centered_symmetry"
+          ]
+        },
+        "capture_context": {
+          "ids": [
+            "service_staff_id_photo"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "professional_detachment"
+          ]
+        }
+      },
+      "embedding_text": "security badge ID-style portrait with access card, earpiece and controlled professional detachment"
+    },
+    {
+      "id": "triptych_story_sequence_portrait",
+      "ko": "트립틱 서사 포트레이트",
+      "en": "triptych story sequence portrait",
+      "weight": 0.62,
+      "template_style": "portrait",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.65
+        },
+        {
+          "slot": "world",
+          "probability": 0.5
+        },
+        {
+          "slot": "texture",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "composition": {
+          "ids": [
+            "triptych_story_sequence",
+            "triptych_sequence"
+          ]
+        },
+        "format": {
+          "ids": [
+            "multi_image_series",
+            "four_cut_grid"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "archival_suspense",
+            "truth_under_pressure"
+          ]
+        }
+      },
+      "embedding_text": "three-panel triptych portrait sequence that shows a concept through repeated visible anchors"
+    },
+    {
+      "id": "split_diopter_dual_focus_portrait",
+      "ko": "스플릿 디옵터 이중초점 포트레이트",
+      "en": "split-diopter dual-focus portrait",
+      "weight": 0.62,
+      "template_style": "portrait",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.65
+        },
+        {
+          "slot": "world",
+          "probability": 0.5
+        },
+        {
+          "slot": "texture",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "composition": {
+          "ids": [
+            "split_diopter_dual_focus"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "case_file_folder_prop",
+            "tarot_card_spread_prop",
+            "pocket_watch_time_loop_prop"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "forensic_cold",
+            "twin_presence_unease"
+          ]
+        }
+      },
+      "embedding_text": "split-diopter portrait with foreground prop and background face simultaneously sharp"
+    },
+    {
+      "id": "pov_first_person_hands_frame",
+      "ko": "1인칭 손 전경 포트레이트",
+      "en": "first-person hands foreground frame",
+      "weight": 0.62,
+      "template_style": "portrait",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.65
+        },
+        {
+          "slot": "world",
+          "probability": 0.5
+        },
+        {
+          "slot": "texture",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "composition": {
+          "ids": [
+            "foreground_hand_pov_frame"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "first_person_pov_hand_foreground",
+            "object_pov_table_edge_direction"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "old_key_prop",
+            "court_summons_paper_prop",
+            "encrypted_data_chip_prop"
+          ]
+        }
+      },
+      "embedding_text": "first-person portrait frame where foreground hand and held object are the concept anchor"
+    },
+    {
+      "id": "over_shoulder_screen_pov_portrait",
+      "ko": "어깨너머 화면 POV 포트레이트",
+      "en": "over-shoulder screen POV portrait",
+      "weight": 0.62,
+      "template_style": "portrait",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.65
+        },
+        {
+          "slot": "world",
+          "probability": 0.5
+        },
+        {
+          "slot": "texture",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "composition": {
+          "ids": [
+            "over_shoulder_phone_screen",
+            "phone_screen_reflection_compare"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "over_shoulder",
+            "phone_screen_overlay_close_pov"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "laptop_terminal_reflection_prop",
+            "glitching_phone_screen_prop"
+          ]
+        },
+        "light_type": {
+          "ids": [
+            "terminal_green_glow",
+            "phone_screen_face_glow"
+          ]
+        }
+      },
+      "embedding_text": "over-shoulder screen POV portrait with phone or terminal reflection near face and hand"
+    },
+    {
+      "id": "object_pov_table_edge_portrait",
+      "ko": "테이블 가장자리 물건 POV 포트레이트",
+      "en": "object POV table-edge portrait",
+      "weight": 0.62,
+      "template_style": "portrait",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.65
+        },
+        {
+          "slot": "world",
+          "probability": 0.5
+        },
+        {
+          "slot": "texture",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "composition": {
+          "ids": [
+            "object_pov_table_edge_frame",
+            "table_edge_hidden_camera_frame"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "object_pov_table_edge_direction",
+            "from_table_edge_hidden_camera"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "tarot_card_spread_prop",
+            "case_file_folder_prop",
+            "bar_cocktail_shaker_prop"
+          ]
+        }
+      },
+      "embedding_text": "portrait seen from table-edge object POV, making a prop the visual witness"
+    },
+    {
+      "id": "photobooth_confession_strip",
+      "ko": "포토부스 고백 스트립",
+      "en": "photobooth confession strip",
+      "weight": 0.62,
+      "template_style": "portrait",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.65
+        },
+        {
+          "slot": "world",
+          "probability": 0.5
+        },
+        {
+          "slot": "texture",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "composition": {
+          "ids": [
+            "photobooth_confession_grid",
+            "photobooth_grid_strip"
+          ]
+        },
+        "format": {
+          "ids": [
+            "photobooth_strip_layout",
+            "nine_cut_grid"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "intimate",
+            "truth_under_pressure"
+          ]
+        }
+      },
+      "embedding_text": "photobooth strip sequence with confession-like repeated close portraits and visible hand-held anchor"
+    },
+    {
+      "id": "backstage_vanity_mirror_portrait",
+      "ko": "백스테이지 화장대 거울 포트레이트",
+      "en": "backstage vanity mirror portrait",
+      "weight": 0.62,
+      "template_style": "portrait",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.65
+        },
+        {
+          "slot": "world",
+          "probability": 0.5
+        },
+        {
+          "slot": "texture",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "composition": {
+          "ids": [
+            "backstage_vanity_mirror_frame"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "backstage_vanity_reflection_direction"
+          ]
+        },
+        "location": {
+          "ids": [
+            "bridal_dressing_room",
+            "ballet_rehearsal_studio"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "stage_motion_flash",
+            "soft_window"
+          ]
+        }
+      },
+      "embedding_text": "backstage vanity mirror portrait for performance, bride, ballet, or disguise roles with face and prop visible in reflection"
+    },
+    {
+      "id": "opera_box_seat_intrigue_portrait",
+      "ko": "오페라 박스석 음모 포트레이트",
+      "en": "opera box-seat intrigue portrait",
+      "weight": 0.62,
+      "template_style": "portrait",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.65
+        },
+        {
+          "slot": "world",
+          "probability": 0.5
+        },
+        {
+          "slot": "texture",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "location": {
+          "ids": [
+            "opera_house_box_seat"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "chandelier_high_watch_frame",
+            "glass_case_reflection_layer"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "folding_fan_prop",
+            "sealed_black_envelope_prop"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "courtly_conspiracy"
+          ]
+        }
+      },
+      "embedding_text": "opera box intrigue portrait with fan, envelope, chandelier observation and high-society surveillance"
+    },
+    {
+      "id": "service_stairwell_dead_drop_portrait",
+      "ko": "서비스 계단 데드드롭 포트레이트",
+      "en": "service stairwell dead-drop portrait",
+      "weight": 0.62,
+      "template_style": "portrait",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.65
+        },
+        {
+          "slot": "world",
+          "probability": 0.5
+        },
+        {
+          "slot": "texture",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "location": {
+          "ids": [
+            "service_stairwell",
+            "underpass_sodium_walkway"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "old_key_prop",
+            "sealed_black_envelope_prop"
+          ]
+        },
+        "action": {
+          "ids": [
+            "pocketing_note_quietly"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "doorway_threshold_half_shadow"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "near_discovery_tension"
+          ]
+        }
+      },
+      "embedding_text": "service stairwell dead-drop portrait with key or envelope, threshold half-shadow and nonviolent thriller tension"
+    },
+    {
+      "id": "ballerina_rehearsal_spotlight_portrait",
+      "ko": "발레 리허설 스포트라이트 포트레이트",
+      "en": "ballerina rehearsal spotlight portrait",
+      "weight": 0.62,
+      "template_style": "portrait",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "costume_style",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.65
+        },
+        {
+          "slot": "world",
+          "probability": 0.5
+        },
+        {
+          "slot": "texture",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "subject": {
+          "ids": [
+            "ballerina_dancer_model"
+          ]
+        },
+        "costume_style": {
+          "ids": [
+            "ballet_leotard_tutu_costume"
+          ]
+        },
+        "action": {
+          "ids": [
+            "pointe_balance_pose"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "ballet_pointe_shoes_prop"
+          ]
+        },
+        "location": {
+          "ids": [
+            "ballet_rehearsal_studio"
+          ]
+        },
+        "light_type": {
+          "ids": [
+            "stage_followspot"
+          ]
+        }
+      },
+      "embedding_text": "adult ballerina in rehearsal studio with pointe shoes, followspot and disciplined graceful posture"
+    },
+    {
+      "id": "cheerleader_stadium_tunnel_motion",
+      "ko": "치어리더 경기장 터널 모션 포트레이트",
+      "en": "cheerleader stadium-tunnel motion portrait",
+      "weight": 0.62,
+      "template_style": "portrait",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "costume_style",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.65
+        },
+        {
+          "slot": "world",
+          "probability": 0.5
+        },
+        {
+          "slot": "texture",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "subject": {
+          "ids": [
+            "cheerleader_performer_model"
+          ]
+        },
+        "costume_style": {
+          "ids": [
+            "cheerleader_uniform_costume"
+          ]
+        },
+        "action": {
+          "ids": [
+            "cheer_jump_freeze_pose"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "cheer_pompom_prop"
+          ]
+        },
+        "location": {
+          "ids": [
+            "stadium_tunnel"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "stage_motion_flash"
+          ]
+        }
+      },
+      "embedding_text": "adult cheerleader in stadium tunnel with pom-poms and frozen energetic motion, safe professional performance framing"
+    },
+    {
+      "id": "racing_pit_lane_editorial",
+      "ko": "레이싱 피트 레인 에디토리얼",
+      "en": "racing pit-lane editorial portrait",
+      "weight": 0.62,
+      "template_style": "portrait",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "costume_style",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.65
+        },
+        {
+          "slot": "world",
+          "probability": 0.5
+        },
+        {
+          "slot": "texture",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "subject": {
+          "ids": [
+            "racing_model_role"
+          ]
+        },
+        "costume_style": {
+          "ids": [
+            "racing_pit_outfit_costume"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "checkered_flag_prop"
+          ]
+        },
+        "location": {
+          "ids": [
+            "racing_pit_lane"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "garage_spark_light",
+            "hard_flash"
+          ]
+        }
+      },
+      "embedding_text": "adult racing model in pit lane with checkered flag, motorsport lights and editorial posture"
+    },
+    {
+      "id": "bartender_bar_counter_portrait",
+      "ko": "바텐더 바 카운터 포트레이트",
+      "en": "bartender bar-counter portrait",
+      "weight": 0.62,
+      "template_style": "portrait",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "costume_style",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.75
+        },
+        {
+          "slot": "world",
+          "probability": 0.45
+        },
+        {
+          "slot": "texture",
+          "probability": 0.35
+        }
+      ],
+      "filters": {
+        "subject": {
+          "ids": [
+            "bartender_role_model"
+          ]
+        },
+        "costume_style": {
+          "ids": [
+            "bartender_vest_costume"
+          ]
+        },
+        "location": {
+          "ids": [
+            "cocktail_bar_counter"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "bar_cocktail_shaker_prop"
+          ]
+        },
+        "action": {
+          "ids": [
+            "mixing_drink_under_bar_light"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "bar_amber_practical_light"
+          ]
+        }
+      },
+      "embedding_text": "adult bartender at a cocktail bar counter with shaker, vest, amber practical light and controlled service posture"
+    },
+    {
+      "id": "nun_chapel_threshold_portrait",
+      "ko": "수녀 예배당 문턱 포트레이트",
+      "en": "nun chapel-threshold portrait",
+      "weight": 0.62,
+      "template_style": "portrait",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "costume_style",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.75
+        },
+        {
+          "slot": "world",
+          "probability": 0.45
+        },
+        {
+          "slot": "texture",
+          "probability": 0.35
+        }
+      ],
+      "filters": {
+        "subject": {
+          "ids": [
+            "nun_role_model"
+          ]
+        },
+        "costume_style": {
+          "ids": [
+            "nun_habit_costume"
+          ]
+        },
+        "location": {
+          "ids": [
+            "small_chapel_threshold"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "rosary_beads_prop"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "chapel_window_rim_light"
+          ]
+        },
+        "light_shape": {
+          "ids": [
+            "cross_window_light"
+          ]
+        }
+      },
+      "embedding_text": "adult nun portrait with habit, rosary, small chapel threshold and respectful devotional quiet"
     }
   ],
   "templates": {
@@ -39248,6 +41526,571 @@
           "telekinesis"
         ],
         "embedding_text": "adult psychic esper subject with levitating small objects and concentrated stillness"
+      },
+      {
+        "id": "noir_detective_role_model",
+        "ko": "느와르 탐정 역할의 성인 인물",
+        "en": "an adult noir detective role model",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "occupation",
+          "noir",
+          "investigation"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "kind": [
+          "human"
+        ],
+        "aliases": [
+          "detective",
+          "탐정"
+        ],
+        "keywords": [
+          "case file",
+          "interrogation",
+          "noir detective"
+        ],
+        "embedding_text": "adult noir detective portrait with case file, blinds-shadow face, and controlled investigative gaze"
+      },
+      {
+        "id": "spy_cover_role_model",
+        "ko": "스파이 커버 역할의 성인 인물",
+        "en": "an adult spy cover-role model",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "occupation",
+          "surveillance",
+          "cover"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "kind": [
+          "human"
+        ],
+        "aliases": [
+          "spy",
+          "스파이",
+          "첩보원"
+        ],
+        "keywords": [
+          "earpiece",
+          "cover identity",
+          "surveillance"
+        ],
+        "embedding_text": "adult spy portrait with earpiece, hotel corridor, hidden-camera or service-route cover identity"
+      },
+      {
+        "id": "investigative_journalist_role_model",
+        "ko": "탐사 기자 역할의 성인 인물",
+        "en": "an adult investigative journalist role model",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "occupation",
+          "press",
+          "documentary"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "kind": [
+          "human"
+        ],
+        "aliases": [
+          "journalist",
+          "reporter",
+          "기자"
+        ],
+        "keywords": [
+          "press badge",
+          "notebook",
+          "newsroom"
+        ],
+        "embedding_text": "adult investigative journalist portrait with press badge, notebook, midnight newsroom, and truth-under-pressure mood"
+      },
+      {
+        "id": "court_witness_role_model",
+        "ko": "법정 증인 역할의 성인 인물",
+        "en": "an adult courtroom witness role model",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "legal",
+          "courtroom",
+          "documentary"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "kind": [
+          "human"
+        ],
+        "aliases": [
+          "witness",
+          "법정 증인",
+          "증인"
+        ],
+        "keywords": [
+          "summons",
+          "court witness",
+          "testimony"
+        ],
+        "embedding_text": "adult courtroom witness portrait with summons paper, witness stand, and pressure of public testimony"
+      },
+      {
+        "id": "underworld_messenger_subject",
+        "ko": "저승사자 분위기의 성인 인물",
+        "en": "an adult underworld messenger subject",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "folk",
+          "afterlife",
+          "threshold"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "kind": [
+          "human"
+        ],
+        "aliases": [
+          "reaper",
+          "저승사자",
+          "사신"
+        ],
+        "keywords": [
+          "name ledger",
+          "black hanbok",
+          "afterlife bureaucracy"
+        ],
+        "embedding_text": "adult Korean underworld messenger with black hanbok, name ledger, extinguishing candle, and quiet threshold authority"
+      },
+      {
+        "id": "time_traveler_subject",
+        "ko": "시간여행자 분위기의 성인 인물",
+        "en": "an adult time-traveler subject",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "time",
+          "retro_future",
+          "sci_fi"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "kind": [
+          "human"
+        ],
+        "aliases": [
+          "time traveler",
+          "시간여행자",
+          "타임루프"
+        ],
+        "keywords": [
+          "pocket watch",
+          "anachronistic device",
+          "train window"
+        ],
+        "embedding_text": "adult time traveler portrait with pocket watch, anachronistic device, and train-window time-loop reflection"
+      },
+      {
+        "id": "alchemist_role_model",
+        "ko": "연금술사 역할의 성인 인물",
+        "en": "an adult alchemist role model",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "alchemy",
+          "occult",
+          "scholarly"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "kind": [
+          "human"
+        ],
+        "aliases": [
+          "alchemist",
+          "연금술사"
+        ],
+        "keywords": [
+          "brass astrolabe",
+          "glass vial",
+          "secret workshop"
+        ],
+        "embedding_text": "adult scholarly alchemist with brass astrolabe, glass vial, old paper, and candlelit controlled ritual"
+      },
+      {
+        "id": "revolutionary_role_model",
+        "ko": "혁명가 분위기의 성인 인물",
+        "en": "an adult revolutionary subject",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "political",
+          "resistance",
+          "documentary"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "kind": [
+          "human"
+        ],
+        "aliases": [
+          "revolutionary",
+          "혁명가",
+          "레지스탕스"
+        ],
+        "keywords": [
+          "protest leaflet",
+          "resolve",
+          "underground"
+        ],
+        "embedding_text": "adult revolutionary portrait with protest leaflet, hidden meeting atmosphere, and nonviolent resolve"
+      },
+      {
+        "id": "exile_traveler_subject",
+        "ko": "망명자 분위기의 성인 인물",
+        "en": "an adult exile traveler subject",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "travel",
+          "melancholy",
+          "border"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "kind": [
+          "human"
+        ],
+        "aliases": [
+          "exile",
+          "망명자",
+          "추방자"
+        ],
+        "keywords": [
+          "passport",
+          "departure gate",
+          "border checkpoint"
+        ],
+        "embedding_text": "adult exile traveler with old stamped passport, departure gate, border checkpoint, and quiet displacement"
+      },
+      {
+        "id": "hacker_role_model",
+        "ko": "해커 역할의 성인 인물",
+        "en": "an adult hacker role model",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "technology",
+          "cyber",
+          "occupation"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "kind": [
+          "human"
+        ],
+        "aliases": [
+          "hacker",
+          "해커"
+        ],
+        "keywords": [
+          "terminal reflection",
+          "encrypted chip",
+          "green glow"
+        ],
+        "embedding_text": "adult hacker portrait with terminal reflection, encrypted data chip, and concentrated low-light technology workspace"
+      },
+      {
+        "id": "bartender_role_model",
+        "ko": "바텐더 역할의 성인 인물",
+        "en": "an adult bartender role model",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "occupation",
+          "bar",
+          "service"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "kind": [
+          "human"
+        ],
+        "aliases": [
+          "bartender",
+          "바텐더"
+        ],
+        "keywords": [
+          "bar counter",
+          "cocktail shaker"
+        ],
+        "embedding_text": "adult bartender portrait at a cocktail bar counter with amber practical light and polished service control"
+      },
+      {
+        "id": "mechanic_role_model",
+        "ko": "정비사 역할의 성인 인물",
+        "en": "an adult mechanic role model",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "occupation",
+          "workshop",
+          "mechanic"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "kind": [
+          "human"
+        ],
+        "aliases": [
+          "mechanic",
+          "정비사",
+          "정비공"
+        ],
+        "keywords": [
+          "garage",
+          "wrench",
+          "sparks"
+        ],
+        "embedding_text": "adult mechanic portrait in a garage workbench setting with wrench, machine parts, and practical spark light"
+      },
+      {
+        "id": "ballerina_dancer_model",
+        "ko": "발레리나 역할의 성인 무용수",
+        "en": "an adult ballerina dancer role model",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "performer",
+          "ballet",
+          "dance"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "kind": [
+          "human"
+        ],
+        "aliases": [
+          "ballerina",
+          "발레리나",
+          "발레"
+        ],
+        "keywords": [
+          "pointe shoes",
+          "rehearsal studio"
+        ],
+        "embedding_text": "adult ballerina dancer portrait with pointe shoes, rehearsal studio, and disciplined stage grace"
+      },
+      {
+        "id": "cheerleader_performer_model",
+        "ko": "치어리더 역할의 성인 퍼포머",
+        "en": "an adult cheerleader performer role model",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "performer",
+          "sports",
+          "stage"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "kind": [
+          "human"
+        ],
+        "aliases": [
+          "cheerleader",
+          "치어리더"
+        ],
+        "keywords": [
+          "pompom",
+          "stadium tunnel"
+        ],
+        "embedding_text": "adult cheerleader performer portrait with pom-poms, stadium tunnel, and energetic motion-freeze timing"
+      },
+      {
+        "id": "racing_model_role",
+        "ko": "레이싱 모델 역할의 성인 인물",
+        "en": "an adult racing model role subject",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "motorsport",
+          "pit",
+          "fashion"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "kind": [
+          "human"
+        ],
+        "aliases": [
+          "racing model",
+          "레이싱 모델",
+          "레이싱걸"
+        ],
+        "keywords": [
+          "pit lane",
+          "checkered flag"
+        ],
+        "embedding_text": "adult racing model portrait in pit lane with checkered flag and motorsport editorial styling"
+      },
+      {
+        "id": "nun_role_model",
+        "ko": "수녀 역할의 성인 인물",
+        "en": "an adult nun role model",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "religious",
+          "threshold",
+          "formal"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "kind": [
+          "human"
+        ],
+        "aliases": [
+          "nun",
+          "수녀"
+        ],
+        "keywords": [
+          "habit",
+          "chapel threshold"
+        ],
+        "embedding_text": "adult nun portrait with habit, chapel threshold light, and devotional quiet without caricature"
+      },
+      {
+        "id": "bride_role_model",
+        "ko": "웨딩 신부 역할의 성인 인물",
+        "en": "an adult bride role model",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "wedding",
+          "ceremony",
+          "formal"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "kind": [
+          "human"
+        ],
+        "aliases": [
+          "bride",
+          "웨딩 신부",
+          "브라이드"
+        ],
+        "keywords": [
+          "veil",
+          "dressing room"
+        ],
+        "embedding_text": "adult bride portrait with veil, dressing room mirror, and ceremonial threshold emotion"
+      },
+      {
+        "id": "geisha_performer_model",
+        "ko": "게이샤풍 성인 퍼포머",
+        "en": "an adult geisha-inspired performer model",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "performer",
+          "period",
+          "japan"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "kind": [
+          "human"
+        ],
+        "aliases": [
+          "geisha",
+          "게이샤"
+        ],
+        "keywords": [
+          "formal kimono",
+          "folding fan"
+        ],
+        "embedding_text": "adult geisha-inspired performer portrait with formal kimono, folding fan, and teahouse restraint"
+      },
+      {
+        "id": "ninja_role_model",
+        "ko": "닌자/쿠노이치 역할의 성인 인물",
+        "en": "an adult ninja or kunoichi role model",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "stealth",
+          "action",
+          "costume"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "kind": [
+          "human"
+        ],
+        "aliases": [
+          "ninja",
+          "kunoichi",
+          "닌자",
+          "쿠노이치"
+        ],
+        "keywords": [
+          "smoke shadow",
+          "rooftop night"
+        ],
+        "embedding_text": "adult ninja or kunoichi portrait with smoke shadow, rooftop night, and stealth posture without combat injury"
+      },
+      {
+        "id": "doppelganger_subject",
+        "ko": "도플갱어 분위기의 성인 인물",
+        "en": "an adult doppelganger subject",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "uncanny",
+          "double",
+          "reflection"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "kind": [
+          "human"
+        ],
+        "aliases": [
+          "doppelganger",
+          "도플갱어",
+          "분신"
+        ],
+        "keywords": [
+          "mirror mismatch",
+          "double exposure"
+        ],
+        "embedding_text": "adult doppelganger portrait with mismatched mirror reflection, doubled face, and visible comparison in one frame"
       }
     ],
     "person_origin": [
@@ -42867,6 +45710,438 @@
           "researcher"
         ],
         "embedding_text": "professional clinical researcher lab coat, real sterile laboratory uniform, not cosplay"
+      },
+      {
+        "id": "noir_detective_trenchcoat_costume",
+        "ko": "느와르 탐정 트렌치코트 스타일",
+        "en": "noir detective trench-coat styling",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "costume",
+          "noir",
+          "coat"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "detective trench coat",
+          "탐정 코트"
+        ],
+        "keywords": [
+          "detective",
+          "trench coat",
+          "noir"
+        ]
+      },
+      {
+        "id": "spy_tailored_cover_suit",
+        "ko": "스파이 커버용 테일러드 수트",
+        "en": "tailored spy cover suit",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "costume",
+          "suit",
+          "spy",
+          "cover"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "spy suit",
+          "첩보원 수트"
+        ],
+        "keywords": [
+          "spy",
+          "tailored suit",
+          "cover identity"
+        ]
+      },
+      {
+        "id": "journalist_field_jacket_costume",
+        "ko": "탐사 기자 필드 재킷 스타일",
+        "en": "investigative journalist field-jacket styling",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "costume",
+          "press",
+          "jacket"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "journalist jacket",
+          "기자 재킷"
+        ],
+        "keywords": [
+          "press",
+          "field jacket",
+          "reporter"
+        ]
+      },
+      {
+        "id": "court_witness_formal_suit",
+        "ko": "법정 증인 포멀 수트",
+        "en": "court-witness formal suit",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "costume",
+          "formal",
+          "court"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "witness suit",
+          "법정 수트"
+        ],
+        "keywords": [
+          "court witness",
+          "formal suit"
+        ]
+      },
+      {
+        "id": "underworld_messenger_black_hanbok",
+        "ko": "검은 한복풍 저승사자 의상",
+        "en": "black hanbok-inspired underworld messenger costume",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "costume",
+          "folk",
+          "hanbok",
+          "threshold"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "black hanbok",
+          "저승사자 한복"
+        ],
+        "keywords": [
+          "reaper",
+          "black hanbok",
+          "afterlife"
+        ]
+      },
+      {
+        "id": "alchemist_apron_costume",
+        "ko": "연금술사 앞치마와 셔츠 스타일",
+        "en": "alchemist apron and shirt styling",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "costume",
+          "alchemy",
+          "apron"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "alchemist apron",
+          "연금술사 앞치마"
+        ],
+        "keywords": [
+          "alchemy",
+          "apron",
+          "workshop"
+        ]
+      },
+      {
+        "id": "revolutionary_coat_costume",
+        "ko": "혁명가 롱 코트 스타일",
+        "en": "revolutionary long-coat styling",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "costume",
+          "resistance",
+          "coat"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "revolutionary coat",
+          "레지스탕스 코트"
+        ],
+        "keywords": [
+          "revolutionary",
+          "long coat"
+        ]
+      },
+      {
+        "id": "exile_travel_layers_costume",
+        "ko": "망명자 여행 레이어드 의상",
+        "en": "exile traveler layered outfit",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "costume",
+          "travel",
+          "coat"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "exile travel layers",
+          "망명자 코트"
+        ],
+        "keywords": [
+          "exile",
+          "passport",
+          "travel layers"
+        ]
+      },
+      {
+        "id": "hacker_hoodie_techwear",
+        "ko": "해커 후디 테크웨어 스타일",
+        "en": "hacker hoodie techwear styling",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "costume",
+          "cyber",
+          "techwear"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "hacker hoodie",
+          "해커 후디"
+        ],
+        "keywords": [
+          "hacker",
+          "hoodie",
+          "techwear"
+        ]
+      },
+      {
+        "id": "bartender_vest_costume",
+        "ko": "바텐더 베스트와 셔츠 스타일",
+        "en": "bartender vest and shirt styling",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "costume",
+          "bar",
+          "service"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "bartender vest",
+          "바텐더 베스트"
+        ],
+        "keywords": [
+          "bartender",
+          "vest",
+          "service"
+        ]
+      },
+      {
+        "id": "mechanic_coverall_costume",
+        "ko": "정비사 커버올 작업복",
+        "en": "mechanic coverall workwear",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "costume",
+          "mechanic",
+          "workwear"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "mechanic coverall",
+          "정비복"
+        ],
+        "keywords": [
+          "mechanic",
+          "coverall",
+          "garage"
+        ]
+      },
+      {
+        "id": "ballet_leotard_tutu_costume",
+        "ko": "발레 레오타드와 튀튀 스타일",
+        "en": "ballet leotard and tutu styling",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "costume",
+          "ballet",
+          "dance"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "ballet tutu",
+          "발레복"
+        ],
+        "keywords": [
+          "ballerina",
+          "tutu",
+          "leotard"
+        ]
+      },
+      {
+        "id": "cheerleader_uniform_costume",
+        "ko": "성인 치어리더 유니폼풍 코스튬",
+        "en": "adult cheerleader-uniform inspired costume",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "costume",
+          "sports",
+          "stage"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "cheerleader uniform",
+          "치어리더 유니폼"
+        ],
+        "keywords": [
+          "adult cheerleader",
+          "uniform",
+          "pompom"
+        ]
+      },
+      {
+        "id": "racing_pit_outfit_costume",
+        "ko": "레이싱 피트 크루풍 코스튬",
+        "en": "racing pit outfit styling",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "costume",
+          "motorsport",
+          "pit"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "racing pit outfit",
+          "레이싱 모델 의상"
+        ],
+        "keywords": [
+          "racing",
+          "pit lane",
+          "checkered flag"
+        ]
+      },
+      {
+        "id": "nun_habit_costume",
+        "ko": "수녀복 스타일",
+        "en": "nun habit styling",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "costume",
+          "religious",
+          "formal"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "nun habit",
+          "수녀복"
+        ],
+        "keywords": [
+          "nun",
+          "habit",
+          "chapel"
+        ]
+      },
+      {
+        "id": "bridal_gown_costume",
+        "ko": "웨딩 드레스 스타일",
+        "en": "bridal gown styling",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "costume",
+          "wedding",
+          "formal"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "bridal gown",
+          "웨딩 드레스"
+        ],
+        "keywords": [
+          "bride",
+          "veil",
+          "wedding"
+        ]
+      },
+      {
+        "id": "geisha_kimono_formal_costume",
+        "ko": "게이샤풍 포멀 기모노",
+        "en": "geisha-inspired formal kimono styling",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "costume",
+          "kimono",
+          "period"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "geisha kimono",
+          "게이샤 기모노"
+        ],
+        "keywords": [
+          "geisha",
+          "kimono",
+          "teahouse"
+        ]
+      },
+      {
+        "id": "kunoichi_ninja_costume",
+        "ko": "닌자/쿠노이치 스텔스 코스튬",
+        "en": "ninja or kunoichi stealth costume",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "costume",
+          "stealth",
+          "action"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "ninja costume",
+          "쿠노이치 의상"
+        ],
+        "keywords": [
+          "ninja",
+          "kunoichi",
+          "stealth"
+        ]
       }
     ],
     "wardrobe_style": [
@@ -46418,6 +49693,386 @@
         "for_any": [
           "human"
         ]
+      },
+      {
+        "id": "reading_case_file_low_light",
+        "ko": "낮은 조명 아래 사건 파일을 읽는",
+        "en": "reading a case file under low light",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "investigation",
+          "noir"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "case file"
+        ],
+        "keywords": [
+          "detective"
+        ]
+      },
+      {
+        "id": "adjusting_earpiece_glance_aside",
+        "ko": "옆을 보며 이어피스를 조정하는",
+        "en": "adjusting an earpiece while glancing aside",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "spy",
+          "surveillance"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "earpiece"
+        ],
+        "keywords": [
+          "spy"
+        ]
+      },
+      {
+        "id": "taking_notes_press_badge",
+        "ko": "프레스 배지 옆에서 취재 수첩에 기록하는",
+        "en": "taking notes beside a visible press badge",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "press",
+          "documentary"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "press badge"
+        ],
+        "keywords": [
+          "journalist"
+        ]
+      },
+      {
+        "id": "holding_court_summons",
+        "ko": "법정 소환장을 손에 든",
+        "en": "holding a court summons paper",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "court",
+          "document"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "summons"
+        ],
+        "keywords": [
+          "witness"
+        ]
+      },
+      {
+        "id": "holding_name_ledger_still",
+        "ko": "명부 장부를 들고 고요히 서 있는",
+        "en": "standing still while holding a name ledger",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "afterlife",
+          "folk"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "name ledger"
+        ],
+        "keywords": [
+          "reaper"
+        ]
+      },
+      {
+        "id": "dealing_tarot_card_to_camera",
+        "ko": "카메라 쪽으로 타로카드를 내려놓는",
+        "en": "dealing a tarot card toward the camera",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "tarot",
+          "occult"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "tarot"
+        ],
+        "keywords": [
+          "divination"
+        ]
+      },
+      {
+        "id": "checking_pocket_watch_time_loop",
+        "ko": "회중시계를 확인하며 멈춘 듯한",
+        "en": "checking a pocket watch as if caught in a time loop",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "time",
+          "retro"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "pocket watch"
+        ],
+        "keywords": [
+          "time loop"
+        ]
+      },
+      {
+        "id": "holding_anachronistic_device",
+        "ko": "시대가 맞지 않는 장치를 손에 든",
+        "en": "holding an anachronistic device",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "time",
+          "retro_future"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "anachronistic device"
+        ],
+        "keywords": [
+          "time traveler"
+        ]
+      },
+      {
+        "id": "typing_terminal_reflection",
+        "ko": "초록 터미널 반사를 받으며 타이핑하는",
+        "en": "typing under a green terminal reflection",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "technology",
+          "cyber"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "terminal"
+        ],
+        "keywords": [
+          "hacker"
+        ]
+      },
+      {
+        "id": "holding_passport_at_departure",
+        "ko": "출국 게이트 앞에서 여권을 든",
+        "en": "holding a passport at a departure gate",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "travel",
+          "exile"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "passport"
+        ],
+        "keywords": [
+          "exile"
+        ]
+      },
+      {
+        "id": "handing_out_protest_leaflet",
+        "ko": "접힌 전단을 조용히 건네는",
+        "en": "quietly handing out a folded leaflet",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "resistance",
+          "documentary"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "leaflet"
+        ],
+        "keywords": [
+          "revolutionary"
+        ]
+      },
+      {
+        "id": "mixing_drink_under_bar_light",
+        "ko": "바 조명 아래 음료를 섞는",
+        "en": "mixing a drink under bar light",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "bar",
+          "service"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "cocktail shaker"
+        ],
+        "keywords": [
+          "bartender"
+        ]
+      },
+      {
+        "id": "repairing_small_machine",
+        "ko": "작은 기계를 정비하는",
+        "en": "repairing a small machine",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "mechanic",
+          "workshop"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "wrench"
+        ],
+        "keywords": [
+          "mechanic"
+        ]
+      },
+      {
+        "id": "pointe_balance_pose",
+        "ko": "포인트 자세로 균형을 잡는",
+        "en": "balancing in a pointe pose",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "ballet",
+          "dance"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "pointe pose"
+        ],
+        "keywords": [
+          "ballerina"
+        ]
+      },
+      {
+        "id": "cheer_jump_freeze_pose",
+        "ko": "점프 순간이 멈춘 치어 포즈",
+        "en": "a cheer pose frozen mid-jump",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "sports",
+          "motion"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "cheer jump"
+        ],
+        "keywords": [
+          "cheerleader"
+        ]
+      },
+      {
+        "id": "standing_in_bridal_veil_light",
+        "ko": "베일 빛 속에 고요히 선",
+        "en": "standing quietly inside bridal-veil light",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "wedding",
+          "ceremony"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "veil"
+        ],
+        "keywords": [
+          "bride"
+        ]
+      },
+      {
+        "id": "folding_fan_face_barrier",
+        "ko": "부채로 얼굴 일부를 가리는",
+        "en": "partly veiling the face with a folding fan",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "period",
+          "fan"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "folding fan"
+        ],
+        "keywords": [
+          "geisha"
+        ]
+      },
+      {
+        "id": "emerging_from_smoke_shadow",
+        "ko": "연막 그림자 속에서 나오는",
+        "en": "emerging from a smoke-shadow edge",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "stealth",
+          "action"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "smoke"
+        ],
+        "keywords": [
+          "ninja"
+        ]
+      },
+      {
+        "id": "inspecting_own_reflection_mismatch",
+        "ko": "자신과 어긋난 반영을 확인하는",
+        "en": "inspecting a mismatched reflection of oneself",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "uncanny",
+          "reflection"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "mismatched reflection"
+        ],
+        "keywords": [
+          "doppelganger"
+        ]
       }
     ],
     "capture_context": [
@@ -46726,6 +50381,54 @@
         "requires_any_tags": [
           "transport",
           "surveillance"
+        ]
+      },
+      {
+        "id": "investigative_press_capture",
+        "ko": "탐사 보도 사진 촬영 맥락",
+        "en": "investigative press capture context",
+        "weight": 0.76,
+        "tags": [
+          "press",
+          "documentary"
+        ],
+        "aliases": [
+          "press capture"
+        ],
+        "keywords": [
+          "journalist"
+        ]
+      },
+      {
+        "id": "court_record_capture",
+        "ko": "법정 기록 사진 맥락",
+        "en": "court record capture context",
+        "weight": 0.74,
+        "tags": [
+          "court",
+          "documentary"
+        ],
+        "aliases": [
+          "court record"
+        ],
+        "keywords": [
+          "witness"
+        ]
+      },
+      {
+        "id": "object_pov_evidence_capture",
+        "ko": "증거물 시점 촬영 맥락",
+        "en": "object-POV evidence capture context",
+        "weight": 0.74,
+        "tags": [
+          "evidence",
+          "pov"
+        ],
+        "aliases": [
+          "evidence POV"
+        ],
+        "keywords": [
+          "object POV"
         ]
       }
     ],
@@ -51333,6 +55036,638 @@
           "star map",
           "tablet"
         ]
+      },
+      {
+        "id": "case_file_folder_prop",
+        "ko": "사건 파일 폴더",
+        "en": "a case-file folder",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "prop",
+          "investigation",
+          "noir"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "case file",
+          "사건 파일"
+        ],
+        "keywords": [
+          "detective",
+          "case file"
+        ]
+      },
+      {
+        "id": "earpiece_comm_device",
+        "ko": "작은 이어피스 통신 장치",
+        "en": "a small earpiece communication device",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "prop",
+          "spy",
+          "surveillance"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "earpiece",
+          "이어피스"
+        ],
+        "keywords": [
+          "spy",
+          "comms"
+        ]
+      },
+      {
+        "id": "press_badge_notebook_prop",
+        "ko": "프레스 배지와 취재 수첩",
+        "en": "a press badge and reporter notebook",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "prop",
+          "press",
+          "documentary"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "press badge",
+          "기자 수첩"
+        ],
+        "keywords": [
+          "journalist",
+          "press",
+          "notebook"
+        ]
+      },
+      {
+        "id": "court_summons_paper_prop",
+        "ko": "법정 소환장 종이",
+        "en": "a court summons paper",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "prop",
+          "court",
+          "document"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "summons",
+          "소환장"
+        ],
+        "keywords": [
+          "court",
+          "witness",
+          "testimony"
+        ]
+      },
+      {
+        "id": "name_ledger_book_prop",
+        "ko": "이름이 적힌 명부 장부",
+        "en": "a name-ledger book",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "prop",
+          "afterlife",
+          "ledger",
+          "folk"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "name ledger",
+          "명부"
+        ],
+        "keywords": [
+          "reaper",
+          "afterlife",
+          "ledger"
+        ]
+      },
+      {
+        "id": "extinguishing_candle_prop",
+        "ko": "꺼져가는 촛불",
+        "en": "an extinguishing candle",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "prop",
+          "candle",
+          "threshold"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "extinguishing candle",
+          "꺼지는 촛불"
+        ],
+        "keywords": [
+          "afterlife",
+          "candle",
+          "threshold"
+        ]
+      },
+      {
+        "id": "tarot_card_spread_prop",
+        "ko": "손 근처에 펼친 타로카드",
+        "en": "a tarot-card spread near the hands",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "prop",
+          "tarot",
+          "occult"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "tarot cards",
+          "타로카드"
+        ],
+        "keywords": [
+          "tarot",
+          "divination"
+        ]
+      },
+      {
+        "id": "crystal_ball_prop",
+        "ko": "작은 수정구",
+        "en": "a small crystal ball",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "prop",
+          "occult",
+          "reflection"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "crystal ball",
+          "수정구"
+        ],
+        "keywords": [
+          "divination",
+          "reflection"
+        ]
+      },
+      {
+        "id": "brass_astrolabe_prop",
+        "ko": "황동 아스트롤라베",
+        "en": "a brass astrolabe",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "prop",
+          "alchemy",
+          "brass",
+          "scholarly"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "astrolabe",
+          "아스트롤라베"
+        ],
+        "keywords": [
+          "alchemy",
+          "astronomy",
+          "brass"
+        ]
+      },
+      {
+        "id": "alchemy_glass_vial_prop",
+        "ko": "연금술 유리 바이알",
+        "en": "an alchemy glass vial",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "prop",
+          "alchemy",
+          "glass"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "glass vial",
+          "유리 바이알"
+        ],
+        "keywords": [
+          "alchemy",
+          "vial"
+        ]
+      },
+      {
+        "id": "old_key_prop",
+        "ko": "오래된 열쇠",
+        "en": "an old key",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "prop",
+          "key",
+          "secret"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "old key",
+          "낡은 열쇠"
+        ],
+        "keywords": [
+          "secret",
+          "key"
+        ]
+      },
+      {
+        "id": "passport_with_old_stamp_prop",
+        "ko": "오래된 입국 도장이 찍힌 여권",
+        "en": "a passport with old border stamps",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "prop",
+          "travel",
+          "document"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "passport",
+          "여권"
+        ],
+        "keywords": [
+          "exile",
+          "border",
+          "passport"
+        ]
+      },
+      {
+        "id": "pocket_watch_time_loop_prop",
+        "ko": "타임루프를 암시하는 회중시계",
+        "en": "a pocket watch hinting at a time loop",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "prop",
+          "time",
+          "watch"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "pocket watch",
+          "회중시계"
+        ],
+        "keywords": [
+          "time loop",
+          "watch"
+        ]
+      },
+      {
+        "id": "retro_future_device_prop",
+        "ko": "시대가 맞지 않는 레트로퓨처 장치",
+        "en": "an anachronistic retro-future device",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "prop",
+          "time",
+          "retro_future",
+          "device"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "retro future device",
+          "시대불일치 장치"
+        ],
+        "keywords": [
+          "time traveler",
+          "anachronism"
+        ]
+      },
+      {
+        "id": "encrypted_data_chip_prop",
+        "ko": "작은 암호화 데이터 칩",
+        "en": "a small encrypted data chip",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "prop",
+          "technology",
+          "cyber"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "data chip",
+          "데이터 칩"
+        ],
+        "keywords": [
+          "hacker",
+          "encrypted",
+          "chip"
+        ]
+      },
+      {
+        "id": "laptop_terminal_reflection_prop",
+        "ko": "초록 터미널이 비치는 노트북",
+        "en": "a laptop with green terminal reflection",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "prop",
+          "technology",
+          "terminal"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "terminal laptop",
+          "터미널 노트북"
+        ],
+        "keywords": [
+          "hacker",
+          "terminal",
+          "green glow"
+        ]
+      },
+      {
+        "id": "protest_leaflet_prop",
+        "ko": "접힌 시위 전단",
+        "en": "a folded protest leaflet",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "prop",
+          "resistance",
+          "document"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "protest leaflet",
+          "시위 전단"
+        ],
+        "keywords": [
+          "revolutionary",
+          "leaflet"
+        ]
+      },
+      {
+        "id": "bar_cocktail_shaker_prop",
+        "ko": "바 카운터의 칵테일 셰이커",
+        "en": "a cocktail shaker on the bar counter",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "prop",
+          "bar",
+          "service"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "cocktail shaker",
+          "셰이커"
+        ],
+        "keywords": [
+          "bartender",
+          "bar"
+        ]
+      },
+      {
+        "id": "wrench_tool_prop",
+        "ko": "손에 든 렌치 공구",
+        "en": "a wrench tool held in hand",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "prop",
+          "mechanic",
+          "tool"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "wrench",
+          "렌치"
+        ],
+        "keywords": [
+          "mechanic",
+          "tool"
+        ]
+      },
+      {
+        "id": "ballet_pointe_shoes_prop",
+        "ko": "포인트 슈즈",
+        "en": "ballet pointe shoes",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "prop",
+          "ballet",
+          "dance"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "pointe shoes",
+          "토슈즈"
+        ],
+        "keywords": [
+          "ballerina",
+          "pointe"
+        ]
+      },
+      {
+        "id": "cheer_pompom_prop",
+        "ko": "치어리더 폼폼",
+        "en": "cheerleader pom-poms",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "prop",
+          "sports",
+          "stage"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "pom-poms",
+          "폼폼"
+        ],
+        "keywords": [
+          "cheerleader",
+          "sports"
+        ]
+      },
+      {
+        "id": "checkered_flag_prop",
+        "ko": "체커드 플래그",
+        "en": "a checkered flag",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "prop",
+          "racing",
+          "motorsport"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "checkered flag",
+          "체커기"
+        ],
+        "keywords": [
+          "racing",
+          "pit lane"
+        ]
+      },
+      {
+        "id": "rosary_beads_prop",
+        "ko": "손에 감은 묵주",
+        "en": "rosary beads wrapped around one hand",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "prop",
+          "religious",
+          "beads"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "rosary",
+          "묵주"
+        ],
+        "keywords": [
+          "nun",
+          "chapel"
+        ]
+      },
+      {
+        "id": "bridal_veil_prop",
+        "ko": "얼굴 옆으로 내려온 웨딩 베일",
+        "en": "a bridal veil falling beside the face",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "prop",
+          "wedding",
+          "veil"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "bridal veil",
+          "웨딩 베일"
+        ],
+        "keywords": [
+          "bride",
+          "veil"
+        ]
+      },
+      {
+        "id": "folding_fan_prop",
+        "ko": "접이식 부채",
+        "en": "a folding fan",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "prop",
+          "period",
+          "fan"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "folding fan",
+          "부채"
+        ],
+        "keywords": [
+          "geisha",
+          "fan"
+        ]
+      },
+      {
+        "id": "smoke_pellet_prop",
+        "ko": "작은 연막 구슬",
+        "en": "a small smoke-pellet prop",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "prop",
+          "stealth",
+          "smoke"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "smoke pellet",
+          "연막"
+        ],
+        "keywords": [
+          "ninja",
+          "smoke"
+        ]
+      },
+      {
+        "id": "incense_smoke_stick_prop",
+        "ko": "향연기가 오르는 향 스틱",
+        "en": "an incense stick with rising smoke",
+        "weight": 0.74,
+        "tags": [
+          "human",
+          "prop",
+          "ritual",
+          "smoke"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "incense stick",
+          "향"
+        ],
+        "keywords": [
+          "incense",
+          "ritual"
+        ]
       }
     ],
     "fetish_styling": [
@@ -54810,6 +59145,435 @@
         ],
         "phrase_en": "inside a moss-reclaimed room",
         "phrase_ko": "이끼가 침식한 방에서"
+      },
+      {
+        "id": "noir_interrogation_room",
+        "ko": "느와르 취조실",
+        "en": "a noir interrogation room",
+        "weight": 0.78,
+        "tags": [
+          "interior",
+          "noir",
+          "investigation"
+        ],
+        "phrase_en": "inside a noir interrogation room",
+        "phrase_ko": "느와르 취조실 안에서",
+        "aliases": [
+          "interrogation room"
+        ],
+        "keywords": [
+          "detective",
+          "noir"
+        ]
+      },
+      {
+        "id": "detective_office_rain_window",
+        "ko": "비 오는 창가의 탐정 사무실",
+        "en": "a detective office with a rainy window",
+        "weight": 0.78,
+        "tags": [
+          "interior",
+          "noir",
+          "rain"
+        ],
+        "phrase_en": "inside a detective office beside a rainy window",
+        "phrase_ko": "비 오는 창가의 탐정 사무실에서",
+        "aliases": [
+          "detective office"
+        ],
+        "keywords": [
+          "case file",
+          "rain window"
+        ]
+      },
+      {
+        "id": "newsroom_after_midnight",
+        "ko": "자정 이후의 뉴스룸",
+        "en": "a newsroom after midnight",
+        "weight": 0.78,
+        "tags": [
+          "interior",
+          "press",
+          "night"
+        ],
+        "phrase_en": "inside a newsroom after midnight",
+        "phrase_ko": "자정 이후의 뉴스룸에서",
+        "aliases": [
+          "midnight newsroom"
+        ],
+        "keywords": [
+          "journalist",
+          "deadline"
+        ]
+      },
+      {
+        "id": "courtroom_witness_stand",
+        "ko": "법정 증인석",
+        "en": "a courtroom witness stand",
+        "weight": 0.78,
+        "tags": [
+          "interior",
+          "court",
+          "legal"
+        ],
+        "phrase_en": "at a courtroom witness stand",
+        "phrase_ko": "법정 증인석에서",
+        "aliases": [
+          "witness stand"
+        ],
+        "keywords": [
+          "court",
+          "testimony"
+        ]
+      },
+      {
+        "id": "funeral_registry_hall",
+        "ko": "차가운 장례 명부 홀",
+        "en": "a cold funeral registry hall",
+        "weight": 0.78,
+        "tags": [
+          "interior",
+          "afterlife",
+          "threshold"
+        ],
+        "phrase_en": "inside a cold funeral registry hall",
+        "phrase_ko": "차가운 장례 명부 홀에서",
+        "aliases": [
+          "registry hall"
+        ],
+        "keywords": [
+          "reaper",
+          "ledger"
+        ]
+      },
+      {
+        "id": "old_clock_train_compartment",
+        "ko": "오래된 시계가 보이는 열차 칸",
+        "en": "an old train compartment with visible clocks",
+        "weight": 0.78,
+        "tags": [
+          "transport",
+          "time",
+          "retro"
+        ],
+        "phrase_en": "inside an old train compartment with visible clocks",
+        "phrase_ko": "오래된 시계가 보이는 열차 칸에서",
+        "aliases": [
+          "clock train"
+        ],
+        "keywords": [
+          "time loop",
+          "train"
+        ]
+      },
+      {
+        "id": "alchemy_workshop_table",
+        "ko": "연금술 작업대가 있는 방",
+        "en": "an alchemy workshop table room",
+        "weight": 0.78,
+        "tags": [
+          "interior",
+          "alchemy",
+          "workshop"
+        ],
+        "phrase_en": "beside an alchemy workshop table",
+        "phrase_ko": "연금술 작업대가 있는 방에서",
+        "aliases": [
+          "alchemy workshop"
+        ],
+        "keywords": [
+          "vial",
+          "astrolabe"
+        ]
+      },
+      {
+        "id": "airport_departure_gate",
+        "ko": "공항 출국 게이트",
+        "en": "an airport departure gate",
+        "weight": 0.78,
+        "tags": [
+          "transport",
+          "airport",
+          "travel"
+        ],
+        "phrase_en": "at an airport departure gate",
+        "phrase_ko": "공항 출국 게이트에서",
+        "aliases": [
+          "departure gate"
+        ],
+        "keywords": [
+          "exile",
+          "passport"
+        ]
+      },
+      {
+        "id": "border_checkpoint_waiting_room",
+        "ko": "국경 검문 대기실",
+        "en": "a border-checkpoint waiting room",
+        "weight": 0.78,
+        "tags": [
+          "interior",
+          "border",
+          "travel"
+        ],
+        "phrase_en": "inside a border-checkpoint waiting room",
+        "phrase_ko": "국경 검문 대기실에서",
+        "aliases": [
+          "border checkpoint"
+        ],
+        "keywords": [
+          "exile",
+          "passport"
+        ]
+      },
+      {
+        "id": "underground_hacker_room",
+        "ko": "지하 해커 작업실",
+        "en": "an underground hacker room",
+        "weight": 0.78,
+        "tags": [
+          "interior",
+          "cyber",
+          "technology"
+        ],
+        "phrase_en": "inside an underground hacker room",
+        "phrase_ko": "지하 해커 작업실에서",
+        "aliases": [
+          "hacker room"
+        ],
+        "keywords": [
+          "terminal",
+          "data chip"
+        ]
+      },
+      {
+        "id": "cocktail_bar_counter",
+        "ko": "칵테일 바 카운터",
+        "en": "a cocktail bar counter",
+        "weight": 0.78,
+        "tags": [
+          "interior",
+          "bar",
+          "night"
+        ],
+        "phrase_en": "at a cocktail bar counter",
+        "phrase_ko": "칵테일 바 카운터에서",
+        "aliases": [
+          "bar counter"
+        ],
+        "keywords": [
+          "bartender"
+        ]
+      },
+      {
+        "id": "mechanic_garage_workbench",
+        "ko": "정비소 작업대",
+        "en": "a mechanic garage workbench",
+        "weight": 0.78,
+        "tags": [
+          "interior",
+          "workshop",
+          "mechanic"
+        ],
+        "phrase_en": "beside a mechanic garage workbench",
+        "phrase_ko": "정비소 작업대에서",
+        "aliases": [
+          "garage workbench"
+        ],
+        "keywords": [
+          "mechanic",
+          "wrench"
+        ]
+      },
+      {
+        "id": "stadium_tunnel",
+        "ko": "경기장 터널",
+        "en": "a stadium tunnel",
+        "weight": 0.78,
+        "tags": [
+          "sports",
+          "stage",
+          "interior"
+        ],
+        "phrase_en": "inside a stadium tunnel",
+        "phrase_ko": "경기장 터널에서",
+        "aliases": [
+          "stadium tunnel"
+        ],
+        "keywords": [
+          "cheerleader"
+        ]
+      },
+      {
+        "id": "racing_pit_lane",
+        "ko": "레이싱 피트 레인",
+        "en": "a racing pit lane",
+        "weight": 0.78,
+        "tags": [
+          "motorsport",
+          "pit",
+          "outdoor"
+        ],
+        "phrase_en": "in a racing pit lane",
+        "phrase_ko": "레이싱 피트 레인에서",
+        "aliases": [
+          "pit lane"
+        ],
+        "keywords": [
+          "racing"
+        ]
+      },
+      {
+        "id": "small_chapel_threshold",
+        "ko": "작은 예배당 문턱",
+        "en": "a small chapel threshold",
+        "weight": 0.78,
+        "tags": [
+          "interior",
+          "chapel",
+          "threshold"
+        ],
+        "phrase_en": "at a small chapel threshold",
+        "phrase_ko": "작은 예배당 문턱에서",
+        "aliases": [
+          "chapel threshold"
+        ],
+        "keywords": [
+          "nun"
+        ]
+      },
+      {
+        "id": "bridal_dressing_room",
+        "ko": "웨딩 드레스룸",
+        "en": "a bridal dressing room",
+        "weight": 0.78,
+        "tags": [
+          "interior",
+          "wedding",
+          "mirror"
+        ],
+        "phrase_en": "inside a bridal dressing room",
+        "phrase_ko": "웨딩 드레스룸에서",
+        "aliases": [
+          "bridal dressing room"
+        ],
+        "keywords": [
+          "bride",
+          "veil"
+        ]
+      },
+      {
+        "id": "geisha_teahouse_room",
+        "ko": "차분한 찻집 방",
+        "en": "a restrained teahouse room",
+        "weight": 0.78,
+        "tags": [
+          "interior",
+          "period",
+          "teahouse"
+        ],
+        "phrase_en": "inside a restrained teahouse room",
+        "phrase_ko": "차분한 찻집 방에서",
+        "aliases": [
+          "teahouse room"
+        ],
+        "keywords": [
+          "geisha",
+          "fan"
+        ]
+      },
+      {
+        "id": "ninja_rooftop_night",
+        "ko": "밤의 옥상 가장자리",
+        "en": "a rooftop edge at night",
+        "weight": 0.78,
+        "tags": [
+          "urban",
+          "night",
+          "stealth"
+        ],
+        "phrase_en": "on a rooftop edge at night",
+        "phrase_ko": "밤의 옥상 가장자리에서",
+        "aliases": [
+          "rooftop night"
+        ],
+        "keywords": [
+          "ninja",
+          "smoke"
+        ]
+      },
+      {
+        "id": "mirror_test_studio",
+        "ko": "거울 비교 스튜디오",
+        "en": "a mirror-comparison test studio",
+        "weight": 0.78,
+        "tags": [
+          "interior",
+          "reflection",
+          "uncanny"
+        ],
+        "phrase_en": "inside a mirror-comparison test studio",
+        "phrase_ko": "거울 비교 스튜디오에서",
+        "aliases": [
+          "mirror test studio"
+        ],
+        "keywords": [
+          "doppelganger",
+          "reflection"
+        ]
+      },
+      {
+        "id": "ferry_terminal_fog",
+        "ko": "안개 낀 여객선 터미널",
+        "en": "a foggy ferry terminal",
+        "weight": 0.78,
+        "tags": [
+          "transport",
+          "fog",
+          "liminal"
+        ],
+        "phrase_en": "at a foggy ferry terminal",
+        "phrase_ko": "안개 낀 여객선 터미널에서",
+        "aliases": [
+          "ferry terminal"
+        ],
+        "keywords": [
+          "departure",
+          "exile"
+        ]
+      },
+      {
+        "id": "underpass_sodium_walkway",
+        "ko": "나트륨등 아래 지하보도",
+        "en": "an underpass walkway under sodium light",
+        "weight": 0.78,
+        "tags": [
+          "urban",
+          "underpass",
+          "night"
+        ],
+        "phrase_en": "inside an underpass walkway under sodium light",
+        "phrase_ko": "나트륨등 아래 지하보도에서",
+        "aliases": [
+          "underpass"
+        ],
+        "keywords": [
+          "noir",
+          "surveillance"
+        ]
+      },
+      {
+        "id": "vintage_darkroom",
+        "ko": "빈티지 사진 암실",
+        "en": "a vintage photographic darkroom",
+        "weight": 0.76,
+        "tags": [
+          "interior",
+          "darkroom",
+          "archive"
+        ],
+        "phrase_en": "inside a vintage photographic darkroom",
+        "phrase_ko": "빈티지 사진 암실에서"
       }
     ],
     "world": [
@@ -55562,6 +60326,139 @@
           "moss",
           "erosion",
           "reclaimed room"
+        ]
+      },
+      {
+        "id": "time_loop_anachronism_world",
+        "ko": "타임루프와 시대 불일치 세계",
+        "en": "time-loop anachronism world",
+        "weight": 0.76,
+        "tags": [
+          "time",
+          "retro_future"
+        ],
+        "aliases": [
+          "time loop world"
+        ],
+        "keywords": [
+          "time traveler"
+        ]
+      },
+      {
+        "id": "noir_crime_city_world",
+        "ko": "느와르 범죄 도시 세계",
+        "en": "noir crime city world",
+        "weight": 0.76,
+        "tags": [
+          "noir",
+          "crime",
+          "urban"
+        ],
+        "aliases": [
+          "noir crime city"
+        ],
+        "keywords": [
+          "detective"
+        ]
+      },
+      {
+        "id": "afterlife_bureaucracy_world",
+        "ko": "저승의 관료제 세계",
+        "en": "afterlife bureaucracy world",
+        "weight": 0.74,
+        "tags": [
+          "afterlife",
+          "folk",
+          "bureaucracy"
+        ],
+        "aliases": [
+          "afterlife bureaucracy"
+        ],
+        "keywords": [
+          "reaper",
+          "ledger"
+        ]
+      },
+      {
+        "id": "press_freedom_thriller_world",
+        "ko": "언론 자유 스릴러 세계",
+        "en": "press-freedom thriller world",
+        "weight": 0.72,
+        "tags": [
+          "press",
+          "thriller"
+        ],
+        "aliases": [
+          "press thriller"
+        ],
+        "keywords": [
+          "journalist"
+        ]
+      },
+      {
+        "id": "border_exile_world",
+        "ko": "국경과 망명의 세계",
+        "en": "border exile world",
+        "weight": 0.72,
+        "tags": [
+          "border",
+          "travel",
+          "exile"
+        ],
+        "aliases": [
+          "border exile"
+        ],
+        "keywords": [
+          "passport"
+        ]
+      },
+      {
+        "id": "alchemy_secret_society_world",
+        "ko": "연금술 비밀결사 세계",
+        "en": "alchemy secret-society world",
+        "weight": 0.72,
+        "tags": [
+          "alchemy",
+          "occult"
+        ],
+        "aliases": [
+          "alchemy society"
+        ],
+        "keywords": [
+          "astrolabe"
+        ]
+      },
+      {
+        "id": "courtroom_pressure_world",
+        "ko": "법정 압박 세계",
+        "en": "courtroom pressure world",
+        "weight": 0.72,
+        "tags": [
+          "court",
+          "legal"
+        ],
+        "aliases": [
+          "courtroom pressure"
+        ],
+        "keywords": [
+          "witness"
+        ]
+      },
+      {
+        "id": "backstage_performance_world",
+        "ko": "무대 뒤 퍼포먼스 세계",
+        "en": "backstage performance world",
+        "weight": 0.72,
+        "tags": [
+          "stage",
+          "backstage"
+        ],
+        "aliases": [
+          "backstage world"
+        ],
+        "keywords": [
+          "ballet",
+          "cheer"
         ]
       }
     ],
@@ -56598,6 +61495,214 @@
           "motion",
           "flash"
         ]
+      },
+      {
+        "id": "venetian_blind_slat_light",
+        "ko": "베네치안 블라인드 슬랫 조명",
+        "en": "venetian-blind slat light",
+        "weight": 0.8,
+        "tags": [
+          "noir",
+          "interior",
+          "shadow"
+        ],
+        "aliases": [
+          "venetian blind light"
+        ],
+        "keywords": [
+          "noir",
+          "blind slats"
+        ],
+        "requires_any_tags": [
+          "human",
+          "portrait",
+          "noir"
+        ]
+      },
+      {
+        "id": "single_candle_flicker_light",
+        "ko": "촛불 하나가 흔들리는 빛",
+        "en": "single flickering candle light",
+        "weight": 0.76,
+        "tags": [
+          "candle",
+          "interior",
+          "ritual"
+        ],
+        "aliases": [
+          "single candle"
+        ],
+        "keywords": [
+          "candle",
+          "flicker"
+        ],
+        "requires_any_tags": [
+          "human",
+          "portrait",
+          "ritual",
+          "occult",
+          "afterlife"
+        ]
+      },
+      {
+        "id": "red_safelight_darkroom",
+        "ko": "암실의 붉은 세이프라이트",
+        "en": "red photographic darkroom safelight",
+        "weight": 0.76,
+        "tags": [
+          "darkroom",
+          "red",
+          "archive"
+        ],
+        "aliases": [
+          "red safelight"
+        ],
+        "keywords": [
+          "darkroom",
+          "red light"
+        ],
+        "requires_any_tags": [
+          "human",
+          "archive",
+          "press",
+          "darkroom"
+        ]
+      },
+      {
+        "id": "newsroom_monitor_glow",
+        "ko": "뉴스룸 모니터가 만드는 빛",
+        "en": "newsroom monitor glow",
+        "weight": 0.74,
+        "tags": [
+          "press",
+          "monitor",
+          "interior"
+        ],
+        "aliases": [
+          "newsroom glow"
+        ],
+        "keywords": [
+          "journalist",
+          "monitor"
+        ],
+        "requires_any_tags": [
+          "human",
+          "press"
+        ]
+      },
+      {
+        "id": "bar_amber_practical_light",
+        "ko": "바의 앰버색 실용 조명",
+        "en": "amber practical bar light",
+        "weight": 0.74,
+        "tags": [
+          "bar",
+          "warm",
+          "night"
+        ],
+        "aliases": [
+          "bar amber light"
+        ],
+        "keywords": [
+          "bartender",
+          "amber"
+        ],
+        "requires_any_tags": [
+          "human",
+          "bar"
+        ]
+      },
+      {
+        "id": "garage_spark_light",
+        "ko": "정비소 불꽃 조명",
+        "en": "garage spark light",
+        "weight": 0.72,
+        "tags": [
+          "workshop",
+          "spark",
+          "mechanic"
+        ],
+        "aliases": [
+          "garage sparks"
+        ],
+        "keywords": [
+          "mechanic",
+          "spark"
+        ],
+        "requires_any_tags": [
+          "human",
+          "mechanic",
+          "workshop"
+        ]
+      },
+      {
+        "id": "chapel_window_rim_light",
+        "ko": "예배당 창가 림라이트",
+        "en": "chapel window rim light",
+        "weight": 0.72,
+        "tags": [
+          "chapel",
+          "rim",
+          "soft"
+        ],
+        "aliases": [
+          "chapel rim light"
+        ],
+        "keywords": [
+          "nun",
+          "chapel"
+        ],
+        "requires_any_tags": [
+          "human",
+          "chapel",
+          "religious",
+          "wedding"
+        ]
+      },
+      {
+        "id": "archive_desk_lamp_light",
+        "ko": "아카이브 책상등 조명",
+        "en": "archive desk-lamp light",
+        "weight": 0.74,
+        "tags": [
+          "archive",
+          "interior"
+        ],
+        "aliases": [
+          "archive desk lamp"
+        ],
+        "keywords": [
+          "archive",
+          "desk lamp"
+        ],
+        "requires_any_tags": [
+          "human",
+          "archive",
+          "library"
+        ]
+      },
+      {
+        "id": "incense_haze_diffusion",
+        "ko": "향연기 확산 조명",
+        "en": "incense-haze diffusion light",
+        "weight": 0.74,
+        "tags": [
+          "ritual",
+          "smoke",
+          "soft"
+        ],
+        "aliases": [
+          "incense haze"
+        ],
+        "keywords": [
+          "incense",
+          "ritual"
+        ],
+        "requires_any_tags": [
+          "human",
+          "ritual",
+          "folk"
+        ]
       }
     ],
     "light_direction": [
@@ -57454,6 +62559,96 @@
           "clinical",
           "interior"
         ]
+      },
+      {
+        "id": "hud_screen_glow",
+        "ko": "HUD 화면 글로우",
+        "en": "HUD screen glow",
+        "weight": 0.76,
+        "tags": [
+          "screen",
+          "sci_fi",
+          "glow"
+        ],
+        "aliases": [
+          "HUD glow"
+        ],
+        "keywords": [
+          "screen",
+          "sci-fi"
+        ],
+        "requires_any_tags": [
+          "human",
+          "technology",
+          "sci_fi",
+          "robot"
+        ]
+      },
+      {
+        "id": "pocket_watch_glint",
+        "ko": "회중시계의 작은 반짝임",
+        "en": "small pocket-watch glint",
+        "weight": 0.72,
+        "tags": [
+          "time",
+          "glint"
+        ],
+        "aliases": [
+          "watch glint"
+        ],
+        "keywords": [
+          "pocket watch"
+        ],
+        "requires_any_tags": [
+          "human",
+          "time"
+        ]
+      },
+      {
+        "id": "terminal_green_glow",
+        "ko": "초록 터미널 글로우",
+        "en": "green terminal glow",
+        "weight": 0.76,
+        "tags": [
+          "terminal",
+          "technology",
+          "green"
+        ],
+        "aliases": [
+          "terminal glow"
+        ],
+        "keywords": [
+          "hacker",
+          "green terminal"
+        ],
+        "requires_any_tags": [
+          "human",
+          "technology",
+          "cyber"
+        ]
+      },
+      {
+        "id": "stage_followspot",
+        "ko": "무대 팔로우스팟",
+        "en": "stage followspot",
+        "weight": 0.74,
+        "tags": [
+          "stage",
+          "spotlight"
+        ],
+        "aliases": [
+          "followspot"
+        ],
+        "keywords": [
+          "stage",
+          "performance"
+        ],
+        "requires_any_tags": [
+          "human",
+          "stage",
+          "performance",
+          "dance"
+        ]
       }
     ],
     "light_intensity": [
@@ -57985,6 +63180,73 @@
             "environment_system"
           ]
         }
+      },
+      {
+        "id": "clockface_shadow_pattern",
+        "ko": "시계판 모양 그림자",
+        "en": "clockface shadow pattern",
+        "weight": 0.72,
+        "tags": [
+          "time",
+          "shadow"
+        ],
+        "aliases": [
+          "clock shadow"
+        ],
+        "keywords": [
+          "time loop"
+        ],
+        "requires_any_tags": [
+          "human",
+          "time"
+        ]
+      },
+      {
+        "id": "cross_window_light",
+        "ko": "십자형 창문 빛",
+        "en": "cross-shaped window light",
+        "weight": 0.72,
+        "tags": [
+          "chapel",
+          "window",
+          "light_shape"
+        ],
+        "aliases": [
+          "cross window light"
+        ],
+        "keywords": [
+          "chapel",
+          "window"
+        ],
+        "requires_any_tags": [
+          "human",
+          "chapel",
+          "religious",
+          "wedding"
+        ]
+      },
+      {
+        "id": "halo_ring_catchlight",
+        "ko": "헤일로처럼 둥근 캐치라이트",
+        "en": "halo-like circular catchlight",
+        "weight": 0.72,
+        "tags": [
+          "portrait",
+          "catchlight",
+          "halo"
+        ],
+        "aliases": [
+          "halo catchlight"
+        ],
+        "keywords": [
+          "angel",
+          "catchlight"
+        ],
+        "requires_any_tags": [
+          "human",
+          "portrait",
+          "angel"
+        ]
       }
     ],
     "camera_type": [
@@ -58632,6 +63894,87 @@
         "tags": [
           "interior",
           "service"
+        ]
+      },
+      {
+        "id": "object_pov_table_edge_direction",
+        "ko": "테이블 위 물건 시점",
+        "en": "object POV from the table edge",
+        "weight": 0.76,
+        "tags": [
+          "pov",
+          "table",
+          "object"
+        ],
+        "aliases": [
+          "object POV table"
+        ],
+        "keywords": [
+          "table edge"
+        ]
+      },
+      {
+        "id": "hidden_press_camera_direction",
+        "ko": "취재 카메라가 숨어든 시점",
+        "en": "hidden press-camera viewpoint",
+        "weight": 0.74,
+        "tags": [
+          "press",
+          "hidden_camera"
+        ],
+        "aliases": [
+          "hidden press camera"
+        ],
+        "keywords": [
+          "journalist"
+        ]
+      },
+      {
+        "id": "witness_box_front_direction",
+        "ko": "증인석 앞 정면 시점",
+        "en": "frontal viewpoint from the witness box",
+        "weight": 0.74,
+        "tags": [
+          "court",
+          "frontal"
+        ],
+        "aliases": [
+          "witness box viewpoint"
+        ],
+        "keywords": [
+          "court witness"
+        ]
+      },
+      {
+        "id": "backstage_vanity_reflection_direction",
+        "ko": "백스테이지 화장대 반사 시점",
+        "en": "backstage vanity reflection viewpoint",
+        "weight": 0.74,
+        "tags": [
+          "backstage",
+          "mirror"
+        ],
+        "aliases": [
+          "vanity reflection"
+        ],
+        "keywords": [
+          "mirror"
+        ]
+      },
+      {
+        "id": "windshield_passenger_reflection_direction",
+        "ko": "조수석 차창 반사 시점",
+        "en": "passenger windshield reflection viewpoint",
+        "weight": 0.74,
+        "tags": [
+          "transport",
+          "reflection"
+        ],
+        "aliases": [
+          "windshield reflection"
+        ],
+        "keywords": [
+          "car window"
         ]
       }
     ],
@@ -59803,6 +65146,300 @@
           "clinical",
           "reflection",
           "lab"
+        ]
+      },
+      {
+        "id": "mirror_mismatch_comparison",
+        "ko": "실제 얼굴과 어긋난 거울 반영을 함께 보이는 구도",
+        "en": "same-frame comparison of the real face and mismatched mirror reflection",
+        "weight": 0.84,
+        "tags": [
+          "portrait",
+          "reflection",
+          "uncanny"
+        ],
+        "aliases": [
+          "mirror mismatch"
+        ],
+        "keywords": [
+          "doppelganger",
+          "reflection"
+        ],
+        "requires_any_tags": [
+          "human",
+          "portrait",
+          "reflection"
+        ]
+      },
+      {
+        "id": "foreground_hand_pov_frame",
+        "ko": "전경 손이 앵커가 되는 1인칭 구도",
+        "en": "first-person composition with foreground hand as the anchor",
+        "weight": 0.82,
+        "tags": [
+          "pov",
+          "foreground",
+          "hand"
+        ],
+        "aliases": [
+          "foreground hand POV"
+        ],
+        "keywords": [
+          "pov",
+          "hand anchor"
+        ],
+        "requires_any_tags": [
+          "human",
+          "portrait"
+        ]
+      },
+      {
+        "id": "split_diopter_dual_focus",
+        "ko": "전경 소품과 후경 얼굴을 동시에 잡은 스플릿 디옵터 구도",
+        "en": "split-diopter dual focus on foreground prop and background face",
+        "weight": 0.82,
+        "tags": [
+          "cinematic",
+          "dual_focus",
+          "foreground"
+        ],
+        "aliases": [
+          "split diopter"
+        ],
+        "keywords": [
+          "dual focus",
+          "foreground prop"
+        ],
+        "requires_any_tags": [
+          "human",
+          "portrait"
+        ]
+      },
+      {
+        "id": "blinds_shadow_face_bars",
+        "ko": "얼굴을 가로지르는 블라인드 그림자 구도",
+        "en": "composition with blind shadows crossing the face",
+        "weight": 0.82,
+        "tags": [
+          "noir",
+          "shadow",
+          "portrait"
+        ],
+        "aliases": [
+          "blind shadow bars"
+        ],
+        "keywords": [
+          "noir",
+          "face bars"
+        ],
+        "requires_any_tags": [
+          "human",
+          "portrait",
+          "noir"
+        ]
+      },
+      {
+        "id": "phone_screen_reflection_compare",
+        "ko": "폰 화면 반사와 실제 얼굴을 비교하는 구도",
+        "en": "composition comparing a phone-screen reflection with the real face",
+        "weight": 0.8,
+        "tags": [
+          "phone",
+          "reflection",
+          "portrait"
+        ],
+        "aliases": [
+          "phone reflection compare"
+        ],
+        "keywords": [
+          "phone",
+          "reflection"
+        ],
+        "requires_any_tags": [
+          "human",
+          "portrait",
+          "phone"
+        ]
+      },
+      {
+        "id": "photobooth_confession_grid",
+        "ko": "고백처럼 이어지는 포토부스 연속컷 그리드",
+        "en": "photobooth confession sequence grid",
+        "weight": 0.76,
+        "tags": [
+          "photobooth",
+          "grid",
+          "story"
+        ],
+        "aliases": [
+          "confession photobooth"
+        ],
+        "keywords": [
+          "sequence",
+          "photobooth"
+        ],
+        "requires_any_tags": [
+          "human",
+          "portrait",
+          "photobooth"
+        ]
+      },
+      {
+        "id": "triptych_story_sequence",
+        "ko": "세 장면으로 나뉜 트립틱 서사 구도",
+        "en": "triptych three-panel story sequence",
+        "weight": 0.76,
+        "tags": [
+          "triptych",
+          "sequence",
+          "story"
+        ],
+        "aliases": [
+          "triptych"
+        ],
+        "keywords": [
+          "three panel story"
+        ],
+        "requires_any_tags": [
+          "human",
+          "portrait"
+        ]
+      },
+      {
+        "id": "table_edge_hidden_camera_frame",
+        "ko": "테이블 가장자리 숨은 카메라 구도",
+        "en": "hidden camera composition from the table edge",
+        "weight": 0.78,
+        "tags": [
+          "surveillance",
+          "table",
+          "hidden_camera"
+        ],
+        "aliases": [
+          "table edge hidden camera"
+        ],
+        "keywords": [
+          "surveillance",
+          "hidden camera"
+        ],
+        "requires_any_tags": [
+          "human",
+          "surveillance",
+          "portrait"
+        ]
+      },
+      {
+        "id": "doorway_threshold_half_shadow",
+        "ko": "문턱에서 얼굴 절반이 그림자에 잠긴 구도",
+        "en": "doorway threshold frame with half the face in shadow",
+        "weight": 0.8,
+        "tags": [
+          "threshold",
+          "shadow",
+          "portrait"
+        ],
+        "aliases": [
+          "threshold half shadow"
+        ],
+        "keywords": [
+          "doorway",
+          "shadow"
+        ],
+        "requires_any_tags": [
+          "human",
+          "portrait",
+          "threshold"
+        ]
+      },
+      {
+        "id": "glass_case_reflection_layer",
+        "ko": "유리 케이스 반사가 겹친 구도",
+        "en": "layered glass-case reflection composition",
+        "weight": 0.78,
+        "tags": [
+          "reflection",
+          "museum",
+          "glass"
+        ],
+        "aliases": [
+          "glass case reflection"
+        ],
+        "keywords": [
+          "relic",
+          "reflection"
+        ],
+        "requires_any_tags": [
+          "human",
+          "portrait",
+          "museum"
+        ]
+      },
+      {
+        "id": "object_pov_table_edge_frame",
+        "ko": "테이블 위 물건 시점의 포트레이트 구도",
+        "en": "portrait framed from an object POV at table edge",
+        "weight": 0.78,
+        "tags": [
+          "pov",
+          "object",
+          "table"
+        ],
+        "aliases": [
+          "object POV"
+        ],
+        "keywords": [
+          "table edge",
+          "object viewpoint"
+        ],
+        "requires_any_tags": [
+          "human",
+          "portrait"
+        ]
+      },
+      {
+        "id": "rain_windshield_reflection_frame",
+        "ko": "비 내린 차창 반사 구도",
+        "en": "rainy windshield reflection frame",
+        "weight": 0.78,
+        "tags": [
+          "transport",
+          "rain",
+          "reflection"
+        ],
+        "aliases": [
+          "windshield reflection"
+        ],
+        "keywords": [
+          "rain",
+          "car window"
+        ],
+        "requires_any_tags": [
+          "human",
+          "portrait",
+          "transport"
+        ]
+      },
+      {
+        "id": "backstage_vanity_mirror_frame",
+        "ko": "백스테이지 화장대 거울 구도",
+        "en": "backstage vanity mirror frame",
+        "weight": 0.78,
+        "tags": [
+          "mirror",
+          "backstage",
+          "portrait"
+        ],
+        "aliases": [
+          "vanity mirror"
+        ],
+        "keywords": [
+          "backstage",
+          "mirror"
+        ],
+        "requires_any_tags": [
+          "human",
+          "portrait",
+          "backstage"
         ]
       }
     ],
@@ -61688,6 +67325,91 @@
             "general"
           ]
         }
+      },
+      {
+        "id": "terminal_green_black",
+        "ko": "터미널 그린과 블랙 팔레트",
+        "en": "terminal green and black palette",
+        "weight": 0.72,
+        "tags": [
+          "technology",
+          "green"
+        ],
+        "aliases": [
+          "terminal green"
+        ],
+        "keywords": [
+          "hacker"
+        ],
+        "requires_any_tags": [
+          "human",
+          "technology",
+          "cyber"
+        ]
+      },
+      {
+        "id": "brass_amber_black",
+        "ko": "브라스 앰버와 블랙 팔레트",
+        "en": "brass amber and black palette",
+        "weight": 0.72,
+        "tags": [
+          "alchemy",
+          "amber"
+        ],
+        "aliases": [
+          "brass amber"
+        ],
+        "keywords": [
+          "alchemy"
+        ],
+        "requires_any_tags": [
+          "human",
+          "alchemy",
+          "occult"
+        ]
+      },
+      {
+        "id": "newspaper_gray_flash",
+        "ko": "신문지 회색과 플래시 화이트 팔레트",
+        "en": "newspaper gray and flash-white palette",
+        "weight": 0.72,
+        "tags": [
+          "press",
+          "gray"
+        ],
+        "aliases": [
+          "newspaper gray"
+        ],
+        "keywords": [
+          "journalist"
+        ],
+        "requires_any_tags": [
+          "human",
+          "press"
+        ]
+      },
+      {
+        "id": "chapel_ivory_shadow",
+        "ko": "예배당 아이보리와 그림자 팔레트",
+        "en": "chapel ivory and shadow palette",
+        "weight": 0.72,
+        "tags": [
+          "chapel",
+          "ivory"
+        ],
+        "aliases": [
+          "chapel ivory"
+        ],
+        "keywords": [
+          "nun",
+          "bride"
+        ],
+        "requires_any_tags": [
+          "human",
+          "chapel",
+          "religious",
+          "wedding"
+        ]
       }
     ],
     "mood": [
@@ -62571,6 +68293,175 @@
         "tags": [
           "pure",
           "serene"
+        ]
+      },
+      {
+        "id": "forensic_cold",
+        "ko": "법의학처럼 차갑고 분석적인 정서",
+        "en": "forensic and coldly analytical",
+        "weight": 0.76,
+        "tags": [
+          "clinical",
+          "investigation"
+        ],
+        "aliases": [
+          "forensic cold"
+        ],
+        "keywords": [
+          "detective",
+          "evidence"
+        ]
+      },
+      {
+        "id": "anachronistic_wonder",
+        "ko": "시대 불일치가 주는 이상한 경이감",
+        "en": "anachronistic wonder",
+        "weight": 0.76,
+        "tags": [
+          "time",
+          "uncanny"
+        ],
+        "aliases": [
+          "anachronistic wonder"
+        ],
+        "keywords": [
+          "time traveler"
+        ]
+      },
+      {
+        "id": "exile_melancholy",
+        "ko": "망명자의 조용한 멜랑콜리",
+        "en": "quiet exile melancholy",
+        "weight": 0.76,
+        "tags": [
+          "travel",
+          "melancholy"
+        ],
+        "aliases": [
+          "exile melancholy"
+        ],
+        "keywords": [
+          "passport",
+          "departure"
+        ]
+      },
+      {
+        "id": "revolutionary_resolve",
+        "ko": "혁명가의 억제된 결의",
+        "en": "restrained revolutionary resolve",
+        "weight": 0.76,
+        "tags": [
+          "resistance",
+          "documentary"
+        ],
+        "aliases": [
+          "revolutionary resolve"
+        ],
+        "keywords": [
+          "leaflet"
+        ]
+      },
+      {
+        "id": "truth_under_pressure",
+        "ko": "압박 속 진실을 말하려는 긴장",
+        "en": "truth under pressure",
+        "weight": 0.76,
+        "tags": [
+          "court",
+          "press",
+          "tense"
+        ],
+        "aliases": [
+          "truth under pressure"
+        ],
+        "keywords": [
+          "witness",
+          "journalist"
+        ]
+      },
+      {
+        "id": "occult_scholarly_calm",
+        "ko": "학술적인 오컬트 침착함",
+        "en": "occult scholarly calm",
+        "weight": 0.74,
+        "tags": [
+          "alchemy",
+          "occult",
+          "calm"
+        ],
+        "aliases": [
+          "scholarly occult"
+        ],
+        "keywords": [
+          "alchemist",
+          "tarot"
+        ]
+      },
+      {
+        "id": "twin_presence_unease",
+        "ko": "둘이면서 하나 같은 불안감",
+        "en": "unease of a doubled presence",
+        "weight": 0.76,
+        "tags": [
+          "uncanny",
+          "double"
+        ],
+        "aliases": [
+          "double presence"
+        ],
+        "keywords": [
+          "doppelganger"
+        ]
+      },
+      {
+        "id": "underworld_calm",
+        "ko": "저승 문턱의 고요한 위엄",
+        "en": "calm authority at the underworld threshold",
+        "weight": 0.76,
+        "tags": [
+          "afterlife",
+          "folk",
+          "quiet"
+        ],
+        "aliases": [
+          "underworld calm"
+        ],
+        "keywords": [
+          "reaper"
+        ]
+      },
+      {
+        "id": "deadline_paranoia",
+        "ko": "마감 직전의 편집국 불안",
+        "en": "deadline paranoia",
+        "weight": 0.72,
+        "tags": [
+          "press",
+          "night",
+          "tense"
+        ],
+        "aliases": [
+          "deadline paranoia"
+        ],
+        "keywords": [
+          "newsroom"
+        ]
+      },
+      {
+        "id": "surveillance_paranoia",
+        "ko": "감시받는 듯한 불안",
+        "en": "surveillance paranoia",
+        "weight": 0.74,
+        "tags": [
+          "surveillance",
+          "tense"
+        ],
+        "aliases": [
+          "surveillance paranoia"
+        ],
+        "keywords": [
+          "spy",
+          "surveillance"
         ]
       }
     ],
@@ -63737,6 +69628,158 @@
           "fabric",
           "silk",
           "folk"
+        ]
+      },
+      {
+        "id": "old_paper_fiber_texture",
+        "ko": "오래된 종이 섬유 질감",
+        "en": "old paper-fiber texture",
+        "weight": 0.72,
+        "tags": [
+          "paper",
+          "archive"
+        ],
+        "aliases": [
+          "old paper"
+        ],
+        "keywords": [
+          "ledger",
+          "archive"
+        ],
+        "requires_any_tags": [
+          "human",
+          "archive",
+          "press",
+          "alchemy"
+        ]
+      },
+      {
+        "id": "wet_window_glass_texture",
+        "ko": "비에 젖은 창유리 질감",
+        "en": "rain-wet window glass texture",
+        "weight": 0.72,
+        "tags": [
+          "glass",
+          "rain"
+        ],
+        "aliases": [
+          "wet window glass"
+        ],
+        "keywords": [
+          "rain",
+          "reflection"
+        ],
+        "requires_any_tags": [
+          "human",
+          "portrait",
+          "rain"
+        ]
+      },
+      {
+        "id": "brushed_brass_patina_texture",
+        "ko": "브러시드 브라스 녹청 질감",
+        "en": "brushed brass patina texture",
+        "weight": 0.72,
+        "tags": [
+          "brass",
+          "alchemy"
+        ],
+        "aliases": [
+          "brass patina"
+        ],
+        "keywords": [
+          "astrolabe",
+          "alchemy"
+        ],
+        "requires_any_tags": [
+          "human",
+          "alchemy",
+          "occult"
+        ]
+      },
+      {
+        "id": "terminal_scanline_green_texture",
+        "ko": "초록 터미널 스캔라인 질감",
+        "en": "green terminal scanline texture",
+        "weight": 0.72,
+        "tags": [
+          "terminal",
+          "scanline"
+        ],
+        "aliases": [
+          "green scanline"
+        ],
+        "keywords": [
+          "hacker"
+        ],
+        "requires_any_tags": [
+          "human",
+          "technology",
+          "cyber"
+        ]
+      },
+      {
+        "id": "stage_dust_in_spotlight",
+        "ko": "스포트라이트 속 무대 먼지",
+        "en": "stage dust visible in spotlight",
+        "weight": 0.72,
+        "tags": [
+          "stage",
+          "dust"
+        ],
+        "aliases": [
+          "stage dust"
+        ],
+        "keywords": [
+          "ballet",
+          "performance"
+        ],
+        "requires_any_tags": [
+          "human",
+          "stage",
+          "performance",
+          "dance"
+        ]
+      },
+      {
+        "id": "veil_tulle_texture",
+        "ko": "베일 튤 질감",
+        "en": "veil tulle texture",
+        "weight": 0.72,
+        "tags": [
+          "wedding",
+          "fabric"
+        ],
+        "aliases": [
+          "tulle veil"
+        ],
+        "keywords": [
+          "bride"
+        ],
+        "requires_any_tags": [
+          "human",
+          "wedding"
+        ]
+      },
+      {
+        "id": "mirror_silvering_edge_texture",
+        "ko": "거울 은막 가장자리 질감",
+        "en": "mirror silvering edge texture",
+        "weight": 0.72,
+        "tags": [
+          "mirror",
+          "reflection"
+        ],
+        "aliases": [
+          "mirror silvering"
+        ],
+        "keywords": [
+          "doppelganger"
+        ],
+        "requires_any_tags": [
+          "human",
+          "reflection",
+          "uncanny"
         ]
       }
     ],
@@ -71016,7 +77059,11 @@
         "photobooth_friend_pair",
         "floor_selfie_creator",
         "yearbook_portrait_sitter",
-        "pojangmacha_customer"
+        "pojangmacha_customer",
+        "exile_traveler_subject",
+        "revolutionary_role_model",
+        "nun_role_model",
+        "bride_role_model"
       ],
       "occupation": [
         "young_barista",
@@ -71031,7 +77078,14 @@
         "crime_scene_reporter",
         "glassblower_artisan",
         "ceramic_potter",
-        "florist_arranging_bouquet"
+        "florist_arranging_bouquet",
+        "noir_detective_role_model",
+        "spy_cover_role_model",
+        "investigative_journalist_role_model",
+        "court_witness_role_model",
+        "hacker_role_model",
+        "bartender_role_model",
+        "mechanic_role_model"
       ],
       "creator": [
         "influencer_creator",
@@ -71056,7 +77110,12 @@
         "wuxia_cosplay_model",
         "historical_drama_actor",
         "adult_cosplay_performer",
-        "gothic_doll_cosplayer"
+        "gothic_doll_cosplayer",
+        "ballerina_dancer_model",
+        "cheerleader_performer_model",
+        "racing_model_role",
+        "geisha_performer_model",
+        "ninja_role_model"
       ],
       "traveler": [
         "traveler_backpack",
@@ -71095,6 +77154,12 @@
         "ceramic_automaton_figure",
         "bronze_guardian_automaton",
         "surveillance_sentinel_node"
+      ],
+      "fantasy": [
+        "underworld_messenger_subject",
+        "time_traveler_subject",
+        "alchemist_role_model",
+        "doppelganger_subject"
       ]
     },
     "location_tones": {
@@ -71112,7 +77177,12 @@
         "gas_station_car_passenger_seat_night",
         "otaku_living_room_sofa_tv",
         "gothic_glass_curio_cabinet",
-        "blue_rimlight_cosplay_studio"
+        "blue_rimlight_cosplay_studio",
+        "newsroom_after_midnight",
+        "ninja_rooftop_night",
+        "cocktail_bar_counter",
+        "underpass_sodium_walkway",
+        "vintage_darkroom"
       ],
       "urban_neon": [
         "rainy_neon_alley",
@@ -71135,7 +77205,14 @@
         "mirrored_elevator_box",
         "subway_platform",
         "hospital_corridor",
-        "hospital_waiting_room"
+        "hospital_waiting_room",
+        "funeral_registry_hall",
+        "airport_departure_gate",
+        "border_checkpoint_waiting_room",
+        "ferry_terminal_fog",
+        "underpass_sodium_walkway",
+        "mirror_test_studio",
+        "vintage_darkroom"
       ],
       "ruin": [
         "abandoned_factory",
@@ -71166,7 +77243,10 @@
         "rooftop_greenhouse",
         "garden_cafe_path_backlight",
         "botanical_greenhouse_deck_floor",
-        "simple_indoor_selfie_room"
+        "simple_indoor_selfie_room",
+        "courtroom_witness_stand",
+        "small_chapel_threshold",
+        "ballet_rehearsal_studio"
       ],
       "cold": [
         "snow_field",

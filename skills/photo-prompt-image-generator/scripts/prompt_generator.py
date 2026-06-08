@@ -918,10 +918,16 @@ def entry_block_reason(
         if slot in {"adult_context", "fetish_styling"}:
             return "adult_slot_not_allowed"
     subject_cat = str(generation_contract.get("subject_category", "generic"))
+    domains = set(generation_contract.get("preset_domains", []))
+    human_visual_terms = {"human", "portrait", "fashion", "beauty", "skin"}
+    if domains & {"product", "jewelry", "food"} and slot == "genre":
+        tokens = entry_context_tokens(item) | facet_tokens(item)
+        blob = " ".join(str(item.get(key, "")) for key in ("id", "en", "ko", "embedding_text")).lower()
+        if tokens & human_visual_terms or any(term in blob for term in human_visual_terms):
+            return "human_visual_signal_not_allowed"
     if subject_cat in {"object", "food", "plant", "environment", "sign"} and slot in {"genre", "texture", "focus", "color"}:
         tokens = entry_context_tokens(item) | facet_tokens(item)
         blob = " ".join(str(item.get(key, "")) for key in ("id", "en", "ko", "embedding_text")).lower()
-        human_visual_terms = {"human", "portrait", "fashion", "beauty", "skin"}
         if tokens & human_visual_terms or any(term in blob for term in human_visual_terms):
             return "human_visual_signal_not_allowed"
     if subject_cat in {"object", "food", "sign"} and slot in {"lighting", "light_direction", "light_type", "light_shape", "texture"}:

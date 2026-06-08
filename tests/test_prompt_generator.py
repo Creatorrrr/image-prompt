@@ -4961,6 +4961,233 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                     self.assertTrue(expected_ids.issubset(set(forced.get(slot, []))), (slot, forced))
                 self.assertGreaterEqual(explanation["soft_anchor_spec"]["min_anchors"], 2)
 
+    def test_additional_concept_viewpoint_presets_tags_and_recipes_are_registered(self):
+        preset_ids = {preset["id"] for preset in self.data["presets"]}
+        self.assertTrue(
+            {
+                "noir_detective_blinds_portrait",
+                "doppelganger_phone_reflection_portrait",
+                "time_loop_train_window_portrait",
+                "journalist_midnight_newsroom_portrait",
+                "courtroom_witness_flash_portrait",
+                "airport_departure_exile_portrait",
+                "split_diopter_dual_focus_portrait",
+                "pov_first_person_hands_frame",
+                "object_pov_table_edge_portrait",
+                "ballerina_rehearsal_spotlight_portrait",
+                "cheerleader_stadium_tunnel_motion",
+                "racing_pit_lane_editorial",
+            }.issubset(preset_ids)
+        )
+
+        family_ids = {family["id"] for family in self.data["preset_families"]}
+        self.assertTrue(
+            {
+                "viewpoint_anchor_family",
+                "noir_investigation_family",
+                "time_memory_exile_family",
+                "performance_role_family",
+                "occult_scholarly_family",
+            }.issubset(family_ids)
+        )
+
+        expected_slot_ids = {
+            "subject": {
+                "noir_detective_role_model",
+                "spy_cover_role_model",
+                "investigative_journalist_role_model",
+                "court_witness_role_model",
+                "underworld_messenger_subject",
+                "time_traveler_subject",
+                "alchemist_role_model",
+                "revolutionary_role_model",
+                "exile_traveler_subject",
+                "hacker_role_model",
+                "ballerina_dancer_model",
+                "doppelganger_subject",
+            },
+            "prop": {
+                "case_file_folder_prop",
+                "earpiece_comm_device",
+                "press_badge_notebook_prop",
+                "court_summons_paper_prop",
+                "name_ledger_book_prop",
+                "tarot_card_spread_prop",
+                "brass_astrolabe_prop",
+                "passport_with_old_stamp_prop",
+                "pocket_watch_time_loop_prop",
+                "encrypted_data_chip_prop",
+                "protest_leaflet_prop",
+                "cheer_pompom_prop",
+            },
+            "composition": {
+                "mirror_mismatch_comparison",
+                "foreground_hand_pov_frame",
+                "split_diopter_dual_focus",
+                "blinds_shadow_face_bars",
+                "phone_screen_reflection_compare",
+                "object_pov_table_edge_frame",
+            },
+            "location": {
+                "noir_interrogation_room",
+                "newsroom_after_midnight",
+                "courtroom_witness_stand",
+                "funeral_registry_hall",
+                "old_clock_train_compartment",
+                "alchemy_workshop_table",
+                "airport_departure_gate",
+                "underground_hacker_room",
+                "ballet_rehearsal_studio",
+                "racing_pit_lane",
+            },
+            "mood": {
+                "forensic_cold",
+                "anachronistic_wonder",
+                "exile_melancholy",
+                "revolutionary_resolve",
+                "truth_under_pressure",
+                "twin_presence_unease",
+                "underworld_calm",
+            },
+        }
+        for slot, ids in expected_slot_ids.items():
+            with self.subTest(slot=slot):
+                actual = {entry["id"] for entry in self.data["slots"][slot]}
+                self.assertTrue(ids.issubset(actual))
+
+        recipes = json.loads((SKILL_DIR / "assets" / "concept_recipes.json").read_text(encoding="utf-8"))
+        self.assertTrue(
+            {
+                "기자",
+                "법정 증인",
+                "해커",
+                "바텐더",
+                "정비사",
+                "발레리나",
+                "치어리더",
+                "레이싱 모델",
+                "수녀",
+                "신부",
+                "게이샤",
+                "닌자",
+            }.issubset(recipes["roles"])
+        )
+        self.assertTrue(
+            {
+                "탐정",
+                "스파이",
+                "도플갱어",
+                "시간여행자",
+                "저승사자",
+                "점성술사",
+                "연금술사",
+                "혁명가",
+                "망명자",
+            }.issubset(recipes["mixins"])
+        )
+        self.assertEqual(recipes["aliases"]["타임루프"], "시간여행자")
+        self.assertEqual(recipes["aliases"]["법정증인"], "법정 증인")
+        self.assertEqual(recipes["aliases"]["거울분신"], "도플갱어")
+        self.assertNotIn("도플", recipes["aliases"])
+        self.assertNotIn("증인", recipes["aliases"])
+
+    def test_additional_concepts_resolve_role_mixin_and_visible_anchors(self):
+        cases = [
+            (
+                "설윤 기자 시간여행자",
+                "기자",
+                "시간여행자",
+                "journalist_midnight_newsroom_portrait",
+                {
+                    "subject": {"investigative_journalist_role_model", "time_traveler_subject"},
+                    "prop": {"press_badge_notebook_prop", "pocket_watch_time_loop_prop", "retro_future_device_prop"},
+                    "action": {"taking_notes_press_badge", "checking_pocket_watch_time_loop"},
+                    "light_shape": {"clockface_shadow_pattern"},
+                },
+            ),
+            (
+                "카리나 해커 스파이",
+                "해커",
+                "스파이",
+                "over_shoulder_screen_pov_portrait",
+                {
+                    "subject": {"hacker_role_model", "spy_cover_role_model"},
+                    "prop": {"laptop_terminal_reflection_prop", "encrypted_data_chip_prop", "earpiece_comm_device"},
+                    "action": {"typing_terminal_reflection", "adjusting_earpiece_glance_aside"},
+                    "composition": {"table_edge_hidden_camera_frame"},
+                },
+            ),
+            (
+                "윈터 발레리나 도플갱어",
+                "발레리나",
+                "도플갱어",
+                "ballerina_rehearsal_spotlight_portrait",
+                {
+                    "subject": {"ballerina_dancer_model", "doppelganger_subject"},
+                    "costume_style": {"ballet_leotard_tutu_costume"},
+                    "action": {"pointe_balance_pose", "inspecting_own_reflection_mismatch"},
+                    "composition": {"mirror_mismatch_comparison"},
+                },
+            ),
+            (
+                "닝닝 법정 증인 저승사자",
+                "법정 증인",
+                "저승사자",
+                "courtroom_witness_flash_portrait",
+                {
+                    "subject": {"court_witness_role_model", "underworld_messenger_subject"},
+                    "prop": {"court_summons_paper_prop", "name_ledger_book_prop", "extinguishing_candle_prop"},
+                    "location": {"courtroom_witness_stand", "funeral_registry_hall"},
+                    "world": {"afterlife_bureaucracy_world"},
+                },
+            ),
+            (
+                "지젤 정비사 연금술사",
+                "정비사",
+                "연금술사",
+                "industrial_workshop_sparks_portrait",
+                {
+                    "subject": {"mechanic_role_model", "alchemist_role_model"},
+                    "prop": {"wrench_tool_prop", "brass_astrolabe_prop", "alchemy_glass_vial_prop"},
+                    "location": {"mechanic_garage_workbench", "alchemy_workshop_table"},
+                    "texture": {"brushed_brass_patina_texture"},
+                },
+            ),
+            (
+                "유나 치어리더 혁명가",
+                "치어리더",
+                "혁명가",
+                "cheerleader_stadium_tunnel_motion",
+                {
+                    "subject": {"cheerleader_performer_model", "revolutionary_role_model"},
+                    "prop": {"cheer_pompom_prop", "protest_leaflet_prop"},
+                    "action": {"cheer_jump_freeze_pose", "handing_out_protest_leaflet"},
+                    "mood": {"revolutionary_resolve"},
+                },
+            ),
+        ]
+
+        for concept, expected_role, expected_mixin, expected_preset, expected_slots in cases:
+            with self.subTest(concept=concept):
+                payload = self.run_wrapper_json(
+                    "--concept",
+                    concept,
+                    "--selection-mode",
+                    "rule",
+                    "--seed",
+                    "17",
+                    "--explain-concept",
+                )
+                explanation = payload["concepts"][0]
+                self.assertEqual(explanation["role"], expected_role)
+                self.assertEqual(explanation["applied_mixins"], [expected_mixin])
+                preset_index = payload["forward_args"].index("--preset")
+                self.assertEqual(payload["forward_args"][preset_index + 1], expected_preset)
+                forced = explanation["combined_forced_slots"]
+                for slot, expected_ids in expected_slots.items():
+                    self.assertTrue(expected_ids.issubset(set(forced.get(slot, []))), (slot, forced))
+                self.assertGreaterEqual(explanation["soft_anchor_spec"]["min_anchors"], 2)
+
     def test_all_concept_recipe_forced_slots_are_registered(self):
         recipes = json.loads((SKILL_DIR / "assets" / "concept_recipes.json").read_text(encoding="utf-8"))
         slot_ids = {slot: {entry["id"] for entry in entries} for slot, entries in self.data["slots"].items()}
@@ -5213,6 +5440,22 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertNotIn("food", product["choices"]["subject"].get("kind", []))
         self.assertNotIn("food", product["choices"]["subject"].get("tags", []))
         self.assertIn("food", food["choices"]["subject"].get("kind", []) + food["choices"]["subject"].get("tags", []))
+
+    def test_product_domain_blocks_human_visual_genre_before_subject_is_chosen(self):
+        preset = next(item for item in self.data["presets"] if item["id"] == "jewelry_macro_reflection")
+        contract = self.generator.make_generation_contract(self.data, preset, {}, {})
+        genres = {entry["id"]: entry for entry in self.data["slots"]["genre"]}
+
+        self.assertTrue({"product", "jewelry"} & set(contract["preset_domains"]))
+        for genre_id in ("portrait", "fashion", "beauty", "fine_art_portrait"):
+            with self.subTest(genre_id=genre_id):
+                self.assertEqual(
+                    self.generator.entry_block_reason(genres[genre_id], "genre", contract),
+                    "human_visual_signal_not_allowed",
+                )
+        for genre_id in ("product", "still_life", "object_concept", "craft_still_life"):
+            with self.subTest(genre_id=genre_id):
+                self.assertIsNone(self.generator.entry_block_reason(genres[genre_id], "genre", contract))
 
     def test_cross_mode_preserves_forced_prompt_facts(self):
         forced = {

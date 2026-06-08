@@ -99,10 +99,10 @@ Concept mode defaults:
 
 Expanded concept coverage:
 
-- Professional and uniform roles now include `승무원`, `소방관`, `보안요원`, `요리사`, `군장교`, `학생`, `무녀`, `기록가`, and `연구원` in addition to the older role recipes. Pass the full short phrase as one `--concept`, for example `카리나 무녀 구미호` or `윈터 연구원 데이터망령`, so the resolver can keep the role anchor and apply the mixin on top.
-- New folklore and speculative mixins include `구미호`, `원귀`, `인어`, `마녀`, `선녀`, `도깨비`, `데이터망령`, `환경침식`, `외계인`, `초능력자`, and `마법사`. These are visible-anchor recipes, not vibe words: they should add face/hand/prop/location evidence such as fox-fire, talismans, glitching screens, UI projection, moss, archive dust, levitating objects, or star maps.
+- Professional, uniform, performance, and narrative roles now include `승무원`, `소방관`, `보안요원`, `요리사`, `군장교`, `학생`, `무녀`, `기록가`, `연구원`, `기자`, `법정 증인`, `해커`, `바텐더`, `정비사`, `발레리나`, `치어리더`, `레이싱 모델`, `수녀`, `신부`, `게이샤`, and `닌자` in addition to the older role recipes. Pass the full short phrase as one `--concept`, for example `카리나 무녀 구미호`, `윈터 연구원 데이터망령`, `설윤 기자 시간여행자`, or `유나 발레리나 도플갱어`, so the resolver can keep the role anchor and apply the mixin on top.
+- New folklore, speculative, investigation, time, and social-archetype mixins include `구미호`, `원귀`, `인어`, `마녀`, `선녀`, `도깨비`, `데이터망령`, `환경침식`, `외계인`, `초능력자`, `마법사`, `탐정`, `스파이`, `도플갱어`, `시간여행자`, `저승사자`, `점성술사`, `연금술사`, `혁명가`, and `망명자`. These are visible-anchor recipes, not vibe words: they should add face/hand/prop/location evidence such as fox-fire, talismans, glitching screens, UI projection, moss, archive dust, levitating objects, star maps, case files, earpieces, mismatched reflections, pocket watches, name ledgers, tarot cards, brass astrolabes, protest leaflets, or stamped passports.
 - New personality-register mixins include `청순`, `쿨뷰티`, `도도`, `발랄`, `연상`, and `보이시`. Use them to steer expression, makeup, posture, wardrobe, and mood without replacing the main role.
-- Additional preset/tag families cover seasonal events, symbolic destination locations, era worlds, dynamic motion, digital glitch entities, professional observation spaces, and environmental transformation.
+- Additional preset/tag families cover seasonal events, symbolic destination locations, era worlds, dynamic motion, digital glitch entities, professional observation spaces, environmental transformation, investigation/testimony scenes, time-memory-exile scenes, performance roles, occult scholarly divination, and viewpoint-first anchor framing such as first-person hands, object POV, phone reflection, split diopter, and mirror mismatch.
 
 Safety and salience rules for the expanded concepts:
 
@@ -111,6 +111,8 @@ Safety and salience rules for the expanded concepts:
 - Folk, shamanic, ghost, witch, and religious-threshold imagery should be respectful and non-graphic: no caricature, gore, sacrifice, victims, or shock-horror injury cues.
 - `데이터망령` and other glitch concepts must keep the face, eyes, hands, and text clean. Glitch should live in localized UI projection, phone/monitor evidence, pixel-drift edges, or surveillance framing.
 - `환경침식` is symbolic environmental transformation: moss, paper dust, crystals, petals, or reclaimed rooms. Do not turn it into body horror, decay wounds, infection, or gore.
+- Investigation, espionage, revolution, exile, and legal-testimony concepts should stay non-graphic and evidence-led: case files, earpieces, press badges, summons papers, leaflets, passports, and surveillance viewpoints should carry the concept without visible victims, active violence, weapon-use emphasis, readable credentials, or real-world harmful instructions.
+- Performance and service roles such as `치어리더`, `레이싱 모델`, `바텐더`, `발레리나`, and `게이샤` should read through adult professional role anchors, workplace/stage context, and face/hand/prop framing. Do not let the role collapse into body-display-only or minor-coded styling.
 
 List tag ids for a slot:
 
