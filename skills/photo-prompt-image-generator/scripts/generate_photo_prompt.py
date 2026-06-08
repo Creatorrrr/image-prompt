@@ -739,6 +739,22 @@ def concept_without_mixins(concept: str, mixin_names: Sequence[str]) -> str:
     return " ".join(stripped.split())
 
 
+def filter_role_duplicate_mixins(
+    concept: str,
+    roles: dict[str, Any],
+    mixin_matches: Sequence[tuple[str, dict[str, Any]]],
+) -> list[tuple[str, dict[str, Any]]]:
+    filtered: list[tuple[str, dict[str, Any]]] = []
+    for mixin, recipe in mixin_matches:
+        if mixin in roles:
+            without_this_mixin = concept_without_mixins(concept, [mixin])
+            alternate_role, _, _ = match_concept_role(without_this_mixin, roles) if without_this_mixin else (None, "", {})
+            if alternate_role is None:
+                continue
+        filtered.append((mixin, recipe))
+    return filtered
+
+
 def select_mixin_intensity_variant(concept: str, mixin_recipe: dict[str, Any]) -> str | None:
     variants = mixin_recipe.get("intensity_variants")
     aliases = mixin_recipe.get("intensity_aliases")
@@ -946,6 +962,7 @@ def resolve_concepts(
             continue
         concept = canonicalize_concept(concept, recipes)
         mixin_matches = match_concept_mixins(concept, mixins)
+        mixin_matches = filter_role_duplicate_mixins(concept, roles, mixin_matches)
         role_concept = concept_without_mixins(concept, [mixin for mixin, _ in mixin_matches])
         role, name, recipe = match_concept_role(role_concept or concept, roles)
         selected_bundles: list[dict[str, Any]] = []

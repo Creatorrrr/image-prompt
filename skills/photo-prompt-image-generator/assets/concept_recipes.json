@@ -33,7 +33,8 @@
     "emotional_contradiction",
     "viewer_position",
     "narrative_phase",
-    "safety_profile"
+    "safety_profile",
+    "costume_style"
   ],
   "soft_anchor_defaults": {
     "anchor_slots": [
@@ -547,6 +548,7 @@
         "hair_style=low_bun_hair",
         "makeup_style=natural_makeup",
         "costume_style=royal_princess_hanbok",
+        "wearable_accessory=phoenix_binyeo_ornament",
         "action=standing_silence",
         "prop=round_fan_prop",
         "composition=centered_symmetric",
@@ -555,9 +557,11 @@
       "soft_anchor_slots": [
         "costume_style",
         "location",
-        "prop"
+        "prop",
+        "wearable_accessory",
+        "composition"
       ],
-      "soft_min_anchors": 1,
+      "soft_min_anchors": 2,
       "anchor_terms": {
         "costume_style": [
           "princess hanbok",
@@ -572,6 +576,12 @@
         "prop": [
           "round fan",
           "fan"
+        ],
+        "wearable_accessory": [
+          "phoenix binyeo",
+          "cheopji",
+          "tteoljam",
+          "traditional Korean court hair ornament"
         ]
       },
       "additional": [
@@ -592,10 +602,19 @@
         "location": [
           "royal_princess_chamber",
           "joseon_palace_interior"
+        ],
+        "wearable_accessory": [
+          "phoenix_binyeo_ornament",
+          "cheopji_hair_ornament",
+          "tteoljam_hair_ornament",
+          "subtle_diamond_tiara"
         ]
       },
       "critical_anchor_slots": [
-        "costume_style"
+        "costume_style",
+        "wearable_accessory",
+        "location",
+        "prop"
       ],
       "anchor_floor": {
         "role": 1
@@ -625,6 +644,22 @@
         ],
         "strategy": "prefer_then_reselect",
         "fail_open": false
+      },
+      "anchor_families": {
+        "regalia": {
+          "slots": [
+            "wearable_accessory",
+            "prop"
+          ],
+          "min_hits": 1
+        },
+        "lineage_place": {
+          "slots": [
+            "costume_style",
+            "location"
+          ],
+          "min_hits": 1
+        }
       }
     },
     "바니걸": {
@@ -24407,6 +24442,1554 @@
         "narrative_phase",
         "safety_profile"
       ]
+    },
+    "공주": {
+      "preset": "princess_lineage_succession_portrait",
+      "set": {
+        "subject": "crown_princess_role",
+        "costume_style": "royal_princess_hanbok",
+        "wearable_accessory": "phoenix_binyeo_ornament",
+        "expression": "serene_sovereign_gaze",
+        "prop": "royal_edict_gyoji_scroll_prop",
+        "composition": "centered_symmetric",
+        "mood": "weight_of_succession"
+      },
+      "soft_anchor_slots": [
+        "costume_style",
+        "wearable_accessory",
+        "prop",
+        "location",
+        "composition",
+        "mood"
+      ],
+      "soft_min_anchors": 2,
+      "anchor_terms": {
+        "wearable_accessory": [
+          "princess regalia: tiara, binyeo, cheopji, tteoljam, royal ornament"
+        ],
+        "costume_style": [
+          "princess hanbok, royal court robe, inherited rank"
+        ],
+        "prop": [
+          "royal seal, royal edict, genealogy, succession token"
+        ],
+        "location": [
+          "palace, court chamber, throne hall, royal ancestral shrine"
+        ],
+        "composition": [
+          "ceremonial symmetry, attendants, lattice or court observer framing"
+        ],
+        "mood": [
+          "weight of succession, ritual composure, quiet nobility"
+        ]
+      },
+      "anchor_pool": {
+        "subject": [
+          "crown_princess_role",
+          "princess_in_disguise_role",
+          "adult_royal_heir_role"
+        ],
+        "costume_style": [
+          "royal_princess_hanbok",
+          "crown_princess_ceremonial_robe",
+          "commoner_disguise_over_silk"
+        ],
+        "wearable_accessory": [
+          "phoenix_binyeo_ornament",
+          "cheopji_hair_ornament",
+          "tteoljam_hair_ornament",
+          "subtle_diamond_tiara",
+          "signet_ring_concealed",
+          "hidden_royal_jade_pendant"
+        ],
+        "prop": [
+          "royal_seal_okse_prop",
+          "royal_edict_gyoji_scroll_prop",
+          "dynastic_genealogy_book_prop",
+          "succession_token_box_prop"
+        ],
+        "location": [
+          "royal_princess_chamber",
+          "joseon_palace_interior",
+          "throne_hall_interior",
+          "royal_ancestral_shrine"
+        ],
+        "composition": [
+          "centered_symmetric",
+          "attendant_flanked_symmetry",
+          "beaded_curtain_jueom_frame",
+          "seal_hand_close_portrait"
+        ],
+        "mood": [
+          "weight_of_succession",
+          "quiet_nobility",
+          "guarded_seclusion"
+        ]
+      },
+      "primary_anchor_pool": {
+        "wearable_accessory": [
+          "phoenix_binyeo_ornament",
+          "cheopji_hair_ornament",
+          "tteoljam_hair_ornament",
+          "subtle_diamond_tiara"
+        ],
+        "prop": [
+          "royal_seal_okse_prop",
+          "royal_edict_gyoji_scroll_prop"
+        ],
+        "costume_style": [
+          "royal_princess_hanbok",
+          "crown_princess_ceremonial_robe"
+        ]
+      },
+      "anchor_groups": {
+        "wearable_accessory": [
+          "mixin_primary"
+        ],
+        "prop": [
+          "mixin_primary"
+        ],
+        "costume_style": [
+          "mixin_primary"
+        ]
+      },
+      "additional": [
+        "공주는 직업/코스프레가 아니라 상속된 왕실 신분으로 먼저 읽혀야 한다: 관, 전통 궁중 머리장식, 옥새, 교지, 왕실 문장, 수행원, 궁정 공간 중 최소 두 개가 화면에 보인다.",
+        "직업 의상이 있더라도 regalia(관/머리장식/옥새/왕실 문장) 최소 1개와 lineage/place(예복/궁정 공간/계승 문서) 최소 1개가 함께 동반된다.",
+        "mirror selfie, phone covering face, convention cosplay, pin-up monarchy framing을 피하고, 얼굴/손 주변에 왕실 앵커를 배치한다."
+      ],
+      "intent_axis": [
+        "inherited royal princess identity before occupational costume",
+        "royal regalia and lineage object visible near face or hands",
+        "princess facets: succession, ceremony, protected confinement, incognito disguise, fallen exile, role reversal, royal guard authority, court healing, modern nobility"
+      ],
+      "likeness_mode": "inspired",
+      "safety_requirements": [
+        "adult fictional subject only; no victim spectacle, coercive captivity, sexualized monarchy, pin-up royal costume, or selfie-first framing"
+      ],
+      "safety_negative_floor": [
+        "mirror selfie",
+        "phone covering face",
+        "selfie arm",
+        "webcam angle",
+        "cosplay convention badge",
+        "sexualized princess costume",
+        "pin-up royal costume",
+        "lingerie princess"
+      ],
+      "register": true,
+      "bundle_override_slots": [
+        "costume_style",
+        "wearable_accessory",
+        "prop",
+        "location",
+        "action",
+        "composition",
+        "subject_framing",
+        "viewer_position",
+        "narrative_phase",
+        "intent_state",
+        "emotional_contradiction",
+        "safety_profile",
+        "mood",
+        "expression",
+        "light_shape"
+      ],
+      "anchor_families": {
+        "regalia": {
+          "slots": [
+            "wearable_accessory",
+            "prop"
+          ],
+          "min_hits": 1
+        },
+        "lineage": {
+          "slots": [
+            "costume_style",
+            "location",
+            "prop"
+          ],
+          "min_hits": 1
+        }
+      },
+      "critical_anchor_slots": [
+        "wearable_accessory",
+        "prop",
+        "costume_style",
+        "location"
+      ],
+      "anchor_floor": {
+        "mixin": 2
+      },
+      "mixin_cue_budget": 3,
+      "free_slot_constraints": {
+        "subject_framing": {
+          "deny_pool": [
+            "full_body_framing",
+            "three_quarter_body_framing",
+            "knee_up_framing"
+          ],
+          "prefer_ids": [
+            "regal_three_quarter_framing",
+            "waist_up_regalia_visible",
+            "hands_and_regalia_visible",
+            "upper_body_framing"
+          ]
+        },
+        "composition": {
+          "deny_pool": [
+            "phone_arm_length_selfie",
+            "mirror_selfie_composition",
+            "crouching_mirror_full_body"
+          ],
+          "prefer_ids": [
+            "centered_symmetric",
+            "attendant_flanked_symmetry",
+            "seal_hand_close_portrait"
+          ]
+        },
+        "action": {
+          "deny_pool": [
+            "mirror_selfie",
+            "taking_selfie"
+          ],
+          "prefer_ids": [
+            "poised_standing",
+            "accepting_court_bow",
+            "touching_state_seal"
+          ]
+        },
+        "body_framing": {
+          "deny_pool": [
+            "collarbone_lips_focus",
+            "legs_heels_framing"
+          ],
+          "prefer_ids": [
+            "hands_nails_accessory_closeup"
+          ]
+        }
+      },
+      "forbidden_slot_values": {
+        "body_framing": [
+          "collarbone_lips_focus",
+          "legs_heels_framing"
+        ],
+        "fetish_styling": [
+          "lace_satin_lingerie_inspired"
+        ]
+      },
+      "visual_guard": [
+        {
+          "id": "princess_anti_selfie_guard",
+          "reason": "princess identity should read through royal regalia, lineage, and court framing rather than social selfie capture",
+          "deny_ids": {
+            "composition": [
+              "phone_arm_length_selfie",
+              "mirror_selfie_composition",
+              "crouching_mirror_full_body"
+            ],
+            "action": [
+              "mirror_selfie",
+              "taking_selfie"
+            ],
+            "subject_framing": [
+              "full_body_framing",
+              "three_quarter_body_framing",
+              "knee_up_framing"
+            ],
+            "body_framing": [
+              "collarbone_lips_focus",
+              "legs_heels_framing"
+            ]
+          },
+          "prefer_ids": {
+            "composition": [
+              "centered_symmetric",
+              "attendant_flanked_symmetry",
+              "seal_hand_close_portrait"
+            ],
+            "subject_framing": [
+              "regal_three_quarter_framing",
+              "waist_up_regalia_visible",
+              "hands_and_regalia_visible"
+            ]
+          }
+        }
+      ],
+      "soft_repair_policy": {
+        "enabled": true,
+        "max_attempts": 2,
+        "trigger_checks": [
+          "required_render_priority_missing",
+          "dual_read_missing",
+          "body_first_survivor",
+          "free_slot_constraint_violation"
+        ],
+        "target_slots": [
+          "wearable_accessory",
+          "prop",
+          "costume_style",
+          "composition",
+          "subject_framing"
+        ],
+        "strategy": "prefer_then_reselect",
+        "fail_open": false
+      },
+      "bundles": [
+        {
+          "id": "maid_princess_role_reversal",
+          "weight": 5,
+          "subtype": "role_reversal",
+          "roles": [
+            "메이드"
+          ],
+          "preset": "princess_servant_role_reversal_portrait",
+          "set": {
+            "costume_style": "royal_apron_hanbok_hybrid",
+            "wearable_accessory": "subtle_diamond_tiara",
+            "prop": "royal_seal_okse_prop",
+            "action": "served_by_attendants",
+            "composition": "attendant_flanked_symmetry",
+            "viewer_position": "viewer_as_attendant",
+            "mood": "graceful_court",
+            "emotional_contradiction": "serving_role_inherited_rank",
+            "safety_profile": "anti_selfie_royal_profile"
+          },
+          "soft_anchor_slots": [
+            "costume_style",
+            "wearable_accessory",
+            "prop",
+            "action",
+            "composition",
+            "viewer_position",
+            "mood",
+            "emotional_contradiction",
+            "safety_profile"
+          ],
+          "soft_min_anchors": 2,
+          "anchor_terms": {
+            "costume_style": [
+              "maid princess reads as role reversal: frilled service costume is transformed by royal apron embroidery, tiara, attendants, and being served rather than ordinary maid cosplay"
+            ],
+            "wearable_accessory": [
+              "maid princess reads as role reversal: frilled service costume is transformed by royal apron embroidery, tiara, attendants, and being served rather than ordinary maid cosplay"
+            ],
+            "prop": [
+              "maid princess reads as role reversal: frilled service costume is transformed by royal apron embroidery, tiara, attendants, and being served rather than ordinary maid cosplay"
+            ],
+            "action": [
+              "maid princess reads as role reversal: frilled service costume is transformed by royal apron embroidery, tiara, attendants, and being served rather than ordinary maid cosplay"
+            ],
+            "composition": [
+              "maid princess reads as role reversal: frilled service costume is transformed by royal apron embroidery, tiara, attendants, and being served rather than ordinary maid cosplay"
+            ],
+            "viewer_position": [
+              "maid princess reads as role reversal: frilled service costume is transformed by royal apron embroidery, tiara, attendants, and being served rather than ordinary maid cosplay"
+            ],
+            "mood": [
+              "maid princess reads as role reversal: frilled service costume is transformed by royal apron embroidery, tiara, attendants, and being served rather than ordinary maid cosplay"
+            ],
+            "emotional_contradiction": [
+              "maid princess reads as role reversal: frilled service costume is transformed by royal apron embroidery, tiara, attendants, and being served rather than ordinary maid cosplay"
+            ],
+            "safety_profile": [
+              "maid princess reads as role reversal: frilled service costume is transformed by royal apron embroidery, tiara, attendants, and being served rather than ordinary maid cosplay"
+            ]
+          },
+          "anchor_pool": {
+            "costume_style": [
+              "royal_apron_hanbok_hybrid"
+            ],
+            "wearable_accessory": [
+              "subtle_diamond_tiara"
+            ],
+            "prop": [
+              "royal_seal_okse_prop"
+            ],
+            "action": [
+              "served_by_attendants"
+            ],
+            "composition": [
+              "attendant_flanked_symmetry"
+            ],
+            "viewer_position": [
+              "viewer_as_attendant"
+            ],
+            "mood": [
+              "graceful_court"
+            ],
+            "emotional_contradiction": [
+              "serving_role_inherited_rank"
+            ],
+            "safety_profile": [
+              "anti_selfie_royal_profile"
+            ]
+          },
+          "primary_anchor_pool": {
+            "wearable_accessory": [
+              "subtle_diamond_tiara"
+            ],
+            "prop": [
+              "royal_seal_okse_prop"
+            ],
+            "costume_style": [
+              "royal_apron_hanbok_hybrid"
+            ]
+          },
+          "anchor_groups": {
+            "wearable_accessory": [
+              "mixin_primary"
+            ],
+            "prop": [
+              "mixin_primary"
+            ],
+            "costume_style": [
+              "mixin_primary"
+            ]
+          },
+          "additional": [
+            "maid princess reads as role reversal: frilled service costume is transformed by royal apron embroidery, tiara, attendants, and being served rather than ordinary maid cosplay",
+            "royal/princess identity must read before ordinary occupation or costume play; keep regalia, lineage object, or palace framing near the face or hands"
+          ],
+          "intent_axis": [
+            "maid princess reads as role reversal: frilled service costume is transformed by royal apron embroidery, tiara, attendants, and being served rather than ordinary maid cosplay"
+          ],
+          "safety_requirements": [
+            "adult fictional subject only; avoid selfie, coercive captivity, victim spectacle, sexualized monarchy, and pin-up framing"
+          ],
+          "safety_negative_floor": [
+            "mirror selfie",
+            "phone covering face",
+            "selfie arm",
+            "sexualized princess costume",
+            "pin-up royal costume"
+          ],
+          "free_slot_constraints": {
+            "subject_framing": {
+              "deny_pool": [
+                "full_body_framing",
+                "three_quarter_body_framing",
+                "knee_up_framing"
+              ],
+              "prefer_ids": [
+                "regal_three_quarter_framing",
+                "waist_up_regalia_visible",
+                "hands_and_regalia_visible",
+                "upper_body_framing"
+              ]
+            },
+            "composition": {
+              "deny_pool": [
+                "phone_arm_length_selfie",
+                "mirror_selfie_composition",
+                "crouching_mirror_full_body"
+              ],
+              "prefer_ids": [
+                "centered_symmetric",
+                "attendant_flanked_symmetry",
+                "seal_hand_close_portrait"
+              ]
+            },
+            "action": {
+              "deny_pool": [
+                "mirror_selfie",
+                "taking_selfie"
+              ],
+              "prefer_ids": [
+                "poised_standing",
+                "accepting_court_bow",
+                "touching_state_seal"
+              ]
+            },
+            "body_framing": {
+              "deny_pool": [
+                "collarbone_lips_focus",
+                "legs_heels_framing"
+              ],
+              "prefer_ids": [
+                "hands_nails_accessory_closeup"
+              ]
+            }
+          }
+        },
+        {
+          "id": "nurse_princess_court_healer",
+          "weight": 5,
+          "subtype": "court_healing",
+          "roles": [
+            "간호사",
+            "의사"
+          ],
+          "preset": "court_healer_princess_portrait",
+          "set": {
+            "subject": "court_healer_princess_role",
+            "costume_style": "court_infirmary_uniform",
+            "wearable_accessory": "cheopji_hair_ornament",
+            "prop": "royal_medical_chart_prop",
+            "location": "palace_infirmary",
+            "composition": "seal_hand_close_portrait",
+            "mood": "quiet_nobility",
+            "safety_profile": "anti_sexualized_royal_profile"
+          },
+          "soft_anchor_slots": [
+            "subject",
+            "costume_style",
+            "wearable_accessory",
+            "prop",
+            "location",
+            "composition",
+            "mood",
+            "safety_profile"
+          ],
+          "soft_min_anchors": 2,
+          "anchor_terms": {
+            "subject": [
+              "nurse princess reads as court healer: royal crest medical chart, palace infirmary, cheopji ornament, and controlled care authority replace ordinary nurse cosplay"
+            ],
+            "costume_style": [
+              "nurse princess reads as court healer: royal crest medical chart, palace infirmary, cheopji ornament, and controlled care authority replace ordinary nurse cosplay"
+            ],
+            "wearable_accessory": [
+              "nurse princess reads as court healer: royal crest medical chart, palace infirmary, cheopji ornament, and controlled care authority replace ordinary nurse cosplay"
+            ],
+            "prop": [
+              "nurse princess reads as court healer: royal crest medical chart, palace infirmary, cheopji ornament, and controlled care authority replace ordinary nurse cosplay"
+            ],
+            "location": [
+              "nurse princess reads as court healer: royal crest medical chart, palace infirmary, cheopji ornament, and controlled care authority replace ordinary nurse cosplay"
+            ],
+            "composition": [
+              "nurse princess reads as court healer: royal crest medical chart, palace infirmary, cheopji ornament, and controlled care authority replace ordinary nurse cosplay"
+            ],
+            "mood": [
+              "nurse princess reads as court healer: royal crest medical chart, palace infirmary, cheopji ornament, and controlled care authority replace ordinary nurse cosplay"
+            ],
+            "safety_profile": [
+              "nurse princess reads as court healer: royal crest medical chart, palace infirmary, cheopji ornament, and controlled care authority replace ordinary nurse cosplay"
+            ]
+          },
+          "anchor_pool": {
+            "subject": [
+              "court_healer_princess_role"
+            ],
+            "costume_style": [
+              "court_infirmary_uniform"
+            ],
+            "wearable_accessory": [
+              "cheopji_hair_ornament"
+            ],
+            "prop": [
+              "royal_medical_chart_prop"
+            ],
+            "location": [
+              "palace_infirmary"
+            ],
+            "composition": [
+              "seal_hand_close_portrait"
+            ],
+            "mood": [
+              "quiet_nobility"
+            ],
+            "safety_profile": [
+              "anti_sexualized_royal_profile"
+            ]
+          },
+          "primary_anchor_pool": {
+            "wearable_accessory": [
+              "cheopji_hair_ornament"
+            ],
+            "prop": [
+              "royal_medical_chart_prop"
+            ],
+            "costume_style": [
+              "court_infirmary_uniform"
+            ]
+          },
+          "anchor_groups": {
+            "wearable_accessory": [
+              "mixin_primary"
+            ],
+            "prop": [
+              "mixin_primary"
+            ],
+            "costume_style": [
+              "mixin_primary"
+            ]
+          },
+          "additional": [
+            "nurse princess reads as court healer: royal crest medical chart, palace infirmary, cheopji ornament, and controlled care authority replace ordinary nurse cosplay",
+            "royal/princess identity must read before ordinary occupation or costume play; keep regalia, lineage object, or palace framing near the face or hands"
+          ],
+          "intent_axis": [
+            "nurse princess reads as court healer: royal crest medical chart, palace infirmary, cheopji ornament, and controlled care authority replace ordinary nurse cosplay"
+          ],
+          "safety_requirements": [
+            "adult fictional subject only; avoid selfie, coercive captivity, victim spectacle, sexualized monarchy, and pin-up framing"
+          ],
+          "safety_negative_floor": [
+            "mirror selfie",
+            "phone covering face",
+            "selfie arm",
+            "sexualized princess costume",
+            "pin-up royal costume"
+          ],
+          "free_slot_constraints": {
+            "subject_framing": {
+              "deny_pool": [
+                "full_body_framing",
+                "three_quarter_body_framing",
+                "knee_up_framing"
+              ],
+              "prefer_ids": [
+                "regal_three_quarter_framing",
+                "waist_up_regalia_visible",
+                "hands_and_regalia_visible",
+                "upper_body_framing"
+              ]
+            },
+            "composition": {
+              "deny_pool": [
+                "phone_arm_length_selfie",
+                "mirror_selfie_composition",
+                "crouching_mirror_full_body"
+              ],
+              "prefer_ids": [
+                "centered_symmetric",
+                "attendant_flanked_symmetry",
+                "seal_hand_close_portrait"
+              ]
+            },
+            "action": {
+              "deny_pool": [
+                "mirror_selfie",
+                "taking_selfie"
+              ],
+              "prefer_ids": [
+                "poised_standing",
+                "accepting_court_bow",
+                "touching_state_seal"
+              ]
+            },
+            "body_framing": {
+              "deny_pool": [
+                "collarbone_lips_focus",
+                "legs_heels_framing"
+              ],
+              "prefer_ids": [
+                "hands_nails_accessory_closeup"
+              ]
+            }
+          }
+        },
+        {
+          "id": "police_princess_royal_guard",
+          "weight": 5,
+          "subtype": "royal_guard",
+          "roles": [
+            "경찰",
+            "보안요원",
+            "기사",
+            "군장교"
+          ],
+          "preset": "royal_guard_princess_authority_portrait",
+          "set": {
+            "subject": "royal_guard_princess_role",
+            "costume_style": "royal_guard_regalia_uniform",
+            "wearable_accessory": "circlet_over_uniform",
+            "prop": "ceremonial_saber_prop",
+            "location": "royal_guard_corridor",
+            "composition": "attendant_flanked_symmetry",
+            "mood": "regal_command",
+            "safety_profile": "anti_sexualized_royal_profile"
+          },
+          "soft_anchor_slots": [
+            "subject",
+            "costume_style",
+            "wearable_accessory",
+            "prop",
+            "location",
+            "composition",
+            "mood",
+            "safety_profile"
+          ],
+          "soft_min_anchors": 2,
+          "anchor_terms": {
+            "subject": [
+              "police or guard princess reads as royal guard authority: crest uniform, circlet over uniform, ceremonial saber, and palace security corridor"
+            ],
+            "costume_style": [
+              "police or guard princess reads as royal guard authority: crest uniform, circlet over uniform, ceremonial saber, and palace security corridor"
+            ],
+            "wearable_accessory": [
+              "police or guard princess reads as royal guard authority: crest uniform, circlet over uniform, ceremonial saber, and palace security corridor"
+            ],
+            "prop": [
+              "police or guard princess reads as royal guard authority: crest uniform, circlet over uniform, ceremonial saber, and palace security corridor"
+            ],
+            "location": [
+              "police or guard princess reads as royal guard authority: crest uniform, circlet over uniform, ceremonial saber, and palace security corridor"
+            ],
+            "composition": [
+              "police or guard princess reads as royal guard authority: crest uniform, circlet over uniform, ceremonial saber, and palace security corridor"
+            ],
+            "mood": [
+              "police or guard princess reads as royal guard authority: crest uniform, circlet over uniform, ceremonial saber, and palace security corridor"
+            ],
+            "safety_profile": [
+              "police or guard princess reads as royal guard authority: crest uniform, circlet over uniform, ceremonial saber, and palace security corridor"
+            ]
+          },
+          "anchor_pool": {
+            "subject": [
+              "royal_guard_princess_role"
+            ],
+            "costume_style": [
+              "royal_guard_regalia_uniform"
+            ],
+            "wearable_accessory": [
+              "circlet_over_uniform"
+            ],
+            "prop": [
+              "ceremonial_saber_prop"
+            ],
+            "location": [
+              "royal_guard_corridor"
+            ],
+            "composition": [
+              "attendant_flanked_symmetry"
+            ],
+            "mood": [
+              "regal_command"
+            ],
+            "safety_profile": [
+              "anti_sexualized_royal_profile"
+            ]
+          },
+          "primary_anchor_pool": {
+            "wearable_accessory": [
+              "circlet_over_uniform"
+            ],
+            "prop": [
+              "ceremonial_saber_prop"
+            ],
+            "costume_style": [
+              "royal_guard_regalia_uniform"
+            ]
+          },
+          "anchor_groups": {
+            "wearable_accessory": [
+              "mixin_primary"
+            ],
+            "prop": [
+              "mixin_primary"
+            ],
+            "costume_style": [
+              "mixin_primary"
+            ]
+          },
+          "additional": [
+            "police or guard princess reads as royal guard authority: crest uniform, circlet over uniform, ceremonial saber, and palace security corridor",
+            "royal/princess identity must read before ordinary occupation or costume play; keep regalia, lineage object, or palace framing near the face or hands"
+          ],
+          "intent_axis": [
+            "police or guard princess reads as royal guard authority: crest uniform, circlet over uniform, ceremonial saber, and palace security corridor"
+          ],
+          "safety_requirements": [
+            "adult fictional subject only; avoid selfie, coercive captivity, victim spectacle, sexualized monarchy, and pin-up framing"
+          ],
+          "safety_negative_floor": [
+            "mirror selfie",
+            "phone covering face",
+            "selfie arm",
+            "sexualized princess costume",
+            "pin-up royal costume"
+          ],
+          "free_slot_constraints": {
+            "subject_framing": {
+              "deny_pool": [
+                "full_body_framing",
+                "three_quarter_body_framing",
+                "knee_up_framing"
+              ],
+              "prefer_ids": [
+                "regal_three_quarter_framing",
+                "waist_up_regalia_visible",
+                "hands_and_regalia_visible",
+                "upper_body_framing"
+              ]
+            },
+            "composition": {
+              "deny_pool": [
+                "phone_arm_length_selfie",
+                "mirror_selfie_composition",
+                "crouching_mirror_full_body"
+              ],
+              "prefer_ids": [
+                "centered_symmetric",
+                "attendant_flanked_symmetry",
+                "seal_hand_close_portrait"
+              ]
+            },
+            "action": {
+              "deny_pool": [
+                "mirror_selfie",
+                "taking_selfie"
+              ],
+              "prefer_ids": [
+                "poised_standing",
+                "accepting_court_bow",
+                "touching_state_seal"
+              ]
+            },
+            "body_framing": {
+              "deny_pool": [
+                "collarbone_lips_focus",
+                "legs_heels_framing"
+              ],
+              "prefer_ids": [
+                "hands_nails_accessory_closeup"
+              ]
+            }
+          }
+        },
+        {
+          "id": "miner_princess_subterranean_exile",
+          "weight": 5,
+          "subtype": "subterranean_exile",
+          "roles": [
+            "광부"
+          ],
+          "preset": "subterranean_imprisoned_princess_portrait",
+          "set": {
+            "subject": "exiled_royal_role",
+            "costume_style": [
+              "mine_workwear_hidden_silk_lining",
+              "soiled_court_robe"
+            ],
+            "wearable_accessory": "tarnished_tiara",
+            "prop": [
+              "broken_chain_prop",
+              "nonfunctional_pickaxe_prop"
+            ],
+            "location": "underground_mine_cell",
+            "light_shape": "lattice_shadow_grid",
+            "composition": "birdcage_bar_frame",
+            "mood": "dignified_downfall",
+            "safety_profile": "anti_sexualized_royal_profile"
+          },
+          "soft_anchor_slots": [
+            "subject",
+            "costume_style",
+            "wearable_accessory",
+            "prop",
+            "location",
+            "light_shape",
+            "composition",
+            "mood",
+            "safety_profile"
+          ],
+          "soft_min_anchors": 2,
+          "anchor_terms": {
+            "subject": [
+              "miner princess reads as exiled royal in a mine: tarnished tiara, hidden silk lining, broken chain, mine cell, and lattice shadows must appear before ordinary mine workwear"
+            ],
+            "costume_style": [
+              "miner princess reads as exiled royal in a mine: tarnished tiara, hidden silk lining, broken chain, mine cell, and lattice shadows must appear before ordinary mine workwear"
+            ],
+            "wearable_accessory": [
+              "miner princess reads as exiled royal in a mine: tarnished tiara, hidden silk lining, broken chain, mine cell, and lattice shadows must appear before ordinary mine workwear"
+            ],
+            "prop": [
+              "miner princess reads as exiled royal in a mine: tarnished tiara, hidden silk lining, broken chain, mine cell, and lattice shadows must appear before ordinary mine workwear"
+            ],
+            "location": [
+              "miner princess reads as exiled royal in a mine: tarnished tiara, hidden silk lining, broken chain, mine cell, and lattice shadows must appear before ordinary mine workwear"
+            ],
+            "light_shape": [
+              "miner princess reads as exiled royal in a mine: tarnished tiara, hidden silk lining, broken chain, mine cell, and lattice shadows must appear before ordinary mine workwear"
+            ],
+            "composition": [
+              "miner princess reads as exiled royal in a mine: tarnished tiara, hidden silk lining, broken chain, mine cell, and lattice shadows must appear before ordinary mine workwear"
+            ],
+            "mood": [
+              "miner princess reads as exiled royal in a mine: tarnished tiara, hidden silk lining, broken chain, mine cell, and lattice shadows must appear before ordinary mine workwear"
+            ],
+            "safety_profile": [
+              "miner princess reads as exiled royal in a mine: tarnished tiara, hidden silk lining, broken chain, mine cell, and lattice shadows must appear before ordinary mine workwear"
+            ]
+          },
+          "anchor_pool": {
+            "subject": [
+              "exiled_royal_role"
+            ],
+            "costume_style": [
+              "mine_workwear_hidden_silk_lining",
+              "soiled_court_robe"
+            ],
+            "wearable_accessory": [
+              "tarnished_tiara"
+            ],
+            "prop": [
+              "broken_chain_prop",
+              "nonfunctional_pickaxe_prop"
+            ],
+            "location": [
+              "underground_mine_cell"
+            ],
+            "light_shape": [
+              "lattice_shadow_grid"
+            ],
+            "composition": [
+              "birdcage_bar_frame"
+            ],
+            "mood": [
+              "dignified_downfall"
+            ],
+            "safety_profile": [
+              "anti_sexualized_royal_profile"
+            ]
+          },
+          "primary_anchor_pool": {
+            "wearable_accessory": [
+              "tarnished_tiara"
+            ],
+            "prop": [
+              "broken_chain_prop",
+              "nonfunctional_pickaxe_prop"
+            ],
+            "costume_style": [
+              "mine_workwear_hidden_silk_lining",
+              "soiled_court_robe"
+            ]
+          },
+          "anchor_groups": {
+            "wearable_accessory": [
+              "mixin_primary"
+            ],
+            "prop": [
+              "mixin_primary"
+            ],
+            "costume_style": [
+              "mixin_primary"
+            ]
+          },
+          "additional": [
+            "miner princess reads as exiled royal in a mine: tarnished tiara, hidden silk lining, broken chain, mine cell, and lattice shadows must appear before ordinary mine workwear",
+            "royal/princess identity must read before ordinary occupation or costume play; keep regalia, lineage object, or palace framing near the face or hands"
+          ],
+          "intent_axis": [
+            "miner princess reads as exiled royal in a mine: tarnished tiara, hidden silk lining, broken chain, mine cell, and lattice shadows must appear before ordinary mine workwear"
+          ],
+          "safety_requirements": [
+            "adult fictional subject only; avoid selfie, coercive captivity, victim spectacle, sexualized monarchy, and pin-up framing"
+          ],
+          "safety_negative_floor": [
+            "mirror selfie",
+            "phone covering face",
+            "selfie arm",
+            "sexualized princess costume",
+            "pin-up royal costume"
+          ],
+          "free_slot_constraints": {
+            "subject_framing": {
+              "deny_pool": [
+                "full_body_framing",
+                "three_quarter_body_framing",
+                "knee_up_framing"
+              ],
+              "prefer_ids": [
+                "regal_three_quarter_framing",
+                "waist_up_regalia_visible",
+                "hands_and_regalia_visible",
+                "upper_body_framing"
+              ]
+            },
+            "composition": {
+              "deny_pool": [
+                "phone_arm_length_selfie",
+                "mirror_selfie_composition",
+                "crouching_mirror_full_body"
+              ],
+              "prefer_ids": [
+                "centered_symmetric",
+                "attendant_flanked_symmetry",
+                "seal_hand_close_portrait"
+              ]
+            },
+            "action": {
+              "deny_pool": [
+                "mirror_selfie",
+                "taking_selfie"
+              ],
+              "prefer_ids": [
+                "poised_standing",
+                "accepting_court_bow",
+                "touching_state_seal"
+              ]
+            },
+            "body_framing": {
+              "deny_pool": [
+                "collarbone_lips_focus",
+                "legs_heels_framing"
+              ],
+              "prefer_ids": [
+                "hands_nails_accessory_closeup"
+              ]
+            }
+          }
+        },
+        {
+          "id": "casual_princess_modern_off_duty",
+          "weight": 5,
+          "subtype": "modern_off_duty",
+          "roles": [
+            "사복 여친"
+          ],
+          "preset": "modern_casual_princess_portrait",
+          "set": {
+            "subject": "modern_vip_princess_role",
+            "costume_style": "elegant_modern_daywear",
+            "wearable_accessory": "subtle_diamond_tiara",
+            "prop": "royal_crest_vip_pass_prop",
+            "location": "palace_garden_modern",
+            "action": "poised_standing",
+            "subject_framing": "regal_three_quarter_framing",
+            "viewer_position": "viewer_as_courtier_below",
+            "composition": "centered_symmetric",
+            "mood": "quiet_nobility",
+            "safety_profile": "anti_selfie_royal_profile"
+          },
+          "soft_anchor_slots": [
+            "subject",
+            "costume_style",
+            "wearable_accessory",
+            "prop",
+            "location",
+            "action",
+            "subject_framing",
+            "viewer_position",
+            "composition",
+            "mood",
+            "safety_profile"
+          ],
+          "soft_min_anchors": 2,
+          "anchor_terms": {
+            "subject": [
+              "casual girlfriend princess reads as off-duty royal: modern daywear remains casual, but tiara, VIP crest, palace garden, and regal standing replace phone selfie sweetness"
+            ],
+            "costume_style": [
+              "casual girlfriend princess reads as off-duty royal: modern daywear remains casual, but tiara, VIP crest, palace garden, and regal standing replace phone selfie sweetness"
+            ],
+            "wearable_accessory": [
+              "casual girlfriend princess reads as off-duty royal: modern daywear remains casual, but tiara, VIP crest, palace garden, and regal standing replace phone selfie sweetness"
+            ],
+            "prop": [
+              "casual girlfriend princess reads as off-duty royal: modern daywear remains casual, but tiara, VIP crest, palace garden, and regal standing replace phone selfie sweetness"
+            ],
+            "location": [
+              "casual girlfriend princess reads as off-duty royal: modern daywear remains casual, but tiara, VIP crest, palace garden, and regal standing replace phone selfie sweetness"
+            ],
+            "action": [
+              "casual girlfriend princess reads as off-duty royal: modern daywear remains casual, but tiara, VIP crest, palace garden, and regal standing replace phone selfie sweetness"
+            ],
+            "subject_framing": [
+              "casual girlfriend princess reads as off-duty royal: modern daywear remains casual, but tiara, VIP crest, palace garden, and regal standing replace phone selfie sweetness"
+            ],
+            "viewer_position": [
+              "casual girlfriend princess reads as off-duty royal: modern daywear remains casual, but tiara, VIP crest, palace garden, and regal standing replace phone selfie sweetness"
+            ],
+            "composition": [
+              "casual girlfriend princess reads as off-duty royal: modern daywear remains casual, but tiara, VIP crest, palace garden, and regal standing replace phone selfie sweetness"
+            ],
+            "mood": [
+              "casual girlfriend princess reads as off-duty royal: modern daywear remains casual, but tiara, VIP crest, palace garden, and regal standing replace phone selfie sweetness"
+            ],
+            "safety_profile": [
+              "casual girlfriend princess reads as off-duty royal: modern daywear remains casual, but tiara, VIP crest, palace garden, and regal standing replace phone selfie sweetness"
+            ]
+          },
+          "anchor_pool": {
+            "subject": [
+              "modern_vip_princess_role"
+            ],
+            "costume_style": [
+              "elegant_modern_daywear"
+            ],
+            "wearable_accessory": [
+              "subtle_diamond_tiara"
+            ],
+            "prop": [
+              "royal_crest_vip_pass_prop"
+            ],
+            "location": [
+              "palace_garden_modern"
+            ],
+            "action": [
+              "poised_standing"
+            ],
+            "subject_framing": [
+              "regal_three_quarter_framing"
+            ],
+            "viewer_position": [
+              "viewer_as_courtier_below"
+            ],
+            "composition": [
+              "centered_symmetric"
+            ],
+            "mood": [
+              "quiet_nobility"
+            ],
+            "safety_profile": [
+              "anti_selfie_royal_profile"
+            ]
+          },
+          "primary_anchor_pool": {
+            "wearable_accessory": [
+              "subtle_diamond_tiara"
+            ],
+            "prop": [
+              "royal_crest_vip_pass_prop"
+            ],
+            "costume_style": [
+              "elegant_modern_daywear"
+            ]
+          },
+          "anchor_groups": {
+            "wearable_accessory": [
+              "mixin_primary"
+            ],
+            "prop": [
+              "mixin_primary"
+            ],
+            "costume_style": [
+              "mixin_primary"
+            ]
+          },
+          "additional": [
+            "casual girlfriend princess reads as off-duty royal: modern daywear remains casual, but tiara, VIP crest, palace garden, and regal standing replace phone selfie sweetness",
+            "royal/princess identity must read before ordinary occupation or costume play; keep regalia, lineage object, or palace framing near the face or hands"
+          ],
+          "intent_axis": [
+            "casual girlfriend princess reads as off-duty royal: modern daywear remains casual, but tiara, VIP crest, palace garden, and regal standing replace phone selfie sweetness"
+          ],
+          "safety_requirements": [
+            "adult fictional subject only; avoid selfie, coercive captivity, victim spectacle, sexualized monarchy, and pin-up framing"
+          ],
+          "safety_negative_floor": [
+            "mirror selfie",
+            "phone covering face",
+            "selfie arm",
+            "sexualized princess costume",
+            "pin-up royal costume"
+          ],
+          "free_slot_constraints": {
+            "subject_framing": {
+              "deny_pool": [
+                "full_body_framing",
+                "three_quarter_body_framing",
+                "knee_up_framing"
+              ],
+              "prefer_ids": [
+                "regal_three_quarter_framing",
+                "waist_up_regalia_visible",
+                "hands_and_regalia_visible",
+                "upper_body_framing"
+              ]
+            },
+            "composition": {
+              "deny_pool": [
+                "phone_arm_length_selfie",
+                "mirror_selfie_composition",
+                "crouching_mirror_full_body"
+              ],
+              "prefer_ids": [
+                "centered_symmetric",
+                "attendant_flanked_symmetry",
+                "seal_hand_close_portrait"
+              ]
+            },
+            "action": {
+              "deny_pool": [
+                "mirror_selfie",
+                "taking_selfie"
+              ],
+              "prefer_ids": [
+                "poised_standing",
+                "accepting_court_bow",
+                "touching_state_seal"
+              ]
+            },
+            "body_framing": {
+              "deny_pool": [
+                "collarbone_lips_focus",
+                "legs_heels_framing"
+              ],
+              "prefer_ids": [
+                "hands_nails_accessory_closeup"
+              ]
+            }
+          }
+        },
+        {
+          "id": "bunny_princess_gala_show",
+          "weight": 5,
+          "subtype": "gala_display",
+          "roles": [
+            "바니걸",
+            "댄서",
+            "가수",
+            "아이돌"
+          ],
+          "preset": "bunny_show_princess_portrait",
+          "set": {
+            "costume_style": "royal_bunny_gala_costume",
+            "wearable_accessory": [
+              "subtle_diamond_tiara",
+              "royal_crest_choker"
+            ],
+            "prop": "royal_crest_vip_pass_prop",
+            "location": "grand_ballroom_chandelier",
+            "composition": "centered_symmetric",
+            "subject_framing": "waist_up_regalia_visible",
+            "mood": "gilded_festivity",
+            "safety_profile": "anti_sexualized_royal_profile"
+          },
+          "soft_anchor_slots": [
+            "costume_style",
+            "wearable_accessory",
+            "prop",
+            "location",
+            "composition",
+            "subject_framing",
+            "mood",
+            "safety_profile"
+          ],
+          "soft_min_anchors": 2,
+          "anchor_terms": {
+            "costume_style": [
+              "bunny princess reads as royal gala performer: covered bunny stage costume is anchored by tiara, crest choker, chandelier ballroom, and waist-up regalia rather than pin-up body display"
+            ],
+            "wearable_accessory": [
+              "bunny princess reads as royal gala performer: covered bunny stage costume is anchored by tiara, crest choker, chandelier ballroom, and waist-up regalia rather than pin-up body display"
+            ],
+            "prop": [
+              "bunny princess reads as royal gala performer: covered bunny stage costume is anchored by tiara, crest choker, chandelier ballroom, and waist-up regalia rather than pin-up body display"
+            ],
+            "location": [
+              "bunny princess reads as royal gala performer: covered bunny stage costume is anchored by tiara, crest choker, chandelier ballroom, and waist-up regalia rather than pin-up body display"
+            ],
+            "composition": [
+              "bunny princess reads as royal gala performer: covered bunny stage costume is anchored by tiara, crest choker, chandelier ballroom, and waist-up regalia rather than pin-up body display"
+            ],
+            "subject_framing": [
+              "bunny princess reads as royal gala performer: covered bunny stage costume is anchored by tiara, crest choker, chandelier ballroom, and waist-up regalia rather than pin-up body display"
+            ],
+            "mood": [
+              "bunny princess reads as royal gala performer: covered bunny stage costume is anchored by tiara, crest choker, chandelier ballroom, and waist-up regalia rather than pin-up body display"
+            ],
+            "safety_profile": [
+              "bunny princess reads as royal gala performer: covered bunny stage costume is anchored by tiara, crest choker, chandelier ballroom, and waist-up regalia rather than pin-up body display"
+            ]
+          },
+          "anchor_pool": {
+            "costume_style": [
+              "royal_bunny_gala_costume"
+            ],
+            "wearable_accessory": [
+              "subtle_diamond_tiara",
+              "royal_crest_choker"
+            ],
+            "prop": [
+              "royal_crest_vip_pass_prop"
+            ],
+            "location": [
+              "grand_ballroom_chandelier"
+            ],
+            "composition": [
+              "centered_symmetric"
+            ],
+            "subject_framing": [
+              "waist_up_regalia_visible"
+            ],
+            "mood": [
+              "gilded_festivity"
+            ],
+            "safety_profile": [
+              "anti_sexualized_royal_profile"
+            ]
+          },
+          "primary_anchor_pool": {
+            "wearable_accessory": [
+              "subtle_diamond_tiara",
+              "royal_crest_choker"
+            ],
+            "prop": [
+              "royal_crest_vip_pass_prop"
+            ],
+            "costume_style": [
+              "royal_bunny_gala_costume"
+            ]
+          },
+          "anchor_groups": {
+            "wearable_accessory": [
+              "mixin_primary"
+            ],
+            "prop": [
+              "mixin_primary"
+            ],
+            "costume_style": [
+              "mixin_primary"
+            ]
+          },
+          "additional": [
+            "bunny princess reads as royal gala performer: covered bunny stage costume is anchored by tiara, crest choker, chandelier ballroom, and waist-up regalia rather than pin-up body display",
+            "royal/princess identity must read before ordinary occupation or costume play; keep regalia, lineage object, or palace framing near the face or hands"
+          ],
+          "intent_axis": [
+            "bunny princess reads as royal gala performer: covered bunny stage costume is anchored by tiara, crest choker, chandelier ballroom, and waist-up regalia rather than pin-up body display"
+          ],
+          "safety_requirements": [
+            "adult fictional subject only; avoid selfie, coercive captivity, victim spectacle, sexualized monarchy, and pin-up framing"
+          ],
+          "safety_negative_floor": [
+            "mirror selfie",
+            "phone covering face",
+            "selfie arm",
+            "sexualized princess costume",
+            "pin-up royal costume"
+          ],
+          "free_slot_constraints": {
+            "subject_framing": {
+              "deny_pool": [
+                "full_body_framing",
+                "three_quarter_body_framing",
+                "knee_up_framing"
+              ],
+              "prefer_ids": [
+                "regal_three_quarter_framing",
+                "waist_up_regalia_visible",
+                "hands_and_regalia_visible",
+                "upper_body_framing"
+              ]
+            },
+            "composition": {
+              "deny_pool": [
+                "phone_arm_length_selfie",
+                "mirror_selfie_composition",
+                "crouching_mirror_full_body"
+              ],
+              "prefer_ids": [
+                "centered_symmetric",
+                "attendant_flanked_symmetry",
+                "seal_hand_close_portrait"
+              ]
+            },
+            "action": {
+              "deny_pool": [
+                "mirror_selfie",
+                "taking_selfie"
+              ],
+              "prefer_ids": [
+                "poised_standing",
+                "accepting_court_bow",
+                "touching_state_seal"
+              ]
+            },
+            "body_framing": {
+              "deny_pool": [
+                "collarbone_lips_focus",
+                "legs_heels_framing"
+              ],
+              "prefer_ids": [
+                "hands_nails_accessory_closeup"
+              ]
+            }
+          }
+        },
+        {
+          "id": "incognito_princess_generic",
+          "weight": 3,
+          "subtype": "incognito",
+          "roles": [
+            "학생",
+            "비서",
+            "바리스타",
+            "기자",
+            "기록가",
+            "호텔리어",
+            "택시기사",
+            "우체부"
+          ],
+          "preset": "princess_incognito_disguise_portrait",
+          "set": {
+            "subject": "princess_in_disguise_role",
+            "costume_style": "commoner_disguise_over_silk",
+            "wearable_accessory": "hidden_royal_jade_pendant",
+            "prop": "succession_token_box_prop",
+            "action": "lowering_hood_revealing_ornament",
+            "narrative_phase": "mid_incognito",
+            "intent_state": "identity_about_to_reveal",
+            "mood": "hidden_lineage_tension",
+            "safety_profile": "anti_selfie_royal_profile"
+          },
+          "soft_anchor_slots": [
+            "subject",
+            "costume_style",
+            "wearable_accessory",
+            "prop",
+            "action",
+            "narrative_phase",
+            "intent_state",
+            "mood",
+            "safety_profile"
+          ],
+          "soft_min_anchors": 2,
+          "anchor_terms": {
+            "subject": [
+              "incognito princess reads through commoner disguise plus hidden jade pendant, succession token, and identity reveal rather than ordinary daily role styling"
+            ],
+            "costume_style": [
+              "incognito princess reads through commoner disguise plus hidden jade pendant, succession token, and identity reveal rather than ordinary daily role styling"
+            ],
+            "wearable_accessory": [
+              "incognito princess reads through commoner disguise plus hidden jade pendant, succession token, and identity reveal rather than ordinary daily role styling"
+            ],
+            "prop": [
+              "incognito princess reads through commoner disguise plus hidden jade pendant, succession token, and identity reveal rather than ordinary daily role styling"
+            ],
+            "action": [
+              "incognito princess reads through commoner disguise plus hidden jade pendant, succession token, and identity reveal rather than ordinary daily role styling"
+            ],
+            "narrative_phase": [
+              "incognito princess reads through commoner disguise plus hidden jade pendant, succession token, and identity reveal rather than ordinary daily role styling"
+            ],
+            "intent_state": [
+              "incognito princess reads through commoner disguise plus hidden jade pendant, succession token, and identity reveal rather than ordinary daily role styling"
+            ],
+            "mood": [
+              "incognito princess reads through commoner disguise plus hidden jade pendant, succession token, and identity reveal rather than ordinary daily role styling"
+            ],
+            "safety_profile": [
+              "incognito princess reads through commoner disguise plus hidden jade pendant, succession token, and identity reveal rather than ordinary daily role styling"
+            ]
+          },
+          "anchor_pool": {
+            "subject": [
+              "princess_in_disguise_role"
+            ],
+            "costume_style": [
+              "commoner_disguise_over_silk"
+            ],
+            "wearable_accessory": [
+              "hidden_royal_jade_pendant"
+            ],
+            "prop": [
+              "succession_token_box_prop"
+            ],
+            "action": [
+              "lowering_hood_revealing_ornament"
+            ],
+            "narrative_phase": [
+              "mid_incognito"
+            ],
+            "intent_state": [
+              "identity_about_to_reveal"
+            ],
+            "mood": [
+              "hidden_lineage_tension"
+            ],
+            "safety_profile": [
+              "anti_selfie_royal_profile"
+            ]
+          },
+          "primary_anchor_pool": {
+            "wearable_accessory": [
+              "hidden_royal_jade_pendant"
+            ],
+            "prop": [
+              "succession_token_box_prop"
+            ],
+            "costume_style": [
+              "commoner_disguise_over_silk"
+            ]
+          },
+          "anchor_groups": {
+            "wearable_accessory": [
+              "mixin_primary"
+            ],
+            "prop": [
+              "mixin_primary"
+            ],
+            "costume_style": [
+              "mixin_primary"
+            ]
+          },
+          "additional": [
+            "incognito princess reads through commoner disguise plus hidden jade pendant, succession token, and identity reveal rather than ordinary daily role styling",
+            "royal/princess identity must read before ordinary occupation or costume play; keep regalia, lineage object, or palace framing near the face or hands"
+          ],
+          "intent_axis": [
+            "incognito princess reads through commoner disguise plus hidden jade pendant, succession token, and identity reveal rather than ordinary daily role styling"
+          ],
+          "safety_requirements": [
+            "adult fictional subject only; avoid selfie, coercive captivity, victim spectacle, sexualized monarchy, and pin-up framing"
+          ],
+          "safety_negative_floor": [
+            "mirror selfie",
+            "phone covering face",
+            "selfie arm",
+            "sexualized princess costume",
+            "pin-up royal costume"
+          ],
+          "free_slot_constraints": {
+            "subject_framing": {
+              "deny_pool": [
+                "full_body_framing",
+                "three_quarter_body_framing",
+                "knee_up_framing"
+              ],
+              "prefer_ids": [
+                "regal_three_quarter_framing",
+                "waist_up_regalia_visible",
+                "hands_and_regalia_visible",
+                "upper_body_framing"
+              ]
+            },
+            "composition": {
+              "deny_pool": [
+                "phone_arm_length_selfie",
+                "mirror_selfie_composition",
+                "crouching_mirror_full_body"
+              ],
+              "prefer_ids": [
+                "centered_symmetric",
+                "attendant_flanked_symmetry",
+                "seal_hand_close_portrait"
+              ]
+            },
+            "action": {
+              "deny_pool": [
+                "mirror_selfie",
+                "taking_selfie"
+              ],
+              "prefer_ids": [
+                "poised_standing",
+                "accepting_court_bow",
+                "touching_state_seal"
+              ]
+            },
+            "body_framing": {
+              "deny_pool": [
+                "collarbone_lips_focus",
+                "legs_heels_framing"
+              ],
+              "prefer_ids": [
+                "hands_nails_accessory_closeup"
+              ]
+            }
+          }
+        }
+      ]
     }
   },
   "aliases": {
@@ -24606,7 +26189,13 @@
     "회계사": "회계사",
     "계약자": "계약자",
     "콜센터상담원": "콜센터 상담원",
-    "콜센터 상담사": "콜센터 상담원"
+    "콜센터 상담사": "콜센터 상담원",
+    "프린세스": "공주",
+    "공주님": "공주",
+    "왕녀": "공주",
+    "세자빈": "공주",
+    "왕세녀": "공주",
+    "황녀": "공주"
   },
   "mixin_diversity_policy": {
     "암살자": {
@@ -24924,6 +26513,28 @@
     "재회": {
       "min_distinct_aspects_per_batch": 2,
       "prefer_bundle_rotation": true
+    },
+    "공주": {
+      "aspect_axes": [
+        "lineage",
+        "ceremony",
+        "protected_confinement",
+        "power_without_agency",
+        "threshold_of_rule",
+        "incognito",
+        "fallen_exile",
+        "role_reversal",
+        "royal_guard",
+        "court_healing",
+        "modern_off_duty",
+        "gala_display"
+      ],
+      "min_distinct_aspects_per_batch": 3,
+      "max_same_prop_ratio": 0.45,
+      "max_same_composition_ratio": 0.45,
+      "max_same_location_ratio": 0.45,
+      "ledger_repeat_decay": 0.35,
+      "batch_repeat_decay": 0.45
     }
   },
   "concept_safety": {
@@ -24963,6 +26574,14 @@
       "caricature of living faith",
       "shock blasphemy",
       "sacrificial gore"
+    ],
+    "royal_anti_selfie": [
+      "mirror selfie",
+      "phone covering face",
+      "selfie arm",
+      "webcam angle",
+      "cosplay convention badge",
+      "thirst-trap royal styling"
     ]
   }
 }

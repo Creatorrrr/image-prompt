@@ -2045,6 +2045,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertEqual(concept["combined_forced_slots"]["hair_style"], ["low_bun_hair"])
         self.assertEqual(concept["combined_forced_slots"]["makeup_style"], ["natural_makeup"])
         self.assertEqual(concept["combined_forced_slots"]["costume_style"], ["royal_princess_hanbok"])
+        self.assertEqual(concept["combined_forced_slots"]["wearable_accessory"], ["phoenix_binyeo_ornament"])
         self.assertEqual(concept["combined_forced_slots"]["action"], ["standing_silence"])
         self.assertEqual(concept["combined_forced_slots"]["prop"], ["round_fan_prop"])
         self.assertEqual(concept["combined_forced_slots"]["composition"], ["centered_symmetric"])
@@ -2054,6 +2055,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertIn("appearance_type=classic_elegant", joined)
         self.assertIn("hair_style=low_bun_hair", joined)
         self.assertIn("makeup_style=natural_makeup", joined)
+        self.assertIn("wearable_accessory=phoenix_binyeo_ornament", joined)
         self.assertIn("action=standing_silence", joined)
         self.assertIn("prop=round_fan_prop", joined)
         self.assertIn("composition=centered_symmetric", joined)
@@ -2066,6 +2068,108 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertIn("ceremonial court dignity", joined)
         self.assertNotIn("princess styling with a delicate tiara", joined)
         self.assertNotIn("princess portrait with tiara", joined)
+
+    def test_princess_mixin_applies_to_role_combination_with_royal_anchors(self):
+        payload = self.run_wrapper_json(
+            "--concept",
+            "카리나 메이드 공주",
+            "--explain-concept",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "260609",
+            "--plain",
+            "--no-negative",
+        )
+
+        concept = payload["concepts"][0]
+        self.assertEqual(concept["name"], "카리나")
+        self.assertEqual(concept["role"], "메이드")
+        self.assertEqual(concept["applied_role"], "메이드")
+        self.assertEqual(concept["applied_mixins"], ["공주"])
+        self.assertEqual(len(concept["selected_bundles"]), 1)
+        self.assertEqual(concept["selected_bundles"][0]["bundle_id"], "maid_princess_role_reversal")
+        self.assertEqual(concept["selected_bundles"][0]["preset"], "princess_servant_role_reversal_portrait")
+        self.assertEqual(concept["combined_forced_slots"]["costume_style"], ["royal_apron_hanbok_hybrid"])
+        self.assertEqual(concept["combined_forced_slots"]["wearable_accessory"], ["subtle_diamond_tiara"])
+        self.assertEqual(concept["combined_forced_slots"]["prop"], ["royal_seal_okse_prop"])
+        self.assertEqual(concept["combined_forced_slots"]["action"], ["served_by_attendants"])
+        self.assertEqual(concept["combined_forced_slots"]["composition"], ["attendant_flanked_symmetry"])
+        self.assertEqual(concept["combined_forced_slots"]["viewer_position"], ["viewer_as_attendant"])
+        joined = " ".join(payload["forward_args"])
+        self.assertIn("royal/princess identity must read before ordinary occupation", joined)
+        self.assertIn("mirror selfie", joined)
+        self.assertIn("phone covering face", joined)
+        self.assertNotIn("costume_style=frill_apron_maid_costume", joined)
+
+    def test_princess_role_is_not_also_applied_as_mixin_without_another_role(self):
+        payload = self.run_wrapper_json(
+            "--concept",
+            "설윤 공주 흡혈귀",
+            "--explain-concept",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "77",
+            "--plain",
+            "--no-negative",
+        )
+
+        concept = payload["concepts"][0]
+        self.assertEqual(concept["name"], "설윤")
+        self.assertEqual(concept["role"], "공주")
+        self.assertEqual(concept["applied_role"], "공주")
+        self.assertEqual(concept["applied_mixins"], ["흡혈귀"])
+        self.assertEqual(concept["combined_forced_slots"]["costume_style"], ["royal_princess_hanbok"])
+        self.assertIn("wearable_accessory", concept["combined_forced_slots"])
+
+    def test_princess_expansion_assets_include_facets_bundles_and_aliases(self):
+        recipes = json.loads((SKILL_DIR / "assets" / "concept_recipes.json").read_text(encoding="utf-8"))
+        tags = json.loads(TAGS_PATH.read_text(encoding="utf-8"))
+
+        self.assertEqual(recipes["aliases"]["프린세스"], "공주")
+        self.assertEqual(recipes["aliases"]["왕녀"], "공주")
+        self.assertIn("공주", recipes["mixins"])
+        princess = recipes["mixins"]["공주"]
+        self.assertIn("anchor_families", princess)
+        self.assertEqual(princess["anchor_families"]["regalia"]["min_hits"], 1)
+        self.assertIn("costume_style", recipes["bundle_override_slots"])
+        self.assertIn("royal_anti_selfie", recipes["concept_safety"])
+
+        bundle_ids = {bundle["id"] for bundle in princess["bundles"]}
+        self.assertTrue(
+            {
+                "maid_princess_role_reversal",
+                "nurse_princess_court_healer",
+                "police_princess_royal_guard",
+                "miner_princess_subterranean_exile",
+                "casual_princess_modern_off_duty",
+                "bunny_princess_gala_show",
+                "incognito_princess_generic",
+            }.issubset(bundle_ids)
+        )
+        preset_ids = {preset["id"] for preset in tags["presets"]}
+        self.assertTrue(
+            {
+                "princess_lineage_succession_portrait",
+                "princess_protection_confinement_portrait",
+                "princess_incognito_disguise_portrait",
+                "princess_servant_role_reversal_portrait",
+                "subterranean_imprisoned_princess_portrait",
+                "modern_casual_princess_portrait",
+                "bunny_show_princess_portrait",
+            }.issubset(preset_ids)
+        )
+        wearable_ids = {entry["id"] for entry in tags["slots"]["wearable_accessory"]}
+        self.assertTrue(
+            {
+                "phoenix_binyeo_ornament",
+                "cheopji_hair_ornament",
+                "tteoljam_hair_ornament",
+                "subtle_diamond_tiara",
+                "signet_ring_concealed",
+            }.issubset(wearable_ids)
+        )
 
     def test_concept_recipe_expands_vampire_as_non_graphic_mixin(self):
         payload = self.run_wrapper_json(
