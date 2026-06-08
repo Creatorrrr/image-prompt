@@ -325,6 +325,19 @@ EXPANDED_SLOT_IDS = {
     "facial_hair",
     "surface_material",
     "aesthetic_trend",
+    "relational_action",
+    "prop_direction",
+    "partner_role",
+    "partner_framing",
+    "gaze_target",
+    "body_orientation",
+    "proxemics",
+    "contact_point",
+    "intent_state",
+    "emotional_contradiction",
+    "viewer_position",
+    "narrative_phase",
+    "safety_profile",
 }
 EXPANDED_PRESET_IDS = {
     "analog_personal_brand_portrait",
@@ -349,6 +362,25 @@ EXPANDED_PRESET_IDS = {
     "skincare_bathroom_countertop",
     "cinematic_product_reflection_stage",
     "creator_desk_setup_flatlay",
+    "tray_handoff_counter",
+    "clipboard_handover_corridor",
+    "umbrella_share_threshold",
+    "lunchbox_doorway_handoff",
+    "coat_collar_adjust_indoor",
+    "two_cups_one_table_silent",
+    "hand_to_hand_envelope_drop",
+    "field_blanket_aftercare",
+    "palace_token_offhand_offer",
+    "backstage_saved_ticket_note",
+    "clinic_scold_care_chart",
+    "counter_dessert_small_thunk",
+    "vehicle_passenger_silent_handoff",
+    "night_convenience_store_care_bag",
+    "used_bookshop_reserved_note",
+    "train_platform_saved_ticket_farewell",
+    "garage_returned_key_aftercare",
+    "winter_handwarmer_under_table",
+    "memory_object_ticket_cups_still",
 }
 EXPANDED_FAMILY_IDS = {
     "analog_film_family",
@@ -357,6 +389,16 @@ EXPANDED_FAMILY_IDS = {
     "creator_branding_family",
     "craft_workshop_family",
     "transport_night_family",
+    "relational_handoff_family",
+    "caretaking_gesture_family",
+    "domestic_intimacy_documentary_family",
+    "service_counter_exchange_family",
+    "clinical_handover_family",
+    "field_relief_family",
+    "paired_silence_family",
+    "textless_evidence_family",
+    "role_identity_action_family",
+    "viewer_role_pov_family",
 }
 EXPANDED_UNIQUE_TAG_IDS = {
     "kodak_portra_400_look",
@@ -377,6 +419,16 @@ EXPANDED_UNIQUE_TAG_IDS = {
     "glassblower_artisan",
     "laundromat_night",
     "disposable_camera",
+    "toward_partner_handoff",
+    "off_frame_viewer_recipient",
+    "partner_hand_visible_only",
+    "to_handoff_object",
+    "face_away_hands_toward_partner",
+    "mid_handoff",
+    "cold_face_warm_hands",
+    "viewer_as_recipient",
+    "warm_thermos_cup_prop",
+    "table_edge_handover",
 }
 SOCIAL_CHARACTER_SLOT_IDS = {"hair_color", "capture_context"}
 SOCIAL_CHARACTER_PRESET_IDS = {
@@ -3187,8 +3239,11 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertEqual(concept["combined_forced_slots"]["makeup_style"], ["natural_makeup"])
         self.assertIn(
             concept["combined_forced_slots"]["expression"][0],
-            {"shy_downward_glance", "looking_away_pensive", "surprised_open_eyes"},
+            {"shy_downward_glance", "looking_away_pensive", "surprised_open_eyes", "eyes_dart_to_partner_then_away"},
         )
+        self.assertIn("relational_action", concept["combined_forced_slots"])
+        self.assertIn("prop_direction", concept["combined_forced_slots"])
+        self.assertIn("partner_role", concept["combined_forced_slots"])
         self.assertEqual(len(concept["selected_bundles"]), 1)
         bundle = concept["selected_bundles"][0]
         self.assertEqual(bundle["mixin"], "츤데레")
@@ -3225,11 +3280,15 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertEqual(concept["applied_role"], "메이드")
         self.assertEqual(concept["applied_mixins"], ["츤데레"])
         self.assertEqual(concept["combined_forced_slots"]["costume_style"], ["frill_apron_maid_costume"])
-        self.assertEqual(concept["combined_forced_slots"]["expression"], ["playful_smirk"])
+        self.assertEqual(concept["combined_forced_slots"]["expression"], ["pursed_lips_tiny_huff"])
         self.assertEqual(concept["combined_forced_slots"]["makeup_style"], ["natural_makeup"])
         self.assertEqual(concept["combined_forced_slots"]["prop"], ["coffee_cup_prop"])
         self.assertEqual(concept["combined_forced_slots"]["action"], ["maid_cafe_tray_pose"])
-        self.assertEqual(concept["combined_forced_slots"]["composition"], ["over_the_shoulder_dialogue"])
+        self.assertEqual(concept["combined_forced_slots"]["composition"], ["table_edge_handover"])
+        self.assertEqual(concept["combined_forced_slots"]["relational_action"], ["setting_down_dessert_with_small_thunk"])
+        self.assertEqual(concept["combined_forced_slots"]["prop_direction"], ["set_down_between_two"])
+        self.assertEqual(concept["combined_forced_slots"]["partner_role"], ["off_frame_customer"])
+        self.assertEqual(concept["combined_forced_slots"]["intent_state"], ["just_after_handoff_pretending_indifference"])
         self.assertEqual(concept["selected_bundles"][0]["bundle_id"], "maid_extra_dessert_denial")
         self.assertEqual(concept["selected_bundles"][0]["subtype"], "verbal_denial")
         joined = " ".join(payload["forward_args"])
@@ -3260,11 +3319,13 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
 
         item = payload[0]
         self.assertEqual(item["choices"]["costume_style"]["id"], "royal_princess_hanbok")
-        self.assertEqual(item["choices"]["expression"]["id"], "calm_intense_gaze")
+        self.assertEqual(item["choices"]["expression"]["id"], "haughty_chin_soft_gaze")
         self.assertEqual(item["choices"]["makeup_style"]["id"], "natural_makeup")
-        self.assertEqual(item["choices"]["prop"]["id"], "phoenix_hairpin_prop")
-        self.assertEqual(item["choices"]["action"]["id"], "court_fan_pose")
-        self.assertEqual(item["choices"]["composition"]["id"], "medium_close")
+        self.assertEqual(item["choices"]["prop"]["id"], "sealed_court_token_prop")
+        self.assertEqual(item["choices"]["action"]["id"], "covering_face_with_fan_offering_token")
+        self.assertEqual(item["choices"]["relational_action"]["id"], "covering_face_with_fan_offering_token")
+        self.assertEqual(item["choices"]["prop_direction"]["id"], "presented_on_open_palm")
+        self.assertEqual(item["choices"]["composition"]["id"], "fan_barrier_token_offer")
         self.assertIn("Core concept lock: 설윤 공주 츤데레", item["prompt_en"])
         self.assertIn("denial-vs-evidence contradiction", item["prompt_en"])
         self.assertIn("faint ear-tip or nose-bridge warmth", item["prompt_en"])
@@ -3284,10 +3345,13 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 1202,
                 "maid_extra_dessert_denial",
                 {
-                    "expression": ["playful_smirk"],
+                    "expression": ["pursed_lips_tiny_huff"],
                     "prop": ["coffee_cup_prop"],
                     "action": ["maid_cafe_tray_pose"],
-                    "composition": ["over_the_shoulder_dialogue"],
+                    "relational_action": ["setting_down_dessert_with_small_thunk"],
+                    "prop_direction": ["set_down_between_two"],
+                    "partner_role": ["off_frame_customer"],
+                    "composition": ["table_edge_handover"],
                 },
             ),
             (
@@ -3295,8 +3359,12 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 1203,
                 "nurse_get_well_denial",
                 {
-                    "expression": ["calm_intense_gaze"],
-                    "prop": ["logo_board_prop"],
+                    "expression": ["scolding_mouth_soft_eyes"],
+                    "prop": ["clinic_handover_chart_prop"],
+                    "action": ["chart_tapping_scold"],
+                    "relational_action": ["chart_tapping_scold"],
+                    "prop_direction": ["toward_partner_handoff"],
+                    "partner_role": ["off_frame_patient"],
                     "location": ["hospital_waiting_room"],
                     "subject_framing": ["upper_body_framing"],
                 },
@@ -3306,8 +3374,12 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 1204,
                 "police_shared_umbrella_denial",
                 {
-                    "expression": ["skeptical_side_eye"],
-                    "prop": ["transparent_dome_umbrella"],
+                    "expression": ["annoyed_but_worried"],
+                    "prop": ["shared_umbrella_two_prop"],
+                    "action": ["holding_umbrella_over_partner"],
+                    "relational_action": ["holding_umbrella_over_partner"],
+                    "prop_direction": ["kept_as_soft_barrier"],
+                    "partner_role": ["off_frame_viewer_recipient"],
                     "location": ["rainy_bus_stop_shelter"],
                     "lighting": ["soft_window"],
                     "subject_framing": ["head_and_shoulders_crop"],
@@ -3318,8 +3390,12 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 1205,
                 "miner_shared_warmth_denial",
                 {
-                    "expression": ["looking_away_pensive"],
-                    "prop": ["picnic_blanket"],
+                    "expression": ["worry_masked_as_irritation"],
+                    "prop": ["warm_thermos_cup_prop"],
+                    "action": ["placing_hot_drink_without_eye_contact"],
+                    "relational_action": ["wrapping_blanket_around_partner"],
+                    "prop_direction": ["toward_partner_handoff"],
+                    "partner_role": ["off_frame_colleague"],
                     "lighting": ["single_flashlight_beam"],
                     "subject_framing": ["head_and_shoulders_crop"],
                 },
@@ -3329,9 +3405,13 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 1206,
                 "casual_lunchbox_denial",
                 {
-                    "expression": ["playful_smirk"],
+                    "expression": ["pursed_lips_tiny_huff"],
                     "wardrobe_style": ["faded_hoodie_sweatpants"],
-                    "prop": ["product_box_prop"],
+                    "prop": ["foil_wrapped_lunchbox_prop"],
+                    "action": ["sliding_lunchbox_across_table"],
+                    "relational_action": ["sliding_lunchbox_across_table"],
+                    "prop_direction": ["set_down_between_two"],
+                    "partner_role": ["off_frame_partner_romantic"],
                     "location": ["sunlit_kitchen"],
                     "lighting": ["soft_window"],
                     "light_intensity": ["high_key_bright"],
@@ -3343,9 +3423,12 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 1207,
                 "princess_kept_token_denial",
                 {
-                    "expression": ["calm_intense_gaze"],
-                    "prop": ["phoenix_hairpin_prop"],
-                    "action": ["court_fan_pose"],
+                    "expression": ["haughty_chin_soft_gaze"],
+                    "prop": ["sealed_court_token_prop"],
+                    "action": ["covering_face_with_fan_offering_token"],
+                    "relational_action": ["covering_face_with_fan_offering_token"],
+                    "prop_direction": ["presented_on_open_palm"],
+                    "partner_role": ["off_frame_partner_romantic"],
                     "color": ["hanbok_pastel_seasonal"],
                 },
             ),
@@ -3354,10 +3437,13 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 1208,
                 "bunny_saved_drink_denial",
                 {
-                    "expression": ["surprised_open_eyes"],
-                    "prop": ["paper_coffee_receipt"],
-                    "action": ["standing_backstage"],
-                    "composition": ["frame_within_frame"],
+                    "expression": ["caught_softening"],
+                    "prop": ["extra_ticket_stub_prop"],
+                    "action": ["offering_ticket_while_looking_away"],
+                    "relational_action": ["offering_ticket_while_looking_away"],
+                    "prop_direction": ["toward_partner_handoff"],
+                    "partner_role": ["off_frame_customer"],
+                    "composition": ["mirror_caught_kindness"],
                 },
             ),
         ]
@@ -3429,7 +3515,9 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
 
         concept = payload["concepts"][0]
         self.assertEqual(concept["selected_bundles"][0]["bundle_id"], "nurse_get_well_denial")
-        self.assertEqual(concept["combined_forced_slots"]["prop"], ["logo_board_prop"])
+        self.assertEqual(concept["combined_forced_slots"]["prop"], ["clinic_handover_chart_prop"])
+        self.assertEqual(concept["combined_forced_slots"]["relational_action"], ["chart_tapping_scold"])
+        self.assertEqual(concept["combined_forced_slots"]["partner_role"], ["off_frame_patient"])
         joined = " ".join(payload["forward_args"])
         self.assertIn("handover chart", joined)
         self.assertIn("care checklist", joined)
@@ -3456,7 +3544,9 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         concept = payload["concepts"][0]
         forced = concept["combined_forced_slots"]
         self.assertEqual(concept["selected_bundles"][0]["bundle_id"], "bunny_saved_drink_denial")
-        self.assertEqual(forced["prop"], ["paper_coffee_receipt"])
+        self.assertEqual(forced["prop"], ["extra_ticket_stub_prop"])
+        self.assertEqual(forced["relational_action"], ["offering_ticket_while_looking_away"])
+        self.assertEqual(forced["prop_direction"], ["toward_partner_handoff"])
         self.assertNotIn(forced["prop"][0], {"coffee_cup_prop", "takeaway_coffee_cup"})
         joined = " ".join(payload["forward_args"])
         self.assertIn("saved spare ticket", joined)
@@ -3517,7 +3607,9 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertEqual(concept["applied_mixins"], ["츤데레"])
         self.assertEqual(concept["selected_bundles"][0]["bundle_id"], "casual_lunchbox_denial")
         self.assertEqual(concept["combined_forced_slots"]["wardrobe_style"], ["faded_hoodie_sweatpants"])
-        self.assertEqual(concept["combined_forced_slots"]["prop"], ["product_box_prop"])
+        self.assertEqual(concept["combined_forced_slots"]["prop"], ["foil_wrapped_lunchbox_prop"])
+        self.assertEqual(concept["combined_forced_slots"]["relational_action"], ["sliding_lunchbox_across_table"])
+        self.assertEqual(concept["combined_forced_slots"]["prop_direction"], ["set_down_between_two"])
         self.assertEqual(concept["combined_forced_slots"]["location"], ["sunlit_kitchen"])
         self.assertEqual(concept["combined_forced_slots"]["mood"], ["playful_sweet_cosplay"])
         joined = " ".join(payload["forward_args"])
@@ -5866,6 +5958,45 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertTrue(EXPANDED_SLOT_IDS.issubset(slots))
         self.assertTrue(EXPANDED_PRESET_IDS.issubset(preset_ids))
         self.assertTrue(EXPANDED_FAMILY_IDS.issubset(family_ids))
+
+    def test_relationship_grammar_slots_render_in_prompt(self):
+        item = self.generate(
+            "tray_handoff_counter",
+            seed=612,
+            forced_choices={
+                "subject": ["young_barista"],
+                "action": ["setting_down_dessert_with_small_thunk"],
+                "relational_action": ["offering_prop_with_averted_gaze"],
+                "prop": ["warm_thermos_cup_prop"],
+                "prop_direction": ["toward_partner_handoff"],
+                "partner_role": ["off_frame_customer"],
+                "partner_framing": ["partner_hand_visible_only"],
+                "gaze_target": ["to_handoff_object"],
+                "body_orientation": ["face_away_hands_toward_partner"],
+                "proxemics": ["formal_counter_distance"],
+                "contact_point": ["knuckle_tap_on_tray"],
+                "intent_state": ["mid_handoff"],
+                "emotional_contradiction": ["cold_face_warm_hands"],
+                "viewer_position": ["viewer_as_customer"],
+                "composition": ["table_edge_handover"],
+                "safety_profile": ["civilian_service_profile"],
+            },
+            include_negative=False,
+        )
+
+        prompt = item["prompt_en"]
+        for phrase in (
+            "offering a prop while averting gaze",
+            "directed toward the partner for handoff",
+            "an off-frame customer",
+            "partner hand visible only",
+            "face turned away while hands move toward the partner",
+            "mid-handoff moment",
+            "cold face with warm hands",
+            "viewer as customer POV",
+            "civilian service anti body-display safety profile",
+        ):
+            self.assertIn(phrase, prompt)
 
     def test_social_character_slots_presets_and_tags_are_registered(self):
         slots = self.data["slots"]

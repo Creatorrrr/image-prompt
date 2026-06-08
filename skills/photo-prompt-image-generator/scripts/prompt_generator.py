@@ -6804,7 +6804,19 @@ def build_prompt_sections(
     sections["subject"] = [
         fields.get("subject_with_mods") or values.get("subject", "")
     ]
-    sections["action"] = selected(("action", "prop"))
+    sections["action"] = selected(
+        (
+            "action",
+            "relational_action",
+            "prop",
+            "prop_direction",
+            "partner_role",
+            "contact_point",
+            "intent_state",
+            "emotional_contradiction",
+            "narrative_phase",
+        )
+    )
     sections["scene"] = [
         fields.get("location_phrase") or values.get("location", ""),
         values.get("time_of_day", ""),
@@ -6816,8 +6828,13 @@ def build_prompt_sections(
         (
             "camera_type",
             "capture_context",
+            "viewer_position",
             "camera_direction",
             "composition",
+            "partner_framing",
+            "gaze_target",
+            "body_orientation",
+            "proxemics",
             "subject_framing",
             "body_framing",
             "lens",
@@ -6852,7 +6869,7 @@ def build_prompt_sections(
             render_trend_layer_detail(trend_layer, lang),
         ]
     )
-    sections["constraints"] = inline_constraints(lang)
+    sections["constraints"] = dedupe_parts(inline_constraints(lang) + selected(("safety_profile",)))
     return {section: dedupe_parts(parts) for section, parts in sections.items()}
 
 
