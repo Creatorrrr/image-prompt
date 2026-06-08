@@ -1010,6 +1010,7 @@ def resolve_concepts(
                     {
                         "mixin": mixin,
                         "bundle_id": str(selected_bundle.get("id") or ""),
+                        "aspect": str(selected_bundle.get("aspect") or ""),
                         "preset": bundle_preset,
                         "set": bundle_set,
                         "weight": selected_bundle.get("weight", 1),

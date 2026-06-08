@@ -12,7 +12,11 @@
     "mood",
     "prop",
     "subject_framing",
-    "wardrobe_style"
+    "wardrobe_style",
+    "camera_direction",
+    "capture_context",
+    "lens",
+    "wearable_accessory"
   ],
   "soft_anchor_defaults": {
     "anchor_slots": [
@@ -6876,20 +6880,64 @@
         "action": [
           "standing in silence",
           "doorway",
-          "concealed"
+          "concealed",
+          "reflection watch",
+          "crowd gap glance",
+          "exit route",
+          "stairwell pause",
+          "wristwatch timing",
+          "earpiece adjustment",
+          "phone-call cover",
+          "sealed orders",
+          "security camera avoidance"
         ],
         "prop": [
           "calling card",
           "sealed envelope",
           "gloves",
           "holster",
-          "pickaxe"
+          "pickaxe",
+          "keycard",
+          "staff lanyard",
+          "earpiece",
+          "pocket watch",
+          "newspaper cover",
+          "pressed flower bookmark",
+          "chess piece",
+          "origami token",
+          "train ticket",
+          "sealed black envelope",
+          "compact mirror",
+          "chalk mark",
+          "colored thread",
+          "serving tray",
+          "florist delivery box",
+          "instrument case"
         ],
         "location": [
           "corridor",
           "museum",
           "mine",
-          "threshold"
+          "threshold",
+          "service stairwell",
+          "freight elevator",
+          "hotel back corridor",
+          "train station concourse",
+          "airport arrivals barrier",
+          "night market",
+          "gallery after hours",
+          "opera box",
+          "palace side gate"
+        ],
+        "composition": [
+          "mirror layers",
+          "shopwindow reflection",
+          "side mirror",
+          "crowd occlusion",
+          "motion-blur crowd",
+          "exit sign frame",
+          "hidden prop crop",
+          "hands detail"
         ]
       },
       "bundles": [
@@ -6916,7 +6964,8 @@
             "covert operative hiding in plain sight inside a maid cafe cover identity",
             "cold stillness under CCTV framing with a single calling card",
             "reflection surveillance and an implied off-frame target inside an ordinary cafe"
-          ]
+          ],
+          "aspect": "cover_identity"
         },
         {
           "id": "hospital_corridor_infiltrator",
@@ -6941,7 +6990,8 @@
             "clinical hospital corridor cover identity with emotional control",
             "doorframe shadow surveillance portrait with black gloves",
             "just-before-approach hospital infiltration with a concealed prop cue"
-          ]
+          ],
+          "aspect": "service_access"
         },
         {
           "id": "undercover_parking_identity",
@@ -6967,7 +7017,8 @@
             "undercover parking garage surveillance portrait with hidden purpose",
             "headlights CCTV frame and calling card mission trace",
             "concealed holster and exit-route check before approaching an implied target"
-          ]
+          ],
+          "aspect": "surveillance"
         },
         {
           "id": "mine_shift_cover_identity",
@@ -6992,7 +7043,8 @@
             "miner disguise hiding a covert observer in a mine tunnel",
             "single flashlight silhouette and cold controlled stillness",
             "mine tunnel cover identity with implied target presence and route awareness"
-          ]
+          ],
+          "aspect": "threshold_stalker"
         },
         {
           "id": "palace_court_shadow",
@@ -7017,7 +7069,8 @@
             "courtly cover identity with sealed mission trace",
             "candlelit palace half-shadow and unreadable gaze",
             "royal disguise with a concealed ornament cue and implied target beyond the frame"
-          ]
+          ],
+          "aspect": "period_intrigue"
         },
         {
           "id": "hotel_lounge_shadow_agent",
@@ -7042,7 +7095,8 @@
             "hotel lounge cover identity as a shadow agent silhouette",
             "rim-lit anonymous stillness with black gloves",
             "crowd-blending hotel cover identity with approach and exit-route tension"
-          ]
+          ],
+          "aspect": "cover_identity"
         },
         {
           "id": "everyday_surveillance_tail",
@@ -7068,6 +7122,475 @@
             "everyday casual cover identity in an airport surveillance tail",
             "paparazzi flash camera prop and phone timing as mission trace",
             "ordinary public-space disguise with reflection surveillance and crowd blending"
+          ],
+          "aspect": "transit_observation"
+        },
+        {
+          "id": "gallery_reflection_watch",
+          "weight": 1,
+          "roles": [
+            "사복 여친",
+            "공주"
+          ],
+          "aspect": "reflection_surveillance",
+          "set": {
+            "prop": "folded_newspaper_cover_prop",
+            "action": "window_reflection_observe",
+            "location": "art_gallery_white_hall",
+            "lighting": "gallery_track_spotlight",
+            "mood": "poised_anonymity",
+            "composition": "shopwindow_reflection_frame",
+            "camera_direction": "reflected_in_mirror_direction",
+            "capture_context": "surveillance_reflection_capture",
+            "lens": "85mm"
+          },
+          "additional": [
+            "the elegant outfit reads as a gallery-visitor cover identity, calm and unremarkable among the artworks",
+            "the figure watches an implied off-frame person only through a glass case or window reflection, never directly, with no weapon shown",
+            "the wrongness is a too-steady gaze and hands that never relax — surveillance through reflection rather than confrontation",
+            "non-graphic staged character photo with no depicted injury, blood, victim, or violence"
+          ],
+          "intent_axis": [
+            "gallery cover identity using reflection surveillance",
+            "poised anonymity among artworks with an implied off-frame target",
+            "non-graphic tension carried by reflected gaze, not a drawn weapon"
+          ]
+        },
+        {
+          "id": "rooftop_long_lens_overwatch",
+          "weight": 1,
+          "roles": [
+            "경찰",
+            "광부"
+          ],
+          "aspect": "distance_overwatch",
+          "set": {
+            "prop": "discreet_earpiece_comms_prop",
+            "action": "rooftop_distance_watch",
+            "location": "rooftop_helipad_edge",
+            "lighting": "blue_hour",
+            "mood": "patient_predatory_calm",
+            "composition": "compressed_tele_layers",
+            "camera_direction": "long_lens_compressed_direction",
+            "capture_context": "long_lens_observation_capture",
+            "lens": "tele_200mm"
+          },
+          "additional": [
+            "the work outfit functions as a rooftop-maintenance or official cover identity while the posture is too still and deliberate for ordinary labor",
+            "tension comes from a distant compressed-perspective overwatch of an implied person far below, shown with no weapon in use",
+            "an earpiece and patient stillness imply timing and coordination rather than action",
+            "non-graphic staged character photo with no depicted injury, blood, victim, or violence"
+          ],
+          "intent_axis": [
+            "rooftop overwatch cover identity at a distance",
+            "compressed long-lens framing of an implied far target",
+            "patient coordination cue via earpiece, non-graphic"
+          ]
+        },
+        {
+          "id": "night_market_crowd_blend",
+          "weight": 1,
+          "roles": [
+            "사복 여친",
+            "바니걸"
+          ],
+          "aspect": "crowd_blending",
+          "set": {
+            "prop": "florist_delivery_box_cover",
+            "action": "crowd_gap_target_glance",
+            "location": "crowded_night_market",
+            "lighting": "market_string_lights",
+            "mood": "surveillance_unease",
+            "composition": "one_still_in_motion_blur_frame",
+            "camera_direction": "through_crowd_gap_direction",
+            "capture_context": "hidden_in_crowd_candid_capture",
+            "lens": "50mm"
+          },
+          "additional": [
+            "the casual or costume outfit blends into a busy night-market crowd as a delivery or vendor cover identity",
+            "the subject is the one still point while the crowd blurs in motion, glancing at a single implied off-frame person through a gap",
+            "no weapon is shown; the delivery box and steady stillness imply purpose hidden inside an ordinary errand",
+            "non-graphic staged character photo with no depicted injury, blood, victim, or violence"
+          ],
+          "intent_axis": [
+            "crowd-blending cover identity in a night market",
+            "one still figure among motion-blurred crowd with an implied target",
+            "errand cover hiding mission purpose, non-graphic"
+          ]
+        },
+        {
+          "id": "service_stairwell_egress",
+          "weight": 1,
+          "roles": [
+            "간호사",
+            "메이드"
+          ],
+          "aspect": "exit_route",
+          "set": {
+            "prop": "hotel_keycard_prop",
+            "action": "exit_route_glance_back",
+            "location": "service_stairwell",
+            "lighting": "exit_sign_green_glow",
+            "mood": "countdown_stillness",
+            "composition": "exit_sign_glow_frame",
+            "camera_direction": "elevator_corner_camera_direction",
+            "capture_context": "cover_role_documentary_capture",
+            "lens": "35mm"
+          },
+          "additional": [
+            "the service uniform is a staff cover identity; the figure pauses on a back stairwell checking an exit route",
+            "green exit-sign glow and a glance back imply egress planning and timing, not a confrontation",
+            "the scene shows aftermath-free quiet — no injury, no drawn weapon, only route awareness",
+            "non-graphic staged character photo with no depicted injury, blood, victim, or violence"
+          ],
+          "intent_axis": [
+            "staff cover identity planning an exit route",
+            "egress timing under exit-sign glow",
+            "non-graphic post-cue stillness with no aftermath shown"
+          ]
+        },
+        {
+          "id": "gala_ballroom_cover_crack",
+          "weight": 1,
+          "roles": [
+            "공주",
+            "바니걸"
+          ],
+          "aspect": "cover_crack",
+          "set": {
+            "prop": "single_unmatched_glove_prop",
+            "action": "feigning_phone_call_cover",
+            "location": "ballroom_gala_floor",
+            "lighting": "chandelier_warm_pools",
+            "mood": "courtly_conspiracy",
+            "composition": "chandelier_high_watch_frame",
+            "camera_direction": "over_railing_down_direction",
+            "wearable_accessory": "silk_opera_gloves",
+            "lens": "85mm"
+          },
+          "additional": [
+            "the gala styling is a high-society cover identity, glamorous and convincing at first glance",
+            "a single small wrongness — one unmatched glove, a too-controlled smile, eyes that scan exits — cracks the disguise",
+            "the threat stays implied; no weapon is drawn, no target shown, the tension lives in the cover-identity crack alone",
+            "non-graphic staged character photo with no depicted injury, blood, victim, or violence"
+          ],
+          "intent_axis": [
+            "high-society gala cover identity",
+            "disguise cracked by one quiet wrongness",
+            "implied threat with no weapon or victim shown"
+          ]
+        },
+        {
+          "id": "taxi_sidemirror_tail",
+          "weight": 1,
+          "roles": [
+            "사복 여친",
+            "경찰"
+          ],
+          "aspect": "implied_target_tail",
+          "set": {
+            "prop": "antique_pocket_watch_prop",
+            "action": "sunglasses_reflection_watch",
+            "location": "taxi_rear_seat_interior",
+            "lighting": "venetian_blind_slats",
+            "mood": "reportage_tense_noir",
+            "composition": "sidemirror_observation_frame",
+            "camera_direction": "sidemirror_reflection_direction",
+            "capture_context": "rearview_or_sidemirror_capture",
+            "lens": "50mm"
+          },
+          "additional": [
+            "the everyday outfit is a passenger cover identity inside a night taxi",
+            "the subject tracks an implied vehicle or person ahead only via the side mirror and sunglasses reflection",
+            "a pocket watch marks timing; no weapon, target, or pursuit action is shown — only a tail in progress",
+            "non-graphic staged character photo with no depicted injury, blood, victim, or violence"
+          ],
+          "intent_axis": [
+            "passenger cover identity tailing an implied target",
+            "side-mirror and reflection surveillance from a taxi",
+            "timing-aware tail with no weapon or confrontation"
+          ]
+        },
+        {
+          "id": "library_silent_signal_drop",
+          "weight": 1,
+          "roles": [
+            "사복 여친",
+            "공주"
+          ],
+          "aspect": "signal_drop",
+          "set": {
+            "prop": "pressed_flower_bookmark_token",
+            "action": "pocketing_note_quietly",
+            "location": "library_reading_room",
+            "lighting": "soft_window",
+            "mood": "patient_predatory_calm",
+            "composition": "through_doorway_deep_frame",
+            "camera_direction": "from_table_edge_hidden_camera",
+            "capture_context": "cover_role_documentary_capture",
+            "lens": "85mm"
+          },
+          "additional": [
+            "the quiet outfit reads as an ordinary library visitor cover identity",
+            "a pressed-flower bookmark left between pages works as a silent signal or dead-drop trace, not a violent sign",
+            "calm surroundings make the controlled stillness the only tell; no weapon, injury, or aggression appears",
+            "non-graphic staged character photo with no depicted injury, blood, victim, or violence"
+          ],
+          "intent_axis": [
+            "library visitor cover identity with a silent signal drop",
+            "dead-drop trace via an innocuous token",
+            "calm setting amplifying controlled stillness, non-graphic"
+          ]
+        },
+        {
+          "id": "freight_elevator_access",
+          "weight": 1,
+          "roles": [
+            "메이드",
+            "간호사",
+            "경찰"
+          ],
+          "aspect": "service_access",
+          "set": {
+            "prop": "staff_lanyard_badge_prop",
+            "action": "pausing_before_threshold",
+            "location": "freight_elevator_interior",
+            "lighting": "elevator_panel_glow",
+            "mood": "near_discovery_tension",
+            "composition": "elevator_gap_frame",
+            "camera_direction": "elevator_corner_camera_direction",
+            "capture_context": "service_staff_id_photo",
+            "lens": "35mm"
+          },
+          "additional": [
+            "the uniform or badge reads as a temporary access identity for a staff-only elevator",
+            "the elevator gap and panel glow make the moment feel like the instant before approach or departure",
+            "all danger is implied by access, timing, and silence; no weapon is used or displayed aggressively",
+            "non-graphic staged character photo with no depicted injury, blood, victim, or violence"
+          ],
+          "intent_axis": [
+            "staff-only freight elevator access cover",
+            "threshold tension just before approach or departure",
+            "non-graphic access cue rather than combat"
+          ]
+        },
+        {
+          "id": "banquet_kitchen_service_cover",
+          "weight": 1,
+          "roles": [
+            "메이드",
+            "바니걸"
+          ],
+          "aspect": "service_cover",
+          "set": {
+            "prop": "waiter_serving_tray_cover",
+            "action": "checking_service_door",
+            "location": "banquet_kitchen_pass",
+            "lighting": "service_corridor_fluorescent",
+            "mood": "professional_detachment",
+            "composition": "service_window_frame",
+            "camera_direction": "from_inside_service_window",
+            "capture_context": "cover_role_documentary_capture",
+            "lens": "50mm"
+          },
+          "additional": [
+            "the outfit is reinterpreted as service cover inside a banquet back-of-house route",
+            "a tray and service window make the scene look ordinary until the eyes check a restricted door",
+            "the weapon cue, if any, remains only a subtle role-appropriate partial glint or hidden edge, never drawn or aimed",
+            "non-graphic staged character photo with no depicted injury, blood, victim, or violence"
+          ],
+          "intent_axis": [
+            "banquet service route as cover identity",
+            "restricted service door check under ordinary work props",
+            "professional calm hiding a covert task"
+          ]
+        },
+        {
+          "id": "opera_box_observer",
+          "weight": 1,
+          "roles": [
+            "공주",
+            "바니걸",
+            "사복 여친"
+          ],
+          "aspect": "period_intrigue",
+          "set": {
+            "prop": "antique_pocket_watch_prop",
+            "action": "watching_from_balcony_shadow",
+            "location": "opera_house_box_seat",
+            "lighting": "opera_stage_spill_light",
+            "mood": "courtly_conspiracy",
+            "composition": "over_railing_observation_frame",
+            "camera_direction": "over_railing_down_direction",
+            "wearable_accessory": "silk_opera_gloves",
+            "lens": "135mm"
+          },
+          "additional": [
+            "the elegant styling functions as high-society cover in an opera box rather than a stage pose",
+            "the subject watches the hall from shadow, timed by a pocket watch, with an implied off-frame person below",
+            "the scene remains a quiet observation portrait with no injury, no drawn weapon, and no visible target confrontation",
+            "non-graphic staged character photo with no depicted injury, blood, victim, or violence"
+          ],
+          "intent_axis": [
+            "opera box high-society cover identity",
+            "balcony observation and timing cue",
+            "period intrigue without graphic violence"
+          ]
+        },
+        {
+          "id": "airport_arrivals_tail",
+          "weight": 1,
+          "roles": [
+            "사복 여친",
+            "경찰"
+          ],
+          "aspect": "transit_observation",
+          "set": {
+            "prop": "train_ticket_stub_prop",
+            "action": "blending_into_crowd",
+            "location": "airport_arrivals_barrier",
+            "lighting": "hard_flash",
+            "mood": "public_place_paranoia",
+            "composition": "foreground_crowd_occlusion",
+            "camera_direction": "through_crowd_gap_direction",
+            "capture_context": "hidden_in_crowd_candid_capture",
+            "lens": "85mm"
+          },
+          "additional": [
+            "the everyday outfit disappears into airport arrivals as a traveler or waiting-person cover identity",
+            "foreground crowd occlusion and a ticket stub create the feeling of a tail hidden in public routine",
+            "no target is shown clearly; only gaze direction, crowd layering, and route timing imply the assignment",
+            "non-graphic staged character photo with no depicted injury, blood, victim, or violence"
+          ],
+          "intent_axis": [
+            "airport arrivals crowd-blend tail",
+            "public routine hiding surveillance",
+            "implied assignment through route and gaze cues"
+          ]
+        },
+        {
+          "id": "palace_side_gate_messenger",
+          "weight": 1,
+          "roles": [
+            "공주"
+          ],
+          "aspect": "period_court_intrigue",
+          "set": {
+            "prop": "sealed_black_envelope_prop",
+            "action": "reading_sealed_orders",
+            "location": "palace_side_gate",
+            "lighting": "candlelight",
+            "mood": "courtly_conspiracy",
+            "composition": "through_doorway_deep_frame",
+            "camera_direction": "eye_level_three_quarter",
+            "wearable_accessory": "phoenix_hairpin_glint",
+            "lens": "85mm"
+          },
+          "additional": [
+            "the hanbok and court ornament remain dominant; the assassin layer reads as palace-messenger intrigue rather than modern combat",
+            "a phoenix hairpin glint and sealed orders imply hidden authority and danger without showing a modern weapon",
+            "the side gate and doorway depth suggest access, secrecy, and a controlled exit path",
+            "non-graphic staged character photo with no depicted injury, blood, victim, or violence"
+          ],
+          "intent_axis": [
+            "Joseon palace side-gate messenger intrigue",
+            "hairpin glint and sealed orders as subtle assassin cues",
+            "historical cover identity without modern firearms or violence"
+          ]
+        },
+        {
+          "id": "parking_kiosk_exit_check",
+          "weight": 1,
+          "roles": [
+            "경찰",
+            "사복 여친"
+          ],
+          "aspect": "exit_route",
+          "set": {
+            "prop": "hotel_keycard_prop",
+            "action": "exit_route_glance_back",
+            "location": "parking_payment_kiosk",
+            "lighting": "passing_headlight_sweep",
+            "mood": "vanishing_route_anxiety",
+            "composition": "target_implied_off_frame_blur",
+            "camera_direction": "long_lens_compressed_direction",
+            "capture_context": "long_lens_observation_capture",
+            "lens": "135mm"
+          },
+          "additional": [
+            "a payment kiosk and low-held card make the scene read like an ordinary exit routine",
+            "a headlight sweep, glance back, and blurred off-frame presence suggest the escape route is being checked",
+            "the weapon cue stays subtle and never drawn, aimed, used, bloody, or shown with a victim",
+            "non-graphic staged character photo with no depicted injury, blood, victim, or violence"
+          ],
+          "intent_axis": [
+            "parking kiosk exit-route check",
+            "ordinary payment routine hiding a covert departure",
+            "headlight sweep and off-frame blur imply tension"
+          ]
+        },
+        {
+          "id": "museum_after_hours_relic",
+          "weight": 1,
+          "roles": [
+            "공주",
+            "사복 여친",
+            "메이드"
+          ],
+          "aspect": "reflection_surveillance",
+          "set": {
+            "prop": "single_chess_piece_token",
+            "action": "mirror_reflection_watch",
+            "location": "museum_gallery_after_hours",
+            "lighting": "gallery_track_spotlight",
+            "mood": "poised_anonymity",
+            "composition": "mirror_layered_watch_frame",
+            "camera_direction": "reflected_in_mirror_direction",
+            "capture_context": "surveillance_reflection_capture",
+            "lens": "85mm"
+          },
+          "additional": [
+            "after-hours museum glass and a single chess-piece token make the scene feel strategic without becoming violent",
+            "the role outfit reads as docent, visitor, or service cover depending on the concept, with the real focus on reflected surveillance",
+            "no weapon is drawn; any threat is carried by reflection, timing, and the small symbolic token",
+            "non-graphic staged character photo with no depicted injury, blood, victim, or violence"
+          ],
+          "intent_axis": [
+            "after-hours museum reflection surveillance",
+            "symbolic chess-piece token as strategic calling sign",
+            "cover identity adapted to museum quiet"
+          ]
+        },
+        {
+          "id": "safehouse_departure_noir",
+          "weight": 1,
+          "roles": [
+            "사복 여친",
+            "간호사",
+            "광부"
+          ],
+          "aspect": "pre_departure",
+          "set": {
+            "prop": "sealed_black_envelope_prop",
+            "action": "checking_wristwatch_timing",
+            "location": "service_stairwell",
+            "lighting": "single_match_or_lighter_glow",
+            "mood": "countdown_stillness",
+            "composition": "hands_only_detail_frame",
+            "camera_direction": "from_table_edge_hidden_camera",
+            "capture_context": "cover_role_documentary_capture",
+            "lens": "50mm"
+          },
+          "additional": [
+            "the scene catches the quiet pre-departure moment: orders sealed, timing checked, identity controlled",
+            "the role outfit remains readable but feels repurposed as a cover for leaving unnoticed",
+            "danger is implied by stillness and timing; no target, injury, or weapon use is depicted",
+            "non-graphic staged character photo with no depicted injury, blood, victim, or violence"
+          ],
+          "intent_axis": [
+            "pre-departure safehouse-like stillness",
+            "sealed orders and watch timing as mission cues",
+            "role outfit repurposed as cover identity"
           ]
         }
       ],
@@ -7092,7 +7615,9 @@
       "intent_axis": [
         "covert assassin hiding in plain sight with a calm unreadable gaze",
         "stillness before action under surveillance-noir framing, non-graphic",
-        "cover identity crack, implied target, concealed prop, reflection surveillance, and crowd blending"
+        "cover identity crack, implied target, concealed prop, reflection surveillance, and crowd blending",
+        "assassin concept can read through reflection surveillance, distance overwatch, crowd blending, exit-route checking, cover identity cracks, dead-drop signals, service access, and period intrigue rather than only visible weapons",
+        "non-graphic covert portrait language: implied target, off-frame gaze, hidden route, reflected watcher, staff-only access, or symbolic token with no injury or victim"
       ],
       "likeness_mode": "inspired",
       "conditional_additional": [
@@ -7101,6 +7626,43 @@
           "text": "role outfit is a cover identity/disguise for the assassin persona",
           "requires_bundle": true
         }
+      ],
+      "bundle_override_slots": [
+        "action",
+        "color",
+        "composition",
+        "expression",
+        "light_direction",
+        "light_intensity",
+        "light_type",
+        "lighting",
+        "location",
+        "mood",
+        "prop",
+        "subject_framing",
+        "wardrobe_style",
+        "camera_direction",
+        "capture_context",
+        "lens",
+        "wearable_accessory"
+      ],
+      "aspect_axes": [
+        "cover_identity",
+        "reflection_surveillance",
+        "distance_overwatch",
+        "crowd_blending",
+        "exit_route",
+        "cover_crack",
+        "implied_target_tail",
+        "signal_drop",
+        "service_access",
+        "service_cover",
+        "period_intrigue",
+        "period_court_intrigue",
+        "transit_observation",
+        "pre_departure",
+        "threshold_stalker",
+        "surveillance"
       ]
     },
     "로봇": {
@@ -7676,5 +8238,33 @@
     "자동인형": "로봇",
     "인조인간": "로봇",
     "휴머노이드": "로봇"
+  },
+  "mixin_diversity_policy": {
+    "암살자": {
+      "aspect_axes": [
+        "cover_identity",
+        "reflection_surveillance",
+        "distance_overwatch",
+        "crowd_blending",
+        "exit_route",
+        "cover_crack",
+        "implied_target_tail",
+        "signal_drop",
+        "service_access",
+        "service_cover",
+        "period_intrigue",
+        "period_court_intrigue",
+        "transit_observation",
+        "pre_departure",
+        "threshold_stalker",
+        "surveillance"
+      ],
+      "min_distinct_aspects_per_batch": 5,
+      "max_same_prop_ratio": 0.34,
+      "max_same_composition_ratio": 0.34,
+      "max_same_location_ratio": 0.4,
+      "ledger_repeat_decay": 0.5,
+      "batch_repeat_decay": 0.45
+    }
   }
 }

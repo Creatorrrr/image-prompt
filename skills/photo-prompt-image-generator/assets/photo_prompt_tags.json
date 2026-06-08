@@ -179,6 +179,66 @@
       "ko": "로봇과 인공 존재 계열",
       "en": "robot and artificial being family",
       "embedding_text": "robots, androids, cyborgs, soft robots, swarm machines, biohybrid systems, automata, charging bays, diagnostics labs, and artificial life photography"
+    },
+    {
+      "id": "covert_surveillance_family",
+      "ko": "은밀 감시 시네마틱 계열",
+      "en": "covert surveillance cinematic family",
+      "embedding_text": "covert observation photography through reflections, long lens distance, crowd gaps, mirrors, glass and rearview surfaces, tense noir stillness without violence"
+    },
+    {
+      "id": "reflection_surface_portrait_family",
+      "ko": "반사면 인물 계열",
+      "en": "reflection surface portrait family",
+      "embedding_text": "portraits seen through mirrors, shop windows, puddles, polished marble, sunglasses and phone screens, layered double-image framing"
+    },
+    {
+      "id": "crowd_blend_candid_family",
+      "ko": "군중 위장 캔디드 계열",
+      "en": "crowd blend candid family",
+      "embedding_text": "anonymous figure blending into crowds, markets, platforms, lobbies, one still person among motion blur, documentary tension"
+    },
+    {
+      "id": "noir_threshold_family",
+      "ko": "느와르 경계·문턱 계열",
+      "en": "noir threshold family",
+      "embedding_text": "thresholds, corridors, elevators, stairwells and doorways with low-key light, approach and exit-route tension, cover identity"
+    },
+    {
+      "id": "transit_observation_family",
+      "ko": "교통·이동 관찰 계열",
+      "en": "transit observation family",
+      "embedding_text": "stations, terminals, taxis, trains and parking decks with surveillance framing, timing and route awareness, neutral travel cover"
+    },
+    {
+      "id": "cover_identity_fracture_family",
+      "ko": "위장 신분 균열 계열",
+      "en": "cover identity fracture family",
+      "embedding_text": "ordinary job costume or lifestyle portrait disrupted by tiny unsettling details, mismatched accessories, route awareness, concealed purpose and disguise cracks"
+    },
+    {
+      "id": "macro_covert_detail_family",
+      "ko": "은닉 단서 매크로 디테일 계열",
+      "en": "macro covert detail family",
+      "embedding_text": "close detail photography of hands, sleeve edges, waistline, earpiece, keycard, hair ornament glint and other subtle covert clues"
+    },
+    {
+      "id": "period_intrigue_family",
+      "ko": "시대극 음모 계열",
+      "en": "period intrigue family",
+      "embedding_text": "candlelit palace, opera box, tea house, sealed letters, courtly ornaments and high society intrigue without graphic violence"
+    },
+    {
+      "id": "service_access_family",
+      "ko": "서비스 동선 침투 계열",
+      "en": "service access infiltration family",
+      "embedding_text": "staff-only corridors, freight elevators, banquet kitchens, laundry rooms and back-office access routes used as cover identities"
+    },
+    {
+      "id": "dead_drop_signal_family",
+      "ko": "데드드롭 신호 계열",
+      "en": "dead drop signal family",
+      "embedding_text": "quiet nonviolent signal objects such as bookmarks, chess pieces, tickets, napkins, chalk marks and sealed envelopes in narrative portrait scenes"
     }
   ],
   "recipes": [
@@ -6185,7 +6245,10 @@
           "ids": [
             "recorded_by_surveillance",
             "standing_silence",
-            "walking_crosswalk"
+            "walking_crosswalk",
+            "turning_away_from_security_camera",
+            "checking_service_door",
+            "blending_into_crowd"
           ]
         },
         "location": {
@@ -6193,7 +6256,11 @@
             "underground_parking_lot",
             "subway_car_inside",
             "convenience_store_night",
-            "subway_platform"
+            "subway_platform",
+            "service_stairwell",
+            "freight_elevator_interior",
+            "parking_payment_kiosk",
+            "subway_transfer_passage"
           ]
         },
         "lighting": {
@@ -6217,7 +6284,10 @@
         "composition": {
           "ids": [
             "cctv_corner_frame",
-            "wide_establishing"
+            "wide_establishing",
+            "elevator_gap_frame",
+            "exit_sign_glow_frame",
+            "foreground_crowd_occlusion"
           ]
         },
         "lens": {
@@ -6440,7 +6510,10 @@
           "ids": [
             "recorded_by_surveillance",
             "walking_crosswalk",
-            "standing_silence"
+            "standing_silence",
+            "exit_route_glance_back",
+            "checking_service_door",
+            "pausing_before_threshold"
           ]
         },
         "location": {
@@ -6455,7 +6528,9 @@
             "hard_flash",
             "fluorescent",
             "low_key",
-            "headlights"
+            "headlights",
+            "service_corridor_fluorescent",
+            "passing_headlight_sweep"
           ]
         },
         "camera_type": {
@@ -6472,7 +6547,9 @@
         "composition": {
           "ids": [
             "bodycam_chest_height",
-            "handheld_candid"
+            "handheld_candid",
+            "through_doorway_deep_frame",
+            "service_window_frame"
           ]
         },
         "lens": {
@@ -10089,6 +10166,14 @@
         {
           "slot": "subject_framing",
           "probability": 0.36
+        },
+        {
+          "slot": "wearable_accessory",
+          "probability": 0.45
+        },
+        {
+          "slot": "capture_context",
+          "probability": 0.35
         }
       ],
       "filters": {
@@ -10147,7 +10232,12 @@
             "studying_arms_museum_display",
             "holding_real_weapon_reference_pose",
             "carrying_holstered_real_sidearm",
-            "carrying_sheathed_real_blade"
+            "carrying_sheathed_real_blade",
+            "mirror_reflection_watch",
+            "window_reflection_observe",
+            "checking_wristwatch_timing",
+            "adjusting_earpiece_discreet",
+            "pocketing_note_quietly"
           ]
         },
         "prop": {
@@ -10180,7 +10270,12 @@
             "real_dagger",
             "real_survival_knife",
             "real_katana",
-            "real_longsword"
+            "real_longsword",
+            "hotel_keycard_prop",
+            "staff_lanyard_badge_prop",
+            "discreet_earpiece_comms_prop",
+            "compact_mirror_surveillance_prop",
+            "sealed_black_envelope_prop"
           ]
         },
         "location": {
@@ -10233,7 +10328,11 @@
             "extreme_close",
             "low_angle",
             "centered_symmetry",
-            "frame_within_frame"
+            "frame_within_frame",
+            "mirror_layered_watch_frame",
+            "waist_level_hidden_prop_crop",
+            "hands_only_detail_frame",
+            "half_face_shadow_split"
           ]
         },
         "lens": {
@@ -12851,7 +12950,10 @@
             "medium_close",
             "centered_symmetric",
             "rule_of_thirds",
-            "low_angle"
+            "low_angle",
+            "waist_level_hidden_prop_crop",
+            "hands_only_detail_frame",
+            "target_implied_off_frame_blur"
           ]
         },
         "lens": {
@@ -12902,7 +13004,10 @@
             "studying_arms_museum_display",
             "holding_real_weapon_reference_pose",
             "carrying_holstered_real_sidearm",
-            "carrying_sheathed_real_blade"
+            "carrying_sheathed_real_blade",
+            "exit_route_glance_back",
+            "checking_wristwatch_timing",
+            "closing_compact_mirror"
           ]
         },
         "prop": {
@@ -12946,7 +13051,10 @@
             "real_longbow",
             "real_crossbow",
             "real_hand_grenade",
-            "real_round_shield"
+            "real_round_shield",
+            "hotel_keycard_prop",
+            "compact_mirror_surveillance_prop",
+            "train_ticket_stub_prop"
           ]
         },
         "location": {
@@ -22088,7 +22196,9 @@
         },
         "composition": {
           "ids": [
-            "wide_establishing"
+            "wide_establishing",
+            "foreground_crowd_occlusion",
+            "compressed_tele_layers"
           ]
         },
         "lens": {
@@ -22154,7 +22264,9 @@
         },
         "mood": {
           "ids": [
-            "reportage_tense_noir"
+            "reportage_tense_noir",
+            "surveillance_unease",
+            "public_place_paranoia"
           ]
         },
         "texture": {
@@ -31213,6 +31325,1336 @@
           ]
         }
       }
+    },
+    {
+      "id": "reflection_surveillance_portrait",
+      "ko": "반사 감시 인물",
+      "en": "reflection surveillance portrait",
+      "weight": 0.75,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.55
+        },
+        {
+          "slot": "world",
+          "probability": 0.65
+        },
+        {
+          "slot": "color",
+          "probability": 0.55
+        },
+        {
+          "slot": "capture_context",
+          "probability": 0.7
+        },
+        {
+          "slot": "wearable_accessory",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "film_still",
+            "concept_photo",
+            "documentary_photo",
+            "urban_candid_photo"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "reportage_noir",
+            "street_photography",
+            "cinematic"
+          ]
+        },
+        "subject": {
+          "tags_any": [
+            "human"
+          ]
+        },
+        "action": {
+          "ids": [
+            "mirror_reflection_watch",
+            "window_reflection_observe",
+            "sunglasses_reflection_watch",
+            "closing_compact_mirror",
+            "standing_silence"
+          ]
+        },
+        "location": {
+          "ids": [
+            "art_gallery_white_hall",
+            "museum_gallery_after_hours",
+            "taxi_rear_seat_interior",
+            "hotel_lobby",
+            "rainy_neon_alley",
+            "crowded_night_market"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "low_key",
+            "chiaroscuro",
+            "gallery_track_spotlight",
+            "neon",
+            "security_monitor_glow"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "reflected_in_mirror_direction",
+            "sidemirror_reflection_direction",
+            "through_crowd_gap_direction",
+            "eye_level_three_quarter"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "mirror_layered_watch_frame",
+            "shopwindow_reflection_frame",
+            "puddle_reflection_split_frame",
+            "sidemirror_observation_frame",
+            "reflection"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "50mm",
+            "85mm",
+            "135mm",
+            "tele_200mm"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "surveillance_unease",
+            "poised_anonymity",
+            "reportage_tense_noir",
+            "patient_predatory_calm"
+          ]
+        },
+        "capture_context": {
+          "ids": [
+            "surveillance_reflection_capture",
+            "rearview_or_sidemirror_capture"
+          ]
+        },
+        "world": {
+          "ids": [
+            "surveillance_noir",
+            "cover_identity_thriller_world"
+          ]
+        }
+      }
+    },
+    {
+      "id": "long_lens_distance_watch",
+      "ko": "원거리 망원 감시",
+      "en": "long lens distance watch",
+      "weight": 0.7,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.45
+        },
+        {
+          "slot": "capture_context",
+          "probability": 0.7
+        },
+        {
+          "slot": "world",
+          "probability": 0.55
+        },
+        {
+          "slot": "weather",
+          "probability": 0.35
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "documentary_photo",
+            "film_still",
+            "urban_candid_photo"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "reportage_noir",
+            "street_photography",
+            "cinematic",
+            "documentary"
+          ]
+        },
+        "subject": {
+          "tags_any": [
+            "human"
+          ]
+        },
+        "action": {
+          "ids": [
+            "rooftop_distance_watch",
+            "over_railing_observe",
+            "watching_from_balcony_shadow",
+            "leaning_pillar_watch",
+            "standing_silence"
+          ]
+        },
+        "location": {
+          "ids": [
+            "rooftop_helipad_edge",
+            "fire_escape_landing",
+            "parking_payment_kiosk",
+            "train_station_concourse",
+            "underground_parking_garage"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "blue_hour",
+            "low_key",
+            "passing_headlight_sweep",
+            "headlights",
+            "overcast"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "long_lens_compressed_direction",
+            "over_railing_down_direction",
+            "high_observer_angle"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "compressed_tele_layers",
+            "over_railing_observation_frame",
+            "foreground_crowd_occlusion",
+            "isolated_subject"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "135mm",
+            "tele_200mm",
+            "tele_400mm"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "patient_predatory_calm",
+            "professional_detachment",
+            "reportage_tense_noir",
+            "surveillance_unease"
+          ]
+        },
+        "capture_context": {
+          "ids": [
+            "long_lens_observation_capture"
+          ]
+        },
+        "world": {
+          "ids": [
+            "surveillance_noir",
+            "cold_war_espionage_realism"
+          ]
+        }
+      }
+    },
+    {
+      "id": "crowd_blend_stillpoint",
+      "ko": "군중 속 정지점 위장",
+      "en": "crowd blend stillpoint",
+      "weight": 0.72,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "motion",
+          "probability": 0.7
+        },
+        {
+          "slot": "prop",
+          "probability": 0.45
+        },
+        {
+          "slot": "capture_context",
+          "probability": 0.65
+        },
+        {
+          "slot": "world",
+          "probability": 0.55
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "street_snapshot",
+            "urban_candid_photo",
+            "documentary_photo",
+            "film_still"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "street_photography",
+            "documentary",
+            "reportage_noir",
+            "lifestyle"
+          ]
+        },
+        "subject": {
+          "tags_any": [
+            "human"
+          ]
+        },
+        "action": {
+          "ids": [
+            "crowd_gap_target_glance",
+            "blending_into_crowd",
+            "feigning_phone_call_cover",
+            "checking_phone",
+            "leaning_pillar_watch"
+          ]
+        },
+        "location": {
+          "ids": [
+            "crowded_night_market",
+            "train_station_concourse",
+            "subway_transfer_passage",
+            "airport_arrivals_barrier",
+            "subway_platform"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "market_string_lights",
+            "fluorescent",
+            "neon",
+            "hard_flash",
+            "overcast"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "through_crowd_gap_direction",
+            "eye_level_three_quarter",
+            "long_lens_compressed_direction"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "one_still_in_motion_blur_frame",
+            "foreground_crowd_occlusion",
+            "crowded_layers",
+            "target_implied_off_frame_blur"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "135mm"
+          ]
+        },
+        "motion": {
+          "ids": [
+            "motion_blur",
+            "panning_blur",
+            "crowd_motion_blur_around_still_subject"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "public_place_paranoia",
+            "surveillance_unease",
+            "poised_anonymity",
+            "reportage_tense_noir"
+          ]
+        },
+        "capture_context": {
+          "ids": [
+            "hidden_in_crowd_candid_capture",
+            "accidental_phone_snapshot"
+          ]
+        },
+        "world": {
+          "ids": [
+            "public_transit_tail_world",
+            "ordinary_lifestyle_crack_world"
+          ]
+        }
+      }
+    },
+    {
+      "id": "exit_route_threshold",
+      "ko": "이탈 동선 문턱 긴장",
+      "en": "exit route threshold",
+      "weight": 0.7,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.5
+        },
+        {
+          "slot": "world",
+          "probability": 0.55
+        },
+        {
+          "slot": "wearable_accessory",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "film_still",
+            "concept_photo",
+            "documentary_photo"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "cinematic",
+            "reportage_noir",
+            "portrait"
+          ]
+        },
+        "subject": {
+          "tags_any": [
+            "human"
+          ]
+        },
+        "action": {
+          "ids": [
+            "exit_route_glance_back",
+            "stairwell_pause_listen",
+            "pausing_before_threshold",
+            "checking_service_door",
+            "turning_away_from_security_camera"
+          ]
+        },
+        "location": {
+          "ids": [
+            "service_stairwell",
+            "freight_elevator_interior",
+            "fire_escape_landing",
+            "hotel_back_corridor",
+            "parking_payment_kiosk"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "exit_sign_green_glow",
+            "elevator_panel_glow",
+            "low_key",
+            "single_flashlight_beam",
+            "service_corridor_fluorescent"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "elevator_corner_camera_direction",
+            "from_inside_service_window",
+            "eye_level_three_quarter",
+            "low_ground_angle"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "exit_sign_glow_frame",
+            "through_doorway_deep_frame",
+            "elevator_gap_frame",
+            "frame_within_frame",
+            "silhouette"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "wide_24mm"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "countdown_stillness",
+            "near_discovery_tension",
+            "vanishing_route_anxiety",
+            "reportage_tense_noir"
+          ]
+        },
+        "world": {
+          "ids": [
+            "service_worker_access_world",
+            "cover_identity_thriller_world"
+          ]
+        }
+      }
+    },
+    {
+      "id": "cover_identity_crack_closeup",
+      "ko": "위장 신분 균열 클로즈업",
+      "en": "cover identity crack closeup",
+      "weight": 0.68,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "prop",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "wearable_accessory",
+          "probability": 0.75
+        },
+        {
+          "slot": "world",
+          "probability": 0.55
+        },
+        {
+          "slot": "subject_framing",
+          "probability": 0.65
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "concept_photo",
+            "fashion_editorial",
+            "film_still",
+            "magazine_feature"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "fashion",
+            "cinematic",
+            "reportage_noir"
+          ]
+        },
+        "subject": {
+          "tags_any": [
+            "human"
+          ]
+        },
+        "action": {
+          "ids": [
+            "adjusting_earpiece_discreet",
+            "checking_wristwatch_timing",
+            "passing_keycard_low",
+            "closing_compact_mirror",
+            "pocketing_note_quietly"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "staff_lanyard_badge_prop",
+            "hotel_keycard_prop",
+            "discreet_earpiece_comms_prop",
+            "antique_pocket_watch_prop",
+            "compact_mirror_surveillance_prop"
+          ]
+        },
+        "location": {
+          "ids": [
+            "hotel_back_corridor",
+            "banquet_kitchen_pass",
+            "art_gallery_white_hall",
+            "ballroom_gala_floor",
+            "hospital_corridor"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "low_key",
+            "service_corridor_fluorescent",
+            "gallery_track_spotlight",
+            "chandelier_warm_pools",
+            "venetian_blind_slats"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "eye_level_three_quarter",
+            "from_table_edge_hidden_camera",
+            "reflected_in_mirror_direction"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "waist_level_hidden_prop_crop",
+            "hands_only_detail_frame",
+            "half_face_shadow_split",
+            "medium_close",
+            "frame_within_frame"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "50mm",
+            "85mm",
+            "100mm_macro"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "cover_identity_fracture",
+            "professional_detachment",
+            "poised_anonymity",
+            "clinical_detachment"
+          ]
+        },
+        "wearable_accessory": {
+          "ids": [
+            "discreet_earpiece",
+            "staff_lanyard_id",
+            "plain_wristwatch_timing",
+            "tinted_sunglasses_indoor",
+            "phoenix_hairpin_glint"
+          ]
+        },
+        "world": {
+          "ids": [
+            "ordinary_lifestyle_crack_world",
+            "cover_identity_thriller_world"
+          ]
+        }
+      }
+    },
+    {
+      "id": "service_corridor_infiltration",
+      "ko": "서비스 복도 침투",
+      "en": "service corridor infiltration",
+      "weight": 0.68,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "prop",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "capture_context",
+          "probability": 0.6
+        },
+        {
+          "slot": "world",
+          "probability": 0.55
+        },
+        {
+          "slot": "wearable_accessory",
+          "probability": 0.5
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "film_still",
+            "documentary_photo",
+            "concept_photo"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "cinematic",
+            "reportage_noir",
+            "documentary",
+            "portrait"
+          ]
+        },
+        "subject": {
+          "tags_any": [
+            "human"
+          ]
+        },
+        "action": {
+          "ids": [
+            "checking_service_door",
+            "pausing_before_threshold",
+            "passing_keycard_low",
+            "stairwell_pause_listen",
+            "turning_away_from_security_camera"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "hotel_keycard_prop",
+            "staff_lanyard_badge_prop",
+            "waiter_serving_tray_cover",
+            "florist_delivery_box_cover"
+          ]
+        },
+        "location": {
+          "ids": [
+            "hotel_back_corridor",
+            "hotel_laundry_service_room",
+            "banquet_kitchen_pass",
+            "freight_elevator_interior",
+            "service_stairwell"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "service_corridor_fluorescent",
+            "elevator_panel_glow",
+            "exit_sign_green_glow",
+            "low_key"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "from_inside_service_window",
+            "elevator_corner_camera_direction",
+            "eye_level_three_quarter"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "service_window_frame",
+            "elevator_gap_frame",
+            "through_doorway_deep_frame",
+            "frame_within_frame"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "wide_24mm"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "near_discovery_tension",
+            "countdown_stillness",
+            "cover_identity_fracture",
+            "professional_detachment"
+          ]
+        },
+        "capture_context": {
+          "ids": [
+            "cover_role_documentary_capture",
+            "service_staff_id_photo"
+          ]
+        },
+        "world": {
+          "ids": [
+            "service_worker_access_world",
+            "cover_identity_thriller_world"
+          ]
+        }
+      }
+    },
+    {
+      "id": "transit_tail_candid",
+      "ko": "교통 미행 캔디드",
+      "en": "transit tail candid",
+      "weight": 0.66,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.55
+        },
+        {
+          "slot": "capture_context",
+          "probability": 0.7
+        },
+        {
+          "slot": "world",
+          "probability": 0.6
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "urban_candid_photo",
+            "documentary_photo",
+            "street_snapshot",
+            "film_still"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "street_photography",
+            "documentary",
+            "reportage_noir",
+            "lifestyle"
+          ]
+        },
+        "subject": {
+          "tags_any": [
+            "human"
+          ]
+        },
+        "action": {
+          "ids": [
+            "crowd_gap_target_glance",
+            "checking_wristwatch_timing",
+            "feigning_phone_call_cover",
+            "sunglasses_reflection_watch",
+            "exit_route_glance_back"
+          ]
+        },
+        "location": {
+          "ids": [
+            "train_station_concourse",
+            "subway_transfer_passage",
+            "airport_arrivals_barrier",
+            "taxi_rear_seat_interior",
+            "parking_payment_kiosk"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "fluorescent",
+            "hard_flash",
+            "passing_headlight_sweep",
+            "elevator_panel_glow",
+            "overcast"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "through_crowd_gap_direction",
+            "sidemirror_reflection_direction",
+            "long_lens_compressed_direction"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "foreground_crowd_occlusion",
+            "sidemirror_observation_frame",
+            "compressed_tele_layers",
+            "target_implied_off_frame_blur"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "135mm"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "surveillance_unease",
+            "public_place_paranoia",
+            "professional_detachment",
+            "vanishing_route_anxiety"
+          ]
+        },
+        "capture_context": {
+          "ids": [
+            "hidden_in_crowd_candid_capture",
+            "rearview_or_sidemirror_capture",
+            "long_lens_observation_capture"
+          ]
+        },
+        "world": {
+          "ids": [
+            "public_transit_tail_world",
+            "surveillance_noir"
+          ]
+        }
+      }
+    },
+    {
+      "id": "dead_drop_signal_portrait",
+      "ko": "데드드롭 신호 포트레이트",
+      "en": "dead drop signal portrait",
+      "weight": 0.62,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "prop",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "world",
+          "probability": 0.65
+        },
+        {
+          "slot": "focus",
+          "probability": 0.5
+        },
+        {
+          "slot": "color",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "concept_photo",
+            "film_still",
+            "documentary_photo",
+            "magazine_feature"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "cinematic",
+            "reportage_noir",
+            "still_life"
+          ]
+        },
+        "subject": {
+          "tags_any": [
+            "human"
+          ]
+        },
+        "action": {
+          "ids": [
+            "pocketing_note_quietly",
+            "reading_sealed_orders",
+            "checking_wristwatch_timing",
+            "standing_silence"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "pressed_flower_bookmark_token",
+            "single_chess_piece_token",
+            "folded_origami_token",
+            "lipstick_marked_napkin_token",
+            "sealed_black_envelope_prop",
+            "chalk_mark_signal_prop",
+            "colored_thread_marker_prop"
+          ]
+        },
+        "location": {
+          "ids": [
+            "library_reading_room",
+            "tea_house_private_room",
+            "ballroom_gala_floor",
+            "art_gallery_white_hall",
+            "palace_side_gate"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "single_match_or_lighter_glow",
+            "chandelier_warm_pools",
+            "gallery_track_spotlight",
+            "candlelight"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "from_table_edge_hidden_camera",
+            "eye_level_three_quarter",
+            "reflected_in_mirror_direction"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "hands_only_detail_frame",
+            "through_doorway_deep_frame",
+            "frame_within_frame",
+            "medium_close"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "50mm",
+            "85mm",
+            "100mm_macro"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "patient_predatory_calm",
+            "countdown_stillness",
+            "courtly_conspiracy",
+            "poised_anonymity"
+          ]
+        },
+        "world": {
+          "ids": [
+            "dead_drop_signal_world",
+            "period_court_intrigue",
+            "surveillance_noir"
+          ]
+        }
+      }
+    },
+    {
+      "id": "period_intrigue_observer",
+      "ko": "시대극 음모 관찰자",
+      "en": "period intrigue observer",
+      "weight": 0.62,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "prop",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "wearable_accessory",
+          "probability": 0.65
+        },
+        {
+          "slot": "world",
+          "probability": 0.7
+        },
+        {
+          "slot": "wardrobe_style",
+          "probability": 0.35
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "film_still",
+            "concept_photo",
+            "fashion_editorial",
+            "magazine_feature"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "cinematic",
+            "period_drama",
+            "portrait",
+            "fantasy"
+          ]
+        },
+        "subject": {
+          "tags_any": [
+            "human"
+          ]
+        },
+        "action": {
+          "ids": [
+            "reading_sealed_orders",
+            "watching_from_balcony_shadow",
+            "pocketing_note_quietly",
+            "standing_silence"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "sealed_black_envelope_prop",
+            "antique_pocket_watch_prop",
+            "pressed_flower_bookmark_token",
+            "phoenix_hairpin_prop",
+            "sealed_mission_envelope_prop"
+          ]
+        },
+        "location": {
+          "ids": [
+            "opera_house_box_seat",
+            "ballroom_gala_floor",
+            "palace_side_gate",
+            "joseon_palace_interior",
+            "tea_house_private_room"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "chandelier_warm_pools",
+            "opera_stage_spill_light",
+            "candlelight",
+            "single_match_or_lighter_glow"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "over_railing_down_direction",
+            "reflected_in_mirror_direction",
+            "eye_level_three_quarter"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "chandelier_high_watch_frame",
+            "through_doorway_deep_frame",
+            "half_face_shadow_split",
+            "frame_within_frame"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "50mm",
+            "85mm",
+            "135mm"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "courtly_conspiracy",
+            "patient_predatory_calm",
+            "poised_anonymity",
+            "occult_noir"
+          ]
+        },
+        "wearable_accessory": {
+          "ids": [
+            "silk_opera_gloves",
+            "phoenix_hairpin_glint",
+            "plain_wristwatch_timing"
+          ]
+        },
+        "world": {
+          "ids": [
+            "period_court_intrigue",
+            "high_society_gala_world"
+          ]
+        }
+      }
+    },
+    {
+      "id": "macro_hidden_cue_detail",
+      "ko": "은닉 단서 매크로 디테일",
+      "en": "macro hidden cue detail",
+      "weight": 0.62,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "prop",
+        "location",
+        "lighting",
+        "camera_direction",
+        "composition",
+        "lens",
+        "focus",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "wearable_accessory",
+          "probability": 0.8
+        },
+        {
+          "slot": "world",
+          "probability": 0.45
+        },
+        {
+          "slot": "texture",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "macro_photo",
+            "concept_photo",
+            "magazine_feature",
+            "fashion_editorial"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "still_life",
+            "fashion",
+            "cinematic"
+          ]
+        },
+        "subject": {
+          "tags_any": [
+            "human"
+          ]
+        },
+        "action": {
+          "ids": [
+            "checking_wristwatch_timing",
+            "adjusting_earpiece_discreet",
+            "passing_keycard_low",
+            "closing_compact_mirror",
+            "pocketing_note_quietly"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "hotel_keycard_prop",
+            "staff_lanyard_badge_prop",
+            "discreet_earpiece_comms_prop",
+            "compact_mirror_surveillance_prop",
+            "antique_pocket_watch_prop"
+          ]
+        },
+        "location": {
+          "tags_any": [
+            "interior",
+            "commercial",
+            "service"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "gallery_track_spotlight",
+            "elevator_panel_glow",
+            "service_corridor_fluorescent",
+            "low_key",
+            "single_match_or_lighter_glow"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "from_table_edge_hidden_camera",
+            "reflected_in_mirror_direction",
+            "eye_level_front"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "hands_only_detail_frame",
+            "waist_level_hidden_prop_crop",
+            "half_face_shadow_split",
+            "medium_close"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "100mm_macro",
+            "85mm",
+            "50mm"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "shallow_depth",
+            "eye_focus",
+            "face_detection_focus"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "cover_identity_fracture",
+            "professional_detachment",
+            "clinical_detachment",
+            "countdown_stillness"
+          ]
+        },
+        "wearable_accessory": {
+          "ids": [
+            "discreet_earpiece",
+            "staff_lanyard_id",
+            "plain_wristwatch_timing",
+            "phoenix_hairpin_glint"
+          ]
+        }
+      }
     }
   ],
   "templates": {
@@ -31835,6 +33277,17 @@
           "artificial person"
         ],
         "embedding_text": "photoreal portrait of a synthetic being, android, cyborg, or artificial person with visible robotic evidence"
+      },
+      {
+        "id": "macro_photo",
+        "ko": "매크로 사진",
+        "en": "macro photograph",
+        "weight": 0.9,
+        "tags": [
+          "photo",
+          "macro",
+          "detail"
+        ]
       }
     ],
     "genre": [
@@ -32394,6 +33847,49 @@
           "artificial life"
         ],
         "embedding_text": "artificial life photography with biohybrid robots, synthetic organisms, soft machines, and living-machine ambiguity"
+      },
+      {
+        "id": "street_photography",
+        "ko": "스트리트 포토그래피",
+        "en": "street photography",
+        "weight": 1.0,
+        "tags": [
+          "street",
+          "documentary",
+          "realistic"
+        ]
+      },
+      {
+        "id": "cinematic",
+        "ko": "시네마틱",
+        "en": "cinematic",
+        "weight": 1.0,
+        "tags": [
+          "cinematic",
+          "dramatic",
+          "photo"
+        ]
+      },
+      {
+        "id": "period_drama",
+        "ko": "시대극 드라마",
+        "en": "period drama",
+        "weight": 0.9,
+        "tags": [
+          "period",
+          "cinematic",
+          "human"
+        ]
+      },
+      {
+        "id": "fantasy",
+        "ko": "판타지",
+        "en": "fantasy",
+        "weight": 0.85,
+        "tags": [
+          "fantasy",
+          "stylized"
+        ]
       }
     ],
     "subject": [
@@ -41457,6 +42953,306 @@
             "human_looking_controlled"
           ]
         }
+      },
+      {
+        "id": "mirror_reflection_watch",
+        "ko": "거울 반사로 대상을 살피는",
+        "en": "watching an implied target through a mirror reflection",
+        "weight": 1.0,
+        "tags": [
+          "human",
+          "tense",
+          "surveillance",
+          "reflection"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "window_reflection_observe",
+        "ko": "유리 반사로 뒤를 관찰하는",
+        "en": "observing behind via a shop window or glass reflection",
+        "weight": 1.0,
+        "tags": [
+          "human",
+          "street",
+          "surveillance",
+          "reflection"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "crowd_gap_target_glance",
+        "ko": "군중 틈으로 한 사람을 흘끗 보는",
+        "en": "glancing at one implied person through a gap in the crowd",
+        "weight": 1.0,
+        "tags": [
+          "human",
+          "street",
+          "surveillance",
+          "crowd"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "blending_into_crowd",
+        "ko": "군중에 자연스럽게 섞여 멈춰 선",
+        "en": "standing still while blending into a moving crowd",
+        "weight": 1.0,
+        "tags": [
+          "human",
+          "street",
+          "crowd",
+          "cover"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "exit_route_glance_back",
+        "ko": "이탈 동선을 확인하며 뒤돌아보는",
+        "en": "glancing back to check an exit route",
+        "weight": 1.0,
+        "tags": [
+          "human",
+          "tense",
+          "exit_route"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "stairwell_pause_listen",
+        "ko": "계단참에서 멈춰 소리를 듣는",
+        "en": "pausing on a stairwell landing to listen",
+        "weight": 0.9,
+        "tags": [
+          "human",
+          "tense",
+          "threshold"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "checking_wristwatch_timing",
+        "ko": "손목시계로 타이밍을 확인하는",
+        "en": "checking a wristwatch for timing",
+        "weight": 0.9,
+        "tags": [
+          "human",
+          "tense",
+          "timing"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "adjusting_earpiece_discreet",
+        "ko": "이어피스를 은밀히 조정하는",
+        "en": "discreetly adjusting a hidden earpiece",
+        "weight": 0.9,
+        "tags": [
+          "human",
+          "tense",
+          "surveillance",
+          "cover"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "feigning_phone_call_cover",
+        "ko": "통화하는 척하며 주변을 살피는",
+        "en": "pretending to take a phone call as cover while watching the space",
+        "weight": 0.9,
+        "tags": [
+          "human",
+          "street",
+          "cover",
+          "surveillance"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "pocketing_note_quietly",
+        "ko": "쪽지를 조용히 주머니에 넣는",
+        "en": "quietly slipping a note into a pocket",
+        "weight": 0.9,
+        "tags": [
+          "human",
+          "tense",
+          "signal"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "leaning_pillar_watch",
+        "ko": "기둥에 기대 무심한 척 살피는",
+        "en": "leaning on a pillar feigning indifference while watching",
+        "weight": 0.9,
+        "tags": [
+          "human",
+          "tense",
+          "cover"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "sunglasses_reflection_watch",
+        "ko": "선글라스 반사로 시선을 숨기는",
+        "en": "hiding the gaze behind sunglasses that reflect an implied target",
+        "weight": 0.9,
+        "tags": [
+          "human",
+          "surveillance",
+          "reflection"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "passing_keycard_low",
+        "ko": "키카드를 낮게 넘기거나 쥐고 있는",
+        "en": "holding or passing a keycard low and discreetly",
+        "weight": 0.85,
+        "tags": [
+          "human",
+          "cover",
+          "access"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "pausing_before_threshold",
+        "ko": "문턱 앞에서 멈춰 선",
+        "en": "pausing just before crossing a threshold",
+        "weight": 0.9,
+        "tags": [
+          "human",
+          "tense",
+          "threshold"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "checking_service_door",
+        "ko": "직원 전용 문을 확인하는",
+        "en": "checking a staff-only service door",
+        "weight": 0.9,
+        "tags": [
+          "human",
+          "cover",
+          "access"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "closing_compact_mirror",
+        "ko": "작은 거울을 닫는",
+        "en": "closing a compact mirror after checking a reflection",
+        "weight": 0.85,
+        "tags": [
+          "human",
+          "reflection",
+          "surveillance"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "watching_from_balcony_shadow",
+        "ko": "발코니 그림자에서 지켜보는",
+        "en": "watching from the shadow of a balcony",
+        "weight": 0.9,
+        "tags": [
+          "human",
+          "tense",
+          "surveillance"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "reading_sealed_orders",
+        "ko": "봉인된 지시서를 읽는",
+        "en": "reading sealed orders quietly",
+        "weight": 0.85,
+        "tags": [
+          "human",
+          "period",
+          "signal"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "turning_away_from_security_camera",
+        "ko": "보안 카메라를 등지고 돌아서는",
+        "en": "turning away from a security camera at the edge of the frame",
+        "weight": 0.85,
+        "tags": [
+          "human",
+          "surveillance",
+          "cover"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "rooftop_distance_watch",
+        "ko": "옥상에서 원거리로 지켜보는",
+        "en": "watching from a rooftop at a distance",
+        "weight": 1.0,
+        "tags": [
+          "human",
+          "tense",
+          "surveillance"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "over_railing_observe",
+        "ko": "난간 너머를 내려다보며 관찰하는",
+        "en": "observing over a railing from above",
+        "weight": 1.0,
+        "tags": [
+          "human",
+          "tense",
+          "surveillance"
+        ],
+        "for_any": [
+          "human"
+        ]
       }
     ],
     "capture_context": [
@@ -41623,6 +43419,148 @@
           "phone_overlay",
           "interactive_pov",
           "mirror_crouch"
+        ]
+      },
+      {
+        "id": "surveillance_reflection_capture",
+        "ko": "반사면 감시 촬영 맥락",
+        "en": "surveillance-via-reflection capture context",
+        "weight": 1.0,
+        "tags": [
+          "human",
+          "surveillance",
+          "reflection"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "requires_any_tags": [
+          "surveillance",
+          "reflection"
+        ]
+      },
+      {
+        "id": "long_lens_observation_capture",
+        "ko": "원거리 망원 관찰 촬영 맥락",
+        "en": "long-lens distant observation capture context",
+        "weight": 1.0,
+        "tags": [
+          "human",
+          "surveillance"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "requires_any_tags": [
+          "surveillance",
+          "tense"
+        ]
+      },
+      {
+        "id": "hidden_in_crowd_candid_capture",
+        "ko": "군중 속 은폐 캔디드 맥락",
+        "en": "hidden-in-crowd candid capture context",
+        "weight": 1.0,
+        "tags": [
+          "human",
+          "street",
+          "crowd"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "requires_any_tags": [
+          "street",
+          "crowd"
+        ]
+      },
+      {
+        "id": "cover_role_documentary_capture",
+        "ko": "위장 직무 다큐 촬영 맥락",
+        "en": "cover-role documentary capture context",
+        "weight": 0.95,
+        "tags": [
+          "human",
+          "cover"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "requires_any_tags": [
+          "cover",
+          "tense"
+        ]
+      },
+      {
+        "id": "rearview_or_sidemirror_capture",
+        "ko": "백미러 또는 사이드미러 촬영 맥락",
+        "en": "rearview or side-mirror capture context",
+        "weight": 0.9,
+        "tags": [
+          "human",
+          "transport",
+          "reflection"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "requires_any_tags": [
+          "transport",
+          "reflection"
+        ]
+      },
+      {
+        "id": "accidental_phone_snapshot",
+        "ko": "우연히 찍힌 휴대폰 스냅 맥락",
+        "en": "accidental phone snapshot capture context",
+        "weight": 0.85,
+        "tags": [
+          "human",
+          "phone",
+          "candid"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "requires_any_tags": [
+          "social",
+          "candid"
+        ]
+      },
+      {
+        "id": "service_staff_id_photo",
+        "ko": "직원 ID처럼 보이는 촬영 맥락",
+        "en": "service-staff ID-photo-like capture context",
+        "weight": 0.85,
+        "tags": [
+          "human",
+          "cover",
+          "service"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "requires_any_tags": [
+          "cover",
+          "service"
+        ]
+      },
+      {
+        "id": "dashcam_reflection_capture",
+        "ko": "대시캠 반사 촬영 맥락",
+        "en": "dashcam reflection capture context",
+        "weight": 0.8,
+        "tags": [
+          "human",
+          "transport",
+          "surveillance"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "requires_any_tags": [
+          "transport",
+          "surveillance"
         ]
       }
     ],
@@ -45459,6 +47397,291 @@
             "power_command"
           ]
         }
+      },
+      {
+        "id": "hotel_keycard_prop",
+        "ko": "호텔 키카드",
+        "en": "a hotel keycard held low",
+        "weight": 0.85,
+        "tags": [
+          "human",
+          "prop",
+          "access",
+          "cover"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "staff_lanyard_badge_prop",
+        "ko": "직원 사원증 랜야드",
+        "en": "a staff lanyard ID badge used as cover",
+        "weight": 0.85,
+        "tags": [
+          "human",
+          "prop",
+          "access",
+          "cover"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "discreet_earpiece_comms_prop",
+        "ko": "눈에 띄지 않는 통신 이어피스",
+        "en": "a discreet earpiece as a communications cue",
+        "weight": 0.9,
+        "tags": [
+          "human",
+          "prop",
+          "surveillance",
+          "cover"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "antique_pocket_watch_prop",
+        "ko": "앤티크 회중시계",
+        "en": "an antique pocket watch marking timing",
+        "weight": 0.9,
+        "tags": [
+          "human",
+          "prop",
+          "period",
+          "timing"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "folded_newspaper_cover_prop",
+        "ko": "접힌 신문지 가림 소품",
+        "en": "a folded newspaper used as a watching cover",
+        "weight": 0.85,
+        "tags": [
+          "human",
+          "prop",
+          "cover",
+          "surveillance"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "pressed_flower_bookmark_token",
+        "ko": "압화 책갈피 신호 토큰",
+        "en": "a pressed-flower bookmark left as a quiet signal token",
+        "weight": 0.85,
+        "tags": [
+          "human",
+          "prop",
+          "narrative",
+          "signal"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "single_chess_piece_token",
+        "ko": "체스 말 하나의 신호 토큰",
+        "en": "a single chess piece left as a signature token",
+        "weight": 0.85,
+        "tags": [
+          "human",
+          "prop",
+          "narrative",
+          "signal"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "folded_origami_token",
+        "ko": "접힌 종이학 신호 토큰",
+        "en": "a folded paper crane left behind as a signal token",
+        "weight": 0.85,
+        "tags": [
+          "human",
+          "prop",
+          "narrative",
+          "signal"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "coat_check_tag_prop",
+        "ko": "코트 보관 번호표",
+        "en": "a coat-check tag held discreetly",
+        "weight": 0.8,
+        "tags": [
+          "human",
+          "prop",
+          "access",
+          "cover"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "train_ticket_stub_prop",
+        "ko": "찢어진 기차표 반쪽",
+        "en": "a torn train ticket stub as a route cue",
+        "weight": 0.8,
+        "tags": [
+          "human",
+          "prop",
+          "transit",
+          "signal"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "lipstick_marked_napkin_token",
+        "ko": "립스틱 자국 냅킨 토큰",
+        "en": "a napkin marked with lipstick left as a sign",
+        "weight": 0.8,
+        "tags": [
+          "human",
+          "prop",
+          "narrative",
+          "signal"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "florist_delivery_box_cover",
+        "ko": "꽃 배달 상자 위장 소품",
+        "en": "a florist delivery box as a cover identity prop",
+        "weight": 0.9,
+        "tags": [
+          "human",
+          "prop",
+          "cover",
+          "service"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "waiter_serving_tray_cover",
+        "ko": "웨이터 서빙 트레이 위장 소품",
+        "en": "a serving tray as a cover identity prop",
+        "weight": 0.9,
+        "tags": [
+          "human",
+          "prop",
+          "cover",
+          "service"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "instrument_case_concealment_prop",
+        "ko": "닫힌 악기 케이스 은닉 암시 소품",
+        "en": "a closed instrument case implying concealment without showing contents",
+        "weight": 0.85,
+        "tags": [
+          "human",
+          "prop",
+          "narrative",
+          "cover"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "chalk_mark_signal_prop",
+        "ko": "작은 분필 표식",
+        "en": "a small chalk mark left as a signal",
+        "weight": 0.8,
+        "tags": [
+          "human",
+          "prop",
+          "narrative",
+          "signal"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "colored_thread_marker_prop",
+        "ko": "색실 표식",
+        "en": "a colored thread tied as a marker",
+        "weight": 0.8,
+        "tags": [
+          "human",
+          "prop",
+          "narrative",
+          "signal"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "compact_mirror_surveillance_prop",
+        "ko": "반사 확인용 컴팩트 미러",
+        "en": "a compact mirror used to check a reflection",
+        "weight": 0.85,
+        "tags": [
+          "human",
+          "prop",
+          "reflection",
+          "surveillance"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "sealed_black_envelope_prop",
+        "ko": "봉인된 검은 봉투",
+        "en": "a sealed black envelope with unreadable contents",
+        "weight": 0.85,
+        "tags": [
+          "human",
+          "prop",
+          "narrative",
+          "signal"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "single_unmatched_glove_prop",
+        "ko": "짝이 맞지 않는 장갑 한 짝",
+        "en": "a single unmatched glove as a quiet wrongness cue",
+        "weight": 0.85,
+        "tags": [
+          "human",
+          "prop",
+          "narrative",
+          "cover"
+        ],
+        "for_any": [
+          "human"
+        ]
       }
     ],
     "fetish_styling": [
@@ -48301,6 +50524,290 @@
             "environment_system"
           ]
         }
+      },
+      {
+        "id": "service_stairwell",
+        "ko": "비상 계단",
+        "en": "a service stairwell",
+        "weight": 1.0,
+        "tags": [
+          "interior",
+          "urban",
+          "service",
+          "threshold"
+        ],
+        "phrase_en": "in a dim service stairwell",
+        "phrase_ko": "어두운 비상 계단에서"
+      },
+      {
+        "id": "freight_elevator_interior",
+        "ko": "화물 엘리베이터 내부",
+        "en": "a freight elevator interior",
+        "weight": 1.0,
+        "tags": [
+          "interior",
+          "industrial",
+          "service",
+          "threshold"
+        ],
+        "phrase_en": "inside a freight elevator",
+        "phrase_ko": "화물 엘리베이터 안에서"
+      },
+      {
+        "id": "fire_escape_landing",
+        "ko": "비상계단 외부 발코니",
+        "en": "a fire escape landing",
+        "weight": 1.0,
+        "tags": [
+          "urban",
+          "street",
+          "exit_route"
+        ],
+        "phrase_en": "on a fire escape landing",
+        "phrase_ko": "비상계단 발코니에서"
+      },
+      {
+        "id": "hotel_back_corridor",
+        "ko": "호텔 후방 복도",
+        "en": "a hotel back-of-house corridor",
+        "weight": 1.0,
+        "tags": [
+          "interior",
+          "commercial",
+          "service",
+          "cover"
+        ],
+        "phrase_en": "in a hotel back corridor",
+        "phrase_ko": "호텔 후방 복도에서"
+      },
+      {
+        "id": "hotel_laundry_service_room",
+        "ko": "호텔 세탁 서비스실",
+        "en": "a hotel laundry service room",
+        "weight": 0.95,
+        "tags": [
+          "interior",
+          "commercial",
+          "service",
+          "cover"
+        ],
+        "phrase_en": "inside a hotel laundry service room",
+        "phrase_ko": "호텔 세탁 서비스실에서"
+      },
+      {
+        "id": "banquet_kitchen_pass",
+        "ko": "연회장 주방 패스",
+        "en": "a banquet kitchen pass",
+        "weight": 0.95,
+        "tags": [
+          "interior",
+          "commercial",
+          "service",
+          "cover"
+        ],
+        "phrase_en": "at a banquet kitchen pass",
+        "phrase_ko": "연회장 주방 패스에서"
+      },
+      {
+        "id": "train_station_concourse",
+        "ko": "기차역 대합실",
+        "en": "a train station concourse",
+        "weight": 1.1,
+        "tags": [
+          "transport",
+          "urban",
+          "crowd"
+        ],
+        "phrase_en": "in a busy train station concourse",
+        "phrase_ko": "붐비는 기차역 대합실에서"
+      },
+      {
+        "id": "subway_transfer_passage",
+        "ko": "지하철 환승 통로",
+        "en": "a subway transfer passage",
+        "weight": 1.05,
+        "tags": [
+          "transport",
+          "urban",
+          "crowd"
+        ],
+        "phrase_en": "in a subway transfer passage",
+        "phrase_ko": "지하철 환승 통로에서"
+      },
+      {
+        "id": "airport_arrivals_barrier",
+        "ko": "공항 입국장 바리어",
+        "en": "an airport arrivals barrier",
+        "weight": 1.0,
+        "tags": [
+          "transport",
+          "urban",
+          "crowd"
+        ],
+        "phrase_en": "by an airport arrivals barrier",
+        "phrase_ko": "공항 입국장 바리어 옆에서"
+      },
+      {
+        "id": "taxi_rear_seat_interior",
+        "ko": "택시 뒷좌석 내부",
+        "en": "a taxi rear-seat interior",
+        "weight": 1.0,
+        "tags": [
+          "transport",
+          "interior",
+          "surveillance"
+        ],
+        "phrase_en": "in a taxi rear seat at night",
+        "phrase_ko": "밤 택시 뒷좌석에서"
+      },
+      {
+        "id": "crowded_night_market",
+        "ko": "붐비는 야시장",
+        "en": "a crowded night market",
+        "weight": 1.1,
+        "tags": [
+          "street",
+          "urban",
+          "commercial",
+          "crowd"
+        ],
+        "phrase_en": "in a crowded night market",
+        "phrase_ko": "붐비는 야시장에서"
+      },
+      {
+        "id": "art_gallery_white_hall",
+        "ko": "화이트 큐브 갤러리",
+        "en": "a white-cube art gallery hall",
+        "weight": 1.0,
+        "tags": [
+          "interior",
+          "commercial",
+          "gallery",
+          "reflection"
+        ],
+        "phrase_en": "in a white-cube gallery hall",
+        "phrase_ko": "화이트 큐브 갤러리에서"
+      },
+      {
+        "id": "museum_gallery_after_hours",
+        "ko": "폐관 후 박물관 갤러리",
+        "en": "an after-hours museum gallery",
+        "weight": 0.95,
+        "tags": [
+          "interior",
+          "museum",
+          "gallery",
+          "reflection"
+        ],
+        "phrase_en": "inside an after-hours museum gallery",
+        "phrase_ko": "폐관 후 박물관 갤러리에서"
+      },
+      {
+        "id": "opera_house_box_seat",
+        "ko": "오페라 하우스 박스석",
+        "en": "an opera house box seat",
+        "weight": 1.0,
+        "tags": [
+          "interior",
+          "commercial",
+          "period",
+          "high_society"
+        ],
+        "phrase_en": "in an opera house box seat",
+        "phrase_ko": "오페라 하우스 박스석에서"
+      },
+      {
+        "id": "ballroom_gala_floor",
+        "ko": "갈라 무도회장",
+        "en": "a gala ballroom floor",
+        "weight": 1.0,
+        "tags": [
+          "interior",
+          "commercial",
+          "high_society"
+        ],
+        "phrase_en": "on a gala ballroom floor",
+        "phrase_ko": "갈라 무도회장에서"
+      },
+      {
+        "id": "library_reading_room",
+        "ko": "고요한 도서관 열람실",
+        "en": "a silent library reading room",
+        "weight": 0.95,
+        "tags": [
+          "interior",
+          "quiet",
+          "signal"
+        ],
+        "phrase_en": "in a silent library reading room",
+        "phrase_ko": "고요한 도서관 열람실에서"
+      },
+      {
+        "id": "tea_house_private_room",
+        "ko": "찻집 별실",
+        "en": "a private room in a tea house",
+        "weight": 0.95,
+        "tags": [
+          "interior",
+          "period",
+          "quiet",
+          "signal"
+        ],
+        "phrase_en": "in a private tea-house room",
+        "phrase_ko": "찻집 별실에서"
+      },
+      {
+        "id": "palace_side_gate",
+        "ko": "궁궐 측문",
+        "en": "a palace side gate",
+        "weight": 0.95,
+        "tags": [
+          "period",
+          "palace",
+          "threshold"
+        ],
+        "phrase_en": "at a palace side gate",
+        "phrase_ko": "궁궐 측문에서"
+      },
+      {
+        "id": "rooftop_helipad_edge",
+        "ko": "옥상 헬리패드 가장자리",
+        "en": "a rooftop helipad edge",
+        "weight": 0.9,
+        "tags": [
+          "urban",
+          "rooftop",
+          "surveillance"
+        ],
+        "phrase_en": "at a rooftop helipad edge",
+        "phrase_ko": "옥상 헬리패드 가장자리에서"
+      },
+      {
+        "id": "parking_payment_kiosk",
+        "ko": "주차장 정산기",
+        "en": "a parking payment kiosk",
+        "weight": 0.9,
+        "tags": [
+          "urban",
+          "transport",
+          "parking",
+          "exit_route"
+        ],
+        "phrase_en": "beside a parking payment kiosk",
+        "phrase_ko": "주차장 정산기 옆에서"
+      },
+      {
+        "id": "hotel_lobby",
+        "ko": "호텔 로비",
+        "en": "a hotel lobby",
+        "weight": 1.0,
+        "tags": [
+          "interior",
+          "commercial",
+          "high_society"
+        ],
+        "phrase_en": "in a hotel lobby",
+        "phrase_ko": "호텔 로비에서"
       }
     ],
     "world": [
@@ -48789,6 +51296,103 @@
             "mirror_of_humanity"
           ]
         }
+      },
+      {
+        "id": "surveillance_noir",
+        "ko": "감시 느와르",
+        "en": "surveillance noir",
+        "weight": 1.2,
+        "tags": [
+          "realistic",
+          "tense",
+          "noir"
+        ]
+      },
+      {
+        "id": "period_court_intrigue",
+        "ko": "시대극 궁정 음모",
+        "en": "period court intrigue",
+        "weight": 1.0,
+        "tags": [
+          "period",
+          "tense"
+        ]
+      },
+      {
+        "id": "cold_war_espionage_realism",
+        "ko": "냉전 첩보 리얼리즘",
+        "en": "cold-war espionage realism",
+        "weight": 1.0,
+        "tags": [
+          "realistic",
+          "tense",
+          "surveillance"
+        ]
+      },
+      {
+        "id": "high_society_gala_world",
+        "ko": "상류사회 갈라 세계",
+        "en": "high-society gala world",
+        "weight": 0.95,
+        "tags": [
+          "realistic",
+          "high_society"
+        ]
+      },
+      {
+        "id": "service_worker_access_world",
+        "ko": "서비스 동선 접근 세계",
+        "en": "service-worker access world",
+        "weight": 0.95,
+        "tags": [
+          "realistic",
+          "service",
+          "cover"
+        ]
+      },
+      {
+        "id": "public_transit_tail_world",
+        "ko": "대중교통 미행 세계",
+        "en": "public-transit tail world",
+        "weight": 0.95,
+        "tags": [
+          "realistic",
+          "transport",
+          "surveillance"
+        ]
+      },
+      {
+        "id": "ordinary_lifestyle_crack_world",
+        "ko": "일상 화보 균열 세계",
+        "en": "ordinary lifestyle crack world",
+        "weight": 0.95,
+        "tags": [
+          "realistic",
+          "cover",
+          "tense"
+        ]
+      },
+      {
+        "id": "cover_identity_thriller_world",
+        "ko": "위장 신분 스릴러 세계",
+        "en": "cover identity thriller world",
+        "weight": 1.0,
+        "tags": [
+          "realistic",
+          "cover",
+          "tense"
+        ]
+      },
+      {
+        "id": "dead_drop_signal_world",
+        "ko": "데드드롭 신호 세계",
+        "en": "dead-drop signal world",
+        "weight": 0.9,
+        "tags": [
+          "realistic",
+          "signal",
+          "tense"
+        ]
       }
     ],
     "lighting": [
@@ -49629,6 +52233,134 @@
           "natural_light",
           "botanical",
           "day"
+        ]
+      },
+      {
+        "id": "exit_sign_green_glow",
+        "ko": "비상구 초록 불빛",
+        "en": "green exit-sign glow",
+        "weight": 0.9,
+        "tags": [
+          "interior",
+          "low_light",
+          "exit_route"
+        ]
+      },
+      {
+        "id": "elevator_panel_glow",
+        "ko": "엘리베이터 패널 불빛",
+        "en": "cold elevator panel glow",
+        "weight": 0.85,
+        "tags": [
+          "interior",
+          "low_light"
+        ]
+      },
+      {
+        "id": "gallery_track_spotlight",
+        "ko": "갤러리 트랙 스폿",
+        "en": "gallery track spotlighting",
+        "weight": 0.9,
+        "tags": [
+          "interior",
+          "artificial_light",
+          "gallery"
+        ]
+      },
+      {
+        "id": "chandelier_warm_pools",
+        "ko": "샹들리에 따뜻한 광원 풀",
+        "en": "warm chandelier light pools",
+        "weight": 0.9,
+        "tags": [
+          "interior",
+          "period",
+          "high_society"
+        ]
+      },
+      {
+        "id": "market_string_lights",
+        "ko": "야시장 줄전구",
+        "en": "night market string lights",
+        "weight": 0.95,
+        "tags": [
+          "street",
+          "colored_light",
+          "crowd"
+        ]
+      },
+      {
+        "id": "single_match_or_lighter_glow",
+        "ko": "성냥 또는 라이터 한 점 불빛",
+        "en": "a single match or lighter glow",
+        "weight": 0.8,
+        "tags": [
+          "low_light",
+          "tense"
+        ]
+      },
+      {
+        "id": "venetian_blind_slats",
+        "ko": "블라인드 슬릿 그림자광",
+        "en": "venetian blind slatted light",
+        "weight": 0.95,
+        "tags": [
+          "interior",
+          "tense"
+        ]
+      },
+      {
+        "id": "opera_stage_spill_light",
+        "ko": "오페라 무대 잔광",
+        "en": "opera stage spill light into the box",
+        "weight": 0.85,
+        "tags": [
+          "interior",
+          "colored_light",
+          "high_society"
+        ]
+      },
+      {
+        "id": "passing_headlight_sweep",
+        "ko": "스쳐 지나가는 헤드라이트 빛",
+        "en": "a passing sweep of car headlights",
+        "weight": 0.9,
+        "tags": [
+          "urban",
+          "low_light",
+          "transport"
+        ]
+      },
+      {
+        "id": "security_monitor_glow",
+        "ko": "보안 모니터 빛",
+        "en": "security monitor glow",
+        "weight": 0.85,
+        "tags": [
+          "interior",
+          "surveillance",
+          "low_light"
+        ]
+      },
+      {
+        "id": "underpass_sodium_lamp",
+        "ko": "지하보도 나트륨등",
+        "en": "sodium-vapor underpass lighting",
+        "weight": 0.85,
+        "tags": [
+          "urban",
+          "low_light"
+        ]
+      },
+      {
+        "id": "service_corridor_fluorescent",
+        "ko": "서비스 복도 형광등",
+        "en": "service corridor fluorescent lighting",
+        "weight": 0.85,
+        "tags": [
+          "interior",
+          "service",
+          "clinical"
         ]
       }
     ],
@@ -51532,6 +54264,86 @@
           "cosplay",
           "character"
         ]
+      },
+      {
+        "id": "long_lens_compressed_direction",
+        "ko": "망원 압축 원거리 시점",
+        "en": "compressed long-lens distant view",
+        "weight": 1.0,
+        "tags": [
+          "tense",
+          "surveillance"
+        ]
+      },
+      {
+        "id": "reflected_in_mirror_direction",
+        "ko": "거울에 비친 시점",
+        "en": "view reflected in a mirror",
+        "weight": 1.0,
+        "tags": [
+          "interior",
+          "reflection"
+        ]
+      },
+      {
+        "id": "through_crowd_gap_direction",
+        "ko": "군중 틈 시점",
+        "en": "view through a gap in the crowd",
+        "weight": 0.95,
+        "tags": [
+          "street",
+          "crowd"
+        ]
+      },
+      {
+        "id": "over_railing_down_direction",
+        "ko": "난간 너머 내려보는 시점",
+        "en": "over-railing downward view",
+        "weight": 0.9,
+        "tags": [
+          "urban",
+          "surveillance"
+        ]
+      },
+      {
+        "id": "elevator_corner_camera_direction",
+        "ko": "엘리베이터 코너 카메라 시점",
+        "en": "elevator corner camera view",
+        "weight": 0.85,
+        "tags": [
+          "interior",
+          "surveillance"
+        ]
+      },
+      {
+        "id": "sidemirror_reflection_direction",
+        "ko": "사이드미러 반사 시점",
+        "en": "side-mirror reflection view",
+        "weight": 0.85,
+        "tags": [
+          "transport",
+          "reflection"
+        ]
+      },
+      {
+        "id": "from_table_edge_hidden_camera",
+        "ko": "테이블 가장자리 숨은 카메라 시점",
+        "en": "from a hidden camera at the edge of a table",
+        "weight": 0.8,
+        "tags": [
+          "interior",
+          "surveillance"
+        ]
+      },
+      {
+        "id": "from_inside_service_window",
+        "ko": "서비스 창 안쪽 시점",
+        "en": "from inside a service window",
+        "weight": 0.8,
+        "tags": [
+          "interior",
+          "service"
+        ]
       }
     ],
     "composition": [
@@ -52417,6 +55229,193 @@
             "swarm"
           ]
         }
+      },
+      {
+        "id": "mirror_layered_watch_frame",
+        "ko": "거울 다중 반사 감시 프레임",
+        "en": "layered mirror reflection watch framing",
+        "weight": 1.0,
+        "tags": [
+          "interior",
+          "tense",
+          "reflection"
+        ]
+      },
+      {
+        "id": "shopwindow_reflection_frame",
+        "ko": "진열창 반사 프레임",
+        "en": "shop window reflection framing",
+        "weight": 1.0,
+        "tags": [
+          "street",
+          "urban",
+          "reflection"
+        ]
+      },
+      {
+        "id": "puddle_reflection_split_frame",
+        "ko": "빗물 웅덩이 반사 분할",
+        "en": "puddle reflection split framing",
+        "weight": 0.9,
+        "tags": [
+          "street",
+          "urban",
+          "reflection"
+        ]
+      },
+      {
+        "id": "sidemirror_observation_frame",
+        "ko": "사이드미러 관찰 구도",
+        "en": "side-mirror observation framing",
+        "weight": 0.9,
+        "tags": [
+          "transport",
+          "tense",
+          "reflection"
+        ]
+      },
+      {
+        "id": "one_still_in_motion_blur_frame",
+        "ko": "군중 모션블러 속 정지 인물",
+        "en": "one still subject amid crowd motion blur",
+        "weight": 1.0,
+        "tags": [
+          "street",
+          "urban",
+          "crowd"
+        ]
+      },
+      {
+        "id": "compressed_tele_layers",
+        "ko": "망원 압축 레이어 구도",
+        "en": "compressed telephoto layered framing",
+        "weight": 1.0,
+        "tags": [
+          "street",
+          "tense",
+          "surveillance"
+        ]
+      },
+      {
+        "id": "foreground_crowd_occlusion",
+        "ko": "전경 군중 오클루전",
+        "en": "foreground crowd occlusion framing",
+        "weight": 0.95,
+        "tags": [
+          "street",
+          "crowd",
+          "surveillance"
+        ]
+      },
+      {
+        "id": "over_railing_observation_frame",
+        "ko": "난간 너머 내려보기 구도",
+        "en": "over-railing downward observation framing",
+        "weight": 0.9,
+        "tags": [
+          "urban",
+          "tense",
+          "surveillance"
+        ]
+      },
+      {
+        "id": "exit_sign_glow_frame",
+        "ko": "비상구 불빛 프레임",
+        "en": "exit-sign glow framing",
+        "weight": 0.9,
+        "tags": [
+          "interior",
+          "tense",
+          "exit_route"
+        ]
+      },
+      {
+        "id": "through_doorway_deep_frame",
+        "ko": "문 너머 깊은 원근 프레임",
+        "en": "deep frame seen through a far doorway",
+        "weight": 0.9,
+        "tags": [
+          "interior",
+          "tense",
+          "threshold"
+        ]
+      },
+      {
+        "id": "elevator_gap_frame",
+        "ko": "엘리베이터 문틈 프레임",
+        "en": "narrow elevator-door gap framing",
+        "weight": 0.85,
+        "tags": [
+          "interior",
+          "threshold",
+          "tense"
+        ]
+      },
+      {
+        "id": "waist_level_hidden_prop_crop",
+        "ko": "허리선 은닉 소품 크롭",
+        "en": "waist-level crop emphasizing a subtle hidden prop cue",
+        "weight": 0.9,
+        "tags": [
+          "human",
+          "detail",
+          "cover"
+        ]
+      },
+      {
+        "id": "hands_only_detail_frame",
+        "ko": "손과 소품 디테일 프레임",
+        "en": "hands-only detail frame around a quiet prop cue",
+        "weight": 0.9,
+        "tags": [
+          "human",
+          "detail",
+          "prop"
+        ]
+      },
+      {
+        "id": "target_implied_off_frame_blur",
+        "ko": "프레임 밖 타깃 암시 블러",
+        "en": "off-frame implied target suggested by a soft foreground blur",
+        "weight": 0.85,
+        "tags": [
+          "human",
+          "surveillance",
+          "tense"
+        ]
+      },
+      {
+        "id": "service_window_frame",
+        "ko": "서비스 창구 프레임",
+        "en": "service-window frame-within-frame composition",
+        "weight": 0.85,
+        "tags": [
+          "interior",
+          "service",
+          "cover"
+        ]
+      },
+      {
+        "id": "half_face_shadow_split",
+        "ko": "얼굴 반쪽 그림자 분할",
+        "en": "half-face split by shadow",
+        "weight": 0.9,
+        "tags": [
+          "portrait",
+          "tense"
+        ]
+      },
+      {
+        "id": "chandelier_high_watch_frame",
+        "ko": "샹들리에 아래 고각 관찰 구도",
+        "en": "high-angle watch framing under a chandelier",
+        "weight": 0.85,
+        "tags": [
+          "interior",
+          "period",
+          "high_society",
+          "surveillance"
+        ]
       }
     ],
     "subject_framing": [
@@ -53188,6 +56187,17 @@
           "concert"
         ],
         "embedding_text": "a 24-70mm event zoom lens"
+      },
+      {
+        "id": "100mm_macro",
+        "ko": "100mm 매크로 렌즈",
+        "en": "100mm macro lens",
+        "weight": 0.9,
+        "tags": [
+          "macro",
+          "detail",
+          "portrait"
+        ]
       }
     ],
     "focus": [
@@ -53725,6 +56735,27 @@
           "night"
         ],
         "embedding_text": "rear-curtain flash trails"
+      },
+      {
+        "id": "motion_blur",
+        "ko": "모션 블러",
+        "en": "motion blur",
+        "weight": 0.9,
+        "tags": [
+          "motion",
+          "candid"
+        ]
+      },
+      {
+        "id": "crowd_motion_blur_around_still_subject",
+        "ko": "정지 인물 주변의 군중 모션 블러",
+        "en": "crowd motion blur around a still subject",
+        "weight": 0.9,
+        "tags": [
+          "motion",
+          "crowd",
+          "street"
+        ]
       }
     ],
     "color": [
@@ -54888,6 +57919,117 @@
             "behavior_control"
           ]
         }
+      },
+      {
+        "id": "patient_predatory_calm",
+        "ko": "인내하는 포식자의 고요",
+        "en": "patient predatory calm",
+        "weight": 1.0,
+        "tags": [
+          "tense",
+          "noir"
+        ]
+      },
+      {
+        "id": "poised_anonymity",
+        "ko": "정제된 익명성",
+        "en": "poised anonymity",
+        "weight": 1.0,
+        "tags": [
+          "tense",
+          "cover"
+        ]
+      },
+      {
+        "id": "courtly_conspiracy",
+        "ko": "궁정 음모의 긴장",
+        "en": "courtly conspiratorial tension",
+        "weight": 0.95,
+        "tags": [
+          "period",
+          "tense"
+        ]
+      },
+      {
+        "id": "countdown_stillness",
+        "ko": "카운트다운 직전의 정지",
+        "en": "countdown stillness before a cue",
+        "weight": 1.0,
+        "tags": [
+          "tense",
+          "timing"
+        ]
+      },
+      {
+        "id": "clinical_detachment",
+        "ko": "임상적 무심함",
+        "en": "clinical detachment",
+        "weight": 0.9,
+        "tags": [
+          "clinical",
+          "tense"
+        ]
+      },
+      {
+        "id": "surveillance_unease",
+        "ko": "감시의 불안",
+        "en": "surveillance unease",
+        "weight": 1.0,
+        "tags": [
+          "tense",
+          "documentary",
+          "surveillance"
+        ]
+      },
+      {
+        "id": "near_discovery_tension",
+        "ko": "발각 직전의 긴장",
+        "en": "near-discovery tension",
+        "weight": 0.95,
+        "tags": [
+          "tense",
+          "threshold"
+        ]
+      },
+      {
+        "id": "cover_identity_fracture",
+        "ko": "위장 신분의 균열",
+        "en": "cover identity fracture",
+        "weight": 0.95,
+        "tags": [
+          "tense",
+          "cover"
+        ]
+      },
+      {
+        "id": "public_place_paranoia",
+        "ko": "공공장소의 편집증적 긴장",
+        "en": "public-place paranoia",
+        "weight": 0.9,
+        "tags": [
+          "tense",
+          "crowd"
+        ]
+      },
+      {
+        "id": "professional_detachment",
+        "ko": "전문가적 무심함",
+        "en": "professional detachment",
+        "weight": 0.9,
+        "tags": [
+          "tense",
+          "noir"
+        ]
+      },
+      {
+        "id": "vanishing_route_anxiety",
+        "ko": "사라질 동선을 재는 불안",
+        "en": "vanishing-route anxiety",
+        "weight": 0.9,
+        "tags": [
+          "tense",
+          "exit_route"
+        ]
       }
     ],
     "surreal_concept": [
@@ -57718,6 +60860,152 @@
           "casual"
         ],
         "embedding_text": "a canvas tote bag",
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "discreet_earpiece",
+        "ko": "눈에 띄지 않는 이어피스",
+        "en": "a discreet flesh-tone earpiece",
+        "weight": 0.9,
+        "tags": [
+          "human",
+          "accessory",
+          "surveillance",
+          "cover"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "staff_lanyard_id",
+        "ko": "직원 사원증 랜야드",
+        "en": "a staff lanyard ID badge",
+        "weight": 0.9,
+        "tags": [
+          "human",
+          "accessory",
+          "cover",
+          "service"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "plain_wristwatch_timing",
+        "ko": "무광 손목시계",
+        "en": "a plain matte wristwatch used as a timing cue",
+        "weight": 0.85,
+        "tags": [
+          "human",
+          "accessory",
+          "timing"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "tinted_sunglasses_indoor",
+        "ko": "실내 틴티드 선글라스",
+        "en": "tinted sunglasses worn indoors",
+        "weight": 0.9,
+        "tags": [
+          "human",
+          "accessory",
+          "cover"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "wide_brim_hat_shadow",
+        "ko": "챙 넓은 모자 그림자",
+        "en": "a wide-brim hat casting a face shadow",
+        "weight": 0.9,
+        "tags": [
+          "human",
+          "accessory",
+          "cover"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "high_collar_coat",
+        "ko": "하이칼라 코트",
+        "en": "a high-collar coat concealing the jawline",
+        "weight": 0.9,
+        "tags": [
+          "human",
+          "accessory",
+          "cover"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "silk_opera_gloves",
+        "ko": "실크 오페라 장갑",
+        "en": "long silk opera gloves",
+        "weight": 0.85,
+        "tags": [
+          "human",
+          "accessory",
+          "period",
+          "high_society"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "service_apron_tie_cue",
+        "ko": "서비스 앞치마 끈 단서",
+        "en": "a service apron tie that creates a subtle cover-identity clue",
+        "weight": 0.8,
+        "tags": [
+          "human",
+          "accessory",
+          "service",
+          "cover"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "phoenix_hairpin_glint",
+        "ko": "봉황 비녀 금속 반짝임",
+        "en": "a metallic glint from a phoenix hairpin",
+        "weight": 0.85,
+        "tags": [
+          "human",
+          "accessory",
+          "period",
+          "ornament"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "camera_strap_cover",
+        "ko": "카메라 스트랩 위장 단서",
+        "en": "a camera strap used as a casual cover cue",
+        "weight": 0.8,
+        "tags": [
+          "human",
+          "accessory",
+          "cover",
+          "surveillance"
+        ],
         "for_any": [
           "human"
         ]
@@ -62347,6 +65635,20 @@
       "hair_color": {
         "glossy_black_hair": 0.35,
         "soft_dark_brown_hair": 0.3
+      },
+      "prop": {
+        "black_leather_gloves_prop": 0.35,
+        "single_playing_card_calling_card_prop": 0.4,
+        "sealed_mission_envelope_prop": 0.55
+      },
+      "composition": {
+        "cctv_corner_frame": 0.4,
+        "frame_within_frame": 0.55
+      },
+      "action": {
+        "doorframe_shadow_watch": 0.4,
+        "standing_silence": 0.5,
+        "concealed_holster_adjust_pose": 0.65
       }
     }
   },

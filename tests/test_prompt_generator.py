@@ -477,6 +477,205 @@ SOCIAL_CHARACTER_EXISTING_SLOT_TAG_IDS = {
         "cosplay_wig_fiber_detail",
     },
 }
+ASSASSIN_VIEWPOINT_PRESET_IDS = {
+    "reflection_surveillance_portrait",
+    "long_lens_distance_watch",
+    "crowd_blend_stillpoint",
+    "exit_route_threshold",
+    "cover_identity_crack_closeup",
+    "service_corridor_infiltration",
+    "transit_tail_candid",
+    "dead_drop_signal_portrait",
+    "period_intrigue_observer",
+    "macro_hidden_cue_detail",
+}
+ASSASSIN_VIEWPOINT_FAMILY_IDS = {
+    "covert_surveillance_family",
+    "reflection_surface_portrait_family",
+    "crowd_blend_candid_family",
+    "noir_threshold_family",
+    "transit_observation_family",
+    "cover_identity_fracture_family",
+    "macro_covert_detail_family",
+    "period_intrigue_family",
+    "service_access_family",
+    "dead_drop_signal_family",
+}
+ASSASSIN_VIEWPOINT_TAG_IDS = {
+    "action": {
+        "mirror_reflection_watch",
+        "window_reflection_observe",
+        "crowd_gap_target_glance",
+        "blending_into_crowd",
+        "exit_route_glance_back",
+        "stairwell_pause_listen",
+        "checking_wristwatch_timing",
+        "adjusting_earpiece_discreet",
+        "feigning_phone_call_cover",
+        "pocketing_note_quietly",
+        "leaning_pillar_watch",
+        "sunglasses_reflection_watch",
+        "passing_keycard_low",
+        "pausing_before_threshold",
+        "checking_service_door",
+        "closing_compact_mirror",
+        "watching_from_balcony_shadow",
+        "reading_sealed_orders",
+        "turning_away_from_security_camera",
+        "rooftop_distance_watch",
+        "over_railing_observe",
+    },
+    "prop": {
+        "hotel_keycard_prop",
+        "staff_lanyard_badge_prop",
+        "discreet_earpiece_comms_prop",
+        "antique_pocket_watch_prop",
+        "folded_newspaper_cover_prop",
+        "pressed_flower_bookmark_token",
+        "single_chess_piece_token",
+        "folded_origami_token",
+        "coat_check_tag_prop",
+        "train_ticket_stub_prop",
+        "lipstick_marked_napkin_token",
+        "florist_delivery_box_cover",
+        "waiter_serving_tray_cover",
+        "instrument_case_concealment_prop",
+        "chalk_mark_signal_prop",
+        "colored_thread_marker_prop",
+        "compact_mirror_surveillance_prop",
+        "sealed_black_envelope_prop",
+        "single_unmatched_glove_prop",
+    },
+    "location": {
+        "service_stairwell",
+        "freight_elevator_interior",
+        "fire_escape_landing",
+        "hotel_back_corridor",
+        "hotel_laundry_service_room",
+        "banquet_kitchen_pass",
+        "train_station_concourse",
+        "subway_transfer_passage",
+        "airport_arrivals_barrier",
+        "taxi_rear_seat_interior",
+        "crowded_night_market",
+        "art_gallery_white_hall",
+        "museum_gallery_after_hours",
+        "opera_house_box_seat",
+        "ballroom_gala_floor",
+        "library_reading_room",
+        "tea_house_private_room",
+        "palace_side_gate",
+        "rooftop_helipad_edge",
+        "parking_payment_kiosk",
+        "hotel_lobby",
+    },
+    "composition": {
+        "mirror_layered_watch_frame",
+        "shopwindow_reflection_frame",
+        "puddle_reflection_split_frame",
+        "sidemirror_observation_frame",
+        "one_still_in_motion_blur_frame",
+        "compressed_tele_layers",
+        "foreground_crowd_occlusion",
+        "over_railing_observation_frame",
+        "exit_sign_glow_frame",
+        "through_doorway_deep_frame",
+        "elevator_gap_frame",
+        "waist_level_hidden_prop_crop",
+        "hands_only_detail_frame",
+        "target_implied_off_frame_blur",
+        "service_window_frame",
+        "half_face_shadow_split",
+        "chandelier_high_watch_frame",
+    },
+    "lighting": {
+        "exit_sign_green_glow",
+        "elevator_panel_glow",
+        "gallery_track_spotlight",
+        "chandelier_warm_pools",
+        "market_string_lights",
+        "single_match_or_lighter_glow",
+        "venetian_blind_slats",
+        "opera_stage_spill_light",
+        "passing_headlight_sweep",
+        "security_monitor_glow",
+        "underpass_sodium_lamp",
+        "service_corridor_fluorescent",
+    },
+    "mood": {
+        "patient_predatory_calm",
+        "poised_anonymity",
+        "courtly_conspiracy",
+        "countdown_stillness",
+        "clinical_detachment",
+        "surveillance_unease",
+        "near_discovery_tension",
+        "cover_identity_fracture",
+        "public_place_paranoia",
+        "professional_detachment",
+        "vanishing_route_anxiety",
+    },
+    "capture_context": {
+        "surveillance_reflection_capture",
+        "long_lens_observation_capture",
+        "hidden_in_crowd_candid_capture",
+        "cover_role_documentary_capture",
+        "rearview_or_sidemirror_capture",
+        "accidental_phone_snapshot",
+        "service_staff_id_photo",
+        "dashcam_reflection_capture",
+    },
+    "camera_direction": {
+        "long_lens_compressed_direction",
+        "reflected_in_mirror_direction",
+        "through_crowd_gap_direction",
+        "over_railing_down_direction",
+        "elevator_corner_camera_direction",
+        "sidemirror_reflection_direction",
+        "from_table_edge_hidden_camera",
+        "from_inside_service_window",
+    },
+    "wearable_accessory": {
+        "discreet_earpiece",
+        "staff_lanyard_id",
+        "plain_wristwatch_timing",
+        "tinted_sunglasses_indoor",
+        "wide_brim_hat_shadow",
+        "high_collar_coat",
+        "silk_opera_gloves",
+        "service_apron_tie_cue",
+        "phoenix_hairpin_glint",
+        "camera_strap_cover",
+    },
+    "world": {
+        "surveillance_noir",
+        "period_court_intrigue",
+        "cold_war_espionage_realism",
+        "high_society_gala_world",
+        "service_worker_access_world",
+        "public_transit_tail_world",
+        "ordinary_lifestyle_crack_world",
+        "cover_identity_thriller_world",
+        "dead_drop_signal_world",
+    },
+}
+ASSASSIN_VIEWPOINT_BUNDLE_IDS = {
+    "gallery_reflection_watch",
+    "rooftop_long_lens_overwatch",
+    "night_market_crowd_blend",
+    "service_stairwell_egress",
+    "gala_ballroom_cover_crack",
+    "taxi_sidemirror_tail",
+    "library_silent_signal_drop",
+    "freight_elevator_access",
+    "banquet_kitchen_service_cover",
+    "opera_box_observer",
+    "airport_arrivals_tail",
+    "palace_side_gate_messenger",
+    "parking_kiosk_exit_check",
+    "museum_after_hours_relic",
+    "safehouse_departure_noir",
+}
 
 
 def load_generator():
@@ -3867,16 +4066,17 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         bundle = concept["selected_bundles"][0]
         self.assertEqual(bundle["mixin"], "암살자")
         self.assertTrue(bundle["bundle_id"])
+        self.assertTrue(bundle["aspect"])
         self.assertIn("weight", bundle)
         self.assertEqual(concept["combined_forced_slots"]["costume_style"], ["police_uniform_costume"])
-        for slot in ("prop", "action", "location", "lighting", "mood", "composition"):
+        for slot in bundle["set"]:
             self.assertEqual(concept["combined_forced_slots"][slot], [bundle["set"][slot]])
         self.assertEqual(concept["combined_forced_slots"]["expression"], ["cold_unreadable_stare"])
         self.assertEqual(concept["combined_forced_slots"]["light_type"], ["narrow_spotlight"])
         self.assertEqual(concept["combined_forced_slots"]["light_intensity"], ["deep_shadow_detail"])
         self.assertEqual(concept["combined_forced_slots"]["color"], ["desaturated_cold_blue"])
         self.assertIn("costume_style=police_uniform_costume", payload["forward_args"])
-        for slot in ("prop", "action", "location", "lighting", "mood", "composition"):
+        for slot in bundle["set"]:
             self.assertIn(f"{slot}={bundle['set'][slot]}", payload["forward_args"])
         self.assertIn("expression=cold_unreadable_stare", payload["forward_args"])
         self.assertIn("role outfit is a cover identity/disguise for the assassin persona", payload["forward_args"])
@@ -3984,6 +4184,84 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             self.assertIn("non-graphic staged character photo with no depicted injury, blood, victim, or violence", item["prompt_en"])
 
         self.assertGreaterEqual(len(selected_bundle_ids), 3)
+
+    def test_assassin_viewpoint_presets_tags_and_cliche_weights_registered(self):
+        slots = self.data["slots"]
+        preset_ids = {preset["id"] for preset in self.data["presets"]}
+        family_ids = {family["id"] for family in self.data.get("preset_families", [])}
+        metadata = self.data["semantic_metadata"]
+
+        self.assertTrue(ASSASSIN_VIEWPOINT_PRESET_IDS.issubset(preset_ids))
+        self.assertTrue(ASSASSIN_VIEWPOINT_FAMILY_IDS.issubset(family_ids))
+        for slot, expected_ids in ASSASSIN_VIEWPOINT_TAG_IDS.items():
+            actual_ids = {entry["id"] for entry in slots[slot]}
+            self.assertTrue(expected_ids.issubset(actual_ids), slot)
+
+        cliche_weights = metadata["cliche_weights"]
+        self.assertLess(cliche_weights["prop"]["black_leather_gloves_prop"], 1.0)
+        self.assertLess(cliche_weights["prop"]["single_playing_card_calling_card_prop"], 1.0)
+        self.assertLess(cliche_weights["composition"]["cctv_corner_frame"], 1.0)
+        self.assertLess(cliche_weights["action"]["doorframe_shadow_watch"], 1.0)
+
+    def test_assassin_viewpoint_bundles_expose_aspects_and_extended_slots(self):
+        recipes = json.loads((SKILL_DIR / "assets" / "concept_recipes.json").read_text(encoding="utf-8"))
+        assassin = recipes["mixins"]["암살자"]
+        bundle_ids = {bundle["id"] for bundle in assassin["bundles"]}
+        aspects = {bundle.get("aspect") for bundle in assassin["bundles"]}
+        override_slots = set(assassin["bundle_override_slots"])
+
+        self.assertTrue(ASSASSIN_VIEWPOINT_BUNDLE_IDS.issubset(bundle_ids))
+        self.assertGreaterEqual(len(aspects), 10)
+        for slot in ("camera_direction", "capture_context", "lens", "wearable_accessory"):
+            self.assertIn(slot, override_slots)
+        self.assertEqual(
+            recipes["mixin_diversity_policy"]["암살자"]["min_distinct_aspects_per_batch"],
+            5,
+        )
+
+    def test_assassin_recent_role_batch_covers_viewpoint_aspects(self):
+        cases = [
+            ("카리나 메이드 암살자", 7401),
+            ("윈터 간호사 암살자", 7402),
+            ("닝닝 경찰 암살자", 7403),
+            ("지젤 광부 암살자", 7404),
+            ("아일릿 원희 사복 여친 암살자", 7405),
+            ("설윤 공주 암살자", 7406),
+            ("유나 바니걸 암살자", 7407),
+        ]
+        bundle_ids = set()
+        aspects = set()
+        props = set()
+        compositions = set()
+        extended_slot_hits = set()
+
+        for concept, seed in cases:
+            explanation = self.run_wrapper_json(
+                "--concept",
+                concept,
+                "--explain-concept",
+                "--selection-mode",
+                "rule",
+                "--seed",
+                str(seed),
+                "--plain",
+                "--no-negative",
+            )
+            selected_bundle = explanation["concepts"][0]["selected_bundles"][0]
+            bundle_ids.add(selected_bundle["bundle_id"])
+            aspects.add(selected_bundle["aspect"])
+            props.add(selected_bundle["set"]["prop"])
+            compositions.add(selected_bundle["set"]["composition"])
+            extended_slot_hits.update(
+                slot for slot in ("camera_direction", "capture_context", "lens", "wearable_accessory")
+                if slot in selected_bundle["set"]
+            )
+
+        self.assertGreaterEqual(len(bundle_ids), 7)
+        self.assertGreaterEqual(len(aspects), 5)
+        self.assertGreaterEqual(len(props), 5)
+        self.assertGreaterEqual(len(compositions), 5)
+        self.assertGreaterEqual(len(extended_slot_hits), 3)
 
     def test_assassin_default_weapon_cue_per_role_preserves_bundle_slots(self):
         cases = [
