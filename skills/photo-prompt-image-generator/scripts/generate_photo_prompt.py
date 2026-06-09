@@ -679,10 +679,16 @@ def match_concept_role(concept: str, roles: dict[str, Any]) -> tuple[str | None,
     return None, stripped, {}
 
 
-def match_concept_mixins(concept: str, mixins: dict[str, Any]) -> list[tuple[str, dict[str, Any]]]:
+def match_concept_mixins(
+    concept: str,
+    mixins: dict[str, Any],
+    protected_phrases: Sequence[str] = (),
+) -> list[tuple[str, dict[str, Any]]]:
     stripped = concept.strip()
     matches: list[tuple[str, dict[str, Any]]] = []
     for mixin in sorted(mixins, key=len, reverse=True):
+        if any(mixin and mixin in phrase for phrase in protected_phrases):
+            continue
         if mixin and mixin in stripped:
             matches.append((mixin, dict(mixins[mixin] or {})))
     return matches
@@ -895,7 +901,9 @@ def resolve_concepts(
         if not concept:
             continue
         concept = canonicalize_concept(concept, recipes)
-        mixin_matches = match_concept_mixins(concept, mixins)
+        protected_role, _, _ = match_concept_role(concept, roles)
+        protected_phrases = [protected_role] if protected_role else []
+        mixin_matches = match_concept_mixins(concept, mixins, protected_phrases)
         role_concept = concept_without_mixins(concept, [mixin for mixin, _ in mixin_matches])
         role, name, recipe = match_concept_role(role_concept or concept, roles)
         selected_bundles: list[dict[str, Any]] = []

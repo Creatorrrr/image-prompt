@@ -6084,6 +6084,7 @@ def build_fields(picked: Dict[str, Entry], lang: str, data: Optional[JsonDict] =
     )
     style_slots = (
         "world",
+        "numinous_register",
         "aesthetic_trend",
         "film_emulation",
         "color",
@@ -6094,6 +6095,13 @@ def build_fields(picked: Dict[str, Entry], lang: str, data: Optional[JsonDict] =
         "surreal_physics_detail",
         "adult_context",
         "caption_context",
+    )
+    concept_cue_slots = (
+        "gaze_target",
+        "gesture_pose",
+        "social_relation",
+        "symbolic_motif",
+        "atmosphere_fx",
     )
     detail_slots = (
         "wearable_accessory",
@@ -6122,6 +6130,9 @@ def build_fields(picked: Dict[str, Entry], lang: str, data: Optional[JsonDict] =
         style_parts = [values[s] for s in style_slots if values.get(s)]
         style_sentence = ensure_period("전체 분위기는 " + ", ".join(style_parts)) if style_parts else ""
 
+        concept_cue_parts = [values[s] for s in concept_cue_slots if values.get(s)]
+        concept_sentence = ensure_period("개념 단서는 " + ", ".join(concept_cue_parts)) if concept_cue_parts else ""
+
         detail_parts = [values[s] for s in detail_slots if values.get(s)]
         detail_sentence = ensure_period("디테일은 " + ", ".join(detail_parts)) if detail_parts else ""
     else:
@@ -6135,6 +6146,9 @@ def build_fields(picked: Dict[str, Entry], lang: str, data: Optional[JsonDict] =
         style_parts = [values[s] for s in style_slots if values.get(s)]
         style_sentence = ensure_period("Overall mood: " + ", ".join(style_parts)) if style_parts else ""
 
+        concept_cue_parts = [values[s] for s in concept_cue_slots if values.get(s)]
+        concept_sentence = ensure_period("Concept cues: " + ", ".join(concept_cue_parts)) if concept_cue_parts else ""
+
         detail_parts = [values[s] for s in detail_slots if values.get(s)]
         detail_sentence = ensure_period("Finishing details: " + ", ".join(detail_parts)) if detail_parts else ""
 
@@ -6146,6 +6160,7 @@ def build_fields(picked: Dict[str, Entry], lang: str, data: Optional[JsonDict] =
         "object_phrase": object_phrase,
         "technique_sentence": technique_sentence,
         "style_sentence": style_sentence,
+        "concept_sentence": concept_sentence,
         "detail_sentence": detail_sentence,
     }
     return fields
@@ -6473,8 +6488,17 @@ def build_prompt_sections(
     sections["intent"] = selected(("medium", "genre", "format", "quality"))
     sections["subject"] = [
         fields.get("subject_with_mods") or values.get("subject", "")
-    ]
-    sections["action"] = selected(("action", "prop"))
+    ] + selected(("gaze_target",))
+    sections["action"] = selected(
+        (
+            "action",
+            "gesture_pose",
+            "social_relation",
+            "prop",
+            "symbolic_motif",
+            "atmosphere_fx",
+        )
+    )
     sections["scene"] = [
         fields.get("location_phrase") or values.get("location", ""),
         values.get("time_of_day", ""),
@@ -6498,7 +6522,7 @@ def build_prompt_sections(
     sections["lighting"] = selected(
         ("lighting", "light_direction", "light_type", "light_intensity", "light_shape")
     )
-    sections["palette_mood"] = selected(("color", "mood", "adult_context", "caption_context"))
+    sections["palette_mood"] = selected(("numinous_register", "color", "mood", "adult_context", "caption_context"))
     sections["finish"] = selected(
         (
             "film_emulation",
