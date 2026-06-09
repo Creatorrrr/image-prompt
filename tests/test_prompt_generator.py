@@ -6319,6 +6319,89 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         ):
             self.assertIn(phrase, prompt)
 
+    def test_visible_multi_subject_slots_render_and_drop_duplicate_faces_negative(self):
+        item = self.generate(
+            "contract_exchange_table_portrait",
+            seed=1401,
+            forced_choices={
+                "subject": ["office_worker"],
+                "partner_role": ["in_frame_counterparty"],
+                "partner_framing": ["two_faces_visible_medium_shot"],
+                "composition": ["first_person_contract_handoff"],
+            },
+            include_negative=True,
+            negative_count=99,
+        )
+
+        prompt = item["prompt_en"]
+        self.assertIn("an in-frame counterparty seated across from the subject", prompt)
+        self.assertIn("two faces visible in a medium shot", prompt)
+        self.assertNotIn("duplicate faces", item["negative_en"])
+        self.assertIn("unrealistic hands", item["negative_en"])
+
+    def test_single_subject_presets_do_not_auto_select_visible_partner_slots(self):
+        item = self.generate(
+            "street_documentary",
+            seed=1402,
+            forced_choices={
+                "subject": ["office_worker"],
+            },
+            include_negative=True,
+            negative_count=99,
+        )
+
+        self.assertNotIn("partner_role", item["choices"])
+        self.assertNotIn("partner_framing", item["choices"])
+        self.assertIn("duplicate faces", item["negative_en"])
+        self.assertNotIn("in-frame counterparty", item["prompt_en"])
+        self.assertNotIn("two faces visible", item["prompt_en"])
+
+    def test_priority_multi_subject_presets_accept_visible_partner_framing(self):
+        cases = {
+            "contract_exchange_table_portrait": ("in_frame_counterparty", "face_to_face_table_two_shot"),
+            "hand_to_hand_envelope_drop": ("in_frame_recipient", "two_faces_visible_medium_shot"),
+            "two_person_rival_reflection": ("in_frame_rival", "foreground_background_power_two_shot"),
+            "shared_umbrella_two_shot": ("in_frame_companion", "side_by_side_two_shot"),
+        }
+
+        for index, (preset, (role_id, framing_id)) in enumerate(cases.items(), start=1):
+            with self.subTest(preset=preset):
+                item = self.generate(
+                    preset,
+                    seed=1410 + index,
+                    forced_choices={
+                        "subject": ["office_worker"],
+                        "partner_role": [role_id],
+                        "partner_framing": [framing_id],
+                    },
+                    include_negative=False,
+                )
+
+                self.assertEqual(item["choices"]["partner_role"]["id"], role_id)
+                self.assertEqual(item["choices"]["partner_framing"]["id"], framing_id)
+                self.assertIn("in-frame", item["prompt_en"])
+                self.assertTrue(
+                    "two-shot" in item["prompt_en"] or "two faces visible" in item["prompt_en"],
+                    item["prompt_en"],
+                )
+
+    def test_small_group_documentary_preset_supports_visible_group_framing(self):
+        item = self.generate(
+            "small_group_interaction_documentary",
+            seed=1420,
+            forced_choices={
+                "subject": ["office_worker"],
+                "partner_role": ["in_frame_companion"],
+                "partner_framing": ["small_group_visible_midshot"],
+            },
+            include_negative=True,
+            negative_count=99,
+        )
+
+        self.assertEqual(item["choices"]["partner_framing"]["id"], "small_group_visible_midshot")
+        self.assertIn("small visible group of three to five people in a mid-shot", item["prompt_en"])
+        self.assertNotIn("duplicate faces", item["negative_en"])
+
     def test_social_character_slots_presets_and_tags_are_registered(self):
         slots = self.data["slots"]
         preset_ids = {preset["id"] for preset in self.data["presets"]}

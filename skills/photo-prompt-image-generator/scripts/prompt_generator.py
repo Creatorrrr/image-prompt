@@ -570,6 +570,10 @@ def picked_context_tokens(picked: Dict[str, Entry]) -> Set[str]:
     return tokens
 
 
+def is_visible_multi_subject_prompt(picked: Dict[str, Entry]) -> bool:
+    return bool(picked_context_tokens(picked) & {"visible_partner", "multi_subject"})
+
+
 def picked_core_context_tokens(picked: Dict[str, Entry]) -> Set[str]:
     tokens: Set[str] = set()
     for slot in ("medium", "genre", "subject", "location"):
@@ -7195,6 +7199,9 @@ def choose_negative_entries(
             if localize(entry, "en") not in seen:
                 entries.append(entry)
                 seen.add(localize(entry, "en"))
+
+    if is_visible_multi_subject_prompt(picked):
+        entries = [entry for entry in entries if localize(entry, "en").strip().lower() != "duplicate faces"]
 
     return entries
 

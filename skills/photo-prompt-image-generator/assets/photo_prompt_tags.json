@@ -1,6 +1,6 @@
 {
-  "version": "1.13",
-  "description": "Photographic prompt dictionary with expanded concept-role, folklore, personality, season, era, digital-entity, and environmental-transformation coverage for semantic and recipe-driven prompt generation. Version 1.13 expands robot semantics with disembodied AI, screen-face terminals, sensory apparatus, fabrication origin, lifecycle wear/repair, drones, mecha, prosthetics, domestic systems, surveillance networks and AI-temple metaphors.",
+  "version": "1.14",
+  "description": "Photographic prompt dictionary with expanded concept-role, folklore, personality, season, era, digital-entity, and environmental-transformation coverage for semantic and recipe-driven prompt generation. Version 1.13 expands robot semantics with disembodied AI, screen-face terminals, sensory apparatus, fabrication origin, lifecycle wear/repair, drones, mecha, prosthetics, domestic systems, surveillance networks and AI-temple metaphors. Version 1.14 adds opt-in visible multi-subject relationship framing, visible in-frame partner roles, and a small-group documentary preset while preserving single-subject defaults.",
   "facet_vocab": {
     "subject_kind": [
       "human",
@@ -32519,6 +32519,272 @@
       "family": "crowd_blend_candid_family"
     },
     {
+      "id": "small_group_interaction_documentary",
+      "ko": "소규모 그룹 상호작용 다큐멘터리",
+      "en": "small-group interaction documentary",
+      "weight": 0.64,
+      "template_style": "natural",
+      "family": "crowd_blend_candid_family",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "partner_role",
+          "probability": 0.82,
+          "priority_boost": true
+        },
+        {
+          "slot": "partner_framing",
+          "probability": 0.85,
+          "priority_boost": true
+        },
+        {
+          "slot": "relational_action",
+          "probability": 0.7,
+          "priority_boost": true
+        },
+        {
+          "slot": "prop_direction",
+          "probability": 0.55,
+          "priority_boost": true
+        },
+        {
+          "slot": "gaze_target",
+          "probability": 0.62,
+          "priority_boost": true
+        },
+        {
+          "slot": "body_orientation",
+          "probability": 0.5,
+          "priority_boost": true
+        },
+        {
+          "slot": "proxemics",
+          "probability": 0.58,
+          "priority_boost": true
+        },
+        {
+          "slot": "contact_point",
+          "probability": 0.3,
+          "priority_boost": true
+        },
+        {
+          "slot": "prop",
+          "probability": 0.45,
+          "priority_boost": true
+        },
+        {
+          "slot": "subject_framing",
+          "probability": 0.62,
+          "priority_boost": true
+        },
+        {
+          "slot": "camera_type",
+          "probability": 0.35
+        },
+        {
+          "slot": "focus",
+          "probability": 0.4
+        },
+        {
+          "slot": "motion",
+          "probability": 0.45
+        },
+        {
+          "slot": "format",
+          "probability": 0.35
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "documentary_photo",
+            "urban_candid_photo",
+            "street_snapshot",
+            "magazine_feature"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "documentary",
+            "lifestyle",
+            "street",
+            "portrait"
+          ]
+        },
+        "subject": {
+          "tags_any": [
+            "human"
+          ]
+        },
+        "action": {
+          "ids": [
+            "standing_silence",
+            "checking_phone",
+            "waiting_train",
+            "pouring_coffee",
+            "walking_rain"
+          ]
+        },
+        "location": {
+          "ids": [
+            "campus_cafe",
+            "quiet_cafe",
+            "subway_platform",
+            "train_station_concourse",
+            "crowded_night_market"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "fluorescent",
+            "overcast",
+            "neon",
+            "market_string_lights"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "tight_two_shot_interaction",
+            "group_two_shot_composition",
+            "crowded_layers",
+            "triangulated_two_people_one_object"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "casual_authentic",
+            "intimate",
+            "communal_warmth",
+            "public_place_paranoia"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "candid_imperfect",
+            "not_overdone"
+          ]
+        },
+        "partner_role": {
+          "ids": [
+            "in_frame_companion",
+            "in_frame_recipient",
+            "in_frame_counterparty"
+          ]
+        },
+        "partner_framing": {
+          "ids": [
+            "small_group_visible_midshot",
+            "shared_frame_equal_weight",
+            "side_by_side_two_shot",
+            "two_faces_visible_medium_shot"
+          ]
+        },
+        "relational_action": {
+          "ids": [
+            "two_people_sitting_without_words",
+            "saving_seat_with_bag",
+            "pushing_prop_toward_partner",
+            "placing_prop_on_table_for_partner"
+          ]
+        },
+        "prop_direction": {
+          "ids": [
+            "set_down_between_two",
+            "neutral_held_self",
+            "kept_as_soft_barrier"
+          ]
+        },
+        "gaze_target": {
+          "ids": [
+            "to_partner_face_then_away",
+            "to_handoff_object",
+            "window_avoiding_partner"
+          ]
+        },
+        "body_orientation": {
+          "ids": [
+            "half_turned_shoulder_to_partner",
+            "turned_shoulders_guarded"
+          ]
+        },
+        "proxemics": {
+          "ids": [
+            "side_by_side_silent_distance",
+            "table_edge_distance",
+            "awkward_close_distance"
+          ]
+        },
+        "contact_point": {
+          "ids": [
+            "no_contact_just_close",
+            "fingertip_brush"
+          ]
+        },
+        "subject_framing": {
+          "ids": [
+            "group_two_shot",
+            "parallel_two_shot_table_framing",
+            "two_shot_handoff_waist_up"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "full_frame_mirrorless",
+            "smartphone_camera",
+            "compact_digital_camera"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "deep_focus",
+            "eye_focus",
+            "zone_focus_street"
+          ]
+        },
+        "motion": {
+          "ids": [
+            "handheld_microshake",
+            "social_snap_tilt",
+            "crowd_motion_blur_around_still_subject"
+          ]
+        },
+        "format": {
+          "ids": [
+            "vertical_4_5",
+            "horizontal_3_2",
+            "vertical_9_16"
+          ]
+        }
+      },
+      "tags": [
+        "portrait",
+        "documentary",
+        "relationship",
+        "multi_subject"
+      ],
+      "embedding_text": "small group of three to five visible people interacting naturally in a documentary mid-shot"
+    },
+    {
       "id": "exit_route_threshold",
       "ko": "이탈 동선 문턱 긴장",
       "en": "exit route threshold",
@@ -47548,6 +47814,61 @@
         {
           "slot": "surface_material",
           "probability": 0.25
+        },
+        {
+          "slot": "partner_role",
+          "probability": 0.78,
+          "priority_boost": true
+        },
+        {
+          "slot": "partner_framing",
+          "probability": 0.76,
+          "priority_boost": true
+        },
+        {
+          "slot": "relational_action",
+          "probability": 0.72,
+          "priority_boost": true
+        },
+        {
+          "slot": "prop_direction",
+          "probability": 0.65,
+          "priority_boost": true
+        },
+        {
+          "slot": "gaze_target",
+          "probability": 0.66,
+          "priority_boost": true
+        },
+        {
+          "slot": "body_orientation",
+          "probability": 0.55,
+          "priority_boost": true
+        },
+        {
+          "slot": "proxemics",
+          "probability": 0.55,
+          "priority_boost": true
+        },
+        {
+          "slot": "contact_point",
+          "probability": 0.35,
+          "priority_boost": true
+        },
+        {
+          "slot": "intent_state",
+          "probability": 0.58,
+          "priority_boost": true
+        },
+        {
+          "slot": "emotional_contradiction",
+          "probability": 0.46,
+          "priority_boost": true
+        },
+        {
+          "slot": "viewer_position",
+          "probability": 0.3,
+          "priority_boost": true
         }
       ],
       "filters": {
@@ -47624,6 +47945,74 @@
             "shared_umbrella_two_prop",
             "transparent_dome_umbrella",
             "clear_umbrella"
+          ]
+        },
+        "partner_role": {
+          "ids": [
+            "in_frame_companion",
+            "in_frame_recipient",
+            "in_frame_counterparty"
+          ]
+        },
+        "partner_framing": {
+          "ids": [
+            "side_by_side_two_shot",
+            "shared_frame_equal_weight",
+            "two_faces_visible_medium_shot"
+          ]
+        },
+        "relational_action": {
+          "ids": [
+            "holding_umbrella_over_partner",
+            "two_people_sitting_without_words"
+          ]
+        },
+        "prop_direction": {
+          "ids": [
+            "neutral_held_self",
+            "set_down_between_two"
+          ]
+        },
+        "gaze_target": {
+          "ids": [
+            "to_partner_face_then_away",
+            "window_avoiding_partner"
+          ]
+        },
+        "body_orientation": {
+          "ids": [
+            "half_turned_shoulder_to_partner",
+            "body_blocks_path_softly"
+          ]
+        },
+        "proxemics": {
+          "ids": [
+            "under_one_umbrella_distance",
+            "awkward_close_distance"
+          ]
+        },
+        "contact_point": {
+          "ids": [
+            "hand_on_umbrella_handle_shared",
+            "no_contact_just_close"
+          ]
+        },
+        "intent_state": {
+          "ids": [
+            "caught_in_kindness",
+            "withholding_confession"
+          ]
+        },
+        "emotional_contradiction": {
+          "ids": [
+            "public_denial_private_care",
+            "cold_face_warm_hands"
+          ]
+        },
+        "viewer_position": {
+          "ids": [
+            "viewer_as_witness",
+            "viewer_as_late_arrival"
           ]
         }
       },
@@ -48827,7 +49216,12 @@
             "off_frame_partner_romantic",
             "off_frame_colleague",
             "off_frame_viewer_recipient",
-            "in_frame_hand_only"
+            "in_frame_hand_only",
+            "in_frame_recipient",
+            "in_frame_counterparty",
+            "in_frame_companion",
+            "in_frame_customer",
+            "in_frame_service_staff"
           ]
         },
         "partner_framing": {
@@ -48835,7 +49229,11 @@
             "partner_hand_visible_only",
             "partner_shoulder_blur_foreground",
             "recipient_over_shoulder_blur",
-            "between_two_objects_no_partner_visible"
+            "between_two_objects_no_partner_visible",
+            "two_faces_visible_medium_shot",
+            "side_by_side_two_shot",
+            "face_to_face_table_two_shot",
+            "shared_frame_equal_weight"
           ]
         },
         "gaze_target": {
@@ -49214,7 +49612,11 @@
         "partner_role": {
           "ids": [
             "off_frame_patient",
-            "off_frame_colleague"
+            "off_frame_colleague",
+            "in_frame_recipient",
+            "in_frame_counterparty",
+            "in_frame_companion",
+            "in_frame_service_staff"
           ]
         },
         "partner_framing": {
@@ -49222,7 +49624,11 @@
             "partner_hand_visible_only",
             "partner_shoulder_blur_foreground",
             "recipient_over_shoulder_blur",
-            "between_two_objects_no_partner_visible"
+            "between_two_objects_no_partner_visible",
+            "two_faces_visible_medium_shot",
+            "side_by_side_two_shot",
+            "face_to_face_table_two_shot",
+            "shared_frame_equal_weight"
           ]
         },
         "gaze_target": {
@@ -49601,7 +50007,10 @@
             "off_frame_partner_romantic",
             "off_frame_colleague",
             "off_frame_viewer_recipient",
-            "in_frame_hand_only"
+            "in_frame_hand_only",
+            "in_frame_recipient",
+            "in_frame_counterparty",
+            "in_frame_companion"
           ]
         },
         "partner_framing": {
@@ -49609,7 +50018,11 @@
             "partner_hand_visible_only",
             "partner_shoulder_blur_foreground",
             "recipient_over_shoulder_blur",
-            "between_two_objects_no_partner_visible"
+            "between_two_objects_no_partner_visible",
+            "two_faces_visible_medium_shot",
+            "side_by_side_two_shot",
+            "face_to_face_table_two_shot",
+            "shared_frame_equal_weight"
           ]
         },
         "gaze_target": {
@@ -49995,7 +50408,10 @@
             "off_frame_partner_romantic",
             "off_frame_colleague",
             "off_frame_viewer_recipient",
-            "in_frame_hand_only"
+            "in_frame_hand_only",
+            "in_frame_recipient",
+            "in_frame_counterparty",
+            "in_frame_companion"
           ]
         },
         "partner_framing": {
@@ -50003,7 +50419,11 @@
             "partner_hand_visible_only",
             "partner_shoulder_blur_foreground",
             "recipient_over_shoulder_blur",
-            "between_two_objects_no_partner_visible"
+            "between_two_objects_no_partner_visible",
+            "two_faces_visible_medium_shot",
+            "side_by_side_two_shot",
+            "face_to_face_table_two_shot",
+            "shared_frame_equal_weight"
           ]
         },
         "gaze_target": {
@@ -50385,7 +50805,10 @@
             "off_frame_partner_romantic",
             "off_frame_colleague",
             "off_frame_viewer_recipient",
-            "in_frame_hand_only"
+            "in_frame_hand_only",
+            "in_frame_recipient",
+            "in_frame_counterparty",
+            "in_frame_companion"
           ]
         },
         "partner_framing": {
@@ -50393,7 +50816,11 @@
             "partner_hand_visible_only",
             "partner_shoulder_blur_foreground",
             "recipient_over_shoulder_blur",
-            "between_two_objects_no_partner_visible"
+            "between_two_objects_no_partner_visible",
+            "two_faces_visible_medium_shot",
+            "side_by_side_two_shot",
+            "face_to_face_table_two_shot",
+            "shared_frame_equal_weight"
           ]
         },
         "gaze_target": {
@@ -50772,7 +51199,10 @@
             "off_frame_partner_romantic",
             "off_frame_colleague",
             "off_frame_viewer_recipient",
-            "in_frame_hand_only"
+            "in_frame_hand_only",
+            "in_frame_recipient",
+            "in_frame_counterparty",
+            "in_frame_companion"
           ]
         },
         "partner_framing": {
@@ -50780,7 +51210,11 @@
             "partner_hand_visible_only",
             "partner_shoulder_blur_foreground",
             "recipient_over_shoulder_blur",
-            "between_two_objects_no_partner_visible"
+            "between_two_objects_no_partner_visible",
+            "two_faces_visible_medium_shot",
+            "side_by_side_two_shot",
+            "face_to_face_table_two_shot",
+            "shared_frame_equal_weight"
           ]
         },
         "gaze_target": {
@@ -51161,7 +51595,10 @@
             "off_frame_partner_romantic",
             "off_frame_colleague",
             "off_frame_viewer_recipient",
-            "in_frame_hand_only"
+            "in_frame_hand_only",
+            "in_frame_recipient",
+            "in_frame_counterparty",
+            "in_frame_companion"
           ]
         },
         "partner_framing": {
@@ -51169,7 +51606,11 @@
             "partner_hand_visible_only",
             "partner_shoulder_blur_foreground",
             "recipient_over_shoulder_blur",
-            "between_two_objects_no_partner_visible"
+            "between_two_objects_no_partner_visible",
+            "two_faces_visible_medium_shot",
+            "side_by_side_two_shot",
+            "face_to_face_table_two_shot",
+            "shared_frame_equal_weight"
           ]
         },
         "gaze_target": {
@@ -51550,7 +51991,10 @@
             "off_frame_partner_romantic",
             "off_frame_colleague",
             "off_frame_viewer_recipient",
-            "in_frame_hand_only"
+            "in_frame_hand_only",
+            "in_frame_recipient",
+            "in_frame_counterparty",
+            "in_frame_companion"
           ]
         },
         "partner_framing": {
@@ -51558,7 +52002,11 @@
             "partner_hand_visible_only",
             "partner_shoulder_blur_foreground",
             "recipient_over_shoulder_blur",
-            "between_two_objects_no_partner_visible"
+            "between_two_objects_no_partner_visible",
+            "two_faces_visible_medium_shot",
+            "side_by_side_two_shot",
+            "face_to_face_table_two_shot",
+            "shared_frame_equal_weight"
           ]
         },
         "gaze_target": {
@@ -51939,7 +52387,10 @@
             "off_frame_partner_romantic",
             "off_frame_colleague",
             "off_frame_viewer_recipient",
-            "in_frame_hand_only"
+            "in_frame_hand_only",
+            "in_frame_recipient",
+            "in_frame_counterparty",
+            "in_frame_companion"
           ]
         },
         "partner_framing": {
@@ -51947,7 +52398,11 @@
             "partner_hand_visible_only",
             "partner_shoulder_blur_foreground",
             "recipient_over_shoulder_blur",
-            "between_two_objects_no_partner_visible"
+            "between_two_objects_no_partner_visible",
+            "two_faces_visible_medium_shot",
+            "side_by_side_two_shot",
+            "face_to_face_table_two_shot",
+            "shared_frame_equal_weight"
           ]
         },
         "gaze_target": {
@@ -52329,7 +52784,10 @@
             "off_frame_partner_romantic",
             "off_frame_colleague",
             "off_frame_viewer_recipient",
-            "in_frame_hand_only"
+            "in_frame_hand_only",
+            "in_frame_recipient",
+            "in_frame_counterparty",
+            "in_frame_companion"
           ]
         },
         "partner_framing": {
@@ -52337,7 +52795,11 @@
             "partner_hand_visible_only",
             "partner_shoulder_blur_foreground",
             "recipient_over_shoulder_blur",
-            "between_two_objects_no_partner_visible"
+            "between_two_objects_no_partner_visible",
+            "two_faces_visible_medium_shot",
+            "side_by_side_two_shot",
+            "face_to_face_table_two_shot",
+            "shared_frame_equal_weight"
           ]
         },
         "gaze_target": {
@@ -52719,7 +53181,11 @@
             "off_frame_partner_romantic",
             "off_frame_colleague",
             "off_frame_viewer_recipient",
-            "in_frame_hand_only"
+            "in_frame_hand_only",
+            "in_frame_recipient",
+            "in_frame_counterparty",
+            "in_frame_companion",
+            "in_frame_service_staff"
           ]
         },
         "partner_framing": {
@@ -52727,7 +53193,11 @@
             "partner_hand_visible_only",
             "partner_shoulder_blur_foreground",
             "recipient_over_shoulder_blur",
-            "between_two_objects_no_partner_visible"
+            "between_two_objects_no_partner_visible",
+            "two_faces_visible_medium_shot",
+            "side_by_side_two_shot",
+            "face_to_face_table_two_shot",
+            "shared_frame_equal_weight"
           ]
         },
         "gaze_target": {
@@ -53105,7 +53575,12 @@
             "off_frame_partner_romantic",
             "off_frame_colleague",
             "off_frame_viewer_recipient",
-            "in_frame_hand_only"
+            "in_frame_hand_only",
+            "in_frame_recipient",
+            "in_frame_counterparty",
+            "in_frame_companion",
+            "in_frame_customer",
+            "in_frame_service_staff"
           ]
         },
         "partner_framing": {
@@ -53113,7 +53588,11 @@
             "partner_hand_visible_only",
             "partner_shoulder_blur_foreground",
             "recipient_over_shoulder_blur",
-            "between_two_objects_no_partner_visible"
+            "between_two_objects_no_partner_visible",
+            "two_faces_visible_medium_shot",
+            "side_by_side_two_shot",
+            "face_to_face_table_two_shot",
+            "shared_frame_equal_weight"
           ]
         },
         "gaze_target": {
@@ -53494,7 +53973,10 @@
             "off_frame_partner_romantic",
             "off_frame_colleague",
             "off_frame_viewer_recipient",
-            "in_frame_hand_only"
+            "in_frame_hand_only",
+            "in_frame_recipient",
+            "in_frame_counterparty",
+            "in_frame_companion"
           ]
         },
         "partner_framing": {
@@ -53502,7 +53984,11 @@
             "partner_hand_visible_only",
             "partner_shoulder_blur_foreground",
             "recipient_over_shoulder_blur",
-            "between_two_objects_no_partner_visible"
+            "between_two_objects_no_partner_visible",
+            "two_faces_visible_medium_shot",
+            "side_by_side_two_shot",
+            "face_to_face_table_two_shot",
+            "shared_frame_equal_weight"
           ]
         },
         "gaze_target": {
@@ -53879,7 +54365,12 @@
             "off_frame_partner_romantic",
             "off_frame_colleague",
             "off_frame_viewer_recipient",
-            "in_frame_hand_only"
+            "in_frame_hand_only",
+            "in_frame_recipient",
+            "in_frame_counterparty",
+            "in_frame_companion",
+            "in_frame_customer",
+            "in_frame_service_staff"
           ]
         },
         "partner_framing": {
@@ -53887,7 +54378,11 @@
             "partner_hand_visible_only",
             "partner_shoulder_blur_foreground",
             "recipient_over_shoulder_blur",
-            "between_two_objects_no_partner_visible"
+            "between_two_objects_no_partner_visible",
+            "two_faces_visible_medium_shot",
+            "side_by_side_two_shot",
+            "face_to_face_table_two_shot",
+            "shared_frame_equal_weight"
           ]
         },
         "gaze_target": {
@@ -54276,7 +54771,10 @@
             "off_frame_partner_romantic",
             "off_frame_colleague",
             "off_frame_viewer_recipient",
-            "in_frame_hand_only"
+            "in_frame_hand_only",
+            "in_frame_recipient",
+            "in_frame_counterparty",
+            "in_frame_companion"
           ]
         },
         "partner_framing": {
@@ -54284,7 +54782,11 @@
             "partner_hand_visible_only",
             "partner_shoulder_blur_foreground",
             "recipient_over_shoulder_blur",
-            "between_two_objects_no_partner_visible"
+            "between_two_objects_no_partner_visible",
+            "two_faces_visible_medium_shot",
+            "side_by_side_two_shot",
+            "face_to_face_table_two_shot",
+            "shared_frame_equal_weight"
           ]
         },
         "gaze_target": {
@@ -54664,7 +55166,10 @@
             "off_frame_partner_romantic",
             "off_frame_colleague",
             "off_frame_viewer_recipient",
-            "in_frame_hand_only"
+            "in_frame_hand_only",
+            "in_frame_recipient",
+            "in_frame_counterparty",
+            "in_frame_companion"
           ]
         },
         "partner_framing": {
@@ -54672,7 +55177,11 @@
             "partner_hand_visible_only",
             "partner_shoulder_blur_foreground",
             "recipient_over_shoulder_blur",
-            "between_two_objects_no_partner_visible"
+            "between_two_objects_no_partner_visible",
+            "two_faces_visible_medium_shot",
+            "side_by_side_two_shot",
+            "face_to_face_table_two_shot",
+            "shared_frame_equal_weight"
           ]
         },
         "gaze_target": {
@@ -55059,7 +55568,10 @@
             "off_frame_partner_romantic",
             "off_frame_colleague",
             "off_frame_viewer_recipient",
-            "in_frame_hand_only"
+            "in_frame_hand_only",
+            "in_frame_recipient",
+            "in_frame_counterparty",
+            "in_frame_companion"
           ]
         },
         "partner_framing": {
@@ -55067,7 +55579,11 @@
             "partner_hand_visible_only",
             "partner_shoulder_blur_foreground",
             "recipient_over_shoulder_blur",
-            "between_two_objects_no_partner_visible"
+            "between_two_objects_no_partner_visible",
+            "two_faces_visible_medium_shot",
+            "side_by_side_two_shot",
+            "face_to_face_table_two_shot",
+            "shared_frame_equal_weight"
           ]
         },
         "gaze_target": {
@@ -55452,7 +55968,10 @@
             "off_frame_partner_romantic",
             "off_frame_colleague",
             "off_frame_viewer_recipient",
-            "in_frame_hand_only"
+            "in_frame_hand_only",
+            "in_frame_recipient",
+            "in_frame_counterparty",
+            "in_frame_companion"
           ]
         },
         "partner_framing": {
@@ -55460,7 +55979,11 @@
             "partner_hand_visible_only",
             "partner_shoulder_blur_foreground",
             "recipient_over_shoulder_blur",
-            "between_two_objects_no_partner_visible"
+            "between_two_objects_no_partner_visible",
+            "two_faces_visible_medium_shot",
+            "side_by_side_two_shot",
+            "face_to_face_table_two_shot",
+            "shared_frame_equal_weight"
           ]
         },
         "gaze_target": {
@@ -56224,6 +56747,61 @@
         {
           "slot": "format",
           "probability": 0.25
+        },
+        {
+          "slot": "partner_role",
+          "probability": 0.78,
+          "priority_boost": true
+        },
+        {
+          "slot": "partner_framing",
+          "probability": 0.76,
+          "priority_boost": true
+        },
+        {
+          "slot": "relational_action",
+          "probability": 0.72,
+          "priority_boost": true
+        },
+        {
+          "slot": "prop_direction",
+          "probability": 0.65,
+          "priority_boost": true
+        },
+        {
+          "slot": "gaze_target",
+          "probability": 0.66,
+          "priority_boost": true
+        },
+        {
+          "slot": "body_orientation",
+          "probability": 0.55,
+          "priority_boost": true
+        },
+        {
+          "slot": "proxemics",
+          "probability": 0.55,
+          "priority_boost": true
+        },
+        {
+          "slot": "contact_point",
+          "probability": 0.35,
+          "priority_boost": true
+        },
+        {
+          "slot": "intent_state",
+          "probability": 0.58,
+          "priority_boost": true
+        },
+        {
+          "slot": "emotional_contradiction",
+          "probability": 0.46,
+          "priority_boost": true
+        },
+        {
+          "slot": "viewer_position",
+          "probability": 0.3,
+          "priority_boost": true
         }
       ],
       "filters": {
@@ -56289,6 +56867,76 @@
           "ids": [
             "photoreal",
             "high_detail"
+          ]
+        },
+        "partner_role": {
+          "ids": [
+            "in_frame_counterparty",
+            "in_frame_recipient"
+          ]
+        },
+        "partner_framing": {
+          "ids": [
+            "face_to_face_table_two_shot",
+            "foreground_background_power_two_shot",
+            "two_faces_visible_medium_shot"
+          ]
+        },
+        "relational_action": {
+          "ids": [
+            "pushing_prop_toward_partner",
+            "placing_prop_on_table_for_partner",
+            "withholding_prop_with_smirk"
+          ]
+        },
+        "prop_direction": {
+          "ids": [
+            "toward_partner_handoff",
+            "set_down_between_two",
+            "returned_at_table_edge",
+            "kept_as_soft_barrier"
+          ]
+        },
+        "gaze_target": {
+          "ids": [
+            "to_partner_face_then_away",
+            "to_handoff_object"
+          ]
+        },
+        "body_orientation": {
+          "ids": [
+            "half_turned_shoulder_to_partner",
+            "turned_shoulders_guarded"
+          ]
+        },
+        "proxemics": {
+          "ids": [
+            "formal_counter_distance",
+            "table_edge_distance"
+          ]
+        },
+        "contact_point": {
+          "ids": [
+            "no_contact_just_close",
+            "fingertip_brush"
+          ]
+        },
+        "intent_state": {
+          "ids": [
+            "mid_handoff",
+            "refusing_to_acknowledge"
+          ]
+        },
+        "emotional_contradiction": {
+          "ids": [
+            "formal_distance_private_token",
+            "hostile_posture_protective_object"
+          ]
+        },
+        "viewer_position": {
+          "ids": [
+            "viewer_as_recipient",
+            "viewer_as_witness"
           ]
         }
       },
@@ -56358,6 +57006,61 @@
         {
           "slot": "format",
           "probability": 0.25
+        },
+        {
+          "slot": "partner_role",
+          "probability": 0.78,
+          "priority_boost": true
+        },
+        {
+          "slot": "partner_framing",
+          "probability": 0.76,
+          "priority_boost": true
+        },
+        {
+          "slot": "relational_action",
+          "probability": 0.72,
+          "priority_boost": true
+        },
+        {
+          "slot": "prop_direction",
+          "probability": 0.65,
+          "priority_boost": true
+        },
+        {
+          "slot": "gaze_target",
+          "probability": 0.66,
+          "priority_boost": true
+        },
+        {
+          "slot": "body_orientation",
+          "probability": 0.55,
+          "priority_boost": true
+        },
+        {
+          "slot": "proxemics",
+          "probability": 0.55,
+          "priority_boost": true
+        },
+        {
+          "slot": "contact_point",
+          "probability": 0.35,
+          "priority_boost": true
+        },
+        {
+          "slot": "intent_state",
+          "probability": 0.58,
+          "priority_boost": true
+        },
+        {
+          "slot": "emotional_contradiction",
+          "probability": 0.46,
+          "priority_boost": true
+        },
+        {
+          "slot": "viewer_position",
+          "probability": 0.3,
+          "priority_boost": true
         }
       ],
       "filters": {
@@ -56423,6 +57126,75 @@
           "ids": [
             "photoreal",
             "high_detail"
+          ]
+        },
+        "partner_role": {
+          "ids": [
+            "in_frame_counterparty",
+            "in_frame_recipient",
+            "in_frame_service_staff"
+          ]
+        },
+        "partner_framing": {
+          "ids": [
+            "face_to_face_table_two_shot",
+            "foreground_background_power_two_shot",
+            "two_faces_visible_medium_shot"
+          ]
+        },
+        "relational_action": {
+          "ids": [
+            "pushing_prop_toward_partner",
+            "placing_prop_on_table_for_partner",
+            "withholding_prop_with_smirk"
+          ]
+        },
+        "prop_direction": {
+          "ids": [
+            "returned_at_table_edge",
+            "set_down_between_two",
+            "kept_as_soft_barrier"
+          ]
+        },
+        "gaze_target": {
+          "ids": [
+            "to_partner_face_then_away",
+            "to_handoff_object"
+          ]
+        },
+        "body_orientation": {
+          "ids": [
+            "turned_shoulders_guarded",
+            "half_turned_shoulder_to_partner"
+          ]
+        },
+        "proxemics": {
+          "ids": [
+            "formal_counter_distance",
+            "table_edge_distance"
+          ]
+        },
+        "contact_point": {
+          "ids": [
+            "no_contact_just_close"
+          ]
+        },
+        "intent_state": {
+          "ids": [
+            "refusing_to_acknowledge",
+            "restrained_resolve"
+          ]
+        },
+        "emotional_contradiction": {
+          "ids": [
+            "formal_distance_private_token",
+            "hostile_posture_protective_object"
+          ]
+        },
+        "viewer_position": {
+          "ids": [
+            "viewer_as_recipient",
+            "viewer_as_witness"
           ]
         }
       },
@@ -56492,6 +57264,61 @@
         {
           "slot": "format",
           "probability": 0.25
+        },
+        {
+          "slot": "partner_role",
+          "probability": 0.78,
+          "priority_boost": true
+        },
+        {
+          "slot": "partner_framing",
+          "probability": 0.76,
+          "priority_boost": true
+        },
+        {
+          "slot": "relational_action",
+          "probability": 0.72,
+          "priority_boost": true
+        },
+        {
+          "slot": "prop_direction",
+          "probability": 0.65,
+          "priority_boost": true
+        },
+        {
+          "slot": "gaze_target",
+          "probability": 0.66,
+          "priority_boost": true
+        },
+        {
+          "slot": "body_orientation",
+          "probability": 0.55,
+          "priority_boost": true
+        },
+        {
+          "slot": "proxemics",
+          "probability": 0.55,
+          "priority_boost": true
+        },
+        {
+          "slot": "contact_point",
+          "probability": 0.35,
+          "priority_boost": true
+        },
+        {
+          "slot": "intent_state",
+          "probability": 0.58,
+          "priority_boost": true
+        },
+        {
+          "slot": "emotional_contradiction",
+          "probability": 0.46,
+          "priority_boost": true
+        },
+        {
+          "slot": "viewer_position",
+          "probability": 0.3,
+          "priority_boost": true
         }
       ],
       "filters": {
@@ -56557,6 +57384,76 @@
           "ids": [
             "phone_realism",
             "photoreal"
+          ]
+        },
+        "partner_role": {
+          "ids": [
+            "in_frame_customer",
+            "in_frame_counterparty",
+            "in_frame_recipient"
+          ]
+        },
+        "partner_framing": {
+          "ids": [
+            "face_to_face_table_two_shot",
+            "two_faces_visible_medium_shot",
+            "shared_frame_equal_weight"
+          ]
+        },
+        "relational_action": {
+          "ids": [
+            "pushing_prop_toward_partner",
+            "placing_prop_on_table_for_partner",
+            "offering_prop_with_averted_gaze"
+          ]
+        },
+        "prop_direction": {
+          "ids": [
+            "toward_partner_handoff",
+            "set_down_between_two",
+            "returned_at_table_edge"
+          ]
+        },
+        "gaze_target": {
+          "ids": [
+            "to_partner_face_then_away",
+            "to_handoff_object"
+          ]
+        },
+        "body_orientation": {
+          "ids": [
+            "half_turned_shoulder_to_partner",
+            "face_away_hands_toward_partner"
+          ]
+        },
+        "proxemics": {
+          "ids": [
+            "formal_counter_distance",
+            "table_edge_distance"
+          ]
+        },
+        "contact_point": {
+          "ids": [
+            "no_contact_just_close",
+            "fingertip_brush"
+          ]
+        },
+        "intent_state": {
+          "ids": [
+            "mid_handoff",
+            "caught_in_kindness"
+          ]
+        },
+        "emotional_contradiction": {
+          "ids": [
+            "formal_distance_private_token",
+            "sweet_object_guarded_expression"
+          ]
+        },
+        "viewer_position": {
+          "ids": [
+            "viewer_as_customer",
+            "viewer_as_recipient"
           ]
         }
       },
@@ -57985,6 +58882,61 @@
         {
           "slot": "format",
           "probability": 0.25
+        },
+        {
+          "slot": "partner_role",
+          "probability": 0.78,
+          "priority_boost": true
+        },
+        {
+          "slot": "partner_framing",
+          "probability": 0.76,
+          "priority_boost": true
+        },
+        {
+          "slot": "relational_action",
+          "probability": 0.72,
+          "priority_boost": true
+        },
+        {
+          "slot": "prop_direction",
+          "probability": 0.65,
+          "priority_boost": true
+        },
+        {
+          "slot": "gaze_target",
+          "probability": 0.66,
+          "priority_boost": true
+        },
+        {
+          "slot": "body_orientation",
+          "probability": 0.55,
+          "priority_boost": true
+        },
+        {
+          "slot": "proxemics",
+          "probability": 0.55,
+          "priority_boost": true
+        },
+        {
+          "slot": "contact_point",
+          "probability": 0.35,
+          "priority_boost": true
+        },
+        {
+          "slot": "intent_state",
+          "probability": 0.58,
+          "priority_boost": true
+        },
+        {
+          "slot": "emotional_contradiction",
+          "probability": 0.46,
+          "priority_boost": true
+        },
+        {
+          "slot": "viewer_position",
+          "probability": 0.3,
+          "priority_boost": true
         }
       ],
       "filters": {
@@ -58051,6 +59003,76 @@
           "ids": [
             "photoreal",
             "high_detail"
+          ]
+        },
+        "partner_role": {
+          "ids": [
+            "in_frame_customer",
+            "in_frame_counterparty",
+            "in_frame_recipient"
+          ]
+        },
+        "partner_framing": {
+          "ids": [
+            "face_to_face_table_two_shot",
+            "foreground_background_power_two_shot",
+            "two_faces_visible_medium_shot"
+          ]
+        },
+        "relational_action": {
+          "ids": [
+            "placing_prop_on_table_for_partner",
+            "pushing_prop_toward_partner",
+            "two_people_sitting_without_words"
+          ]
+        },
+        "prop_direction": {
+          "ids": [
+            "set_down_between_two",
+            "toward_partner_handoff",
+            "kept_as_soft_barrier"
+          ]
+        },
+        "gaze_target": {
+          "ids": [
+            "to_partner_face_then_away",
+            "to_handoff_object"
+          ]
+        },
+        "body_orientation": {
+          "ids": [
+            "half_turned_shoulder_to_partner",
+            "turned_shoulders_guarded"
+          ]
+        },
+        "proxemics": {
+          "ids": [
+            "formal_counter_distance",
+            "table_edge_distance"
+          ]
+        },
+        "contact_point": {
+          "ids": [
+            "no_contact_just_close",
+            "fingertip_brush"
+          ]
+        },
+        "intent_state": {
+          "ids": [
+            "mid_handoff",
+            "withholding_confession"
+          ]
+        },
+        "emotional_contradiction": {
+          "ids": [
+            "formal_distance_private_token",
+            "sweet_object_guarded_expression"
+          ]
+        },
+        "viewer_position": {
+          "ids": [
+            "viewer_as_customer",
+            "viewer_as_witness"
           ]
         }
       },
@@ -58120,6 +59142,61 @@
         {
           "slot": "format",
           "probability": 0.25
+        },
+        {
+          "slot": "partner_role",
+          "probability": 0.78,
+          "priority_boost": true
+        },
+        {
+          "slot": "partner_framing",
+          "probability": 0.76,
+          "priority_boost": true
+        },
+        {
+          "slot": "relational_action",
+          "probability": 0.72,
+          "priority_boost": true
+        },
+        {
+          "slot": "prop_direction",
+          "probability": 0.65,
+          "priority_boost": true
+        },
+        {
+          "slot": "gaze_target",
+          "probability": 0.66,
+          "priority_boost": true
+        },
+        {
+          "slot": "body_orientation",
+          "probability": 0.55,
+          "priority_boost": true
+        },
+        {
+          "slot": "proxemics",
+          "probability": 0.55,
+          "priority_boost": true
+        },
+        {
+          "slot": "contact_point",
+          "probability": 0.35,
+          "priority_boost": true
+        },
+        {
+          "slot": "intent_state",
+          "probability": 0.58,
+          "priority_boost": true
+        },
+        {
+          "slot": "emotional_contradiction",
+          "probability": 0.46,
+          "priority_boost": true
+        },
+        {
+          "slot": "viewer_position",
+          "probability": 0.3,
+          "priority_boost": true
         }
       ],
       "filters": {
@@ -58187,6 +59264,77 @@
           "ids": [
             "photoreal",
             "editorial_quality"
+          ]
+        },
+        "partner_role": {
+          "ids": [
+            "in_frame_customer",
+            "in_frame_recipient",
+            "in_frame_counterparty",
+            "in_frame_service_staff"
+          ]
+        },
+        "partner_framing": {
+          "ids": [
+            "face_to_face_table_two_shot",
+            "foreground_background_power_two_shot",
+            "two_faces_visible_medium_shot"
+          ]
+        },
+        "relational_action": {
+          "ids": [
+            "offering_prop_with_averted_gaze",
+            "pushing_prop_toward_partner",
+            "intercepting_partner_path"
+          ]
+        },
+        "prop_direction": {
+          "ids": [
+            "toward_partner_handoff",
+            "presented_on_open_palm",
+            "kept_as_soft_barrier"
+          ]
+        },
+        "gaze_target": {
+          "ids": [
+            "to_partner_face_then_away",
+            "to_handoff_object"
+          ]
+        },
+        "body_orientation": {
+          "ids": [
+            "half_turned_shoulder_to_partner",
+            "body_blocks_path_softly"
+          ]
+        },
+        "proxemics": {
+          "ids": [
+            "formal_counter_distance",
+            "doorway_half_step_distance"
+          ]
+        },
+        "contact_point": {
+          "ids": [
+            "no_contact_just_close",
+            "fingertip_brush"
+          ]
+        },
+        "intent_state": {
+          "ids": [
+            "mid_handoff",
+            "restrained_resolve"
+          ]
+        },
+        "emotional_contradiction": {
+          "ids": [
+            "formal_distance_private_token",
+            "public_denial_private_care"
+          ]
+        },
+        "viewer_position": {
+          "ids": [
+            "viewer_as_customer",
+            "viewer_as_recipient"
           ]
         }
       },
@@ -58663,6 +59811,61 @@
         {
           "slot": "format",
           "probability": 0.25
+        },
+        {
+          "slot": "partner_role",
+          "probability": 0.78,
+          "priority_boost": true
+        },
+        {
+          "slot": "partner_framing",
+          "probability": 0.76,
+          "priority_boost": true
+        },
+        {
+          "slot": "relational_action",
+          "probability": 0.72,
+          "priority_boost": true
+        },
+        {
+          "slot": "prop_direction",
+          "probability": 0.65,
+          "priority_boost": true
+        },
+        {
+          "slot": "gaze_target",
+          "probability": 0.66,
+          "priority_boost": true
+        },
+        {
+          "slot": "body_orientation",
+          "probability": 0.55,
+          "priority_boost": true
+        },
+        {
+          "slot": "proxemics",
+          "probability": 0.55,
+          "priority_boost": true
+        },
+        {
+          "slot": "contact_point",
+          "probability": 0.35,
+          "priority_boost": true
+        },
+        {
+          "slot": "intent_state",
+          "probability": 0.58,
+          "priority_boost": true
+        },
+        {
+          "slot": "emotional_contradiction",
+          "probability": 0.46,
+          "priority_boost": true
+        },
+        {
+          "slot": "viewer_position",
+          "probability": 0.3,
+          "priority_boost": true
         }
       ],
       "filters": {
@@ -58730,6 +59933,76 @@
           "ids": [
             "photoreal",
             "high_detail"
+          ]
+        },
+        "partner_role": {
+          "ids": [
+            "in_frame_rival",
+            "in_frame_counterparty"
+          ]
+        },
+        "partner_framing": {
+          "ids": [
+            "foreground_background_power_two_shot",
+            "shared_frame_equal_weight",
+            "two_faces_visible_medium_shot"
+          ]
+        },
+        "relational_action": {
+          "ids": [
+            "intercepting_partner_path",
+            "withholding_prop_with_smirk",
+            "two_people_sitting_without_words"
+          ]
+        },
+        "prop_direction": {
+          "ids": [
+            "pulled_back_from_partner",
+            "kept_as_soft_barrier",
+            "neutral_held_self"
+          ]
+        },
+        "gaze_target": {
+          "ids": [
+            "mirror_reflecting_partner",
+            "camera_direct_ignoring_partner",
+            "to_partner_face_then_away"
+          ]
+        },
+        "body_orientation": {
+          "ids": [
+            "body_blocks_path_softly",
+            "turned_shoulders_guarded",
+            "half_turned_shoulder_to_partner"
+          ]
+        },
+        "proxemics": {
+          "ids": [
+            "side_by_side_silent_distance",
+            "formal_counter_distance"
+          ]
+        },
+        "contact_point": {
+          "ids": [
+            "no_contact_just_close"
+          ]
+        },
+        "intent_state": {
+          "ids": [
+            "refusing_to_acknowledge",
+            "restrained_resolve"
+          ]
+        },
+        "emotional_contradiction": {
+          "ids": [
+            "hostile_posture_protective_object",
+            "formal_distance_private_token"
+          ]
+        },
+        "viewer_position": {
+          "ids": [
+            "viewer_as_rival",
+            "viewer_as_witness"
           ]
         }
       },
@@ -58799,6 +60072,61 @@
         {
           "slot": "format",
           "probability": 0.25
+        },
+        {
+          "slot": "partner_role",
+          "probability": 0.78,
+          "priority_boost": true
+        },
+        {
+          "slot": "partner_framing",
+          "probability": 0.76,
+          "priority_boost": true
+        },
+        {
+          "slot": "relational_action",
+          "probability": 0.72,
+          "priority_boost": true
+        },
+        {
+          "slot": "prop_direction",
+          "probability": 0.65,
+          "priority_boost": true
+        },
+        {
+          "slot": "gaze_target",
+          "probability": 0.66,
+          "priority_boost": true
+        },
+        {
+          "slot": "body_orientation",
+          "probability": 0.55,
+          "priority_boost": true
+        },
+        {
+          "slot": "proxemics",
+          "probability": 0.55,
+          "priority_boost": true
+        },
+        {
+          "slot": "contact_point",
+          "probability": 0.35,
+          "priority_boost": true
+        },
+        {
+          "slot": "intent_state",
+          "probability": 0.58,
+          "priority_boost": true
+        },
+        {
+          "slot": "emotional_contradiction",
+          "probability": 0.46,
+          "priority_boost": true
+        },
+        {
+          "slot": "viewer_position",
+          "probability": 0.3,
+          "priority_boost": true
         }
       ],
       "filters": {
@@ -58866,6 +60194,76 @@
           "ids": [
             "photoreal",
             "high_detail"
+          ]
+        },
+        "partner_role": {
+          "ids": [
+            "in_frame_family_member",
+            "in_frame_recipient",
+            "in_frame_companion"
+          ]
+        },
+        "partner_framing": {
+          "ids": [
+            "shared_frame_equal_weight",
+            "side_by_side_two_shot",
+            "two_faces_visible_medium_shot"
+          ]
+        },
+        "relational_action": {
+          "ids": [
+            "two_people_sitting_without_words",
+            "placing_prop_on_table_for_partner",
+            "offering_ticket_while_looking_away"
+          ]
+        },
+        "prop_direction": {
+          "ids": [
+            "set_down_between_two",
+            "presented_on_open_palm",
+            "returned_at_table_edge"
+          ]
+        },
+        "gaze_target": {
+          "ids": [
+            "to_partner_face_then_away",
+            "to_handoff_object"
+          ]
+        },
+        "body_orientation": {
+          "ids": [
+            "half_turned_shoulder_to_partner",
+            "turned_shoulders_guarded"
+          ]
+        },
+        "proxemics": {
+          "ids": [
+            "side_by_side_silent_distance",
+            "table_edge_distance"
+          ]
+        },
+        "contact_point": {
+          "ids": [
+            "fingertip_brush",
+            "no_contact_just_close"
+          ]
+        },
+        "intent_state": {
+          "ids": [
+            "mid_handoff",
+            "restrained_resolve"
+          ]
+        },
+        "emotional_contradiction": {
+          "ids": [
+            "formal_distance_private_token",
+            "public_denial_private_care"
+          ]
+        },
+        "viewer_position": {
+          "ids": [
+            "viewer_as_witness",
+            "viewer_as_recipient"
           ]
         }
       },
@@ -116179,6 +117577,134 @@
         "for_any": [
           "human"
         ]
+      },
+      {
+        "id": "in_frame_recipient",
+        "ko": "얼굴이 보이는 프레임 안 수신자",
+        "en": "an in-frame recipient with face visible",
+        "weight": 0.84,
+        "tags": [
+          "human",
+          "relationship",
+          "relational",
+          "narrative_safe",
+          "visible_partner",
+          "multi_subject",
+          "recipient"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "in_frame_counterparty",
+        "ko": "주 피사체 맞은편에 앉은 프레임 안 상대",
+        "en": "an in-frame counterparty seated across from the subject",
+        "weight": 0.84,
+        "tags": [
+          "human",
+          "relationship",
+          "relational",
+          "narrative_safe",
+          "visible_partner",
+          "multi_subject",
+          "counterparty"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "in_frame_rival",
+        "ko": "얼굴이 보이는 프레임 안 라이벌",
+        "en": "an in-frame rival with a visible face",
+        "weight": 0.84,
+        "tags": [
+          "human",
+          "relationship",
+          "relational",
+          "narrative_safe",
+          "visible_partner",
+          "multi_subject",
+          "rival"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "in_frame_companion",
+        "ko": "같은 장면을 공유하는 프레임 안 동행자",
+        "en": "an in-frame companion sharing the scene",
+        "weight": 0.84,
+        "tags": [
+          "human",
+          "relationship",
+          "relational",
+          "narrative_safe",
+          "visible_partner",
+          "multi_subject",
+          "companion"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "in_frame_family_member",
+        "ko": "얼굴이 보이는 프레임 안 가족 구성원",
+        "en": "an in-frame family member with face visible",
+        "weight": 0.84,
+        "tags": [
+          "human",
+          "relationship",
+          "relational",
+          "narrative_safe",
+          "visible_partner",
+          "multi_subject",
+          "family"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "in_frame_customer",
+        "ko": "카운터에 함께 보이는 프레임 안 고객",
+        "en": "an in-frame customer at the counter",
+        "weight": 0.84,
+        "tags": [
+          "human",
+          "relationship",
+          "relational",
+          "narrative_safe",
+          "visible_partner",
+          "multi_subject",
+          "service",
+          "customer"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "in_frame_service_staff",
+        "ko": "얼굴이 보이는 프레임 안 서비스 직원",
+        "en": "an in-frame service staff member",
+        "weight": 0.84,
+        "tags": [
+          "human",
+          "relationship",
+          "relational",
+          "narrative_safe",
+          "visible_partner",
+          "multi_subject",
+          "service",
+          "staff"
+        ],
+        "for_any": [
+          "human"
+        ]
       }
     ],
     "partner_framing": [
@@ -116255,6 +117781,92 @@
           "relationship",
           "relational",
           "narrative_safe"
+        ]
+      },
+      {
+        "id": "two_faces_visible_medium_shot",
+        "ko": "두 얼굴이 모두 보이는 미디엄샷",
+        "en": "two faces visible in a medium shot",
+        "weight": 0.84,
+        "tags": [
+          "human",
+          "relationship",
+          "relational",
+          "narrative_safe",
+          "visible_partner",
+          "multi_subject"
+        ]
+      },
+      {
+        "id": "side_by_side_two_shot",
+        "ko": "두 사람이 나란히 보이는 투샷",
+        "en": "side-by-side two-shot with both people visible",
+        "weight": 0.84,
+        "tags": [
+          "human",
+          "relationship",
+          "relational",
+          "narrative_safe",
+          "visible_partner",
+          "multi_subject"
+        ]
+      },
+      {
+        "id": "face_to_face_table_two_shot",
+        "ko": "테이블을 사이에 두고 마주 보는 투샷",
+        "en": "face-to-face table two-shot with both people visible",
+        "weight": 0.84,
+        "tags": [
+          "human",
+          "relationship",
+          "relational",
+          "narrative_safe",
+          "visible_partner",
+          "multi_subject"
+        ]
+      },
+      {
+        "id": "foreground_background_power_two_shot",
+        "ko": "전경과 배경에 권력 차이가 보이는 투샷",
+        "en": "foreground-background power two-shot with both people visible",
+        "weight": 0.84,
+        "tags": [
+          "human",
+          "relationship",
+          "relational",
+          "narrative_safe",
+          "visible_partner",
+          "multi_subject",
+          "power"
+        ]
+      },
+      {
+        "id": "shared_frame_equal_weight",
+        "ko": "두 사람이 같은 비중으로 공유하는 프레임",
+        "en": "equal-weight shared frame with both people visible",
+        "weight": 0.84,
+        "tags": [
+          "human",
+          "relationship",
+          "relational",
+          "narrative_safe",
+          "visible_partner",
+          "multi_subject"
+        ]
+      },
+      {
+        "id": "small_group_visible_midshot",
+        "ko": "3명에서 5명 정도의 작은 그룹이 보이는 미드샷",
+        "en": "small visible group of three to five people in a mid-shot",
+        "weight": 0.84,
+        "tags": [
+          "human",
+          "relationship",
+          "relational",
+          "narrative_safe",
+          "visible_partner",
+          "multi_subject",
+          "group"
         ]
       }
     ],
