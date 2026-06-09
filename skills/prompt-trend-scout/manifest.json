@@ -1,0 +1,31 @@
+{
+  "name": "prompt-trend-scout",
+  "version": "0.1.0",
+  "entrypoint": "SKILL.md",
+  "default_cadence": "weekly",
+  "pipeline": [
+    "collect_sources",
+    "sanitize_examples",
+    "analyze_corpus",
+    "diff_against_photo_prompt",
+    "build_reflection_report",
+    "validate_harvest_schema"
+  ],
+  "non_mutation_contract": {
+    "automated_pipeline_writes": [
+      "skills/prompt-trend-scout/data"
+    ],
+    "automated_pipeline_read_only_targets": [
+      "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json",
+      "skills/photo-prompt-image-generator/assets/concept_recipes.json"
+    ],
+    "requires_human_approval_for_apply": true
+  },
+  "adapters": [
+    "local_inbox",
+    "rss_atom",
+    "activitypub_public",
+    "x_api",
+    "threads_official"
+  ]
+}

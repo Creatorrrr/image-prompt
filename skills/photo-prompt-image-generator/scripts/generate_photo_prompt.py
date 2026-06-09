@@ -752,6 +752,18 @@ def filter_role_duplicate_mixins(
             if alternate_role is None:
                 continue
         filtered.append((mixin, recipe))
+    role_concept = concept_without_mixins(concept, [mixin for mixin, _ in filtered])
+    role, _, _ = match_concept_role(role_concept, roles) if role_concept else (None, "", {})
+    if role is None:
+        role_like_mixins = [(mixin, recipe) for mixin, recipe in filtered if mixin in roles]
+        if len(role_like_mixins) > 1:
+            role_like_mixins.sort(key=lambda item: concept.find(item[0]) if item[0] in concept else len(concept))
+            restored_role = role_like_mixins[0][0]
+            candidate = [(mixin, recipe) for mixin, recipe in filtered if mixin != restored_role]
+            candidate_role_concept = concept_without_mixins(concept, [mixin for mixin, _ in candidate])
+            candidate_role, _, _ = match_concept_role(candidate_role_concept, roles) if candidate_role_concept else (None, "", {})
+            if candidate_role == restored_role:
+                filtered = candidate
     return filtered
 
 
@@ -768,6 +780,41 @@ def select_mixin_intensity_variant(concept: str, mixin_recipe: dict[str, Any]) -
         if any(alias and alias.lower() in lowered for alias in normalize_list(raw_aliases)):
             return str(variant)
     return None
+
+
+def select_mixin_species_variant(
+    concept: str, mixin_name: str, mixin_recipe: dict[str, Any], args: Sequence[str]
+) -> dict[str, Any] | None:
+    species_config = mixin_recipe.get("species_variants")
+    if not isinstance(species_config, dict):
+        return None
+    raw_variants = species_config.get("variants")
+    variants = [dict(variant) for variant in raw_variants if isinstance(variant, dict)] if isinstance(raw_variants, list) else []
+    if not variants:
+        return None
+
+    lowered = concept.lower()
+    for variant in variants:
+        aliases = normalize_list(variant.get("aliases"))
+        if any(alias and alias.lower() in lowered for alias in aliases):
+            return variant
+
+    weights = [max(float(variant.get("weight", 1) or 0), 0.0) for variant in variants]
+    total = sum(weights)
+    if total <= 0:
+        return variants[0]
+
+    seed = option_value(args, "--seed") or ""
+    stream = str(species_config.get("stream") or "species")
+    token = f"{concept}|{mixin_name}|{stream}|{seed}"
+    value = int(hashlib.sha256(token.encode("utf-8")).hexdigest()[:16], 16) / float(16**16)
+    threshold = value * total
+    running = 0.0
+    for variant, weight in zip(variants, weights):
+        running += weight
+        if threshold <= running:
+            return variant
+    return variants[-1]
 
 
 def split_forced_slot(raw: str) -> tuple[str, list[str]] | None:
@@ -873,6 +920,12 @@ def conditional_additional_requirements(
             continue
         if rule.get("requires_role") and not role:
             continue
+        allowed_roles = set(normalize_list(rule.get("roles")))
+        if allowed_roles and role not in allowed_roles:
+            continue
+        excluded_roles = set(normalize_list(rule.get("exclude_roles")))
+        if excluded_roles and role in excluded_roles:
+            continue
         if rule.get("requires_bundle") and not selected_bundle:
             continue
         rule_mixin = str(rule.get("mixin") or "")
@@ -966,6 +1019,7 @@ def resolve_concepts(
         role_concept = concept_without_mixins(concept, [mixin for mixin, _ in mixin_matches])
         role, name, recipe = match_concept_role(role_concept or concept, roles)
         selected_bundles: list[dict[str, Any]] = []
+        selected_species_variants: list[dict[str, Any]] = []
         set_groups: list[tuple[Sequence[str], set[str]]] = []
         applied_recipes = [recipe] if recipe else []
         additional_requirements: list[str] = []
@@ -1025,6 +1079,21 @@ def resolve_concepts(
                 and not (explicit_user_set_slots & {"prop", "action"})
             ):
                 additional_requirements.extend(normalize_list(weapon_cues.get(role)))
+            species_variant = select_mixin_species_variant(concept, mixin, mixin_recipe, args)
+            if species_variant:
+                additional_requirements.extend(normalize_list(species_variant.get("additional")))
+                soft_safety_requirements.extend(soft_safety_requirements_for_recipe(species_variant))
+                soft_salience_cues.extend(soft_salience_cues_for_recipe(species_variant))
+                intent_axes.extend(normalize_list(species_variant.get("intent_axis")))
+                selected_species_variants.append(
+                    {
+                        "mixin": mixin,
+                        "variant_id": str(species_variant.get("id") or ""),
+                        "family": str(species_variant.get("family") or species_variant.get("id") or ""),
+                        "tier": str(species_variant.get("tier") or ""),
+                        "weight": species_variant.get("weight", 1),
+                    }
+                )
             if selected_bundle:
                 bundle_preset = str(selected_bundle.get("preset") or "")
                 if concept_mode == "legacy" and bundle_preset and not has_preset_value:
@@ -1159,6 +1228,7 @@ def resolve_concepts(
                 "recipe": recipe,
                 "mixins": {mixin: mixin_recipe for mixin, mixin_recipe in mixin_matches},
                 "selected_bundles": selected_bundles,
+                "selected_species_variants": selected_species_variants,
                 "combined_forced_slots": forced_sets_to_mapping(combined_sets),
                 "soft_anchor_spec": build_soft_anchor_spec(soft_anchor_specs, soft_min_anchor_candidates, concept),
                 "forced_slots_applied": concept_mode == "legacy",

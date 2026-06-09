@@ -6,6 +6,7 @@
     "expression",
     "light_direction",
     "light_intensity",
+    "light_shape",
     "light_type",
     "lighting",
     "location",
@@ -19,6 +20,7 @@
     "wearable_accessory",
     "texture",
     "surface_material",
+    "surreal_physics_detail",
     "world",
     "aesthetic_trend",
     "relational_action",
@@ -934,6 +936,247 @@
           ]
         }
       }
+    },
+    "산타복": {
+      "preset": "seasonal_event_portrait",
+      "set": [
+        "subject=cosplayer",
+        "costume_style=covered_santa_fur_trim_costume",
+        "location=christmas_market_lights,seoul_bus_stop_snow",
+        "action=brisk_gift_handoff_pose",
+        "prop=modest_wrapped_gift_prop,christmas_lights_prop,gift_tag_ledger_prop",
+        "lighting=first_snow_evening_light",
+        "light_shape=snowflake_pinpoint_glow",
+        "weather=windblown_snow",
+        "motion=suspended_snowflake_motion"
+      ],
+      "soft_anchor_slots": [
+        "costume_style",
+        "location",
+        "action",
+        "prop",
+        "lighting",
+        "light_shape",
+        "weather"
+      ],
+      "soft_min_anchors": 2,
+      "anchor_terms": {
+        "costume_style": [
+          "covered Santa outfit",
+          "red fur-trim costume",
+          "winter holiday costume"
+        ],
+        "location": [
+          "Christmas market",
+          "snowy Seoul bus stop",
+          "winter street"
+        ],
+        "prop": [
+          "wrapped gift",
+          "Christmas lights",
+          "gift-tag ledger"
+        ],
+        "light_shape": [
+          "snowflake pinpoint glow"
+        ],
+        "weather": [
+          "windblown snow"
+        ]
+      },
+      "render_priority_terms": [
+        {
+          "id": "santa_role_floor",
+          "group": "role_costume_identity",
+          "tier": "required",
+          "terms": [
+            "covered Santa outfit",
+            "red fur-trim costume",
+            "wrapped gift",
+            "Christmas lights",
+            "winter street"
+          ],
+          "min_hits": 2,
+          "target_slots": [
+            "costume_style",
+            "prop",
+            "location",
+            "weather"
+          ]
+        }
+      ],
+      "additional": [
+        "adult covered Santa-inspired costume must stay readable through red fur trim, winter street lighting, wrapped gift, Christmas lights, and snow; do not collapse the role into generic archive fantasy",
+        "holiday identity is practical and festive, not lingerie, pin-up, or body-first costume display"
+      ],
+      "intent_axis": [
+        "adult covered Santa outfit portrait with red fur trim, wrapped gift, Christmas lights, snow, and winter street atmosphere"
+      ],
+      "likeness_mode": "inspired",
+      "anchor_pool": {
+        "costume_style": [
+          "covered_santa_fur_trim_costume"
+        ],
+        "location": [
+          "christmas_market_lights",
+          "seoul_bus_stop_snow"
+        ],
+        "prop": [
+          "modest_wrapped_gift_prop",
+          "christmas_lights_prop",
+          "gift_tag_ledger_prop"
+        ],
+        "lighting": [
+          "first_snow_evening_light"
+        ],
+        "light_shape": [
+          "snowflake_pinpoint_glow"
+        ],
+        "weather": [
+          "windblown_snow"
+        ],
+        "motion": [
+          "suspended_snowflake_motion"
+        ]
+      },
+      "critical_anchor_slots": [
+        "costume_style",
+        "prop",
+        "location"
+      ],
+      "anchor_floor": {
+        "role": 1
+      },
+      "safety_requirements": [
+        "adult subject only; covered festive costume, no lingerie-like Santa outfit, no pin-up framing, no minors-coding"
+      ],
+      "salience_cues": [
+        "red fur-trim Santa costume, wrapped gift, and winter lights should read before any wizard layer"
+      ],
+      "mixin_cue_budget": 2
+    },
+    "운동복": {
+      "preset": "sports_action_wire",
+      "set": [
+        "subject=adult_fitness_creator",
+        "wardrobe_style=covered_track_jacket_training_set",
+        "location=gym_track,track_lane_stadium",
+        "action=sprint_start_drive",
+        "prop=stopwatch_training_prop",
+        "lighting=gym_overhead_led_light",
+        "light_shape=kinetic_trail_edge_light",
+        "composition=medium_close",
+        "motion=kinetic_spell_trail_motion"
+      ],
+      "soft_anchor_slots": [
+        "subject",
+        "wardrobe_style",
+        "location",
+        "action",
+        "prop",
+        "lighting",
+        "light_shape",
+        "motion"
+      ],
+      "soft_min_anchors": 2,
+      "anchor_terms": {
+        "subject": [
+          "adult fitness creator",
+          "athletic subject"
+        ],
+        "wardrobe_style": [
+          "track jacket",
+          "training pants",
+          "sneakers",
+          "covered sportswear"
+        ],
+        "location": [
+          "running track",
+          "track lane",
+          "gym"
+        ],
+        "prop": [
+          "stopwatch",
+          "training band"
+        ],
+        "motion": [
+          "kinetic spell trail",
+          "athletic motion"
+        ]
+      },
+      "render_priority_terms": [
+        {
+          "id": "sportswear_role_floor",
+          "group": "role_costume_identity",
+          "tier": "required",
+          "terms": [
+            "covered track jacket",
+            "training pants",
+            "sneakers",
+            "stopwatch",
+            "running track",
+            "gym"
+          ],
+          "min_hits": 2,
+          "target_slots": [
+            "wardrobe_style",
+            "prop",
+            "location",
+            "action"
+          ]
+        }
+      ],
+      "additional": [
+        "sportswear identity should read through covered track jacket, training pants, sneakers, stopwatch or training band, and running-track or gym context; do not collapse the role into an archive scholar",
+        "keep the athletic read practical and nonsexualized; action may be poised, mid-start, or controlled, not body-first fitness glamour"
+      ],
+      "intent_axis": [
+        "adult sportswear portrait with covered track jacket, training pants, sneakers, stopwatch, and running-track or gym context"
+      ],
+      "likeness_mode": "inspired",
+      "anchor_pool": {
+        "wardrobe_style": [
+          "covered_track_jacket_training_set",
+          "gym_athleisure_mirror_fit"
+        ],
+        "location": [
+          "gym_track",
+          "track_lane_stadium",
+          "gym_mirror_weight_room"
+        ],
+        "action": [
+          "sprint_start_drive",
+          "sprinting_track"
+        ],
+        "prop": [
+          "stopwatch_training_prop"
+        ],
+        "lighting": [
+          "gym_overhead_led_light",
+          "high_speed_strobe"
+        ],
+        "light_shape": [
+          "kinetic_trail_edge_light"
+        ],
+        "motion": [
+          "kinetic_spell_trail_motion",
+          "panning_blur"
+        ]
+      },
+      "critical_anchor_slots": [
+        "wardrobe_style",
+        "prop",
+        "location"
+      ],
+      "anchor_floor": {
+        "role": 1
+      },
+      "safety_requirements": [
+        "adult subject only; covered athletic outfit, no fetish fitness framing, no cleavage-centered gym image, no minors-coding"
+      ],
+      "salience_cues": [
+        "track jacket, sneakers, stopwatch or training band, and athletic space should remain visible with the wizard layer"
+      ],
+      "mixin_cue_budget": 2
     },
     "승무원": {
       "preset": "flight_attendant_service_portrait",
@@ -1978,6 +2221,98 @@
       "likeness_mode": "inspired",
       "safety_requirements": [
         "no weaponized magic harm, no victim"
+      ],
+      "anchor_floor": {
+        "role": 1
+      }
+    },
+    "마법사": {
+      "preset": "archive_ledger_threshold",
+      "set": [
+        "subject=archivist_role_model",
+        "costume_style=archivist_apron_gloves_costume",
+        "wardrobe_style=light_academia_knit_layers",
+        "location=grand_archive_hall,restoration_lab,glass_office,observatory_dome_room,oak_library_dark_academia",
+        "action=writing_notes,presenting_file_folder,checking_phone,levitating_small_objects",
+        "prop=grimoire_candle_prop,starmap_note_prop,slim_office_tablet_prop,gift_tag_ledger_prop,sealed_black_envelope_prop,levitating_teacup_prop",
+        "lighting=archive_desk_lamp,monitor_glow,clean_laboratory_fluorescent",
+        "light_type=archive_desk_lamp,monitor_glow",
+        "light_direction=window_left_light",
+        "camera_type=full_frame_mirrorless",
+        "camera_direction=eye_level_three_quarter",
+        "composition=hands_only_detail_frame,document_foreground_face_background",
+        "light_shape=threshold_sliver_light,monitor_rectangle_glow,snowflake_pinpoint_glow",
+        "surreal_physics_detail=localized_refraction_at_contact,tiny_levitation_contact_shadow,textless_mark_rearrangement_boundary",
+        "motion=stable_tripod",
+        "mood=archival_suspense"
+      ],
+      "soft_anchor_slots": [
+        "prop",
+        "costume_style",
+        "location",
+        "action",
+        "composition",
+        "light_shape",
+        "surreal_physics_detail"
+      ],
+      "soft_min_anchors": 3,
+      "anchor_terms": {
+        "prop": [
+          "grimoire",
+          "star map",
+          "hidden order",
+          "tablet",
+          "gift-tag ledger",
+          "sealed envelope",
+          "levitating teacup"
+        ],
+        "location": [
+          "archive",
+          "library",
+          "records",
+          "restoration lab",
+          "glass office",
+          "observatory"
+        ],
+        "costume_style": [
+          "archivist apron",
+          "white gloves"
+        ],
+        "composition": [
+          "hands-only detail"
+        ],
+        "light_shape": [
+          "threshold light",
+          "monitor rectangle glow",
+          "snowflake pinpoint glow"
+        ],
+        "surreal_physics_detail": [
+          "contact-point refraction",
+          "tiny levitation shadow",
+          "textless marks rearranging"
+        ],
+        "light_direction": [
+          "window light"
+        ],
+        "motion": [
+          "stable tripod"
+        ]
+      },
+      "additional": [
+        "wizard role should read through mechanism rather than one prop: scholarly archive, technomancy interface, contract logomancy, micro-object levitation, or restoration-lab material anomaly can each be the main axis",
+        "archive evidence such as grimoire or star-map notes remains available, but it is only one axis among modern devices, sealed records, gift-tag ledgers, small levitation shadows, and contact-point refraction",
+        "distinct from stage magician: no playing-card fan, tailcoat, top hat, audience performance, or sleight-of-hand stagecraft should dominate the image",
+        "power should feel controlled and costly through one concrete local world response: paper stirring without wind, textless marks rearranging, a screen pulse, contact refraction, or a few-centimeter levitation with a believable shadow; avoid routine glowing magic circles, generic blue aura, explosive blasts, combat, gore, sacrifice, or injury"
+      ],
+      "intent_axis": [
+        "wizard or mage as hidden-order reader across archive, lab, office, contract, device, and micro-object mechanisms; magic appears as local transformation plus cost or trace"
+      ],
+      "likeness_mode": "inspired",
+      "safety_requirements": [
+        "adult fictional subject only; symbolic magic only; no gore, sacrifice, combat, weaponized spell, injury, victim, or religious mockery"
+      ],
+      "salience_cues": [
+        "visible medium plus local anomaly should make standalone wizard identity readable: grimoire or star-map note, tablet or sealed ledger, contact refraction, rearranging marks, or a tiny levitation shadow"
       ],
       "anchor_floor": {
         "role": 1
@@ -3049,6 +3384,201 @@
         "role": 1
       }
     },
+    "회사원": {
+      "preset": "corporate_startup_profile",
+      "set": [
+        "subject=office_worker",
+        "person_origin=south_korea",
+        "appearance_type=corporate_professional",
+        "wardrobe_style=clean_blazer_trousers",
+        "location=glass_office,subway_transfer_passage,mirrored_elevator_box,corporate_high_floor_office,accountant_office_late",
+        "action=standing_silence,checking_wristwatch_timing,standing_in_subway_car,commuting_night,presenting_file_folder,reviewing_ledger_columns,holding_coffee_phone",
+        "prop=staff_lanyard_badge_prop,security_access_card_prop",
+        "lighting=fluorescent,monitor_glow,subway_car_fluorescent_light,archive_desk_lamp",
+        "light_shape=monitor_rectangle_glow,window_rectangle,barcode_shadow_bars,elevator_gap_sliver_light",
+        "composition=document_foreground_face_background,one_still_in_motion_blur_frame,architectural_lines_frame,elevator_gap_frame,reflection",
+        "camera_direction=elevator_corner_camera_direction,eye_level_three_quarter,high_observer_angle",
+        "subject_framing=upper_body_framing,head_and_shoulders_crop,waist_up_framing,detail_crop_hands_accessories",
+        "mood=melancholic,survival,surveilled_unease,bureaucratic_horror"
+      ],
+      "soft_anchor_slots": [
+        "subject",
+        "person_origin",
+        "appearance_type",
+        "wardrobe_style",
+        "location",
+        "action",
+        "prop",
+        "lighting",
+        "light_shape",
+        "composition",
+        "subject_framing"
+      ],
+      "soft_min_anchors": 4,
+      "anchor_terms": {
+        "subject": [
+          "office worker",
+          "company employee",
+          "salaried worker"
+        ],
+        "person_origin": [
+          "Korean"
+        ],
+        "appearance_type": [
+          "corporate professional",
+          "business"
+        ],
+        "wardrobe_style": [
+          "clean blazer",
+          "tailored trousers",
+          "businesswear"
+        ],
+        "location": [
+          "glass office",
+          "subway transfer",
+          "elevator",
+          "late office"
+        ],
+        "action": [
+          "standing in silence",
+          "checking wristwatch",
+          "commuting",
+          "presenting files"
+        ],
+        "prop": [
+          "staff lanyard",
+          "access card"
+        ],
+        "lighting": [
+          "fluorescent light",
+          "monitor glow",
+          "commute light"
+        ],
+        "light_shape": [
+          "monitor rectangle",
+          "window rectangle",
+          "barcode shadows",
+          "elevator gap"
+        ],
+        "composition": [
+          "document foreground",
+          "motion-blur crowd",
+          "architectural pressure",
+          "elevator gap"
+        ]
+      },
+      "anchor_pool": {
+        "location": [
+          "glass_office",
+          "subway_transfer_passage",
+          "mirrored_elevator_box",
+          "corporate_high_floor_office",
+          "accountant_office_late"
+        ],
+        "action": [
+          "standing_silence",
+          "checking_wristwatch_timing",
+          "standing_in_subway_car",
+          "commuting_night",
+          "presenting_file_folder",
+          "reviewing_ledger_columns",
+          "holding_coffee_phone"
+        ],
+        "prop": [
+          "staff_lanyard_badge_prop",
+          "security_access_card_prop"
+        ],
+        "lighting": [
+          "fluorescent",
+          "monitor_glow",
+          "subway_car_fluorescent_light",
+          "archive_desk_lamp"
+        ],
+        "light_shape": [
+          "monitor_rectangle_glow",
+          "window_rectangle",
+          "barcode_shadow_bars",
+          "elevator_gap_sliver_light"
+        ],
+        "composition": [
+          "document_foreground_face_background",
+          "one_still_in_motion_blur_frame",
+          "architectural_lines_frame",
+          "elevator_gap_frame",
+          "reflection"
+        ]
+      },
+      "primary_anchor_pool": {
+        "subject": [
+          "office_worker"
+        ],
+        "wardrobe_style": [
+          "clean_blazer_trousers"
+        ],
+        "prop": [
+          "staff_lanyard_badge_prop",
+          "security_access_card_prop"
+        ],
+        "location": [
+          "glass_office",
+          "subway_transfer_passage",
+          "mirrored_elevator_box"
+        ]
+      },
+      "anchor_families": {
+        "role_identity": {
+          "slots": [
+            "subject",
+            "person_origin",
+            "appearance_type",
+            "wardrobe_style"
+          ],
+          "min_hits": 1
+        },
+        "organization_marker": {
+          "slots": [
+            "prop",
+            "location"
+          ],
+          "min_hits": 1
+        },
+        "time_discipline": {
+          "slots": [
+            "action",
+            "lighting",
+            "composition"
+          ],
+          "min_hits": 1
+        }
+      },
+      "critical_anchor_slots": [
+        "subject",
+        "wardrobe_style",
+        "prop",
+        "location"
+      ],
+      "additional": [
+        "Korean salaried company worker identity should read through organizational anonymity, time discipline, commute fatigue, and abstract labor pressure rather than generic business fashion.",
+        "Make the role visible through an employee ID lanyard or access card, clean but slightly tired businesswear, cool fluorescent or monitor light, and a glass-office, subway-transfer, elevator, or late-office setting.",
+        "Avoid office-siren glamour, pin-up office styling, heroic executive branding, fantasy drift, and purely sad stock-photo gestures; the emotion should come from the corporate space, commute routine, documents, badge, light, and posture."
+      ],
+      "intent_axis": [
+        "Korean company worker portrait with time discipline, organizational anonymity, commute fatigue, and abstract labor pressure",
+        "adult office worker in clean blazer and trousers with staff lanyard or access card under fluorescent or monitor light",
+        "glass office, subway transfer passage, elevator, or late office as corporate-city pressure around the subject"
+      ],
+      "salience_cues": [
+        "staff lanyard or access card near the face, hand, or chest",
+        "corporate space or commute setting should read before fashion styling"
+      ],
+      "likeness_mode": "inspired",
+      "safety_requirements": [
+        "adult fictional subject only; keep office-worker identity practical and nonsexualized; no cleavage-centered office-siren framing, pin-up office trope, fetish secretary framing, or minors-coding"
+      ],
+      "anchor_floor": {
+        "role": 1
+      }
+    },
     "보험조사원": {
       "preset": "judgement_packet_portrait",
       "set": [
@@ -3083,6 +3613,551 @@
     }
   },
   "mixins": {
+    "회사원": {
+      "preset": "corporate_startup_profile",
+      "set": {
+        "wearable_accessory": "staff_lanyard_id",
+        "prop": [
+          "staff_lanyard_badge_prop",
+          "security_access_card_prop"
+        ],
+        "location": [
+          "glass_office",
+          "subway_transfer_passage",
+          "mirrored_elevator_box",
+          "corporate_high_floor_office",
+          "accountant_office_late"
+        ],
+        "action": [
+          "checking_wristwatch_timing",
+          "commuting_night",
+          "presenting_file_folder",
+          "holding_coffee_phone",
+          "reviewing_ledger_columns"
+        ],
+        "lighting": [
+          "fluorescent",
+          "monitor_glow",
+          "subway_car_fluorescent_light"
+        ],
+        "light_shape": [
+          "monitor_rectangle_glow",
+          "window_rectangle",
+          "barcode_shadow_bars",
+          "elevator_gap_sliver_light"
+        ],
+        "composition": [
+          "document_foreground_face_background",
+          "one_still_in_motion_blur_frame",
+          "architectural_lines_frame",
+          "elevator_gap_frame"
+        ],
+        "subject_framing": [
+          "upper_body_framing",
+          "head_and_shoulders_crop",
+          "detail_crop_hands_accessories"
+        ],
+        "mood": [
+          "melancholic",
+          "survival",
+          "surveilled_unease",
+          "bureaucratic_horror"
+        ],
+        "safety_profile": "civilian_service_profile"
+      },
+      "bundle_override_slots": [
+        "location",
+        "action",
+        "prop",
+        "lighting",
+        "light_type",
+        "light_shape",
+        "composition",
+        "camera_direction",
+        "subject_framing",
+        "mood",
+        "safety_profile"
+      ],
+      "soft_anchor_slots": [
+        "wearable_accessory",
+        "prop",
+        "location",
+        "action",
+        "lighting",
+        "composition",
+        "subject_framing"
+      ],
+      "soft_min_anchors": 3,
+      "anchor_terms": {
+        "wearable_accessory": [
+          "staff lanyard ID",
+          "employee ID badge"
+        ],
+        "prop": [
+          "staff lanyard",
+          "access card",
+          "office tablet",
+          "work documents"
+        ],
+        "location": [
+          "glass office",
+          "subway transfer",
+          "elevator",
+          "late office"
+        ],
+        "action": [
+          "checking wristwatch",
+          "commuting",
+          "presenting files",
+          "reviewing ledgers",
+          "holding coffee and phone"
+        ],
+        "lighting": [
+          "fluorescent light",
+          "monitor glow",
+          "commute light"
+        ],
+        "composition": [
+          "document foreground",
+          "motion-blur commute",
+          "architectural pressure",
+          "elevator gap"
+        ]
+      },
+      "anchor_pool": {
+        "wearable_accessory": [
+          "staff_lanyard_id"
+        ],
+        "prop": [
+          "staff_lanyard_badge_prop",
+          "security_access_card_prop",
+          "slim_office_tablet_prop",
+          "calculator_ledger_prop"
+        ],
+        "location": [
+          "glass_office",
+          "subway_transfer_passage",
+          "mirrored_elevator_box",
+          "corporate_high_floor_office",
+          "accountant_office_late"
+        ],
+        "action": [
+          "checking_wristwatch_timing",
+          "commuting_night",
+          "presenting_file_folder",
+          "holding_coffee_phone",
+          "reviewing_ledger_columns"
+        ],
+        "lighting": [
+          "fluorescent",
+          "monitor_glow",
+          "subway_car_fluorescent_light"
+        ],
+        "composition": [
+          "document_foreground_face_background",
+          "one_still_in_motion_blur_frame",
+          "architectural_lines_frame",
+          "elevator_gap_frame"
+        ]
+      },
+      "primary_anchor_pool": {
+        "wearable_accessory": [
+          "staff_lanyard_id"
+        ],
+        "prop": [
+          "staff_lanyard_badge_prop",
+          "security_access_card_prop"
+        ],
+        "location": [
+          "glass_office",
+          "subway_transfer_passage",
+          "mirrored_elevator_box"
+        ]
+      },
+      "anchor_families": {
+        "organization_marker": {
+          "slots": [
+            "wearable_accessory",
+            "prop",
+            "location"
+          ],
+          "min_hits": 1
+        },
+        "time_discipline": {
+          "slots": [
+            "action",
+            "lighting",
+            "composition"
+          ],
+          "min_hits": 1
+        }
+      },
+      "critical_anchor_slots": [
+        "wearable_accessory",
+        "prop",
+        "location"
+      ],
+      "additional": [
+        "When company-worker identity is layered onto another role, preserve the base role's subject and costume; express the office-worker layer through a staff lanyard ID, access card, office or commute space, documents, wristwatch timing, monitor glow, and controlled posture.",
+        "The image should read as the original role caught inside Korean company routines: reporting, commuting, records, badges, fluorescent light, manager-visible posture, and emotional labor rather than a generic suit replacement.",
+        "Avoid letting the office layer erase the role costume; avoid office-siren glamour, pin-up service framing, fetish uniform styling, heroic executive branding, stock-photo sadness, or body-first office fashion."
+      ],
+      "intent_axis": [
+        "base role costume preserved while Korean company-worker routines appear through staff ID, access card, office documents, commute pressure, and fluorescent light",
+        "organizational anonymity, time discipline, reporting pressure, and emotional labor layered onto another role without replacing that role"
+      ],
+      "salience_cues": [
+        "employee ID lanyard or access card must be near the face, chest, or hands",
+        "corporate or commute space should read alongside the original role costume"
+      ],
+      "likeness_mode": "inspired",
+      "safety_requirements": [
+        "adult fictional subject only; keep company-worker identity practical and nonsexualized; preserve the base role's safety constraints; no cleavage-centered office-siren framing, pin-up office trope, fetish secretary framing, erotic uniform styling, or minors-coding"
+      ],
+      "safety_negative_floor": [
+        "office siren",
+        "pin-up office styling",
+        "fetish secretary framing",
+        "erotic uniform styling",
+        "body-first office fashion",
+        "cleavage-centered office look"
+      ],
+      "anchor_floor": {
+        "mixin": 1
+      },
+      "mixin_cue_budget": 2,
+      "bundles": [
+        {
+          "id": "generic_badge_commute_routine",
+          "weight": 1.0,
+          "preset": "corporate_startup_profile",
+          "aspect": "badge_commute_routine",
+          "subtype": "generic_role_company_layer",
+          "set": {
+            "wearable_accessory": "staff_lanyard_id",
+            "prop": [
+              "staff_lanyard_badge_prop",
+              "security_access_card_prop",
+              "slim_office_tablet_prop"
+            ],
+            "action": "checking_wristwatch_timing",
+            "location": "subway_transfer_passage",
+            "lighting": "subway_car_fluorescent_light",
+            "light_type": "subway_train_fluorescent",
+            "light_shape": "barcode_shadow_bars",
+            "composition": "one_still_in_motion_blur_frame",
+            "camera_direction": "eye_level_three_quarter",
+            "subject_framing": "upper_body_framing",
+            "mood": "melancholic",
+            "safety_profile": "civilian_service_profile"
+          },
+          "additional": [
+            "the base role stays readable, while a staff ID, access card, tablet, and commute motion blur make the same person read as a salaried worker under time discipline",
+            "use the lanyard, watch check, subway-transfer architecture, and fluorescent commute light as the office-worker read, not a full business-suit replacement"
+          ],
+          "intent_axis": [
+            "base role plus company-worker commute routine, staff lanyard, access card, time pressure, subway transfer, fluorescent light"
+          ]
+        },
+        {
+          "id": "maid_corporate_service_shift",
+          "weight": 1.0,
+          "roles": [
+            "메이드"
+          ],
+          "preset": "corporate_startup_profile",
+          "aspect": "office_service_shift",
+          "subtype": "maid_company_worker",
+          "set": {
+            "wearable_accessory": "staff_lanyard_id",
+            "prop": [
+              "staff_lanyard_badge_prop",
+              "security_access_card_prop",
+              "coffee_cup_prop",
+              "slim_office_tablet_prop"
+            ],
+            "action": "presenting_file_folder",
+            "location": "corporate_high_floor_office",
+            "lighting": "fluorescent",
+            "light_type": "fluorescent_ceiling",
+            "light_shape": "window_rectangle",
+            "composition": "document_foreground_face_background",
+            "camera_direction": "eye_level_three_quarter",
+            "subject_framing": "upper_body_framing",
+            "mood": "survival",
+            "safety_profile": "civilian_service_profile"
+          },
+          "additional": [
+            "the frilled apron maid costume remains the role anchor, but the lanyard, access card, office tablet, coffee, and document handoff make it read as corporate service labor inside an office",
+            "avoid maid-cafe pin-up or fetish service framing; the company-worker read should come from reporting, ID badge, files, and fluorescent office pressure"
+          ],
+          "intent_axis": [
+            "maid costume preserved as corporate service shift, staff ID, access card, office tablet, document handoff, fluorescent office"
+          ]
+        },
+        {
+          "id": "nurse_corporate_health_admin",
+          "weight": 1.0,
+          "roles": [
+            "간호사"
+          ],
+          "preset": "corporate_startup_profile",
+          "aspect": "corporate_health_admin",
+          "subtype": "nurse_company_worker",
+          "set": {
+            "wearable_accessory": "staff_lanyard_id",
+            "prop": [
+              "staff_lanyard_badge_prop",
+              "security_access_card_prop",
+              "clinical_chart_clipboard_prop"
+            ],
+            "action": "checking_medical_chart",
+            "location": [
+              "hospital_records_room",
+              "corporate_high_floor_office"
+            ],
+            "lighting": "clean_laboratory_fluorescent",
+            "light_type": "fluorescent",
+            "light_shape": "monitor_rectangle_glow",
+            "composition": "document_foreground_face_background",
+            "camera_direction": "eye_level_three_quarter",
+            "subject_framing": "upper_body_framing",
+            "mood": "quiet_dread",
+            "safety_profile": "clinical_care_profile"
+          },
+          "additional": [
+            "the covered nurse uniform stays clinical, while the staff lanyard, access card, chart clipboard, records-room desk, and corporate health-admin context make the role read as company medical labor",
+            "avoid selfie, pin-up nurse, patient distress, emergency spectacle, or body-first framing; use chart review, badge, records, and fluorescent administrative light"
+          ],
+          "intent_axis": [
+            "nurse uniform preserved as corporate health administration, staff lanyard, access card, medical chart, records desk, fluorescent office light"
+          ]
+        },
+        {
+          "id": "police_internal_compliance_shift",
+          "weight": 1.0,
+          "roles": [
+            "경찰"
+          ],
+          "preset": "corporate_startup_profile",
+          "aspect": "internal_compliance_casework",
+          "subtype": "police_company_worker",
+          "set": {
+            "wearable_accessory": "staff_lanyard_id",
+            "prop": [
+              "staff_lanyard_badge_prop",
+              "security_access_card_prop",
+              "case_file_folder_prop",
+              "evidence_marker_prop"
+            ],
+            "action": "studying_caseboard",
+            "location": [
+              "public_records_office",
+              "detective_office_caseboard",
+              "glass_office"
+            ],
+            "lighting": "security_monitor_glow",
+            "light_type": "monitor_glow",
+            "light_shape": "monitor_rectangle_glow",
+            "composition": "caseboard_over_shoulder_frame",
+            "camera_direction": "high_observer_angle",
+            "subject_framing": "upper_body_framing",
+            "mood": "reportage_tense_noir",
+            "safety_profile": "uniformed_authority_profile"
+          },
+          "additional": [
+            "the police uniform remains legible, while the staff lanyard, access card, case file, records office, and monitor-lit caseboard make the authority role read as internal compliance or procedural office labor",
+            "do not replace the police role with a generic suit; the office-worker layer is bureaucracy, documents, access control, and report pressure"
+          ],
+          "intent_axis": [
+            "police uniform preserved as internal compliance office work, staff ID, access card, case file, records office, monitor-lit caseboard"
+          ]
+        },
+        {
+          "id": "miner_shift_report_ledgers",
+          "weight": 1.0,
+          "roles": [
+            "광부"
+          ],
+          "preset": "corporate_startup_profile",
+          "aspect": "manual_labor_shift_report",
+          "subtype": "miner_company_worker",
+          "set": {
+            "wearable_accessory": "staff_lanyard_id",
+            "prop": [
+              "staff_lanyard_badge_prop",
+              "security_access_card_prop",
+              "nonfunctional_pickaxe_prop",
+              "calculator_ledger_prop"
+            ],
+            "action": "reviewing_ledger_columns",
+            "location": [
+              "mine_rest_stop",
+              "accountant_office_late"
+            ],
+            "lighting": "headlamp",
+            "light_type": "fluorescent",
+            "light_shape": "window_rectangle",
+            "composition": "document_foreground_face_background",
+            "camera_direction": "eye_level_three_quarter",
+            "subject_framing": "upper_body_framing",
+            "mood": "survival",
+            "safety_profile": "civilian_service_profile"
+          },
+          "additional": [
+            "the hard hat and miner workwear remain practical, while the lanyard, access card, shift ledger, and report desk make the miner read as a salaried worker inside industrial company routine",
+            "company-worker pressure should come from shift reports, timekeeping, ledger review, and badge access, not from erasing the mine-work role"
+          ],
+          "intent_axis": [
+            "miner workwear preserved as company shift reporting, hard hat, staff ID, access card, ledger columns, mine rest stop, fluorescent report desk"
+          ]
+        },
+        {
+          "id": "casual_after_work_phone_report",
+          "weight": 1.0,
+          "roles": [
+            "사복 여친"
+          ],
+          "preset": "corporate_startup_profile",
+          "aspect": "after_work_phone_report",
+          "subtype": "casual_company_worker",
+          "set": {
+            "wearable_accessory": "staff_lanyard_id",
+            "prop": [
+              "staff_lanyard_badge_prop",
+              "security_access_card_prop",
+              "clear_case_smartphone",
+              "takeaway_coffee_cup"
+            ],
+            "action": "holding_coffee_phone",
+            "location": "subway_transfer_passage",
+            "lighting": "phone_screen_face_glow",
+            "light_type": "phone_screen_glow",
+            "light_shape": "phone_notification_pulse",
+            "composition": "over_shoulder_phone_screen",
+            "camera_direction": "eye_level_three_quarter",
+            "subject_framing": "upper_body_framing",
+            "mood": "melancholic",
+            "safety_profile": "civilian_service_profile"
+          },
+          "additional": [
+            "the casual everyday outfit remains first-read, while the staff lanyard, access card, phone report, takeaway coffee, and subway transfer make it read as after-work company fatigue rather than generic cafe lifestyle",
+            "use phone-screen work pressure and commute light; avoid girlfriend selfie drift, body-first framing, or purely romantic lifestyle cues"
+          ],
+          "intent_axis": [
+            "casual outfit preserved as after-work company worker, staff lanyard, access card, phone report, takeaway coffee, subway transfer commute"
+          ]
+        },
+        {
+          "id": "princess_boardroom_succession_packet",
+          "weight": 1.0,
+          "roles": [
+            "공주"
+          ],
+          "preset": "corporate_startup_profile",
+          "aspect": "royal_boardroom_succession",
+          "subtype": "princess_company_worker",
+          "set": {
+            "wearable_accessory": "staff_lanyard_id",
+            "prop": [
+              "staff_lanyard_badge_prop",
+              "security_access_card_prop",
+              "royal_seal_okse_prop",
+              "royal_edict_gyoji_scroll_prop"
+            ],
+            "action": "touching_state_seal",
+            "location": "corporate_high_floor_office",
+            "lighting": "monitor_glow",
+            "light_type": "monitor_glow",
+            "light_shape": "window_rectangle",
+            "composition": "seal_hand_close_portrait",
+            "camera_direction": "eye_level_three_quarter",
+            "subject_framing": "waist_up_regalia_visible",
+            "mood": "ceremonial_loneliness",
+            "safety_profile": "anti_sexualized_royal_profile"
+          },
+          "additional": [
+            "the royal hanbok, regalia, and succession object remain visible, while the staff ID, access card, high-floor office, and boardroom packet translate princess rank into corporate succession pressure",
+            "avoid generic Western princess drift or executive glamour; the dual read is court regalia under modern office reporting and access-control routines"
+          ],
+          "intent_axis": [
+            "princess regalia preserved as corporate succession office work, royal seal, staff ID, access card, high-floor office, boardroom packet"
+          ]
+        },
+        {
+          "id": "bunny_event_staff_timesheet",
+          "weight": 1.0,
+          "roles": [
+            "바니걸"
+          ],
+          "preset": "corporate_startup_profile",
+          "aspect": "event_staff_timesheet",
+          "subtype": "bunny_company_worker",
+          "set": {
+            "wearable_accessory": "staff_lanyard_id",
+            "prop": [
+              "staff_lanyard_badge_prop",
+              "security_access_card_prop",
+              "compact_mirror",
+              "slim_office_tablet_prop"
+            ],
+            "action": "checking_wristwatch_timing",
+            "location": "mirrored_elevator_box",
+            "lighting": "makeup_mirror_bulbs",
+            "light_type": "fluorescent",
+            "light_shape": "elevator_gap_sliver_light",
+            "composition": "reflection",
+            "camera_direction": "elevator_corner_camera_direction",
+            "subject_framing": "upper_body_framing",
+            "mood": "surveilled_unease",
+            "safety_profile": "civilian_service_profile"
+          },
+          "additional": [
+            "the covered adult bunny-girl stage costume stays readable through ears or bow-tie detail, while lanyard, access card, tablet timesheet, elevator mirror, and wristwatch timing make it read as event staff company labor",
+            "avoid pin-up emphasis, lingerie focus, or full-body costume display; keep upper-body framing, badge, timekeeping, and workplace surveillance as the company read"
+          ],
+          "intent_axis": [
+            "covered bunny stage costume preserved as event staff company work, staff ID, access card, tablet timesheet, wristwatch timing, elevator mirror"
+          ]
+        },
+        {
+          "id": "gothic_lolita_office_records",
+          "weight": 1.0,
+          "roles": [
+            "고스로리"
+          ],
+          "preset": "corporate_startup_profile",
+          "aspect": "gothic_records_office",
+          "subtype": "gothic_lolita_company_worker",
+          "set": {
+            "wearable_accessory": "staff_lanyard_id",
+            "prop": [
+              "staff_lanyard_badge_prop",
+              "security_access_card_prop",
+              "ornate_gothic_perfume_bottle",
+              "appointment_ledger_prop"
+            ],
+            "action": "reviewing_ledger_columns",
+            "location": "accountant_office_late",
+            "lighting": "monitor_glow",
+            "light_type": "monitor_glow",
+            "light_shape": "monitor_rectangle_glow",
+            "composition": "document_foreground_face_background",
+            "camera_direction": "eye_level_three_quarter",
+            "subject_framing": "upper_body_framing",
+            "mood": "gothic_melancholy",
+            "safety_profile": "civilian_service_profile"
+          },
+          "additional": [
+            "the gothic-lolita black lace and doll-like stillness stay dominant, while the staff ID, access card, appointment ledger, and late office records make it read as corporate archive labor",
+            "avoid costume-only gothic portrait drift; the company-worker layer should be documents, badge, monitor light, and ledger review rather than glamour posing"
+          ],
+          "intent_axis": [
+            "gothic lolita dress preserved as late office records work, staff ID, access card, appointment ledger, monitor glow, document foreground"
+          ]
+        }
+      ]
+    },
     "흡혈귀": {
       "preset": "gothic_doll_cosplay_portrait",
       "set": {
@@ -16244,7 +17319,7 @@
         "subject": "alien_visitor_subject",
         "surface_material": "soft_luminous_alien_skin_surface",
         "prop": "star_map_tablet_prop",
-        "action": "studying_star_map_tablet",
+        "action": "checking_ore_contact_point",
         "mood": "digital_dislocation",
         "light_type": "ui_projection_on_skin"
       },
@@ -16320,42 +17395,607 @@
     "마법사": {
       "preset": "folk_creature_threshold_portrait",
       "set": {
-        "costume_style": "witch_robe_wide_hat",
-        "prop": "grimoire_candle_prop",
-        "mood": "archival_suspense",
-        "aesthetic_trend": "light_academia_aesthetic",
         "composition": "hands_only_detail_frame",
-        "light_type": "ritual_candle_cluster"
+        "light_shape": "threshold_sliver_light",
+        "surreal_physics_detail": "localized_refraction_at_contact"
       },
       "soft_anchor_slots": [
-        "costume_style",
-        "prop",
-        "light_type",
-        "aesthetic_trend"
+        "composition",
+        "light_shape",
+        "surreal_physics_detail"
       ],
       "soft_min_anchors": 2,
       "anchor_terms": {
-        "prop": [
-          "grimoire"
-        ],
-        "aesthetic_trend": [
-          "light academia"
-        ],
         "composition": [
           "hands-only detail"
+        ],
+        "light_shape": [
+          "threshold light",
+          "lifted glyph glow",
+          "near-hand glyph light"
+        ],
+        "surreal_physics_detail": [
+          "localized refraction",
+          "contact-point distortion",
+          "boundary-transition magic",
+          "lifted textless glyphs",
+          "near-hand orbiting marks",
+          "volumetric contract glyphs"
         ]
       },
+      "anchor_pool": {
+        "prop": [
+          "levitating_teacup_prop",
+          "gift_tag_ledger_prop",
+          "stopwatch_training_prop",
+          "slim_office_tablet_prop",
+          "sealed_talisman_paper_prop"
+        ],
+        "action": [
+          "levitating_small_objects",
+          "checking_phone",
+          "checking_wristwatch_timing",
+          "reviewing_ledger_columns"
+        ],
+        "location": [
+          "glass_office",
+          "hospital_corridor",
+          "christmas_market_lights",
+          "gym_track",
+          "underground_mine_tunnel_set"
+        ],
+        "composition": [
+          "hands_only_detail_frame",
+          "document_foreground_face_background"
+        ],
+        "light_shape": [
+          "threshold_sliver_light",
+          "lifted_glyph_self_glow"
+        ],
+        "surreal_physics_detail": [
+          "localized_refraction_at_contact",
+          "tiny_levitation_contact_shadow",
+          "textless_mark_rearrangement_boundary",
+          "near_hand_glyphs_lift_and_orbit"
+        ]
+      },
+      "primary_anchor_pool": {
+        "composition": [
+          "hands_only_detail_frame"
+        ],
+        "light_shape": [
+          "threshold_sliver_light",
+          "lifted_glyph_self_glow"
+        ],
+        "surreal_physics_detail": [
+          "localized_refraction_at_contact",
+          "tiny_levitation_contact_shadow",
+          "textless_mark_rearrangement_boundary",
+          "near_hand_glyphs_lift_and_orbit"
+        ]
+      },
+      "anchor_groups": {
+        "composition": [
+          "mixin_primary"
+        ],
+        "light_shape": [
+          "mixin_primary"
+        ],
+        "surreal_physics_detail": [
+          "mixin_primary"
+        ]
+      },
+      "anchor_families": {
+        "medium_to_effect": {
+          "slots": [
+            "prop",
+            "action",
+            "surreal_physics_detail"
+          ],
+          "min_hits": 1
+        },
+        "boundary_transition": {
+          "slots": [
+            "surreal_physics_detail",
+            "light_shape",
+            "composition"
+          ],
+          "min_hits": 1
+        },
+        "restraint_cost": {
+          "slots": [
+            "light_shape",
+            "composition",
+            "motion"
+          ],
+          "min_hits": 1
+        }
+      },
       "additional": [
-        "wizard identity should feel scholarly and controlled through grimoire, candle, hand detail, and knowledge ritual rather than explosive fantasy effects"
+        "wizard identity should be constructed as medium plus scale plus transformation plus cost or trace; the spell should visibly use the role's own tool, document, screen, seal, mirror, gift, stopwatch, or material surface rather than defaulting to a generic spell circle",
+        "distinct from stage magician: no playing-card fan, tailcoat, top hat, audience performance, or sleight-of-hand stagecraft should dominate the image",
+        "avoid routine glowing magic circles, generic blue aura, standard fantasy robes, and default old-book-and-candle staging unless the selected bundle explicitly asks for scholarly archive magic",
+        "the world response should be specific, local, and visible at thumbnail scale: refraction at a contact point, textless marks lifting above the surface, a few-centimeter levitation shadow, suspended dust or snow, a screen pulse, or a material boundary changing state while the role outfit stays readable",
+        "for role-wizard bundles, the magic evidence should be the second-strongest visual read after the role tool or costume; avoid relying only on tiny decorative glows, flat in-plane marks, or monochrome lighting when the spell depends on luminous detail"
       ],
       "intent_axis": [
-        "wizard or mage, scholarly magic, grimoire, candlelit hands, controlled knowledge ritual"
+        "wizard or mage as mechanism: ordinary tool as spell medium, one local physical anomaly, visible transformation boundary, controlled cost or trace, role identity preserved without default magic circle"
       ],
       "safety_requirements": [
         "symbolic magic only; no gore, sacrifice, combat, or injury"
       ],
       "salience_cues": [
-        "grimoire or spellbook in hand detail keeps the wizard concept readable"
+        "the magic cue should sit near the hands, tool, screen, document, seal, mirror, gift, stopwatch, or contact boundary so it reads as wizardry without replacing the main role",
+        "at least one spell cue should show physical depth, self-light, shadow, refraction, suspension, or material displacement rather than a purely decorative aura"
+      ],
+      "bundles": [
+        {
+          "id": "maid_service_cantrip",
+          "weight": 1.0,
+          "roles": [
+            "메이드"
+          ],
+          "aspect": "service_cantrip",
+          "subtype": "levitating_tea_service",
+          "set": {
+            "prop": [
+              "levitating_teacup_prop"
+            ],
+            "action": "levitating_small_objects",
+            "location": "maid_cafe_interior",
+            "lighting": "candlelit_ritual_light",
+            "light_type": "ritual_candle_cluster",
+            "light_shape": "candle_flicker_pool",
+            "color": "warm_kodak_gold",
+            "composition": "hands_only_detail_frame",
+            "subject_framing": "upper_body_framing",
+            "surreal_physics_detail": "tiny_levitation_contact_shadow",
+            "mood": "archival_suspense"
+          },
+          "additional": [
+            "the maid outfit stays readable, while the tea service becomes a controlled cantrip: a teacup, spoon, receipt, or napkin lifts only a few centimeters from the tray near the hands",
+            "wizardness must come from precise finger control, a clearly visible world-response around the service object, and a believable levitation shadow on the tray, not from replacing the role with a generic robe or stage magician act"
+          ],
+          "intent_axis": [
+            "maid wizard as service cantrip, levitating teacup near apron hands, tiny controlled spell in cafe ritual light"
+          ],
+          "salience_cues": [
+            "levitating tea service, apron hands, and small candlelit response keep both maid and wizard identity visible"
+          ]
+        },
+        {
+          "id": "nurse_diagnostic_star_chart",
+          "weight": 1.0,
+          "roles": [
+            "간호사"
+          ],
+          "aspect": "clinical_diagnosis",
+          "subtype": "chart_becomes_star_map",
+          "set": {
+            "prop": [
+              "clinical_chart_clipboard_prop"
+            ],
+            "action": "checking_medical_chart",
+            "location": "hospital_corridor",
+            "lighting": "monitor_glow",
+            "light_type": "monitor_glow",
+            "light_shape": "lifted_glyph_self_glow",
+            "color": "clinical_white",
+            "composition": "document_foreground_face_background",
+            "subject_framing": "upper_body_framing",
+            "surreal_physics_detail": "near_hand_glyphs_lift_and_orbit",
+            "mood": "quiet_dread"
+          },
+          "additional": [
+            "the nurse uniform and clinical corridor stay readable, while the clipboard or chart becomes a diagnostic spell medium: textless chart marks detach from the page and orbit her fingertip as a small clinical constellation, with monitor-glow response near the hands",
+            "make the magical action controlled and caregiving-adjacent without injury spectacle, gore, patient suffering, or fetishized nurse framing"
+          ],
+          "intent_axis": [
+            "nurse wizard as diagnostic logomancer, clinical chart under monitor glow, textless marks lifting above the clipboard near the fingertip, restrained healing-adjacent magic"
+          ],
+          "safety_requirements": [
+            "symbolic clinical magic only; no visible patient, injury, medical gore, or fetishized nurse styling"
+          ]
+        },
+        {
+          "id": "police_evidence_scrying_case",
+          "weight": 1.0,
+          "roles": [
+            "경찰"
+          ],
+          "aspect": "evidence_scrying",
+          "subtype": "case_file_as_spell_surface",
+          "set": {
+            "prop": [
+              "case_file_folder_prop",
+              "evidence_marker_prop",
+              "scrying_mirror_prop"
+            ],
+            "action": "studying_caseboard",
+            "location": "detective_office_caseboard",
+            "lighting": "security_monitor_glow",
+            "light_type": "monitor_glow",
+            "light_shape": "monitor_rectangle_glow",
+            "composition": "caseboard_over_shoulder_frame",
+            "subject_framing": "upper_body_framing",
+            "surreal_physics_detail": "textless_mark_rearrangement_boundary",
+            "mood": "reportage_tense_noir"
+          },
+          "additional": [
+            "the police uniform stays legible, while evidence markers, a case file, or a small scrying mirror become the spell surface that reveals a hidden route, pattern, or restrained binding glyph",
+            "wizardness should read through procedural divination and world-response in the evidence board, not through playing cards, top hats, stagecraft, combat, or weaponized magic"
+          ],
+          "intent_axis": [
+            "police wizard as occult investigator, evidence board scrying, case file glyphs, procedural authority under security monitor glow"
+          ]
+        },
+        {
+          "id": "miner_headlamp_ore_sigils",
+          "weight": 1.0,
+          "roles": [
+            "광부"
+          ],
+          "aspect": "subterranean_ore_spell",
+          "subtype": "headlamp_reveals_ore_refraction",
+          "set": {
+            "prop": [
+              "nonfunctional_pickaxe_prop"
+            ],
+            "action": "checking_ore_contact_point",
+            "location": "underground_mine_tunnel_set",
+            "lighting": "headlamp",
+            "light_type": "archive_desk_lamp",
+            "light_shape": "threshold_sliver_light",
+            "composition": "document_foreground_face_background",
+            "subject_framing": "upper_body_framing",
+            "surface_material": "salt_crystal_attached_surface",
+            "surreal_physics_detail": "localized_refraction_at_contact",
+            "mood": "archival_suspense"
+          },
+          "additional": [
+            "the miner hard hat, workwear, and nonfunctional tool stay practical, while the headlamp catches ore dust, salt crystals, or tunnel marks that bend light at the pickaxe contact point",
+            "keep the magic close and geological: dust hangs too still, crystal grains refract locally, or the tunnel face answers the tool with one subtle glint"
+          ],
+          "intent_axis": [
+            "miner wizard as subterranean geomancer, headlamp reveals ore and salt-crystal refraction around the work tool, controlled earthbound magic"
+          ]
+        },
+        {
+          "id": "casual_phone_constellation",
+          "weight": 1.0,
+          "roles": [
+            "사복 여친"
+          ],
+          "preset": "candid_iphone_portrait",
+          "aspect": "phone_constellation",
+          "subtype": "everyday_screen_spell",
+          "set": {
+            "wardrobe_style": "hoodie_shorts_sneakers",
+            "prop": [
+              "clear_case_smartphone",
+              "glitching_phone_screen_prop"
+            ],
+            "action": "checking_phone",
+            "location": "dim_monitor_glow_bedroom",
+            "lighting": "phone_screen_face_glow",
+            "light_type": "phone_screen_face_glow",
+            "light_shape": "lifted_glyph_self_glow",
+            "color": "cool_blue",
+            "composition": "over_shoulder_phone_screen",
+            "subject_framing": "upper_body_framing",
+            "surreal_physics_detail": "near_hand_glyphs_lift_and_orbit",
+            "mood": "intimate"
+          },
+          "additional": [
+            "the casual girlfriend-style outfit stays everyday and adult, while the phone screen becomes a tiny everyday spell surface: notification dots, receipt marks, or a paper-charm symbol lift off the screen and orbit near her fingertip",
+            "avoid ordinary cafe lifestyle drift: the phone-screen spell, near-hand lifted marks, and screen glow must be the first magical read without adding robes, hats, or theatrical fantasy costume"
+          ],
+          "intent_axis": [
+            "casual girlfriend wizard as everyday screen spell, hoodie outfit, phone constellation glyphs lifting from the screen near the hand"
+          ]
+        },
+        {
+          "id": "princess_royal_seal_thaumaturgy",
+          "weight": 1.0,
+          "roles": [
+            "공주"
+          ],
+          "aspect": "royal_seal_spell",
+          "subtype": "seal_responds_to_edict",
+          "set": {
+            "costume_style": "royal_princess_hanbok",
+            "prop": [
+              "royal_seal_okse_prop",
+              "royal_edict_gyoji_scroll_prop"
+            ],
+            "action": "touching_state_seal",
+            "location": "royal_princess_chamber",
+            "lighting": "candlelight",
+            "light_type": "candlelight",
+            "light_shape": "lifted_glyph_self_glow",
+            "color": "warm_kodak_gold",
+            "composition": "seal_hand_close_portrait",
+            "subject_framing": "waist_up_framing",
+            "surreal_physics_detail": "near_hand_glyphs_lift_and_orbit",
+            "mood": "ceremonial_loneliness"
+          },
+          "additional": [
+            "preserve the East-Asian Joseon palace identity and royal hanbok; wizardness should come from the royal seal and edict scroll responding to her hand as controlled court thaumaturgy",
+            "do not make her an imprisoned fantasy captive or generic Western princess; the active magical read is ceremonial authority, lineage, seal light, and the seal impression or edict marks lifting visibly above the paper around the state seal"
+          ],
+          "intent_axis": [
+            "princess wizard as court thaumaturge, Joseon royal hanbok, state seal and edict scroll respond to hand with lifted textless seal marks, ceremonial magical authority"
+          ]
+        },
+        {
+          "id": "bunny_backstage_scrying_mirror",
+          "weight": 1.0,
+          "roles": [
+            "바니걸"
+          ],
+          "aspect": "backstage_scrying",
+          "subtype": "vanity_mirror_spell",
+          "set": {
+            "prop": [
+              "compact_mirror",
+              "scrying_mirror_prop"
+            ],
+            "action": "closing_compact_mirror",
+            "location": "makeup_vanity",
+            "lighting": "makeup_mirror_bulbs",
+            "light_type": "ritual_candle_cluster",
+            "light_shape": "candle_flicker_pool",
+            "composition": "reflection",
+            "subject_framing": "upper_body_framing",
+            "surreal_physics_detail": "localized_refraction_at_contact",
+            "mood": "occult_noir"
+          },
+          "additional": [
+            "the covered adult bunny-girl stage costume stays readable at the shoulders and hair accessory, while the compact mirror or vanity mirror becomes a private scrying surface near the face and hand",
+            "avoid pin-up emphasis and avoid stage-magician playing-card cues; wizardness comes from mirror response, controlled hand posture, and a small backstage ritual glow"
+          ],
+          "intent_axis": [
+            "bunny-girl wizard as backstage scryer, covered stage costume, compact mirror spell, private vanity ritual glow"
+          ],
+          "safety_requirements": [
+            "adult fictional subject only; covered non-explicit stage costume; no pin-up framing"
+          ]
+        },
+        {
+          "id": "gothic_lolita_curio_sorcery",
+          "weight": 1.0,
+          "roles": [
+            "고스로리"
+          ],
+          "aspect": "gothic_instrument_sorcery",
+          "subtype": "curio_objects_obey",
+          "set": {
+            "prop": [
+              "ornate_gothic_perfume_bottle",
+              "scrying_mirror_prop"
+            ],
+            "action": "levitating_small_objects",
+            "location": "gothic_glass_curio_cabinet",
+            "lighting": "candlelight",
+            "light_type": "candlelight",
+            "light_shape": "candle_flicker_pool",
+            "composition": "frame_within_frame",
+            "subject_framing": "upper_body_framing",
+            "surreal_physics_detail": "tiny_levitation_contact_shadow",
+            "mood": "gothic_melancholy"
+          },
+          "additional": [
+            "the gothic-lolita dress and doll-like stillness stay dominant, while a perfume bottle, tiny key, lace scrap, or scrying mirror obeys a quiet hand gesture inside the glass curio frame",
+            "keep the wizard read instrumental and controlled rather than turning the image into a generic witch hat, horror doll, or costume-only gothic portrait"
+          ],
+          "intent_axis": [
+            "gothic lolita wizard as curio sorcerer, black lace dress, small objects levitating in glass cabinet, controlled doll-like magic"
+          ]
+        },
+        {
+          "id": "office_ledger_spellwork",
+          "weight": 1.0,
+          "roles": [
+            "회사원"
+          ],
+          "preset": "corporate_startup_profile",
+          "aspect": "corporate_ledger_magic",
+          "subtype": "bureaucratic_spell_screen",
+          "set": {
+            "wardrobe_style": "clean_blazer_trousers",
+            "prop": [
+              "staff_lanyard_badge_prop",
+              "security_access_card_prop",
+              "slim_office_tablet_prop"
+            ],
+            "action": "reviewing_ledger_columns",
+            "location": "glass_office",
+            "lighting": "monitor_glow",
+            "light_type": "monitor_glow",
+            "light_shape": "lifted_glyph_self_glow",
+            "color": "cool_blue",
+            "composition": "document_foreground_face_background",
+            "subject_framing": "upper_body_framing",
+            "surreal_physics_detail": "near_hand_glyphs_lift_and_orbit",
+            "mood": "bureaucratic_horror"
+          },
+          "additional": [
+            "the office look stays practical through blazer, employee badge, access card, and corporate space, while the tablet or ledger columns detach as textless contract marks under restrained monitor-glow spellwork",
+            "wizardness should read as bureaucratic arcana: lifted contract glyphs are the brightest object near the hands and visibly detached from the tablet or document plane, not fantasy robe drift, executive glamour, or ordinary late office work"
+          ],
+          "intent_axis": [
+            "office-worker wizard as bureaucratic spellwork, staff badge, tablet ledger, cool-blue lifted contract marks orbiting the hand, controlled corporate arcana"
+          ]
+        },
+        {
+          "id": "santa_gift_contract_spell",
+          "weight": 1.0,
+          "roles": [
+            "산타복"
+          ],
+          "preset": "seasonal_event_portrait",
+          "aspect": "holiday_contract_magic",
+          "subtype": "gift_tag_ledger_spell",
+          "set": {
+            "costume_style": "covered_santa_fur_trim_costume",
+            "prop": [
+              "modest_wrapped_gift_prop",
+              "gift_tag_ledger_prop",
+              "christmas_lights_prop"
+            ],
+            "action": "levitating_small_objects",
+            "location": "christmas_market_lights",
+            "lighting": "first_snow_evening_light",
+            "light_shape": "lifted_glyph_self_glow",
+            "color": "warm_kodak_gold",
+            "weather": "windblown_snow",
+            "motion": "suspended_snowflake_motion",
+            "composition": "hands_foreground_face_behind",
+            "subject_framing": "upper_body_framing",
+            "surreal_physics_detail": "near_hand_glyphs_lift_and_orbit",
+            "mood": "festive_warmth"
+          },
+          "additional": [
+            "the covered Santa outfit stays readable through red fur trim, wrapped gift, winter street lights, and snow, while the gift-tag ledger becomes a holiday contract spell surface",
+            "wizardness should read as contract magic at gift scale: gift-tag marks lift above the present and orbit her hand while ribbon tips hang still in the snow, making the gift response brighter than the market lights, not a magic circle or archive book"
+          ],
+          "intent_axis": [
+            "Santa-outfit wizard as holiday contract mage, red fur-trim costume, gift-tag ledger, suspended snow and ribbon, lifted gift marks orbiting the hand without magic circle"
+          ],
+          "safety_requirements": [
+            "adult fictional subject only; covered festive costume, no lingerie-like Santa outfit, no pin-up framing"
+          ]
+        },
+        {
+          "id": "sports_kinetic_training_spell",
+          "weight": 1.0,
+          "roles": [
+            "운동복"
+          ],
+          "preset": "sports_action_wire",
+          "aspect": "kinetic_training_magic",
+          "subtype": "stopwatch_motion_spell",
+          "set": {
+            "wardrobe_style": "covered_track_jacket_training_set",
+            "prop": [
+              "stopwatch_training_prop"
+            ],
+            "action": "sprint_start_drive",
+            "location": "gym_track",
+            "lighting": "gym_overhead_led_light",
+            "light_type": "high_speed_strobe",
+            "light_shape": "kinetic_trail_edge_light",
+            "motion": "kinetic_spell_trail_motion",
+            "composition": "medium_close",
+            "subject_framing": "upper_body_framing",
+            "surreal_physics_detail": "localized_refraction_at_contact",
+            "mood": "focused"
+          },
+          "additional": [
+            "the covered sportswear stays readable through track jacket, training pants, sneakers, stopwatch, and running-track context, while timing and motion become the spell medium",
+            "wizardness should read as kinetic magic: the stopwatch face, training band, or arm gesture leaves a thin controlled trail and local refraction, not robes, spell circles, books, or generic aura"
+          ],
+          "intent_axis": [
+            "sportswear wizard as kinetic trainer, covered track jacket and sneakers, stopwatch spell medium, controlled motion trail on indoor track without magic circle"
+          ],
+          "safety_requirements": [
+            "adult fictional subject only; covered athletic outfit, no fetish fitness framing or body-first gym glamour"
+          ]
+        },
+        {
+          "id": "generic_micro_object_levitation",
+          "weight": 1.0,
+          "aspect": "micro_object_magic",
+          "subtype": "small_object_contact_shadow",
+          "set": {
+            "prop": [
+              "levitating_teacup_prop"
+            ],
+            "action": "levitating_small_objects",
+            "composition": "hands_only_detail_frame",
+            "subject_framing": "upper_body_framing",
+            "surreal_physics_detail": "tiny_levitation_contact_shadow",
+            "mood": "archival_suspense"
+          },
+          "override_slots": [
+            "composition",
+            "subject_framing",
+            "surreal_physics_detail",
+            "mood"
+          ],
+          "additional": [
+            "when no role-specific wizard bundle exists, keep the base role readable and show wizardry as one small role-adjacent object hovering only a few centimeters with a believable contact shadow"
+          ],
+          "intent_axis": [
+            "wizard mixin as micro-object magic, one small object near the hands levitates with contact-shadow proof while the base role remains dominant"
+          ]
+        },
+        {
+          "id": "generic_technomancy_interface_spell",
+          "weight": 1.0,
+          "aspect": "technomancy_interface",
+          "subtype": "screen_contact_refraction",
+          "set": {
+            "prop": [
+              "glitching_phone_screen_prop",
+              "slim_office_tablet_prop"
+            ],
+            "action": "checking_phone",
+            "lighting": "monitor_glow",
+            "light_type": "monitor_glow",
+            "light_shape": "monitor_rectangle_glow",
+            "composition": "over_shoulder_phone_screen",
+            "subject_framing": "upper_body_framing",
+            "surreal_physics_detail": "localized_refraction_at_contact",
+            "mood": "quiet_dread"
+          },
+          "override_slots": [
+            "lighting",
+            "light_type",
+            "light_shape",
+            "composition",
+            "subject_framing",
+            "surreal_physics_detail",
+            "mood"
+          ],
+          "additional": [
+            "when no role-specific wizard bundle exists, the spell can be modern technomancy: a phone or tablet screen refracts only at the fingertip, with screen light wrapping the hand and no fantasy book required"
+          ],
+          "intent_axis": [
+            "wizard mixin as modern technomancy, phone or tablet screen as spell medium, fingertip refraction and monitor glow while the base role stays visible"
+          ]
+        },
+        {
+          "id": "generic_contract_mark_spell",
+          "weight": 1.0,
+          "aspect": "contract_logomancy",
+          "subtype": "textless_marks_rearrange",
+          "set": {
+            "prop": [
+              "sealed_black_envelope_prop",
+              "gift_tag_ledger_prop"
+            ],
+            "action": "presenting_file_folder",
+            "light_shape": "lifted_glyph_self_glow",
+            "composition": "document_foreground_face_background",
+            "subject_framing": "upper_body_framing",
+            "surreal_physics_detail": "near_hand_glyphs_lift_and_orbit",
+            "mood": "bureaucratic_horror"
+          },
+          "override_slots": [
+            "light_shape",
+            "composition",
+            "subject_framing",
+            "surreal_physics_detail",
+            "mood"
+          ],
+          "additional": [
+            "when no role-specific wizard bundle exists, the spell can be contract or logomancy: textless marks lift from an envelope, tag, or document near the exact contact boundary, without readable text or a magic circle"
+          ],
+          "intent_axis": [
+            "wizard mixin as contract logomancy, textless marks lifting from a document or envelope near the contact boundary while the base role stays dominant"
+          ]
+        }
       ]
     },
     "수인": {
@@ -16365,43 +18005,48 @@
         "prop": "pointed_ear_tail_set_prop",
         "texture": "fur_patch_skin_blend",
         "expression": "slit_pupil_intense_gaze",
-        "costume_style": "beastkin_tailored_folk_costume",
         "mood": "weathered_endurance"
       },
       "soft_anchor_slots": [
         "subject",
         "prop",
-        "texture"
+        "texture",
+        "expression",
+        "composition",
+        "world"
       ],
       "soft_min_anchors": 2,
       "anchor_terms": {
         "subject": [
           "beastkin",
-          "animal traits",
-          "pointed ears",
-          "tail",
-          "fur patch"
+          "human-animal threshold",
+          "humanlike body with visible animal traits"
         ],
         "prop": [
-          "beastkin",
-          "animal traits",
           "pointed ears",
           "tail",
-          "fur patch"
+          "mobile sensory ears",
+          "tail as body structure"
         ],
         "texture": [
-          "beastkin",
-          "animal traits",
-          "pointed ears",
-          "tail",
-          "fur patch"
+          "skin-to-fur transition",
+          "fur patch blended into skin",
+          "body as transition zone"
         ],
         "expression": [
-          "beastkin",
-          "animal traits",
-          "pointed ears",
-          "tail",
-          "fur patch"
+          "slit-pupil gaze",
+          "non-human sensory attention",
+          "animal-aware stare"
+        ],
+        "composition": [
+          "threshold frame",
+          "reflection or frame-within-frame",
+          "visible split between human and animal self"
+        ],
+        "world": [
+          "folk threshold",
+          "public social othering",
+          "human society noticing a non-human body"
         ]
       },
       "anchor_pool": {
@@ -16416,6 +18061,15 @@
         ],
         "expression": [
           "slit_pupil_intense_gaze"
+        ],
+        "composition": [
+          "threshold_backlit_center",
+          "reflection",
+          "frame_within_frame"
+        ],
+        "world": [
+          "folk_threshold_world",
+          "public_transit_tail_world"
         ]
       },
       "primary_anchor_pool": {
@@ -16424,6 +18078,9 @@
         ],
         "texture": [
           "fur_patch_skin_blend"
+        ],
+        "expression": [
+          "slit_pupil_intense_gaze"
         ]
       },
       "anchor_groups": {
@@ -16432,23 +18089,571 @@
         ],
         "texture": [
           "mixin_primary"
+        ],
+        "expression": [
+          "mixin_primary"
+        ],
+        "composition": [
+          "beastkin_liminal"
+        ],
+        "world": [
+          "beastkin_liminal"
         ]
       },
+      "anchor_families": {
+        "body_transition": {
+          "slots": [
+            "subject",
+            "texture",
+            "prop"
+          ],
+          "min_hits": 1
+        },
+        "sensory_gaze": {
+          "slots": [
+            "expression",
+            "prop",
+            "action"
+          ],
+          "min_hits": 1
+        },
+        "liminal_context": {
+          "slots": [
+            "composition",
+            "world",
+            "light_shape"
+          ],
+          "min_hits": 1
+        }
+      },
+      "anchor_group_floor": {
+        "mixin_primary": 1
+      },
       "additional": [
-        "수인은 동물 귀/꼬리만 붙인 패션이 아니라 피부와 털, 시선, 자세가 인간과 비인간 사이의 경계로 읽히게 한다."
+        "수인은 동물 귀/꼬리만 붙인 패션이 아니라 피부와 털, 시선, 자세, 반사, 주변 시선에서 인간과 비인간 사이의 경계로 읽히게 한다.",
+        "Keep any base role outfit readable; the beastkin layer should alter surface texture, sensory gaze, body posture, reflection logic, social space, and species-specific body cues rather than replacing the role with a generic animal costume."
       ],
       "intent_axis": [
-        "visible beastkin identity through ears, tail, fur patches, slit-pupil gaze, and threshold folk mood"
+        "beastkin as a living human-animal threshold where skin, fur, ears, tail, gaze, posture, reflection, and social space prove a mixed body rather than detachable accessories"
       ],
+      "species_variants": {
+        "stream": "species",
+        "min_distinct_per_batch": 4,
+        "max_same_family_ratio": 0.34,
+        "variants": [
+          {
+            "id": "canid_fox_wolf",
+            "family": "canid",
+            "tier": "default_safe",
+            "weight": 1.0,
+            "aliases": [
+              "개과",
+              "늑대",
+              "여우",
+              "강아지",
+              "wolf",
+              "fox",
+              "canid"
+            ],
+            "additional": [
+              "canid beastkin variant: mobile upright ears, a weighted bushy tail, faint ruff-to-skin boundary at jaw or nape, and sound-tracking posture; keep the face humanlike, not a muzzle or mascot head"
+            ],
+            "intent_axis": [
+              "canid fox or wolf beastkin with mobile ears, weighted tail, and ruff-to-skin boundary while the human face and role outfit remain dominant"
+            ],
+            "salience_cues": [
+              "canid ear angle, tail weight, or nape ruff should identify the species family without becoming a full animal head"
+            ]
+          },
+          {
+            "id": "feline_cat_bigcat",
+            "family": "feline",
+            "tier": "default_safe",
+            "weight": 1.0,
+            "aliases": [
+              "고양이",
+              "네코",
+              "호랑이",
+              "표범",
+              "사자",
+              "cat",
+              "tiger",
+              "leopard",
+              "feline"
+            ],
+            "additional": [
+              "feline beastkin variant: narrow reflective eyes, subtle whisker-shadow texture, compact ears, and a balancing tail; keep the human face intact and avoid cat-mask cosplay"
+            ],
+            "intent_axis": [
+              "feline beastkin with compact ears, balancing tail, reflective eyes, and subtle whisker-shadow marks integrated into a humanlike portrait"
+            ],
+            "salience_cues": [
+              "feline eye shine or whisker-shadow skin detail should be visible near the face, not only detachable ears"
+            ]
+          },
+          {
+            "id": "rabbit_hare",
+            "family": "lagomorph",
+            "tier": "default_safe",
+            "weight": 1.0,
+            "aliases": [
+              "토끼",
+              "산토끼",
+              "rabbit",
+              "hare",
+              "lagomorph"
+            ],
+            "additional": [
+              "rabbit or hare beastkin variant: long sensory ears responding to off-frame sound, short tail structure, alert stillness, and soft fur boundary at wrist or collar; keep it different from bunny-girl costume styling"
+            ],
+            "intent_axis": [
+              "rabbit or hare beastkin where long ears, alert stillness, and a soft fur boundary prove a living body rather than a bunny costume"
+            ],
+            "salience_cues": [
+              "rabbit or hare ears should read as mobile sensory anatomy, not costume ears"
+            ]
+          },
+          {
+            "id": "deer_ungulate",
+            "family": "ungulate",
+            "tier": "default_safe",
+            "weight": 0.9,
+            "aliases": [
+              "사슴",
+              "순록",
+              "영양",
+              "deer",
+              "reindeer",
+              "antler",
+              "ungulate"
+            ],
+            "additional": [
+              "deer or ungulate beastkin variant: fine ears, small velvet antler buds or restrained antler silhouette, and a delicate neck-to-skin texture change; keep horns modest and distinct from dragonkin scales or fantasy armor"
+            ],
+            "intent_axis": [
+              "deer or ungulate beastkin with fine ears, restrained antler silhouette, and delicate skin-to-fur boundary in a humanlike role portrait"
+            ],
+            "salience_cues": [
+              "deer-like ears or restrained antler buds should identify the species while preserving the role costume"
+            ]
+          },
+          {
+            "id": "bear",
+            "family": "bear",
+            "tier": "guarded_safe",
+            "weight": 0.8,
+            "aliases": [
+              "곰",
+              "bear",
+              "ursine"
+            ],
+            "additional": [
+              "bear beastkin variant: round ears, heavier fur patches at shoulder or forearm, grounded posture, and warm breath in the air; avoid teddy-bear mascot proportions and keep the face humanlike"
+            ],
+            "intent_axis": [
+              "bear beastkin with round ears, shoulder or forearm fur patches, grounded posture, and humanlike facial structure"
+            ],
+            "salience_cues": [
+              "bear-like round ears or shoulder fur should be grounded and anatomical, never plush mascot styling"
+            ]
+          },
+          {
+            "id": "horse_equine",
+            "family": "equine",
+            "tier": "guarded_safe",
+            "weight": 0.75,
+            "aliases": [
+              "말",
+              "말수인",
+              "horse",
+              "equine"
+            ],
+            "additional": [
+              "equine beastkin variant: mane-like hair flow, long mobile ears, strong but humanlike neck posture, and a tail that affects clothing or movement; avoid horse mask, hoof focus, or full animal body"
+            ],
+            "intent_axis": [
+              "equine beastkin with mane-like hair, long mobile ears, and tail movement integrated into a human role portrait"
+            ],
+            "salience_cues": [
+              "equine mane or ear shape should be visible without turning the face into a horse mask"
+            ]
+          },
+          {
+            "id": "aquatic_mammal_otter_seal",
+            "family": "aquatic_mammal",
+            "tier": "guarded_safe",
+            "weight": 0.8,
+            "aliases": [
+              "수달",
+              "물개",
+              "바다표범",
+              "otter",
+              "seal",
+              "aquatic mammal"
+            ],
+            "additional": [
+              "aquatic mammal beastkin variant: damp fur sheen at collar or wrist, subtle whisker-shadow, wet reflection logic, and compact tail or streamlined posture; do not add gills, fish fins, or mermaid traits"
+            ],
+            "intent_axis": [
+              "otter or seal-like aquatic mammal beastkin with damp fur sheen, subtle whisker-shadow, and reflection-based body evidence"
+            ],
+            "salience_cues": [
+              "wet fur sheen or reflected aquatic-mammal texture should identify the variant without turning into fish or mermaid imagery"
+            ]
+          },
+          {
+            "id": "avian_owl_raptor_corvid",
+            "family": "avian",
+            "tier": "guarded_safe",
+            "weight": 0.85,
+            "aliases": [
+              "새",
+              "올빼미",
+              "매",
+              "까마귀",
+              "조류",
+              "bird",
+              "owl",
+              "raptor",
+              "corvid",
+              "avian"
+            ],
+            "additional": [
+              "avian beastkin variant: feather ruff along collarbone or temple, sharp attentive eyes, wing-like fabric response, and quiet head-angle precision; keep the human mouth and nose, no beak or bird mask"
+            ],
+            "intent_axis": [
+              "avian owl, raptor, or corvid beastkin with feather ruff, sharp attentive gaze, and wing-like fabric movement while the face remains human"
+            ],
+            "salience_cues": [
+              "feather ruff or wing-like fabric should read as avian anatomy without adding a beak"
+            ]
+          },
+          {
+            "id": "reptile_lizard_gecko",
+            "family": "reptile",
+            "tier": "guarded_safe",
+            "weight": 0.65,
+            "aliases": [
+              "도마뱀",
+              "게코",
+              "카멜레온",
+              "파충류",
+              "lizard",
+              "gecko",
+              "chameleon",
+              "reptile"
+            ],
+            "additional": [
+              "reptile beastkin variant: small scale patches at temple, wrist, or collarbone, controlled stillness, and cool reflective eye detail; keep scales partial and distinct from dragonkin horns or full monster skin"
+            ],
+            "intent_axis": [
+              "lizard or gecko-like reptile beastkin with partial scale patches, cool stillness, and humanlike face rather than dragonkin or monster design"
+            ],
+            "salience_cues": [
+              "partial lizard-like scale patches should stay near face or hands and never become full monster skin"
+            ]
+          }
+        ],
+        "excluded_default_families": [
+          "snake",
+          "fish_shark_koi",
+          "amphibian",
+          "insect_arthropod"
+        ],
+        "exclusion_reason": "These families can be explored only by explicit request with extra safety guards because they easily collapse into monster, mascot, body-horror, mermaid, or dehumanized animal imagery."
+      },
       "likeness_mode": "inspired",
       "safety_requirements": [
-        "keep the concept visible through symbolic costume, light, pose, props, and surface texture; no gore, wounds, injury, or sexualized vulnerability"
+        "keep the concept visible through symbolic costume, light, pose, props, surface texture, gaze, reflection, and social context; no gore, wounds, injury, animal abuse, sexualized vulnerability, dehumanizing caricature, or mascot-suit drift"
+      ],
+      "salience_cues": [
+        "at least one beastkin cue should sit near the lit face, eye, hand, wrist, collar, tail base, reflection, or foreground body surface, and the viewer should read a living human-animal boundary before ordinary cosplay, fashion styling, or mascot costume"
+      ],
+      "render_priority_terms": [
+        {
+          "id": "beastkin_body_transition",
+          "group": "beastkin_body_transition",
+          "tier": "required",
+          "terms": [
+            "skin-to-fur transition",
+            "fur patch",
+            "pointed ears",
+            "tail",
+            "slit-pupil gaze"
+          ],
+          "min_hits": 2,
+          "target_slots": [
+            "subject",
+            "prop",
+            "texture",
+            "expression"
+          ]
+        },
+        {
+          "id": "beastkin_liminal_context",
+          "group": "beastkin_liminal_context",
+          "tier": "support",
+          "terms": [
+            "threshold",
+            "reflection",
+            "frame-within-frame",
+            "public-transit tail world",
+            "social gaze"
+          ],
+          "min_hits": 1,
+          "target_slots": [
+            "composition",
+            "world",
+            "light_shape",
+            "mood"
+          ]
+        },
+        {
+          "id": "beastkin_species_specificity",
+          "group": "beastkin_species_specificity",
+          "tier": "support",
+          "terms": [
+            "species-specific animal trait",
+            "distinct ear shape",
+            "distinct tail structure",
+            "fur, feather, scale, or damp-sheen boundary",
+            "humanlike face"
+          ],
+          "min_hits": 1,
+          "target_slots": [
+            "subject",
+            "prop",
+            "texture",
+            "expression"
+          ]
+        }
+      ],
+      "render_suppress_terms": [
+        "detachable animal ears only",
+        "tail accessory only",
+        "full mascot suit",
+        "animal costume parody",
+        "dehumanizing animal caricature",
+        "ordinary cosplay with ears"
+      ],
+      "conditional_additional": [
+        {
+          "requires_role": true,
+          "roles": [
+            "산타복"
+          ],
+          "text": [
+            "for Santa outfit beastkin, the covered red fur-trim Santa costume, wrapped gift, Christmas lights, and winter street should remain first-read anchors; animal traits should interact with the hood, fur trim, sleeve opening, or tail gap rather than replacing the outfit with generic fantasy fur"
+          ]
+        },
+        {
+          "requires_role": true,
+          "roles": [
+            "운동복"
+          ],
+          "text": [
+            "for sportswear beastkin, the covered track jacket, training pants, sneakers, stopwatch or training band, and gym or running-track context should remain first-read anchors; animal traits should appear through ears under a headband, tail balancing motion, or fur/scale detail at wrist and ankle, not through folk robes or shrine-threshold fantasy"
+          ]
+        }
+      ],
+      "dual_read_requirement": {
+        "enabled": true,
+        "min_role_hits": 2,
+        "min_mixin_hits": 2
+      },
+      "free_slot_constraints": {
+        "subject_framing": {
+          "prefer_ids": [
+            "head_and_shoulders_crop",
+            "upper_body_framing",
+            "detail_crop_hands_accessories"
+          ],
+          "deny_pool": [
+            "full_body_framing",
+            "three_quarter_body_framing"
+          ]
+        },
+        "composition": {
+          "prefer_ids": [
+            "threshold_backlit_center",
+            "reflection",
+            "frame_within_frame",
+            "medium_close"
+          ],
+          "deny_pool": [
+            "phone_arm_length_selfie",
+            "mirror_selfie_composition",
+            "crouching_mirror_full_body"
+          ]
+        }
+      },
+      "bundle_override_slots": [],
+      "bundles": [
+        {
+          "id": "threshold_body_transition",
+          "weight": 1.0,
+          "aspect": "body_transition",
+          "subtype": "skin_fur_boundary",
+          "set": {
+            "action": "pausing_before_threshold",
+            "composition": "threshold_backlit_center",
+            "subject_framing": "upper_body_framing",
+            "world": "folk_threshold_world",
+            "light_shape": "threshold_sliver_light"
+          },
+          "soft_anchor_slots": [
+            "action",
+            "composition",
+            "world",
+            "light_shape"
+          ],
+          "soft_min_anchors": 2,
+          "anchor_terms": {
+            "action": [
+              "pausing before a human-animal threshold"
+            ],
+            "composition": [
+              "threshold frame",
+              "body boundary made visible"
+            ],
+            "world": [
+              "folk threshold",
+              "liminal beastkin world"
+            ],
+            "light_shape": [
+              "threshold sliver light"
+            ]
+          },
+          "anchor_families": {
+            "body_transition": {
+              "slots": [
+                "action",
+                "composition",
+                "light_shape"
+              ],
+              "min_hits": 1
+            }
+          },
+          "additional": [
+            "make the skin-to-fur transition visible as a living boundary at the neck, wrist, forearm, collar, or tail base; the ears and tail should feel organically connected to the skull and spine rather than attached accessories"
+          ],
+          "intent_axis": [
+            "beastkin body-transition portrait at a threshold, skin-to-fur boundary and organic ears or tail near face and hands"
+          ],
+          "salience_cues": [
+            "the skin-to-fur boundary should survive a tight face or upper-body crop"
+          ]
+        },
+        {
+          "id": "sensory_social_othering",
+          "weight": 1.0,
+          "aspect": "sensory_othering",
+          "subtype": "public_gaze_and_tail_space",
+          "set": {
+            "action": "standing_silence",
+            "composition": "frame_within_frame",
+            "subject_framing": "head_and_shoulders_crop",
+            "world": "public_transit_tail_world"
+          },
+          "soft_anchor_slots": [
+            "action",
+            "composition",
+            "subject_framing",
+            "world"
+          ],
+          "soft_min_anchors": 2,
+          "anchor_terms": {
+            "action": [
+              "stillness while sensing off-frame attention"
+            ],
+            "composition": [
+              "social frame",
+              "observed through a boundary"
+            ],
+            "world": [
+              "public-transit tail world",
+              "surrounding human gaze"
+            ]
+          },
+          "anchor_families": {
+            "sensory_othering": {
+              "slots": [
+                "action",
+                "composition",
+                "world"
+              ],
+              "min_hits": 1
+            }
+          },
+          "additional": [
+            "make the animal senses feel active: ears angled toward an off-frame sound, slit pupils focused before the human face moves, tail affecting nearby personal space, and bystanders or framing that quietly mark the subject as socially other"
+          ],
+          "intent_axis": [
+            "beastkin as a socially observed body, non-human sensory attention and tail-aware posture inside ordinary human space"
+          ],
+          "salience_cues": [
+            "the social gaze or public-space tension should support the animal traits instead of becoming a generic commute portrait"
+          ]
+        },
+        {
+          "id": "shadow_reflection_duality",
+          "weight": 1.0,
+          "aspect": "shadow_reflection",
+          "subtype": "animal_self_in_reflection",
+          "set": {
+            "composition": "reflection",
+            "subject_framing": "upper_body_framing",
+            "world": "folk_threshold_world",
+            "light_shape": "threshold_sliver_light"
+          },
+          "soft_anchor_slots": [
+            "composition",
+            "world",
+            "light_shape"
+          ],
+          "soft_min_anchors": 2,
+          "anchor_terms": {
+            "composition": [
+              "reflection",
+              "shadow or mirror reveals animal self"
+            ],
+            "world": [
+              "folk threshold",
+              "human-animal duality"
+            ],
+            "light_shape": [
+              "backlit threshold silhouette"
+            ]
+          },
+          "anchor_families": {
+            "shadow_reflection": {
+              "slots": [
+                "composition",
+                "world",
+                "light_shape"
+              ],
+              "min_hits": 1
+            }
+          },
+          "additional": [
+            "use shadow, mirror, glass, or water reflection as the second read: the real body stays humanlike beastkin while the reflected contour, cast shadow, or framed duplicate hints at a more animal self"
+          ],
+          "intent_axis": [
+            "beastkin duality shown through reflection, shadow, or frame-within-frame revealing the animal self"
+          ],
+          "salience_cues": [
+            "the reflection or shadow cue should sit close enough to the face or body to be understood in one still image"
+          ]
+        }
       ],
       "safety_negative_floor": [
         "gore",
         "wounds",
         "body horror",
-        "animal abuse"
+        "animal abuse",
+        "bestiality",
+        "dehumanizing caricature",
+        "full animal mascot suit"
       ]
     },
     "용인": {
@@ -26710,6 +28915,16 @@
     "에스퍼": "초능력자",
     "사이킥": "초능력자",
     "마도사": "마법사",
+    "산타 코스튬": "산타복",
+    "산타 의상": "산타복",
+    "크리스마스 코스튬": "산타복",
+    "크리스마스 의상": "산타복",
+    "트레이닝복": "운동복",
+    "스포츠웨어": "운동복",
+    "운동복룩": "운동복",
+    "애슬레저": "운동복",
+    "track suit": "운동복",
+    "sportswear": "운동복",
     "위치": "마녀",
     "고딕로리": "고스로리",
     "고스 로리": "고스로리",
@@ -26849,6 +29064,20 @@
     "accountant": "회계사",
     "보험 조사원": "보험조사원",
     "insurance investigator": "보험조사원",
+    "직장인": "회사원",
+    "월급쟁이": "회사원",
+    "샐러리맨": "회사원",
+    "셀러리맨": "회사원",
+    "salaryman": "회사원",
+    "오피스 워커": "회사원",
+    "오피스룩": "회사원",
+    "오피스 룩": "회사원",
+    "office worker": "회사원",
+    "office look": "회사원",
+    "화이트칼라": "회사원",
+    "사무직": "회사원",
+    "직딩": "회사원",
+    "회사 직원": "회사원",
     "trickster": "트릭스터",
     "세이지": "현자",
     "sage": "현자",
@@ -26899,6 +29128,45 @@
     "기계 예언자": "로봇"
   },
   "mixin_diversity_policy": {
+    "회사원": {
+      "aspect_axes": [
+        "badge_commute_routine",
+        "office_service_shift",
+        "corporate_health_admin",
+        "internal_compliance_casework",
+        "manual_labor_shift_report",
+        "after_work_phone_report",
+        "royal_boardroom_succession",
+        "event_staff_timesheet",
+        "gothic_records_office"
+      ],
+      "min_distinct_aspects_per_batch": 5,
+      "max_same_prop_ratio": 0.55,
+      "max_same_composition_ratio": 0.55,
+      "batch_repeat_decay": 0.35
+    },
+    "마법사": {
+      "aspect_axes": [
+        "service_cantrip",
+        "clinical_diagnosis",
+        "evidence_scrying",
+        "subterranean_ore_spell",
+        "phone_constellation",
+        "royal_seal_spell",
+        "backstage_scrying",
+        "gothic_instrument_sorcery",
+        "corporate_ledger_magic",
+        "holiday_contract_magic",
+        "kinetic_training_magic",
+        "micro_object_magic",
+        "technomancy_interface",
+        "contract_logomancy"
+      ],
+      "min_distinct_aspects_per_batch": 7,
+      "max_same_prop_ratio": 0.45,
+      "max_same_composition_ratio": 0.45,
+      "batch_repeat_decay": 0.35
+    },
     "암살자": {
       "aspect_axes": [
         "cover_identity",
@@ -26926,8 +29194,18 @@
       "batch_repeat_decay": 0.45
     },
     "수인": {
+      "aspect_axes": [
+        "body_transition",
+        "sensory_othering",
+        "shadow_reflection",
+        "species_family"
+      ],
       "min_distinct_aspects_per_batch": 2,
-      "prefer_bundle_rotation": true
+      "min_distinct_species_per_batch": 4,
+      "max_same_species_family_ratio": 0.34,
+      "prefer_bundle_rotation": true,
+      "max_same_composition_ratio": 0.5,
+      "batch_repeat_decay": 0.35
     },
     "용인": {
       "min_distinct_aspects_per_batch": 2,

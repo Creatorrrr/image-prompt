@@ -1186,6 +1186,542 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertNotIn("expression=cold_unreadable_stare", payload["forward_args"])
         self.assertNotIn("hiding in plain sight", " ".join(payload["forward_args"]))
 
+    def test_wizard_standalone_role_and_role_mixin_stay_distinct_from_stage_magic(self):
+        standalone = self.run_wrapper_json(
+            "--concept",
+            "마법사",
+            "--explain-concept",
+            "--selection-mode",
+            "rule",
+            "--plain",
+            "--no-negative",
+        )
+        standalone_concept = standalone["concepts"][0]
+        self.assertEqual(standalone_concept["role"], "마법사")
+        self.assertEqual(standalone_concept["applied_mixins"], [])
+        self.assertEqual(standalone_concept["combined_forced_slots"]["subject"], ["archivist_role_model"])
+        self.assertEqual(standalone_concept["combined_forced_slots"]["costume_style"], ["archivist_apron_gloves_costume"])
+        self.assertIn("grand_archive_hall", standalone_concept["combined_forced_slots"]["location"])
+        self.assertTrue(
+            {
+                "restoration_lab",
+                "glass_office",
+                "observatory_dome_room",
+                "oak_library_dark_academia",
+            }.intersection(standalone_concept["combined_forced_slots"]["location"])
+        )
+        self.assertEqual(standalone_concept["combined_forced_slots"]["camera_type"], ["full_frame_mirrorless"])
+        self.assertIn("grimoire_candle_prop", standalone_concept["combined_forced_slots"]["prop"])
+        self.assertIn("starmap_note_prop", standalone_concept["combined_forced_slots"]["prop"])
+        self.assertTrue(
+            {"slim_office_tablet_prop", "gift_tag_ledger_prop", "levitating_teacup_prop"}.intersection(
+                standalone_concept["combined_forced_slots"]["prop"]
+            )
+        )
+        self.assertIn("surreal_physics_detail", standalone_concept["combined_forced_slots"])
+        standalone_joined = " ".join(standalone["forward_args"])
+        self.assertIn("mechanism rather than one prop", standalone_joined)
+        self.assertIn("only one axis among", standalone_joined)
+        self.assertIn("distinct from stage magician", standalone_joined)
+        self.assertIn("generic blue aura", standalone_joined)
+        self.assertNotIn("stage_magician_role_model", standalone_joined)
+        self.assertNotIn("magician_playing_card_fan_prop", standalone_joined)
+        self.assertNotIn("witch_robe_wide_hat", standalone_joined)
+
+        role_combo = self.run_wrapper_json(
+            "--concept",
+            "마법사 연구원",
+            "--explain-concept",
+            "--selection-mode",
+            "rule",
+            "--plain",
+            "--no-negative",
+        )
+        combo_concept = role_combo["concepts"][0]
+        self.assertEqual(combo_concept["role"], "연구원")
+        self.assertEqual(combo_concept["applied_mixins"], ["마법사"])
+        self.assertEqual(combo_concept["combined_forced_slots"]["subject"], ["clinical_researcher_role_model"])
+        self.assertEqual(combo_concept["combined_forced_slots"]["costume_style"], ["clinical_lab_coat_professional"])
+        self.assertIn("glass_specimen_case_prop", combo_concept["combined_forced_slots"]["prop"])
+        self.assertIn(
+            combo_concept["selected_bundles"][0]["aspect"],
+            {"micro_object_magic", "technomancy_interface", "contract_logomancy"},
+        )
+        self.assertIn("surreal_physics_detail", combo_concept["combined_forced_slots"])
+        combo_joined = " ".join(role_combo["forward_args"])
+        self.assertIn("medium plus scale plus transformation plus cost or trace", combo_joined)
+        self.assertIn("lifted_glyph_self_glow", combo_joined)
+        self.assertIn("near_hand_glyphs_lift_and_orbit", combo_joined)
+        self.assertNotIn("grimoire_candle_prop", combo_joined)
+        self.assertNotIn("witch_robe_wide_hat", combo_joined)
+        self.assertNotIn("magician_playing_card_fan_prop", combo_joined)
+
+    def test_wizard_role_batch_uses_role_specific_active_spell_bundles(self):
+        cases = [
+            (
+                "카리나 메이드 마법사",
+                260609,
+                "메이드",
+                "maid_service_cantrip",
+                "levitating_teacup_prop",
+                "levitating_small_objects",
+                "hands_only_detail_frame",
+                "service cantrip",
+                "tiny_levitation_contact_shadow",
+            ),
+            (
+                "윈터 간호사 마법사",
+                260610,
+                "간호사",
+                "nurse_diagnostic_star_chart",
+                "clinical_chart_clipboard_prop",
+                "checking_medical_chart",
+                "document_foreground_face_background",
+                "diagnostic logomancer",
+                "near_hand_glyphs_lift_and_orbit",
+            ),
+            (
+                "닝닝 경찰 마법사",
+                260611,
+                "경찰",
+                "police_evidence_scrying_case",
+                "case_file_folder_prop",
+                "studying_caseboard",
+                "caseboard_over_shoulder_frame",
+                "procedural divination",
+                "textless_mark_rearrangement_boundary",
+            ),
+            (
+                "지젤 광부 마법사",
+                260612,
+                "광부",
+                "miner_headlamp_ore_sigils",
+                "nonfunctional_pickaxe_prop",
+                "checking_ore_contact_point",
+                "document_foreground_face_background",
+                "subterranean geomancer",
+                "localized_refraction_at_contact",
+            ),
+            (
+                "아일릿 원희 사복 여친 마법사",
+                260613,
+                "사복 여친",
+                "casual_phone_constellation",
+                "clear_case_smartphone",
+                "checking_phone",
+                "over_shoulder_phone_screen",
+                "phone-screen spell",
+                "near_hand_glyphs_lift_and_orbit",
+            ),
+            (
+                "설윤 공주 마법사",
+                260614,
+                "공주",
+                "princess_royal_seal_thaumaturgy",
+                "royal_seal_okse_prop",
+                "touching_state_seal",
+                "seal_hand_close_portrait",
+                "court thaumaturgy",
+                "near_hand_glyphs_lift_and_orbit",
+            ),
+            (
+                "유나 바니걸 마법사",
+                260615,
+                "바니걸",
+                "bunny_backstage_scrying_mirror",
+                "compact_mirror",
+                "closing_compact_mirror",
+                "reflection",
+                "backstage scryer",
+                "localized_refraction_at_contact",
+            ),
+            (
+                "아이유 고스로리 마법사",
+                260616,
+                "고스로리",
+                "gothic_lolita_curio_sorcery",
+                "ornate_gothic_perfume_bottle",
+                "levitating_small_objects",
+                "frame_within_frame",
+                "curio sorcerer",
+                "tiny_levitation_contact_shadow",
+            ),
+            (
+                "장원영 오피스룩 마법사",
+                260617,
+                "회사원",
+                "office_ledger_spellwork",
+                "staff_lanyard_badge_prop",
+                "reviewing_ledger_columns",
+                "document_foreground_face_background",
+                "bureaucratic spellwork",
+                "near_hand_glyphs_lift_and_orbit",
+            ),
+            (
+                "김채원 산타복 마법사",
+                260618,
+                "산타복",
+                "santa_gift_contract_spell",
+                "gift_tag_ledger_prop",
+                "levitating_small_objects",
+                "hands_foreground_face_behind",
+                "holiday contract mage",
+                "near_hand_glyphs_lift_and_orbit",
+            ),
+            (
+                "카즈하 운동복 마법사",
+                260619,
+                "운동복",
+                "sports_kinetic_training_spell",
+                "stopwatch_training_prop",
+                "sprint_start_drive",
+                "medium_close",
+                "kinetic trainer",
+                "localized_refraction_at_contact",
+            ),
+        ]
+        selected_bundle_ids = set()
+        selected_aspects = set()
+        selected_props = set()
+        selected_compositions = set()
+        for (
+            concept,
+            seed,
+            expected_role,
+            expected_bundle,
+            expected_prop,
+            expected_action,
+            expected_composition,
+            expected_text,
+            expected_surreal_detail,
+        ) in cases:
+            explanation = self.run_wrapper_json(
+                "--concept",
+                concept,
+                "--explain-concept",
+                "--selection-mode",
+                "rule",
+                "--seed",
+                str(seed),
+                "--plain",
+                "--no-negative",
+            )
+            concept_payload = explanation["concepts"][0]
+            selected_bundle = concept_payload["selected_bundles"][0]
+            combined = concept_payload["combined_forced_slots"]
+            joined = " ".join(explanation["forward_args"])
+
+            self.assertEqual(concept_payload["role"], expected_role)
+            self.assertEqual(concept_payload["applied_mixins"], ["마법사"])
+            self.assertEqual(selected_bundle["bundle_id"], expected_bundle)
+            self.assertFalse(selected_bundle["bundle_id"].startswith("shared_"))
+            self.assertFalse(selected_bundle["bundle_id"].startswith("standalone_"))
+            self.assertIn(expected_prop, combined["prop"])
+            self.assertEqual(combined["action"], [expected_action])
+            self.assertEqual(combined["composition"], [expected_composition])
+            self.assertIn(expected_surreal_detail, combined["surreal_physics_detail"])
+            self.assertNotEqual(combined["prop"], ["grimoire_candle_prop"])
+            self.assertTrue("world-response" in joined or "world response" in joined or "respond" in joined)
+            self.assertIn("distinct from stage magician", joined)
+            self.assertIn("generic blue aura", joined)
+            self.assertIn(expected_text, joined)
+
+            if expected_role in {"메이드", "간호사", "사복 여친", "공주", "회사원", "산타복"}:
+                self.assertIn("color", combined)
+                self.assertNotIn("monochrome", combined["color"])
+            if expected_role in {"간호사", "사복 여친", "공주", "회사원", "산타복"}:
+                self.assertIn("lifted_glyph_self_glow", combined["light_shape"])
+                self.assertEqual(combined["surreal_physics_detail"], ["near_hand_glyphs_lift_and_orbit"])
+            if expected_role == "공주":
+                self.assertEqual(combined["costume_style"], ["royal_princess_hanbok"])
+                self.assertIn("royal_edict_gyoji_scroll_prop", combined["prop"])
+            if expected_role == "회사원":
+                self.assertEqual(combined["wardrobe_style"], ["clean_blazer_trousers"])
+                self.assertIn("security_access_card_prop", combined["prop"])
+                self.assertIn("slim_office_tablet_prop", combined["prop"])
+                self.assertNotIn("star_map_tablet_prop", combined["prop"])
+                self.assertEqual(combined["color"], ["cool_blue"])
+                self.assertIn("brightest object near the hands", joined)
+                self.assertNotIn("lift slightly", joined)
+            if expected_role == "사복 여친":
+                self.assertEqual(combined["wardrobe_style"], ["hoodie_shorts_sneakers"])
+                self.assertIn("glitching_phone_screen_prop", combined["prop"])
+                self.assertNotIn("star_map_tablet_prop", combined["prop"])
+                self.assertEqual(combined["color"], ["cool_blue"])
+            if expected_role == "산타복":
+                self.assertEqual(combined["costume_style"], ["covered_santa_fur_trim_costume"])
+                self.assertIn("christmas_lights_prop", combined["prop"])
+                self.assertEqual(combined["color"], ["warm_kodak_gold"])
+                self.assertEqual(combined["motion"], ["suspended_snowflake_motion"])
+                self.assertEqual(combined["weather"], ["windblown_snow"])
+                self.assertIn("gift-tag marks lift above the present", joined)
+            if expected_role == "운동복":
+                self.assertEqual(combined["wardrobe_style"], ["covered_track_jacket_training_set"])
+                self.assertEqual(combined["motion"], ["kinetic_spell_trail_motion"])
+                self.assertIn("kinetic_trail_edge_light", combined["light_shape"])
+
+            selected_bundle_ids.add(selected_bundle["bundle_id"])
+            selected_aspects.add(selected_bundle["aspect"])
+            selected_props.add(expected_prop)
+            selected_compositions.add(expected_composition)
+
+        self.assertEqual(len(selected_bundle_ids), len(cases))
+        self.assertEqual(len(selected_aspects), len(cases))
+        self.assertGreaterEqual(len(selected_props), 10)
+        self.assertGreaterEqual(len(selected_compositions), 7)
+
+    def test_wizard_glow_dependent_bundles_pin_color_and_volumetric_spell_proof(self):
+        cases = {
+            "윈터 간호사 마법사": ("clinical_white", "near_hand_glyphs_lift_and_orbit"),
+            "아일릿 원희 사복 여친 마법사": ("cool_blue", "near_hand_glyphs_lift_and_orbit"),
+            "설윤 공주 마법사": ("warm_kodak_gold", "near_hand_glyphs_lift_and_orbit"),
+            "장원영 오피스룩 마법사": ("cool_blue", "near_hand_glyphs_lift_and_orbit"),
+            "김채원 산타복 마법사": ("warm_kodak_gold", "near_hand_glyphs_lift_and_orbit"),
+        }
+        for concept, (expected_color, expected_surreal_detail) in cases.items():
+            explanation = self.run_wrapper_json(
+                "--concept",
+                concept,
+                "--explain-concept",
+                "--selection-mode",
+                "rule",
+                "--seed",
+                "260620",
+                "--plain",
+                "--no-negative",
+            )
+            combined = explanation["concepts"][0]["combined_forced_slots"]
+            joined = " ".join(explanation["forward_args"])
+
+            self.assertEqual(combined["color"], [expected_color])
+            self.assertNotEqual(combined["color"], ["monochrome"])
+            self.assertIn("lifted_glyph_self_glow", combined["light_shape"])
+            self.assertEqual(combined["surreal_physics_detail"], [expected_surreal_detail])
+            self.assertIn("near_hand_glyphs_lift_and_orbit", joined)
+            self.assertIn("lifted_glyph_self_glow", joined)
+
+    def test_company_worker_role_aliases_anchor_corporate_time_pressure(self):
+        payload = self.run_wrapper_json(
+            "--concept",
+            "회사원",
+            "--explain-concept",
+            "--selection-mode",
+            "rule",
+            "--plain",
+            "--no-negative",
+        )
+        concept = payload["concepts"][0]
+        self.assertEqual(concept["role"], "회사원")
+        self.assertEqual(concept["applied_mixins"], [])
+        self.assertEqual(concept["combined_forced_slots"]["subject"], ["office_worker"])
+        self.assertEqual(concept["combined_forced_slots"]["person_origin"], ["south_korea"])
+        self.assertEqual(concept["combined_forced_slots"]["appearance_type"], ["corporate_professional"])
+        self.assertEqual(concept["combined_forced_slots"]["wardrobe_style"], ["clean_blazer_trousers"])
+        self.assertEqual(
+            set(concept["combined_forced_slots"]["prop"]),
+            {
+                "staff_lanyard_badge_prop",
+                "security_access_card_prop",
+            },
+        )
+        self.assertTrue(
+            {
+                "glass_office",
+                "subway_transfer_passage",
+                "mirrored_elevator_box",
+            }.issubset(set(concept["combined_forced_slots"]["location"]))
+        )
+        self.assertTrue(
+            {
+                "checking_wristwatch_timing",
+                "commuting_night",
+                "standing_in_subway_car",
+            }.issubset(set(concept["combined_forced_slots"]["action"]))
+        )
+        self.assertTrue(
+            {
+                "fluorescent",
+                "monitor_glow",
+                "subway_car_fluorescent_light",
+            }.issubset(set(concept["combined_forced_slots"]["lighting"]))
+        )
+        self.assertTrue(
+            {
+                "monitor_rectangle_glow",
+                "barcode_shadow_bars",
+                "elevator_gap_sliver_light",
+            }.issubset(set(concept["combined_forced_slots"]["light_shape"]))
+        )
+        self.assertTrue(
+            {
+                "one_still_in_motion_blur_frame",
+                "architectural_lines_frame",
+                "document_foreground_face_background",
+            }.issubset(set(concept["combined_forced_slots"]["composition"]))
+        )
+        joined = " ".join(payload["forward_args"])
+        self.assertIn("organizational anonymity", joined)
+        self.assertIn("time discipline", joined)
+        self.assertIn("commute fatigue", joined)
+        self.assertIn("Avoid office-siren glamour", joined)
+        self.assertIn("--likeness-mode", payload["forward_args"])
+        self.assertNotIn("witch_robe_wide_hat", joined)
+        self.assertNotIn("traditional_shrine_interior", joined)
+
+        alias_payload = self.run_wrapper_json(
+            "--concept",
+            "직장인",
+            "--explain-concept",
+            "--selection-mode",
+            "rule",
+            "--plain",
+            "--no-negative",
+        )
+        alias_concept = alias_payload["concepts"][0]
+        self.assertEqual(alias_concept["concept"], "회사원")
+        self.assertEqual(alias_concept["role"], "회사원")
+        self.assertEqual(alias_concept["combined_forced_slots"]["subject"], ["office_worker"])
+
+        office_look_payload = self.run_wrapper_json(
+            "--concept",
+            "장원영 오피스룩 마법사",
+            "--explain-concept",
+            "--selection-mode",
+            "rule",
+            "--plain",
+            "--no-negative",
+        )
+        office_look_concept = office_look_payload["concepts"][0]
+        self.assertEqual(office_look_concept["role"], "회사원")
+        self.assertEqual(office_look_concept["applied_mixins"], ["마법사"])
+        self.assertEqual(office_look_concept["selected_bundles"][0]["bundle_id"], "office_ledger_spellwork")
+
+    def test_company_worker_mixin_preserves_role_costumes_and_adds_corporate_layer(self):
+        duplicate_payload = self.run_wrapper_json(
+            "--concept",
+            "장원영 오피스룩 회사원",
+            "--explain-concept",
+            "--selection-mode",
+            "rule",
+            "--plain",
+            "--no-negative",
+        )
+        duplicate_concept = duplicate_payload["concepts"][0]
+        self.assertEqual(duplicate_concept["concept"], "장원영 회사원 회사원")
+        self.assertEqual(duplicate_concept["role"], "회사원")
+        self.assertEqual(duplicate_concept["applied_mixins"], [])
+        self.assertEqual(duplicate_concept["combined_forced_slots"]["subject"], ["office_worker"])
+
+        cases = [
+            (
+                "카리나 메이드 회사원",
+                "메이드",
+                "maid_corporate_service_shift",
+                {"subject": "maid_cafe_performer", "costume_style": "frill_apron_maid_costume"},
+                "corporate service labor",
+            ),
+            (
+                "윈터 간호사 회사원",
+                "간호사",
+                "nurse_corporate_health_admin",
+                {"costume_style": "nurse_uniform_costume", "prop": "clinical_chart_clipboard_prop"},
+                "company medical labor",
+            ),
+            (
+                "닝닝 경찰 회사원",
+                "경찰",
+                "police_internal_compliance_shift",
+                {"costume_style": "police_uniform_costume", "prop": "case_file_folder_prop"},
+                "internal compliance",
+            ),
+            (
+                "지젤 광부 회사원",
+                "광부",
+                "miner_shift_report_ledgers",
+                {"costume_style": "miner_workwear_hard_hat", "prop": "nonfunctional_pickaxe_prop"},
+                "shift reports",
+            ),
+            (
+                "아일릿 원희 사복 여친 회사원",
+                "사복 여친",
+                "casual_after_work_phone_report",
+                {"wardrobe_style": "hoodie_shorts_sneakers", "prop": "clear_case_smartphone"},
+                "after-work company fatigue",
+            ),
+            (
+                "설윤 공주 회사원",
+                "공주",
+                "princess_boardroom_succession_packet",
+                {"costume_style": "royal_princess_hanbok", "wearable_accessory": "phoenix_binyeo_ornament"},
+                "corporate succession pressure",
+            ),
+            (
+                "유나 바니걸 회사원",
+                "바니걸",
+                "bunny_event_staff_timesheet",
+                {"costume_style": "bunny_girl_costume", "prop": "compact_mirror"},
+                "event staff company labor",
+            ),
+            (
+                "아이유 고스로리 회사원",
+                "고스로리",
+                "gothic_lolita_office_records",
+                {"costume_style": "gothic_lolita_dress", "prop": "ornate_gothic_perfume_bottle"},
+                "corporate archive labor",
+            ),
+        ]
+
+        for index, (concept, expected_role, expected_bundle, expected_slots, expected_text) in enumerate(cases, start=1):
+            with self.subTest(concept=concept):
+                payload = self.run_wrapper_json(
+                    "--concept",
+                    concept,
+                    "--explain-concept",
+                    "--selection-mode",
+                    "rule",
+                    "--seed",
+                    str(270000 + index),
+                    "--plain",
+                    "--no-negative",
+                )
+                concept_payload = payload["concepts"][0]
+                combined = concept_payload["combined_forced_slots"]
+                selected_bundle = concept_payload["selected_bundles"][0]
+                joined = " ".join(payload["forward_args"])
+
+                self.assertEqual(concept_payload["role"], expected_role)
+                self.assertEqual(concept_payload["applied_mixins"], ["회사원"])
+                self.assertEqual(selected_bundle["mixin"], "회사원")
+                self.assertEqual(selected_bundle["bundle_id"], expected_bundle)
+                self.assertNotEqual(selected_bundle["bundle_id"], "generic_badge_commute_routine")
+                self.assertIn("staff_lanyard_id", combined["wearable_accessory"])
+                self.assertIn("staff_lanyard_badge_prop", combined["prop"])
+                self.assertIn("security_access_card_prop", combined["prop"])
+                self.assertTrue(
+                    {"upper_body_framing", "waist_up_regalia_visible"} & set(combined["subject_framing"])
+                )
+                self.assertNotIn("office_worker", combined.get("subject", []))
+                self.assertIn("base role's subject and costume", joined)
+                self.assertIn("staff lanyard ID", joined)
+                self.assertIn("access card", joined)
+                self.assertIn(expected_text, joined)
+
+                for slot, expected_id in expected_slots.items():
+                    self.assertIn(expected_id, combined[slot], slot)
+
+        reversed_order = self.run_wrapper_json(
+            "--concept",
+            "회사원 경찰",
+            "--explain-concept",
+            "--selection-mode",
+            "rule",
+            "--plain",
+            "--no-negative",
+        )["concepts"][0]
+        self.assertEqual(reversed_order["role"], "경찰")
+        self.assertEqual(reversed_order["applied_mixins"], ["회사원"])
+        self.assertEqual(reversed_order["selected_bundles"][0]["bundle_id"], "police_internal_compliance_shift")
+
     def test_concept_recipe_assassin_conditional_additional_is_data_driven(self):
         payload = self.run_wrapper_json(
             "--concept",
@@ -5211,6 +5747,10 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "knight_armor_cloak_costume",
                 "saint_modest_robe_costume",
                 "ghost_bride_veil_dress",
+                "covered_santa_fur_trim_costume",
+            },
+            "wardrobe_style": {
+                "covered_track_jacket_training_set",
             },
             "prop": {
                 "shaman_bells_prop",
@@ -5242,6 +5782,12 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "evidence_corkboard_prop",
                 "case_file_folder_prop",
                 "dragon_orb_prop",
+                "gift_tag_ledger_prop",
+                "stopwatch_training_prop",
+            },
+            "action": {
+                "checking_ore_contact_point",
+                "sprint_start_drive",
             },
             "location": {
                 "airplane_cabin_aisle",
@@ -5332,6 +5878,17 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "stained_glass_color_cast",
                 "halo_aura_bloom",
                 "birdcage_bar_shadows",
+                "snowflake_pinpoint_glow",
+                "kinetic_trail_edge_light",
+            },
+            "motion": {
+                "suspended_snowflake_motion",
+                "kinetic_spell_trail_motion",
+            },
+            "surreal_physics_detail": {
+                "localized_refraction_at_contact",
+                "tiny_levitation_contact_shadow",
+                "textless_mark_rearrangement_boundary",
             },
         }
         for slot, ids in expected_slot_ids.items():
@@ -5361,6 +5918,9 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "사제",
                 "수도자",
                 "호텔리어",
+                "회사원",
+                "산타복",
+                "운동복",
             }.issubset(recipes["roles"])
         )
         self.assertTrue(
@@ -5403,6 +5963,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "정령",
                 "드래곤족",
                 "유령신부",
+                "회사원",
             }.issubset(recipes["mixins"])
         )
         self.assertEqual(recipes["aliases"]["사서"], "도서관 사서")
@@ -5412,10 +5973,65 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertEqual(recipes["aliases"]["저승사자"], "사신")
         self.assertEqual(recipes["aliases"]["쿠데레"], "쿨데레")
         self.assertEqual(recipes["aliases"]["선생님"], "교사")
+        self.assertEqual(recipes["aliases"]["직장인"], "회사원")
+        self.assertEqual(recipes["aliases"]["월급쟁이"], "회사원")
+        self.assertEqual(recipes["aliases"]["샐러리맨"], "회사원")
+        self.assertEqual(recipes["aliases"]["산타 코스튬"], "산타복")
+        self.assertEqual(recipes["aliases"]["트레이닝복"], "운동복")
+        self.assertEqual(recipes["aliases"]["sportswear"], "운동복")
         self.assertIn("concept_safety", recipes)
         self.assertIn("dark_non_graphic", recipes["concept_safety"])
         self.assertIn("anchor_families", recipes["mixins"]["성녀"])
         self.assertIn("forbidden_slot_values", recipes["mixins"]["소악마"])
+
+        beastkin = recipes["mixins"]["수인"]
+        self.assertNotIn("costume_style", beastkin["set"])
+        species_variants = beastkin["species_variants"]["variants"]
+        self.assertGreaterEqual(len(species_variants), 8)
+        self.assertTrue(
+            {
+                "canid_fox_wolf",
+                "feline_cat_bigcat",
+                "rabbit_hare",
+                "deer_ungulate",
+                "bear",
+                "horse_equine",
+                "aquatic_mammal_otter_seal",
+                "avian_owl_raptor_corvid",
+                "reptile_lizard_gecko",
+            }.issubset({variant["id"] for variant in species_variants})
+        )
+        self.assertTrue(
+            {
+                "snake",
+                "fish_shark_koi",
+                "amphibian",
+                "insect_arthropod",
+            }.issubset(set(beastkin["species_variants"]["excluded_default_families"]))
+        )
+        self.assertTrue(
+            {
+                "threshold_body_transition",
+                "sensory_social_othering",
+                "shadow_reflection_duality",
+            }.issubset({bundle["id"] for bundle in beastkin["bundles"]})
+        )
+        self.assertTrue(
+            {
+                "bestiality",
+                "dehumanizing caricature",
+                "full animal mascot suit",
+            }.issubset(set(beastkin["safety_negative_floor"]))
+        )
+        self.assertIn("body_transition", recipes["mixin_diversity_policy"]["수인"]["aspect_axes"])
+        self.assertIn("sensory_othering", recipes["mixin_diversity_policy"]["수인"]["aspect_axes"])
+        self.assertIn("shadow_reflection", recipes["mixin_diversity_policy"]["수인"]["aspect_axes"])
+        self.assertIn("species_family", recipes["mixin_diversity_policy"]["수인"]["aspect_axes"])
+        self.assertGreaterEqual(recipes["mixin_diversity_policy"]["수인"]["min_distinct_species_per_batch"], 4)
+        self.assertEqual(beastkin["dual_read_requirement"]["min_role_hits"], 2)
+        self.assertIn("holiday_contract_magic", recipes["mixin_diversity_policy"]["마법사"]["aspect_axes"])
+        self.assertIn("kinetic_training_magic", recipes["mixin_diversity_policy"]["마법사"]["aspect_axes"])
+        self.assertIn("technomancy_interface", recipes["mixin_diversity_policy"]["마법사"]["aspect_axes"])
 
         robot_bundle_ids = {bundle["id"] for bundle in recipes["mixins"]["로봇"]["bundles"]}
         self.assertTrue(
@@ -5498,11 +6114,16 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "수인",
                 "maid_cafe_cosplay_portrait",
                 {
-                    "costume_style": {"frill_apron_maid_costume", "beastkin_tailored_folk_costume"},
+                    "subject": {"maid_cafe_performer", "beastkin_subject"},
+                    "costume_style": {"frill_apron_maid_costume"},
                     "location": {"maid_cafe_interior"},
                     "prop": {"pointed_ear_tail_set_prop"},
                     "texture": {"fur_patch_skin_blend"},
                     "expression": {"slit_pupil_intense_gaze"},
+                    "action": {"pausing_before_threshold"},
+                    "composition": {"threshold_backlit_center"},
+                    "world": {"folk_threshold_world"},
+                    "light_shape": {"threshold_sliver_light"},
                 },
             ),
             (
@@ -5610,6 +6231,162 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 for slot, expected_ids in expected_slots.items():
                     self.assertTrue(expected_ids.issubset(set(forced.get(slot, []))), (slot, forced))
                 self.assertGreaterEqual(explanation["soft_anchor_spec"]["min_anchors"], 2)
+
+    def test_beastkin_concept_rotates_liminal_bundles_and_preserves_role(self):
+        seen_aspects = set()
+        expected_by_seed = {
+            "1": "shadow_reflection",
+            "3": "sensory_othering",
+            "5": "body_transition",
+        }
+        for seed, expected_aspect in expected_by_seed.items():
+            with self.subTest(seed=seed):
+                payload = self.run_wrapper_json(
+                    "--concept",
+                    "카리나 메이드 수인",
+                    "--selection-mode",
+                    "rule",
+                    "--seed",
+                    seed,
+                    "--explain-concept",
+                )
+                concept = payload["concepts"][0]
+                self.assertEqual(concept["role"], "메이드")
+                self.assertEqual(concept["applied_mixins"], ["수인"])
+                self.assertEqual(len(concept["selected_bundles"]), 1)
+                bundle = concept["selected_bundles"][0]
+                self.assertEqual(bundle["aspect"], expected_aspect)
+                seen_aspects.add(bundle["aspect"])
+                forced = concept["combined_forced_slots"]
+                self.assertEqual(forced["costume_style"], ["frill_apron_maid_costume"])
+                self.assertNotIn("beastkin_tailored_folk_costume", forced["costume_style"])
+                self.assertIn("beastkin_subject", forced["subject"])
+                self.assertEqual(forced["prop"], ["pointed_ear_tail_set_prop"])
+                self.assertEqual(forced["texture"], ["fur_patch_skin_blend"])
+                self.assertEqual(forced["expression"], ["slit_pupil_intense_gaze"])
+                self.assertEqual(len(concept["selected_species_variants"]), 1)
+                self.assertTrue(
+                    {
+                        "bestiality",
+                        "dehumanizing caricature",
+                        "full animal mascot suit",
+                    }.issubset(set(concept["soft_anchor_spec"]["safety_negative_floor"]))
+                )
+                self.assertGreaterEqual(concept["soft_anchor_spec"]["min_anchors"], 2)
+        self.assertEqual(seen_aspects, {"shadow_reflection", "sensory_othering", "body_transition"})
+
+    def test_beastkin_species_variants_are_deterministic_diverse_and_aliasable(self):
+        first = self.run_wrapper_json(
+            "--concept",
+            "카리나 메이드 수인",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "23",
+            "--explain-concept",
+        )["concepts"][0]
+        repeated = self.run_wrapper_json(
+            "--concept",
+            "카리나 메이드 수인",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "23",
+            "--explain-concept",
+        )["concepts"][0]
+        self.assertEqual(first["selected_species_variants"], repeated["selected_species_variants"])
+        self.assertEqual(first["selected_bundles"], repeated["selected_bundles"])
+
+        variant_ids = set()
+        bundle_aspects = set()
+        for seed in range(1, 25):
+            payload = self.run_wrapper_json(
+                "--concept",
+                "수인",
+                "--selection-mode",
+                "rule",
+                "--seed",
+                str(seed),
+                "--explain-concept",
+            )
+            concept = payload["concepts"][0]
+            variant_ids.add(concept["selected_species_variants"][0]["variant_id"])
+            bundle_aspects.add(concept["selected_bundles"][0]["aspect"])
+            self.assertEqual(concept["combined_forced_slots"]["subject"], ["beastkin_subject"])
+        self.assertGreaterEqual(len(variant_ids), 4)
+        self.assertEqual(bundle_aspects, {"body_transition", "sensory_othering", "shadow_reflection"})
+
+        rabbit = self.run_wrapper_json(
+            "--concept",
+            "유나 토끼 수인",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "9",
+            "--explain-concept",
+        )["concepts"][0]
+        owl = self.run_wrapper_json(
+            "--concept",
+            "장원영 올빼미 수인",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "9",
+            "--explain-concept",
+        )["concepts"][0]
+        self.assertEqual(rabbit["selected_species_variants"][0]["variant_id"], "rabbit_hare")
+        self.assertEqual(owl["selected_species_variants"][0]["variant_id"], "avian_owl_raptor_corvid")
+
+    def test_beastkin_santa_and_sportswear_preserve_role_priority(self):
+        cases = [
+            (
+                "김채원 산타복 수인",
+                {
+                    "costume_style": {"covered_santa_fur_trim_costume"},
+                    "prop": {"modest_wrapped_gift_prop", "christmas_lights_prop", "gift_tag_ledger_prop"},
+                    "location": {"christmas_market_lights", "seoul_bus_stop_snow"},
+                    "action": {"brisk_gift_handoff_pose"},
+                },
+                "santa_role_floor",
+                "covered red fur-trim Santa costume",
+            ),
+            (
+                "카즈하 운동복 수인",
+                {
+                    "wardrobe_style": {"covered_track_jacket_training_set"},
+                    "prop": {"stopwatch_training_prop"},
+                    "location": {"gym_track", "track_lane_stadium"},
+                    "action": {"sprint_start_drive"},
+                },
+                "sportswear_role_floor",
+                "covered track jacket",
+            ),
+        ]
+        for concept_text, expected_slots, priority_id, requirement_text in cases:
+            with self.subTest(concept=concept_text):
+                payload = self.run_wrapper_json(
+                    "--concept",
+                    concept_text,
+                    "--selection-mode",
+                    "rule",
+                    "--seed",
+                    "17",
+                    "--explain-concept",
+                )
+                concept = payload["concepts"][0]
+                self.assertEqual(concept["applied_mixins"], ["수인"])
+                self.assertEqual(len(concept["selected_species_variants"]), 1)
+                forced = concept["combined_forced_slots"]
+                for slot, expected_ids in expected_slots.items():
+                    self.assertTrue(expected_ids.issubset(set(forced.get(slot, []))), (slot, forced))
+                self.assertIn("beastkin_subject", forced["subject"])
+                self.assertEqual(forced["prop"][-1], "pointed_ear_tail_set_prop")
+                spec = concept["soft_anchor_spec"]
+                priority_ids = {group["id"] for group in spec["render_priority_terms"]}
+                self.assertIn(priority_id, priority_ids)
+                self.assertIn("beastkin_species_specificity", priority_ids)
+                self.assertEqual(spec["dual_read_requirement"]["min_role_hits"], 2)
+                self.assertIn(requirement_text, "\n".join(payload["forward_args"]))
 
     def test_wide_archetype_presets_tags_roles_and_mixins_are_registered(self):
         preset_ids = {preset["id"] for preset in self.data["presets"]}
@@ -5720,6 +6497,9 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "역무원",
                 "회계사",
                 "보험조사원",
+                "회사원",
+                "산타복",
+                "운동복",
             }.issubset(recipes["roles"])
         )
         self.assertTrue(
@@ -5735,6 +6515,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "치유자",
                 "계약자",
                 "도시전설",
+                "회사원",
             }.issubset(recipes["mixins"])
         )
 
