@@ -12013,7 +12013,14 @@
         "expression",
         "composition",
         "light_shape",
-        "texture"
+        "texture",
+        "location",
+        "light_type",
+        "capture_context",
+        "camera_type",
+        "focus",
+        "motion",
+        "wearable_accessory"
       ],
       "soft_min_anchors": 2,
       "bundle_override_slots": [
@@ -12025,34 +12032,64 @@
         "composition",
         "light_shape",
         "texture",
-        "mood"
+        "mood",
+        "location",
+        "light_type",
+        "camera_type",
+        "focus",
+        "motion",
+        "wearable_accessory"
       ],
       "anchor_terms": {
         "subject": [
           "robot",
           "android",
           "machine body",
-          "synthetic being"
+          "synthetic being",
+          "hologram AI",
+          "screen-face terminal",
+          "voice assistant",
+          "mecha",
+          "drone",
+          "prosthetic limb",
+          "decommissioned android"
         ],
         "surface_material": [
           "synthetic skin",
           "robot casing",
           "transparent shell",
           "liquid metal",
-          "biohybrid surface"
+          "biohybrid surface",
+          "brushed aluminum",
+          "carbon fiber",
+          "rusted steel",
+          "injection molded plastic",
+          "hologram light surface"
         ],
         "prop": [
           "serial number",
           "actuator port",
           "charging cable",
           "diagnostic readout",
-          "dock contacts"
+          "dock contacts",
+          "lidar dome",
+          "lens array",
+          "wiring harness",
+          "asset tag",
+          "error code screen",
+          "teach pendant"
         ],
         "action": [
           "command standby",
           "diagnostic routine",
           "charging dock",
-          "boot sequence"
+          "boot sequence",
+          "firmware update",
+          "sensor sweep",
+          "panel open inspection",
+          "powerdown",
+          "data sync",
+          "rotor hover"
         ],
         "expression": [
           "empty machine gaze",
@@ -12075,6 +12112,41 @@
           "brushed alloy",
           "cable fibers",
           "liquid metal"
+        ],
+        "location": [
+          "repair garage",
+          "e-waste graveyard",
+          "automated warehouse",
+          "smart home",
+          "mecha cockpit",
+          "AI temple"
+        ],
+        "light_type": [
+          "holographic glow",
+          "lidar dots",
+          "error glow",
+          "screen-face emission"
+        ],
+        "camera_type": [
+          "machine vision camera",
+          "lidar sensor view",
+          "inspection macro rig"
+        ],
+        "focus": [
+          "lens array focus",
+          "exposed joint focus",
+          "screen-face focus"
+        ],
+        "motion": [
+          "rotor blur",
+          "servo twitch",
+          "robot arm sweep",
+          "boot flicker"
+        ],
+        "wearable_accessory": [
+          "sensor visor",
+          "status LED badge",
+          "data port collar"
         ]
       },
       "anchor_pool": {
@@ -12088,7 +12160,18 @@
           "bio_hybrid_organism_unit",
           "drone_swarm_collective",
           "ceramic_automaton_figure",
-          "sentient_room_system"
+          "sentient_room_system",
+          "holographic_assistant_projection",
+          "screen_face_service_terminal",
+          "voice_assistant_speaker_unit",
+          "piloted_combat_mecha",
+          "exposed_endoskeleton_android",
+          "single_camera_drone",
+          "desk_companion_bot",
+          "precision_prosthetic_arm",
+          "rusted_decommissioned_android",
+          "mass_production_line_clone_unit",
+          "clockwork_brass_automaton"
         ],
         "surface_material": [
           "matte_synthetic_skin_surface",
@@ -12097,7 +12180,13 @@
           "soft_polymer_surface",
           "liquid_metal_gel_surface",
           "bio_tissue_substrate_surface",
-          "ceramic_porcelain_casing_surface"
+          "ceramic_porcelain_casing_surface",
+          "brushed_aluminum_panel_surface",
+          "carbon_fiber_weave_surface",
+          "rusted_steel_panel_surface",
+          "injection_molded_plastic_surface",
+          "glossy_white_consumer_shell_surface",
+          "transparent_hologram_light_surface"
         ],
         "prop": [
           "serial_spec_plate_prop",
@@ -12106,14 +12195,30 @@
           "wrist_port_charging_lead_prop",
           "diagnostic_readout_prop",
           "docking_contacts_prop",
-          "maintenance_tag_prop"
+          "maintenance_tag_prop",
+          "lidar_dome_prop",
+          "lens_array_eye_prop",
+          "exposed_wiring_harness_prop",
+          "circuit_board_panel_prop",
+          "qr_asset_tag_prop",
+          "error_code_screen_prop",
+          "tool_changer_end_effector_prop",
+          "projection_pedestal_prop"
         ],
         "action": [
           "command_standby",
           "running_diagnostics",
           "charging_docked",
           "present_empty_gaze_standby",
-          "system_boot_sequence"
+          "system_boot_sequence",
+          "firmware_update_progress",
+          "optical_calibration_routine",
+          "panel_open_self_inspection",
+          "sensor_sweep_scan",
+          "error_state_freeze",
+          "battery_critical_shutdown",
+          "wireless_data_sync",
+          "rotor_hover_scan"
         ],
         "expression": [
           "present_but_empty_gaze",
@@ -12129,13 +12234,57 @@
         "light_shape": [
           "scan_grid_projection",
           "registration_crosshair",
-          "status_led_array_pattern"
+          "status_led_array_pattern",
+          "lidar_scan_dot_pattern",
+          "volumetric_projection_cone",
+          "hud_reticle_overlay_pattern",
+          "boot_progress_bar_pattern",
+          "data_stream_line_pattern"
         ],
         "texture": [
           "matte_synthetic_skin_pore",
           "brushed_alloy_microscratch",
           "woven_cable_fiber_texture",
-          "liquid_metal_specular_texture"
+          "liquid_metal_specular_texture",
+          "brushed_metal_grain_texture",
+          "rust_pitting_texture",
+          "pixel_grid_screen_texture",
+          "hologram_scanline_texture"
+        ],
+        "location": [
+          "robot_repair_garage",
+          "e_waste_robot_graveyard",
+          "automated_warehouse_aisle",
+          "smart_home_robot_living_room",
+          "mech_cockpit_interior",
+          "ai_temple_machine_altar"
+        ],
+        "light_type": [
+          "holographic_volumetric_glow",
+          "lidar_dot_emission",
+          "error_red_alert_glow",
+          "screen_face_emission"
+        ],
+        "camera_type": [
+          "machine_vision_camera",
+          "lidar_sensor_view",
+          "inspection_macro_rig"
+        ],
+        "focus": [
+          "lens_array_focus",
+          "exposed_joint_focus",
+          "screen_face_focus"
+        ],
+        "motion": [
+          "rotor_blur_hover",
+          "servo_twitch_motion",
+          "assembly_arm_sweep_blur",
+          "boot_flicker_motion"
+        ],
+        "wearable_accessory": [
+          "sensor_visor_band",
+          "status_badge_led",
+          "data_port_collar"
         ]
       },
       "primary_anchor_pool": {
@@ -12143,14 +12292,28 @@
           "exposed_actuator_port_prop",
           "wrist_port_charging_lead_prop",
           "diagnostic_readout_prop",
-          "serial_spec_plate_prop"
+          "serial_spec_plate_prop",
+          "lidar_dome_prop",
+          "lens_array_eye_prop",
+          "exposed_wiring_harness_prop",
+          "error_code_screen_prop",
+          "qr_asset_tag_prop"
         ],
         "surface_material": [
           "matte_synthetic_skin_surface",
           "transparent_polycarbonate_surface",
           "worn_alloy_surface",
           "soft_polymer_surface",
-          "liquid_metal_gel_surface"
+          "liquid_metal_gel_surface",
+          "brushed_aluminum_panel_surface",
+          "carbon_fiber_weave_surface",
+          "rusted_steel_panel_surface",
+          "transparent_hologram_light_surface"
+        ],
+        "light_shape": [
+          "lidar_scan_dot_pattern",
+          "hud_reticle_overlay_pattern",
+          "data_stream_line_pattern"
         ]
       },
       "anchor_floor": {
@@ -12228,6 +12391,41 @@
             "surface_material",
             "texture"
           ]
+        },
+        {
+          "id": "robot_expanded_proof_families",
+          "group": "robot_expanded_proof_families",
+          "tier": "required",
+          "terms": [
+            "lidar",
+            "lens array",
+            "firmware",
+            "asset tag",
+            "hologram",
+            "screen face",
+            "data stream",
+            "repair bench",
+            "e-waste",
+            "rusted casing",
+            "mecha cockpit",
+            "rotor",
+            "prosthetic limb",
+            "machine vision"
+          ],
+          "min_hits": 2,
+          "target_slots": [
+            "subject",
+            "prop",
+            "action",
+            "location",
+            "light_type",
+            "light_shape",
+            "camera_type",
+            "focus",
+            "motion",
+            "surface_material",
+            "texture"
+          ]
         }
       ],
       "render_directives": [
@@ -12240,11 +12438,14 @@
             "synthetic being"
           ],
           "render_as": "visible_system_identity",
-          "positive_clause": "show robot identity through at least two different visible proof families: material surface, exposed joint or actuator, power/charging interface, diagnostic/status interface, machine behavior, nonhuman form, or environment-as-system cues",
+          "positive_clause": "show robot identity through at least two different proof families: material surface, exposed structure, power/charging interface, diagnostics/status display, sensory apparatus, fabrication-origin mark, wear/repair lifecycle, data-network interface, screen/hologram face, nonhuman scale, or environment-as-system cues",
           "suppress_terms": [
             "only a small metal patch under skin",
             "only decorative circuit makeup",
-            "pure cosplay armor without machine function"
+            "pure cosplay armor without machine function",
+            "only a cute metal accessory",
+            "only ordinary sci-fi costume",
+            "robot concept reduced to skin opening only"
           ]
         }
       ],
@@ -12292,12 +12493,15 @@
         "treat the robot concept broadly: the body can be humanoid android, partial cyborg, nonhumanoid machine, soft robot, liquid metal system, biohybrid organism, swarm, exoskeleton, sentient environment, or mythic automaton depending on the chosen bundle",
         "do not rely on a single small exposed metal patch; include multiple robot proof families such as manufactured material, actuator structure, power or command interface, diagnostic readout, machine behavior, nonhuman scale, or system environment",
         "the role costume or social role must remain readable, but the robot identity should be equally readable at first glance through function, construction, power, sensors, or controlled behavior",
-        "keep machine details non-graphic: clean ports, transparent shells, actuator joints, cables, LEDs, scan grids, and diagnostic panels rather than wounds or torn skin"
+        "keep machine details non-graphic: clean ports, transparent shells, actuator joints, cables, LEDs, scan grids, and diagnostic panels rather than wounds or torn skin",
+        "also consider disembodied and system-level robots: holographic AI, screen-face terminals, voice assistants, autonomous drones, factory arms, prosthetic augmentations, mecha cockpit bodies, e-waste relics, repair benches, smart homes and surveillance infrastructures can all read as robot when their proof families are visible",
+        "vary robot degree from tiny implant or prosthetic part to whole android, nonhumanoid machine, swarm, giant piloted mecha, environment-sized system or purely interface-based AI; do not default every prompt to skin opened over metal"
       ],
       "intent_axis": [
         "broad robot identity beyond cyborg skin patch: android, cyborg, nonhumanoid, soft/liquid, biohybrid, swarm, exoskeleton, sentient environment, or automaton",
         "visible robot proof through surface construction, deep structure, power interface, command behavior, diagnostics, sensors, and machine environment",
-        "role identity preserved while artificial-being ontology is visually dominant"
+        "role identity preserved while artificial-being ontology is visually dominant",
+        "expanded robot ontology: embodied machine, partial augmentation, software interface, social infrastructure, industrial labor, lifecycle decay, domestic care, surveillance, mecha scale and ritual/artificial-life metaphors"
       ],
       "likeness_mode": "inspired",
       "bundles": [
@@ -12798,6 +13002,479 @@
           "intent_axis": [
             "shaman robot as ceremonial automaton"
           ]
+        },
+        {
+          "id": "barista_service_arm_robot",
+          "weight": 4,
+          "roles": [
+            "바리스타"
+          ],
+          "preset": "industrial_arm_factory_line",
+          "set": {
+            "subject": "bartender_arm_robot",
+            "surface_material": "brushed_aluminum_panel_surface",
+            "prop": [
+              "tool_changer_end_effector_prop",
+              "pendant_teach_controller_prop"
+            ],
+            "action": "serving_with_mechanical_precision",
+            "location": "automated_warehouse_aisle",
+            "composition": "exposed_joint_detail_crop",
+            "light_shape": "hud_reticle_overlay_pattern",
+            "texture": "brushed_metal_grain_texture",
+            "mood": "clinical_machine"
+          },
+          "additional": [
+            "바리스타 역할은 사람형 미소보다 정밀한 조작 팔, 툴 체인저, 명령 펜던트, 반복 루틴으로 읽히게 한다."
+          ],
+          "intent_axis": [
+            "barista robot as service manipulator arm and process automation rather than ordinary cafe costume"
+          ]
+        },
+        {
+          "id": "farmer_field_robot",
+          "weight": 4,
+          "roles": [
+            "농부"
+          ],
+          "preset": "drone_aerial_unit",
+          "set": {
+            "subject": "agricultural_field_robot",
+            "prop": [
+              "lidar_dome_prop",
+              "battery_pack_module_prop"
+            ],
+            "action": "obstacle_avoidance_pause",
+            "location": "agricultural_robot_greenhouse",
+            "surface_material": "oil_stained_metal_surface",
+            "texture": "dust_film_texture",
+            "mood": "repair_focused_calm"
+          },
+          "additional": [
+            "농부 로봇은 작물 센서, 흙 묻은 구동부, 자율 주행 정지, 온실 행렬을 먼저 보이게 한다."
+          ],
+          "intent_axis": [
+            "agricultural field robot with crop sensors, mud-worn chassis and autonomous farm labor"
+          ]
+        },
+        {
+          "id": "courier_delivery_robot",
+          "weight": 4,
+          "roles": [
+            "택배기사"
+          ],
+          "preset": "domestic_service_robot_home",
+          "set": {
+            "subject": "delivery_courier_robot",
+            "prop": [
+              "qr_asset_tag_prop",
+              "lidar_dome_prop"
+            ],
+            "action": "payload_pickup_motion",
+            "location": "automated_warehouse_aisle",
+            "surface_material": "injection_molded_plastic_surface",
+            "light_shape": "lidar_scan_dot_pattern",
+            "mood": "controlled_obedience"
+          },
+          "additional": [
+            "택배기사 로봇은 자율 배송 유닛의 라이다, QR 자산 태그, 페이로드 해치, 경로 계산 동작을 강조한다."
+          ],
+          "intent_axis": [
+            "courier robot as autonomous delivery platform with asset tag, payload hatch and navigation sensors"
+          ]
+        },
+        {
+          "id": "security_guard_panopticon_robot",
+          "weight": 4,
+          "roles": [
+            "보안요원"
+          ],
+          "preset": "surveillance_panopticon_scene",
+          "set": {
+            "subject": "combat_quadruped_robot",
+            "prop": [
+              "lens_array_eye_prop",
+              "antenna_array_prop"
+            ],
+            "action": "face_tracking_lock",
+            "location": "reflective_dark_corridor",
+            "light_shape": "hud_reticle_overlay_pattern",
+            "camera_type": "cctv_camera",
+            "mood": "surveilled_unease"
+          },
+          "additional": [
+            "보안요원 로봇은 감시망, 렌즈 배열, 추적 레티클, 원격 명령 체계가 먼저 읽히게 한다."
+          ],
+          "intent_axis": [
+            "security robot as panopticon patrol node with tracking optics and command network"
+          ]
+        },
+        {
+          "id": "teacher_screenface_tutor",
+          "weight": 4,
+          "roles": [
+            "교사"
+          ],
+          "preset": "disembodied_ai_interface",
+          "set": {
+            "subject": "screen_face_service_terminal",
+            "prop": [
+              "smart_speaker_ring_prop",
+              "error_code_screen_prop"
+            ],
+            "action": "wireless_data_sync",
+            "location": "smart_home_robot_living_room",
+            "surface_material": "e_ink_display_panel_surface",
+            "light_type": "screen_face_emission",
+            "composition": "screen_face_centered",
+            "mood": "synthetic_calm"
+          },
+          "additional": [
+            "교사 로봇은 화면 얼굴, 음성 응답, 데이터 동기화, 학습 인터페이스가 지능의 몸처럼 보이게 한다."
+          ],
+          "intent_axis": [
+            "teacher robot as screen-face tutor interface with voice AI and data synchronization"
+          ]
+        },
+        {
+          "id": "mechanic_self_repair_android",
+          "weight": 4,
+          "roles": [
+            "정비사"
+          ],
+          "preset": "robot_repair_workshop",
+          "set": {
+            "subject": "exposed_endoskeleton_android",
+            "prop": [
+              "disassembly_tray_parts_prop",
+              "exposed_wiring_harness_prop"
+            ],
+            "action": "repairing_own_open_panel",
+            "location": "robot_repair_garage",
+            "composition": "repair_bench_topdown",
+            "focus": "exposed_joint_focus",
+            "mood": "repair_focused_calm"
+          },
+          "additional": [
+            "정비사 로봇은 스스로 열린 패널을 수리하는 역설이 핵심이다. 도구와 부품 트레이가 인간 직업과 기계 몸을 동시에 설명하게 한다."
+          ],
+          "intent_axis": [
+            "mechanic robot repairing its own open panel, merging worker role and manufactured body"
+          ]
+        },
+        {
+          "id": "pilot_mecha_operator",
+          "weight": 4,
+          "roles": [
+            "우주비행사"
+          ],
+          "preset": "giant_piloted_mecha",
+          "set": {
+            "subject": "piloted_combat_mecha",
+            "prop": [
+              "antenna_array_prop",
+              "manufacturer_logo_plate_prop"
+            ],
+            "action": "command_standby",
+            "location": "mech_cockpit_interior",
+            "composition": "cockpit_over_shoulder",
+            "light_type": "screen_face_emission",
+            "mood": "awe_of_scale"
+          },
+          "additional": [
+            "우주비행사 로봇은 조종자와 거대 기계 몸이 하나의 확장 신체처럼 읽히게 한다."
+          ],
+          "intent_axis": [
+            "mecha pilot as human operator inside a giant robotic body extension"
+          ]
+        },
+        {
+          "id": "partner_domestic_companion_robot",
+          "weight": 4,
+          "roles": [
+            "사복 여친"
+          ],
+          "preset": "domestic_service_robot_home",
+          "set": {
+            "subject": "desk_companion_bot",
+            "prop": [
+              "smart_speaker_ring_prop",
+              "charging_tether_prop"
+            ],
+            "action": "present_empty_gaze_standby",
+            "location": "smart_home_robot_living_room",
+            "surface_material": "glossy_white_consumer_shell_surface",
+            "composition": "screen_face_centered",
+            "mood": "domestic_synthetic_warmth"
+          },
+          "additional": [
+            "사복 여친 로봇은 사람형 안드로이드만이 아니라 집 안의 동반자 장치, 화면 얼굴, 충전 독, 대화형 루틴으로도 읽힐 수 있게 한다."
+          ],
+          "intent_axis": [
+            "domestic companion robot as intimate home interface with synthetic warmth and visible charging system"
+          ]
+        },
+        {
+          "id": "oracle_temple_automaton",
+          "weight": 4,
+          "roles": [
+            "사제",
+            "수도자",
+            "무녀"
+          ],
+          "preset": "ai_temple_oracle",
+          "set": {
+            "subject": "holographic_assistant_projection",
+            "prop": [
+              "projection_pedestal_prop",
+              "antenna_array_prop"
+            ],
+            "action": "wireless_data_sync",
+            "location": "ai_temple_machine_altar",
+            "light_shape": "data_stream_line_pattern",
+            "light_type": "holographic_volumetric_glow",
+            "mood": "sacred_machine_reverence"
+          },
+          "additional": [
+            "종교적 역할은 기계 예언자와 AI 사원으로 번역한다. 촛불과 서버 LED, 투영 받침대, 데이터 스트림이 의식의 물체가 된다."
+          ],
+          "intent_axis": [
+            "religious robot as machine oracle and AI temple interface"
+          ]
+        },
+        {
+          "id": "knight_guardian_automaton",
+          "weight": 4,
+          "roles": [
+            "기사"
+          ],
+          "preset": "mythic_automaton_court",
+          "set": {
+            "subject": "clockwork_brass_automaton",
+            "prop": [
+              "manufacturer_logo_plate_prop",
+              "battery_pack_module_prop"
+            ],
+            "action": "command_standby",
+            "surface_material": "clockwork_brass_gear_surface",
+            "texture": "gear_teeth_texture",
+            "mood": "sacred_machine_reverence"
+          },
+          "additional": [
+            "기사 로봇은 갑옷 코스튬보다 태엽 장치와 수호 프로토콜이 보이는 자동인형으로 잡는다."
+          ],
+          "intent_axis": [
+            "knight robot as clockwork guardian automaton with visible protocol and gear structure"
+          ]
+        },
+        {
+          "id": "judge_arbiter_machine",
+          "weight": 4,
+          "roles": [
+            "판사"
+          ],
+          "preset": "disembodied_ai_interface",
+          "set": {
+            "subject": "screen_face_service_terminal",
+            "prop": [
+              "error_code_screen_prop",
+              "antenna_array_prop"
+            ],
+            "action": "wireless_data_sync",
+            "surface_material": "e_ink_display_panel_surface",
+            "composition": "screen_face_centered",
+            "light_shape": "data_stream_line_pattern",
+            "mood": "controlled_obedience"
+          },
+          "additional": [
+            "판사 로봇은 스크린 얼굴, 판정 로그, 데이터 스트림, 비인격적 판정 시스템으로 권위를 보여준다."
+          ],
+          "intent_axis": [
+            "judge robot as screen-face arbiter machine and procedural decision system"
+          ]
+        },
+        {
+          "id": "funeral_director_decommission_android",
+          "weight": 4,
+          "roles": [
+            "장례지도사"
+          ],
+          "preset": "decommissioned_robot_decay",
+          "set": {
+            "subject": "rusted_decommissioned_android",
+            "prop": [
+              "dust_cover_sheet_prop",
+              "maintenance_tag_prop"
+            ],
+            "action": "decommission_powerdown",
+            "surface_material": "rusted_steel_panel_surface",
+            "texture": "dust_film_texture",
+            "mood": "obsolete_melancholy"
+          },
+          "additional": [
+            "장례지도사 로봇은 기계의 종료와 폐기 의례를 다룬다. 먼지 덮개, 폐기 태그, 전원 차단 상태가 장례의 언어가 된다."
+          ],
+          "intent_axis": [
+            "funeral robot as decommission ritual for obsolete machine bodies"
+          ]
+        },
+        {
+          "id": "idol_stage_animatronic",
+          "weight": 4,
+          "roles": [
+            "아이돌"
+          ],
+          "preset": "mass_production_clone_line",
+          "set": {
+            "subject": "theme_park_animatronic",
+            "prop": [
+              "serial_spec_plate_prop",
+              "error_code_screen_prop"
+            ],
+            "action": "serving_with_mechanical_precision",
+            "location": "theme_park_animatronic_stage",
+            "light_shape": "status_led_array_pattern",
+            "motion": "servo_twitch_motion",
+            "mood": "glitch_anxiety"
+          },
+          "additional": [
+            "아이돌 로봇은 무대 위 애니매트로닉/양산 퍼포머로 해석한다. 정확한 안무, 서보 트위치, 시리얼 플레이트, 오류 표시가 스타 이미지와 충돌하게 한다."
+          ],
+          "intent_axis": [
+            "idol robot as animatronic performer with serial identity, servo choreography and display glitch"
+          ]
+        },
+        {
+          "id": "standalone_disembodied_ai",
+          "weight": 1,
+          "preset": "disembodied_ai_interface",
+          "set": {
+            "subject": "holographic_assistant_projection",
+            "prop": "projection_pedestal_prop",
+            "action": "wireless_data_sync",
+            "location": "hologram_projection_room",
+            "surface_material": "transparent_hologram_light_surface",
+            "texture": "hologram_scanline_texture",
+            "light_shape": "volumetric_projection_cone"
+          },
+          "additional": [
+            "몸이 없는 로봇: 투영체, 데이터 스트림, 투영 받침대, 서버/네트워크가 로봇의 몸 역할을 한다."
+          ],
+          "intent_axis": [
+            "disembodied AI as robot without solid body"
+          ]
+        },
+        {
+          "id": "standalone_repair_bench_robot",
+          "weight": 1,
+          "preset": "robot_repair_workshop",
+          "set": {
+            "subject": "exposed_endoskeleton_android",
+            "prop": "disassembly_tray_parts_prop",
+            "action": "being_disassembled_on_bench",
+            "location": "robot_repair_garage",
+            "composition": "repair_bench_topdown",
+            "focus": "exposed_joint_focus"
+          },
+          "additional": [
+            "로봇의 제작성과 수리 가능성이 주제다. 부품 트레이, 열린 패널, 점검등이 몸보다 먼저 읽히게 한다."
+          ],
+          "intent_axis": [
+            "robot as maintainable manufactured object on repair bench"
+          ]
+        },
+        {
+          "id": "standalone_decommissioned_relic",
+          "weight": 1,
+          "preset": "decommissioned_robot_decay",
+          "set": {
+            "subject": "rusted_decommissioned_android",
+            "prop": "dust_cover_sheet_prop",
+            "action": "decommission_powerdown",
+            "location": "e_waste_robot_graveyard",
+            "surface_material": "rusted_steel_panel_surface",
+            "texture": "rust_pitting_texture"
+          },
+          "additional": [
+            "로봇을 생애주기의 끝에서 보여준다. 고장, 녹, 폐기 태그, 휴면 상태가 인간적인 멜랑콜리를 만든다."
+          ],
+          "intent_axis": [
+            "obsolete robot relic and machine mortality"
+          ]
+        },
+        {
+          "id": "standalone_giant_mecha",
+          "weight": 1,
+          "preset": "giant_piloted_mecha",
+          "set": {
+            "subject": "piloted_combat_mecha",
+            "location": "mech_cockpit_interior",
+            "composition": "scale_human_beside_mecha",
+            "surface_material": "anodized_titanium_surface",
+            "mood": "awe_of_scale"
+          },
+          "additional": [
+            "로봇의 크기와 조종 관계를 보여준다. 인간 파일럿과 기계 몸의 스케일 차이가 핵심이다."
+          ],
+          "intent_axis": [
+            "robot as giant piloted body extension"
+          ]
+        },
+        {
+          "id": "standalone_domestic_service_system",
+          "weight": 1,
+          "preset": "domestic_service_robot_home",
+          "set": {
+            "subject": "desk_companion_bot",
+            "location": "smart_home_robot_living_room",
+            "prop": "smart_speaker_ring_prop",
+            "action": "charging_docked",
+            "mood": "domestic_synthetic_warmth"
+          },
+          "additional": [
+            "집 전체와 작은 동반자 장치가 함께 로봇처럼 작동한다. 친밀함과 제어 시스템이 동시에 보이게 한다."
+          ],
+          "intent_axis": [
+            "domestic robot as home companion and smart environment"
+          ]
+        },
+        {
+          "id": "standalone_surveillance_panopticon",
+          "weight": 1,
+          "preset": "surveillance_panopticon_scene",
+          "set": {
+            "subject": "surveillance_sentinel_node",
+            "prop": "lens_array_eye_prop",
+            "action": "face_tracking_lock",
+            "light_shape": "hud_reticle_overlay_pattern",
+            "camera_type": "cctv_camera",
+            "mood": "surveilled_unease"
+          },
+          "additional": [
+            "로봇을 하나의 몸이 아니라 감시 체계로 보여준다. 눈, 카메라, 레티클, 네트워크가 주체가 된다."
+          ],
+          "intent_axis": [
+            "robot as surveillance network and panopticon body"
+          ]
+        },
+        {
+          "id": "standalone_prosthetic_augment",
+          "weight": 1,
+          "preset": "prosthetic_augment_portrait",
+          "set": {
+            "subject": "prosthetic_eye_cyborg",
+            "prop": "lens_array_eye_prop",
+            "action": "optical_calibration_routine",
+            "composition": "lens_array_macro",
+            "focus": "lens_array_focus",
+            "mood": "clinical_machine"
+          },
+          "additional": [
+            "로봇이 전체 몸이 아니라 일부 감각기관/보철로만 존재하는 경우다. 눈, 손, 신경 포트 같은 경계부를 선명하게 잡는다."
+          ],
+          "intent_axis": [
+            "partial robot augmentation through prosthetic eye or limb"
+          ]
         }
       ],
       "soft_repair_policy": {
@@ -12815,7 +13492,13 @@
           "surface_material",
           "subject_framing",
           "action",
-          "light_shape"
+          "light_shape",
+          "location",
+          "light_type",
+          "camera_type",
+          "focus",
+          "motion",
+          "wearable_accessory"
         ],
         "strategy": "prefer_then_reselect",
         "fail_open": false
@@ -26195,7 +26878,25 @@
     "왕녀": "공주",
     "세자빈": "공주",
     "왕세녀": "공주",
-    "황녀": "공주"
+    "황녀": "공주",
+    "홀로그램 로봇": "로봇",
+    "스크린로봇": "로봇",
+    "스크린 얼굴 로봇": "로봇",
+    "음성AI": "로봇",
+    "음성 AI": "로봇",
+    "탈신체 AI": "로봇",
+    "메카": "로봇",
+    "드론 로봇": "로봇",
+    "수리로봇": "로봇",
+    "수리 로봇": "로봇",
+    "폐기로봇": "로봇",
+    "폐기 로봇": "로봇",
+    "의수 로봇": "로봇",
+    "보철 로봇": "로봇",
+    "감시 로봇": "로봇",
+    "가정용 로봇": "로봇",
+    "AI 사원": "로봇",
+    "기계 예언자": "로봇"
   },
   "mixin_diversity_policy": {
     "암살자": {

@@ -1,6 +1,6 @@
 {
-  "version": "1.12",
-  "description": "Photographic prompt dictionary with expanded concept-role, folklore, personality, season, era, digital-entity, and environmental-transformation coverage for semantic and recipe-driven prompt generation.",
+  "version": "1.13",
+  "description": "Photographic prompt dictionary with expanded concept-role, folklore, personality, season, era, digital-entity, and environmental-transformation coverage for semantic and recipe-driven prompt generation. Version 1.13 expands robot semantics with disembodied AI, screen-face terminals, sensory apparatus, fabrication origin, lifecycle wear/repair, drones, mecha, prosthetics, domestic systems, surveillance networks and AI-temple metaphors.",
   "facet_vocab": {
     "subject_kind": [
       "human",
@@ -24,7 +24,16 @@
       "laboratory",
       "industrial",
       "space",
-      "infrastructure"
+      "infrastructure",
+      "domestic",
+      "repair",
+      "waste",
+      "warehouse",
+      "temple",
+      "disaster",
+      "stage",
+      "cockpit",
+      "agricultural"
     ],
     "time_of_day": [
       "day",
@@ -48,7 +57,10 @@
       "flash",
       "studio_light",
       "low_light",
-      "diagnostic_light"
+      "diagnostic_light",
+      "projection_light",
+      "machine_light",
+      "hazard_light"
     ],
     "mood_family": [
       "calm",
@@ -60,7 +72,12 @@
       "documentary",
       "clinical",
       "uncanny",
-      "operational"
+      "operational",
+      "melancholic",
+      "sacred",
+      "anxious",
+      "awe",
+      "intimate"
     ],
     "camera_register": [
       "phone",
@@ -68,7 +85,10 @@
       "surveillance",
       "vintage",
       "studio",
-      "macro"
+      "macro",
+      "sensor",
+      "machine_vision",
+      "inspection"
     ],
     "safety_tier": [
       "general",
@@ -93,14 +113,28 @@
       "exoskeleton",
       "environment_as_robot",
       "autonomous_vehicle",
-      "mythic_automaton"
+      "mythic_automaton",
+      "holographic_projection",
+      "screen_face_terminal",
+      "disembodied_voice_unit",
+      "piloted_mecha",
+      "exposed_endoskeleton",
+      "inflatable_pneumatic",
+      "animatronic_puppet",
+      "aerial_single_drone",
+      "wearable_companion_bot",
+      "prosthetic_limb_focus",
+      "clockwork_mechanism"
     ],
     "robot_degree": [
       "human_looking_controlled",
       "partial_cyborg",
       "android_mimicry",
       "full_machine",
-      "distributed_system"
+      "distributed_system",
+      "disembodied_software",
+      "minimal_implant",
+      "uploaded_consciousness"
     ],
     "robot_proof_family": [
       "surface_construction",
@@ -109,7 +143,12 @@
       "behavior_control",
       "power_command",
       "environment_system",
-      "uncanny"
+      "uncanny",
+      "sensory_apparatus",
+      "fabrication_origin",
+      "wear_decay",
+      "data_network",
+      "display_face"
     ],
     "robot_metaphor": [
       "robota_labor",
@@ -122,7 +161,23 @@
       "companion",
       "weapon",
       "body_extension",
-      "environment_as_robot"
+      "environment_as_robot",
+      "surveillance_panopticon",
+      "obsolescence_replacement",
+      "creator_creature",
+      "idol_oracle",
+      "memory_archive",
+      "bondage_revolt",
+      "intimacy_care",
+      "mortality_shutdown"
+    ],
+    "robot_condition": [
+      "pristine_factory_new",
+      "field_worn_operational",
+      "mid_repair_disassembled",
+      "decommissioned_abandoned",
+      "powered_down_dormant",
+      "reactivated_legacy"
     ]
   },
   "preset_families": [
@@ -785,6 +840,30 @@
       "ko": "왕실 공주 개념 확장 계열",
       "en": "royal princess concept facet family",
       "embedding_text": "royal princess facets: lineage, succession, ceremony, protected confinement, incognito disguise, fallen exile, role reversal, royal guard authority, court healing, modern off-duty nobility, gala display"
+    },
+    {
+      "id": "robot_lifecycle_family",
+      "ko": "로봇 생애주기 계열",
+      "en": "robot lifecycle family",
+      "embedding_text": "factory-new robots, QA inspection, repair benches, field wear, decommissioned shells, dormant shutdown and reactivated legacy machines"
+    },
+    {
+      "id": "robot_disembodied_ai_family",
+      "ko": "탈신체 AI 인터페이스 계열",
+      "en": "disembodied AI interface family",
+      "embedding_text": "holographic assistants, screen-face terminals, smart speakers, data centers, projection cones and networked artificial minds without full bodies"
+    },
+    {
+      "id": "robot_social_system_family",
+      "ko": "사회 시스템 로봇 계열",
+      "en": "robot social system family",
+      "embedding_text": "surveillance networks, domestic coexistence, logistics automation, worker replacement, command hierarchies and social robots embedded in human routines"
+    },
+    {
+      "id": "robot_scale_mecha_family",
+      "ko": "로봇 스케일/메카 계열",
+      "en": "robot scale and mecha family",
+      "embedding_text": "single drones, desktop companion bots, human-scale androids, giant piloted mecha and environment-sized distributed robot bodies"
     }
   ],
   "recipes": [
@@ -65053,6 +65132,1623 @@
         }
       },
       "embedding_text": "modern royal press leak observed from a distance, not a selfie"
+    },
+    {
+      "id": "disembodied_ai_interface",
+      "ko": "탈신체 AI 인터페이스",
+      "en": "disembodied AI interface",
+      "weight": 0.78,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "light_type",
+        "light_shape"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.65
+        },
+        {
+          "slot": "surface_material",
+          "probability": 0.45
+        },
+        {
+          "slot": "texture",
+          "probability": 0.45
+        },
+        {
+          "slot": "world",
+          "probability": 0.35
+        },
+        {
+          "slot": "camera_type",
+          "probability": 0.35
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "robotics_engineering_record",
+            "scientific_record",
+            "optical_experiment_photo"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "robotics",
+            "artificial_life",
+            "science"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "holographic_assistant_projection",
+            "screen_face_service_terminal",
+            "voice_assistant_speaker_unit"
+          ]
+        },
+        "location": {
+          "ids": [
+            "hologram_projection_room",
+            "data_center_cold_aisle",
+            "ai_temple_machine_altar"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "hologram_underglow",
+            "monitor_glow",
+            "ai_temple_candle_led_mix"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "hologram_through_glass",
+            "screen_face_centered",
+            "medium_close"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "synthetic_calm",
+            "glitch_anxiety",
+            "sacred_machine_reverence"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "optical_photo_realism",
+            "high_detail"
+          ]
+        },
+        "light_type": {
+          "ids": [
+            "holographic_volumetric_glow",
+            "screen_face_emission",
+            "status_led_glow"
+          ]
+        },
+        "light_shape": {
+          "ids": [
+            "volumetric_projection_cone",
+            "data_stream_line_pattern",
+            "boot_progress_bar_pattern"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "projection_pedestal_prop",
+            "smart_speaker_ring_prop",
+            "error_code_screen_prop",
+            "antenna_array_prop"
+          ]
+        },
+        "surface_material": {
+          "ids": [
+            "transparent_hologram_light_surface",
+            "e_ink_display_panel_surface",
+            "glossy_white_consumer_shell_surface"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "hologram_scanline_texture",
+            "pixel_grid_screen_texture",
+            "clean_digital"
+          ]
+        },
+        "world": {
+          "ids": [
+            "distributed_ai_system_world",
+            "ai_temple_civilization"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "machine_vision_camera",
+            "webcam_camera",
+            "full_frame_mirrorless"
+          ]
+        }
+      },
+      "family": "urban_portrait_semantic"
+    },
+    {
+      "id": "robot_repair_workshop",
+      "ko": "로봇 수리 워크숍",
+      "en": "robot repair workshop",
+      "weight": 0.8,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "action",
+        "prop",
+        "surface_material",
+        "texture"
+      ],
+      "optional_slots": [
+        {
+          "slot": "light_type",
+          "probability": 0.5
+        },
+        {
+          "slot": "light_shape",
+          "probability": 0.5
+        },
+        {
+          "slot": "camera_type",
+          "probability": 0.35
+        },
+        {
+          "slot": "focus",
+          "probability": 0.4
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "robotics_engineering_record",
+            "documentary_photo",
+            "scientific_record"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "robotics",
+            "documentary",
+            "science"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "exposed_endoskeleton_android",
+            "rusted_decommissioned_android",
+            "precision_prosthetic_arm",
+            "service_android_unit"
+          ]
+        },
+        "action": {
+          "ids": [
+            "being_disassembled_on_bench",
+            "panel_open_self_inspection",
+            "repairing_own_open_panel",
+            "running_diagnostics"
+          ]
+        },
+        "location": {
+          "ids": [
+            "robot_repair_garage",
+            "robot_quality_inspection_bench",
+            "diagnostics_lab"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "repair_bay_worklight",
+            "lab_led",
+            "monitor_glow"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "repair_bench_topdown",
+            "parts_laid_flat_knolling",
+            "exposed_joint_detail_crop"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "macro_100mm",
+            "105mm_macro",
+            "50mm"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "repair_focused_calm",
+            "clinical_machine",
+            "dormant_stillness"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "optical_photo_realism",
+            "high_detail"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "disassembly_tray_parts_prop",
+            "exposed_wiring_harness_prop",
+            "circuit_board_panel_prop",
+            "pendant_teach_controller_prop",
+            "diagnostic_readout_prop"
+          ]
+        },
+        "surface_material": {
+          "ids": [
+            "brushed_aluminum_panel_surface",
+            "oil_stained_metal_surface",
+            "transparent_polycarbonate_surface"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "brushed_metal_grain_texture",
+            "oil_sheen_texture",
+            "woven_cable_fiber_texture"
+          ]
+        },
+        "light_type": {
+          "ids": [
+            "cooling_fan_blue_glow",
+            "status_led_glow",
+            "calibration_projector_glow"
+          ]
+        },
+        "light_shape": {
+          "ids": [
+            "hud_reticle_overlay_pattern",
+            "registration_crosshair",
+            "boot_progress_bar_pattern"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "inspection_macro_rig",
+            "machine_vision_camera",
+            "full_frame_mirrorless"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "exposed_joint_focus",
+            "macro_focus_stack",
+            "lens_array_focus"
+          ]
+        }
+      },
+      "family": "urban_portrait_semantic"
+    },
+    {
+      "id": "decommissioned_robot_decay",
+      "ko": "폐기 로봇 부식 장면",
+      "en": "decommissioned robot decay",
+      "weight": 0.76,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "action",
+        "prop",
+        "surface_material",
+        "texture"
+      ],
+      "optional_slots": [
+        {
+          "slot": "world",
+          "probability": 0.45
+        },
+        {
+          "slot": "light_type",
+          "probability": 0.35
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "documentary_photo",
+            "robotics_engineering_record"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "documentary",
+            "robotics",
+            "artificial_life"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "rusted_decommissioned_android",
+            "autonomous_vehicle_entity",
+            "quadruped_utility_robot",
+            "clockwork_brass_automaton"
+          ]
+        },
+        "action": {
+          "ids": [
+            "decommission_powerdown",
+            "battery_critical_shutdown",
+            "error_state_freeze"
+          ]
+        },
+        "location": {
+          "ids": [
+            "e_waste_robot_graveyard",
+            "robot_repair_garage"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "e_waste_dusk_ambient",
+            "low_key",
+            "repair_bay_worklight"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "rust_detail_macro",
+            "medium_close",
+            "extreme_wide_environmental"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "obsolete_melancholy",
+            "dormant_stillness",
+            "uncanny"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "optical_photo_realism",
+            "high_detail"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "dust_cover_sheet_prop",
+            "oil_drip_pan_prop",
+            "qr_asset_tag_prop",
+            "maintenance_tag_prop"
+          ]
+        },
+        "surface_material": {
+          "ids": [
+            "rusted_steel_panel_surface",
+            "oil_stained_metal_surface",
+            "worn_alloy_surface"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "rust_pitting_texture",
+            "dust_film_texture",
+            "scratched_lacquer_texture"
+          ]
+        },
+        "world": {
+          "ids": [
+            "e_waste_ruin_world",
+            "post_human_android_world"
+          ]
+        },
+        "light_type": {
+          "ids": [
+            "error_red_alert_glow",
+            "charging_indicator_glow"
+          ]
+        }
+      },
+      "family": "urban_portrait_semantic"
+    },
+    {
+      "id": "giant_piloted_mecha",
+      "ko": "거대 조종 메카",
+      "en": "giant piloted mecha",
+      "weight": 0.78,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "surface_material",
+        "prop"
+      ],
+      "optional_slots": [
+        {
+          "slot": "light_type",
+          "probability": 0.45
+        },
+        {
+          "slot": "light_shape",
+          "probability": 0.45
+        },
+        {
+          "slot": "world",
+          "probability": 0.4
+        },
+        {
+          "slot": "motion",
+          "probability": 0.25
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "robotics_engineering_record",
+            "documentary_photo",
+            "synthetic_being_portrait_photo"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "robotics",
+            "science",
+            "sci_fi_city"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "piloted_combat_mecha"
+          ]
+        },
+        "location": {
+          "ids": [
+            "mech_cockpit_interior",
+            "robot_assembly_line",
+            "orbital_station_interior"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "cockpit_instrument_glow",
+            "low_key",
+            "fluorescent"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "scale_human_beside_mecha",
+            "cockpit_over_shoulder",
+            "centered_symmetry"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "wide_24mm",
+            "16_35mm",
+            "35mm"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "awe_of_scale",
+            "tense",
+            "synthetic_calm"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "optical_photo_realism",
+            "high_detail"
+          ]
+        },
+        "surface_material": {
+          "ids": [
+            "brushed_aluminum_panel_surface",
+            "carbon_fiber_weave_surface",
+            "anodized_titanium_surface"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "manufacturer_logo_plate_prop",
+            "battery_pack_module_prop",
+            "antenna_array_prop"
+          ]
+        },
+        "light_type": {
+          "ids": [
+            "screen_face_emission",
+            "cooling_fan_blue_glow"
+          ]
+        },
+        "light_shape": {
+          "ids": [
+            "hud_reticle_overlay_pattern",
+            "data_stream_line_pattern"
+          ]
+        },
+        "world": {
+          "ids": [
+            "mecha_defense_frontier",
+            "automated_machine_civilization"
+          ]
+        },
+        "motion": {
+          "ids": [
+            "servo_twitch_motion",
+            "stable_tripod"
+          ]
+        }
+      },
+      "family": "urban_portrait_semantic"
+    },
+    {
+      "id": "drone_aerial_unit",
+      "ko": "단일 항공 드론 유닛",
+      "en": "single aerial drone unit",
+      "weight": 0.76,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "action",
+        "prop"
+      ],
+      "optional_slots": [
+        {
+          "slot": "motion",
+          "probability": 0.65
+        },
+        {
+          "slot": "camera_type",
+          "probability": 0.45
+        },
+        {
+          "slot": "light_shape",
+          "probability": 0.4
+        },
+        {
+          "slot": "focus",
+          "probability": 0.35
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "robotics_engineering_record",
+            "documentary_photo"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "robotics",
+            "documentary",
+            "science"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "single_camera_drone"
+          ]
+        },
+        "action": {
+          "ids": [
+            "rotor_hover_scan",
+            "sensor_sweep_scan",
+            "obstacle_avoidance_pause"
+          ]
+        },
+        "location": {
+          "ids": [
+            "drone_test_flight_hangar",
+            "disaster_rescue_site"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "fluorescent",
+            "repair_bay_worklight"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "centered_symmetry",
+            "lens_array_macro",
+            "medium_close"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "wide_24mm",
+            "35mm",
+            "macro_100mm"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "surveilled_unease",
+            "clinical_machine",
+            "tense"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "optical_photo_realism",
+            "high_detail"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "lidar_dome_prop",
+            "lens_array_eye_prop",
+            "antenna_array_prop"
+          ]
+        },
+        "motion": {
+          "ids": [
+            "rotor_blur_hover",
+            "drone_smooth_hover",
+            "frozen_action"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "drone_camera_type",
+            "machine_vision_camera",
+            "lidar_sensor_view"
+          ]
+        },
+        "light_shape": {
+          "ids": [
+            "lidar_scan_dot_pattern",
+            "hud_reticle_overlay_pattern"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "lens_array_focus",
+            "deep_focus"
+          ]
+        }
+      },
+      "family": "urban_portrait_semantic"
+    },
+    {
+      "id": "domestic_service_robot_home",
+      "ko": "가정용 서비스 로봇 홈",
+      "en": "domestic service robot at home",
+      "weight": 0.74,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "action",
+        "prop"
+      ],
+      "optional_slots": [
+        {
+          "slot": "surface_material",
+          "probability": 0.55
+        },
+        {
+          "slot": "texture",
+          "probability": 0.4
+        },
+        {
+          "slot": "world",
+          "probability": 0.3
+        },
+        {
+          "slot": "wearable_accessory",
+          "probability": 0.25
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "synthetic_being_portrait_photo",
+            "documentary_photo",
+            "robotics_engineering_record"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "robotics",
+            "artificial_life",
+            "documentary"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "desk_companion_bot",
+            "inflatable_care_robot",
+            "service_android_unit",
+            "gynoid_companion_unit"
+          ]
+        },
+        "action": {
+          "ids": [
+            "serving_with_mechanical_precision",
+            "charging_docked",
+            "present_empty_gaze_standby"
+          ]
+        },
+        "location": {
+          "ids": [
+            "smart_home_robot_living_room",
+            "cozy_apartment",
+            "robot_charging_bay"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "monitor_glow",
+            "softbox",
+            "lab_led"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "medium_close",
+            "screen_face_centered",
+            "frame_within_frame"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "50mm",
+            "35mm",
+            "85mm"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "domestic_synthetic_warmth",
+            "synthetic_calm",
+            "uncanny"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "optical_photo_realism",
+            "high_detail"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "charging_tether_prop",
+            "smart_speaker_ring_prop",
+            "docking_contacts_prop"
+          ]
+        },
+        "surface_material": {
+          "ids": [
+            "glossy_white_consumer_shell_surface",
+            "injection_molded_plastic_surface",
+            "matte_synthetic_skin_surface"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "mold_seam_line_texture",
+            "matte_synthetic_skin_pore",
+            "pixel_grid_screen_texture"
+          ]
+        },
+        "world": {
+          "ids": [
+            "human_robot_coexistence_suburb"
+          ]
+        },
+        "wearable_accessory": {
+          "ids": [
+            "status_badge_led",
+            "data_port_collar"
+          ]
+        }
+      },
+      "family": "urban_portrait_semantic"
+    },
+    {
+      "id": "surveillance_panopticon_scene",
+      "ko": "감시 파놉티콘 로봇 장면",
+      "en": "surveillance panopticon robot scene",
+      "weight": 0.74,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "action",
+        "prop",
+        "light_shape"
+      ],
+      "optional_slots": [
+        {
+          "slot": "camera_type",
+          "probability": 0.55
+        },
+        {
+          "slot": "light_type",
+          "probability": 0.45
+        },
+        {
+          "slot": "world",
+          "probability": 0.45
+        },
+        {
+          "slot": "focus",
+          "probability": 0.3
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "documentary_photo",
+            "robotics_engineering_record"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "robotics",
+            "documentary",
+            "sci_fi_city"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "surveillance_sentinel_node",
+            "single_camera_drone",
+            "combat_quadruped_robot",
+            "telepresence_avatar_robot"
+          ]
+        },
+        "action": {
+          "ids": [
+            "face_tracking_lock",
+            "sensor_sweep_scan",
+            "recorded_by_surveillance"
+          ]
+        },
+        "location": {
+          "ids": [
+            "reflective_dark_corridor",
+            "automated_warehouse_aisle"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "low_key",
+            "fluorescent",
+            "monitor_glow"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "cctv_corner_frame",
+            "lens_array_macro",
+            "centered_symmetry"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "wide_24mm",
+            "50mm"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "surveilled_unease",
+            "controlled_obedience",
+            "uncanny"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "optical_photo_realism",
+            "high_detail"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "lens_array_eye_prop",
+            "lidar_dome_prop",
+            "antenna_array_prop",
+            "diagnostic_readout_prop"
+          ]
+        },
+        "light_shape": {
+          "ids": [
+            "hud_reticle_overlay_pattern",
+            "lidar_scan_dot_pattern",
+            "registration_crosshair"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "cctv_camera",
+            "machine_vision_camera",
+            "bodycam_camera"
+          ]
+        },
+        "light_type": {
+          "ids": [
+            "lidar_dot_emission",
+            "screen_face_emission",
+            "status_led_glow"
+          ]
+        },
+        "world": {
+          "ids": [
+            "surveillance_state_world"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "lens_array_focus",
+            "deep_focus"
+          ]
+        }
+      },
+      "family": "urban_portrait_semantic"
+    },
+    {
+      "id": "industrial_arm_factory_line",
+      "ko": "산업용 로봇 팔 공장 라인",
+      "en": "industrial robotic arm factory line",
+      "weight": 0.74,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "action",
+        "prop",
+        "surface_material"
+      ],
+      "optional_slots": [
+        {
+          "slot": "motion",
+          "probability": 0.55
+        },
+        {
+          "slot": "camera_type",
+          "probability": 0.35
+        },
+        {
+          "slot": "light_shape",
+          "probability": 0.35
+        },
+        {
+          "slot": "texture",
+          "probability": 0.35
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "robotics_engineering_record",
+            "documentary_photo"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "robotics",
+            "documentary",
+            "science"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "fixed_industrial_robot_arm",
+            "bartender_arm_robot"
+          ]
+        },
+        "action": {
+          "ids": [
+            "arm_calibration_sweep",
+            "repetitive_assembly_task",
+            "payload_pickup_motion"
+          ]
+        },
+        "location": {
+          "ids": [
+            "robot_assembly_line",
+            "automated_warehouse_aisle",
+            "robot_quality_inspection_bench"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "fluorescent",
+            "repair_bay_worklight",
+            "warehouse_sodium_light"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "parts_laid_flat_knolling",
+            "exposed_joint_detail_crop",
+            "medium_close"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "wide_24mm"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "clinical_machine",
+            "mass_production_anonymity",
+            "controlled_obedience"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "optical_photo_realism",
+            "high_detail"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "tool_changer_end_effector_prop",
+            "pendant_teach_controller_prop",
+            "calibration_target_prop"
+          ]
+        },
+        "surface_material": {
+          "ids": [
+            "brushed_aluminum_panel_surface",
+            "anodized_titanium_surface",
+            "worn_alloy_surface"
+          ]
+        },
+        "motion": {
+          "ids": [
+            "assembly_arm_sweep_blur",
+            "stable_tripod"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "machine_vision_camera",
+            "full_frame_mirrorless"
+          ]
+        },
+        "light_shape": {
+          "ids": [
+            "registration_crosshair",
+            "scan_grid_projection"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "brushed_metal_grain_texture",
+            "scratched_lacquer_texture"
+          ]
+        }
+      },
+      "family": "urban_portrait_semantic"
+    },
+    {
+      "id": "mass_production_clone_line",
+      "ko": "양산 복제 안드로이드 라인",
+      "en": "mass-production android clone line",
+      "weight": 0.74,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "action",
+        "prop",
+        "surface_material"
+      ],
+      "optional_slots": [
+        {
+          "slot": "light_shape",
+          "probability": 0.5
+        },
+        {
+          "slot": "texture",
+          "probability": 0.45
+        },
+        {
+          "slot": "world",
+          "probability": 0.35
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "robotics_engineering_record",
+            "synthetic_being_portrait_photo",
+            "documentary_photo"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "robotics",
+            "artificial_life",
+            "science"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "mass_production_line_clone_unit",
+            "service_android_unit",
+            "gynoid_companion_unit"
+          ]
+        },
+        "action": {
+          "ids": [
+            "system_boot_sequence",
+            "optical_calibration_routine",
+            "command_standby"
+          ]
+        },
+        "location": {
+          "ids": [
+            "robot_assembly_line",
+            "robot_quality_inspection_bench"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "lab_led",
+            "fluorescent",
+            "repair_bay_worklight"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "centered_symmetry",
+            "swarm_repetition_grid",
+            "parts_laid_flat_knolling"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "50mm",
+            "85mm",
+            "35mm"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "mass_production_anonymity",
+            "clinical_machine",
+            "uncanny"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "optical_photo_realism",
+            "high_detail"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "serial_spec_plate_prop",
+            "qr_asset_tag_prop",
+            "calibration_target_prop",
+            "manufacturer_logo_plate_prop"
+          ]
+        },
+        "surface_material": {
+          "ids": [
+            "matte_synthetic_skin_surface",
+            "glossy_white_consumer_shell_surface",
+            "injection_molded_plastic_surface"
+          ]
+        },
+        "light_shape": {
+          "ids": [
+            "registration_crosshair",
+            "boot_progress_bar_pattern",
+            "status_led_array_pattern"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "matte_synthetic_skin_pore",
+            "mold_seam_line_texture",
+            "pixel_grid_screen_texture"
+          ]
+        },
+        "world": {
+          "ids": [
+            "automated_machine_civilization"
+          ]
+        }
+      },
+      "family": "urban_portrait_semantic"
+    },
+    {
+      "id": "prosthetic_augment_portrait",
+      "ko": "로봇 보철 증강 포트레이트",
+      "en": "robotic prosthetic augmentation portrait",
+      "weight": 0.72,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "action",
+        "prop",
+        "surface_material",
+        "texture"
+      ],
+      "optional_slots": [
+        {
+          "slot": "wearable_accessory",
+          "probability": 0.45
+        },
+        {
+          "slot": "light_shape",
+          "probability": 0.35
+        },
+        {
+          "slot": "focus",
+          "probability": 0.4
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "synthetic_being_portrait_photo",
+            "robotics_engineering_record"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "robotics",
+            "artificial_life",
+            "science"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "precision_prosthetic_arm",
+            "prosthetic_eye_cyborg",
+            "cyborg_partial_prosthetic"
+          ]
+        },
+        "action": {
+          "ids": [
+            "optical_calibration_routine",
+            "panel_open_self_inspection",
+            "face_tracking_lock"
+          ]
+        },
+        "location": {
+          "ids": [
+            "diagnostics_lab",
+            "robot_quality_inspection_bench"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "lab_led",
+            "softbox",
+            "monitor_glow"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "lens_array_macro",
+            "exposed_joint_detail_crop",
+            "medium_close"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "macro_100mm",
+            "85mm",
+            "105mm_macro"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "clinical_machine",
+            "synthetic_calm",
+            "uncanny"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "optical_photo_realism",
+            "high_detail"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "lens_array_eye_prop",
+            "coolant_line_prop",
+            "wrist_port_charging_lead_prop",
+            "diagnostic_readout_prop"
+          ]
+        },
+        "surface_material": {
+          "ids": [
+            "carbon_fiber_weave_surface",
+            "brushed_aluminum_panel_surface",
+            "matte_synthetic_skin_surface"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "carbon_weave_texture",
+            "brushed_metal_grain_texture",
+            "matte_synthetic_skin_pore"
+          ]
+        },
+        "wearable_accessory": {
+          "ids": [
+            "sensor_visor_band",
+            "data_port_collar",
+            "maintenance_qr_wristband"
+          ]
+        },
+        "light_shape": {
+          "ids": [
+            "hud_reticle_overlay_pattern",
+            "registration_crosshair"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "lens_array_focus",
+            "exposed_joint_focus",
+            "eye_focus"
+          ]
+        }
+      },
+      "family": "urban_portrait_semantic"
+    },
+    {
+      "id": "ai_temple_oracle",
+      "ko": "AI 사원 기계 예언자",
+      "en": "AI temple machine oracle",
+      "weight": 0.68,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "prop",
+        "light_type"
+      ],
+      "optional_slots": [
+        {
+          "slot": "world",
+          "probability": 0.55
+        },
+        {
+          "slot": "light_shape",
+          "probability": 0.55
+        },
+        {
+          "slot": "surface_material",
+          "probability": 0.4
+        },
+        {
+          "slot": "texture",
+          "probability": 0.35
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "synthetic_being_portrait_photo",
+            "optical_experiment_photo",
+            "robotics_engineering_record"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "artificial_life",
+            "robotics",
+            "fantasy"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "holographic_assistant_projection",
+            "screen_face_service_terminal",
+            "clockwork_brass_automaton"
+          ]
+        },
+        "location": {
+          "ids": [
+            "ai_temple_machine_altar",
+            "data_center_cold_aisle",
+            "hologram_projection_room"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "ai_temple_candle_led_mix",
+            "hologram_underglow",
+            "monitor_glow"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "centered_symmetry",
+            "hologram_through_glass",
+            "screen_face_centered"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "50mm",
+            "85mm",
+            "35mm"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "sacred_machine_reverence",
+            "synthetic_calm",
+            "uncanny"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "optical_photo_realism",
+            "high_detail"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "projection_pedestal_prop",
+            "antenna_array_prop",
+            "manufacturer_logo_plate_prop"
+          ]
+        },
+        "light_type": {
+          "ids": [
+            "holographic_volumetric_glow",
+            "screen_face_emission"
+          ]
+        },
+        "world": {
+          "ids": [
+            "ai_temple_civilization",
+            "distributed_ai_system_world"
+          ]
+        },
+        "light_shape": {
+          "ids": [
+            "data_stream_line_pattern",
+            "volumetric_projection_cone",
+            "hud_reticle_overlay_pattern"
+          ]
+        },
+        "surface_material": {
+          "ids": [
+            "transparent_hologram_light_surface",
+            "e_ink_display_panel_surface",
+            "clockwork_brass_gear_surface"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "hologram_scanline_texture",
+            "pixel_grid_screen_texture",
+            "gear_teeth_texture"
+          ]
+        }
+      },
+      "family": "urban_portrait_semantic"
     }
   ],
   "templates": {
@@ -71599,6 +73295,848 @@
         "for_any": [
           "human"
         ]
+      },
+      {
+        "id": "holographic_assistant_projection",
+        "ko": "홀로그램 어시스턴트 투영체",
+        "en": "a holographic assistant projection",
+        "weight": 0.82,
+        "tags": [
+          "robot",
+          "ai",
+          "hologram"
+        ],
+        "kind": [
+          "robot",
+          "human"
+        ],
+        "aliases": [
+          "holographic assistant",
+          "projected AI avatar"
+        ],
+        "keywords": [
+          "hologram",
+          "projection",
+          "disembodied AI"
+        ],
+        "embedding_text": "disembodied AI represented as a translucent human-scale holographic assistant with projection pedestal, scanlines and data-stream light",
+        "facets": {
+          "subject_kind": [
+            "robot"
+          ],
+          "robot_form": [
+            "holographic_projection"
+          ],
+          "robot_degree": [
+            "disembodied_software"
+          ],
+          "robot_proof_family": [
+            "display_face",
+            "data_network"
+          ],
+          "robot_metaphor": [
+            "companion",
+            "memory_archive"
+          ]
+        }
+      },
+      {
+        "id": "screen_face_service_terminal",
+        "ko": "스크린 얼굴 서비스 단말 로봇",
+        "en": "a screen-face service terminal robot",
+        "weight": 0.8,
+        "tags": [
+          "robot",
+          "screen",
+          "terminal"
+        ],
+        "kind": [
+          "robot",
+          "object"
+        ],
+        "aliases": [
+          "screen-face robot",
+          "display-face droid"
+        ],
+        "keywords": [
+          "screen face",
+          "terminal robot",
+          "display face"
+        ],
+        "embedding_text": "robot identity carried by a display screen face, casing, status UI and terminal body rather than human skin",
+        "facets": {
+          "subject_kind": [
+            "robot"
+          ],
+          "robot_form": [
+            "screen_face_terminal"
+          ],
+          "robot_degree": [
+            "full_machine"
+          ],
+          "robot_proof_family": [
+            "display_face",
+            "surface_construction"
+          ],
+          "robot_metaphor": [
+            "tool",
+            "companion"
+          ]
+        }
+      },
+      {
+        "id": "voice_assistant_speaker_unit",
+        "ko": "음성 AI 스피커 유닛",
+        "en": "a voice assistant speaker unit",
+        "weight": 0.74,
+        "tags": [
+          "robot",
+          "ai",
+          "speaker"
+        ],
+        "kind": [
+          "robot",
+          "object"
+        ],
+        "aliases": [
+          "voice assistant unit",
+          "smart speaker robot"
+        ],
+        "keywords": [
+          "voice AI",
+          "smart speaker",
+          "disembodied assistant"
+        ],
+        "embedding_text": "robot concept reduced to disembodied voice, microphone ring, speaker grille, glowing status band and cloud-linked command system",
+        "facets": {
+          "subject_kind": [
+            "robot"
+          ],
+          "robot_form": [
+            "disembodied_voice_unit"
+          ],
+          "robot_degree": [
+            "disembodied_software"
+          ],
+          "robot_proof_family": [
+            "sensory_apparatus",
+            "data_network"
+          ],
+          "robot_metaphor": [
+            "tool",
+            "companion"
+          ]
+        }
+      },
+      {
+        "id": "piloted_combat_mecha",
+        "ko": "조종석이 있는 거대 메카",
+        "en": "a giant piloted mecha with visible cockpit",
+        "weight": 0.86,
+        "tags": [
+          "robot",
+          "mecha",
+          "cockpit"
+        ],
+        "kind": [
+          "robot",
+          "object"
+        ],
+        "aliases": [
+          "piloted mecha",
+          "giant robot"
+        ],
+        "keywords": [
+          "mecha",
+          "cockpit",
+          "giant robot",
+          "pilot"
+        ],
+        "embedding_text": "towering piloted mecha whose robot identity comes from giant scale, cockpit canopy, mechanical limbs, armor plates and human operator relationship",
+        "facets": {
+          "subject_kind": [
+            "robot"
+          ],
+          "robot_form": [
+            "piloted_mecha"
+          ],
+          "robot_degree": [
+            "full_machine"
+          ],
+          "robot_proof_family": [
+            "form_scale",
+            "power_command"
+          ],
+          "robot_metaphor": [
+            "weapon",
+            "body_extension"
+          ]
+        }
+      },
+      {
+        "id": "exposed_endoskeleton_android",
+        "ko": "노출된 엔도스켈레톤 안드로이드",
+        "en": "an android with exposed endoskeleton frame",
+        "weight": 0.82,
+        "tags": [
+          "robot",
+          "android",
+          "endoskeleton"
+        ],
+        "kind": [
+          "robot",
+          "human"
+        ],
+        "aliases": [
+          "exposed endoskeleton android",
+          "open-frame android"
+        ],
+        "keywords": [
+          "endoskeleton",
+          "actuator frame",
+          "robot skeleton"
+        ],
+        "embedding_text": "humanoid android with clean exposed endoskeleton, actuator rods, synthetic skin panels and open service seams without injury imagery",
+        "facets": {
+          "subject_kind": [
+            "robot"
+          ],
+          "robot_form": [
+            "exposed_endoskeleton"
+          ],
+          "robot_degree": [
+            "android_mimicry"
+          ],
+          "robot_proof_family": [
+            "deep_structural",
+            "surface_construction"
+          ],
+          "robot_condition": [
+            "mid_repair_disassembled"
+          ]
+        }
+      },
+      {
+        "id": "inflatable_care_robot",
+        "ko": "공압식 인플레이터블 케어 로봇",
+        "en": "an inflatable pneumatic care robot",
+        "weight": 0.7,
+        "tags": [
+          "robot",
+          "soft_robot",
+          "pneumatic"
+        ],
+        "kind": [
+          "robot",
+          "object"
+        ],
+        "aliases": [
+          "inflatable care robot",
+          "pneumatic soft robot"
+        ],
+        "keywords": [
+          "inflatable robot",
+          "pneumatic",
+          "soft robotics"
+        ],
+        "embedding_text": "soft pneumatic care robot with inflated vinyl body, seam lines, air valves and safe nonrigid movement",
+        "facets": {
+          "subject_kind": [
+            "robot"
+          ],
+          "robot_form": [
+            "inflatable_pneumatic",
+            "soft_liquid"
+          ],
+          "robot_degree": [
+            "full_machine"
+          ],
+          "robot_proof_family": [
+            "surface_construction",
+            "behavior_control"
+          ],
+          "robot_metaphor": [
+            "intimacy_care"
+          ]
+        }
+      },
+      {
+        "id": "theme_park_animatronic",
+        "ko": "테마파크 애니매트로닉",
+        "en": "a theme park animatronic figure",
+        "weight": 0.72,
+        "tags": [
+          "robot",
+          "animatronic",
+          "stage"
+        ],
+        "kind": [
+          "robot",
+          "object"
+        ],
+        "aliases": [
+          "animatronic figure",
+          "robot puppet"
+        ],
+        "keywords": [
+          "animatronic",
+          "puppet mechanism",
+          "stage robot"
+        ],
+        "embedding_text": "robot as staged animatronic performer with servo timing, artificial skin shell, puppet joints and entertainment choreography",
+        "facets": {
+          "subject_kind": [
+            "robot"
+          ],
+          "robot_form": [
+            "animatronic_puppet"
+          ],
+          "robot_degree": [
+            "android_mimicry"
+          ],
+          "robot_proof_family": [
+            "behavior_control",
+            "fabrication_origin"
+          ],
+          "robot_metaphor": [
+            "made_body",
+            "idol_oracle"
+          ]
+        }
+      },
+      {
+        "id": "single_camera_drone",
+        "ko": "단일 카메라 드론",
+        "en": "a single camera drone",
+        "weight": 0.82,
+        "tags": [
+          "robot",
+          "drone",
+          "camera"
+        ],
+        "kind": [
+          "robot",
+          "object"
+        ],
+        "aliases": [
+          "camera drone",
+          "single aerial drone"
+        ],
+        "keywords": [
+          "drone",
+          "aerial robot",
+          "rotor",
+          "camera gimbal"
+        ],
+        "embedding_text": "single aerial drone with rotors, camera gimbal, lidar sensors and hovering machine vision behavior",
+        "facets": {
+          "subject_kind": [
+            "robot"
+          ],
+          "robot_form": [
+            "aerial_single_drone"
+          ],
+          "robot_degree": [
+            "full_machine"
+          ],
+          "robot_proof_family": [
+            "sensory_apparatus",
+            "behavior_control"
+          ],
+          "robot_metaphor": [
+            "surveillance_panopticon"
+          ]
+        }
+      },
+      {
+        "id": "desk_companion_bot",
+        "ko": "책상 위 동반자 로봇",
+        "en": "a small desk companion robot",
+        "weight": 0.72,
+        "tags": [
+          "robot",
+          "companion",
+          "desktop"
+        ],
+        "kind": [
+          "robot",
+          "object"
+        ],
+        "aliases": [
+          "desk companion bot",
+          "desktop robot"
+        ],
+        "keywords": [
+          "companion robot",
+          "desktop bot",
+          "status display"
+        ],
+        "embedding_text": "small consumer companion robot on a desk with status face display, charging dock and responsive gaze behavior",
+        "facets": {
+          "subject_kind": [
+            "robot"
+          ],
+          "robot_form": [
+            "wearable_companion_bot"
+          ],
+          "robot_degree": [
+            "full_machine"
+          ],
+          "robot_proof_family": [
+            "display_face",
+            "power_command"
+          ],
+          "robot_metaphor": [
+            "companion",
+            "intimacy_care"
+          ]
+        }
+      },
+      {
+        "id": "precision_prosthetic_arm",
+        "ko": "정밀 의수 로봇 팔",
+        "en": "a precision robotic prosthetic arm",
+        "weight": 0.76,
+        "tags": [
+          "robot",
+          "prosthetic",
+          "cyborg"
+        ],
+        "kind": [
+          "robot",
+          "object"
+        ],
+        "aliases": [
+          "robotic prosthetic arm",
+          "precision prosthetic limb"
+        ],
+        "keywords": [
+          "prosthetic arm",
+          "robotic limb",
+          "servo fingers"
+        ],
+        "embedding_text": "robotic prosthetic arm as body extension with servo fingers, tactile sensors, carbon fiber socket and calibration markers",
+        "facets": {
+          "subject_kind": [
+            "robot"
+          ],
+          "robot_form": [
+            "prosthetic_limb_focus"
+          ],
+          "robot_degree": [
+            "minimal_implant"
+          ],
+          "robot_proof_family": [
+            "deep_structural",
+            "sensory_apparatus"
+          ],
+          "robot_metaphor": [
+            "body_extension"
+          ]
+        }
+      },
+      {
+        "id": "prosthetic_eye_cyborg",
+        "ko": "인공 눈을 가진 사이보그",
+        "en": "a cyborg with a prosthetic robotic eye",
+        "weight": 0.78,
+        "tags": [
+          "robot",
+          "cyborg",
+          "prosthetic_eye"
+        ],
+        "kind": [
+          "robot",
+          "human"
+        ],
+        "aliases": [
+          "prosthetic eye cyborg",
+          "sensor eye cyborg"
+        ],
+        "keywords": [
+          "cyborg eye",
+          "prosthetic eye",
+          "sensor array"
+        ],
+        "embedding_text": "partial cyborg whose robot layer is concentrated in a visible prosthetic eye, micro lenses, calibration reticle and neural port",
+        "facets": {
+          "subject_kind": [
+            "robot"
+          ],
+          "robot_form": [
+            "prosthetic_limb_focus"
+          ],
+          "robot_degree": [
+            "minimal_implant"
+          ],
+          "robot_proof_family": [
+            "sensory_apparatus"
+          ],
+          "robot_metaphor": [
+            "body_extension",
+            "uncanny_valley"
+          ]
+        }
+      },
+      {
+        "id": "agricultural_field_robot",
+        "ko": "농업용 필드 로봇",
+        "en": "an agricultural field robot",
+        "weight": 0.78,
+        "tags": [
+          "robot",
+          "agriculture",
+          "field"
+        ],
+        "kind": [
+          "robot",
+          "object"
+        ],
+        "aliases": [
+          "field robot",
+          "agricultural robot"
+        ],
+        "keywords": [
+          "agricultural robot",
+          "crop scanner",
+          "autonomous field unit"
+        ],
+        "embedding_text": "autonomous agricultural robot with crop sensors, mud-worn wheels, sprayer arm and row-following machine behavior",
+        "facets": {
+          "subject_kind": [
+            "robot"
+          ],
+          "robot_form": [
+            "autonomous_vehicle"
+          ],
+          "robot_degree": [
+            "full_machine"
+          ],
+          "robot_proof_family": [
+            "behavior_control",
+            "wear_decay"
+          ],
+          "robot_condition": [
+            "field_worn_operational"
+          ],
+          "robot_metaphor": [
+            "robota_labor"
+          ]
+        }
+      },
+      {
+        "id": "delivery_courier_robot",
+        "ko": "배송 캐리어 로봇",
+        "en": "an autonomous delivery courier robot",
+        "weight": 0.78,
+        "tags": [
+          "robot",
+          "delivery",
+          "autonomous_vehicle"
+        ],
+        "kind": [
+          "robot",
+          "object"
+        ],
+        "aliases": [
+          "delivery robot",
+          "courier robot"
+        ],
+        "keywords": [
+          "delivery robot",
+          "autonomous courier",
+          "payload hatch",
+          "navigation lidar"
+        ],
+        "embedding_text": "street delivery robot with cargo hatch, lidar tower, asset tag and autonomous sidewalk navigation behavior",
+        "facets": {
+          "subject_kind": [
+            "robot"
+          ],
+          "robot_form": [
+            "autonomous_vehicle"
+          ],
+          "robot_degree": [
+            "full_machine"
+          ],
+          "robot_proof_family": [
+            "sensory_apparatus",
+            "behavior_control"
+          ],
+          "robot_metaphor": [
+            "tool",
+            "robota_labor"
+          ]
+        }
+      },
+      {
+        "id": "bartender_arm_robot",
+        "ko": "바텐더 로봇 팔",
+        "en": "a robotic bartender arm",
+        "weight": 0.74,
+        "tags": [
+          "robot",
+          "service",
+          "industrial_arm"
+        ],
+        "kind": [
+          "robot",
+          "object"
+        ],
+        "aliases": [
+          "bartender robot arm",
+          "service manipulator arm"
+        ],
+        "keywords": [
+          "robot arm",
+          "bartender robot",
+          "tool changer"
+        ],
+        "embedding_text": "fixed service robot arm performing precise drink preparation with tool changer, stainless joints and teach controller nearby",
+        "facets": {
+          "subject_kind": [
+            "robot"
+          ],
+          "robot_form": [
+            "fixed_installation"
+          ],
+          "robot_degree": [
+            "full_machine"
+          ],
+          "robot_proof_family": [
+            "deep_structural",
+            "behavior_control"
+          ],
+          "robot_metaphor": [
+            "robota_labor",
+            "tool"
+          ]
+        }
+      },
+      {
+        "id": "disaster_search_robot",
+        "ko": "재난 수색 로봇",
+        "en": "a disaster search robot",
+        "weight": 0.8,
+        "tags": [
+          "robot",
+          "rescue",
+          "crawler"
+        ],
+        "kind": [
+          "robot",
+          "object"
+        ],
+        "aliases": [
+          "search and rescue robot",
+          "crawler rescue robot"
+        ],
+        "keywords": [
+          "rescue robot",
+          "tracked crawler",
+          "thermal sensor"
+        ],
+        "embedding_text": "field-worn disaster search robot with tracks, thermal camera, dust, rescue markings and remote inspection posture",
+        "facets": {
+          "subject_kind": [
+            "robot"
+          ],
+          "robot_form": [
+            "zoomorphic_nonhumanoid"
+          ],
+          "robot_degree": [
+            "full_machine"
+          ],
+          "robot_proof_family": [
+            "sensory_apparatus",
+            "wear_decay"
+          ],
+          "robot_condition": [
+            "field_worn_operational"
+          ]
+        }
+      },
+      {
+        "id": "rusted_decommissioned_android",
+        "ko": "녹슨 폐기 안드로이드",
+        "en": "a rusted decommissioned android",
+        "weight": 0.78,
+        "tags": [
+          "robot",
+          "android",
+          "rust"
+        ],
+        "kind": [
+          "robot",
+          "human"
+        ],
+        "aliases": [
+          "decommissioned android",
+          "rusted android"
+        ],
+        "keywords": [
+          "decommissioned robot",
+          "rust",
+          "powered down",
+          "obsolete android"
+        ],
+        "embedding_text": "decommissioned android with rusted casing, missing panels, asset tag, dust cover and powered-down stillness, framed as obsolete manufactured body",
+        "facets": {
+          "subject_kind": [
+            "robot"
+          ],
+          "robot_form": [
+            "humanoid_android"
+          ],
+          "robot_degree": [
+            "android_mimicry"
+          ],
+          "robot_proof_family": [
+            "wear_decay",
+            "fabrication_origin"
+          ],
+          "robot_condition": [
+            "decommissioned_abandoned"
+          ],
+          "robot_metaphor": [
+            "obsolescence_replacement",
+            "mortality_shutdown"
+          ]
+        }
+      },
+      {
+        "id": "mass_production_line_clone_unit",
+        "ko": "양산 라인 복제 안드로이드",
+        "en": "a mass-production line clone android unit",
+        "weight": 0.8,
+        "tags": [
+          "robot",
+          "factory",
+          "clone"
+        ],
+        "kind": [
+          "robot",
+          "human"
+        ],
+        "aliases": [
+          "clone android unit",
+          "mass-produced android"
+        ],
+        "keywords": [
+          "mass production",
+          "android clone",
+          "assembly line",
+          "serial unit"
+        ],
+        "embedding_text": "identical android units on a factory line with serial plates, calibration targets and manufactured copy repetition",
+        "facets": {
+          "subject_kind": [
+            "robot"
+          ],
+          "robot_form": [
+            "humanoid_android"
+          ],
+          "robot_degree": [
+            "android_mimicry"
+          ],
+          "robot_proof_family": [
+            "fabrication_origin",
+            "behavior_control"
+          ],
+          "robot_metaphor": [
+            "made_body",
+            "mirror_of_humanity"
+          ]
+        }
+      },
+      {
+        "id": "clockwork_brass_automaton",
+        "ko": "태엽식 황동 자동인형",
+        "en": "a clockwork brass automaton",
+        "weight": 0.76,
+        "tags": [
+          "robot",
+          "automaton",
+          "clockwork"
+        ],
+        "kind": [
+          "robot",
+          "object"
+        ],
+        "aliases": [
+          "clockwork automaton",
+          "brass automaton"
+        ],
+        "keywords": [
+          "clockwork",
+          "brass gears",
+          "automaton"
+        ],
+        "embedding_text": "historical automaton whose robot identity comes from visible brass gears, winding key, clockwork timing and ritualized artificial movement",
+        "facets": {
+          "subject_kind": [
+            "robot"
+          ],
+          "robot_form": [
+            "clockwork_mechanism",
+            "mythic_automaton"
+          ],
+          "robot_degree": [
+            "full_machine"
+          ],
+          "robot_proof_family": [
+            "deep_structural",
+            "fabrication_origin"
+          ],
+          "robot_metaphor": [
+            "mythic_artificial_life",
+            "creator_creature"
+          ]
+        }
+      },
+      {
+        "id": "combat_quadruped_robot",
+        "ko": "전술 사족 보행 로봇",
+        "en": "a tactical quadruped robot",
+        "weight": 0.8,
+        "tags": [
+          "robot",
+          "quadruped",
+          "tactical"
+        ],
+        "kind": [
+          "robot",
+          "object"
+        ],
+        "aliases": [
+          "combat quadruped robot",
+          "tactical robot dog"
+        ],
+        "keywords": [
+          "quadruped robot",
+          "tactical robot",
+          "sensor mast"
+        ],
+        "embedding_text": "nonhumanoid quadruped robot with tactical sensor mast, rugged casing, actuator legs and patrol behavior",
+        "facets": {
+          "subject_kind": [
+            "robot"
+          ],
+          "robot_form": [
+            "zoomorphic_nonhumanoid"
+          ],
+          "robot_degree": [
+            "full_machine"
+          ],
+          "robot_proof_family": [
+            "deep_structural",
+            "sensory_apparatus"
+          ],
+          "robot_metaphor": [
+            "weapon",
+            "surveillance_panopticon"
+          ]
+        }
       }
     ],
     "person_origin": [
@@ -82436,6 +84974,352 @@
         "for_any": [
           "human"
         ]
+      },
+      {
+        "id": "firmware_update_progress",
+        "ko": "펌웨어 업데이트 진행 중",
+        "en": "firmware update in progress",
+        "weight": 0.66,
+        "keywords": [
+          "firmware",
+          "update",
+          "in"
+        ],
+        "embedding_text": "robot paused while firmware update progress and status logs are visible",
+        "facets": {
+          "robot_proof_family": [
+            "data_network"
+          ],
+          "robot_condition": [
+            "mid_repair_disassembled"
+          ]
+        }
+      },
+      {
+        "id": "optical_calibration_routine",
+        "ko": "광학 센서 보정 루틴",
+        "en": "optical sensor calibration routine",
+        "weight": 0.66,
+        "keywords": [
+          "optical",
+          "sensor",
+          "calibration"
+        ],
+        "embedding_text": "robot performing optical calibration with reticles, lens alignment and diagnostic projection",
+        "facets": {
+          "robot_proof_family": [
+            "sensory_apparatus",
+            "behavior_control"
+          ]
+        }
+      },
+      {
+        "id": "panel_open_self_inspection",
+        "ko": "패널을 연 자가 점검",
+        "en": "self inspection with an open access panel",
+        "weight": 0.66,
+        "keywords": [
+          "self",
+          "inspection",
+          "with"
+        ],
+        "embedding_text": "robot opens a service panel for non-graphic self inspection, revealing manufactured electronics and actuator modules",
+        "facets": {
+          "robot_proof_family": [
+            "deep_structural",
+            "fabrication_origin"
+          ],
+          "robot_condition": [
+            "mid_repair_disassembled"
+          ]
+        }
+      },
+      {
+        "id": "sensor_sweep_scan",
+        "ko": "센서 스윕 스캔",
+        "en": "sensor sweep scan",
+        "weight": 0.66,
+        "keywords": [
+          "sensor",
+          "sweep",
+          "scan"
+        ],
+        "embedding_text": "machine pauses while lidar and lens arrays sweep the environment",
+        "facets": {
+          "robot_proof_family": [
+            "sensory_apparatus",
+            "behavior_control"
+          ]
+        }
+      },
+      {
+        "id": "error_state_freeze",
+        "ko": "오류 상태로 정지",
+        "en": "frozen in an error state",
+        "weight": 0.66,
+        "keywords": [
+          "frozen",
+          "in",
+          "an"
+        ],
+        "embedding_text": "robot frozen mid-action with visible error code and fail-safe posture",
+        "facets": {
+          "robot_proof_family": [
+            "display_face",
+            "power_command"
+          ],
+          "robot_condition": [
+            "powered_down_dormant"
+          ]
+        }
+      },
+      {
+        "id": "battery_critical_shutdown",
+        "ko": "배터리 부족 셧다운",
+        "en": "battery-critical shutdown",
+        "weight": 0.66,
+        "keywords": [
+          "battery",
+          "critical",
+          "shutdown"
+        ],
+        "embedding_text": "robot in low-power shutdown with fading status LEDs and charging contacts exposed",
+        "facets": {
+          "robot_proof_family": [
+            "power_command"
+          ],
+          "robot_condition": [
+            "powered_down_dormant"
+          ]
+        }
+      },
+      {
+        "id": "wireless_data_sync",
+        "ko": "무선 데이터 동기화",
+        "en": "wireless data synchronization",
+        "weight": 0.66,
+        "keywords": [
+          "wireless",
+          "data",
+          "synchronization"
+        ],
+        "embedding_text": "robot synchronizing with a network through visible data stream light and status interface",
+        "facets": {
+          "robot_proof_family": [
+            "data_network"
+          ]
+        }
+      },
+      {
+        "id": "reboot_flicker",
+        "ko": "재부팅 깜빡임",
+        "en": "reboot flicker",
+        "weight": 0.66,
+        "keywords": [
+          "reboot",
+          "flicker"
+        ],
+        "embedding_text": "robot face display and status LEDs flicker during reboot",
+        "facets": {
+          "robot_proof_family": [
+            "display_face",
+            "power_command"
+          ],
+          "robot_condition": [
+            "reactivated_legacy"
+          ]
+        }
+      },
+      {
+        "id": "arm_calibration_sweep",
+        "ko": "로봇 팔 보정 스윕",
+        "en": "robot arm calibration sweep",
+        "weight": 0.66,
+        "keywords": [
+          "robot",
+          "arm",
+          "calibration"
+        ],
+        "embedding_text": "robot manipulator sweeps through calibration markers with precise servo motion",
+        "facets": {
+          "robot_proof_family": [
+            "deep_structural",
+            "behavior_control"
+          ]
+        }
+      },
+      {
+        "id": "obstacle_avoidance_pause",
+        "ko": "장애물 회피 중 정지",
+        "en": "pausing during obstacle avoidance",
+        "weight": 0.66,
+        "keywords": [
+          "pausing",
+          "during",
+          "obstacle"
+        ],
+        "embedding_text": "autonomous robot pauses and recalculates around an obstacle with lidar scan dots visible",
+        "facets": {
+          "robot_proof_family": [
+            "sensory_apparatus",
+            "behavior_control"
+          ]
+        }
+      },
+      {
+        "id": "face_tracking_lock",
+        "ko": "얼굴 추적 락온",
+        "en": "face-tracking lock-on",
+        "weight": 0.66,
+        "keywords": [
+          "face",
+          "tracking",
+          "lock"
+        ],
+        "embedding_text": "robot camera gaze locks onto a face with tracking reticle and optical iris behavior",
+        "facets": {
+          "robot_proof_family": [
+            "sensory_apparatus",
+            "display_face"
+          ]
+        }
+      },
+      {
+        "id": "payload_pickup_motion",
+        "ko": "페이로드 픽업 동작",
+        "en": "payload pickup motion",
+        "weight": 0.66,
+        "keywords": [
+          "payload",
+          "pickup",
+          "motion"
+        ],
+        "embedding_text": "robot lifts or receives a payload with mechanically precise autonomous routine",
+        "facets": {
+          "robot_proof_family": [
+            "behavior_control"
+          ],
+          "robot_metaphor": [
+            "robota_labor"
+          ]
+        }
+      },
+      {
+        "id": "decommission_powerdown",
+        "ko": "폐기 전원 차단",
+        "en": "decommissioned powerdown",
+        "weight": 0.66,
+        "keywords": [
+          "decommissioned",
+          "powerdown"
+        ],
+        "embedding_text": "robot rests powered down with decommission tags, dust and inactive status lights",
+        "facets": {
+          "robot_proof_family": [
+            "wear_decay"
+          ],
+          "robot_condition": [
+            "decommissioned_abandoned"
+          ]
+        }
+      },
+      {
+        "id": "being_disassembled_on_bench",
+        "ko": "정비대 위에서 분해 중",
+        "en": "being disassembled on a repair bench",
+        "weight": 0.66,
+        "keywords": [
+          "being",
+          "disassembled",
+          "on"
+        ],
+        "embedding_text": "robot is non-graphically disassembled on a repair bench with panels, screws and modules laid out",
+        "facets": {
+          "robot_proof_family": [
+            "fabrication_origin",
+            "deep_structural"
+          ],
+          "robot_condition": [
+            "mid_repair_disassembled"
+          ]
+        }
+      },
+      {
+        "id": "kneeling_for_inspection",
+        "ko": "검사를 위해 무릎 꿇은 자세",
+        "en": "kneeling for inspection",
+        "weight": 0.66,
+        "keywords": [
+          "kneeling",
+          "for",
+          "inspection"
+        ],
+        "embedding_text": "humanoid robot kneels in a controlled inspection posture with service ports visible",
+        "facets": {
+          "robot_proof_family": [
+            "behavior_control",
+            "power_command"
+          ]
+        }
+      },
+      {
+        "id": "rotor_hover_scan",
+        "ko": "로터 호버 스캔",
+        "en": "rotor hover scan",
+        "weight": 0.66,
+        "keywords": [
+          "rotor",
+          "hover",
+          "scan"
+        ],
+        "embedding_text": "drone robot hovers with rotor blur while scanning with camera gimbal and lidar dots",
+        "facets": {
+          "robot_proof_family": [
+            "sensory_apparatus",
+            "behavior_control"
+          ]
+        }
+      },
+      {
+        "id": "serving_with_mechanical_precision",
+        "ko": "기계적으로 정밀한 서빙",
+        "en": "serving with mechanical precision",
+        "weight": 0.66,
+        "keywords": [
+          "serving",
+          "with",
+          "mechanical"
+        ],
+        "embedding_text": "service robot performs a social role with too-precise motion and visible servo timing",
+        "facets": {
+          "robot_proof_family": [
+            "behavior_control"
+          ],
+          "robot_metaphor": [
+            "robota_labor"
+          ]
+        }
+      },
+      {
+        "id": "repairing_own_open_panel",
+        "ko": "열린 패널을 스스로 수리",
+        "en": "repairing its own open panel",
+        "weight": 0.66,
+        "keywords": [
+          "repairing",
+          "its",
+          "own"
+        ],
+        "embedding_text": "robot reaches into its own access panel with tool fingers and diagnostics visible, non-graphic manufactured self-repair",
+        "facets": {
+          "robot_proof_family": [
+            "deep_structural",
+            "fabrication_origin"
+          ],
+          "robot_condition": [
+            "mid_repair_disassembled"
+          ]
+        }
       }
     ],
     "capture_context": [
@@ -82843,6 +85727,84 @@
         "requires_any_tags": [
           "forensic"
         ]
+      },
+      {
+        "id": "robot_qa_inspection_log",
+        "ko": "로봇 QA 검사 로그 사진",
+        "en": "robot QA inspection log photo",
+        "weight": 0.66,
+        "keywords": [
+          "robot",
+          "QA",
+          "inspection",
+          "log"
+        ],
+        "embedding_text": "robot QA inspection log photo as robot concept proof or scene anchor"
+      },
+      {
+        "id": "drone_flight_test_capture",
+        "ko": "드론 비행 테스트 캡처",
+        "en": "drone flight-test capture",
+        "weight": 0.66,
+        "keywords": [
+          "drone",
+          "flight",
+          "test",
+          "capture"
+        ],
+        "embedding_text": "drone flight-test capture as robot concept proof or scene anchor"
+      },
+      {
+        "id": "repair_manual_reference_shot",
+        "ko": "수리 매뉴얼 레퍼런스 샷",
+        "en": "repair manual reference shot",
+        "weight": 0.66,
+        "keywords": [
+          "repair",
+          "manual",
+          "reference",
+          "shot"
+        ],
+        "embedding_text": "repair manual reference shot as robot concept proof or scene anchor"
+      },
+      {
+        "id": "e_waste_survey_photo",
+        "ko": "전자폐기물 조사 사진",
+        "en": "e-waste survey photo",
+        "weight": 0.66,
+        "keywords": [
+          "e",
+          "waste",
+          "survey",
+          "photo"
+        ],
+        "embedding_text": "e-waste survey photo as robot concept proof or scene anchor"
+      },
+      {
+        "id": "museum_automaton_archive_shot",
+        "ko": "박물관 자동인형 아카이브 샷",
+        "en": "museum automaton archive shot",
+        "weight": 0.66,
+        "keywords": [
+          "museum",
+          "automaton",
+          "archive",
+          "shot"
+        ],
+        "embedding_text": "museum automaton archive shot as robot concept proof or scene anchor"
+      },
+      {
+        "id": "machine_vision_sensor_capture",
+        "ko": "머신비전 센서 캡처",
+        "en": "machine-vision sensor capture",
+        "weight": 0.66,
+        "keywords": [
+          "machine",
+          "vision",
+          "sensor",
+          "capture"
+        ],
+        "embedding_text": "machine-vision sensor capture as robot concept proof or scene anchor"
       }
     ],
     "prop": [
@@ -89605,6 +92567,304 @@
         "for_any": [
           "human"
         ]
+      },
+      {
+        "id": "lidar_dome_prop",
+        "ko": "라이다 돔",
+        "en": "lidar dome",
+        "weight": 0.66,
+        "keywords": [
+          "lidar",
+          "dome"
+        ],
+        "embedding_text": "raised lidar dome that marks autonomous machine perception",
+        "facets": {
+          "robot_proof_family": [
+            "sensory_apparatus"
+          ]
+        }
+      },
+      {
+        "id": "lens_array_eye_prop",
+        "ko": "렌즈 배열 눈",
+        "en": "lens array eye",
+        "weight": 0.66,
+        "keywords": [
+          "lens",
+          "array",
+          "eye"
+        ],
+        "embedding_text": "clustered lens-array eye as unmistakable robot sensory apparatus",
+        "facets": {
+          "robot_proof_family": [
+            "sensory_apparatus"
+          ]
+        }
+      },
+      {
+        "id": "coolant_line_prop",
+        "ko": "냉각수 라인",
+        "en": "coolant line",
+        "weight": 0.66,
+        "keywords": [
+          "coolant",
+          "line"
+        ],
+        "embedding_text": "visible coolant line and thermal-management tube inside robot casing",
+        "facets": {
+          "robot_proof_family": [
+            "deep_structural"
+          ]
+        }
+      },
+      {
+        "id": "exposed_wiring_harness_prop",
+        "ko": "노출 배선 하네스",
+        "en": "exposed wiring harness",
+        "weight": 0.66,
+        "keywords": [
+          "exposed",
+          "wiring",
+          "harness"
+        ],
+        "embedding_text": "organized exposed wiring harness showing manufactured internal systems",
+        "facets": {
+          "robot_proof_family": [
+            "deep_structural",
+            "fabrication_origin"
+          ]
+        }
+      },
+      {
+        "id": "circuit_board_panel_prop",
+        "ko": "회로 기판 패널",
+        "en": "circuit board panel",
+        "weight": 0.66,
+        "keywords": [
+          "circuit",
+          "board",
+          "panel"
+        ],
+        "embedding_text": "visible circuit board panel under a clean access hatch",
+        "facets": {
+          "robot_proof_family": [
+            "deep_structural",
+            "fabrication_origin"
+          ]
+        }
+      },
+      {
+        "id": "qr_asset_tag_prop",
+        "ko": "QR 자산 태그",
+        "en": "QR asset tag",
+        "weight": 0.66,
+        "keywords": [
+          "QR",
+          "asset",
+          "tag"
+        ],
+        "embedding_text": "QR asset tag linking the robot to inventory, ownership and fabrication origin",
+        "facets": {
+          "robot_proof_family": [
+            "fabrication_origin"
+          ]
+        }
+      },
+      {
+        "id": "manufacturer_logo_plate_prop",
+        "ko": "제조사 로고 플레이트",
+        "en": "manufacturer logo plate",
+        "weight": 0.66,
+        "keywords": [
+          "manufacturer",
+          "logo",
+          "plate"
+        ],
+        "embedding_text": "manufacturer plate and factory markings on the robot casing",
+        "facets": {
+          "robot_proof_family": [
+            "fabrication_origin"
+          ]
+        }
+      },
+      {
+        "id": "battery_pack_module_prop",
+        "ko": "탈착식 배터리 팩 모듈",
+        "en": "removable battery pack module",
+        "weight": 0.66,
+        "keywords": [
+          "removable",
+          "battery",
+          "pack"
+        ],
+        "embedding_text": "removable battery pack module that makes robot power dependency visible",
+        "facets": {
+          "robot_proof_family": [
+            "power_command"
+          ]
+        }
+      },
+      {
+        "id": "error_code_screen_prop",
+        "ko": "오류 코드 스크린",
+        "en": "error-code screen",
+        "weight": 0.66,
+        "keywords": [
+          "error",
+          "code",
+          "screen"
+        ],
+        "embedding_text": "small error-code screen displaying fault state or boot logs",
+        "facets": {
+          "robot_proof_family": [
+            "display_face",
+            "data_network"
+          ]
+        }
+      },
+      {
+        "id": "tool_changer_end_effector_prop",
+        "ko": "툴 체인저 엔드 이펙터",
+        "en": "tool-changer end effector",
+        "weight": 0.66,
+        "keywords": [
+          "tool",
+          "changer",
+          "end"
+        ],
+        "embedding_text": "robot arm end effector with interchangeable tool head",
+        "facets": {
+          "robot_proof_family": [
+            "deep_structural",
+            "behavior_control"
+          ]
+        }
+      },
+      {
+        "id": "disassembly_tray_parts_prop",
+        "ko": "분해 부품 트레이",
+        "en": "disassembly tray of robot parts",
+        "weight": 0.66,
+        "keywords": [
+          "disassembly",
+          "tray",
+          "of"
+        ],
+        "embedding_text": "tray of labeled robot panels, screws, modules and actuator parts beside the subject",
+        "facets": {
+          "robot_proof_family": [
+            "fabrication_origin"
+          ],
+          "robot_condition": [
+            "mid_repair_disassembled"
+          ]
+        }
+      },
+      {
+        "id": "antenna_array_prop",
+        "ko": "안테나 배열",
+        "en": "antenna array",
+        "weight": 0.66,
+        "keywords": [
+          "antenna",
+          "array"
+        ],
+        "embedding_text": "antenna array suggesting wireless command and data-network dependency",
+        "facets": {
+          "robot_proof_family": [
+            "data_network"
+          ]
+        }
+      },
+      {
+        "id": "oil_drip_pan_prop",
+        "ko": "오일 드립 팬",
+        "en": "oil drip pan",
+        "weight": 0.66,
+        "keywords": [
+          "oil",
+          "drip",
+          "pan"
+        ],
+        "embedding_text": "oil drip pan under robot chassis indicating mechanical wear and servicing",
+        "facets": {
+          "robot_proof_family": [
+            "wear_decay"
+          ]
+        }
+      },
+      {
+        "id": "dust_cover_sheet_prop",
+        "ko": "먼지 덮개 천",
+        "en": "dust cover sheet",
+        "weight": 0.66,
+        "keywords": [
+          "dust",
+          "cover",
+          "sheet"
+        ],
+        "embedding_text": "dust cover partly pulled back from a dormant robot body",
+        "facets": {
+          "robot_condition": [
+            "powered_down_dormant"
+          ],
+          "robot_proof_family": [
+            "wear_decay"
+          ]
+        }
+      },
+      {
+        "id": "pendant_teach_controller_prop",
+        "ko": "티치 펜던트 컨트롤러",
+        "en": "pendant teach controller",
+        "weight": 0.66,
+        "keywords": [
+          "pendant",
+          "teach",
+          "controller"
+        ],
+        "embedding_text": "handheld teach pendant controller tethered to a robot system",
+        "facets": {
+          "robot_proof_family": [
+            "power_command",
+            "behavior_control"
+          ]
+        }
+      },
+      {
+        "id": "projection_pedestal_prop",
+        "ko": "홀로그램 투영 받침대",
+        "en": "hologram projection pedestal",
+        "weight": 0.66,
+        "keywords": [
+          "hologram",
+          "projection",
+          "pedestal"
+        ],
+        "embedding_text": "projection pedestal casting a robot or AI hologram into space",
+        "facets": {
+          "robot_proof_family": [
+            "display_face"
+          ]
+        }
+      },
+      {
+        "id": "smart_speaker_ring_prop",
+        "ko": "스마트 스피커 라이트 링",
+        "en": "smart speaker light ring",
+        "weight": 0.66,
+        "keywords": [
+          "smart",
+          "speaker",
+          "light"
+        ],
+        "embedding_text": "glowing smart-speaker ring that signals listening state and voice command interface",
+        "facets": {
+          "robot_proof_family": [
+            "display_face",
+            "data_network"
+          ]
+        }
       }
     ],
     "fetish_styling": [
@@ -94792,6 +98052,271 @@
         "embedding_text": "royal guard corridor with palace security",
         "phrase_en": "inside a royal guard corridor",
         "phrase_ko": "왕실 근위 복도에서"
+      },
+      {
+        "id": "hologram_projection_room",
+        "ko": "홀로그램 투영실",
+        "en": "a hologram projection room",
+        "weight": 0.66,
+        "keywords": [
+          "a",
+          "hologram",
+          "projection"
+        ],
+        "embedding_text": "dark projection room with volumetric light cones, glass, calibration dots and data displays",
+        "facets": {
+          "place_type": [
+            "laboratory"
+          ],
+          "lighting_family": [
+            "projection_light"
+          ]
+        }
+      },
+      {
+        "id": "drone_test_flight_hangar",
+        "ko": "드론 테스트 비행 격납고",
+        "en": "a drone test-flight hangar",
+        "weight": 0.66,
+        "keywords": [
+          "a",
+          "drone",
+          "test"
+        ],
+        "embedding_text": "indoor flight-test hangar with safety nets, calibration targets and hovering robot lanes",
+        "facets": {
+          "place_type": [
+            "industrial"
+          ],
+          "lighting_family": [
+            "machine_light"
+          ]
+        }
+      },
+      {
+        "id": "robot_repair_garage",
+        "ko": "로봇 수리 차고",
+        "en": "a robot repair garage",
+        "weight": 0.66,
+        "keywords": [
+          "a",
+          "robot",
+          "repair"
+        ],
+        "embedding_text": "repair garage filled with bench lights, spare actuator parts, hanging cables and diagnostic monitors",
+        "facets": {
+          "place_type": [
+            "repair",
+            "industrial"
+          ],
+          "mood_family": [
+            "clinical"
+          ]
+        }
+      },
+      {
+        "id": "e_waste_robot_graveyard",
+        "ko": "전자폐기물 로봇 폐기장",
+        "en": "an e-waste robot graveyard",
+        "weight": 0.66,
+        "keywords": [
+          "an",
+          "e",
+          "waste"
+        ],
+        "embedding_text": "e-waste yard with stacked robot shells, rust, asset tags, broken panels and sunset dust",
+        "facets": {
+          "place_type": [
+            "waste"
+          ],
+          "mood_family": [
+            "melancholic"
+          ]
+        }
+      },
+      {
+        "id": "automated_warehouse_aisle",
+        "ko": "자동화 창고 통로",
+        "en": "an automated warehouse aisle",
+        "weight": 0.66,
+        "keywords": [
+          "an",
+          "automated",
+          "warehouse"
+        ],
+        "embedding_text": "warehouse aisle with autonomous carts, barcode racks, floor markers and machine-routing lights",
+        "facets": {
+          "place_type": [
+            "warehouse"
+          ],
+          "mood_family": [
+            "operational"
+          ]
+        }
+      },
+      {
+        "id": "smart_home_robot_living_room",
+        "ko": "스마트홈 로봇 거실",
+        "en": "a smart-home robot living room",
+        "weight": 0.66,
+        "keywords": [
+          "a",
+          "smart",
+          "home"
+        ],
+        "embedding_text": "ordinary living room where speakers, cameras, dock stations and appliances behave as one robot system",
+        "facets": {
+          "place_type": [
+            "domestic",
+            "home"
+          ],
+          "mood_family": [
+            "intimate"
+          ]
+        }
+      },
+      {
+        "id": "agricultural_robot_greenhouse",
+        "ko": "농업 로봇 온실",
+        "en": "an agricultural robot greenhouse",
+        "weight": 0.66,
+        "keywords": [
+          "an",
+          "agricultural",
+          "robot"
+        ],
+        "embedding_text": "greenhouse rows with autonomous sprayers, crop sensors, damp tracks and status beacons",
+        "facets": {
+          "place_type": [
+            "agricultural"
+          ],
+          "mood_family": [
+            "operational"
+          ]
+        }
+      },
+      {
+        "id": "mech_cockpit_interior",
+        "ko": "메카 조종석 내부",
+        "en": "inside a mecha cockpit",
+        "weight": 0.66,
+        "keywords": [
+          "inside",
+          "a",
+          "mecha"
+        ],
+        "embedding_text": "tight cockpit interior with harness, HUD glass, mechanical controls and giant machine scale implied outside",
+        "facets": {
+          "place_type": [
+            "cockpit",
+            "transport"
+          ],
+          "lighting_family": [
+            "machine_light"
+          ]
+        }
+      },
+      {
+        "id": "robot_quality_inspection_bench",
+        "ko": "로봇 품질검사 벤치",
+        "en": "a robot quality-inspection bench",
+        "weight": 0.66,
+        "keywords": [
+          "a",
+          "robot",
+          "quality"
+        ],
+        "embedding_text": "factory QA bench with calibration targets, serial labels, inspection lights and module trays",
+        "facets": {
+          "place_type": [
+            "industrial",
+            "laboratory"
+          ],
+          "lighting_family": [
+            "diagnostic_light"
+          ]
+        }
+      },
+      {
+        "id": "data_center_cold_aisle",
+        "ko": "데이터센터 콜드 아일",
+        "en": "a data center cold aisle",
+        "weight": 0.66,
+        "keywords": [
+          "a",
+          "data",
+          "center"
+        ],
+        "embedding_text": "cold server aisle where robot mind or distributed AI appears as rack lights, cables and terminal interfaces",
+        "facets": {
+          "place_type": [
+            "infrastructure"
+          ],
+          "mood_family": [
+            "clinical"
+          ]
+        }
+      },
+      {
+        "id": "theme_park_animatronic_stage",
+        "ko": "애니매트로닉 무대",
+        "en": "a theme park animatronic stage",
+        "weight": 0.66,
+        "keywords": [
+          "a",
+          "theme",
+          "park"
+        ],
+        "embedding_text": "stage set with hidden rails, servo access doors, theatrical light and animatronic timing marks",
+        "facets": {
+          "place_type": [
+            "stage"
+          ],
+          "mood_family": [
+            "uncanny"
+          ]
+        }
+      },
+      {
+        "id": "disaster_rescue_site",
+        "ko": "재난 구조 현장",
+        "en": "a disaster rescue site",
+        "weight": 0.66,
+        "keywords": [
+          "a",
+          "disaster",
+          "rescue"
+        ],
+        "embedding_text": "dusty disaster site with rubble, safety cones, thermal search robots and command monitors",
+        "facets": {
+          "place_type": [
+            "disaster"
+          ],
+          "mood_family": [
+            "tense"
+          ]
+        }
+      },
+      {
+        "id": "ai_temple_machine_altar",
+        "ko": "AI 사원 기계 제단",
+        "en": "an AI temple machine altar",
+        "weight": 0.66,
+        "keywords": [
+          "an",
+          "AI",
+          "temple"
+        ],
+        "embedding_text": "ceremonial machine altar mixing server racks, votive LEDs, cables, incense and oracle screens",
+        "facets": {
+          "place_type": [
+            "temple",
+            "interior"
+          ],
+          "mood_family": [
+            "sacred"
+          ]
+        }
       }
     ],
     "world": [
@@ -95545,6 +99070,81 @@
           "erosion",
           "reclaimed room"
         ]
+      },
+      {
+        "id": "surveillance_state_world",
+        "ko": "감시국가 로봇 세계",
+        "en": "surveillance-state robot world",
+        "weight": 0.66,
+        "keywords": [
+          "surveillance",
+          "state",
+          "robot",
+          "world"
+        ],
+        "embedding_text": "surveillance-state robot world as robot concept proof or scene anchor"
+      },
+      {
+        "id": "automated_logistics_world",
+        "ko": "자동화 물류 세계",
+        "en": "automated logistics world",
+        "weight": 0.66,
+        "keywords": [
+          "automated",
+          "logistics",
+          "world"
+        ],
+        "embedding_text": "automated logistics world as robot concept proof or scene anchor"
+      },
+      {
+        "id": "e_waste_ruin_world",
+        "ko": "전자폐기물 유적 세계",
+        "en": "e-waste ruin world",
+        "weight": 0.66,
+        "keywords": [
+          "e",
+          "waste",
+          "ruin",
+          "world"
+        ],
+        "embedding_text": "e-waste ruin world as robot concept proof or scene anchor"
+      },
+      {
+        "id": "human_robot_coexistence_suburb",
+        "ko": "인간-로봇 공존 교외",
+        "en": "human-robot coexistence suburb",
+        "weight": 0.66,
+        "keywords": [
+          "human",
+          "robot",
+          "coexistence",
+          "suburb"
+        ],
+        "embedding_text": "human-robot coexistence suburb as robot concept proof or scene anchor"
+      },
+      {
+        "id": "mecha_defense_frontier",
+        "ko": "메카 방위 전선",
+        "en": "mecha defense frontier",
+        "weight": 0.66,
+        "keywords": [
+          "mecha",
+          "defense",
+          "frontier"
+        ],
+        "embedding_text": "mecha defense frontier as robot concept proof or scene anchor"
+      },
+      {
+        "id": "ai_temple_civilization",
+        "ko": "AI 사원 문명",
+        "en": "AI temple civilization",
+        "weight": 0.66,
+        "keywords": [
+          "AI",
+          "temple",
+          "civilization"
+        ],
+        "embedding_text": "AI temple civilization as robot concept proof or scene anchor"
       }
     ],
     "lighting": [
@@ -97023,6 +100623,79 @@
           "uncanny"
         ],
         "embedding_text": "small pulsing phone notification light near the hand or face"
+      },
+      {
+        "id": "repair_bay_worklight",
+        "ko": "수리 베이 작업등",
+        "en": "repair-bay worklight",
+        "weight": 0.66,
+        "keywords": [
+          "repair",
+          "bay",
+          "worklight"
+        ],
+        "embedding_text": "repair-bay worklight as robot concept proof or scene anchor"
+      },
+      {
+        "id": "hologram_underglow",
+        "ko": "홀로그램 언더글로우",
+        "en": "hologram underglow",
+        "weight": 0.66,
+        "keywords": [
+          "hologram",
+          "underglow"
+        ],
+        "embedding_text": "hologram underglow as robot concept proof or scene anchor"
+      },
+      {
+        "id": "warehouse_sodium_light",
+        "ko": "창고 나트륨등",
+        "en": "warehouse sodium light",
+        "weight": 0.66,
+        "keywords": [
+          "warehouse",
+          "sodium",
+          "light"
+        ],
+        "embedding_text": "warehouse sodium light as robot concept proof or scene anchor"
+      },
+      {
+        "id": "e_waste_dusk_ambient",
+        "ko": "전자폐기장 해질녘 주변광",
+        "en": "e-waste dusk ambient light",
+        "weight": 0.66,
+        "keywords": [
+          "e",
+          "waste",
+          "dusk",
+          "ambient"
+        ],
+        "embedding_text": "e-waste dusk ambient light as robot concept proof or scene anchor"
+      },
+      {
+        "id": "cockpit_instrument_glow",
+        "ko": "조종석 계기판 발광",
+        "en": "cockpit instrument glow",
+        "weight": 0.66,
+        "keywords": [
+          "cockpit",
+          "instrument",
+          "glow"
+        ],
+        "embedding_text": "cockpit instrument glow as robot concept proof or scene anchor"
+      },
+      {
+        "id": "ai_temple_candle_led_mix",
+        "ko": "촛불과 LED가 섞인 AI 사원 조명",
+        "en": "AI-temple candle and LED mixed light",
+        "weight": 0.66,
+        "keywords": [
+          "AI",
+          "temple",
+          "candle",
+          "and"
+        ],
+        "embedding_text": "AI-temple candle and LED mixed light as robot concept proof or scene anchor"
       }
     ],
     "light_direction": [
@@ -98167,6 +101840,68 @@
           "light_type"
         ],
         "embedding_text": "underworld red underlight"
+      },
+      {
+        "id": "holographic_volumetric_glow",
+        "ko": "홀로그램 볼류메트릭 글로우",
+        "en": "holographic volumetric glow",
+        "weight": 0.66,
+        "keywords": [
+          "holographic",
+          "volumetric",
+          "glow"
+        ],
+        "embedding_text": "holographic volumetric glow as robot concept proof or scene anchor"
+      },
+      {
+        "id": "lidar_dot_emission",
+        "ko": "라이다 점 발광",
+        "en": "lidar dot emission",
+        "weight": 0.66,
+        "keywords": [
+          "lidar",
+          "dot",
+          "emission"
+        ],
+        "embedding_text": "lidar dot emission as robot concept proof or scene anchor"
+      },
+      {
+        "id": "error_red_alert_glow",
+        "ko": "빨간 오류 경고 글로우",
+        "en": "red error-alert glow",
+        "weight": 0.66,
+        "keywords": [
+          "red",
+          "error",
+          "alert",
+          "glow"
+        ],
+        "embedding_text": "red error-alert glow as robot concept proof or scene anchor"
+      },
+      {
+        "id": "cooling_fan_blue_glow",
+        "ko": "냉각팬 블루 글로우",
+        "en": "blue cooling-fan glow",
+        "weight": 0.66,
+        "keywords": [
+          "blue",
+          "cooling",
+          "fan",
+          "glow"
+        ],
+        "embedding_text": "blue cooling-fan glow as robot concept proof or scene anchor"
+      },
+      {
+        "id": "screen_face_emission",
+        "ko": "스크린 얼굴 발광",
+        "en": "screen-face emission",
+        "weight": 0.66,
+        "keywords": [
+          "screen",
+          "face",
+          "emission"
+        ],
+        "embedding_text": "screen-face emission as robot concept proof or scene anchor"
       }
     ],
     "light_intensity": [
@@ -98999,6 +102734,82 @@
           "light"
         ],
         "embedding_text": "vertical palace window shadows like ceremonial bars"
+      },
+      {
+        "id": "lidar_scan_dot_pattern",
+        "ko": "라이다 스캔 점 패턴",
+        "en": "lidar scan dot pattern",
+        "weight": 0.66,
+        "keywords": [
+          "lidar",
+          "scan",
+          "dot",
+          "pattern"
+        ],
+        "embedding_text": "lidar scan dot pattern as robot concept proof or scene anchor"
+      },
+      {
+        "id": "volumetric_projection_cone",
+        "ko": "볼류메트릭 투영 콘",
+        "en": "volumetric projection cone",
+        "weight": 0.66,
+        "keywords": [
+          "volumetric",
+          "projection",
+          "cone"
+        ],
+        "embedding_text": "volumetric projection cone as robot concept proof or scene anchor"
+      },
+      {
+        "id": "hud_reticle_overlay_pattern",
+        "ko": "HUD 레티클 오버레이 패턴",
+        "en": "HUD reticle overlay pattern",
+        "weight": 0.66,
+        "keywords": [
+          "HUD",
+          "reticle",
+          "overlay",
+          "pattern"
+        ],
+        "embedding_text": "HUD reticle overlay pattern as robot concept proof or scene anchor"
+      },
+      {
+        "id": "boot_progress_bar_pattern",
+        "ko": "부팅 진행 바 패턴",
+        "en": "boot progress bar pattern",
+        "weight": 0.66,
+        "keywords": [
+          "boot",
+          "progress",
+          "bar",
+          "pattern"
+        ],
+        "embedding_text": "boot progress bar pattern as robot concept proof or scene anchor"
+      },
+      {
+        "id": "error_blink_pattern",
+        "ko": "오류 점멸 패턴",
+        "en": "error blink pattern",
+        "weight": 0.66,
+        "keywords": [
+          "error",
+          "blink",
+          "pattern"
+        ],
+        "embedding_text": "error blink pattern as robot concept proof or scene anchor"
+      },
+      {
+        "id": "data_stream_line_pattern",
+        "ko": "데이터 스트림 선 패턴",
+        "en": "data-stream line pattern",
+        "weight": 0.66,
+        "keywords": [
+          "data",
+          "stream",
+          "line",
+          "pattern"
+        ],
+        "embedding_text": "data-stream line pattern as robot concept proof or scene anchor"
       }
     ],
     "camera_type": [
@@ -99256,6 +103067,42 @@
           "photobooth",
           "korean_photobooth_booth"
         ]
+      },
+      {
+        "id": "lidar_sensor_view",
+        "ko": "라이다 센서 시점",
+        "en": "lidar sensor view",
+        "weight": 0.66,
+        "keywords": [
+          "lidar",
+          "sensor",
+          "view"
+        ],
+        "embedding_text": "lidar sensor view as robot concept proof or scene anchor"
+      },
+      {
+        "id": "inspection_macro_rig",
+        "ko": "검사용 매크로 리그",
+        "en": "inspection macro rig",
+        "weight": 0.66,
+        "keywords": [
+          "inspection",
+          "macro",
+          "rig"
+        ],
+        "embedding_text": "inspection macro rig as robot concept proof or scene anchor"
+      },
+      {
+        "id": "machine_vision_camera",
+        "ko": "머신비전 카메라",
+        "en": "machine-vision camera",
+        "weight": 0.66,
+        "keywords": [
+          "machine",
+          "vision",
+          "camera"
+        ],
+        "embedding_text": "machine-vision camera as robot concept proof or scene anchor"
       }
     ],
     "camera_direction": [
@@ -101567,6 +105414,123 @@
           "composition"
         ],
         "embedding_text": "viewer low as attendant serving princess"
+      },
+      {
+        "id": "lens_array_macro",
+        "ko": "렌즈 배열 매크로",
+        "en": "lens-array macro composition",
+        "weight": 0.66,
+        "keywords": [
+          "lens",
+          "array",
+          "macro",
+          "composition"
+        ],
+        "embedding_text": "lens-array macro composition as robot concept proof or scene anchor"
+      },
+      {
+        "id": "exposed_endoskeleton_full",
+        "ko": "노출 엔도스켈레톤 전신 구도",
+        "en": "full exposed-endoskeleton composition",
+        "weight": 0.66,
+        "keywords": [
+          "full",
+          "exposed",
+          "endoskeleton",
+          "composition"
+        ],
+        "embedding_text": "full exposed-endoskeleton composition as robot concept proof or scene anchor"
+      },
+      {
+        "id": "cockpit_over_shoulder",
+        "ko": "조종석 오버숄더 구도",
+        "en": "cockpit over-the-shoulder composition",
+        "weight": 0.66,
+        "keywords": [
+          "cockpit",
+          "over",
+          "the",
+          "shoulder"
+        ],
+        "embedding_text": "cockpit over-the-shoulder composition as robot concept proof or scene anchor"
+      },
+      {
+        "id": "parts_laid_flat_knolling",
+        "ko": "부품 플랫레이 노링 구도",
+        "en": "parts-laid-flat knolling composition",
+        "weight": 0.66,
+        "keywords": [
+          "parts",
+          "laid",
+          "flat",
+          "knolling"
+        ],
+        "embedding_text": "parts-laid-flat knolling composition as robot concept proof or scene anchor"
+      },
+      {
+        "id": "scale_human_beside_mecha",
+        "ko": "인간과 메카 스케일 비교 구도",
+        "en": "human beside mecha scale composition",
+        "weight": 0.66,
+        "keywords": [
+          "human",
+          "beside",
+          "mecha",
+          "scale"
+        ],
+        "embedding_text": "human beside mecha scale composition as robot concept proof or scene anchor"
+      },
+      {
+        "id": "hologram_through_glass",
+        "ko": "유리 너머 홀로그램 구도",
+        "en": "hologram through glass composition",
+        "weight": 0.66,
+        "keywords": [
+          "hologram",
+          "through",
+          "glass",
+          "composition"
+        ],
+        "embedding_text": "hologram through glass composition as robot concept proof or scene anchor"
+      },
+      {
+        "id": "repair_bench_topdown",
+        "ko": "수리 벤치 탑다운 구도",
+        "en": "top-down repair bench composition",
+        "weight": 0.66,
+        "keywords": [
+          "top",
+          "down",
+          "repair",
+          "bench"
+        ],
+        "embedding_text": "top-down repair bench composition as robot concept proof or scene anchor"
+      },
+      {
+        "id": "rust_detail_macro",
+        "ko": "녹슨 로봇 디테일 매크로",
+        "en": "rusted robot detail macro",
+        "weight": 0.66,
+        "keywords": [
+          "rusted",
+          "robot",
+          "detail",
+          "macro"
+        ],
+        "embedding_text": "rusted robot detail macro as robot concept proof or scene anchor"
+      },
+      {
+        "id": "screen_face_centered",
+        "ko": "스크린 얼굴 중앙 구도",
+        "en": "centered screen-face composition",
+        "weight": 0.66,
+        "keywords": [
+          "centered",
+          "screen",
+          "face",
+          "composition"
+        ],
+        "embedding_text": "centered screen-face composition as robot concept proof or scene anchor"
       }
     ],
     "subject_framing": [
@@ -102741,6 +106705,42 @@
           "portrait"
         ],
         "embedding_text": "Lensbaby-style edge blur with a sharp center"
+      },
+      {
+        "id": "lens_array_focus",
+        "ko": "렌즈 배열 초점",
+        "en": "lens-array focus",
+        "weight": 0.66,
+        "keywords": [
+          "lens",
+          "array",
+          "focus"
+        ],
+        "embedding_text": "lens-array focus as robot concept proof or scene anchor"
+      },
+      {
+        "id": "exposed_joint_focus",
+        "ko": "노출 관절 초점",
+        "en": "exposed joint focus",
+        "weight": 0.66,
+        "keywords": [
+          "exposed",
+          "joint",
+          "focus"
+        ],
+        "embedding_text": "exposed joint focus as robot concept proof or scene anchor"
+      },
+      {
+        "id": "screen_face_focus",
+        "ko": "스크린 얼굴 초점",
+        "en": "screen-face focus",
+        "weight": 0.66,
+        "keywords": [
+          "screen",
+          "face",
+          "focus"
+        ],
+        "embedding_text": "screen-face focus as robot concept proof or scene anchor"
       }
     ],
     "motion": [
@@ -103152,6 +107152,55 @@
           "camera",
           "candid"
         ]
+      },
+      {
+        "id": "rotor_blur_hover",
+        "ko": "호버링 로터 블러",
+        "en": "rotor blur hover",
+        "weight": 0.66,
+        "keywords": [
+          "rotor",
+          "blur",
+          "hover"
+        ],
+        "embedding_text": "rotor blur hover as robot concept proof or scene anchor"
+      },
+      {
+        "id": "servo_twitch_motion",
+        "ko": "서보 트위치 모션",
+        "en": "servo twitch motion",
+        "weight": 0.66,
+        "keywords": [
+          "servo",
+          "twitch",
+          "motion"
+        ],
+        "embedding_text": "servo twitch motion as robot concept proof or scene anchor"
+      },
+      {
+        "id": "assembly_arm_sweep_blur",
+        "ko": "조립 로봇 팔 스윕 블러",
+        "en": "assembly-arm sweep blur",
+        "weight": 0.66,
+        "keywords": [
+          "assembly",
+          "arm",
+          "sweep",
+          "blur"
+        ],
+        "embedding_text": "assembly-arm sweep blur as robot concept proof or scene anchor"
+      },
+      {
+        "id": "boot_flicker_motion",
+        "ko": "부팅 플리커 모션",
+        "en": "boot flicker motion",
+        "weight": 0.66,
+        "keywords": [
+          "boot",
+          "flicker",
+          "motion"
+        ],
+        "embedding_text": "boot flicker motion as robot concept proof or scene anchor"
       }
     ],
     "color": [
@@ -105131,6 +109180,110 @@
           "mood"
         ],
         "embedding_text": "incognito royal identity about to be discovered"
+      },
+      {
+        "id": "obsolete_melancholy",
+        "ko": "구식화된 멜랑콜리",
+        "en": "obsolete melancholy",
+        "weight": 0.66,
+        "keywords": [
+          "obsolete",
+          "melancholy"
+        ],
+        "embedding_text": "obsolete melancholy as robot concept proof or scene anchor"
+      },
+      {
+        "id": "surveilled_unease",
+        "ko": "감시받는 불안감",
+        "en": "surveilled unease",
+        "weight": 0.66,
+        "keywords": [
+          "surveilled",
+          "unease"
+        ],
+        "embedding_text": "surveilled unease as robot concept proof or scene anchor"
+      },
+      {
+        "id": "repair_focused_calm",
+        "ko": "수리에 집중한 차분함",
+        "en": "repair-focused calm",
+        "weight": 0.66,
+        "keywords": [
+          "repair",
+          "focused",
+          "calm"
+        ],
+        "embedding_text": "repair-focused calm as robot concept proof or scene anchor"
+      },
+      {
+        "id": "mass_production_anonymity",
+        "ko": "양산품 익명성",
+        "en": "mass-production anonymity",
+        "weight": 0.66,
+        "keywords": [
+          "mass",
+          "production",
+          "anonymity"
+        ],
+        "embedding_text": "mass-production anonymity as robot concept proof or scene anchor"
+      },
+      {
+        "id": "awe_of_scale",
+        "ko": "거대한 스케일의 경외감",
+        "en": "awe of scale",
+        "weight": 0.66,
+        "keywords": [
+          "awe",
+          "of",
+          "scale"
+        ],
+        "embedding_text": "awe of scale as robot concept proof or scene anchor"
+      },
+      {
+        "id": "dormant_stillness",
+        "ko": "휴면 상태의 정적",
+        "en": "dormant stillness",
+        "weight": 0.66,
+        "keywords": [
+          "dormant",
+          "stillness"
+        ],
+        "embedding_text": "dormant stillness as robot concept proof or scene anchor"
+      },
+      {
+        "id": "glitch_anxiety",
+        "ko": "글리치 불안감",
+        "en": "glitch anxiety",
+        "weight": 0.66,
+        "keywords": [
+          "glitch",
+          "anxiety"
+        ],
+        "embedding_text": "glitch anxiety as robot concept proof or scene anchor"
+      },
+      {
+        "id": "sacred_machine_reverence",
+        "ko": "신성한 기계 경외",
+        "en": "sacred machine reverence",
+        "weight": 0.66,
+        "keywords": [
+          "sacred",
+          "machine",
+          "reverence"
+        ],
+        "embedding_text": "sacred machine reverence as robot concept proof or scene anchor"
+      },
+      {
+        "id": "domestic_synthetic_warmth",
+        "ko": "가정적 합성 온기",
+        "en": "domestic synthetic warmth",
+        "weight": 0.66,
+        "keywords": [
+          "domestic",
+          "synthetic",
+          "warmth"
+        ],
+        "embedding_text": "domestic synthetic warmth as robot concept proof or scene anchor"
       }
     ],
     "surreal_concept": [
@@ -106549,6 +110702,130 @@
           "paper",
           "macro"
         ]
+      },
+      {
+        "id": "brushed_metal_grain_texture",
+        "ko": "브러시드 금속 결",
+        "en": "brushed metal grain texture",
+        "weight": 0.66,
+        "keywords": [
+          "brushed",
+          "metal",
+          "grain",
+          "texture"
+        ],
+        "embedding_text": "brushed metal grain texture as robot concept proof or scene anchor"
+      },
+      {
+        "id": "carbon_weave_texture",
+        "ko": "카본 직조 텍스처",
+        "en": "carbon weave texture",
+        "weight": 0.66,
+        "keywords": [
+          "carbon",
+          "weave",
+          "texture"
+        ],
+        "embedding_text": "carbon weave texture as robot concept proof or scene anchor"
+      },
+      {
+        "id": "rust_pitting_texture",
+        "ko": "녹 피팅 텍스처",
+        "en": "rust pitting texture",
+        "weight": 0.66,
+        "keywords": [
+          "rust",
+          "pitting",
+          "texture"
+        ],
+        "embedding_text": "rust pitting texture as robot concept proof or scene anchor"
+      },
+      {
+        "id": "mold_seam_line_texture",
+        "ko": "사출 금형 이음선 텍스처",
+        "en": "mold seam line texture",
+        "weight": 0.66,
+        "keywords": [
+          "mold",
+          "seam",
+          "line",
+          "texture"
+        ],
+        "embedding_text": "mold seam line texture as robot concept proof or scene anchor"
+      },
+      {
+        "id": "scratched_lacquer_texture",
+        "ko": "긁힌 래커 코팅 텍스처",
+        "en": "scratched lacquer coating texture",
+        "weight": 0.66,
+        "keywords": [
+          "scratched",
+          "lacquer",
+          "coating",
+          "texture"
+        ],
+        "embedding_text": "scratched lacquer coating texture as robot concept proof or scene anchor"
+      },
+      {
+        "id": "dust_film_texture",
+        "ko": "먼지 막 텍스처",
+        "en": "dust film texture",
+        "weight": 0.66,
+        "keywords": [
+          "dust",
+          "film",
+          "texture"
+        ],
+        "embedding_text": "dust film texture as robot concept proof or scene anchor"
+      },
+      {
+        "id": "oil_sheen_texture",
+        "ko": "오일 광택 텍스처",
+        "en": "oil sheen texture",
+        "weight": 0.66,
+        "keywords": [
+          "oil",
+          "sheen",
+          "texture"
+        ],
+        "embedding_text": "oil sheen texture as robot concept proof or scene anchor"
+      },
+      {
+        "id": "pixel_grid_screen_texture",
+        "ko": "픽셀 그리드 스크린 텍스처",
+        "en": "pixel grid screen texture",
+        "weight": 0.66,
+        "keywords": [
+          "pixel",
+          "grid",
+          "screen",
+          "texture"
+        ],
+        "embedding_text": "pixel grid screen texture as robot concept proof or scene anchor"
+      },
+      {
+        "id": "gear_teeth_texture",
+        "ko": "기어 톱니 텍스처",
+        "en": "gear teeth texture",
+        "weight": 0.66,
+        "keywords": [
+          "gear",
+          "teeth",
+          "texture"
+        ],
+        "embedding_text": "gear teeth texture as robot concept proof or scene anchor"
+      },
+      {
+        "id": "hologram_scanline_texture",
+        "ko": "홀로그램 스캔라인 텍스처",
+        "en": "hologram scanline texture",
+        "weight": 0.66,
+        "keywords": [
+          "hologram",
+          "scanline",
+          "texture"
+        ],
+        "embedding_text": "hologram scanline texture as robot concept proof or scene anchor"
       }
     ],
     "format": [
@@ -108917,6 +113194,65 @@
         "for_any": [
           "human"
         ]
+      },
+      {
+        "id": "sensor_visor_band",
+        "ko": "센서 바이저 밴드",
+        "en": "sensor visor band",
+        "weight": 0.66,
+        "keywords": [
+          "sensor",
+          "visor",
+          "band"
+        ],
+        "embedding_text": "sensor visor band as robot concept proof or scene anchor"
+      },
+      {
+        "id": "antenna_headset",
+        "ko": "안테나 헤드셋",
+        "en": "antenna headset",
+        "weight": 0.66,
+        "keywords": [
+          "antenna",
+          "headset"
+        ],
+        "embedding_text": "antenna headset as robot concept proof or scene anchor"
+      },
+      {
+        "id": "status_badge_led",
+        "ko": "상태 LED 배지",
+        "en": "status LED badge",
+        "weight": 0.66,
+        "keywords": [
+          "status",
+          "LED",
+          "badge"
+        ],
+        "embedding_text": "status LED badge as robot concept proof or scene anchor"
+      },
+      {
+        "id": "maintenance_qr_wristband",
+        "ko": "정비 QR 손목밴드",
+        "en": "maintenance QR wristband",
+        "weight": 0.66,
+        "keywords": [
+          "maintenance",
+          "QR",
+          "wristband"
+        ],
+        "embedding_text": "maintenance QR wristband as robot concept proof or scene anchor"
+      },
+      {
+        "id": "data_port_collar",
+        "ko": "데이터 포트 칼라",
+        "en": "data-port collar",
+        "weight": 0.66,
+        "keywords": [
+          "data",
+          "port",
+          "collar"
+        ],
+        "embedding_text": "data-port collar as robot concept proof or scene anchor"
       }
     ],
     "facial_hair": [
@@ -110284,6 +114620,200 @@
           "texture"
         ],
         "embedding_text": "velvet stage dust texture"
+      },
+      {
+        "id": "brushed_aluminum_panel_surface",
+        "ko": "브러시드 알루미늄 패널 표면",
+        "en": "brushed aluminum panel surface",
+        "weight": 0.66,
+        "keywords": [
+          "brushed",
+          "aluminum",
+          "panel"
+        ],
+        "embedding_text": "brushed aluminum robot casing with fine linear grain",
+        "facets": {
+          "robot_proof_family": [
+            "surface_construction"
+          ]
+        }
+      },
+      {
+        "id": "carbon_fiber_weave_surface",
+        "ko": "카본 파이버 직조 표면",
+        "en": "carbon fiber weave surface",
+        "weight": 0.66,
+        "keywords": [
+          "carbon",
+          "fiber",
+          "weave"
+        ],
+        "embedding_text": "carbon fiber weave used in robotic limbs, drones or mecha shells",
+        "facets": {
+          "robot_proof_family": [
+            "surface_construction"
+          ]
+        }
+      },
+      {
+        "id": "rusted_steel_panel_surface",
+        "ko": "녹슨 강철 패널 표면",
+        "en": "rusted steel panel surface",
+        "weight": 0.66,
+        "keywords": [
+          "rusted",
+          "steel",
+          "panel"
+        ],
+        "embedding_text": "rusted steel panel surface showing robot age, exposure and abandonment",
+        "facets": {
+          "robot_proof_family": [
+            "wear_decay"
+          ],
+          "robot_condition": [
+            "decommissioned_abandoned"
+          ]
+        }
+      },
+      {
+        "id": "injection_molded_plastic_surface",
+        "ko": "사출 플라스틱 외장 표면",
+        "en": "injection-molded plastic shell surface",
+        "weight": 0.66,
+        "keywords": [
+          "injection",
+          "molded",
+          "plastic"
+        ],
+        "embedding_text": "consumer robot shell with injection-molded plastic seams and screw caps",
+        "facets": {
+          "robot_proof_family": [
+            "fabrication_origin"
+          ]
+        }
+      },
+      {
+        "id": "anodized_titanium_surface",
+        "ko": "아노다이즈드 티타늄 표면",
+        "en": "anodized titanium surface",
+        "weight": 0.66,
+        "keywords": [
+          "anodized",
+          "titanium",
+          "surface"
+        ],
+        "embedding_text": "premium anodized titanium robot casing with precise machined edges",
+        "facets": {
+          "robot_proof_family": [
+            "surface_construction"
+          ]
+        }
+      },
+      {
+        "id": "glossy_white_consumer_shell_surface",
+        "ko": "글로시 화이트 소비자 로봇 외장",
+        "en": "glossy white consumer robot shell",
+        "weight": 0.66,
+        "keywords": [
+          "glossy",
+          "white",
+          "consumer"
+        ],
+        "embedding_text": "clean glossy white consumer robot shell with rounded panels and light seams",
+        "facets": {
+          "robot_proof_family": [
+            "surface_construction"
+          ]
+        }
+      },
+      {
+        "id": "inflatable_vinyl_skin_surface",
+        "ko": "인플레이터블 비닐 스킨 표면",
+        "en": "inflatable vinyl skin surface",
+        "weight": 0.66,
+        "keywords": [
+          "inflatable",
+          "vinyl",
+          "skin"
+        ],
+        "embedding_text": "inflated vinyl robotic skin with welded seams and soft pneumatic volume",
+        "facets": {
+          "robot_proof_family": [
+            "surface_construction"
+          ]
+        }
+      },
+      {
+        "id": "clockwork_brass_gear_surface",
+        "ko": "태엽 황동 기어 표면",
+        "en": "clockwork brass gear surface",
+        "weight": 0.66,
+        "keywords": [
+          "clockwork",
+          "brass",
+          "gear"
+        ],
+        "embedding_text": "visible brass clockwork gears and polished mechanical plates",
+        "facets": {
+          "robot_proof_family": [
+            "deep_structural"
+          ]
+        }
+      },
+      {
+        "id": "oil_stained_metal_surface",
+        "ko": "오일 얼룩 금속 표면",
+        "en": "oil-stained metal surface",
+        "weight": 0.66,
+        "keywords": [
+          "oil",
+          "stained",
+          "metal"
+        ],
+        "embedding_text": "oil-stained robot metal with service grime and field wear",
+        "facets": {
+          "robot_proof_family": [
+            "wear_decay"
+          ],
+          "robot_condition": [
+            "field_worn_operational"
+          ]
+        }
+      },
+      {
+        "id": "e_ink_display_panel_surface",
+        "ko": "전자잉크 디스플레이 패널 표면",
+        "en": "e-ink display panel surface",
+        "weight": 0.66,
+        "keywords": [
+          "e",
+          "ink",
+          "display"
+        ],
+        "embedding_text": "matte e-ink screen panel acting as robot face or status surface",
+        "facets": {
+          "robot_proof_family": [
+            "display_face"
+          ]
+        }
+      },
+      {
+        "id": "transparent_hologram_light_surface",
+        "ko": "투명 홀로그램 광막 표면",
+        "en": "transparent hologram light surface",
+        "weight": 0.66,
+        "keywords": [
+          "transparent",
+          "hologram",
+          "light"
+        ],
+        "embedding_text": "semi-transparent projected light surface made of scanlines and volumetric glow rather than matter",
+        "facets": {
+          "robot_proof_family": [
+            "display_face",
+            "data_network"
+          ]
+        }
       }
     ],
     "aesthetic_trend": [
@@ -115215,7 +119745,29 @@
           "로봇",
           "안드로이드",
           "사이보그",
-          "자동인형"
+          "자동인형",
+          "hologram robot",
+          "screen-face robot",
+          "voice AI unit",
+          "disembodied AI",
+          "mecha",
+          "drone robot",
+          "prosthetic cyborg",
+          "decommissioned robot",
+          "repair robot",
+          "domestic service robot",
+          "surveillance robot",
+          "홀로그램 로봇",
+          "스크린 얼굴 로봇",
+          "음성 AI",
+          "탈신체 AI",
+          "메카",
+          "드론 로봇",
+          "의수 로봇",
+          "폐기로봇",
+          "수리로봇",
+          "감시 로봇",
+          "기계 제단"
         ],
         "keywords": [
           "robot",
@@ -115234,10 +119786,27 @@
           "soft robot",
           "biohybrid",
           "nanobot",
-          "telepresence"
+          "telepresence",
+          "hologram",
+          "screen face",
+          "voice assistant",
+          "firmware",
+          "lidar",
+          "lens array",
+          "factory origin",
+          "decommissioned",
+          "repair bench",
+          "mecha cockpit",
+          "drone hover",
+          "prosthetic limb",
+          "machine vision",
+          "data stream",
+          "asset tag",
+          "end effector",
+          "AI temple"
         ],
         "axis_label": "robot/artificial being identity",
-        "axis_embedding_text": "robots and artificial beings across humanoid androids, cyborg bodies, nonhumanoid machines, soft liquid robots, swarm systems, biohybrid organisms, telepresence avatars, exoskeletons, sentient rooms, and mythic automata",
+        "axis_embedding_text": "robots and artificial beings across humanoid androids, cyborg bodies, nonhumanoid machines, soft liquid robots, swarm systems, biohybrid organisms, telepresence avatars, exoskeletons, sentient rooms, and mythic automata Expanded robot readings include disembodied software, holographic projection, screen-face terminals, voice assistants, mecha scale, drone autonomy, prosthetic augmentation, repair and decommission lifecycle, surveillance systems, domestic companion systems, industrial manipulators, fabrication origin, sensory apparatus, display faces and data-network proof.",
         "signal_lexicon": {
           "strong": [
             {
@@ -115273,6 +119842,60 @@
                 "ko",
                 "embedding_text"
               ]
+            },
+            {
+              "id": "robot_hologram_screen_voice",
+              "any_terms": [
+                "hologram robot",
+                "screen-face robot",
+                "voice AI",
+                "disembodied AI",
+                "projection pedestal",
+                "smart speaker robot"
+              ],
+              "boundary": false,
+              "match_fields": [
+                "id",
+                "en",
+                "ko",
+                "embedding_text"
+              ]
+            },
+            {
+              "id": "robot_lifecycle_repair_decay",
+              "any_terms": [
+                "repair bench",
+                "decommissioned robot",
+                "rusted android",
+                "e-waste",
+                "powered down",
+                "firmware update"
+              ],
+              "boundary": false,
+              "match_fields": [
+                "id",
+                "en",
+                "ko",
+                "embedding_text"
+              ]
+            },
+            {
+              "id": "robot_sensor_network",
+              "any_terms": [
+                "lidar",
+                "lens array",
+                "machine vision",
+                "data stream",
+                "antenna array",
+                "face tracking"
+              ],
+              "boundary": false,
+              "match_fields": [
+                "id",
+                "en",
+                "ko",
+                "embedding_text"
+              ]
             }
           ],
           "ambient": [
@@ -115293,6 +119916,23 @@
                 "en",
                 "embedding_text"
               ]
+            },
+            {
+              "id": "robot_social_system_terms",
+              "any_terms": [
+                "domestic robot",
+                "automated warehouse",
+                "surveillance state",
+                "AI temple",
+                "human-robot coexistence"
+              ],
+              "boundary": false,
+              "match_fields": [
+                "id",
+                "en",
+                "ko",
+                "embedding_text"
+              ]
             }
           ]
         },
@@ -115304,7 +119944,12 @@
           "texture": "robot surface or internal texture",
           "location": "robot environment",
           "light_shape": "diagnostic light geometry",
-          "mood": "artificial-being mood"
+          "mood": "artificial-being mood",
+          "capture_context": "robot evidence capture context",
+          "camera_type": "robot sensor or inspection camera register",
+          "focus": "robot proof focus plane",
+          "motion": "robot motion signature",
+          "wearable_accessory": "robot interface accessory"
         },
         "routed_slots": [
           "subject",
@@ -115317,7 +119962,12 @@
           "light_shape",
           "mood",
           "world",
-          "composition"
+          "composition",
+          "capture_context",
+          "camera_type",
+          "focus",
+          "motion",
+          "wearable_accessory"
         ],
         "steering_slots": [
           "subject",
@@ -115330,7 +119980,12 @@
           "light_shape",
           "mood",
           "world",
-          "composition"
+          "composition",
+          "capture_context",
+          "camera_type",
+          "focus",
+          "motion",
+          "wearable_accessory"
         ],
         "preset_policy": {
           "allow_ids": [
@@ -115351,7 +120006,18 @@
             "deepsea_space_ops_unit",
             "science_documentary",
             "cyberpunk_city",
-            "mecha_pilot_cosplay_portrait"
+            "mecha_pilot_cosplay_portrait",
+            "disembodied_ai_interface",
+            "robot_repair_workshop",
+            "decommissioned_robot_decay",
+            "giant_piloted_mecha",
+            "drone_aerial_unit",
+            "domestic_service_robot_home",
+            "surveillance_panopticon_scene",
+            "industrial_arm_factory_line",
+            "mass_production_clone_line",
+            "prosthetic_augment_portrait",
+            "ai_temple_oracle"
           ]
         },
         "slot_signals": {
@@ -115376,7 +120042,26 @@
               "autonomous_vehicle_entity",
               "ceramic_automaton_figure",
               "bronze_guardian_automaton",
-              "surveillance_sentinel_node"
+              "surveillance_sentinel_node",
+              "holographic_assistant_projection",
+              "screen_face_service_terminal",
+              "voice_assistant_speaker_unit",
+              "piloted_combat_mecha",
+              "exposed_endoskeleton_android",
+              "inflatable_care_robot",
+              "theme_park_animatronic",
+              "single_camera_drone",
+              "desk_companion_bot",
+              "precision_prosthetic_arm",
+              "prosthetic_eye_cyborg",
+              "agricultural_field_robot",
+              "delivery_courier_robot",
+              "bartender_arm_robot",
+              "disaster_search_robot",
+              "rusted_decommissioned_android",
+              "mass_production_line_clone_unit",
+              "clockwork_brass_automaton",
+              "combat_quadruped_robot"
             ],
             "term_rules": {
               "ambient": {
@@ -115393,7 +120078,8 @@
                   "embedding_text"
                 ]
               }
-            }
+            },
+            "support": []
           },
           "action": {
             "core": [
@@ -115403,8 +120089,27 @@
               "synchronized_swarm_motion",
               "repetitive_assembly_task",
               "system_boot_sequence",
-              "present_empty_gaze_standby"
-            ]
+              "present_empty_gaze_standby",
+              "firmware_update_progress",
+              "optical_calibration_routine",
+              "panel_open_self_inspection",
+              "sensor_sweep_scan",
+              "error_state_freeze",
+              "battery_critical_shutdown",
+              "wireless_data_sync",
+              "reboot_flicker",
+              "arm_calibration_sweep",
+              "obstacle_avoidance_pause",
+              "face_tracking_lock",
+              "payload_pickup_motion",
+              "decommission_powerdown",
+              "being_disassembled_on_bench",
+              "kneeling_for_inspection",
+              "rotor_hover_scan",
+              "serving_with_mechanical_precision",
+              "repairing_own_open_panel"
+            ],
+            "support": []
           },
           "prop": {
             "core": [
@@ -115415,8 +120120,26 @@
               "diagnostic_readout_prop",
               "calibration_target_prop",
               "docking_contacts_prop",
-              "maintenance_tag_prop"
-            ]
+              "maintenance_tag_prop",
+              "lidar_dome_prop",
+              "lens_array_eye_prop",
+              "coolant_line_prop",
+              "exposed_wiring_harness_prop",
+              "circuit_board_panel_prop",
+              "qr_asset_tag_prop",
+              "manufacturer_logo_plate_prop",
+              "battery_pack_module_prop",
+              "error_code_screen_prop",
+              "tool_changer_end_effector_prop",
+              "disassembly_tray_parts_prop",
+              "antenna_array_prop",
+              "oil_drip_pan_prop",
+              "dust_cover_sheet_prop",
+              "pendant_teach_controller_prop",
+              "projection_pedestal_prop",
+              "smart_speaker_ring_prop"
+            ],
+            "support": []
           },
           "surface_material": {
             "core": [
@@ -115430,6 +120153,19 @@
               "woven_cable_fiber_surface",
               "bio_tissue_substrate_surface",
               "electroactive_responsive_surface"
+            ],
+            "support": [
+              "brushed_aluminum_panel_surface",
+              "carbon_fiber_weave_surface",
+              "rusted_steel_panel_surface",
+              "injection_molded_plastic_surface",
+              "anodized_titanium_surface",
+              "glossy_white_consumer_shell_surface",
+              "inflatable_vinyl_skin_surface",
+              "clockwork_brass_gear_surface",
+              "oil_stained_metal_surface",
+              "e_ink_display_panel_surface",
+              "transparent_hologram_light_surface"
             ]
           },
           "texture": {
@@ -115439,6 +120175,18 @@
               "porcelain_ceramic_glaze_texture",
               "liquid_metal_specular_texture",
               "woven_cable_fiber_texture"
+            ],
+            "support": [
+              "brushed_metal_grain_texture",
+              "carbon_weave_texture",
+              "rust_pitting_texture",
+              "mold_seam_line_texture",
+              "scratched_lacquer_texture",
+              "dust_film_texture",
+              "oil_sheen_texture",
+              "pixel_grid_screen_texture",
+              "gear_teeth_texture",
+              "hologram_scanline_texture"
             ]
           },
           "location": {
@@ -115446,7 +120194,20 @@
               "robot_charging_bay",
               "robot_assembly_line",
               "diagnostics_lab",
-              "orbital_station_interior"
+              "orbital_station_interior",
+              "hologram_projection_room",
+              "drone_test_flight_hangar",
+              "robot_repair_garage",
+              "e_waste_robot_graveyard",
+              "automated_warehouse_aisle",
+              "smart_home_robot_living_room",
+              "agricultural_robot_greenhouse",
+              "mech_cockpit_interior",
+              "robot_quality_inspection_bench",
+              "data_center_cold_aisle",
+              "theme_park_animatronic_stage",
+              "disaster_rescue_site",
+              "ai_temple_machine_altar"
             ],
             "support": [
               "industrial_mecha_hangar",
@@ -115463,14 +120224,28 @@
               "status_led_glow",
               "charging_indicator_glow",
               "scan_line_light"
+            ],
+            "support": [
+              "holographic_volumetric_glow",
+              "lidar_dot_emission",
+              "error_red_alert_glow",
+              "cooling_fan_blue_glow",
+              "screen_face_emission"
             ]
           },
           "light_shape": {
             "core": [
               "scan_grid_projection",
               "registration_crosshair",
-              "status_led_array_pattern"
-            ]
+              "status_led_array_pattern",
+              "lidar_scan_dot_pattern",
+              "volumetric_projection_cone",
+              "hud_reticle_overlay_pattern",
+              "boot_progress_bar_pattern",
+              "error_blink_pattern",
+              "data_stream_line_pattern"
+            ],
+            "support": []
           },
           "mood": {
             "core": [
@@ -115479,7 +120254,16 @@
               "clinical_machine"
             ],
             "support": [
-              "uncanny"
+              "uncanny",
+              "obsolete_melancholy",
+              "surveilled_unease",
+              "repair_focused_calm",
+              "mass_production_anonymity",
+              "awe_of_scale",
+              "dormant_stillness",
+              "glitch_anxiety",
+              "sacred_machine_reverence",
+              "domestic_synthetic_warmth"
             ]
           },
           "world": {
@@ -115491,7 +120275,13 @@
             "support": [
               "cyberpunk",
               "tech_noir",
-              "retro_futurism"
+              "retro_futurism",
+              "surveillance_state_world",
+              "automated_logistics_world",
+              "e_waste_ruin_world",
+              "human_robot_coexistence_suburb",
+              "mecha_defense_frontier",
+              "ai_temple_civilization"
             ]
           },
           "composition": {
@@ -115506,7 +120296,73 @@
               "medium_close",
               "frame_within_frame",
               "reflection",
-              "macro_detail"
+              "macro_detail",
+              "lens_array_macro",
+              "exposed_endoskeleton_full",
+              "cockpit_over_shoulder",
+              "parts_laid_flat_knolling",
+              "scale_human_beside_mecha",
+              "hologram_through_glass",
+              "repair_bench_topdown",
+              "rust_detail_macro",
+              "screen_face_centered"
+            ]
+          },
+          "lighting": {
+            "core": [],
+            "support": [
+              "repair_bay_worklight",
+              "hologram_underglow",
+              "warehouse_sodium_light",
+              "e_waste_dusk_ambient",
+              "cockpit_instrument_glow",
+              "ai_temple_candle_led_mix"
+            ]
+          },
+          "capture_context": {
+            "core": [],
+            "support": [
+              "robot_qa_inspection_log",
+              "drone_flight_test_capture",
+              "repair_manual_reference_shot",
+              "e_waste_survey_photo",
+              "museum_automaton_archive_shot",
+              "machine_vision_sensor_capture"
+            ]
+          },
+          "camera_type": {
+            "core": [],
+            "support": [
+              "lidar_sensor_view",
+              "inspection_macro_rig",
+              "machine_vision_camera"
+            ]
+          },
+          "focus": {
+            "core": [],
+            "support": [
+              "lens_array_focus",
+              "exposed_joint_focus",
+              "screen_face_focus"
+            ]
+          },
+          "motion": {
+            "core": [],
+            "support": [
+              "rotor_blur_hover",
+              "servo_twitch_motion",
+              "assembly_arm_sweep_blur",
+              "boot_flicker_motion"
+            ]
+          },
+          "wearable_accessory": {
+            "core": [],
+            "support": [
+              "sensor_visor_band",
+              "antenna_headset",
+              "status_badge_led",
+              "maintenance_qr_wristband",
+              "data_port_collar"
             ]
           }
         },
@@ -115581,6 +120437,85 @@
                 "ceramic_automaton_figure",
                 "bronze_guardian_automaton"
               ]
+            },
+            {
+              "terms": [
+                "홀로그램",
+                "hologram",
+                "projection",
+                "탈신체",
+                "disembodied"
+              ],
+              "ids": [
+                "holographic_assistant_projection",
+                "voice_assistant_speaker_unit"
+              ]
+            },
+            {
+              "terms": [
+                "스크린",
+                "screen face",
+                "terminal",
+                "display face"
+              ],
+              "ids": [
+                "screen_face_service_terminal"
+              ]
+            },
+            {
+              "terms": [
+                "메카",
+                "mecha",
+                "거대 로봇",
+                "pilot robot"
+              ],
+              "ids": [
+                "piloted_combat_mecha"
+              ]
+            },
+            {
+              "terms": [
+                "드론",
+                "drone",
+                "quadrotor"
+              ],
+              "ids": [
+                "single_camera_drone"
+              ]
+            },
+            {
+              "terms": [
+                "의수",
+                "prosthetic",
+                "cyborg eye",
+                "보철"
+              ],
+              "ids": [
+                "precision_prosthetic_arm",
+                "prosthetic_eye_cyborg"
+              ]
+            },
+            {
+              "terms": [
+                "폐기",
+                "decommissioned",
+                "rusted",
+                "obsolete"
+              ],
+              "ids": [
+                "rusted_decommissioned_android"
+              ]
+            },
+            {
+              "terms": [
+                "양산",
+                "mass production",
+                "clone",
+                "factory line"
+              ],
+              "ids": [
+                "mass_production_line_clone_unit"
+              ]
             }
           ],
           "prop": [
@@ -115598,6 +120533,44 @@
                 "diagnostic_readout_prop",
                 "wrist_port_charging_lead_prop"
               ]
+            },
+            {
+              "terms": [
+                "lidar",
+                "라이다",
+                "sensor",
+                "렌즈 배열"
+              ],
+              "ids": [
+                "lidar_dome_prop",
+                "lens_array_eye_prop"
+              ]
+            },
+            {
+              "terms": [
+                "수리",
+                "repair",
+                "분해",
+                "disassembly"
+              ],
+              "ids": [
+                "disassembly_tray_parts_prop",
+                "exposed_wiring_harness_prop",
+                "circuit_board_panel_prop"
+              ]
+            },
+            {
+              "terms": [
+                "제조",
+                "factory origin",
+                "asset tag",
+                "serial"
+              ],
+              "ids": [
+                "qr_asset_tag_prop",
+                "manufacturer_logo_plate_prop",
+                "serial_spec_plate_prop"
+              ]
             }
           ],
           "action": [
@@ -115614,6 +120587,88 @@
                 "present_empty_gaze_standby"
               ]
             }
+          ],
+          "location": [
+            {
+              "terms": [
+                "수리",
+                "repair workshop",
+                "repair bench"
+              ],
+              "ids": [
+                "robot_repair_garage",
+                "robot_quality_inspection_bench"
+              ]
+            },
+            {
+              "terms": [
+                "폐기",
+                "e-waste",
+                "graveyard",
+                "abandoned robot"
+              ],
+              "ids": [
+                "e_waste_robot_graveyard"
+              ]
+            },
+            {
+              "terms": [
+                "스마트홈",
+                "domestic robot",
+                "home robot"
+              ],
+              "ids": [
+                "smart_home_robot_living_room"
+              ]
+            },
+            {
+              "terms": [
+                "AI temple",
+                "기계 제단",
+                "oracle machine"
+              ],
+              "ids": [
+                "ai_temple_machine_altar"
+              ]
+            }
+          ],
+          "light_shape": [
+            {
+              "terms": [
+                "lidar",
+                "라이다",
+                "machine vision"
+              ],
+              "ids": [
+                "lidar_scan_dot_pattern",
+                "hud_reticle_overlay_pattern"
+              ]
+            },
+            {
+              "terms": [
+                "hologram",
+                "projection",
+                "data stream"
+              ],
+              "ids": [
+                "volumetric_projection_cone",
+                "data_stream_line_pattern"
+              ]
+            }
+          ],
+          "camera_type": [
+            {
+              "terms": [
+                "machine vision",
+                "sensor view",
+                "inspection"
+              ],
+              "ids": [
+                "machine_vision_camera",
+                "lidar_sensor_view",
+                "inspection_macro_rig"
+              ]
+            }
           ]
         },
         "coverage_repair": {
@@ -115624,7 +120679,13 @@
             "surface_material",
             "texture",
             "location",
-            "light_shape"
+            "light_shape",
+            "light_type",
+            "camera_type",
+            "focus",
+            "motion",
+            "capture_context",
+            "wearable_accessory"
           ],
           "anchor_ids": [
             "service_android_unit",
@@ -115632,7 +120693,21 @@
             "charging_tether_prop",
             "matte_synthetic_skin_pore",
             "scan_grid_projection",
-            "robot_charging_bay"
+            "robot_charging_bay",
+            "lidar_dome_prop",
+            "lens_array_eye_prop",
+            "exposed_wiring_harness_prop",
+            "error_code_screen_prop",
+            "robot_repair_garage",
+            "e_waste_robot_graveyard",
+            "holographic_assistant_projection",
+            "screen_face_service_terminal",
+            "piloted_combat_mecha",
+            "single_camera_drone",
+            "rusted_decommissioned_android",
+            "mass_production_line_clone_unit",
+            "lidar_scan_dot_pattern",
+            "hud_reticle_overlay_pattern"
           ],
           "min_anchors": 2
         }
@@ -117323,7 +122398,91 @@
           "soft_liquid_robot",
           "environment_as_robot_space",
           "maintenance_charging_bay",
-          "biohybrid_organism_subject"
+          "biohybrid_organism_subject",
+          "holographic_assistant_projection",
+          "screen_face_service_terminal",
+          "voice_assistant_speaker_unit",
+          "piloted_combat_mecha",
+          "exposed_endoskeleton_android",
+          "inflatable_care_robot",
+          "theme_park_animatronic",
+          "single_camera_drone",
+          "desk_companion_bot",
+          "precision_prosthetic_arm",
+          "prosthetic_eye_cyborg",
+          "agricultural_field_robot",
+          "delivery_courier_robot",
+          "bartender_arm_robot",
+          "disaster_search_robot",
+          "rusted_decommissioned_android",
+          "mass_production_line_clone_unit",
+          "clockwork_brass_automaton",
+          "combat_quadruped_robot",
+          "firmware_update_progress",
+          "optical_calibration_routine",
+          "panel_open_self_inspection",
+          "sensor_sweep_scan",
+          "error_state_freeze",
+          "battery_critical_shutdown",
+          "wireless_data_sync",
+          "reboot_flicker",
+          "arm_calibration_sweep",
+          "obstacle_avoidance_pause",
+          "face_tracking_lock",
+          "payload_pickup_motion",
+          "decommission_powerdown",
+          "being_disassembled_on_bench",
+          "kneeling_for_inspection",
+          "rotor_hover_scan",
+          "serving_with_mechanical_precision",
+          "repairing_own_open_panel",
+          "lidar_dome_prop",
+          "lens_array_eye_prop",
+          "coolant_line_prop",
+          "exposed_wiring_harness_prop",
+          "circuit_board_panel_prop",
+          "qr_asset_tag_prop",
+          "manufacturer_logo_plate_prop",
+          "battery_pack_module_prop",
+          "error_code_screen_prop",
+          "tool_changer_end_effector_prop",
+          "disassembly_tray_parts_prop",
+          "antenna_array_prop",
+          "oil_drip_pan_prop",
+          "dust_cover_sheet_prop",
+          "pendant_teach_controller_prop",
+          "projection_pedestal_prop",
+          "smart_speaker_ring_prop",
+          "hologram_projection_room",
+          "drone_test_flight_hangar",
+          "robot_repair_garage",
+          "e_waste_robot_graveyard",
+          "automated_warehouse_aisle",
+          "smart_home_robot_living_room",
+          "agricultural_robot_greenhouse",
+          "mech_cockpit_interior",
+          "robot_quality_inspection_bench",
+          "data_center_cold_aisle",
+          "theme_park_animatronic_stage",
+          "disaster_rescue_site",
+          "ai_temple_machine_altar",
+          "lidar_scan_dot_pattern",
+          "volumetric_projection_cone",
+          "hud_reticle_overlay_pattern",
+          "boot_progress_bar_pattern",
+          "error_blink_pattern",
+          "data_stream_line_pattern",
+          "disembodied_ai_interface",
+          "robot_repair_workshop",
+          "decommissioned_robot_decay",
+          "giant_piloted_mecha",
+          "drone_aerial_unit",
+          "domestic_service_robot_home",
+          "surveillance_panopticon_scene",
+          "industrial_arm_factory_line",
+          "mass_production_clone_line",
+          "prosthetic_augment_portrait",
+          "ai_temple_oracle"
         ],
         "ambient": [
           "matte_synthetic_skin_surface",
@@ -117347,7 +122506,84 @@
           "clinical_machine",
           "automated_machine_civilization",
           "distributed_ai_system_world",
-          "post_human_android_world"
+          "post_human_android_world",
+          "brushed_aluminum_panel_surface",
+          "carbon_fiber_weave_surface",
+          "rusted_steel_panel_surface",
+          "injection_molded_plastic_surface",
+          "anodized_titanium_surface",
+          "glossy_white_consumer_shell_surface",
+          "inflatable_vinyl_skin_surface",
+          "clockwork_brass_gear_surface",
+          "oil_stained_metal_surface",
+          "e_ink_display_panel_surface",
+          "transparent_hologram_light_surface",
+          "brushed_metal_grain_texture",
+          "carbon_weave_texture",
+          "rust_pitting_texture",
+          "mold_seam_line_texture",
+          "scratched_lacquer_texture",
+          "dust_film_texture",
+          "oil_sheen_texture",
+          "pixel_grid_screen_texture",
+          "gear_teeth_texture",
+          "hologram_scanline_texture",
+          "repair_bay_worklight",
+          "hologram_underglow",
+          "warehouse_sodium_light",
+          "e_waste_dusk_ambient",
+          "cockpit_instrument_glow",
+          "ai_temple_candle_led_mix",
+          "holographic_volumetric_glow",
+          "lidar_dot_emission",
+          "error_red_alert_glow",
+          "cooling_fan_blue_glow",
+          "screen_face_emission",
+          "lens_array_macro",
+          "exposed_endoskeleton_full",
+          "cockpit_over_shoulder",
+          "parts_laid_flat_knolling",
+          "scale_human_beside_mecha",
+          "hologram_through_glass",
+          "repair_bench_topdown",
+          "rust_detail_macro",
+          "screen_face_centered",
+          "obsolete_melancholy",
+          "surveilled_unease",
+          "repair_focused_calm",
+          "mass_production_anonymity",
+          "awe_of_scale",
+          "dormant_stillness",
+          "glitch_anxiety",
+          "sacred_machine_reverence",
+          "domestic_synthetic_warmth",
+          "surveillance_state_world",
+          "automated_logistics_world",
+          "e_waste_ruin_world",
+          "human_robot_coexistence_suburb",
+          "mecha_defense_frontier",
+          "ai_temple_civilization",
+          "robot_qa_inspection_log",
+          "drone_flight_test_capture",
+          "repair_manual_reference_shot",
+          "e_waste_survey_photo",
+          "museum_automaton_archive_shot",
+          "machine_vision_sensor_capture",
+          "lidar_sensor_view",
+          "inspection_macro_rig",
+          "machine_vision_camera",
+          "lens_array_focus",
+          "exposed_joint_focus",
+          "screen_face_focus",
+          "rotor_blur_hover",
+          "servo_twitch_motion",
+          "assembly_arm_sweep_blur",
+          "boot_flicker_motion",
+          "sensor_visor_band",
+          "antenna_headset",
+          "status_badge_led",
+          "maintenance_qr_wristband",
+          "data_port_collar"
         ]
       },
       "relationship_interaction": {
@@ -117516,7 +122752,26 @@
         "autonomous_vehicle_entity",
         "ceramic_automaton_figure",
         "bronze_guardian_automaton",
-        "surveillance_sentinel_node"
+        "surveillance_sentinel_node",
+        "holographic_assistant_projection",
+        "screen_face_service_terminal",
+        "voice_assistant_speaker_unit",
+        "piloted_combat_mecha",
+        "exposed_endoskeleton_android",
+        "inflatable_care_robot",
+        "theme_park_animatronic",
+        "single_camera_drone",
+        "desk_companion_bot",
+        "precision_prosthetic_arm",
+        "prosthetic_eye_cyborg",
+        "agricultural_field_robot",
+        "delivery_courier_robot",
+        "bartender_arm_robot",
+        "disaster_search_robot",
+        "rusted_decommissioned_android",
+        "mass_production_line_clone_unit",
+        "clockwork_brass_automaton",
+        "combat_quadruped_robot"
       ]
     },
     "location_tones": {
@@ -117620,6 +122875,30 @@
         "server_room",
         "laboratory",
         "biolab"
+      ],
+      "robot_repair": [
+        "robot_repair_garage",
+        "robot_quality_inspection_bench",
+        "diagnostics_lab"
+      ],
+      "robot_decay": [
+        "e_waste_robot_graveyard"
+      ],
+      "robot_domestic": [
+        "smart_home_robot_living_room",
+        "cozy_apartment"
+      ],
+      "robot_surveillance": [
+        "automated_warehouse_aisle",
+        "reflective_dark_corridor"
+      ],
+      "robot_mecha": [
+        "mech_cockpit_interior",
+        "orbital_station_interior"
+      ],
+      "robot_ai_temple": [
+        "ai_temple_machine_altar",
+        "data_center_cold_aisle"
       ]
     },
     "axis_signals": {
@@ -118055,7 +123334,26 @@
           "autonomous_vehicle_entity",
           "ceramic_automaton_figure",
           "bronze_guardian_automaton",
-          "surveillance_sentinel_node"
+          "surveillance_sentinel_node",
+          "holographic_assistant_projection",
+          "screen_face_service_terminal",
+          "voice_assistant_speaker_unit",
+          "piloted_combat_mecha",
+          "exposed_endoskeleton_android",
+          "inflatable_care_robot",
+          "theme_park_animatronic",
+          "single_camera_drone",
+          "desk_companion_bot",
+          "precision_prosthetic_arm",
+          "prosthetic_eye_cyborg",
+          "agricultural_field_robot",
+          "delivery_courier_robot",
+          "bartender_arm_robot",
+          "disaster_search_robot",
+          "rusted_decommissioned_android",
+          "mass_production_line_clone_unit",
+          "clockwork_brass_automaton",
+          "combat_quadruped_robot"
         ],
         "action": [
           "charging_docked",
@@ -118064,7 +123362,25 @@
           "synchronized_swarm_motion",
           "repetitive_assembly_task",
           "system_boot_sequence",
-          "present_empty_gaze_standby"
+          "present_empty_gaze_standby",
+          "firmware_update_progress",
+          "optical_calibration_routine",
+          "panel_open_self_inspection",
+          "sensor_sweep_scan",
+          "error_state_freeze",
+          "battery_critical_shutdown",
+          "wireless_data_sync",
+          "reboot_flicker",
+          "arm_calibration_sweep",
+          "obstacle_avoidance_pause",
+          "face_tracking_lock",
+          "payload_pickup_motion",
+          "decommission_powerdown",
+          "being_disassembled_on_bench",
+          "kneeling_for_inspection",
+          "rotor_hover_scan",
+          "serving_with_mechanical_precision",
+          "repairing_own_open_panel"
         ],
         "prop": [
           "serial_spec_plate_prop",
@@ -118074,7 +123390,24 @@
           "diagnostic_readout_prop",
           "calibration_target_prop",
           "docking_contacts_prop",
-          "maintenance_tag_prop"
+          "maintenance_tag_prop",
+          "lidar_dome_prop",
+          "lens_array_eye_prop",
+          "coolant_line_prop",
+          "exposed_wiring_harness_prop",
+          "circuit_board_panel_prop",
+          "qr_asset_tag_prop",
+          "manufacturer_logo_plate_prop",
+          "battery_pack_module_prop",
+          "error_code_screen_prop",
+          "tool_changer_end_effector_prop",
+          "disassembly_tray_parts_prop",
+          "antenna_array_prop",
+          "oil_drip_pan_prop",
+          "dust_cover_sheet_prop",
+          "pendant_teach_controller_prop",
+          "projection_pedestal_prop",
+          "smart_speaker_ring_prop"
         ],
         "surface_material": [
           "matte_synthetic_skin_surface",
@@ -118098,13 +123431,42 @@
         "light_shape": [
           "scan_grid_projection",
           "registration_crosshair",
-          "status_led_array_pattern"
+          "status_led_array_pattern",
+          "lidar_scan_dot_pattern",
+          "volumetric_projection_cone",
+          "hud_reticle_overlay_pattern",
+          "boot_progress_bar_pattern",
+          "error_blink_pattern",
+          "data_stream_line_pattern"
         ],
         "location": [
           "robot_charging_bay",
           "robot_assembly_line",
           "diagnostics_lab",
-          "orbital_station_interior"
+          "orbital_station_interior",
+          "hologram_projection_room",
+          "drone_test_flight_hangar",
+          "robot_repair_garage",
+          "e_waste_robot_graveyard",
+          "automated_warehouse_aisle",
+          "smart_home_robot_living_room",
+          "agricultural_robot_greenhouse",
+          "mech_cockpit_interior",
+          "robot_quality_inspection_bench",
+          "data_center_cold_aisle",
+          "theme_park_animatronic_stage",
+          "disaster_rescue_site",
+          "ai_temple_machine_altar"
+        ],
+        "camera_type": [
+          "lidar_sensor_view",
+          "inspection_macro_rig",
+          "machine_vision_camera"
+        ],
+        "focus": [
+          "lens_array_focus",
+          "exposed_joint_focus",
+          "screen_face_focus"
         ]
       },
       "robot_ambient": {
@@ -118114,31 +123476,112 @@
           "post_human_android_world",
           "cyberpunk",
           "tech_noir",
-          "retro_futurism"
+          "retro_futurism",
+          "surveillance_state_world",
+          "automated_logistics_world",
+          "e_waste_ruin_world",
+          "human_robot_coexistence_suburb",
+          "mecha_defense_frontier",
+          "ai_temple_civilization"
         ],
         "lighting": [
           "lab_led",
           "monitor_glow",
           "fluorescent",
-          "low_key"
+          "low_key",
+          "repair_bay_worklight",
+          "hologram_underglow",
+          "warehouse_sodium_light",
+          "e_waste_dusk_ambient",
+          "cockpit_instrument_glow",
+          "ai_temple_candle_led_mix"
         ],
         "light_type": [
           "calibration_projector_glow",
           "status_led_glow",
           "charging_indicator_glow",
-          "scan_line_light"
+          "scan_line_light",
+          "holographic_volumetric_glow",
+          "lidar_dot_emission",
+          "error_red_alert_glow",
+          "cooling_fan_blue_glow",
+          "screen_face_emission"
         ],
         "mood": [
           "synthetic_calm",
           "controlled_obedience",
           "clinical_machine",
-          "uncanny"
+          "uncanny",
+          "obsolete_melancholy",
+          "surveilled_unease",
+          "repair_focused_calm",
+          "mass_production_anonymity",
+          "awe_of_scale",
+          "dormant_stillness",
+          "glitch_anxiety",
+          "sacred_machine_reverence",
+          "domestic_synthetic_warmth"
         ],
         "composition": [
           "exposed_joint_detail_crop",
           "sensor_eye_macro",
           "segmented_limb_macro",
-          "swarm_repetition_grid"
+          "swarm_repetition_grid",
+          "lens_array_macro",
+          "exposed_endoskeleton_full",
+          "cockpit_over_shoulder",
+          "parts_laid_flat_knolling",
+          "scale_human_beside_mecha",
+          "hologram_through_glass",
+          "repair_bench_topdown",
+          "rust_detail_macro",
+          "screen_face_centered"
+        ],
+        "surface_material": [
+          "brushed_aluminum_panel_surface",
+          "carbon_fiber_weave_surface",
+          "rusted_steel_panel_surface",
+          "injection_molded_plastic_surface",
+          "anodized_titanium_surface",
+          "glossy_white_consumer_shell_surface",
+          "inflatable_vinyl_skin_surface",
+          "clockwork_brass_gear_surface",
+          "oil_stained_metal_surface",
+          "e_ink_display_panel_surface",
+          "transparent_hologram_light_surface"
+        ],
+        "texture": [
+          "brushed_metal_grain_texture",
+          "carbon_weave_texture",
+          "rust_pitting_texture",
+          "mold_seam_line_texture",
+          "scratched_lacquer_texture",
+          "dust_film_texture",
+          "oil_sheen_texture",
+          "pixel_grid_screen_texture",
+          "gear_teeth_texture",
+          "hologram_scanline_texture"
+        ],
+        "capture_context": [
+          "robot_qa_inspection_log",
+          "drone_flight_test_capture",
+          "repair_manual_reference_shot",
+          "e_waste_survey_photo",
+          "museum_automaton_archive_shot",
+          "machine_vision_sensor_capture"
+        ],
+        "motion": [
+          "rotor_blur_hover",
+          "servo_twitch_motion",
+          "assembly_arm_sweep_blur",
+          "boot_flicker_motion"
+        ],
+        "wearable_accessory": [
+          "sensor_visor_band",
+          "antenna_headset",
+          "status_badge_led",
+          "maintenance_qr_wristband",
+          "data_port_collar"
         ]
       },
       "relationship_interaction_strong": {
@@ -118302,7 +123745,26 @@
       "ceramic_automaton_figure": "object",
       "bronze_guardian_automaton": "object",
       "surveillance_sentinel_node": "object",
-      "sentient_room_system": "environment"
+      "sentient_room_system": "environment",
+      "holographic_assistant_projection": "human",
+      "screen_face_service_terminal": "object",
+      "voice_assistant_speaker_unit": "object",
+      "piloted_combat_mecha": "object",
+      "exposed_endoskeleton_android": "human",
+      "inflatable_care_robot": "object",
+      "theme_park_animatronic": "object",
+      "single_camera_drone": "object",
+      "desk_companion_bot": "object",
+      "precision_prosthetic_arm": "object",
+      "prosthetic_eye_cyborg": "human",
+      "agricultural_field_robot": "object",
+      "delivery_courier_robot": "object",
+      "bartender_arm_robot": "object",
+      "disaster_search_robot": "object",
+      "rusted_decommissioned_android": "human",
+      "mass_production_line_clone_unit": "human",
+      "clockwork_brass_automaton": "object",
+      "combat_quadruped_robot": "object"
     },
     "preset_domain_overrides": {
       "jewelry_macro_reflection": [
@@ -118550,6 +124012,50 @@
       "funeral_quiet_threshold": [
         "portrait",
         "documentary"
+      ],
+      "disembodied_ai_interface": [
+        "portrait",
+        "surreal"
+      ],
+      "robot_repair_workshop": [
+        "documentary",
+        "product"
+      ],
+      "decommissioned_robot_decay": [
+        "documentary",
+        "surreal"
+      ],
+      "giant_piloted_mecha": [
+        "documentary",
+        "surreal"
+      ],
+      "drone_aerial_unit": [
+        "documentary",
+        "product"
+      ],
+      "domestic_service_robot_home": [
+        "portrait",
+        "documentary"
+      ],
+      "surveillance_panopticon_scene": [
+        "documentary",
+        "urban"
+      ],
+      "industrial_arm_factory_line": [
+        "documentary",
+        "product"
+      ],
+      "mass_production_clone_line": [
+        "portrait",
+        "documentary"
+      ],
+      "prosthetic_augment_portrait": [
+        "portrait",
+        "beauty"
+      ],
+      "ai_temple_oracle": [
+        "portrait",
+        "surreal"
       ]
     },
     "slots": {
