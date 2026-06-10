@@ -6811,9 +6811,12 @@ def build_prompt_sections(
     sections["action"] = selected(
         (
             "action",
+            "procedure_step",
+            "duty_prop_state",
             "relational_action",
             "prop",
             "prop_direction",
+            "social_cue",
             "partner_role",
             "contact_point",
             "intent_state",
@@ -6827,23 +6830,27 @@ def build_prompt_sections(
         values.get("weather", ""),
         values.get("surface_material", ""),
         values.get("world", ""),
+        values.get("reflection_logic", ""),
     ]
     sections["camera"] = selected(
         (
             "camera_type",
             "capture_context",
             "viewer_position",
+            "camera_height",
             "camera_direction",
             "composition",
             "partner_framing",
             "gaze_target",
             "body_orientation",
             "proxemics",
+            "distance_narrative",
             "subject_framing",
             "body_framing",
             "lens",
             "focus",
             "motion",
+            "frame_anchor_medium",
         )
     )
     sections["lighting"] = selected(
@@ -6860,6 +6867,9 @@ def build_prompt_sections(
             "makeup_style",
             "costume_style",
             "fetish_styling",
+            "species_marker",
+            "transition_stage",
+            "sensory_focus",
             "surface_material",
             "texture",
             "format",
@@ -7189,6 +7199,59 @@ def choose_negative_entries(
     else:
         count = min(max(count, 1), len(negatives))
         entries = rng.sample(negatives, k=count)
+
+    def append_context_pool(pool_name: str) -> None:
+        seen = {localize(entry, "en") for entry in entries}
+        for entry in negative_pools.get(pool_name, []):
+            key = localize(entry, "en")
+            if key and key not in seen:
+                entries.append(entry)
+                seen.add(key)
+
+    if negative_pools:
+        screen_context = {
+            "screen",
+            "server",
+            "server_room",
+            "server_room_aisle",
+            "control",
+            "control_room",
+            "surveillance",
+            "surveillance_control_room",
+            "security_control_room",
+            "digital",
+            "ui",
+            "monitor",
+            "dashboard",
+            "anti_diagram_context",
+            "slot:frame_anchor_medium",
+        }
+        beastkin_context = {
+            "beastkin",
+            "beastkin_subject",
+            "species_marker",
+            "slot:species_marker",
+            "transition_stage",
+            "slot:transition_stage",
+            "human_animal_boundary",
+        }
+        uniform_context = {
+            "uniform",
+            "authority",
+            "safety_profile:uniformed_authority_profile",
+            "safety_profile:procedural_authority_profile",
+            "costume_style:police_uniform_costume",
+            "costume_style:nurse_uniform_costume",
+            "costume_style:covered_santa_fur_trim_costume",
+            "costume_style:bunny_girl_costume",
+        }
+        if context & screen_context or core_context & screen_context:
+            append_context_pool("anti_diagram")
+            append_context_pool("screen_workplace")
+        if context & beastkin_context or core_context & beastkin_context:
+            append_context_pool("anti_costume_shortcut")
+        if context & uniform_context or core_context & uniform_context:
+            append_context_pool("role_dignity")
 
     if include_surreal:
         seen = {localize(entry, "en") for entry in entries}

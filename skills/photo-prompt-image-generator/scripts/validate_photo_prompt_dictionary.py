@@ -939,6 +939,43 @@ def validate_concept_recipe_entry(
     validate_conditional_additional(label, recipe, by_slot, errors)
 
 
+def validate_species_variants(label: str, recipe: dict[str, Any], data: dict[str, Any], errors: list[str]) -> None:
+    config = recipe.get("species_variants")
+    if config is None:
+        return
+    if not isinstance(config, dict):
+        errors.append(f"{label}.species_variants: must be an object")
+        return
+    variants = config.get("variants", []) or []
+    if not isinstance(variants, list):
+        errors.append(f"{label}.species_variants.variants: must be a list")
+        return
+    allowed_tiers = {"default_safe", "guarded_safe", "opt_in"}
+    seen_ids: set[str] = set()
+    for index, variant in enumerate(variants):
+        variant_label = f"{label}.species_variants.variants[{index}]"
+        if not isinstance(variant, dict):
+            errors.append(f"{variant_label}: must be an object")
+            continue
+        variant_id = str(variant.get("id") or "").strip()
+        if not variant_id:
+            errors.append(f"{variant_label}.id: required")
+        elif variant_id in seen_ids:
+            errors.append(f"{variant_label}.id: duplicate id {variant_id}")
+        seen_ids.add(variant_id)
+        tier = str(variant.get("tier") or "default_safe")
+        if tier not in allowed_tiers:
+            errors.append(f"{variant_label}.tier: must be one of {sorted(allowed_tiers)}")
+        if tier == "opt_in" and not normalize_list(variant.get("aliases")):
+            errors.append(f"{variant_label}.aliases: opt_in variants require at least one alias")
+        if "weight" in variant:
+            try:
+                float(variant.get("weight"))
+            except (TypeError, ValueError):
+                errors.append(f"{variant_label}.weight: must be numeric")
+        validate_concept_recipe_entry(variant_label, variant, data, errors)
+
+
 def validate_concept_recipes(path: Path, data: dict[str, Any], errors: list[str]) -> None:
     if not path.exists():
         return
@@ -988,6 +1025,7 @@ def validate_concept_recipes(path: Path, data: dict[str, Any], errors: list[str]
                 continue
             label = f"concept_recipes.mixins.{mixin}"
             validate_concept_recipe_entry(label, recipe, data, errors)
+            validate_species_variants(label, recipe, data, errors)
             bundles = recipe.get("bundles", []) or []
             if bundles and not isinstance(bundles, list):
                 errors.append(f"{label}.bundles: must be a list")

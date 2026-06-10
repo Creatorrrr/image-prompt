@@ -797,12 +797,29 @@ def select_mixin_species_variant(
     for variant in variants:
         aliases = normalize_list(variant.get("aliases"))
         if any(alias and alias.lower() in lowered for alias in aliases):
-            return variant
+            selected = dict(variant)
+            if str(selected.get("tier") or "") == "opt_in":
+                selected["opt_in_activated"] = True
+                selected["activation"] = "alias"
+            return selected
 
-    weights = [max(float(variant.get("weight", 1) or 0), 0.0) for variant in variants]
+    excluded_default_families = set(normalize_list(species_config.get("excluded_default_families")))
+    selectable_variants = [
+        variant
+        for variant in variants
+        if str(variant.get("tier") or "") != "opt_in"
+        and str(variant.get("family") or variant.get("id") or "") not in excluded_default_families
+        and str(variant.get("id") or "") not in excluded_default_families
+    ]
+    if not selectable_variants:
+        selectable_variants = [
+            variant for variant in variants if str(variant.get("tier") or "") != "opt_in"
+        ] or variants
+
+    weights = [max(float(variant.get("weight", 1) or 0), 0.0) for variant in selectable_variants]
     total = sum(weights)
     if total <= 0:
-        return variants[0]
+        return selectable_variants[0]
 
     seed = option_value(args, "--seed") or ""
     stream = str(species_config.get("stream") or "species")
@@ -810,11 +827,11 @@ def select_mixin_species_variant(
     value = int(hashlib.sha256(token.encode("utf-8")).hexdigest()[:16], 16) / float(16**16)
     threshold = value * total
     running = 0.0
-    for variant, weight in zip(variants, weights):
+    for variant, weight in zip(selectable_variants, weights):
         running += weight
         if threshold <= running:
             return variant
-    return variants[-1]
+    return selectable_variants[-1]
 
 
 def split_forced_slot(raw: str) -> tuple[str, list[str]] | None:
@@ -1081,6 +1098,19 @@ def resolve_concepts(
                 additional_requirements.extend(normalize_list(weapon_cues.get(role)))
             species_variant = select_mixin_species_variant(concept, mixin, mixin_recipe, args)
             if species_variant:
+                species_variant_set = set_values_to_forced(species_variant.get("set"))
+                if species_variant_set:
+                    set_groups.append((species_variant_set, set()))
+                    soft_anchor_specs.extend(
+                        soft_anchor_specs_from_mapping(
+                            recipes,
+                            forced_sets_to_mapping(species_variant_set),
+                            species_variant,
+                            "mixin",
+                            explicit_user_set_slots,
+                        )
+                    )
+                    soft_min_anchor_candidates.append(soft_min_anchors_for_recipe(species_variant, 1))
                 additional_requirements.extend(normalize_list(species_variant.get("additional")))
                 soft_safety_requirements.extend(soft_safety_requirements_for_recipe(species_variant))
                 soft_salience_cues.extend(soft_salience_cues_for_recipe(species_variant))
@@ -1092,6 +1122,8 @@ def resolve_concepts(
                         "family": str(species_variant.get("family") or species_variant.get("id") or ""),
                         "tier": str(species_variant.get("tier") or ""),
                         "weight": species_variant.get("weight", 1),
+                        "opt_in_activated": bool(species_variant.get("opt_in_activated")),
+                        "activation": str(species_variant.get("activation") or "weighted"),
                     }
                 )
             if selected_bundle:

@@ -1645,8 +1645,8 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "아일릿 원희 사복 여친 회사원",
                 "사복 여친",
                 "casual_after_work_phone_report",
-                {"wardrobe_style": "hoodie_shorts_sneakers", "prop": "clear_case_smartphone"},
-                "after-work company fatigue",
+                {"wardrobe_style": "hoodie_shorts_sneakers", "prop": "slim_office_tablet_prop"},
+                "do not count a lanyard alone",
             ),
             (
                 "설윤 공주 회사원",
@@ -1666,8 +1666,22 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "아이유 고스로리 회사원",
                 "고스로리",
                 "gothic_lolita_office_records",
-                {"costume_style": "gothic_lolita_dress", "prop": "ornate_gothic_perfume_bottle"},
+                {"costume_style": "gothic_lolita_dress", "prop": "slim_office_tablet_prop"},
                 "corporate archive labor",
+            ),
+            (
+                "김채원 산타복 회사원",
+                "산타복",
+                "santa_year_end_event_admin",
+                {"costume_style": "covered_santa_fur_trim_costume", "prop": "gift_tag_ledger_prop"},
+                "year-end event checklist",
+            ),
+            (
+                "카즈하 운동복 회사원",
+                "운동복",
+                "sportswear_company_wellness_shift",
+                {"wardrobe_style": "covered_track_jacket_training_set", "prop": "stopwatch_training_prop"},
+                "do not replace the sportswear",
             ),
         ]
 
@@ -1695,8 +1709,12 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 self.assertEqual(selected_bundle["bundle_id"], expected_bundle)
                 self.assertNotEqual(selected_bundle["bundle_id"], "generic_badge_commute_routine")
                 self.assertIn("staff_lanyard_id", combined["wearable_accessory"])
-                self.assertIn("staff_lanyard_badge_prop", combined["prop"])
-                self.assertIn("security_access_card_prop", combined["prop"])
+                if expected_role == "사복 여친":
+                    self.assertEqual(combined["prop"], ["slim_office_tablet_prop"])
+                    self.assertIn("access card", joined)
+                else:
+                    self.assertIn("staff_lanyard_badge_prop", combined["prop"])
+                    self.assertIn("security_access_card_prop", combined["prop"])
                 self.assertTrue(
                     {"upper_body_framing", "waist_up_regalia_visible"} & set(combined["subject_framing"])
                 )
@@ -1708,6 +1726,21 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
 
                 for slot, expected_id in expected_slots.items():
                     self.assertIn(expected_id, combined[slot], slot)
+
+                if expected_role == "고스로리":
+                    self.assertNotIn("ornate_gothic_perfume_bottle", combined["prop"])
+                    self.assertIn("office tablet", joined)
+                    self.assertIn("perfume bottle", joined)
+                if expected_role == "사복 여친":
+                    self.assertNotIn("clear_case_smartphone", combined["prop"])
+                    self.assertNotIn("takeaway_coffee_cup", combined["prop"])
+                if expected_role == "산타복":
+                    self.assertNotIn("clean_blazer_trousers", combined.get("wardrobe_style", []))
+                    self.assertIn("do not replace the Santa outfit", joined)
+                if expected_role == "운동복":
+                    self.assertNotIn("clean_blazer_trousers", combined.get("wardrobe_style", []))
+                    self.assertIn("staff lanyard", joined)
+                    self.assertIn("track jacket", joined)
 
         reversed_order = self.run_wrapper_json(
             "--concept",
@@ -6387,6 +6420,141 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 self.assertIn("beastkin_species_specificity", priority_ids)
                 self.assertEqual(spec["dual_read_requirement"]["min_role_hits"], 2)
                 self.assertIn(requirement_text, "\n".join(payload["forward_args"]))
+
+    def test_perspective_concept_expansion_presets_slots_roles_and_mixins_are_registered(self):
+        preset_ids = {preset["id"] for preset in self.data["presets"]}
+        family_ids = {family["id"] for family in self.data.get("preset_families", [])}
+
+        self.assertTrue(
+            {
+                "fur_boundary_macro_portrait",
+                "bus_seat_distance_candid",
+                "id_check_counter_tension",
+                "shop_window_species_reflection",
+                "same_beastkin_three_scenes_series",
+                "police_traffic_control_documentary",
+                "santa_gift_logistics_warehouse",
+                "grocery_run_two_baskets_candid",
+                "costume_workshop_fitting_pins",
+                "server_room_human_scale_portrait",
+                "pov_hands_repairing_watch",
+            }.issubset(preset_ids)
+        )
+        self.assertTrue(
+            {
+                "beastkin_body_evidence_family",
+                "beastkin_social_otherness_family",
+                "beastkin_reflection_duality_family",
+                "procedural_duty_family",
+                "companion_daily_errand_family",
+                "bunny_stagecraft_family",
+                "anti_diagram_photo_anchor_family",
+                "first_person_task_pov_family",
+            }.issubset(family_ids)
+        )
+
+        expected_slots = {
+            "species_marker": {"snake_smooth_scale_neckline", "caprine_horizontal_pupil_small_horns"},
+            "transition_stage": {"boundary_stage_visible_skin_shift", "mid_shift_stage_opt_in"},
+            "social_cue": {"empty_adjacent_seat", "species_access_signage"},
+            "reflection_logic": {"species_truth_reflection", "cctv_other_self"},
+            "procedure_step": {"identity_verification", "safety_inspection"},
+            "duty_prop_state": {"checklist_half_ticked", "access_card_scanned"},
+            "frame_anchor_medium": {"single_camera_perspective", "screen_out_of_focus_anchor"},
+        }
+        for slot, ids in expected_slots.items():
+            with self.subTest(slot=slot):
+                self.assertTrue(ids.issubset({entry["id"] for entry in self.data["slots"][slot]}))
+
+        self.assertIn("anti_diagram", self.data["negative_prompt_pools"])
+        self.assertIn("anti_costume_shortcut", self.data["negative_prompt_pools"])
+
+        recipes = json.loads((SKILL_DIR / "assets" / "concept_recipes.json").read_text(encoding="utf-8"))
+        self.assertTrue(
+            {
+                "조향사",
+                "시계 수리공",
+                "문화재 복원가",
+                "수어 통역사",
+                "무대조명 디자이너",
+                "인형극사",
+            }.issubset(recipes["roles"])
+        )
+        self.assertTrue(
+            {
+                "파수꾼",
+                "이방인",
+                "중재자",
+                "목격자",
+                "직업적 완벽주의",
+                "사수-부사수",
+                "단골과 주인",
+            }.issubset(recipes["mixins"])
+        )
+
+    def test_beastkin_opt_in_species_are_alias_only_and_force_species_marker(self):
+        opt_in_seen = set()
+        for seed in range(1, 80):
+            concept = self.run_wrapper_json(
+                "--concept",
+                "수인",
+                "--selection-mode",
+                "rule",
+                "--seed",
+                str(seed),
+                "--explain-concept",
+            )["concepts"][0]
+            variants = concept["selected_species_variants"]
+            self.assertEqual(len(variants), 1)
+            if variants[0]["tier"] == "opt_in":
+                opt_in_seen.add(variants[0]["variant_id"])
+        self.assertEqual(opt_in_seen, set())
+
+        snake = self.run_wrapper_json(
+            "--concept",
+            "뱀 수인",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "11",
+            "--explain-concept",
+        )["concepts"][0]
+        self.assertEqual(snake["selected_species_variants"][0]["variant_id"], "snake_serpent")
+        self.assertEqual(snake["selected_species_variants"][0]["tier"], "opt_in")
+        self.assertTrue(snake["selected_species_variants"][0]["opt_in_activated"])
+        self.assertIn("snake_smooth_scale_neckline", snake["combined_forced_slots"]["species_marker"])
+
+    def test_anti_diagram_negative_pool_is_context_attached(self):
+        item = self.generate(
+            "server_room_human_scale_portrait",
+            seed=1510,
+            include_negative=True,
+            negative_count=3,
+        )
+
+        self.assertIn("diagram layout", item["negative_en"])
+        self.assertIn("floating UI panels", item["negative_en"])
+        self.assertIn("screen-only frontal close-up", item["negative_en"])
+
+    def test_new_perspective_slots_render_into_prompt(self):
+        item = self.generate(
+            "fur_boundary_macro_portrait",
+            seed=1511,
+            forced_choices={
+                "subject": ["beastkin_subject"],
+                "species_marker": ["canid_mobile_ears_tail_counterbalance"],
+                "transition_stage": ["boundary_stage_visible_skin_shift"],
+                "composition": ["body_part_evidence_crop"],
+                "safety_profile": ["beastkin_dignity_profile"],
+            },
+            include_negative=False,
+        )
+
+        prompt = item["prompt_en"]
+        self.assertIn("mobile canid ears and weighted tail balance", prompt)
+        self.assertIn("visible boundary-stage skin to trait shift", prompt)
+        self.assertIn("body-part evidence crop", prompt)
+        self.assertIn("beastkin dignity profile", prompt)
 
     def test_wide_archetype_presets_tags_roles_and_mixins_are_registered(self):
         preset_ids = {preset["id"] for preset in self.data["presets"]}

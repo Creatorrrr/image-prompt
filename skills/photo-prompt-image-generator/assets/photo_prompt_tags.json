@@ -1,6 +1,6 @@
 {
   "version": "1.14",
-  "description": "Photographic prompt dictionary with expanded concept-role, folklore, personality, season, era, digital-entity, and environmental-transformation coverage for semantic and recipe-driven prompt generation. Version 1.13 expands robot semantics with disembodied AI, screen-face terminals, sensory apparatus, fabrication origin, lifecycle wear/repair, drones, mecha, prosthetics, domestic systems, surveillance networks and AI-temple metaphors. Version 1.14 adds opt-in visible multi-subject relationship framing, visible in-frame partner roles, and a small-group documentary preset while preserving single-subject defaults.",
+  "description": "Photographic prompt dictionary with expanded concept-role, folklore, personality, season, era, digital-entity, and environmental-transformation coverage for semantic and recipe-driven prompt generation. Version 1.13 expands robot semantics with disembodied AI, screen-face terminals, sensory apparatus, fabrication origin, lifecycle wear/repair, drones, mecha, prosthetics, domestic systems, surveillance networks and AI-temple metaphors. Version 1.14 adds opt-in visible multi-subject relationship framing, visible in-frame partner roles, and a small-group documentary preset while preserving single-subject defaults. Version 1.15 adds perspective-rich beastkin evidence, procedural-duty, daily-errand, stagecraft, anti-diagram, POV-task, opt-in species, and expanded role/mixin coverage.",
   "facet_vocab": {
     "subject_kind": [
       "human",
@@ -864,6 +864,90 @@
       "ko": "로봇 스케일/메카 계열",
       "en": "robot scale and mecha family",
       "embedding_text": "single drones, desktop companion bots, human-scale androids, giant piloted mecha and environment-sized distributed robot bodies"
+    },
+    {
+      "id": "beastkin_body_evidence_family",
+      "ko": "beastkin body evidence family",
+      "en": "beastkin body evidence family",
+      "embedding_text": "close photographic evidence of beastkin anatomy"
+    },
+    {
+      "id": "beastkin_social_otherness_family",
+      "ko": "beastkin social otherness family",
+      "en": "beastkin social otherness family",
+      "embedding_text": "ordinary public spaces showing social othering of beastkin bodies"
+    },
+    {
+      "id": "beastkin_reflection_duality_family",
+      "ko": "beastkin reflection duality family",
+      "en": "beastkin reflection duality family",
+      "embedding_text": "mirrors windows water phones and CCTV revealing a second species self"
+    },
+    {
+      "id": "species_consistency_series_family",
+      "ko": "species consistency series family",
+      "en": "species consistency series family",
+      "embedding_text": "series photographs repeating the same beastkin species cues"
+    },
+    {
+      "id": "procedural_duty_family",
+      "ko": "procedural duty family",
+      "en": "procedural duty family",
+      "embedding_text": "professional role photography anchored by procedures and duty props"
+    },
+    {
+      "id": "companion_daily_errand_family",
+      "ko": "companion daily errand family",
+      "en": "companion daily errand family",
+      "embedding_text": "nonsexual daily companion scenes through errands and shared objects"
+    },
+    {
+      "id": "bunny_stagecraft_family",
+      "ko": "bunny stagecraft family",
+      "en": "bunny stagecraft family",
+      "embedding_text": "bunny identity reframed as backstage costume work and stage logistics"
+    },
+    {
+      "id": "anti_diagram_photo_anchor_family",
+      "ko": "anti-diagram photo anchor family",
+      "en": "anti-diagram photo anchor family",
+      "embedding_text": "screen server control and whiteboard scenes fixed as single photographs"
+    },
+    {
+      "id": "first_person_task_pov_family",
+      "ko": "first-person task POV family",
+      "en": "first-person task POV family",
+      "embedding_text": "hands-first point-of-view task photographs"
+    },
+    {
+      "id": "night_shift_workers_family",
+      "ko": "night shift workers family",
+      "en": "night shift workers family",
+      "embedding_text": "night-shift handover and quiet work documentary"
+    },
+    {
+      "id": "analog_communication_family",
+      "ko": "analog communication family",
+      "en": "analog communication family",
+      "embedding_text": "payphones letters radios tickets and paper traces"
+    },
+    {
+      "id": "weather_extreme_safety_family",
+      "ko": "weather extreme safety family",
+      "en": "weather extreme safety family",
+      "embedding_text": "rain snow heat and wind through public safety procedure"
+    },
+    {
+      "id": "craft_inheritance_family",
+      "ko": "craft inheritance family",
+      "en": "craft inheritance family",
+      "embedding_text": "apprentice and master workbenches with material handoff"
+    },
+    {
+      "id": "urban_wildlife_coexistence_family",
+      "ko": "urban wildlife coexistence family",
+      "en": "urban wildlife coexistence family",
+      "embedding_text": "city residents and real animals in documentary coexistence"
     }
   ],
   "recipes": [
@@ -68147,6 +68231,4611 @@
         }
       },
       "family": "urban_portrait_semantic"
+    },
+    {
+      "id": "fur_boundary_macro_portrait",
+      "ko": "fur boundary macro beastkin portrait",
+      "en": "fur boundary macro beastkin portrait",
+      "weight": 1.1,
+      "family": "beastkin_body_evidence_family",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "species_marker",
+        "transition_stage",
+        "subject_framing",
+        "safety_profile"
+      ],
+      "optional_slots": [
+        {
+          "slot": "texture",
+          "probability": 1.0
+        },
+        {
+          "slot": "sensory_focus",
+          "probability": 0.65
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "documentary_photo",
+            "photojournalism",
+            "magazine_feature",
+            "street_snapshot"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "documentary",
+            "portrait",
+            "street",
+            "photojournalism"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "overcast",
+            "fluorescent",
+            "rim_light",
+            "streetlamp"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "candid_imperfect",
+            "not_overdone"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "beastkin_subject"
+          ]
+        },
+        "action": {
+          "ids": [
+            "standing_silence"
+          ]
+        },
+        "location": {
+          "ids": [
+            "shop_window_after_hours",
+            "id_check_service_counter"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "body_part_evidence_crop",
+            "macro_detail",
+            "medium_close"
+          ]
+        },
+        "species_marker": {
+          "tags_any": [
+            "beastkin"
+          ]
+        },
+        "transition_stage": {
+          "ids": [
+            "boundary_stage_visible_skin_shift",
+            "prominent_stage_structural_body_trait"
+          ]
+        },
+        "subject_framing": {
+          "ids": [
+            "detail_crop_hands_accessories",
+            "upper_body_framing"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "fur_patch_skin_blend"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "weathered_endurance",
+            "social_othering_quiet_tension"
+          ]
+        },
+        "safety_profile": {
+          "ids": [
+            "beastkin_dignity_profile"
+          ]
+        }
+      }
+    },
+    {
+      "id": "ear_motion_sequence_portrait",
+      "ko": "ear-motion beastkin portrait",
+      "en": "ear-motion beastkin portrait",
+      "weight": 0.9,
+      "family": "beastkin_body_evidence_family",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "species_marker",
+        "transition_stage",
+        "motion",
+        "safety_profile"
+      ],
+      "optional_slots": [
+        {
+          "slot": "social_cue",
+          "probability": 0.8
+        },
+        {
+          "slot": "sensory_focus",
+          "probability": 0.8
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "documentary_photo",
+            "photojournalism",
+            "magazine_feature",
+            "street_snapshot"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "documentary",
+            "portrait",
+            "street",
+            "photojournalism"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "overcast",
+            "fluorescent",
+            "rim_light",
+            "streetlamp"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "candid_imperfect",
+            "not_overdone"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "beastkin_subject"
+          ]
+        },
+        "action": {
+          "ids": [
+            "standing_silence"
+          ]
+        },
+        "location": {
+          "ids": [
+            "city_bus_one_seat_gap",
+            "market_stare_documentary_lane"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "medium_close",
+            "frame_within_frame"
+          ]
+        },
+        "species_marker": {
+          "tags_any": [
+            "beastkin"
+          ]
+        },
+        "transition_stage": {
+          "ids": [
+            "trace_stage_trait_hint",
+            "boundary_stage_visible_skin_shift"
+          ]
+        },
+        "motion": {
+          "ids": [
+            "handheld_motion_blur",
+            "panning_blur"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "social_othering_quiet_tension",
+            "weathered_endurance"
+          ]
+        },
+        "safety_profile": {
+          "ids": [
+            "beastkin_dignity_profile"
+          ]
+        }
+      }
+    },
+    {
+      "id": "tail_weight_balance_portrait",
+      "ko": "tail counterbalance beastkin portrait",
+      "en": "tail counterbalance beastkin portrait",
+      "weight": 0.9,
+      "family": "beastkin_body_evidence_family",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "species_marker",
+        "transition_stage",
+        "composition",
+        "safety_profile"
+      ],
+      "optional_slots": [
+        {
+          "slot": "social_cue",
+          "probability": 0.9
+        },
+        {
+          "slot": "distance_narrative",
+          "probability": 0.8
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "documentary_photo",
+            "photojournalism",
+            "magazine_feature",
+            "street_snapshot"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "documentary",
+            "portrait",
+            "street",
+            "photojournalism"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "overcast",
+            "fluorescent",
+            "rim_light",
+            "streetlamp"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "candid_imperfect",
+            "not_overdone"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "beastkin_subject"
+          ]
+        },
+        "action": {
+          "ids": [
+            "standing_silence"
+          ]
+        },
+        "location": {
+          "ids": [
+            "subway_car_inside",
+            "city_bus_one_seat_gap"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "tail_counterbalance_pose_frame",
+            "medium_close"
+          ]
+        },
+        "species_marker": {
+          "ids": [
+            "canid_mobile_ears_tail_counterbalance",
+            "feline_reflective_eye_whisker_shadow",
+            "lagomorph_long_sensory_ears"
+          ]
+        },
+        "transition_stage": {
+          "ids": [
+            "prominent_stage_structural_body_trait",
+            "boundary_stage_visible_skin_shift"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "social_othering_quiet_tension"
+          ]
+        },
+        "safety_profile": {
+          "ids": [
+            "beastkin_dignity_profile"
+          ]
+        }
+      }
+    },
+    {
+      "id": "bus_seat_distance_candid",
+      "ko": "bus one-seat gap beastkin candid",
+      "en": "bus one-seat gap beastkin candid",
+      "weight": 1.0,
+      "family": "beastkin_social_otherness_family",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "social_cue",
+        "distance_narrative",
+        "species_marker",
+        "safety_profile"
+      ],
+      "optional_slots": [
+        {
+          "slot": "color",
+          "probability": 0.55
+        },
+        {
+          "slot": "texture",
+          "probability": 0.55
+        },
+        {
+          "slot": "format",
+          "probability": 0.35
+        },
+        {
+          "slot": "safety_profile",
+          "probability": 0.7
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "documentary_photo",
+            "photojournalism",
+            "magazine_feature",
+            "street_snapshot"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "documentary",
+            "portrait",
+            "street",
+            "photojournalism"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "overcast",
+            "fluorescent",
+            "rim_light",
+            "streetlamp"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "candid_imperfect",
+            "not_overdone"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "beastkin_subject"
+          ]
+        },
+        "action": {
+          "ids": [
+            "standing_silence",
+            "waiting_train"
+          ]
+        },
+        "location": {
+          "ids": [
+            "city_bus_one_seat_gap",
+            "subway_car_inside"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "handheld_candid",
+            "compressed_tele_layers",
+            "frame_within_frame"
+          ]
+        },
+        "social_cue": {
+          "ids": [
+            "empty_adjacent_seat",
+            "crowd_parting_around_tail"
+          ]
+        },
+        "distance_narrative": {
+          "ids": [
+            "one_seat_gap",
+            "crowd_buffer_circle"
+          ]
+        },
+        "species_marker": {
+          "tags_any": [
+            "beastkin"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "social_othering_quiet_tension",
+            "melancholic"
+          ]
+        },
+        "safety_profile": {
+          "ids": [
+            "beastkin_dignity_profile"
+          ]
+        }
+      }
+    },
+    {
+      "id": "id_check_counter_tension",
+      "ko": "ID-check counter tension",
+      "en": "ID-check counter tension",
+      "weight": 1.0,
+      "family": "beastkin_social_otherness_family",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "social_cue",
+        "procedure_step",
+        "distance_narrative",
+        "species_marker",
+        "safety_profile"
+      ],
+      "optional_slots": [
+        {
+          "slot": "color",
+          "probability": 0.55
+        },
+        {
+          "slot": "texture",
+          "probability": 0.55
+        },
+        {
+          "slot": "format",
+          "probability": 0.35
+        },
+        {
+          "slot": "safety_profile",
+          "probability": 0.7
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "documentary_photo",
+            "photojournalism",
+            "magazine_feature",
+            "street_snapshot"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "documentary",
+            "portrait",
+            "street",
+            "photojournalism"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "overcast",
+            "fluorescent",
+            "rim_light",
+            "streetlamp"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "candid_imperfect",
+            "not_overdone"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "beastkin_subject"
+          ]
+        },
+        "action": {
+          "ids": [
+            "standing_silence"
+          ]
+        },
+        "location": {
+          "ids": [
+            "id_check_service_counter"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "service_window_frame",
+            "document_foreground_face_background",
+            "medium_close"
+          ]
+        },
+        "social_cue": {
+          "ids": [
+            "polite_counter_distance",
+            "service_staff_paused_hand",
+            "species_access_signage"
+          ]
+        },
+        "procedure_step": {
+          "ids": [
+            "identity_verification"
+          ]
+        },
+        "distance_narrative": {
+          "ids": [
+            "formal_counter_distance"
+          ]
+        },
+        "species_marker": {
+          "tags_any": [
+            "beastkin"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "social_othering_quiet_tension",
+            "professional_detachment"
+          ]
+        },
+        "safety_profile": {
+          "ids": [
+            "beastkin_dignity_profile",
+            "procedural_authority_profile"
+          ]
+        }
+      }
+    },
+    {
+      "id": "shop_window_species_reflection",
+      "ko": "shop-window species reflection",
+      "en": "shop-window species reflection",
+      "weight": 0.9,
+      "family": "beastkin_reflection_duality_family",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "reflection_logic",
+        "species_marker",
+        "frame_anchor_medium",
+        "safety_profile"
+      ],
+      "optional_slots": [
+        {
+          "slot": "transition_stage",
+          "probability": 0.85
+        },
+        {
+          "slot": "texture",
+          "probability": 0.75
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "documentary_photo",
+            "photojournalism",
+            "magazine_feature",
+            "street_snapshot"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "documentary",
+            "portrait",
+            "street",
+            "photojournalism"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "overcast",
+            "fluorescent",
+            "rim_light",
+            "streetlamp"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "candid_imperfect",
+            "not_overdone"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "beastkin_subject"
+          ]
+        },
+        "action": {
+          "ids": [
+            "window_reflection_observe",
+            "catching_wrong_reflection",
+            "standing_silence"
+          ]
+        },
+        "location": {
+          "ids": [
+            "shop_window_after_hours"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "shopwindow_reflection_frame",
+            "reflection",
+            "medium_close"
+          ]
+        },
+        "reflection_logic": {
+          "ids": [
+            "species_truth_reflection"
+          ]
+        },
+        "species_marker": {
+          "tags_any": [
+            "beastkin"
+          ]
+        },
+        "frame_anchor_medium": {
+          "ids": [
+            "single_camera_perspective",
+            "optical_bokeh_present"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "uncanny",
+            "social_othering_quiet_tension"
+          ]
+        },
+        "safety_profile": {
+          "ids": [
+            "beastkin_dignity_profile"
+          ]
+        }
+      }
+    },
+    {
+      "id": "cctv_monitor_other_self",
+      "ko": "CCTV monitor other self",
+      "en": "CCTV monitor other self",
+      "weight": 0.9,
+      "family": "beastkin_reflection_duality_family",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "reflection_logic",
+        "species_marker",
+        "frame_anchor_medium",
+        "safety_profile"
+      ],
+      "optional_slots": [
+        {
+          "slot": "transition_stage",
+          "probability": 0.85
+        },
+        {
+          "slot": "texture",
+          "probability": 0.75
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "documentary_photo",
+            "photojournalism",
+            "magazine_feature",
+            "street_snapshot"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "documentary",
+            "portrait",
+            "street",
+            "photojournalism"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "overcast",
+            "fluorescent",
+            "rim_light",
+            "streetlamp"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "candid_imperfect",
+            "not_overdone"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "beastkin_subject"
+          ]
+        },
+        "action": {
+          "ids": [
+            "watching_offscreen_monitor",
+            "standing_silence"
+          ]
+        },
+        "location": {
+          "ids": [
+            "cctv_monitor_wall"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "screen_bokeh_over_shoulder",
+            "reflection",
+            "medium_close"
+          ]
+        },
+        "reflection_logic": {
+          "ids": [
+            "cctv_other_self"
+          ]
+        },
+        "species_marker": {
+          "tags_any": [
+            "beastkin"
+          ]
+        },
+        "frame_anchor_medium": {
+          "ids": [
+            "single_camera_perspective",
+            "screen_out_of_focus_anchor"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "uncanny",
+            "surveilled_unease"
+          ]
+        },
+        "safety_profile": {
+          "ids": [
+            "beastkin_dignity_profile",
+            "screen_workplace_profile"
+          ]
+        }
+      }
+    },
+    {
+      "id": "same_beastkin_three_scenes_series",
+      "ko": "same beastkin three-scene series",
+      "en": "same beastkin three-scene series",
+      "weight": 0.75,
+      "family": "species_consistency_series_family",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "species_marker",
+        "transition_stage",
+        "format",
+        "frame_anchor_medium"
+      ],
+      "optional_slots": [
+        {
+          "slot": "color",
+          "probability": 0.55
+        },
+        {
+          "slot": "texture",
+          "probability": 0.55
+        },
+        {
+          "slot": "format",
+          "probability": 0.35
+        },
+        {
+          "slot": "safety_profile",
+          "probability": 0.7
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "documentary_photo",
+            "photojournalism",
+            "magazine_feature",
+            "street_snapshot"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "documentary",
+            "portrait",
+            "street",
+            "photojournalism"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "overcast",
+            "fluorescent",
+            "rim_light",
+            "streetlamp"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "candid_imperfect",
+            "not_overdone"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "beastkin_subject"
+          ]
+        },
+        "action": {
+          "ids": [
+            "standing_silence",
+            "checking_phone",
+            "walking_rain"
+          ]
+        },
+        "location": {
+          "ids": [
+            "city_bus_one_seat_gap",
+            "id_check_service_counter",
+            "shop_window_after_hours"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "triptych_sequence",
+            "photobooth_grid_strip"
+          ]
+        },
+        "species_marker": {
+          "tags_any": [
+            "beastkin"
+          ]
+        },
+        "transition_stage": {
+          "ids": [
+            "boundary_stage_visible_skin_shift",
+            "prominent_stage_structural_body_trait"
+          ]
+        },
+        "format": {
+          "ids": [
+            "landscape_16_9",
+            "square_1_1"
+          ]
+        },
+        "frame_anchor_medium": {
+          "ids": [
+            "single_camera_perspective",
+            "no_layout_elements"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "social_othering_quiet_tension",
+            "weathered_endurance"
+          ]
+        }
+      }
+    },
+    {
+      "id": "species_id_card_daily_diptych",
+      "ko": "species ID card and daily diptych",
+      "en": "species ID card and daily diptych",
+      "weight": 0.7,
+      "family": "species_consistency_series_family",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "species_marker",
+        "social_cue",
+        "procedure_step",
+        "format",
+        "safety_profile"
+      ],
+      "optional_slots": [
+        {
+          "slot": "color",
+          "probability": 0.55
+        },
+        {
+          "slot": "texture",
+          "probability": 0.55
+        },
+        {
+          "slot": "format",
+          "probability": 0.35
+        },
+        {
+          "slot": "safety_profile",
+          "probability": 0.7
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "documentary_photo",
+            "photojournalism",
+            "magazine_feature",
+            "street_snapshot"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "documentary",
+            "portrait",
+            "street",
+            "photojournalism"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "overcast",
+            "fluorescent",
+            "rim_light",
+            "streetlamp"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "candid_imperfect",
+            "not_overdone"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "beastkin_subject"
+          ]
+        },
+        "action": {
+          "ids": [
+            "standing_silence"
+          ]
+        },
+        "location": {
+          "ids": [
+            "id_check_service_counter",
+            "city_bus_one_seat_gap"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "document_foreground_face_background",
+            "triptych_sequence"
+          ]
+        },
+        "species_marker": {
+          "tags_any": [
+            "beastkin"
+          ]
+        },
+        "social_cue": {
+          "ids": [
+            "species_access_signage",
+            "empty_adjacent_seat"
+          ]
+        },
+        "procedure_step": {
+          "ids": [
+            "identity_verification"
+          ]
+        },
+        "format": {
+          "ids": [
+            "landscape_16_9",
+            "square_1_1"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "bureaucratic_horror",
+            "social_othering_quiet_tension"
+          ]
+        },
+        "safety_profile": {
+          "ids": [
+            "beastkin_dignity_profile",
+            "text_sensitive_profile"
+          ]
+        }
+      }
+    },
+    {
+      "id": "police_traffic_control_documentary",
+      "ko": "police traffic-control documentary",
+      "en": "police traffic-control documentary",
+      "weight": 0.9,
+      "family": "procedural_duty_family",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "procedure_step",
+        "duty_prop_state",
+        "prop",
+        "safety_profile",
+        "frame_anchor_medium"
+      ],
+      "optional_slots": [
+        {
+          "slot": "capture_context",
+          "probability": 0.8
+        },
+        {
+          "slot": "subject_framing",
+          "probability": 0.7
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "documentary_photo",
+            "photojournalism",
+            "magazine_feature",
+            "street_snapshot"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "documentary",
+            "portrait",
+            "street",
+            "photojournalism"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "overcast",
+            "fluorescent",
+            "rim_light",
+            "streetlamp"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "candid_imperfect",
+            "not_overdone"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "police_officer_role"
+          ]
+        },
+        "action": {
+          "ids": [
+            "directing_traffic_handsignal"
+          ]
+        },
+        "location": {
+          "ids": [
+            "traffic_crossing_rain"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "traffic_baton_prop"
+          ]
+        },
+        "procedure_step": {
+          "ids": [
+            "equipment_check",
+            "mid_task_protocol",
+            "logging_report",
+            "identity_verification",
+            "safety_inspection",
+            "route_sorting"
+          ]
+        },
+        "duty_prop_state": {
+          "ids": [
+            "checklist_half_ticked",
+            "radio_in_use",
+            "clipboard_open_case",
+            "access_card_scanned",
+            "package_route_labels",
+            "taped_training_joint"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "medium_close",
+            "document_foreground_face_background",
+            "clipboard_face_same_crop",
+            "hands_only_detail_frame"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "procedural_focus",
+            "professional_detachment"
+          ]
+        },
+        "safety_profile": {
+          "ids": [
+            "procedural_authority_profile"
+          ]
+        },
+        "frame_anchor_medium": {
+          "ids": [
+            "single_camera_perspective"
+          ]
+        }
+      }
+    },
+    {
+      "id": "police_lost_child_protocol",
+      "ko": "police lost-child protocol documentary",
+      "en": "police lost-child protocol documentary",
+      "weight": 0.9,
+      "family": "procedural_duty_family",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "procedure_step",
+        "duty_prop_state",
+        "prop",
+        "safety_profile",
+        "frame_anchor_medium"
+      ],
+      "optional_slots": [
+        {
+          "slot": "capture_context",
+          "probability": 0.8
+        },
+        {
+          "slot": "subject_framing",
+          "probability": 0.7
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "documentary_photo",
+            "photojournalism",
+            "magazine_feature",
+            "street_snapshot"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "documentary",
+            "portrait",
+            "street",
+            "photojournalism"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "overcast",
+            "fluorescent",
+            "rim_light",
+            "streetlamp"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "candid_imperfect",
+            "not_overdone"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "police_officer_role"
+          ]
+        },
+        "action": {
+          "ids": [
+            "filling_incident_report"
+          ]
+        },
+        "location": {
+          "ids": [
+            "lost_child_service_desk"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "incident_clipboard_prop"
+          ]
+        },
+        "procedure_step": {
+          "ids": [
+            "equipment_check",
+            "mid_task_protocol",
+            "logging_report",
+            "identity_verification",
+            "safety_inspection",
+            "route_sorting"
+          ]
+        },
+        "duty_prop_state": {
+          "ids": [
+            "checklist_half_ticked",
+            "radio_in_use",
+            "clipboard_open_case",
+            "access_card_scanned",
+            "package_route_labels",
+            "taped_training_joint"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "medium_close",
+            "document_foreground_face_background",
+            "clipboard_face_same_crop",
+            "hands_only_detail_frame"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "procedural_focus",
+            "professional_detachment"
+          ]
+        },
+        "safety_profile": {
+          "ids": [
+            "procedural_authority_profile"
+          ]
+        },
+        "frame_anchor_medium": {
+          "ids": [
+            "single_camera_perspective"
+          ]
+        }
+      }
+    },
+    {
+      "id": "santa_gift_logistics_warehouse",
+      "ko": "Santa gift logistics warehouse",
+      "en": "Santa gift logistics warehouse",
+      "weight": 0.9,
+      "family": "procedural_duty_family",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "procedure_step",
+        "duty_prop_state",
+        "prop",
+        "safety_profile",
+        "frame_anchor_medium"
+      ],
+      "optional_slots": [
+        {
+          "slot": "capture_context",
+          "probability": 0.8
+        },
+        {
+          "slot": "subject_framing",
+          "probability": 0.7
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "documentary_photo",
+            "photojournalism",
+            "magazine_feature",
+            "street_snapshot"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "documentary",
+            "portrait",
+            "street",
+            "photojournalism"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "overcast",
+            "fluorescent",
+            "rim_light",
+            "streetlamp"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "candid_imperfect",
+            "not_overdone"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "cosplayer"
+          ]
+        },
+        "action": {
+          "ids": [
+            "sorting_parcels_by_route"
+          ]
+        },
+        "location": {
+          "ids": [
+            "gift_logistics_warehouse"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "route_manifest_prop"
+          ]
+        },
+        "procedure_step": {
+          "ids": [
+            "equipment_check",
+            "mid_task_protocol",
+            "logging_report",
+            "identity_verification",
+            "safety_inspection",
+            "route_sorting"
+          ]
+        },
+        "duty_prop_state": {
+          "ids": [
+            "checklist_half_ticked",
+            "radio_in_use",
+            "clipboard_open_case",
+            "access_card_scanned",
+            "package_route_labels",
+            "taped_training_joint"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "medium_close",
+            "document_foreground_face_background",
+            "clipboard_face_same_crop",
+            "hands_only_detail_frame"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "procedural_focus",
+            "professional_detachment"
+          ]
+        },
+        "safety_profile": {
+          "ids": [
+            "procedural_authority_profile"
+          ]
+        },
+        "frame_anchor_medium": {
+          "ids": [
+            "single_camera_perspective"
+          ]
+        }
+      }
+    },
+    {
+      "id": "athletic_taping_prep_closeup",
+      "ko": "athletic taping preparation close-up",
+      "en": "athletic taping preparation close-up",
+      "weight": 0.9,
+      "family": "procedural_duty_family",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "procedure_step",
+        "duty_prop_state",
+        "prop",
+        "safety_profile",
+        "frame_anchor_medium"
+      ],
+      "optional_slots": [
+        {
+          "slot": "capture_context",
+          "probability": 0.8
+        },
+        {
+          "slot": "subject_framing",
+          "probability": 0.7
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "documentary_photo",
+            "photojournalism",
+            "magazine_feature",
+            "street_snapshot"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "documentary",
+            "portrait",
+            "street",
+            "photojournalism"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "overcast",
+            "fluorescent",
+            "rim_light",
+            "streetlamp"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "candid_imperfect",
+            "not_overdone"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "adult_fitness_creator"
+          ]
+        },
+        "action": {
+          "ids": [
+            "demonstrating_proper_form"
+          ]
+        },
+        "location": {
+          "ids": [
+            "training_gym_form_check"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "athletic_tape_roll_prop"
+          ]
+        },
+        "procedure_step": {
+          "ids": [
+            "equipment_check",
+            "mid_task_protocol",
+            "logging_report",
+            "identity_verification",
+            "safety_inspection",
+            "route_sorting"
+          ]
+        },
+        "duty_prop_state": {
+          "ids": [
+            "checklist_half_ticked",
+            "radio_in_use",
+            "clipboard_open_case",
+            "access_card_scanned",
+            "package_route_labels",
+            "taped_training_joint"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "medium_close",
+            "document_foreground_face_background",
+            "clipboard_face_same_crop",
+            "hands_only_detail_frame"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "procedural_focus",
+            "professional_detachment"
+          ]
+        },
+        "safety_profile": {
+          "ids": [
+            "procedural_authority_profile"
+          ]
+        },
+        "frame_anchor_medium": {
+          "ids": [
+            "single_camera_perspective"
+          ]
+        }
+      }
+    },
+    {
+      "id": "clinical_handover_vitals",
+      "ko": "clinical vitals handover",
+      "en": "clinical vitals handover",
+      "weight": 0.9,
+      "family": "procedural_duty_family",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "procedure_step",
+        "duty_prop_state",
+        "prop",
+        "safety_profile",
+        "frame_anchor_medium"
+      ],
+      "optional_slots": [
+        {
+          "slot": "capture_context",
+          "probability": 0.8
+        },
+        {
+          "slot": "subject_framing",
+          "probability": 0.7
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "documentary_photo",
+            "photojournalism",
+            "magazine_feature",
+            "street_snapshot"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "documentary",
+            "portrait",
+            "street",
+            "photojournalism"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "overcast",
+            "fluorescent",
+            "rim_light",
+            "streetlamp"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "candid_imperfect",
+            "not_overdone"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "nurse_role"
+          ]
+        },
+        "action": {
+          "ids": [
+            "checking_vitals_handover"
+          ]
+        },
+        "location": {
+          "ids": [
+            "hospital_corridor"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "clinical_chart_clipboard_prop"
+          ]
+        },
+        "procedure_step": {
+          "ids": [
+            "equipment_check",
+            "mid_task_protocol",
+            "logging_report",
+            "identity_verification",
+            "safety_inspection",
+            "route_sorting"
+          ]
+        },
+        "duty_prop_state": {
+          "ids": [
+            "checklist_half_ticked",
+            "radio_in_use",
+            "clipboard_open_case",
+            "access_card_scanned",
+            "package_route_labels",
+            "taped_training_joint"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "medium_close",
+            "document_foreground_face_background",
+            "clipboard_face_same_crop",
+            "hands_only_detail_frame"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "procedural_focus",
+            "professional_detachment"
+          ]
+        },
+        "safety_profile": {
+          "ids": [
+            "clinical_care_profile"
+          ]
+        },
+        "frame_anchor_medium": {
+          "ids": [
+            "single_camera_perspective"
+          ]
+        }
+      }
+    },
+    {
+      "id": "grocery_run_two_baskets_candid",
+      "ko": "grocery run two-basket candid",
+      "en": "grocery run two-basket candid",
+      "weight": 0.8,
+      "family": "companion_daily_errand_family",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "distance_narrative",
+        "safety_profile"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.8
+        },
+        {
+          "slot": "relational_action",
+          "probability": 0.65
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "documentary_photo",
+            "photojournalism",
+            "magazine_feature",
+            "street_snapshot"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "documentary",
+            "portrait",
+            "street",
+            "photojournalism"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "overcast",
+            "fluorescent",
+            "rim_light",
+            "streetlamp"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "candid_imperfect",
+            "not_overdone"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "fashion_influencer",
+            "office_worker",
+            "subway_commuter_candid"
+          ]
+        },
+        "action": {
+          "ids": [
+            "walking_rain"
+          ]
+        },
+        "location": {
+          "ids": [
+            "grocery_aisle_evening"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "shopping_bag_prop"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "handheld_candid",
+            "medium_close",
+            "object_between_faces"
+          ]
+        },
+        "distance_narrative": {
+          "ids": [
+            "object_between_two_people"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "casual_authentic",
+            "intimate",
+            "bittersweet_nostalgia"
+          ]
+        },
+        "safety_profile": {
+          "ids": [
+            "companion_modesty_profile"
+          ]
+        }
+      }
+    },
+    {
+      "id": "bus_stop_shared_earphones",
+      "ko": "bus stop shared-earphones candid",
+      "en": "bus stop shared-earphones candid",
+      "weight": 0.8,
+      "family": "companion_daily_errand_family",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "distance_narrative",
+        "safety_profile"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.8
+        },
+        {
+          "slot": "relational_action",
+          "probability": 0.65
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "documentary_photo",
+            "photojournalism",
+            "magazine_feature",
+            "street_snapshot"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "documentary",
+            "portrait",
+            "street",
+            "photojournalism"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "overcast",
+            "fluorescent",
+            "rim_light",
+            "streetlamp"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "candid_imperfect",
+            "not_overdone"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "fashion_influencer",
+            "office_worker",
+            "subway_commuter_candid"
+          ]
+        },
+        "action": {
+          "ids": [
+            "waiting_old_bus_stop"
+          ]
+        },
+        "location": {
+          "ids": [
+            "rainy_bus_stop_shelter"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "wired_earbuds"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "handheld_candid",
+            "medium_close",
+            "object_between_faces"
+          ]
+        },
+        "distance_narrative": {
+          "ids": [
+            "parallel_walking_silence"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "casual_authentic",
+            "intimate",
+            "bittersweet_nostalgia"
+          ]
+        },
+        "safety_profile": {
+          "ids": [
+            "companion_modesty_profile"
+          ]
+        }
+      }
+    },
+    {
+      "id": "pharmacy_pickup_waiting_bench",
+      "ko": "pharmacy pickup waiting bench",
+      "en": "pharmacy pickup waiting bench",
+      "weight": 0.8,
+      "family": "companion_daily_errand_family",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "distance_narrative",
+        "safety_profile"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.8
+        },
+        {
+          "slot": "relational_action",
+          "probability": 0.65
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "documentary_photo",
+            "photojournalism",
+            "magazine_feature",
+            "street_snapshot"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "documentary",
+            "portrait",
+            "street",
+            "photojournalism"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "overcast",
+            "fluorescent",
+            "rim_light",
+            "streetlamp"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "candid_imperfect",
+            "not_overdone"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "fashion_influencer",
+            "office_worker",
+            "subway_commuter_candid"
+          ]
+        },
+        "action": {
+          "ids": [
+            "checking_phone"
+          ]
+        },
+        "location": {
+          "ids": [
+            "pharmacy_waiting_bench"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "pharmacy_prescription_bag_prop"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "handheld_candid",
+            "medium_close",
+            "object_between_faces"
+          ]
+        },
+        "distance_narrative": {
+          "ids": [
+            "one_step_hesitation"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "casual_authentic",
+            "intimate",
+            "bittersweet_nostalgia"
+          ]
+        },
+        "safety_profile": {
+          "ids": [
+            "companion_modesty_profile"
+          ]
+        }
+      }
+    },
+    {
+      "id": "apartment_corridor_trash_day",
+      "ko": "apartment corridor errand day",
+      "en": "apartment corridor errand day",
+      "weight": 0.8,
+      "family": "companion_daily_errand_family",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "distance_narrative",
+        "safety_profile"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.8
+        },
+        {
+          "slot": "relational_action",
+          "probability": 0.65
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "documentary_photo",
+            "photojournalism",
+            "magazine_feature",
+            "street_snapshot"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "documentary",
+            "portrait",
+            "street",
+            "photojournalism"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "overcast",
+            "fluorescent",
+            "rim_light",
+            "streetlamp"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "candid_imperfect",
+            "not_overdone"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "fashion_influencer",
+            "office_worker",
+            "subway_commuter_candid"
+          ]
+        },
+        "action": {
+          "ids": [
+            "standing_silence"
+          ]
+        },
+        "location": {
+          "ids": [
+            "apartment_corridor_errand"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "shopping_bag_prop"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "handheld_candid",
+            "medium_close",
+            "object_between_faces"
+          ]
+        },
+        "distance_narrative": {
+          "ids": [
+            "doorway_threshold_distance"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "casual_authentic",
+            "intimate",
+            "bittersweet_nostalgia"
+          ]
+        },
+        "safety_profile": {
+          "ids": [
+            "companion_modesty_profile"
+          ]
+        }
+      }
+    },
+    {
+      "id": "magician_assistant_prop_check",
+      "ko": "magician assistant prop check",
+      "en": "magician assistant prop check",
+      "weight": 0.8,
+      "family": "bunny_stagecraft_family",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "procedure_step",
+        "duty_prop_state",
+        "safety_profile"
+      ],
+      "optional_slots": [
+        {
+          "slot": "costume_style",
+          "probability": 1.0
+        },
+        {
+          "slot": "prop",
+          "probability": 0.8
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "documentary_photo",
+            "photojournalism",
+            "magazine_feature",
+            "street_snapshot"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "documentary",
+            "portrait",
+            "street",
+            "photojournalism"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "overcast",
+            "fluorescent",
+            "rim_light",
+            "streetlamp"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "candid_imperfect",
+            "not_overdone"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "adult_cosplay_performer"
+          ]
+        },
+        "costume_style": {
+          "ids": [
+            "bunny_girl_costume"
+          ]
+        },
+        "action": {
+          "ids": [
+            "magic_wand_stage_pose"
+          ]
+        },
+        "location": {
+          "ids": [
+            "backstage_room"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "stage_cue_sheet_prop"
+          ]
+        },
+        "procedure_step": {
+          "ids": [
+            "equipment_check",
+            "pre_shift_briefing",
+            "logging_report"
+          ]
+        },
+        "duty_prop_state": {
+          "ids": [
+            "checklist_half_ticked",
+            "regulation_folded"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "medium_close",
+            "frame_within_frame",
+            "hands_only_detail_frame"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "offstage_workaday_calm",
+            "glamorous_backstage"
+          ]
+        },
+        "safety_profile": {
+          "ids": [
+            "performer_public_profile"
+          ]
+        }
+      }
+    },
+    {
+      "id": "theme_park_mascot_break_room",
+      "ko": "theme park mascot break room",
+      "en": "theme park mascot break room",
+      "weight": 0.8,
+      "family": "bunny_stagecraft_family",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "procedure_step",
+        "duty_prop_state",
+        "safety_profile"
+      ],
+      "optional_slots": [
+        {
+          "slot": "costume_style",
+          "probability": 1.0
+        },
+        {
+          "slot": "prop",
+          "probability": 0.8
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "documentary_photo",
+            "photojournalism",
+            "magazine_feature",
+            "street_snapshot"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "documentary",
+            "portrait",
+            "street",
+            "photojournalism"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "overcast",
+            "fluorescent",
+            "rim_light",
+            "streetlamp"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "candid_imperfect",
+            "not_overdone"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "adult_cosplay_performer"
+          ]
+        },
+        "costume_style": {
+          "ids": [
+            "bunny_girl_costume"
+          ]
+        },
+        "action": {
+          "ids": [
+            "standing_silence"
+          ]
+        },
+        "location": {
+          "ids": [
+            "mascot_break_room"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "hand_puppet_prop"
+          ]
+        },
+        "procedure_step": {
+          "ids": [
+            "equipment_check",
+            "pre_shift_briefing",
+            "logging_report"
+          ]
+        },
+        "duty_prop_state": {
+          "ids": [
+            "checklist_half_ticked",
+            "regulation_folded"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "medium_close",
+            "frame_within_frame",
+            "hands_only_detail_frame"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "offstage_workaday_calm",
+            "glamorous_backstage"
+          ]
+        },
+        "safety_profile": {
+          "ids": [
+            "performer_public_profile"
+          ]
+        }
+      }
+    },
+    {
+      "id": "costume_workshop_fitting_pins",
+      "ko": "costume workshop fitting pins",
+      "en": "costume workshop fitting pins",
+      "weight": 0.8,
+      "family": "bunny_stagecraft_family",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "procedure_step",
+        "duty_prop_state",
+        "safety_profile"
+      ],
+      "optional_slots": [
+        {
+          "slot": "costume_style",
+          "probability": 1.0
+        },
+        {
+          "slot": "prop",
+          "probability": 0.8
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "documentary_photo",
+            "photojournalism",
+            "magazine_feature",
+            "street_snapshot"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "documentary",
+            "portrait",
+            "street",
+            "photojournalism"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "overcast",
+            "fluorescent",
+            "rim_light",
+            "streetlamp"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "candid_imperfect",
+            "not_overdone"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "adult_cosplay_performer"
+          ]
+        },
+        "costume_style": {
+          "ids": [
+            "bunny_girl_costume"
+          ]
+        },
+        "action": {
+          "ids": [
+            "retouching_stage_makeup"
+          ]
+        },
+        "location": {
+          "ids": [
+            "costume_workshop_backstage"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "makeup_palette_brush_prop"
+          ]
+        },
+        "procedure_step": {
+          "ids": [
+            "equipment_check",
+            "pre_shift_briefing",
+            "logging_report"
+          ]
+        },
+        "duty_prop_state": {
+          "ids": [
+            "checklist_half_ticked",
+            "regulation_folded"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "medium_close",
+            "frame_within_frame",
+            "hands_only_detail_frame"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "offstage_workaday_calm",
+            "glamorous_backstage"
+          ]
+        },
+        "safety_profile": {
+          "ids": [
+            "performer_public_profile"
+          ]
+        }
+      }
+    },
+    {
+      "id": "stage_door_payroll_sign",
+      "ko": "stage door payroll sign",
+      "en": "stage door payroll sign",
+      "weight": 0.8,
+      "family": "bunny_stagecraft_family",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "procedure_step",
+        "duty_prop_state",
+        "safety_profile"
+      ],
+      "optional_slots": [
+        {
+          "slot": "costume_style",
+          "probability": 1.0
+        },
+        {
+          "slot": "prop",
+          "probability": 0.8
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "documentary_photo",
+            "photojournalism",
+            "magazine_feature",
+            "street_snapshot"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "documentary",
+            "portrait",
+            "street",
+            "photojournalism"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "overcast",
+            "fluorescent",
+            "rim_light",
+            "streetlamp"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "candid_imperfect",
+            "not_overdone"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "adult_cosplay_performer"
+          ]
+        },
+        "costume_style": {
+          "ids": [
+            "bunny_girl_costume"
+          ]
+        },
+        "action": {
+          "ids": [
+            "filling_incident_report"
+          ]
+        },
+        "location": {
+          "ids": [
+            "stage_door_staff_entry"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "stage_reservation_log_prop"
+          ]
+        },
+        "procedure_step": {
+          "ids": [
+            "equipment_check",
+            "pre_shift_briefing",
+            "logging_report"
+          ]
+        },
+        "duty_prop_state": {
+          "ids": [
+            "checklist_half_ticked",
+            "regulation_folded"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "medium_close",
+            "frame_within_frame",
+            "hands_only_detail_frame"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "offstage_workaday_calm",
+            "glamorous_backstage"
+          ]
+        },
+        "safety_profile": {
+          "ids": [
+            "performer_public_profile"
+          ]
+        }
+      }
+    },
+    {
+      "id": "server_room_human_scale_portrait",
+      "ko": "human-scale server-room portrait",
+      "en": "human-scale server-room portrait",
+      "weight": 0.95,
+      "family": "anti_diagram_photo_anchor_family",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "frame_anchor_medium",
+        "camera_height",
+        "safety_profile"
+      ],
+      "optional_slots": [
+        {
+          "slot": "capture_context",
+          "probability": 0.9
+        },
+        {
+          "slot": "prop",
+          "probability": 0.5
+        },
+        {
+          "slot": "focus",
+          "probability": 0.7
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "documentary_photo",
+            "photojournalism",
+            "magazine_feature",
+            "street_snapshot"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "documentary",
+            "portrait",
+            "street",
+            "photojournalism"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "overcast",
+            "fluorescent",
+            "rim_light",
+            "streetlamp"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "candid_imperfect",
+            "not_overdone"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "hacker_operator"
+          ]
+        },
+        "action": {
+          "ids": [
+            "watching_offscreen_monitor",
+            "calibrating_instrument",
+            "writing_notes"
+          ]
+        },
+        "location": {
+          "ids": [
+            "server_room_aisle"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "screen_bokeh_over_shoulder",
+            "over_the_shoulder_workbench",
+            "medium_close"
+          ]
+        },
+        "frame_anchor_medium": {
+          "ids": [
+            "single_camera_perspective",
+            "screen_out_of_focus_anchor",
+            "optical_bokeh_present",
+            "no_layout_elements"
+          ]
+        },
+        "camera_height": {
+          "ids": [
+            "over_shoulder_work_observer",
+            "eye_level_observer"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "professional_detachment",
+            "technological_haunting"
+          ]
+        },
+        "safety_profile": {
+          "ids": [
+            "screen_workplace_profile"
+          ]
+        }
+      }
+    },
+    {
+      "id": "control_room_over_shoulder",
+      "ko": "control room over-shoulder photograph",
+      "en": "control room over-shoulder photograph",
+      "weight": 0.95,
+      "family": "anti_diagram_photo_anchor_family",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "frame_anchor_medium",
+        "camera_height",
+        "safety_profile"
+      ],
+      "optional_slots": [
+        {
+          "slot": "capture_context",
+          "probability": 0.9
+        },
+        {
+          "slot": "prop",
+          "probability": 0.5
+        },
+        {
+          "slot": "focus",
+          "probability": 0.7
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "documentary_photo",
+            "photojournalism",
+            "magazine_feature",
+            "street_snapshot"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "documentary",
+            "portrait",
+            "street",
+            "photojournalism"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "overcast",
+            "fluorescent",
+            "rim_light",
+            "streetlamp"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "candid_imperfect",
+            "not_overdone"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "air_traffic_controller_role_model"
+          ]
+        },
+        "action": {
+          "ids": [
+            "watching_offscreen_monitor",
+            "calibrating_instrument",
+            "writing_notes"
+          ]
+        },
+        "location": {
+          "ids": [
+            "surveillance_control_room"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "screen_bokeh_over_shoulder",
+            "over_the_shoulder_workbench",
+            "medium_close"
+          ]
+        },
+        "frame_anchor_medium": {
+          "ids": [
+            "single_camera_perspective",
+            "screen_out_of_focus_anchor",
+            "optical_bokeh_present",
+            "no_layout_elements"
+          ]
+        },
+        "camera_height": {
+          "ids": [
+            "over_shoulder_work_observer",
+            "eye_level_observer"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "professional_detachment",
+            "technological_haunting"
+          ]
+        },
+        "safety_profile": {
+          "ids": [
+            "screen_workplace_profile"
+          ]
+        }
+      }
+    },
+    {
+      "id": "whiteboard_out_of_focus_portrait",
+      "ko": "whiteboard out-of-focus portrait",
+      "en": "whiteboard out-of-focus portrait",
+      "weight": 0.95,
+      "family": "anti_diagram_photo_anchor_family",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "frame_anchor_medium",
+        "camera_height",
+        "safety_profile"
+      ],
+      "optional_slots": [
+        {
+          "slot": "capture_context",
+          "probability": 0.9
+        },
+        {
+          "slot": "prop",
+          "probability": 0.5
+        },
+        {
+          "slot": "focus",
+          "probability": 0.7
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "documentary_photo",
+            "photojournalism",
+            "magazine_feature",
+            "street_snapshot"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "documentary",
+            "portrait",
+            "street",
+            "photojournalism"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "overcast",
+            "fluorescent",
+            "rim_light",
+            "streetlamp"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "candid_imperfect",
+            "not_overdone"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "office_worker"
+          ]
+        },
+        "action": {
+          "ids": [
+            "watching_offscreen_monitor",
+            "calibrating_instrument",
+            "writing_notes"
+          ]
+        },
+        "location": {
+          "ids": [
+            "whiteboard_meeting_room_bokeh"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "whiteboard_bokeh_portrait",
+            "over_the_shoulder_workbench",
+            "medium_close"
+          ]
+        },
+        "frame_anchor_medium": {
+          "ids": [
+            "single_camera_perspective",
+            "screen_out_of_focus_anchor",
+            "optical_bokeh_present",
+            "no_layout_elements"
+          ]
+        },
+        "camera_height": {
+          "ids": [
+            "over_shoulder_work_observer",
+            "eye_level_observer"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "professional_detachment",
+            "technological_haunting"
+          ]
+        },
+        "safety_profile": {
+          "ids": [
+            "screen_workplace_profile"
+          ]
+        }
+      }
+    },
+    {
+      "id": "pov_hands_repairing_watch",
+      "ko": "POV hands repairing a watch",
+      "en": "POV hands repairing a watch",
+      "weight": 0.85,
+      "family": "first_person_task_pov_family",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "viewer_position",
+        "camera_height",
+        "prop",
+        "frame_anchor_medium"
+      ],
+      "optional_slots": [
+        {
+          "slot": "sensory_focus",
+          "probability": 0.75
+        },
+        {
+          "slot": "subject_framing",
+          "probability": 0.65
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "documentary_photo",
+            "photojournalism",
+            "magazine_feature",
+            "street_snapshot"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "documentary",
+            "portrait",
+            "street",
+            "photojournalism"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "overcast",
+            "fluorescent",
+            "rim_light",
+            "streetlamp"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "candid_imperfect",
+            "not_overdone"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "office_worker",
+            "watch_repairer_role_model",
+            "field_biologist_role_model",
+            "courier_rider_role_model"
+          ]
+        },
+        "action": {
+          "ids": [
+            "checking_loupe_watch"
+          ]
+        },
+        "location": {
+          "ids": [
+            "watch_repair_bench"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "watchmaker_loupe_prop"
+          ]
+        },
+        "viewer_position": {
+          "ids": [
+            "viewer_as_recipient",
+            "viewer_as_customer"
+          ]
+        },
+        "camera_height": {
+          "ids": [
+            "hands_first_pov_down"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "hands_first_task_pov",
+            "hands_only_detail_frame"
+          ]
+        },
+        "frame_anchor_medium": {
+          "ids": [
+            "single_camera_perspective",
+            "photographic_grain_present"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "focused",
+            "procedural_focus"
+          ]
+        }
+      }
+    },
+    {
+      "id": "pov_receiving_change_at_counter",
+      "ko": "POV receiving change at a counter",
+      "en": "POV receiving change at a counter",
+      "weight": 0.85,
+      "family": "first_person_task_pov_family",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "viewer_position",
+        "camera_height",
+        "prop",
+        "frame_anchor_medium"
+      ],
+      "optional_slots": [
+        {
+          "slot": "sensory_focus",
+          "probability": 0.75
+        },
+        {
+          "slot": "subject_framing",
+          "probability": 0.65
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "documentary_photo",
+            "photojournalism",
+            "magazine_feature",
+            "street_snapshot"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "documentary",
+            "portrait",
+            "street",
+            "photojournalism"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "overcast",
+            "fluorescent",
+            "rim_light",
+            "streetlamp"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "candid_imperfect",
+            "not_overdone"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "office_worker",
+            "watch_repairer_role_model",
+            "field_biologist_role_model",
+            "courier_rider_role_model"
+          ]
+        },
+        "action": {
+          "ids": [
+            "sliding_receipt_across_counter"
+          ]
+        },
+        "location": {
+          "ids": [
+            "service_counter_close"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "paper_coffee_receipt"
+          ]
+        },
+        "viewer_position": {
+          "ids": [
+            "viewer_as_recipient",
+            "viewer_as_customer"
+          ]
+        },
+        "camera_height": {
+          "ids": [
+            "hands_first_pov_down"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "hands_first_task_pov",
+            "hands_only_detail_frame"
+          ]
+        },
+        "frame_anchor_medium": {
+          "ids": [
+            "single_camera_perspective",
+            "photographic_grain_present"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "focused",
+            "procedural_focus"
+          ]
+        }
+      }
+    },
+    {
+      "id": "pov_signing_delivery_pad",
+      "ko": "POV signing a delivery pad",
+      "en": "POV signing a delivery pad",
+      "weight": 0.85,
+      "family": "first_person_task_pov_family",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "viewer_position",
+        "camera_height",
+        "prop",
+        "frame_anchor_medium"
+      ],
+      "optional_slots": [
+        {
+          "slot": "sensory_focus",
+          "probability": 0.75
+        },
+        {
+          "slot": "subject_framing",
+          "probability": 0.65
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "documentary_photo",
+            "photojournalism",
+            "magazine_feature",
+            "street_snapshot"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "documentary",
+            "portrait",
+            "street",
+            "photojournalism"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "overcast",
+            "fluorescent",
+            "rim_light",
+            "streetlamp"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "candid_imperfect",
+            "not_overdone"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "office_worker",
+            "watch_repairer_role_model",
+            "field_biologist_role_model",
+            "courier_rider_role_model"
+          ]
+        },
+        "action": {
+          "ids": [
+            "sorting_parcels_by_route"
+          ]
+        },
+        "location": {
+          "ids": [
+            "apartment_corridor_errand"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "route_manifest_prop"
+          ]
+        },
+        "viewer_position": {
+          "ids": [
+            "viewer_as_recipient",
+            "viewer_as_customer"
+          ]
+        },
+        "camera_height": {
+          "ids": [
+            "hands_first_pov_down"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "hands_first_task_pov",
+            "hands_only_detail_frame"
+          ]
+        },
+        "frame_anchor_medium": {
+          "ids": [
+            "single_camera_perspective",
+            "photographic_grain_present"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "focused",
+            "procedural_focus"
+          ]
+        }
+      }
+    },
+    {
+      "id": "pov_holding_field_notebook",
+      "ko": "POV holding a field notebook",
+      "en": "POV holding a field notebook",
+      "weight": 0.85,
+      "family": "first_person_task_pov_family",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "viewer_position",
+        "camera_height",
+        "prop",
+        "frame_anchor_medium"
+      ],
+      "optional_slots": [
+        {
+          "slot": "sensory_focus",
+          "probability": 0.75
+        },
+        {
+          "slot": "subject_framing",
+          "probability": 0.65
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "documentary_photo",
+            "photojournalism",
+            "magazine_feature",
+            "street_snapshot"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "documentary",
+            "portrait",
+            "street",
+            "photojournalism"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "overcast",
+            "fluorescent",
+            "rim_light",
+            "streetlamp"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "candid_imperfect",
+            "not_overdone"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "office_worker",
+            "watch_repairer_role_model",
+            "field_biologist_role_model",
+            "courier_rider_role_model"
+          ]
+        },
+        "action": {
+          "ids": [
+            "writing_notes"
+          ]
+        },
+        "location": {
+          "ids": [
+            "field_biology_hide"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "field_notebook_binoculars_prop"
+          ]
+        },
+        "viewer_position": {
+          "ids": [
+            "viewer_as_recipient",
+            "viewer_as_customer"
+          ]
+        },
+        "camera_height": {
+          "ids": [
+            "hands_first_pov_down"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "hands_first_task_pov",
+            "hands_only_detail_frame"
+          ]
+        },
+        "frame_anchor_medium": {
+          "ids": [
+            "single_camera_perspective",
+            "photographic_grain_present"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "focused",
+            "procedural_focus"
+          ]
+        }
+      }
+    },
+    {
+      "id": "night_shift_handover_corridor",
+      "ko": "night-shift handover corridor",
+      "en": "night-shift handover corridor",
+      "weight": 0.7,
+      "family": "night_shift_workers_family",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "procedure_step",
+        "duty_prop_state",
+        "frame_anchor_medium"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.75
+        },
+        {
+          "slot": "sensory_focus",
+          "probability": 0.55
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "documentary_photo",
+            "photojournalism",
+            "magazine_feature",
+            "street_snapshot"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "documentary",
+            "portrait",
+            "street",
+            "photojournalism"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "overcast",
+            "fluorescent",
+            "rim_light",
+            "streetlamp"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "candid_imperfect",
+            "not_overdone"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "nurse_role"
+          ]
+        },
+        "action": {
+          "ids": [
+            "checking_vitals_handover"
+          ]
+        },
+        "location": {
+          "ids": [
+            "hospital_corridor"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "clinical_chart_clipboard_prop"
+          ]
+        },
+        "procedure_step": {
+          "ids": [
+            "handover_debrief",
+            "equipment_check",
+            "mid_task_protocol"
+          ]
+        },
+        "duty_prop_state": {
+          "ids": [
+            "checklist_half_ticked",
+            "worn_in_gloves",
+            "radio_in_use"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "medium_close",
+            "over_the_shoulder_workbench",
+            "handheld_candid"
+          ]
+        },
+        "frame_anchor_medium": {
+          "ids": [
+            "single_camera_perspective"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "procedural_focus",
+            "melancholic",
+            "communal_warmth"
+          ]
+        }
+      }
+    },
+    {
+      "id": "analog_payphone_wait",
+      "ko": "analog payphone waiting scene",
+      "en": "analog payphone waiting scene",
+      "weight": 0.7,
+      "family": "analog_communication_family",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "procedure_step",
+        "duty_prop_state",
+        "frame_anchor_medium"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.75
+        },
+        {
+          "slot": "sensory_focus",
+          "probability": 0.55
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "documentary_photo",
+            "photojournalism",
+            "magazine_feature",
+            "street_snapshot"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "documentary",
+            "portrait",
+            "street",
+            "photojournalism"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "overcast",
+            "fluorescent",
+            "rim_light",
+            "streetlamp"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "candid_imperfect",
+            "not_overdone"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "subway_commuter_candid"
+          ]
+        },
+        "action": {
+          "ids": [
+            "standing_silence"
+          ]
+        },
+        "location": {
+          "ids": [
+            "old_korean_market_arcade"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "old_paper_bus_ticket_prop"
+          ]
+        },
+        "procedure_step": {
+          "ids": [
+            "handover_debrief",
+            "equipment_check",
+            "mid_task_protocol"
+          ]
+        },
+        "duty_prop_state": {
+          "ids": [
+            "checklist_half_ticked",
+            "worn_in_gloves",
+            "radio_in_use"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "medium_close",
+            "over_the_shoulder_workbench",
+            "handheld_candid"
+          ]
+        },
+        "frame_anchor_medium": {
+          "ids": [
+            "single_camera_perspective"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "procedural_focus",
+            "melancholic",
+            "communal_warmth"
+          ]
+        }
+      }
+    },
+    {
+      "id": "storm_traffic_safety",
+      "ko": "storm traffic safety procedure",
+      "en": "storm traffic safety procedure",
+      "weight": 0.7,
+      "family": "weather_extreme_safety_family",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "procedure_step",
+        "duty_prop_state",
+        "frame_anchor_medium"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.75
+        },
+        {
+          "slot": "sensory_focus",
+          "probability": 0.55
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "documentary_photo",
+            "photojournalism",
+            "magazine_feature",
+            "street_snapshot"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "documentary",
+            "portrait",
+            "street",
+            "photojournalism"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "overcast",
+            "fluorescent",
+            "rim_light",
+            "streetlamp"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "candid_imperfect",
+            "not_overdone"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "police_officer_role"
+          ]
+        },
+        "action": {
+          "ids": [
+            "directing_traffic_handsignal"
+          ]
+        },
+        "location": {
+          "ids": [
+            "traffic_crossing_rain"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "traffic_baton_prop"
+          ]
+        },
+        "procedure_step": {
+          "ids": [
+            "handover_debrief",
+            "equipment_check",
+            "mid_task_protocol"
+          ]
+        },
+        "duty_prop_state": {
+          "ids": [
+            "checklist_half_ticked",
+            "worn_in_gloves",
+            "radio_in_use"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "medium_close",
+            "over_the_shoulder_workbench",
+            "handheld_candid"
+          ]
+        },
+        "frame_anchor_medium": {
+          "ids": [
+            "single_camera_perspective"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "procedural_focus",
+            "melancholic",
+            "communal_warmth"
+          ]
+        }
+      }
+    },
+    {
+      "id": "master_apprentice_workbench",
+      "ko": "master and apprentice workbench",
+      "en": "master and apprentice workbench",
+      "weight": 0.7,
+      "family": "craft_inheritance_family",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "procedure_step",
+        "duty_prop_state",
+        "frame_anchor_medium"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.75
+        },
+        {
+          "slot": "sensory_focus",
+          "probability": 0.55
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "documentary_photo",
+            "photojournalism",
+            "magazine_feature",
+            "street_snapshot"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "documentary",
+            "portrait",
+            "street",
+            "photojournalism"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "overcast",
+            "fluorescent",
+            "rim_light",
+            "streetlamp"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "candid_imperfect",
+            "not_overdone"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "antique_restorer_role_model"
+          ]
+        },
+        "action": {
+          "ids": [
+            "restoring_antique_surface"
+          ]
+        },
+        "location": {
+          "ids": [
+            "antique_restoration_table"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "restoration_scalpel_brush_prop"
+          ]
+        },
+        "procedure_step": {
+          "ids": [
+            "handover_debrief",
+            "equipment_check",
+            "mid_task_protocol"
+          ]
+        },
+        "duty_prop_state": {
+          "ids": [
+            "checklist_half_ticked",
+            "worn_in_gloves",
+            "radio_in_use"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "medium_close",
+            "over_the_shoulder_workbench",
+            "handheld_candid"
+          ]
+        },
+        "frame_anchor_medium": {
+          "ids": [
+            "single_camera_perspective"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "procedural_focus",
+            "melancholic",
+            "communal_warmth"
+          ]
+        }
+      }
+    },
+    {
+      "id": "city_wildlife_coexistence_photo",
+      "ko": "urban wildlife coexistence photograph",
+      "en": "urban wildlife coexistence photograph",
+      "weight": 0.7,
+      "family": "urban_wildlife_coexistence_family",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "procedure_step",
+        "duty_prop_state",
+        "frame_anchor_medium"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.75
+        },
+        {
+          "slot": "sensory_focus",
+          "probability": 0.55
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "documentary_photo",
+            "photojournalism",
+            "magazine_feature",
+            "street_snapshot"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "documentary",
+            "portrait",
+            "street",
+            "photojournalism"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "overcast",
+            "fluorescent",
+            "rim_light",
+            "streetlamp"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "candid_imperfect",
+            "not_overdone"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "pet_owner"
+          ]
+        },
+        "action": {
+          "ids": [
+            "playing_with_pet"
+          ]
+        },
+        "location": {
+          "ids": [
+            "bus_stop_shelter"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "clear_umbrella"
+          ]
+        },
+        "procedure_step": {
+          "ids": [
+            "handover_debrief",
+            "equipment_check",
+            "mid_task_protocol"
+          ]
+        },
+        "duty_prop_state": {
+          "ids": [
+            "checklist_half_ticked",
+            "worn_in_gloves",
+            "radio_in_use"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "medium_close",
+            "over_the_shoulder_workbench",
+            "handheld_candid"
+          ]
+        },
+        "frame_anchor_medium": {
+          "ids": [
+            "single_camera_perspective"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "procedural_focus",
+            "melancholic",
+            "communal_warmth"
+          ]
+        }
+      }
+    },
+    {
+      "id": "office_fire_drill_documentary",
+      "ko": "office fire-drill documentary",
+      "en": "office fire-drill documentary",
+      "weight": 0.85,
+      "family": "procedural_duty_family",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "procedure_step",
+        "duty_prop_state",
+        "prop",
+        "safety_profile",
+        "frame_anchor_medium"
+      ],
+      "optional_slots": [
+        {
+          "slot": "capture_context",
+          "probability": 0.8
+        },
+        {
+          "slot": "subject_framing",
+          "probability": 0.7
+        },
+        {
+          "slot": "format",
+          "probability": 0.35
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "documentary_photo",
+            "photojournalism",
+            "magazine_feature",
+            "street_snapshot"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "documentary",
+            "portrait",
+            "street",
+            "photojournalism"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "overcast",
+            "fluorescent",
+            "rim_light",
+            "streetlamp"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "candid_imperfect",
+            "not_overdone"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "office_worker"
+          ]
+        },
+        "action": {
+          "ids": [
+            "calibrating_instrument"
+          ]
+        },
+        "location": {
+          "ids": [
+            "office_fire_drill_stairwell"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "incident_clipboard_prop"
+          ]
+        },
+        "procedure_step": {
+          "ids": [
+            "safety_inspection",
+            "pre_shift_briefing"
+          ]
+        },
+        "duty_prop_state": {
+          "ids": [
+            "checklist_half_ticked",
+            "radio_in_use"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "medium_close",
+            "document_foreground_face_background",
+            "hands_only_detail_frame"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "procedural_focus",
+            "professional_detachment"
+          ]
+        },
+        "safety_profile": {
+          "ids": [
+            "procedural_authority_profile"
+          ]
+        },
+        "frame_anchor_medium": {
+          "ids": [
+            "single_camera_perspective"
+          ]
+        }
+      }
     }
   ],
   "templates": {
@@ -75535,6 +80224,412 @@
             "surveillance_panopticon"
           ]
         }
+      },
+      {
+        "id": "field_biologist_role_model",
+        "ko": "a field biologist with field gear",
+        "en": "a field biologist with field gear",
+        "weight": 1,
+        "tags": [
+          "human",
+          "role",
+          "science"
+        ],
+        "kind": [
+          "human"
+        ]
+      },
+      {
+        "id": "antique_restorer_role_model",
+        "ko": "an antique restorer at work",
+        "en": "an antique restorer at work",
+        "weight": 1,
+        "tags": [
+          "human",
+          "role",
+          "craft"
+        ],
+        "kind": [
+          "human"
+        ]
+      },
+      {
+        "id": "urban_archivist_role_model",
+        "ko": "an urban archivist handling records",
+        "en": "an urban archivist handling records",
+        "weight": 1,
+        "tags": [
+          "human",
+          "role",
+          "archive"
+        ],
+        "kind": [
+          "human"
+        ]
+      },
+      {
+        "id": "coast_guard_role_model",
+        "ko": "a coast guard officer on duty",
+        "en": "a coast guard officer on duty",
+        "weight": 1,
+        "tags": [
+          "human",
+          "role",
+          "uniform"
+        ],
+        "kind": [
+          "human"
+        ]
+      },
+      {
+        "id": "forest_ranger_role_model",
+        "ko": "a forest ranger watch officer",
+        "en": "a forest ranger watch officer",
+        "weight": 1,
+        "tags": [
+          "human",
+          "role",
+          "outdoor"
+        ],
+        "kind": [
+          "human"
+        ]
+      },
+      {
+        "id": "air_traffic_controller_role_model",
+        "ko": "an air traffic controller at a console",
+        "en": "an air traffic controller at a console",
+        "weight": 1,
+        "tags": [
+          "human",
+          "role",
+          "technology"
+        ],
+        "kind": [
+          "human"
+        ]
+      },
+      {
+        "id": "train_driver_role_model",
+        "ko": "a train driver in the cab",
+        "en": "a train driver in the cab",
+        "weight": 1,
+        "tags": [
+          "human",
+          "role",
+          "transit"
+        ],
+        "kind": [
+          "human"
+        ]
+      },
+      {
+        "id": "lighthouse_keeper_role_model",
+        "ko": "a lighthouse keeper maintaining the lantern",
+        "en": "a lighthouse keeper maintaining the lantern",
+        "weight": 1,
+        "tags": [
+          "human",
+          "role",
+          "maritime"
+        ],
+        "kind": [
+          "human"
+        ]
+      },
+      {
+        "id": "veterinarian_role_model",
+        "ko": "a veterinarian in an exam room",
+        "en": "a veterinarian in an exam room",
+        "weight": 1,
+        "tags": [
+          "human",
+          "role",
+          "clinical"
+        ],
+        "kind": [
+          "human"
+        ]
+      },
+      {
+        "id": "pharmacist_role_model",
+        "ko": "a pharmacist at the dispensing counter",
+        "en": "a pharmacist at the dispensing counter",
+        "weight": 1,
+        "tags": [
+          "human",
+          "role",
+          "clinical"
+        ],
+        "kind": [
+          "human"
+        ]
+      },
+      {
+        "id": "quarantine_worker_role_model",
+        "ko": "a public-health quarantine worker",
+        "en": "a public-health quarantine worker",
+        "weight": 1,
+        "tags": [
+          "human",
+          "role",
+          "public_health"
+        ],
+        "kind": [
+          "human"
+        ]
+      },
+      {
+        "id": "heritage_restorer_role_model",
+        "ko": "a cultural heritage restorer",
+        "en": "a cultural heritage restorer",
+        "weight": 1,
+        "tags": [
+          "human",
+          "role",
+          "craft"
+        ],
+        "kind": [
+          "human"
+        ]
+      },
+      {
+        "id": "watch_repairer_role_model",
+        "ko": "a watch repairer under a loupe",
+        "en": "a watch repairer under a loupe",
+        "weight": 1,
+        "tags": [
+          "human",
+          "role",
+          "craft"
+        ],
+        "kind": [
+          "human"
+        ]
+      },
+      {
+        "id": "instrument_luthier_role_model",
+        "ko": "a string-instrument maker at a bench",
+        "en": "a string-instrument maker at a bench",
+        "weight": 1,
+        "tags": [
+          "human",
+          "role",
+          "craft"
+        ],
+        "kind": [
+          "human"
+        ]
+      },
+      {
+        "id": "glassblower_role_model",
+        "ko": "a glassblower in a hot shop",
+        "en": "a glassblower in a hot shop",
+        "weight": 1,
+        "tags": [
+          "human",
+          "role",
+          "craft"
+        ],
+        "kind": [
+          "human"
+        ]
+      },
+      {
+        "id": "baker_role_model",
+        "ko": "a baker in a pre-dawn bakery",
+        "en": "a baker in a pre-dawn bakery",
+        "weight": 1,
+        "tags": [
+          "human",
+          "role",
+          "food"
+        ],
+        "kind": [
+          "human"
+        ]
+      },
+      {
+        "id": "printshop_operator_role_model",
+        "ko": "a printshop press operator",
+        "en": "a printshop press operator",
+        "weight": 1,
+        "tags": [
+          "human",
+          "role",
+          "craft"
+        ],
+        "kind": [
+          "human"
+        ]
+      },
+      {
+        "id": "natural_dyer_role_model",
+        "ko": "a natural dye artisan",
+        "en": "a natural dye artisan",
+        "weight": 1,
+        "tags": [
+          "human",
+          "role",
+          "craft"
+        ],
+        "kind": [
+          "human"
+        ]
+      },
+      {
+        "id": "brewer_role_model",
+        "ko": "a brewer checking fermentation tanks",
+        "en": "a brewer checking fermentation tanks",
+        "weight": 1,
+        "tags": [
+          "human",
+          "role",
+          "food"
+        ],
+        "kind": [
+          "human"
+        ]
+      },
+      {
+        "id": "perfumer_role_model",
+        "ko": "a perfumer testing scent strips",
+        "en": "a perfumer testing scent strips",
+        "weight": 1,
+        "tags": [
+          "human",
+          "role",
+          "craft"
+        ],
+        "kind": [
+          "human"
+        ]
+      },
+      {
+        "id": "framer_restorer_role_model",
+        "ko": "a traditional paper framer at a worktable",
+        "en": "a traditional paper framer at a worktable",
+        "weight": 1,
+        "tags": [
+          "human",
+          "role",
+          "craft"
+        ],
+        "kind": [
+          "human"
+        ]
+      },
+      {
+        "id": "courier_rider_role_model",
+        "ko": "a courier rider checking a route",
+        "en": "a courier rider checking a route",
+        "weight": 1,
+        "tags": [
+          "human",
+          "role",
+          "transit"
+        ],
+        "kind": [
+          "human"
+        ]
+      },
+      {
+        "id": "electrician_role_model",
+        "ko": "an electrician testing voltage safely",
+        "en": "an electrician testing voltage safely",
+        "weight": 1,
+        "tags": [
+          "human",
+          "role",
+          "technical"
+        ],
+        "kind": [
+          "human"
+        ]
+      },
+      {
+        "id": "crane_operator_role_model",
+        "ko": "a crane operator in a high cab",
+        "en": "a crane operator in a high cab",
+        "weight": 1,
+        "tags": [
+          "human",
+          "role",
+          "technical"
+        ],
+        "kind": [
+          "human"
+        ]
+      },
+      {
+        "id": "editor_role_model",
+        "ko": "an editor marking proofs with a red pencil",
+        "en": "an editor marking proofs with a red pencil",
+        "weight": 1,
+        "tags": [
+          "human",
+          "role",
+          "office"
+        ],
+        "kind": [
+          "human"
+        ]
+      },
+      {
+        "id": "sign_language_interpreter_role_model",
+        "ko": "a sign-language interpreter mid-gesture",
+        "en": "a sign-language interpreter mid-gesture",
+        "weight": 1,
+        "tags": [
+          "human",
+          "role",
+          "communication"
+        ],
+        "kind": [
+          "human"
+        ]
+      },
+      {
+        "id": "stage_lighting_designer_role_model",
+        "ko": "a stage lighting designer at a cue sheet",
+        "en": "a stage lighting designer at a cue sheet",
+        "weight": 1,
+        "tags": [
+          "human",
+          "role",
+          "stage"
+        ],
+        "kind": [
+          "human"
+        ]
+      },
+      {
+        "id": "makeup_artist_role_model",
+        "ko": "a makeup artist at a lit mirror",
+        "en": "a makeup artist at a lit mirror",
+        "weight": 1,
+        "tags": [
+          "human",
+          "role",
+          "stage"
+        ],
+        "kind": [
+          "human"
+        ]
+      },
+      {
+        "id": "puppeteer_role_model",
+        "ko": "a puppeteer positioning a hand puppet",
+        "en": "a puppeteer positioning a hand puppet",
+        "weight": 1,
+        "tags": [
+          "human",
+          "role",
+          "stage"
+        ],
+        "kind": [
+          "human"
+        ]
       }
     ],
     "person_origin": [
@@ -86809,6 +91904,227 @@
             "mid_repair_disassembled"
           ]
         }
+      },
+      {
+        "id": "directing_traffic_handsignal",
+        "ko": "directing traffic with clear hand signals",
+        "en": "directing traffic with clear hand signals",
+        "weight": 1,
+        "tags": [
+          "human",
+          "procedure",
+          "uniform"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "filling_incident_report",
+        "ko": "filling out an incident report",
+        "en": "filling out an incident report",
+        "weight": 1,
+        "tags": [
+          "human",
+          "procedure",
+          "paperwork"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "sorting_parcels_by_route",
+        "ko": "sorting parcels by route",
+        "en": "sorting parcels by route",
+        "weight": 1,
+        "tags": [
+          "human",
+          "procedure",
+          "logistics"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "demonstrating_proper_form",
+        "ko": "demonstrating proper athletic form",
+        "en": "demonstrating proper athletic form",
+        "weight": 1,
+        "tags": [
+          "human",
+          "sports",
+          "procedure"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "checking_vitals_handover",
+        "ko": "handing over a vitals chart",
+        "en": "handing over a vitals chart",
+        "weight": 1,
+        "tags": [
+          "human",
+          "clinical",
+          "procedure"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "calibrating_instrument",
+        "ko": "calibrating an instrument",
+        "en": "calibrating an instrument",
+        "weight": 1,
+        "tags": [
+          "human",
+          "technical",
+          "procedure"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "coiling_rescue_rope",
+        "ko": "coiling rescue rope properly",
+        "en": "coiling rescue rope properly",
+        "weight": 1,
+        "tags": [
+          "human",
+          "rescue",
+          "procedure"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "restoring_antique_surface",
+        "ko": "carefully restoring an antique surface",
+        "en": "carefully restoring an antique surface",
+        "weight": 1,
+        "tags": [
+          "human",
+          "craft"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "checking_loupe_watch",
+        "ko": "checking a watch movement under a loupe",
+        "en": "checking a watch movement under a loupe",
+        "weight": 1,
+        "tags": [
+          "human",
+          "craft",
+          "macro"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "testing_stage_light_cue",
+        "ko": "testing a stage lighting cue",
+        "en": "testing a stage lighting cue",
+        "weight": 1,
+        "tags": [
+          "human",
+          "stage",
+          "screen"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "retouching_stage_makeup",
+        "ko": "retouching stage makeup",
+        "en": "retouching stage makeup",
+        "weight": 1,
+        "tags": [
+          "human",
+          "stage",
+          "mirror"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "puppet_hand_positioning",
+        "ko": "positioning a hand puppet",
+        "en": "positioning a hand puppet",
+        "weight": 1,
+        "tags": [
+          "human",
+          "stage",
+          "craft"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "translating_sign_language",
+        "ko": "interpreting in sign language",
+        "en": "interpreting in sign language",
+        "weight": 1,
+        "tags": [
+          "human",
+          "communication"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "testing_voltage_safely",
+        "ko": "checking voltage safely with a tester",
+        "en": "checking voltage safely with a tester",
+        "weight": 1,
+        "tags": [
+          "human",
+          "technical",
+          "safety"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "operating_train_controls",
+        "ko": "operating train cab controls",
+        "en": "operating train cab controls",
+        "weight": 1,
+        "tags": [
+          "human",
+          "transit"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "mixing_fragrance_strip",
+        "ko": "comparing scent strips",
+        "en": "comparing scent strips",
+        "weight": 1,
+        "tags": [
+          "human",
+          "sensory",
+          "craft"
+        ],
+        "for_any": [
+          "human"
+        ]
       }
     ],
     "capture_context": [
@@ -87294,6 +92610,47 @@
           "capture"
         ],
         "embedding_text": "machine-vision sensor capture as robot concept proof or scene anchor"
+      },
+      {
+        "id": "shift_log_attachment_photo",
+        "ko": "photo attached to a shift log",
+        "en": "photo attached to a shift log",
+        "weight": 1.0,
+        "tags": [
+          "work",
+          "procedure"
+        ]
+      },
+      {
+        "id": "workplace_safety_audit_photo",
+        "ko": "workplace safety-audit photograph",
+        "en": "workplace safety-audit photograph",
+        "weight": 1.0,
+        "tags": [
+          "work",
+          "safety",
+          "procedure"
+        ]
+      },
+      {
+        "id": "training_manual_reference_photo",
+        "ko": "training manual reference photograph",
+        "en": "training manual reference photograph",
+        "weight": 1.0,
+        "tags": [
+          "work",
+          "procedure"
+        ]
+      },
+      {
+        "id": "single_photo_not_diagram_context",
+        "ko": "single real scene photograph, not a diagram",
+        "en": "single real scene photograph, not a diagram",
+        "weight": 1.0,
+        "tags": [
+          "photo",
+          "anti_diagram_context"
+        ]
       }
     ],
     "prop": [
@@ -94419,6 +99776,255 @@
             "data_network"
           ]
         }
+      },
+      {
+        "id": "traffic_baton_prop",
+        "ko": "a traffic-control baton",
+        "en": "a traffic-control baton",
+        "weight": 1,
+        "tags": [
+          "human",
+          "procedure",
+          "uniform"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "incident_clipboard_prop",
+        "ko": "an incident-report clipboard",
+        "en": "an incident-report clipboard",
+        "weight": 1,
+        "tags": [
+          "human",
+          "procedure",
+          "paperwork"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "route_manifest_prop",
+        "ko": "a route manifest sheet",
+        "en": "a route manifest sheet",
+        "weight": 1,
+        "tags": [
+          "human",
+          "procedure",
+          "logistics"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "athletic_tape_roll_prop",
+        "ko": "a roll of athletic tape",
+        "en": "a roll of athletic tape",
+        "weight": 1,
+        "tags": [
+          "human",
+          "sports",
+          "procedure"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "rescue_rope_radio_prop",
+        "ko": "rescue rope and a radio",
+        "en": "rescue rope and a radio",
+        "weight": 1,
+        "tags": [
+          "human",
+          "rescue",
+          "procedure"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "field_notebook_binoculars_prop",
+        "ko": "a field notebook and binoculars",
+        "en": "a field notebook and binoculars",
+        "weight": 1,
+        "tags": [
+          "human",
+          "science",
+          "outdoor"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "restoration_scalpel_brush_prop",
+        "ko": "a restoration scalpel and fine brush",
+        "en": "a restoration scalpel and fine brush",
+        "weight": 1,
+        "tags": [
+          "human",
+          "craft"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "watchmaker_loupe_prop",
+        "ko": "a watchmaker loupe",
+        "en": "a watchmaker loupe",
+        "weight": 1,
+        "tags": [
+          "human",
+          "craft",
+          "macro"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "scent_strip_vials_prop",
+        "ko": "scent strips and small vials",
+        "en": "scent strips and small vials",
+        "weight": 1,
+        "tags": [
+          "human",
+          "sensory",
+          "craft"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "proof_red_pencil_prop",
+        "ko": "proof sheets and a red pencil",
+        "en": "proof sheets and a red pencil",
+        "weight": 1,
+        "tags": [
+          "human",
+          "paperwork",
+          "office"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "sign_language_tablet_prop",
+        "ko": "an interpreter tablet",
+        "en": "an interpreter tablet",
+        "weight": 1,
+        "tags": [
+          "human",
+          "communication"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "stage_cue_sheet_prop",
+        "ko": "a stage lighting cue sheet",
+        "en": "a stage lighting cue sheet",
+        "weight": 1,
+        "tags": [
+          "human",
+          "stage",
+          "paperwork"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "makeup_palette_brush_prop",
+        "ko": "a makeup palette and brush",
+        "en": "a makeup palette and brush",
+        "weight": 1,
+        "tags": [
+          "human",
+          "stage",
+          "mirror"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "hand_puppet_prop",
+        "ko": "a hand puppet prop",
+        "en": "a hand puppet prop",
+        "weight": 1,
+        "tags": [
+          "human",
+          "stage",
+          "craft"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "voltage_tester_prop",
+        "ko": "a voltage tester",
+        "en": "a voltage tester",
+        "weight": 1,
+        "tags": [
+          "human",
+          "technical",
+          "safety"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "train_control_key_prop",
+        "ko": "a train control key",
+        "en": "a train control key",
+        "weight": 1,
+        "tags": [
+          "human",
+          "transit"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "pharmacy_prescription_bag_prop",
+        "ko": "a pharmacy prescription bag",
+        "en": "a pharmacy prescription bag",
+        "weight": 1,
+        "tags": [
+          "human",
+          "clinical",
+          "service"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "veterinary_stethoscope_prop",
+        "ko": "a veterinary stethoscope",
+        "en": "a veterinary stethoscope",
+        "weight": 1,
+        "tags": [
+          "human",
+          "clinical",
+          "animal"
+        ],
+        "for_any": [
+          "human"
+        ]
       }
     ],
     "fetish_styling": [
@@ -99871,6 +105477,435 @@
             "sacred"
           ]
         }
+      },
+      {
+        "id": "id_check_service_counter",
+        "ko": "at an identity-check service counter",
+        "en": "at an identity-check service counter",
+        "weight": 1.0,
+        "tags": [
+          "service",
+          "social",
+          "interior"
+        ]
+      },
+      {
+        "id": "city_bus_one_seat_gap",
+        "ko": "inside a city bus with one empty seat gap",
+        "en": "inside a city bus with one empty seat gap",
+        "weight": 1.0,
+        "tags": [
+          "urban",
+          "transit",
+          "social"
+        ]
+      },
+      {
+        "id": "market_stare_documentary_lane",
+        "ko": "in a market lane with restrained bystander stares",
+        "en": "in a market lane with restrained bystander stares",
+        "weight": 1.0,
+        "tags": [
+          "street",
+          "market",
+          "social"
+        ]
+      },
+      {
+        "id": "shop_window_after_hours",
+        "ko": "in front of an after-hours shop window",
+        "en": "in front of an after-hours shop window",
+        "weight": 1.0,
+        "tags": [
+          "urban",
+          "reflection"
+        ]
+      },
+      {
+        "id": "still_water_underpass",
+        "ko": "in an underpass with still water reflections",
+        "en": "in an underpass with still water reflections",
+        "weight": 1.0,
+        "tags": [
+          "urban",
+          "reflection"
+        ]
+      },
+      {
+        "id": "cctv_monitor_wall",
+        "ko": "before a wall of CCTV monitors",
+        "en": "before a wall of CCTV monitors",
+        "weight": 1.0,
+        "tags": [
+          "surveillance",
+          "screen",
+          "anti_diagram_context"
+        ]
+      },
+      {
+        "id": "traffic_crossing_rain",
+        "ko": "at a rainy crosswalk traffic-control point",
+        "en": "at a rainy crosswalk traffic-control point",
+        "weight": 1.0,
+        "tags": [
+          "street",
+          "procedure",
+          "uniform"
+        ]
+      },
+      {
+        "id": "lost_child_service_desk",
+        "ko": "at a lost-child service desk",
+        "en": "at a lost-child service desk",
+        "weight": 1.0,
+        "tags": [
+          "service",
+          "procedure"
+        ]
+      },
+      {
+        "id": "gift_logistics_warehouse",
+        "ko": "inside a gift logistics warehouse",
+        "en": "inside a gift logistics warehouse",
+        "weight": 1.0,
+        "tags": [
+          "logistics",
+          "seasonal",
+          "procedure"
+        ]
+      },
+      {
+        "id": "office_fire_drill_stairwell",
+        "ko": "in an office fire-drill stairwell",
+        "en": "in an office fire-drill stairwell",
+        "weight": 1.0,
+        "tags": [
+          "office",
+          "safety",
+          "procedure"
+        ]
+      },
+      {
+        "id": "training_gym_form_check",
+        "ko": "in a training gym during form check",
+        "en": "in a training gym during form check",
+        "weight": 1.0,
+        "tags": [
+          "sports",
+          "procedure"
+        ]
+      },
+      {
+        "id": "pharmacy_waiting_bench",
+        "ko": "on a pharmacy waiting bench",
+        "en": "on a pharmacy waiting bench",
+        "weight": 1.0,
+        "tags": [
+          "daily",
+          "service"
+        ]
+      },
+      {
+        "id": "grocery_aisle_evening",
+        "ko": "in an evening grocery aisle",
+        "en": "in an evening grocery aisle",
+        "weight": 1.0,
+        "tags": [
+          "daily",
+          "service"
+        ]
+      },
+      {
+        "id": "apartment_corridor_errand",
+        "ko": "in an apartment corridor during errands",
+        "en": "in an apartment corridor during errands",
+        "weight": 1.0,
+        "tags": [
+          "daily",
+          "domestic"
+        ]
+      },
+      {
+        "id": "costume_workshop_backstage",
+        "ko": "in a backstage costume workshop",
+        "en": "in a backstage costume workshop",
+        "weight": 1.0,
+        "tags": [
+          "stage",
+          "craft"
+        ]
+      },
+      {
+        "id": "mascot_break_room",
+        "ko": "inside a theme-park mascot break room",
+        "en": "inside a theme-park mascot break room",
+        "weight": 1.0,
+        "tags": [
+          "stage",
+          "workplace"
+        ]
+      },
+      {
+        "id": "stage_door_staff_entry",
+        "ko": "at a stage-door staff entrance",
+        "en": "at a stage-door staff entrance",
+        "weight": 1.0,
+        "tags": [
+          "stage",
+          "workplace"
+        ]
+      },
+      {
+        "id": "whiteboard_meeting_room_bokeh",
+        "ko": "in a meeting room with the whiteboard blurred into bokeh",
+        "en": "in a meeting room with the whiteboard blurred into bokeh",
+        "weight": 1.0,
+        "tags": [
+          "office",
+          "screen",
+          "anti_diagram_context"
+        ]
+      },
+      {
+        "id": "watch_repair_bench",
+        "ko": "at a watch repair bench",
+        "en": "at a watch repair bench",
+        "weight": 1.0,
+        "tags": [
+          "craft",
+          "macro"
+        ]
+      },
+      {
+        "id": "field_biology_hide",
+        "ko": "in a field biology observation hide",
+        "en": "in a field biology observation hide",
+        "weight": 1.0,
+        "tags": [
+          "science",
+          "outdoor"
+        ]
+      },
+      {
+        "id": "antique_restoration_table",
+        "ko": "at an antique restoration table",
+        "en": "at an antique restoration table",
+        "weight": 1.0,
+        "tags": [
+          "craft",
+          "interior"
+        ]
+      },
+      {
+        "id": "mountain_rescue_base",
+        "ko": "at a mountain-rescue equipment base",
+        "en": "at a mountain-rescue equipment base",
+        "weight": 1.0,
+        "tags": [
+          "rescue",
+          "outdoor"
+        ]
+      },
+      {
+        "id": "railway_driver_cab",
+        "ko": "inside a railway driver cab",
+        "en": "inside a railway driver cab",
+        "weight": 1.0,
+        "tags": [
+          "transit",
+          "workplace"
+        ]
+      },
+      {
+        "id": "lighthouse_lantern_room",
+        "ko": "inside a lighthouse lantern room",
+        "en": "inside a lighthouse lantern room",
+        "weight": 1.0,
+        "tags": [
+          "maritime",
+          "workplace"
+        ]
+      },
+      {
+        "id": "veterinary_exam_room",
+        "ko": "inside a veterinary exam room",
+        "en": "inside a veterinary exam room",
+        "weight": 1.0,
+        "tags": [
+          "clinical",
+          "animal"
+        ]
+      },
+      {
+        "id": "pharmacy_dispensing_counter",
+        "ko": "at a pharmacy dispensing counter",
+        "en": "at a pharmacy dispensing counter",
+        "weight": 1.0,
+        "tags": [
+          "clinical",
+          "service"
+        ]
+      },
+      {
+        "id": "heritage_restoration_lab",
+        "ko": "in a cultural heritage restoration lab",
+        "en": "in a cultural heritage restoration lab",
+        "weight": 1.0,
+        "tags": [
+          "craft",
+          "archive"
+        ]
+      },
+      {
+        "id": "glassblowing_hotshop",
+        "ko": "in a glassblowing hot shop",
+        "en": "in a glassblowing hot shop",
+        "weight": 1.0,
+        "tags": [
+          "craft",
+          "workshop"
+        ]
+      },
+      {
+        "id": "pre_dawn_bakery",
+        "ko": "inside a pre-dawn bakery",
+        "en": "inside a pre-dawn bakery",
+        "weight": 1.0,
+        "tags": [
+          "food",
+          "workplace"
+        ]
+      },
+      {
+        "id": "printshop_press_floor",
+        "ko": "on a printshop press floor",
+        "en": "on a printshop press floor",
+        "weight": 1.0,
+        "tags": [
+          "craft",
+          "workplace"
+        ]
+      },
+      {
+        "id": "dye_workshop_vats",
+        "ko": "beside dye vats in a dye workshop",
+        "en": "beside dye vats in a dye workshop",
+        "weight": 1.0,
+        "tags": [
+          "craft",
+          "workplace"
+        ]
+      },
+      {
+        "id": "brewery_fermentation_room",
+        "ko": "inside a brewery fermentation room",
+        "en": "inside a brewery fermentation room",
+        "weight": 1.0,
+        "tags": [
+          "food",
+          "workplace"
+        ]
+      },
+      {
+        "id": "perfumer_organ_table",
+        "ko": "at a perfumer organ table",
+        "en": "at a perfumer organ table",
+        "weight": 1.0,
+        "tags": [
+          "craft",
+          "sensory"
+        ]
+      },
+      {
+        "id": "paper_framing_workshop",
+        "ko": "inside a paper-framing workshop",
+        "en": "inside a paper-framing workshop",
+        "weight": 1.0,
+        "tags": [
+          "craft",
+          "traditional"
+        ]
+      },
+      {
+        "id": "courier_route_curbside",
+        "ko": "curbside while checking a courier route",
+        "en": "curbside while checking a courier route",
+        "weight": 1.0,
+        "tags": [
+          "transit",
+          "work"
+        ]
+      },
+      {
+        "id": "electrical_panel_room",
+        "ko": "inside an electrical panel room",
+        "en": "inside an electrical panel room",
+        "weight": 1.0,
+        "tags": [
+          "technical",
+          "safety"
+        ]
+      },
+      {
+        "id": "crane_operator_cab",
+        "ko": "inside a crane operator cab",
+        "en": "inside a crane operator cab",
+        "weight": 1.0,
+        "tags": [
+          "technical",
+          "height"
+        ]
+      },
+      {
+        "id": "proofreading_editor_desk",
+        "ko": "at an editor desk covered with proofs",
+        "en": "at an editor desk covered with proofs",
+        "weight": 1.0,
+        "tags": [
+          "office",
+          "paperwork"
+        ]
+      },
+      {
+        "id": "interpretation_booth",
+        "ko": "inside an interpretation booth",
+        "en": "inside an interpretation booth",
+        "weight": 1.0,
+        "tags": [
+          "communication",
+          "workplace"
+        ]
+      },
+      {
+        "id": "stage_lighting_booth",
+        "ko": "inside a stage lighting booth",
+        "en": "inside a stage lighting booth",
+        "weight": 1.0,
+        "tags": [
+          "stage",
+          "screen",
+          "anti_diagram_context"
+        ]
+      },
+      {
+        "id": "makeup_mirror_station",
+        "ko": "at a lit makeup mirror station",
+        "en": "at a lit makeup mirror station",
+        "weight": 1.0,
+        "tags": [
+          "stage",
+          "mirror"
+        ]
+      },
+      {
+        "id": "puppet_theater_backstage",
+        "ko": "backstage at a puppet theater",
+        "en": "backstage at a puppet theater",
+        "weight": 1.0,
+        "tags": [
+          "stage",
+          "craft"
+        ]
       }
     ],
     "world": [
@@ -107163,6 +113198,68 @@
           "composition"
         ],
         "embedding_text": "centered screen-face composition as robot concept proof or scene anchor"
+      },
+      {
+        "id": "body_part_evidence_crop",
+        "ko": "body-part evidence crop emphasizing transformation detail",
+        "en": "body-part evidence crop emphasizing transformation detail",
+        "weight": 1.0,
+        "tags": [
+          "human",
+          "beastkin",
+          "macro"
+        ]
+      },
+      {
+        "id": "tail_counterbalance_pose_frame",
+        "ko": "frame showing tail counterbalance in posture",
+        "en": "frame showing tail counterbalance in posture",
+        "weight": 1.0,
+        "tags": [
+          "human",
+          "beastkin"
+        ]
+      },
+      {
+        "id": "reflection_mismatch_split",
+        "ko": "split frame where subject and reflection differ",
+        "en": "split frame where subject and reflection differ",
+        "weight": 1.0,
+        "tags": [
+          "reflection",
+          "surreal",
+          "beastkin"
+        ]
+      },
+      {
+        "id": "screen_bokeh_over_shoulder",
+        "ko": "over-shoulder composition with screens blurred into bokeh",
+        "en": "over-shoulder composition with screens blurred into bokeh",
+        "weight": 1.0,
+        "tags": [
+          "screen",
+          "anti_diagram_context"
+        ]
+      },
+      {
+        "id": "whiteboard_bokeh_portrait",
+        "ko": "portrait with the whiteboard blurred into bokeh",
+        "en": "portrait with the whiteboard blurred into bokeh",
+        "weight": 1.0,
+        "tags": [
+          "office",
+          "anti_diagram_context"
+        ]
+      },
+      {
+        "id": "hands_first_task_pov",
+        "ko": "first-person task POV led by hands",
+        "en": "first-person task POV led by hands",
+        "weight": 1.0,
+        "tags": [
+          "pov",
+          "work"
+        ]
       }
     ],
     "subject_framing": [
@@ -110964,6 +117061,36 @@
           "warmth"
         ],
         "embedding_text": "domestic synthetic warmth as robot concept proof or scene anchor"
+      },
+      {
+        "id": "social_othering_quiet_tension",
+        "ko": "quiet tension from social othering",
+        "en": "quiet tension from social othering",
+        "weight": 0.8,
+        "tags": [
+          "social",
+          "beastkin"
+        ]
+      },
+      {
+        "id": "procedural_focus",
+        "ko": "focused procedural calm",
+        "en": "focused procedural calm",
+        "weight": 0.8,
+        "tags": [
+          "procedure",
+          "work"
+        ]
+      },
+      {
+        "id": "offstage_workaday_calm",
+        "ko": "offstage workaday calm",
+        "en": "offstage workaday calm",
+        "weight": 0.8,
+        "tags": [
+          "stage",
+          "work"
+        ]
       }
     ],
     "surreal_concept": [
@@ -119620,6 +125747,951 @@
           "safety_profile"
         ],
         "embedding_text": "royal profile suppressing sexualized monarchy or pin-up framing"
+      },
+      {
+        "id": "beastkin_dignity_profile",
+        "ko": "beastkin dignity profile: living person, not mascot or spectacle",
+        "en": "beastkin dignity profile: living person, not mascot or spectacle",
+        "weight": 0.1,
+        "tags": [
+          "safety",
+          "beastkin"
+        ]
+      },
+      {
+        "id": "procedural_authority_profile",
+        "ko": "procedural authority safety profile",
+        "en": "procedural authority safety profile",
+        "weight": 0.1,
+        "tags": [
+          "safety",
+          "uniform",
+          "procedure"
+        ]
+      },
+      {
+        "id": "companion_modesty_profile",
+        "ko": "daily companion modesty safety profile",
+        "en": "daily companion modesty safety profile",
+        "weight": 0.1,
+        "tags": [
+          "safety",
+          "relationship",
+          "daily"
+        ]
+      },
+      {
+        "id": "screen_workplace_profile",
+        "ko": "screen workplace anti-diagram safety profile",
+        "en": "screen workplace anti-diagram safety profile",
+        "weight": 0.1,
+        "tags": [
+          "safety",
+          "screen",
+          "anti_diagram_context"
+        ]
+      }
+    ],
+    "species_marker": [
+      {
+        "id": "canid_mobile_ears_tail_counterbalance",
+        "ko": "mobile canid ears and weighted tail balance",
+        "en": "mobile canid ears and weighted tail balance",
+        "weight": 0.8,
+        "tags": [
+          "human",
+          "beastkin",
+          "species",
+          "canid",
+          "human_animal_boundary"
+        ]
+      },
+      {
+        "id": "feline_reflective_eye_whisker_shadow",
+        "ko": "feline reflective eyes and whisker-shadow skin marks",
+        "en": "feline reflective eyes and whisker-shadow skin marks",
+        "weight": 0.8,
+        "tags": [
+          "human",
+          "beastkin",
+          "species",
+          "feline",
+          "human_animal_boundary"
+        ]
+      },
+      {
+        "id": "lagomorph_long_sensory_ears",
+        "ko": "long rabbit or hare sensory ears reacting to sound",
+        "en": "long rabbit or hare sensory ears reacting to sound",
+        "weight": 0.8,
+        "tags": [
+          "human",
+          "beastkin",
+          "species",
+          "lagomorph",
+          "human_animal_boundary"
+        ]
+      },
+      {
+        "id": "caprine_horizontal_pupil_small_horns",
+        "ko": "horizontal caprine pupils and small living horns",
+        "en": "horizontal caprine pupils and small living horns",
+        "weight": 0.8,
+        "tags": [
+          "human",
+          "beastkin",
+          "species",
+          "caprine",
+          "human_animal_boundary"
+        ]
+      },
+      {
+        "id": "avian_feather_ruff_wing_sleeve",
+        "ko": "avian feather ruff and wing-like sleeve structure",
+        "en": "avian feather ruff and wing-like sleeve structure",
+        "weight": 0.8,
+        "tags": [
+          "human",
+          "beastkin",
+          "species",
+          "avian",
+          "human_animal_boundary"
+        ]
+      },
+      {
+        "id": "aquatic_mammal_wet_fur_collar",
+        "ko": "aquatic mammal wet fur boundary at collar",
+        "en": "aquatic mammal wet fur boundary at collar",
+        "weight": 0.8,
+        "tags": [
+          "human",
+          "beastkin",
+          "species",
+          "aquatic_mammal",
+          "human_animal_boundary"
+        ]
+      },
+      {
+        "id": "reptile_fine_scale_patch",
+        "ko": "fine reptile scale patches across neck and wrist",
+        "en": "fine reptile scale patches across neck and wrist",
+        "weight": 0.8,
+        "tags": [
+          "human",
+          "beastkin",
+          "species",
+          "reptile",
+          "human_animal_boundary"
+        ]
+      },
+      {
+        "id": "rodent_round_ears_nimble_hands",
+        "ko": "round rodent ears and nimble hands",
+        "en": "round rodent ears and nimble hands",
+        "weight": 0.75,
+        "tags": [
+          "human",
+          "beastkin",
+          "species",
+          "rodent",
+          "human_animal_boundary"
+        ]
+      },
+      {
+        "id": "mustelid_mask_marking_hands",
+        "ko": "mustelid mask markings and dexterous hands",
+        "en": "mustelid mask markings and dexterous hands",
+        "weight": 0.75,
+        "tags": [
+          "human",
+          "beastkin",
+          "species",
+          "mustelid",
+          "human_animal_boundary"
+        ]
+      },
+      {
+        "id": "bat_membrane_ear_hint",
+        "ko": "bat ears and subtle inner-arm membrane shadow",
+        "en": "bat ears and subtle inner-arm membrane shadow",
+        "weight": 0.6,
+        "tags": [
+          "human",
+          "beastkin",
+          "species",
+          "bat",
+          "human_animal_boundary",
+          "guarded"
+        ]
+      },
+      {
+        "id": "snake_smooth_scale_neckline",
+        "ko": "opt-in serpent smooth scale neckline",
+        "en": "opt-in serpent smooth scale neckline",
+        "weight": 0.1,
+        "tags": [
+          "human",
+          "beastkin",
+          "species",
+          "snake",
+          "human_animal_boundary",
+          "opt_in"
+        ]
+      },
+      {
+        "id": "koi_gill_sheen_trace",
+        "ko": "opt-in gill-line trace and wet koi-like sheen",
+        "en": "opt-in gill-line trace and wet koi-like sheen",
+        "weight": 0.1,
+        "tags": [
+          "human",
+          "beastkin",
+          "species",
+          "fish",
+          "human_animal_boundary",
+          "opt_in"
+        ]
+      },
+      {
+        "id": "moth_antennae_wing_shadow",
+        "ko": "opt-in moth antennae and powdery wing shadow",
+        "en": "opt-in moth antennae and powdery wing shadow",
+        "weight": 0.1,
+        "tags": [
+          "human",
+          "beastkin",
+          "species",
+          "insect",
+          "human_animal_boundary",
+          "opt_in"
+        ]
+      },
+      {
+        "id": "cephalopod_sucker_shadow_opt_in",
+        "ko": "opt-in cephalopod sucker-shadow cue",
+        "en": "opt-in cephalopod sucker-shadow cue",
+        "weight": 0.1,
+        "tags": [
+          "human",
+          "beastkin",
+          "species",
+          "cephalopod",
+          "human_animal_boundary",
+          "opt_in"
+        ]
+      },
+      {
+        "id": "suid_grounded_tusk_hint",
+        "ko": "guarded suid grounded neck and small tusk hint",
+        "en": "guarded suid grounded neck and small tusk hint",
+        "weight": 0.65,
+        "tags": [
+          "human",
+          "beastkin",
+          "species",
+          "suid",
+          "guarded"
+        ]
+      },
+      {
+        "id": "amphibian_damp_eye_gill_hint",
+        "ko": "opt-in amphibian damp eye and soft gill hint",
+        "en": "opt-in amphibian damp eye and soft gill hint",
+        "weight": 0.65,
+        "tags": [
+          "human",
+          "beastkin",
+          "species",
+          "amphibian",
+          "opt_in"
+        ]
+      }
+    ],
+    "transition_stage": [
+      {
+        "id": "trace_stage_trait_hint",
+        "ko": "trace-stage animal trait hint",
+        "en": "trace-stage animal trait hint",
+        "weight": 0.8,
+        "tags": [
+          "human",
+          "beastkin",
+          "transition"
+        ]
+      },
+      {
+        "id": "boundary_stage_visible_skin_shift",
+        "ko": "visible boundary-stage skin to trait shift",
+        "en": "visible boundary-stage skin to trait shift",
+        "weight": 0.9,
+        "tags": [
+          "human",
+          "beastkin",
+          "transition"
+        ]
+      },
+      {
+        "id": "prominent_stage_structural_body_trait",
+        "ko": "prominent structural body trait",
+        "en": "prominent structural body trait",
+        "weight": 0.75,
+        "tags": [
+          "human",
+          "beastkin",
+          "transition"
+        ]
+      },
+      {
+        "id": "mid_shift_stage_opt_in",
+        "ko": "opt-in mid-shift transformation stage without gore",
+        "en": "opt-in mid-shift transformation stage without gore",
+        "weight": 0.1,
+        "tags": [
+          "human",
+          "beastkin",
+          "transition",
+          "opt_in"
+        ]
+      }
+    ],
+    "procedure_step": [
+      {
+        "id": "equipment_check",
+        "ko": "equipment check procedure",
+        "en": "equipment check procedure",
+        "weight": 0.8,
+        "tags": [
+          "human",
+          "procedure",
+          "work"
+        ]
+      },
+      {
+        "id": "pre_shift_briefing",
+        "ko": "pre-shift briefing",
+        "en": "pre-shift briefing",
+        "weight": 0.75,
+        "tags": [
+          "human",
+          "procedure",
+          "work"
+        ]
+      },
+      {
+        "id": "mid_task_protocol",
+        "ko": "mid-task protocol",
+        "en": "mid-task protocol",
+        "weight": 0.85,
+        "tags": [
+          "human",
+          "procedure",
+          "work"
+        ]
+      },
+      {
+        "id": "handover_debrief",
+        "ko": "handover and debrief",
+        "en": "handover and debrief",
+        "weight": 0.8,
+        "tags": [
+          "human",
+          "procedure",
+          "work"
+        ]
+      },
+      {
+        "id": "logging_report",
+        "ko": "logging a report",
+        "en": "logging a report",
+        "weight": 0.85,
+        "tags": [
+          "human",
+          "procedure",
+          "paperwork"
+        ]
+      },
+      {
+        "id": "identity_verification",
+        "ko": "identity verification procedure",
+        "en": "identity verification procedure",
+        "weight": 0.8,
+        "tags": [
+          "human",
+          "procedure",
+          "service"
+        ]
+      },
+      {
+        "id": "safety_inspection",
+        "ko": "safety inspection procedure",
+        "en": "safety inspection procedure",
+        "weight": 0.8,
+        "tags": [
+          "human",
+          "procedure",
+          "safety"
+        ]
+      },
+      {
+        "id": "route_sorting",
+        "ko": "route sorting procedure",
+        "en": "route sorting procedure",
+        "weight": 0.8,
+        "tags": [
+          "human",
+          "procedure",
+          "logistics"
+        ]
+      }
+    ],
+    "duty_prop_state": [
+      {
+        "id": "checklist_half_ticked",
+        "ko": "half-ticked checklist",
+        "en": "half-ticked checklist",
+        "weight": 0.75,
+        "tags": [
+          "human",
+          "work",
+          "prop_state"
+        ]
+      },
+      {
+        "id": "radio_in_use",
+        "ko": "radio actively in use",
+        "en": "radio actively in use",
+        "weight": 0.7,
+        "tags": [
+          "human",
+          "work",
+          "prop_state"
+        ]
+      },
+      {
+        "id": "worn_in_gloves",
+        "ko": "worn-in work gloves",
+        "en": "worn-in work gloves",
+        "weight": 0.7,
+        "tags": [
+          "human",
+          "work",
+          "prop_state"
+        ]
+      },
+      {
+        "id": "regulation_folded",
+        "ko": "folded regulation sheet",
+        "en": "folded regulation sheet",
+        "weight": 0.7,
+        "tags": [
+          "human",
+          "work",
+          "paperwork"
+        ]
+      },
+      {
+        "id": "access_card_scanned",
+        "ko": "freshly scanned access card",
+        "en": "freshly scanned access card",
+        "weight": 0.7,
+        "tags": [
+          "human",
+          "work",
+          "security"
+        ]
+      },
+      {
+        "id": "clipboard_open_case",
+        "ko": "open case clipboard",
+        "en": "open case clipboard",
+        "weight": 0.75,
+        "tags": [
+          "human",
+          "work",
+          "paperwork"
+        ]
+      },
+      {
+        "id": "taped_training_joint",
+        "ko": "taped training joint",
+        "en": "taped training joint",
+        "weight": 0.65,
+        "tags": [
+          "human",
+          "sports",
+          "safety"
+        ]
+      },
+      {
+        "id": "package_route_labels",
+        "ko": "packages sorted by route labels",
+        "en": "packages sorted by route labels",
+        "weight": 0.7,
+        "tags": [
+          "human",
+          "logistics",
+          "paperwork"
+        ]
+      }
+    ],
+    "social_cue": [
+      {
+        "id": "empty_adjacent_seat",
+        "ko": "empty adjacent seat marking distance",
+        "en": "empty adjacent seat marking distance",
+        "weight": 0.8,
+        "tags": [
+          "human",
+          "social",
+          "beastkin"
+        ]
+      },
+      {
+        "id": "bystander_double_take",
+        "ko": "restrained bystander double take",
+        "en": "restrained bystander double take",
+        "weight": 0.8,
+        "tags": [
+          "human",
+          "social",
+          "street"
+        ]
+      },
+      {
+        "id": "species_access_signage",
+        "ko": "textless species-access signage",
+        "en": "textless species-access signage",
+        "weight": 0.65,
+        "tags": [
+          "human",
+          "social",
+          "beastkin",
+          "textless"
+        ]
+      },
+      {
+        "id": "polite_counter_distance",
+        "ko": "polite distance across a service counter",
+        "en": "polite distance across a service counter",
+        "weight": 0.75,
+        "tags": [
+          "human",
+          "service",
+          "social"
+        ]
+      },
+      {
+        "id": "protective_parent_pull",
+        "ko": "protective parent subtly pulling a child closer",
+        "en": "protective parent subtly pulling a child closer",
+        "weight": 0.55,
+        "tags": [
+          "human",
+          "social",
+          "documentary"
+        ]
+      },
+      {
+        "id": "crowd_parting_around_tail",
+        "ko": "crowd quietly parting around tail space",
+        "en": "crowd quietly parting around tail space",
+        "weight": 0.75,
+        "tags": [
+          "human",
+          "beastkin",
+          "social"
+        ]
+      },
+      {
+        "id": "service_staff_paused_hand",
+        "ko": "service worker hand paused mid-gesture",
+        "en": "service worker hand paused mid-gesture",
+        "weight": 0.65,
+        "tags": [
+          "human",
+          "service",
+          "social"
+        ]
+      },
+      {
+        "id": "elevator_reflection_stares",
+        "ko": "multiple restrained stares in elevator reflections",
+        "en": "multiple restrained stares in elevator reflections",
+        "weight": 0.65,
+        "tags": [
+          "human",
+          "social",
+          "reflection"
+        ]
+      }
+    ],
+    "reflection_logic": [
+      {
+        "id": "faithful_reflection",
+        "ko": "faithful reflection matching the subject",
+        "en": "faithful reflection matching the subject",
+        "weight": 0.7,
+        "tags": [
+          "reflection",
+          "photo"
+        ]
+      },
+      {
+        "id": "species_truth_reflection",
+        "ko": "reflection shows a truer species self",
+        "en": "reflection shows a truer species self",
+        "weight": 0.85,
+        "tags": [
+          "reflection",
+          "beastkin",
+          "surreal"
+        ]
+      },
+      {
+        "id": "delayed_reflection",
+        "ko": "subtly delayed reflection",
+        "en": "subtly delayed reflection",
+        "weight": 0.7,
+        "tags": [
+          "reflection",
+          "surreal"
+        ]
+      },
+      {
+        "id": "cctv_other_self",
+        "ko": "different self visible on CCTV monitor",
+        "en": "different self visible on CCTV monitor",
+        "weight": 0.7,
+        "tags": [
+          "reflection",
+          "surveillance",
+          "screen",
+          "anti_diagram_context"
+        ]
+      },
+      {
+        "id": "phone_front_camera_mismatch",
+        "ko": "front camera shows identity mismatch",
+        "en": "front camera shows identity mismatch",
+        "weight": 0.7,
+        "tags": [
+          "reflection",
+          "phone",
+          "screen",
+          "anti_diagram_context"
+        ]
+      },
+      {
+        "id": "shadow_shows_animal_self",
+        "ko": "cast shadow reveals a more animal self",
+        "en": "cast shadow reveals a more animal self",
+        "weight": 0.75,
+        "tags": [
+          "reflection",
+          "beastkin",
+          "shadow"
+        ]
+      }
+    ],
+    "camera_height": [
+      {
+        "id": "eye_level_observer",
+        "ko": "eye-level observer camera height",
+        "en": "eye-level observer camera height",
+        "weight": 0.9,
+        "tags": [
+          "camera",
+          "photo"
+        ]
+      },
+      {
+        "id": "chest_level_service_counter",
+        "ko": "chest-level service-counter camera height",
+        "en": "chest-level service-counter camera height",
+        "weight": 0.75,
+        "tags": [
+          "camera",
+          "service"
+        ]
+      },
+      {
+        "id": "overhead_table_evidence",
+        "ko": "overhead table evidence camera height",
+        "en": "overhead table evidence camera height",
+        "weight": 0.7,
+        "tags": [
+          "camera",
+          "evidence"
+        ]
+      },
+      {
+        "id": "security_camera_high_corner",
+        "ko": "high-corner security camera height",
+        "en": "high-corner security camera height",
+        "weight": 0.65,
+        "tags": [
+          "camera",
+          "surveillance",
+          "anti_diagram_context"
+        ]
+      },
+      {
+        "id": "child_height_public_gaze",
+        "ko": "child-height public gaze perspective",
+        "en": "child-height public gaze perspective",
+        "weight": 0.55,
+        "tags": [
+          "camera",
+          "social"
+        ]
+      },
+      {
+        "id": "hands_first_pov_down",
+        "ko": "hands-first downward POV",
+        "en": "hands-first downward POV",
+        "weight": 0.8,
+        "tags": [
+          "camera",
+          "pov"
+        ]
+      },
+      {
+        "id": "over_shoulder_work_observer",
+        "ko": "over-shoulder work observer camera height",
+        "en": "over-shoulder work observer camera height",
+        "weight": 0.8,
+        "tags": [
+          "camera",
+          "work"
+        ]
+      }
+    ],
+    "distance_narrative": [
+      {
+        "id": "one_seat_gap",
+        "ko": "one-seat gap distance",
+        "en": "one-seat gap distance",
+        "weight": 0.75,
+        "tags": [
+          "human",
+          "social",
+          "distance"
+        ]
+      },
+      {
+        "id": "formal_counter_distance",
+        "ko": "formal distance created by a counter",
+        "en": "formal distance created by a counter",
+        "weight": 0.75,
+        "tags": [
+          "human",
+          "service",
+          "distance"
+        ]
+      },
+      {
+        "id": "one_step_hesitation",
+        "ko": "one-step hesitation distance",
+        "en": "one-step hesitation distance",
+        "weight": 0.75,
+        "tags": [
+          "human",
+          "relationship",
+          "distance"
+        ]
+      },
+      {
+        "id": "back_to_back_truce",
+        "ko": "back-to-back truce distance",
+        "en": "back-to-back truce distance",
+        "weight": 0.65,
+        "tags": [
+          "human",
+          "relationship",
+          "distance"
+        ]
+      },
+      {
+        "id": "parallel_walking_silence",
+        "ko": "parallel walking in silence",
+        "en": "parallel walking in silence",
+        "weight": 0.65,
+        "tags": [
+          "human",
+          "relationship",
+          "distance"
+        ]
+      },
+      {
+        "id": "object_between_two_people",
+        "ko": "object between two people as distance",
+        "en": "object between two people as distance",
+        "weight": 0.7,
+        "tags": [
+          "human",
+          "relationship",
+          "distance"
+        ]
+      },
+      {
+        "id": "doorway_threshold_distance",
+        "ko": "doorway threshold distance",
+        "en": "doorway threshold distance",
+        "weight": 0.7,
+        "tags": [
+          "human",
+          "threshold",
+          "distance"
+        ]
+      },
+      {
+        "id": "crowd_buffer_circle",
+        "ko": "crowd-made buffer circle",
+        "en": "crowd-made buffer circle",
+        "weight": 0.65,
+        "tags": [
+          "human",
+          "social",
+          "distance"
+        ]
+      }
+    ],
+    "sensory_focus": [
+      {
+        "id": "cold_breath_fog",
+        "ko": "visible cold breath fog",
+        "en": "visible cold breath fog",
+        "weight": 0.7,
+        "tags": [
+          "weather",
+          "sensory"
+        ]
+      },
+      {
+        "id": "bass_vibration_blur",
+        "ko": "bass vibration edge blur",
+        "en": "bass vibration edge blur",
+        "weight": 0.65,
+        "tags": [
+          "music",
+          "sensory",
+          "motion"
+        ]
+      },
+      {
+        "id": "scent_steam_visible",
+        "ko": "visible aromatic steam",
+        "en": "visible aromatic steam",
+        "weight": 0.75,
+        "tags": [
+          "food",
+          "sensory"
+        ]
+      },
+      {
+        "id": "tactile_fingertip_texture",
+        "ko": "texture felt under fingertips",
+        "en": "texture felt under fingertips",
+        "weight": 0.8,
+        "tags": [
+          "texture",
+          "sensory"
+        ]
+      },
+      {
+        "id": "rain_on_fur_edges",
+        "ko": "rain caught on fur edges",
+        "en": "rain caught on fur edges",
+        "weight": 0.75,
+        "tags": [
+          "beastkin",
+          "weather",
+          "sensory"
+        ]
+      },
+      {
+        "id": "dust_in_worklight",
+        "ko": "dust particles in work light",
+        "en": "dust particles in work light",
+        "weight": 0.75,
+        "tags": [
+          "work",
+          "sensory",
+          "light"
+        ]
+      },
+      {
+        "id": "fabric_rustle_motion",
+        "ko": "subtle fabric-rustle motion",
+        "en": "subtle fabric-rustle motion",
+        "weight": 0.65,
+        "tags": [
+          "wardrobe",
+          "sensory",
+          "motion"
+        ]
+      },
+      {
+        "id": "disinfectant_air_stillness",
+        "ko": "still clinical disinfectant air",
+        "en": "still clinical disinfectant air",
+        "weight": 0.65,
+        "tags": [
+          "clinical",
+          "sensory"
+        ]
+      }
+    ],
+    "frame_anchor_medium": [
+      {
+        "id": "single_camera_perspective",
+        "ko": "single-camera perspective, not a layout",
+        "en": "single-camera perspective, not a layout",
+        "weight": 0.9,
+        "tags": [
+          "photo",
+          "anti_diagram_context"
+        ]
+      },
+      {
+        "id": "optical_bokeh_present",
+        "ko": "visible optical bokeh from a real lens",
+        "en": "visible optical bokeh from a real lens",
+        "weight": 0.8,
+        "tags": [
+          "photo",
+          "anti_diagram_context"
+        ]
+      },
+      {
+        "id": "photographic_grain_present",
+        "ko": "photographic film or sensor grain present",
+        "en": "photographic film or sensor grain present",
+        "weight": 0.75,
+        "tags": [
+          "photo",
+          "anti_diagram_context"
+        ]
+      },
+      {
+        "id": "no_layout_elements",
+        "ko": "one photograph with no layout elements",
+        "en": "one photograph with no layout elements",
+        "weight": 0.8,
+        "tags": [
+          "photo",
+          "anti_diagram_context"
+        ]
+      },
+      {
+        "id": "screen_out_of_focus_anchor",
+        "ko": "screens or boards only as out-of-focus background anchors",
+        "en": "screens or boards only as out-of-focus background anchors",
+        "weight": 0.8,
+        "tags": [
+          "screen",
+          "anti_diagram_context"
+        ]
       }
     ]
   },
@@ -119893,6 +126965,130 @@
         "ko": "디지털 일러스트 느낌",
         "en": "digital illustration"
       }
+    ],
+    "anti_diagram": [
+      {
+        "ko": "다이어그램 레이아웃",
+        "en": "diagram layout"
+      },
+      {
+        "ko": "인포그래픽",
+        "en": "infographic"
+      },
+      {
+        "ko": "플로차트",
+        "en": "flowchart"
+      },
+      {
+        "ko": "대시보드 화면 구성",
+        "en": "dashboard layout"
+      },
+      {
+        "ko": "프레젠테이션 슬라이드",
+        "en": "presentation slide deck"
+      },
+      {
+        "ko": "떠 있는 UI 패널",
+        "en": "floating UI panels"
+      },
+      {
+        "ko": "콜아웃 라벨",
+        "en": "callout labels"
+      },
+      {
+        "ko": "차트 축과 범례",
+        "en": "chart axes and legend"
+      },
+      {
+        "ko": "와이어프레임 목업",
+        "en": "wireframe mockup"
+      },
+      {
+        "ko": "아이콘 그리드",
+        "en": "icon grid"
+      },
+      {
+        "ko": "주 피사체가 된 청사진",
+        "en": "blueprint sheet as the main subject"
+      }
+    ],
+    "anti_costume_shortcut": [
+      {
+        "ko": "머리띠처럼 붙인 동물 귀",
+        "en": "costume headband ears"
+      },
+      {
+        "ko": "클립온 꼬리",
+        "en": "clip-on tail"
+      },
+      {
+        "ko": "마스코트 수트",
+        "en": "mascot suit"
+      },
+      {
+        "ko": "동물 잠옷 원지",
+        "en": "animal onesie"
+      },
+      {
+        "ko": "고양이 수염 페이스페인팅",
+        "en": "face-paint whiskers"
+      },
+      {
+        "ko": "퍼리 만화 스타일",
+        "en": "anthro cartoon furry style"
+      },
+      {
+        "ko": "사람 얼굴을 대체한 주둥이",
+        "en": "snout replacing the human face"
+      },
+      {
+        "ko": "분리형 코스프레 부속품",
+        "en": "detachable cosplay animal parts"
+      }
+    ],
+    "role_dignity": [
+      {
+        "ko": "핀업 포즈",
+        "en": "pin-up pose"
+      },
+      {
+        "ko": "제복을 페티시처럼 보이게 하는 연출",
+        "en": "fetishized uniform"
+      },
+      {
+        "ko": "선정적인 단추 풀기",
+        "en": "suggestive unbuttoning"
+      },
+      {
+        "ko": "젖은 셔츠 강조",
+        "en": "wet shirt emphasis"
+      },
+      {
+        "ko": "속옷처럼 보이는 제복",
+        "en": "lingerie-like uniform"
+      },
+      {
+        "ko": "침실 표정 중심 연출",
+        "en": "bedroom-eyes framing"
+      }
+    ],
+    "screen_workplace": [
+      {
+        "ko": "화면 정면 클로즈업만 있는 이미지",
+        "en": "screen-only frontal close-up"
+      },
+      {
+        "ko": "읽을 수 있는 긴 화면 텍스트",
+        "en": "readable long screen text"
+      },
+      {
+        "ko": "HUD 오버레이",
+        "en": "HUD overlay"
+      },
+      {
+        "ko": "모니터 안 그래픽이 주 피사체",
+        "en": "monitor graphics as the main subject"
+      }
     ]
   },
   "surreal_negative_prompt": [
@@ -119939,9 +127135,12 @@
     "hair_color",
     "makeup_style",
     "expression",
+    "species_marker",
+    "transition_stage",
     "gaze_target",
     "body_orientation",
     "proxemics",
+    "distance_narrative",
     "contact_point",
     "intent_state",
     "emotional_contradiction",
@@ -119950,8 +127149,12 @@
     "wardrobe_style",
     "adult_context",
     "action",
+    "procedure_step",
+    "duty_prop_state",
+    "social_cue",
     "capture_context",
     "viewer_position",
+    "camera_height",
     "prop",
     "relational_action",
     "prop_direction",
@@ -119962,6 +127165,7 @@
     "time_of_day",
     "weather",
     "world",
+    "reflection_logic",
     "aesthetic_trend",
     "film_emulation",
     "lighting",
@@ -119977,6 +127181,7 @@
     "lens",
     "focus",
     "motion",
+    "frame_anchor_medium",
     "color",
     "mood",
     "surreal_concept",
@@ -119984,6 +127189,7 @@
     "scale_relation",
     "surreal_physics_detail",
     "texture",
+    "sensory_focus",
     "format",
     "quality",
     "safety_profile"
@@ -120049,7 +127255,17 @@
     "emotional_contradiction": 1.75,
     "viewer_position": 1.65,
     "narrative_phase": 1.55,
-    "safety_profile": 0.7
+    "safety_profile": 0.7,
+    "species_marker": 2.4,
+    "transition_stage": 2.2,
+    "procedure_step": 2.1,
+    "duty_prop_state": 1.9,
+    "social_cue": 1.9,
+    "reflection_logic": 2.0,
+    "camera_height": 1.75,
+    "distance_narrative": 1.7,
+    "sensory_focus": 1.65,
+    "frame_anchor_medium": 1.8
   },
   "generation_settings": {
     "priority_bias": 0.45,
