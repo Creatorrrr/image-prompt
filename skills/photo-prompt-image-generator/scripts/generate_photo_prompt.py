@@ -681,6 +681,10 @@ def build_soft_anchor_spec(
     }
 
 
+def soft_anchor_spec_has_runtime_controls(spec: dict[str, Any]) -> bool:
+    return bool(spec.get("visual_guards"))
+
+
 def resolve_concept_mode(values: Sequence[str]) -> str:
     mode = str(values[-1]).strip() if values else "legacy"
     if mode not in CONCEPT_MODES:
@@ -1214,6 +1218,18 @@ def resolve_concepts(
         if concept_mode == "legacy":
             for forced in combined_sets:
                 add_option(resolved_args, "--set", forced)
+            if soft_anchor_specs:
+                soft_anchor_spec = build_soft_anchor_spec(soft_anchor_specs, soft_min_anchor_candidates, concept)
+                if (
+                    soft_anchor_spec["anchors"]
+                    and soft_anchor_spec["min_anchors"] > 0
+                    and soft_anchor_spec_has_runtime_controls(soft_anchor_spec)
+                ):
+                    add_option(
+                        resolved_args,
+                        "--soft-anchor-spec",
+                        json.dumps(soft_anchor_spec, ensure_ascii=False, separators=(",", ":")),
+                    )
             for requirement in additional_requirements:
                 add_option(resolved_args, "--additional-requirement", requirement)
         elif soft_anchor_specs:

@@ -1219,14 +1219,33 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             )
         )
         self.assertIn("surreal_physics_detail", standalone_concept["combined_forced_slots"])
+        self.assertIn("world_where_craft_is_spellcraft", standalone_concept["combined_forced_slots"]["world"])
         standalone_joined = " ".join(standalone["forward_args"])
         self.assertIn("mechanism rather than one prop", standalone_joined)
         self.assertIn("only one axis among", standalone_joined)
+        self.assertIn("do not add visible tech visors", standalone_joined)
+        self.assertIn("visibly change matter or force", standalone_joined)
         self.assertIn("distinct from stage magician", standalone_joined)
         self.assertIn("generic blue aura", standalone_joined)
         self.assertNotIn("stage_magician_role_model", standalone_joined)
         self.assertNotIn("magician_playing_card_fan_prop", standalone_joined)
         self.assertNotIn("witch_robe_wide_hat", standalone_joined)
+        self.assertIn("--soft-anchor-spec", standalone["forward_args"])
+        standalone_spec_index = standalone["forward_args"].index("--soft-anchor-spec") + 1
+        standalone_spec = json.loads(standalone["forward_args"][standalone_spec_index])
+        self.assertTrue(standalone_spec["visual_guards"][0]["fail_closed"])
+        self.assertIn("sensor_visor_band", standalone_spec["free_slot_constraints"]["wearable_accessory"]["deny_pool"])
+        self.assertIn("antenna_headset", standalone_spec["free_slot_constraints"]["wearable_accessory"]["deny_pool"])
+        self.assertIn("machine_vision_camera", standalone_spec["free_slot_constraints"]["camera_type"]["deny_pool"])
+        self.assertIn("lens_array_focus", standalone_spec["free_slot_constraints"]["focus"]["deny_pool"])
+        self.assertIn("exposed_joint_focus", standalone_spec["free_slot_constraints"]["focus"]["deny_pool"])
+        self.assertIn("boot_flicker_motion", standalone_spec["free_slot_constraints"]["motion"]["deny_pool"])
+        self.assertIn("woven_cable_fiber_texture", standalone_spec["free_slot_constraints"]["texture"]["deny_pool"])
+        self.assertIn("liquid_metal_specular_texture", standalone_spec["free_slot_constraints"]["texture"]["deny_pool"])
+        self.assertIn("matte_synthetic_skin_pore", standalone_spec["free_slot_constraints"]["texture"]["deny_pool"])
+        self.assertIn("brushed_alloy_microscratch", standalone_spec["free_slot_constraints"]["texture"]["deny_pool"])
+        self.assertIn("automated_machine_civilization", standalone_spec["free_slot_constraints"]["world"]["deny_pool"])
+        self.assertIn("visible tech visor", standalone_spec["render_suppress_terms"])
 
         role_combo = self.run_wrapper_json(
             "--concept",
@@ -1262,6 +1281,8 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertIn("medium plus scale plus transformation plus cost or trace", combo_joined)
         self.assertIn("tool -> material response -> residue", combo_joined)
         self.assertIn("expand wizardry beyond glow", combo_joined)
+        self.assertIn("do not add visible tech visors", combo_joined)
+        self.assertIn("visibly change matter or force", combo_joined)
         self.assertTrue(
             any(
                 cue in combo_joined
@@ -1278,6 +1299,22 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertNotIn("grimoire_candle_prop", combo_joined)
         self.assertNotIn("witch_robe_wide_hat", combo_joined)
         self.assertNotIn("magician_playing_card_fan_prop", combo_joined)
+        self.assertIn("--soft-anchor-spec", role_combo["forward_args"])
+        combo_spec_index = role_combo["forward_args"].index("--soft-anchor-spec") + 1
+        combo_spec = json.loads(role_combo["forward_args"][combo_spec_index])
+        self.assertTrue(combo_spec["visual_guards"][0]["fail_closed"])
+        self.assertIn("sensor_visor_band", combo_spec["free_slot_constraints"]["wearable_accessory"]["deny_pool"])
+        self.assertIn("antenna_headset", combo_spec["free_slot_constraints"]["wearable_accessory"]["deny_pool"])
+        self.assertIn("machine_vision_camera", combo_spec["free_slot_constraints"]["camera_type"]["deny_pool"])
+        self.assertIn("lens_array_focus", combo_spec["free_slot_constraints"]["focus"]["deny_pool"])
+        self.assertIn("exposed_joint_focus", combo_spec["free_slot_constraints"]["focus"]["deny_pool"])
+        self.assertIn("boot_flicker_motion", combo_spec["free_slot_constraints"]["motion"]["deny_pool"])
+        self.assertIn("woven_cable_fiber_texture", combo_spec["free_slot_constraints"]["texture"]["deny_pool"])
+        self.assertIn("liquid_metal_specular_texture", combo_spec["free_slot_constraints"]["texture"]["deny_pool"])
+        self.assertIn("matte_synthetic_skin_pore", combo_spec["free_slot_constraints"]["texture"]["deny_pool"])
+        self.assertIn("brushed_alloy_microscratch", combo_spec["free_slot_constraints"]["texture"]["deny_pool"])
+        self.assertIn("lidar_scan_dot_pattern", combo_spec["free_slot_constraints"]["light_shape"]["deny_pool"])
+        self.assertIn("AR hologram interface as the main magic cue", combo_spec["render_suppress_terms"])
 
     def test_wizard_expansion_presets_families_and_tags_are_registered(self):
         preset_ids = {preset["id"] for preset in self.data["presets"]}
@@ -1434,7 +1471,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "checking_medical_chart",
                 "document_foreground_face_background",
                 "diagnostic logomancer",
-                "near_hand_glyphs_lift_and_orbit",
+                "condensation_forming_pattern",
             ),
             (
                 "닝닝 경찰 마법사",
@@ -1445,7 +1482,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "studying_caseboard",
                 "caseboard_over_shoulder_frame",
                 "procedural divination",
-                "textless_mark_rearrangement_boundary",
+                "thread_tension_visible",
             ),
             (
                 "지젤 광부 마법사",
@@ -1456,7 +1493,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "checking_ore_contact_point",
                 "document_foreground_face_background",
                 "subterranean geomancer",
-                "localized_refraction_at_contact",
+                "crystal_growth_contact_point",
             ),
             (
                 "아일릿 원희 사복 여친 마법사",
@@ -1466,8 +1503,8 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "clear_case_smartphone",
                 "checking_phone",
                 "over_shoulder_phone_screen",
-                "phone-screen spell",
-                "near_hand_glyphs_lift_and_orbit",
+                "phone pressure",
+                "surface_tension_air",
             ),
             (
                 "설윤 공주 마법사",
@@ -1478,7 +1515,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "touching_state_seal",
                 "seal_hand_close_portrait",
                 "court thaumaturgy",
-                "near_hand_glyphs_lift_and_orbit",
+                "paper_charring_along_line",
             ),
             (
                 "유나 바니걸 마법사",
@@ -1511,7 +1548,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "reviewing_ledger_columns",
                 "document_foreground_face_background",
                 "bureaucratic spellwork",
-                "near_hand_glyphs_lift_and_orbit",
+                "ink_flowing_uphill_slow",
             ),
             (
                 "김채원 산타복 마법사",
@@ -1522,7 +1559,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "levitating_small_objects",
                 "hands_foreground_face_behind",
                 "holiday contract mage",
-                "near_hand_glyphs_lift_and_orbit",
+                "frost_crystallizing_realtime",
             ),
             (
                 "카즈하 운동복 마법사",
@@ -1533,7 +1570,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "sprint_start_drive",
                 "medium_close",
                 "kinetic trainer",
-                "localized_refraction_at_contact",
+                "gravity_gradient_lean",
             ),
         ]
         selected_bundle_ids = set()
@@ -1587,7 +1624,18 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 self.assertNotIn("monochrome", combined["color"])
             if expected_role in {"간호사", "사복 여친", "공주", "회사원", "산타복"}:
                 self.assertIn("lifted_glyph_self_glow", combined["light_shape"])
-                self.assertEqual(combined["surreal_physics_detail"], ["near_hand_glyphs_lift_and_orbit"])
+                self.assertNotEqual(combined["surreal_physics_detail"], ["near_hand_glyphs_lift_and_orbit"])
+                self.assertTrue(
+                    {
+                        "condensation_forming_pattern",
+                        "surface_tension_air",
+                        "paper_charring_along_line",
+                        "wax_melting_resolidifying",
+                        "ink_flowing_uphill_slow",
+                        "frost_crystallizing_realtime",
+                        "gravity_gradient_lean",
+                    }.intersection(combined["surreal_physics_detail"])
+                )
             if expected_role == "공주":
                 self.assertEqual(combined["costume_style"], ["royal_princess_hanbok"])
                 self.assertIn("royal_edict_gyoji_scroll_prop", combined["prop"])
@@ -1597,7 +1645,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 self.assertIn("slim_office_tablet_prop", combined["prop"])
                 self.assertNotIn("star_map_tablet_prop", combined["prop"])
                 self.assertEqual(combined["color"], ["cool_blue"])
-                self.assertIn("brightest object near the hands", joined)
+                self.assertIn("ink visibly climbs", joined)
                 self.assertNotIn("lift slightly", joined)
             if expected_role == "사복 여친":
                 self.assertEqual(combined["wardrobe_style"], ["hoodie_shorts_sneakers"])
@@ -1610,7 +1658,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 self.assertEqual(combined["color"], ["warm_kodak_gold"])
                 self.assertEqual(combined["motion"], ["suspended_snowflake_motion"])
                 self.assertEqual(combined["weather"], ["windblown_snow"])
-                self.assertIn("gift-tag marks lift above the present", joined)
+                self.assertIn("frost grows across the gift tag", joined)
             if expected_role == "운동복":
                 self.assertEqual(combined["wardrobe_style"], ["covered_track_jacket_training_set"])
                 self.assertEqual(combined["motion"], ["kinetic_spell_trail_motion"])
@@ -1628,11 +1676,11 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
 
     def test_wizard_glow_dependent_bundles_pin_color_and_volumetric_spell_proof(self):
         cases = {
-            "윈터 간호사 마법사": ("clinical_white", "near_hand_glyphs_lift_and_orbit"),
-            "아일릿 원희 사복 여친 마법사": ("cool_blue", "near_hand_glyphs_lift_and_orbit"),
-            "설윤 공주 마법사": ("warm_kodak_gold", "near_hand_glyphs_lift_and_orbit"),
-            "장원영 오피스룩 마법사": ("cool_blue", "near_hand_glyphs_lift_and_orbit"),
-            "김채원 산타복 마법사": ("warm_kodak_gold", "near_hand_glyphs_lift_and_orbit"),
+            "윈터 간호사 마법사": ("clinical_white", "condensation_forming_pattern"),
+            "아일릿 원희 사복 여친 마법사": ("cool_blue", "surface_tension_air"),
+            "설윤 공주 마법사": ("warm_kodak_gold", "paper_charring_along_line"),
+            "장원영 오피스룩 마법사": ("cool_blue", "ink_flowing_uphill_slow"),
+            "김채원 산타복 마법사": ("warm_kodak_gold", "frost_crystallizing_realtime"),
         }
         for concept, (expected_color, expected_surreal_detail) in cases.items():
             explanation = self.run_wrapper_json(
@@ -1652,8 +1700,9 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             self.assertEqual(combined["color"], [expected_color])
             self.assertNotEqual(combined["color"], ["monochrome"])
             self.assertIn("lifted_glyph_self_glow", combined["light_shape"])
-            self.assertEqual(combined["surreal_physics_detail"], [expected_surreal_detail])
-            self.assertIn("near_hand_glyphs_lift_and_orbit", joined)
+            self.assertIn(expected_surreal_detail, combined["surreal_physics_detail"])
+            self.assertIn(expected_surreal_detail, joined)
+            self.assertNotEqual(combined["surreal_physics_detail"], ["near_hand_glyphs_lift_and_orbit"])
             self.assertIn("lifted_glyph_self_glow", joined)
 
     def test_company_worker_role_aliases_anchor_corporate_time_pressure(self):
@@ -6424,9 +6473,10 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
     def test_beastkin_concept_rotates_liminal_bundles_and_preserves_role(self):
         seen_aspects = set()
         expected_by_seed = {
-            "1": "shadow_reflection",
-            "3": "sensory_othering",
+            "1": "motion_logic",
+            "3": "shadow_reflection",
             "5": "body_transition",
+            "9": "sensory_othering",
         }
         for seed, expected_aspect in expected_by_seed.items():
             with self.subTest(seed=seed):
@@ -6453,6 +6503,8 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 self.assertEqual(forced["prop"], ["pointed_ear_tail_set_prop"])
                 self.assertEqual(forced["texture"], ["fur_patch_skin_blend"])
                 self.assertEqual(forced["expression"], ["slit_pupil_intense_gaze"])
+                self.assertIn("anatomical_connection", forced)
+                self.assertIn("body_evidence_region", forced)
                 self.assertEqual(len(concept["selected_species_variants"]), 1)
                 self.assertTrue(
                     {
@@ -6462,7 +6514,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                     }.issubset(set(concept["soft_anchor_spec"]["safety_negative_floor"]))
                 )
                 self.assertGreaterEqual(concept["soft_anchor_spec"]["min_anchors"], 2)
-        self.assertEqual(seen_aspects, {"shadow_reflection", "sensory_othering", "body_transition"})
+        self.assertEqual(seen_aspects, {"motion_logic", "shadow_reflection", "sensory_othering", "body_transition"})
 
     def test_beastkin_species_variants_are_deterministic_diverse_and_aliasable(self):
         first = self.run_wrapper_json(
@@ -6503,7 +6555,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             bundle_aspects.add(concept["selected_bundles"][0]["aspect"])
             self.assertEqual(concept["combined_forced_slots"]["subject"], ["beastkin_subject"])
         self.assertGreaterEqual(len(variant_ids), 4)
-        self.assertEqual(bundle_aspects, {"body_transition", "sensory_othering", "shadow_reflection"})
+        self.assertEqual(bundle_aspects, {"body_transition", "motion_logic", "sensory_othering", "shadow_reflection"})
 
         rabbit = self.run_wrapper_json(
             "--concept",

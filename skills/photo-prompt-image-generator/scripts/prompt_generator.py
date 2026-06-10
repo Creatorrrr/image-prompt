@@ -4241,6 +4241,8 @@ def normalize_soft_free_slot_constraints(raw: Any) -> JsonDict:
             values = normalize_list(constraint.get(key))
             if values:
                 row[key] = values
+        if bool(constraint.get("fail_closed")):
+            row["fail_closed"] = True
         if row:
             normalized[str(slot)] = row
     return normalized
@@ -4311,6 +4313,7 @@ def normalize_soft_visual_guards(raw: Any) -> List[JsonDict]:
         deny_ids = normalize_slot_id_map(guard.get("deny_ids") or guard.get("deny"))
         prefer_ids = normalize_slot_id_map(guard.get("prefer_ids") or guard.get("prefer"))
         deny_facets = normalize_slot_id_map(guard.get("deny_facets"))
+        fail_closed = bool(guard.get("fail_closed"))
         if not deny_ids and not prefer_ids and not deny_facets:
             continue
         guards.append(
@@ -4320,6 +4323,7 @@ def normalize_soft_visual_guards(raw: Any) -> List[JsonDict]:
                 "deny_ids": deny_ids,
                 "prefer_ids": prefer_ids,
                 "deny_facets": deny_facets,
+                "fail_closed": fail_closed,
             }
         )
     return guards
@@ -4675,13 +4679,15 @@ def soft_visual_guard_for_slot(policy: Optional[JsonDict], slot: str) -> JsonDic
     prefer_ids: Set[str] = set()
     deny_facets: Set[str] = set()
     guard_ids: List[str] = []
+    fail_closed = False
     for guard in (policy or {}).get("visual_guards", []) or []:
         deny_ids.update(normalize_list((guard.get("deny_ids", {}) or {}).get(slot)))
         prefer_ids.update(normalize_list((guard.get("prefer_ids", {}) or {}).get(slot)))
         deny_facets.update(normalize_list((guard.get("deny_facets", {}) or {}).get(slot)))
         if (guard.get("deny_ids", {}) or {}).get(slot) or (guard.get("prefer_ids", {}) or {}).get(slot) or (guard.get("deny_facets", {}) or {}).get(slot):
             guard_ids.append(str(guard.get("id") or "visual_guard"))
-    return {"deny_ids": deny_ids, "prefer_ids": prefer_ids, "deny_facets": deny_facets, "guard_ids": guard_ids}
+            fail_closed = fail_closed or bool(guard.get("fail_closed"))
+    return {"deny_ids": deny_ids, "prefer_ids": prefer_ids, "deny_facets": deny_facets, "guard_ids": guard_ids, "fail_closed": fail_closed}
 
 
 def apply_soft_body_first_guard(
@@ -4773,6 +4779,7 @@ def apply_soft_free_slot_constraints(
     allow_ids = set(normalize_list(constraint.get("allow_pool")))
     deny_ids = set(normalize_list(constraint.get("deny_pool")))
     prefer_ids = set(normalize_list(constraint.get("prefer_ids")))
+    fail_closed = bool(constraint.get("fail_closed"))
     constrained = [item for item in original_pool if str(item.get("id", "")) not in deny_ids]
     if allow_ids:
         allowed = [item for item in constrained if str(item.get("id", "")) in allow_ids]
@@ -4803,11 +4810,12 @@ def apply_soft_free_slot_constraints(
                 "deny_pool": sorted(deny_ids),
                 "preferred_ids": sorted(prefer_ids),
                 "boosted_ids": sorted(set(boosted)),
+                "fail_closed": fail_closed,
                 "policy_schema_version": (semantic_context or {}).get("policy_schema_version"),
                 "semantic_policy_hash": (semantic_context or {}).get("semantic_policy_hash"),
             },
         )
-    return adjusted or original_pool
+    return adjusted if adjusted or fail_closed else original_pool
 
 
 def apply_soft_visual_guard(
@@ -4821,6 +4829,7 @@ def apply_soft_visual_guard(
     deny_ids: Set[str] = guard["deny_ids"]
     prefer_ids: Set[str] = guard["prefer_ids"]
     deny_facets: Set[str] = guard["deny_facets"]
+    fail_closed = bool(guard.get("fail_closed"))
     if not deny_ids and not prefer_ids and not deny_facets:
         return list(pool)
     original_pool = list(pool)
@@ -4831,6 +4840,8 @@ def apply_soft_visual_guard(
     ]
     if filtered:
         pool = filtered
+    elif fail_closed:
+        pool = []
     adjusted: List[Entry] = []
     boosted: List[JsonDict] = []
     for item in pool:
@@ -4857,6 +4868,7 @@ def apply_soft_visual_guard(
                 "denied_ids": sorted(deny_ids),
                 "preferred_ids": sorted(prefer_ids),
                 "boosted_ids": sorted(item["id"] for item in boosted),
+                "fail_closed": fail_closed,
                 "policy_schema_version": (semantic_context or {}).get("policy_schema_version"),
                 "semantic_policy_hash": (semantic_context or {}).get("semantic_policy_hash"),
             },
@@ -6847,6 +6859,7 @@ def build_prompt_sections(
             "distance_narrative",
             "subject_framing",
             "body_framing",
+            "body_evidence_region",
             "lens",
             "focus",
             "motion",
@@ -6863,15 +6876,17 @@ def build_prompt_sections(
             "aesthetic_trend",
             "wearable_accessory",
             "facial_hair",
+            "species_marker",
+            "transition_stage",
+            "anatomical_connection",
+            "costume_absorption_guard",
+            "sensory_focus",
+            "texture",
             "wardrobe_style",
             "makeup_style",
             "costume_style",
             "fetish_styling",
-            "species_marker",
-            "transition_stage",
-            "sensory_focus",
             "surface_material",
-            "texture",
             "format",
             "quality",
         )
@@ -7233,7 +7248,29 @@ def choose_negative_entries(
             "slot:species_marker",
             "transition_stage",
             "slot:transition_stage",
+            "anatomical_connection",
+            "slot:anatomical_connection",
+            "body_evidence_region",
+            "slot:body_evidence_region",
+            "costume_absorption_guard",
+            "slot:costume_absorption_guard",
+            "costume_swap",
+            "body_evidence",
             "human_animal_boundary",
+        }
+        ornament_risk_context = {
+            "ornament_risk",
+            "costume_absorption_risk",
+            "costume_absorption_guard",
+            "slot:costume_absorption_guard",
+            "costume_style:covered_santa_fur_trim_costume",
+            "costume_style:bunny_girl_costume",
+            "costume_style:gothic_lolita_dress",
+            "costume_style:gothic_doll_lace_dress",
+            "costume_style:royal_princess_hanbok",
+            "costume_style:crown_princess_ceremonial_robe",
+            "costume_style:miner_workwear_hard_hat",
+            "wardrobe_style:covered_track_jacket_training_set",
         }
         uniform_context = {
             "uniform",
@@ -7250,6 +7287,8 @@ def choose_negative_entries(
             append_context_pool("screen_workplace")
         if context & beastkin_context or core_context & beastkin_context:
             append_context_pool("anti_costume_shortcut")
+            if context & ornament_risk_context or core_context & ornament_risk_context:
+                append_context_pool("anti_ornament_absorption")
         if context & uniform_context or core_context & uniform_context:
             append_context_pool("role_dignity")
 

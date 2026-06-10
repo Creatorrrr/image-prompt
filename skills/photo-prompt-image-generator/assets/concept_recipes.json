@@ -2239,6 +2239,7 @@
         "light_type=archive_desk_lamp,monitor_glow",
         "light_direction=window_left_light",
         "camera_type=full_frame_mirrorless",
+        "world=world_where_craft_is_spellcraft,world_where_aftermath_outlives_spell,world_where_science_borders_thaumaturgy",
         "camera_direction=eye_level_three_quarter",
         "composition=hands_only_detail_frame,document_foreground_face_background",
         "light_shape=threshold_sliver_light,monitor_rectangle_glow,snowflake_pinpoint_glow",
@@ -2256,6 +2257,166 @@
         "surreal_physics_detail"
       ],
       "soft_min_anchors": 3,
+      "visual_guard": [
+        {
+          "id": "wizard_role_no_sf_interface_hardware",
+          "reason": "standalone wizard should read through spell effect and material anomaly rather than sci-fi interface hardware unless explicitly requested",
+          "fail_closed": true,
+          "deny_ids": {
+            "wearable_accessory": [
+              "sensor_visor_band",
+              "antenna_headset",
+              "status_badge_led",
+              "maintenance_qr_wristband",
+              "data_port_collar"
+            ],
+            "camera_type": [
+              "lidar_sensor_view",
+              "machine_vision_camera"
+            ],
+            "focus": [
+              "lens_array_focus",
+              "exposed_joint_focus",
+              "screen_face_focus"
+            ],
+            "light_shape": [
+              "lidar_scan_dot_pattern",
+              "error_blink_pattern"
+            ],
+            "motion": [
+              "reboot_flicker",
+              "boot_flicker_motion",
+              "servo_twitch_motion",
+              "rotor_blur_hover",
+              "assembly_arm_sweep_blur"
+            ],
+            "texture": [
+              "woven_cable_fiber_texture",
+              "liquid_metal_specular_texture",
+              "matte_synthetic_skin_pore",
+              "brushed_alloy_microscratch"
+            ],
+            "surface_material": [
+              "woven_cable_fiber_surface",
+              "liquid_metal_gel_surface",
+              "matte_synthetic_skin_surface"
+            ],
+            "prop": [
+              "lens_array_eye_prop",
+              "lidar_dome_prop",
+              "qr_asset_tag_prop"
+            ],
+            "world": [
+              "automated_machine_civilization"
+            ],
+            "capture_context": [
+              "robot_qa_inspection_log",
+              "machine_vision_sensor_capture"
+            ]
+          }
+        }
+      ],
+      "free_slot_constraints": {
+        "wearable_accessory": {
+          "deny_pool": [
+            "sensor_visor_band",
+            "antenna_headset",
+            "status_badge_led",
+            "maintenance_qr_wristband",
+            "data_port_collar"
+          ]
+        },
+        "camera_type": {
+          "deny_pool": [
+            "lidar_sensor_view",
+            "machine_vision_camera"
+          ],
+          "prefer_ids": [
+            "full_frame_mirrorless",
+            "dslr_camera",
+            "smartphone_camera"
+          ]
+        },
+        "focus": {
+          "deny_pool": [
+            "lens_array_focus",
+            "exposed_joint_focus",
+            "screen_face_focus"
+          ]
+        },
+        "light_shape": {
+          "deny_pool": [
+            "lidar_scan_dot_pattern",
+            "error_blink_pattern"
+          ]
+        },
+        "motion": {
+          "deny_pool": [
+            "reboot_flicker",
+            "boot_flicker_motion",
+            "servo_twitch_motion",
+            "rotor_blur_hover",
+            "assembly_arm_sweep_blur"
+          ]
+        },
+        "texture": {
+          "deny_pool": [
+            "woven_cable_fiber_texture",
+            "liquid_metal_specular_texture",
+            "matte_synthetic_skin_pore",
+            "brushed_alloy_microscratch"
+          ]
+        },
+        "surface_material": {
+          "deny_pool": [
+            "woven_cable_fiber_surface",
+            "liquid_metal_gel_surface",
+            "matte_synthetic_skin_surface"
+          ]
+        },
+        "prop": {
+          "deny_pool": [
+            "lens_array_eye_prop",
+            "lidar_dome_prop",
+            "qr_asset_tag_prop"
+          ]
+        },
+        "world": {
+          "deny_pool": [
+            "automated_machine_civilization"
+          ],
+          "prefer_ids": [
+            "world_where_craft_is_spellcraft",
+            "world_where_aftermath_outlives_spell",
+            "world_where_science_borders_thaumaturgy"
+          ]
+        },
+        "capture_context": {
+          "deny_pool": [
+            "robot_qa_inspection_log",
+            "machine_vision_sensor_capture"
+          ]
+        }
+      },
+      "render_suppress_terms": [
+        "visible tech visor",
+        "sensor visor band",
+        "antenna headset",
+        "status LED badge",
+        "maintenance QR wristband",
+        "data-port collar",
+        "lidar scan dots",
+        "lens-array focus",
+        "exposed joint focus",
+        "boot flicker motion",
+        "woven cable-fiber texture",
+        "liquid-metal specular texture",
+        "matte synthetic-skin pore texture",
+        "brushed alloy microscratch texture",
+        "machine-vision camera look",
+        "robot diagnostic overlay",
+        "AR hologram interface as the main magic cue"
+      ],
       "anchor_terms": {
         "prop": [
           "grimoire",
@@ -2301,8 +2462,10 @@
       "additional": [
         "wizard role should read through mechanism rather than one prop: scholarly archive, technomancy interface, contract logomancy, micro-object levitation, or restoration-lab material anomaly can each be the main axis",
         "archive evidence such as grimoire or star-map notes remains available, but it is only one axis among modern devices, sealed records, gift-tag ledgers, small levitation shadows, and contact-point refraction",
+        "unless the user explicitly asks for sci-fi, robot, android, cyborg, data-ghost, alien, or machine-interface magic, do not add visible tech visors, antenna headsets, sensor bands, status LED badges, maintenance QR wristbands, data-port collars, lidar scan dots, machine-vision camera views, robot diagnostics, lens-array focus, exposed-joint focus, boot-flicker motion, cable-fiber textures, liquid-metal textures, synthetic-skin textures, brushed-alloy robot textures, or AR hologram UI as the main spell evidence",
         "distinct from stage magician: no playing-card fan, tailcoat, top hat, audience performance, or sleight-of-hand stagecraft should dominate the image",
-        "power should feel controlled and costly through one concrete local world response: paper stirring without wind, textless marks rearranging, a screen pulse, contact refraction, or a few-centimeter levitation with a believable shadow; avoid routine glowing magic circles, generic blue aura, explosive blasts, combat, gore, sacrifice, or injury"
+        "power should feel controlled and costly through one concrete local world response: paper stirring without wind, textless marks rearranging, a screen pulse, contact refraction, or a few-centimeter levitation with a believable shadow; avoid routine glowing magic circles, generic blue aura, explosive blasts, combat, gore, sacrifice, or injury",
+        "the active spell should visibly change matter or force in the photographed space, not only display symbols: paper chars, ink climbs uphill, frost grows, wax melts and resolidifies, thread tightens, salt vibrates, dust is displaced, crystals grow, candle flames bend, air ripples, or a real object levitates with a cast shadow"
       ],
       "intent_axis": [
         "wizard or mage as hidden-order reader across archive, lab, office, contract, device, and micro-object mechanisms; magic appears as local transformation plus cost or trace"
@@ -19491,7 +19654,9 @@
       "set": {
         "composition": "hands_only_detail_frame",
         "light_shape": "threshold_sliver_light",
-        "surreal_physics_detail": "localized_refraction_at_contact"
+        "surreal_physics_detail": "localized_refraction_at_contact",
+        "camera_type": "full_frame_mirrorless",
+        "world": "world_where_craft_is_spellcraft"
       },
       "soft_anchor_slots": [
         "composition",
@@ -19502,6 +19667,178 @@
         "contact_point"
       ],
       "soft_min_anchors": 3,
+      "visual_guard": [
+        {
+          "id": "wizard_no_sf_interface_hardware",
+          "reason": "wizard magic should read through physical spell effects rather than sci-fi interface hardware unless the user explicitly asks for a sci-fi or robot concept",
+          "fail_closed": true,
+          "deny_ids": {
+            "wearable_accessory": [
+              "sensor_visor_band",
+              "antenna_headset",
+              "status_badge_led",
+              "maintenance_qr_wristband",
+              "data_port_collar"
+            ],
+            "camera_type": [
+              "lidar_sensor_view",
+              "machine_vision_camera"
+            ],
+            "focus": [
+              "lens_array_focus",
+              "exposed_joint_focus",
+              "screen_face_focus"
+            ],
+            "light_shape": [
+              "lidar_scan_dot_pattern",
+              "error_blink_pattern"
+            ],
+            "motion": [
+              "reboot_flicker",
+              "boot_flicker_motion",
+              "servo_twitch_motion",
+              "rotor_blur_hover",
+              "assembly_arm_sweep_blur"
+            ],
+            "texture": [
+              "woven_cable_fiber_texture",
+              "liquid_metal_specular_texture",
+              "matte_synthetic_skin_pore",
+              "brushed_alloy_microscratch"
+            ],
+            "surface_material": [
+              "woven_cable_fiber_surface",
+              "liquid_metal_gel_surface",
+              "matte_synthetic_skin_surface"
+            ],
+            "prop": [
+              "lens_array_eye_prop",
+              "lidar_dome_prop",
+              "qr_asset_tag_prop"
+            ],
+            "world": [
+              "automated_machine_civilization"
+            ],
+            "capture_context": [
+              "robot_qa_inspection_log",
+              "machine_vision_sensor_capture"
+            ]
+          },
+          "deny_facets": {
+            "prop": [
+              "robot_proof_family:sensory_apparatus",
+              "robot_proof_family:power_command"
+            ],
+            "action": [
+              "robot_proof_family:sensory_apparatus",
+              "robot_proof_family:behavior_control"
+            ]
+          }
+        }
+      ],
+      "free_slot_constraints": {
+        "wearable_accessory": {
+          "deny_pool": [
+            "sensor_visor_band",
+            "antenna_headset",
+            "status_badge_led",
+            "maintenance_qr_wristband",
+            "data_port_collar"
+          ]
+        },
+        "camera_type": {
+          "deny_pool": [
+            "lidar_sensor_view",
+            "machine_vision_camera"
+          ],
+          "prefer_ids": [
+            "full_frame_mirrorless",
+            "dslr_camera",
+            "smartphone_camera"
+          ]
+        },
+        "focus": {
+          "deny_pool": [
+            "lens_array_focus",
+            "exposed_joint_focus",
+            "screen_face_focus"
+          ]
+        },
+        "light_shape": {
+          "deny_pool": [
+            "lidar_scan_dot_pattern",
+            "error_blink_pattern"
+          ]
+        },
+        "motion": {
+          "deny_pool": [
+            "reboot_flicker",
+            "boot_flicker_motion",
+            "servo_twitch_motion",
+            "rotor_blur_hover",
+            "assembly_arm_sweep_blur"
+          ]
+        },
+        "texture": {
+          "deny_pool": [
+            "woven_cable_fiber_texture",
+            "liquid_metal_specular_texture",
+            "matte_synthetic_skin_pore",
+            "brushed_alloy_microscratch"
+          ]
+        },
+        "surface_material": {
+          "deny_pool": [
+            "woven_cable_fiber_surface",
+            "liquid_metal_gel_surface",
+            "matte_synthetic_skin_surface"
+          ]
+        },
+        "prop": {
+          "deny_pool": [
+            "lens_array_eye_prop",
+            "lidar_dome_prop",
+            "qr_asset_tag_prop"
+          ]
+        },
+        "world": {
+          "deny_pool": [
+            "automated_machine_civilization"
+          ],
+          "prefer_ids": [
+            "world_where_craft_is_spellcraft",
+            "world_where_small_rituals_protect",
+            "world_where_aftermath_outlives_spell",
+            "world_where_science_borders_thaumaturgy",
+            "world_where_city_patterns_answer"
+          ]
+        },
+        "capture_context": {
+          "deny_pool": [
+            "robot_qa_inspection_log",
+            "machine_vision_sensor_capture"
+          ]
+        }
+      },
+      "render_suppress_terms": [
+        "visible tech visor",
+        "sensor visor band",
+        "antenna headset",
+        "status LED badge",
+        "maintenance QR wristband",
+        "data-port collar",
+        "lidar scan dots",
+        "lens-array focus",
+        "exposed joint focus",
+        "boot flicker motion",
+        "woven cable-fiber texture",
+        "liquid-metal specular texture",
+        "matte synthetic-skin pore texture",
+        "brushed alloy microscratch texture",
+        "machine-vision camera look",
+        "robot diagnostic overlay",
+        "AR hologram interface as the main magic cue"
+      ],
       "anchor_terms": {
         "composition": [
           "hands-only detail"
@@ -19830,9 +20167,11 @@
       },
       "additional": [
         "wizard identity should be constructed as medium plus scale plus transformation plus cost or trace; the spell should visibly use the role's own tool, document, screen, seal, mirror, gift, stopwatch, or material surface rather than defaulting to a generic spell circle",
+        "unless the user explicitly asks for sci-fi, robot, android, cyborg, data-ghost, alien, or machine-interface magic, do not add visible tech visors, antenna headsets, sensor bands, status LED badges, maintenance QR wristbands, data-port collars, lidar scan dots, machine-vision camera views, robot diagnostics, lens-array focus, exposed-joint focus, boot-flicker motion, cable-fiber textures, liquid-metal textures, synthetic-skin textures, brushed-alloy robot textures, or AR hologram UI as the main spell evidence",
         "distinct from stage magician: no playing-card fan, tailcoat, top hat, audience performance, or sleight-of-hand stagecraft should dominate the image",
         "avoid routine glowing magic circles, generic blue aura, standard fantasy robes, and default old-book-and-candle staging unless the selected bundle explicitly asks for scholarly archive magic",
         "the world response should be specific, local, and visible at thumbnail scale: refraction at a contact point, textless marks lifting above the surface, a few-centimeter levitation shadow, suspended dust or snow, a screen pulse, or a material boundary changing state while the role outfit stays readable",
+        "the active spell should visibly change matter or force in the photographed space, not only display symbols: paper chars, ink climbs uphill, frost grows, wax melts and resolidifies, thread tightens, salt vibrates, dust is displaced, crystals grow, candle flames bend, air ripples, or a real object levitates with a cast shadow",
         "for role-wizard bundles, the magic evidence should be the second-strongest visual read after the role tool or costume; avoid relying only on tiny decorative glows, flat in-plane marks, or monochrome lighting when the spell depends on luminous detail",
         "after the latest wizard image reviews, prefer the causal chain tool -> material response -> residue: a viewer should see what caused the spell, what changed physically, and what trace or cost remains",
         "expand wizardry beyond glow or magic circles into practical craft, bureaucracy, scientific thaumaturgy, domestic warding, urban folk rituals, scale paradoxes, and aftermath/cost evidence",
@@ -19869,13 +20208,20 @@
             "light_type": "ritual_candle_cluster",
             "light_shape": "candle_flicker_pool",
             "color": "warm_kodak_gold",
+            "world": "world_where_small_rituals_protect",
             "composition": "hands_only_detail_frame",
             "subject_framing": "upper_body_framing",
-            "surreal_physics_detail": "tiny_levitation_contact_shadow",
+            "surreal_concept": "liquid_holding_intent",
+            "surreal_anchor": "water_basin_surface",
+            "surreal_physics_detail": [
+              "tiny_levitation_contact_shadow",
+              "water_ripple_from_word"
+            ],
             "mood": "archival_suspense"
           },
           "additional": [
             "the maid outfit stays readable, while the tea service becomes a controlled cantrip: a teacup, spoon, receipt, or napkin lifts only a few centimeters from the tray near the hands",
+            "avoid making the tray a large flat magic-circle display; the teacup shadow, tea ripple, steam bend, or displaced sugar grains should make the spell visible",
             "wizardness must come from precise finger control, a clearly visible world-response around the service object, and a believable levitation shadow on the tray, not from replacing the role with a generic robe or stage magician act"
           ],
           "intent_axis": [
@@ -19903,17 +20249,23 @@
             "light_type": "monitor_glow",
             "light_shape": "lifted_glyph_self_glow",
             "color": "clinical_white",
+            "world": "world_where_science_borders_thaumaturgy",
             "composition": "document_foreground_face_background",
             "subject_framing": "upper_body_framing",
-            "surreal_physics_detail": "near_hand_glyphs_lift_and_orbit",
+            "surreal_concept": "tool_caused_material_change",
+            "surreal_anchor": "frost_edge_glass",
+            "surreal_physics_detail": [
+              "condensation_forming_pattern",
+              "surface_tension_air"
+            ],
             "mood": "quiet_dread"
           },
           "additional": [
-            "the nurse uniform and clinical corridor stay readable, while the clipboard or chart becomes a diagnostic spell medium: textless chart marks detach from the page and orbit her fingertip as a small clinical constellation, with monitor-glow response near the hands",
+            "the nurse uniform and clinical corridor stay readable, while the clipboard or chart becomes a diagnostic spell medium: condensation beads into a deliberate pattern on the chart clip or nearby glass, and the air above the page visibly tightens near her fingertip",
             "make the magical action controlled and caregiving-adjacent without injury spectacle, gore, patient suffering, or fetishized nurse framing"
           ],
           "intent_axis": [
-            "nurse wizard as diagnostic logomancer, clinical chart under monitor glow, textless marks lifting above the clipboard near the fingertip, restrained healing-adjacent magic"
+            "nurse wizard as diagnostic logomancer, clinical chart under monitor glow, patterned condensation and surface tension around the clipboard near the fingertip, restrained healing-adjacent magic"
           ],
           "safety_requirements": [
             "symbolic clinical magic only; no visible patient, injury, medical gore, or fetishized nurse styling"
@@ -19931,24 +20283,31 @@
             "prop": [
               "case_file_folder_prop",
               "evidence_marker_prop",
-              "scrying_mirror_prop"
+              "scrying_mirror_prop",
+              "evidence_string_board_prop"
             ],
             "action": "studying_caseboard",
             "location": "detective_office_caseboard",
             "lighting": "security_monitor_glow",
             "light_type": "monitor_glow",
             "light_shape": "monitor_rectangle_glow",
+            "world": "world_where_city_patterns_answer",
             "composition": "caseboard_over_shoulder_frame",
             "subject_framing": "upper_body_framing",
-            "surreal_physics_detail": "textless_mark_rearrangement_boundary",
+            "surreal_concept": "causality_link",
+            "surreal_anchor": "knotted_red_cord",
+            "surreal_physics_detail": [
+              "thread_tension_visible",
+              "displaced_dust_ring"
+            ],
             "mood": "reportage_tense_noir"
           },
           "additional": [
-            "the police uniform stays legible, while evidence markers, a case file, or a small scrying mirror become the spell surface that reveals a hidden route, pattern, or restrained binding glyph",
+            "the police uniform stays legible, while evidence markers, a case file, red evidence strings, or a small scrying mirror become the spell surface; one string visibly tightens by itself and dust shifts into a thin route ring on the board",
             "wizardness should read through procedural divination and world-response in the evidence board, not through playing cards, top hats, stagecraft, combat, or weaponized magic"
           ],
           "intent_axis": [
-            "police wizard as occult investigator, evidence board scrying, case file glyphs, procedural authority under security monitor glow"
+            "police wizard as occult investigator, evidence board scrying, red evidence string tightening, displaced dust route, procedural authority under security monitor glow"
           ]
         },
         {
@@ -19971,15 +20330,21 @@
             "composition": "document_foreground_face_background",
             "subject_framing": "upper_body_framing",
             "surface_material": "salt_crystal_attached_surface",
-            "surreal_physics_detail": "localized_refraction_at_contact",
+            "world": "world_where_craft_is_spellcraft",
+            "surreal_concept": "tool_caused_material_change",
+            "surreal_anchor": "crystal_growth_anchor",
+            "surreal_physics_detail": [
+              "crystal_growth_contact_point",
+              "displaced_dust_ring"
+            ],
             "mood": "archival_suspense"
           },
           "additional": [
-            "the miner hard hat, workwear, and nonfunctional tool stay practical, while the headlamp catches ore dust, salt crystals, or tunnel marks that bend light at the pickaxe contact point",
-            "keep the magic close and geological: dust hangs too still, crystal grains refract locally, or the tunnel face answers the tool with one subtle glint"
+            "the miner hard hat, workwear, and nonfunctional tool stay practical, while the headlamp catches ore dust, salt crystals, or tunnel marks that react at the pickaxe contact point",
+            "keep the magic close and geological: crystals visibly grow from the touched seam, dust pushes into a ring around the tool, and the tunnel face answers the tool rather than merely glowing"
           ],
           "intent_axis": [
-            "miner wizard as subterranean geomancer, headlamp reveals ore and salt-crystal refraction around the work tool, controlled earthbound magic"
+            "miner wizard as subterranean geomancer, headlamp reveals ore and salt-crystal growth around the work tool, controlled earthbound magic with dust displaced by the spell"
           ]
         },
         {
@@ -20003,17 +20368,23 @@
             "light_type": "phone_screen_face_glow",
             "light_shape": "lifted_glyph_self_glow",
             "color": "cool_blue",
+            "world": "world_where_city_patterns_answer",
             "composition": "over_shoulder_phone_screen",
             "subject_framing": "upper_body_framing",
-            "surreal_physics_detail": "near_hand_glyphs_lift_and_orbit",
+            "surreal_concept": "information_density_pressure",
+            "surreal_anchor": "paper_vortex",
+            "surreal_physics_detail": [
+              "surface_tension_air",
+              "distorted_reflection_different_reality"
+            ],
             "mood": "intimate"
           },
           "additional": [
-            "the casual girlfriend-style outfit stays everyday and adult, while the phone screen becomes a tiny everyday spell surface: notification dots, receipt marks, or a paper-charm symbol lift off the screen and orbit near her fingertip",
-            "avoid ordinary cafe lifestyle drift: the phone-screen spell, near-hand lifted marks, and screen glow must be the first magical read without adding robes, hats, or theatrical fantasy costume"
+            "the casual girlfriend-style outfit stays everyday and adult, while the phone screen becomes a tiny everyday spell surface: notification dots, receipt marks, or a paper charm pull the nearby air taut and warp the reflection beyond the glass",
+            "avoid ordinary cafe lifestyle drift and avoid AR-interface drift: the phone spell must leave physical proof outside the screen through air ripples, a lifted paper charm shadow, dust bending, or reflection mismatch without adding robes, hats, visors, or theatrical fantasy costume"
           ],
           "intent_axis": [
-            "casual girlfriend wizard as everyday screen spell, hoodie outfit, phone constellation glyphs lifting from the screen near the hand"
+            "casual girlfriend wizard as everyday screen spell, hoodie outfit, phone pressure warping air and reflection near the hand"
           ]
         },
         {
@@ -20036,17 +20407,23 @@
             "light_type": "candlelight",
             "light_shape": "lifted_glyph_self_glow",
             "color": "warm_kodak_gold",
+            "world": "world_where_bureaucracy_is_magic",
             "composition": "seal_hand_close_portrait",
             "subject_framing": "waist_up_framing",
-            "surreal_physics_detail": "near_hand_glyphs_lift_and_orbit",
+            "surreal_concept": "written_word_binding_reality",
+            "surreal_anchor": "wax_seal_pool",
+            "surreal_physics_detail": [
+              "paper_charring_along_line",
+              "wax_melting_resolidifying"
+            ],
             "mood": "ceremonial_loneliness"
           },
           "additional": [
             "preserve the East-Asian Joseon palace identity and royal hanbok; wizardness should come from the royal seal and edict scroll responding to her hand as controlled court thaumaturgy",
-            "do not make her an imprisoned fantasy captive or generic Western princess; the active magical read is ceremonial authority, lineage, seal light, and the seal impression or edict marks lifting visibly above the paper around the state seal"
+            "do not make her an imprisoned fantasy captive or generic Western princess; the active magical read is ceremonial authority, lineage, seal light, wax cooling and resolidifying, and an edict line charring cleanly around the state seal"
           ],
           "intent_axis": [
-            "princess wizard as court thaumaturge, Joseon royal hanbok, state seal and edict scroll respond to hand with lifted textless seal marks, ceremonial magical authority"
+            "princess wizard as court thaumaturge, Joseon royal hanbok, state seal and edict scroll respond to hand with wax and paper physically changing, ceremonial magical authority"
           ]
         },
         {
@@ -20136,17 +20513,23 @@
             "light_type": "monitor_glow",
             "light_shape": "lifted_glyph_self_glow",
             "color": "cool_blue",
+            "world": "world_where_bureaucracy_is_magic",
             "composition": "document_foreground_face_background",
             "subject_framing": "upper_body_framing",
-            "surreal_physics_detail": "near_hand_glyphs_lift_and_orbit",
+            "surreal_concept": "contract_enforced_by_world",
+            "surreal_anchor": "ledger_open_page",
+            "surreal_physics_detail": [
+              "ink_flowing_uphill_slow",
+              "paper_charring_along_line"
+            ],
             "mood": "bureaucratic_horror"
           },
           "additional": [
-            "the office look stays practical through blazer, employee badge, access card, and corporate space, while the tablet or ledger columns detach as textless contract marks under restrained monitor-glow spellwork",
-            "wizardness should read as bureaucratic arcana: lifted contract glyphs are the brightest object near the hands and visibly detached from the tablet or document plane, not fantasy robe drift, executive glamour, or ordinary late office work"
+            "the office look stays practical through blazer, employee badge, access card, and corporate space, while the tablet or ledger columns become binding contract magic under restrained monitor-glow spellwork",
+            "wizardness should read as bureaucratic arcana: ink visibly climbs upward through a ledger line or a paper edge chars cleanly near her hand, not fantasy robe drift, executive glamour, ordinary late office work, AR UI, or a visor"
           ],
           "intent_axis": [
-            "office-worker wizard as bureaucratic spellwork, staff badge, tablet ledger, cool-blue lifted contract marks orbiting the hand, controlled corporate arcana"
+            "office-worker wizard as bureaucratic spellwork, staff badge, tablet ledger, cool-blue contract magic physically moving ink or charring paper near the hand, controlled corporate arcana"
           ]
         },
         {
@@ -20172,17 +20555,23 @@
             "color": "warm_kodak_gold",
             "weather": "windblown_snow",
             "motion": "suspended_snowflake_motion",
+            "world": "world_where_seasons_need_permits",
             "composition": "hands_foreground_face_behind",
             "subject_framing": "upper_body_framing",
-            "surreal_physics_detail": "near_hand_glyphs_lift_and_orbit",
+            "surreal_concept": "contract_enforced_by_world",
+            "surreal_anchor": "ledger_open_page",
+            "surreal_physics_detail": [
+              "frost_crystallizing_realtime",
+              "gravity_gradient_lean"
+            ],
             "mood": "festive_warmth"
           },
           "additional": [
             "the covered Santa outfit stays readable through red fur trim, wrapped gift, winter street lights, and snow, while the gift-tag ledger becomes a holiday contract spell surface",
-            "wizardness should read as contract magic at gift scale: gift-tag marks lift above the present and orbit her hand while ribbon tips hang still in the snow, making the gift response brighter than the market lights, not a magic circle or archive book"
+            "wizardness should read as contract magic at gift scale: frost grows across the gift tag in real time and ribbon tips lean against gravity in suspended snow, making the gift response brighter than the market lights, not a magic circle, archive book, AR UI, or visor"
           ],
           "intent_axis": [
-            "Santa-outfit wizard as holiday contract mage, red fur-trim costume, gift-tag ledger, suspended snow and ribbon, lifted gift marks orbiting the hand without magic circle"
+            "Santa-outfit wizard as holiday contract mage, red fur-trim costume, gift-tag ledger, suspended snow, frost growth, and ribbon gravity shift without magic circle"
           ],
           "safety_requirements": [
             "adult fictional subject only; covered festive costume, no lingerie-like Santa outfit, no pin-up framing"
@@ -20208,17 +20597,23 @@
             "light_type": "high_speed_strobe",
             "light_shape": "kinetic_trail_edge_light",
             "motion": "kinetic_spell_trail_motion",
+            "world": "world_where_craft_is_spellcraft",
             "composition": "medium_close",
             "subject_framing": "upper_body_framing",
-            "surreal_physics_detail": "localized_refraction_at_contact",
+            "surreal_concept": "selective_exemption_zone",
+            "surreal_anchor": "brass_balance_scale",
+            "surreal_physics_detail": [
+              "gravity_gradient_lean",
+              "surface_tension_air"
+            ],
             "mood": "focused"
           },
           "additional": [
             "the covered sportswear stays readable through track jacket, training pants, sneakers, stopwatch, and running-track context, while timing and motion become the spell medium",
-            "wizardness should read as kinetic magic: the stopwatch face, training band, or arm gesture leaves a thin controlled trail and local refraction, not robes, spell circles, books, or generic aura"
+            "wizardness should read as kinetic magic: the stopwatch face, training band, or arm gesture bends lane dust and the air around the motion trail, with a subtle gravity lean in nearby markers, not robes, spell circles, books, generic aura, AR UI, or visor"
           ],
           "intent_axis": [
-            "sportswear wizard as kinetic trainer, covered track jacket and sneakers, stopwatch spell medium, controlled motion trail on indoor track without magic circle"
+            "sportswear wizard as kinetic trainer, covered track jacket and sneakers, stopwatch spell medium, controlled motion trail bending air and lane dust on indoor track without magic circle"
           ],
           "safety_requirements": [
             "adult fictional subject only; covered athletic outfit, no fetish fitness framing or body-first gym glamour"
@@ -20718,6 +21113,9 @@
         "subject": "beastkin_subject",
         "prop": "pointed_ear_tail_set_prop",
         "texture": "fur_patch_skin_blend",
+        "transition_stage": "boundary_stage_visible_skin_shift",
+        "anatomical_connection": "fur_boundary_wrist_collar",
+        "body_evidence_region": "face_hairline_wrist_evidence",
         "expression": "slit_pupil_intense_gaze",
         "mood": "weathered_endurance"
       },
@@ -20731,9 +21129,12 @@
         "species_marker",
         "transition_stage",
         "social_cue",
-        "reflection_logic"
+        "reflection_logic",
+        "anatomical_connection",
+        "body_evidence_region",
+        "costume_absorption_guard"
       ],
-      "soft_min_anchors": 2,
+      "soft_min_anchors": 3,
       "anchor_terms": {
         "subject": [
           "beastkin",
@@ -20770,6 +21171,25 @@
           "species-specific body marker",
           "living animal trait",
           "not costume accessory"
+        ],
+        "anatomical_connection": [
+          "ear root",
+          "tail base",
+          "horn root",
+          "skin follicle boundary",
+          "scale-to-skin gradient",
+          "living anatomy connection"
+        ],
+        "body_evidence_region": [
+          "face and hairline evidence",
+          "wrist or collar boundary",
+          "tail base evidence",
+          "body-root evidence remains after costume swap"
+        ],
+        "costume_absorption_guard": [
+          "ornament stays separate from anatomy",
+          "hood trim stays garment",
+          "feathers are skin-rooted, not costume effects"
         ]
       },
       "anchor_pool": {
@@ -20802,17 +21222,53 @@
           "avian_feather_ruff_wing_sleeve",
           "rodent_round_ears_nimble_hands",
           "mustelid_mask_marking_hands"
+        ],
+        "anatomical_connection": [
+          "tail_base_under_waistband",
+          "ear_root_in_hairline",
+          "horn_root_scalp_skin_ring",
+          "feather_skin_follicle_boundary",
+          "scale_skin_gradient_boundary",
+          "fur_boundary_wrist_collar",
+          "hand_pad_claw_nail_blend",
+          "tail_motion_fabric_response"
+        ],
+        "body_evidence_region": [
+          "face_hairline_wrist_evidence",
+          "collar_tail_base_crop",
+          "hands_wrists_worklight_evidence",
+          "window_reflection_tail_base_evidence",
+          "feather_root_macro_crop"
+        ],
+        "costume_absorption_guard": [
+          "ornate_headpiece_not_horn_guard",
+          "hood_trim_not_ears_guard",
+          "stage_feathers_not_body_guard",
+          "helmet_ear_root_visible_guard",
+          "costume_bunny_ears_separate_from_anatomy_guard",
+          "lace_frill_not_fur_guard"
         ]
       },
       "primary_anchor_pool": {
-        "prop": [
-          "pointed_ear_tail_set_prop"
-        ],
         "texture": [
-          "fur_patch_skin_blend"
+          "fur_patch_skin_blend",
+          "feather_skin_follicle_blend",
+          "scale_skin_gradient_patch",
+          "damp_fur_sheen_boundary"
         ],
-        "expression": [
-          "slit_pupil_intense_gaze"
+        "species_marker": [
+          "canid_mobile_ears_tail_counterbalance",
+          "feline_reflective_eye_whisker_shadow",
+          "lagomorph_ear_root_parting_hair",
+          "cervid_velvet_antler_bud_ear_root",
+          "avian_feather_follicle_nape_temple",
+          "reptile_scale_gradient_temple_jaw",
+          "caprine_horn_root_skin_transition"
+        ],
+        "anatomical_connection": [
+          "ear_root_in_hairline",
+          "tail_base_under_waistband",
+          "fur_boundary_wrist_collar"
         ]
       },
       "anchor_groups": {
@@ -20835,11 +21291,12 @@
       "anchor_families": {
         "body_transition": {
           "slots": [
-            "subject",
             "texture",
-            "prop"
+            "transition_stage",
+            "anatomical_connection",
+            "body_evidence_region"
           ],
-          "min_hits": 1
+          "min_hits": 2
         },
         "sensory_gaze": {
           "slots": [
@@ -20860,10 +21317,18 @@
         "species_identity": {
           "slots": [
             "species_marker",
-            "texture",
-            "prop"
+            "anatomical_connection",
+            "texture"
           ],
           "min_hits": 2
+        },
+        "costume_swap_body_evidence": {
+          "slots": [
+            "anatomical_connection",
+            "body_evidence_region",
+            "texture"
+          ],
+          "min_hits": 1
         }
       },
       "anchor_group_floor": {
@@ -20903,7 +21368,39 @@
             ],
             "salience_cues": [
               "canid ear angle, tail weight, or nape ruff should identify the species family without becoming a full animal head"
-            ]
+            ],
+            "set": {
+              "species_marker": "canid_mobile_ears_tail_counterbalance",
+              "texture": "fur_patch_skin_blend",
+              "anatomical_connection": "tail_base_under_waistband",
+              "transition_stage": "boundary_stage_visible_skin_shift"
+            },
+            "soft_anchor_slots": [
+              "species_marker",
+              "anatomical_connection",
+              "texture"
+            ],
+            "soft_min_anchors": 2,
+            "anchor_terms": {
+              "anatomical_connection": [
+                "body-rooted animal trait",
+                "living anatomy connection"
+              ],
+              "texture": [
+                "fur, feather, scale, or damp-sheen boundary"
+              ]
+            },
+            "anchor_pool": {
+              "species_marker": [
+                "canid_mobile_ears_tail_counterbalance"
+              ],
+              "texture": [
+                "fur_patch_skin_blend"
+              ],
+              "anatomical_connection": [
+                "tail_base_under_waistband"
+              ]
+            }
           },
           {
             "id": "feline_cat_bigcat",
@@ -20929,7 +21426,39 @@
             ],
             "salience_cues": [
               "feline eye shine or whisker-shadow skin detail should be visible near the face, not only detachable ears"
-            ]
+            ],
+            "set": {
+              "species_marker": "feline_reflective_eye_whisker_shadow",
+              "texture": "fur_patch_skin_blend",
+              "anatomical_connection": "hand_pad_claw_nail_blend",
+              "transition_stage": "boundary_stage_visible_skin_shift"
+            },
+            "soft_anchor_slots": [
+              "species_marker",
+              "anatomical_connection",
+              "texture"
+            ],
+            "soft_min_anchors": 2,
+            "anchor_terms": {
+              "anatomical_connection": [
+                "body-rooted animal trait",
+                "living anatomy connection"
+              ],
+              "texture": [
+                "fur, feather, scale, or damp-sheen boundary"
+              ]
+            },
+            "anchor_pool": {
+              "species_marker": [
+                "feline_reflective_eye_whisker_shadow"
+              ],
+              "texture": [
+                "fur_patch_skin_blend"
+              ],
+              "anatomical_connection": [
+                "hand_pad_claw_nail_blend"
+              ]
+            }
           },
           {
             "id": "rabbit_hare",
@@ -20941,7 +21470,12 @@
               "산토끼",
               "rabbit",
               "hare",
-              "lagomorph"
+              "lagomorph",
+              "바니",
+              "바니걸",
+              "bunny",
+              "bunny girl",
+              "bunnygirl"
             ],
             "additional": [
               "rabbit or hare beastkin variant: long sensory ears responding to off-frame sound, short tail structure, alert stillness, and soft fur boundary at wrist or collar; keep it different from bunny-girl costume styling"
@@ -20951,7 +21485,39 @@
             ],
             "salience_cues": [
               "rabbit or hare ears should read as mobile sensory anatomy, not costume ears"
-            ]
+            ],
+            "set": {
+              "species_marker": "lagomorph_ear_root_parting_hair",
+              "texture": "fur_patch_skin_blend",
+              "anatomical_connection": "ear_root_in_hairline",
+              "transition_stage": "boundary_stage_visible_skin_shift"
+            },
+            "soft_anchor_slots": [
+              "species_marker",
+              "anatomical_connection",
+              "texture"
+            ],
+            "soft_min_anchors": 2,
+            "anchor_terms": {
+              "anatomical_connection": [
+                "body-rooted animal trait",
+                "living anatomy connection"
+              ],
+              "texture": [
+                "fur, feather, scale, or damp-sheen boundary"
+              ]
+            },
+            "anchor_pool": {
+              "species_marker": [
+                "lagomorph_ear_root_parting_hair"
+              ],
+              "texture": [
+                "fur_patch_skin_blend"
+              ],
+              "anatomical_connection": [
+                "ear_root_in_hairline"
+              ]
+            }
           },
           {
             "id": "deer_ungulate",
@@ -20975,7 +21541,39 @@
             ],
             "salience_cues": [
               "deer-like ears or restrained antler buds should identify the species while preserving the role costume"
-            ]
+            ],
+            "set": {
+              "species_marker": "cervid_velvet_antler_bud_ear_root",
+              "texture": "velvet_antler_skin_texture",
+              "anatomical_connection": "horn_root_scalp_skin_ring",
+              "transition_stage": "boundary_stage_visible_skin_shift"
+            },
+            "soft_anchor_slots": [
+              "species_marker",
+              "anatomical_connection",
+              "texture"
+            ],
+            "soft_min_anchors": 2,
+            "anchor_terms": {
+              "anatomical_connection": [
+                "body-rooted animal trait",
+                "living anatomy connection"
+              ],
+              "texture": [
+                "fur, feather, scale, or damp-sheen boundary"
+              ]
+            },
+            "anchor_pool": {
+              "species_marker": [
+                "cervid_velvet_antler_bud_ear_root"
+              ],
+              "texture": [
+                "velvet_antler_skin_texture"
+              ],
+              "anatomical_connection": [
+                "horn_root_scalp_skin_ring"
+              ]
+            }
           },
           {
             "id": "bear",
@@ -20995,7 +21593,39 @@
             ],
             "salience_cues": [
               "bear-like round ears or shoulder fur should be grounded and anatomical, never plush mascot styling"
-            ]
+            ],
+            "set": {
+              "species_marker": "ursine_round_ear_shoulder_fur_patch",
+              "texture": "fur_patch_skin_blend",
+              "anatomical_connection": "fur_boundary_wrist_collar",
+              "transition_stage": "boundary_stage_visible_skin_shift"
+            },
+            "soft_anchor_slots": [
+              "species_marker",
+              "anatomical_connection",
+              "texture"
+            ],
+            "soft_min_anchors": 2,
+            "anchor_terms": {
+              "anatomical_connection": [
+                "body-rooted animal trait",
+                "living anatomy connection"
+              ],
+              "texture": [
+                "fur, feather, scale, or damp-sheen boundary"
+              ]
+            },
+            "anchor_pool": {
+              "species_marker": [
+                "ursine_round_ear_shoulder_fur_patch"
+              ],
+              "texture": [
+                "fur_patch_skin_blend"
+              ],
+              "anatomical_connection": [
+                "fur_boundary_wrist_collar"
+              ]
+            }
           },
           {
             "id": "horse_equine",
@@ -21016,7 +21646,39 @@
             ],
             "salience_cues": [
               "equine mane or ear shape should be visible without turning the face into a horse mask"
-            ]
+            ],
+            "set": {
+              "species_marker": "equine_mane_blend_long_ear_tail_base",
+              "texture": "fur_patch_skin_blend",
+              "anatomical_connection": "tail_base_under_waistband",
+              "transition_stage": "boundary_stage_visible_skin_shift"
+            },
+            "soft_anchor_slots": [
+              "species_marker",
+              "anatomical_connection",
+              "texture"
+            ],
+            "soft_min_anchors": 2,
+            "anchor_terms": {
+              "anatomical_connection": [
+                "body-rooted animal trait",
+                "living anatomy connection"
+              ],
+              "texture": [
+                "fur, feather, scale, or damp-sheen boundary"
+              ]
+            },
+            "anchor_pool": {
+              "species_marker": [
+                "equine_mane_blend_long_ear_tail_base"
+              ],
+              "texture": [
+                "fur_patch_skin_blend"
+              ],
+              "anatomical_connection": [
+                "tail_base_under_waistband"
+              ]
+            }
           },
           {
             "id": "aquatic_mammal_otter_seal",
@@ -21039,7 +21701,39 @@
             ],
             "salience_cues": [
               "wet fur sheen or reflected aquatic-mammal texture should identify the variant without turning into fish or mermaid imagery"
-            ]
+            ],
+            "set": {
+              "species_marker": "aquatic_mammal_wet_fur_collar",
+              "texture": "damp_fur_sheen_boundary",
+              "anatomical_connection": "fur_boundary_wrist_collar",
+              "transition_stage": "boundary_stage_visible_skin_shift"
+            },
+            "soft_anchor_slots": [
+              "species_marker",
+              "anatomical_connection",
+              "texture"
+            ],
+            "soft_min_anchors": 2,
+            "anchor_terms": {
+              "anatomical_connection": [
+                "body-rooted animal trait",
+                "living anatomy connection"
+              ],
+              "texture": [
+                "fur, feather, scale, or damp-sheen boundary"
+              ]
+            },
+            "anchor_pool": {
+              "species_marker": [
+                "aquatic_mammal_wet_fur_collar"
+              ],
+              "texture": [
+                "damp_fur_sheen_boundary"
+              ],
+              "anatomical_connection": [
+                "fur_boundary_wrist_collar"
+              ]
+            }
           },
           {
             "id": "avian_owl_raptor_corvid",
@@ -21059,14 +21753,46 @@
               "avian"
             ],
             "additional": [
-              "avian beastkin variant: feather ruff along collarbone or temple, sharp attentive eyes, wing-like fabric response, and quiet head-angle precision; keep the human mouth and nose, no beak or bird mask"
+              "avian beastkin variant: feathers must be rooted in skin follicles at nape, temple, or forearm with a visible skin-to-feather boundary; keep the human mouth and nose, no beak, bird mask, feather boa, draped feather fabric, or floating feather effects"
             ],
             "intent_axis": [
               "avian owl, raptor, or corvid beastkin with feather ruff, sharp attentive gaze, and wing-like fabric movement while the face remains human"
             ],
             "salience_cues": [
               "feather ruff or wing-like fabric should read as avian anatomy without adding a beak"
-            ]
+            ],
+            "set": {
+              "species_marker": "avian_feather_follicle_nape_temple",
+              "texture": "feather_skin_follicle_blend",
+              "anatomical_connection": "feather_skin_follicle_boundary",
+              "transition_stage": "boundary_stage_visible_skin_shift"
+            },
+            "soft_anchor_slots": [
+              "species_marker",
+              "anatomical_connection",
+              "texture"
+            ],
+            "soft_min_anchors": 2,
+            "anchor_terms": {
+              "anatomical_connection": [
+                "body-rooted animal trait",
+                "living anatomy connection"
+              ],
+              "texture": [
+                "fur, feather, scale, or damp-sheen boundary"
+              ]
+            },
+            "anchor_pool": {
+              "species_marker": [
+                "avian_feather_follicle_nape_temple"
+              ],
+              "texture": [
+                "feather_skin_follicle_blend"
+              ],
+              "anatomical_connection": [
+                "feather_skin_follicle_boundary"
+              ]
+            }
           },
           {
             "id": "reptile_lizard_gecko",
@@ -21084,14 +21810,46 @@
               "reptile"
             ],
             "additional": [
-              "reptile beastkin variant: small scale patches at temple, wrist, or collarbone, controlled stillness, and cool reflective eye detail; keep scales partial and distinct from dragonkin horns or full monster skin"
+              "reptile beastkin variant: scale patches must show a gradual pore-level skin-to-scale gradient at temple, jaw, wrist, or collarbone; keep scales partial and distinct from dragonkin armor or monster skin"
             ],
             "intent_axis": [
               "lizard or gecko-like reptile beastkin with partial scale patches, cool stillness, and humanlike face rather than dragonkin or monster design"
             ],
             "salience_cues": [
               "partial lizard-like scale patches should stay near face or hands and never become full monster skin"
-            ]
+            ],
+            "set": {
+              "species_marker": "reptile_scale_gradient_temple_jaw",
+              "texture": "scale_skin_gradient_patch",
+              "anatomical_connection": "scale_skin_gradient_boundary",
+              "transition_stage": "boundary_stage_visible_skin_shift"
+            },
+            "soft_anchor_slots": [
+              "species_marker",
+              "anatomical_connection",
+              "texture"
+            ],
+            "soft_min_anchors": 2,
+            "anchor_terms": {
+              "anatomical_connection": [
+                "body-rooted animal trait",
+                "living anatomy connection"
+              ],
+              "texture": [
+                "fur, feather, scale, or damp-sheen boundary"
+              ]
+            },
+            "anchor_pool": {
+              "species_marker": [
+                "reptile_scale_gradient_temple_jaw"
+              ],
+              "texture": [
+                "scale_skin_gradient_patch"
+              ],
+              "anatomical_connection": [
+                "scale_skin_gradient_boundary"
+              ]
+            }
           },
           {
             "id": "rodent_mouse_squirrel",
@@ -21107,22 +21865,40 @@
               "rodent"
             ],
             "set": {
-              "species_marker": "rodent_round_ears_nimble_hands"
+              "species_marker": "rodent_round_ears_nimble_hands",
+              "texture": "fur_patch_skin_blend",
+              "anatomical_connection": "ear_root_in_hairline",
+              "transition_stage": "boundary_stage_visible_skin_shift"
             },
             "soft_anchor_slots": [
-              "species_marker"
+              "species_marker",
+              "anatomical_connection",
+              "texture"
             ],
-            "soft_min_anchors": 1,
+            "soft_min_anchors": 2,
             "anchor_terms": {
               "species_marker": [
                 "rodent round ears nimble hands",
                 "rodent",
                 "species body marker"
+              ],
+              "anatomical_connection": [
+                "body-rooted animal trait",
+                "living anatomy connection"
+              ],
+              "texture": [
+                "fur, feather, scale, or damp-sheen boundary"
               ]
             },
             "anchor_pool": {
               "species_marker": [
                 "rodent_round_ears_nimble_hands"
+              ],
+              "texture": [
+                "fur_patch_skin_blend"
+              ],
+              "anatomical_connection": [
+                "ear_root_in_hairline"
               ]
             },
             "additional": [
@@ -21149,22 +21925,40 @@
               "caprine"
             ],
             "set": {
-              "species_marker": "caprine_horizontal_pupil_small_horns"
+              "species_marker": "caprine_horn_root_skin_transition",
+              "texture": "velvet_antler_skin_texture",
+              "anatomical_connection": "horn_root_scalp_skin_ring",
+              "transition_stage": "boundary_stage_visible_skin_shift"
             },
             "soft_anchor_slots": [
-              "species_marker"
+              "species_marker",
+              "anatomical_connection",
+              "texture"
             ],
-            "soft_min_anchors": 1,
+            "soft_min_anchors": 2,
             "anchor_terms": {
               "species_marker": [
                 "caprine horizontal pupil small horns",
                 "caprine",
                 "species body marker"
+              ],
+              "anatomical_connection": [
+                "body-rooted animal trait",
+                "living anatomy connection"
+              ],
+              "texture": [
+                "fur, feather, scale, or damp-sheen boundary"
               ]
             },
             "anchor_pool": {
               "species_marker": [
-                "caprine_horizontal_pupil_small_horns"
+                "caprine_horn_root_skin_transition"
+              ],
+              "texture": [
+                "velvet_antler_skin_texture"
+              ],
+              "anatomical_connection": [
+                "horn_root_scalp_skin_ring"
               ]
             },
             "additional": [
@@ -21192,22 +21986,40 @@
               "marten"
             ],
             "set": {
-              "species_marker": "mustelid_mask_marking_hands"
+              "species_marker": "mustelid_mask_marking_hands",
+              "texture": "fur_patch_skin_blend",
+              "anatomical_connection": "hand_pad_claw_nail_blend",
+              "transition_stage": "boundary_stage_visible_skin_shift"
             },
             "soft_anchor_slots": [
-              "species_marker"
+              "species_marker",
+              "anatomical_connection",
+              "texture"
             ],
-            "soft_min_anchors": 1,
+            "soft_min_anchors": 2,
             "anchor_terms": {
               "species_marker": [
                 "mustelid mask marking hands",
                 "mustelid",
                 "species body marker"
+              ],
+              "anatomical_connection": [
+                "body-rooted animal trait",
+                "living anatomy connection"
+              ],
+              "texture": [
+                "fur, feather, scale, or damp-sheen boundary"
               ]
             },
             "anchor_pool": {
               "species_marker": [
                 "mustelid_mask_marking_hands"
+              ],
+              "texture": [
+                "fur_patch_skin_blend"
+              ],
+              "anatomical_connection": [
+                "hand_pad_claw_nail_blend"
               ]
             },
             "additional": [
@@ -21233,22 +22045,40 @@
               "suid"
             ],
             "set": {
-              "species_marker": "suid_grounded_tusk_hint"
+              "species_marker": "suid_grounded_tusk_hint",
+              "texture": "fur_patch_skin_blend",
+              "anatomical_connection": "fur_boundary_wrist_collar",
+              "transition_stage": "boundary_stage_visible_skin_shift"
             },
             "soft_anchor_slots": [
-              "species_marker"
+              "species_marker",
+              "anatomical_connection",
+              "texture"
             ],
-            "soft_min_anchors": 1,
+            "soft_min_anchors": 2,
             "anchor_terms": {
               "species_marker": [
                 "suid grounded tusk hint",
                 "suid",
                 "species body marker"
+              ],
+              "anatomical_connection": [
+                "body-rooted animal trait",
+                "living anatomy connection"
+              ],
+              "texture": [
+                "fur, feather, scale, or damp-sheen boundary"
               ]
             },
             "anchor_pool": {
               "species_marker": [
                 "suid_grounded_tusk_hint"
+              ],
+              "texture": [
+                "fur_patch_skin_blend"
+              ],
+              "anatomical_connection": [
+                "fur_boundary_wrist_collar"
               ]
             },
             "additional": [
@@ -21275,22 +22105,40 @@
               "chiroptera"
             ],
             "set": {
-              "species_marker": "bat_membrane_ear_hint"
+              "species_marker": "bat_membrane_ear_hint",
+              "texture": "fur_patch_skin_blend",
+              "anatomical_connection": "ear_root_in_hairline",
+              "transition_stage": "boundary_stage_visible_skin_shift"
             },
             "soft_anchor_slots": [
-              "species_marker"
+              "species_marker",
+              "anatomical_connection",
+              "texture"
             ],
-            "soft_min_anchors": 1,
+            "soft_min_anchors": 2,
             "anchor_terms": {
               "species_marker": [
                 "bat membrane ear hint",
                 "bat",
                 "species body marker"
+              ],
+              "anatomical_connection": [
+                "body-rooted animal trait",
+                "living anatomy connection"
+              ],
+              "texture": [
+                "fur, feather, scale, or damp-sheen boundary"
               ]
             },
             "anchor_pool": {
               "species_marker": [
                 "bat_membrane_ear_hint"
+              ],
+              "texture": [
+                "fur_patch_skin_blend"
+              ],
+              "anatomical_connection": [
+                "ear_root_in_hairline"
               ]
             },
             "additional": [
@@ -21320,22 +22168,40 @@
               "waterfowl"
             ],
             "set": {
-              "species_marker": "avian_feather_ruff_wing_sleeve"
+              "species_marker": "avian_alula_forearm_feather_line",
+              "texture": "feather_skin_follicle_blend",
+              "anatomical_connection": "feather_skin_follicle_boundary",
+              "transition_stage": "boundary_stage_visible_skin_shift"
             },
             "soft_anchor_slots": [
-              "species_marker"
+              "species_marker",
+              "anatomical_connection",
+              "texture"
             ],
-            "soft_min_anchors": 1,
+            "soft_min_anchors": 2,
             "anchor_terms": {
               "species_marker": [
                 "avian feather ruff wing sleeve",
                 "avian",
                 "species body marker"
+              ],
+              "anatomical_connection": [
+                "body-rooted animal trait",
+                "living anatomy connection"
+              ],
+              "texture": [
+                "fur, feather, scale, or damp-sheen boundary"
               ]
             },
             "anchor_pool": {
               "species_marker": [
-                "avian_feather_ruff_wing_sleeve"
+                "avian_alula_forearm_feather_line"
+              ],
+              "texture": [
+                "feather_skin_follicle_blend"
+              ],
+              "anatomical_connection": [
+                "feather_skin_follicle_boundary"
               ]
             },
             "additional": [
@@ -21360,22 +22226,40 @@
               "snake"
             ],
             "set": {
-              "species_marker": "snake_smooth_scale_neckline"
+              "species_marker": "snake_smooth_scale_neckline",
+              "texture": "scale_skin_gradient_patch",
+              "anatomical_connection": "scale_skin_gradient_boundary",
+              "transition_stage": "mid_shift_stage_opt_in"
             },
             "soft_anchor_slots": [
-              "species_marker"
+              "species_marker",
+              "anatomical_connection",
+              "texture"
             ],
-            "soft_min_anchors": 1,
+            "soft_min_anchors": 2,
             "anchor_terms": {
               "species_marker": [
                 "snake smooth scale neckline",
                 "snake",
                 "species body marker"
+              ],
+              "anatomical_connection": [
+                "body-rooted animal trait",
+                "living anatomy connection"
+              ],
+              "texture": [
+                "fur, feather, scale, or damp-sheen boundary"
               ]
             },
             "anchor_pool": {
               "species_marker": [
                 "snake_smooth_scale_neckline"
+              ],
+              "texture": [
+                "scale_skin_gradient_patch"
+              ],
+              "anatomical_connection": [
+                "scale_skin_gradient_boundary"
               ]
             },
             "additional": [
@@ -21405,22 +22289,40 @@
               "fish"
             ],
             "set": {
-              "species_marker": "koi_gill_sheen_trace"
+              "species_marker": "koi_gill_sheen_trace",
+              "texture": "damp_fur_sheen_boundary",
+              "anatomical_connection": "scale_skin_gradient_boundary",
+              "transition_stage": "mid_shift_stage_opt_in"
             },
             "soft_anchor_slots": [
-              "species_marker"
+              "species_marker",
+              "anatomical_connection",
+              "texture"
             ],
-            "soft_min_anchors": 1,
+            "soft_min_anchors": 2,
             "anchor_terms": {
               "species_marker": [
                 "koi gill sheen trace",
                 "fish_shark_koi",
                 "species body marker"
+              ],
+              "anatomical_connection": [
+                "body-rooted animal trait",
+                "living anatomy connection"
+              ],
+              "texture": [
+                "fur, feather, scale, or damp-sheen boundary"
               ]
             },
             "anchor_pool": {
               "species_marker": [
                 "koi_gill_sheen_trace"
+              ],
+              "texture": [
+                "damp_fur_sheen_boundary"
+              ],
+              "anatomical_connection": [
+                "scale_skin_gradient_boundary"
               ]
             },
             "additional": [
@@ -21450,22 +22352,40 @@
               "amphibian"
             ],
             "set": {
-              "species_marker": "amphibian_damp_eye_gill_hint"
+              "species_marker": "amphibian_damp_eye_gill_hint",
+              "texture": "damp_fur_sheen_boundary",
+              "anatomical_connection": "scale_skin_gradient_boundary",
+              "transition_stage": "mid_shift_stage_opt_in"
             },
             "soft_anchor_slots": [
-              "species_marker"
+              "species_marker",
+              "anatomical_connection",
+              "texture"
             ],
-            "soft_min_anchors": 1,
+            "soft_min_anchors": 2,
             "anchor_terms": {
               "species_marker": [
                 "amphibian damp eye gill hint",
                 "amphibian",
                 "species body marker"
+              ],
+              "anatomical_connection": [
+                "body-rooted animal trait",
+                "living anatomy connection"
+              ],
+              "texture": [
+                "fur, feather, scale, or damp-sheen boundary"
               ]
             },
             "anchor_pool": {
               "species_marker": [
                 "amphibian_damp_eye_gill_hint"
+              ],
+              "texture": [
+                "damp_fur_sheen_boundary"
+              ],
+              "anatomical_connection": [
+                "scale_skin_gradient_boundary"
               ]
             },
             "additional": [
@@ -21496,22 +22416,40 @@
               "arthropod"
             ],
             "set": {
-              "species_marker": "moth_antennae_wing_shadow"
+              "species_marker": "moth_antennae_wing_shadow",
+              "texture": "feather_skin_follicle_blend",
+              "anatomical_connection": "feather_skin_follicle_boundary",
+              "transition_stage": "mid_shift_stage_opt_in"
             },
             "soft_anchor_slots": [
-              "species_marker"
+              "species_marker",
+              "anatomical_connection",
+              "texture"
             ],
-            "soft_min_anchors": 1,
+            "soft_min_anchors": 2,
             "anchor_terms": {
               "species_marker": [
                 "moth antennae wing shadow",
                 "insect_arthropod",
                 "species body marker"
+              ],
+              "anatomical_connection": [
+                "body-rooted animal trait",
+                "living anatomy connection"
+              ],
+              "texture": [
+                "fur, feather, scale, or damp-sheen boundary"
               ]
             },
             "anchor_pool": {
               "species_marker": [
                 "moth_antennae_wing_shadow"
+              ],
+              "texture": [
+                "feather_skin_follicle_blend"
+              ],
+              "anatomical_connection": [
+                "feather_skin_follicle_boundary"
               ]
             },
             "additional": [
@@ -21541,22 +22479,40 @@
               "cephalopod"
             ],
             "set": {
-              "species_marker": "cephalopod_sucker_shadow_opt_in"
+              "species_marker": "cephalopod_sucker_shadow_opt_in",
+              "texture": "damp_fur_sheen_boundary",
+              "anatomical_connection": "fur_boundary_wrist_collar",
+              "transition_stage": "mid_shift_stage_opt_in"
             },
             "soft_anchor_slots": [
-              "species_marker"
+              "species_marker",
+              "anatomical_connection",
+              "texture"
             ],
-            "soft_min_anchors": 1,
+            "soft_min_anchors": 2,
             "anchor_terms": {
               "species_marker": [
                 "cephalopod sucker shadow opt in",
                 "cephalopod",
                 "species body marker"
+              ],
+              "anatomical_connection": [
+                "body-rooted animal trait",
+                "living anatomy connection"
+              ],
+              "texture": [
+                "fur, feather, scale, or damp-sheen boundary"
               ]
             },
             "anchor_pool": {
               "species_marker": [
                 "cephalopod_sucker_shadow_opt_in"
+              ],
+              "texture": [
+                "damp_fur_sheen_boundary"
+              ],
+              "anatomical_connection": [
+                "fur_boundary_wrist_collar"
               ]
             },
             "additional": [
@@ -21595,22 +22551,48 @@
       ],
       "render_priority_terms": [
         {
-          "id": "beastkin_body_transition",
+          "id": "beastkin_body_rooted_evidence",
           "group": "beastkin_body_transition",
           "tier": "required",
           "terms": [
             "skin-to-fur transition",
+            "skin-to-scale boundary",
+            "skin-to-feather boundary",
+            "ear root",
+            "tail base",
+            "horn root",
             "fur patch",
-            "pointed ears",
-            "tail",
-            "slit-pupil gaze"
+            "scale patch",
+            "feather follicle",
+            "living skin boundary",
+            "body-root evidence"
           ],
           "min_hits": 2,
           "target_slots": [
-            "subject",
-            "prop",
             "texture",
-            "expression"
+            "species_marker",
+            "transition_stage",
+            "anatomical_connection",
+            "body_evidence_region"
+          ]
+        },
+        {
+          "id": "beastkin_silhouette_support",
+          "group": "beastkin_silhouette_support",
+          "tier": "support",
+          "terms": [
+            "pointed ears",
+            "tail",
+            "slit-pupil gaze",
+            "weighted tail",
+            "mobile ears"
+          ],
+          "min_hits": 1,
+          "target_slots": [
+            "prop",
+            "expression",
+            "species_marker",
+            "action"
           ]
         },
         {
@@ -21622,14 +22604,18 @@
             "reflection",
             "frame-within-frame",
             "public-transit tail world",
-            "social gaze"
+            "social gaze",
+            "bystander",
+            "CCTV"
           ],
           "min_hits": 1,
           "target_slots": [
             "composition",
             "world",
             "light_shape",
-            "mood"
+            "mood",
+            "social_cue",
+            "reflection_logic"
           ]
         },
         {
@@ -21646,8 +22632,9 @@
           "min_hits": 1,
           "target_slots": [
             "subject",
-            "prop",
+            "species_marker",
             "texture",
+            "anatomical_connection",
             "expression"
           ]
         }
@@ -21658,7 +22645,12 @@
         "full mascot suit",
         "animal costume parody",
         "dehumanizing animal caricature",
-        "ordinary cosplay with ears"
+        "ordinary cosplay with ears",
+        "headpiece pretending to be horns",
+        "hood trim pretending to be ears",
+        "feather boa instead of skin-rooted feathers",
+        "helmet hiding all ear roots",
+        "costume bunny ears replacing living anatomy"
       ],
       "conditional_additional": [
         {
@@ -21667,7 +22659,7 @@
             "산타복"
           ],
           "text": [
-            "for Santa outfit beastkin, the covered red fur-trim Santa costume, wrapped gift, Christmas lights, and winter street should remain first-read anchors; animal traits should interact with the hood, fur trim, sleeve opening, or tail gap rather than replacing the outfit with generic fantasy fur"
+            "for Santa outfit beastkin, the covered red fur-trim Santa costume, wrapped gift, Christmas lights, and winter street stay first-read anchors; living animal traits must pass through the hood opening, sleeve edge, fur trim boundary, or tail gap rather than becoming decorative trim"
           ]
         },
         {
@@ -21676,7 +22668,52 @@
             "운동복"
           ],
           "text": [
-            "for sportswear beastkin, the covered track jacket, training pants, sneakers, stopwatch or training band, and gym or running-track context should remain first-read anchors; animal traits should appear through ears under a headband, tail balancing motion, or fur/scale detail at wrist and ankle, not through folk robes or shrine-threshold fantasy"
+            "for sportswear beastkin, the covered track jacket, training pants, sneakers, stopwatch or training band, and gym or running-track context stay first-read anchors; feathers, fur, scales, ears, or tail must be body-rooted and motion-functional, not stage effects or accessory trim"
+          ]
+        },
+        {
+          "requires_role": true,
+          "roles": [
+            "공주"
+          ],
+          "text": [
+            "for princess beastkin, tiara, binyeo, crown, and court ornaments remain metallic objects separate from any horn root or ear root; beastkin evidence should sit at scalp skin, ear root, wrist, tail base, or reflection without being swallowed by royal regalia"
+          ]
+        },
+        {
+          "requires_role": true,
+          "roles": [
+            "고스로리"
+          ],
+          "text": [
+            "for gothic-lolita beastkin, bonnet, lace, ribbons, and frills remain fabric; living ear roots or horn roots part the hair separately, and fur or feather boundaries must be skin-rooted rather than lace decoration"
+          ]
+        },
+        {
+          "requires_role": true,
+          "roles": [
+            "광부"
+          ],
+          "text": [
+            "for miner beastkin, hard hat or headlamp must not hide all ear roots; show practical workwear, tunnel dust, safety procedure, worn gloves, and body evidence at wrist, hand, ear root, or tail clearing the tunnel wall so it reads as labor rather than fashion-first posing"
+          ]
+        },
+        {
+          "requires_role": true,
+          "roles": [
+            "사복 여친"
+          ],
+          "text": [
+            "for casual girlfriend beastkin, everyday clothing and candid social mood remain simple, but the body evidence must survive without accessories through ear root, tail base shaping the clothes, wrist/collar boundary, cafe-window reflection, or a companion/bystander noticing the trait"
+          ]
+        },
+        {
+          "requires_role": true,
+          "roles": [
+            "바니걸"
+          ],
+          "text": [
+            "for bunny-girl beastkin, the covered stage costume remains garment; living lagomorph ears must show ear roots, inner-ear skin, or motion distinct from costume ears, and any bow tie or headband must not become the anatomy"
           ]
         }
       ],
@@ -21867,6 +22904,255 @@
           ],
           "salience_cues": [
             "the reflection or shadow cue should sit close enough to the face or body to be understood in one still image"
+          ]
+        },
+        {
+          "id": "motion_social_body_proof",
+          "weight": 1.0,
+          "aspect": "motion_logic",
+          "subtype": "living_trait_motion",
+          "set": {
+            "action": "ears_swivel_to_offframe_sound",
+            "social_cue": "bystander_double_take",
+            "body_evidence_region": "face_hairline_wrist_evidence",
+            "anatomical_connection": "ear_root_in_hairline"
+          },
+          "soft_anchor_slots": [
+            "action",
+            "social_cue",
+            "body_evidence_region",
+            "anatomical_connection"
+          ],
+          "soft_min_anchors": 2,
+          "additional": [
+            "show at least one animal trait behaving like living anatomy through motion, social reaction, or clothing response rather than static accessory styling"
+          ],
+          "intent_axis": [
+            "beastkin motion logic where ears, tail, or body surface responds before the human pose catches up"
+          ],
+          "salience_cues": [
+            "the motion cue should make ears, tail, fur, feathers, or scales read as living body parts"
+          ]
+        },
+        {
+          "id": "sportswear_body_connected_motion",
+          "roles": [
+            "운동복"
+          ],
+          "weight": 1.0,
+          "aspect": "motion_logic",
+          "subtype": "role_specific_anti_absorption",
+          "set": {
+            "action": "tail_counterbalance_mid_turn",
+            "body_evidence_region": "collar_tail_base_crop",
+            "anatomical_connection": "tail_motion_fabric_response",
+            "costume_absorption_guard": "athletic_effects_not_anatomy_guard"
+          },
+          "soft_anchor_slots": [
+            "action",
+            "body_evidence_region",
+            "anatomical_connection",
+            "costume_absorption_guard"
+          ],
+          "soft_min_anchors": 2,
+          "additional": [
+            "sportswear beastkin should show body-rooted motion evidence under athletic clothing, with ears, tail, fur, feathers, or scales attached to skin rather than training effects, fabric stripes, or decorative motion trails"
+          ],
+          "intent_axis": [
+            "sportswear beastkin should show body-rooted motion evidence under athletic clothing, with ears, tail, fur, feathers, or scales attached to skin rather than training effects, fabric stripes, or decorative motion trails"
+          ],
+          "salience_cues": [
+            "role identity and body-rooted beastkin evidence should both remain readable in one still image"
+          ]
+        },
+        {
+          "id": "princess_regalia_anatomy_guard",
+          "roles": [
+            "공주"
+          ],
+          "weight": 1.0,
+          "aspect": "costume_swap",
+          "subtype": "role_specific_anti_absorption",
+          "set": {
+            "anatomical_connection": "horn_root_scalp_skin_ring",
+            "body_evidence_region": "face_hairline_wrist_evidence",
+            "costume_absorption_guard": "ornate_headpiece_not_horn_guard",
+            "reflection_logic": "species_truth_reflection"
+          },
+          "soft_anchor_slots": [
+            "anatomical_connection",
+            "body_evidence_region",
+            "costume_absorption_guard",
+            "reflection_logic"
+          ],
+          "soft_min_anchors": 2,
+          "additional": [
+            "princess beastkin should separate royal ornaments from living horn or ear roots while keeping court regalia first-read"
+          ],
+          "intent_axis": [
+            "princess beastkin should separate royal ornaments from living horn or ear roots while keeping court regalia first-read"
+          ],
+          "salience_cues": [
+            "role identity and body-rooted beastkin evidence should both remain readable in one still image"
+          ]
+        },
+        {
+          "id": "gothic_lolita_lace_anatomy_guard",
+          "roles": [
+            "고스로리"
+          ],
+          "weight": 1.0,
+          "aspect": "costume_swap",
+          "subtype": "role_specific_anti_absorption",
+          "set": {
+            "anatomical_connection": "ear_root_in_hairline",
+            "body_evidence_region": "face_hairline_wrist_evidence",
+            "costume_absorption_guard": "lace_frill_not_fur_guard",
+            "reflection_logic": "shadow_shows_animal_self"
+          },
+          "soft_anchor_slots": [
+            "anatomical_connection",
+            "body_evidence_region",
+            "costume_absorption_guard",
+            "reflection_logic"
+          ],
+          "soft_min_anchors": 2,
+          "additional": [
+            "gothic-lolita beastkin should keep lace and bonnet as fabric while ear, horn, fur, or feather cues are skin-rooted"
+          ],
+          "intent_axis": [
+            "gothic-lolita beastkin should keep lace and bonnet as fabric while ear, horn, fur, or feather cues are skin-rooted"
+          ],
+          "salience_cues": [
+            "role identity and body-rooted beastkin evidence should both remain readable in one still image"
+          ]
+        },
+        {
+          "id": "santa_hood_tail_gap_guard",
+          "roles": [
+            "산타복"
+          ],
+          "weight": 1.0,
+          "aspect": "costume_swap",
+          "subtype": "role_specific_anti_absorption",
+          "set": {
+            "anatomical_connection": "tail_base_under_waistband",
+            "body_evidence_region": "hood_opening_tail_gap_evidence",
+            "costume_absorption_guard": "hood_trim_not_ears_guard",
+            "action": "tail_lifting_before_sitting"
+          },
+          "soft_anchor_slots": [
+            "anatomical_connection",
+            "body_evidence_region",
+            "costume_absorption_guard",
+            "action"
+          ],
+          "soft_min_anchors": 2,
+          "additional": [
+            "Santa outfit beastkin should distinguish fur trim from living fur and show tail gap, hood opening, sleeve edge, or collar body evidence"
+          ],
+          "intent_axis": [
+            "Santa outfit beastkin should distinguish fur trim from living fur and show tail gap, hood opening, sleeve edge, or collar body evidence"
+          ],
+          "salience_cues": [
+            "role identity and body-rooted beastkin evidence should both remain readable in one still image"
+          ]
+        },
+        {
+          "id": "miner_worklight_body_boundary",
+          "roles": [
+            "광부"
+          ],
+          "weight": 1.0,
+          "aspect": "procedure_body_evidence",
+          "subtype": "role_specific_anti_absorption",
+          "set": {
+            "procedure_step": "safety_inspection",
+            "duty_prop_state": "worn_in_gloves",
+            "anatomical_connection": "fur_boundary_wrist_collar",
+            "body_evidence_region": "hands_wrists_worklight_evidence",
+            "costume_absorption_guard": "helmet_ear_root_visible_guard",
+            "action": "ducking_ear_clearance_doorway"
+          },
+          "soft_anchor_slots": [
+            "procedure_step",
+            "duty_prop_state",
+            "anatomical_connection",
+            "body_evidence_region",
+            "costume_absorption_guard",
+            "action"
+          ],
+          "soft_min_anchors": 2,
+          "additional": [
+            "miner beastkin should keep helmet, headlamp, gloves, tunnel dust, and safety procedure while work light reveals wrist, hand, ear-root, or tail body evidence"
+          ],
+          "intent_axis": [
+            "miner beastkin should keep helmet, headlamp, gloves, tunnel dust, and safety procedure while work light reveals wrist, hand, ear-root, or tail body evidence"
+          ],
+          "salience_cues": [
+            "role identity and body-rooted beastkin evidence should both remain readable in one still image"
+          ]
+        },
+        {
+          "id": "casual_girlfriend_reflection_body_evidence",
+          "roles": [
+            "사복 여친"
+          ],
+          "weight": 1.0,
+          "aspect": "social_reflection_body_evidence",
+          "subtype": "role_specific_anti_absorption",
+          "set": {
+            "anatomical_connection": "tail_base_under_waistband",
+            "body_evidence_region": "window_reflection_tail_base_evidence",
+            "social_cue": "service_staff_paused_hand",
+            "reflection_logic": "phone_front_camera_mismatch"
+          },
+          "soft_anchor_slots": [
+            "anatomical_connection",
+            "body_evidence_region",
+            "social_cue",
+            "reflection_logic"
+          ],
+          "soft_min_anchors": 2,
+          "additional": [
+            "casual girlfriend beastkin should remain everyday and candid while reflection, clothing shape, or social pause proves body-rooted animal traits"
+          ],
+          "intent_axis": [
+            "casual girlfriend beastkin should remain everyday and candid while reflection, clothing shape, or social pause proves body-rooted animal traits"
+          ],
+          "salience_cues": [
+            "role identity and body-rooted beastkin evidence should both remain readable in one still image"
+          ]
+        },
+        {
+          "id": "bunny_stage_living_lagomorph_guard",
+          "roles": [
+            "바니걸"
+          ],
+          "weight": 1.0,
+          "aspect": "costume_swap",
+          "subtype": "role_specific_anti_absorption",
+          "set": {
+            "species_marker": "lagomorph_ear_root_parting_hair",
+            "anatomical_connection": "ear_root_in_hairline",
+            "body_evidence_region": "face_hairline_wrist_evidence",
+            "costume_absorption_guard": "costume_bunny_ears_separate_from_anatomy_guard"
+          },
+          "soft_anchor_slots": [
+            "species_marker",
+            "anatomical_connection",
+            "body_evidence_region",
+            "costume_absorption_guard"
+          ],
+          "soft_min_anchors": 2,
+          "additional": [
+            "bunny-girl beastkin should distinguish covered stage costume ears from living lagomorph ear roots and inner-ear skin"
+          ],
+          "intent_axis": [
+            "bunny-girl beastkin should distinguish covered stage costume ears from living lagomorph ear roots and inner-ear skin"
+          ],
+          "salience_cues": [
+            "role identity and body-rooted beastkin evidence should both remain readable in one still image"
           ]
         }
       ],
@@ -33426,9 +34712,14 @@
         "opt_in_species_guard",
         "body_evidence_macro",
         "social_otherness",
-        "reflection_duality"
+        "reflection_duality",
+        "anatomical_integrity_guard",
+        "anatomical_connection",
+        "costume_swap_body_evidence",
+        "motion_logic",
+        "anti_ornament_absorption"
       ],
-      "min_distinct_aspects_per_batch": 2,
+      "min_distinct_aspects_per_batch": 3,
       "min_distinct_species_per_batch": 4,
       "max_same_species_family_ratio": 0.34,
       "prefer_bundle_rotation": true,
