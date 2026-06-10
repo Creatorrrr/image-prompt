@@ -1245,16 +1245,172 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertIn("glass_specimen_case_prop", combo_concept["combined_forced_slots"]["prop"])
         self.assertIn(
             combo_concept["selected_bundles"][0]["aspect"],
-            {"micro_object_magic", "technomancy_interface", "contract_logomancy"},
+            {
+                "micro_object_magic",
+                "technomancy_interface",
+                "contract_logomancy",
+                "practical_craft_material_magic",
+                "bureaucratic_contract_magic",
+                "scientific_thaumaturgy",
+                "domestic_urban_ward_magic",
+                "spell_cost_aftermath",
+                "scale_paradox_magic",
+            },
         )
         self.assertIn("surreal_physics_detail", combo_concept["combined_forced_slots"])
         combo_joined = " ".join(role_combo["forward_args"])
         self.assertIn("medium plus scale plus transformation plus cost or trace", combo_joined)
-        self.assertIn("lifted_glyph_self_glow", combo_joined)
-        self.assertIn("near_hand_glyphs_lift_and_orbit", combo_joined)
+        self.assertIn("tool -> material response -> residue", combo_joined)
+        self.assertIn("expand wizardry beyond glow", combo_joined)
+        self.assertTrue(
+            any(
+                cue in combo_joined
+                for cue in (
+                    "lifted_glyph_self_glow",
+                    "near_hand_glyphs_lift_and_orbit",
+                    "wax_melting_resolidifying",
+                    "ink_flowing_uphill_slow",
+                    "cold_breath_in_warm_room",
+                    "surface_tension_air",
+                )
+            )
+        )
         self.assertNotIn("grimoire_candle_prop", combo_joined)
         self.assertNotIn("witch_robe_wide_hat", combo_joined)
         self.assertNotIn("magician_playing_card_fan_prop", combo_joined)
+
+    def test_wizard_expansion_presets_families_and_tags_are_registered(self):
+        preset_ids = {preset["id"] for preset in self.data["presets"]}
+        family_ids = {family["id"] for family in self.data.get("preset_families", [])}
+
+        self.assertTrue(
+            {
+                "practical_craft_magic_family",
+                "bureaucratic_magic_family",
+                "scientific_thaumaturgy_family",
+                "domestic_subtle_magic_family",
+                "spell_cost_aftermath_family",
+                "urban_modern_wizard_family",
+                "institutional_guardian_magic_family",
+                "scale_paradox_magic_family",
+                "professional_mystic_family",
+                "fundamental_reality_magic_family",
+            }.issubset(family_ids)
+        )
+        self.assertTrue(
+            {
+                "seamstress_thread_binding_portrait",
+                "notary_binding_stamp_portrait",
+                "lab_glassware_transmutation_portrait",
+                "kitchen_steam_script_portrait",
+                "spell_exhaustion_aftermath_portrait",
+                "convenience_store_night_charm_portrait",
+                "school_nurse_remedy_ward_portrait",
+                "teacup_storm_keeper_portrait",
+                "wizard_forensic",
+                "wizard_architect",
+            }.issubset(preset_ids)
+        )
+
+        expected_slot_ids = {
+            "surreal_concept": {
+                "tool_caused_material_change",
+                "written_word_binding_reality",
+                "contract_enforced_by_world",
+                "spatial_folding",
+            },
+            "surreal_anchor": {
+                "wax_seal_pool",
+                "ledger_open_page",
+                "taut_sewing_thread",
+                "crystal_growth_anchor",
+            },
+            "surreal_physics_detail": {
+                "wax_melting_resolidifying",
+                "ink_flowing_uphill_slow",
+                "salt_grains_vibrating",
+                "surface_tension_air",
+            },
+            "prop": {
+                "wax_seal_kit_prop",
+                "rubber_stamp_sigil_prop",
+                "storm_glass_vial_prop",
+                "tuning_fork_wand_prop",
+            },
+            "action": {
+                "pressing_seal_into_wax",
+                "weighing_intangible_action",
+                "stirring_counterclockwise",
+                "folding_blueprint_space",
+            },
+            "location": {
+                "notary_office_after_hours",
+                "herbal_pharmacy_drawers",
+                "storm_glass_weather_lab",
+                "city_intersection_night",
+            },
+        }
+        for slot, expected_ids in expected_slot_ids.items():
+            with self.subTest(slot=slot):
+                actual_ids = {entry["id"] for entry in self.data["slots"][slot]}
+                self.assertTrue(expected_ids.issubset(actual_ids))
+
+    def test_wizard_mixin_uses_tool_material_trace_grammar(self):
+        recipes = json.loads((SKILL_DIR / "assets" / "concept_recipes.json").read_text(encoding="utf-8"))
+        wizard = recipes["mixins"]["마법사"]
+
+        self.assertGreaterEqual(wizard["soft_min_anchors"], 3)
+        self.assertTrue(
+            {
+                "surreal_concept",
+                "surreal_anchor",
+                "surreal_physics_detail",
+                "contact_point",
+            }.issubset(wizard["soft_anchor_slots"])
+        )
+        self.assertTrue(
+            {
+                "tool_to_material_to_trace",
+                "spell_cost_aftermath",
+                "scale_and_system_magic",
+            }.issubset(wizard["anchor_families"])
+        )
+        self.assertTrue(
+            {
+                "tool_caused_material_change",
+                "written_word_binding_reality",
+                "contract_enforced_by_world",
+                "spatial_folding",
+            }.issubset(wizard["anchor_pool"]["surreal_concept"])
+        )
+        self.assertTrue(
+            {
+                "wax_seal_pool",
+                "ledger_open_page",
+                "taut_sewing_thread",
+                "crystal_growth_anchor",
+            }.issubset(wizard["anchor_pool"]["surreal_anchor"])
+        )
+        self.assertTrue(
+            {
+                "wax_melting_resolidifying",
+                "ink_flowing_uphill_slow",
+                "salt_grains_vibrating",
+                "surface_tension_air",
+            }.issubset(wizard["anchor_pool"]["surreal_physics_detail"])
+        )
+
+        bundle_ids = {bundle["id"] for bundle in wizard["bundles"]}
+        self.assertTrue(
+            {
+                "generic_practical_craft_material_spell",
+                "generic_bureaucratic_contract_spell",
+                "generic_scientific_thaumaturgy",
+                "generic_domestic_urban_ward",
+                "generic_spell_cost_aftermath",
+                "generic_scale_paradox_magic",
+            }.issubset(bundle_ids)
+        )
 
     def test_wizard_role_batch_uses_role_specific_active_spell_bundles(self):
         cases = [
