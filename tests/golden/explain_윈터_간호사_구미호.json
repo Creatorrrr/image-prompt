@@ -1,0 +1,431 @@
+{
+  "concepts": [
+    {
+      "applied_mixins": [
+        "구미호"
+      ],
+      "combined_forced_slots": {
+        "composition": [
+          "cornea_reflection_closeup"
+        ],
+        "costume_style": [
+          "nurse_uniform_costume"
+        ],
+        "expression": [
+          "golden_fox_eye_gaze"
+        ],
+        "lighting": [
+          "moonlit_folk_ritual_light"
+        ],
+        "location": [
+          "hospital_corridor"
+        ],
+        "mood": [
+          "folk_ritual_unease"
+        ],
+        "prop": [
+          "fox_fire_wisp_prop"
+        ],
+        "subject": [
+          "nurse_role"
+        ],
+        "world": [
+          "folk_threshold_world"
+        ]
+      },
+      "concept": "윈터 간호사 구미호",
+      "concept_mode": "legacy",
+      "forced_slots_applied": true,
+      "gate_results": [],
+      "matched": true,
+      "name": "윈터",
+      "role": "간호사",
+      "selected_bundles": [],
+      "selected_species_variants": [],
+      "soft_anchor_spec": {
+        "anchor_expansion": {
+          "enabled": false,
+          "min_similarity": 0.78,
+          "top_k": 3,
+          "weight_ratio": 0.5
+        },
+        "anchors": [
+          {
+            "critical": true,
+            "groups": [
+              "role_primary"
+            ],
+            "ids": [
+              "nurse_uniform_costume"
+            ],
+            "pool": [
+              "nurse_uniform_costume"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "costume_style",
+            "source": "role",
+            "terms": [
+              "nurse-uniform",
+              "nurse",
+              "medical"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": false,
+            "groups": [],
+            "ids": [
+              "golden_fox_eye_gaze"
+            ],
+            "pool": [
+              "golden_fox_eye_gaze"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "expression",
+            "source": "mixin",
+            "terms": [
+              "golden fox-eye gaze"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": false,
+            "groups": [],
+            "ids": [
+              "moonlit_folk_ritual_light"
+            ],
+            "pool": [
+              "moonlit_folk_ritual_light"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "lighting",
+            "source": "mixin",
+            "terms": [
+              "lighting",
+              "moonlit",
+              "folk",
+              "ritual",
+              "light"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": false,
+            "groups": [
+              "role_primary"
+            ],
+            "ids": [
+              "hospital_corridor"
+            ],
+            "pool": [
+              "hospital_corridor",
+              "hospital_waiting_room",
+              "clinic_corridor_handover",
+              "hospital_records_room",
+              "pharmacy_dispensing_counter"
+            ],
+            "pool_weights": {
+              "hospital_corridor": 2.0,
+              "hospital_waiting_room": 2.0
+            },
+            "primary": false,
+            "required": true,
+            "slot": "location",
+            "source": "role",
+            "terms": [
+              "hospital corridor",
+              "clinical"
+            ],
+            "variant_group": "role_scene:clinical_care_space",
+            "variant_strategy": "role_scene_rotation"
+          },
+          {
+            "critical": false,
+            "groups": [],
+            "ids": [
+              "folk_ritual_unease"
+            ],
+            "pool": [
+              "folk_ritual_unease"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "mood",
+            "source": "mixin",
+            "terms": [
+              "mood",
+              "folk",
+              "ritual",
+              "unease"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": false,
+            "groups": [],
+            "ids": [
+              "fox_fire_wisp_prop"
+            ],
+            "pool": [
+              "fox_fire_wisp_prop"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "prop",
+            "source": "mixin",
+            "terms": [
+              "fox-fire wisp"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": false,
+            "groups": [
+              "role_primary"
+            ],
+            "ids": [
+              "nurse_role"
+            ],
+            "pool": [
+              "nurse_role"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "subject",
+            "source": "role",
+            "terms": [
+              "subject",
+              "nurse",
+              "role"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          }
+        ],
+        "concept": "윈터 간호사 구미호",
+        "dual_read_requirement": {
+          "enabled": true,
+          "mixin_terms": [
+            "golden fox-eye gaze",
+            "lighting",
+            "moonlit",
+            "folk",
+            "ritual",
+            "light",
+            "mood",
+            "unease"
+          ],
+          "role_terms": [
+            "nurse-uniform",
+            "nurse",
+            "medical",
+            "hospital corridor",
+            "clinical",
+            "subject",
+            "role"
+          ]
+        },
+        "free_slot_constraints": {
+          "action": {
+            "deny_pool": [
+              "turning_back",
+              "over_shoulder_pose",
+              "slow_walk_turnaround",
+              "over_shoulder_floor_turn",
+              "reacting_to_pov_hand_tail_pull"
+            ]
+          },
+          "body_framing": {
+            "deny_pool": [
+              "over_shoulder_hip_line",
+              "clothed_bodyline_emphasis",
+              "legs_heels_framing"
+            ],
+            "prefer_ids": [
+              "hands_nails_accessory_closeup"
+            ]
+          },
+          "composition": {
+            "deny_pool": [
+              "phone_arm_length_selfie",
+              "mirror_selfie_composition",
+              "crouching_mirror_full_body",
+              "low_angle",
+              "low_angle_hero",
+              "concert_low_angle_crowd"
+            ],
+            "prefer_ids": [
+              "medium_close",
+              "frame_within_frame",
+              "beauty_tight_face_crop"
+            ]
+          },
+          "subject_framing": {
+            "deny_pool": [
+              "full_body_framing",
+              "three_quarter_body_framing",
+              "knee_up_framing"
+            ],
+            "prefer_ids": [
+              "head_and_shoulders_crop",
+              "upper_body_framing",
+              "close_up_face_crop",
+              "detail_crop_hands_accessories"
+            ]
+          }
+        },
+        "group_floors": {},
+        "min_anchors": 2,
+        "mixin_cue_budget": 0,
+        "mode": "soft",
+        "preset_affinity": {
+          "discouraged_axes": [
+            "erotic nurse",
+            "pin-up",
+            "medical horror",
+            "body display"
+          ],
+          "discouraged_presets": [
+            "adult_boundary_social_stress_test",
+            "adult_fetish_fashion_editorial",
+            "beastkin_threshold_portrait"
+          ],
+          "preferred_axes": [
+            "covered nurse uniform",
+            "clinical chart",
+            "face and hands",
+            "professional role"
+          ],
+          "preferred_presets": [
+            "clinical_handover_vitals",
+            "folk_creature_threshold_portrait"
+          ]
+        },
+        "render_directives": [],
+        "render_priority_terms": [],
+        "render_suppress_terms": [],
+        "role_scene_policy": {
+          "allowed_locations": [
+            "hospital_corridor",
+            "hospital_waiting_room",
+            "clinic_corridor_handover",
+            "hospital_records_room",
+            "pharmacy_dispensing_counter"
+          ],
+          "enabled": true,
+          "enforce": true,
+          "forbidden_locations": [
+            "highland_pasture"
+          ],
+          "preferred_locations": [
+            "hospital_corridor",
+            "hospital_waiting_room",
+            "clinic_corridor_handover",
+            "hospital_records_room",
+            "pharmacy_dispensing_counter"
+          ],
+          "reason": "role scene pool must own location before generic beastkin atmosphere",
+          "scene_family": "clinical_care_space"
+        },
+        "safety_negative_floor": [
+          "erotic nurse costume",
+          "thirst-trap nurse",
+          "pin-up nurse",
+          "medical emergency",
+          "patient distress"
+        ],
+        "salience_floor": 1,
+        "soft_repair_policy": {
+          "enabled": true,
+          "fail_open": false,
+          "max_attempts": 2,
+          "strategy": "prefer_then_reselect",
+          "target_slots": [
+            "subject_framing",
+            "composition",
+            "action",
+            "prop",
+            "body_framing"
+          ],
+          "trigger_checks": [
+            "required_render_priority_missing",
+            "dual_read_missing",
+            "body_first_survivor",
+            "free_slot_constraint_violation"
+          ]
+        },
+        "source_floors": {
+          "role": 1
+        },
+        "species_family_policy": {},
+        "visual_guards": []
+      }
+    }
+  ],
+  "forward_args": [
+    "--tags",
+    "<ROOT>/skills/photo-prompt-image-generator/assets/photo_prompt_tags.json",
+    "--seed",
+    "42",
+    "--selection-mode",
+    "rule",
+    "--concept-lock",
+    "윈터 간호사 구미호",
+    "--preset",
+    "clinical_handover_vitals",
+    "--set",
+    "subject=nurse_role",
+    "--set",
+    "costume_style=nurse_uniform_costume",
+    "--set",
+    "location=hospital_corridor",
+    "--set",
+    "expression=golden_fox_eye_gaze",
+    "--set",
+    "prop=fox_fire_wisp_prop",
+    "--set",
+    "lighting=moonlit_folk_ritual_light",
+    "--set",
+    "mood=folk_ritual_unease",
+    "--set",
+    "world=folk_threshold_world",
+    "--set",
+    "composition=cornea_reflection_closeup",
+    "--additional-requirement",
+    "adult nurse duty uniform with clear medical-uniform details",
+    "--additional-requirement",
+    "gumiho identity should read through fox-like gaze, fox-fire, folk threshold atmosphere, and controlled temptation rather than animal ears alone",
+    "--intent-axis",
+    "adult nurse on duty in a clear medical uniform",
+    "--intent-axis",
+    "professional clinical care identity",
+    "--intent-axis",
+    "cold hospital corridor atmosphere",
+    "--intent-axis",
+    "gumiho folklore allure, golden fox-eye gaze, fox-fire wisp, folk threshold, intelligent danger",
+    "--likeness-mode",
+    "inspired",
+    "--n",
+    "1",
+    "--lang",
+    "both",
+    "--detail-level",
+    "detailed",
+    "--json-output",
+    "--include-negative"
+  ]
+}

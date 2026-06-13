@@ -75,9 +75,72 @@ GENERATOR_VERSION = "2026.06.0"
 LIKENESS_MODES = ("off", "inspired")
 SOFT_ANCHOR_WEIGHT_MULTIPLIER = 24.0
 SOFT_ANCHOR_PROMOTED_WEIGHT_MULTIPLIER = 36.0
+SOFT_ANCHOR_PRIMARY_WEIGHT_MULTIPLIER = 48.0
 SOFT_ANCHOR_CRITICAL_WEIGHT_MULTIPLIER = 64.0
 SOFT_ANCHOR_BODY_TERM_THRESHOLD = 0.60
 SOFT_ANCHOR_SELECTED_RATE_FLOOR = 0.80
+# Slot-level per-source anchor match-rate floors; aligned with the quality
+# gate (eval_semantic.py) so the in-engine repair fires whenever the gate
+# would fail the run. Override per spec via soft_anchor policy
+# "source_rate_floors".
+DEFAULT_SOFT_ANCHOR_SOURCE_RATE_FLOORS = {"role": 0.90, "mixin": 0.80}
+
+CANDIDATE_PACK_PRESET_LIMIT = 5
+CANDIDATE_PACK_CORE_SLOT_LIMIT = 5
+CANDIDATE_PACK_SUPPORT_SLOT_LIMIT = 3
+CANDIDATE_PACK_TOTAL_CANDIDATE_LIMIT = 120
+CANDIDATE_PACK_CORE_SLOTS = {
+    "subject",
+    "appearance_type",
+    "costume_style",
+    "anatomical_connection",
+    "body_evidence_region",
+    "species_marker",
+    "surface_material",
+    "prop",
+    "location",
+    "action",
+    "mood",
+    "lighting",
+    "light_type",
+    "light_shape",
+    "composition",
+}
+CANDIDATE_PACK_INTENT_STOPWORDS = {
+    "달린",
+    "있는",
+    "없는",
+    "같은",
+    "느낌",
+    "스타일",
+    "컨셉",
+    "그리고",
+    "및",
+    "와",
+    "과",
+    "의",
+    "한",
+    "a",
+    "an",
+    "the",
+    "and",
+    "with",
+    "of",
+    "in",
+}
+CANDIDATE_PACK_DEFAULT_FORBIDDEN_TERMS = (
+    "gore",
+    "blood",
+    "wound",
+    "injury",
+    "victim",
+    "self-harm",
+    "underage",
+    "minor",
+    "child",
+    "teen",
+    "coercion",
+)
 
 SEMANTIC_PROFILE_CONFIGS: Dict[str, Dict[str, float]] = {
     "conservative": {
@@ -184,6 +247,8 @@ BATCH_DIVERSITY_TRACKED_SCOPES = (
     "style",
     "color",
     "texture",
+    "species_marker",
+    "anatomical_connection",
     "lens",
     "film_emulation",
     "weather",
@@ -448,17 +513,42 @@ def save_anchor_diversity_ledger(path: Optional[str], ledger: JsonDict) -> None:
     ledger_path.write_text(json.dumps(ledger, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
+def result_choice_ids(result: JsonDict) -> Dict[str, str]:
+    choices: Dict[str, str] = {}
+    for slot, value in (result.get("choices") or {}).items():
+        if isinstance(value, dict):
+            choices[slot] = str(value.get("id") or "")
+        elif value:
+            choices[slot] = str(value)
+    return choices
+
+
 def update_anchor_diversity_ledger(ledger: JsonDict, result: JsonDict) -> None:
     trace = result.get("semantic_trace", {}) or {}
     contract = trace.get("generation_contract", {}) or {}
     policy = contract.get("soft_anchor_policy", {}) or {}
     if not policy.get("enabled"):
         return
-    choices = choice_ids(result)
+    choices = result_choice_ids(result)
+    species_policy = policy.get("species_family_policy") if isinstance(policy.get("species_family_policy"), dict) else {}
+    family = str(species_policy.get("family") or "").strip()
+    if family:
+        family_counts = ledger.setdefault("species_family", {})
+        family_counts[family] = int(family_counts.get(family, 0)) + 1
+    variant_id = str(species_policy.get("variant_id") or "").strip()
+    if variant_id:
+        variant_counts = ledger.setdefault("species_variant", {})
+        variant_counts[variant_id] = int(variant_counts.get(variant_id, 0)) + 1
+    role_policy = policy.get("role_scene_policy") if isinstance(policy.get("role_scene_policy"), dict) else {}
+    allowed_locations = set(normalize_list(role_policy.get("allowed_locations")))
+    selected_location = choices.get("location", "")
+    if role_policy.get("enabled") and selected_location and selected_location in allowed_locations:
+        location_counts = ledger.setdefault("location", {})
+        location_counts[selected_location] = int(location_counts.get(selected_location, 0)) + 1
     for anchor in policy.get("anchors", []) or []:
         group = str(anchor.get("variant_group") or "")
         slot = str(anchor.get("slot") or "")
-        selected = choices.get(slot)
+        selected = str(anchor.get("selected") or "") or choices.get(slot)
         pool = set(normalize_list(anchor.get("pool")) or normalize_list(anchor.get("ids")))
         if not group or not slot or not selected or selected not in pool:
             continue
@@ -686,7 +776,10 @@ def infer_preset_domains(preset: JsonDict) -> Set[str]:
         "social": ("social", "creator", "influencer", "tiktok", "instagram", "vlogger"),
         "product": ("product", "packshot", "commercial", "cpg", "skincare", "catalog"),
         "jewelry": ("jewelry", "ring", "macro_reflection"),
-        "food": ("food", "street_food", "pojangmacha", "tteokbokki", "cafe"),
+        # "cafe" intentionally excluded: cafe-set portrait presets (maid cafe,
+        # coquette cafe) are person-centric, and the food domain denies the
+        # person-styling slots via slot_applicability.
+        "food": ("food", "street_food", "pojangmacha", "tteokbokki"),
         "wildlife": ("wildlife", "animal", "nature_wildlife"),
         "documentary": ("documentary", "reportage", "candid"),
         "craft": ("craft", "craftsperson", "workshop", "artisan", "ceramic", "glassblowing"),
@@ -937,6 +1030,120 @@ def entry_block_reason(
     return None
 
 
+def apply_anchor_reachability_guard(
+    slot: str,
+    pool: Sequence[Entry],
+    data: JsonDict,
+    generation_contract: Optional[JsonDict],
+) -> List[Entry]:
+    """Drop subject candidates whose category would deny another anchor slot.
+
+    The subject pick fixes subject_category, and slot_applicability can then
+    skip slots that still carry soft anchors (e.g. an automaton subject makes
+    a human-only makeup anchor permanently unreachable). Falls back to the
+    original pool when every candidate would block something.
+    """
+    if slot != "subject" or generation_contract is None:
+        return list(pool)
+    policy = generation_contract.get("soft_anchor_policy") or {}
+    anchor_slots = {
+        str(anchor.get("slot") or "")
+        for anchor in (policy.get("anchors") or [])
+        if anchor.get("slot") and anchor.get("slot") != "subject"
+    }
+    if not anchor_slots:
+        return list(pool)
+    # Anchors on both sides of a category divide (e.g. human-only makeup vs
+    # robot-only surface_material) mean no candidate is conflict-free: keep
+    # the candidates that leave the most anchor slots reachable.
+    scored: List[tuple[int, Entry, List[str], str]] = []
+    for item in pool:
+        category = subject_category({"subject": item}, data)
+        denied_slots: List[str] = []
+        for anchor_slot in sorted(anchor_slots):
+            slot_policy = slot_applicability_policy(data, anchor_slot)
+            if not slot_policy:
+                continue
+            allowed = set(normalize_list(slot_policy.get("subject_categories")))
+            denied = set(normalize_list(slot_policy.get("deny_subject_categories")))
+            if category in denied or (allowed and category not in allowed):
+                denied_slots.append(anchor_slot)
+        scored.append((len(denied_slots), item, denied_slots, category))
+    best = min(count for count, *_ in scored)
+    if best == max(count for count, *_ in scored):
+        return list(pool)
+    survivors = [item for count, item, _slots, _cat in scored if count == best]
+    blocked = [
+        {"id": item.get("id"), "category": category, "denied_anchor_slots": denied_slots}
+        for count, item, denied_slots, category in scored
+        if count > best
+    ]
+    record_generation_contract_event(
+        generation_contract,
+        "reselect_events",
+        {"slot": slot, "status": "anchor_reachability_filtered", "filtered": blocked},
+    )
+    return survivors
+
+
+def reconcile_contract_blocked_picks(
+    data: JsonDict,
+    preset: JsonDict,
+    rng: random.Random,
+    picked: Dict[str, Entry],
+    forced_choices: Optional[Dict[str, List[str]]] = None,
+    semantic_context: Optional[JsonDict] = None,
+    generation_contract: Optional[JsonDict] = None,
+) -> None:
+    """Re-pick slots whose entry became contract-blocked after later picks.
+
+    The contract evolves while slots are picked (e.g. subject_category turns
+    "object" once the subject lands), so an early pick can violate a rule it
+    passed at selection time. Without this pass such picks are only dropped at
+    render (render_suppressed_slots), losing the slot entirely.
+    """
+    if generation_contract is None:
+        return
+    forced_slots = set(generation_contract.get("forced_slots", []))
+    soft_policy = generation_contract.get("soft_anchor_policy")
+    for slot in list(picked.keys()):
+        entry = picked[slot]
+        protected = slot in forced_slots or (
+            soft_anchor_critical_slot(soft_policy, slot)
+            and str(entry.get("id", "")) in soft_anchor_pool_for_slot(soft_policy, slot, critical_only=True)
+        )
+        if protected:
+            continue
+        slot_reason = slot_block_reason(data, slot, generation_contract)
+        entry_reason = None if slot_reason else entry_block_reason(entry, slot, generation_contract)
+        if not slot_reason and not entry_reason:
+            continue
+        replacement = None
+        if entry_reason:  # slot-level reasons make the whole slot inapplicable
+            remaining = {key: value for key, value in picked.items() if key != slot}
+            replacement = choose_slot(
+                slot, data, preset, rng, remaining, forced_choices, semantic_context, generation_contract
+            )
+            if replacement is not None and entry_block_reason(replacement, slot, generation_contract):
+                replacement = None
+        if replacement is not None:
+            picked[slot] = replacement
+        else:
+            picked.pop(slot, None)
+        record_generation_contract_event(
+            generation_contract,
+            "reselect_events",
+            {
+                "slot": slot,
+                "id": entry.get("id"),
+                "reason": slot_reason or entry_reason,
+                "status": "contract_reselected" if replacement is not None else "contract_dropped",
+                "replacement": (replacement or {}).get("id"),
+            },
+        )
+        refresh_generation_contract(generation_contract, data, preset, picked, forced_choices)
+
+
 def render_guarded_picked(
     data: JsonDict,
     preset: JsonDict,
@@ -1045,6 +1252,531 @@ def normalize_list(value: Any) -> List[str]:
     if isinstance(value, list):
         return [str(x) for x in value]
     return [str(value)]
+
+
+def candidate_pack_float(value: Any, digits: int = 6) -> Optional[float]:
+    if value is None:
+        return None
+    try:
+        return round(float(value), digits)
+    except (TypeError, ValueError):
+        return None
+
+
+def candidate_pack_candidate_id(scope: str, raw_id: str, slot: Optional[str] = None) -> str:
+    if scope == "preset":
+        return f"preset:{raw_id}"
+    return f"slot:{slot}:{raw_id}"
+
+
+def candidate_pack_slot_limit(slot: str) -> int:
+    return CANDIDATE_PACK_CORE_SLOT_LIMIT if slot in CANDIDATE_PACK_CORE_SLOTS else CANDIDATE_PACK_SUPPORT_SLOT_LIMIT
+
+
+def candidate_pack_normalized_probabilities(rows: Sequence[JsonDict]) -> List[float]:
+    weights: List[float] = []
+    for row in rows:
+        value = candidate_pack_float(row.get("weight")) or 0.0
+        weights.append(max(value, 0.0))
+    total = sum(weights)
+    if total <= 0 and rows:
+        return [round(1.0 / len(rows), 6) for _ in rows]
+    if total <= 0:
+        return []
+    return [round(weight / total, 6) for weight in weights]
+
+
+def candidate_pack_preset_by_id(data: JsonDict, preset_id: str) -> Optional[JsonDict]:
+    for preset in data.get("presets", []) or []:
+        if str(preset.get("id")) == preset_id:
+            return preset
+    return materialize_virtual_preset(data, preset_id)
+
+
+def candidate_pack_slot_entry_by_id(data: JsonDict, slot: str, entry_id: str) -> Optional[Entry]:
+    for entry in data.get("slots", {}).get(slot, []) or []:
+        if str(entry.get("id")) == entry_id:
+            return entry
+    return None
+
+
+def candidate_pack_score_payload(row: JsonDict) -> JsonDict:
+    score: JsonDict = {}
+    excluded = {"id"}
+    for key, value in row.items():
+        if key in excluded:
+            continue
+        if isinstance(value, (str, int, float, bool)) or value is None:
+            score[key] = value
+        elif isinstance(value, list):
+            score[key] = value[:12]
+        elif isinstance(value, dict):
+            score[key] = value
+    return score
+
+
+def candidate_pack_entry_blob(entry: JsonDict, extra: Sequence[str] = ()) -> str:
+    values: List[str] = [str(item) for item in extra if str(item).strip()]
+    for key in (
+        "id",
+        "en",
+        "ko",
+        "family",
+        "category",
+        "description",
+        "embedding_text",
+        "aliases",
+        "keywords",
+        "tags",
+        "kind",
+        "facets",
+    ):
+        raw = entry.get(key)
+        if isinstance(raw, list):
+            values.extend(str(item) for item in raw)
+        elif raw is not None:
+            values.append(str(raw))
+    return " ".join(values).lower()
+
+
+def candidate_pack_summarize_preset_candidate(
+    data: JsonDict,
+    row: JsonDict,
+    probability: float,
+    selected_id: str,
+) -> tuple[JsonDict, JsonDict]:
+    raw_id = str(row.get("id") or selected_id or "")
+    preset = candidate_pack_preset_by_id(data, raw_id) or {"id": raw_id}
+    candidate = {
+        "id": candidate_pack_candidate_id("preset", raw_id),
+        "preset_id": raw_id,
+        "label_en": localize(preset, "en") or raw_id,
+        "label_ko": localize(preset, "ko") or raw_id,
+        "family": preset.get("family"),
+        "probability": probability,
+        "weight": candidate_pack_float(row.get("weight")),
+        "selected_by_sampler": raw_id == selected_id,
+        "scores": candidate_pack_score_payload(row),
+        "conflicts_with": [],
+    }
+    return candidate, preset
+
+
+def candidate_pack_summarize_slot_candidate(
+    data: JsonDict,
+    slot: str,
+    row: JsonDict,
+    probability: float,
+    selected_id: str,
+) -> tuple[JsonDict, Entry]:
+    raw_id = str(row.get("id") or selected_id or "")
+    entry = candidate_pack_slot_entry_by_id(data, slot, raw_id) or {"id": raw_id}
+    candidate = {
+        "id": candidate_pack_candidate_id("slot", raw_id, slot),
+        "slot": slot,
+        "entry_id": raw_id,
+        "label_en": localize(entry, "en") or raw_id,
+        "label_ko": localize(entry, "ko") or raw_id,
+        "probability": probability,
+        "weight": candidate_pack_float(row.get("weight")),
+        "selected_by_sampler": raw_id == selected_id,
+        "tags": normalize_list(entry.get("tags"))[:12],
+        "kind": normalize_list(entry.get("kind"))[:8],
+        "scores": candidate_pack_score_payload(row),
+        "conflicts_with": [],
+    }
+    return candidate, entry
+
+
+def candidate_pack_rows_with_selected(rows: Sequence[JsonDict], selected_id: str, limit: int) -> List[JsonDict]:
+    selected_id = str(selected_id or "")
+    normalized = [dict(row) for row in rows if isinstance(row, dict) and row.get("id")]
+    if selected_id and selected_id not in {str(row.get("id")) for row in normalized}:
+        selected_row = {"id": selected_id, "weight": 0.0, "selected_fallback": True}
+        if len(normalized) >= limit:
+            normalized = normalized[: max(0, limit - 1)] + [selected_row]
+        else:
+            normalized.append(selected_row)
+    return normalized[:limit]
+
+
+def candidate_pack_build_presets(
+    data: JsonDict,
+    trace: JsonDict,
+    result: JsonDict,
+    candidate_entries: Dict[str, tuple[str, Optional[str], JsonDict]],
+) -> List[JsonDict]:
+    preset_score = trace.get("preset_score") if isinstance(trace.get("preset_score"), dict) else {}
+    selected_id = str(preset_score.get("selected") or result.get("preset_id") or "")
+    rows = candidate_pack_rows_with_selected(preset_score.get("top") or [], selected_id, CANDIDATE_PACK_PRESET_LIMIT)
+    probabilities = candidate_pack_normalized_probabilities(rows)
+    presets: List[JsonDict] = []
+    for row, probability in zip(rows, probabilities):
+        candidate, preset = candidate_pack_summarize_preset_candidate(data, row, probability, selected_id)
+        presets.append(candidate)
+        candidate_entries[candidate["id"]] = ("preset", None, preset)
+    return presets
+
+
+def candidate_pack_build_slots(
+    data: JsonDict,
+    trace: JsonDict,
+    result: JsonDict,
+    candidate_entries: Dict[str, tuple[str, Optional[str], JsonDict]],
+) -> JsonDict:
+    slots: JsonDict = {}
+    choices = result.get("choices") if isinstance(result.get("choices"), dict) else {}
+    total = 0
+    for score_row in trace.get("slot_scores") or []:
+        if not isinstance(score_row, dict):
+            continue
+        slot = str(score_row.get("slot") or "")
+        if not slot:
+            continue
+        limit = candidate_pack_slot_limit(slot)
+        selected_id = str(score_row.get("selected") or ((choices.get(slot) or {}).get("id") if isinstance(choices.get(slot), dict) else "") or "")
+        rows = candidate_pack_rows_with_selected(score_row.get("top") or [], selected_id, limit)
+        if total + len(rows) > CANDIDATE_PACK_TOTAL_CANDIDATE_LIMIT:
+            remaining = max(0, CANDIDATE_PACK_TOTAL_CANDIDATE_LIMIT - total)
+            rows = rows[:remaining]
+        if not rows:
+            continue
+        probabilities = candidate_pack_normalized_probabilities(rows)
+        candidates: List[JsonDict] = []
+        for row, probability in zip(rows, probabilities):
+            candidate, entry = candidate_pack_summarize_slot_candidate(data, slot, row, probability, selected_id)
+            candidates.append(candidate)
+            candidate_entries[candidate["id"]] = ("slot", slot, entry)
+        slots[slot] = {
+            "slot": slot,
+            "role": "core" if slot in CANDIDATE_PACK_CORE_SLOTS else "support",
+            "selected": candidate_pack_candidate_id("slot", selected_id, slot) if selected_id else None,
+            "candidates": candidates,
+            "candidate_count": score_row.get("candidate_count", len(rows)),
+            "candidate_limit": score_row.get("candidate_limit", limit),
+            "weight_floor": score_row.get("weight_floor"),
+            "score_window": score_row.get("score_window"),
+            "selected_filter": score_row.get("selected_filter"),
+        }
+        total += len(candidates)
+        if total >= CANDIDATE_PACK_TOTAL_CANDIDATE_LIMIT:
+            break
+
+    if slots or not choices:
+        return slots
+
+    # Rule mode has no semantic slot score trace. Keep it useful for CI and
+    # legacy/offline use by exposing the selected weighted-pool entries.
+    for slot, choice in choices.items():
+        if not isinstance(choice, dict):
+            continue
+        raw_id = str(choice.get("id") or "")
+        if not raw_id or total >= CANDIDATE_PACK_TOTAL_CANDIDATE_LIMIT:
+            continue
+        row = {"id": raw_id, "weight": 1.0, "rule_selected": True}
+        candidate, entry = candidate_pack_summarize_slot_candidate(data, str(slot), row, 1.0, raw_id)
+        slots[str(slot)] = {
+            "slot": str(slot),
+            "role": "core" if str(slot) in CANDIDATE_PACK_CORE_SLOTS else "support",
+            "selected": candidate["id"],
+            "candidates": [candidate],
+            "candidate_count": 1,
+            "candidate_limit": 1,
+            "weight_floor": None,
+            "score_window": None,
+            "selected_filter": "rule",
+        }
+        candidate_entries[candidate["id"]] = ("slot", str(slot), entry)
+        total += 1
+    return slots
+
+
+def candidate_pack_conflicts(
+    data: JsonDict,
+    candidate_entries: Dict[str, tuple[str, Optional[str], JsonDict]],
+    limit: int = 100,
+) -> List[JsonDict]:
+    slot_items = [
+        (candidate_id, slot, entry)
+        for candidate_id, (scope, slot, entry) in candidate_entries.items()
+        if scope == "slot" and slot
+    ]
+    conflicts: List[JsonDict] = []
+    seen: Set[tuple[str, str, str]] = set()
+    for rule in slot_conflict_rules_from_source(data):
+        if str(rule.get("severity", "hard")) != "hard":
+            continue
+        left = rule.get("left") or {}
+        right = rule.get("right") or {}
+        left_matches = [
+            (candidate_id, slot, entry)
+            for candidate_id, slot, entry in slot_items
+            if conflict_side_matches(left, slot or "", entry)
+        ]
+        right_matches = [
+            (candidate_id, slot, entry)
+            for candidate_id, slot, entry in slot_items
+            if conflict_side_matches(right, slot or "", entry)
+        ]
+        for left_id, left_slot, _left_entry in left_matches:
+            for right_id, right_slot, _right_entry in right_matches:
+                if left_id == right_id:
+                    continue
+                key = (str(rule.get("id") or ""), *sorted([left_id, right_id]))
+                if key in seen:
+                    continue
+                seen.add(key)
+                conflicts.append(
+                    {
+                        "id": f"conflict:{stable_text_id('|'.join(key), 12)}",
+                        "rule_id": str(rule.get("id") or ""),
+                        "severity": "hard",
+                        "candidates": [left_id, right_id],
+                        "slots": [left_slot, right_slot],
+                        "reason": str(rule.get("reason") or rule.get("description") or ""),
+                    }
+                )
+                if len(conflicts) >= limit:
+                    return conflicts
+    return conflicts
+
+
+def candidate_pack_apply_conflicts(slots: JsonDict, conflicts: Sequence[JsonDict]) -> None:
+    by_id: Dict[str, JsonDict] = {}
+    for slot_payload in slots.values():
+        if not isinstance(slot_payload, dict):
+            continue
+        for candidate in slot_payload.get("candidates") or []:
+            if isinstance(candidate, dict):
+                by_id[str(candidate.get("id"))] = candidate
+    for conflict in conflicts:
+        ids = [str(item) for item in conflict.get("candidates", [])]
+        for candidate_id in ids:
+            candidate = by_id.get(candidate_id)
+            if candidate is None:
+                continue
+            for other_id in ids:
+                if other_id != candidate_id and other_id not in candidate["conflicts_with"]:
+                    candidate["conflicts_with"].append(other_id)
+
+
+def candidate_pack_source_texts(result: JsonDict, trace: JsonDict) -> List[tuple[str, str]]:
+    texts: List[tuple[str, str]] = []
+    provenance = result.get("provenance") if isinstance(result.get("provenance"), dict) else {}
+    for concept in normalize_list(provenance.get("concept_lock")):
+        if concept.strip():
+            texts.append(("concept_lock", concept.strip()))
+    intent = str(trace.get("intent") or "").strip()
+    if not texts and intent and trace.get("intent_source") == "user":
+        texts.append(("intent", intent))
+    return texts
+
+
+def candidate_pack_tokenize_intent_text(text: str) -> List[str]:
+    tokens = re.findall(r"[A-Za-z0-9][A-Za-z0-9_+-]*|[가-힣]+", text)
+    normalized: List[str] = []
+    for token in tokens:
+        key = token.lower()
+        if key in CANDIDATE_PACK_INTENT_STOPWORDS:
+            continue
+        if len(token) <= 1 and not token.isascii():
+            continue
+        normalized.append(token)
+    return normalized or ([text.strip()] if text.strip() else [])
+
+
+def candidate_pack_candidate_blobs(presets: Sequence[JsonDict], slots: JsonDict) -> Dict[str, str]:
+    blobs: Dict[str, str] = {}
+    for preset in presets:
+        candidate_id = str(preset.get("id"))
+        blobs[candidate_id] = candidate_pack_entry_blob(
+            preset,
+            [
+                str(preset.get("preset_id") or ""),
+                str(preset.get("label_en") or ""),
+                str(preset.get("label_ko") or ""),
+                str(preset.get("family") or ""),
+            ],
+        )
+    for slot_payload in slots.values():
+        if not isinstance(slot_payload, dict):
+            continue
+        for candidate in slot_payload.get("candidates") or []:
+            if not isinstance(candidate, dict):
+                continue
+            candidate_id = str(candidate.get("id"))
+            blobs[candidate_id] = candidate_pack_entry_blob(
+                candidate,
+                [
+                    str(candidate.get("entry_id") or ""),
+                    str(candidate.get("slot") or ""),
+                    str(candidate.get("label_en") or ""),
+                    str(candidate.get("label_ko") or ""),
+                ],
+            )
+    return blobs
+
+
+def candidate_pack_candidate_terms(presets: Sequence[JsonDict], slots: JsonDict) -> Dict[str, List[str]]:
+    terms: Dict[str, List[str]] = {}
+    for preset in presets:
+        candidate_id = str(preset.get("id"))
+        terms[candidate_id] = [
+            str(preset.get("preset_id") or ""),
+            str(preset.get("label_en") or ""),
+            str(preset.get("label_ko") or ""),
+            str(preset.get("family") or ""),
+        ]
+    for slot_payload in slots.values():
+        if not isinstance(slot_payload, dict):
+            continue
+        for candidate in slot_payload.get("candidates") or []:
+            if not isinstance(candidate, dict):
+                continue
+            candidate_id = str(candidate.get("id"))
+            terms[candidate_id] = [
+                str(candidate.get("entry_id") or ""),
+                str(candidate.get("label_en") or ""),
+                str(candidate.get("label_ko") or ""),
+            ]
+    return {
+        candidate_id: list(dict.fromkeys(term for term in values if term.strip()))[:12]
+        for candidate_id, values in terms.items()
+    }
+
+
+def candidate_pack_mandatory_intents(
+    result: JsonDict,
+    trace: JsonDict,
+    candidate_blobs: Dict[str, str],
+    candidate_terms: Dict[str, List[str]],
+) -> tuple[List[JsonDict], List[JsonDict]]:
+    intents: List[JsonDict] = []
+    seen: Set[tuple[str, str]] = set()
+    for source, source_text in candidate_pack_source_texts(result, trace):
+        for token in candidate_pack_tokenize_intent_text(source_text):
+            dedupe_key = (source, token.lower())
+            if dedupe_key in seen:
+                continue
+            seen.add(dedupe_key)
+            token_lower = token.lower()
+            covered_by = [
+                candidate_id
+                for candidate_id, blob in candidate_blobs.items()
+                if token_lower in blob
+            ][:12]
+            audit_terms = [token]
+            for candidate_id in covered_by:
+                audit_terms.extend(candidate_terms.get(candidate_id, []))
+            intents.append(
+                {
+                    "text": token,
+                    "source": source,
+                    "source_text": source_text,
+                    "status": "covered" if covered_by else "uncovered",
+                    "covered_by": covered_by,
+                    "audit_terms": list(dict.fromkeys(term for term in audit_terms if str(term).strip()))[:12],
+                }
+            )
+    uncovered = [intent for intent in intents if intent.get("status") == "uncovered"]
+    return intents, uncovered
+
+
+def candidate_pack_safety_floor(trace: JsonDict, result: JsonDict) -> JsonDict:
+    contract = trace.get("generation_contract") if isinstance(trace.get("generation_contract"), dict) else {}
+    requirements: List[str] = []
+    for requirement in normalize_list(contract.get("additional_requirements")):
+        lowered = requirement.lower()
+        if any(token in lowered for token in ("safe", "adult", "non-graphic", "no ", "avoid", "covered")):
+            requirements.append(requirement)
+    soft_policy = contract.get("soft_anchor_policy") if isinstance(contract.get("soft_anchor_policy"), dict) else {}
+    for requirement in normalize_list(soft_policy.get("safety_requirements")):
+        if requirement not in requirements:
+            requirements.append(requirement)
+    return {
+        "non_graphic": True,
+        "forbidden_terms": list(CANDIDATE_PACK_DEFAULT_FORBIDDEN_TERMS),
+        "requirements": list(dict.fromkeys(requirements)),
+        "negative_required": bool(result.get("negative_en")),
+    }
+
+
+def candidate_pack_diversity_state(trace: JsonDict) -> JsonDict:
+    batch = trace.get("batch_diversity") if isinstance(trace.get("batch_diversity"), dict) else {}
+    history = trace.get("batch_history_summary") if isinstance(trace.get("batch_history_summary"), dict) else {}
+    ledger = trace.get("anchor_diversity_ledger_summary") if isinstance(trace.get("anchor_diversity_ledger_summary"), dict) else {}
+    penalties = trace.get("batch_repetition_penalty") if isinstance(trace.get("batch_repetition_penalty"), list) else []
+    return {
+        "enabled": bool(batch.get("enabled")),
+        "tracked_scopes": normalize_list(batch.get("tracked_scopes")),
+        "novelty": batch.get("novelty"),
+        "history": history,
+        "anchor_ledger": ledger,
+        "recent_penalties": penalties[-12:],
+    }
+
+
+def build_candidate_pack(result: JsonDict, data: JsonDict) -> JsonDict:
+    trace = result.get("semantic_trace") if isinstance(result.get("semantic_trace"), dict) else {}
+    provenance = result.get("provenance") if isinstance(result.get("provenance"), dict) else {}
+    candidate_entries: Dict[str, tuple[str, Optional[str], JsonDict]] = {}
+    presets = candidate_pack_build_presets(data, trace, result, candidate_entries)
+    slots = candidate_pack_build_slots(data, trace, result, candidate_entries)
+    conflicts = candidate_pack_conflicts(data, candidate_entries)
+    candidate_pack_apply_conflicts(slots, conflicts)
+    candidate_blobs = candidate_pack_candidate_blobs(presets, slots)
+    candidate_terms = candidate_pack_candidate_terms(presets, slots)
+    mandatory_intents, uncovered_intents = candidate_pack_mandatory_intents(result, trace, candidate_blobs, candidate_terms)
+    contract = trace.get("generation_contract") if isinstance(trace.get("generation_contract"), dict) else {}
+    soft_policy = contract.get("soft_anchor_policy") if isinstance(contract.get("soft_anchor_policy"), dict) else {}
+    pack: JsonDict = {
+        "pack_id": "",
+        "mandatory_intents": mandatory_intents,
+        "uncovered_intents": uncovered_intents,
+        "presets": presets,
+        "slots": slots,
+        "role_scene_policy": soft_policy.get("role_scene_policy", {"enabled": False}),
+        "species_family": soft_policy.get("species_family_policy", {"enabled": False, "allowed": {}}),
+        "diversity_state": candidate_pack_diversity_state(trace),
+        "coverage": {
+            "mandatory_intent_count": len(mandatory_intents),
+            "covered_mandatory_intent_count": len(mandatory_intents) - len(uncovered_intents),
+            "uncovered_intent_count": len(uncovered_intents),
+            "axis_coverage": trace.get("axis_coverage", {}),
+            "contract": {
+                "must_cover_axes": contract.get("must_cover_axes", []),
+                "covered_axes": contract.get("covered_axes", []),
+                "coverage_gaps": contract.get("coverage_gaps", []),
+            },
+            "candidate_limits": {
+                "preset_top": CANDIDATE_PACK_PRESET_LIMIT,
+                "core_slot_top": CANDIDATE_PACK_CORE_SLOT_LIMIT,
+                "support_slot_top": CANDIDATE_PACK_SUPPORT_SLOT_LIMIT,
+                "total": CANDIDATE_PACK_TOTAL_CANDIDATE_LIMIT,
+            },
+        },
+        "conflicts": conflicts,
+        "safety_floor": candidate_pack_safety_floor(trace, result),
+        "negative_en": result.get("negative_en"),
+        "provenance": {
+            "generator_version": provenance.get("generator_version", GENERATOR_VERSION),
+            "seed": provenance.get("seed"),
+            "batch_index": provenance.get("batch_index"),
+            "preset_id": provenance.get("preset_id") or result.get("preset_id"),
+            "selection_mode": provenance.get("selection_mode") or trace.get("selection_mode"),
+            "requested_selection_mode": provenance.get("requested_selection_mode") or trace.get("requested_selection_mode"),
+            "tags_hash": provenance.get("tags_hash") or trace.get("dictionary_hash"),
+            "concept_lock": provenance.get("concept_lock", []),
+            "additional_requirements": provenance.get("additional_requirements", []),
+            "likeness_mode": provenance.get("likeness_mode"),
+            "argv": provenance.get("argv", []),
+            "sample_prompt_id": provenance.get("prompt_id"),
+        },
+    }
+    hashable = dict(pack)
+    hashable["pack_id"] = None
+    pack["pack_id"] = stable_text_id(json.dumps(hashable, ensure_ascii=False, sort_keys=True, separators=(",", ":"))) or ""
+    return pack
 
 
 def semantic_description_for_entry(entry: Entry) -> str:
@@ -1495,16 +2227,169 @@ def compatible_with_facet_guards(item: Entry, preset: JsonDict, picked: Dict[str
     return True
 
 
-def novelty_settings(novelty: str) -> tuple[float, float]:
-    if novelty == "low":
-        return (1.8, 0.05)
-    if novelty == "high":
-        return (0.75, 0.45)
-    return (1.15, 0.18)
+NOVELTY_SETTINGS_DEFAULTS: Dict[str, tuple[float, float]] = {
+    "low": (1.8, 0.05),
+    "medium": (1.15, 0.18),
+    "high": (0.75, 0.45),
+}
 
 
-def semantic_profile_config(profile: str) -> Dict[str, float]:
-    return SEMANTIC_PROFILE_CONFIGS.get(profile, SEMANTIC_PROFILE_CONFIGS["balanced"])
+def creativity_override(source: Optional[JsonDict], key: str) -> Any:
+    if not isinstance(source, dict):
+        return None
+    overrides = source.get("creativity_overrides")
+    if not isinstance(overrides, dict):
+        return None
+    return overrides.get(key)
+
+
+def novelty_settings(novelty: str, source: Optional[JsonDict] = None) -> tuple[float, float]:
+    override = creativity_override(source, "novelty_settings")
+    if isinstance(override, (list, tuple)) and len(override) == 2:
+        try:
+            return (float(override[0]), float(override[1]))
+        except (TypeError, ValueError):
+            pass
+    base = NOVELTY_SETTINGS_DEFAULTS.get(novelty, NOVELTY_SETTINGS_DEFAULTS["medium"])
+    temperature = semantic_policy_float(source, ("novelty", novelty, "temperature"), base[0])
+    scale = semantic_policy_float(source, ("novelty", novelty, "novelty_scale"), base[1])
+    return (temperature, scale)
+
+
+def semantic_profile_config(profile: str, source: Optional[JsonDict] = None) -> Dict[str, float]:
+    override = creativity_override(source, "profile_config")
+    if isinstance(override, dict) and override:
+        return override
+    base = SEMANTIC_PROFILE_CONFIGS.get(profile, SEMANTIC_PROFILE_CONFIGS["balanced"])
+    policy_profiles = semantic_policy_from_source(source).get("profiles", {}) if source else {}
+    overlay = policy_profiles.get(profile, {}) if isinstance(policy_profiles, dict) else {}
+    if isinstance(overlay, dict) and overlay:
+        merged: Dict[str, float] = dict(base)
+        for key, value in overlay.items():
+            try:
+                merged[str(key)] = float(value)
+            except (TypeError, ValueError):
+                continue
+        return merged
+    return base
+
+
+def semantic_base_power(context: Optional[JsonDict]) -> float:
+    """Exponent applied to base weights in semantic candidate scoring.
+
+    Soft-anchor promotion factors are damped by this exponent, so the bias
+    path compensates with factor ** (1 / base_power) to restore nominal
+    multipliers in the final weights.
+    """
+    if not isinstance(context, dict):
+        return 1.0
+    selection_mode = str(context.get("selection_mode") or "semantic")
+    semantic_weight = float(context.get("semantic_weight", default_semantic_weight(selection_mode)))
+    return max(0.15, 1.0 - (semantic_weight * 0.85))
+
+
+def batch_diversity_config(novelty: str, source: Optional[JsonDict] = None) -> Dict[str, Any]:
+    override = creativity_override(source, "batch_diversity_config")
+    if isinstance(override, dict) and override:
+        return override
+    base = BATCH_DIVERSITY_CONFIGS.get(novelty, BATCH_DIVERSITY_CONFIGS["medium"])
+    policy_configs = semantic_policy_from_source(source).get("batch_diversity", {}) if source else {}
+    overlay = policy_configs.get(novelty, {}) if isinstance(policy_configs, dict) else {}
+    if isinstance(overlay, dict) and overlay:
+        merged: Dict[str, Any] = dict(base)
+        scope_weights = dict(base.get("scope_weights", {}))
+        for key, value in overlay.items():
+            if key == "scope_weights" and isinstance(value, dict):
+                for scope, weight in value.items():
+                    try:
+                        scope_weights[str(scope)] = float(weight)
+                    except (TypeError, ValueError):
+                        continue
+                continue
+            try:
+                merged[str(key)] = float(value)
+            except (TypeError, ValueError):
+                continue
+        merged["scope_weights"] = scope_weights
+        return merged
+    return base
+
+
+CREATIVITY_PROFILE_ANCHORS: tuple[tuple[float, str, str], ...] = (
+    (0.0, "conservative", "low"),
+    (0.5, "balanced", "medium"),
+    (1.0, "exploratory", "high"),
+)
+CREATIVITY_INTEGER_CONFIG_KEYS = {"preset_candidate_limit", "slot_candidate_limit"}
+
+
+def clamp_unit_interval(value: float) -> float:
+    return max(0.0, min(1.0, float(value)))
+
+
+def interpolate_numeric_config(
+    low: Dict[str, Any],
+    high: Dict[str, Any],
+    fraction: float,
+) -> Dict[str, Any]:
+    merged: Dict[str, Any] = {}
+    for key in set(low) | set(high):
+        left = low.get(key, high.get(key))
+        right = high.get(key, low.get(key))
+        if isinstance(left, dict) and isinstance(right, dict):
+            merged[key] = interpolate_numeric_config(left, right, fraction)
+            continue
+        if isinstance(left, (int, float)) and isinstance(right, (int, float)):
+            value = float(left) + (float(right) - float(left)) * fraction
+            merged[key] = int(round(value)) if key in CREATIVITY_INTEGER_CONFIG_KEYS else value
+            continue
+        merged[key] = right if fraction >= 0.5 else left
+    return merged
+
+
+def creativity_settings(creativity: float, source: Optional[JsonDict] = None) -> JsonDict:
+    """Map a single 0..1 creativity lever onto the layered diversity knobs.
+
+    0.0 anchors at conservative/low-novelty, 0.5 at balanced/medium, 1.0 at
+    exploratory/high. Coherence knobs (semantic_weight, filter_strictness)
+    are deliberately not touched: they trade off correctness, not creativity.
+    """
+    value = clamp_unit_interval(creativity)
+    anchors = CREATIVITY_PROFILE_ANCHORS
+    for (low_pos, low_profile, low_novelty), (high_pos, high_profile, high_novelty) in zip(anchors, anchors[1:]):
+        if value <= high_pos:
+            span = high_pos - low_pos
+            fraction = 0.0 if span <= 0 else (value - low_pos) / span
+            break
+    else:
+        low_profile, low_novelty = anchors[-1][1], anchors[-1][2]
+        high_profile, high_novelty = low_profile, low_novelty
+        fraction = 1.0
+    profile_config = interpolate_numeric_config(
+        dict(semantic_profile_config(low_profile, source)),
+        dict(semantic_profile_config(high_profile, source)),
+        fraction,
+    )
+    low_temp, low_scale = novelty_settings(low_novelty, source)
+    high_temp, high_scale = novelty_settings(high_novelty, source)
+    batch_config = interpolate_numeric_config(
+        dict(batch_diversity_config(low_novelty, source)),
+        dict(batch_diversity_config(high_novelty, source)),
+        fraction,
+    )
+    nearest_profile = high_profile if fraction >= 0.5 else low_profile
+    nearest_novelty = high_novelty if fraction >= 0.5 else low_novelty
+    return {
+        "creativity": value,
+        "profile_config": profile_config,
+        "novelty_settings": (
+            low_temp + (high_temp - low_temp) * fraction,
+            low_scale + (high_scale - low_scale) * fraction,
+        ),
+        "batch_diversity_config": batch_config,
+        "profile_label": nearest_profile,
+        "novelty_label": nearest_novelty,
+    }
 
 
 def default_filter_strictness(selection_mode: str) -> str:
@@ -1665,15 +2550,15 @@ def embed_single_semantic_text(
 
 
 def semantic_profile_float(context: JsonDict, key: str, default: float) -> float:
-    config = semantic_profile_config(str(context.get("semantic_profile", "balanced")))
+    config = semantic_profile_config(str(context.get("semantic_profile", "balanced")), context)
     try:
         return float(config.get(key, default))
     except (TypeError, ValueError):
         return default
 
 
-def initial_axis_coverage(axis_vectors: Sequence[JsonDict], profile: str) -> JsonDict:
-    config = semantic_profile_config(profile)
+def initial_axis_coverage(axis_vectors: Sequence[JsonDict], profile: str, source: Optional[JsonDict] = None) -> JsonDict:
+    config = semantic_profile_config(profile, source)
     target = float(config.get("axis_coverage_target", 0.68))
     return {
         "target": target,
@@ -1710,10 +2595,19 @@ def semantic_axis_coverage_trace(context: JsonDict) -> JsonDict:
     }
 
 
-def make_batch_context(selection_mode: str, novelty: str, total_count: int = 1) -> Optional[JsonDict]:
+def make_batch_context(
+    selection_mode: str,
+    novelty: str,
+    total_count: int = 1,
+    source: Optional[JsonDict] = None,
+    creativity: Optional[float] = None,
+) -> Optional[JsonDict]:
     if selection_mode not in {"semantic", "hybrid"} or total_count <= 1:
         return None
-    config = BATCH_DIVERSITY_CONFIGS.get(novelty, BATCH_DIVERSITY_CONFIGS["medium"])
+    if creativity is not None:
+        config = creativity_settings(creativity, source)["batch_diversity_config"]
+    else:
+        config = batch_diversity_config(novelty, source)
     return {
         "enabled": True,
         "novelty": novelty,
@@ -1753,6 +2647,23 @@ def batch_history_summary(batch_context: Optional[JsonDict]) -> JsonDict:
         },
         "selected_count": len(batch_context.get("selected", [])),
     }
+
+
+def anchor_diversity_ledger_summary(ledger: Optional[JsonDict]) -> JsonDict:
+    if not isinstance(ledger, dict) or not ledger:
+        return {"enabled": False, "counts": {}}
+    counts: JsonDict = {}
+    for scope, raw_counts in ledger.items():
+        if not isinstance(raw_counts, dict):
+            continue
+        normalized_counts: JsonDict = {}
+        for key, value in raw_counts.items():
+            try:
+                normalized_counts[str(key)] = int(value)
+            except (TypeError, ValueError):
+                continue
+        counts[str(scope)] = dict(sorted(normalized_counts.items()))
+    return {"enabled": bool(counts), "counts": counts}
 
 
 def batch_diversity_penalty(
@@ -1976,6 +2887,228 @@ def stronger_family_strength(left: str, right: str) -> str:
     return left if FAMILY_STRENGTH_RANK.get(left, 0) >= FAMILY_STRENGTH_RANK.get(right, 0) else right
 
 
+def slot_conflict_rules_from_source(source: Optional[JsonDict]) -> List[JsonDict]:
+    rules = coherence_rules_from_source(source or {})
+    declared = rules.get("slot_conflicts")
+    if not isinstance(declared, list):
+        return []
+    return [rule for rule in declared if isinstance(rule, dict)]
+
+
+def slot_context_rules_from_source(source: Optional[JsonDict]) -> List[JsonDict]:
+    rules = coherence_rules_from_source(source or {})
+    declared = rules.get("slot_context_rules")
+    if not isinstance(declared, list):
+        return []
+    return [rule for rule in declared if isinstance(rule, dict)]
+
+
+def builtin_slot_context_rules_enabled(source: Optional[JsonDict]) -> bool:
+    # Legacy escape hatch: dictionaries that migrated the built-in Python
+    # slot-context rules to coherence_rules.slot_context_rules set this false.
+    if not source:
+        return True
+    rules = coherence_rules_from_source(source)
+    return bool(rules.get("builtin_slot_context_rules", True))
+
+
+def rule_slots(rule: JsonDict) -> Set[str]:
+    slots = rule.get("slots")
+    if isinstance(slots, str):
+        return {slots}
+    return set(normalize_list(slots))
+
+
+def conflict_side_matches(side: JsonDict, slot: str, entry: Entry) -> bool:
+    if not isinstance(side, dict) or str(side.get("slot") or "") != slot:
+        return False
+    ids = set(normalize_list(side.get("ids")))
+    tokens = set(normalize_list(side.get("tokens")))
+    facets = set(normalize_list(side.get("facets")))
+    if not ids and not tokens and not facets:
+        return False
+    if ids and str(entry.get("id", "")) in ids:
+        return True
+    if tokens and tokens & entry_context_tokens(entry):
+        return True
+    if facets and facets & facet_tokens(entry):
+        return True
+    return False
+
+
+def slot_conflict_violations(
+    slot: str,
+    item: Entry,
+    picked: Dict[str, Entry],
+    source: Optional[JsonDict],
+    severity: str,
+) -> List[JsonDict]:
+    violations: List[JsonDict] = []
+    for rule in slot_conflict_rules_from_source(source):
+        if str(rule.get("severity", "hard")) != severity:
+            continue
+        left = rule.get("left") or {}
+        right = rule.get("right") or {}
+        for candidate_side, picked_side in ((left, right), (right, left)):
+            if not conflict_side_matches(candidate_side, slot, item):
+                continue
+            picked_slot = str((picked_side or {}).get("slot") or "")
+            entry = picked.get(picked_slot)
+            if entry is not None and conflict_side_matches(picked_side, picked_slot, entry):
+                violations.append(
+                    {
+                        "rule_id": str(rule.get("id") or ""),
+                        "slot": slot,
+                        "item_id": str(item.get("id", "")),
+                        "picked_slot": picked_slot,
+                        "picked_id": str(entry.get("id", "")),
+                        "penalty": float(rule.get("penalty", 0.25)),
+                    }
+                )
+                break
+    return violations
+
+
+def slot_context_rule_violation(
+    rule: JsonDict,
+    slot: str,
+    item: Entry,
+    context: Set[str],
+    scene_context: Set[str],
+) -> bool:
+    if slot not in rule_slots(rule):
+        return False
+    match_ids = set(normalize_list(rule.get("match_ids")))
+    match_tokens = set(normalize_list(rule.get("match_tokens")))
+    match_facets = set(normalize_list(rule.get("match_facets")))
+    if match_ids or match_tokens or match_facets:
+        item_tokens = entry_context_tokens(item)
+        matched = bool(
+            (match_ids and str(item.get("id", "")) in match_ids)
+            or (match_tokens and match_tokens & item_tokens)
+            or (match_facets and match_facets & facet_tokens(item))
+        )
+        if not matched:
+            return False
+    when_context = set(normalize_list(rule.get("when_context_any")))
+    if when_context and not (when_context & context):
+        return False
+    scope_context = scene_context if str(rule.get("context_scope") or "all") == "scene" else context
+    requires_context = set(normalize_list(rule.get("requires_context_any")))
+    if requires_context and not (requires_context & scope_context):
+        return True
+    requires_item = set(normalize_list(rule.get("requires_item_any")))
+    if requires_item and not (requires_item & entry_context_tokens(item)):
+        return True
+    return False
+
+
+def violates_declared_slot_context_rules(
+    slot: str,
+    item: Entry,
+    picked: Dict[str, Entry],
+    source: Optional[JsonDict],
+) -> bool:
+    rules = slot_context_rules_from_source(source)
+    if not rules:
+        return False
+    context = picked_context_tokens(picked)
+    scene_context = picked_scene_context_tokens(picked)
+    return any(
+        slot_context_rule_violation(rule, slot, item, context, scene_context)
+        for rule in rules
+        if str(rule.get("severity", "hard")) == "hard"
+    )
+
+
+def pending_forced_conflict_entries(
+    data: JsonDict,
+    forced_choices: Optional[Dict[str, List[str]]],
+    picked: Dict[str, Entry],
+) -> Dict[str, List[Entry]]:
+    """Entries for forced slots that are not picked yet, for look-ahead conflict checks."""
+    pending: Dict[str, List[Entry]] = {}
+    for slot, forced_ids in (forced_choices or {}).items():
+        if slot in picked or not forced_ids:
+            continue
+        wanted = {str(item_id) for item_id in forced_ids}
+        entries = [item for item in data.get("slots", {}).get(slot, []) if str(item.get("id")) in wanted]
+        if entries:
+            pending[slot] = entries
+    return pending
+
+
+def conflicts_with_all_pending_forced(
+    slot: str,
+    item: Entry,
+    pending: Dict[str, List[Entry]],
+    source: Optional[JsonDict],
+) -> bool:
+    """True when a hard pair rule binds the candidate against EVERY forced
+    candidate of some upcoming forced slot — the contradiction is then
+    unavoidable, so the free-slot candidate must be filtered now."""
+    if not pending or not slot_conflict_rules_from_source(source):
+        return False
+    for pending_slot, entries in pending.items():
+        if not entries:
+            continue
+        if all(
+            slot_conflict_violations(slot, item, {pending_slot: entry}, source, "hard")
+            for entry in entries
+        ):
+            return True
+    return False
+
+
+def apply_slot_conflict_soft_penalties(
+    slot: str,
+    pool: Sequence[Entry],
+    picked: Dict[str, Entry],
+    data: JsonDict,
+    generation_contract: Optional[JsonDict],
+) -> List[Entry]:
+    if not picked or not slot_conflict_rules_from_source(data):
+        return list(pool)
+    adjusted: List[Entry] = []
+    penalized: List[JsonDict] = []
+    for item in pool:
+        violations = slot_conflict_violations(slot, item, picked, data, "soft")
+        if not violations:
+            adjusted.append(item)
+            continue
+        factor = 1.0
+        for violation in violations:
+            penalty = float(violation.get("penalty", 0.25))
+            if 0.0 < penalty < 1.0:
+                factor *= penalty
+        if factor >= 1.0:
+            adjusted.append(item)
+            continue
+        base_weight = item_base_weight(item)
+        copied = dict(item)
+        copied["weight"] = round(base_weight * factor, 6)
+        adjusted.append(copied)
+        penalized.append(
+            {
+                "id": item.get("id"),
+                "factor": round(factor, 4),
+                "rules": [violation.get("rule_id") for violation in violations],
+            }
+        )
+    if penalized:
+        record_generation_contract_event(
+            generation_contract,
+            "slot_conflict_soft_penalty",
+            {
+                "slot": slot,
+                "reason": "declared_slot_conflict_soft_penalty",
+                "reason_code": "declared_slot_conflict_soft_penalty",
+                "penalized": penalized,
+            },
+        )
+    return adjusted
+
+
 MATCH_RULE_KEYS = {
     "id",
     "any_terms",
@@ -2176,7 +3309,7 @@ def semantic_coherence_factor(
     active_families = sorted(context_axis_families(context))
     if not active_families:
         return 1.0, {"factor": 1.0, "events": []}
-    config = semantic_profile_config(str(context.get("semantic_profile", "balanced")))
+    config = semantic_profile_config(str(context.get("semantic_profile", "balanced")), context)
     factor = 1.0
     events: List[JsonDict] = []
     for family in active_families:
@@ -2276,7 +3409,7 @@ def semantic_preset_family_coverage(preset: Entry, context: JsonDict) -> tuple[f
     tracked = [family for family in families if family in (rules.get("family_strength", {}) or {})]
     if len(families) < 2 or not tracked:
         return 0.0, {"active": False, "families": []}
-    config = semantic_profile_config(str(context.get("semantic_profile", "balanced")))
+    config = semantic_profile_config(str(context.get("semantic_profile", "balanced")), context)
     adjustment = 0.0
     rows: List[JsonDict] = []
     for family in tracked:
@@ -2322,6 +3455,8 @@ def make_semantic_context(
     intent_source: str = "user",
     semantic_defaulted: bool = False,
     batch_context: Optional[JsonDict] = None,
+    creativity: Optional[float] = None,
+    novelty_explicit: bool = False,
 ) -> Optional[JsonDict]:
     resolved_filter, resolved_weight, resolved_profile = resolve_semantic_runtime_options(
         selection_mode,
@@ -2377,6 +3512,20 @@ def make_semantic_context(
             }
         )
     family_set = sorted({family for item in axis_vectors for family in item.get("families", [])})
+    creativity_value: Optional[float] = None
+    creativity_overrides: JsonDict = {}
+    if creativity is not None:
+        creativity_value = clamp_unit_interval(creativity)
+        derived = creativity_settings(creativity_value, {"semantic_policy": semantic_policy})
+        # Explicit --novelty / --semantic-profile always win over the lever.
+        if semantic_profile is None:
+            creativity_overrides["profile_config"] = derived["profile_config"]
+        if not novelty_explicit:
+            creativity_overrides["novelty_settings"] = derived["novelty_settings"]
+    context_for_coverage = {
+        "semantic_policy": semantic_policy,
+        "creativity_overrides": creativity_overrides,
+    }
     return {
         "selection_mode": selection_mode,
         "intent": intent,
@@ -2386,6 +3535,8 @@ def make_semantic_context(
         "filter_strictness": resolved_filter,
         "semantic_weight": resolved_weight,
         "semantic_profile": resolved_profile,
+        "creativity": creativity_value,
+        "creativity_overrides": creativity_overrides,
         "index": index,
         "coherence_rules": data.get("coherence_rules", {}) or {},
         "semantic_metadata": data.get("semantic_metadata", {}) or {},
@@ -2396,7 +3547,7 @@ def make_semantic_context(
         "semantic_axis_mode": semantic_axis_mode,
         "intent_axes": axis_payload,
         "axis_vectors": axis_vectors,
-        "axis_coverage": initial_axis_coverage(axis_vectors, resolved_profile),
+        "axis_coverage": initial_axis_coverage(axis_vectors, resolved_profile, context_for_coverage),
         "intent_steering": {
             "mode": resolved_steering,
             "enabled": resolved_steering == "auto",
@@ -2484,7 +3635,7 @@ def semantic_filter_factor(context: JsonDict, filter_match: Optional[bool]) -> f
     strictness = context.get("filter_strictness", "hard")
     if strictness == "off" or filter_match is None:
         return 1.0
-    config = semantic_profile_config(str(context.get("semantic_profile", "balanced")))
+    config = semantic_profile_config(str(context.get("semantic_profile", "balanced")), context)
     if filter_match:
         return 1.0 + float(config["filter_bonus"])
     return max(0.01, 1.0 - float(config["filter_penalty"]))
@@ -2696,8 +3847,8 @@ def semantic_candidate_weight(
     redundancy = 0.0
     if context.get("picked_vectors"):
         redundancy = max(cosine_similarity(vector, picked) for picked in context["picked_vectors"])
-    temperature, novelty_scale = novelty_settings(context["novelty"])
-    temperature *= semantic_profile_config(str(context.get("semantic_profile", "balanced")))["temperature_multiplier"]
+    temperature, novelty_scale = novelty_settings(context["novelty"], context)
+    temperature *= semantic_profile_config(str(context.get("semantic_profile", "balanced")), context)["temperature_multiplier"]
     slot_temperature_multiplier = SLOT_TEMPERATURE_MULTIPLIERS.get(slot, 1.0)
     temperature *= slot_temperature_multiplier
     novelty_weight = 0.0
@@ -2739,7 +3890,7 @@ def semantic_candidate_weight(
     mmr_affinity = (semantic_weight * relevance) - ((1.0 - semantic_weight) * effective_redundancy)
     affinity = mmr_affinity + (novelty_scale * novelty_weight)
     semantic_multiplier = math.exp(max(min(affinity, 3.0), -3.0) / max(temperature, 0.1))
-    base_power = max(0.15, 1.0 - (semantic_weight * 0.85))
+    base_power = semantic_base_power(context)
     weighted = (max(item_base_weight(item), 0.01) ** base_power) * (semantic_multiplier ** semantic_weight)
     weighted *= semantic_filter_factor(context, filter_match)
     weighted *= coherence_factor
@@ -2783,8 +3934,8 @@ def semantic_candidate_weight(
 
 
 def semantic_preset_candidate_weight(preset: Entry, score: float, context: JsonDict) -> float:
-    temperature, novelty_scale = novelty_settings(context["novelty"])
-    temperature *= semantic_profile_config(str(context.get("semantic_profile", "balanced")))["temperature_multiplier"]
+    temperature, novelty_scale = novelty_settings(context["novelty"], context)
+    temperature *= semantic_profile_config(str(context.get("semantic_profile", "balanced")), context)["temperature_multiplier"]
     base = max(item_base_weight(preset), 0.01)
     novelty_weight = 0.0
     try:
@@ -2797,7 +3948,7 @@ def semantic_preset_candidate_weight(preset: Entry, score: float, context: JsonD
 
 
 def semantic_preset_score_window(context: JsonDict) -> float:
-    base = semantic_profile_config(str(context.get("semantic_profile", "balanced")))["preset_window"]
+    base = semantic_profile_config(str(context.get("semantic_profile", "balanced")), context)["preset_window"]
     novelty = context.get("novelty", "medium")
     if novelty == "low":
         return max(0.04, base * 0.65)
@@ -2807,7 +3958,7 @@ def semantic_preset_score_window(context: JsonDict) -> float:
 
 
 def semantic_preset_candidate_limit(context: JsonDict) -> int:
-    config = semantic_profile_config(str(context.get("semantic_profile", "balanced")))
+    config = semantic_profile_config(str(context.get("semantic_profile", "balanced")), context)
     limit = int(config.get("preset_candidate_limit", 8))
     novelty = context.get("novelty", "medium")
     if novelty == "low":
@@ -2818,7 +3969,7 @@ def semantic_preset_candidate_limit(context: JsonDict) -> int:
 
 
 def semantic_preset_weight_floor(context: JsonDict) -> float:
-    config = semantic_profile_config(str(context.get("semantic_profile", "balanced")))
+    config = semantic_profile_config(str(context.get("semantic_profile", "balanced")), context)
     floor = float(config.get("preset_weight_floor", 0.82))
     novelty = context.get("novelty", "medium")
     if novelty == "low":
@@ -2845,7 +3996,7 @@ def semantic_preset_score_breakdown(vector: Sequence[float], context: JsonDict, 
     raw_scores = [item["score"] for item in axis_scores]
     axis_mean = sum(raw_scores) / len(raw_scores) if raw_scores else overall
     axis_floor = min(raw_scores) if raw_scores else overall
-    config = semantic_profile_config(str(context.get("semantic_profile", "balanced")))
+    config = semantic_profile_config(str(context.get("semantic_profile", "balanced")), context)
     overall_weight = float(config.get("preset_overall_weight", 0.45))
     axis_mean_weight = float(config.get("preset_axis_mean_weight", 0.35))
     axis_floor_weight = float(config.get("preset_axis_floor_weight", 0.20))
@@ -2898,21 +4049,54 @@ def semantic_intent_allows_adult_context(context: JsonDict) -> bool:
     return any(term in text for term in adult_terms)
 
 
-def compatible_preset_with_semantic_hard_guards(preset: Entry, context: JsonDict) -> tuple[bool, Optional[str]]:
+def preset_denied_anchor_slot(
+    preset: Entry,
+    soft_policy: Optional[JsonDict],
+    data: JsonDict,
+) -> Optional[str]:
+    """First soft-anchor slot this preset's domains would deny, if any.
+
+    A preset whose domains block an anchor slot via slot_applicability makes
+    that anchor permanently unreachable (repair cannot fill a denied slot), so
+    preset choice must avoid it up front.
+    """
+    if not soft_policy:
+        return None
+    slots = {str(anchor.get("slot") or "") for anchor in (soft_policy.get("anchors") or [])}
+    if not slots:
+        return None
+    domains = preset_domains(preset, data)
+    if not domains:
+        return None
+    for slot in sorted(slots):
+        policy = slot_applicability_policy(data, slot)
+        if not policy:
+            continue
+        if domains & set(normalize_list(policy.get("deny_domains"))):
+            return slot
+    return None
+
+
+def compatible_preset_with_semantic_hard_guards(
+    preset: Entry,
+    context: JsonDict,
+    relax_family_policy: bool = False,
+) -> tuple[bool, Optional[str]]:
     if preset_uses_adult_context(preset) and not semantic_intent_allows_adult_context(context):
         return False, "adult_context"
     tokens = facet_tokens(preset)
     if "safety_tier:adult_only" in tokens and not semantic_intent_allows_adult_context(context):
         return False, "adult_only"
-    for family in sorted(context_axis_families(context)):
-        preset_policy = family_preset_policy(context, family)
-        if preset_policy and not preset_has_family_policy_signal(preset, context, family):
-            return False, f"{family}_preset"
+    if not relax_family_policy:
+        for family in sorted(context_axis_families(context)):
+            preset_policy = family_preset_policy(context, family)
+            if preset_policy and not preset_has_family_policy_signal(preset, context, family):
+                return False, f"{family}_preset"
     return True, None
 
 
 def semantic_slot_score_window(context: JsonDict) -> float:
-    base = semantic_profile_config(str(context.get("semantic_profile", "balanced")))["slot_window"]
+    base = semantic_profile_config(str(context.get("semantic_profile", "balanced")), context)["slot_window"]
     novelty = context.get("novelty", "medium")
     if novelty == "low":
         return max(0.04, base * 0.65)
@@ -2922,7 +4106,7 @@ def semantic_slot_score_window(context: JsonDict) -> float:
 
 
 def semantic_slot_candidate_limit(context: JsonDict, slot: Optional[str] = None) -> int:
-    config = semantic_profile_config(str(context.get("semantic_profile", "balanced")))
+    config = semantic_profile_config(str(context.get("semantic_profile", "balanced")), context)
     limit = int(config.get("slot_candidate_limit", 8))
     if slot in COHERENT_DIVERSITY_SLOTS:
         limit += 4
@@ -2935,7 +4119,7 @@ def semantic_slot_candidate_limit(context: JsonDict, slot: Optional[str] = None)
 
 
 def semantic_slot_weight_floor(context: JsonDict, slot: Optional[str] = None) -> float:
-    config = semantic_profile_config(str(context.get("semantic_profile", "balanced")))
+    config = semantic_profile_config(str(context.get("semantic_profile", "balanced")), context)
     floor = float(config.get("slot_weight_floor", 0.82))
     if slot in COHERENT_DIVERSITY_SLOTS:
         floor = max(0.58, floor - 0.12)
@@ -3011,6 +4195,29 @@ def semantic_weighted_choice(
     else:
         candidates = []
 
+    # Soft-anchor reinjection: pool members pruned by the weight floor or the
+    # candidate limit re-enter the window so the probability floor can act.
+    anchor_reinjection_summary: Optional[JsonDict] = None
+    soft_policy = ((context or {}).get("generation_contract", {}) or {}).get("soft_anchor_policy", {})
+    reinjection_anchor_ids = soft_anchor_pool_for_slot(soft_policy, slot)
+    if reinjection_anchor_ids and candidates:
+        candidate_ids = {str(row[0].get("id")) for row in candidates}
+        missing_rows = [
+            row
+            for row in ordered
+            if str(row[0].get("id")) in reinjection_anchor_ids and str(row[0].get("id")) not in candidate_ids
+        ]
+        reinjection_limit = int(
+            semantic_policy_float(context, ("soft_anchor_diversity", "candidate_reinjection_limit"), 2)
+        )
+        if missing_rows and reinjection_limit > 0:
+            injected = missing_rows[:reinjection_limit]
+            candidates = list(candidates) + injected
+            anchor_reinjection_summary = {
+                "ids": [str(row[0].get("id")) for row in injected],
+                "count": len(injected),
+            }
+
     for item, _vector, _filter_match, weight, _query, _summary in candidates:
         weights.append(weight)
 
@@ -3022,6 +4229,25 @@ def semantic_weighted_choice(
         selected = rng.choice([item for item, *_ in candidates] or list(pool))
     else:
         selected = rng.choices([item for item, *_ in candidates], weights=weights, k=1)[0]
+
+    # Anchor-pool enforcement: concept anchor slots must stay inside the pool
+    # (related randomness happens among pool members); leakage to non-pool
+    # candidates is the job of the opt-in anchor_expansion, not the sampler.
+    anchor_enforced = False
+    if (
+        reinjection_anchor_ids
+        and str(selected.get("id")) not in reinjection_anchor_ids
+        and semantic_policy_float(context, ("soft_anchor_diversity", "anchor_pool_enforcement"), 1.0) >= 1.0
+    ):
+        anchor_rows = [
+            (row, weight)
+            for row, weight in zip(candidates, weights)
+            if str(row[0].get("id")) in reinjection_anchor_ids
+        ]
+        if anchor_rows:
+            anchor_weights = [max(weight, 0.000001) for _, weight in anchor_rows]
+            selected = rng.choices([row[0] for row, _ in anchor_rows], weights=anchor_weights, k=1)[0]
+            anchor_enforced = True
 
     selected_id = str(selected.get("id"))
     if vectors.get(selected_id):
@@ -3051,6 +4277,8 @@ def semantic_weighted_choice(
             "batch_penalty": selected_batch_penalty,
             "batch_group_penalty": selected_batch_group_penalty,
             "anchor_probability_floor": anchor_probability_summary,
+            "anchor_reinjection": anchor_reinjection_summary,
+            "anchor_enforced": anchor_enforced,
         }
     )
     return selected
@@ -3118,7 +4346,7 @@ def soft_preset_affinity_factor(preset: JsonDict, policy: Optional[JsonDict], da
     )
     factor = 1.0
     if preferred:
-        factor *= 1.35
+        factor *= max(1.0, semantic_policy_float(data, ("preset_affinity", "preferred_multiplier"), 1.35))
     if discouraged:
         factor *= 0.35
     return factor, {
@@ -3126,6 +4354,75 @@ def soft_preset_affinity_factor(preset: JsonDict, policy: Optional[JsonDict], da
         "factor": round(factor, 4),
         "preferred_matches": preferred,
         "discouraged_matches": discouraged,
+    }
+
+
+def preset_filter_ids_for_slot(preset: JsonDict, slot: str) -> Set[str]:
+    raw = (preset.get("filters") or {}).get(slot)
+    if isinstance(raw, dict):
+        values = normalize_list(raw.get("ids") or raw.get("allow") or raw.get("any_of"))
+    else:
+        values = normalize_list(raw)
+    return {str(value) for value in values if str(value).strip()}
+
+
+def role_scene_policy_factor(preset: JsonDict, policy: Optional[JsonDict]) -> tuple[float, JsonDict]:
+    role_policy = normalize_role_scene_policy((policy or {}).get("role_scene_policy"))
+    if not role_policy.get("enabled"):
+        return 1.0, {"applied": False}
+    preset_id = str(preset.get("id") or "")
+    location_ids = preset_filter_ids_for_slot(preset, "location")
+    mood_ids = preset_filter_ids_for_slot(preset, "mood")
+    allowed_locations = set(normalize_list(role_policy.get("allowed_locations")))
+    preferred_locations = set(normalize_list(role_policy.get("preferred_locations"))) or allowed_locations
+    forbidden_locations = set(normalize_list(role_policy.get("forbidden_locations")))
+    forbidden_locations.update(normalize_list(role_policy.get("discouraged_generic_locations")))
+    discouraged_moods = set(normalize_list(role_policy.get("discouraged_generic_moods")))
+    support_presets = set(normalize_list(role_policy.get("support_presets")))
+    discouraged_presets = set(normalize_list(role_policy.get("discouraged_presets")))
+
+    factor = 1.0
+    reasons: List[str] = []
+    allowed_hit = bool(location_ids & allowed_locations)
+    preferred_hit = bool(location_ids & preferred_locations)
+    forbidden_hit = bool(location_ids & forbidden_locations)
+    mood_hit = bool(mood_ids & discouraged_moods)
+
+    if preferred_hit:
+        factor *= 1.25
+        reasons.append("preferred_role_location")
+    elif allowed_hit:
+        factor *= 1.12
+        reasons.append("allowed_role_location")
+
+    if preset_id in support_presets:
+        if allowed_locations and role_policy.get("generic_preset_support_only_when_role_scene_missing"):
+            factor *= 0.55
+            reasons.append("generic_support_deferred_to_role_scene")
+        else:
+            factor *= 1.08
+            reasons.append("support_preset")
+
+    if preset_id in discouraged_presets:
+        factor *= 0.2
+        reasons.append("discouraged_preset")
+    if forbidden_hit and not allowed_hit:
+        factor *= 0.05 if role_policy.get("enforce") else 0.35
+        reasons.append("forbidden_role_location")
+    if mood_hit:
+        factor *= 0.35
+        reasons.append("discouraged_generic_mood")
+    if allowed_locations and location_ids and not allowed_hit and role_policy.get("role_first"):
+        factor *= 0.35 if role_policy.get("enforce") else 0.65
+        reasons.append("preset_location_outside_role_pool")
+
+    return factor, {
+        "applied": bool(reasons),
+        "factor": round(factor, 4),
+        "scene_family": role_policy.get("scene_family"),
+        "preset_locations": sorted(location_ids),
+        "preset_moods": sorted(mood_ids),
+        "reasons": reasons,
     }
 
 
@@ -3167,27 +4464,96 @@ def choose_preset(
         scored_presets: List[tuple[JsonDict, float, float, JsonDict]] = []
         summaries: List[JsonDict] = []
         rejected_by_reason: Dict[str, int] = {}
-        for preset in presets:
-            allowed, reason = compatible_preset_with_semantic_hard_guards(preset, semantic_context)
-            if not allowed:
-                rejected_by_reason[str(reason or "hard_guard")] = rejected_by_reason.get(str(reason or "hard_guard"), 0) + 1
-                continue
-            vector = semantic_vector(semantic_context, semantic_entry_key("preset", preset))
-            score, score_summary = semantic_preset_score_breakdown(vector, semantic_context, preset)
-            weight = semantic_preset_candidate_weight(preset, score, semantic_context)
-            affinity_factor, affinity_summary = soft_preset_affinity_factor(preset, soft_policy, data)
-            weight *= affinity_factor
-            batch_penalty, batch_summary = batch_diversity_penalty(semantic_context, "preset", str(preset.get("id")), vector)
-            weight *= batch_penalty
-            summary = {
-                "id": preset.get("id"),
-                "weight": round(weight, 6),
-                "batch_penalty": batch_summary,
-                "soft_preset_affinity": affinity_summary,
-                **score_summary,
-            }
-            scored_presets.append((preset, weight, score, summary))
-            summaries.append(summary)
+        guard_relaxed = False
+        for relax_family_policy in (False, True):
+            for preset in presets:
+                allowed, reason = compatible_preset_with_semantic_hard_guards(
+                    preset, semantic_context, relax_family_policy=relax_family_policy
+                )
+                if not allowed:
+                    if not relax_family_policy:
+                        rejected_by_reason[str(reason or "hard_guard")] = rejected_by_reason.get(str(reason or "hard_guard"), 0) + 1
+                    continue
+                denied_slot = preset_denied_anchor_slot(preset, soft_policy, data)
+                if denied_slot:
+                    if not relax_family_policy:
+                        key = f"anchor_slot_domain:{denied_slot}"
+                        rejected_by_reason[key] = rejected_by_reason.get(key, 0) + 1
+                    continue
+                vector = semantic_vector(semantic_context, semantic_entry_key("preset", preset))
+                score, score_summary = semantic_preset_score_breakdown(vector, semantic_context, preset)
+                weight = semantic_preset_candidate_weight(preset, score, semantic_context)
+                affinity_factor, affinity_summary = soft_preset_affinity_factor(preset, soft_policy, data)
+                weight *= affinity_factor
+                role_scene_factor, role_scene_summary = role_scene_policy_factor(preset, soft_policy)
+                weight *= role_scene_factor
+                batch_penalty, batch_summary = batch_diversity_penalty(semantic_context, "preset", str(preset.get("id")), vector)
+                weight *= batch_penalty
+                summary = {
+                    "id": preset.get("id"),
+                    "weight": round(weight, 6),
+                    "batch_penalty": batch_summary,
+                    "soft_preset_affinity": affinity_summary,
+                    "role_scene_policy": role_scene_summary,
+                    **score_summary,
+                }
+                scored_presets.append((preset, weight, score, summary))
+            if scored_presets:
+                guard_relaxed = relax_family_policy
+                break
+            # Family preset policies can reject every preset (e.g. a
+            # relationship mixin whose capable presets are adult-gated).
+            # Retry with the family policy relaxed but every safety guard
+            # intact, instead of falling back to a guard-blind random pick.
+        if guard_relaxed:
+            semantic_context.setdefault("preset_guard_relaxations", []).append(
+                {"reason": "family_preset_policy_relaxed", "rejected": dict(rejected_by_reason)}
+            )
+        # Concept-affine presets (explicit role/bundle preset ids) outrank a
+        # mixin's atmospheric family lock: when the guards rejected every
+        # preferred preset, score them with the family policy relaxed (all
+        # safety guards intact) so reinjection/enforcement can reach them.
+        affine_spec_ids = set(
+            normalize_list((soft_policy.get("preset_affinity") or {}).get("preferred_presets"))
+        )
+        if affine_spec_ids and not (
+            affine_spec_ids & {str(row[0].get("id")) for row in scored_presets}
+        ):
+            for preset in presets:
+                if str(preset.get("id")) not in affine_spec_ids:
+                    continue
+                allowed, _reason = compatible_preset_with_semantic_hard_guards(
+                    preset, semantic_context, relax_family_policy=True
+                )
+                if not allowed:
+                    continue
+                vector = semantic_vector(semantic_context, semantic_entry_key("preset", preset))
+                score, score_summary = semantic_preset_score_breakdown(vector, semantic_context, preset)
+                weight = semantic_preset_candidate_weight(preset, score, semantic_context)
+                affinity_factor, affinity_summary = soft_preset_affinity_factor(preset, soft_policy, data)
+                weight *= affinity_factor
+                role_scene_factor, role_scene_summary = role_scene_policy_factor(preset, soft_policy)
+                weight *= role_scene_factor
+                batch_penalty, batch_summary = batch_diversity_penalty(semantic_context, "preset", str(preset.get("id")), vector)
+                weight *= batch_penalty
+                scored_presets.append(
+                    (
+                        preset,
+                        weight,
+                        score,
+                        {
+                            "id": preset.get("id"),
+                            "weight": round(weight, 6),
+                            "batch_penalty": batch_summary,
+                            "soft_preset_affinity": affinity_summary,
+                            "role_scene_policy": role_scene_summary,
+                            "affine_guard_relaxed": True,
+                            **score_summary,
+                        },
+                    )
+                )
+                guard_relaxed = True
+        summaries = [row[3] for row in scored_presets]
         rejected_count = sum(rejected_by_reason.values())
         if rejected_count:
             semantic_context["hard_rejected_count"] = int(semantic_context.get("hard_rejected_count", 0)) + rejected_count
@@ -3212,18 +4578,90 @@ def choose_preset(
                 candidates = ordered[:minimum]
         else:
             candidates = []
+        # Preferred-preset reinjection + mass floor: concept-affine presets
+        # (role/bundle presets) must stay reachable even when the semantic
+        # score window prunes them, mirroring the soft-anchor slot treatment.
+        # Pool semantics need exact ids: axis-text affinity ("portrait" etc.)
+        # is a soft bias and must not widen the enforced affine pool.
+        preferred_ids = set(
+            normalize_list((soft_policy.get("preset_affinity") or {}).get("preferred_presets"))
+        )
+        scored_ids = {str(row[0].get("id")) for row in scored_presets}
+        preferred_ids &= scored_ids
+        if preferred_ids:
+            candidate_ids = {str(preset.get("id")) for preset, *_ in candidates}
+            missing = [
+                row
+                for row in sorted(scored_presets, key=lambda r: r[2], reverse=True)
+                if str(row[0].get("id")) in preferred_ids and str(row[0].get("id")) not in candidate_ids
+            ]
+            # Reinjection limit applies to exact preferred presets only.
+            reinjection_limit = int(
+                semantic_policy_float(semantic_context, ("preset_affinity", "candidate_reinjection_limit"), 2)
+            )
+            if missing and reinjection_limit > 0:
+                candidates = list(candidates) + missing[:reinjection_limit]
         candidate_presets = [preset for preset, *_ in candidates]
         candidate_weights = [weight for _, weight, *_ in candidates]
+        if preferred_ids and candidate_presets:
+            preferred_floor = semantic_policy_float(
+                semantic_context, ("preset_affinity", "preferred_probability_floor"), 0.5
+            )
+            indexes = [
+                index
+                for index, preset in enumerate(candidate_presets)
+                if str(preset.get("id")) in preferred_ids
+            ]
+            total = sum(max(weight, 0.0) for weight in candidate_weights)
+            preferred_mass = sum(max(candidate_weights[index], 0.0) for index in indexes)
+            other_mass = max(total - preferred_mass, 0.0)
+            if indexes and other_mass > 0 and preferred_mass > 0 and 0.0 < preferred_floor < 1.0:
+                share = preferred_mass / total
+                if share < preferred_floor:
+                    scale = (preferred_floor * other_mass) / ((1.0 - preferred_floor) * preferred_mass)
+                    for index in indexes:
+                        candidate_weights[index] = candidate_weights[index] * scale
         if candidate_presets and sum(candidate_weights) > 0:
             selected = rng.choices(candidate_presets, weights=candidate_weights, k=1)[0]
         else:
             selected = weighted_choice(presets, rng)
+        # Preset-pool enforcement: like anchor slots, concept-affine presets
+        # (preferred ids plus presets sharing their families) form the related
+        # pool; randomness lives inside that pool, not outside it.
+        if (
+            preferred_ids
+            and candidate_presets
+            and semantic_policy_float(semantic_context, ("preset_affinity", "enforcement"), 1.0) >= 1.0
+        ):
+            preferred_families = {
+                str(preset.get("family"))
+                for preset in presets
+                if str(preset.get("id")) in preferred_ids and preset.get("family")
+            }
+            def in_affine_pool(preset_entry: JsonDict) -> bool:
+                return (
+                    str(preset_entry.get("id")) in preferred_ids
+                    or (preset_entry.get("family") and str(preset_entry.get("family")) in preferred_families)
+                )
+            if not in_affine_pool(selected):
+                affine_rows = [
+                    (preset_entry, max(weight, 0.000001))
+                    for preset_entry, weight in zip(candidate_presets, candidate_weights)
+                    if in_affine_pool(preset_entry)
+                ]
+                if affine_rows:
+                    selected = rng.choices(
+                        [row[0] for row in affine_rows],
+                        weights=[row[1] for row in affine_rows],
+                        k=1,
+                    )[0]
         summary_by_id = {str(summary.get("id")): summary for summary in summaries}
         selected_batch_penalty = summary_by_id.get(str(selected.get("id")), {}).get("batch_penalty")
         if selected_batch_penalty:
             semantic_context.setdefault("batch_repetition_penalty", []).append(selected_batch_penalty)
         semantic_context["preset_score"] = {
             "selected": selected.get("id"),
+            "guard_relaxed": guard_relaxed,
             "selected_summary": summary_by_id.get(str(selected.get("id")), {}),
             "intent_axes": semantic_context.get("intent_axes", {}),
             "top": [
@@ -3763,7 +5201,7 @@ def evaluate_generation_quality(
                 "min_anchors": min_anchors,
                 "required_anchor_count": required_anchor_count,
                 "selected_anchor_rate": match_status.get("selected_anchor_rate", round(len(selected_slots) / max(1, anchor_slot_count), 4)),
-                "minimum_selected_anchor_rate": SOFT_ANCHOR_SELECTED_RATE_FLOOR,
+                "minimum_selected_anchor_rate": soft_anchor_selected_rate_floor(soft_policy),
                 "selected_anchor_slots": sorted(selected_slots),
                 "missing_anchor_slots": missing_anchor_slots,
                 "critical_missing": match_status.get("critical_missing", []),
@@ -4041,6 +5479,9 @@ def normalize_soft_anchor_spec(payload: Any) -> JsonDict:
             "render_directives": [],
             "dual_read_requirement": {},
             "preset_affinity": {},
+            "role_scene_policy": {"enabled": False},
+            "species_family_policy": {"enabled": False, "allowed": {}},
+            "diversity_state": {},
             "soft_repair_policy": normalize_soft_repair_policy({}),
             "safety_negative_floor": [],
         }
@@ -4049,6 +5490,7 @@ def normalize_soft_anchor_spec(payload: Any) -> JsonDict:
         min_anchors = len(raw_anchors)
         mode = "soft"
         concept = ""
+        raw_anchor_expansion = {}
         raw_source_floors = {}
         raw_group_floors = {}
         raw_salience_floor = 0
@@ -4059,6 +5501,9 @@ def normalize_soft_anchor_spec(payload: Any) -> JsonDict:
         raw_render_directives = []
         raw_dual_read_requirement = {}
         raw_preset_affinity = {}
+        raw_role_scene_policy = {}
+        raw_species_family_policy = {}
+        raw_diversity_state = {}
         raw_soft_repair_policy = {}
         raw_safety_negative_floor = []
     elif isinstance(payload, dict):
@@ -4066,6 +5511,7 @@ def normalize_soft_anchor_spec(payload: Any) -> JsonDict:
         min_anchors = payload.get("min_anchors", payload.get("soft_min_anchors", 0))
         mode = str(payload.get("mode") or "soft")
         concept = str(payload.get("concept") or "")
+        raw_anchor_expansion = payload.get("anchor_expansion", {}) or {}
         raw_source_floors = payload.get("source_floors", payload.get("anchor_floor", {})) or {}
         raw_group_floors = payload.get("group_floors", payload.get("anchor_group_floor", {})) or {}
         raw_salience_floor = payload.get("salience_floor", 0)
@@ -4076,6 +5522,9 @@ def normalize_soft_anchor_spec(payload: Any) -> JsonDict:
         raw_render_directives = payload.get("render_directives", []) or []
         raw_dual_read_requirement = payload.get("dual_read_requirement", {}) or {}
         raw_preset_affinity = payload.get("preset_affinity", {}) or {}
+        raw_role_scene_policy = payload.get("role_scene_policy", {}) or {}
+        raw_species_family_policy = payload.get("species_family_policy", {}) or {}
+        raw_diversity_state = payload.get("diversity_state", {}) or {}
         raw_soft_repair_policy = payload.get("soft_repair_policy", {}) or {}
         raw_safety_negative_floor = payload.get("safety_negative_floor", []) or []
     else:
@@ -4095,11 +5544,22 @@ def normalize_soft_anchor_spec(payload: Any) -> JsonDict:
         terms = normalize_list(raw.get("terms"))
         pool = normalize_list(raw.get("pool")) or list(ids)
         source = str(raw.get("source") or "recipe")
+        pool_weights: JsonDict = {}
+        raw_pool_weights = raw.get("pool_weights")
+        if isinstance(raw_pool_weights, dict):
+            for item_id, weight in raw_pool_weights.items():
+                try:
+                    value = float(weight)
+                except (TypeError, ValueError):
+                    continue
+                if value > 0 and str(item_id) in set(pool):
+                    pool_weights[str(item_id)] = value
         anchors.append(
             {
                 "slot": slot,
                 "ids": ids,
                 "pool": pool,
+                "pool_weights": pool_weights,
                 "terms": terms,
                 "source": source,
                 "required": bool(raw.get("required", True)),
@@ -4146,12 +5606,34 @@ def normalize_soft_anchor_spec(payload: Any) -> JsonDict:
     render_directives = normalize_soft_render_directives(raw_render_directives)
     dual_read_requirement = normalize_dual_read_requirement(raw_dual_read_requirement)
     preset_affinity = normalize_soft_preset_affinity(raw_preset_affinity)
+    role_scene_policy = normalize_role_scene_policy(raw_role_scene_policy)
+    species_family_policy = normalize_species_family_policy(raw_species_family_policy)
+    diversity_state = raw_diversity_state if isinstance(raw_diversity_state, dict) else {}
     soft_repair_policy = normalize_soft_repair_policy(raw_soft_repair_policy)
     safety_negative_floor = normalize_list(raw_safety_negative_floor)
+    selected_rate_floor = SOFT_ANCHOR_SELECTED_RATE_FLOOR
+    if isinstance(payload, dict) and payload.get("selected_rate_floor") is not None:
+        try:
+            candidate_floor = float(payload.get("selected_rate_floor"))
+        except (TypeError, ValueError):
+            candidate_floor = selected_rate_floor
+        if 0.0 < candidate_floor <= 1.0:
+            selected_rate_floor = candidate_floor
+    anchor_expansion: JsonDict = {}
+    if isinstance(raw_anchor_expansion, dict) and raw_anchor_expansion:
+        anchor_expansion = {"enabled": bool(raw_anchor_expansion.get("enabled"))}
+        for key, caster in (("top_k", int), ("min_similarity", float), ("weight_ratio", float)):
+            if key in raw_anchor_expansion:
+                try:
+                    anchor_expansion[key] = caster(raw_anchor_expansion[key])
+                except (TypeError, ValueError):
+                    continue
     return {
         "enabled": bool(anchors and normalized_min > 0),
         "mode": mode,
         "concept": concept,
+        "selected_rate_floor": selected_rate_floor,
+        "anchor_expansion": anchor_expansion,
         "min_anchors": normalized_min,
         "source_floors": source_floors,
         "group_floors": group_floors,
@@ -4163,6 +5645,9 @@ def normalize_soft_anchor_spec(payload: Any) -> JsonDict:
         "render_directives": render_directives,
         "dual_read_requirement": dual_read_requirement,
         "preset_affinity": preset_affinity,
+        "role_scene_policy": role_scene_policy,
+        "species_family_policy": species_family_policy,
+        "diversity_state": diversity_state,
         "soft_repair_policy": soft_repair_policy,
         "safety_negative_floor": safety_negative_floor,
         "anchors": anchors,
@@ -4208,8 +5693,19 @@ def parse_soft_anchor_specs(items: Optional[Sequence[str]]) -> JsonDict:
             merged["dual_read_requirement"] = spec.get("dual_read_requirement")
         if spec.get("preset_affinity"):
             merged.setdefault("preset_affinity", {}).update(spec.get("preset_affinity") or {})
+        if spec.get("role_scene_policy"):
+            merge_role_scene_policies(merged.setdefault("role_scene_policy", {}), spec.get("role_scene_policy") or {})
+        if spec.get("species_family_policy"):
+            merge_species_family_policies(
+                merged.setdefault("species_family_policy", {}),
+                spec.get("species_family_policy") or {},
+            )
+        if spec.get("diversity_state"):
+            merged.setdefault("diversity_state", {}).update(spec.get("diversity_state") or {})
         if spec.get("soft_repair_policy"):
             merged.setdefault("soft_repair_policy", {}).update(spec.get("soft_repair_policy") or {})
+        if spec.get("anchor_expansion"):
+            merged.setdefault("anchor_expansion", {}).update(spec.get("anchor_expansion") or {})
         merged.setdefault("safety_negative_floor", [])
         for term in normalize_list(spec.get("safety_negative_floor")):
             if term not in merged["safety_negative_floor"]:
@@ -4257,6 +5753,107 @@ def normalize_soft_preset_affinity(raw: Any) -> JsonDict:
         if values:
             normalized[key] = values
     return normalized
+
+
+def normalize_role_scene_policy(raw: Any) -> JsonDict:
+    if not isinstance(raw, dict):
+        return {"enabled": False}
+    normalized: JsonDict = {}
+    for key in (
+        "allowed_locations",
+        "preferred_locations",
+        "forbidden_locations",
+        "discouraged_generic_locations",
+        "discouraged_generic_moods",
+        "support_presets",
+        "discouraged_presets",
+    ):
+        values = normalize_list(raw.get(key))
+        if values:
+            normalized[key] = values
+    for key in ("enabled", "enforce", "role_first", "generic_preset_support_only_when_role_scene_missing"):
+        if key in raw:
+            normalized[key] = bool(raw.get(key))
+    for key in ("scene_family", "reason"):
+        value = str(raw.get(key) or "").strip()
+        if value:
+            normalized[key] = value
+    if normalized and "enabled" not in normalized:
+        normalized["enabled"] = True
+    normalized.setdefault("enabled", False)
+    return normalized
+
+
+def merge_role_scene_policies(base: JsonDict, incoming: Any) -> JsonDict:
+    policy = normalize_role_scene_policy(incoming)
+    if not policy.get("enabled") and not any(policy.get(key) for key in ("allowed_locations", "preferred_locations", "forbidden_locations")):
+        return base
+    base["enabled"] = bool(base.get("enabled") or policy.get("enabled", True))
+    for key in (
+        "allowed_locations",
+        "preferred_locations",
+        "forbidden_locations",
+        "discouraged_generic_locations",
+        "discouraged_generic_moods",
+        "support_presets",
+        "discouraged_presets",
+    ):
+        bucket = base.setdefault(key, [])
+        for value in normalize_list(policy.get(key)):
+            if value not in bucket:
+                bucket.append(value)
+    for key in ("enforce", "role_first", "generic_preset_support_only_when_role_scene_missing"):
+        if key in policy:
+            base[key] = bool(base.get(key) or policy.get(key))
+    for key in ("scene_family", "reason"):
+        value = str(policy.get(key) or "").strip()
+        if value and not base.get(key):
+            base[key] = value
+    return base
+
+
+def normalize_species_family_policy(raw: Any) -> JsonDict:
+    if not isinstance(raw, dict):
+        return {"enabled": False, "allowed": {}}
+    allowed: JsonDict = {}
+    raw_allowed = raw.get("allowed")
+    if isinstance(raw_allowed, dict):
+        for slot, ids in raw_allowed.items():
+            values = normalize_list(ids)
+            if values:
+                allowed[str(slot)] = values
+    normalized: JsonDict = {
+        "enabled": bool(raw.get("enabled", bool(allowed))),
+        "allowed": allowed,
+        "enforce": bool(raw.get("enforce", True)),
+        "hybrid_allowed": bool(raw.get("hybrid_allowed", False)),
+    }
+    for key in ("family", "variant_id", "mixin", "tier"):
+        value = str(raw.get(key) or "").strip()
+        if value:
+            normalized[key] = value
+    return normalized
+
+
+def merge_species_family_policies(base: JsonDict, incoming: Any) -> JsonDict:
+    policy = normalize_species_family_policy(incoming)
+    if not policy.get("enabled") and not policy.get("allowed"):
+        return base
+    base["enabled"] = bool(base.get("enabled") or policy.get("enabled", True))
+    for key in ("family", "variant_id", "mixin", "tier"):
+        value = str(policy.get(key) or "").strip()
+        if value and not base.get(key):
+            base[key] = value
+    for key in ("enforce", "hybrid_allowed"):
+        if key in policy:
+            base[key] = bool(base.get(key) or policy.get(key))
+    allowed = base.setdefault("allowed", {})
+    for slot, ids in (policy.get("allowed") or {}).items():
+        bucket = allowed.setdefault(str(slot), [])
+        for value in normalize_list(ids):
+            if value not in bucket:
+                bucket.append(value)
+    return base
 
 
 def normalize_soft_render_directives(raw: Any) -> List[JsonDict]:
@@ -4426,6 +6023,128 @@ def soft_anchor_ids_for_slot(policy: Optional[JsonDict], slot: str) -> Set[str]:
     return ids
 
 
+def soft_anchor_weight_multipliers(source: Optional[JsonDict]) -> tuple[float, float, float, float]:
+    """(base, promoted, critical, primary) multipliers; overridable via semantic_policy.soft_anchor_weights."""
+    base = semantic_policy_float(source, ("soft_anchor_weights", "base"), SOFT_ANCHOR_WEIGHT_MULTIPLIER)
+    promoted = semantic_policy_float(source, ("soft_anchor_weights", "promoted"), SOFT_ANCHOR_PROMOTED_WEIGHT_MULTIPLIER)
+    critical = semantic_policy_float(source, ("soft_anchor_weights", "critical"), SOFT_ANCHOR_CRITICAL_WEIGHT_MULTIPLIER)
+    primary = semantic_policy_float(source, ("soft_anchor_weights", "primary"), SOFT_ANCHOR_PRIMARY_WEIGHT_MULTIPLIER)
+    return base, promoted, critical, primary
+
+
+def anchor_expansion_settings(policy: JsonDict, semantic_context: Optional[JsonDict]) -> Optional[JsonDict]:
+    config = policy.get("anchor_expansion")
+    if not isinstance(config, dict) or not config.get("enabled"):
+        return None
+    try:
+        top_k = max(1, int(config.get("top_k", 3)))
+    except (TypeError, ValueError):
+        top_k = 3
+    try:
+        min_similarity = float(config.get("min_similarity", 0.78))
+    except (TypeError, ValueError):
+        min_similarity = 0.78
+    try:
+        weight_ratio = float(config.get("weight_ratio", 0.5))
+    except (TypeError, ValueError):
+        weight_ratio = 0.5
+    creativity = (semantic_context or {}).get("creativity")
+    if creativity is not None:
+        # Higher creativity widens the semantic neighborhood slightly.
+        value = clamp_unit_interval(creativity)
+        if value >= 0.75:
+            top_k += 1
+        min_similarity = max(0.5, min_similarity - 0.06 * value)
+    return {"top_k": top_k, "min_similarity": min_similarity, "weight_ratio": max(0.05, min(weight_ratio, 1.0))}
+
+
+def expand_soft_anchor_pools(
+    generation_contract: Optional[JsonDict],
+    semantic_context: Optional[JsonDict],
+    data: JsonDict,
+) -> None:
+    """Opt-in semantic widening of soft anchor pools.
+
+    Each non-critical anchor pool member pulls its top-k same-slot embedding
+    neighbors into the pool at a reduced in-pool weight. Expanded members stay
+    subject to the normal hard guards and slot-conflict checks downstream, so
+    expansion widens the related candidate set without bypassing coherence.
+    """
+    if not semantic_context:
+        return
+    policy = (generation_contract or {}).get("soft_anchor_policy") or {}
+    if not policy.get("enabled"):
+        return
+    settings = anchor_expansion_settings(policy, semantic_context)
+    if not settings:
+        return
+    index_entries = (semantic_context.get("index") or {}).get("entries", {}) or {}
+    if not index_entries:
+        return
+    expansions: List[JsonDict] = []
+    for anchor in policy.get("anchors", []):
+        slot = str(anchor.get("slot") or "")
+        if not slot or anchor.get("critical"):
+            continue
+        pool = normalize_list(anchor.get("pool")) or normalize_list(anchor.get("ids"))
+        if not pool:
+            continue
+        slot_entries = data.get("slots", {}).get(slot, [])
+        if not slot_entries:
+            continue
+        pool_set = set(pool)
+        candidate_scores: Dict[str, float] = {}
+        for member in pool:
+            member_vector = (index_entries.get(f"slot:{slot}:{member}") or {}).get("vector")
+            if not member_vector:
+                continue
+            scored: List[tuple[float, str]] = []
+            for entry in slot_entries:
+                entry_id = str(entry.get("id") or "")
+                if not entry_id or entry_id in pool_set:
+                    continue
+                vector = (index_entries.get(f"slot:{slot}:{entry_id}") or {}).get("vector")
+                if not vector:
+                    continue
+                similarity = cosine_similarity(member_vector, vector)
+                if similarity >= settings["min_similarity"]:
+                    scored.append((similarity, entry_id))
+            scored.sort(reverse=True)
+            for similarity, entry_id in scored[: settings["top_k"]]:
+                candidate_scores[entry_id] = max(candidate_scores.get(entry_id, 0.0), similarity)
+        if not candidate_scores:
+            continue
+        added = sorted(candidate_scores, key=lambda entry_id: (-candidate_scores[entry_id], entry_id))
+        pool_weights = anchor.get("pool_weights")
+        if not isinstance(pool_weights, dict):
+            pool_weights = {}
+            anchor["pool_weights"] = pool_weights
+        for entry_id in added:
+            pool.append(entry_id)
+            pool_weights[entry_id] = settings["weight_ratio"]
+        anchor["pool"] = pool
+        expansions.append(
+            {
+                "slot": slot,
+                "added": [
+                    {"id": entry_id, "similarity": round(candidate_scores[entry_id], 4)}
+                    for entry_id in added
+                ],
+                "settings": settings,
+            }
+        )
+    if expansions:
+        record_generation_contract_event(
+            generation_contract,
+            "soft_anchor_pool_expansion",
+            {
+                "reason": "anchor_expansion_semantic_neighbors",
+                "reason_code": "anchor_expansion_semantic_neighbors",
+                "expansions": expansions,
+            },
+        )
+
+
 def soft_anchor_pool_for_slot(policy: Optional[JsonDict], slot: str, critical_only: bool = False) -> Set[str]:
     if not policy or not policy.get("enabled"):
         return set()
@@ -4443,6 +6162,25 @@ def soft_anchor_entries_for_slot(policy: Optional[JsonDict], slot: str) -> List[
     if not policy or not policy.get("enabled"):
         return []
     return [anchor for anchor in policy.get("anchors", []) if anchor.get("slot") == slot]
+
+
+def soft_anchor_pool_weight(policy: Optional[JsonDict], slot: str, item_id: str) -> float:
+    """Relative in-pool weight for a soft-anchor pool member (default 1.0)."""
+    values: List[float] = []
+    for anchor in soft_anchor_entries_for_slot(policy, slot):
+        pool_weights = anchor.get("pool_weights")
+        if not isinstance(pool_weights, dict):
+            continue
+        raw = pool_weights.get(item_id)
+        if raw is None:
+            continue
+        try:
+            value = float(raw)
+        except (TypeError, ValueError):
+            continue
+        if value > 0:
+            values.append(value)
+    return max(values) if values else 1.0
 
 
 def soft_anchor_critical_slot(policy: Optional[JsonDict], slot: str) -> bool:
@@ -4467,12 +6205,23 @@ def soft_anchor_variant_group_for_slot(policy: Optional[JsonDict], slot: str) ->
     return ""
 
 
+def soft_anchor_selected_rate_floor(policy: Optional[JsonDict]) -> float:
+    raw = (policy or {}).get("selected_rate_floor")
+    try:
+        value = float(raw)
+    except (TypeError, ValueError):
+        return SOFT_ANCHOR_SELECTED_RATE_FLOOR
+    if 0.0 < value <= 1.0:
+        return value
+    return SOFT_ANCHOR_SELECTED_RATE_FLOOR
+
+
 def soft_anchor_required_count(policy: Optional[JsonDict]) -> int:
     if not policy or not policy.get("enabled"):
         return 0
     anchor_count = len(soft_anchor_slots(policy))
     configured_min = int(policy.get("min_anchors", 0) or 0)
-    rate_floor = int(math.ceil(anchor_count * SOFT_ANCHOR_SELECTED_RATE_FLOOR))
+    rate_floor = int(math.ceil(anchor_count * soft_anchor_selected_rate_floor(policy)))
     critical_slots = {str(anchor.get("slot")) for anchor in policy.get("anchors", []) if anchor.get("critical")}
     source_floor_total = 0
     for value in (policy.get("source_floors", {}) or {}).values():
@@ -4516,6 +6265,8 @@ def soft_anchor_match_status(policy: Optional[JsonDict], picked: Dict[str, Entry
     critical_missing: List[str] = []
     salience_matches = 0
     salience_total = 0
+    slot_union_pools: Dict[str, Set[str]] = {}
+    source_slots: Dict[str, Set[str]] = {}
     for anchor in anchors:
         slot = str(anchor.get("slot") or "")
         pool_ids = set(normalize_list(anchor.get("pool")) or normalize_list(anchor.get("ids")))
@@ -4542,8 +6293,10 @@ def soft_anchor_match_status(policy: Optional[JsonDict], picked: Dict[str, Entry
             missing_anchors.append(row)
         if anchor.get("critical") and not matched:
             critical_missing.append(slot)
+        slot_union_pools.setdefault(slot, set()).update(pool_ids)
         for source in sources:
             source_totals[source] = source_totals.get(source, 0) + 1
+            source_slots.setdefault(source, set()).add(slot)
             if matched:
                 source_counts[source] = source_counts.get(source, 0) + 1
         if "mixin" in sources:
@@ -4568,6 +6321,33 @@ def soft_anchor_match_status(policy: Optional[JsonDict], picked: Dict[str, Entry
         if matched < floor:
             group_floor_misses.append({"group": group, "matched": matched, "floor": floor})
 
+    # Slot-level per-source match rates. The quality gate enforces rate floors
+    # (role >= 0.90, mixin >= 0.80), so the repair contract must trip on the
+    # same condition — count floors alone let a 2/3 source slip through.
+    slot_matched_by_union = {
+        slot
+        for slot, ids in slot_union_pools.items()
+        if str((picked.get(slot) or {}).get("id") or "") in ids
+    }
+    rate_floors = dict(DEFAULT_SOFT_ANCHOR_SOURCE_RATE_FLOORS)
+    for source, raw in (policy.get("source_rate_floors", {}) or {}).items():
+        rate_floors[str(source)] = float(raw)
+    source_rate_misses: List[JsonDict] = []
+    source_rates: Dict[str, float] = {}
+    for source, slots in source_slots.items():
+        rate = len(slots & slot_matched_by_union) / len(slots)
+        source_rates[source] = round(rate, 4)
+        floor = rate_floors.get(source)
+        if floor is not None and rate < float(floor):
+            source_rate_misses.append(
+                {
+                    "source": source,
+                    "rate": round(rate, 4),
+                    "floor": float(floor),
+                    "missing_slots": sorted(slots - slot_matched_by_union),
+                }
+            )
+
     anchor_slot_count = len(soft_anchor_slots(policy))
     selected_rate = len(selected_slots) / max(1, anchor_slot_count)
     min_anchors = soft_anchor_required_count(policy)
@@ -4579,9 +6359,11 @@ def soft_anchor_match_status(policy: Optional[JsonDict], picked: Dict[str, Entry
         failure_reasons.append(f"source_floor_not_met:{miss['source']}")
     for miss in group_floor_misses:
         failure_reasons.append(f"anchor_group_floor_not_met:{miss['group']}")
+    for miss in source_rate_misses:
+        failure_reasons.append(f"source_rate_floor_not_met:{miss['source']}")
     if salience_matches < salience_floor:
         failure_reasons.append("mixin_salience_floor_not_met")
-    if len(selected_slots) < min_anchors or selected_rate < SOFT_ANCHOR_SELECTED_RATE_FLOOR:
+    if len(selected_slots) < min_anchors or selected_rate < soft_anchor_selected_rate_floor(policy):
         failure_reasons.append("selected_anchor_rate_below_floor")
     return {
         "enabled": True,
@@ -4599,6 +6381,8 @@ def soft_anchor_match_status(policy: Optional[JsonDict], picked: Dict[str, Entry
         "group_counts": group_counts,
         "group_totals": group_totals,
         "group_floor_misses": group_floor_misses,
+        "source_rates": source_rates,
+        "source_rate_misses": source_rate_misses,
         "salience_matches": salience_matches,
         "salience_total": salience_total,
         "salience_floor": salience_floor,
@@ -4629,6 +6413,7 @@ def soft_anchor_trace(policy: Optional[JsonDict], picked: Optional[Dict[str, Ent
                 "primary": bool(anchor.get("primary")),
                 "variant_group": str(anchor.get("variant_group") or ""),
                 "variant_strategy": str(anchor.get("variant_strategy") or ""),
+                "pool_weights": dict(anchor.get("pool_weights") or {}),
                 "selected": selected.get("id"),
                 "matched": slot in selected_slots,
             }
@@ -4638,6 +6423,7 @@ def soft_anchor_trace(policy: Optional[JsonDict], picked: Optional[Dict[str, Ent
         "enabled": True,
         "mode": policy.get("mode", "soft"),
         "concept": policy.get("concept", ""),
+        "anchor_expansion": dict(policy.get("anchor_expansion") or {}),
         "min_anchors": int(policy.get("min_anchors", 0)),
         "source_floors": policy.get("source_floors", {}) or {},
         "group_floors": policy.get("group_floors", {}) or {},
@@ -4649,6 +6435,9 @@ def soft_anchor_trace(policy: Optional[JsonDict], picked: Optional[Dict[str, Ent
         "render_directives": policy.get("render_directives", []) or [],
         "dual_read_requirement": policy.get("dual_read_requirement", {}) or {},
         "preset_affinity": policy.get("preset_affinity", {}) or {},
+        "role_scene_policy": policy.get("role_scene_policy", {}) or {"enabled": False},
+        "species_family_policy": policy.get("species_family_policy", {}) or {"enabled": False, "allowed": {}},
+        "diversity_state": policy.get("diversity_state", {}) or {},
         "soft_repair_policy": policy.get("soft_repair_policy", {}) or normalize_soft_repair_policy({}),
         "safety_negative_floor": policy.get("safety_negative_floor", []) or [],
         "required_anchor_count": soft_anchor_required_count(policy),
@@ -4735,7 +6524,7 @@ def apply_soft_body_first_guard(
             demoted.append(str(item.get("id")))
         elif prefer_facets and entry_matches_guard_facets(item, prefer_facets):
             copied = dict(item)
-            copied["weight"] = round(item_base_weight(item) * SOFT_ANCHOR_PROMOTED_WEIGHT_MULTIPLIER, 6)
+            copied["weight"] = round(item_base_weight(item) * soft_anchor_weight_multipliers(semantic_context)[1], 6)
             adjusted.append(copied)
             preferred.append(str(item.get("id")))
         else:
@@ -4793,7 +6582,7 @@ def apply_soft_free_slot_constraints(
             adjusted.append(item)
             continue
         copied = dict(item)
-        copied["weight"] = round(item_base_weight(item) * SOFT_ANCHOR_PROMOTED_WEIGHT_MULTIPLIER, 6)
+        copied["weight"] = round(item_base_weight(item) * soft_anchor_weight_multipliers(semantic_context)[1], 6)
         adjusted.append(copied)
         boosted.append(item_id)
     if len(adjusted) != len(original_pool) or boosted:
@@ -4851,7 +6640,7 @@ def apply_soft_visual_guard(
             continue
         copied = dict(item)
         base_weight = item_base_weight(item)
-        copied["weight"] = round(base_weight * SOFT_ANCHOR_PROMOTED_WEIGHT_MULTIPLIER, 6)
+        copied["weight"] = round(base_weight * soft_anchor_weight_multipliers(semantic_context)[1], 6)
         adjusted.append(copied)
         boosted.append({"id": item_id, "base_weight": round(base_weight, 4), "adjusted_weight": copied["weight"]})
     if len(filtered) != len(original_pool) or boosted:
@@ -4917,41 +6706,83 @@ def apply_soft_anchor_probability_floor(
     context: Optional[JsonDict],
 ) -> tuple[List[float], Optional[JsonDict]]:
     policy = ((context or {}).get("generation_contract", {}) or {}).get("soft_anchor_policy", {})
-    variant_group = soft_anchor_variant_group_for_slot(policy, slot)
-    if not variant_group or len(candidates) < 2 or not weights:
-        return weights, None
     anchor_ids = soft_anchor_pool_for_slot(policy, slot)
-    anchor_indexes = [index for index, row in enumerate(candidates) if str(row[0].get("id")) in anchor_ids]
-    if len(anchor_indexes) < 2:
+    if not anchor_ids or not weights:
         return weights, None
-    total_before = sum(max(weight, 0.0) for weight in weights)
-    top_before = max(weights[index] for index in anchor_indexes) / max(total_before, 0.000001)
-    floor_ratio = semantic_policy_float(context, ("soft_anchor_diversity", "candidate_probability_floor"), 0.08)
-    max_top = semantic_policy_float(context, ("soft_anchor_diversity", "max_single_candidate_probability"), 0.85)
+    anchor_indexes = [index for index, row in enumerate(candidates) if str(row[0].get("id")) in anchor_ids]
+    if not anchor_indexes:
+        return weights, None
+    variant_group = soft_anchor_variant_group_for_slot(policy, slot)
     adjusted = list(weights)
-    anchor_max = max(weights[index] for index in anchor_indexes)
-    floor_weight = anchor_max * max(0.0, min(floor_ratio, 0.5))
-    for index in anchor_indexes:
-        adjusted[index] = max(adjusted[index], floor_weight)
-    total_after = sum(max(weight, 0.0) for weight in adjusted)
-    top_after = max(adjusted[index] for index in anchor_indexes) / max(total_after, 0.000001)
-    if top_after > max_top and max_top > 0:
-        top_weight = max(adjusted[index] for index in anchor_indexes)
+    summary: JsonDict = {"slot": slot, "mode": []}
+
+    if variant_group and len(candidates) >= 2 and len(anchor_indexes) >= 2:
+        total_before = sum(max(weight, 0.0) for weight in adjusted)
+        top_before = max(adjusted[index] for index in anchor_indexes) / max(total_before, 0.000001)
+        floor_ratio = semantic_policy_float(context, ("soft_anchor_diversity", "candidate_probability_floor"), 0.08)
+        max_top = semantic_policy_float(context, ("soft_anchor_diversity", "max_single_candidate_probability"), 0.85)
+        anchor_max = max(adjusted[index] for index in anchor_indexes)
+        floor_weight = anchor_max * max(0.0, min(floor_ratio, 0.5))
         for index in anchor_indexes:
-            if adjusted[index] == top_weight:
-                adjusted[index] = top_weight * max_top
-                break
+            adjusted[index] = max(adjusted[index], floor_weight)
         total_after = sum(max(weight, 0.0) for weight in adjusted)
         top_after = max(adjusted[index] for index in anchor_indexes) / max(total_after, 0.000001)
-    return adjusted, {
-        "slot": slot,
-        "anchor_variant_group": variant_group,
-        "candidate_probability_floor": round(floor_ratio, 4),
-        "max_single_candidate_probability": round(max_top, 4),
-        "top1_probability_before": round(top_before, 4),
-        "top1_probability_after": round(top_after, 4),
-        "candidate_ids": [str(candidates[index][0].get("id")) for index in anchor_indexes],
-    }
+        if top_after > max_top and max_top > 0:
+            top_weight = max(adjusted[index] for index in anchor_indexes)
+            for index in anchor_indexes:
+                if adjusted[index] == top_weight:
+                    adjusted[index] = top_weight * max_top
+                    break
+            total_after = sum(max(weight, 0.0) for weight in adjusted)
+            top_after = max(adjusted[index] for index in anchor_indexes) / max(total_after, 0.000001)
+        summary["mode"].append("variant_floor")
+        summary.update(
+            {
+                "anchor_variant_group": variant_group,
+                "candidate_probability_floor": round(floor_ratio, 4),
+                "max_single_candidate_probability": round(max_top, 4),
+                "top1_probability_before": round(top_before, 4),
+                "top1_probability_after": round(top_after, 4),
+                "candidate_ids": [str(candidates[index][0].get("id")) for index in anchor_indexes],
+            }
+        )
+
+    # Slot-level mass floor: guarantee the anchor pool a minimum share of the
+    # selection probability even without a variant group or with one anchor.
+    slot_floor = semantic_policy_float(context, ("soft_anchor_diversity", "anchor_slot_probability_floor"), 0.55)
+    max_anchor_mass = semantic_policy_float(context, ("soft_anchor_diversity", "max_anchor_slot_probability"), 0.92)
+    total = sum(max(weight, 0.0) for weight in adjusted)
+    anchor_mass = sum(max(adjusted[index], 0.0) for index in anchor_indexes)
+    non_anchor_mass = max(total - anchor_mass, 0.0)
+    if total > 0 and non_anchor_mass > 0 and 0.0 < slot_floor < 1.0:
+        anchor_share_before = anchor_mass / total
+        target = min(max(slot_floor, 0.0), max(max_anchor_mass, slot_floor))
+        if anchor_share_before < slot_floor and anchor_mass > 0:
+            scale = (target * non_anchor_mass) / ((1.0 - target) * anchor_mass)
+            for index in anchor_indexes:
+                adjusted[index] = adjusted[index] * scale
+            summary["mode"].append("slot_floor")
+            summary["anchor_mass_before"] = round(anchor_share_before, 4)
+            summary["anchor_mass_after"] = round(
+                sum(max(adjusted[i], 0.0) for i in anchor_indexes)
+                / max(sum(max(w, 0.0) for w in adjusted), 0.000001),
+                4,
+            )
+        elif anchor_share_before > max_anchor_mass and max_anchor_mass > 0:
+            scale = (max_anchor_mass * non_anchor_mass) / ((1.0 - max_anchor_mass) * anchor_mass)
+            for index in anchor_indexes:
+                adjusted[index] = adjusted[index] * scale
+            summary["mode"].append("slot_cap")
+            summary["anchor_mass_before"] = round(anchor_share_before, 4)
+            summary["anchor_mass_after"] = round(
+                sum(max(adjusted[i], 0.0) for i in anchor_indexes)
+                / max(sum(max(w, 0.0) for w in adjusted), 0.000001),
+                4,
+            )
+
+    if not summary["mode"]:
+        return weights, None
+    return adjusted, summary
 
 
 def soft_visual_guard_status(policy: Optional[JsonDict], picked: Dict[str, Entry]) -> JsonDict:
@@ -5380,12 +7211,27 @@ def steer_semantic_candidate_pool(
     slot: str,
     pool: Sequence[Entry],
     context: Optional[JsonDict],
+    anchor_ids: Optional[Set[str]] = None,
 ) -> List[Entry]:
     if not context or not intent_steering_enabled(context):
         return list(pool)
     for family in ordered_steering_families(context):
         steered, decision = apply_family_steering(slot, pool, context, family)
         if decision:
+            # Soft-anchor pool members must stay reachable: steering narrows the
+            # candidate set before anchor promotion/enforcement ever runs, so a
+            # family signal can otherwise silently annihilate the entire pool.
+            if anchor_ids:
+                kept_ids = {str(item.get("id")) for item in steered}
+                preserved = [
+                    item
+                    for item in pool
+                    if str(item.get("id")) in anchor_ids and str(item.get("id")) not in kept_ids
+                ]
+                if preserved:
+                    steered = list(steered) + preserved
+                    decision["anchor_preserved"] = sorted(str(item.get("id")) for item in preserved)
+                    decision["after"] = len(steered)
             record_intent_steering(context, decision)
             return steered
     return list(pool)
@@ -5448,7 +7294,9 @@ def rule_policy_candidate_bias(
             continue
         promoted = tier == "core" and str(item.get("id")) in family_concept_lock_promoted_ids(context, family, slot)
         key = "promoted_core" if promoted else tier
-        factor = float(RULE_POLICY_WEIGHT_MULTIPLIERS.get(key, 1.0))
+        factor = semantic_policy_float(
+            context, ("rule_policy_weights", key), float(RULE_POLICY_WEIGHT_MULTIPLIERS.get(key, 1.0))
+        )
         rank = 3 if promoted else FAMILY_STRENGTH_RANK.get(tier, 0)
         candidate = {
             "family": family,
@@ -5530,6 +7378,10 @@ def apply_soft_anchor_bias(
     policy = (generation_contract or {}).get("soft_anchor_policy", {})
     ids = soft_anchor_pool_for_slot(policy, slot)
     critical_ids = soft_anchor_pool_for_slot(policy, slot, critical_only=True)
+    primary_ids: Set[str] = set()
+    for anchor in soft_anchor_entries_for_slot(policy, slot):
+        if anchor.get("primary"):
+            primary_ids.update(normalize_list(anchor.get("pool")) or normalize_list(anchor.get("ids")))
     if not ids:
         return list(pool)
 
@@ -5561,20 +7413,33 @@ def apply_soft_anchor_bias(
             adjusted.append(item)
             continue
         base_weight = item_base_weight(item)
+        base_multiplier, promoted_multiplier, critical_multiplier, primary_multiplier = soft_anchor_weight_multipliers(semantic_context)
         if item_id in critical_ids:
-            factor = SOFT_ANCHOR_CRITICAL_WEIGHT_MULTIPLIER
+            factor = critical_multiplier
+        elif item_id in primary_ids:
+            factor = primary_multiplier
         else:
-            factor = SOFT_ANCHOR_PROMOTED_WEIGHT_MULTIPLIER if item.get("anchor") else SOFT_ANCHOR_WEIGHT_MULTIPLIER
+            factor = promoted_multiplier if item.get("anchor") else base_multiplier
         repeat_factor, repeat_summary = soft_anchor_repeat_factor(slot, item_id, semantic_context, policy)
         factor *= repeat_factor
+        factor *= soft_anchor_pool_weight(policy, slot, item_id)
+        # Semantic scoring damps base weights by base_power; compensate so the
+        # nominal promotion factor survives into the final candidate weight.
+        effective_factor = factor
+        base_power = semantic_base_power(semantic_context)
+        if semantic_context is not None and 0.0 < base_power < 1.0 and factor > 0:
+            compensated = factor ** (1.0 / base_power)
+            if math.isfinite(compensated):
+                effective_factor = min(compensated, 1e12)
         copied = dict(item)
-        copied["weight"] = round(base_weight * factor, 6)
+        copied["weight"] = round(base_weight * effective_factor, 6)
         adjusted.append(copied)
         promoted.append(
             {
                 "id": item_id,
                 "base_weight": round(base_weight, 4),
                 "factor": round(factor, 4),
+                "effective_factor": round(effective_factor, 4),
                 "adjusted_weight": copied["weight"],
                 "anchor_variant_group": soft_anchor_variant_group_for_slot(policy, slot),
                 "diversity": repeat_summary,
@@ -5601,6 +7466,139 @@ def apply_soft_anchor_bias(
     return adjusted
 
 
+def apply_role_scene_policy(
+    slot: str,
+    pool: Sequence[Entry],
+    semantic_context: Optional[JsonDict],
+    generation_contract: Optional[JsonDict],
+) -> List[Entry]:
+    if slot != "location":
+        return list(pool)
+    policy = normalize_role_scene_policy(((generation_contract or {}).get("soft_anchor_policy") or {}).get("role_scene_policy"))
+    if not policy.get("enabled"):
+        return list(pool)
+    original_pool = list(pool)
+    allowed = set(normalize_list(policy.get("allowed_locations")))
+    preferred = set(normalize_list(policy.get("preferred_locations"))) or allowed
+    forbidden = set(normalize_list(policy.get("forbidden_locations")))
+    forbidden.update(normalize_list(policy.get("discouraged_generic_locations")))
+
+    constrained = original_pool
+    reason = ""
+    if allowed:
+        allowed_pool = [item for item in constrained if str(item.get("id")) in allowed]
+        if allowed_pool:
+            constrained = allowed_pool
+            reason = "role_scene_allowed_pool"
+    if forbidden and constrained:
+        filtered = [item for item in constrained if str(item.get("id")) not in forbidden]
+        if filtered and len(filtered) != len(constrained):
+            constrained = filtered
+            reason = reason or "role_scene_forbidden_removed"
+    if allowed and len(constrained) > 1 and semantic_context:
+        ledger = semantic_context.get("anchor_diversity_ledger") if isinstance(semantic_context.get("anchor_diversity_ledger"), dict) else {}
+        ledger_counts = ledger.get(slot, {}) if isinstance(ledger.get(slot), dict) else {}
+        batch_context = semantic_context.get("batch_context") if isinstance(semantic_context.get("batch_context"), dict) else {}
+        batch_counts = ((batch_context.get("counts") or {}).get(slot) or {}) if isinstance(batch_context.get("counts"), dict) else {}
+
+        def seen_count(item: Entry) -> int:
+            item_id = str(item.get("id") or "")
+            return int(ledger_counts.get(item_id, 0) or 0) + int(batch_counts.get(item_id, 0) or 0)
+
+        min_count = min(seen_count(item) for item in constrained)
+        least_seen = [item for item in constrained if seen_count(item) == min_count]
+        if least_seen and len(least_seen) < len(constrained):
+            constrained = least_seen
+            reason = "role_scene_least_used_location"
+    if preferred and constrained and not allowed:
+        adjusted: List[Entry] = []
+        for item in constrained:
+            if str(item.get("id")) not in preferred:
+                adjusted.append(item)
+                continue
+            copied = dict(item)
+            copied["weight"] = round(item_base_weight(item) * 1.35, 6)
+            adjusted.append(copied)
+        constrained = adjusted
+        reason = reason or "role_scene_preferred_boost"
+
+    if constrained is not original_pool and len(constrained) != len(original_pool):
+        record_generation_contract_event(
+            generation_contract,
+            "role_scene_policy",
+            {
+                "slot": slot,
+                "reason": reason or "role_scene_policy_applied",
+                "reason_code": reason or "role_scene_policy_applied",
+                "scene_family": policy.get("scene_family"),
+                "before": len(original_pool),
+                "after": len(constrained),
+                "allowed_locations": sorted(allowed),
+                "preferred_locations": sorted(preferred),
+                "forbidden_locations": sorted(forbidden),
+                "remaining_ids": sorted(str(item.get("id")) for item in constrained),
+                "policy_schema_version": (semantic_context or {}).get("policy_schema_version"),
+                "semantic_policy_hash": (semantic_context or {}).get("semantic_policy_hash"),
+            },
+        )
+    return constrained
+
+
+def apply_species_family_policy(
+    slot: str,
+    pool: Sequence[Entry],
+    semantic_context: Optional[JsonDict],
+    generation_contract: Optional[JsonDict],
+) -> List[Entry]:
+    if slot not in {"species_marker", "texture", "anatomical_connection"}:
+        return list(pool)
+    policy = normalize_species_family_policy(
+        ((generation_contract or {}).get("soft_anchor_policy") or {}).get("species_family_policy")
+    )
+    if not policy.get("enabled") or policy.get("hybrid_allowed"):
+        return list(pool)
+    allowed = set(normalize_list((policy.get("allowed") or {}).get(slot)))
+    if not allowed:
+        return list(pool)
+    original_pool = list(pool)
+    constrained = [item for item in original_pool if str(item.get("id")) in allowed]
+    if not constrained:
+        record_generation_contract_event(
+            generation_contract,
+            "species_family_policy",
+            {
+                "slot": slot,
+                "reason": "species_family_allowed_pool_empty",
+                "reason_code": "species_family_allowed_pool_empty",
+                "family": policy.get("family"),
+                "variant_id": policy.get("variant_id"),
+                "allowed_ids": sorted(allowed),
+                "before": len(original_pool),
+                "after": len(original_pool),
+            },
+        )
+        return original_pool
+    if len(constrained) != len(original_pool):
+        record_generation_contract_event(
+            generation_contract,
+            "species_family_policy",
+            {
+                "slot": slot,
+                "reason": "species_family_allowed_pool",
+                "reason_code": "species_family_allowed_pool",
+                "family": policy.get("family"),
+                "variant_id": policy.get("variant_id"),
+                "allowed_ids": sorted(allowed),
+                "before": len(original_pool),
+                "after": len(constrained),
+                "remaining_ids": sorted(str(item.get("id")) for item in constrained),
+                "policy_schema_version": (semantic_context or {}).get("policy_schema_version"),
+                "semantic_policy_hash": (semantic_context or {}).get("semantic_policy_hash"),
+            },
+        )
+    return constrained
+
+
 def semantic_steering_slots(context: Optional[JsonDict], data: JsonDict) -> List[str]:
     if not context or not intent_steering_enabled(context):
         return []
@@ -5613,7 +7611,12 @@ def semantic_steering_slots(context: Optional[JsonDict], data: JsonDict) -> List
     return wanted
 
 
-def compatible_with_slot_context(slot: str, item: Entry, picked: Dict[str, Entry]) -> bool:
+def compatible_with_slot_context(
+    slot: str,
+    item: Entry,
+    picked: Dict[str, Entry],
+    source: Optional[JsonDict] = None,
+) -> bool:
     context = picked_context_tokens(picked)
     scene_context = picked_scene_context_tokens(picked)
     item_tokens = entry_context_tokens(item)
@@ -5627,6 +7630,14 @@ def compatible_with_slot_context(slot: str, item: Entry, picked: Dict[str, Entry
         return False
     if values_as_set(item, "exclude_any_tags", "exclude_any") & context:
         return False
+
+    if source is not None:
+        if violates_declared_slot_context_rules(slot, item, picked, source):
+            return False
+        if slot_conflict_violations(slot, item, picked, source, "hard"):
+            return False
+        if not builtin_slot_context_rules_enabled(source):
+            return True
 
     if slot in {"camera_type", "composition", "lens", "motion"}:
         if "surveillance" in item_tokens and not (context & {"surveillance", "cctv_frame", "dashcam_still", "bodycam_frame"}):
@@ -5675,6 +7686,7 @@ def compatible_with_picked(
     picked: Dict[str, Entry],
     forced: bool = False,
     slot: str = "",
+    source: Optional[JsonDict] = None,
 ) -> List[Entry]:
     """
     Generic compatibility check.
@@ -5701,7 +7713,7 @@ def compatible_with_picked(
             continue
         if excluded and (excluded & subject_kinds):
             continue
-        if slot and not compatible_with_slot_context(slot, item, picked):
+        if slot and not compatible_with_slot_context(slot, item, picked, source):
             continue
         compatible.append(item)
     return compatible
@@ -5773,11 +7785,17 @@ def choose_slot(
                 pool = steered
 
     if semantic_context and not forced:
-        pool = steer_semantic_candidate_pool(slot, pool, semantic_context)
+        slot_anchor_ids = soft_anchor_pool_for_slot(
+            (generation_contract or {}).get("soft_anchor_policy"), slot
+        )
+        pool = steer_semantic_candidate_pool(slot, pool, semantic_context, anchor_ids=slot_anchor_ids)
+        pool = apply_anchor_reachability_guard(slot, pool, data, generation_contract)
         pool = apply_soft_free_slot_constraints(slot, pool, semantic_context, generation_contract)
         pool = apply_soft_body_first_guard(slot, pool, semantic_context, generation_contract)
         pool = apply_soft_visual_guard(slot, pool, semantic_context, generation_contract)
         pool = apply_soft_anchor_bias(slot, pool, semantic_context, generation_contract)
+        pool = apply_role_scene_policy(slot, pool, semantic_context, generation_contract)
+        pool = apply_species_family_policy(slot, pool, semantic_context, generation_contract)
         if slot == "prop":
             pool = avoid_homebody_action_prop_redundancy(pool, semantic_context, picked)
 
@@ -5812,12 +7830,22 @@ def choose_slot(
         if filtered:
             pool = filtered
 
+    if not forced:
+        pending_forced = pending_forced_conflict_entries(data, forced_choices, picked)
+        if pending_forced:
+            ahead_filtered = [
+                item for item in pool
+                if not conflicts_with_all_pending_forced(slot, item, pending_forced, data)
+            ]
+            if ahead_filtered:
+                pool = ahead_filtered
+
     # Compatibility is generic, but action keeps the older generous fallback.
-    compatible = compatible_with_picked(pool, picked, forced=forced, slot=slot)
+    compatible = compatible_with_picked(pool, picked, forced=forced, slot=slot, source=data)
     if compatible:
         pool = compatible
     elif slot == "action":
-        fallback = compatible_with_picked(full_pool, picked, forced=False, slot=slot)
+        fallback = compatible_with_picked(full_pool, picked, forced=False, slot=slot, source=data)
         pool = fallback or pool or full_pool
     elif forced:
         # Forced choices should already be in pool; allow them even if odd.
@@ -5857,7 +7885,10 @@ def choose_slot(
             "fallback_blocked_slots",
             {"slot": slot, "reason": "empty_candidate_pool"},
         )
-        pool = compatible_with_picked(full_pool, picked, forced=False, slot=slot) or full_pool
+        pool = compatible_with_picked(full_pool, picked, forced=False, slot=slot, source=data) or full_pool
+
+    if not forced:
+        pool = apply_slot_conflict_soft_penalties(slot, pool, picked, data, generation_contract)
 
     if not semantic_context and not forced:
         pool = apply_rule_policy_bias(slot, pool, data, generation_contract)
@@ -5881,6 +7912,7 @@ def soft_anchor_repair_candidates(
     ids: Set[str],
     picked: Dict[str, Entry],
     generation_contract: Optional[JsonDict],
+    allow_current_in_pool: bool = False,
 ) -> List[Entry]:
     if slot not in data.get("slots", {}):
         return []
@@ -5907,10 +7939,35 @@ def soft_anchor_repair_candidates(
             allow_adult_item=str(item.get("id", "")) in ids,
         )
     ]
-    compatible = compatible_with_picked(candidates, candidate_picked, forced=False, slot=slot)
-    candidates = compatible or candidates
+    tier1 = compatible_with_picked(candidates, candidate_picked, forced=False, slot=slot, source=data)
+    if tier1:
+        candidates = tier1
+    else:
+        # Relaxed tier: drop tag-requirement heuristics but keep declared hard
+        # rules so repair can never introduce a hard slot contradiction.
+        tier2 = [
+            item
+            for item in candidates
+            if not violates_declared_slot_context_rules(slot, item, candidate_picked, data)
+            and not slot_conflict_violations(slot, item, candidate_picked, data, "hard")
+        ]
+        if tier2 and tier2 != candidates:
+            record_generation_contract_event(
+                generation_contract,
+                "soft_anchor_repair_relaxed",
+                {
+                    "slot": slot,
+                    "reason": "repair_relaxed_to_declared_hard_rules",
+                    "reason_code": "repair_relaxed_to_declared_hard_rules",
+                    "candidate_ids": sorted(str(item.get("id")) for item in tier2),
+                },
+            )
+        candidates = tier2
     if current and str(current.get("id")) in ids:
-        return []
+        if not allow_current_in_pool:
+            return []
+        current_id = str(current.get("id"))
+        candidates = [item for item in candidates if str(item.get("id")) != current_id]
     return candidates
 
 
@@ -6087,12 +8144,16 @@ def apply_soft_post_render_repair(
             continue
         ids = soft_repair_candidate_ids_for_slot(policy, slot)
         if ids:
-            candidates = soft_anchor_repair_candidates(data, preset, slot, ids, picked, generation_contract)
+            # Post-render repair may need to swap one pool member for another
+            # (the current pick can be in-pool yet fail render-term checks).
+            candidates = soft_anchor_repair_candidates(
+                data, preset, slot, ids, picked, generation_contract, allow_current_in_pool=True
+            )
         else:
             candidate_picked = dict(picked)
             candidate_picked.pop(slot, None)
             candidates = [item for item in data.get("slots", {}).get(slot, []) if not entry_block_reason(item, slot, generation_contract, forced=False)]
-            candidates = compatible_with_picked(candidates, candidate_picked, forced=False, slot=slot) or candidates
+            candidates = compatible_with_picked(candidates, candidate_picked, forced=False, slot=slot, source=data) or candidates
         if not candidates:
             attempts.append({"slot": slot, "status": "blocked", "candidate_ids": sorted(ids)})
             continue
@@ -6100,6 +8161,8 @@ def apply_soft_post_render_repair(
         candidates = apply_soft_body_first_guard(slot, candidates, semantic_context, generation_contract)
         candidates = apply_soft_visual_guard(slot, candidates, semantic_context, generation_contract)
         candidates = apply_soft_anchor_bias(slot, candidates, semantic_context, generation_contract)
+        candidates = apply_role_scene_policy(slot, candidates, semantic_context, generation_contract)
+        candidates = apply_species_family_policy(slot, candidates, semantic_context, generation_contract)
         before_id = str((picked.get(slot) or {}).get("id") or "")
         selected_entry = semantic_weighted_choice(
             candidates,
@@ -6197,6 +8260,11 @@ def apply_soft_anchor_repair(
     ordered_slots: List[str] = []
     for slot in status.get("critical_missing", []) or []:
         if slot not in ordered_slots:
+            ordered_slots.append(slot)
+    # Primary anchors repair right after critical ones.
+    for anchor in policy.get("anchors", []) or []:
+        slot = str(anchor.get("slot") or "")
+        if anchor.get("primary") and slot and slot not in ordered_slots:
             ordered_slots.append(slot)
     for miss in status.get("group_floor_misses", []) or []:
         group = str(miss.get("group") or "")
@@ -7431,6 +9499,8 @@ def generate_once(
     source_argv: Optional[Sequence[str]] = None,
     seed: Optional[int] = None,
     anchor_diversity_ledger: Optional[JsonDict] = None,
+    creativity: Optional[float] = None,
+    novelty_explicit: bool = False,
 ) -> JsonDict:
     requested_selection_mode = requested_selection_mode or selection_mode
     effective_selection_mode = selection_mode
@@ -7458,6 +9528,8 @@ def generate_once(
             intent_source,
             semantic_defaulted,
             batch_context,
+            creativity=creativity,
+            novelty_explicit=novelty_explicit,
         )
     except Exception as exc:
         if semantic_defaulted and selection_mode != "rule":
@@ -7479,6 +9551,7 @@ def generate_once(
         likeness_mode=likeness_mode,
         soft_anchor_spec=soft_anchor_spec,
     )
+    expand_soft_anchor_pools(generation_contract, semantic_context, data)
     affinity_status = soft_preset_affinity_status(
         preset,
         generation_contract.get("soft_anchor_policy"),
@@ -7532,6 +9605,9 @@ def generate_once(
             )
             sync_generation_contract_axis_coverage(generation_contract, semantic_context)
 
+    reconcile_contract_blocked_picks(
+        data, preset, rng, picked, forced_choices, semantic_context, generation_contract
+    )
     apply_soft_anchor_repair(data, preset, rng, picked, forced_choices, semantic_context, generation_contract)
     refresh_generation_contract(
         generation_contract,
@@ -7740,6 +9816,7 @@ def generate_once(
         "concept_lock": normalize_concept_locks(concept_locks),
         "additional_requirements": effective_additional_requirements,
         "likeness_mode": likeness_mode,
+        "creativity": (semantic_context or {}).get("creativity"),
         "argv": list(source_argv or []),
     }
 
@@ -7809,6 +9886,9 @@ def generate_once(
             },
             "batch_repetition_penalty": semantic_context.get("batch_repetition_penalty", []),
             "batch_history_summary": batch_history_summary(semantic_context.get("batch_context")),
+            "anchor_diversity_ledger_summary": anchor_diversity_ledger_summary(
+                semantic_context.get("anchor_diversity_ledger")
+            ),
         }
     elif include_trace:
         result["semantic_trace"] = {
@@ -7848,6 +9928,7 @@ def generate_once(
             },
             "batch_repetition_penalty": [],
             "batch_history_summary": batch_history_summary(batch_context),
+            "anchor_diversity_ledger_summary": anchor_diversity_ledger_summary(anchor_diversity_ledger),
         }
 
     return result
@@ -7950,6 +10031,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     parser.add_argument("--default-intent", action="store_true", help=argparse.SUPPRESS)
     parser.add_argument("--semantic-default", action="store_true", help=argparse.SUPPRESS)
     parser.add_argument("--novelty", choices=NOVELTY_LEVELS, default="medium", help="Semantic sampling diversity level. Used only with semantic or hybrid selection.")
+    parser.add_argument("--creativity", type=float, default=None, help="Single 0..1 diversity lever: 0 maps to conservative/low-novelty, 0.5 to balanced/medium, 1 to exploratory/high. Explicit --novelty or --semantic-profile values win over this lever. Coherence controls (semantic weight, filter strictness) are not affected.")
     parser.add_argument("--filter-strictness", choices=FILTER_STRICTNESS_MODES, default=None, help="Preset filter behavior for semantic/hybrid selection. Defaults to soft for semantic and hard for hybrid/rule.")
     parser.add_argument("--semantic-weight", type=float, default=None, help="0..1 blend weight for semantic scoring. Defaults by selection mode.")
     parser.add_argument("--semantic-profile", choices=SEMANTIC_PROFILES, default=None, help="Semantic candidate window/profile. Defaults by selection mode.")
@@ -7970,6 +10052,11 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     parser.add_argument("--include-negative", action="store_true", help="Also output a negative prompt.")
     parser.add_argument("--negative-count", type=int, default=12, help="Number of negative tags to sample.")
     parser.add_argument("--include-choices", action="store_true", help="Include chosen slot details in plain or JSON output.")
+    parser.add_argument(
+        "--emit-candidate-pack",
+        action="store_true",
+        help="Emit candidate-pack JSON for agent composition instead of final prompt JSON/plain text.",
+    )
     parser.add_argument("--json-output", action="store_true", help="Print results as JSON.")
     parser.add_argument("--list-presets", action="store_true", help="List preset ids and exit.")
     parser.add_argument("--include-virtual", action="store_true", help="Include virtual recipe presets when listing presets.")
@@ -8041,7 +10128,16 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         if candidate.exists():
             semantic_index_path = str(candidate)
 
-    batch_context = make_batch_context(selection_mode, args.novelty, args.n)
+    if args.creativity is not None and not 0.0 <= args.creativity <= 1.0:
+        raise ValueError("--creativity must be between 0 and 1")
+    novelty_explicit = has_cli_option(raw_args, "--novelty")
+    batch_context = make_batch_context(
+        selection_mode,
+        args.novelty,
+        args.n,
+        source=data,
+        creativity=None if novelty_explicit else args.creativity,
+    )
     anchor_diversity_ledger = load_anchor_diversity_ledger(args.anchor_diversity_ledger)
     results = []
     for batch_index in range(args.n):
@@ -8051,9 +10147,9 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             rng=rng,
             preset_id=args.preset,
             langs=langs,
-            include_negative=args.include_negative,
+            include_negative=args.include_negative or args.emit_candidate_pack,
             negative_count=args.negative_count,
-            include_choices=args.include_choices,
+            include_choices=args.include_choices or args.emit_candidate_pack,
             forced_choices=forced_choices,
             priority_bias=args.priority_bias,
             detail_level=args.detail_level,
@@ -8078,7 +10174,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             requested_selection_mode=selection_mode,
             batch_context=batch_context,
             batch_index=batch_index,
-            include_trace=args.include_trace,
+            include_trace=args.include_trace or args.emit_candidate_pack,
             llm_polish=args.llm_polish,
             semantic_index_path=semantic_index_path,
             semantic_model=args.semantic_model,
@@ -8089,6 +10185,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             source_argv=raw_args,
             seed=args.seed,
             anchor_diversity_ledger=anchor_diversity_ledger if args.anchor_diversity_ledger else None,
+            creativity=args.creativity,
+            novelty_explicit=novelty_explicit,
         )
         results.append(result)
         if args.anchor_diversity_ledger:
@@ -8096,7 +10194,10 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     if args.anchor_diversity_ledger:
         save_anchor_diversity_ledger(args.anchor_diversity_ledger, anchor_diversity_ledger)
 
-    if args.json_output:
+    if args.emit_candidate_pack:
+        packs = [build_candidate_pack(result, data) for result in results]
+        print(json.dumps(packs, ensure_ascii=False, indent=2))
+    elif args.json_output:
         print(json.dumps(results, ensure_ascii=False, indent=2))
     else:
         print_plain(results, langs, args.include_negative, args.include_choices)

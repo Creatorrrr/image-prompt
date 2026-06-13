@@ -1,0 +1,782 @@
+{
+  "concepts": [
+    {
+      "applied_mixins": [
+        "수인"
+      ],
+      "combined_forced_slots": {
+        "action": [
+          "ears_swivel_to_offframe_sound"
+        ],
+        "anatomical_connection": [
+          "horn_root_scalp_skin_ring",
+          "ear_root_in_hairline"
+        ],
+        "body_evidence_region": [
+          "face_hairline_wrist_evidence"
+        ],
+        "costume_style": [
+          "frill_apron_maid_costume"
+        ],
+        "expression": [
+          "side_set_prey_alert_gaze"
+        ],
+        "location": [
+          "maid_cafe_interior"
+        ],
+        "social_cue": [
+          "bystander_double_take"
+        ],
+        "species_marker": [
+          "cervid_velvet_antler_bud_ear_root"
+        ],
+        "subject": [
+          "maid_cafe_performer",
+          "beastkin_subject"
+        ],
+        "texture": [
+          "velvet_antler_skin_texture"
+        ],
+        "transition_stage": [
+          "prominent_stage_structural_body_trait"
+        ]
+      },
+      "concept": "카리나 메이드 수인",
+      "concept_mode": "legacy",
+      "forced_slots_applied": true,
+      "gate_results": [
+        {
+          "check": "applied_mixins가 정확히 ['수인']이고 역할은 0~1개여야 한다",
+          "detail": "applied_mixins == ['수인'] with role 메이드",
+          "id": "mixin_shape",
+          "source": "수인",
+          "status": "pass"
+        },
+        {
+          "check": "역할이 있으면 costume_style/wardrobe_style 강제값이 역할 recipe에서 유래해야 한다",
+          "detail": "role costume slots preserved",
+          "id": "role_costume_preserved",
+          "source": "수인",
+          "status": "pass"
+        },
+        {
+          "check": "subject가 beastkin_subject로 강제되어야 한다",
+          "detail": "slot subject forced to ['beastkin_subject', 'maid_cafe_performer']",
+          "id": "beastkin_subject_forced",
+          "source": "수인",
+          "status": "pass"
+        },
+        {
+          "check": "expression이 종에 맞는 gaze(슬릿/측면 동공/조류 원형/포식자 원형) 중 하나로 강제되어야 한다",
+          "detail": "slot expression forced to ['side_set_prey_alert_gaze']",
+          "id": "species_gaze_forced",
+          "source": "수인",
+          "status": "pass"
+        },
+        {
+          "check": "species_marker 슬롯이 강제되어야 한다(종 축 핀)",
+          "detail": "slot species_marker forced to ['cervid_velvet_antler_bud_ear_root']",
+          "id": "species_marker_present",
+          "source": "수인",
+          "status": "pass"
+        },
+        {
+          "check": "역할 의상을 평상복으로 바꿔도 ear root/tail base/horn root/피부 경계/반사 불일치/사회적 거리 큐/모션 로직 중 2개 이상이 잔존해야 한다. 귀+꼬리 실루엣만으로는 불충분하다.",
+          "id": "costume_swap_test",
+          "source": "수인",
+          "status": "manual"
+        }
+      ],
+      "matched": true,
+      "name": "카리나",
+      "role": "메이드",
+      "selected_bundles": [
+        {
+          "aspect": "motion_logic",
+          "bundle_id": "motion_social_body_proof",
+          "mixin": "수인",
+          "preset": "",
+          "set": {
+            "action": "ears_swivel_to_offframe_sound",
+            "anatomical_connection": "ear_root_in_hairline",
+            "body_evidence_region": "face_hairline_wrist_evidence",
+            "social_cue": "bystander_double_take"
+          },
+          "subtype": "living_trait_motion",
+          "weight": 1.0
+        }
+      ],
+      "selected_species_variants": [
+        {
+          "activation": "weighted",
+          "family": "ungulate",
+          "mixin": "수인",
+          "opt_in_activated": false,
+          "species_family_policy": {
+            "allowed": {
+              "anatomical_connection": [
+                "horn_root_scalp_skin_ring"
+              ],
+              "species_marker": [
+                "cervid_velvet_antler_bud_ear_root"
+              ],
+              "texture": [
+                "velvet_antler_skin_texture"
+              ]
+            },
+            "enabled": true,
+            "enforce": true,
+            "family": "ungulate",
+            "hybrid_allowed": false,
+            "mixin": "수인",
+            "tier": "default_safe",
+            "variant_id": "deer_ungulate"
+          },
+          "tier": "default_safe",
+          "variant_id": "deer_ungulate",
+          "weight": 0.9
+        }
+      ],
+      "soft_anchor_spec": {
+        "anchor_expansion": {
+          "enabled": false,
+          "min_similarity": 0.78,
+          "top_k": 3,
+          "weight_ratio": 0.5
+        },
+        "anchors": [
+          {
+            "critical": false,
+            "groups": [],
+            "ids": [
+              "ears_swivel_to_offframe_sound"
+            ],
+            "pool": [
+              "ears_swivel_to_offframe_sound"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "action",
+            "source": "bundle",
+            "terms": [
+              "action",
+              "ears",
+              "swivel",
+              "to",
+              "offframe",
+              "sound"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": false,
+            "groups": [],
+            "ids": [
+              "horn_root_scalp_skin_ring"
+            ],
+            "pool": [
+              "horn_root_scalp_skin_ring"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "anatomical_connection",
+            "source": "mixin",
+            "terms": [
+              "body-rooted animal trait",
+              "living anatomy connection"
+            ],
+            "variant_group": "species_family",
+            "variant_strategy": "locked_family"
+          },
+          {
+            "critical": false,
+            "groups": [],
+            "ids": [
+              "ear_root_in_hairline"
+            ],
+            "pool": [
+              "ear_root_in_hairline"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "anatomical_connection",
+            "source": "bundle",
+            "terms": [
+              "anatomical",
+              "connection",
+              "ear",
+              "root",
+              "in",
+              "hairline"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": false,
+            "groups": [],
+            "ids": [
+              "face_hairline_wrist_evidence"
+            ],
+            "pool": [
+              "face_hairline_wrist_evidence",
+              "collar_tail_base_crop",
+              "hands_wrists_worklight_evidence",
+              "window_reflection_tail_base_evidence",
+              "feather_root_macro_crop"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "body_evidence_region",
+            "source": "mixin",
+            "terms": [
+              "face and hairline evidence",
+              "wrist or collar boundary",
+              "tail base evidence",
+              "body-root evidence remains after costume swap"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": false,
+            "groups": [],
+            "ids": [
+              "face_hairline_wrist_evidence"
+            ],
+            "pool": [
+              "face_hairline_wrist_evidence"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "body_evidence_region",
+            "source": "bundle",
+            "terms": [
+              "body",
+              "evidence",
+              "region",
+              "face",
+              "hairline",
+              "wrist"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": true,
+            "groups": [
+              "role_primary"
+            ],
+            "ids": [
+              "frill_apron_maid_costume"
+            ],
+            "pool": [
+              "frill_apron_maid_costume",
+              "akihabara_maid_cafe_uniform"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "costume_style",
+            "source": "role",
+            "terms": [
+              "maid-cafe",
+              "maid",
+              "frilled apron"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": true,
+            "groups": [
+              "role_primary"
+            ],
+            "ids": [
+              "maid_cafe_interior"
+            ],
+            "pool": [
+              "maid_cafe_interior",
+              "quiet_cafe",
+              "tea_house_private_room",
+              "victorian_mansion_parlor"
+            ],
+            "pool_weights": {
+              "maid_cafe_interior": 3.0
+            },
+            "primary": false,
+            "required": true,
+            "slot": "location",
+            "source": "role",
+            "terms": [
+              "maid-cafe",
+              "cafe interior"
+            ],
+            "variant_group": "role_scene:maid_service_interior",
+            "variant_strategy": "role_scene_rotation"
+          },
+          {
+            "critical": false,
+            "groups": [],
+            "ids": [
+              "bystander_double_take"
+            ],
+            "pool": [
+              "bystander_double_take"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "social_cue",
+            "source": "bundle",
+            "terms": [
+              "social",
+              "cue",
+              "bystander",
+              "double",
+              "take"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": false,
+            "groups": [],
+            "ids": [
+              "cervid_velvet_antler_bud_ear_root"
+            ],
+            "pool": [
+              "cervid_velvet_antler_bud_ear_root"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "species_marker",
+            "source": "mixin",
+            "terms": [
+              "species",
+              "marker",
+              "cervid",
+              "velvet",
+              "antler",
+              "bud"
+            ],
+            "variant_group": "species_family",
+            "variant_strategy": "locked_family"
+          },
+          {
+            "critical": false,
+            "groups": [
+              "role_primary"
+            ],
+            "ids": [
+              "maid_cafe_performer"
+            ],
+            "pool": [
+              "maid_cafe_performer"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "subject",
+            "source": "role",
+            "terms": [
+              "subject",
+              "maid",
+              "cafe",
+              "performer"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": false,
+            "groups": [],
+            "ids": [
+              "beastkin_subject"
+            ],
+            "pool": [
+              "beastkin_subject"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "subject",
+            "source": "mixin",
+            "terms": [
+              "beastkin",
+              "human-animal threshold",
+              "humanlike body with visible animal traits"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": false,
+            "groups": [],
+            "ids": [
+              "velvet_antler_skin_texture"
+            ],
+            "pool": [
+              "velvet_antler_skin_texture"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "texture",
+            "source": "mixin",
+            "terms": [
+              "fur, feather, scale, or damp-sheen boundary"
+            ],
+            "variant_group": "species_family",
+            "variant_strategy": "locked_family"
+          }
+        ],
+        "concept": "카리나 메이드 수인",
+        "dual_read_requirement": {
+          "enabled": true,
+          "min_mixin_hits": 2,
+          "min_role_hits": 2,
+          "mixin_terms": [
+            "action",
+            "ears",
+            "swivel",
+            "to",
+            "offframe",
+            "sound",
+            "body-rooted animal trait",
+            "living anatomy connection"
+          ],
+          "role_terms": [
+            "maid-cafe",
+            "maid",
+            "frilled apron",
+            "cafe interior",
+            "subject",
+            "cafe",
+            "performer"
+          ]
+        },
+        "free_slot_constraints": {
+          "composition": {
+            "deny_pool": [
+              "phone_arm_length_selfie",
+              "mirror_selfie_composition",
+              "crouching_mirror_full_body"
+            ],
+            "prefer_ids": [
+              "threshold_backlit_center",
+              "reflection",
+              "frame_within_frame",
+              "medium_close"
+            ]
+          },
+          "subject_framing": {
+            "deny_pool": [
+              "full_body_framing",
+              "three_quarter_body_framing"
+            ],
+            "prefer_ids": [
+              "head_and_shoulders_crop",
+              "upper_body_framing",
+              "detail_crop_hands_accessories"
+            ]
+          }
+        },
+        "group_floors": {},
+        "min_anchors": 3,
+        "mixin_cue_budget": 2,
+        "mode": "soft",
+        "preset_affinity": {
+          "discouraged_axes": [
+            "generic highland pasture beastkin scene",
+            "weathered endurance as default mood"
+          ],
+          "discouraged_presets": [
+            "beastkin_threshold_portrait"
+          ],
+          "preferred_axes": [
+            "body-rooted beastkin evidence",
+            "species-specific anatomy",
+            "role costume preserved"
+          ],
+          "preferred_presets": [
+            "maid_cafe_cosplay_portrait"
+          ]
+        },
+        "render_directives": [],
+        "render_priority_terms": [
+          {
+            "group": "beastkin_body_transition",
+            "id": "beastkin_body_rooted_evidence",
+            "min_hits": 2,
+            "target_slots": [
+              "texture",
+              "species_marker",
+              "transition_stage",
+              "anatomical_connection",
+              "body_evidence_region"
+            ],
+            "terms": [
+              "skin-to-fur transition",
+              "skin-to-scale boundary",
+              "skin-to-feather boundary",
+              "ear root",
+              "tail base",
+              "horn root",
+              "fur patch",
+              "scale patch",
+              "feather follicle",
+              "living skin boundary",
+              "body-root evidence"
+            ],
+            "tier": "required"
+          },
+          {
+            "group": "beastkin_silhouette_support",
+            "id": "beastkin_silhouette_support",
+            "min_hits": 1,
+            "target_slots": [
+              "prop",
+              "expression",
+              "species_marker",
+              "action"
+            ],
+            "terms": [
+              "pointed ears",
+              "tail",
+              "slit-pupil gaze",
+              "weighted tail",
+              "mobile ears"
+            ],
+            "tier": "support"
+          },
+          {
+            "group": "beastkin_liminal_context",
+            "id": "beastkin_liminal_context",
+            "min_hits": 1,
+            "target_slots": [
+              "composition",
+              "world",
+              "light_shape",
+              "mood",
+              "social_cue",
+              "reflection_logic"
+            ],
+            "terms": [
+              "threshold",
+              "reflection",
+              "frame-within-frame",
+              "public-transit tail world",
+              "social gaze",
+              "bystander",
+              "CCTV"
+            ],
+            "tier": "support"
+          },
+          {
+            "group": "beastkin_species_specificity",
+            "id": "beastkin_species_specificity",
+            "min_hits": 1,
+            "target_slots": [
+              "subject",
+              "species_marker",
+              "texture",
+              "anatomical_connection",
+              "expression"
+            ],
+            "terms": [
+              "species-specific animal trait",
+              "distinct ear shape",
+              "distinct tail structure",
+              "fur, feather, scale, or damp-sheen boundary",
+              "humanlike face"
+            ],
+            "tier": "support"
+          }
+        ],
+        "render_suppress_terms": [
+          "detachable animal ears only",
+          "tail accessory only",
+          "full mascot suit",
+          "animal costume parody",
+          "dehumanizing animal caricature",
+          "ordinary cosplay with ears",
+          "headpiece pretending to be horns",
+          "hood trim pretending to be ears",
+          "feather boa instead of skin-rooted feathers",
+          "helmet hiding all ear roots",
+          "costume bunny ears replacing living anatomy"
+        ],
+        "role_scene_policy": {
+          "allowed_locations": [
+            "maid_cafe_interior",
+            "quiet_cafe",
+            "tea_house_private_room",
+            "victorian_mansion_parlor"
+          ],
+          "discouraged_generic_locations": [
+            "highland_pasture"
+          ],
+          "discouraged_generic_moods": [
+            "weathered_endurance"
+          ],
+          "enabled": true,
+          "enforce": true,
+          "forbidden_locations": [
+            "highland_pasture"
+          ],
+          "generic_preset_support_only_when_role_scene_missing": true,
+          "preferred_locations": [
+            "maid_cafe_interior",
+            "quiet_cafe",
+            "tea_house_private_room",
+            "victorian_mansion_parlor"
+          ],
+          "reason": "role scene pool must own location before generic beastkin atmosphere",
+          "role_first": true,
+          "scene_family": "maid_service_interior",
+          "support_presets": [
+            "fur_boundary_macro_portrait",
+            "ear_motion_sequence_portrait",
+            "tail_weight_balance_portrait",
+            "bus_seat_distance_candid"
+          ]
+        },
+        "safety_negative_floor": [
+          "gore",
+          "wounds",
+          "body horror",
+          "animal abuse",
+          "bestiality",
+          "dehumanizing caricature",
+          "full animal mascot suit",
+          "costume headband ears",
+          "clip-on tail",
+          "mascot suit",
+          "anthro cartoon furry style",
+          "full animal head",
+          "creature horror anatomy",
+          "monster transformation",
+          "compound eyes",
+          "mandibles",
+          "dehumanized animal body"
+        ],
+        "salience_floor": 1,
+        "soft_repair_policy": {
+          "enabled": true,
+          "fail_open": false,
+          "max_attempts": 2,
+          "strategy": "prefer_then_reselect",
+          "target_slots": [
+            "subject_framing",
+            "composition",
+            "action",
+            "prop",
+            "body_framing"
+          ],
+          "trigger_checks": [
+            "required_render_priority_missing",
+            "dual_read_missing",
+            "body_first_survivor",
+            "free_slot_constraint_violation"
+          ]
+        },
+        "source_floors": {
+          "role": 1
+        },
+        "species_family_policy": {
+          "allowed": {
+            "anatomical_connection": [
+              "horn_root_scalp_skin_ring"
+            ],
+            "species_marker": [
+              "cervid_velvet_antler_bud_ear_root"
+            ],
+            "texture": [
+              "velvet_antler_skin_texture"
+            ]
+          },
+          "enabled": true,
+          "enforce": true,
+          "family": "ungulate",
+          "hybrid_allowed": false,
+          "mixin": "수인",
+          "tier": "default_safe",
+          "variant_id": "deer_ungulate"
+        },
+        "visual_guards": []
+      }
+    }
+  ],
+  "forward_args": [
+    "--tags",
+    "<ROOT>/skills/photo-prompt-image-generator/assets/photo_prompt_tags.json",
+    "--seed",
+    "42",
+    "--selection-mode",
+    "rule",
+    "--concept-lock",
+    "카리나 메이드 수인",
+    "--preset",
+    "maid_cafe_cosplay_portrait",
+    "--set",
+    "subject=maid_cafe_performer,beastkin_subject",
+    "--set",
+    "costume_style=frill_apron_maid_costume",
+    "--set",
+    "location=maid_cafe_interior",
+    "--set",
+    "species_marker=cervid_velvet_antler_bud_ear_root",
+    "--set",
+    "texture=velvet_antler_skin_texture",
+    "--set",
+    "anatomical_connection=horn_root_scalp_skin_ring,ear_root_in_hairline",
+    "--set",
+    "transition_stage=prominent_stage_structural_body_trait",
+    "--set",
+    "expression=side_set_prey_alert_gaze",
+    "--set",
+    "body_evidence_region=face_hairline_wrist_evidence",
+    "--set",
+    "action=ears_swivel_to_offframe_sound",
+    "--set",
+    "social_cue=bystander_double_take",
+    "--additional-requirement",
+    "adult maid-cafe costume styling with frilled apron details",
+    "--additional-requirement",
+    "수인은 동물 귀/꼬리만 붙인 패션이 아니라 피부와 털, 시선, 자세, 반사, 주변 시선에서 인간과 비인간 사이의 경계로 읽히게 한다.",
+    "--additional-requirement",
+    "Keep any base role outfit readable; the beastkin layer should alter surface texture, sensory gaze, body posture, reflection logic, social space, and species-specific body cues rather than replacing the role with a generic animal costume.",
+    "--additional-requirement",
+    "deer or ungulate beastkin variant: fine ears, small velvet antler buds or restrained antler silhouette, and a delicate neck-to-skin texture change; keep horns modest and distinct from dragonkin scales or fantasy armor",
+    "--additional-requirement",
+    "show at least one animal trait behaving like living anatomy through motion, social reaction, or clothing response rather than static accessory styling",
+    "--intent-axis",
+    "adult maid-cafe cosplay portrait",
+    "--intent-axis",
+    "frilled apron maid costume in a cafe interior",
+    "--intent-axis",
+    "beastkin as a living human-animal threshold where skin, fur, ears, tail, gaze, posture, reflection, and social space prove a mixed body rather than detachable accessories",
+    "--intent-axis",
+    "deer or ungulate beastkin with fine ears, restrained antler silhouette, and delicate skin-to-fur boundary in a humanlike role portrait",
+    "--intent-axis",
+    "beastkin motion logic where ears, tail, or body surface responds before the human pose catches up",
+    "--likeness-mode",
+    "inspired",
+    "--n",
+    "1",
+    "--lang",
+    "both",
+    "--detail-level",
+    "detailed",
+    "--json-output",
+    "--include-negative"
+  ]
+}

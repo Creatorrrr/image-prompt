@@ -92,6 +92,50 @@
         "string",
         "null"
       ]
+    },
+    "pack_id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{16}$"
+    },
+    "chosen_candidate_ids": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "composer": {
+      "enum": [
+        "agent",
+        "auto"
+      ]
+    },
+    "audit_status": {
+      "enum": [
+        "pass",
+        "warn",
+        "fail",
+        "not_run"
+      ]
     }
   }
 }

@@ -177,20 +177,62 @@ def anchor_terms_for_slot(recipe: dict[str, Any], slot: str, ids: Sequence[str])
     return fallback_anchor_terms(slot, ids)
 
 
+def normalize_weighted_pool(raw: Any) -> tuple[list[str], dict[str, float]]:
+    """Normalize a pool that may mix plain id strings and {"id", "w"} objects."""
+    ids: list[str] = []
+    weights: dict[str, float] = {}
+    if not isinstance(raw, list):
+        raw = normalize_list(raw)
+    for item in raw:
+        if isinstance(item, dict):
+            item_id = str(item.get("id") or "").strip()
+            if not item_id:
+                continue
+            ids.append(item_id)
+            try:
+                weight = float(item.get("w", 1.0))
+            except (TypeError, ValueError):
+                weight = 1.0
+            if weight > 0 and weight != 1.0:
+                weights[item_id] = weight
+        else:
+            item_id = str(item).strip()
+            if item_id:
+                ids.append(item_id)
+    return ids, weights
+
+
 def anchor_pool_for_slot(recipe: dict[str, Any], slot: str, ids: Sequence[str]) -> list[str]:
     configured = recipe.get("anchor_pool")
     if isinstance(configured, dict):
-        pool = normalize_list(configured.get(slot))
+        pool, _weights = normalize_weighted_pool(configured.get(slot))
         if pool:
             return pool
     return [str(item_id) for item_id in ids if str(item_id).strip()]
 
 
+def anchor_pool_weights_for_slot(recipe: dict[str, Any], slot: str) -> dict[str, float]:
+    configured = recipe.get("anchor_pool")
+    if isinstance(configured, dict):
+        _pool, weights = normalize_weighted_pool(configured.get(slot))
+        return weights
+    return {}
+
+
 def primary_anchor_pool_for_slot(recipe: dict[str, Any], slot: str) -> list[str]:
     configured = recipe.get("primary_anchor_pool")
     if isinstance(configured, dict):
-        return normalize_list(configured.get(slot))
+        pool, _weights = normalize_weighted_pool(configured.get(slot))
+        return pool
     return []
+
+
+def primary_anchor_pool_weights_for_slot(recipe: dict[str, Any], slot: str) -> dict[str, float]:
+    configured = recipe.get("primary_anchor_pool")
+    if isinstance(configured, dict):
+        _pool, weights = normalize_weighted_pool(configured.get(slot))
+        return weights
+    return {}
 
 
 def anchor_variant_for_slot(recipe: dict[str, Any], slot: str) -> dict[str, Any]:
@@ -301,6 +343,35 @@ def preset_affinity_for_recipe(recipe: dict[str, Any]) -> dict[str, Any]:
     return raw if isinstance(raw, dict) else {}
 
 
+def role_scene_policy_for_recipe(recipe: dict[str, Any]) -> dict[str, Any]:
+    raw = recipe.get("role_scene_policy")
+    if not isinstance(raw, dict):
+        return {}
+    policy: dict[str, Any] = {}
+    for key in (
+        "allowed_locations",
+        "preferred_locations",
+        "forbidden_locations",
+        "discouraged_generic_locations",
+        "discouraged_generic_moods",
+        "support_presets",
+        "discouraged_presets",
+    ):
+        values = normalize_list(raw.get(key))
+        if values:
+            policy[key] = values
+    for key in ("enabled", "enforce", "role_first", "generic_preset_support_only_when_role_scene_missing"):
+        if key in raw:
+            policy[key] = bool(raw.get(key))
+    for key in ("scene_family", "reason"):
+        value = str(raw.get(key) or "").strip()
+        if value:
+            policy[key] = value
+    if policy and "enabled" not in policy:
+        policy["enabled"] = True
+    return policy
+
+
 def soft_repair_policy_for_recipe(recipe: dict[str, Any]) -> dict[str, Any]:
     raw = recipe.get("soft_repair_policy")
     return raw if isinstance(raw, dict) else {}
@@ -377,6 +448,12 @@ def soft_anchor_specs_from_mapping(
     render_directives = render_directives_for_recipe(recipe)
     dual_read_requirement = dual_read_requirement_for_recipe(recipe)
     preset_affinity = preset_affinity_for_recipe(recipe)
+    role_scene_policy = role_scene_policy_for_recipe(recipe)
+    role_scene_locations = set(normalize_list(role_scene_policy.get("allowed_locations")))
+    role_scene_locations.update(normalize_list(role_scene_policy.get("preferred_locations")))
+    role_scene_group = ""
+    if role_scene_policy.get("enabled") and role_scene_locations:
+        role_scene_group = "role_scene:" + str(role_scene_policy.get("scene_family") or source)
     soft_repair_policy = soft_repair_policy_for_recipe(recipe)
     safety_negative_floor = safety_negative_floor_for_recipe(recipe)
     mixin_cue_budget = mixin_cue_budget_for_recipe(recipe)
@@ -398,11 +475,24 @@ def soft_anchor_specs_from_mapping(
         variant_group = str(variant.get("group") or "") if variant else ""
         primary_pool = primary_anchor_pool_for_slot(recipe, slot)
         pool = primary_pool or variant_options or anchor_pool_for_slot(recipe, slot, clean_ids)
+        if primary_pool:
+            pool_weights = primary_anchor_pool_weights_for_slot(recipe, slot)
+        elif variant_options:
+            pool_weights = {}
+        else:
+            pool_weights = anchor_pool_weights_for_slot(recipe, slot)
+        pool_weights = {item_id: weight for item_id, weight in pool_weights.items() if item_id in pool}
+        effective_variant_group = variant_group
+        effective_variant_strategy = str(variant.get("select") or "") if variant else ""
+        if slot == "location" and role_scene_group and set(pool) & role_scene_locations:
+            effective_variant_group = role_scene_group
+            effective_variant_strategy = "role_scene_rotation"
         specs.append(
             {
                 "slot": slot,
                 "ids": clean_ids,
                 "pool": pool,
+                "pool_weights": pool_weights,
                 "terms": anchor_terms_for_slot(recipe, slot, clean_ids),
                 "source": source,
                 "required": True,
@@ -410,8 +500,8 @@ def soft_anchor_specs_from_mapping(
                 "source_floors": floors,
                 "groups": anchor_groups_for_slot(recipe, source, slot, primary=bool(primary_pool)),
                 "primary": bool(primary_pool),
-                "variant_group": variant_group,
-                "variant_strategy": str(variant.get("select") or "") if variant else "",
+                "variant_group": effective_variant_group,
+                "variant_strategy": effective_variant_strategy,
                 "group_floors": group_floors,
                 "visual_guards": visual_guards,
                 "render_priority_terms": render_priority_terms,
@@ -420,6 +510,7 @@ def soft_anchor_specs_from_mapping(
                 "render_directives": render_directives,
                 "dual_read_requirement": dual_read_requirement,
                 "preset_affinity": preset_affinity,
+                "role_scene_policy": role_scene_policy,
                 "soft_repair_policy": soft_repair_policy,
                 "safety_negative_floor": safety_negative_floor,
                 "mixin_cue_budget": mixin_cue_budget,
@@ -434,16 +525,22 @@ def soft_anchor_specs_from_mapping(
                 continue
             if slot not in anchor_slots:
                 continue
-            clean_ids = normalize_list(ids)
+            clean_ids, clean_weights = normalize_weighted_pool(ids)
             if not clean_ids:
                 continue
             variant = anchor_variant_for_slot(recipe, slot)
             variant_group = str(variant.get("group") or "") if variant else ""
+            effective_variant_group = variant_group
+            effective_variant_strategy = str(variant.get("select") or "") if variant else ""
+            if slot == "location" and role_scene_group and set(clean_ids) & role_scene_locations:
+                effective_variant_group = role_scene_group
+                effective_variant_strategy = "role_scene_rotation"
             specs.append(
                 {
                     "slot": slot,
                     "ids": clean_ids,
                     "pool": clean_ids,
+                    "pool_weights": clean_weights,
                     "terms": anchor_terms_for_slot(recipe, slot, clean_ids),
                     "source": source,
                     "required": True,
@@ -451,8 +548,8 @@ def soft_anchor_specs_from_mapping(
                     "source_floors": floors,
                     "groups": anchor_groups_for_slot(recipe, source, slot, primary=True),
                     "primary": True,
-                    "variant_group": variant_group,
-                    "variant_strategy": str(variant.get("select") or "") if variant else "",
+                    "variant_group": effective_variant_group,
+                    "variant_strategy": effective_variant_strategy,
                     "group_floors": group_floors,
                     "visual_guards": visual_guards,
                     "render_priority_terms": render_priority_terms,
@@ -461,12 +558,66 @@ def soft_anchor_specs_from_mapping(
                     "render_directives": render_directives,
                     "dual_read_requirement": dual_read_requirement,
                     "preset_affinity": preset_affinity,
+                    "role_scene_policy": role_scene_policy,
                     "soft_repair_policy": soft_repair_policy,
                     "safety_negative_floor": safety_negative_floor,
                     "mixin_cue_budget": mixin_cue_budget,
                 }
             )
     return specs
+
+
+def merge_role_scene_policy(target: dict[str, Any], policy: dict[str, Any]) -> None:
+    if not isinstance(policy, dict) or not policy:
+        return
+    target["enabled"] = bool(target.get("enabled") or policy.get("enabled", True))
+    for key in (
+        "allowed_locations",
+        "preferred_locations",
+        "forbidden_locations",
+        "discouraged_generic_locations",
+        "discouraged_generic_moods",
+        "support_presets",
+        "discouraged_presets",
+    ):
+        values = normalize_list(policy.get(key))
+        if not values:
+            continue
+        bucket = target.setdefault(key, [])
+        for value in values:
+            if value not in bucket:
+                bucket.append(value)
+    for key in ("enforce", "role_first", "generic_preset_support_only_when_role_scene_missing"):
+        if key in policy:
+            target[key] = bool(target.get(key) or policy.get(key))
+    for key in ("scene_family", "reason"):
+        value = str(policy.get(key) or "").strip()
+        if value and not target.get(key):
+            target[key] = value
+
+
+def merge_species_family_policy(target: dict[str, Any], policy: dict[str, Any]) -> None:
+    if not isinstance(policy, dict) or not policy:
+        return
+    target["enabled"] = bool(target.get("enabled") or policy.get("enabled", True))
+    for key in ("family", "variant_id", "mixin", "tier"):
+        value = str(policy.get(key) or "").strip()
+        if value and not target.get(key):
+            target[key] = value
+    for key in ("enforce", "hybrid_allowed"):
+        if key in policy:
+            target[key] = bool(target.get(key) or policy.get(key))
+    raw_allowed = policy.get("allowed")
+    if isinstance(raw_allowed, dict):
+        allowed = target.setdefault("allowed", {})
+        for slot, ids in raw_allowed.items():
+            values = normalize_list(ids)
+            if not values:
+                continue
+            bucket = allowed.setdefault(str(slot), [])
+            for value in values:
+                if value not in bucket:
+                    bucket.append(value)
 
 
 def dedupe_soft_anchor_specs(specs: Sequence[dict[str, Any]]) -> list[dict[str, Any]]:
@@ -490,6 +641,7 @@ def dedupe_soft_anchor_specs(specs: Sequence[dict[str, Any]]) -> list[dict[str, 
                 "slot": slot,
                 "ids": [],
                 "pool": [],
+                "pool_weights": {},
                 "terms": [],
                 "source": [],
                 "required": False,
@@ -507,6 +659,8 @@ def dedupe_soft_anchor_specs(specs: Sequence[dict[str, Any]]) -> list[dict[str, 
                 "render_directives": [],
                 "dual_read_requirement": {},
                 "preset_affinity": {},
+                "role_scene_policy": {},
+                "species_family_policy": {},
                 "soft_repair_policy": {},
                 "safety_negative_floor": [],
                 "mixin_cue_budget": 0,
@@ -518,6 +672,15 @@ def dedupe_soft_anchor_specs(specs: Sequence[dict[str, Any]]) -> list[dict[str, 
         for item_id in normalize_list(spec.get("pool")) or ids:
             if item_id not in current["pool"]:
                 current["pool"].append(item_id)
+        for item_id, weight in (spec.get("pool_weights") or {}).items():
+            try:
+                value = float(weight)
+            except (TypeError, ValueError):
+                continue
+            if value > 0:
+                current["pool_weights"][str(item_id)] = max(
+                    value, float(current["pool_weights"].get(str(item_id), 0.0))
+                )
         for term in normalize_list(spec.get("terms")):
             if term not in current["terms"]:
                 current["terms"].append(term)
@@ -562,6 +725,13 @@ def dedupe_soft_anchor_specs(specs: Sequence[dict[str, Any]]) -> list[dict[str, 
             current["dual_read_requirement"].update(spec.get("dual_read_requirement") or {})
         if spec.get("preset_affinity"):
             current["preset_affinity"].update(spec.get("preset_affinity") or {})
+        if spec.get("role_scene_policy"):
+            merge_role_scene_policy(current.setdefault("role_scene_policy", {}), spec.get("role_scene_policy") or {})
+        if spec.get("species_family_policy"):
+            merge_species_family_policy(
+                current.setdefault("species_family_policy", {}),
+                spec.get("species_family_policy") or {},
+            )
         if spec.get("soft_repair_policy"):
             current.setdefault("soft_repair_policy", {}).update(spec.get("soft_repair_policy") or {})
         for term in normalize_list(spec.get("safety_negative_floor")):
@@ -580,10 +750,155 @@ def dedupe_soft_anchor_specs(specs: Sequence[dict[str, Any]]) -> list[dict[str, 
     return sorted(normalized, key=lambda item: item["slot"])
 
 
+def collect_concept_guides(applied: Sequence[tuple[str, dict[str, Any]]]) -> dict[str, Any]:
+    guides: dict[str, Any] = {}
+    for name, recipe in applied:
+        guide = recipe.get("guide")
+        if isinstance(guide, dict) and guide:
+            guides[name] = guide
+    return guides
+
+
+def collect_review_gates(applied: Sequence[tuple[str, dict[str, Any]]]) -> list[dict[str, Any]]:
+    gates: list[dict[str, Any]] = []
+    for name, recipe in applied:
+        raw = recipe.get("review_gates")
+        if not isinstance(raw, list):
+            continue
+        for gate in raw:
+            if isinstance(gate, dict):
+                merged = dict(gate)
+                merged.setdefault("source", name)
+                gates.append(merged)
+    return gates
+
+
+def evaluate_gate_assert(
+    spec: dict[str, Any],
+    explanation: dict[str, Any],
+    role_recipe: dict[str, Any] | None,
+) -> tuple[bool, str]:
+    kind = str(spec.get("type") or "")
+    forced = explanation.get("combined_forced_slots") or {}
+    applied_mixins = list(explanation.get("applied_mixins") or [])
+    role = str(explanation.get("role") or "")
+
+    if kind == "mixin_shape":
+        mixin = str(spec.get("mixin") or "")
+        if applied_mixins != [mixin]:
+            return False, f"applied_mixins={applied_mixins}, expected ['{mixin}']"
+        return True, f"applied_mixins == ['{mixin}']" + (f" with role {role}" if role else " standalone")
+
+    if kind == "forced_slot_any":
+        slot = str(spec.get("slot") or "")
+        values = set(normalize_list(spec.get("any_of")))
+        forced_values = set(normalize_list(forced.get(slot)))
+        if not forced_values:
+            return False, f"slot {slot} is not forced"
+        if values and not (forced_values & values):
+            return False, f"slot {slot} forced to {sorted(forced_values)}, expected one of {sorted(values)}"
+        return True, f"slot {slot} forced to {sorted(forced_values)}"
+
+    if kind == "forced_slot_absent":
+        slot = str(spec.get("slot") or "")
+        values = set(normalize_list(spec.get("values")))
+        forced_values = set(normalize_list(forced.get(slot)))
+        hits = forced_values & values if values else forced_values
+        if hits:
+            return False, f"slot {slot} unexpectedly forced to {sorted(hits)}"
+        return True, f"slot {slot} clear"
+
+    if kind == "bundle_selected":
+        mixin = str(spec.get("mixin") or "")
+        bundles = explanation.get("selected_bundles") or []
+        for bundle in bundles:
+            if str(bundle.get("mixin")) == mixin and str(bundle.get("bundle_id") or ""):
+                return True, f"bundle {bundle.get('bundle_id')} selected for {mixin}"
+        return False, f"no bundle selected for {mixin}"
+
+    if kind == "role_costume_preserved":
+        if not role or not role_recipe:
+            return True, "no role applied (not applicable)"
+        role_mapping = forced_sets_to_mapping(set_values_to_forced(role_recipe.get("set")))
+        for slot in ("costume_style", "wardrobe_style"):
+            role_values = set(normalize_list(role_mapping.get(slot)))
+            if not role_values:
+                continue
+            forced_values = set(normalize_list(forced.get(slot)))
+            if forced_values and not (forced_values & role_values):
+                return False, f"slot {slot} forced to {sorted(forced_values)}, role expects {sorted(role_values)}"
+        return True, "role costume slots preserved"
+
+    return False, f"unknown assert type {kind!r}"
+
+
+def evaluate_review_gates(
+    gates: Sequence[dict[str, Any]],
+    explanation: dict[str, Any],
+    role_recipe: dict[str, Any] | None,
+) -> list[dict[str, Any]]:
+    results: list[dict[str, Any]] = []
+    for gate in gates:
+        gate_id = str(gate.get("id") or "")
+        entry: dict[str, Any] = {
+            "id": gate_id,
+            "source": gate.get("source"),
+            "check": gate.get("check"),
+        }
+        if not gate.get("machine_checkable"):
+            entry["status"] = "manual"
+            results.append(entry)
+            continue
+        spec = gate.get("assert")
+        if not isinstance(spec, dict):
+            entry["status"] = "fail"
+            entry["detail"] = "machine_checkable gate has no assert spec"
+            results.append(entry)
+            continue
+        passed, detail = evaluate_gate_assert(spec, explanation, role_recipe)
+        entry["status"] = "pass" if passed else "fail"
+        entry["detail"] = detail
+        results.append(entry)
+    return results
+
+
+def merge_affine_presets(spec: dict[str, Any], preset_ids: Sequence[str]) -> dict[str, Any]:
+    """Concept-affine presets (role/bundle preset ids) become preferred presets
+    so soft mode keeps preset selection near the concept's home domain."""
+    clean = [str(pid) for pid in preset_ids if str(pid or "").strip()]
+    if not clean:
+        return spec
+    affinity = spec.setdefault("preset_affinity", {})
+    preferred = normalize_list(affinity.get("preferred_presets"))
+    for pid in clean:
+        if pid not in preferred:
+            preferred.append(pid)
+    affinity["preferred_presets"] = preferred
+    return spec
+
+
+def anchor_expansion_config(
+    recipes: dict[str, Any],
+    applied_recipes: Sequence[dict[str, Any]],
+) -> dict[str, Any]:
+    """Merge anchor_expansion config: soft_anchor_defaults first, recipes override."""
+    defaults = recipes.get("soft_anchor_defaults", {}) if isinstance(recipes, dict) else {}
+    base = defaults.get("anchor_expansion") if isinstance(defaults, dict) else None
+    merged: dict[str, Any] = dict(base) if isinstance(base, dict) else {}
+    for recipe in applied_recipes:
+        if not isinstance(recipe, dict):
+            continue
+        override = recipe.get("anchor_expansion")
+        if isinstance(override, dict):
+            merged.update(override)
+    return merged
+
+
 def build_soft_anchor_spec(
     specs: Sequence[dict[str, Any]],
     min_anchor_candidates: Sequence[int],
     concept: str,
+    anchor_expansion: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     anchors = dedupe_soft_anchor_specs(specs)
     source_floors: dict[str, int] = {}
@@ -595,6 +910,8 @@ def build_soft_anchor_spec(
     render_directives: list[dict[str, Any]] = []
     dual_read_requirement: dict[str, Any] = {}
     preset_affinity: dict[str, Any] = {}
+    role_scene_policy: dict[str, Any] = {}
+    species_family_policy: dict[str, Any] = {}
     soft_repair_policy: dict[str, Any] = {}
     safety_negative_floor: list[str] = []
     mixin_cue_budgets: list[int] = []
@@ -628,6 +945,14 @@ def build_soft_anchor_spec(
             preset_affinity.update(anchor.pop("preset_affinity") or {})
         else:
             anchor.pop("preset_affinity", None)
+        if anchor.get("role_scene_policy"):
+            merge_role_scene_policy(role_scene_policy, anchor.pop("role_scene_policy") or {})
+        else:
+            anchor.pop("role_scene_policy", None)
+        if anchor.get("species_family_policy"):
+            merge_species_family_policy(species_family_policy, anchor.pop("species_family_policy") or {})
+        else:
+            anchor.pop("species_family_policy", None)
         if anchor.get("soft_repair_policy"):
             soft_repair_policy.update(anchor.pop("soft_repair_policy") or {})
         else:
@@ -644,6 +969,29 @@ def build_soft_anchor_spec(
             source_floors["role"] = 1
         if "mixin" in sources:
             source_floors["mixin"] = 1
+
+    # Orphaned-floor clamp: dedupe can drop a non-critical anchor whose group
+    # or source backed a floor (e.g. a mixin primary anchor on a role-critical
+    # slot). A floor no surviving anchor can satisfy would make the soft match
+    # permanently fail, so clamp floors to what the surviving anchors carry.
+    group_carriers: dict[str, int] = {}
+    source_carriers: dict[str, int] = {}
+    for anchor in anchors:
+        for group in normalize_list(anchor.get("groups")):
+            group_carriers[group] = group_carriers.get(group, 0) + 1
+        for source in str(anchor.get("source") or "").split("+"):
+            if source:
+                source_carriers[source] = source_carriers.get(source, 0) + 1
+    group_floors = {
+        group: min(value, group_carriers.get(group, 0))
+        for group, value in group_floors.items()
+        if min(value, group_carriers.get(group, 0)) > 0
+    }
+    source_floors = {
+        source: min(value, source_carriers.get(source, 0))
+        for source, value in source_floors.items()
+        if min(value, source_carriers.get(source, 0)) > 0
+    }
     positive_minima = [value for value in min_anchor_candidates if value > 0]
     default_min = min(2, len(anchors)) if len(anchors) >= 2 else len(anchors)
     min_anchors = max(positive_minima) if positive_minima else default_min
@@ -663,6 +1011,7 @@ def build_soft_anchor_spec(
     return {
         "mode": "soft",
         "concept": concept,
+        "anchor_expansion": dict(anchor_expansion) if isinstance(anchor_expansion, dict) else {},
         "min_anchors": min_anchors,
         "source_floors": source_floors,
         "group_floors": group_floors,
@@ -674,6 +1023,8 @@ def build_soft_anchor_spec(
         "render_directives": render_directives,
         "dual_read_requirement": dual_read_requirement,
         "preset_affinity": preset_affinity,
+        "role_scene_policy": role_scene_policy,
+        "species_family_policy": species_family_policy,
         "soft_repair_policy": soft_repair_policy,
         "safety_negative_floor": safety_negative_floor,
         "mixin_cue_budget": min(mixin_cue_budgets) if mixin_cue_budgets else 0,
@@ -787,7 +1138,7 @@ def select_mixin_intensity_variant(concept: str, mixin_recipe: dict[str, Any]) -
 
 
 def select_mixin_species_variant(
-    concept: str, mixin_name: str, mixin_recipe: dict[str, Any], args: Sequence[str]
+    concept: str, mixin_name: str, mixin_recipe: dict[str, Any], args: Sequence[str], role: str = ""
 ) -> dict[str, Any] | None:
     species_config = mixin_recipe.get("species_variants")
     if not isinstance(species_config, dict):
@@ -798,9 +1149,10 @@ def select_mixin_species_variant(
         return None
 
     lowered = concept.lower()
+    alias_text = lowered.replace(str(role or "").lower(), " ") if role else lowered
     for variant in variants:
         aliases = normalize_list(variant.get("aliases"))
-        if any(alias and alias.lower() in lowered for alias in aliases):
+        if any(alias and alias.lower() in alias_text for alias in aliases):
             selected = dict(variant)
             if str(selected.get("tier") or "") == "opt_in":
                 selected["opt_in_activated"] = True
@@ -808,17 +1160,43 @@ def select_mixin_species_variant(
             return selected
 
     excluded_default_families = set(normalize_list(species_config.get("excluded_default_families")))
+    # Batch species-diversity support: callers generating one concept per CLI
+    # invocation pass previously selected families to avoid convergence.
+    _, user_excluded = extract_option_values(list(args), "--exclude-species")
+    user_excluded_families = {value.strip() for value in user_excluded if value.strip()}
     selectable_variants = [
         variant
         for variant in variants
         if str(variant.get("tier") or "") != "opt_in"
         and str(variant.get("family") or variant.get("id") or "") not in excluded_default_families
         and str(variant.get("id") or "") not in excluded_default_families
+        and str(variant.get("family") or "") not in user_excluded_families
+        and str(variant.get("id") or "") not in user_excluded_families
     ]
     if not selectable_variants:
         selectable_variants = [
+            variant
+            for variant in variants
+            if str(variant.get("tier") or "") != "opt_in"
+            and str(variant.get("family") or variant.get("id") or "") not in excluded_default_families
+            and str(variant.get("id") or "") not in excluded_default_families
+    ] or [
             variant for variant in variants if str(variant.get("tier") or "") != "opt_in"
         ] or variants
+
+    ledger_counts = species_family_counts_from_anchor_ledger(args)
+    if ledger_counts and selectable_variants:
+        min_count = min(
+            int(ledger_counts.get(str(variant.get("family") or variant.get("id") or ""), 0))
+            for variant in selectable_variants
+        )
+        balanced_variants = [
+            variant
+            for variant in selectable_variants
+            if int(ledger_counts.get(str(variant.get("family") or variant.get("id") or ""), 0)) == min_count
+        ]
+        if balanced_variants:
+            selectable_variants = balanced_variants
 
     weights = [max(float(variant.get("weight", 1) or 0), 0.0) for variant in selectable_variants]
     total = sum(weights)
@@ -836,6 +1214,49 @@ def select_mixin_species_variant(
         if threshold <= running:
             return variant
     return selectable_variants[-1]
+
+
+def species_family_counts_from_anchor_ledger(args: Sequence[str]) -> dict[str, int]:
+    ledger_path = option_value(args, "--anchor-diversity-ledger")
+    if not ledger_path:
+        return {}
+    try:
+        payload = json.loads(Path(ledger_path).read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+    raw_counts = payload.get("species_family") if isinstance(payload, dict) else {}
+    if not isinstance(raw_counts, dict):
+        return {}
+    counts: dict[str, int] = {}
+    for family, count in raw_counts.items():
+        try:
+            value = int(count)
+        except (TypeError, ValueError):
+            continue
+        if value > 0:
+            counts[str(family)] = value
+    return counts
+
+
+def species_family_policy_for_variant(mixin_name: str, variant: dict[str, Any]) -> dict[str, Any]:
+    mapping = forced_sets_to_mapping(set_values_to_forced(variant.get("set")))
+    allowed: dict[str, list[str]] = {}
+    for slot in ("species_marker", "texture", "anatomical_connection"):
+        values = normalize_list(mapping.get(slot))
+        if values:
+            allowed[slot] = values
+    if not allowed:
+        return {}
+    return {
+        "enabled": True,
+        "mixin": mixin_name,
+        "family": str(variant.get("family") or variant.get("id") or ""),
+        "variant_id": str(variant.get("id") or ""),
+        "tier": str(variant.get("tier") or ""),
+        "allowed": allowed,
+        "enforce": True,
+        "hybrid_allowed": False,
+    }
 
 
 def split_forced_slot(raw: str) -> tuple[str, list[str]] | None:
@@ -1014,6 +1435,7 @@ def resolve_concepts(
     args: Sequence[str],
     concepts: Sequence[str],
     concept_mode: str = "legacy",
+    concept_mode_explicit: bool = True,
 ) -> tuple[list[str], list[dict[str, Any]]]:
     if concept_mode not in CONCEPT_MODES:
         raise ValueError("--concept-mode must be one of: legacy, soft")
@@ -1039,6 +1461,24 @@ def resolve_concepts(
         mixin_matches = filter_role_duplicate_mixins(concept, roles, mixin_matches)
         role_concept = concept_without_mixins(concept, [mixin for mixin, _ in mixin_matches])
         role, name, recipe = match_concept_role(role_concept or concept, roles)
+
+        # Per-recipe gradual soft promotion: an explicit --concept-mode always
+        # wins; otherwise a recipe that passed the soft benchmark gate may opt
+        # into soft mode via concept_mode_default.
+        effective_mode = concept_mode
+        if not concept_mode_explicit:
+            recipe_default = str((recipe or {}).get("concept_mode_default") or "")
+            if not recipe_default:
+                recipe_default = next(
+                    (
+                        str(mixin_recipe.get("concept_mode_default") or "")
+                        for _, mixin_recipe in mixin_matches
+                        if mixin_recipe.get("concept_mode_default")
+                    ),
+                    "",
+                )
+            if recipe_default in CONCEPT_MODES:
+                effective_mode = recipe_default
         selected_bundles: list[dict[str, Any]] = []
         selected_species_variants: list[dict[str, Any]] = []
         set_groups: list[tuple[Sequence[str], set[str]]] = []
@@ -1100,20 +1540,26 @@ def resolve_concepts(
                 and not (explicit_user_set_slots & {"prop", "action"})
             ):
                 additional_requirements.extend(normalize_list(weapon_cues.get(role)))
-            species_variant = select_mixin_species_variant(concept, mixin, mixin_recipe, args)
+            species_variant = select_mixin_species_variant(concept, mixin, mixin_recipe, args, role=role or "")
             if species_variant:
                 species_variant_set = set_values_to_forced(species_variant.get("set"))
+                species_family_policy = species_family_policy_for_variant(mixin, species_variant)
                 if species_variant_set:
                     set_groups.append((species_variant_set, set()))
-                    soft_anchor_specs.extend(
-                        soft_anchor_specs_from_mapping(
-                            recipes,
-                            forced_sets_to_mapping(species_variant_set),
-                            species_variant,
-                            "mixin",
-                            explicit_user_set_slots,
-                        )
+                    variant_specs = soft_anchor_specs_from_mapping(
+                        recipes,
+                        forced_sets_to_mapping(species_variant_set),
+                        species_variant,
+                        "mixin",
+                        explicit_user_set_slots,
                     )
+                    if species_family_policy:
+                        for spec in variant_specs:
+                            spec["species_family_policy"] = species_family_policy
+                            if spec.get("slot") in species_family_policy.get("allowed", {}):
+                                spec["variant_group"] = "species_family"
+                                spec["variant_strategy"] = "locked_family"
+                    soft_anchor_specs.extend(variant_specs)
                     soft_min_anchor_candidates.append(soft_min_anchors_for_recipe(species_variant, 1))
                 additional_requirements.extend(normalize_list(species_variant.get("additional")))
                 soft_safety_requirements.extend(soft_safety_requirements_for_recipe(species_variant))
@@ -1128,11 +1574,12 @@ def resolve_concepts(
                         "weight": species_variant.get("weight", 1),
                         "opt_in_activated": bool(species_variant.get("opt_in_activated")),
                         "activation": str(species_variant.get("activation") or "weighted"),
+                        "species_family_policy": species_family_policy,
                     }
                 )
             if selected_bundle:
                 bundle_preset = str(selected_bundle.get("preset") or "")
-                if concept_mode == "legacy" and bundle_preset and not has_preset_value:
+                if effective_mode == "legacy" and bundle_preset and not has_preset_value:
                     add_option(resolved_args, "--preset", bundle_preset)
                     has_preset_value = True
                 if mixin_base_set:
@@ -1204,6 +1651,7 @@ def resolve_concepts(
                     soft_min_anchor_candidates.append(soft_min_anchors_for_recipe(mixin_recipe, 1))
 
         combined_sets = merge_forced_set_groups(set_groups)
+        expansion_config = anchor_expansion_config(recipes, applied_recipes)
         add_option(resolved_args, "--concept-lock", concept)
 
         preset = str(recipe.get("preset") or "")
@@ -1212,14 +1660,19 @@ def resolve_concepts(
                 (str(mixin_recipe.get("preset") or "") for _, mixin_recipe in mixin_matches if mixin_recipe.get("preset")),
                 "",
             )
-        if concept_mode == "legacy" and preset and not has_preset_value:
+        affine_presets = [str(recipe.get("preset") or "")] if recipe else []
+        affine_presets += [str(m.get("preset") or "") for _, m in mixin_matches]
+        affine_presets += [str(b.get("preset") or "") for b in selected_bundles]
+        if effective_mode == "legacy" and preset and not has_preset_value:
             add_option(resolved_args, "--preset", preset)
             has_preset_value = True
-        if concept_mode == "legacy":
+        if effective_mode == "legacy":
             for forced in combined_sets:
                 add_option(resolved_args, "--set", forced)
             if soft_anchor_specs:
-                soft_anchor_spec = build_soft_anchor_spec(soft_anchor_specs, soft_min_anchor_candidates, concept)
+                soft_anchor_spec = build_soft_anchor_spec(
+                    soft_anchor_specs, soft_min_anchor_candidates, concept, expansion_config
+                )
                 if (
                     soft_anchor_spec["anchors"]
                     and soft_anchor_spec["min_anchors"] > 0
@@ -1233,14 +1686,20 @@ def resolve_concepts(
             for requirement in additional_requirements:
                 add_option(resolved_args, "--additional-requirement", requirement)
         elif soft_anchor_specs:
-            soft_anchor_spec = build_soft_anchor_spec(soft_anchor_specs, soft_min_anchor_candidates, concept)
+            soft_anchor_spec = build_soft_anchor_spec(
+                soft_anchor_specs, soft_min_anchor_candidates, concept, expansion_config
+            )
+            merge_affine_presets(soft_anchor_spec, affine_presets)
             if soft_anchor_spec["anchors"] and soft_anchor_spec["min_anchors"] > 0:
                 add_option(
                     resolved_args,
                     "--soft-anchor-spec",
                     json.dumps(soft_anchor_spec, ensure_ascii=False, separators=(",", ":")),
                 )
-                for requirement in dict.fromkeys(soft_safety_requirements):
+                # Role/mixin/bundle descriptive guidance is identity-bearing
+                # (e.g. Joseon-court styling); soft mode keeps it alongside the
+                # safety floor instead of dropping it with the forced slots.
+                for requirement in dict.fromkeys([*additional_requirements, *soft_safety_requirements]):
                     add_option(resolved_args, "--additional-requirement", requirement)
                 defaults = recipes.get("soft_anchor_defaults", {}) if isinstance(recipes, dict) else {}
                 max_salience = normalize_int(defaults.get("max_salience_cues") if isinstance(defaults, dict) else None, 2)
@@ -1257,31 +1716,43 @@ def resolve_concepts(
                 (str(mixin_recipe.get("likeness_mode") or "") for _, mixin_recipe in mixin_matches if mixin_recipe.get("likeness_mode")),
                 "",
             )
-        if concept_mode == "legacy" and likeness_mode and not has_likeness_value:
+        if effective_mode == "legacy" and likeness_mode and not has_likeness_value:
             add_option(resolved_args, "--likeness-mode", likeness_mode)
             has_likeness_value = True
 
         if not applied_recipes:
             add_option(resolved_args, "--intent-axis", concept)
 
-        explanations.append(
-            {
-                "concept": concept,
-                "concept_mode": concept_mode,
-                "name": name,
-                "role": role,
-                "applied_role": role,
-                "applied_mixins": [mixin for mixin, _ in mixin_matches],
-                "matched": bool(applied_recipes),
-                "recipe": recipe,
-                "mixins": {mixin: mixin_recipe for mixin, mixin_recipe in mixin_matches},
-                "selected_bundles": selected_bundles,
-                "selected_species_variants": selected_species_variants,
-                "combined_forced_slots": forced_sets_to_mapping(combined_sets),
-                "soft_anchor_spec": build_soft_anchor_spec(soft_anchor_specs, soft_min_anchor_candidates, concept),
-                "forced_slots_applied": concept_mode == "legacy",
-            }
-        )
+        applied_named: list[tuple[str, dict[str, Any]]] = []
+        if recipe:
+            applied_named.append((role or concept, recipe))
+        applied_named.extend(mixin_matches)
+        explanation = {
+            "concept": concept,
+            "concept_mode": effective_mode,
+            "name": name,
+            "role": role,
+            "applied_role": role,
+            "applied_mixins": [mixin for mixin, _ in mixin_matches],
+            "matched": bool(applied_recipes),
+            "recipe": recipe,
+            "mixins": {mixin: mixin_recipe for mixin, mixin_recipe in mixin_matches},
+            "selected_bundles": selected_bundles,
+            "selected_species_variants": selected_species_variants,
+            "combined_forced_slots": forced_sets_to_mapping(combined_sets),
+            "soft_anchor_spec": merge_affine_presets(
+                build_soft_anchor_spec(
+                    soft_anchor_specs, soft_min_anchor_candidates, concept, expansion_config
+                ),
+                affine_presets,
+            ),
+            "forced_slots_applied": effective_mode == "legacy",
+        }
+        explanation["guide"] = collect_concept_guides(applied_named)
+        review_gates = collect_review_gates(applied_named)
+        explanation["review_gates"] = review_gates
+        explanation["gate_results"] = evaluate_review_gates(review_gates, explanation, recipe)
+        explanations.append(explanation)
 
     for forced in explicit_user_sets:
         add_option(resolved_args, "--set", forced)
@@ -1323,9 +1794,14 @@ def build_forward_args(argv: Sequence[str]) -> list[str]:
     args = remove_flag(remove_flag(args, "--plain"), "--no-negative")
     args, concepts = extract_option_values(args, "--concept")
     args, concept_mode_values = extract_option_values(args, "--concept-mode")
-    concept_mode = resolve_concept_mode(concept_mode_values)
+    emit_candidate_pack = has_option(args, "--emit-candidate-pack")
+    concept_mode = resolve_concept_mode(concept_mode_values or (["soft"] if emit_candidate_pack else []))
     args, _ = extract_flag(args, "--explain-concept")
-    args, _ = resolve_concepts(args, concepts, concept_mode)
+    args, _ = resolve_concepts(
+        args, concepts, concept_mode, concept_mode_explicit=bool(concept_mode_values) or emit_candidate_pack
+    )
+    # Wrapper-only option: consumed by species-variant selection, not the engine.
+    args, _ = extract_option_values(args, "--exclude-species")
 
     if not has_option(args, "--tags"):
         args[:0] = ["--tags", str(DEFAULT_TAGS)]
@@ -1363,8 +1839,11 @@ def main(argv: Sequence[str] | None = None) -> int:
         forward_args = build_forward_args(raw_args)
         explain_args = extract_flag(concept_args, "--explain-concept")[0]
         explain_args, concept_mode_values = extract_option_values(explain_args, "--concept-mode")
-        concept_mode = resolve_concept_mode(concept_mode_values)
-        _, explanations = resolve_concepts(explain_args, concepts, concept_mode)
+        emit_candidate_pack = has_option(explain_args, "--emit-candidate-pack")
+        concept_mode = resolve_concept_mode(concept_mode_values or (["soft"] if emit_candidate_pack else []))
+        _, explanations = resolve_concepts(
+            explain_args, concepts, concept_mode, concept_mode_explicit=bool(concept_mode_values) or emit_candidate_pack
+        )
         print(json.dumps({"concepts": explanations, "forward_args": forward_args}, ensure_ascii=False, indent=2))
         return 0
     generator = load_generator()

@@ -20,6 +20,7 @@ TAGS_PATH = SKILL_DIR / "assets" / "photo_prompt_tags.json"
 GENERATOR_PATH = SKILL_DIR / "scripts" / "prompt_generator.py"
 WRAPPER_PATH = SKILL_DIR / "scripts" / "generate_photo_prompt.py"
 RECORD_RUN_PATH = SKILL_DIR / "scripts" / "record_image_run.py"
+AUDIT_COMPOSED_PATH = SKILL_DIR / "scripts" / "audit_composed_prompt.py"
 VALIDATOR_PATH = SKILL_DIR / "scripts" / "validate_photo_prompt_dictionary.py"
 INDEX_BUILDER_PATH = SKILL_DIR / "scripts" / "build_semantic_index.py"
 EVAL_SEMANTIC_PATH = SKILL_DIR / "scripts" / "eval_semantic.py"
@@ -87,6 +88,32 @@ REACTOR_EXPORT_PRESET_IDS = {
     "taxi_backseat_night_portrait",
     "airplane_window_seat_lifestyle",
     "crime_scene_yellow_tape_reportage",
+}
+
+BROAD_PRINCESS_COSTUME_IDS = {
+    "royal_ball_gown",
+    "royal_princess_hanbok",
+    "ornate_hanfu_court_dress",
+    "crown_princess_ceremonial_robe",
+    "elegant_modern_daywear",
+    "commoner_disguise_over_silk",
+    "faded_court_robe_worn",
+}
+
+BROAD_PRINCESS_LOCATION_IDS = {
+    "throne_hall_interior",
+    "grand_ballroom_chandelier",
+    "royal_princess_chamber",
+    "hanfu_court_garden",
+    "joseon_palace_interior",
+    "hanok_inner_court",
+    "palace_ceremonial_courtyard",
+    "palace_garden_modern",
+    "palace_side_gate",
+    "royal_guard_corridor",
+    "royal_ancestral_shrine",
+    "ballroom_gala_floor",
+    "ruined_palace_wing",
 }
 NON_PHOTO_RESERVED_PRESET_IDS = {
     "poster_advertising",
@@ -1637,7 +1664,8 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                     }.intersection(combined["surreal_physics_detail"])
                 )
             if expected_role == "공주":
-                self.assertEqual(combined["costume_style"], ["royal_princess_hanbok"])
+                self.assertTrue(set(combined["costume_style"]).issubset(BROAD_PRINCESS_COSTUME_IDS))
+                self.assertTrue(set(combined["costume_style"]))
                 self.assertIn("royal_edict_gyoji_scroll_prop", combined["prop"])
             if expected_role == "회사원":
                 self.assertEqual(combined["wardrobe_style"], ["clean_blazer_trousers"])
@@ -1857,7 +1885,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "설윤 공주 회사원",
                 "공주",
                 "princess_boardroom_succession_packet",
-                {"costume_style": "royal_princess_hanbok", "wearable_accessory": "phoenix_binyeo_ornament"},
+                {"costume_style": "royal_ball_gown", "wearable_accessory": "subtle_diamond_tiara"},
                 "corporate succession pressure",
             ),
             (
@@ -2003,7 +2031,9 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertNotIn("--preset", payload["forward_args"])
         self.assertNotIn("--set", payload["forward_args"])
         self.assertIn("--additional-requirement", payload["forward_args"])
-        self.assertNotIn(
+        # v2 개선(A2): soft 모드도 역할/믹스인의 정체성 서술 지시문을 전달한다
+        # (강제 슬롯은 여전히 없음 — forced_slots_applied=False 어서션이 보장).
+        self.assertIn(
             "role outfit is a cover identity/disguise for the assassin persona",
             payload["forward_args"],
         )
@@ -2798,7 +2828,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertEqual(summary["visual_review"]["field_summaries"]["render_modality"]["counts"]["fail"], 1)
         self.assertEqual(summary["visual_review"]["field_summaries"]["body_emphasis_survived"]["counts"]["yes"], 1)
 
-    def test_concept_recipe_princess_base_uses_korean_court_lineage_language(self):
+    def test_concept_recipe_princess_base_uses_broad_royal_register_language(self):
         payload = self.run_wrapper_json(
             "--concept",
             "설윤 공주",
@@ -2814,34 +2844,66 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertEqual(concept["role"], "공주")
         self.assertEqual(concept["applied_role"], "공주")
         self.assertEqual(concept["applied_mixins"], [])
-        self.assertEqual(concept["combined_forced_slots"]["subject"], ["historical_drama_actor"])
+        self.assertEqual(concept["combined_forced_slots"]["subject"], ["princess_role"])
         self.assertEqual(concept["combined_forced_slots"]["appearance_type"], ["classic_elegant"])
         self.assertEqual(concept["combined_forced_slots"]["hair_style"], ["low_bun_hair"])
         self.assertEqual(concept["combined_forced_slots"]["makeup_style"], ["natural_makeup"])
-        self.assertEqual(concept["combined_forced_slots"]["costume_style"], ["royal_princess_hanbok"])
-        self.assertEqual(concept["combined_forced_slots"]["wearable_accessory"], ["phoenix_binyeo_ornament"])
-        self.assertEqual(concept["combined_forced_slots"]["action"], ["standing_silence"])
-        self.assertEqual(concept["combined_forced_slots"]["prop"], ["round_fan_prop"])
+        self.assertEqual(concept["combined_forced_slots"]["costume_style"], ["royal_ball_gown"])
+        self.assertEqual(concept["combined_forced_slots"]["wearable_accessory"], ["subtle_diamond_tiara"])
+        self.assertEqual(concept["combined_forced_slots"]["action"], ["poised_standing"])
+        self.assertEqual(concept["combined_forced_slots"]["prop"], ["crown_on_cushion_prop"])
         self.assertEqual(concept["combined_forced_slots"]["composition"], ["centered_symmetric"])
-        self.assertEqual(concept["combined_forced_slots"]["location"], ["royal_princess_chamber"])
+        self.assertEqual(concept["combined_forced_slots"]["location"], ["throne_hall_interior"])
 
         joined = " ".join(payload["forward_args"])
         self.assertIn("appearance_type=classic_elegant", joined)
         self.assertIn("hair_style=low_bun_hair", joined)
         self.assertIn("makeup_style=natural_makeup", joined)
-        self.assertIn("wearable_accessory=phoenix_binyeo_ornament", joined)
-        self.assertIn("action=standing_silence", joined)
-        self.assertIn("prop=round_fan_prop", joined)
+        self.assertIn("wearable_accessory=subtle_diamond_tiara", joined)
+        self.assertIn("action=poised_standing", joined)
+        self.assertIn("prop=crown_on_cushion_prop", joined)
         self.assertIn("composition=centered_symmetric", joined)
-        self.assertIn("Korean Joseon court princess styling", joined)
-        self.assertIn("traditional Korean court hair ornament", joined)
-        self.assertIn("royal lineage and inherited rank", joined)
-        self.assertIn("quiet weight of succession", joined)
-        self.assertIn("keep the East-Asian Joseon palace identity dominant", joined)
-        self.assertIn("Korean Joseon court princess portrait with hanbok", joined)
-        self.assertIn("ceremonial court dignity", joined)
-        self.assertNotIn("princess styling with a delicate tiara", joined)
-        self.assertNotIn("princess portrait with tiara", joined)
+        self.assertIn("broad adult royal archetype", joined)
+        self.assertIn("single Joseon-only costume", joined)
+        self.assertIn("Chinese hanfu court", joined)
+        self.assertIn("Western ballroom royalty", joined)
+        self.assertIn("modern royal heiress", joined)
+        self.assertIn("Do not collapse every princess prompt into hanbok/Joseon palace", joined)
+        self.assertNotIn("Korean Joseon court princess styling", joined)
+        self.assertNotIn("keep the East-Asian Joseon palace identity dominant", joined)
+
+    def test_broad_role_recipes_expose_multiple_scene_registers(self):
+        recipes = json.loads((SKILL_DIR / "assets" / "concept_recipes.json").read_text(encoding="utf-8"))
+        expected_locations = {
+            "광부": {"underground_mine_tunnel_set", "mine_rest_stop"},
+            "산타복": {"christmas_market_lights", "seoul_bus_stop_snow", "gift_logistics_warehouse", "apartment_door_threshold"},
+            "학생": {"school_reference_studio", "campus_cafe", "library_reading_room", "classroom_interior"},
+            "무녀": {"traditional_shrine_interior", "urban_shrine_corner", "temple_gate_stone_steps", "temple_back_gate"},
+            "기사": {"castle_armory_hall", "historical_armory_exhibit_room", "royal_guard_corridor", "palace_side_gate", "rpg_ruin_studio_set"},
+            "퇴마사": {"shrine_exorcism_threshold", "urban_shrine_corner", "temple_back_gate", "apartment_door_threshold"},
+            "음양사": {"shrine_exorcism_threshold", "traditional_shrine_interior", "temple_gate_stone_steps", "temple_back_gate"},
+            "사제": {"cathedral_nave_interior", "stained_glass_chapel"},
+            "수도자": {"stained_glass_chapel", "cathedral_nave_interior", "temple_lantern_hall"},
+        }
+
+        for role, locations in expected_locations.items():
+            with self.subTest(role=role):
+                recipe = recipes["roles"][role]
+                anchor_locations = set(recipe["anchor_pool"]["location"])
+                self.assertGreaterEqual(len(anchor_locations), 2)
+                self.assertTrue(locations.issubset(anchor_locations))
+
+                set_locations = set()
+                for assignment in recipe["set"]:
+                    if assignment.startswith("location="):
+                        set_locations.update(assignment.split("=", 1)[1].split(","))
+                self.assertTrue(locations.issubset(set_locations))
+
+                policy = recipe["role_scene_policy"]
+                self.assertTrue(policy["enabled"])
+                self.assertTrue(policy["enforce"])
+                self.assertEqual(set(policy["allowed_locations"]), anchor_locations)
+                self.assertIn("highland_pasture", policy["forbidden_locations"])
 
     def test_princess_mixin_applies_to_role_combination_with_royal_anchors(self):
         payload = self.run_wrapper_json(
@@ -2894,7 +2956,9 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertEqual(concept["role"], "공주")
         self.assertEqual(concept["applied_role"], "공주")
         self.assertEqual(concept["applied_mixins"], ["흡혈귀"])
-        self.assertEqual(concept["combined_forced_slots"]["costume_style"], ["royal_princess_hanbok"])
+        self.assertTrue(
+            set(concept["combined_forced_slots"]["costume_style"]).issubset(BROAD_PRINCESS_COSTUME_IDS)
+        )
         self.assertIn("wearable_accessory", concept["combined_forced_slots"])
 
     def test_princess_expansion_assets_include_facets_bundles_and_aliases(self):
@@ -3034,7 +3098,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
 
         item = payload[0]
         self.assertEqual(item["choices"]["appearance_type"]["id"], "classic_elegant")
-        self.assertEqual(item["choices"]["costume_style"]["id"], "royal_princess_hanbok")
+        self.assertIn(item["choices"]["costume_style"]["id"], BROAD_PRINCESS_COSTUME_IDS)
         self.assertEqual(item["choices"]["subject_framing"]["id"], "waist_up_framing")
         self.assertIn("Core concept lock: 설윤 공주 흡혈귀", item["prompt_en"])
         self.assertIn("predatory stillness", item["prompt_en"])
@@ -3042,8 +3106,8 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertIn("role outfit readable", item["prompt_en"])
         self.assertIn("moonlit bat silhouettes", item["prompt_en"])
         self.assertIn("ruby eye catchlight", item["prompt_en"])
-        self.assertIn("Eastern and Korean court-coded", item["prompt_en"])
-        self.assertIn("do not convert the look into a Western black-lace gothic gown", item["prompt_en"])
+        self.assertIn("selected princess register as a coherent royal identity", item["prompt_en"])
+        self.assertIn("do not flatten it into generic black-lace gothic costume", item["prompt_en"])
         self.assertIn("no visible blood", item["prompt_en"])
         self.assertIn("no bared fangs", item["prompt_en"])
         self.assertIn("no visible victims", item["prompt_en"])
@@ -3084,7 +3148,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             "--no-negative",
             "--include-choices",
         )[0]
-        self.assertEqual(police["choices"]["subject"]["id"], "adult_cosplay_performer")
+        self.assertEqual(police["choices"]["subject"]["id"], "police_officer_role")
         self.assertEqual(police["choices"]["costume_style"]["id"], "police_uniform_costume")
         self.assertEqual(police["choices"]["prop"]["id"], "clear_umbrella")
         self.assertEqual(police["choices"]["composition"]["id"], "reflection")
@@ -3131,7 +3195,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             "--no-negative",
             "--include-choices",
         )[0]
-        self.assertEqual(bunny["choices"]["subject"]["id"], "adult_cosplay_performer")
+        self.assertEqual(bunny["choices"]["subject"]["id"], "adult_stage_dancer")
         self.assertEqual(bunny["choices"]["costume_style"]["id"], "bunny_girl_costume")
         self.assertEqual(bunny["choices"]["prop"]["id"], "compact_mirror")
         self.assertEqual(bunny["choices"]["composition"]["id"], "reflection")
@@ -3195,7 +3259,11 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                     " ".join(explanation["forward_args"]),
                 )
             if concept_payload["role"] == "공주":
-                self.assertEqual(concept_payload["combined_forced_slots"]["costume_style"], ["royal_princess_hanbok"])
+                self.assertTrue(
+                    set(concept_payload["combined_forced_slots"]["costume_style"]).issubset(
+                        BROAD_PRINCESS_COSTUME_IDS
+                    )
+                )
                 self.assertEqual(concept_payload["combined_forced_slots"]["subject_framing"], ["waist_up_framing"])
             if concept_payload["role"] == "바니걸":
                 self.assertEqual(concept_payload["combined_forced_slots"]["subject_framing"], ["upper_body_framing"])
@@ -3440,7 +3508,11 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 self.assertEqual(selected_bundle["preset"], "compact_urban_fashion_portrait")
                 self.assertEqual(concept_payload["combined_forced_slots"]["wardrobe_style"], ["hoodie_shorts_sneakers"])
             if concept_payload["role"] == "공주":
-                self.assertEqual(concept_payload["combined_forced_slots"]["costume_style"], ["royal_princess_hanbok"])
+                self.assertTrue(
+                    set(concept_payload["combined_forced_slots"]["costume_style"]).issubset(
+                        BROAD_PRINCESS_COSTUME_IDS
+                    )
+                )
                 self.assertEqual(concept_payload["combined_forced_slots"]["subject_framing"], ["waist_up_framing"])
             if concept_payload["role"] == "바니걸":
                 self.assertEqual(concept_payload["combined_forced_slots"]["subject_framing"], ["head_and_shoulders_crop"])
@@ -3625,7 +3697,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         )
 
         item = payload[0]
-        self.assertEqual(item["choices"]["costume_style"]["id"], "royal_princess_hanbok")
+        self.assertIn(item["choices"]["costume_style"]["id"], BROAD_PRINCESS_COSTUME_IDS)
         self.assertEqual(item["choices"]["expression"]["id"], "cold_unreadable_stare")
         self.assertEqual(item["choices"]["action"]["id"], "looking_down_at_low_camera")
         self.assertEqual(item["choices"]["prop"]["id"], "phoenix_hairpin_prop")
@@ -3927,7 +3999,8 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertEqual(bunny["choices"]["costume_style"]["id"], "bunny_girl_costume")
         self.assertEqual(bunny["choices"]["prop"]["id"], "compact_mirror")
         self.assertEqual(bunny["choices"]["location"]["id"], "makeup_vanity")
-        self.assertEqual(bunny["choices"]["subject_framing"]["id"], "upper_body_framing")
+        # B4 재구성: 바니걸 멘헤라는 얼굴/손 중심 크롭으로 좁힘
+        self.assertEqual(bunny["choices"]["subject_framing"]["id"], "head_and_shoulders_crop")
         self.assertEqual(bunny["choices"]["expression"]["id"], "neutral_camera_gaze")
         self.assertIn("fully covered adult stage costume", bunny["prompt_en"])
         self.assertIn("upper-body backstage exhaustion portrait", bunny["prompt_en"])
@@ -4067,7 +4140,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             "--no-negative",
             "--include-choices",
         )[0]
-        self.assertEqual(princess["choices"]["costume_style"]["id"], "royal_princess_hanbok")
+        self.assertIn(princess["choices"]["costume_style"]["id"], BROAD_PRINCESS_COSTUME_IDS)
         self.assertEqual(princess["choices"]["light_type"]["id"], "phone_screen_face_glow")
         self.assertEqual(princess["choices"]["expression"]["id"], "eyes_closed_serene")
         self.assertIn("do NOT place a modern phone in the main silhouette", princess["prompt_en"])
@@ -4196,7 +4269,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         )
 
         item = payload[0]
-        self.assertEqual(item["choices"]["costume_style"]["id"], "royal_princess_hanbok")
+        self.assertIn(item["choices"]["costume_style"]["id"], BROAD_PRINCESS_COSTUME_IDS)
         self.assertEqual(item["choices"]["expression"]["id"], "haughty_chin_soft_gaze")
         self.assertEqual(item["choices"]["makeup_style"]["id"], "natural_makeup")
         self.assertEqual(item["choices"]["prop"]["id"], "sealed_court_token_prop")
@@ -4207,7 +4280,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertIn("Core concept lock: 설윤 공주 츤데레", item["prompt_en"])
         self.assertIn("denial-vs-evidence contradiction", item["prompt_en"])
         self.assertIn("faint ear-tip or nose-bridge warmth", item["prompt_en"])
-        self.assertIn("preserve the royal princess hanbok and East-Asian court identity", item["prompt_en"])
+        self.assertIn("preserve the selected royal princess register and visible regalia", item["prompt_en"])
         self.assertIn("courtly haughtiness", item["prompt_en"])
         self.assertIn("slightly raised chin", item["prompt_en"])
         self.assertIn("warm personal gesture", item["prompt_en"])
@@ -4661,7 +4734,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         )
 
         item = payload[0]
-        self.assertEqual(item["choices"]["costume_style"]["id"], "royal_princess_hanbok")
+        self.assertIn(item["choices"]["costume_style"]["id"], BROAD_PRINCESS_COSTUME_IDS)
         self.assertEqual(item["choices"]["expression"]["id"], "cold_unreadable_stare")
         self.assertEqual(item["choices"]["prop"]["id"], "phoenix_hairpin_prop")
         self.assertEqual(item["choices"]["composition"]["id"], "centered_symmetry")
@@ -4672,7 +4745,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertIn("sealed royal decree", item["prompt_en"])
         self.assertIn("empty gilded birdcage", item["prompt_en"])
         self.assertIn("phoenix hairpin remains a courtly possession marker, not a weapon cue", item["prompt_en"])
-        self.assertIn("preserve royal princess hanbok and East-Asian court identity", item["prompt_en"])
+        self.assertIn("preserve the selected royal princess register and visible regalia", item["prompt_en"])
         self.assertIn("no weapon use", item["prompt_en"])
         self.assertIn("no blood", item["prompt_en"])
         self.assertIn("no harmed person", item["prompt_en"])
@@ -5602,16 +5675,219 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertIn("Core concept lock: 지젤 광부", item["prompt_en"])
         self.assertIn("Additional requirements: coal miner workwear", item["prompt_en"])
         self.assertIn("miner workwear with a safety helmet and headlamp", item["prompt_en"])
-        self.assertIn("underground mine tunnel set", item["prompt_en"])
+        self.assertTrue(
+            "underground mine tunnel set" in item["prompt_en"]
+            or "mine worksite rest stop" in item["prompt_en"]
+        )
         self.assertIn("not an exact likeness", item["prompt_en"])
         self.assertIn("지젤 광부", item["provenance"]["concept_lock"])
         self.assertTrue(
             any("coal miner workwear" in requirement for requirement in item["provenance"]["additional_requirements"])
         )
         self.assertIn("costume_style=miner_workwear_hard_hat", item["provenance"]["argv"])
-        self.assertIn("location=underground_mine_tunnel_set", item["provenance"]["argv"])
+        self.assertIn("location=underground_mine_tunnel_set,mine_rest_stop", item["provenance"]["argv"])
         self.assertIn("--concept-lock", item["provenance"]["argv"])
         self.assertIn("--additional-requirement", item["provenance"]["argv"])
+
+    def test_candidate_pack_preserves_unmatched_concept_intents(self):
+        payload = self.run_wrapper_json(
+            "--concept",
+            "카리나 메이드 드래곤 고양이손 달린 흡혈귀",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "701",
+            "--emit-candidate-pack",
+        )
+
+        pack = payload[0]
+        self.assertRegex(pack["pack_id"], r"^[0-9a-f]{16}$")
+        self.assertNotIn("prompt_en", pack)
+        self.assertEqual(
+            {
+                "pack_id",
+                "mandatory_intents",
+                "uncovered_intents",
+                "presets",
+                "slots",
+                "role_scene_policy",
+                "species_family",
+                "diversity_state",
+                "coverage",
+                "conflicts",
+                "safety_floor",
+                "negative_en",
+                "provenance",
+            },
+            set(pack.keys()),
+        )
+        intent_texts = {item["text"] for item in pack["mandatory_intents"]}
+        self.assertTrue({"카리나", "메이드", "드래곤", "고양이손", "흡혈귀"} <= intent_texts)
+        uncovered = {item["text"] for item in pack["uncovered_intents"]}
+        self.assertIn("드래곤", uncovered)
+        self.assertIn("고양이손", uncovered)
+        self.assertLessEqual(len(pack["presets"]), 5)
+        total_slot_candidates = 0
+        for slot, slot_payload in pack["slots"].items():
+            candidates = slot_payload["candidates"]
+            total_slot_candidates += len(candidates)
+            expected_limit = 5 if slot_payload["role"] == "core" else 3
+            self.assertLessEqual(len(candidates), expected_limit)
+            self.assertAlmostEqual(sum(candidate["probability"] for candidate in candidates), 1.0, places=5)
+        self.assertLessEqual(total_slot_candidates, 120)
+
+    def test_candidate_pack_defaults_concept_resolution_to_soft_mode(self):
+        payload = self.run_wrapper_json(
+            "--concept",
+            "카리나 메이드 흡혈귀",
+            "--emit-candidate-pack",
+            "--explain-concept",
+        )
+
+        concept = payload["concepts"][0]
+        self.assertEqual(concept["concept_mode"], "soft")
+        self.assertFalse(concept["forced_slots_applied"])
+
+        legacy_payload = self.run_wrapper_json(
+            "--concept",
+            "카리나 메이드 흡혈귀",
+            "--concept-mode",
+            "legacy",
+            "--emit-candidate-pack",
+            "--explain-concept",
+        )
+        self.assertEqual(legacy_payload["concepts"][0]["concept_mode"], "legacy")
+        self.assertTrue(legacy_payload["concepts"][0]["forced_slots_applied"])
+
+    def test_audit_composed_prompt_enforces_pack_contract(self):
+        pack = {
+            "pack_id": "aaaaaaaaaaaaaaaa",
+            "mandatory_intents": [{"text": "dragon", "status": "covered", "covered_by": ["slot:subject:dragon"], "audit_terms": ["dragon"]}],
+            "uncovered_intents": [],
+            "presets": [{"id": "preset:p1"}],
+            "slots": {
+                "subject": {"candidates": [{"id": "slot:subject:dragon"}]},
+                "mood": {"candidates": [{"id": "slot:mood:cozy"}, {"id": "slot:mood:tense"}]},
+            },
+            "coverage": {},
+            "conflicts": [{"id": "conflict:1", "severity": "hard", "candidates": ["slot:mood:cozy", "slot:mood:tense"]}],
+            "safety_floor": {"forbidden_terms": ["blood"]},
+            "negative_en": "bad anatomy",
+            "provenance": {},
+        }
+        good = {
+            "pack_id": "aaaaaaaaaaaaaaaa",
+            "prompt_en": "A dragon portrait with warm studio light, no text or watermark.",
+            "negative_en": "bad anatomy",
+            "chosen_candidate_ids": ["preset:p1", "slot:subject:dragon", "slot:mood:cozy"],
+            "composer": "agent",
+        }
+        bad = {
+            **good,
+            "prompt_en": "A portrait with blood on the costume, no text or watermark.",
+            "chosen_candidate_ids": ["slot:subject:dragon", "slot:mood:cozy", "slot:mood:tense", "slot:missing:nope"],
+        }
+        with tempfile.TemporaryDirectory() as tmpdir:
+            pack_path = Path(tmpdir) / "pack.json"
+            good_path = Path(tmpdir) / "good.json"
+            bad_path = Path(tmpdir) / "bad.json"
+            pack_path.write_text(json.dumps(pack, ensure_ascii=False), encoding="utf-8")
+            good_path.write_text(json.dumps(good, ensure_ascii=False), encoding="utf-8")
+            bad_path.write_text(json.dumps(bad, ensure_ascii=False), encoding="utf-8")
+
+            passed = subprocess.run(
+                [sys.executable, str(AUDIT_COMPOSED_PATH), "--pack", str(pack_path), "--composed", str(good_path)],
+                cwd=ROOT,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+            self.assertEqual(passed.returncode, 0, passed.stderr)
+            self.assertEqual(json.loads(passed.stdout)["status"], "pass")
+
+            failed = subprocess.run(
+                [sys.executable, str(AUDIT_COMPOSED_PATH), "--pack", str(pack_path), "--composed", str(bad_path)],
+                cwd=ROOT,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+            self.assertEqual(failed.returncode, 1)
+            audit = json.loads(failed.stdout)
+            self.assertEqual(audit["status"], "fail")
+            failure_checks = {failure["check"] for failure in audit["failures"]}
+            self.assertTrue({"mandatory_intent", "chosen_candidate_ids", "hard_conflict", "safety_floor"} <= failure_checks)
+
+    def test_audit_composed_prompt_rejects_role_scene_and_species_mismatch(self):
+        pack = {
+            "pack_id": "bbbbbbbbbbbbbbbb",
+            "mandatory_intents": [{"text": "beastkin", "status": "covered", "covered_by": ["slot:subject:beastkin"], "audit_terms": ["beastkin"]}],
+            "uncovered_intents": [],
+            "presets": [{"id": "preset:p1"}],
+            "slots": {
+                "subject": {"candidates": [{"id": "slot:subject:beastkin"}]},
+                "location": {
+                    "candidates": [
+                        {"id": "slot:location:traffic_crossing_rain"},
+                        {"id": "slot:location:highland_pasture"},
+                    ]
+                },
+                "species_marker": {
+                    "candidates": [
+                        {"id": "slot:species_marker:feline_reflective_eye_whisker_shadow"},
+                        {"id": "slot:species_marker:avian_feather_ruff_wing_sleeve"},
+                    ]
+                },
+            },
+            "role_scene_policy": {
+                "enabled": True,
+                "enforce": True,
+                "scene_family": "procedural_public_safety",
+                "allowed_locations": ["traffic_crossing_rain"],
+                "forbidden_locations": ["highland_pasture"],
+            },
+            "species_family": {
+                "enabled": True,
+                "family": "feline",
+                "variant_id": "feline_cat_bigcat",
+                "allowed": {"species_marker": ["feline_reflective_eye_whisker_shadow"]},
+            },
+            "coverage": {},
+            "conflicts": [],
+            "safety_floor": {"forbidden_terms": []},
+            "negative_en": "bad anatomy",
+            "provenance": {},
+        }
+        composed = {
+            "pack_id": "bbbbbbbbbbbbbbbb",
+            "prompt_en": "A beastkin police portrait, no text or watermark.",
+            "negative_en": "bad anatomy",
+            "chosen_candidate_ids": [
+                "preset:p1",
+                "slot:subject:beastkin",
+                "slot:location:highland_pasture",
+                "slot:species_marker:avian_feather_ruff_wing_sleeve",
+            ],
+            "composer": "agent",
+        }
+        with tempfile.TemporaryDirectory() as tmpdir:
+            pack_path = Path(tmpdir) / "pack.json"
+            composed_path = Path(tmpdir) / "composed.json"
+            pack_path.write_text(json.dumps(pack, ensure_ascii=False), encoding="utf-8")
+            composed_path.write_text(json.dumps(composed, ensure_ascii=False), encoding="utf-8")
+            result = subprocess.run(
+                [sys.executable, str(AUDIT_COMPOSED_PATH), "--pack", str(pack_path), "--composed", str(composed_path)],
+                cwd=ROOT,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+
+        self.assertEqual(result.returncode, 1)
+        audit = json.loads(result.stdout)
+        failure_checks = {failure["check"] for failure in audit["failures"]}
+        self.assertIn("role_scene_policy", failure_checks)
+        self.assertIn("species_family", failure_checks)
 
     def test_record_image_run_ledger_preserves_prompt_hash_across_retries(self):
         prompt = "Exact prompt text for unchanged retry"
@@ -5688,6 +5964,52 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             self.assertEqual(rows[1]["retry_of"], rows[0]["run_id"])
             self.assertEqual(rows[1]["image_paths"], ["/tmp/generated.png"])
 
+    def test_record_image_run_accepts_candidate_pack_provenance(self):
+        prompt = "Audited composed prompt with no text or watermark"
+        prompt_id = hashlib.sha256(prompt.encode("utf-8")).hexdigest()[:16]
+        with tempfile.TemporaryDirectory() as tmpdir:
+            ledger = Path(tmpdir) / "runs.ndjson"
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(RECORD_RUN_PATH),
+                    "--ts",
+                    "2026-06-03T10:00:00+09:00",
+                    "--prompt-en",
+                    prompt,
+                    "--prompt-id",
+                    prompt_id,
+                    "--attempt",
+                    "1",
+                    "--status",
+                    "success",
+                    "--tool",
+                    "image_gen",
+                    "--pack-id",
+                    "aaaaaaaaaaaaaaaa",
+                    "--chosen-candidate-ids-json",
+                    json.dumps({"subject": ["slot:subject:dragon"], "preset": "preset:p1"}),
+                    "--composer",
+                    "agent",
+                    "--audit-status",
+                    "pass",
+                    "--ledger",
+                    str(ledger),
+                ],
+                cwd=ROOT,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+
+            self.assertEqual(result.returncode, 0, result.stderr)
+            row = json.loads(ledger.read_text(encoding="utf-8").splitlines()[0])
+            self.assertEqual(row["pack_id"], "aaaaaaaaaaaaaaaa")
+            self.assertEqual(row["chosen_candidate_ids"]["subject"], ["slot:subject:dragon"])
+            self.assertEqual(row["chosen_candidate_ids"]["preset"], "preset:p1")
+            self.assertEqual(row["composer"], "agent")
+            self.assertEqual(row["audit_status"], "pass")
+
     def test_record_image_run_default_ledger_is_worktree_local_runs_file(self):
         spec = importlib.util.spec_from_file_location("record_image_run", RECORD_RUN_PATH)
         self.assertIsNotNone(spec)
@@ -5763,6 +6085,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "frill_apron_maid_costume",
                 "nurse_uniform_costume",
                 "miner_workwear_hard_hat",
+                "royal_ball_gown",
                 "royal_princess_hanbok",
             },
             "prop": {
@@ -5796,6 +6119,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "maid_cafe_interior",
                 "hospital_corridor",
                 "underground_mine_tunnel_set",
+                "throne_hall_interior",
                 "royal_princess_chamber",
                 "underground_parking_garage",
                 "joseon_palace_interior",
@@ -6355,9 +6679,6 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                     "subject": {"maid_cafe_performer", "beastkin_subject"},
                     "costume_style": {"frill_apron_maid_costume"},
                     "location": {"maid_cafe_interior"},
-                    "prop": {"pointed_ear_tail_set_prop"},
-                    "texture": {"fur_patch_skin_blend"},
-                    "expression": {"slit_pupil_intense_gaze"},
                     "action": {"pausing_before_threshold"},
                     "composition": {"threshold_backlit_center"},
                     "world": {"folk_threshold_world"},
@@ -6438,11 +6759,11 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "설윤 공주 여신",
                 "공주",
                 "여신",
-                "joseon_period_portrait",
+                "princess_lineage_succession_portrait",
                 {
-                    "costume_style": {"royal_princess_hanbok", "ritual_goddess_drape_costume"},
-                    "location": {"royal_princess_chamber"},
-                    "prop": {"round_fan_prop", "radiant_disc_halo_prop"},
+                    "costume_style": {"royal_ball_gown", "ritual_goddess_drape_costume"},
+                    "location": {"throne_hall_interior"},
+                    "prop": {"crown_on_cushion_prop", "radiant_disc_halo_prop"},
                     "lighting": {"temple_disc_backlight"},
                     "surface_material": {"gold_leaf_skin_surface"},
                 },
@@ -6500,9 +6821,33 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 self.assertEqual(forced["costume_style"], ["frill_apron_maid_costume"])
                 self.assertNotIn("beastkin_tailored_folk_costume", forced["costume_style"])
                 self.assertIn("beastkin_subject", forced["subject"])
-                self.assertEqual(forced["prop"], ["pointed_ear_tail_set_prop"])
-                self.assertEqual(forced["texture"], ["fur_patch_skin_blend"])
-                self.assertEqual(forced["expression"], ["slit_pupil_intense_gaze"])
+                # 표정/텍스처/소품은 종 variant가 종에 맞는 단일 값으로 핀한다.
+                self.assertEqual(len(forced.get("expression", [])), 1)
+                self.assertIn(
+                    forced["expression"][0],
+                    {
+                        "slit_pupil_intense_gaze",
+                        "side_set_prey_alert_gaze",
+                        "round_unblinking_bird_gaze",
+                        "round_pupil_quiet_predator_focus",
+                    },
+                )
+                self.assertEqual(len(forced.get("texture", [])), 1)
+                self.assertIn(
+                    forced["texture"][0],
+                    {
+                        "fur_patch_skin_blend",
+                        "feather_skin_follicle_blend",
+                        "scale_skin_gradient_patch",
+                        "velvet_antler_skin_texture",
+                        "damp_fur_sheen_boundary",
+                    },
+                )
+                beastkin_props = set(forced.get("prop", [])) & {
+                    "pointed_ear_tail_set_prop",
+                    "single_feather_trace_prop",
+                }
+                self.assertLessEqual(len(beastkin_props), 1)
                 self.assertIn("anatomical_connection", forced)
                 self.assertIn("body_evidence_region", forced)
                 self.assertEqual(len(concept["selected_species_variants"]), 1)
@@ -6621,7 +6966,12 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 for slot, expected_ids in expected_slots.items():
                     self.assertTrue(expected_ids.issubset(set(forced.get(slot, []))), (slot, forced))
                 self.assertIn("beastkin_subject", forced["subject"])
-                self.assertEqual(forced["prop"][-1], "pointed_ear_tail_set_prop")
+                # 신체 소품은 종에 따라 0~1개만 추가된다(역할 소품은 expected_slots에서 검증).
+                beastkin_props = set(forced.get("prop", [])) & {
+                    "pointed_ear_tail_set_prop",
+                    "single_feather_trace_prop",
+                }
+                self.assertLessEqual(len(beastkin_props), 1)
                 spec = concept["soft_anchor_spec"]
                 priority_ids = {group["id"] for group in spec["render_priority_terms"]}
                 self.assertIn(priority_id, priority_ids)
@@ -6993,8 +7343,15 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         def normalize_values(value):
             if isinstance(value, str):
                 return [value]
+            if isinstance(value, dict):
+                # Weighted pool entry: {"id": ..., "w": ...}
+                entry_id = str(value.get("id") or "")
+                return [entry_id] if entry_id else []
             if isinstance(value, list):
-                return value
+                flattened: list[str] = []
+                for item in value:
+                    flattened.extend(normalize_values(item))
+                return flattened
             return []
 
         def check_set(path: str, raw_set) -> None:
@@ -9012,6 +9369,50 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertGreater(repeated_penalty, 0.0)
         self.assertEqual(forced_penalty, 1.0)
         self.assertEqual(summary["exact_count"], 1)
+
+    def test_role_scene_policy_records_and_prefers_least_used_location(self):
+        ledger = {}
+        result = {
+            "choices": {"location": {"id": "traffic_crossing_rain"}},
+            "semantic_trace": {
+                "generation_contract": {
+                    "soft_anchor_policy": {
+                        "enabled": True,
+                        "role_scene_policy": {
+                            "enabled": True,
+                            "allowed_locations": [
+                                "traffic_crossing_rain",
+                                "city_intersection_night",
+                            ],
+                        },
+                    }
+                }
+            },
+        }
+        self.generator.update_anchor_diversity_ledger(ledger, result)
+        self.assertEqual(ledger["location"]["traffic_crossing_rain"], 1)
+
+        contract = {
+            "soft_anchor_policy": {
+                "role_scene_policy": {
+                    "enabled": True,
+                    "role_first": True,
+                    "enforce": True,
+                    "allowed_locations": [
+                        "traffic_crossing_rain",
+                        "city_intersection_night",
+                    ],
+                }
+            }
+        }
+        context = {"anchor_diversity_ledger": ledger}
+        pool = [
+            {"id": "traffic_crossing_rain", "weight": 100.0},
+            {"id": "city_intersection_night", "weight": 1.0},
+            {"id": "highland_pasture", "weight": 1.0},
+        ]
+        adjusted = self.generator.apply_role_scene_policy("location", pool, context, contract)
+        self.assertEqual([item["id"] for item in adjusted], ["city_intersection_night"])
 
     def test_semantic_batch_trace_records_shared_history(self):
         semantic_index = self.build_mock_semantic_index()

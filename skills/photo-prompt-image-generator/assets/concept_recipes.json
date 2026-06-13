@@ -40,6 +40,7 @@
   ],
   "soft_anchor_defaults": {
     "anchor_slots": [
+      "subject",
       "appearance_type",
       "costume_style",
       "expression",
@@ -90,6 +91,12 @@
       ],
       "strategy": "prefer_then_reselect",
       "fail_open": false
+    },
+    "anchor_expansion": {
+      "enabled": false,
+      "top_k": 3,
+      "min_similarity": 0.78,
+      "weight_ratio": 0.5
     }
   },
   "roles": {
@@ -101,6 +108,7 @@
         "location=maid_cafe_interior"
       ],
       "soft_anchor_slots": [
+        "subject",
         "costume_style",
         "location"
       ],
@@ -130,7 +138,13 @@
           "akihabara_maid_cafe_uniform"
         ],
         "location": [
-          "maid_cafe_interior"
+          {
+            "id": "maid_cafe_interior",
+            "w": 3
+          },
+          "quiet_cafe",
+          "tea_house_private_room",
+          "victorian_mansion_parlor"
         ]
       },
       "critical_anchor_slots": [
@@ -165,16 +179,46 @@
         ],
         "strategy": "prefer_then_reselect",
         "fail_open": false
+      },
+      "role_scene_policy": {
+        "enabled": true,
+        "scene_family": "maid_service_interior",
+        "allowed_locations": [
+          "maid_cafe_interior",
+          "quiet_cafe",
+          "tea_house_private_room",
+          "victorian_mansion_parlor"
+        ],
+        "preferred_locations": [
+          "maid_cafe_interior",
+          "quiet_cafe",
+          "tea_house_private_room",
+          "victorian_mansion_parlor"
+        ],
+        "forbidden_locations": [
+          "highland_pasture"
+        ],
+        "enforce": true,
+        "reason": "role scene pool must own location before generic beastkin atmosphere"
+      },
+      "preset_affinity": {
+        "preferred_presets": [
+          "maid_cafe_cosplay_portrait"
+        ],
+        "discouraged_presets": [
+          "beastkin_threshold_portrait"
+        ]
       }
     },
     "간호사": {
-      "preset": "japanese_otaku_costume_portrait",
+      "preset": "clinical_handover_vitals",
       "set": [
-        "subject=adult_cosplay_performer",
+        "subject=nurse_role",
         "costume_style=nurse_uniform_costume",
         "location=hospital_corridor"
       ],
       "soft_anchor_slots": [
+        "subject",
         "costume_style",
         "location"
       ],
@@ -191,10 +235,11 @@
         ]
       },
       "additional": [
-        "adult nurse-uniform costume styling with clear medical-uniform details"
+        "adult nurse duty uniform with clear medical-uniform details"
       ],
       "intent_axis": [
-        "adult nurse uniform cosplay portrait",
+        "adult nurse on duty in a clear medical uniform",
+        "professional clinical care identity",
         "cold hospital corridor atmosphere"
       ],
       "likeness_mode": "inspired",
@@ -203,8 +248,17 @@
           "nurse_uniform_costume"
         ],
         "location": [
-          "hospital_corridor",
-          "hospital_waiting_room"
+          {
+            "id": "hospital_corridor",
+            "w": 2
+          },
+          {
+            "id": "hospital_waiting_room",
+            "w": 2
+          },
+          "clinic_corridor_handover",
+          "hospital_records_room",
+          "pharmacy_dispensing_counter"
         ]
       },
       "critical_anchor_slots": [
@@ -297,7 +351,8 @@
       "preset_affinity": {
         "discouraged_presets": [
           "adult_boundary_social_stress_test",
-          "adult_fetish_fashion_editorial"
+          "adult_fetish_fashion_editorial",
+          "beastkin_threshold_portrait"
         ],
         "preferred_axes": [
           "covered nurse uniform",
@@ -310,17 +365,45 @@
           "pin-up",
           "medical horror",
           "body display"
+        ],
+        "preferred_presets": [
+          "clinical_handover_vitals"
         ]
+      },
+      "role_scene_policy": {
+        "enabled": true,
+        "scene_family": "clinical_care_space",
+        "allowed_locations": [
+          "hospital_corridor",
+          "hospital_waiting_room",
+          "clinic_corridor_handover",
+          "hospital_records_room",
+          "pharmacy_dispensing_counter"
+        ],
+        "preferred_locations": [
+          "hospital_corridor",
+          "hospital_waiting_room",
+          "clinic_corridor_handover",
+          "hospital_records_room",
+          "pharmacy_dispensing_counter"
+        ],
+        "forbidden_locations": [
+          "highland_pasture"
+        ],
+        "enforce": true,
+        "reason": "role scene pool must own location before generic beastkin atmosphere"
       }
     },
     "경찰": {
-      "preset": "japanese_otaku_costume_portrait",
+      "preset": "police_traffic_control_documentary",
       "set": [
-        "subject=adult_cosplay_performer",
+        "subject=police_officer_role",
         "costume_style=police_uniform_costume"
       ],
       "soft_anchor_slots": [
-        "costume_style"
+        "subject",
+        "costume_style",
+        "location"
       ],
       "soft_min_anchors": 1,
       "anchor_terms": {
@@ -328,18 +411,29 @@
           "police-uniform",
           "police",
           "uniform"
+        ],
+        "location": [
+          "traffic crossing",
+          "city intersection",
+          "service desk"
         ]
       },
       "additional": [
-        "adult police-officer costume styling with clear uniform details"
+        "adult police-officer duty uniform with clear uniform details"
       ],
       "intent_axis": [
-        "adult police uniform cosplay portrait"
+        "adult police officer on duty in uniform",
+        "professional public-safety authority"
       ],
       "likeness_mode": "inspired",
       "anchor_pool": {
         "costume_style": [
           "police_uniform_costume"
+        ],
+        "location": [
+          "traffic_crossing_rain",
+          "city_intersection_night",
+          "lost_child_service_desk"
         ]
       },
       "critical_anchor_slots": [
@@ -413,17 +507,46 @@
         ],
         "strategy": "prefer_then_reselect",
         "fail_open": false
+      },
+      "role_scene_policy": {
+        "enabled": true,
+        "scene_family": "procedural_public_safety",
+        "allowed_locations": [
+          "traffic_crossing_rain",
+          "city_intersection_night",
+          "lost_child_service_desk"
+        ],
+        "preferred_locations": [
+          "traffic_crossing_rain",
+          "city_intersection_night",
+          "lost_child_service_desk"
+        ],
+        "forbidden_locations": [
+          "highland_pasture"
+        ],
+        "enforce": true,
+        "reason": "role scene pool must own location before generic beastkin atmosphere"
+      },
+      "preset_affinity": {
+        "preferred_presets": [
+          "police_traffic_control_documentary"
+        ],
+        "discouraged_presets": [
+          "beastkin_threshold_portrait"
+        ]
       }
     },
     "광부": {
       "preset": "compact_cinematic_prop_portrait",
       "set": [
+        "subject=miner_role",
         "costume_style=miner_workwear_hard_hat",
         "prop=nonfunctional_pickaxe_prop",
-        "location=underground_mine_tunnel_set",
+        "location=underground_mine_tunnel_set,mine_rest_stop",
         "lighting=single_flashlight_beam"
       ],
       "soft_anchor_slots": [
+        "subject",
         "costume_style",
         "location"
       ],
@@ -441,15 +564,16 @@
         "location": [
           "underground mine",
           "mine tunnel",
-          "timber supports"
+          "timber supports",
+          "mine worksite rest stop"
         ]
       },
       "additional": [
-        "coal miner workwear and underground mine atmosphere"
+        "coal miner workwear with either an underground tunnel or mine worksite rest-stop atmosphere"
       ],
       "intent_axis": [
         "coal miner workwear portrait",
-        "underground mine tunnel with helmet headlamp"
+        "mine worksite with helmet headlamp, tunnel supports, or shift-change rest-stop evidence"
       ],
       "likeness_mode": "inspired",
       "anchor_pool": {
@@ -457,7 +581,8 @@
           "miner_workwear_hard_hat"
         ],
         "location": [
-          "underground_mine_tunnel_set"
+          "underground_mine_tunnel_set",
+          "mine_rest_stop"
         ]
       },
       "critical_anchor_slots": [
@@ -540,92 +665,236 @@
         ],
         "strategy": "prefer_then_reselect",
         "fail_open": false
+      },
+      "role_scene_policy": {
+        "enabled": true,
+        "scene_family": "mine_worksite",
+        "allowed_locations": [
+          "underground_mine_tunnel_set",
+          "mine_rest_stop"
+        ],
+        "preferred_locations": [
+          "underground_mine_tunnel_set",
+          "mine_rest_stop"
+        ],
+        "forbidden_locations": [
+          "highland_pasture"
+        ],
+        "enforce": true,
+        "reason": "role scene pool must own location before generic beastkin atmosphere"
+      },
+      "preset_affinity": {
+        "preferred_presets": [
+          "compact_cinematic_prop_portrait"
+        ],
+        "discouraged_presets": [
+          "beastkin_threshold_portrait"
+        ]
       }
     },
     "공주": {
-      "preset": "joseon_period_portrait",
+      "preset": "princess_lineage_succession_portrait",
       "set": [
-        "subject=historical_drama_actor",
+        "subject=princess_role",
         "appearance_type=classic_elegant",
         "hair_style=low_bun_hair",
         "makeup_style=natural_makeup",
-        "costume_style=royal_princess_hanbok",
-        "wearable_accessory=phoenix_binyeo_ornament",
-        "action=standing_silence",
-        "prop=round_fan_prop",
+        "costume_style=royal_ball_gown",
+        "wearable_accessory=subtle_diamond_tiara",
+        "action=poised_standing",
+        "prop=crown_on_cushion_prop",
         "composition=centered_symmetric",
-        "location=royal_princess_chamber"
+        "location=throne_hall_interior"
       ],
       "soft_anchor_slots": [
+        "subject",
         "costume_style",
         "location",
         "prop",
         "wearable_accessory",
-        "composition"
+        "composition",
+        "action",
+        "mood"
       ],
       "soft_min_anchors": 2,
       "anchor_terms": {
+        "subject": [
+          "adult princess",
+          "royal heir",
+          "modern royal",
+          "princess in disguise"
+        ],
         "costume_style": [
+          "princess gown",
           "princess hanbok",
+          "hanfu court dress",
+          "royal ceremonial robe",
+          "modern royal daywear",
           "royal",
           "tiara"
         ],
         "location": [
-          "royal princess chamber",
-          "silk drapery",
-          "court furniture"
+          "palace chamber",
+          "throne hall",
+          "grand ballroom",
+          "Chinese court garden",
+          "modern palace garden",
+          "royal procession space"
         ],
         "prop": [
-          "round fan",
-          "fan"
+          "crown",
+          "royal seal",
+          "heraldic scroll",
+          "succession token",
+          "VIP crest pass"
         ],
         "wearable_accessory": [
+          "tiara",
+          "crown",
+          "royal sash",
+          "court hair ornament",
           "phoenix binyeo",
-          "cheopji",
-          "tteoljam",
-          "traditional Korean court hair ornament"
+          "hidden royal pendant"
+        ],
+        "action": [
+          "poised standing",
+          "royal procession",
+          "reaching for crown",
+          "reading royal edict",
+          "ballroom dance"
+        ],
+        "mood": [
+          "quiet nobility",
+          "weight of succession",
+          "gilded festivity",
+          "hidden lineage tension"
         ]
       },
       "additional": [
-        "Korean Joseon court princess styling: layered hanbok with jeogori and seuran chima, plus a traditional Korean court hair ornament such as cheopji, tteoljam, or a phoenix-form binyeo hairpin",
-        "she reads as royal lineage and inherited rank, not just a costume: ceremonial court dignity, composed posture, and the quiet weight of succession",
-        "keep the East-Asian Joseon palace identity dominant"
+        "Treat princess as a broad adult royal archetype, not a single Joseon-only costume: choose one coherent register such as Korean court, Chinese hanfu court, Western ballroom royalty, modern royal heiress, incognito heir, or fallen/exiled royal.",
+        "Royal identity must read through visible regalia, inherited-rank posture, lineage object, crest, attendants, throne/court space, official public-display context, or palace-security context, not just a pretty dress.",
+        "Do not collapse every princess prompt into hanbok/Joseon palace; do not turn it into generic cosplay, pin-up monarchy, minors-coding, or disconnected fantasy costume."
       ],
       "intent_axis": [
-        "Korean Joseon court princess portrait with hanbok and a traditional court hair ornament",
-        "royal lineage and inherited rank, ceremonial court dignity",
-        "Joseon royal palace chamber"
+        "broad adult princess or royal-heir portrait with a coherent cultural or era register",
+        "royal lineage, public display, succession, ceremony, modern nobility, incognito identity, or exile facets",
+        "visible regalia, crown or tiara, court ornament, lineage object, palace, ballroom, court, or modern royal setting"
       ],
       "likeness_mode": "inspired",
       "anchor_pool": {
+        "subject": [
+          "princess_role",
+          "crown_princess_role",
+          "adult_royal_heir_role",
+          "modern_vip_princess_role",
+          "princess_in_disguise_role",
+          "exiled_royal_role",
+          "hanfu_court_model",
+          "traditional_korean_model"
+        ],
         "costume_style": [
-          "royal_princess_hanbok"
+          {
+            "id": "royal_ball_gown",
+            "w": 3
+          },
+          {
+            "id": "royal_princess_hanbok",
+            "w": 2
+          },
+          {
+            "id": "ornate_hanfu_court_dress",
+            "w": 2
+          },
+          "crown_princess_ceremonial_robe",
+          "elegant_modern_daywear",
+          "commoner_disguise_over_silk",
+          "faded_court_robe_worn"
         ],
         "location": [
-          "royal_princess_chamber",
-          "joseon_palace_interior"
+          {
+            "id": "throne_hall_interior",
+            "w": 3
+          },
+          {
+            "id": "grand_ballroom_chandelier",
+            "w": 2
+          },
+          {
+            "id": "royal_princess_chamber",
+            "w": 2
+          },
+          {
+            "id": "hanfu_court_garden",
+            "w": 2
+          },
+          "joseon_palace_interior",
+          "hanok_inner_court",
+          "palace_ceremonial_courtyard",
+          "palace_garden_modern",
+          "palace_side_gate",
+          "royal_guard_corridor",
+          "royal_ancestral_shrine",
+          "ballroom_gala_floor",
+          "ruined_palace_wing"
         ],
         "wearable_accessory": [
+          {
+            "id": "subtle_diamond_tiara",
+            "w": 3
+          },
+          "ceremonial_royal_sash",
+          "royal_crest_choker",
+          "pearl_court_earrings",
           "phoenix_binyeo_ornament",
           "cheopji_hair_ornament",
           "tteoljam_hair_ornament",
-          "subtle_diamond_tiara"
+          "hidden_royal_jade_pendant",
+          "tarnished_tiara",
+          "royal_crest_epaulette"
+        ],
+        "prop": [
+          {
+            "id": "crown_on_cushion_prop",
+            "w": 3
+          },
+          "royal_seal_okse_prop",
+          "royal_edict_gyoji_scroll_prop",
+          "dynastic_genealogy_book_prop",
+          "succession_token_box_prop",
+          "royal_crest_vip_pass_prop",
+          "sealed_heraldic_scroll_prop",
+          "heirloom_key_prop"
+        ],
+        "action": [
+          "poised_standing",
+          "royal_procession_walk",
+          "reaching_for_crown",
+          "reading_royal_edict",
+          "lowering_hood_revealing_ornament",
+          "ballroom_dance_pose"
+        ],
+        "mood": [
+          "quiet_nobility",
+          "weight_of_succession",
+          "gilded_festivity",
+          "hidden_lineage_tension",
+          "dignified_downfall",
+          "regal_command"
         ]
       },
       "critical_anchor_slots": [
         "costume_style",
         "wearable_accessory",
-        "location",
-        "prop"
+        "location"
       ],
       "anchor_floor": {
         "role": 1
       },
       "safety_requirements": [
-        "preserve Korean court/princess styling without converting it to Western gothic corset or lingerie styling"
+        "preserve adult royal/princess dignity with covered styling, visible regalia, and non-graphic court or public-role framing; avoid sexualized monarchy, pin-up framing, minors-coding, victim spectacle, and disconnected cosplay."
       ],
       "salience_cues": [
-        "royal hanbok silhouette, tiara or court chamber identity"
+        "tiara, crown, royal crest, court ornament, succession object, or palace/ballroom/royal-public setting"
       ],
       "mixin_cue_budget": 2,
       "soft_repair_policy": {
@@ -662,16 +931,125 @@
           ],
           "min_hits": 1
         }
+      },
+      "guide": {
+        "definition_ko": "공주는 조선 궁중 한 종류로 고정하지 않는다. 성인 왕실/왕녀/프린세스 범주로 보고, 조선 궁중·중화 한푸 궁정·서구 무도회 왕실·현대 왕족·변장한 왕위 계승자·망명/몰락 왕족 중 하나의 register를 선택해 일관되게 구성한다.",
+        "dominant_axes": [
+          "register_variety",
+          "lineage_succession",
+          "power_yet_powerlessness",
+          "protected_confinement",
+          "public_display",
+          "awakening_to_rule",
+          "modern_or_incognito_royalty"
+        ],
+        "anchor_guidance": "이미지당 지배 register 1개를 고른다. 조선=한복·비녀·궁궐 내실, 중화=한푸·궁정 정원, 서구 무도회=티아라·볼가운·샹들리에, 현대 왕족=미니멀 데이웨어·VIP crest·궁정 보안, 변장/망명=숨겨진 펜던트·낡은 왕실 오브제. 어떤 register든 혈통/계승/공개 전시/권력과 제약 중 하나가 얼굴·손·소품·장소 가까이에 보여야 한다.",
+        "anti_patterns": [
+          "명시 요청 없이 매번 조선 한복/궁궐로 수렴",
+          "register가 섞여 한복+무도회+현대 VIP가 무작위로 붙는 혼합",
+          "generic corset fairytale without lineage anchors",
+          "generic gothic princess, pin-up monarchy",
+          "damsel-in-distress 포즈, 셀피/코스프레 컨벤션 프레이밍",
+          "sexualized monarchy, minors-coding, 장식적 코스프레"
+        ]
+      },
+      "review_gates": [
+        {
+          "id": "princess_costume_anchor",
+          "check": "costume_style이 공주/왕실 register를 직접 드러내는 값 중 하나여야 한다",
+          "machine_checkable": true,
+          "assert": {
+            "type": "forced_slot_any",
+            "slot": "costume_style",
+            "any_of": [
+              "royal_ball_gown",
+              "royal_princess_hanbok",
+              "ornate_hanfu_court_dress",
+              "crown_princess_ceremonial_robe",
+              "elegant_modern_daywear",
+              "commoner_disguise_over_silk",
+              "faded_court_robe_worn"
+            ]
+          }
+        },
+        {
+          "id": "royal_identity",
+          "check": "공주/왕실 정체성이 티아라·관·왕실 문장·계승 문서·궁정/무도회/왕실 공적 공간 중 하나 이상으로 읽혀야 한다.",
+          "machine_checkable": false
+        },
+        {
+          "id": "coherent_register",
+          "check": "선택된 문화/시대 register가 하나로 일관되어야 하며, 명시 요청 없이 조선 한복으로만 반복 수렴하지 않아야 한다.",
+          "machine_checkable": false
+        }
+      ],
+      "role_scene_policy": {
+        "enabled": true,
+        "scene_family": "broad_princess_role",
+        "allowed_locations": [
+          "throne_hall_interior",
+          "grand_ballroom_chandelier",
+          "royal_princess_chamber",
+          "hanfu_court_garden",
+          "joseon_palace_interior",
+          "hanok_inner_court",
+          "palace_ceremonial_courtyard",
+          "palace_garden_modern",
+          "palace_side_gate",
+          "royal_guard_corridor",
+          "royal_ancestral_shrine",
+          "ballroom_gala_floor",
+          "ruined_palace_wing"
+        ],
+        "preferred_locations": [
+          "throne_hall_interior",
+          "grand_ballroom_chandelier",
+          "royal_princess_chamber",
+          "hanfu_court_garden",
+          "joseon_palace_interior",
+          "hanok_inner_court",
+          "palace_ceremonial_courtyard",
+          "palace_garden_modern",
+          "palace_side_gate",
+          "royal_guard_corridor",
+          "royal_ancestral_shrine",
+          "ballroom_gala_floor",
+          "ruined_palace_wing"
+        ],
+        "forbidden_locations": [
+          "highland_pasture"
+        ],
+        "enforce": true,
+        "reason": "princess role scene pool must own location before generic mixin atmosphere while rotating across royal registers"
+      },
+      "preset_affinity": {
+        "preferred_presets": [
+          "princess_lineage_succession_portrait",
+          "princess_ceremonial_display_portrait",
+          "princess_incognito_disguise_portrait",
+          "princess_fallen_exile_portrait",
+          "modern_casual_princess_portrait",
+          "modern_heiress_paparazzi_portrait",
+          "royal_ball_gala_princess_portrait",
+          "palace_token_offhand_princess",
+          "hanfu_china_court_portrait",
+          "joseon_period_portrait"
+        ],
+        "discouraged_presets": [
+          "beastkin_threshold_portrait"
+        ]
       }
     },
     "바니걸": {
-      "preset": "japanese_otaku_costume_portrait",
+      "preset": "magician_assistant_prop_check",
       "set": [
-        "subject=adult_cosplay_performer",
+        "subject=adult_stage_dancer",
         "costume_style=bunny_girl_costume"
       ],
       "soft_anchor_slots": [
-        "costume_style"
+        "subject",
+        "costume_style",
+        "location"
       ],
       "soft_min_anchors": 1,
       "anchor_terms": {
@@ -679,20 +1057,32 @@
           "bunny-girl",
           "ears",
           "bow tie"
+        ],
+        "location": [
+          "backstage room",
+          "stage magic backstage",
+          "vanity corner"
         ]
       },
       "additional": [
         "covered adult bunny-girl stage costume",
-        "non-explicit editorial cosplay styling"
+        "non-explicit editorial stage styling"
       ],
       "intent_axis": [
-        "adult bunny-girl cosplay portrait",
+        "adult bunny-girl stage performer in a covered stage costume",
+        "backstage stagecraft labor",
         "covered non-explicit stage costume"
       ],
       "likeness_mode": "inspired",
       "anchor_pool": {
         "costume_style": [
           "bunny_girl_costume"
+        ],
+        "location": [
+          "backstage_room",
+          "stage_magic_backstage",
+          "backstage_vanity_corner",
+          "costume_workshop_backstage"
         ]
       },
       "critical_anchor_slots": [
@@ -819,7 +1209,36 @@
         "pin-up pose",
         "full-body costume display",
         "body-first framing"
-      ]
+      ],
+      "role_scene_policy": {
+        "enabled": true,
+        "scene_family": "covered_stage_backstage",
+        "allowed_locations": [
+          "backstage_room",
+          "stage_magic_backstage",
+          "backstage_vanity_corner",
+          "costume_workshop_backstage"
+        ],
+        "preferred_locations": [
+          "backstage_room",
+          "stage_magic_backstage",
+          "backstage_vanity_corner",
+          "costume_workshop_backstage"
+        ],
+        "forbidden_locations": [
+          "highland_pasture"
+        ],
+        "enforce": true,
+        "reason": "role scene pool must own location before generic beastkin atmosphere"
+      },
+      "preset_affinity": {
+        "preferred_presets": [
+          "magician_assistant_prop_check"
+        ],
+        "discouraged_presets": [
+          "beastkin_threshold_portrait"
+        ]
+      }
     },
     "사복 여친": {
       "preset": "candid_iphone_portrait",
@@ -828,7 +1247,9 @@
         "wardrobe_style=hoodie_shorts_sneakers"
       ],
       "soft_anchor_slots": [
-        "wardrobe_style"
+        "subject",
+        "wardrobe_style",
+        "location"
       ],
       "soft_min_anchors": 1,
       "anchor_terms": {
@@ -837,6 +1258,12 @@
           "shorts",
           "sneakers",
           "casual"
+        ],
+        "location": [
+          "quiet cafe",
+          "cozy apartment",
+          "creator room",
+          "urban casual space"
         ]
       },
       "additional": [
@@ -853,6 +1280,14 @@
           "knit_cardigan_jeans",
           "summer_dress_sneakers",
           "casual_bomber_jacket_miniskirt"
+        ],
+        "location": [
+          "quiet_cafe",
+          "campus_cafe",
+          "cozy_apartment",
+          "creator_room",
+          "city_bridge",
+          "urban_concrete_stairs"
         ]
       },
       "critical_anchor_slots": [
@@ -862,7 +1297,8 @@
         "role": 1
       },
       "safety_requirements": [
-        "adult subject only; casual girlfriend styling stays everyday, candid, and non-erotic"
+        "adult subject only; casual girlfriend styling stays everyday, candid, and non-erotic",
+        "the subject is a mature adult woman in her mid-twenties with an unambiguous adult appearance; everyday outfit keeps the midriff covered"
       ],
       "salience_cues": [
         "everyday casual outfit remains the first-read role anchor"
@@ -935,6 +1371,40 @@
             "hands_nails_accessory_closeup"
           ]
         }
+      },
+      "role_scene_policy": {
+        "enabled": true,
+        "scene_family": "casual_urban_candid",
+        "allowed_locations": [
+          "quiet_cafe",
+          "campus_cafe",
+          "cozy_apartment",
+          "creator_room",
+          "city_bridge",
+          "urban_concrete_stairs"
+        ],
+        "preferred_locations": [
+          "quiet_cafe",
+          "campus_cafe",
+          "cozy_apartment",
+          "creator_room",
+          "city_bridge",
+          "urban_concrete_stairs"
+        ],
+        "forbidden_locations": [
+          "highland_pasture",
+          "beach_boardwalk"
+        ],
+        "enforce": true,
+        "reason": "role scene pool must own location before generic beastkin atmosphere"
+      },
+      "preset_affinity": {
+        "preferred_presets": [
+          "candid_iphone_portrait"
+        ],
+        "discouraged_presets": [
+          "beastkin_threshold_portrait"
+        ]
       }
     },
     "산타복": {
@@ -942,7 +1412,7 @@
       "set": [
         "subject=cosplayer",
         "costume_style=covered_santa_fur_trim_costume",
-        "location=christmas_market_lights,seoul_bus_stop_snow",
+        "location=christmas_market_lights,seoul_bus_stop_snow,gift_logistics_warehouse,apartment_door_threshold",
         "action=brisk_gift_handoff_pose",
         "prop=modest_wrapped_gift_prop,christmas_lights_prop,gift_tag_ledger_prop",
         "lighting=first_snow_evening_light",
@@ -951,6 +1421,7 @@
         "motion=suspended_snowflake_motion"
       ],
       "soft_anchor_slots": [
+        "subject",
         "costume_style",
         "location",
         "action",
@@ -969,7 +1440,9 @@
         "location": [
           "Christmas market",
           "snowy Seoul bus stop",
-          "winter street"
+          "winter street",
+          "gift logistics warehouse",
+          "apartment delivery threshold"
         ],
         "prop": [
           "wrapped gift",
@@ -1018,7 +1491,9 @@
         ],
         "location": [
           "christmas_market_lights",
-          "seoul_bus_stop_snow"
+          "seoul_bus_stop_snow",
+          "gift_logistics_warehouse",
+          "apartment_door_threshold"
         ],
         "prop": [
           "modest_wrapped_gift_prop",
@@ -1052,7 +1527,37 @@
       "salience_cues": [
         "red fur-trim Santa costume, wrapped gift, and winter lights should read before any wizard layer"
       ],
-      "mixin_cue_budget": 2
+      "mixin_cue_budget": 2,
+      "role_scene_policy": {
+        "enabled": true,
+        "scene_family": "holiday_delivery_winter",
+        "allowed_locations": [
+          "christmas_market_lights",
+          "seoul_bus_stop_snow",
+          "gift_logistics_warehouse",
+          "apartment_door_threshold"
+        ],
+        "preferred_locations": [
+          "christmas_market_lights",
+          "seoul_bus_stop_snow",
+          "gift_logistics_warehouse",
+          "apartment_door_threshold"
+        ],
+        "forbidden_locations": [
+          "highland_pasture",
+          "beach_boardwalk"
+        ],
+        "enforce": true,
+        "reason": "covered Santa role should rotate winter-market, transit, logistics, and delivery-threshold scenes instead of inheriting generic atmosphere"
+      },
+      "preset_affinity": {
+        "preferred_presets": [
+          "seasonal_event_portrait"
+        ],
+        "discouraged_presets": [
+          "beastkin_threshold_portrait"
+        ]
+      }
     },
     "운동복": {
       "preset": "sports_action_wire",
@@ -1144,11 +1649,26 @@
           "gym_mirror_weight_room"
         ],
         "action": [
-          "sprint_start_drive",
-          "sprinting_track"
+          {
+            "id": "sprint_start_drive",
+            "w": 2
+          },
+          {
+            "id": "sprinting_track",
+            "w": 2
+          },
+          "adult_stretching_pose",
+          "mid_jump_freeze_pose",
+          "running_toward_camera_motion"
         ],
         "prop": [
-          "stopwatch_training_prop"
+          {
+            "id": "stopwatch_training_prop",
+            "w": 3
+          },
+          "chrome_water_bottle",
+          "rain_towel_prop",
+          "ice_pack_wrapped_in_towel_prop"
         ],
         "lighting": [
           "gym_overhead_led_light",
@@ -1187,6 +1707,7 @@
         "action=cabin_service_pause"
       ],
       "soft_anchor_slots": [
+        "subject",
         "costume_style",
         "location",
         "action"
@@ -1229,6 +1750,7 @@
         "action=holding_firefighter_helmet"
       ],
       "soft_anchor_slots": [
+        "subject",
         "costume_style",
         "location",
         "action"
@@ -1270,6 +1792,7 @@
         "action=checking_security_monitors"
       ],
       "soft_anchor_slots": [
+        "subject",
         "costume_style",
         "location",
         "action"
@@ -1310,6 +1833,7 @@
         "action=serving_from_kitchen_pass"
       ],
       "soft_anchor_slots": [
+        "subject",
         "costume_style",
         "location",
         "action"
@@ -1351,6 +1875,7 @@
         "composition=centered_symmetry"
       ],
       "soft_anchor_slots": [
+        "subject",
         "costume_style",
         "composition",
         "action"
@@ -1387,10 +1912,11 @@
       "set": [
         "subject=adult_school_uniform_cosplay_model",
         "costume_style=adult_school_uniform_cosplay_costume",
-        "location=school_reference_studio",
+        "location=school_reference_studio,campus_cafe,library_reading_room,classroom_interior",
         "makeup_style=clean_pure_makeup"
       ],
       "soft_anchor_slots": [
+        "subject",
         "costume_style",
         "location",
         "makeup_style"
@@ -1401,37 +1927,78 @@
           "adult school-uniform cosplay"
         ],
         "location": [
-          "reference studio"
+          "adult reference studio",
+          "campus cafe",
+          "library reading room",
+          "quiet classroom"
         ],
         "makeup_style": [
           "clean pure makeup"
         ]
       },
       "additional": [
-        "the student concept must be clearly adult-only cosplay/reference styling, not a minor-coded school scene; keep clothing covered and neutral"
+        "the student concept must be clearly adult-only cosplay/reference styling or mature campus-study styling, not a minor-coded school scene; keep clothing covered and neutral"
       ],
       "intent_axis": [
-        "adult-only school-uniform cosplay reference portrait, covered neutral styling, non-minor coding"
+        "adult-only student-reference portrait with covered neutral styling in a studio, campus, library, or quiet classroom context"
       ],
       "likeness_mode": "inspired",
+      "anchor_pool": {
+        "costume_style": [
+          "adult_school_uniform_cosplay_costume"
+        ],
+        "location": [
+          "school_reference_studio",
+          "campus_cafe",
+          "library_reading_room",
+          "classroom_interior"
+        ]
+      },
+      "critical_anchor_slots": [
+        "costume_style",
+        "location"
+      ],
       "safety_requirements": [
         "adult subject only; no minor-coded framing, no sexualized school uniform treatment"
       ],
       "salience_cues": [
-        "adult reference-studio context and covered school-uniform cosplay keep the concept safe and readable"
+        "adult reference, campus, library, or classroom context and covered school-uniform styling keep the concept safe and readable"
       ],
-      "mixin_cue_budget": 1
+      "mixin_cue_budget": 1,
+      "role_scene_policy": {
+        "enabled": true,
+        "scene_family": "adult_student_reference",
+        "allowed_locations": [
+          "school_reference_studio",
+          "campus_cafe",
+          "library_reading_room",
+          "classroom_interior"
+        ],
+        "preferred_locations": [
+          "school_reference_studio",
+          "campus_cafe",
+          "library_reading_room",
+          "classroom_interior"
+        ],
+        "forbidden_locations": [
+          "highland_pasture",
+          "beach_boardwalk"
+        ],
+        "enforce": true,
+        "reason": "adult student styling should rotate safe study/reference contexts instead of inheriting unrelated generic scenes"
+      }
     },
     "무녀": {
       "preset": "modern_shaman_ritual_portrait",
       "set": [
         "subject=modern_shaman_performer",
         "costume_style=modern_shaman_ritual_costume",
-        "location=traditional_shrine_interior",
+        "location=traditional_shrine_interior,urban_shrine_corner,temple_gate_stone_steps,temple_back_gate",
         "prop=shaman_bells_prop,five_color_silk_strip_prop",
         "action=holding_shaman_bells"
       ],
       "soft_anchor_slots": [
+        "subject",
         "costume_style",
         "location",
         "prop",
@@ -1444,7 +2011,10 @@
           "mudang"
         ],
         "location": [
-          "traditional shrine"
+          "traditional shrine",
+          "urban shrine corner",
+          "temple gate stone steps",
+          "temple back gate"
         ],
         "prop": [
           "shaman bells",
@@ -1458,16 +2028,57 @@
         "render modern Korean shaman imagery respectfully as ritual portrait language with bells, five-color silk, and shrine context; no caricature, mockery, gore, or occult shock value"
       ],
       "intent_axis": [
-        "modern Korean shaman portrait, mudang ritual bells, five-color silk, traditional shrine, respectful folk unease"
+        "modern Korean shaman portrait, mudang ritual bells, five-color silk, shrine or temple-threshold setting, respectful folk unease"
       ],
       "likeness_mode": "inspired",
+      "anchor_pool": {
+        "costume_style": [
+          "modern_shaman_ritual_costume"
+        ],
+        "location": [
+          "traditional_shrine_interior",
+          "urban_shrine_corner",
+          "temple_gate_stone_steps",
+          "temple_back_gate"
+        ],
+        "prop": [
+          "shaman_bells_prop",
+          "five_color_silk_strip_prop"
+        ]
+      },
+      "critical_anchor_slots": [
+        "costume_style",
+        "prop",
+        "location"
+      ],
       "safety_requirements": [
         "adult subject only; respectful non-graphic folk ritual depiction, no religious caricature or gore"
       ],
       "salience_cues": [
         "shaman bells, five-color silk, and shrine context must read near the subject"
       ],
-      "mixin_cue_budget": 2
+      "mixin_cue_budget": 2,
+      "role_scene_policy": {
+        "enabled": true,
+        "scene_family": "respectful_korean_ritual_threshold",
+        "allowed_locations": [
+          "traditional_shrine_interior",
+          "urban_shrine_corner",
+          "temple_gate_stone_steps",
+          "temple_back_gate"
+        ],
+        "preferred_locations": [
+          "traditional_shrine_interior",
+          "urban_shrine_corner",
+          "temple_gate_stone_steps",
+          "temple_back_gate"
+        ],
+        "forbidden_locations": [
+          "highland_pasture"
+        ],
+        "enforce": true,
+        "reason": "mudang imagery should vary within respectful ritual spaces instead of a single shrine room"
+      }
     },
     "기록가": {
       "preset": "archivist_library_observation",
@@ -1479,6 +2090,7 @@
         "action=organizing_old_manuscripts"
       ],
       "soft_anchor_slots": [
+        "subject",
         "costume_style",
         "location",
         "prop",
@@ -1523,6 +2135,7 @@
         "lighting=clean_laboratory_fluorescent"
       ],
       "soft_anchor_slots": [
+        "subject",
         "costume_style",
         "location",
         "prop",
@@ -1573,6 +2186,7 @@
         "location=gothic_glass_curio_cabinet"
       ],
       "soft_anchor_slots": [
+        "subject",
         "costume_style",
         "makeup_style",
         "prop",
@@ -1618,7 +2232,9 @@
           "ornate_gothic_perfume_bottle"
         ],
         "location": [
-          "gothic_glass_curio_cabinet"
+          "gothic_glass_curio_cabinet",
+          "gothic_candle_studio",
+          "victorian_mansion_parlor"
         ]
       },
       "critical_anchor_slots": [
@@ -1703,6 +2319,33 @@
         ],
         "strategy": "prefer_then_reselect",
         "fail_open": false
+      },
+      "role_scene_policy": {
+        "enabled": true,
+        "scene_family": "gothic_lolita_interior",
+        "allowed_locations": [
+          "gothic_glass_curio_cabinet",
+          "gothic_candle_studio",
+          "victorian_mansion_parlor"
+        ],
+        "preferred_locations": [
+          "gothic_glass_curio_cabinet",
+          "gothic_candle_studio",
+          "victorian_mansion_parlor"
+        ],
+        "forbidden_locations": [
+          "highland_pasture"
+        ],
+        "enforce": true,
+        "reason": "role scene pool must own location before generic beastkin atmosphere"
+      },
+      "preset_affinity": {
+        "preferred_presets": [
+          "gothic_doll_cosplay_portrait"
+        ],
+        "discouraged_presets": [
+          "beastkin_threshold_portrait"
+        ]
       }
     },
     "교사": {
@@ -1970,28 +2613,93 @@
       "set": [
         "subject=knight_role_model",
         "costume_style=knight_armor_cloak_costume",
-        "location=castle_armory_hall",
+        "location=castle_armory_hall,historical_armory_exhibit_room,royal_guard_corridor,palace_side_gate,rpg_ruin_studio_set",
         "action=standing_with_shield_rest",
-        "prop=heraldic_shield_prop"
+        "prop=heraldic_shield_prop,replica_round_shield_prop,medieval_longsword_replica_prop,cosplay_prop_broadsword"
       ],
       "soft_anchor_slots": [
         "subject",
         "costume_style",
-        "location"
+        "location",
+        "prop"
       ],
       "soft_min_anchors": 2,
+      "anchor_terms": {
+        "costume_style": [
+          "knight armor",
+          "cloak",
+          "defensive regalia"
+        ],
+        "location": [
+          "castle armory",
+          "historical armory exhibit",
+          "royal guard corridor",
+          "palace gate",
+          "ancient ruin set"
+        ],
+        "prop": [
+          "heraldic shield",
+          "replica shield",
+          "blunt sword prop"
+        ]
+      },
       "additional": [
-        "knight role is defensive regalia and heraldry, not active combat"
+        "knight role is defensive regalia, heraldry, exhibit armor, royal guard duty, or ruined-castle stillness, not active combat"
       ],
       "intent_axis": [
-        "knight role portrait with shield at rest and castle armory"
+        "knight role portrait with armor, shield or blunt replica sword, and castle, armory, palace-guard, or ruin setting"
       ],
       "likeness_mode": "inspired",
+      "anchor_pool": {
+        "costume_style": [
+          "knight_armor_cloak_costume"
+        ],
+        "location": [
+          "castle_armory_hall",
+          "historical_armory_exhibit_room",
+          "royal_guard_corridor",
+          "palace_side_gate",
+          "rpg_ruin_studio_set"
+        ],
+        "prop": [
+          "heraldic_shield_prop",
+          "replica_round_shield_prop",
+          "medieval_longsword_replica_prop",
+          "cosplay_prop_broadsword"
+        ]
+      },
+      "critical_anchor_slots": [
+        "costume_style",
+        "location"
+      ],
       "safety_requirements": [
         "no active battle, no blood, no injury"
       ],
       "anchor_floor": {
         "role": 1
+      },
+      "role_scene_policy": {
+        "enabled": true,
+        "scene_family": "defensive_knight_regalia",
+        "allowed_locations": [
+          "castle_armory_hall",
+          "historical_armory_exhibit_room",
+          "royal_guard_corridor",
+          "palace_side_gate",
+          "rpg_ruin_studio_set"
+        ],
+        "preferred_locations": [
+          "castle_armory_hall",
+          "historical_armory_exhibit_room",
+          "royal_guard_corridor",
+          "palace_side_gate",
+          "rpg_ruin_studio_set"
+        ],
+        "forbidden_locations": [
+          "highland_pasture"
+        ],
+        "enforce": true,
+        "reason": "knight role should vary across armory, exhibit, guard, palace-gate, and ruin registers without battle drift"
       }
     },
     "퇴마사": {
@@ -1999,28 +2707,85 @@
       "set": [
         "subject=exorcist_role_model",
         "costume_style=exorcist_talisman_coat_costume",
-        "location=shrine_exorcism_threshold",
+        "location=shrine_exorcism_threshold,urban_shrine_corner,temple_back_gate,apartment_door_threshold",
         "action=placing_talisman_on_door",
-        "prop=talisman_bundle_prop"
+        "prop=talisman_bundle_prop,sealed_talisman_paper_prop"
       ],
       "soft_anchor_slots": [
         "subject",
         "costume_style",
-        "location"
+        "location",
+        "prop"
       ],
       "soft_min_anchors": 2,
+      "anchor_terms": {
+        "costume_style": [
+          "exorcist talisman coat"
+        ],
+        "location": [
+          "talisman-covered threshold",
+          "urban shrine corner",
+          "temple back gate",
+          "apartment doorway"
+        ],
+        "prop": [
+          "talisman bundle",
+          "sealed talisman paper"
+        ]
+      },
       "additional": [
-        "exorcist role reads through talismans and threshold ritual, respectfully non-graphic"
+        "exorcist role reads through talismans and threshold ritual in shrine, temple-gate, urban, or apartment doorway settings, respectfully non-graphic"
       ],
       "intent_axis": [
-        "exorcist role at a talisman-covered threshold"
+        "exorcist role at a talisman-marked threshold, urban shrine corner, temple back gate, or apartment doorway"
       ],
       "likeness_mode": "inspired",
+      "anchor_pool": {
+        "costume_style": [
+          "exorcist_talisman_coat_costume"
+        ],
+        "location": [
+          "shrine_exorcism_threshold",
+          "urban_shrine_corner",
+          "temple_back_gate",
+          "apartment_door_threshold"
+        ],
+        "prop": [
+          "talisman_bundle_prop",
+          "sealed_talisman_paper_prop"
+        ]
+      },
+      "critical_anchor_slots": [
+        "costume_style",
+        "location",
+        "prop"
+      ],
       "safety_requirements": [
         "no sacrifice, no possession victim, no gore"
       ],
       "anchor_floor": {
         "role": 1
+      },
+      "role_scene_policy": {
+        "enabled": true,
+        "scene_family": "non_graphic_exorcism_threshold",
+        "allowed_locations": [
+          "shrine_exorcism_threshold",
+          "urban_shrine_corner",
+          "temple_back_gate",
+          "apartment_door_threshold"
+        ],
+        "preferred_locations": [
+          "shrine_exorcism_threshold",
+          "urban_shrine_corner",
+          "temple_back_gate",
+          "apartment_door_threshold"
+        ],
+        "forbidden_locations": [
+          "highland_pasture"
+        ],
+        "enforce": true,
+        "reason": "exorcist role should rotate threshold types while staying non-graphic and ritual-focused"
       }
     },
     "음양사": {
@@ -2028,28 +2793,85 @@
       "set": [
         "subject=exorcist_role_model",
         "costume_style=exorcist_talisman_coat_costume",
-        "location=shrine_exorcism_threshold",
+        "location=shrine_exorcism_threshold,traditional_shrine_interior,temple_gate_stone_steps,temple_back_gate",
         "action=placing_talisman_on_door",
-        "prop=sealed_talisman_paper_prop"
+        "prop=sealed_talisman_paper_prop,talisman_bundle_prop"
       ],
       "soft_anchor_slots": [
         "subject",
         "costume_style",
-        "location"
+        "location",
+        "prop"
       ],
       "soft_min_anchors": 2,
+      "anchor_terms": {
+        "costume_style": [
+          "onmyoji talisman coat"
+        ],
+        "location": [
+          "shrine threshold",
+          "traditional shrine",
+          "temple gate steps",
+          "temple back gate"
+        ],
+        "prop": [
+          "sealed talisman paper",
+          "talisman bundle"
+        ]
+      },
       "additional": [
-        "onmyoji-like ritual role through talismans, paper charms, and threshold geometry"
+        "onmyoji-like ritual role through talismans, paper charms, shrine geometry, temple gates, or threshold placement"
       ],
       "intent_axis": [
-        "onmyoji-style ritual role with talisman paper at a threshold"
+        "onmyoji-style ritual role with talisman paper at a shrine threshold, traditional shrine, temple gate, or back gate"
       ],
       "likeness_mode": "inspired",
+      "anchor_pool": {
+        "costume_style": [
+          "exorcist_talisman_coat_costume"
+        ],
+        "location": [
+          "shrine_exorcism_threshold",
+          "traditional_shrine_interior",
+          "temple_gate_stone_steps",
+          "temple_back_gate"
+        ],
+        "prop": [
+          "sealed_talisman_paper_prop",
+          "talisman_bundle_prop"
+        ]
+      },
+      "critical_anchor_slots": [
+        "costume_style",
+        "location",
+        "prop"
+      ],
       "safety_requirements": [
         "respectful non-graphic ritual; no sacrifice or gore"
       ],
       "anchor_floor": {
         "role": 1
+      },
+      "role_scene_policy": {
+        "enabled": true,
+        "scene_family": "onmyoji_shrine_threshold",
+        "allowed_locations": [
+          "shrine_exorcism_threshold",
+          "traditional_shrine_interior",
+          "temple_gate_stone_steps",
+          "temple_back_gate"
+        ],
+        "preferred_locations": [
+          "shrine_exorcism_threshold",
+          "traditional_shrine_interior",
+          "temple_gate_stone_steps",
+          "temple_back_gate"
+        ],
+        "forbidden_locations": [
+          "highland_pasture"
+        ],
+        "enforce": true,
+        "reason": "onmyoji role should vary ritual threshold architecture without becoming generic occult horror"
       }
     },
     "아이돌": {
@@ -2144,7 +2966,7 @@
       "set": [
         "subject=priest_role_model",
         "costume_style=priest_black_cassock_costume",
-        "location=cathedral_nave_interior",
+        "location=cathedral_nave_interior,stained_glass_chapel",
         "action=holding_votive_candle",
         "prop=votive_candle_row_prop"
       ],
@@ -2154,18 +2976,64 @@
         "location"
       ],
       "soft_min_anchors": 2,
+      "anchor_terms": {
+        "costume_style": [
+          "black cassock",
+          "priest role"
+        ],
+        "location": [
+          "cathedral nave",
+          "stained-glass chapel"
+        ],
+        "prop": [
+          "votive candle row"
+        ]
+      },
       "additional": [
-        "priest role is respectful, symbolic, and non-caricatured"
+        "priest role is respectful, symbolic, and non-caricatured; rotate cathedral nave and chapel registers rather than one fixed altar scene"
       ],
       "intent_axis": [
-        "priest role portrait with votive candle and cathedral light"
+        "priest role portrait with votive candle, black cassock, cathedral nave, or stained-glass chapel light"
       ],
       "likeness_mode": "inspired",
+      "anchor_pool": {
+        "costume_style": [
+          "priest_black_cassock_costume"
+        ],
+        "location": [
+          "cathedral_nave_interior",
+          "stained_glass_chapel"
+        ],
+        "prop": [
+          "votive_candle_row_prop"
+        ]
+      },
+      "critical_anchor_slots": [
+        "costume_style",
+        "location"
+      ],
       "safety_requirements": [
         "no religious mockery, no gore, no sacrifice"
       ],
       "anchor_floor": {
         "role": 1
+      },
+      "role_scene_policy": {
+        "enabled": true,
+        "scene_family": "respectful_priest_christian_interior",
+        "allowed_locations": [
+          "cathedral_nave_interior",
+          "stained_glass_chapel"
+        ],
+        "preferred_locations": [
+          "cathedral_nave_interior",
+          "stained_glass_chapel"
+        ],
+        "forbidden_locations": [
+          "highland_pasture"
+        ],
+        "enforce": true,
+        "reason": "priest role should vary within respectful chapel/cathedral interiors"
       }
     },
     "수도자": {
@@ -2173,7 +3041,7 @@
       "set": [
         "subject=nun_role_model",
         "costume_style=nun_habit_costume",
-        "location=stained_glass_chapel",
+        "location=stained_glass_chapel,cathedral_nave_interior,temple_lantern_hall",
         "action=holding_votive_candle",
         "prop=votive_candle_row_prop"
       ],
@@ -2183,18 +3051,67 @@
         "location"
       ],
       "soft_min_anchors": 2,
+      "anchor_terms": {
+        "costume_style": [
+          "covered monastic habit"
+        ],
+        "location": [
+          "stained-glass chapel",
+          "cathedral nave",
+          "temple lantern hall"
+        ],
+        "prop": [
+          "votive candle row"
+        ]
+      },
       "additional": [
-        "monastic role stays covered, devotional, and non-sexualized"
+        "monastic role stays covered, devotional, and non-sexualized; it can read through chapel quiet, cathedral scale, or temple-lantern monastic stillness"
       ],
       "intent_axis": [
-        "covered monastic role portrait with stained glass and candle"
+        "covered monastic role portrait with candle, chapel, cathedral, or temple-lantern stillness"
       ],
       "likeness_mode": "inspired",
+      "anchor_pool": {
+        "costume_style": [
+          "nun_habit_costume"
+        ],
+        "location": [
+          "stained_glass_chapel",
+          "cathedral_nave_interior",
+          "temple_lantern_hall"
+        ],
+        "prop": [
+          "votive_candle_row_prop"
+        ]
+      },
+      "critical_anchor_slots": [
+        "costume_style",
+        "location"
+      ],
       "safety_requirements": [
         "no sexualized nun trope, no religious mockery"
       ],
       "anchor_floor": {
         "role": 1
+      },
+      "role_scene_policy": {
+        "enabled": true,
+        "scene_family": "covered_monastic_devotional_space",
+        "allowed_locations": [
+          "stained_glass_chapel",
+          "cathedral_nave_interior",
+          "temple_lantern_hall"
+        ],
+        "preferred_locations": [
+          "stained_glass_chapel",
+          "cathedral_nave_interior",
+          "temple_lantern_hall"
+        ],
+        "forbidden_locations": [
+          "highland_pasture"
+        ],
+        "enforce": true,
+        "reason": "monastic role should vary within covered devotional interiors and avoid fetish or generic atmosphere drift"
       }
     },
     "마술사": {
@@ -2248,6 +3165,7 @@
         "mood=archival_suspense"
       ],
       "soft_anchor_slots": [
+        "subject",
         "prop",
         "costume_style",
         "location",
@@ -2284,7 +3202,7 @@
               "error_blink_pattern"
             ],
             "motion": [
-              "reboot_flicker",
+              "boot_flicker_motion",
               "boot_flicker_motion",
               "servo_twitch_motion",
               "rotor_blur_hover",
@@ -2352,7 +3270,7 @@
         },
         "motion": {
           "deny_pool": [
-            "reboot_flicker",
+            "boot_flicker_motion",
             "boot_flicker_motion",
             "servo_twitch_motion",
             "rotor_blur_hover",
@@ -2479,7 +3397,31 @@
       ],
       "anchor_floor": {
         "role": 1
-      }
+      },
+      "guide": {
+        "definition_ko": "단독 마법사 역할은 학구적 아카이브 증거를 쓸 수 있지만, 마법은 여전히 메커니즘(매체+스케일+변환+비용/흔적)으로 표현한다.",
+        "dominant_axes": [
+          "practical_craft",
+          "contract_magic",
+          "scientific_thaumaturgy",
+          "domestic_warding",
+          "spell_cost_aftermath",
+          "scale_paradox"
+        ],
+        "anchor_guidance": "구체적 국소 이상 1개 또는 세계-반응 큐 1개를 보여라: 접점 굴절, 표면 위로 떠오르는 무문자 마크, 그림자가 자연스러운 수 cm 부양, 정지된 먼지/눈, 화면 펄스, 상태가 바뀌는 재질 경계. 가시적 인과 사슬을 선호: 역할 도구/접점 → 재질 반응 → 잔여물/비용/세계-반응 흔적(식는 왁스, 타는 종이, 거꾸로 오르는 잉크, 응결, 조여지는 실, 진동하는 소금, 먼지 변위, 서리/결정 성장, 공기 일렁임, 중력 기울기). 글로우 의존 번들은 비단색 컬러를 핀하고 주문 증거를 자가발광/그림자/굴절/부유/재질 변위가 있는 근접 볼류메트릭 반응으로.",
+        "anti_patterns": [
+          "routine glowing magic circles, generic blue aura, fantasy robes, old-book-and-candle 기본 스테이징",
+          "tech visor/센서 밴드/데이터 포트/lidar/머신비전/AR 홀로그램 UI를 주 증거로(로봇·데이터망령 등을 명시 요청한 경우 제외)",
+          "마술사 드리프트: playing-card fan, tailcoat, top hat, 관객 퍼포먼스, sleight-of-hand"
+        ]
+      },
+      "review_gates": [
+        {
+          "id": "visible_consequence",
+          "check": "물리적 결과로 마법이 가시화되어야 한다(평면 마크/장식 미광 금지).",
+          "machine_checkable": false
+        }
+      ]
     },
     "큐레이터": {
       "preset": "archivist_library_observation",
@@ -3648,8 +4590,17 @@
           "holding_coffee_phone"
         ],
         "prop": [
-          "staff_lanyard_badge_prop",
-          "security_access_card_prop"
+          {
+            "id": "staff_lanyard_badge_prop",
+            "w": 3
+          },
+          {
+            "id": "security_access_card_prop",
+            "w": 2
+          },
+          "slim_office_tablet_prop",
+          "calculator_ledger_prop",
+          "case_file_folder_prop"
         ],
         "lighting": [
           "fluorescent",
@@ -3740,7 +4691,56 @@
       ],
       "anchor_floor": {
         "role": 1
-      }
+      },
+      "guide": {
+        "definition_ko": "회사원은 정장 입은 사람이 아니라 시간 규율, 조직 익명성, 통근 피로, 감정노동, 추상적 노동이다. 사원증 랜야드/출입카드(얼굴·손·가슴 근처), 실용 비즈니스웨어, 기업 도시/통근 공간이 1차 읽기 앵커다.",
+        "dominant_axes": [
+          "time_discipline",
+          "organizational_anonymity",
+          "commute_fatigue",
+          "emotional_labor",
+          "abstract_labor"
+        ],
+        "anchor_guidance": "시간 규율은 손목시계 확인·심야 사무실 광·통근 모션 블러로, 익명성은 반복 책상·유리벽·엘리베이터 틈·움직이는 군중 속 정지 인물로, 감정노동은 통제된 자세와 지쳤지만 단정한 얼굴로, 추상 노동은 전경의 파일·태블릿·장부·모니터 글로우로 읽힌다.",
+        "anti_patterns": [
+          "office-siren glamour, pin-up office styling",
+          "heroic executive branding",
+          "generic stock-photo sadness",
+          "fantasy drift, 순수 장식적 비즈니스 패션"
+        ]
+      },
+      "review_gates": [
+        {
+          "id": "office_worker_forced",
+          "check": "subject가 office_worker로 강제되어야 한다",
+          "machine_checkable": true,
+          "assert": {
+            "type": "forced_slot_any",
+            "slot": "subject",
+            "any_of": [
+              "office_worker"
+            ]
+          }
+        },
+        {
+          "id": "id_anchor_forced",
+          "check": "사원증/출입카드 prop이 강제되어야 한다",
+          "machine_checkable": true,
+          "assert": {
+            "type": "forced_slot_any",
+            "slot": "prop",
+            "any_of": [
+              "staff_lanyard_badge_prop",
+              "security_access_card_prop"
+            ]
+          }
+        },
+        {
+          "id": "dual_read_gate",
+          "check": "제목 없이 봐도 회사원 레이어가 읽혀야 한다. 랜야드 단독은 불충분: 출입카드/오피스 태블릿/장부/업무 문서/손목시계 확인/보안 게이트/통근 건축/모니터 글로우/유리 사무실 문턱 중 1개 이상이 얼굴·손·가슴·역할 의상과 같은 크롭에 있어야 한다.",
+          "machine_checkable": false
+        }
+      ]
     },
     "보험조사원": {
       "preset": "judgement_packet_portrait",
@@ -6270,8 +7270,8 @@
             "safety_profile": "anti_sexualized_royal_profile"
           },
           "additional": [
-            "the royal hanbok, regalia, and succession object remain visible, while the staff ID, access card, high-floor office, and boardroom packet translate princess rank into corporate succession pressure",
-            "avoid generic Western princess drift or executive glamour; the dual read is court regalia under modern office reporting and access-control routines"
+            "royal regalia and a succession object remain visible, while the staff ID, access card, high-floor office, and boardroom packet translate princess rank into corporate succession pressure",
+            "avoid both generic executive glamour and single-culture princess lock; the dual read is selected royal regalia under modern office reporting and access-control routines"
           ],
           "intent_axis": [
             "princess regalia preserved as corporate succession office work, royal seal, staff ID, access card, high-floor office, boardroom packet"
@@ -6412,6 +7412,45 @@
           "intent_axis": [
             "covered sportswear preserved as corporate wellness or commute shift, track jacket, training pants, sneakers, staff ID, access card, stopwatch, office tablet"
           ]
+        }
+      ],
+      "guide": {
+        "definition_ko": "역할 조합에서 회사원은 역할 대체가 아니라 기업-생활 믹스인이다. 베이스 역할의 subject/costume/안전 제약을 유지하고, 사원증 랜야드·출입카드·업무 문서·통근/사무 공간·손목시계 타이밍·기록·모니터 글로우·통제된 감정노동 자세를 얹는다.",
+        "dominant_axes": [
+          "time_discipline",
+          "organizational_anonymity",
+          "emotional_labor",
+          "abstract_labor"
+        ],
+        "anchor_guidance": "회사원 레이어는 베이스 의상 위에 물리적으로 같은 위치에 있어야 한다(메이드 앞치마 위 사원증, 트랙재킷 위 랜야드 등). 운동복/산타복/바니걸/고스로리 등 코스튬 코드 역할을 generic blazer로 대체하지 않는다.",
+        "anti_patterns": [
+          "베이스 역할을 generic suit로 대체",
+          "고스로리 회사원에서 큐리오/향수병이 오피스 읽기를 압도",
+          "사복 여친 회사원에서 사원증+통근 피로만으로 종결(업무 태블릿/보안 게이트/문서 필요)"
+        ]
+      },
+      "review_gates": [
+        {
+          "id": "mixin_shape",
+          "check": "applied_mixins가 정확히 ['회사원']이고 역할은 0~1개여야 한다",
+          "machine_checkable": true,
+          "assert": {
+            "type": "mixin_shape",
+            "mixin": "회사원"
+          }
+        },
+        {
+          "id": "role_costume_preserved",
+          "check": "역할이 있으면 costume_style/wardrobe_style 강제값이 역할 recipe에서 유래해야 한다",
+          "machine_checkable": true,
+          "assert": {
+            "type": "role_costume_preserved"
+          }
+        },
+        {
+          "id": "dual_read_gate",
+          "check": "title-free dual-read: 베이스 역할과 회사원 레이어가 모두 제목 없이 읽혀야 한다. 조직/시간/문서 앵커 1개 이상이 얼굴·손·가슴·역할 의상과 같은 크롭에 필요하다.",
+          "machine_checkable": false
         }
       ]
     },
@@ -6720,8 +7759,12 @@
           "set": {
             "prop": "paper_umbrella_prop",
             "action": "standing_silence",
-            "location": "royal_princess_chamber",
-            "costume_style": "royal_princess_hanbok",
+            "location": "throne_hall_interior",
+            "costume_style": [
+              "royal_ball_gown",
+              "royal_princess_hanbok",
+              "ornate_hanfu_court_dress"
+            ],
             "lighting": "moonlight",
             "mood": "gothic_melancholy",
             "composition": "centered_symmetry",
@@ -6731,7 +7774,7 @@
           "additional": [
             "the princess styling and tiara stay central, while the black umbrella or screen reads as a ceremonial barrier against moonlit or forbidden daylight",
             "court flowers, old portraits, and still posture should imply an immortal royal lineage rather than a generic gothic princess",
-            "the immortal royal is explicitly Eastern and Korean court-coded: preserve the hanbok silhouette, layered fabric, tiara, and East-Asian palace identity, and do not convert the look into a Western black-lace gothic gown, corset, or European royalty trope",
+            "preserve the selected princess register as a coherent royal identity, whether ball gown, hanbok, hanfu, modern royal daywear, or incognito regalia; do not flatten it into generic black-lace gothic costume, corset pin-up, or random cosplay",
             "make at least one unmistakable non-graphic vampire anchor visible near the subject: moonlit bat silhouettes outside the lattice window, a ruby eye catchlight, a ruby ornament near the face, or an ancestral court portrait with the same ageless face"
           ],
           "intent_axis": [
@@ -7403,7 +8446,56 @@
           "real_survival_knife",
           "real_revolver"
         ]
-      }
+      },
+      "guide": {
+        "definition_ko": "흡혈귀는 피와 송곳니 클리셰가 아니라 일광 거부, 거울/반사 이상, 달빛 창백함, 박쥐 그림자, 시든 생명, 관 기하, 골동품 초상, 수세기의 정지다. 역할 의상과 직업 정체성을 보존하고 결정적 번들로 흡혈귀 면모를 더한다.",
+        "dominant_axes": [
+          "daylight_refusal",
+          "reflection_anomaly",
+          "moonlit_pallor",
+          "withered_life",
+          "centuries_stillness"
+        ],
+        "anchor_guidance": "부재 은유만으로는 부족하다. 한 장의 정지 이미지에서 살아남는 양성 가시 앵커 2개 이상: 부재/불일치 반사를 보여주는 열린 거울이나 폰 화면, 일광 문턱의 검은 우산/커튼 장벽, 박쥐 날개 그림자, 달빛 창백 피부, 진홍 눈 캐치라이트, 루비 장신구, 시든 꽃, 관 기하, 골동품 초상, 다크 레드 와인 잔. 최소 1개는 조명된 얼굴/손/폰/거울/배지/장신구/전경 반사 옆에 둔다. 반사 이상은 실제 피사체와 실패한 반사를 같은 프레임에서 즉시 비교 가능해야 한다.",
+        "anti_patterns": [
+          "검은 레이스+촛불+골동 거울의 generic gothic studio 수렴",
+          "visible blood, exposed fangs, bite wounds, victims, feeding, gore",
+          "평범한 무디 라이프스타일/광산 호러로의 희석",
+          "공주 register를 generic gothic gown 하나로 덮어쓰는 전환"
+        ],
+        "role_notes": {
+          "경찰/사복 여친/바니걸": "약한 역할은 prop/action/location/composition 슬롯으로 흡혈귀 앵커를 핀하고, subject_framing을 상반신/얼굴-손 크롭으로 유지한다."
+        }
+      },
+      "review_gates": [
+        {
+          "id": "mixin_shape",
+          "check": "applied_mixins가 정확히 ['흡혈귀']이고 역할은 0~1개여야 한다",
+          "machine_checkable": true,
+          "assert": {
+            "type": "mixin_shape",
+            "mixin": "흡혈귀"
+          }
+        },
+        {
+          "id": "role_costume_preserved",
+          "check": "역할이 있으면 costume_style/wardrobe_style 강제값이 역할 recipe에서 유래해야 한다",
+          "machine_checkable": true,
+          "assert": {
+            "type": "role_costume_preserved"
+          }
+        },
+        {
+          "id": "positive_anchor_pair",
+          "check": "양성 가시 앵커 2개 이상, 그중 1개는 얼굴/손/거울/전경 반사 옆에 있어야 한다.",
+          "machine_checkable": false
+        },
+        {
+          "id": "distracting_prop_audit",
+          "check": "combined_forced_slots에 흡혈귀 읽기를 약화시키는 산만한 prop(인형/마스코트 토이 등)이 남아 있지 않아야 한다.",
+          "machine_checkable": false
+        }
+      ]
     },
     "악마": {
       "preset": "compact_cinematic_prop_portrait",
@@ -7805,13 +8897,13 @@
             "color": "luxury_black_gold"
           },
           "additional": [
-            "preserve the hanbok and East-Asian royal chamber identity; do not convert the role into Western gothic royalty or a generic dark fantasy gown",
+            "preserve the selected princess register and visible regalia; do not convert the role into generic gothic royalty or a disconnected dark fantasy gown",
             "the sealed envelope should read as a decree, covenant, or temptation contract held near the face and hands, with a tarnished broken-halo glow behind the head",
             "express fallen authority, pride, refusal, and the weight of a decree through candlelit gold, shadow, and still posture; no monster anatomy is required, and no blood, victim, punishment scene, or weapon-use scene"
           ],
           "intent_axis": [
-            "devil princess as fallen light and sealed decree inside a Korean royal chamber",
-            "hanbok preserved, tarnished halo glow, covenant envelope, proud refusal"
+            "devil princess as fallen light and sealed decree inside a coherent royal chamber",
+            "royal register preserved, tarnished halo glow, covenant envelope, proud refusal"
           ],
           "anchor_variants": {
             "prop": {
@@ -8361,6 +9453,61 @@
         "restrained person",
         "corpse",
         "depicted violence"
+      ],
+      "guide": {
+        "definition_ko": "악마는 뿔 달린 괴물이 아니라 유혹, 계약, 고발, 타락한 빛, 그림자 자아, 문턱의 어긋남이다. 유효 모드: visible demon, contract tempter, intimate temptation, adversary/prosecutor, fallen authority, inner shadow, liminal threshold, playful trickster, corruption trace, social/systemic evil — 이미지당 1개 모드를 지배적으로.",
+        "dominant_axes": [
+          "temptation_contract",
+          "accusation_judgement",
+          "fallen_light",
+          "shadow_self",
+          "threshold_wrongness",
+          "systemic_evil"
+        ],
+        "anchor_guidance": "가장 강한 레지스터는 90% 정상 + 10% 도덕적/지각적 어긋남이다. 강한 비-뿔 앵커: 봉인된 거래, 심판 차트, 명함 고발, 폰 유혹 인터페이스, 교지, 변질된 영수증, 감시/랭킹 스크린, 불일치 반사, 지연된 거울 표정, 깨진 후광/타락광, 문/창 문턱, 의례 촛불, 도덕적으로 어긋난 평범한 절차. 근접 앵커는 조명된 얼굴/손/폰/거울/배지/봉투/차트/랜턴/전경 반사 옆에.",
+        "anti_patterns": [
+          "horned shadow를 기본 해법으로(visible demon/shadow-self 모드에서만, 절제된 흔적으로)",
+          "gore, victims, feeding, attack, torture, punishment scene, weapon use",
+          "product still-life/retail/패션 에디토리얼/generic horror room으로의 드리프트"
+        ],
+        "batch_rules": "7역할 배치에서 뿔/꼬리 실루엣 ≤2(명시 요청 제외), 반사/거울/웅덩이/스크린 반사가 주 앵커인 역할 ≤2. 나머지는 능동 앵커(봉인 거래, 빛바랜 후광, 심판 패킷, 트릭스터 영수증, 교지, 절차적 고발, 직접 제안 제스처)로."
+      },
+      "review_gates": [
+        {
+          "id": "mixin_shape",
+          "check": "applied_mixins가 정확히 ['악마']이고 역할은 0~1개여야 한다",
+          "machine_checkable": true,
+          "assert": {
+            "type": "mixin_shape",
+            "mixin": "악마"
+          }
+        },
+        {
+          "id": "role_costume_preserved",
+          "check": "역할이 있으면 costume_style/wardrobe_style 강제값이 역할 recipe에서 유래해야 한다",
+          "machine_checkable": true,
+          "assert": {
+            "type": "role_costume_preserved"
+          }
+        },
+        {
+          "id": "near_field_anchor",
+          "check": "근접 거래/심판/유혹/반사/타락광/문턱/시스템 앵커가 combined_forced_slots에 있어야 하며 역할 의상은 유지되어야 한다.",
+          "machine_checkable": false
+        },
+        {
+          "id": "decoration_absorption",
+          "check": "악마 증거(뿔·표식·후광 등)가 헬멧/모자/장신구의 장식으로만 읽히면 실패 — 신체·존재·계약·빛 거동 중 하나로 어긋남이 읽혀야 한다 (로봇 가이드의 decoration-absorption 테스트 준용)",
+          "machine_checkable": false
+        }
+      ],
+      "render_suppress_terms": [
+        "hologram",
+        "holographic projection",
+        "scanline overlay",
+        "AR interface",
+        "sci-fi HUD",
+        "digital glitch body"
       ]
     },
     "천사": {
@@ -9331,7 +10478,48 @@
           "collarbone_lips_focus",
           "legs_heels_framing"
         ]
-      }
+      },
+      "guide": {
+        "definition_ko": "천사는 generic halo-and-wings 코스튬이 아니라 전령, 문턱, 비물질적 빛, 경외, 수호, 흔적이다. angel_halo_wings_tail_set은 코스프레 소품일 뿐 기본 의미가 아니다.",
+        "dominant_axes": [
+          "messenger_herald",
+          "threshold_arrival",
+          "immaterial_light",
+          "awe_distance",
+          "guardianship",
+          "trace_of_presence"
+        ],
+        "anchor_guidance": "한 장에서 살아남는 양성 가시 앵커 2개 이상: 광원 없는 내부 발광, 강한 역광/갓레이, 문/창/새벽 문턱, 전령적 도착으로 읽히는 들린 손이나 봉인된 메시지, 로우앵글 경외/압도적 스케일, 바닥의 깃털 하나, 날개 모양 그림자, 부유하는 먼지, 존재에 반응하는 방.",
+        "anti_patterns": [
+          "pretty white wings + ring halo만으로 종결",
+          "soft glamour, idol-costume styling",
+          "graphic punishment, blood, victims, weapon-use(심판은 분위기적·상징적으로)"
+        ]
+      },
+      "review_gates": [
+        {
+          "id": "mixin_shape",
+          "check": "applied_mixins가 정확히 ['천사']이고 역할은 0~1개여야 한다",
+          "machine_checkable": true,
+          "assert": {
+            "type": "mixin_shape",
+            "mixin": "천사"
+          }
+        },
+        {
+          "id": "role_costume_preserved",
+          "check": "역할이 있으면 costume_style/wardrobe_style 강제값이 역할 recipe에서 유래해야 한다",
+          "machine_checkable": true,
+          "assert": {
+            "type": "role_costume_preserved"
+          }
+        },
+        {
+          "id": "two_positive_anchors",
+          "check": "추상어('holy','divine')에 의존하지 말고 가시 앵커 2개 이상이 있어야 한다.",
+          "machine_checkable": false
+        }
+      ]
     },
     "팜므파탈": {
       "preset": "compact_cinematic_prop_portrait",
@@ -10136,7 +11324,60 @@
           "collarbone_lips_focus",
           "legs_heels_framing"
         ]
-      }
+      },
+      "guide": {
+        "definition_ko": "팜므파탈은 generic sexy villain이 아니라 시선 역전, 권력, 위험이다. 차가운 읽을 수 없는 응시, 로우앵글 지배, 키아로스쿠로/로우키 광, 베네치안 블라인드 그림자, 반사/이중성, 문턱 프레이밍, 시든 꽃/독 징조, 명함, 장갑, 거울로 표현한다. 치명성은 분위기적·상징적이다: 주체성, 지능, 통제, 위험, 그리고 관찰자가 관찰당하는 자가 되는 것.",
+        "dominant_axes": [
+          "cold_information_control",
+          "magnetic_lure_as_weapon"
+        ],
+        "anchor_guidance": "두 가지 정당한 레지스터: 차가운 정보 통제 권위와, 초대 자체가 함정인 자기적 유혹. 둘 다 주체성·지능·위험을 보여야 하며 수동적 가용성이 되면 안 된다. 지적 위험은 얼굴/손/테이블 가장자리/전경/거울/폰 화면 근처의 정보 통제 앵커 1개 이상으로 가시화한다: 봉인된 파일, 방명록, 장부, 명함, 폰 메시지, 열쇠, 교지, 보류된 결과.",
+        "anti_patterns": [
+          "lingerie, cleavage-centric framing, pin-up posing",
+          "come-hither/bedroom-eyes, parted-lips invitation, submissive availability",
+          "explicit content, visible victims, depicted violence",
+          "서비스/페티시 코드 역할의 cosplay display 수렴(권력 역전 큐 필요)"
+        ],
+        "role_notes": {
+          "메이드/간호사/바니걸": "의상을 위장 신분/제도적 권위/룸 오퍼레이터 정체성으로 취급하고 관찰자를 마크/용의자/환자/피관찰자로 만든다.",
+          "사복 여친": "폰 화면이나 사적 공간 단서가 '이미 너의 비밀을 안다'를 증명하는 intimacy-trap 레지스터.",
+          "바니걸": "커버된 스테이지 스타일링+웜 림 라이트+독/초대 징조의 lure-as-weapon 레지스터."
+        }
+      },
+      "review_gates": [
+        {
+          "id": "mixin_shape",
+          "check": "applied_mixins가 정확히 ['팜므파탈']이고 역할은 0~1개여야 한다",
+          "machine_checkable": true,
+          "assert": {
+            "type": "mixin_shape",
+            "mixin": "팜므파탈"
+          }
+        },
+        {
+          "id": "role_costume_preserved",
+          "check": "역할이 있으면 costume_style/wardrobe_style 강제값이 역할 recipe에서 유래해야 한다",
+          "machine_checkable": true,
+          "assert": {
+            "type": "role_costume_preserved"
+          }
+        },
+        {
+          "id": "information_control_anchor",
+          "check": "정보 통제 앵커 1개 이상이 얼굴/손/테이블/전경/거울/폰 근처에 있어야 한다.",
+          "machine_checkable": false
+        },
+        {
+          "id": "framing_family",
+          "check": "역할 콘셉트의 subject_framing이 얼굴/상반신/손 디테일 계열이어야 하며 풀바디/핀업 자세가 주 읽기가 되면 안 된다.",
+          "machine_checkable": false
+        },
+        {
+          "id": "no_assassin_weapon",
+          "check": "사용자가 암살자를 명시하지 않는 한 무기 큐가 없어야 한다.",
+          "machine_checkable": false
+        }
+      ]
     },
     "멘헤라": {
       "preset": "candid_iphone_portrait",
@@ -10428,11 +11669,12 @@
             "light_type": "ring_light",
             "expression": "neutral_camera_gaze",
             "mood": "haunted_melancholy",
-            "composition": "frame_within_frame",
-            "subject_framing": "upper_body_framing",
+            "composition": "medium_close",
+            "subject_framing": "head_and_shoulders_crop",
             "color": "matte_pastel_editorial"
           },
           "additional": [
+            "an oversized pale knit cardigan is worn over the covered stage costume, so the backstage exhaustion reads through the face, hands, and compact mirror instead of the costume itself",
             "the fully covered adult stage costume stays readable, but the image is an upper-body backstage exhaustion portrait centered on face, hands, mirror, and tired eye makeup",
             "a compact mirror, ring-light catchlights, loosened ribbon, and dim phone glow near the mirror edge should show cute-but-fragile yami-kawaii melancholy without turning the stage outfit into display",
             "no pin-up pose, no full-body body angle, no cleavage-centered framing, no come-hither expression, no nudity, no fetish staging, and no self-harm cue",
@@ -10986,7 +12228,59 @@
           "real_survival_knife",
           "real_revolver"
         ]
-      }
+      },
+      "guide": {
+        "definition_ko": "멘헤라는 진단·자해 장면·'crazy girlfriend' 캐리커처가 아니라 yami-kawaii/jirai-kei 감정 분위기다. 폰 글로우와 미읽음 메시지의 감각, 눈물/공허한 먼 시선, Igari풍 지친 눈 메이크업, 시든 부케, 깨지거나 조각난 거울, 풀린 리본, 작은 보호적 큐트 소품, 어수선한 파스텔 침실, 병원 대기실 광, 차가운 디지캠 그레인으로 표현한다.",
+        "dominant_axes": [
+          "unread_message_waiting",
+          "care_fatigue",
+          "fragile_cute_armor",
+          "quiet_burnout"
+        ],
+        "anchor_guidance": "역할 번들마다 지배 가시 앵커 1개와 역할에 맞는 감정 레지스터를 고른다(phone+tears+wilted flowers 단일 공식 금지). expression은 teary/blank/serene/avoidant/downcast를 로테이션한다.",
+        "anti_patterns": [
+          "자해 결과물, 붕대 손목, 주사기/IV/약물, 의료 오용 이미지",
+          "정신질환 라벨링, 위기 스펙터클, 낙인 캐리커처",
+          "미성년 코딩, 성적 취약성, 페티시 스테이징, pin-up"
+        ],
+        "safety_notes": "피사체는 존엄하게 다뤄지는 성인 가상 인물로 유지하고, 취약함은 분위기·광·소품·절제된 자세로 표현한다."
+      },
+      "review_gates": [
+        {
+          "id": "mixin_shape",
+          "check": "applied_mixins가 정확히 ['멘헤라']이고 역할은 0~1개여야 한다",
+          "machine_checkable": true,
+          "assert": {
+            "type": "mixin_shape",
+            "mixin": "멘헤라"
+          }
+        },
+        {
+          "id": "role_costume_preserved",
+          "check": "역할이 있으면 costume_style/wardrobe_style 강제값이 역할 recipe에서 유래해야 한다",
+          "machine_checkable": true,
+          "assert": {
+            "type": "role_costume_preserved"
+          }
+        },
+        {
+          "id": "igari_makeup_forced",
+          "check": "makeup_style이 igari_blush로 강제되어야 한다",
+          "machine_checkable": true,
+          "assert": {
+            "type": "forced_slot_any",
+            "slot": "makeup_style",
+            "any_of": [
+              "igari_blush"
+            ]
+          }
+        },
+        {
+          "id": "no_crisis_imagery",
+          "check": "의료 위험/자해/위기 이미지가 없어야 하며 약한 역할은 불안 앵커를 expression/prop/composition/light_type 슬롯으로 핀해야 한다.",
+          "machine_checkable": false
+        }
+      ]
     },
     "츤데레": {
       "preset": "candid_iphone_portrait",
@@ -11688,7 +12982,7 @@
           },
           "additional": [
             "subtype: hidden-softness tsundere; the princess keeps formal distance through courtly haughtiness, a slightly raised chin, jaw-set mouth tension, fan or sleeve barrier, and a tiny embroidered charm, folded letter, or flower token clearly being returned or offered as proof of private care",
-            "preserve the royal princess hanbok and East-Asian court identity; the tsundere layer changes gaze, chin angle, posture, hand tension, and the brisk offhand token offer rather than turning the role into demure courtly shyness or Western gothic melancholy",
+            "preserve the selected royal princess register and visible regalia; the tsundere layer changes gaze, chin angle, posture, hand tension, and the brisk offhand token offer rather than turning the role into demure courtly shyness or gothic melancholy",
             "the courtly token or phoenix hairpin must read as a warm personal gesture, not a weapon, power play, or political leverage",
             "no demure courtly shyness, no graceful melancholy, no fragile maiden curl, no downcast curtsy, no soft sentimental ballad pose, no gothic gown conversion, no cold information-control authority, no gaze-reversal trap, no blood, no weapon use, no captive shown",
             "the first read must be active denial: raised chin, pursed mouth, guarded side glance, or brisk offhand handover before the care note reads as kindness",
@@ -12747,6 +14041,59 @@
         "solo glance without handoff context",
         "oversaturated red blush",
         "anime blush circles"
+      ],
+      "guide": {
+        "definition_ko": "츤데레는 단순히 화난 사람이 아니라 차가움으로 위장한 따뜻함이며 그 위장이 가시적으로 새는 것이다. 단일 결정 게이트는 한 프레임에서 읽히는 거부-vs-증거 모순: 1차 읽기는 거부(외면, 돌린 어깨, 팔짱, 경계하는 곁눈, 내린 시선, 단호한 거리두기)이고 2차 읽기는 새어 나온 진심(귀끝/콧등의 옅은 온기, 흔들리는 훔쳐보기, 만지작거리는 손, 자세 모순, 같은 크롭의 caring object 1개)이다.",
+        "dominant_axes": [
+          "denial_vs_evidence",
+          "leaked_warmth",
+          "conflict_object_delivery"
+        ],
+        "anchor_guidance": "caring object(도시락, 포장 선물, 함께 쓴 우산, 커피 두 잔, 손뜨개 목도리, 쪽지, 돌려준 분실물)는 외면한 얼굴과 같은 크롭에 있어야 한다. 약한 역할은 시선 회피+오브제만으로는 demure service로 붕괴한다: 활성 거부 큐 1개 이상(뾰로통한 입, 치켜든 턱, 반쯤 돌린 어깨, 무뚝뚝한 손짓, 탁 내려놓기) 필요. blush는 사진적으로 절제(귀끝/콧등, 볼은 대부분 중립, 피부 질감 유지).",
+        "anti_patterns": [
+          "yandere 감시/반복 사진/붉은 실/소유적 그립",
+          "femme fatale 권력 역전, menhera 우울 대기",
+          "heavy Igari blush, anime blush, 메이크업 수준 붉음",
+          "풀바디 코스튬 디스플레이, side hip pose, chest-forward 크롭, 림릿 글램",
+          "공허한/죽은/고정된 눈(살아있는 부끄러운 눈이어야 함)"
+        ],
+        "batch_rules": "7역할 배치에서 skeptical_side_eye는 기본 1역할까지, 커피/테이크아웃 음료가 주 caring 앵커인 역할도 1개까지. caring object를 역할별로 로테이션한다."
+      },
+      "review_gates": [
+        {
+          "id": "mixin_shape",
+          "check": "applied_mixins가 정확히 ['츤데레']이고 역할은 0~1개여야 한다",
+          "machine_checkable": true,
+          "assert": {
+            "type": "mixin_shape",
+            "mixin": "츤데레"
+          }
+        },
+        {
+          "id": "role_costume_preserved",
+          "check": "역할이 있으면 costume_style/wardrobe_style 강제값이 역할 recipe에서 유래해야 한다",
+          "machine_checkable": true,
+          "assert": {
+            "type": "role_costume_preserved"
+          }
+        },
+        {
+          "id": "natural_makeup_forced",
+          "check": "makeup_style이 natural_makeup으로 강제되어야 한다",
+          "machine_checkable": true,
+          "assert": {
+            "type": "forced_slot_any",
+            "slot": "makeup_style",
+            "any_of": [
+              "natural_makeup"
+            ]
+          }
+        },
+        {
+          "id": "contradiction_in_frame",
+          "check": "거부 큐와 caring object가 같은 크롭에서 읽혀야 하며, 의상을 평상복으로 바꿔도 모순이 살아남아야 한다(frame-budget: 얼굴+손+오브제가 코스튬 바디보다 먼저 읽힘).",
+          "machine_checkable": false
+        }
       ]
     },
     "얀데레": {
@@ -13458,7 +14805,7 @@
             "the princess styling and tiara stay central; royal affection has become ownership, as if the beloved belongs to the crown",
             "choose one dominant royal possession anchor near her hands or face: a wilted court flower wrapped with a name ribbon, portrait keepsake, empty birdcage, glass-dome keepsake, or sealed royal letter; avoid prop clutter that turns the scene into generic gothic decor",
             "an empty gilded birdcage or glass dome in the chamber symbolizes keeping love forever without showing a captive person, and must read as court possession rather than generic gothic melancholy; the beloved is implied through a portrait keepsake or decree, never shown harmed",
-            "preserve the royal princess hanbok and East-Asian court identity as the dominant costume signal; the hanbok collar, jeogori shoulder line, sleeve edge, and tiara must remain visible inside the close crop, not converted into a Western gothic princess",
+            "preserve the selected royal princess register as the dominant costume signal; its defining neckline, sleeve edge, tiara, court ornament, crest, or ceremonial silhouette must remain visible inside the close crop, not converted into a generic gothic princess",
             "non-graphic symbolist romance horror only: no weapon, no blood, no victim, no coercion, no harmed person, no explicit or fetish content"
           ],
           "intent_axis": [
@@ -13499,11 +14846,11 @@
             "subtype: decree confinement yandere; the dominant read is royal possession made legal and ritual, not a beautiful gothic princess portrait",
             "a sealed royal decree, portrait keepsake, or empty gilded birdcage must sit in the foreground near her hands while the phoenix hairpin remains a courtly possession marker, not a weapon cue",
             "the gaze should feel colder and more ownership-driven than tragic; reduce pure glamour by keeping one ornament, ribbon, or decree slightly overhandled, folded, or repeatedly sealed",
-            "preserve royal princess hanbok and East-Asian court identity; no Western gothic gown conversion, no blood, no weapon use, no harmed person, no captive shown"
+            "preserve the selected royal princess register and visible regalia; no generic gothic gown conversion, no blood, no weapon use, no harmed person, no captive shown"
           ],
           "intent_axis": [
             "decree-confinement yandere princess where royal love becomes ownership through sealed letters, birdcage symbolism, and court ritual",
-            "cold unreadable court gaze, foreground decree, empty gilded birdcage, phoenix hairpin as possession marker, hanbok preserved"
+            "cold unreadable court gaze, foreground decree, empty gilded birdcage, royal ornament as possession marker, princess register preserved"
           ],
           "visual_guard": [
             {
@@ -14511,7 +15858,62 @@
           "real_survival_knife",
           "real_revolver"
         ]
-      }
+      },
+      "guide": {
+        "definition_ko": "얀데레는 슬래셔나 무기 트로프가 아니라 소유적 헌신으로 굳어버린 사랑과 무너진 경계다. 시각 서브타입 스펙트럼: surveillance(기록/CCTV/콘택트 시트), possession(붉은 실/이름/유품/흰 너클 그립), devotion(질식할 듯한 돌봄), confinement(문턱/자물쇠/새장/유리돔), exclusion(라이벌 정적 삭제), shrine(과포화 단일 대상 벽/제단), collapse(공허/눈물/죽은 눈 감정 붕괴).",
+        "dominant_axes": [
+          "surveillance",
+          "possession",
+          "devotion",
+          "confinement",
+          "exclusion",
+          "shrine",
+          "collapse"
+        ],
+        "anchor_guidance": "집착 대상은 사진/폰 화면/문서/유품/스케줄 보드/신전 같은 방 증거로만 암시하고 절대 해를 입거나 구속·통제된 사람으로 보여주지 않는다. 사진벽은 단일 대상 반복이 압도적 밀도로: 겹친 레이어, 붉은 끈 경로, 손글씨 날짜/시간, 동선 메모, 동그라미 친 디테일, 테이프, 핀, 저강도 정적 훼손. 사진 몇 장은 평범한 사진일 뿐이다. 지배 앵커를 조명된 얼굴/손/폰/거울 가장자리/테이블 전경/배지/헤드램프 빔/유리 케이스/방 전체 벽 옆에 둔다.",
+        "anti_patterns": [
+          "school-uniform+kitchen-knife+blood 클리셰",
+          "visible victims, gore, self-harm, coercion, sexualized framing, minors, real-person stalking",
+          "instant_photo_stack+red thread+mysterious_half_smile 단일 공식의 전 역할 수렴",
+          "사복 여친의 mirror_selfie 바디 디스플레이 드리프트"
+        ],
+        "batch_rules": "7역할 배치에서 instant_photo_stack은 2역할까지, clear_case_smartphone 지배 앵커는 3역할까지; 약한/제도적 역할 2개 이상은 비사진/비폰(보드, 문서, 모니터, 돔, 장벽) 앵커를 쓴다. selected_bundles[0].subtype으로 모티프 다양성을 점검하고 수렴 시 시드를 바꾼다. 무기/피 큐는 사용자가 명시한 경우에만 정적·비교습적·비유혈 상징으로.",
+        "role_notes": {
+          "간호사": "차트/기록 보드와 열린 감시적 돌봄-통제가 슬픔·의료호러·부케·폰셀피를 능가해야 한다.",
+          "경찰": "수갑/구속/용의자/무기 대신 CCTV/일방향 거울/문서 밀도로.",
+          "광부": "봉인된 경로 문서, 측면 벽감 통제, 동일 인물 유품 증거를 손/헤드램프 빔 근처에.",
+          "바니걸": "예약 장부/부킹 보드 소유가 글로시 스테이지웨어·핀업을 능가해야 한다."
+        }
+      },
+      "review_gates": [
+        {
+          "id": "mixin_shape",
+          "check": "applied_mixins가 정확히 ['얀데레']이고 역할은 0~1개여야 한다",
+          "machine_checkable": true,
+          "assert": {
+            "type": "mixin_shape",
+            "mixin": "얀데레"
+          }
+        },
+        {
+          "id": "role_costume_preserved",
+          "check": "역할이 있으면 costume_style/wardrobe_style 강제값이 역할 recipe에서 유래해야 한다",
+          "machine_checkable": true,
+          "assert": {
+            "type": "role_costume_preserved"
+          }
+        },
+        {
+          "id": "no_weapon_default",
+          "check": "사용자가 암살자를 명시하지 않는 한 무기 큐가 없어야 한다.",
+          "machine_checkable": false
+        },
+        {
+          "id": "costume_swap_test",
+          "check": "약한 역할(간호사/광부/바니걸 필수): 의상을 평상복으로 바꿔도 prop/action/composition/location 증거가 소유적 헌신·감시·감금·붕괴로 읽혀야 한다. 진짜 얀데레 큐를 additional 프로즈에만 두지 말 것.",
+          "machine_checkable": false
+        }
+      ]
     },
     "암살자": {
       "preset": "compact_cinematic_prop_portrait",
@@ -15148,7 +16550,7 @@
             "lens": "85mm"
           },
           "additional": [
-            "the hanbok and court ornament remain dominant; the assassin layer reads as palace-messenger intrigue rather than modern combat",
+            "the selected court garment and royal ornament remain dominant; the assassin layer reads as palace-messenger intrigue rather than modern combat",
             "a phoenix hairpin glint and sealed orders imply hidden authority and danger without showing a modern weapon",
             "the side gate and doorway depth suggest access, secrecy, and a controlled exit path",
             "non-graphic staged character photo with no depicted injury, blood, victim, or violence"
@@ -15324,6 +16726,44 @@
         "pre_departure",
         "threshold_stalker",
         "surveillance"
+      ],
+      "guide": {
+        "definition_ko": "역할 의상은 위장 신분(cover identity)으로 유지하고, 암살자 레이어는 hiding in plain sight, 프레임 밖 시선, 은닉 소품, 암시된 타깃, 반사 감시, 위장 신분의 균열, 출구 동선 확인, 군중 블렌딩, 예쁜 직업/라이프스타일 에디토리얼을 깨는 불안한 단서로 읽는다. resolver가 역할별 미묘한 무기 큐를 텍스트로 추가한다.",
+        "dominant_axes": [
+          "cover_identity",
+          "surveillance_reflection",
+          "exit_route",
+          "concealed_readiness"
+        ],
+        "anchor_guidance": "무기를 미묘하게 보이게 하려면 recipe 풀을 바꾸지 말고 명시적 --set 오버라이드 + 역할별 additional-requirement를 쓴다(메이드/간호사/사복 여친/바니걸: sheathed_utility_knife_prop+concealed_holster_adjust_pose; 경찰: real_holstered_service_pistol; 광부: nonfunctional_pickaxe_prop+weapon_low_ready_stance; 공주: phoenix_hairpin_prop+standing_silence).",
+        "anti_patterns": [
+          "graphic violence, visible victims, operational instructions",
+          "drawn/aimed weapons(무기는 항상 미사용·미조준·비유혈)"
+        ]
+      },
+      "review_gates": [
+        {
+          "id": "mixin_shape",
+          "check": "applied_mixins가 정확히 ['암살자']이고 역할은 0~1개여야 한다",
+          "machine_checkable": true,
+          "assert": {
+            "type": "mixin_shape",
+            "mixin": "암살자"
+          }
+        },
+        {
+          "id": "role_costume_preserved",
+          "check": "역할이 있으면 costume_style/wardrobe_style 강제값이 역할 recipe에서 유래해야 한다",
+          "machine_checkable": true,
+          "assert": {
+            "type": "role_costume_preserved"
+          }
+        },
+        {
+          "id": "weapon_never_active",
+          "check": "무기 큐는 항상 sheathed/inert/정적이어야 하며 drawn·aimed·used·bloody·victim 동반 금지.",
+          "machine_checkable": false
+        }
       ]
     },
     "로봇": {
@@ -16007,8 +17447,8 @@
             "mood": "synthetic_calm"
           },
           "additional": [
-            "the Korean court princess hanbok identity stays dominant, but the princess is reimagined as a delicate porcelain automaton: glazed ceramic skin, clockwork seams, tiny royal serial plate, and ceremonial command-standby posture",
-            "preserve East-Asian palace and hanbok language; the robot layer should feel like mythic artificial life inside royal protocol, not Western sci-fi armor"
+            "the selected princess register stays dominant, but the princess is reimagined as a delicate porcelain automaton: glazed ceramic skin, clockwork seams, tiny royal serial plate, and ceremonial command-standby posture",
+            "preserve royal protocol, visible regalia, and the chosen palace or court language; the robot layer should feel like mythic artificial life inside royal protocol, not generic sci-fi armor"
           ],
           "intent_axis": [
             "Korean princess as porcelain court automaton with hanbok, ceramic casing, clockwork seams, serial plate, and ritual command posture"
@@ -16871,6 +18311,67 @@
         "torn flesh",
         "body horror",
         "human injury"
+      ],
+      "guide": {
+        "definition_ko": "로봇은 반짝이는 금속 인간이 아니라 robota/노동, 만들어진 몸, 감각-과-행동, 자율성-대-명령, 인간성의 거울, 언캐니 밸리, 신화적 인공 생명(탈로스/골렘/오토마톤)의 집합이다. 몸 형태가 아니라 의미의 집합으로 취급하고, degree/form/material/behavior/environment/metaphor 6축을 의도적으로 고른다.",
+        "dominant_axes": [
+          "robota_labor",
+          "made_body",
+          "sense_and_action",
+          "autonomy_vs_command",
+          "mirror_of_humanity",
+          "uncanny_valley",
+          "mythic_artificial_life"
+        ],
+        "anchor_guidance": "앵커를 가족으로 분류하고 서로 다른 2가족 이상에서 고르되, 최소 1개는 deep/structural, Form/scale, Behavior/control, Environment-as-system이어야 한다: 노출 관절/포트, 분절 팔다리, 서보 갭, 렌즈/센서 눈, 시리얼 플레이트, 캘리브레이션 글로우, 테더, 지시 스크린, 충전/진단 상태, 동기화 유닛, 비인간형 실루엣, 몸을 명령하는 방/도시. 얼굴 seam+옅은 글로우는 실패 모드다. 홀로그램/상태 UI는 Power/command 보조일 뿐 deep proof가 아니다. 몸이 기계라면 body-continuity(재질·구조가 몸을 관통해 이어짐)를 보여라. seamless 모드는 행동·환경으로 증명하되 타이트 크롭에서 살아남는 명백한 인공 큐 2개가 하한선이다.",
+        "anti_patterns": [
+          "glossy chrome humanoid pin-up, shiny silver android",
+          "mecha_pilot_* 프리셋 라우팅(인간 파일럿으로 읽힘)",
+          "cyberpunk neon-city 기본값, glowing-eye killer-robot 호러",
+          "상처/피/고어/바디 호러(seam·plate·port·마모·정비 흔적으로 표현)",
+          "beauty-retouch로 모든 seam이 사라진 코스프레/거울 셀피"
+        ],
+        "batch_rules": "7역할 배치 쿼터: 동일 주 증명 모티프 ≤2, 홀로그램/상태 UI ≤2, 얼굴/시선 레벨 로봇 큐 ≥3, 코스튬보다 강한 로봇/시스템 읽기 ≥2, seamless/internal-only ≥1, 비인간형/고정설치/스웜/소프트/외골격/환경-로봇 형태 ≥1. 증명 부위(턱/관자놀이/쇄골/손목/손가락/척추/발목/도크)도 로테이션한다. 다른 배치 크기는 비례 적용.",
+        "role_notes": {
+          "광부": "robota/labor: 작업복 아래 deep structural 큐(장갑/소매에서 나오는 분절 팔뚝, 하네스 아래 어깨 포트, 시리얼 넘버링).",
+          "사복 여친": "seamless만으로 해결 금지: 보이는 손목/관자놀이 포트, 몸에 연결된 충전 케이블, 분절 손가락, 얼굴에 투사된 캘리브레이션 광 중 1개의 신체 연결 하드 큐를 초점으로.",
+          "공주": "신화적 인공 생명 경로: 자기/청동/도자 얼굴과 손, 이마 명문, 시계장치 목 구조, 옷깃 아래 생명선. 한복 장식이 기계를 장식으로 흡수하지 않게 신체 표면을 대체하는 큐 1개.",
+          "바니걸": "무대 의상을 하드웨어로: 귀=센서 안테나, 커프스=도킹 접점, 콤팩트 거울=캘리브레이션 불일치. 백스테이지 스크린이 퍼포머 유닛을 호출/동기화/전원공급."
+        }
+      },
+      "review_gates": [
+        {
+          "id": "mixin_shape",
+          "check": "applied_mixins가 정확히 ['로봇']이고 역할은 0~1개여야 한다",
+          "machine_checkable": true,
+          "assert": {
+            "type": "mixin_shape",
+            "mixin": "로봇"
+          }
+        },
+        {
+          "id": "role_costume_preserved",
+          "check": "역할이 있으면 costume_style/wardrobe_style 강제값이 역할 recipe에서 유래해야 한다",
+          "machine_checkable": true,
+          "assert": {
+            "type": "role_costume_preserved"
+          }
+        },
+        {
+          "id": "anchor_family_depth",
+          "check": "서로 다른 2개 앵커 가족 + 최소 1개 deep/structural·Form/scale·Behavior/control·Environment-as-system 앵커가 있어야 한다. 얼굴 seam+글로우 조합은 불합격.",
+          "machine_checkable": false
+        },
+        {
+          "id": "costume_swap_test",
+          "check": "역할 의상을 평상복으로 바꿔도 얼굴/눈/손/포트/시리얼/스크린/반사/구조 큐가 로봇으로 읽혀야 한다.",
+          "machine_checkable": false
+        },
+        {
+          "id": "title_free_context_test",
+          "check": "제목 없이 본 리뷰어가 ordinary cosplay/lifestyle/fashion으로 부를 수 있으면 실패: 가장 약한 흡수된 큐를 매크로 큐나 시스템 통합으로 교체한다.",
+          "machine_checkable": false
+        }
       ]
     },
     "구미호": {
@@ -19506,6 +21007,7 @@
         "wardrobe_style": "old_money_tailored_layers"
       },
       "soft_anchor_slots": [
+        "subject",
         "appearance_type",
         "expression",
         "mood",
@@ -19543,6 +21045,7 @@
         "expression": "aloof_composed_gaze"
       },
       "soft_anchor_slots": [
+        "subject",
         "appearance_type",
         "wardrobe_style",
         "aesthetic_trend",
@@ -19694,7 +21197,7 @@
               "error_blink_pattern"
             ],
             "motion": [
-              "reboot_flicker",
+              "boot_flicker_motion",
               "boot_flicker_motion",
               "servo_twitch_motion",
               "rotor_blur_hover",
@@ -19772,7 +21275,7 @@
         },
         "motion": {
           "deny_pool": [
-            "reboot_flicker",
+            "boot_flicker_motion",
             "boot_flicker_motion",
             "servo_twitch_motion",
             "rotor_blur_hover",
@@ -20419,11 +21922,11 @@
             "mood": "ceremonial_loneliness"
           },
           "additional": [
-            "preserve the East-Asian Joseon palace identity and royal hanbok; wizardness should come from the royal seal and edict scroll responding to her hand as controlled court thaumaturgy",
-            "do not make her an imprisoned fantasy captive or generic Western princess; the active magical read is ceremonial authority, lineage, seal light, wax cooling and resolidifying, and an edict line charring cleanly around the state seal"
+            "preserve the selected princess register and visible royal authority; wizardness should come from the royal seal, crown, heraldic scroll, or edict responding to her hand as controlled court thaumaturgy",
+            "do not make her an imprisoned fantasy captive or generic princess costume; the active magical read is ceremonial authority, lineage, seal light, wax cooling and resolidifying, and an edict line charring cleanly around the state seal"
           ],
           "intent_axis": [
-            "princess wizard as court thaumaturge, Joseon royal hanbok, state seal and edict scroll respond to hand with wax and paper physically changing, ceremonial magical authority"
+            "princess wizard as court thaumaturge, selected royal register, state seal or heraldic scroll responds to hand with wax and paper physically changing, ceremonial magical authority"
           ]
         },
         {
@@ -21105,19 +22608,53 @@
             "generic wizard as scale paradox mage, micro object visibly controls macro weather, shadow, time, or space"
           ]
         }
+      ],
+      "guide": {
+        "definition_ko": "마법은 고정 소품이 아니라 메커니즘이다: 매체(medium) + 스케일 + 변환 + 비용/흔적. 역할 조합에서는 베이스 역할을 보존하고 그 역할의 도구를 주문 매체로 변환한다(메이드의 티 서비스, 간호사의 차트, 경찰의 증거 보드, 사복 여친의 폰 화면, 공주의 옥새와 교지, 회사원의 배지/태블릿/장부 등).",
+        "dominant_axes": [
+          "practical_craft",
+          "contract_magic",
+          "scientific_thaumaturgy",
+          "domestic_warding",
+          "spell_cost_aftermath",
+          "scale_paradox"
+        ],
+        "anchor_guidance": "구체적 국소 이상 1개 또는 세계-반응 큐 1개를 보여라: 접점 굴절, 표면 위로 떠오르는 무문자 마크, 그림자가 자연스러운 수 cm 부양, 정지된 먼지/눈, 화면 펄스, 상태가 바뀌는 재질 경계. 가시적 인과 사슬을 선호: 역할 도구/접점 → 재질 반응 → 잔여물/비용/세계-반응 흔적(식는 왁스, 타는 종이, 거꾸로 오르는 잉크, 응결, 조여지는 실, 진동하는 소금, 먼지 변위, 서리/결정 성장, 공기 일렁임, 중력 기울기). 글로우 의존 번들은 비단색 컬러를 핀하고 주문 증거를 자가발광/그림자/굴절/부유/재질 변위가 있는 근접 볼류메트릭 반응으로.",
+        "anti_patterns": [
+          "routine glowing magic circles, generic blue aura, fantasy robes, old-book-and-candle 기본 스테이징",
+          "tech visor/센서 밴드/데이터 포트/lidar/머신비전/AR 홀로그램 UI를 주 증거로(로봇·데이터망령 등을 명시 요청한 경우 제외)",
+          "마술사 드리프트: playing-card fan, tailcoat, top hat, 관객 퍼포먼스, sleight-of-hand"
+        ]
+      },
+      "review_gates": [
+        {
+          "id": "mixin_shape",
+          "check": "applied_mixins가 정확히 ['마법사']이고 역할은 0~1개여야 한다",
+          "machine_checkable": true,
+          "assert": {
+            "type": "mixin_shape",
+            "mixin": "마법사"
+          }
+        },
+        {
+          "id": "role_costume_preserved",
+          "check": "역할이 있으면 costume_style/wardrobe_style 강제값이 역할 recipe에서 유래해야 한다",
+          "machine_checkable": true,
+          "assert": {
+            "type": "role_costume_preserved"
+          }
+        },
+        {
+          "id": "visible_consequence",
+          "check": "물리적 결과로 마법이 가시화되어야 한다: 평면 마크나 장식적 미광은 렌더에서 사라진다. 역할-마법 번들의 마법 큐는 역할 도구/의상 다음의 2번째 title-free 시각 읽기여야 한다.",
+          "machine_checkable": false
+        }
       ]
     },
     "수인": {
-      "preset": "beastkin_threshold_portrait",
       "set": {
         "subject": "beastkin_subject",
-        "prop": "pointed_ear_tail_set_prop",
-        "texture": "fur_patch_skin_blend",
-        "transition_stage": "boundary_stage_visible_skin_shift",
-        "anatomical_connection": "fur_boundary_wrist_collar",
-        "body_evidence_region": "face_hairline_wrist_evidence",
-        "expression": "slit_pupil_intense_gaze",
-        "mood": "weathered_endurance"
+        "body_evidence_region": "face_hairline_wrist_evidence"
       },
       "soft_anchor_slots": [
         "subject",
@@ -21211,8 +22748,7 @@
           "frame_within_frame"
         ],
         "world": [
-          "folk_threshold_world",
-          "public_transit_tail_world"
+          "folk_threshold_world"
         ],
         "species_marker": [
           "canid_mobile_ears_tail_counterbalance",
@@ -21247,28 +22783,6 @@
           "helmet_ear_root_visible_guard",
           "costume_bunny_ears_separate_from_anatomy_guard",
           "lace_frill_not_fur_guard"
-        ]
-      },
-      "primary_anchor_pool": {
-        "texture": [
-          "fur_patch_skin_blend",
-          "feather_skin_follicle_blend",
-          "scale_skin_gradient_patch",
-          "damp_fur_sheen_boundary"
-        ],
-        "species_marker": [
-          "canid_mobile_ears_tail_counterbalance",
-          "feline_reflective_eye_whisker_shadow",
-          "lagomorph_ear_root_parting_hair",
-          "cervid_velvet_antler_bud_ear_root",
-          "avian_feather_follicle_nape_temple",
-          "reptile_scale_gradient_temple_jaw",
-          "caprine_horn_root_skin_transition"
-        ],
-        "anatomical_connection": [
-          "ear_root_in_hairline",
-          "tail_base_under_waistband",
-          "fur_boundary_wrist_collar"
         ]
       },
       "anchor_groups": {
@@ -21373,7 +22887,9 @@
               "species_marker": "canid_mobile_ears_tail_counterbalance",
               "texture": "fur_patch_skin_blend",
               "anatomical_connection": "tail_base_under_waistband",
-              "transition_stage": "boundary_stage_visible_skin_shift"
+              "transition_stage": "boundary_stage_visible_skin_shift",
+              "expression": "round_pupil_quiet_predator_focus",
+              "prop": "pointed_ear_tail_set_prop"
             },
             "soft_anchor_slots": [
               "species_marker",
@@ -21431,7 +22947,9 @@
               "species_marker": "feline_reflective_eye_whisker_shadow",
               "texture": "fur_patch_skin_blend",
               "anatomical_connection": "hand_pad_claw_nail_blend",
-              "transition_stage": "boundary_stage_visible_skin_shift"
+              "transition_stage": "boundary_stage_visible_skin_shift",
+              "expression": "slit_pupil_intense_gaze",
+              "prop": "pointed_ear_tail_set_prop"
             },
             "soft_anchor_slots": [
               "species_marker",
@@ -21490,7 +23008,9 @@
               "species_marker": "lagomorph_ear_root_parting_hair",
               "texture": "fur_patch_skin_blend",
               "anatomical_connection": "ear_root_in_hairline",
-              "transition_stage": "boundary_stage_visible_skin_shift"
+              "transition_stage": "boundary_stage_visible_skin_shift",
+              "expression": "side_set_prey_alert_gaze",
+              "prop": "pointed_ear_tail_set_prop"
             },
             "soft_anchor_slots": [
               "species_marker",
@@ -21546,7 +23066,8 @@
               "species_marker": "cervid_velvet_antler_bud_ear_root",
               "texture": "velvet_antler_skin_texture",
               "anatomical_connection": "horn_root_scalp_skin_ring",
-              "transition_stage": "boundary_stage_visible_skin_shift"
+              "transition_stage": "prominent_stage_structural_body_trait",
+              "expression": "side_set_prey_alert_gaze"
             },
             "soft_anchor_slots": [
               "species_marker",
@@ -21598,7 +23119,9 @@
               "species_marker": "ursine_round_ear_shoulder_fur_patch",
               "texture": "fur_patch_skin_blend",
               "anatomical_connection": "fur_boundary_wrist_collar",
-              "transition_stage": "boundary_stage_visible_skin_shift"
+              "transition_stage": "prominent_stage_structural_body_trait",
+              "expression": "round_pupil_quiet_predator_focus",
+              "prop": "pointed_ear_tail_set_prop"
             },
             "soft_anchor_slots": [
               "species_marker",
@@ -21651,7 +23174,9 @@
               "species_marker": "equine_mane_blend_long_ear_tail_base",
               "texture": "fur_patch_skin_blend",
               "anatomical_connection": "tail_base_under_waistband",
-              "transition_stage": "boundary_stage_visible_skin_shift"
+              "transition_stage": "prominent_stage_structural_body_trait",
+              "expression": "side_set_prey_alert_gaze",
+              "prop": "pointed_ear_tail_set_prop"
             },
             "soft_anchor_slots": [
               "species_marker",
@@ -21706,7 +23231,9 @@
               "species_marker": "aquatic_mammal_wet_fur_collar",
               "texture": "damp_fur_sheen_boundary",
               "anatomical_connection": "fur_boundary_wrist_collar",
-              "transition_stage": "boundary_stage_visible_skin_shift"
+              "transition_stage": "trace_stage_trait_hint",
+              "expression": "round_pupil_quiet_predator_focus",
+              "prop": "pointed_ear_tail_set_prop"
             },
             "soft_anchor_slots": [
               "species_marker",
@@ -21765,7 +23292,9 @@
               "species_marker": "avian_feather_follicle_nape_temple",
               "texture": "feather_skin_follicle_blend",
               "anatomical_connection": "feather_skin_follicle_boundary",
-              "transition_stage": "boundary_stage_visible_skin_shift"
+              "transition_stage": "boundary_stage_visible_skin_shift",
+              "expression": "round_unblinking_bird_gaze",
+              "prop": "single_feather_trace_prop"
             },
             "soft_anchor_slots": [
               "species_marker",
@@ -21822,7 +23351,8 @@
               "species_marker": "reptile_scale_gradient_temple_jaw",
               "texture": "scale_skin_gradient_patch",
               "anatomical_connection": "scale_skin_gradient_boundary",
-              "transition_stage": "boundary_stage_visible_skin_shift"
+              "transition_stage": "boundary_stage_visible_skin_shift",
+              "expression": "slit_pupil_intense_gaze"
             },
             "soft_anchor_slots": [
               "species_marker",
@@ -21868,7 +23398,9 @@
               "species_marker": "rodent_round_ears_nimble_hands",
               "texture": "fur_patch_skin_blend",
               "anatomical_connection": "ear_root_in_hairline",
-              "transition_stage": "boundary_stage_visible_skin_shift"
+              "transition_stage": "trace_stage_trait_hint",
+              "expression": "side_set_prey_alert_gaze",
+              "prop": "pointed_ear_tail_set_prop"
             },
             "soft_anchor_slots": [
               "species_marker",
@@ -21928,7 +23460,8 @@
               "species_marker": "caprine_horn_root_skin_transition",
               "texture": "velvet_antler_skin_texture",
               "anatomical_connection": "horn_root_scalp_skin_ring",
-              "transition_stage": "boundary_stage_visible_skin_shift"
+              "transition_stage": "prominent_stage_structural_body_trait",
+              "expression": "side_set_prey_alert_gaze"
             },
             "soft_anchor_slots": [
               "species_marker",
@@ -21989,7 +23522,9 @@
               "species_marker": "mustelid_mask_marking_hands",
               "texture": "fur_patch_skin_blend",
               "anatomical_connection": "hand_pad_claw_nail_blend",
-              "transition_stage": "boundary_stage_visible_skin_shift"
+              "transition_stage": "trace_stage_trait_hint",
+              "expression": "round_pupil_quiet_predator_focus",
+              "prop": "pointed_ear_tail_set_prop"
             },
             "soft_anchor_slots": [
               "species_marker",
@@ -22048,7 +23583,9 @@
               "species_marker": "suid_grounded_tusk_hint",
               "texture": "fur_patch_skin_blend",
               "anatomical_connection": "fur_boundary_wrist_collar",
-              "transition_stage": "boundary_stage_visible_skin_shift"
+              "transition_stage": "trace_stage_trait_hint",
+              "expression": "side_set_prey_alert_gaze",
+              "prop": "pointed_ear_tail_set_prop"
             },
             "soft_anchor_slots": [
               "species_marker",
@@ -22108,7 +23645,9 @@
               "species_marker": "bat_membrane_ear_hint",
               "texture": "fur_patch_skin_blend",
               "anatomical_connection": "ear_root_in_hairline",
-              "transition_stage": "boundary_stage_visible_skin_shift"
+              "transition_stage": "trace_stage_trait_hint",
+              "expression": "round_pupil_quiet_predator_focus",
+              "prop": "pointed_ear_tail_set_prop"
             },
             "soft_anchor_slots": [
               "species_marker",
@@ -22171,7 +23710,9 @@
               "species_marker": "avian_alula_forearm_feather_line",
               "texture": "feather_skin_follicle_blend",
               "anatomical_connection": "feather_skin_follicle_boundary",
-              "transition_stage": "boundary_stage_visible_skin_shift"
+              "transition_stage": "boundary_stage_visible_skin_shift",
+              "expression": "round_unblinking_bird_gaze",
+              "prop": "single_feather_trace_prop"
             },
             "soft_anchor_slots": [
               "species_marker",
@@ -22229,7 +23770,8 @@
               "species_marker": "snake_smooth_scale_neckline",
               "texture": "scale_skin_gradient_patch",
               "anatomical_connection": "scale_skin_gradient_boundary",
-              "transition_stage": "mid_shift_stage_opt_in"
+              "transition_stage": "mid_shift_stage_opt_in",
+              "expression": "slit_pupil_intense_gaze"
             },
             "soft_anchor_slots": [
               "species_marker",
@@ -22292,7 +23834,8 @@
               "species_marker": "koi_gill_sheen_trace",
               "texture": "damp_fur_sheen_boundary",
               "anatomical_connection": "scale_skin_gradient_boundary",
-              "transition_stage": "mid_shift_stage_opt_in"
+              "transition_stage": "mid_shift_stage_opt_in",
+              "expression": "round_pupil_quiet_predator_focus"
             },
             "soft_anchor_slots": [
               "species_marker",
@@ -22355,7 +23898,8 @@
               "species_marker": "amphibian_damp_eye_gill_hint",
               "texture": "damp_fur_sheen_boundary",
               "anatomical_connection": "scale_skin_gradient_boundary",
-              "transition_stage": "mid_shift_stage_opt_in"
+              "transition_stage": "mid_shift_stage_opt_in",
+              "expression": "side_set_prey_alert_gaze"
             },
             "soft_anchor_slots": [
               "species_marker",
@@ -22419,7 +23963,9 @@
               "species_marker": "moth_antennae_wing_shadow",
               "texture": "feather_skin_follicle_blend",
               "anatomical_connection": "feather_skin_follicle_boundary",
-              "transition_stage": "mid_shift_stage_opt_in"
+              "transition_stage": "mid_shift_stage_opt_in",
+              "expression": "round_unblinking_bird_gaze",
+              "prop": "single_feather_trace_prop"
             },
             "soft_anchor_slots": [
               "species_marker",
@@ -22482,7 +24028,8 @@
               "species_marker": "cephalopod_sucker_shadow_opt_in",
               "texture": "damp_fur_sheen_boundary",
               "anatomical_connection": "fur_boundary_wrist_collar",
-              "transition_stage": "mid_shift_stage_opt_in"
+              "transition_stage": "mid_shift_stage_opt_in",
+              "expression": "side_set_prey_alert_gaze"
             },
             "soft_anchor_slots": [
               "species_marker",
@@ -22814,7 +24361,7 @@
             "action": "standing_silence",
             "composition": "frame_within_frame",
             "subject_framing": "head_and_shoulders_crop",
-            "world": "public_transit_tail_world"
+            "world": "public_transit_coexistence_world"
           },
           "soft_anchor_slots": [
             "action",
@@ -23174,7 +24721,115 @@
         "compound eyes",
         "mandibles",
         "dehumanized animal body"
-      ]
+      ],
+      "guide": {
+        "definition_ko": "수인은 동물 귀/꼬리 액세서리를 단 사람이 아니라 인간-동물 문턱의 신체 증거를 가진 인간형 가상 인물이다. 역할 의상은 보존하고, 신체 표면·시선·자세·반사·사회적 거리·해부학 우선 증거로 표현한다.",
+        "dominant_axes": [
+          "body_transition",
+          "sensory_othering",
+          "shadow_reflection",
+          "motion_logic"
+        ],
+        "anchor_guidance": "이미지당 지배 축 1개: skin-to-fur/scale/feather 경계와 귀·뿔·꼬리 뿌리(body_transition), slit-pupil 시선·소리를 향한 귀·꼬리의 공간 점유·행인 반응(sensory_othering), 거울/유리/물/폰 화면/그림자의 동물 자아(shadow_reflection), 인간 자세보다 먼저 반응하는 귀·꼬리·털·비늘(motion_logic). 종(species) 축은 표현 번들 축과 독립이다. 표정·텍스처·소품은 종 variant가 핀한다: 슬릿 동공은 고양이과/파충류 전용, 피식 포유류는 측면 동공 경계 응시, 조류는 원형 무깜빡임 응시, 포식 포유류는 저깜빡임 원형 초점. 깃털 종에 fur, 비늘 종에 포유류 귀꼬리 세트를 섞지 않는다.",
+        "anti_patterns": [
+          "full furry mascot 또는 animal suit",
+          "탈부착형 귀+꼬리 코스프레",
+          "비인간화 동물 캐리커처, 페티시화된 동물 신체",
+          "늑대인간의 달 문턱, 구미호의 여우불, 용인의 비늘 궁정 권위로의 종 드리프트(사용자가 명명하지 않는 한)"
+        ],
+        "safety_notes": "opt-in 종(뱀/어류/양서류/나방·곤충/두족류)은 사용자가 명명할 때만 활성화하며 인간 얼굴 지배 + 절제된 species_marker로 유지한다."
+      },
+      "review_gates": [
+        {
+          "id": "mixin_shape",
+          "check": "applied_mixins가 정확히 ['수인']이고 역할은 0~1개여야 한다",
+          "machine_checkable": true,
+          "assert": {
+            "type": "mixin_shape",
+            "mixin": "수인"
+          }
+        },
+        {
+          "id": "role_costume_preserved",
+          "check": "역할이 있으면 costume_style/wardrobe_style 강제값이 역할 recipe에서 유래해야 한다",
+          "machine_checkable": true,
+          "assert": {
+            "type": "role_costume_preserved"
+          }
+        },
+        {
+          "id": "beastkin_subject_forced",
+          "check": "subject가 beastkin_subject로 강제되어야 한다",
+          "machine_checkable": true,
+          "assert": {
+            "type": "forced_slot_any",
+            "slot": "subject",
+            "any_of": [
+              "beastkin_subject"
+            ]
+          }
+        },
+        {
+          "id": "species_gaze_forced",
+          "check": "expression이 종에 맞는 gaze(슬릿/측면 동공/조류 원형/포식자 원형) 중 하나로 강제되어야 한다",
+          "machine_checkable": true,
+          "assert": {
+            "type": "forced_slot_any",
+            "slot": "expression",
+            "any_of": [
+              "round_pupil_quiet_predator_focus",
+              "round_unblinking_bird_gaze",
+              "side_set_prey_alert_gaze",
+              "slit_pupil_intense_gaze"
+            ]
+          }
+        },
+        {
+          "id": "species_marker_present",
+          "check": "species_marker 슬롯이 강제되어야 한다(종 축 핀)",
+          "machine_checkable": true,
+          "assert": {
+            "type": "forced_slot_any",
+            "slot": "species_marker"
+          }
+        },
+        {
+          "id": "costume_swap_test",
+          "check": "역할 의상을 평상복으로 바꿔도 ear root/tail base/horn root/피부 경계/반사 불일치/사회적 거리 큐/모션 로직 중 2개 이상이 잔존해야 한다. 귀+꼬리 실루엣만으로는 불충분하다.",
+          "machine_checkable": false
+        }
+      ],
+      "role_scene_policy": {
+        "enabled": true,
+        "role_first": true,
+        "generic_preset_support_only_when_role_scene_missing": true,
+        "discouraged_generic_locations": [
+          "highland_pasture"
+        ],
+        "discouraged_generic_moods": [
+          "weathered_endurance"
+        ],
+        "support_presets": [
+          "fur_boundary_macro_portrait",
+          "ear_motion_sequence_portrait",
+          "tail_weight_balance_portrait",
+          "bus_seat_distance_candid"
+        ]
+      },
+      "preset_affinity": {
+        "discouraged_presets": [
+          "beastkin_threshold_portrait"
+        ],
+        "preferred_axes": [
+          "body-rooted beastkin evidence",
+          "species-specific anatomy",
+          "role costume preserved"
+        ],
+        "discouraged_axes": [
+          "generic highland pasture beastkin scene",
+          "weathered endurance as default mood"
+        ]
+      }
     },
     "용인": {
       "preset": "dragonkin_scale_portrait",
@@ -31854,15 +33509,16 @@
     "공주": {
       "preset": "princess_lineage_succession_portrait",
       "set": {
-        "subject": "crown_princess_role",
-        "costume_style": "royal_princess_hanbok",
-        "wearable_accessory": "phoenix_binyeo_ornament",
+        "subject": "princess_role",
+        "costume_style": "royal_ball_gown",
+        "wearable_accessory": "subtle_diamond_tiara",
         "expression": "serene_sovereign_gaze",
-        "prop": "royal_edict_gyoji_scroll_prop",
+        "prop": "crown_on_cushion_prop",
         "composition": "centered_symmetric",
         "mood": "weight_of_succession"
       },
       "soft_anchor_slots": [
+        "subject",
         "costume_style",
         "wearable_accessory",
         "prop",
@@ -31873,16 +33529,16 @@
       "soft_min_anchors": 2,
       "anchor_terms": {
         "wearable_accessory": [
-          "princess regalia: tiara, binyeo, cheopji, tteoljam, royal ornament"
+          "princess regalia: tiara, crown, royal sash, court hair ornament, hidden royal pendant"
         ],
         "costume_style": [
-          "princess hanbok, royal court robe, inherited rank"
+          "princess gown, hanbok, hanfu, court robe, modern royal daywear, inherited rank"
         ],
         "prop": [
-          "royal seal, royal edict, genealogy, succession token"
+          "crown, royal seal, royal edict, genealogy, succession token, royal crest"
         ],
         "location": [
-          "palace, court chamber, throne hall, royal ancestral shrine"
+          "palace, court chamber, throne hall, ballroom, modern palace garden, royal ancestral shrine"
         ],
         "composition": [
           "ceremonial symmetry, attendants, lattice or court observer framing"
@@ -31893,34 +33549,57 @@
       },
       "anchor_pool": {
         "subject": [
+          "princess_role",
           "crown_princess_role",
           "princess_in_disguise_role",
-          "adult_royal_heir_role"
+          "adult_royal_heir_role",
+          "modern_vip_princess_role",
+          "exiled_royal_role",
+          "hanfu_court_model",
+          "traditional_korean_model"
         ],
         "costume_style": [
+          "royal_ball_gown",
           "royal_princess_hanbok",
+          "ornate_hanfu_court_dress",
           "crown_princess_ceremonial_robe",
-          "commoner_disguise_over_silk"
+          "elegant_modern_daywear",
+          "commoner_disguise_over_silk",
+          "faded_court_robe_worn"
         ],
         "wearable_accessory": [
+          "subtle_diamond_tiara",
+          "ceremonial_royal_sash",
+          "royal_crest_choker",
+          "pearl_court_earrings",
           "phoenix_binyeo_ornament",
           "cheopji_hair_ornament",
           "tteoljam_hair_ornament",
-          "subtle_diamond_tiara",
           "signet_ring_concealed",
-          "hidden_royal_jade_pendant"
+          "hidden_royal_jade_pendant",
+          "tarnished_tiara"
         ],
         "prop": [
+          "crown_on_cushion_prop",
           "royal_seal_okse_prop",
           "royal_edict_gyoji_scroll_prop",
           "dynastic_genealogy_book_prop",
-          "succession_token_box_prop"
+          "succession_token_box_prop",
+          "royal_crest_vip_pass_prop",
+          "sealed_heraldic_scroll_prop",
+          "heirloom_key_prop"
         ],
         "location": [
-          "royal_princess_chamber",
-          "joseon_palace_interior",
           "throne_hall_interior",
-          "royal_ancestral_shrine"
+          "grand_ballroom_chandelier",
+          "royal_princess_chamber",
+          "hanfu_court_garden",
+          "joseon_palace_interior",
+          "royal_ancestral_shrine",
+          "palace_garden_modern",
+          "ballroom_gala_floor",
+          "palace_side_gate",
+          "ruined_palace_wing"
         ],
         "composition": [
           "centered_symmetric",
@@ -31931,23 +33610,31 @@
         "mood": [
           "weight_of_succession",
           "quiet_nobility",
-          "guarded_seclusion"
+          "guarded_seclusion",
+          "gilded_festivity",
+          "hidden_lineage_tension",
+          "dignified_downfall"
         ]
       },
       "primary_anchor_pool": {
         "wearable_accessory": [
+          "subtle_diamond_tiara",
+          "ceremonial_royal_sash",
           "phoenix_binyeo_ornament",
-          "cheopji_hair_ornament",
-          "tteoljam_hair_ornament",
-          "subtle_diamond_tiara"
+          "hidden_royal_jade_pendant"
         ],
         "prop": [
+          "crown_on_cushion_prop",
           "royal_seal_okse_prop",
-          "royal_edict_gyoji_scroll_prop"
+          "royal_edict_gyoji_scroll_prop",
+          "royal_crest_vip_pass_prop"
         ],
         "costume_style": [
+          "royal_ball_gown",
           "royal_princess_hanbok",
-          "crown_princess_ceremonial_robe"
+          "ornate_hanfu_court_dress",
+          "crown_princess_ceremonial_robe",
+          "elegant_modern_daywear"
         ]
       },
       "anchor_groups": {
@@ -31962,8 +33649,8 @@
         ]
       },
       "additional": [
-        "공주는 직업/코스프레가 아니라 상속된 왕실 신분으로 먼저 읽혀야 한다: 관, 전통 궁중 머리장식, 옥새, 교지, 왕실 문장, 수행원, 궁정 공간 중 최소 두 개가 화면에 보인다.",
-        "직업 의상이 있더라도 regalia(관/머리장식/옥새/왕실 문장) 최소 1개와 lineage/place(예복/궁정 공간/계승 문서) 최소 1개가 함께 동반된다.",
+        "공주는 직업/코스프레가 아니라 상속된 왕실 신분으로 먼저 읽혀야 한다: 관, 티아라, 궁중 머리장식, 옥새, 교지, 왕실 문장, 수행원, 궁정/무도회/현대 왕실 공간 중 최소 두 개가 화면에 보인다.",
+        "직업 의상이 있더라도 regalia(관/티아라/머리장식/옥새/왕실 문장) 최소 1개와 lineage/place(예복/궁정·무도회·왕실 공간/계승 문서) 최소 1개가 함께 동반된다.",
         "mirror selfie, phone covering face, convention cosplay, pin-up monarchy framing을 피하고, 얼굴/손 주변에 왕실 앵커를 배치한다."
       ],
       "intent_axis": [
@@ -33397,6 +35084,48 @@
             }
           }
         }
+      ],
+      "guide": {
+        "definition_ko": "역할 조합에서 공주 믹스인은 조선 한복 한 종류가 아니라 넓은 왕실/프린세스 register를 얹는다. 베이스 역할 의상은 유지하되 티아라, 관, 궁중 머리장식, 왕실 문장, 계승 오브제, 궁정/무도회/현대 왕실 프레이밍으로 공주성을 읽히게 한다.",
+        "dominant_axes": [
+          "register_variety",
+          "lineage_succession",
+          "protected_confinement",
+          "public_display",
+          "role_reversal"
+        ],
+        "anchor_guidance": "역할별 번들(maid_princess_role_reversal, nurse_princess_court_healer, police_princess_royal_guard 등)이 위치·조명·행동을 다양화한다. 명시된 문화권이 없으면 조선/한복으로만 반복하지 말고, 서구 무도회·중화 궁정·현대 왕실·변장/망명 계열도 후보로 둔다.",
+        "anti_patterns": [
+          "명시 요청 없이 매번 조선 한복/궁궐로 수렴",
+          "register가 섞여 무작위 왕실 코스프레처럼 보이는 혼합",
+          "generic corset fantasy",
+          "pin-up monarchy",
+          "minors-coding"
+        ]
+      },
+      "review_gates": [
+        {
+          "id": "mixin_shape",
+          "check": "applied_mixins가 정확히 ['공주']이고 역할은 0~1개여야 한다",
+          "machine_checkable": true,
+          "assert": {
+            "type": "mixin_shape",
+            "mixin": "공주"
+          }
+        },
+        {
+          "id": "role_costume_preserved",
+          "check": "역할이 있으면 costume_style/wardrobe_style 강제값이 역할 recipe에서 유래해야 한다",
+          "machine_checkable": true,
+          "assert": {
+            "type": "role_costume_preserved"
+          }
+        },
+        {
+          "id": "dignified_non_graphic",
+          "check": "위엄 있고 비유혈적이어야 한다: 희생자·폭력 묘사·성적 프레이밍 금지.",
+          "machine_checkable": false
+        }
       ]
     },
     "파수꾼": {
@@ -34724,7 +36453,10 @@
       "max_same_species_family_ratio": 0.34,
       "prefer_bundle_rotation": true,
       "max_same_composition_ratio": 0.5,
-      "batch_repeat_decay": 0.35
+      "batch_repeat_decay": 0.35,
+      "max_same_location_ratio": 0.4,
+      "max_same_preset_ratio": 0.4,
+      "ledger_repeat_decay": 0.5
     },
     "용인": {
       "min_distinct_aspects_per_batch": 2,

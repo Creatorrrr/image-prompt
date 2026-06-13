@@ -1,0 +1,621 @@
+{
+  "concepts": [
+    {
+      "applied_mixins": [
+        "수인"
+      ],
+      "combined_forced_slots": {
+        "action": [
+          "standing_silence"
+        ],
+        "anatomical_connection": [
+          "horn_root_scalp_skin_ring"
+        ],
+        "body_evidence_region": [
+          "face_hairline_wrist_evidence"
+        ],
+        "composition": [
+          "frame_within_frame"
+        ],
+        "expression": [
+          "side_set_prey_alert_gaze"
+        ],
+        "species_marker": [
+          "caprine_horn_root_skin_transition"
+        ],
+        "subject": [
+          "beastkin_subject"
+        ],
+        "subject_framing": [
+          "head_and_shoulders_crop"
+        ],
+        "texture": [
+          "velvet_antler_skin_texture"
+        ],
+        "transition_stage": [
+          "prominent_stage_structural_body_trait"
+        ],
+        "world": [
+          "public_transit_coexistence_world"
+        ]
+      },
+      "concept": "수인",
+      "concept_mode": "legacy",
+      "forced_slots_applied": true,
+      "gate_results": [
+        {
+          "check": "applied_mixins가 정확히 ['수인']이고 역할은 0~1개여야 한다",
+          "detail": "applied_mixins == ['수인'] standalone",
+          "id": "mixin_shape",
+          "source": "수인",
+          "status": "pass"
+        },
+        {
+          "check": "역할이 있으면 costume_style/wardrobe_style 강제값이 역할 recipe에서 유래해야 한다",
+          "detail": "no role applied (not applicable)",
+          "id": "role_costume_preserved",
+          "source": "수인",
+          "status": "pass"
+        },
+        {
+          "check": "subject가 beastkin_subject로 강제되어야 한다",
+          "detail": "slot subject forced to ['beastkin_subject']",
+          "id": "beastkin_subject_forced",
+          "source": "수인",
+          "status": "pass"
+        },
+        {
+          "check": "expression이 종에 맞는 gaze(슬릿/측면 동공/조류 원형/포식자 원형) 중 하나로 강제되어야 한다",
+          "detail": "slot expression forced to ['side_set_prey_alert_gaze']",
+          "id": "species_gaze_forced",
+          "source": "수인",
+          "status": "pass"
+        },
+        {
+          "check": "species_marker 슬롯이 강제되어야 한다(종 축 핀)",
+          "detail": "slot species_marker forced to ['caprine_horn_root_skin_transition']",
+          "id": "species_marker_present",
+          "source": "수인",
+          "status": "pass"
+        },
+        {
+          "check": "역할 의상을 평상복으로 바꿔도 ear root/tail base/horn root/피부 경계/반사 불일치/사회적 거리 큐/모션 로직 중 2개 이상이 잔존해야 한다. 귀+꼬리 실루엣만으로는 불충분하다.",
+          "id": "costume_swap_test",
+          "source": "수인",
+          "status": "manual"
+        }
+      ],
+      "matched": true,
+      "name": "수인",
+      "role": null,
+      "selected_bundles": [
+        {
+          "aspect": "sensory_othering",
+          "bundle_id": "sensory_social_othering",
+          "mixin": "수인",
+          "preset": "",
+          "set": {
+            "action": "standing_silence",
+            "composition": "frame_within_frame",
+            "subject_framing": "head_and_shoulders_crop",
+            "world": "public_transit_coexistence_world"
+          },
+          "subtype": "public_gaze_and_tail_space",
+          "weight": 1.0
+        }
+      ],
+      "selected_species_variants": [
+        {
+          "activation": "weighted",
+          "family": "caprine",
+          "mixin": "수인",
+          "opt_in_activated": false,
+          "species_family_policy": {
+            "allowed": {
+              "anatomical_connection": [
+                "horn_root_scalp_skin_ring"
+              ],
+              "species_marker": [
+                "caprine_horn_root_skin_transition"
+              ],
+              "texture": [
+                "velvet_antler_skin_texture"
+              ]
+            },
+            "enabled": true,
+            "enforce": true,
+            "family": "caprine",
+            "hybrid_allowed": false,
+            "mixin": "수인",
+            "tier": "default_safe",
+            "variant_id": "caprine_goat_sheep"
+          },
+          "tier": "default_safe",
+          "variant_id": "caprine_goat_sheep",
+          "weight": 0.85
+        }
+      ],
+      "soft_anchor_spec": {
+        "anchor_expansion": {
+          "enabled": false,
+          "min_similarity": 0.78,
+          "top_k": 3,
+          "weight_ratio": 0.5
+        },
+        "anchors": [
+          {
+            "critical": false,
+            "groups": [],
+            "ids": [
+              "standing_silence"
+            ],
+            "pool": [
+              "standing_silence"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "action",
+            "source": "bundle",
+            "terms": [
+              "stillness while sensing off-frame attention"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": false,
+            "groups": [],
+            "ids": [
+              "horn_root_scalp_skin_ring"
+            ],
+            "pool": [
+              "horn_root_scalp_skin_ring"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "anatomical_connection",
+            "source": "mixin",
+            "terms": [
+              "body-rooted animal trait",
+              "living anatomy connection"
+            ],
+            "variant_group": "species_family",
+            "variant_strategy": "locked_family"
+          },
+          {
+            "critical": false,
+            "groups": [],
+            "ids": [
+              "face_hairline_wrist_evidence"
+            ],
+            "pool": [
+              "face_hairline_wrist_evidence",
+              "collar_tail_base_crop",
+              "hands_wrists_worklight_evidence",
+              "window_reflection_tail_base_evidence",
+              "feather_root_macro_crop"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "body_evidence_region",
+            "source": "mixin",
+            "terms": [
+              "face and hairline evidence",
+              "wrist or collar boundary",
+              "tail base evidence",
+              "body-root evidence remains after costume swap"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": false,
+            "groups": [],
+            "ids": [
+              "frame_within_frame"
+            ],
+            "pool": [
+              "frame_within_frame"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "composition",
+            "source": "bundle",
+            "terms": [
+              "social frame",
+              "observed through a boundary"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": false,
+            "groups": [],
+            "ids": [
+              "caprine_horn_root_skin_transition"
+            ],
+            "pool": [
+              "caprine_horn_root_skin_transition"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "species_marker",
+            "source": "mixin",
+            "terms": [
+              "caprine horizontal pupil small horns",
+              "caprine",
+              "species body marker"
+            ],
+            "variant_group": "species_family",
+            "variant_strategy": "locked_family"
+          },
+          {
+            "critical": false,
+            "groups": [],
+            "ids": [
+              "beastkin_subject"
+            ],
+            "pool": [
+              "beastkin_subject"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "subject",
+            "source": "mixin",
+            "terms": [
+              "beastkin",
+              "human-animal threshold",
+              "humanlike body with visible animal traits"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": false,
+            "groups": [],
+            "ids": [
+              "head_and_shoulders_crop"
+            ],
+            "pool": [
+              "head_and_shoulders_crop"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "subject_framing",
+            "source": "bundle",
+            "terms": [
+              "subject",
+              "framing",
+              "head",
+              "and",
+              "shoulders",
+              "crop"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": false,
+            "groups": [],
+            "ids": [
+              "velvet_antler_skin_texture"
+            ],
+            "pool": [
+              "velvet_antler_skin_texture"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "texture",
+            "source": "mixin",
+            "terms": [
+              "fur, feather, scale, or damp-sheen boundary"
+            ],
+            "variant_group": "species_family",
+            "variant_strategy": "locked_family"
+          },
+          {
+            "critical": false,
+            "groups": [],
+            "ids": [
+              "public_transit_coexistence_world"
+            ],
+            "pool": [
+              "public_transit_coexistence_world"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "world",
+            "source": "bundle",
+            "terms": [
+              "public-transit tail world",
+              "surrounding human gaze"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          }
+        ],
+        "concept": "수인",
+        "dual_read_requirement": {
+          "enabled": true,
+          "min_mixin_hits": 2,
+          "min_role_hits": 2
+        },
+        "free_slot_constraints": {
+          "composition": {
+            "deny_pool": [
+              "phone_arm_length_selfie",
+              "mirror_selfie_composition",
+              "crouching_mirror_full_body"
+            ],
+            "prefer_ids": [
+              "threshold_backlit_center",
+              "reflection",
+              "frame_within_frame",
+              "medium_close"
+            ]
+          },
+          "subject_framing": {
+            "deny_pool": [
+              "full_body_framing",
+              "three_quarter_body_framing"
+            ],
+            "prefer_ids": [
+              "head_and_shoulders_crop",
+              "upper_body_framing",
+              "detail_crop_hands_accessories"
+            ]
+          }
+        },
+        "group_floors": {},
+        "min_anchors": 3,
+        "mixin_cue_budget": 0,
+        "mode": "soft",
+        "preset_affinity": {
+          "discouraged_axes": [
+            "generic highland pasture beastkin scene",
+            "weathered endurance as default mood"
+          ],
+          "discouraged_presets": [
+            "beastkin_threshold_portrait"
+          ],
+          "preferred_axes": [
+            "body-rooted beastkin evidence",
+            "species-specific anatomy",
+            "role costume preserved"
+          ]
+        },
+        "render_directives": [],
+        "render_priority_terms": [
+          {
+            "group": "beastkin_body_transition",
+            "id": "beastkin_body_rooted_evidence",
+            "min_hits": 2,
+            "target_slots": [
+              "texture",
+              "species_marker",
+              "transition_stage",
+              "anatomical_connection",
+              "body_evidence_region"
+            ],
+            "terms": [
+              "skin-to-fur transition",
+              "skin-to-scale boundary",
+              "skin-to-feather boundary",
+              "ear root",
+              "tail base",
+              "horn root",
+              "fur patch",
+              "scale patch",
+              "feather follicle",
+              "living skin boundary",
+              "body-root evidence"
+            ],
+            "tier": "required"
+          },
+          {
+            "group": "beastkin_silhouette_support",
+            "id": "beastkin_silhouette_support",
+            "min_hits": 1,
+            "target_slots": [
+              "prop",
+              "expression",
+              "species_marker",
+              "action"
+            ],
+            "terms": [
+              "pointed ears",
+              "tail",
+              "slit-pupil gaze",
+              "weighted tail",
+              "mobile ears"
+            ],
+            "tier": "support"
+          },
+          {
+            "group": "beastkin_liminal_context",
+            "id": "beastkin_liminal_context",
+            "min_hits": 1,
+            "target_slots": [
+              "composition",
+              "world",
+              "light_shape",
+              "mood",
+              "social_cue",
+              "reflection_logic"
+            ],
+            "terms": [
+              "threshold",
+              "reflection",
+              "frame-within-frame",
+              "public-transit tail world",
+              "social gaze",
+              "bystander",
+              "CCTV"
+            ],
+            "tier": "support"
+          },
+          {
+            "group": "beastkin_species_specificity",
+            "id": "beastkin_species_specificity",
+            "min_hits": 1,
+            "target_slots": [
+              "subject",
+              "species_marker",
+              "texture",
+              "anatomical_connection",
+              "expression"
+            ],
+            "terms": [
+              "species-specific animal trait",
+              "distinct ear shape",
+              "distinct tail structure",
+              "fur, feather, scale, or damp-sheen boundary",
+              "humanlike face"
+            ],
+            "tier": "support"
+          }
+        ],
+        "render_suppress_terms": [
+          "detachable animal ears only",
+          "tail accessory only",
+          "full mascot suit",
+          "animal costume parody",
+          "dehumanizing animal caricature",
+          "ordinary cosplay with ears",
+          "headpiece pretending to be horns",
+          "hood trim pretending to be ears",
+          "feather boa instead of skin-rooted feathers",
+          "helmet hiding all ear roots",
+          "costume bunny ears replacing living anatomy"
+        ],
+        "role_scene_policy": {
+          "discouraged_generic_locations": [
+            "highland_pasture"
+          ],
+          "discouraged_generic_moods": [
+            "weathered_endurance"
+          ],
+          "enabled": true,
+          "generic_preset_support_only_when_role_scene_missing": true,
+          "role_first": true,
+          "support_presets": [
+            "fur_boundary_macro_portrait",
+            "ear_motion_sequence_portrait",
+            "tail_weight_balance_portrait",
+            "bus_seat_distance_candid"
+          ]
+        },
+        "safety_negative_floor": [
+          "gore",
+          "wounds",
+          "body horror",
+          "animal abuse",
+          "bestiality",
+          "dehumanizing caricature",
+          "full animal mascot suit",
+          "costume headband ears",
+          "clip-on tail",
+          "mascot suit",
+          "anthro cartoon furry style",
+          "full animal head",
+          "creature horror anatomy",
+          "monster transformation",
+          "compound eyes",
+          "mandibles",
+          "dehumanized animal body"
+        ],
+        "salience_floor": 1,
+        "soft_repair_policy": {},
+        "source_floors": {
+          "mixin": 1
+        },
+        "species_family_policy": {
+          "allowed": {
+            "anatomical_connection": [
+              "horn_root_scalp_skin_ring"
+            ],
+            "species_marker": [
+              "caprine_horn_root_skin_transition"
+            ],
+            "texture": [
+              "velvet_antler_skin_texture"
+            ]
+          },
+          "enabled": true,
+          "enforce": true,
+          "family": "caprine",
+          "hybrid_allowed": false,
+          "mixin": "수인",
+          "tier": "default_safe",
+          "variant_id": "caprine_goat_sheep"
+        },
+        "visual_guards": []
+      }
+    }
+  ],
+  "forward_args": [
+    "--tags",
+    "<ROOT>/skills/photo-prompt-image-generator/assets/photo_prompt_tags.json",
+    "--seed",
+    "42",
+    "--selection-mode",
+    "rule",
+    "--concept-lock",
+    "수인",
+    "--set",
+    "species_marker=caprine_horn_root_skin_transition",
+    "--set",
+    "texture=velvet_antler_skin_texture",
+    "--set",
+    "anatomical_connection=horn_root_scalp_skin_ring",
+    "--set",
+    "transition_stage=prominent_stage_structural_body_trait",
+    "--set",
+    "expression=side_set_prey_alert_gaze",
+    "--set",
+    "subject=beastkin_subject",
+    "--set",
+    "body_evidence_region=face_hairline_wrist_evidence",
+    "--set",
+    "action=standing_silence",
+    "--set",
+    "composition=frame_within_frame",
+    "--set",
+    "subject_framing=head_and_shoulders_crop",
+    "--set",
+    "world=public_transit_coexistence_world",
+    "--additional-requirement",
+    "수인은 동물 귀/꼬리만 붙인 패션이 아니라 피부와 털, 시선, 자세, 반사, 주변 시선에서 인간과 비인간 사이의 경계로 읽히게 한다.",
+    "--additional-requirement",
+    "Keep any base role outfit readable; the beastkin layer should alter surface texture, sensory gaze, body posture, reflection logic, social space, and species-specific body cues rather than replacing the role with a generic animal costume.",
+    "--additional-requirement",
+    "caprine goat or sheep beastkin with horizontal pupils and small horn cues",
+    "--additional-requirement",
+    "make the animal senses feel active: ears angled toward an off-frame sound, slit pupils focused before the human face moves, tail affecting nearby personal space, and bystanders or framing that quietly mark the subject as socially other",
+    "--intent-axis",
+    "beastkin as a living human-animal threshold where skin, fur, ears, tail, gaze, posture, reflection, and social space prove a mixed body rather than detachable accessories",
+    "--intent-axis",
+    "caprine goat or sheep beastkin with horizontal pupils and small horn cues",
+    "--intent-axis",
+    "beastkin as a socially observed body, non-human sensory attention and tail-aware posture inside ordinary human space",
+    "--likeness-mode",
+    "inspired",
+    "--n",
+    "1",
+    "--lang",
+    "both",
+    "--detail-level",
+    "detailed",
+    "--json-output",
+    "--include-negative"
+  ]
+}

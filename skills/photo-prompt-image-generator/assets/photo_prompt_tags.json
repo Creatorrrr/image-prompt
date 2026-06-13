@@ -94765,6 +94765,48 @@
         "for_any": [
           "human"
         ]
+      },
+      {
+        "id": "side_set_prey_alert_gaze",
+        "ko": "wide side-set prey-animal eyes in alert peripheral watch",
+        "en": "wide side-set prey-animal eyes in alert peripheral watch",
+        "weight": 1.0,
+        "tags": [
+          "human",
+          "expression",
+          "fantasy"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "round_unblinking_bird_gaze",
+        "ko": "round unblinking bird-like eyes with fixed head-still focus",
+        "en": "round unblinking bird-like eyes with fixed head-still focus",
+        "weight": 1.0,
+        "tags": [
+          "human",
+          "expression",
+          "fantasy"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "round_pupil_quiet_predator_focus",
+        "ko": "round-pupil low-blink quiet predator focus",
+        "en": "round-pupil low-blink quiet predator focus",
+        "weight": 1.0,
+        "tags": [
+          "human",
+          "expression",
+          "fantasy"
+        ],
+        "for_any": [
+          "human"
+        ]
       }
     ],
     "costume_style": [
@@ -118444,12 +118486,24 @@
       {
         "id": "public_transit_tail_world",
         "ko": "대중교통 미행 세계",
-        "en": "public-transit tail world",
+        "en": "public-transit covert-shadowing world",
         "weight": 0.95,
         "tags": [
           "realistic",
           "transport",
           "surveillance"
+        ],
+        "embedding_text": "espionage shadowing world: an operative discreetly follows a target through buses, subways, and transfer stations; spy tradecraft, timed transfers, crowd cover, surveillance and counter-surveillance pursuit",
+        "requires_any_tags": [
+          "surveillance",
+          "spy",
+          "espionage",
+          "stakeout",
+          "assassin",
+          "noir",
+          "investigation",
+          "thriller",
+          "cover_identity"
         ]
       },
       {
@@ -118870,6 +118924,18 @@
           "modern"
         ],
         "embedding_text": "world where city infrastructure answers small rituals, traffic lights, receipts and vending machines as urban magic"
+      },
+      {
+        "id": "public_transit_coexistence_world",
+        "ko": "대중교통 공존 세계",
+        "en": "everyday public-transit coexistence world",
+        "weight": 1.0,
+        "tags": [
+          "realistic",
+          "transport",
+          "social"
+        ],
+        "embedding_text": "everyday public-transit coexistence world: buses, subways, and platforms where visibly different beings share seats, handrails, gaps, and quiet glances; social distance, bystander reactions, and unspoken seating choices in ordinary commuting"
       }
     ],
     "lighting": [
@@ -118892,7 +118958,13 @@
           "nature",
           "travel",
           "portrait"
-        ]
+        ],
+        "facets": {
+          "time_of_day": [
+            "dawn",
+            "dusk"
+          ]
+        }
       },
       {
         "id": "blue_hour",
@@ -118902,7 +118974,13 @@
         "tags": [
           "urban",
           "landscape"
-        ]
+        ],
+        "facets": {
+          "time_of_day": [
+            "dawn",
+            "dusk"
+          ]
+        }
       },
       {
         "id": "overcast",
@@ -118928,7 +119006,12 @@
           "summer",
           "sunlit_pool_deck",
           "desert_dune_ridge"
-        ]
+        ],
+        "facets": {
+          "time_of_day": [
+            "day"
+          ]
+        }
       },
       {
         "id": "neon",
@@ -119038,7 +119121,12 @@
         "tags": [
           "nature",
           "night"
-        ]
+        ],
+        "facets": {
+          "time_of_day": [
+            "night"
+          ]
+        }
       },
       {
         "id": "headlights",
@@ -133454,7 +133542,13 @@
           "blue_hour",
           "twilight"
         ],
-        "embedding_text": "blue-hour twilight after sunset"
+        "embedding_text": "blue-hour twilight after sunset",
+        "facets": {
+          "time_of_day": [
+            "dawn",
+            "dusk"
+          ]
+        }
       },
       {
         "id": "civil_twilight",
@@ -133475,7 +133569,13 @@
           "twilight",
           "ambient"
         ],
-        "embedding_text": "civil twilight with visible ambient sky light"
+        "embedding_text": "civil twilight with visible ambient sky light",
+        "facets": {
+          "time_of_day": [
+            "dawn",
+            "dusk"
+          ]
+        }
       },
       {
         "id": "harsh_noon_sun",
@@ -133499,7 +133599,12 @@
           "noon",
           "harsh"
         ],
-        "embedding_text": "harsh noon sun with short shadows"
+        "embedding_text": "harsh noon sun with short shadows",
+        "facets": {
+          "time_of_day": [
+            "day"
+          ]
+        }
       },
       {
         "id": "early_morning_commute",
@@ -133521,7 +133626,13 @@
           "morning",
           "commute"
         ],
-        "embedding_text": "early morning commute light"
+        "embedding_text": "early morning commute light",
+        "facets": {
+          "time_of_day": [
+            "day",
+            "dawn"
+          ]
+        }
       },
       {
         "id": "late_afternoon_backlight",
@@ -133543,7 +133654,13 @@
           "afternoon",
           "backlight"
         ],
-        "embedding_text": "late-afternoon warm backlight"
+        "embedding_text": "late-afternoon warm backlight",
+        "facets": {
+          "time_of_day": [
+            "day",
+            "dusk"
+          ]
+        }
       },
       {
         "id": "midnight_neon",
@@ -133564,7 +133681,12 @@
           "night",
           "neon"
         ],
-        "embedding_text": "midnight neon-lit darkness"
+        "embedding_text": "midnight neon-lit darkness",
+        "facets": {
+          "time_of_day": [
+            "night"
+          ]
+        }
       },
       {
         "id": "pre_dawn_empty_street",
@@ -133589,7 +133711,13 @@
           "street",
           "quiet"
         ],
-        "embedding_text": "pre-dawn empty-street quietness"
+        "embedding_text": "pre-dawn empty-street quietness",
+        "facets": {
+          "time_of_day": [
+            "night",
+            "dawn"
+          ]
+        }
       },
       {
         "id": "golden_hour_after_rain",
@@ -133614,7 +133742,13 @@
           "rain",
           "warm"
         ],
-        "embedding_text": "golden hour light after rain"
+        "embedding_text": "golden hour light after rain",
+        "facets": {
+          "time_of_day": [
+            "dawn",
+            "dusk"
+          ]
+        }
       },
       {
         "id": "late_night_after_shift",
@@ -133624,7 +133758,12 @@
         "tags": [
           "night",
           "work"
-        ]
+        ],
+        "facets": {
+          "time_of_day": [
+            "night"
+          ]
+        }
       },
       {
         "id": "just_before_dawn_blue",
@@ -133633,7 +133772,13 @@
         "weight": 0.82,
         "tags": [
           "dawn"
-        ]
+        ],
+        "facets": {
+          "time_of_day": [
+            "night",
+            "dawn"
+          ]
+        }
       },
       {
         "id": "closing_time_lights_dimming",
@@ -133643,7 +133788,12 @@
         "tags": [
           "night",
           "interior"
-        ]
+        ],
+        "facets": {
+          "time_of_day": [
+            "night"
+          ]
+        }
       }
     ],
     "wearable_accessory": [
@@ -146036,7 +146186,347 @@
           "screen_grab_softness"
         ]
       }
-    }
+    },
+    "builtin_slot_context_rules": false,
+    "slot_context_rules": [
+      {
+        "id": "surveillance_camera_context",
+        "slots": [
+          "camera_type",
+          "composition",
+          "lens",
+          "motion"
+        ],
+        "match_tokens": [
+          "surveillance"
+        ],
+        "requires_context_any": [
+          "surveillance",
+          "cctv_frame",
+          "dashcam_still",
+          "bodycam_frame"
+        ],
+        "context_scope": "all",
+        "severity": "hard"
+      },
+      {
+        "id": "vehicle_camera_context",
+        "slots": [
+          "camera_type",
+          "composition",
+          "lens",
+          "motion"
+        ],
+        "match_tokens": [
+          "vehicle"
+        ],
+        "requires_context_any": [
+          "vehicle",
+          "automotive",
+          "dashcam_still",
+          "highway_dashcam"
+        ],
+        "context_scope": "all",
+        "severity": "hard"
+      },
+      {
+        "id": "phone_context_lens",
+        "slots": [
+          "lens"
+        ],
+        "when_context_any": [
+          "phone",
+          "front_facing_phone",
+          "smartphone_camera",
+          "selfie_camera_photo"
+        ],
+        "requires_item_any": [
+          "phone",
+          "selfie",
+          "social",
+          "wide",
+          "general"
+        ],
+        "severity": "hard"
+      },
+      {
+        "id": "headlights_need_street_context",
+        "slots": [
+          "lighting",
+          "light_type"
+        ],
+        "match_ids": [
+          "headlights"
+        ],
+        "requires_context_any": [
+          "street",
+          "urban",
+          "vehicle",
+          "night",
+          "surveillance"
+        ],
+        "context_scope": "scene",
+        "severity": "hard"
+      },
+      {
+        "id": "moonlight_needs_night_nature",
+        "slots": [
+          "lighting",
+          "light_type"
+        ],
+        "match_ids": [
+          "moonlight"
+        ],
+        "requires_context_any": [
+          "nature",
+          "night",
+          "landscape",
+          "wild"
+        ],
+        "context_scope": "scene",
+        "severity": "hard"
+      },
+      {
+        "id": "underwater_caustics_need_aquatic",
+        "slots": [
+          "lighting",
+          "light_type"
+        ],
+        "match_ids": [
+          "underwater_caustics"
+        ],
+        "requires_context_any": [
+          "nature",
+          "aquatic",
+          "wild",
+          "travel",
+          "landscape"
+        ],
+        "context_scope": "scene",
+        "severity": "hard"
+      },
+      {
+        "id": "streetlamp_needs_street",
+        "slots": [
+          "lighting",
+          "light_type"
+        ],
+        "match_ids": [
+          "streetlamp"
+        ],
+        "requires_context_any": [
+          "street",
+          "urban",
+          "night"
+        ],
+        "context_scope": "scene",
+        "severity": "hard"
+      },
+      {
+        "id": "lab_led_needs_science",
+        "slots": [
+          "lighting",
+          "light_type"
+        ],
+        "match_ids": [
+          "lab_led"
+        ],
+        "requires_context_any": [
+          "science",
+          "technology",
+          "laboratory",
+          "biolab",
+          "data_center"
+        ],
+        "context_scope": "all",
+        "severity": "hard"
+      },
+      {
+        "id": "monitor_glow_needs_tech",
+        "slots": [
+          "lighting",
+          "light_type"
+        ],
+        "match_ids": [
+          "monitor_glow"
+        ],
+        "requires_context_any": [
+          "technology",
+          "gaming",
+          "creator",
+          "creator_room",
+          "esports_room",
+          "glass_office"
+        ],
+        "context_scope": "all",
+        "severity": "hard"
+      },
+      {
+        "id": "studio_light_needs_studio",
+        "slots": [
+          "lighting",
+          "light_type"
+        ],
+        "match_ids": [
+          "studio_strobe",
+          "studio_flash",
+          "softbox"
+        ],
+        "requires_context_any": [
+          "studio",
+          "commercial",
+          "fashion",
+          "beauty",
+          "product",
+          "portrait"
+        ],
+        "context_scope": "all",
+        "severity": "hard"
+      },
+      {
+        "id": "small_point_light_context",
+        "slots": [
+          "light_shape"
+        ],
+        "match_ids": [
+          "small_point_light"
+        ],
+        "requires_context_any": [
+          "flash",
+          "night",
+          "stage",
+          "concert"
+        ],
+        "context_scope": "all",
+        "severity": "hard"
+      },
+      {
+        "id": "studio_light_shapes_context",
+        "slots": [
+          "light_shape"
+        ],
+        "match_ids": [
+          "large_softbox_shape",
+          "strip_light_shape",
+          "gobo_pattern"
+        ],
+        "requires_context_any": [
+          "studio",
+          "commercial",
+          "fashion",
+          "beauty",
+          "product",
+          "portrait"
+        ],
+        "context_scope": "all",
+        "severity": "hard"
+      },
+      {
+        "id": "adult_body_framing_context",
+        "slots": [
+          "body_framing"
+        ],
+        "match_tokens": [
+          "adult"
+        ],
+        "requires_context_any": [
+          "adult"
+        ],
+        "context_scope": "all",
+        "severity": "hard"
+      }
+    ],
+    "slot_conflicts": [
+      {
+        "id": "day_time_vs_night_lighting",
+        "left": {
+          "slot": "time_of_day",
+          "facets": [
+            "time_of_day:day"
+          ]
+        },
+        "right": {
+          "slot": "lighting",
+          "facets": [
+            "time_of_day:night"
+          ]
+        },
+        "severity": "hard"
+      },
+      {
+        "id": "night_time_vs_day_lighting",
+        "left": {
+          "slot": "time_of_day",
+          "facets": [
+            "time_of_day:night"
+          ]
+        },
+        "right": {
+          "slot": "lighting",
+          "facets": [
+            "time_of_day:day"
+          ]
+        },
+        "severity": "hard"
+      },
+      {
+        "id": "storm_weather_vs_sunny_lighting",
+        "left": {
+          "slot": "weather",
+          "ids": [
+            "heavy_downpour",
+            "thunderstorm_flash",
+            "dense_fog_bank"
+          ]
+        },
+        "right": {
+          "slot": "lighting",
+          "ids": [
+            "harsh_noon",
+            "golden_hour"
+          ]
+        },
+        "severity": "soft",
+        "penalty": 0.3
+      },
+      {
+        "id": "rain_action_vs_interior_location",
+        "left": {
+          "slot": "action",
+          "ids": [
+            "walking_rain",
+            "reflecting_puddle",
+            "looking_through_puddle_reflection",
+            "ear_flick_against_rain"
+          ]
+        },
+        "right": {
+          "slot": "location",
+          "tokens": [
+            "interior",
+            "indoor"
+          ]
+        },
+        "severity": "hard"
+      },
+      {
+        "id": "street_neon_vs_interior_location",
+        "left": {
+          "slot": "lighting",
+          "ids": [
+            "neon"
+          ]
+        },
+        "right": {
+          "slot": "location",
+          "tokens": [
+            "interior",
+            "indoor"
+          ]
+        },
+        "severity": "hard"
+      }
+    ]
   },
   "semantic_metadata": {
     "subject_groups": {

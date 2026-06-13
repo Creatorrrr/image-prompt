@@ -1,0 +1,514 @@
+{
+  "concepts": [
+    {
+      "applied_mixins": [],
+      "combined_forced_slots": {
+        "action": [
+          "standing_silence",
+          "checking_wristwatch_timing",
+          "standing_in_subway_car",
+          "commuting_night",
+          "presenting_file_folder",
+          "reviewing_ledger_columns",
+          "holding_coffee_phone"
+        ],
+        "appearance_type": [
+          "corporate_professional"
+        ],
+        "camera_direction": [
+          "elevator_corner_camera_direction",
+          "eye_level_three_quarter",
+          "high_observer_angle"
+        ],
+        "composition": [
+          "document_foreground_face_background",
+          "one_still_in_motion_blur_frame",
+          "architectural_lines_frame",
+          "elevator_gap_frame",
+          "reflection"
+        ],
+        "light_shape": [
+          "monitor_rectangle_glow",
+          "window_rectangle",
+          "barcode_shadow_bars",
+          "elevator_gap_sliver_light"
+        ],
+        "lighting": [
+          "fluorescent",
+          "monitor_glow",
+          "subway_car_fluorescent_light",
+          "archive_desk_lamp"
+        ],
+        "location": [
+          "glass_office",
+          "subway_transfer_passage",
+          "mirrored_elevator_box",
+          "corporate_high_floor_office",
+          "accountant_office_late"
+        ],
+        "mood": [
+          "melancholic",
+          "survival",
+          "surveilled_unease",
+          "bureaucratic_horror"
+        ],
+        "person_origin": [
+          "south_korea"
+        ],
+        "prop": [
+          "staff_lanyard_badge_prop",
+          "security_access_card_prop"
+        ],
+        "subject": [
+          "office_worker"
+        ],
+        "subject_framing": [
+          "upper_body_framing",
+          "head_and_shoulders_crop",
+          "waist_up_framing",
+          "detail_crop_hands_accessories"
+        ],
+        "wardrobe_style": [
+          "clean_blazer_trousers"
+        ]
+      },
+      "concept": "회사원",
+      "concept_mode": "legacy",
+      "forced_slots_applied": true,
+      "gate_results": [
+        {
+          "check": "subject가 office_worker로 강제되어야 한다",
+          "detail": "slot subject forced to ['office_worker']",
+          "id": "office_worker_forced",
+          "source": "회사원",
+          "status": "pass"
+        },
+        {
+          "check": "사원증/출입카드 prop이 강제되어야 한다",
+          "detail": "slot prop forced to ['security_access_card_prop', 'staff_lanyard_badge_prop']",
+          "id": "id_anchor_forced",
+          "source": "회사원",
+          "status": "pass"
+        },
+        {
+          "check": "제목 없이 봐도 회사원 레이어가 읽혀야 한다. 랜야드 단독은 불충분: 출입카드/오피스 태블릿/장부/업무 문서/손목시계 확인/보안 게이트/통근 건축/모니터 글로우/유리 사무실 문턱 중 1개 이상이 얼굴·손·가슴·역할 의상과 같은 크롭에 있어야 한다.",
+          "id": "dual_read_gate",
+          "source": "회사원",
+          "status": "manual"
+        }
+      ],
+      "matched": true,
+      "name": "",
+      "role": "회사원",
+      "selected_bundles": [],
+      "selected_species_variants": [],
+      "soft_anchor_spec": {
+        "anchor_expansion": {
+          "enabled": false,
+          "min_similarity": 0.78,
+          "top_k": 3,
+          "weight_ratio": 0.5
+        },
+        "anchors": [
+          {
+            "critical": false,
+            "groups": [
+              "role_primary"
+            ],
+            "ids": [
+              "standing_silence",
+              "checking_wristwatch_timing",
+              "standing_in_subway_car",
+              "commuting_night",
+              "presenting_file_folder",
+              "reviewing_ledger_columns",
+              "holding_coffee_phone"
+            ],
+            "pool": [
+              "standing_silence",
+              "checking_wristwatch_timing",
+              "standing_in_subway_car",
+              "commuting_night",
+              "presenting_file_folder",
+              "reviewing_ledger_columns",
+              "holding_coffee_phone"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "action",
+            "source": "role",
+            "terms": [
+              "standing in silence",
+              "checking wristwatch",
+              "commuting",
+              "presenting files"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": false,
+            "groups": [
+              "role_primary"
+            ],
+            "ids": [
+              "corporate_professional"
+            ],
+            "pool": [
+              "corporate_professional"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "appearance_type",
+            "source": "role",
+            "terms": [
+              "corporate professional",
+              "business"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": false,
+            "groups": [
+              "role_primary"
+            ],
+            "ids": [
+              "document_foreground_face_background",
+              "one_still_in_motion_blur_frame",
+              "architectural_lines_frame",
+              "elevator_gap_frame",
+              "reflection"
+            ],
+            "pool": [
+              "document_foreground_face_background",
+              "one_still_in_motion_blur_frame",
+              "architectural_lines_frame",
+              "elevator_gap_frame",
+              "reflection"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "composition",
+            "source": "role",
+            "terms": [
+              "document foreground",
+              "motion-blur crowd",
+              "architectural pressure",
+              "elevator gap"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": false,
+            "groups": [
+              "role_primary"
+            ],
+            "ids": [
+              "monitor_rectangle_glow",
+              "window_rectangle",
+              "barcode_shadow_bars",
+              "elevator_gap_sliver_light"
+            ],
+            "pool": [
+              "monitor_rectangle_glow",
+              "window_rectangle",
+              "barcode_shadow_bars",
+              "elevator_gap_sliver_light"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "light_shape",
+            "source": "role",
+            "terms": [
+              "monitor rectangle",
+              "window rectangle",
+              "barcode shadows",
+              "elevator gap"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": false,
+            "groups": [
+              "role_primary"
+            ],
+            "ids": [
+              "fluorescent",
+              "monitor_glow",
+              "subway_car_fluorescent_light",
+              "archive_desk_lamp"
+            ],
+            "pool": [
+              "fluorescent",
+              "monitor_glow",
+              "subway_car_fluorescent_light",
+              "archive_desk_lamp"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "lighting",
+            "source": "role",
+            "terms": [
+              "fluorescent light",
+              "monitor glow",
+              "commute light"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": true,
+            "groups": [
+              "role_primary"
+            ],
+            "ids": [
+              "glass_office",
+              "subway_transfer_passage",
+              "mirrored_elevator_box",
+              "corporate_high_floor_office",
+              "accountant_office_late"
+            ],
+            "pool": [
+              "glass_office",
+              "subway_transfer_passage",
+              "mirrored_elevator_box"
+            ],
+            "pool_weights": {},
+            "primary": true,
+            "required": true,
+            "slot": "location",
+            "source": "role",
+            "terms": [
+              "glass office",
+              "subway transfer",
+              "elevator",
+              "late office"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": false,
+            "groups": [
+              "role_primary"
+            ],
+            "ids": [
+              "south_korea"
+            ],
+            "pool": [
+              "south_korea"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "person_origin",
+            "source": "role",
+            "terms": [
+              "Korean"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": true,
+            "groups": [
+              "role_primary"
+            ],
+            "ids": [
+              "staff_lanyard_badge_prop",
+              "security_access_card_prop"
+            ],
+            "pool": [
+              "staff_lanyard_badge_prop",
+              "security_access_card_prop"
+            ],
+            "pool_weights": {},
+            "primary": true,
+            "required": true,
+            "slot": "prop",
+            "source": "role",
+            "terms": [
+              "staff lanyard",
+              "access card"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": true,
+            "groups": [
+              "role_primary"
+            ],
+            "ids": [
+              "office_worker"
+            ],
+            "pool": [
+              "office_worker"
+            ],
+            "pool_weights": {},
+            "primary": true,
+            "required": true,
+            "slot": "subject",
+            "source": "role",
+            "terms": [
+              "office worker",
+              "company employee",
+              "salaried worker"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": false,
+            "groups": [
+              "role_primary"
+            ],
+            "ids": [
+              "upper_body_framing",
+              "head_and_shoulders_crop",
+              "waist_up_framing",
+              "detail_crop_hands_accessories"
+            ],
+            "pool": [
+              "upper_body_framing",
+              "head_and_shoulders_crop",
+              "waist_up_framing",
+              "detail_crop_hands_accessories"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "subject_framing",
+            "source": "role",
+            "terms": [
+              "subject",
+              "framing",
+              "upper",
+              "body",
+              "head",
+              "and"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": true,
+            "groups": [
+              "role_primary"
+            ],
+            "ids": [
+              "clean_blazer_trousers"
+            ],
+            "pool": [
+              "clean_blazer_trousers"
+            ],
+            "pool_weights": {},
+            "primary": true,
+            "required": true,
+            "slot": "wardrobe_style",
+            "source": "role",
+            "terms": [
+              "clean blazer",
+              "tailored trousers",
+              "businesswear"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          }
+        ],
+        "concept": "회사원",
+        "dual_read_requirement": {},
+        "free_slot_constraints": {},
+        "group_floors": {},
+        "min_anchors": 4,
+        "mixin_cue_budget": 0,
+        "mode": "soft",
+        "preset_affinity": {
+          "preferred_presets": [
+            "corporate_startup_profile"
+          ]
+        },
+        "render_directives": [],
+        "render_priority_terms": [],
+        "render_suppress_terms": [],
+        "role_scene_policy": {},
+        "safety_negative_floor": [],
+        "salience_floor": 0,
+        "soft_repair_policy": {},
+        "source_floors": {
+          "role": 1
+        },
+        "species_family_policy": {},
+        "visual_guards": []
+      }
+    }
+  ],
+  "forward_args": [
+    "--tags",
+    "<ROOT>/skills/photo-prompt-image-generator/assets/photo_prompt_tags.json",
+    "--seed",
+    "42",
+    "--selection-mode",
+    "rule",
+    "--concept-lock",
+    "회사원",
+    "--preset",
+    "corporate_startup_profile",
+    "--set",
+    "subject=office_worker",
+    "--set",
+    "person_origin=south_korea",
+    "--set",
+    "appearance_type=corporate_professional",
+    "--set",
+    "wardrobe_style=clean_blazer_trousers",
+    "--set",
+    "location=glass_office,subway_transfer_passage,mirrored_elevator_box,corporate_high_floor_office,accountant_office_late",
+    "--set",
+    "action=standing_silence,checking_wristwatch_timing,standing_in_subway_car,commuting_night,presenting_file_folder,reviewing_ledger_columns,holding_coffee_phone",
+    "--set",
+    "prop=staff_lanyard_badge_prop,security_access_card_prop",
+    "--set",
+    "lighting=fluorescent,monitor_glow,subway_car_fluorescent_light,archive_desk_lamp",
+    "--set",
+    "light_shape=monitor_rectangle_glow,window_rectangle,barcode_shadow_bars,elevator_gap_sliver_light",
+    "--set",
+    "composition=document_foreground_face_background,one_still_in_motion_blur_frame,architectural_lines_frame,elevator_gap_frame,reflection",
+    "--set",
+    "camera_direction=elevator_corner_camera_direction,eye_level_three_quarter,high_observer_angle",
+    "--set",
+    "subject_framing=upper_body_framing,head_and_shoulders_crop,waist_up_framing,detail_crop_hands_accessories",
+    "--set",
+    "mood=melancholic,survival,surveilled_unease,bureaucratic_horror",
+    "--additional-requirement",
+    "Korean salaried company worker identity should read through organizational anonymity, time discipline, commute fatigue, and abstract labor pressure rather than generic business fashion.",
+    "--additional-requirement",
+    "Make the role visible through an employee ID lanyard or access card, clean but slightly tired businesswear, cool fluorescent or monitor light, and a glass-office, subway-transfer, elevator, or late-office setting.",
+    "--additional-requirement",
+    "Avoid office-siren glamour, pin-up office styling, heroic executive branding, fantasy drift, and purely sad stock-photo gestures; the emotion should come from the corporate space, commute routine, documents, badge, light, and posture.",
+    "--intent-axis",
+    "Korean company worker portrait with time discipline, organizational anonymity, commute fatigue, and abstract labor pressure",
+    "--intent-axis",
+    "adult office worker in clean blazer and trousers with staff lanyard or access card under fluorescent or monitor light",
+    "--intent-axis",
+    "glass office, subway transfer passage, elevator, or late office as corporate-city pressure around the subject",
+    "--likeness-mode",
+    "inspired",
+    "--n",
+    "1",
+    "--lang",
+    "both",
+    "--detail-level",
+    "detailed",
+    "--json-output",
+    "--include-negative"
+  ]
+}

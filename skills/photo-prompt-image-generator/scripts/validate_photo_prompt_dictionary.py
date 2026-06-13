@@ -177,6 +177,106 @@ def validate_coherence_rules(data: dict[str, Any], errors: list[str]) -> None:
                 if entry_id not in valid_ids:
                     errors.append(f"coherence_rules.family_conflicts.{family}.{slot}: unknown id {entry_id}")
 
+    vocab = merged_facet_vocab(data)
+
+    def validate_facet_tokens(label: str, tokens: Any) -> None:
+        for token in normalize_list(tokens):
+            if ":" not in token:
+                errors.append(f"{label}: facet token must be key:value, got {token}")
+                continue
+            key, value = token.split(":", 1)
+            if key not in vocab:
+                errors.append(f"{label}: unknown facet key {key}")
+            elif value not in vocab[key]:
+                errors.append(f"{label}: unknown facet value {token}")
+
+    def validate_side(label: str, side: Any) -> None:
+        if not isinstance(side, dict):
+            errors.append(f"{label}: must be an object")
+            return
+        slot = str(side.get("slot") or "")
+        if slot not in by_slot:
+            errors.append(f"{label}: unknown slot {slot!r}")
+            return
+        ids = normalize_list(side.get("ids"))
+        tokens = normalize_list(side.get("tokens"))
+        facets = normalize_list(side.get("facets"))
+        if not ids and not tokens and not facets:
+            errors.append(f"{label}: requires at least one of ids/tokens/facets")
+        for entry_id in ids:
+            if entry_id not in by_slot[slot]:
+                errors.append(f"{label}: unknown id {entry_id} for slot {slot}")
+        validate_facet_tokens(label, facets)
+
+    slot_conflicts = rules.get("slot_conflicts", []) or []
+    if slot_conflicts and not isinstance(slot_conflicts, list):
+        errors.append("coherence_rules.slot_conflicts: must be a list")
+        slot_conflicts = []
+    seen_conflict_ids: set[str] = set()
+    for index, rule in enumerate(slot_conflicts):
+        label = f"coherence_rules.slot_conflicts[{index}]"
+        if not isinstance(rule, dict):
+            errors.append(f"{label}: must be an object")
+            continue
+        rule_id = str(rule.get("id") or "")
+        if not rule_id:
+            errors.append(f"{label}: id is required")
+        elif rule_id in seen_conflict_ids:
+            errors.append(f"{label}: duplicate id {rule_id}")
+        else:
+            seen_conflict_ids.add(rule_id)
+        severity = str(rule.get("severity", "hard"))
+        if severity not in {"hard", "soft"}:
+            errors.append(f"{label}: severity must be hard or soft, got {severity!r}")
+        if severity == "soft":
+            try:
+                penalty = float(rule.get("penalty", 0.25))
+            except (TypeError, ValueError):
+                penalty = -1.0
+            if not 0.0 < penalty < 1.0:
+                errors.append(f"{label}: soft penalty must be in (0, 1)")
+        validate_side(f"{label}.left", rule.get("left"))
+        validate_side(f"{label}.right", rule.get("right"))
+
+    context_rules = rules.get("slot_context_rules", []) or []
+    if context_rules and not isinstance(context_rules, list):
+        errors.append("coherence_rules.slot_context_rules: must be a list")
+        context_rules = []
+    seen_context_ids: set[str] = set()
+    for index, rule in enumerate(context_rules):
+        label = f"coherence_rules.slot_context_rules[{index}]"
+        if not isinstance(rule, dict):
+            errors.append(f"{label}: must be an object")
+            continue
+        rule_id = str(rule.get("id") or "")
+        if not rule_id:
+            errors.append(f"{label}: id is required")
+        elif rule_id in seen_context_ids:
+            errors.append(f"{label}: duplicate id {rule_id}")
+        else:
+            seen_context_ids.add(rule_id)
+        slots = normalize_list(rule.get("slots"))
+        if not slots:
+            errors.append(f"{label}: slots is required")
+        for slot in slots:
+            if slot not in by_slot:
+                errors.append(f"{label}: unknown slot {slot}")
+        slot_id_union: set[str] = set()
+        for slot in slots:
+            slot_id_union |= by_slot.get(slot, set())
+        for entry_id in normalize_list(rule.get("match_ids")):
+            if entry_id not in slot_id_union:
+                errors.append(f"{label}: match_ids id {entry_id} not found in slots {slots}")
+        validate_facet_tokens(label, rule.get("match_facets"))
+        scope = str(rule.get("context_scope", "all"))
+        if scope not in {"all", "scene"}:
+            errors.append(f"{label}: context_scope must be all or scene, got {scope!r}")
+        severity = str(rule.get("severity", "hard"))
+        if severity != "hard":
+            errors.append(f"{label}: only hard severity is supported for slot_context_rules")
+        if not normalize_list(rule.get("requires_context_any")) and not normalize_list(rule.get("requires_item_any")):
+            errors.append(f"{label}: requires_context_any or requires_item_any is required")
+
 
 def validate_semantic_metadata(data: dict[str, Any], errors: list[str]) -> None:
     metadata = data.get("semantic_metadata", {}) or {}
@@ -686,6 +786,37 @@ def validate_concept_recipe_entry(
     validate_recipe_slot_list(label, "critical_anchor_slots", recipe.get("critical_anchor_slots"), by_slot, errors)
     validate_anchor_families(label, recipe, by_slot, errors)
     validate_forbidden_slot_values(label, recipe, by_slot, errors)
+    concept_mode_default = recipe.get("concept_mode_default")
+    if concept_mode_default is not None and str(concept_mode_default) not in {"legacy", "soft"}:
+        errors.append(f"{label}.concept_mode_default: must be legacy or soft")
+    validate_anchor_expansion(label, recipe.get("anchor_expansion"), errors)
+    validate_concept_guide(label, recipe.get("guide"), errors)
+    validate_review_gates_schema(label, recipe.get("review_gates"), by_slot, errors)
+
+    def weighted_pool_ids(pool_label: str, value: Any) -> list[str]:
+        """Pools accept plain id strings and {"id", "w"} objects."""
+        ids: list[str] = []
+        raw_items = value if isinstance(value, list) else normalize_list(value)
+        for item in raw_items:
+            if isinstance(item, dict):
+                entry_id = str(item.get("id") or "").strip()
+                if not entry_id:
+                    errors.append(f"{pool_label}: weighted pool entry requires id")
+                    continue
+                ids.append(entry_id)
+                raw_weight = item.get("w", 1.0)
+                try:
+                    weight = float(raw_weight)
+                except (TypeError, ValueError):
+                    weight = -1.0
+                if weight <= 0:
+                    errors.append(f"{pool_label}: weighted pool entry {entry_id} requires w > 0")
+            else:
+                entry_id = str(item).strip()
+                if entry_id:
+                    ids.append(entry_id)
+        return ids
+
     anchor_pool = recipe.get("anchor_pool") or {}
     if anchor_pool and not isinstance(anchor_pool, dict):
         errors.append(f"{label}.anchor_pool: must be an object")
@@ -694,7 +825,7 @@ def validate_concept_recipe_entry(
             if slot not in by_slot:
                 errors.append(f"{label}.anchor_pool: unknown slot {slot}")
                 continue
-            for entry_id in normalize_list(ids):
+            for entry_id in weighted_pool_ids(f"{label}.anchor_pool.{slot}", ids):
                 if entry_id not in by_slot[slot]:
                     errors.append(f"{label}.anchor_pool.{slot}: unknown id {entry_id}")
     primary_anchor_pool = recipe.get("primary_anchor_pool") or {}
@@ -705,7 +836,7 @@ def validate_concept_recipe_entry(
             if slot not in by_slot:
                 errors.append(f"{label}.primary_anchor_pool: unknown slot {slot}")
                 continue
-            for entry_id in normalize_list(ids):
+            for entry_id in weighted_pool_ids(f"{label}.primary_anchor_pool.{slot}", ids):
                 if entry_id not in by_slot[slot]:
                     errors.append(f"{label}.primary_anchor_pool.{slot}: unknown id {entry_id}")
                 if slot == "prop" and entry_id == "angel_halo_wings_tail_set" and "천사" in label:
@@ -976,6 +1107,118 @@ def validate_species_variants(label: str, recipe: dict[str, Any], data: dict[str
         validate_concept_recipe_entry(variant_label, variant, data, errors)
 
 
+REVIEW_GATE_ASSERT_TYPES = {
+    "mixin_shape",
+    "forced_slot_any",
+    "forced_slot_absent",
+    "bundle_selected",
+    "role_costume_preserved",
+}
+
+
+def validate_concept_guide(label: str, guide: Any, errors: list[str]) -> None:
+    if guide is None:
+        return
+    if not isinstance(guide, dict):
+        errors.append(f"{label}.guide: must be an object")
+        return
+    definition = guide.get("definition_ko")
+    if not isinstance(definition, str) or not definition.strip():
+        errors.append(f"{label}.guide.definition_ko: non-empty string is required")
+    for key in ("dominant_axes", "anti_patterns"):
+        value = guide.get(key)
+        if value is None:
+            continue
+        if not isinstance(value, list) or not all(isinstance(item, str) and item.strip() for item in value):
+            errors.append(f"{label}.guide.{key}: must be a list of non-empty strings")
+
+
+def validate_review_gates_schema(
+    label: str,
+    gates: Any,
+    by_slot: dict[str, set[str]],
+    errors: list[str],
+) -> None:
+    if gates is None:
+        return
+    if not isinstance(gates, list):
+        errors.append(f"{label}.review_gates: must be a list")
+        return
+    seen: set[str] = set()
+    for index, gate in enumerate(gates):
+        gate_label = f"{label}.review_gates[{index}]"
+        if not isinstance(gate, dict):
+            errors.append(f"{gate_label}: must be an object")
+            continue
+        gate_id = str(gate.get("id") or "")
+        if not gate_id:
+            errors.append(f"{gate_label}: id is required")
+        elif gate_id in seen:
+            errors.append(f"{gate_label}: duplicate id {gate_id}")
+        else:
+            seen.add(gate_id)
+        if not str(gate.get("check") or "").strip():
+            errors.append(f"{gate_label}: check description is required")
+        machine = gate.get("machine_checkable")
+        if machine is not None and not isinstance(machine, bool):
+            errors.append(f"{gate_label}: machine_checkable must be a boolean")
+        spec = gate.get("assert")
+        if not machine:
+            continue
+        if not isinstance(spec, dict):
+            errors.append(f"{gate_label}: machine_checkable gate requires an assert object")
+            continue
+        assert_type = str(spec.get("type") or "")
+        if assert_type not in REVIEW_GATE_ASSERT_TYPES:
+            errors.append(f"{gate_label}.assert: unknown type {assert_type!r}")
+            continue
+        if assert_type in {"mixin_shape", "bundle_selected"} and not str(spec.get("mixin") or "").strip():
+            errors.append(f"{gate_label}.assert: mixin is required for {assert_type}")
+        if assert_type in {"forced_slot_any", "forced_slot_absent"}:
+            slot = str(spec.get("slot") or "")
+            if slot not in by_slot:
+                errors.append(f"{gate_label}.assert: unknown slot {slot!r}")
+                continue
+            id_key = "any_of" if assert_type == "forced_slot_any" else "values"
+            for entry_id in normalize_list(spec.get(id_key)):
+                if entry_id not in by_slot[slot]:
+                    errors.append(f"{gate_label}.assert.{id_key}: unknown id {entry_id} for slot {slot}")
+
+
+def validate_anchor_expansion(label: str, config: Any, errors: list[str]) -> None:
+    if config is None:
+        return
+    if not isinstance(config, dict):
+        errors.append(f"{label}.anchor_expansion: must be an object")
+        return
+    if "enabled" in config and not isinstance(config.get("enabled"), bool):
+        errors.append(f"{label}.anchor_expansion.enabled: must be a boolean")
+    if "top_k" in config:
+        try:
+            top_k = int(config.get("top_k"))
+        except (TypeError, ValueError):
+            top_k = -1
+        if top_k < 1:
+            errors.append(f"{label}.anchor_expansion.top_k: must be an integer >= 1")
+    if "min_similarity" in config:
+        try:
+            min_similarity = float(config.get("min_similarity"))
+        except (TypeError, ValueError):
+            min_similarity = -1.0
+        if not 0.0 < min_similarity <= 1.0:
+            errors.append(f"{label}.anchor_expansion.min_similarity: must be in (0, 1]")
+    if "weight_ratio" in config:
+        try:
+            weight_ratio = float(config.get("weight_ratio"))
+        except (TypeError, ValueError):
+            weight_ratio = -1.0
+        if not 0.0 < weight_ratio <= 1.0:
+            errors.append(f"{label}.anchor_expansion.weight_ratio: must be in (0, 1]")
+    unknown = set(config) - {"enabled", "top_k", "min_similarity", "weight_ratio"}
+    if unknown:
+        errors.append(f"{label}.anchor_expansion: unknown keys {sorted(unknown)}")
+
+
 def validate_concept_recipes(path: Path, data: dict[str, Any], errors: list[str]) -> None:
     if not path.exists():
         return
@@ -991,6 +1234,10 @@ def validate_concept_recipes(path: Path, data: dict[str, Any], errors: list[str]
     validate_recipe_slot_list("concept_recipes", "bundle_override_slots", recipes.get("bundle_override_slots"), by_slot, errors)
     validate_recipe_slot_list("concept_recipes", "override_slots", recipes.get("override_slots"), by_slot, errors)
 
+    defaults = recipes.get("soft_anchor_defaults", {}) or {}
+    if isinstance(defaults, dict):
+        validate_anchor_expansion("concept_recipes.soft_anchor_defaults", defaults.get("anchor_expansion"), errors)
+
     concept_safety = recipes.get("concept_safety", {}) or {}
     if concept_safety and not isinstance(concept_safety, dict):
         errors.append("concept_recipes.concept_safety: must be an object")
@@ -1004,6 +1251,27 @@ def validate_concept_recipes(path: Path, data: dict[str, Any], errors: list[str]
             for term in normalized_terms:
                 if not str(term).strip():
                     errors.append(f"concept_recipes.concept_safety.{pool}: empty term")
+
+    aliases = recipes.get("aliases", {}) or {}
+    if aliases and not isinstance(aliases, dict):
+        errors.append("concept_recipes.aliases: must be an object")
+    elif isinstance(aliases, dict):
+        role_names = set((recipes.get("roles", {}) or {}).keys())
+        mixin_names = set((recipes.get("mixins", {}) or {}).keys())
+        for alias, canonical in aliases.items():
+            if not str(alias).strip():
+                errors.append("concept_recipes.aliases: empty alias")
+                continue
+            canonical_text = str(canonical or "")
+            if not canonical_text.strip():
+                errors.append(f"concept_recipes.aliases.{alias}: empty canonical value")
+                continue
+            if not any(name in canonical_text for name in role_names) and not any(
+                name in canonical_text for name in mixin_names
+            ):
+                errors.append(
+                    f"concept_recipes.aliases.{alias}: canonical {canonical_text!r} does not reference any role or mixin"
+                )
 
     roles = recipes.get("roles", {}) or {}
     if roles and not isinstance(roles, dict):
@@ -1130,10 +1398,34 @@ def validate_slot_applicability(data: dict[str, Any], errors: list[str]) -> None
             errors.append(f"slot_applicability.slots.{slot}.require_domain_match: must be a boolean")
 
 
+def validate_skill_doc_literals(path: Path, data: dict[str, Any], errors: list[str]) -> None:
+    """Cross-check `--preset X` and `--set slot=id` literals in SKILL.md against the dictionary."""
+    if not path.exists():
+        return
+    import re
+
+    text = path.read_text(encoding="utf-8")
+    by_slot = entry_ids_by_slot(data)
+    preset_ids = {str(preset.get("id")) for preset in data.get("presets", [])}
+    for match in re.finditer(r"--preset[ =]([A-Za-z0-9_]+)", text):
+        preset_id = match.group(1)
+        if preset_id not in preset_ids:
+            errors.append(f"SKILL.md: unknown preset id {preset_id}")
+    for match in re.finditer(r"--set[ =]([A-Za-z0-9_]+)=([A-Za-z0-9_|]+)", text):
+        slot, values = match.group(1), match.group(2)
+        if slot not in by_slot:
+            errors.append(f"SKILL.md: unknown slot {slot} in --set example")
+            continue
+        for value in values.split("|"):
+            if value and value not in by_slot[slot]:
+                errors.append(f"SKILL.md: unknown id {value} for slot {slot} in --set example")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Validate photo prompt dictionary semantic metadata.")
     parser.add_argument("--tags", default=Path(__file__).resolve().parents[1] / "assets" / "photo_prompt_tags.json")
     parser.add_argument("--concept-recipes", default=DEFAULT_CONCEPT_RECIPES)
+    parser.add_argument("--skill-doc", default=Path(__file__).resolve().parents[1] / "SKILL.md")
     args = parser.parse_args()
 
     data = load_json(args.tags)
@@ -1146,6 +1438,7 @@ def main() -> int:
     validate_semantic_metadata(data, errors)
     validate_slot_applicability(data, errors)
     validate_concept_recipes(Path(args.concept_recipes), data, errors)
+    validate_skill_doc_literals(Path(args.skill_doc), data, errors)
     for label, entry in all_entries(data):
         validate_facets(label, entry, vocab, errors)
         validate_hard_guards(label, entry, vocab, errors)

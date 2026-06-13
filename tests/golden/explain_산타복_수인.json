@@ -1,0 +1,941 @@
+{
+  "concepts": [
+    {
+      "applied_mixins": [
+        "수인"
+      ],
+      "combined_forced_slots": {
+        "action": [
+          "brisk_gift_handoff_pose",
+          "tail_lifting_before_sitting"
+        ],
+        "anatomical_connection": [
+          "horn_root_scalp_skin_ring",
+          "tail_base_under_waistband"
+        ],
+        "body_evidence_region": [
+          "face_hairline_wrist_evidence",
+          "hood_opening_tail_gap_evidence"
+        ],
+        "costume_absorption_guard": [
+          "hood_trim_not_ears_guard"
+        ],
+        "costume_style": [
+          "covered_santa_fur_trim_costume"
+        ],
+        "expression": [
+          "side_set_prey_alert_gaze"
+        ],
+        "light_shape": [
+          "snowflake_pinpoint_glow"
+        ],
+        "lighting": [
+          "first_snow_evening_light"
+        ],
+        "location": [
+          "christmas_market_lights",
+          "seoul_bus_stop_snow",
+          "gift_logistics_warehouse",
+          "apartment_door_threshold"
+        ],
+        "motion": [
+          "suspended_snowflake_motion"
+        ],
+        "prop": [
+          "modest_wrapped_gift_prop",
+          "christmas_lights_prop",
+          "gift_tag_ledger_prop"
+        ],
+        "species_marker": [
+          "caprine_horn_root_skin_transition"
+        ],
+        "subject": [
+          "cosplayer",
+          "beastkin_subject"
+        ],
+        "texture": [
+          "velvet_antler_skin_texture"
+        ],
+        "transition_stage": [
+          "prominent_stage_structural_body_trait"
+        ],
+        "weather": [
+          "windblown_snow"
+        ]
+      },
+      "concept": "산타복 수인",
+      "concept_mode": "legacy",
+      "forced_slots_applied": true,
+      "gate_results": [
+        {
+          "check": "applied_mixins가 정확히 ['수인']이고 역할은 0~1개여야 한다",
+          "detail": "applied_mixins == ['수인'] with role 산타복",
+          "id": "mixin_shape",
+          "source": "수인",
+          "status": "pass"
+        },
+        {
+          "check": "역할이 있으면 costume_style/wardrobe_style 강제값이 역할 recipe에서 유래해야 한다",
+          "detail": "role costume slots preserved",
+          "id": "role_costume_preserved",
+          "source": "수인",
+          "status": "pass"
+        },
+        {
+          "check": "subject가 beastkin_subject로 강제되어야 한다",
+          "detail": "slot subject forced to ['beastkin_subject', 'cosplayer']",
+          "id": "beastkin_subject_forced",
+          "source": "수인",
+          "status": "pass"
+        },
+        {
+          "check": "expression이 종에 맞는 gaze(슬릿/측면 동공/조류 원형/포식자 원형) 중 하나로 강제되어야 한다",
+          "detail": "slot expression forced to ['side_set_prey_alert_gaze']",
+          "id": "species_gaze_forced",
+          "source": "수인",
+          "status": "pass"
+        },
+        {
+          "check": "species_marker 슬롯이 강제되어야 한다(종 축 핀)",
+          "detail": "slot species_marker forced to ['caprine_horn_root_skin_transition']",
+          "id": "species_marker_present",
+          "source": "수인",
+          "status": "pass"
+        },
+        {
+          "check": "역할 의상을 평상복으로 바꿔도 ear root/tail base/horn root/피부 경계/반사 불일치/사회적 거리 큐/모션 로직 중 2개 이상이 잔존해야 한다. 귀+꼬리 실루엣만으로는 불충분하다.",
+          "id": "costume_swap_test",
+          "source": "수인",
+          "status": "manual"
+        }
+      ],
+      "matched": true,
+      "name": "",
+      "role": "산타복",
+      "selected_bundles": [
+        {
+          "aspect": "costume_swap",
+          "bundle_id": "santa_hood_tail_gap_guard",
+          "mixin": "수인",
+          "preset": "",
+          "set": {
+            "action": "tail_lifting_before_sitting",
+            "anatomical_connection": "tail_base_under_waistband",
+            "body_evidence_region": "hood_opening_tail_gap_evidence",
+            "costume_absorption_guard": "hood_trim_not_ears_guard"
+          },
+          "subtype": "role_specific_anti_absorption",
+          "weight": 1.0
+        }
+      ],
+      "selected_species_variants": [
+        {
+          "activation": "weighted",
+          "family": "caprine",
+          "mixin": "수인",
+          "opt_in_activated": false,
+          "species_family_policy": {
+            "allowed": {
+              "anatomical_connection": [
+                "horn_root_scalp_skin_ring"
+              ],
+              "species_marker": [
+                "caprine_horn_root_skin_transition"
+              ],
+              "texture": [
+                "velvet_antler_skin_texture"
+              ]
+            },
+            "enabled": true,
+            "enforce": true,
+            "family": "caprine",
+            "hybrid_allowed": false,
+            "mixin": "수인",
+            "tier": "default_safe",
+            "variant_id": "caprine_goat_sheep"
+          },
+          "tier": "default_safe",
+          "variant_id": "caprine_goat_sheep",
+          "weight": 0.85
+        }
+      ],
+      "soft_anchor_spec": {
+        "anchor_expansion": {
+          "enabled": false,
+          "min_similarity": 0.78,
+          "top_k": 3,
+          "weight_ratio": 0.5
+        },
+        "anchors": [
+          {
+            "critical": false,
+            "groups": [
+              "role_primary"
+            ],
+            "ids": [
+              "brisk_gift_handoff_pose"
+            ],
+            "pool": [
+              "brisk_gift_handoff_pose"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "action",
+            "source": "role",
+            "terms": [
+              "action",
+              "brisk",
+              "gift",
+              "handoff",
+              "pose"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": false,
+            "groups": [],
+            "ids": [
+              "tail_lifting_before_sitting"
+            ],
+            "pool": [
+              "tail_lifting_before_sitting"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "action",
+            "source": "bundle",
+            "terms": [
+              "action",
+              "tail",
+              "lifting",
+              "before",
+              "sitting"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": false,
+            "groups": [],
+            "ids": [
+              "horn_root_scalp_skin_ring"
+            ],
+            "pool": [
+              "horn_root_scalp_skin_ring"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "anatomical_connection",
+            "source": "mixin",
+            "terms": [
+              "body-rooted animal trait",
+              "living anatomy connection"
+            ],
+            "variant_group": "species_family",
+            "variant_strategy": "locked_family"
+          },
+          {
+            "critical": false,
+            "groups": [],
+            "ids": [
+              "tail_base_under_waistband"
+            ],
+            "pool": [
+              "tail_base_under_waistband"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "anatomical_connection",
+            "source": "bundle",
+            "terms": [
+              "anatomical",
+              "connection",
+              "tail",
+              "base",
+              "under",
+              "waistband"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": false,
+            "groups": [],
+            "ids": [
+              "face_hairline_wrist_evidence"
+            ],
+            "pool": [
+              "face_hairline_wrist_evidence",
+              "collar_tail_base_crop",
+              "hands_wrists_worklight_evidence",
+              "window_reflection_tail_base_evidence",
+              "feather_root_macro_crop"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "body_evidence_region",
+            "source": "mixin",
+            "terms": [
+              "face and hairline evidence",
+              "wrist or collar boundary",
+              "tail base evidence",
+              "body-root evidence remains after costume swap"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": false,
+            "groups": [],
+            "ids": [
+              "hood_opening_tail_gap_evidence"
+            ],
+            "pool": [
+              "hood_opening_tail_gap_evidence"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "body_evidence_region",
+            "source": "bundle",
+            "terms": [
+              "body",
+              "evidence",
+              "region",
+              "hood",
+              "opening",
+              "tail"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": false,
+            "groups": [],
+            "ids": [
+              "hood_trim_not_ears_guard"
+            ],
+            "pool": [
+              "hood_trim_not_ears_guard"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "costume_absorption_guard",
+            "source": "bundle",
+            "terms": [
+              "costume",
+              "absorption",
+              "guard",
+              "hood",
+              "trim",
+              "not"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": true,
+            "groups": [
+              "role_primary"
+            ],
+            "ids": [
+              "covered_santa_fur_trim_costume"
+            ],
+            "pool": [
+              "covered_santa_fur_trim_costume"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "costume_style",
+            "source": "role",
+            "terms": [
+              "covered Santa outfit",
+              "red fur-trim costume",
+              "winter holiday costume"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": false,
+            "groups": [
+              "role_primary"
+            ],
+            "ids": [
+              "snowflake_pinpoint_glow"
+            ],
+            "pool": [
+              "snowflake_pinpoint_glow"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "light_shape",
+            "source": "role",
+            "terms": [
+              "snowflake pinpoint glow"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": false,
+            "groups": [
+              "role_primary"
+            ],
+            "ids": [
+              "first_snow_evening_light"
+            ],
+            "pool": [
+              "first_snow_evening_light"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "lighting",
+            "source": "role",
+            "terms": [
+              "lighting",
+              "first",
+              "snow",
+              "evening",
+              "light"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": true,
+            "groups": [
+              "role_primary"
+            ],
+            "ids": [
+              "christmas_market_lights",
+              "seoul_bus_stop_snow",
+              "gift_logistics_warehouse",
+              "apartment_door_threshold"
+            ],
+            "pool": [
+              "christmas_market_lights",
+              "seoul_bus_stop_snow",
+              "gift_logistics_warehouse",
+              "apartment_door_threshold"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "location",
+            "source": "role",
+            "terms": [
+              "Christmas market",
+              "snowy Seoul bus stop",
+              "winter street",
+              "gift logistics warehouse",
+              "apartment delivery threshold"
+            ],
+            "variant_group": "role_scene:holiday_delivery_winter",
+            "variant_strategy": "role_scene_rotation"
+          },
+          {
+            "critical": true,
+            "groups": [
+              "role_primary"
+            ],
+            "ids": [
+              "modest_wrapped_gift_prop",
+              "christmas_lights_prop",
+              "gift_tag_ledger_prop"
+            ],
+            "pool": [
+              "modest_wrapped_gift_prop",
+              "christmas_lights_prop",
+              "gift_tag_ledger_prop"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "prop",
+            "source": "role",
+            "terms": [
+              "wrapped gift",
+              "Christmas lights",
+              "gift-tag ledger"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": false,
+            "groups": [],
+            "ids": [
+              "caprine_horn_root_skin_transition"
+            ],
+            "pool": [
+              "caprine_horn_root_skin_transition"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "species_marker",
+            "source": "mixin",
+            "terms": [
+              "caprine horizontal pupil small horns",
+              "caprine",
+              "species body marker"
+            ],
+            "variant_group": "species_family",
+            "variant_strategy": "locked_family"
+          },
+          {
+            "critical": false,
+            "groups": [
+              "role_primary"
+            ],
+            "ids": [
+              "cosplayer"
+            ],
+            "pool": [
+              "cosplayer"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "subject",
+            "source": "role",
+            "terms": [
+              "subject",
+              "cosplayer"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": false,
+            "groups": [],
+            "ids": [
+              "beastkin_subject"
+            ],
+            "pool": [
+              "beastkin_subject"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "subject",
+            "source": "mixin",
+            "terms": [
+              "beastkin",
+              "human-animal threshold",
+              "humanlike body with visible animal traits"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": false,
+            "groups": [],
+            "ids": [
+              "velvet_antler_skin_texture"
+            ],
+            "pool": [
+              "velvet_antler_skin_texture"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "texture",
+            "source": "mixin",
+            "terms": [
+              "fur, feather, scale, or damp-sheen boundary"
+            ],
+            "variant_group": "species_family",
+            "variant_strategy": "locked_family"
+          },
+          {
+            "critical": false,
+            "groups": [
+              "role_primary"
+            ],
+            "ids": [
+              "windblown_snow"
+            ],
+            "pool": [
+              "windblown_snow"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "weather",
+            "source": "role",
+            "terms": [
+              "windblown snow"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          }
+        ],
+        "concept": "산타복 수인",
+        "dual_read_requirement": {
+          "enabled": true,
+          "min_mixin_hits": 2,
+          "min_role_hits": 2,
+          "mixin_terms": [
+            "action",
+            "tail",
+            "lifting",
+            "before",
+            "sitting",
+            "body-rooted animal trait",
+            "living anatomy connection",
+            "anatomical"
+          ],
+          "role_terms": [
+            "action",
+            "brisk",
+            "gift",
+            "handoff",
+            "pose",
+            "covered Santa outfit",
+            "red fur-trim costume",
+            "winter holiday costume"
+          ]
+        },
+        "free_slot_constraints": {
+          "composition": {
+            "deny_pool": [
+              "phone_arm_length_selfie",
+              "mirror_selfie_composition",
+              "crouching_mirror_full_body"
+            ],
+            "prefer_ids": [
+              "threshold_backlit_center",
+              "reflection",
+              "frame_within_frame",
+              "medium_close"
+            ]
+          },
+          "subject_framing": {
+            "deny_pool": [
+              "full_body_framing",
+              "three_quarter_body_framing"
+            ],
+            "prefer_ids": [
+              "head_and_shoulders_crop",
+              "upper_body_framing",
+              "detail_crop_hands_accessories"
+            ]
+          }
+        },
+        "group_floors": {},
+        "min_anchors": 3,
+        "mixin_cue_budget": 2,
+        "mode": "soft",
+        "preset_affinity": {
+          "discouraged_axes": [
+            "generic highland pasture beastkin scene",
+            "weathered endurance as default mood"
+          ],
+          "discouraged_presets": [
+            "beastkin_threshold_portrait"
+          ],
+          "preferred_axes": [
+            "body-rooted beastkin evidence",
+            "species-specific anatomy",
+            "role costume preserved"
+          ],
+          "preferred_presets": [
+            "seasonal_event_portrait"
+          ]
+        },
+        "render_directives": [],
+        "render_priority_terms": [
+          {
+            "group": "role_costume_identity",
+            "id": "santa_role_floor",
+            "min_hits": 2,
+            "target_slots": [
+              "costume_style",
+              "prop",
+              "location",
+              "weather"
+            ],
+            "terms": [
+              "covered Santa outfit",
+              "red fur-trim costume",
+              "wrapped gift",
+              "Christmas lights",
+              "winter street"
+            ],
+            "tier": "required"
+          },
+          {
+            "group": "beastkin_body_transition",
+            "id": "beastkin_body_rooted_evidence",
+            "min_hits": 2,
+            "target_slots": [
+              "texture",
+              "species_marker",
+              "transition_stage",
+              "anatomical_connection",
+              "body_evidence_region"
+            ],
+            "terms": [
+              "skin-to-fur transition",
+              "skin-to-scale boundary",
+              "skin-to-feather boundary",
+              "ear root",
+              "tail base",
+              "horn root",
+              "fur patch",
+              "scale patch",
+              "feather follicle",
+              "living skin boundary",
+              "body-root evidence"
+            ],
+            "tier": "required"
+          },
+          {
+            "group": "beastkin_silhouette_support",
+            "id": "beastkin_silhouette_support",
+            "min_hits": 1,
+            "target_slots": [
+              "prop",
+              "expression",
+              "species_marker",
+              "action"
+            ],
+            "terms": [
+              "pointed ears",
+              "tail",
+              "slit-pupil gaze",
+              "weighted tail",
+              "mobile ears"
+            ],
+            "tier": "support"
+          },
+          {
+            "group": "beastkin_liminal_context",
+            "id": "beastkin_liminal_context",
+            "min_hits": 1,
+            "target_slots": [
+              "composition",
+              "world",
+              "light_shape",
+              "mood",
+              "social_cue",
+              "reflection_logic"
+            ],
+            "terms": [
+              "threshold",
+              "reflection",
+              "frame-within-frame",
+              "public-transit tail world",
+              "social gaze",
+              "bystander",
+              "CCTV"
+            ],
+            "tier": "support"
+          },
+          {
+            "group": "beastkin_species_specificity",
+            "id": "beastkin_species_specificity",
+            "min_hits": 1,
+            "target_slots": [
+              "subject",
+              "species_marker",
+              "texture",
+              "anatomical_connection",
+              "expression"
+            ],
+            "terms": [
+              "species-specific animal trait",
+              "distinct ear shape",
+              "distinct tail structure",
+              "fur, feather, scale, or damp-sheen boundary",
+              "humanlike face"
+            ],
+            "tier": "support"
+          }
+        ],
+        "render_suppress_terms": [
+          "detachable animal ears only",
+          "tail accessory only",
+          "full mascot suit",
+          "animal costume parody",
+          "dehumanizing animal caricature",
+          "ordinary cosplay with ears",
+          "headpiece pretending to be horns",
+          "hood trim pretending to be ears",
+          "feather boa instead of skin-rooted feathers",
+          "helmet hiding all ear roots",
+          "costume bunny ears replacing living anatomy"
+        ],
+        "role_scene_policy": {
+          "allowed_locations": [
+            "christmas_market_lights",
+            "seoul_bus_stop_snow",
+            "gift_logistics_warehouse",
+            "apartment_door_threshold"
+          ],
+          "discouraged_generic_locations": [
+            "highland_pasture"
+          ],
+          "discouraged_generic_moods": [
+            "weathered_endurance"
+          ],
+          "enabled": true,
+          "enforce": true,
+          "forbidden_locations": [
+            "highland_pasture",
+            "beach_boardwalk"
+          ],
+          "generic_preset_support_only_when_role_scene_missing": true,
+          "preferred_locations": [
+            "christmas_market_lights",
+            "seoul_bus_stop_snow",
+            "gift_logistics_warehouse",
+            "apartment_door_threshold"
+          ],
+          "reason": "covered Santa role should rotate winter-market, transit, logistics, and delivery-threshold scenes instead of inheriting generic atmosphere",
+          "role_first": true,
+          "scene_family": "holiday_delivery_winter",
+          "support_presets": [
+            "fur_boundary_macro_portrait",
+            "ear_motion_sequence_portrait",
+            "tail_weight_balance_portrait",
+            "bus_seat_distance_candid"
+          ]
+        },
+        "safety_negative_floor": [
+          "gore",
+          "wounds",
+          "body horror",
+          "animal abuse",
+          "bestiality",
+          "dehumanizing caricature",
+          "full animal mascot suit",
+          "costume headband ears",
+          "clip-on tail",
+          "mascot suit",
+          "anthro cartoon furry style",
+          "full animal head",
+          "creature horror anatomy",
+          "monster transformation",
+          "compound eyes",
+          "mandibles",
+          "dehumanized animal body"
+        ],
+        "salience_floor": 1,
+        "soft_repair_policy": {},
+        "source_floors": {
+          "role": 1
+        },
+        "species_family_policy": {
+          "allowed": {
+            "anatomical_connection": [
+              "horn_root_scalp_skin_ring"
+            ],
+            "species_marker": [
+              "caprine_horn_root_skin_transition"
+            ],
+            "texture": [
+              "velvet_antler_skin_texture"
+            ]
+          },
+          "enabled": true,
+          "enforce": true,
+          "family": "caprine",
+          "hybrid_allowed": false,
+          "mixin": "수인",
+          "tier": "default_safe",
+          "variant_id": "caprine_goat_sheep"
+        },
+        "visual_guards": []
+      }
+    }
+  ],
+  "forward_args": [
+    "--tags",
+    "<ROOT>/skills/photo-prompt-image-generator/assets/photo_prompt_tags.json",
+    "--seed",
+    "42",
+    "--selection-mode",
+    "rule",
+    "--concept-lock",
+    "산타복 수인",
+    "--preset",
+    "seasonal_event_portrait",
+    "--set",
+    "subject=cosplayer,beastkin_subject",
+    "--set",
+    "costume_style=covered_santa_fur_trim_costume",
+    "--set",
+    "location=christmas_market_lights,seoul_bus_stop_snow,gift_logistics_warehouse,apartment_door_threshold",
+    "--set",
+    "action=brisk_gift_handoff_pose,tail_lifting_before_sitting",
+    "--set",
+    "prop=modest_wrapped_gift_prop,christmas_lights_prop,gift_tag_ledger_prop",
+    "--set",
+    "lighting=first_snow_evening_light",
+    "--set",
+    "light_shape=snowflake_pinpoint_glow",
+    "--set",
+    "weather=windblown_snow",
+    "--set",
+    "motion=suspended_snowflake_motion",
+    "--set",
+    "species_marker=caprine_horn_root_skin_transition",
+    "--set",
+    "texture=velvet_antler_skin_texture",
+    "--set",
+    "anatomical_connection=horn_root_scalp_skin_ring,tail_base_under_waistband",
+    "--set",
+    "transition_stage=prominent_stage_structural_body_trait",
+    "--set",
+    "expression=side_set_prey_alert_gaze",
+    "--set",
+    "body_evidence_region=face_hairline_wrist_evidence,hood_opening_tail_gap_evidence",
+    "--set",
+    "costume_absorption_guard=hood_trim_not_ears_guard",
+    "--additional-requirement",
+    "adult covered Santa-inspired costume must stay readable through red fur trim, winter street lighting, wrapped gift, Christmas lights, and snow; do not collapse the role into generic archive fantasy",
+    "--additional-requirement",
+    "holiday identity is practical and festive, not lingerie, pin-up, or body-first costume display",
+    "--additional-requirement",
+    "수인은 동물 귀/꼬리만 붙인 패션이 아니라 피부와 털, 시선, 자세, 반사, 주변 시선에서 인간과 비인간 사이의 경계로 읽히게 한다.",
+    "--additional-requirement",
+    "Keep any base role outfit readable; the beastkin layer should alter surface texture, sensory gaze, body posture, reflection logic, social space, and species-specific body cues rather than replacing the role with a generic animal costume.",
+    "--additional-requirement",
+    "caprine goat or sheep beastkin with horizontal pupils and small horn cues",
+    "--additional-requirement",
+    "Santa outfit beastkin should distinguish fur trim from living fur and show tail gap, hood opening, sleeve edge, or collar body evidence",
+    "--additional-requirement",
+    "for Santa outfit beastkin, the covered red fur-trim Santa costume, wrapped gift, Christmas lights, and winter street stay first-read anchors; living animal traits must pass through the hood opening, sleeve edge, fur trim boundary, or tail gap rather than becoming decorative trim",
+    "--intent-axis",
+    "adult covered Santa outfit portrait with red fur trim, wrapped gift, Christmas lights, snow, and winter street atmosphere",
+    "--intent-axis",
+    "beastkin as a living human-animal threshold where skin, fur, ears, tail, gaze, posture, reflection, and social space prove a mixed body rather than detachable accessories",
+    "--intent-axis",
+    "caprine goat or sheep beastkin with horizontal pupils and small horn cues",
+    "--intent-axis",
+    "Santa outfit beastkin should distinguish fur trim from living fur and show tail gap, hood opening, sleeve edge, or collar body evidence",
+    "--likeness-mode",
+    "inspired",
+    "--n",
+    "1",
+    "--lang",
+    "both",
+    "--detail-level",
+    "detailed",
+    "--json-output",
+    "--include-negative"
+  ]
+}

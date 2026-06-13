@@ -1,0 +1,611 @@
+{
+  "concepts": [
+    {
+      "applied_mixins": [
+        "흡혈귀"
+      ],
+      "combined_forced_slots": {
+        "action": [
+          "doorframe_shadow_watch"
+        ],
+        "appearance_type": [
+          "classic_elegant"
+        ],
+        "color": [
+          "luxury_black_gold"
+        ],
+        "composition": [
+          "frame_within_frame"
+        ],
+        "costume_style": [
+          "frill_apron_maid_costume"
+        ],
+        "expression": [
+          "calm_intense_gaze"
+        ],
+        "light_intensity": [
+          "deep_shadow_detail"
+        ],
+        "lighting": [
+          "chiaroscuro_window_light"
+        ],
+        "location": [
+          "maid_cafe_interior"
+        ],
+        "mood": [
+          "occult_noir"
+        ],
+        "prop": [
+          "compact_mirror"
+        ],
+        "subject": [
+          "maid_cafe_performer"
+        ],
+        "subject_framing": [
+          "upper_body_framing"
+        ]
+      },
+      "concept": "카리나 메이드 흡혈귀",
+      "concept_mode": "legacy",
+      "forced_slots_applied": true,
+      "gate_results": [
+        {
+          "check": "applied_mixins가 정확히 ['흡혈귀']이고 역할은 0~1개여야 한다",
+          "detail": "applied_mixins == ['흡혈귀'] with role 메이드",
+          "id": "mixin_shape",
+          "source": "흡혈귀",
+          "status": "pass"
+        },
+        {
+          "check": "역할이 있으면 costume_style/wardrobe_style 강제값이 역할 recipe에서 유래해야 한다",
+          "detail": "role costume slots preserved",
+          "id": "role_costume_preserved",
+          "source": "흡혈귀",
+          "status": "pass"
+        },
+        {
+          "check": "양성 가시 앵커 2개 이상, 그중 1개는 얼굴/손/거울/전경 반사 옆에 있어야 한다.",
+          "id": "positive_anchor_pair",
+          "source": "흡혈귀",
+          "status": "manual"
+        },
+        {
+          "check": "combined_forced_slots에 흡혈귀 읽기를 약화시키는 산만한 prop(인형/마스코트 토이 등)이 남아 있지 않아야 한다.",
+          "id": "distracting_prop_audit",
+          "source": "흡혈귀",
+          "status": "manual"
+        }
+      ],
+      "matched": true,
+      "name": "카리나",
+      "role": "메이드",
+      "selected_bundles": [
+        {
+          "aspect": "",
+          "bundle_id": "maid_reflection_service",
+          "mixin": "흡혈귀",
+          "preset": "",
+          "set": {
+            "action": "doorframe_shadow_watch",
+            "color": "luxury_black_gold",
+            "composition": "frame_within_frame",
+            "lighting": "chiaroscuro_window_light",
+            "location": "maid_cafe_interior",
+            "mood": "occult_noir",
+            "prop": "compact_mirror",
+            "subject_framing": "upper_body_framing"
+          },
+          "subtype": "",
+          "weight": 5
+        }
+      ],
+      "selected_species_variants": [],
+      "soft_anchor_spec": {
+        "anchor_expansion": {
+          "enabled": false,
+          "min_similarity": 0.78,
+          "top_k": 3,
+          "weight_ratio": 0.5
+        },
+        "anchors": [
+          {
+            "critical": false,
+            "groups": [],
+            "ids": [
+              "classic_elegant"
+            ],
+            "pool": [
+              "classic_elegant"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "appearance_type",
+            "source": "mixin",
+            "terms": [
+              "classic",
+              "elegant"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": true,
+            "groups": [
+              "role_primary"
+            ],
+            "ids": [
+              "frill_apron_maid_costume"
+            ],
+            "pool": [
+              "frill_apron_maid_costume",
+              "akihabara_maid_cafe_uniform"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "costume_style",
+            "source": "role",
+            "terms": [
+              "maid-cafe",
+              "maid",
+              "frilled apron"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": false,
+            "groups": [],
+            "ids": [
+              "calm_intense_gaze"
+            ],
+            "pool": [
+              "calm_intense_gaze",
+              "cold_unreadable_stare"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "expression",
+            "source": "mixin",
+            "terms": [
+              "calm intense gaze",
+              "intense gaze"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": true,
+            "groups": [
+              "role_primary"
+            ],
+            "ids": [
+              "maid_cafe_interior"
+            ],
+            "pool": [
+              "maid_cafe_interior",
+              "quiet_cafe",
+              "tea_house_private_room",
+              "victorian_mansion_parlor"
+            ],
+            "pool_weights": {
+              "maid_cafe_interior": 3.0
+            },
+            "primary": false,
+            "required": true,
+            "slot": "location",
+            "source": "role",
+            "terms": [
+              "maid-cafe",
+              "cafe interior"
+            ],
+            "variant_group": "role_scene:maid_service_interior",
+            "variant_strategy": "role_scene_rotation"
+          },
+          {
+            "critical": false,
+            "groups": [
+              "mixin_primary"
+            ],
+            "ids": [
+              "compact_mirror",
+              "antique_hand_mirror_no_reflection_prop",
+              "ornate_goblet_dark_liquid_prop",
+              "ruby_cameo_choker_prop",
+              "bat_shadow_lace_prop"
+            ],
+            "pool": [
+              "compact_mirror",
+              "antique_hand_mirror_no_reflection_prop",
+              "ornate_goblet_dark_liquid_prop",
+              "ruby_cameo_choker_prop",
+              "bat_shadow_lace_prop"
+            ],
+            "pool_weights": {},
+            "primary": true,
+            "required": true,
+            "slot": "prop",
+            "source": "mixin",
+            "terms": [
+              "failed reflection",
+              "bat-like shadow",
+              "ruby eye",
+              "ruby cameo",
+              "goblet",
+              "no reflection"
+            ],
+            "variant_group": "vampire_subject_cue",
+            "variant_strategy": "seed_rotate"
+          },
+          {
+            "critical": false,
+            "groups": [
+              "mixin_primary"
+            ],
+            "ids": [
+              "compact_mirror"
+            ],
+            "pool": [
+              "compact_mirror",
+              "antique_hand_mirror_no_reflection_prop",
+              "ornate_goblet_dark_liquid_prop",
+              "ruby_cameo_choker_prop",
+              "bat_shadow_lace_prop"
+            ],
+            "pool_weights": {},
+            "primary": true,
+            "required": true,
+            "slot": "prop",
+            "source": "bundle",
+            "terms": [
+              "failed reflection",
+              "bat-like shadow",
+              "ruby eye",
+              "ruby cameo",
+              "goblet",
+              "no reflection"
+            ],
+            "variant_group": "vampire_subject_cue",
+            "variant_strategy": "seed_rotate"
+          },
+          {
+            "critical": false,
+            "groups": [
+              "role_primary"
+            ],
+            "ids": [
+              "maid_cafe_performer"
+            ],
+            "pool": [
+              "maid_cafe_performer"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "subject",
+            "source": "role",
+            "terms": [
+              "subject",
+              "maid",
+              "cafe",
+              "performer"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          }
+        ],
+        "concept": "카리나 메이드 흡혈귀",
+        "dual_read_requirement": {
+          "enabled": true,
+          "min_mixin_hits": 1,
+          "min_role_hits": 1,
+          "mixin_terms": [
+            "classic",
+            "elegant",
+            "calm intense gaze",
+            "intense gaze",
+            "failed reflection",
+            "bat-like shadow",
+            "ruby eye",
+            "ruby cameo"
+          ],
+          "role_terms": [
+            "maid-cafe",
+            "maid",
+            "frilled apron",
+            "cafe interior",
+            "subject",
+            "cafe",
+            "performer"
+          ]
+        },
+        "free_slot_constraints": {
+          "action": {
+            "deny_pool": [
+              "turning_back",
+              "over_shoulder_pose",
+              "slow_walk_turnaround",
+              "over_shoulder_floor_turn",
+              "reacting_to_pov_hand_tail_pull"
+            ]
+          },
+          "body_framing": {
+            "deny_pool": [
+              "over_shoulder_hip_line",
+              "clothed_bodyline_emphasis",
+              "legs_heels_framing"
+            ],
+            "prefer_ids": [
+              "hands_nails_accessory_closeup"
+            ]
+          },
+          "composition": {
+            "deny_pool": [
+              "phone_arm_length_selfie",
+              "mirror_selfie_composition",
+              "crouching_mirror_full_body",
+              "low_angle",
+              "low_angle_hero",
+              "concert_low_angle_crowd"
+            ],
+            "prefer_ids": [
+              "frame_within_frame",
+              "reflection",
+              "medium_close",
+              "broken_glass_fragments_frame",
+              "beauty_tight_face_crop",
+              "over_the_shoulder_dialogue"
+            ]
+          },
+          "subject_framing": {
+            "allow_pool": [
+              "head_and_shoulders_crop",
+              "upper_body_framing",
+              "detail_crop_hands_accessories"
+            ],
+            "deny_pool": [
+              "full_body_framing",
+              "three_quarter_body_framing",
+              "knee_up_framing"
+            ],
+            "prefer_ids": [
+              "head_and_shoulders_crop",
+              "upper_body_framing",
+              "close_up_face_crop",
+              "detail_crop_hands_accessories"
+            ]
+          }
+        },
+        "group_floors": {
+          "mixin_primary": 1
+        },
+        "min_anchors": 2,
+        "mixin_cue_budget": 2,
+        "mode": "soft",
+        "preset_affinity": {
+          "discouraged_presets": [
+            "beastkin_threshold_portrait"
+          ],
+          "preferred_presets": [
+            "maid_cafe_cosplay_portrait",
+            "gothic_doll_cosplay_portrait"
+          ]
+        },
+        "render_directives": [
+          {
+            "cue_terms": [
+              "bat-wing-shaped lace shadow",
+              "bat-like shadow",
+              "bat-wing shadow",
+              "bat shadow"
+            ],
+            "id": "vampire_cast_shadow_not_wings",
+            "positive_clause": "the bat-wing motif appears only as a flat dark shadow cast onto a nearby wall, floor, shoulder-side surface, or lace screen, with no physical wings, no wing props, and no costume attachment on the back",
+            "render_as": "cast_shadow",
+            "suppress_terms": [
+              "physical wings",
+              "wing prop",
+              "cosplay wings",
+              "3D wing attachment",
+              "wings on back"
+            ]
+          }
+        ],
+        "render_priority_terms": [
+          {
+            "group": "vampire_subject_cue",
+            "id": "vampire_visible_cue",
+            "min_hits": 1,
+            "target_slots": [
+              "prop",
+              "light_shape",
+              "location",
+              "composition"
+            ],
+            "terms": [
+              "failed reflection",
+              "bat-like shadow",
+              "ruby eye catchlight",
+              "daylight refusal",
+              "moon-pale pallor"
+            ],
+            "tier": "required"
+          },
+          {
+            "group": "vampire_visible_cue",
+            "id": "vampire_visible_cue",
+            "min_hits": 1,
+            "target_slots": [],
+            "terms": [
+              "failed reflection",
+              "bat-like shadow",
+              "ruby eye",
+              "ruby cameo",
+              "goblet",
+              "no reflection"
+            ],
+            "tier": "required"
+          }
+        ],
+        "render_suppress_terms": [],
+        "role_scene_policy": {
+          "allowed_locations": [
+            "maid_cafe_interior",
+            "quiet_cafe",
+            "tea_house_private_room",
+            "victorian_mansion_parlor"
+          ],
+          "enabled": true,
+          "enforce": true,
+          "forbidden_locations": [
+            "highland_pasture"
+          ],
+          "preferred_locations": [
+            "maid_cafe_interior",
+            "quiet_cafe",
+            "tea_house_private_room",
+            "victorian_mansion_parlor"
+          ],
+          "reason": "role scene pool must own location before generic beastkin atmosphere",
+          "scene_family": "maid_service_interior"
+        },
+        "safety_negative_floor": [
+          "visible blood",
+          "fang bite",
+          "bite wound",
+          "feeding scene",
+          "victim",
+          "gore",
+          "physical wings",
+          "wounds",
+          "injury",
+          "visible victim",
+          "captive person",
+          "restrained person",
+          "corpse",
+          "depicted violence"
+        ],
+        "salience_floor": 1,
+        "soft_repair_policy": {
+          "enabled": true,
+          "fail_open": false,
+          "max_attempts": 2,
+          "strategy": "prefer_then_reselect",
+          "target_slots": [
+            "subject_framing",
+            "composition",
+            "action",
+            "prop",
+            "body_framing"
+          ],
+          "trigger_checks": [
+            "required_render_priority_missing",
+            "dual_read_missing",
+            "body_first_survivor",
+            "free_slot_constraint_violation"
+          ]
+        },
+        "source_floors": {
+          "mixin": 1,
+          "role": 1
+        },
+        "species_family_policy": {},
+        "visual_guards": []
+      }
+    }
+  ],
+  "forward_args": [
+    "--tags",
+    "<ROOT>/skills/photo-prompt-image-generator/assets/photo_prompt_tags.json",
+    "--seed",
+    "42",
+    "--selection-mode",
+    "rule",
+    "--concept-lock",
+    "카리나 메이드 흡혈귀",
+    "--preset",
+    "maid_cafe_cosplay_portrait",
+    "--set",
+    "subject=maid_cafe_performer",
+    "--set",
+    "costume_style=frill_apron_maid_costume",
+    "--set",
+    "location=maid_cafe_interior",
+    "--set",
+    "appearance_type=classic_elegant",
+    "--set",
+    "expression=calm_intense_gaze",
+    "--set",
+    "light_intensity=deep_shadow_detail",
+    "--set",
+    "prop=compact_mirror",
+    "--set",
+    "action=doorframe_shadow_watch",
+    "--set",
+    "lighting=chiaroscuro_window_light",
+    "--set",
+    "mood=occult_noir",
+    "--set",
+    "composition=frame_within_frame",
+    "--set",
+    "subject_framing=upper_body_framing",
+    "--set",
+    "color=luxury_black_gold",
+    "--additional-requirement",
+    "adult maid-cafe costume styling with frilled apron details",
+    "--additional-requirement",
+    "vampire reinterpreted as an immortal nocturnal aristocrat: poised, refined, ageless, and defined by predatory stillness rather than a horror-movie monster pose",
+    "--additional-requirement",
+    "keep the role outfit readable; the vampire layer should alter posture, light, reflection behavior, room cues, and nearby objects rather than replacing the costume with a generic gothic doll dress",
+    "--additional-requirement",
+    "make at least two positive, visible non-graphic vampire identity anchors appear in the frame beyond black lace: a camera-visible absent or mismatched reflection, daylight barrier, moonlit pallor, bat-like shadow, withered flowers, coffin-like geometry, antique portrait, ruby eye catchlight, ruby jewelry, or a small cup of dark red wine",
+    "--additional-requirement",
+    "at least one vampire anchor must be attached to the subject or placed immediately beside the face, hand, phone, mirror, badge, jewelry, or foreground reflection; do not leave all vampire cues as distant background props",
+    "--additional-requirement",
+    "the vampire identity should be the first reading within a couple of seconds, before the job costume, role genre, or ordinary cosplay/fashion reading",
+    "--additional-requirement",
+    "do not rely on absence cues alone; generic gothic fashion, ordinary moody lifestyle portraiture, or plain mine horror is not enough to satisfy the vampire concept",
+    "--additional-requirement",
+    "use one restrained crimson accent only as eye catchlight, jewelry, medical cross, flower, or light, never as visible blood",
+    "--additional-requirement",
+    "the mouth stays relaxed and closed with no teeth shown; no visible blood, no bared fangs, no bite wounds, no visible victims, no gore, no feeding scene, and no graphic violence",
+    "--additional-requirement",
+    "the maid outfit stays clearly readable, while an open compact mirror faces the camera and shows an empty room, delayed silhouette, or mismatched reflection instead of a normal reflection",
+    "--additional-requirement",
+    "service posture becomes unnaturally still at the doorway, as if the room has gone silent around an immortal nocturnal guest",
+    "--additional-requirement",
+    "the subject's lit face and hands must be visible in the same frame as the open mirror, so the viewer can instantly compare the real maid against the failed reflection",
+    "--additional-requirement",
+    "add a positive vampire anchor near the subject, such as bat-wing-shaped lace shadow crossing the wall art close to the shoulder or a tiny ruby eye catchlight, so it is not only a gothic maid portrait",
+    "--additional-requirement",
+    "the vampire cue must share the first-read area with the face, throat, hand, choker, mirror edge, or foreground reflection rather than sitting only in background decor",
+    "--additional-requirement",
+    "the ruby, reflection, bat-like shadow, or moon-pale cue must be visible before the image reads as ordinary maid cosplay",
+    "--intent-axis",
+    "adult maid-cafe cosplay portrait",
+    "--intent-axis",
+    "frilled apron maid costume in a cafe interior",
+    "--intent-axis",
+    "non-graphic vampire portrait with positive visible supernatural anchors beyond gothic fashion",
+    "--intent-axis",
+    "daylight refusal, reflection unease, moonlit pallor, bat-like shadows, ruby eye catchlight, withered-life cues, and old-world predatory stillness",
+    "--intent-axis",
+    "role outfit preserved while vampire identity appears through environment, light, posture, and room behavior",
+    "--intent-axis",
+    "vampire maid portrait with reflection unease inside a maid-cafe cover setting",
+    "--intent-axis",
+    "doorway stillness, visible compact mirror wrongness, bat-like shadow, and nocturnal aristocratic service mood",
+    "--likeness-mode",
+    "inspired",
+    "--n",
+    "1",
+    "--lang",
+    "both",
+    "--detail-level",
+    "detailed",
+    "--json-output",
+    "--include-negative"
+  ]
+}

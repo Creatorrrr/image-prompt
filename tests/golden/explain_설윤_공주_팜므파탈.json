@@ -1,0 +1,843 @@
+{
+  "concepts": [
+    {
+      "applied_mixins": [
+        "팜므파탈"
+      ],
+      "combined_forced_slots": {
+        "action": [
+          "looking_down_at_low_camera"
+        ],
+        "appearance_type": [
+          "classic_elegant"
+        ],
+        "color": [
+          "luxury_black_gold"
+        ],
+        "composition": [
+          "centered_symmetry"
+        ],
+        "costume_style": [
+          "royal_ball_gown"
+        ],
+        "expression": [
+          "cold_unreadable_stare"
+        ],
+        "hair_style": [
+          "low_bun_hair"
+        ],
+        "light_direction": [
+          "side_light_left"
+        ],
+        "light_intensity": [
+          "deep_shadow_detail"
+        ],
+        "light_shape": [
+          "venetian_blind_shadows"
+        ],
+        "lighting": [
+          "candlelight"
+        ],
+        "location": [
+          "joseon_palace_interior"
+        ],
+        "makeup_style": [
+          "natural_makeup"
+        ],
+        "mood": [
+          "occult_noir"
+        ],
+        "prop": [
+          "phoenix_hairpin_prop"
+        ],
+        "subject": [
+          "princess_role"
+        ],
+        "subject_framing": [
+          "upper_body_framing"
+        ],
+        "wearable_accessory": [
+          "subtle_diamond_tiara"
+        ]
+      },
+      "concept": "설윤 공주 팜므파탈",
+      "concept_mode": "legacy",
+      "forced_slots_applied": true,
+      "gate_results": [
+        {
+          "check": "costume_style이 공주/왕실 register를 직접 드러내는 값 중 하나여야 한다",
+          "detail": "slot costume_style forced to ['royal_ball_gown']",
+          "id": "princess_costume_anchor",
+          "source": "공주",
+          "status": "pass"
+        },
+        {
+          "check": "공주/왕실 정체성이 티아라·관·왕실 문장·계승 문서·궁정/무도회/왕실 공적 공간 중 하나 이상으로 읽혀야 한다.",
+          "id": "royal_identity",
+          "source": "공주",
+          "status": "manual"
+        },
+        {
+          "check": "선택된 문화/시대 register가 하나로 일관되어야 하며, 명시 요청 없이 조선 한복으로만 반복 수렴하지 않아야 한다.",
+          "id": "coherent_register",
+          "source": "공주",
+          "status": "manual"
+        },
+        {
+          "check": "applied_mixins가 정확히 ['팜므파탈']이고 역할은 0~1개여야 한다",
+          "detail": "applied_mixins == ['팜므파탈'] with role 공주",
+          "id": "mixin_shape",
+          "source": "팜므파탈",
+          "status": "pass"
+        },
+        {
+          "check": "역할이 있으면 costume_style/wardrobe_style 강제값이 역할 recipe에서 유래해야 한다",
+          "detail": "role costume slots preserved",
+          "id": "role_costume_preserved",
+          "source": "팜므파탈",
+          "status": "pass"
+        },
+        {
+          "check": "정보 통제 앵커 1개 이상이 얼굴/손/테이블/전경/거울/폰 근처에 있어야 한다.",
+          "id": "information_control_anchor",
+          "source": "팜므파탈",
+          "status": "manual"
+        },
+        {
+          "check": "역할 콘셉트의 subject_framing이 얼굴/상반신/손 디테일 계열이어야 하며 풀바디/핀업 자세가 주 읽기가 되면 안 된다.",
+          "id": "framing_family",
+          "source": "팜므파탈",
+          "status": "manual"
+        },
+        {
+          "check": "사용자가 암살자를 명시하지 않는 한 무기 큐가 없어야 한다.",
+          "id": "no_assassin_weapon",
+          "source": "팜므파탈",
+          "status": "manual"
+        }
+      ],
+      "matched": true,
+      "name": "설윤",
+      "role": "공주",
+      "selected_bundles": [
+        {
+          "aspect": "",
+          "bundle_id": "princess_poisoned_court",
+          "mixin": "팜므파탈",
+          "preset": "",
+          "set": {
+            "action": "looking_down_at_low_camera",
+            "color": "luxury_black_gold",
+            "composition": "centered_symmetry",
+            "lighting": "candlelight",
+            "location": "joseon_palace_interior",
+            "mood": "occult_noir",
+            "prop": "phoenix_hairpin_prop",
+            "subject_framing": "upper_body_framing"
+          },
+          "subtype": "",
+          "weight": 5
+        }
+      ],
+      "selected_species_variants": [],
+      "soft_anchor_spec": {
+        "anchor_expansion": {
+          "enabled": false,
+          "min_similarity": 0.78,
+          "top_k": 3,
+          "weight_ratio": 0.5
+        },
+        "anchors": [
+          {
+            "critical": false,
+            "groups": [
+              "role_primary"
+            ],
+            "ids": [
+              "poised_standing"
+            ],
+            "pool": [
+              "poised_standing",
+              "royal_procession_walk",
+              "reaching_for_crown",
+              "reading_royal_edict",
+              "lowering_hood_revealing_ornament",
+              "ballroom_dance_pose"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "action",
+            "source": "role",
+            "terms": [
+              "poised standing",
+              "royal procession",
+              "reaching for crown",
+              "reading royal edict",
+              "ballroom dance"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": false,
+            "groups": [
+              "role_primary"
+            ],
+            "ids": [
+              "centered_symmetric"
+            ],
+            "pool": [
+              "centered_symmetric"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "composition",
+            "source": "role",
+            "terms": [
+              "composition",
+              "centered",
+              "symmetric"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": true,
+            "groups": [
+              "role_primary"
+            ],
+            "ids": [
+              "royal_ball_gown"
+            ],
+            "pool": [
+              "royal_ball_gown",
+              "royal_princess_hanbok",
+              "ornate_hanfu_court_dress",
+              "crown_princess_ceremonial_robe",
+              "elegant_modern_daywear",
+              "commoner_disguise_over_silk",
+              "faded_court_robe_worn"
+            ],
+            "pool_weights": {
+              "ornate_hanfu_court_dress": 2.0,
+              "royal_ball_gown": 3.0,
+              "royal_princess_hanbok": 2.0
+            },
+            "primary": false,
+            "required": true,
+            "slot": "costume_style",
+            "source": "role",
+            "terms": [
+              "princess gown",
+              "princess hanbok",
+              "hanfu court dress",
+              "royal ceremonial robe",
+              "modern royal daywear",
+              "royal",
+              "tiara"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": false,
+            "groups": [
+              "mixin_primary"
+            ],
+            "ids": [
+              "cold_unreadable_stare"
+            ],
+            "pool": [
+              "cold_unreadable_stare",
+              "confident_direct_gaze",
+              "mysterious_half_smile"
+            ],
+            "pool_weights": {},
+            "primary": true,
+            "required": true,
+            "slot": "expression",
+            "source": "mixin",
+            "terms": [
+              "cold unreadable stare",
+              "unreadable stare"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": true,
+            "groups": [
+              "role_primary"
+            ],
+            "ids": [
+              "throne_hall_interior"
+            ],
+            "pool": [
+              "throne_hall_interior",
+              "grand_ballroom_chandelier",
+              "royal_princess_chamber",
+              "hanfu_court_garden",
+              "joseon_palace_interior",
+              "hanok_inner_court",
+              "palace_ceremonial_courtyard",
+              "palace_garden_modern",
+              "palace_side_gate",
+              "royal_guard_corridor",
+              "royal_ancestral_shrine",
+              "ballroom_gala_floor",
+              "ruined_palace_wing"
+            ],
+            "pool_weights": {
+              "grand_ballroom_chandelier": 2.0,
+              "hanfu_court_garden": 2.0,
+              "royal_princess_chamber": 2.0,
+              "throne_hall_interior": 3.0
+            },
+            "primary": false,
+            "required": true,
+            "slot": "location",
+            "source": "role",
+            "terms": [
+              "palace chamber",
+              "throne hall",
+              "grand ballroom",
+              "Chinese court garden",
+              "modern palace garden",
+              "royal procession space"
+            ],
+            "variant_group": "role_scene:broad_princess_role",
+            "variant_strategy": "role_scene_rotation"
+          },
+          {
+            "critical": false,
+            "groups": [
+              "role_primary"
+            ],
+            "ids": [
+              "crown_on_cushion_prop"
+            ],
+            "pool": [
+              "crown_on_cushion_prop",
+              "royal_seal_okse_prop",
+              "royal_edict_gyoji_scroll_prop",
+              "dynastic_genealogy_book_prop",
+              "succession_token_box_prop",
+              "royal_crest_vip_pass_prop",
+              "sealed_heraldic_scroll_prop",
+              "heirloom_key_prop"
+            ],
+            "pool_weights": {
+              "crown_on_cushion_prop": 3.0
+            },
+            "primary": false,
+            "required": true,
+            "slot": "prop",
+            "source": "role",
+            "terms": [
+              "crown",
+              "royal seal",
+              "heraldic scroll",
+              "succession token",
+              "VIP crest pass"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": false,
+            "groups": [
+              "mixin_primary"
+            ],
+            "ids": [
+              "single_playing_card_calling_card_prop",
+              "wax_sealed_dossier_prop",
+              "engraved_signet_token_prop",
+              "security_access_card_prop"
+            ],
+            "pool": [
+              "single_playing_card_calling_card_prop",
+              "wax_sealed_dossier_prop",
+              "engraved_signet_token_prop",
+              "security_access_card_prop"
+            ],
+            "pool_weights": {},
+            "primary": true,
+            "required": true,
+            "slot": "prop",
+            "source": "mixin",
+            "terms": [
+              "calling card",
+              "dossier",
+              "signet token",
+              "access card",
+              "information-control"
+            ],
+            "variant_group": "femme_fatale_leverage",
+            "variant_strategy": "seed_rotate"
+          },
+          {
+            "critical": false,
+            "groups": [],
+            "ids": [
+              "phoenix_hairpin_prop"
+            ],
+            "pool": [
+              "phoenix_hairpin_prop"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "prop",
+            "source": "bundle",
+            "terms": [
+              "prop",
+              "phoenix",
+              "hairpin"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": false,
+            "groups": [
+              "role_primary"
+            ],
+            "ids": [
+              "princess_role"
+            ],
+            "pool": [
+              "princess_role",
+              "crown_princess_role",
+              "adult_royal_heir_role",
+              "modern_vip_princess_role",
+              "princess_in_disguise_role",
+              "exiled_royal_role",
+              "hanfu_court_model",
+              "traditional_korean_model"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "subject",
+            "source": "role",
+            "terms": [
+              "adult princess",
+              "royal heir",
+              "modern royal",
+              "princess in disguise"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": true,
+            "groups": [
+              "role_primary"
+            ],
+            "ids": [
+              "subtle_diamond_tiara"
+            ],
+            "pool": [
+              "subtle_diamond_tiara",
+              "ceremonial_royal_sash",
+              "royal_crest_choker",
+              "pearl_court_earrings",
+              "phoenix_binyeo_ornament",
+              "cheopji_hair_ornament",
+              "tteoljam_hair_ornament",
+              "hidden_royal_jade_pendant",
+              "tarnished_tiara",
+              "royal_crest_epaulette"
+            ],
+            "pool_weights": {
+              "subtle_diamond_tiara": 3.0
+            },
+            "primary": false,
+            "required": true,
+            "slot": "wearable_accessory",
+            "source": "role",
+            "terms": [
+              "tiara",
+              "crown",
+              "royal sash",
+              "court hair ornament",
+              "phoenix binyeo",
+              "hidden royal pendant"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          }
+        ],
+        "concept": "설윤 공주 팜므파탈",
+        "dual_read_requirement": {
+          "enabled": true,
+          "mixin_terms": [
+            "cold unreadable stare",
+            "unreadable stare",
+            "calling card",
+            "dossier",
+            "signet token",
+            "access card",
+            "information-control",
+            "prop"
+          ],
+          "role_terms": [
+            "poised standing",
+            "royal procession",
+            "reaching for crown",
+            "reading royal edict",
+            "ballroom dance",
+            "composition",
+            "centered",
+            "symmetric"
+          ]
+        },
+        "free_slot_constraints": {
+          "action": {
+            "deny_pool": [
+              "turning_back",
+              "over_shoulder_pose",
+              "slow_walk_turnaround",
+              "over_shoulder_floor_turn",
+              "reacting_to_pov_hand_tail_pull"
+            ]
+          },
+          "body_framing": {
+            "deny_pool": [
+              "over_shoulder_hip_line",
+              "clothed_bodyline_emphasis",
+              "legs_heels_framing"
+            ],
+            "prefer_ids": [
+              "hands_nails_accessory_closeup"
+            ]
+          },
+          "composition": {
+            "deny_pool": [
+              "phone_arm_length_selfie",
+              "mirror_selfie_composition",
+              "crouching_mirror_full_body",
+              "low_angle",
+              "low_angle_hero",
+              "concert_low_angle_crowd"
+            ],
+            "prefer_ids": [
+              "medium_close",
+              "frame_within_frame",
+              "beauty_tight_face_crop",
+              "over_the_shoulder_dialogue"
+            ]
+          },
+          "subject_framing": {
+            "deny_pool": [
+              "full_body_framing",
+              "three_quarter_body_framing",
+              "knee_up_framing"
+            ],
+            "prefer_ids": [
+              "head_and_shoulders_crop",
+              "upper_body_framing",
+              "close_up_face_crop",
+              "detail_crop_hands_accessories"
+            ]
+          }
+        },
+        "group_floors": {
+          "mixin_primary": 1
+        },
+        "min_anchors": 2,
+        "mixin_cue_budget": 2,
+        "mode": "soft",
+        "preset_affinity": {
+          "discouraged_presets": [
+            "beastkin_threshold_portrait"
+          ],
+          "preferred_presets": [
+            "princess_lineage_succession_portrait",
+            "princess_ceremonial_display_portrait",
+            "princess_incognito_disguise_portrait",
+            "princess_fallen_exile_portrait",
+            "modern_casual_princess_portrait",
+            "modern_heiress_paparazzi_portrait",
+            "royal_ball_gala_princess_portrait",
+            "palace_token_offhand_princess",
+            "hanfu_china_court_portrait",
+            "joseon_period_portrait",
+            "compact_cinematic_prop_portrait"
+          ]
+        },
+        "render_directives": [],
+        "render_priority_terms": [
+          {
+            "group": "femme_fatale_leverage",
+            "id": "femme_fatale_leverage",
+            "min_hits": 1,
+            "target_slots": [
+              "prop",
+              "composition",
+              "expression",
+              "action"
+            ],
+            "terms": [
+              "calling card",
+              "noir leverage",
+              "controlled gaze",
+              "information-control"
+            ],
+            "tier": "required"
+          }
+        ],
+        "render_suppress_terms": [],
+        "role_scene_policy": {
+          "allowed_locations": [
+            "throne_hall_interior",
+            "grand_ballroom_chandelier",
+            "royal_princess_chamber",
+            "hanfu_court_garden",
+            "joseon_palace_interior",
+            "hanok_inner_court",
+            "palace_ceremonial_courtyard",
+            "palace_garden_modern",
+            "palace_side_gate",
+            "royal_guard_corridor",
+            "royal_ancestral_shrine",
+            "ballroom_gala_floor",
+            "ruined_palace_wing"
+          ],
+          "enabled": true,
+          "enforce": true,
+          "forbidden_locations": [
+            "highland_pasture"
+          ],
+          "preferred_locations": [
+            "throne_hall_interior",
+            "grand_ballroom_chandelier",
+            "royal_princess_chamber",
+            "hanfu_court_garden",
+            "joseon_palace_interior",
+            "hanok_inner_court",
+            "palace_ceremonial_courtyard",
+            "palace_garden_modern",
+            "palace_side_gate",
+            "royal_guard_corridor",
+            "royal_ancestral_shrine",
+            "ballroom_gala_floor",
+            "ruined_palace_wing"
+          ],
+          "reason": "princess role scene pool must own location before generic mixin atmosphere while rotating across royal registers",
+          "scene_family": "broad_princess_role"
+        },
+        "safety_negative_floor": [
+          "pin-up pose",
+          "striptease framing",
+          "body-first authority pose",
+          "low-angle body dominance",
+          "gore",
+          "wounds",
+          "injury",
+          "visible victim",
+          "captive person",
+          "restrained person",
+          "corpse",
+          "depicted violence"
+        ],
+        "salience_floor": 1,
+        "soft_repair_policy": {
+          "enabled": true,
+          "fail_open": false,
+          "max_attempts": 2,
+          "strategy": "prefer_then_reselect",
+          "target_slots": [
+            "subject_framing",
+            "composition",
+            "action",
+            "prop",
+            "body_framing"
+          ],
+          "trigger_checks": [
+            "required_render_priority_missing",
+            "dual_read_missing",
+            "body_first_survivor",
+            "free_slot_constraint_violation"
+          ]
+        },
+        "source_floors": {
+          "mixin": 1,
+          "role": 1
+        },
+        "species_family_policy": {},
+        "visual_guards": [
+          {
+            "deny_ids": {
+              "action": [
+                "looking_down_at_low_camera",
+                "mirror_thirst_trap_pose",
+                "gym_mirror_fitcheck",
+                "body_roll_dance_loop"
+              ],
+              "composition": [
+                "low_angle",
+                "low_angle_hero",
+                "crouching_mirror_full_body",
+                "concert_low_angle_crowd"
+              ],
+              "subject_framing": [
+                "full_body_framing",
+                "three_quarter_body_framing",
+                "knee_up_framing"
+              ],
+              "wardrobe_style": [
+                "crop_top_wide_pants",
+                "street_jacket_boots",
+                "gym_athleisure_mirror_fit",
+                "pool_deck_swim_editorial"
+              ]
+            },
+            "id": "femme_fatale_anti_pinup_soft_guard",
+            "prefer_ids": {
+              "composition": [
+                "medium_close",
+                "frame_within_frame",
+                "reflection"
+              ],
+              "subject_framing": [
+                "head_and_shoulders_crop",
+                "upper_body_framing",
+                "detail_crop_hands_accessories"
+              ]
+            },
+            "reason": "keep femme fatale as noir control rather than body-first display"
+          },
+          {
+            "deny_facets": {
+              "body_framing": [
+                "soft_body_role:body_emphasis"
+              ]
+            },
+            "id": "femme_fatale_body_first_soft_guard",
+            "reason": "demote body-first framing when soft concept anchors are active"
+          },
+          {
+            "deny_facets": {
+              "body_framing": [
+                "soft_body_role:body_emphasis"
+              ]
+            },
+            "id": "팜므파탈_bundle_body_first_soft_guard",
+            "reason": "demote body-first framing when soft concept anchors are active"
+          }
+        ]
+      }
+    }
+  ],
+  "forward_args": [
+    "--tags",
+    "<ROOT>/skills/photo-prompt-image-generator/assets/photo_prompt_tags.json",
+    "--seed",
+    "42",
+    "--selection-mode",
+    "rule",
+    "--concept-lock",
+    "설윤 공주 팜므파탈",
+    "--preset",
+    "princess_lineage_succession_portrait",
+    "--set",
+    "subject=princess_role",
+    "--set",
+    "appearance_type=classic_elegant",
+    "--set",
+    "hair_style=low_bun_hair",
+    "--set",
+    "makeup_style=natural_makeup",
+    "--set",
+    "costume_style=royal_ball_gown",
+    "--set",
+    "wearable_accessory=subtle_diamond_tiara",
+    "--set",
+    "action=looking_down_at_low_camera",
+    "--set",
+    "prop=phoenix_hairpin_prop",
+    "--set",
+    "composition=centered_symmetry",
+    "--set",
+    "location=joseon_palace_interior",
+    "--set",
+    "expression=cold_unreadable_stare",
+    "--set",
+    "lighting=candlelight",
+    "--set",
+    "light_direction=side_light_left",
+    "--set",
+    "light_shape=venetian_blind_shadows",
+    "--set",
+    "light_intensity=deep_shadow_detail",
+    "--set",
+    "color=luxury_black_gold",
+    "--set",
+    "mood=occult_noir",
+    "--set",
+    "subject_framing=upper_body_framing",
+    "--soft-anchor-spec",
+    "{\"mode\":\"soft\",\"concept\":\"설윤 공주 팜므파탈\",\"anchor_expansion\":{\"enabled\":false,\"top_k\":3,\"min_similarity\":0.78,\"weight_ratio\":0.5},\"min_anchors\":2,\"source_floors\":{\"role\":1,\"mixin\":1},\"group_floors\":{\"mixin_primary\":1},\"salience_floor\":1,\"visual_guards\":[{\"id\":\"femme_fatale_anti_pinup_soft_guard\",\"reason\":\"keep femme fatale as noir control rather than body-first display\",\"deny_ids\":{\"action\":[\"looking_down_at_low_camera\",\"mirror_thirst_trap_pose\",\"gym_mirror_fitcheck\",\"body_roll_dance_loop\"],\"composition\":[\"low_angle\",\"low_angle_hero\",\"crouching_mirror_full_body\",\"concert_low_angle_crowd\"],\"subject_framing\":[\"full_body_framing\",\"three_quarter_body_framing\",\"knee_up_framing\"],\"wardrobe_style\":[\"crop_top_wide_pants\",\"street_jacket_boots\",\"gym_athleisure_mirror_fit\",\"pool_deck_swim_editorial\"]},\"prefer_ids\":{\"composition\":[\"medium_close\",\"frame_within_frame\",\"reflection\"],\"subject_framing\":[\"head_and_shoulders_crop\",\"upper_body_framing\",\"detail_crop_hands_accessories\"]}},{\"id\":\"femme_fatale_body_first_soft_guard\",\"reason\":\"demote body-first framing when soft concept anchors are active\",\"deny_facets\":{\"body_framing\":[\"soft_body_role:body_emphasis\"]}},{\"id\":\"팜므파탈_bundle_body_first_soft_guard\",\"reason\":\"demote body-first framing when soft concept anchors are active\",\"deny_facets\":{\"body_framing\":[\"soft_body_role:body_emphasis\"]}}],\"render_priority_terms\":[{\"id\":\"femme_fatale_leverage\",\"group\":\"femme_fatale_leverage\",\"tier\":\"required\",\"terms\":[\"calling card\",\"noir leverage\",\"controlled gaze\",\"information-control\"],\"min_hits\":1,\"target_slots\":[\"prop\",\"composition\",\"expression\",\"action\"]}],\"free_slot_constraints\":{\"subject_framing\":{\"deny_pool\":[\"full_body_framing\",\"three_quarter_body_framing\",\"knee_up_framing\"],\"prefer_ids\":[\"head_and_shoulders_crop\",\"upper_body_framing\",\"close_up_face_crop\",\"detail_crop_hands_accessories\"]},\"action\":{\"deny_pool\":[\"turning_back\",\"over_shoulder_pose\",\"slow_walk_turnaround\",\"over_shoulder_floor_turn\",\"reacting_to_pov_hand_tail_pull\"]},\"composition\":{\"deny_pool\":[\"phone_arm_length_selfie\",\"mirror_selfie_composition\",\"crouching_mirror_full_body\",\"low_angle\",\"low_angle_hero\",\"concert_low_angle_crowd\"],\"prefer_ids\":[\"medium_close\",\"frame_within_frame\",\"beauty_tight_face_crop\",\"over_the_shoulder_dialogue\"]},\"body_framing\":{\"deny_pool\":[\"over_shoulder_hip_line\",\"clothed_bodyline_emphasis\",\"legs_heels_framing\"],\"prefer_ids\":[\"hands_nails_accessory_closeup\"]}},\"render_suppress_terms\":[],\"render_directives\":[],\"dual_read_requirement\":{\"enabled\":true,\"role_terms\":[\"poised standing\",\"royal procession\",\"reaching for crown\",\"reading royal edict\",\"ballroom dance\",\"composition\",\"centered\",\"symmetric\"],\"mixin_terms\":[\"cold unreadable stare\",\"unreadable stare\",\"calling card\",\"dossier\",\"signet token\",\"access card\",\"information-control\",\"prop\"]},\"preset_affinity\":{\"preferred_presets\":[\"princess_lineage_succession_portrait\",\"princess_ceremonial_display_portrait\",\"princess_incognito_disguise_portrait\",\"princess_fallen_exile_portrait\",\"modern_casual_princess_portrait\",\"modern_heiress_paparazzi_portrait\",\"royal_ball_gala_princess_portrait\",\"palace_token_offhand_princess\",\"hanfu_china_court_portrait\",\"joseon_period_portrait\"],\"discouraged_presets\":[\"beastkin_threshold_portrait\"]},\"role_scene_policy\":{\"enabled\":true,\"allowed_locations\":[\"throne_hall_interior\",\"grand_ballroom_chandelier\",\"royal_princess_chamber\",\"hanfu_court_garden\",\"joseon_palace_interior\",\"hanok_inner_court\",\"palace_ceremonial_courtyard\",\"palace_garden_modern\",\"palace_side_gate\",\"royal_guard_corridor\",\"royal_ancestral_shrine\",\"ballroom_gala_floor\",\"ruined_palace_wing\"],\"preferred_locations\":[\"throne_hall_interior\",\"grand_ballroom_chandelier\",\"royal_princess_chamber\",\"hanfu_court_garden\",\"joseon_palace_interior\",\"hanok_inner_court\",\"palace_ceremonial_courtyard\",\"palace_garden_modern\",\"palace_side_gate\",\"royal_guard_corridor\",\"royal_ancestral_shrine\",\"ballroom_gala_floor\",\"ruined_palace_wing\"],\"forbidden_locations\":[\"highland_pasture\"],\"enforce\":true,\"scene_family\":\"broad_princess_role\",\"reason\":\"princess role scene pool must own location before generic mixin atmosphere while rotating across royal registers\"},\"species_family_policy\":{},\"soft_repair_policy\":{\"enabled\":true,\"max_attempts\":2,\"trigger_checks\":[\"required_render_priority_missing\",\"dual_read_missing\",\"body_first_survivor\",\"free_slot_constraint_violation\"],\"target_slots\":[\"subject_framing\",\"composition\",\"action\",\"prop\",\"body_framing\"],\"strategy\":\"prefer_then_reselect\",\"fail_open\":false},\"safety_negative_floor\":[\"pin-up pose\",\"striptease framing\",\"body-first authority pose\",\"low-angle body dominance\",\"gore\",\"wounds\",\"injury\",\"visible victim\",\"captive person\",\"restrained person\",\"corpse\",\"depicted violence\"],\"mixin_cue_budget\":2,\"anchors\":[{\"slot\":\"action\",\"ids\":[\"poised_standing\"],\"pool\":[\"poised_standing\",\"royal_procession_walk\",\"reaching_for_crown\",\"reading_royal_edict\",\"lowering_hood_revealing_ornament\",\"ballroom_dance_pose\"],\"pool_weights\":{},\"terms\":[\"poised standing\",\"royal procession\",\"reaching for crown\",\"reading royal edict\",\"ballroom dance\"],\"source\":\"role\",\"required\":true,\"critical\":false,\"groups\":[\"role_primary\"],\"primary\":false,\"variant_group\":\"\",\"variant_strategy\":\"\"},{\"slot\":\"composition\",\"ids\":[\"centered_symmetric\"],\"pool\":[\"centered_symmetric\"],\"pool_weights\":{},\"terms\":[\"composition\",\"centered\",\"symmetric\"],\"source\":\"role\",\"required\":true,\"critical\":false,\"groups\":[\"role_primary\"],\"primary\":false,\"variant_group\":\"\",\"variant_strategy\":\"\"},{\"slot\":\"costume_style\",\"ids\":[\"royal_ball_gown\"],\"pool\":[\"royal_ball_gown\",\"royal_princess_hanbok\",\"ornate_hanfu_court_dress\",\"crown_princess_ceremonial_robe\",\"elegant_modern_daywear\",\"commoner_disguise_over_silk\",\"faded_court_robe_worn\"],\"pool_weights\":{\"royal_ball_gown\":3.0,\"royal_princess_hanbok\":2.0,\"ornate_hanfu_court_dress\":2.0},\"terms\":[\"princess gown\",\"princess hanbok\",\"hanfu court dress\",\"royal ceremonial robe\",\"modern royal daywear\",\"royal\",\"tiara\"],\"source\":\"role\",\"required\":true,\"critical\":true,\"groups\":[\"role_primary\"],\"primary\":false,\"variant_group\":\"\",\"variant_strategy\":\"\"},{\"slot\":\"expression\",\"ids\":[\"cold_unreadable_stare\"],\"pool\":[\"cold_unreadable_stare\",\"confident_direct_gaze\",\"mysterious_half_smile\"],\"pool_weights\":{},\"terms\":[\"cold unreadable stare\",\"unreadable stare\"],\"source\":\"mixin\",\"required\":true,\"critical\":false,\"groups\":[\"mixin_primary\"],\"primary\":true,\"variant_group\":\"\",\"variant_strategy\":\"\"},{\"slot\":\"location\",\"ids\":[\"throne_hall_interior\"],\"pool\":[\"throne_hall_interior\",\"grand_ballroom_chandelier\",\"royal_princess_chamber\",\"hanfu_court_garden\",\"joseon_palace_interior\",\"hanok_inner_court\",\"palace_ceremonial_courtyard\",\"palace_garden_modern\",\"palace_side_gate\",\"royal_guard_corridor\",\"royal_ancestral_shrine\",\"ballroom_gala_floor\",\"ruined_palace_wing\"],\"pool_weights\":{\"throne_hall_interior\":3.0,\"grand_ballroom_chandelier\":2.0,\"royal_princess_chamber\":2.0,\"hanfu_court_garden\":2.0},\"terms\":[\"palace chamber\",\"throne hall\",\"grand ballroom\",\"Chinese court garden\",\"modern palace garden\",\"royal procession space\"],\"source\":\"role\",\"required\":true,\"critical\":true,\"groups\":[\"role_primary\"],\"primary\":false,\"variant_group\":\"role_scene:broad_princess_role\",\"variant_strategy\":\"role_scene_rotation\"},{\"slot\":\"prop\",\"ids\":[\"crown_on_cushion_prop\"],\"pool\":[\"crown_on_cushion_prop\",\"royal_seal_okse_prop\",\"royal_edict_gyoji_scroll_prop\",\"dynastic_genealogy_book_prop\",\"succession_token_box_prop\",\"royal_crest_vip_pass_prop\",\"sealed_heraldic_scroll_prop\",\"heirloom_key_prop\"],\"pool_weights\":{\"crown_on_cushion_prop\":3.0},\"terms\":[\"crown\",\"royal seal\",\"heraldic scroll\",\"succession token\",\"VIP crest pass\"],\"source\":\"role\",\"required\":true,\"critical\":false,\"groups\":[\"role_primary\"],\"primary\":false,\"variant_group\":\"\",\"variant_strategy\":\"\"},{\"slot\":\"prop\",\"ids\":[\"single_playing_card_calling_card_prop\",\"wax_sealed_dossier_prop\",\"engraved_signet_token_prop\",\"security_access_card_prop\"],\"pool\":[\"single_playing_card_calling_card_prop\",\"wax_sealed_dossier_prop\",\"engraved_signet_token_prop\",\"security_access_card_prop\"],\"pool_weights\":{},\"terms\":[\"calling card\",\"dossier\",\"signet token\",\"access card\",\"information-control\"],\"source\":\"mixin\",\"required\":true,\"critical\":false,\"groups\":[\"mixin_primary\"],\"primary\":true,\"variant_group\":\"femme_fatale_leverage\",\"variant_strategy\":\"seed_rotate\"},{\"slot\":\"prop\",\"ids\":[\"phoenix_hairpin_prop\"],\"pool\":[\"phoenix_hairpin_prop\"],\"pool_weights\":{},\"terms\":[\"prop\",\"phoenix\",\"hairpin\"],\"source\":\"bundle\",\"required\":true,\"critical\":false,\"groups\":[],\"primary\":false,\"variant_group\":\"\",\"variant_strategy\":\"\"},{\"slot\":\"subject\",\"ids\":[\"princess_role\"],\"pool\":[\"princess_role\",\"crown_princess_role\",\"adult_royal_heir_role\",\"modern_vip_princess_role\",\"princess_in_disguise_role\",\"exiled_royal_role\",\"hanfu_court_model\",\"traditional_korean_model\"],\"pool_weights\":{},\"terms\":[\"adult princess\",\"royal heir\",\"modern royal\",\"princess in disguise\"],\"source\":\"role\",\"required\":true,\"critical\":false,\"groups\":[\"role_primary\"],\"primary\":false,\"variant_group\":\"\",\"variant_strategy\":\"\"},{\"slot\":\"wearable_accessory\",\"ids\":[\"subtle_diamond_tiara\"],\"pool\":[\"subtle_diamond_tiara\",\"ceremonial_royal_sash\",\"royal_crest_choker\",\"pearl_court_earrings\",\"phoenix_binyeo_ornament\",\"cheopji_hair_ornament\",\"tteoljam_hair_ornament\",\"hidden_royal_jade_pendant\",\"tarnished_tiara\",\"royal_crest_epaulette\"],\"pool_weights\":{\"subtle_diamond_tiara\":3.0},\"terms\":[\"tiara\",\"crown\",\"royal sash\",\"court hair ornament\",\"phoenix binyeo\",\"hidden royal pendant\"],\"source\":\"role\",\"required\":true,\"critical\":true,\"groups\":[\"role_primary\"],\"primary\":false,\"variant_group\":\"\",\"variant_strategy\":\"\"}]}",
+    "--additional-requirement",
+    "Treat princess as a broad adult royal archetype, not a single Joseon-only costume: choose one coherent register such as Korean court, Chinese hanfu court, Western ballroom royalty, modern royal heiress, incognito heir, or fallen/exiled royal.",
+    "--additional-requirement",
+    "Royal identity must read through visible regalia, inherited-rank posture, lineage object, crest, attendants, throne/court space, official public-display context, or palace-security context, not just a pretty dress.",
+    "--additional-requirement",
+    "Do not collapse every princess prompt into hanbok/Joseon palace; do not turn it into generic cosplay, pin-up monarchy, minors-coding, or disconnected fantasy costume.",
+    "--additional-requirement",
+    "femme fatale reinterpreted as a powerful, intelligent, dangerous woman who controls the gaze and the situation: the symbol of potential ruin, not a sexy villainess stereotype",
+    "--additional-requirement",
+    "she is the subject who watches and decides; the camera or viewer is the one being observed and unsettled through gaze reversal",
+    "--additional-requirement",
+    "keep the role outfit readable; the femme fatale layer changes power, posture, gaze direction, light, and symbolic props rather than turning the image into lingerie, cleavage-centric framing, or a pin-up",
+    "--additional-requirement",
+    "express danger through noir and symbolist grammar: chiaroscuro, deep shadow, reflection or doubling, threshold framing, wilted-flower or poison omen, and withheld intent",
+    "--additional-requirement",
+    "make intelligence and leverage visible in the frame: at least one information-control anchor such as a sealed file, guest book, ledger, calling card, phone message, key, decree, or withheld result should sit near her face, hand, table edge, or foreground, not only in the mood",
+    "--additional-requirement",
+    "danger may also be expressed as magnetic, deliberate allure where being drawn in is itself the trap: a honey-trap or spider-and-web register in which she chooses the encounter, sets the lure, and reads the mark; this is still agency, intelligence, and control, never passive availability or submission",
+    "--additional-requirement",
+    "agency over availability: no come-hither pose, no bedroom-eyes expression, no parted-lips invitation, no submissive posture, no nudity, no explicit or fetish content, and no depicted violence, blood, victim, or injury",
+    "--additional-requirement",
+    "frame her through face, eyes, hands, and symbolic evidence in an upper-body, head-and-shoulders, waist-up, or detail crop; if a low-angle camera is used, frame it as dominance through face, eyes, posture, and stance from a respectful distance, never as an objectifying full-body or pin-up body angle",
+    "--additional-requirement",
+    "the princess styling reads as political power and lethal intelligence in a poisoned court, not decorative beauty",
+    "--additional-requirement",
+    "the phoenix hairpin catches a quiet omen-like glint, with an unsigned decree or sealed court order nearby as the information she may reveal or destroy; she is the one who decides fates in this court",
+    "--intent-axis",
+    "broad adult princess or royal-heir portrait with a coherent cultural or era register",
+    "--intent-axis",
+    "royal lineage, public display, succession, ceremony, modern nobility, incognito identity, or exile facets",
+    "--intent-axis",
+    "visible regalia, crown or tiara, court ornament, lineage object, palace, ballroom, court, or modern royal setting",
+    "--intent-axis",
+    "femme fatale as power, intelligence, danger, and the symbol of ruin, never simple seduction",
+    "--intent-axis",
+    "gaze reversal where the viewer becomes the observed object",
+    "--intent-axis",
+    "noir and symbolist grammar: chiaroscuro, reflection-doubling, threshold, wilted omen, poison omen, withheld intent",
+    "--intent-axis",
+    "intellectual danger and leverage made visible through information-control anchors near the face, hands, table edge, or foreground",
+    "--intent-axis",
+    "two legitimate registers: cold information-control authority, and magnetic lure-as-weapon where the invitation itself is the trap",
+    "--intent-axis",
+    "role outfit preserved while femme fatale identity appears through power, gaze, light, posture, and symbolic props",
+    "--intent-axis",
+    "femme fatale court figure who rules through intelligence and danger",
+    "--intent-axis",
+    "candlelit palace power, omen ornament, centered authority, and reversed gaze",
+    "--likeness-mode",
+    "inspired",
+    "--n",
+    "1",
+    "--lang",
+    "both",
+    "--detail-level",
+    "detailed",
+    "--json-output",
+    "--include-negative"
+  ]
+}

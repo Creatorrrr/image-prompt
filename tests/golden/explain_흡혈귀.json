@@ -1,0 +1,488 @@
+{
+  "concepts": [
+    {
+      "applied_mixins": [
+        "흡혈귀"
+      ],
+      "combined_forced_slots": {
+        "action": [
+          "standing_silence"
+        ],
+        "appearance_type": [
+          "classic_elegant"
+        ],
+        "color": [
+          "luxury_black_gold"
+        ],
+        "composition": [
+          "centered_symmetry"
+        ],
+        "costume_style": [
+          "gothic_doll_lace_dress"
+        ],
+        "expression": [
+          "calm_intense_gaze"
+        ],
+        "light_intensity": [
+          "deep_shadow_detail"
+        ],
+        "lighting": [
+          "candlelit_ritual_light"
+        ],
+        "location": [
+          "gothic_glass_curio_cabinet"
+        ],
+        "mood": [
+          "gothic_melancholy"
+        ],
+        "prop": [
+          "flower_bouquet"
+        ]
+      },
+      "concept": "흡혈귀",
+      "concept_mode": "legacy",
+      "forced_slots_applied": true,
+      "gate_results": [
+        {
+          "check": "applied_mixins가 정확히 ['흡혈귀']이고 역할은 0~1개여야 한다",
+          "detail": "applied_mixins == ['흡혈귀'] standalone",
+          "id": "mixin_shape",
+          "source": "흡혈귀",
+          "status": "pass"
+        },
+        {
+          "check": "역할이 있으면 costume_style/wardrobe_style 강제값이 역할 recipe에서 유래해야 한다",
+          "detail": "no role applied (not applicable)",
+          "id": "role_costume_preserved",
+          "source": "흡혈귀",
+          "status": "pass"
+        },
+        {
+          "check": "양성 가시 앵커 2개 이상, 그중 1개는 얼굴/손/거울/전경 반사 옆에 있어야 한다.",
+          "id": "positive_anchor_pair",
+          "source": "흡혈귀",
+          "status": "manual"
+        },
+        {
+          "check": "combined_forced_slots에 흡혈귀 읽기를 약화시키는 산만한 prop(인형/마스코트 토이 등)이 남아 있지 않아야 한다.",
+          "id": "distracting_prop_audit",
+          "source": "흡혈귀",
+          "status": "manual"
+        }
+      ],
+      "matched": true,
+      "name": "흡혈귀",
+      "role": null,
+      "selected_bundles": [
+        {
+          "aspect": "",
+          "bundle_id": "standalone_curio_nocturne",
+          "mixin": "흡혈귀",
+          "preset": "",
+          "set": {
+            "action": "standing_silence",
+            "color": "luxury_black_gold",
+            "composition": "centered_symmetry",
+            "costume_style": "gothic_doll_lace_dress",
+            "lighting": "candlelit_ritual_light",
+            "location": "gothic_glass_curio_cabinet",
+            "mood": "gothic_melancholy",
+            "prop": "flower_bouquet"
+          },
+          "subtype": "",
+          "weight": 1
+        }
+      ],
+      "selected_species_variants": [],
+      "soft_anchor_spec": {
+        "anchor_expansion": {
+          "enabled": false,
+          "min_similarity": 0.78,
+          "top_k": 3,
+          "weight_ratio": 0.5
+        },
+        "anchors": [
+          {
+            "critical": false,
+            "groups": [],
+            "ids": [
+              "classic_elegant"
+            ],
+            "pool": [
+              "classic_elegant"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "appearance_type",
+            "source": "mixin",
+            "terms": [
+              "classic",
+              "elegant"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": false,
+            "groups": [],
+            "ids": [
+              "gothic_doll_lace_dress"
+            ],
+            "pool": [
+              "gothic_doll_lace_dress"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "costume_style",
+            "source": "bundle",
+            "terms": [
+              "costume",
+              "gothic",
+              "doll",
+              "lace",
+              "dress"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": false,
+            "groups": [],
+            "ids": [
+              "calm_intense_gaze"
+            ],
+            "pool": [
+              "calm_intense_gaze",
+              "cold_unreadable_stare"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "expression",
+            "source": "mixin",
+            "terms": [
+              "calm intense gaze",
+              "intense gaze"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": false,
+            "groups": [],
+            "ids": [
+              "gothic_glass_curio_cabinet"
+            ],
+            "pool": [
+              "gothic_glass_curio_cabinet"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "location",
+            "source": "bundle",
+            "terms": [
+              "location",
+              "gothic",
+              "glass",
+              "curio",
+              "cabinet"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": false,
+            "groups": [
+              "mixin_primary"
+            ],
+            "ids": [
+              "compact_mirror",
+              "antique_hand_mirror_no_reflection_prop",
+              "ornate_goblet_dark_liquid_prop",
+              "ruby_cameo_choker_prop",
+              "bat_shadow_lace_prop"
+            ],
+            "pool": [
+              "compact_mirror",
+              "antique_hand_mirror_no_reflection_prop",
+              "ornate_goblet_dark_liquid_prop",
+              "ruby_cameo_choker_prop",
+              "bat_shadow_lace_prop"
+            ],
+            "pool_weights": {},
+            "primary": true,
+            "required": true,
+            "slot": "prop",
+            "source": "mixin",
+            "terms": [
+              "failed reflection",
+              "bat-like shadow",
+              "ruby eye",
+              "ruby cameo",
+              "goblet",
+              "no reflection"
+            ],
+            "variant_group": "vampire_subject_cue",
+            "variant_strategy": "seed_rotate"
+          },
+          {
+            "critical": false,
+            "groups": [],
+            "ids": [
+              "flower_bouquet"
+            ],
+            "pool": [
+              "flower_bouquet"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "prop",
+            "source": "bundle",
+            "terms": [
+              "prop",
+              "flower",
+              "bouquet"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          }
+        ],
+        "concept": "흡혈귀",
+        "dual_read_requirement": {
+          "enabled": true,
+          "min_mixin_hits": 1,
+          "min_role_hits": 1
+        },
+        "free_slot_constraints": {
+          "action": {
+            "deny_pool": [
+              "turning_back",
+              "over_shoulder_pose",
+              "slow_walk_turnaround",
+              "over_shoulder_floor_turn",
+              "reacting_to_pov_hand_tail_pull"
+            ]
+          },
+          "body_framing": {
+            "deny_pool": [
+              "over_shoulder_hip_line",
+              "clothed_bodyline_emphasis",
+              "legs_heels_framing"
+            ],
+            "prefer_ids": [
+              "hands_nails_accessory_closeup"
+            ]
+          },
+          "composition": {
+            "deny_pool": [
+              "phone_arm_length_selfie",
+              "mirror_selfie_composition",
+              "crouching_mirror_full_body",
+              "low_angle",
+              "low_angle_hero",
+              "concert_low_angle_crowd"
+            ],
+            "prefer_ids": [
+              "frame_within_frame",
+              "reflection",
+              "medium_close",
+              "broken_glass_fragments_frame",
+              "beauty_tight_face_crop",
+              "over_the_shoulder_dialogue"
+            ]
+          },
+          "subject_framing": {
+            "allow_pool": [
+              "head_and_shoulders_crop",
+              "upper_body_framing",
+              "close_up_face_crop",
+              "detail_crop_hands_accessories"
+            ],
+            "deny_pool": [
+              "full_body_framing",
+              "three_quarter_body_framing",
+              "knee_up_framing"
+            ],
+            "prefer_ids": [
+              "head_and_shoulders_crop",
+              "upper_body_framing",
+              "close_up_face_crop",
+              "detail_crop_hands_accessories"
+            ]
+          }
+        },
+        "group_floors": {
+          "mixin_primary": 1
+        },
+        "min_anchors": 1,
+        "mixin_cue_budget": 0,
+        "mode": "soft",
+        "preset_affinity": {
+          "preferred_presets": [
+            "gothic_doll_cosplay_portrait"
+          ]
+        },
+        "render_directives": [
+          {
+            "cue_terms": [
+              "bat-wing-shaped lace shadow",
+              "bat-like shadow",
+              "bat-wing shadow",
+              "bat shadow"
+            ],
+            "id": "vampire_cast_shadow_not_wings",
+            "positive_clause": "the bat-wing motif appears only as a flat dark shadow cast onto a nearby wall, floor, shoulder-side surface, or lace screen, with no physical wings, no wing props, and no costume attachment on the back",
+            "render_as": "cast_shadow",
+            "suppress_terms": [
+              "physical wings",
+              "wing prop",
+              "cosplay wings",
+              "3D wing attachment",
+              "wings on back"
+            ]
+          }
+        ],
+        "render_priority_terms": [
+          {
+            "group": "vampire_subject_cue",
+            "id": "vampire_visible_cue",
+            "min_hits": 1,
+            "target_slots": [
+              "prop",
+              "light_shape",
+              "location",
+              "composition"
+            ],
+            "terms": [
+              "failed reflection",
+              "bat-like shadow",
+              "ruby eye catchlight",
+              "daylight refusal",
+              "moon-pale pallor"
+            ],
+            "tier": "required"
+          }
+        ],
+        "render_suppress_terms": [],
+        "role_scene_policy": {},
+        "safety_negative_floor": [
+          "visible blood",
+          "fang bite",
+          "bite wound",
+          "feeding scene",
+          "victim",
+          "gore",
+          "physical wings",
+          "wounds",
+          "injury",
+          "visible victim",
+          "captive person",
+          "restrained person",
+          "corpse",
+          "depicted violence"
+        ],
+        "salience_floor": 1,
+        "soft_repair_policy": {
+          "enabled": true,
+          "fail_open": false,
+          "max_attempts": 2,
+          "strategy": "prefer_then_reselect",
+          "target_slots": [
+            "subject_framing",
+            "composition",
+            "action",
+            "prop",
+            "body_framing"
+          ],
+          "trigger_checks": [
+            "required_render_priority_missing",
+            "dual_read_missing",
+            "body_first_survivor",
+            "free_slot_constraint_violation"
+          ]
+        },
+        "source_floors": {
+          "mixin": 1
+        },
+        "species_family_policy": {},
+        "visual_guards": []
+      }
+    }
+  ],
+  "forward_args": [
+    "--tags",
+    "<ROOT>/skills/photo-prompt-image-generator/assets/photo_prompt_tags.json",
+    "--seed",
+    "42",
+    "--selection-mode",
+    "rule",
+    "--concept-lock",
+    "흡혈귀",
+    "--preset",
+    "gothic_doll_cosplay_portrait",
+    "--set",
+    "appearance_type=classic_elegant",
+    "--set",
+    "expression=calm_intense_gaze",
+    "--set",
+    "light_intensity=deep_shadow_detail",
+    "--set",
+    "costume_style=gothic_doll_lace_dress",
+    "--set",
+    "prop=flower_bouquet",
+    "--set",
+    "action=standing_silence",
+    "--set",
+    "location=gothic_glass_curio_cabinet",
+    "--set",
+    "lighting=candlelit_ritual_light",
+    "--set",
+    "mood=gothic_melancholy",
+    "--set",
+    "composition=centered_symmetry",
+    "--set",
+    "color=luxury_black_gold",
+    "--additional-requirement",
+    "vampire reinterpreted as an immortal nocturnal aristocrat: poised, refined, ageless, and defined by predatory stillness rather than a horror-movie monster pose",
+    "--additional-requirement",
+    "keep the role outfit readable; the vampire layer should alter posture, light, reflection behavior, room cues, and nearby objects rather than replacing the costume with a generic gothic doll dress",
+    "--additional-requirement",
+    "make at least two positive, visible non-graphic vampire identity anchors appear in the frame beyond black lace: a camera-visible absent or mismatched reflection, daylight barrier, moonlit pallor, bat-like shadow, withered flowers, coffin-like geometry, antique portrait, ruby eye catchlight, ruby jewelry, or a small cup of dark red wine",
+    "--additional-requirement",
+    "at least one vampire anchor must be attached to the subject or placed immediately beside the face, hand, phone, mirror, badge, jewelry, or foreground reflection; do not leave all vampire cues as distant background props",
+    "--additional-requirement",
+    "the vampire identity should be the first reading within a couple of seconds, before the job costume, role genre, or ordinary cosplay/fashion reading",
+    "--additional-requirement",
+    "do not rely on absence cues alone; generic gothic fashion, ordinary moody lifestyle portraiture, or plain mine horror is not enough to satisfy the vampire concept",
+    "--additional-requirement",
+    "use one restrained crimson accent only as eye catchlight, jewelry, medical cross, flower, or light, never as visible blood",
+    "--additional-requirement",
+    "the mouth stays relaxed and closed with no teeth shown; no visible blood, no bared fangs, no bite wounds, no visible victims, no gore, no feeding scene, and no graphic violence",
+    "--additional-requirement",
+    "glass curios, withered flowers, antique portraits, a ruby eye catchlight, and a small cup of dark red wine should imply centuries of collected time around a still nocturnal aristocrat",
+    "--intent-axis",
+    "non-graphic vampire portrait with positive visible supernatural anchors beyond gothic fashion",
+    "--intent-axis",
+    "daylight refusal, reflection unease, moonlit pallor, bat-like shadows, ruby eye catchlight, withered-life cues, and old-world predatory stillness",
+    "--intent-axis",
+    "role outfit preserved while vampire identity appears through environment, light, posture, and room behavior",
+    "--intent-axis",
+    "standalone vampire aristocrat surrounded by gothic curios and withered flowers",
+    "--intent-axis",
+    "candlelit old-world elegance, collected centuries, and refined predatory stillness",
+    "--likeness-mode",
+    "inspired",
+    "--n",
+    "1",
+    "--lang",
+    "both",
+    "--detail-level",
+    "detailed",
+    "--json-output",
+    "--include-negative"
+  ]
+}

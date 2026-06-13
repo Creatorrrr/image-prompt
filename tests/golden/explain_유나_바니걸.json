@@ -1,0 +1,276 @@
+{
+  "concepts": [
+    {
+      "applied_mixins": [],
+      "combined_forced_slots": {
+        "costume_style": [
+          "bunny_girl_costume"
+        ],
+        "subject": [
+          "adult_stage_dancer"
+        ]
+      },
+      "concept": "유나 바니걸",
+      "concept_mode": "legacy",
+      "forced_slots_applied": true,
+      "gate_results": [],
+      "matched": true,
+      "name": "유나",
+      "role": "바니걸",
+      "selected_bundles": [],
+      "selected_species_variants": [],
+      "soft_anchor_spec": {
+        "anchor_expansion": {
+          "enabled": false,
+          "min_similarity": 0.78,
+          "top_k": 3,
+          "weight_ratio": 0.5
+        },
+        "anchors": [
+          {
+            "critical": true,
+            "groups": [
+              "role_primary"
+            ],
+            "ids": [
+              "bunny_girl_costume"
+            ],
+            "pool": [
+              "bunny_girl_costume"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "costume_style",
+            "source": "role",
+            "terms": [
+              "bunny-girl",
+              "ears",
+              "bow tie"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          },
+          {
+            "critical": false,
+            "groups": [
+              "role_primary"
+            ],
+            "ids": [
+              "adult_stage_dancer"
+            ],
+            "pool": [
+              "adult_stage_dancer"
+            ],
+            "pool_weights": {},
+            "primary": false,
+            "required": true,
+            "slot": "subject",
+            "source": "role",
+            "terms": [
+              "subject",
+              "adult",
+              "stage",
+              "dancer"
+            ],
+            "variant_group": "",
+            "variant_strategy": ""
+          }
+        ],
+        "concept": "유나 바니걸",
+        "dual_read_requirement": {},
+        "free_slot_constraints": {
+          "action": {
+            "deny_pool": [
+              "turning_back",
+              "over_shoulder_pose",
+              "slow_walk_turnaround",
+              "over_shoulder_floor_turn",
+              "reacting_to_pov_hand_tail_pull"
+            ]
+          },
+          "body_framing": {
+            "deny_pool": [
+              "over_shoulder_hip_line",
+              "clothed_bodyline_emphasis",
+              "legs_heels_framing"
+            ],
+            "prefer_ids": [
+              "hands_nails_accessory_closeup"
+            ]
+          },
+          "composition": {
+            "deny_pool": [
+              "phone_arm_length_selfie",
+              "mirror_selfie_composition",
+              "crouching_mirror_full_body",
+              "low_angle",
+              "low_angle_hero",
+              "concert_low_angle_crowd"
+            ],
+            "prefer_ids": [
+              "medium_close",
+              "frame_within_frame",
+              "beauty_tight_face_crop"
+            ]
+          },
+          "subject_framing": {
+            "deny_pool": [
+              "full_body_framing",
+              "three_quarter_body_framing",
+              "knee_up_framing"
+            ],
+            "prefer_ids": [
+              "head_and_shoulders_crop",
+              "upper_body_framing",
+              "close_up_face_crop",
+              "detail_crop_hands_accessories"
+            ]
+          }
+        },
+        "group_floors": {},
+        "min_anchors": 1,
+        "mixin_cue_budget": 1,
+        "mode": "soft",
+        "preset_affinity": {
+          "discouraged_presets": [
+            "beastkin_threshold_portrait"
+          ],
+          "preferred_presets": [
+            "magician_assistant_prop_check"
+          ]
+        },
+        "render_directives": [],
+        "render_priority_terms": [],
+        "render_suppress_terms": [],
+        "role_scene_policy": {
+          "allowed_locations": [
+            "backstage_room",
+            "stage_magic_backstage",
+            "backstage_vanity_corner",
+            "costume_workshop_backstage"
+          ],
+          "enabled": true,
+          "enforce": true,
+          "forbidden_locations": [
+            "highland_pasture"
+          ],
+          "preferred_locations": [
+            "backstage_room",
+            "stage_magic_backstage",
+            "backstage_vanity_corner",
+            "costume_workshop_backstage"
+          ],
+          "reason": "role scene pool must own location before generic beastkin atmosphere",
+          "scene_family": "covered_stage_backstage"
+        },
+        "safety_negative_floor": [
+          "lingerie focus",
+          "bare shoulders",
+          "cleavage",
+          "pin-up pose",
+          "full-body costume display",
+          "body-first framing"
+        ],
+        "salience_floor": 0,
+        "soft_repair_policy": {
+          "enabled": true,
+          "fail_open": false,
+          "max_attempts": 2,
+          "strategy": "prefer_then_reselect",
+          "target_slots": [
+            "subject_framing",
+            "composition",
+            "action",
+            "prop",
+            "body_framing"
+          ],
+          "trigger_checks": [
+            "required_render_priority_missing",
+            "dual_read_missing",
+            "body_first_survivor",
+            "free_slot_constraint_violation"
+          ]
+        },
+        "source_floors": {
+          "role": 1
+        },
+        "species_family_policy": {},
+        "visual_guards": [
+          {
+            "deny_ids": {
+              "action": [
+                "mirror_thirst_trap_pose",
+                "body_roll_dance_loop",
+                "gym_mirror_fitcheck"
+              ],
+              "composition": [
+                "crouching_mirror_full_body",
+                "low_angle",
+                "low_angle_hero",
+                "mirror_selfie_composition"
+              ],
+              "subject_framing": [
+                "full_body_framing",
+                "three_quarter_body_framing",
+                "knee_up_framing"
+              ]
+            },
+            "id": "bunny_anti_body_display_soft_guard",
+            "prefer_ids": {
+              "composition": [
+                "medium_close",
+                "frame_within_frame",
+                "reflection"
+              ],
+              "subject_framing": [
+                "head_and_shoulders_crop",
+                "upper_body_framing",
+                "detail_crop_hands_accessories"
+              ]
+            },
+            "reason": "keep bunny role readable without body-first stagewear display"
+          }
+        ]
+      }
+    }
+  ],
+  "forward_args": [
+    "--tags",
+    "<ROOT>/skills/photo-prompt-image-generator/assets/photo_prompt_tags.json",
+    "--seed",
+    "42",
+    "--selection-mode",
+    "rule",
+    "--concept-lock",
+    "유나 바니걸",
+    "--preset",
+    "magician_assistant_prop_check",
+    "--set",
+    "subject=adult_stage_dancer",
+    "--set",
+    "costume_style=bunny_girl_costume",
+    "--soft-anchor-spec",
+    "{\"mode\":\"soft\",\"concept\":\"유나 바니걸\",\"anchor_expansion\":{\"enabled\":false,\"top_k\":3,\"min_similarity\":0.78,\"weight_ratio\":0.5},\"min_anchors\":1,\"source_floors\":{\"role\":1},\"group_floors\":{},\"salience_floor\":0,\"visual_guards\":[{\"id\":\"bunny_anti_body_display_soft_guard\",\"reason\":\"keep bunny role readable without body-first stagewear display\",\"deny_ids\":{\"composition\":[\"crouching_mirror_full_body\",\"low_angle\",\"low_angle_hero\",\"mirror_selfie_composition\"],\"subject_framing\":[\"full_body_framing\",\"three_quarter_body_framing\",\"knee_up_framing\"],\"action\":[\"mirror_thirst_trap_pose\",\"body_roll_dance_loop\",\"gym_mirror_fitcheck\"]},\"prefer_ids\":{\"composition\":[\"medium_close\",\"frame_within_frame\",\"reflection\"],\"subject_framing\":[\"head_and_shoulders_crop\",\"upper_body_framing\",\"detail_crop_hands_accessories\"]}}],\"render_priority_terms\":[],\"free_slot_constraints\":{\"subject_framing\":{\"deny_pool\":[\"full_body_framing\",\"three_quarter_body_framing\",\"knee_up_framing\"],\"prefer_ids\":[\"head_and_shoulders_crop\",\"upper_body_framing\",\"close_up_face_crop\",\"detail_crop_hands_accessories\"]},\"composition\":{\"deny_pool\":[\"phone_arm_length_selfie\",\"mirror_selfie_composition\",\"crouching_mirror_full_body\",\"low_angle\",\"low_angle_hero\",\"concert_low_angle_crowd\"],\"prefer_ids\":[\"medium_close\",\"frame_within_frame\",\"beauty_tight_face_crop\"]},\"action\":{\"deny_pool\":[\"turning_back\",\"over_shoulder_pose\",\"slow_walk_turnaround\",\"over_shoulder_floor_turn\",\"reacting_to_pov_hand_tail_pull\"]},\"body_framing\":{\"deny_pool\":[\"over_shoulder_hip_line\",\"clothed_bodyline_emphasis\",\"legs_heels_framing\"],\"prefer_ids\":[\"hands_nails_accessory_closeup\"]}},\"render_suppress_terms\":[],\"render_directives\":[],\"dual_read_requirement\":{},\"preset_affinity\":{\"preferred_presets\":[\"magician_assistant_prop_check\"],\"discouraged_presets\":[\"beastkin_threshold_portrait\"]},\"role_scene_policy\":{\"enabled\":true,\"allowed_locations\":[\"backstage_room\",\"stage_magic_backstage\",\"backstage_vanity_corner\",\"costume_workshop_backstage\"],\"preferred_locations\":[\"backstage_room\",\"stage_magic_backstage\",\"backstage_vanity_corner\",\"costume_workshop_backstage\"],\"forbidden_locations\":[\"highland_pasture\"],\"enforce\":true,\"scene_family\":\"covered_stage_backstage\",\"reason\":\"role scene pool must own location before generic beastkin atmosphere\"},\"species_family_policy\":{},\"soft_repair_policy\":{\"enabled\":true,\"max_attempts\":2,\"trigger_checks\":[\"required_render_priority_missing\",\"dual_read_missing\",\"body_first_survivor\",\"free_slot_constraint_violation\"],\"target_slots\":[\"subject_framing\",\"composition\",\"action\",\"prop\",\"body_framing\"],\"strategy\":\"prefer_then_reselect\",\"fail_open\":false},\"safety_negative_floor\":[\"lingerie focus\",\"bare shoulders\",\"cleavage\",\"pin-up pose\",\"full-body costume display\",\"body-first framing\"],\"mixin_cue_budget\":1,\"anchors\":[{\"slot\":\"costume_style\",\"ids\":[\"bunny_girl_costume\"],\"pool\":[\"bunny_girl_costume\"],\"pool_weights\":{},\"terms\":[\"bunny-girl\",\"ears\",\"bow tie\"],\"source\":\"role\",\"required\":true,\"critical\":true,\"groups\":[\"role_primary\"],\"primary\":false,\"variant_group\":\"\",\"variant_strategy\":\"\"},{\"slot\":\"subject\",\"ids\":[\"adult_stage_dancer\"],\"pool\":[\"adult_stage_dancer\"],\"pool_weights\":{},\"terms\":[\"subject\",\"adult\",\"stage\",\"dancer\"],\"source\":\"role\",\"required\":true,\"critical\":false,\"groups\":[\"role_primary\"],\"primary\":false,\"variant_group\":\"\",\"variant_strategy\":\"\"}]}",
+    "--additional-requirement",
+    "covered adult bunny-girl stage costume",
+    "--additional-requirement",
+    "non-explicit editorial stage styling",
+    "--intent-axis",
+    "adult bunny-girl stage performer in a covered stage costume",
+    "--intent-axis",
+    "backstage stagecraft labor",
+    "--intent-axis",
+    "covered non-explicit stage costume",
+    "--likeness-mode",
+    "inspired",
+    "--n",
+    "1",
+    "--lang",
+    "both",
+    "--detail-level",
+    "detailed",
+    "--json-output",
+    "--include-negative"
+  ]
+}

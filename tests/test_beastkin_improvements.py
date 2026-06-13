@@ -71,6 +71,67 @@ class TestBeastkinImprovements(unittest.TestCase):
         self.assertTrue({"ear root", "tail base", "horn root", "feather follicle"}.issubset(terms))
         self.assertIn("anatomical_connection", required[0]["target_slots"])
 
+    def test_beastkin_mixin_no_longer_locks_generic_scene_or_mood(self):
+        mixin = self.recipes["mixins"]["수인"]
+
+        self.assertNotIn("preset", mixin)
+        self.assertNotIn("mood", mixin.get("set", {}))
+        self.assertEqual(mixin["role_scene_policy"]["discouraged_generic_locations"], ["highland_pasture"])
+        self.assertEqual(mixin["role_scene_policy"]["discouraged_generic_moods"], ["weathered_endurance"])
+        self.assertIn("beastkin_threshold_portrait", mixin["preset_affinity"]["discouraged_presets"])
+
+    def test_role_scene_pools_cover_reviewed_beastkin_roles(self):
+        expected = {
+            "경찰": {"traffic_crossing_rain", "city_intersection_night", "lost_child_service_desk"},
+            "사복 여친": {"quiet_cafe", "campus_cafe", "cozy_apartment", "creator_room", "city_bridge", "urban_concrete_stairs"},
+            "바니걸": {"backstage_room", "stage_magic_backstage", "backstage_vanity_corner", "costume_workshop_backstage"},
+            "고스로리": {"gothic_glass_curio_cabinet", "gothic_candle_studio", "victorian_mansion_parlor"},
+            "광부": {"underground_mine_tunnel_set", "mine_rest_stop"},
+            "산타복": {"christmas_market_lights", "seoul_bus_stop_snow", "gift_logistics_warehouse", "apartment_door_threshold"},
+            "공주": {
+                "throne_hall_interior",
+                "grand_ballroom_chandelier",
+                "royal_princess_chamber",
+                "hanfu_court_garden",
+                "joseon_palace_interior",
+                "hanok_inner_court",
+                "palace_ceremonial_courtyard",
+                "palace_garden_modern",
+                "palace_side_gate",
+                "royal_guard_corridor",
+                "royal_ancestral_shrine",
+                "ballroom_gala_floor",
+                "ruined_palace_wing",
+            },
+        }
+
+        for role, locations in expected.items():
+            with self.subTest(role=role):
+                policy = self.recipes["roles"][role]["role_scene_policy"]
+                self.assertTrue(policy["enabled"])
+                self.assertTrue(policy["enforce"])
+                self.assertEqual(set(policy["allowed_locations"]), locations)
+                self.assertIn("highland_pasture", policy["forbidden_locations"])
+                self.assertIn("beastkin_threshold_portrait", self.recipes["roles"][role]["preset_affinity"]["discouraged_presets"])
+
+    def test_role_beastkin_soft_spec_carries_scene_and_species_family_policy(self):
+        _args, explanations = generate_photo_prompt.resolve_concepts(
+            ["--selection-mode", "semantic", "--seed", "12"],
+            ["닝닝 경찰 수인"],
+            concept_mode="soft",
+        )
+        spec = explanations[0]["soft_anchor_spec"]
+        self.assertEqual(spec["role_scene_policy"]["scene_family"], "procedural_public_safety")
+        self.assertTrue(spec["role_scene_policy"]["enforce"])
+        self.assertEqual(
+            set(spec["role_scene_policy"]["allowed_locations"]),
+            {"traffic_crossing_rain", "city_intersection_night", "lost_child_service_desk"},
+        )
+        species_policy = spec["species_family_policy"]
+        self.assertTrue(species_policy["enabled"])
+        self.assertIn(species_policy["family"], {variant["family"] for variant in self.recipes["mixins"]["수인"]["species_variants"]["variants"]})
+        self.assertTrue({"species_marker", "texture", "anatomical_connection"} <= set(species_policy["allowed"]))
+
     def test_review_weak_roles_have_role_specific_beastkin_bundles(self):
         mixin = self.recipes["mixins"]["수인"]
         covered_roles = set()

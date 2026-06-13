@@ -12,6 +12,7 @@ import os
 import random
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 from typing import Any, Dict, List, Sequence, Set
 
@@ -33,8 +34,13 @@ from prompt_generator import (
     semantic_metadata_from_source,
     semantic_policy_digest,
     semantic_policy_from_source,
+    picked_context_tokens,
+    picked_scene_context_tokens,
     semantic_policy_schema_version,
     set_batch_index,
+    slot_conflict_violations,
+    slot_context_rule_violation,
+    slot_context_rules_from_source,
     subject_category,
     validate_semantic_index_metadata,
 )
@@ -44,6 +50,7 @@ JsonDict = Dict[str, Any]
 
 DEFAULT_TAGS = Path(__file__).resolve().parents[1] / "assets" / "photo_prompt_tags.json"
 DEFAULT_INDEX = Path(__file__).resolve().parents[1] / "assets" / "photo_prompt_semantic_index.json"
+DEFAULT_CONCEPT_RECIPES = Path(__file__).resolve().parents[1] / "assets" / "concept_recipes.json"
 WRAPPER_PATH = Path(__file__).resolve().with_name("generate_photo_prompt.py")
 PROJECT_ROOT = Path(__file__).resolve().parents[1].parents[1]
 
@@ -204,6 +211,16 @@ DIVERSITY_CHECK_CASES: List[JsonDict] = [
     },
 ]
 
+CANDIDATE_PACK_COVERAGE_CASES: List[JsonDict] = [
+    {
+        "name": "karina_maid_dragon_catpaw_vampire",
+        "concept": "카리나 메이드 드래곤 고양이손 달린 흡혈귀",
+        "selection_mode": "rule",
+        "required_intents": ["카리나", "메이드", "드래곤", "고양이손", "흡혈귀"],
+        "expected_uncovered": ["드래곤", "고양이손"],
+    }
+]
+
 CONCEPT_BENCHMARK_CASES: List[JsonDict] = [
     {
         "name": "karina_maid_vampire",
@@ -253,10 +270,10 @@ CONCEPT_BENCHMARK_CASES: List[JsonDict] = [
     {
         "name": "sullyoon_princess_vampire",
         "concept": "설윤 공주 흡혈귀",
-        "prompt_terms": ["princess", "vampire", "hanbok"],
+        "prompt_terms": ["princess", "vampire", "royal"],
         "required_legacy_choices": {
-            "costume_style": ["royal_princess_hanbok"],
-            "location": ["royal_princess_chamber"],
+            "costume_style": ["royal_ball_gown", "royal_princess_hanbok", "ornate_hanfu_court_dress"],
+            "location": ["throne_hall_interior"],
         },
     },
     {
@@ -655,6 +672,11 @@ def soft_anchor_metrics(result: JsonDict) -> tuple[float, List[JsonDict], float,
             "anchor_group_match_rate": 1.0,
             "visual_guard_violation_count": 0,
             "render_priority_term_rate": 1.0,
+            "required_render_priority_pass_rate": 1.0,
+            "soft_repair_success_rate": 1.0,
+            "active_denial_pass_rate": 1.0,
+            "robot_deep_structural_pass_rate": 1.0,
+            "free_slot_constraint_violation_count": 0,
             "body_first_drift_rate": 0.0,
             "critical_term_missing": [],
             "critical_missing": [],
@@ -705,11 +727,11 @@ def soft_anchor_metrics(result: JsonDict) -> tuple[float, List[JsonDict], float,
     mixin_matched = {slot for slot in mixin_slots if slot in matched_slots}
     primary_matched = {slot for slot in primary_slots if slot in matched_slots}
     grouped_matched = {slot for slot in grouped_slots if slot in matched_slots}
-    critical_anchor_match_rate = len(critical_matched) / max(len(critical_by_slot), 1)
-    role_anchor_match_rate = len(role_matched) / max(len(role_slots), 1)
-    mixin_salience_match_rate = len(mixin_matched) / max(len(mixin_slots), 1)
-    primary_anchor_match_rate = len(primary_matched) / max(len(primary_slots), 1)
-    anchor_group_match_rate = len(grouped_matched) / max(len(grouped_slots), 1)
+    critical_anchor_match_rate = len(critical_matched) / len(critical_by_slot) if critical_by_slot else 1.0
+    role_anchor_match_rate = len(role_matched) / len(role_slots) if role_slots else 1.0
+    mixin_salience_match_rate = len(mixin_matched) / len(mixin_slots) if mixin_slots else 1.0
+    primary_anchor_match_rate = len(primary_matched) / len(primary_slots) if primary_slots else 1.0
+    anchor_group_match_rate = len(grouped_matched) / len(grouped_slots) if grouped_slots else 1.0
     quality = (result.get("quality", {}) or {})
     checks = quality.get("checks", []) or []
     visual_guard_check = next((check for check in checks if check.get("id") == "soft_visual_guard"), {}) or {}
@@ -968,6 +990,7 @@ def run_wrapper_concept(
     seed: int,
     tags_path: Path,
     semantic_index_path: Path,
+    anchor_diversity_ledger: Path | None = None,
 ) -> JsonDict:
     command = [
         sys.executable,
@@ -995,6 +1018,8 @@ def run_wrapper_concept(
         "--json-output",
         "--no-negative",
     ]
+    if anchor_diversity_ledger is not None:
+        command.extend(["--anchor-diversity-ledger", str(anchor_diversity_ledger)])
     completed = subprocess.run(
         command,
         cwd=PROJECT_ROOT,
@@ -1038,6 +1063,11 @@ def evaluate_concept_benchmark(
     rows: List[JsonDict] = []
     by_mode: Dict[str, List[JsonDict]] = {mode: [] for mode in modes}
     for case_index, case in enumerate(cases):
+        # Soft batch runs share an anchor-diversity ledger so anchor-variant
+        # rotation is measured the way real multi-run batches are documented
+        # to operate (the engine's repeat decay needs cross-run state).
+        ledger_dir = Path(tempfile.mkdtemp(prefix="soft_ledger_"))
+        soft_ledger = ledger_dir / f"case_{case_index}.json"
         for run_index in range(max(1, runs)):
             run_seed = seed + 8000 + (case_index * 100) + run_index
             for mode in modes:
@@ -1047,6 +1077,7 @@ def evaluate_concept_benchmark(
                     seed=run_seed,
                     tags_path=tags_path,
                     semantic_index_path=semantic_index_path,
+                    anchor_diversity_ledger=soft_ledger if mode == "soft" else None,
                 )
                 trace = result.get("semantic_trace", {}) or {}
                 contract = trace.get("generation_contract", {}) or {}
@@ -1262,6 +1293,76 @@ def evaluate_concept_benchmark(
     }
 
 
+BEASTKIN_ROLE_SCENE_EXPECTATIONS: Dict[str, Set[str]] = {
+    "경찰": {"traffic_crossing_rain", "city_intersection_night", "lost_child_service_desk"},
+    "사복 여친": {"quiet_cafe", "campus_cafe", "cozy_apartment", "creator_room", "city_bridge", "urban_concrete_stairs"},
+    "바니걸": {"backstage_room", "stage_magic_backstage", "backstage_vanity_corner", "costume_workshop_backstage"},
+    "고스로리": {"gothic_glass_curio_cabinet", "gothic_candle_studio", "victorian_mansion_parlor"},
+    "공주": {
+        "throne_hall_interior",
+        "grand_ballroom_chandelier",
+        "royal_princess_chamber",
+        "hanfu_court_garden",
+        "joseon_palace_interior",
+        "hanok_inner_court",
+        "palace_ceremonial_courtyard",
+        "palace_garden_modern",
+        "palace_side_gate",
+        "royal_guard_corridor",
+        "royal_ancestral_shrine",
+        "ballroom_gala_floor",
+        "ruined_palace_wing",
+    },
+}
+
+
+def evaluate_beastkin_role_matrix_gate(recipes_path: Path = DEFAULT_CONCEPT_RECIPES) -> JsonDict:
+    try:
+        recipes = json.loads(recipes_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        return {"passed": False, "failures": [{"check": "load_recipes", "reason": str(exc)}]}
+
+    failures: List[JsonDict] = []
+    mixin = (recipes.get("mixins") or {}).get("수인") or {}
+    if mixin.get("preset") == "beastkin_threshold_portrait":
+        failures.append({"check": "beastkin_mixin_preset", "reason": "수인 mixin still locks beastkin_threshold_portrait"})
+    set_values = mixin.get("set") if isinstance(mixin.get("set"), dict) else {}
+    if set_values.get("mood") == "weathered_endurance":
+        failures.append({"check": "beastkin_mixin_mood", "reason": "수인 mixin still locks weathered_endurance"})
+
+    roles = recipes.get("roles") or {}
+    for role, expected_locations in BEASTKIN_ROLE_SCENE_EXPECTATIONS.items():
+        recipe = roles.get(role) or {}
+        policy = recipe.get("role_scene_policy") if isinstance(recipe.get("role_scene_policy"), dict) else {}
+        allowed = set(str(item) for item in policy.get("allowed_locations") or [])
+        forbidden = set(str(item) for item in policy.get("forbidden_locations") or [])
+        preset_affinity = recipe.get("preset_affinity") if isinstance(recipe.get("preset_affinity"), dict) else {}
+        discouraged = set(str(item) for item in preset_affinity.get("discouraged_presets") or [])
+        if not policy.get("enabled"):
+            failures.append({"check": "role_scene_policy", "role": role, "reason": "policy disabled or missing"})
+        if policy.get("enforce") is not True:
+            failures.append({"check": "role_scene_policy", "role": role, "reason": "policy must enforce role-compatible locations"})
+        if allowed != expected_locations:
+            failures.append(
+                {
+                    "check": "role_scene_locations",
+                    "role": role,
+                    "expected": sorted(expected_locations),
+                    "actual": sorted(allowed),
+                }
+            )
+        if "highland_pasture" not in forbidden:
+            failures.append({"check": "role_scene_forbidden", "role": role, "reason": "highland_pasture not forbidden"})
+        if "beastkin_threshold_portrait" not in discouraged:
+            failures.append({"check": "role_preset_affinity", "role": role, "reason": "beastkin_threshold_portrait not discouraged"})
+
+    return {
+        "passed": not failures,
+        "checked_roles": sorted(BEASTKIN_ROLE_SCENE_EXPECTATIONS),
+        "failures": failures,
+    }
+
+
 def evaluate_diversity_check(
     data: JsonDict,
     cases: Sequence[JsonDict],
@@ -1356,9 +1457,12 @@ def evaluate_diversity_check(
                 "results": rows,
             }
         )
+    beastkin_role_matrix = evaluate_beastkin_role_matrix_gate()
+    diversity_failed = sum(1 for item in results if not item["passed"])
     return {
         "case_count": len(results),
-        "failed_case_count": sum(1 for item in results if not item["passed"]),
+        "failed_case_count": diversity_failed + (0 if beastkin_role_matrix["passed"] else 1),
+        "beastkin_role_matrix": beastkin_role_matrix,
         "results": results,
     }
 
@@ -1604,6 +1708,194 @@ def evaluate_multi_axis_coverage(
     }
 
 
+def picked_entries_from_choices(data: JsonDict, choices: Dict[str, str]) -> Dict[str, JsonDict]:
+    picked: Dict[str, JsonDict] = {}
+    for slot, entry_id in choices.items():
+        entry = dictionary_entry(data, slot, entry_id)
+        if entry:
+            picked[slot] = entry
+    return picked
+
+
+def declared_rule_violations_in_result(data: JsonDict, choices: Dict[str, str]) -> List[JsonDict]:
+    picked = picked_entries_from_choices(data, choices)
+    violations: List[JsonDict] = []
+    context_rules = [
+        rule
+        for rule in slot_context_rules_from_source(data)
+        if str(rule.get("severity", "hard")) == "hard"
+    ]
+    for slot, entry in picked.items():
+        others = {other: picked[other] for other in picked if other != slot}
+        for violation in slot_conflict_violations(slot, entry, others, data, "hard"):
+            violations.append({"type": "slot_conflict", **violation})
+        if context_rules:
+            context = picked_context_tokens(others)
+            scene_context = picked_scene_context_tokens(others)
+            for rule in context_rules:
+                if slot_context_rule_violation(rule, slot, entry, context, scene_context):
+                    violations.append(
+                        {
+                            "type": "slot_context_rule",
+                            "rule_id": str(rule.get("id") or ""),
+                            "slot": slot,
+                            "item_id": str(entry.get("id", "")),
+                        }
+                    )
+    return violations
+
+
+def evaluate_contradiction_check(
+    data: JsonDict,
+    seed: int,
+    runs: int,
+    preset_limit: int = 0,
+) -> JsonDict:
+    presets = [str(preset.get("id")) for preset in data.get("presets", [])]
+    if preset_limit:
+        presets = presets[:preset_limit]
+    rows: List[JsonDict] = []
+    generated = 0
+    for preset_index, preset_id in enumerate(presets):
+        for offset in range(max(1, runs)):
+            rng = random.Random(seed + preset_index * 1000 + offset)
+            result = generate_once(
+                data=data,
+                rng=rng,
+                preset_id=preset_id,
+                langs=["en"],
+                include_negative=False,
+                negative_count=0,
+                include_choices=True,
+                detail_level="detailed",
+                selection_mode="rule",
+            )
+            generated += 1
+            choices = {
+                slot: str(entry_id)
+                for slot, entry_id in (result.get("choices") or {}).items()
+                if entry_id
+            }
+            violations = declared_rule_violations_in_result(data, choices)
+            if violations:
+                rows.append(
+                    {
+                        "preset": preset_id,
+                        "seed_offset": offset,
+                        "violations": violations,
+                    }
+                )
+    return {
+        "preset_count": len(presets),
+        "runs_per_preset": max(1, runs),
+        "generated": generated,
+        "violation_count": sum(len(row["violations"]) for row in rows),
+        "violations": rows,
+        "declared_slot_conflicts": len(
+            [
+                rule
+                for rule in (data.get("coherence_rules", {}) or {}).get("slot_conflicts", [])
+                if isinstance(rule, dict)
+            ]
+        ),
+        "declared_slot_context_rules": len(slot_context_rules_from_source(data)),
+    }
+
+
+def evaluate_candidate_pack_coverage(tags_path: Path, seed: int, cases: Sequence[JsonDict]) -> JsonDict:
+    rows: List[JsonDict] = []
+    for index, case in enumerate(cases):
+        cmd = [
+            sys.executable,
+            str(WRAPPER_PATH),
+            "--tags",
+            str(tags_path),
+            "--concept",
+            str(case["concept"]),
+            "--selection-mode",
+            str(case.get("selection_mode") or "rule"),
+            "--seed",
+            str(seed + index),
+            "--emit-candidate-pack",
+        ]
+        result = subprocess.run(
+            cmd,
+            cwd=PROJECT_ROOT,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        row: JsonDict = {
+            "name": case.get("name"),
+            "concept": case.get("concept"),
+            "returncode": result.returncode,
+            "passed": False,
+            "failures": [],
+        }
+        if result.returncode != 0:
+            row["failures"].append("wrapper_failed")
+            row["stderr"] = result.stderr.strip()
+            rows.append(row)
+            continue
+        try:
+            payload = json.loads(result.stdout)
+            pack = payload[0]
+        except Exception as exc:
+            row["failures"].append("invalid_candidate_pack_json")
+            row["error"] = str(exc)
+            rows.append(row)
+            continue
+        mandatory = {str(item.get("text")) for item in pack.get("mandatory_intents", []) if isinstance(item, dict)}
+        uncovered = {str(item.get("text")) for item in pack.get("uncovered_intents", []) if isinstance(item, dict)}
+        required = set(normalize_list(case.get("required_intents")))
+        expected_uncovered = set(normalize_list(case.get("expected_uncovered")))
+        missing = sorted(required - mandatory)
+        missing_uncovered = sorted(expected_uncovered - uncovered)
+        if missing:
+            row["failures"].append("missing_mandatory_intents")
+        if missing_uncovered:
+            row["failures"].append("missing_expected_uncovered_intents")
+        if "prompt_en" in pack:
+            row["failures"].append("candidate_pack_contains_final_prompt")
+        if len(pack.get("presets", []) or []) > 5:
+            row["failures"].append("preset_candidate_cap_exceeded")
+        total_slot_candidates = 0
+        probability_failures: List[str] = []
+        for slot, slot_payload in (pack.get("slots", {}) or {}).items():
+            candidates = slot_payload.get("candidates", []) if isinstance(slot_payload, dict) else []
+            total_slot_candidates += len(candidates)
+            limit = 5 if slot_payload.get("role") == "core" else 3
+            if len(candidates) > limit:
+                row["failures"].append(f"slot_candidate_cap_exceeded:{slot}")
+            if candidates:
+                total_probability = sum(float(candidate.get("probability", 0.0)) for candidate in candidates)
+                if abs(total_probability - 1.0) > 0.00001:
+                    probability_failures.append(str(slot))
+        if total_slot_candidates > 120:
+            row["failures"].append("total_slot_candidate_cap_exceeded")
+        if probability_failures:
+            row["failures"].append("slot_probability_not_normalized")
+            row["probability_failures"] = probability_failures
+        row.update(
+            {
+                "pack_id": pack.get("pack_id"),
+                "mandatory_intents": sorted(mandatory),
+                "uncovered_intents": sorted(uncovered),
+                "missing_mandatory_intents": missing,
+                "missing_expected_uncovered_intents": missing_uncovered,
+                "preset_candidate_count": len(pack.get("presets", []) or []),
+                "slot_candidate_count": total_slot_candidates,
+            }
+        )
+        row["passed"] = not row["failures"]
+        rows.append(row)
+    return {
+        "case_count": len(rows),
+        "failed_case_count": sum(1 for row in rows if not row["passed"]),
+        "results": rows,
+    }
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Evaluate semantic prompt selection against golden intents.")
     parser.add_argument("--tags", default=DEFAULT_TAGS)
@@ -1616,10 +1908,13 @@ def main() -> int:
     parser.add_argument("--bleed-check", action="store_true", help="Run cross-category leakage checks for product, craft, wildlife, and food scenarios.")
     parser.add_argument("--bleed-runs", type=int, default=10, help="Number of seeds per bleed-check case.")
     parser.add_argument("--diversity-check", action="store_true", help="Run V8 keyword preservation and free-slot diversity checks.")
+    parser.add_argument("--candidate-pack-check", action="store_true", help="Run candidate-pack mandatory intent and cap checks.")
     parser.add_argument("--quality-gate", action="store_true", help="Run the real embedding quality gate for semantic concept benchmarks and regression checks.")
     parser.add_argument("--quality-runs", type=int, default=2, help="Number of seeds per concept benchmark case for --quality-gate.")
     parser.add_argument("--quality-require-soft", action="store_true", help="Make soft concept-mode promotion readiness a hard --quality-gate failure.")
     parser.add_argument("--visual-review", default=None, help="Summarize a manual visual review JSON without embedding/API calls.")
+    parser.add_argument("--contradiction-check", action="store_true", help="Generate rule-mode prompts across presets and report violations of declared coherence_rules (no embedding API needed).")
+    parser.add_argument("--contradiction-runs", type=int, default=3, help="Number of seeds per preset for --contradiction-check.")
     args = parser.parse_args()
 
     load_project_env()
@@ -1657,6 +1952,17 @@ def main() -> int:
             )
         )
         return 0
+    if args.contradiction_check:
+        summary = {
+            "contradiction_check": evaluate_contradiction_check(
+                data,
+                args.seed,
+                args.contradiction_runs,
+                preset_limit=args.limit,
+            )
+        }
+        print(json.dumps(summary, ensure_ascii=False, indent=2))
+        return 0 if summary["contradiction_check"]["violation_count"] == 0 else 7
     if args.dry_run:
         print(
             json.dumps(
@@ -1667,6 +1973,7 @@ def main() -> int:
                     "multi_axis_coverage_cases": len(MULTI_AXIS_COVERAGE_CASES),
                     "bleed_check_cases": len(BLEED_CHECK_CASES),
                     "diversity_check_cases": len(DIVERSITY_CHECK_CASES),
+                    "candidate_pack_coverage_cases": len(CANDIDATE_PACK_COVERAGE_CASES),
                     "concept_benchmark_cases": len(CONCEPT_BENCHMARK_CASES),
                 },
                 indent=2,
@@ -1690,6 +1997,16 @@ def main() -> int:
     gemini_api_key = "mock" if args.mock_embeddings else None
 
     try:
+        if args.candidate_pack_check:
+            summary = {
+                "candidate_pack_coverage": evaluate_candidate_pack_coverage(
+                    tags_path,
+                    args.seed,
+                    CANDIDATE_PACK_COVERAGE_CASES[: args.limit] if args.limit else CANDIDATE_PACK_COVERAGE_CASES,
+                )
+            }
+            print(json.dumps(summary, ensure_ascii=False, indent=2))
+            return 0 if summary["candidate_pack_coverage"]["failed_case_count"] == 0 else 11
         if args.bleed_check:
             bleed_cases = BLEED_CHECK_CASES[: args.limit] if args.limit else BLEED_CHECK_CASES
             summary = {
@@ -1722,8 +2039,15 @@ def main() -> int:
             summary = {
                 "warning": "mock embeddings are deterministic test doubles, not retrieval-quality evidence" if args.mock_embeddings else None,
                 "diversity_check": diversity_result,
+                "candidate_pack_coverage": evaluate_candidate_pack_coverage(
+                    tags_path,
+                    args.seed,
+                    CANDIDATE_PACK_COVERAGE_CASES[: args.limit] if args.limit else CANDIDATE_PACK_COVERAGE_CASES,
+                ),
             }
             print(json.dumps(summary, ensure_ascii=False, indent=2))
+            if summary["candidate_pack_coverage"]["failed_case_count"] > 0:
+                return 11
             return 0 if args.mock_embeddings or summary["diversity_check"]["failed_case_count"] == 0 else 7
         if args.quality_gate:
             concept_cases = CONCEPT_BENCHMARK_CASES[: args.limit] if args.limit else CONCEPT_BENCHMARK_CASES
@@ -1765,6 +2089,11 @@ def main() -> int:
                     gemini_api_key,
                     runs=max(1, min(args.bleed_runs, args.quality_runs)),
                 ),
+                "candidate_pack_coverage": evaluate_candidate_pack_coverage(
+                    tags_path,
+                    args.seed,
+                    CANDIDATE_PACK_COVERAGE_CASES[: args.limit] if args.limit else CANDIDATE_PACK_COVERAGE_CASES,
+                ),
                 "preset_guards": evaluate_preset_guards(data, MULTI_AXIS_PRESET_GUARDS, args.seed, semantic_index, gemini_api_key),
                 "multi_axis_coverage": evaluate_multi_axis_coverage(data, MULTI_AXIS_COVERAGE_CASES, args.seed, semantic_index, gemini_api_key),
             }
@@ -1774,6 +2103,7 @@ def main() -> int:
                 not legacy_passed
                 or summary["diversity_check"]["failed_case_count"] > 0
                 or summary["bleed_check"]["failed_case_count"] > 0
+                or summary["candidate_pack_coverage"]["failed_case_count"] > 0
                 or summary["preset_guards"]["blacklisted_case_count"] > 0
                 or summary["multi_axis_coverage"]["failed_case_count"] > 0
                 or (args.quality_require_soft and not soft_ready)
