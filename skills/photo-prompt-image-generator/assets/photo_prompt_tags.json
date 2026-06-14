@@ -1008,6 +1008,48 @@
       "ko": "근원 현실 왜곡 계열",
       "en": "fundamental reality magic family",
       "embedding_text": "causality, entropy, gravity, information density and space-time treated as tangible photographic forces"
+    },
+    {
+      "id": "liminal_threshold_semantic",
+      "ko": "문턱과 경계 시맨틱 계열",
+      "en": "liminal threshold semantic family",
+      "embedding_text": "doorways, stairwells, elevator gaps, corridors and transitional spaces used as photographic concept anchors"
+    },
+    {
+      "id": "reflective_surface_semantic",
+      "ko": "반사면 불일치 시맨틱 계열",
+      "en": "reflective surface semantic family",
+      "embedding_text": "mirrors, windows, badges, display cases and screens showing mismatched or impossible reflections"
+    },
+    {
+      "id": "aftermath_trace_semantic",
+      "ko": "사건 이후 흔적 시맨틱 계열",
+      "en": "aftermath trace semantic family",
+      "embedding_text": "non-graphic traces after an unseen event: withered flowers, stopped clocks, cooled drinks, disturbed chairs and drained color"
+    },
+    {
+      "id": "procedural_station_semantic",
+      "ko": "절차와 업무 스테이션 시맨틱 계열",
+      "en": "procedural station semantic family",
+      "embedding_text": "clinical, office, records, access gate and inspection counter scenes where procedure and objects carry the concept"
+    },
+    {
+      "id": "apparatus_pov_semantic",
+      "ko": "장치 시점 시맨틱 계열",
+      "en": "apparatus POV semantic family",
+      "embedding_text": "peephole, two-way mirror, scanner platen, thermal camera and other optical apparatus viewpoints"
+    },
+    {
+      "id": "covered_stage_backstage_semantic",
+      "ko": "커버드 스테이지 백스테이지 계열",
+      "en": "covered stage backstage semantic family",
+      "embedding_text": "covered performer and costume roles anchored by backstage tools, vanity bulbs, stage doors and costume racks instead of body-first framing"
+    },
+    {
+      "id": "psychological_distance_semantic",
+      "ko": "심리적 거리 시맨틱 계열",
+      "en": "psychological distance semantic family",
+      "embedding_text": "quiet relational tension shown through seat gaps, turned-away handoffs, empty chairs and too-close no-contact distance"
     }
   ],
   "recipes": [
@@ -83569,6 +83611,3400 @@
         "magic"
       ],
       "embedding_text": "miner or geologist wizard handling tectonic pressure, crystal growth and rock response at the tool contact point"
+    },
+    {
+      "id": "doorway_handoff_portrait",
+      "ko": "문턱 전달 인물 사진",
+      "en": "doorway handoff portrait",
+      "weight": 0.82,
+      "family": "liminal_threshold_semantic",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "viewer_position",
+        "distance_narrative",
+        "relational_action"
+      ],
+      "optional_slots": [
+        {
+          "slot": "subject_framing",
+          "probability": 0.65
+        },
+        {
+          "slot": "safety_profile",
+          "probability": 0.5
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "concept_photo",
+            "film_still",
+            "documentary_photo",
+            "magazine_feature"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "documentary",
+            "cinematic",
+            "lifestyle"
+          ]
+        },
+        "subject": {
+          "tags_any": [
+            "human"
+          ]
+        },
+        "action": {
+          "ids": [
+            "standing_silence",
+            "holding_story_prop",
+            "checking_wristwatch_timing",
+            "presenting_file_folder",
+            "reviewing_ledger_columns"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "fluorescent",
+            "monitor_glow",
+            "low_key",
+            "candlelit_ritual_light"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "not_overdone",
+            "candid_imperfect"
+          ]
+        },
+        "subject_framing": {
+          "ids": [
+            "upper_body_framing",
+            "head_and_shoulders_crop",
+            "detail_crop_hands_accessories"
+          ]
+        },
+        "location": {
+          "ids": [
+            "apartment_door_threshold",
+            "service_corridor_interim",
+            "stairwell_landing_after_hours"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "through_doorway_handoff",
+            "service_window_split_frame",
+            "frame_within_frame",
+            "table_edge_threshold_frame"
+          ]
+        },
+        "viewer_position": {
+          "ids": [
+            "viewer_through_doorway",
+            "viewer_as_contract_party",
+            "viewer_as_recipient"
+          ]
+        },
+        "distance_narrative": {
+          "ids": [
+            "threshold_one_inside",
+            "arm_offered_across_gap",
+            "doorway_threshold_distance"
+          ]
+        },
+        "relational_action": {
+          "ids": [
+            "holding_door_half_open",
+            "presenting_blank_token",
+            "placing_seal_between"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "liminal_invitation",
+            "tense",
+            "calm"
+          ]
+        }
+      }
+    },
+    {
+      "id": "elevator_liminal_gap_portrait",
+      "ko": "엘리베이터 문틈 경계 인물 사진",
+      "en": "elevator gap liminal portrait",
+      "weight": 0.82,
+      "family": "liminal_threshold_semantic",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "reflection_logic",
+        "distance_narrative",
+        "light_shape"
+      ],
+      "optional_slots": [
+        {
+          "slot": "subject_framing",
+          "probability": 0.65
+        },
+        {
+          "slot": "safety_profile",
+          "probability": 0.5
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "concept_photo",
+            "film_still",
+            "documentary_photo",
+            "magazine_feature"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "documentary",
+            "cinematic",
+            "lifestyle"
+          ]
+        },
+        "subject": {
+          "tags_any": [
+            "human"
+          ]
+        },
+        "action": {
+          "ids": [
+            "standing_silence",
+            "holding_story_prop",
+            "checking_wristwatch_timing",
+            "presenting_file_folder",
+            "reviewing_ledger_columns"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "fluorescent",
+            "monitor_glow",
+            "low_key",
+            "candlelit_ritual_light"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "not_overdone",
+            "candid_imperfect"
+          ]
+        },
+        "subject_framing": {
+          "ids": [
+            "upper_body_framing",
+            "head_and_shoulders_crop",
+            "detail_crop_hands_accessories"
+          ]
+        },
+        "location": {
+          "ids": [
+            "mirrored_elevator_box",
+            "office_access_gate_lobby"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "elevator_gap_frame",
+            "reflection_mismatch_split",
+            "layered_reflection_depth"
+          ]
+        },
+        "reflection_logic": {
+          "ids": [
+            "reflection_lags_motion",
+            "reflection_extra_presence",
+            "delayed_reflection"
+          ]
+        },
+        "distance_narrative": {
+          "ids": [
+            "threshold_one_inside",
+            "mirrored_distance"
+          ]
+        },
+        "light_shape": {
+          "ids": [
+            "elevator_gap_sliver_light",
+            "turnstile_scanner_sliver"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "liminal_invitation",
+            "soft_surveillance",
+            "tense"
+          ]
+        }
+      }
+    },
+    {
+      "id": "stairwell_landing_threshold",
+      "ko": "비상계단 계단참 경계 인물 사진",
+      "en": "stairwell landing threshold portrait",
+      "weight": 0.82,
+      "family": "liminal_threshold_semantic",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "distance_narrative",
+        "light_shape"
+      ],
+      "optional_slots": [
+        {
+          "slot": "subject_framing",
+          "probability": 0.65
+        },
+        {
+          "slot": "safety_profile",
+          "probability": 0.5
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "concept_photo",
+            "film_still",
+            "documentary_photo",
+            "magazine_feature"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "documentary",
+            "cinematic",
+            "lifestyle"
+          ]
+        },
+        "subject": {
+          "tags_any": [
+            "human"
+          ]
+        },
+        "action": {
+          "ids": [
+            "standing_silence",
+            "holding_story_prop",
+            "checking_wristwatch_timing",
+            "presenting_file_folder",
+            "reviewing_ledger_columns"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "fluorescent",
+            "monitor_glow",
+            "low_key",
+            "candlelit_ritual_light"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "not_overdone",
+            "candid_imperfect"
+          ]
+        },
+        "subject_framing": {
+          "ids": [
+            "upper_body_framing",
+            "head_and_shoulders_crop",
+            "detail_crop_hands_accessories"
+          ]
+        },
+        "location": {
+          "ids": [
+            "stairwell_landing_after_hours",
+            "office_fire_drill_stairwell",
+            "service_corridor_interim"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "obstructed_observer_frame",
+            "frame_within_frame",
+            "through_doorway_deep_frame"
+          ]
+        },
+        "distance_narrative": {
+          "ids": [
+            "threshold_one_inside",
+            "one_step_hesitation"
+          ]
+        },
+        "light_shape": {
+          "ids": [
+            "slit_light_under_door",
+            "threshold_sliver_light"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "liminal_invitation",
+            "bureaucratic_dread",
+            "tense"
+          ]
+        }
+      }
+    },
+    {
+      "id": "mirror_mismatch_portrait",
+      "ko": "거울 불일치 인물 사진",
+      "en": "mirror mismatch portrait",
+      "weight": 0.82,
+      "family": "reflective_surface_semantic",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "reflection_logic"
+      ],
+      "optional_slots": [
+        {
+          "slot": "subject_framing",
+          "probability": 0.65
+        },
+        {
+          "slot": "safety_profile",
+          "probability": 0.5
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "concept_photo",
+            "film_still",
+            "documentary_photo",
+            "magazine_feature"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "documentary",
+            "cinematic",
+            "lifestyle"
+          ]
+        },
+        "subject": {
+          "tags_any": [
+            "human"
+          ]
+        },
+        "action": {
+          "ids": [
+            "standing_silence",
+            "holding_story_prop",
+            "checking_wristwatch_timing",
+            "presenting_file_folder",
+            "reviewing_ledger_columns"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "fluorescent",
+            "monitor_glow",
+            "low_key",
+            "candlelit_ritual_light"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "not_overdone",
+            "candid_imperfect"
+          ]
+        },
+        "subject_framing": {
+          "ids": [
+            "upper_body_framing",
+            "head_and_shoulders_crop",
+            "detail_crop_hands_accessories"
+          ]
+        },
+        "location": {
+          "ids": [
+            "makeup_vanity",
+            "bedroom_mirror",
+            "reflective_dark_corridor",
+            "two_way_observation_room"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "mirror_mismatch_same_frame",
+            "reflection_mismatch_split",
+            "layered_reflection_depth"
+          ]
+        },
+        "reflection_logic": {
+          "ids": [
+            "reflection_lags_motion",
+            "reflection_holds_still",
+            "reflection_other_age",
+            "reflection_doll_self"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "domestic_wrongness",
+            "soft_surveillance",
+            "tense"
+          ]
+        }
+      }
+    },
+    {
+      "id": "window_double_exposure_portrait",
+      "ko": "유리창 이중 반사 인물 사진",
+      "en": "window double exposure portrait",
+      "weight": 0.82,
+      "family": "reflective_surface_semantic",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "reflection_logic"
+      ],
+      "optional_slots": [
+        {
+          "slot": "subject_framing",
+          "probability": 0.65
+        },
+        {
+          "slot": "safety_profile",
+          "probability": 0.5
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "concept_photo",
+            "film_still",
+            "documentary_photo",
+            "magazine_feature"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "documentary",
+            "cinematic",
+            "lifestyle"
+          ]
+        },
+        "subject": {
+          "tags_any": [
+            "human"
+          ]
+        },
+        "action": {
+          "ids": [
+            "standing_silence",
+            "holding_story_prop",
+            "checking_wristwatch_timing",
+            "presenting_file_folder",
+            "reviewing_ledger_columns"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "fluorescent",
+            "monitor_glow",
+            "low_key",
+            "candlelit_ritual_light"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "not_overdone",
+            "candid_imperfect"
+          ]
+        },
+        "subject_framing": {
+          "ids": [
+            "upper_body_framing",
+            "head_and_shoulders_crop",
+            "detail_crop_hands_accessories"
+          ]
+        },
+        "location": {
+          "ids": [
+            "glass_office",
+            "rain_puddle_reflection_street",
+            "corporate_high_floor_office"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "window_reflection_double",
+            "shopwindow_reflection_frame",
+            "layered_reflection_depth"
+          ]
+        },
+        "reflection_logic": {
+          "ids": [
+            "reflection_extra_presence",
+            "reflection_other_age",
+            "puddle_inverted_self"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "bureaucratic_dread",
+            "melancholic",
+            "domestic_wrongness"
+          ]
+        }
+      }
+    },
+    {
+      "id": "badge_reflection_closeup",
+      "ko": "배지 반사 클로즈업 인물 사진",
+      "en": "badge reflection close-up portrait",
+      "weight": 0.82,
+      "family": "reflective_surface_semantic",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "reflection_logic",
+        "prop"
+      ],
+      "optional_slots": [
+        {
+          "slot": "subject_framing",
+          "probability": 0.65
+        },
+        {
+          "slot": "safety_profile",
+          "probability": 0.5
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "concept_photo",
+            "film_still",
+            "documentary_photo",
+            "magazine_feature"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "documentary",
+            "cinematic",
+            "lifestyle"
+          ]
+        },
+        "subject": {
+          "tags_any": [
+            "human"
+          ]
+        },
+        "action": {
+          "ids": [
+            "standing_silence",
+            "holding_story_prop",
+            "checking_wristwatch_timing",
+            "presenting_file_folder",
+            "reviewing_ledger_columns"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "fluorescent",
+            "monitor_glow",
+            "low_key",
+            "candlelit_ritual_light"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "not_overdone",
+            "candid_imperfect"
+          ]
+        },
+        "subject_framing": {
+          "ids": [
+            "upper_body_framing",
+            "head_and_shoulders_crop",
+            "detail_crop_hands_accessories"
+          ]
+        },
+        "location": {
+          "ids": [
+            "office_access_gate_lobby",
+            "city_intersection_night",
+            "public_records_office"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "badge_reflection_close_frame",
+            "first_person_token_handoff_macro",
+            "medium_close"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "blank_access_badge_prop",
+            "staff_lanyard_badge_prop",
+            "security_access_card_prop"
+          ]
+        },
+        "reflection_logic": {
+          "ids": [
+            "reflection_lags_motion",
+            "reflection_extra_presence",
+            "phone_front_camera_mismatch"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "procedural_focus",
+            "soft_surveillance",
+            "bureaucratic_dread"
+          ]
+        }
+      }
+    },
+    {
+      "id": "withered_residue_portrait",
+      "ko": "시든 흔적 인물 사진",
+      "en": "withered residue portrait",
+      "weight": 0.82,
+      "family": "aftermath_trace_semantic",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "aftermath_trace"
+      ],
+      "optional_slots": [
+        {
+          "slot": "subject_framing",
+          "probability": 0.65
+        },
+        {
+          "slot": "safety_profile",
+          "probability": 0.5
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "concept_photo",
+            "film_still",
+            "documentary_photo",
+            "magazine_feature"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "documentary",
+            "cinematic",
+            "lifestyle"
+          ]
+        },
+        "subject": {
+          "tags_any": [
+            "human"
+          ]
+        },
+        "action": {
+          "ids": [
+            "standing_silence",
+            "holding_story_prop",
+            "checking_wristwatch_timing",
+            "presenting_file_folder",
+            "reviewing_ledger_columns"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "fluorescent",
+            "monitor_glow",
+            "low_key",
+            "candlelit_ritual_light"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "not_overdone",
+            "candid_imperfect"
+          ]
+        },
+        "subject_framing": {
+          "ids": [
+            "upper_body_framing",
+            "head_and_shoulders_crop",
+            "detail_crop_hands_accessories"
+          ]
+        },
+        "location": {
+          "ids": [
+            "gothic_candle_studio",
+            "quiet_cafe",
+            "makeup_vanity",
+            "apartment_door_threshold"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "table_edge_threshold_frame",
+            "medium_close",
+            "frame_within_frame"
+          ]
+        },
+        "aftermath_trace": {
+          "ids": [
+            "withered_flowers_trace",
+            "drained_color_patch",
+            "dimmed_bulb_trace"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "domestic_wrongness",
+            "liminal_invitation",
+            "melancholic"
+          ]
+        }
+      }
+    },
+    {
+      "id": "stopped_clock_portrait",
+      "ko": "멈춘 시계 흔적 인물 사진",
+      "en": "stopped clock trace portrait",
+      "weight": 0.82,
+      "family": "aftermath_trace_semantic",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "aftermath_trace",
+        "prop"
+      ],
+      "optional_slots": [
+        {
+          "slot": "subject_framing",
+          "probability": 0.65
+        },
+        {
+          "slot": "safety_profile",
+          "probability": 0.5
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "concept_photo",
+            "film_still",
+            "documentary_photo",
+            "magazine_feature"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "documentary",
+            "cinematic",
+            "lifestyle"
+          ]
+        },
+        "subject": {
+          "tags_any": [
+            "human"
+          ]
+        },
+        "action": {
+          "ids": [
+            "standing_silence",
+            "holding_story_prop",
+            "checking_wristwatch_timing",
+            "presenting_file_folder",
+            "reviewing_ledger_columns"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "fluorescent",
+            "monitor_glow",
+            "low_key",
+            "candlelit_ritual_light"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "not_overdone",
+            "candid_imperfect"
+          ]
+        },
+        "subject_framing": {
+          "ids": [
+            "upper_body_framing",
+            "head_and_shoulders_crop",
+            "detail_crop_hands_accessories"
+          ]
+        },
+        "location": {
+          "ids": [
+            "old_watchmaker_bench",
+            "accountant_office_late",
+            "notary_office_after_hours"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "document_foreground_face_background",
+            "first_person_token_handoff_macro",
+            "medium_close"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "metronome_stopped_prop",
+            "astrolabe_watch_prop",
+            "stopwatch_training_prop"
+          ]
+        },
+        "aftermath_trace": {
+          "ids": [
+            "stopped_clock_trace",
+            "drained_color_patch"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "bureaucratic_dread",
+            "procedural_focus",
+            "tense"
+          ]
+        }
+      }
+    },
+    {
+      "id": "single_object_left_behind_portrait",
+      "ko": "남겨진 단일 사물 인물 사진",
+      "en": "single object left behind portrait",
+      "weight": 0.82,
+      "family": "aftermath_trace_semantic",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "aftermath_trace"
+      ],
+      "optional_slots": [
+        {
+          "slot": "subject_framing",
+          "probability": 0.65
+        },
+        {
+          "slot": "safety_profile",
+          "probability": 0.5
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "concept_photo",
+            "film_still",
+            "documentary_photo",
+            "magazine_feature"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "documentary",
+            "cinematic",
+            "lifestyle"
+          ]
+        },
+        "subject": {
+          "tags_any": [
+            "human"
+          ]
+        },
+        "action": {
+          "ids": [
+            "standing_silence",
+            "holding_story_prop",
+            "checking_wristwatch_timing",
+            "presenting_file_folder",
+            "reviewing_ledger_columns"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "fluorescent",
+            "monitor_glow",
+            "low_key",
+            "candlelit_ritual_light"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "not_overdone",
+            "candid_imperfect"
+          ]
+        },
+        "subject_framing": {
+          "ids": [
+            "upper_body_framing",
+            "head_and_shoulders_crop",
+            "detail_crop_hands_accessories"
+          ]
+        },
+        "location": {
+          "ids": [
+            "terminal_waiting_after_last_train",
+            "coin_laundry_midnight",
+            "apartment_door_threshold"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "table_edge_threshold_frame",
+            "obstructed_observer_frame",
+            "wide_establishing"
+          ]
+        },
+        "aftermath_trace": {
+          "ids": [
+            "single_glove_left",
+            "cooling_untouched_drink",
+            "overturned_chair_trace"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "melancholic",
+            "domestic_wrongness",
+            "soft_surveillance"
+          ]
+        }
+      }
+    },
+    {
+      "id": "clinical_handover_station",
+      "ko": "임상 인계 스테이션 인물 사진",
+      "en": "clinical handover station portrait",
+      "weight": 0.82,
+      "family": "procedural_station_semantic",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "prop",
+        "safety_profile"
+      ],
+      "optional_slots": [
+        {
+          "slot": "subject_framing",
+          "probability": 0.65
+        },
+        {
+          "slot": "safety_profile",
+          "probability": 0.5
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "concept_photo",
+            "film_still",
+            "documentary_photo",
+            "magazine_feature"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "documentary",
+            "cinematic",
+            "lifestyle"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "nurse_role",
+            "office_worker"
+          ]
+        },
+        "action": {
+          "ids": [
+            "standing_silence",
+            "holding_story_prop",
+            "checking_wristwatch_timing",
+            "presenting_file_folder",
+            "reviewing_ledger_columns"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "fluorescent",
+            "monitor_glow",
+            "low_key",
+            "candlelit_ritual_light"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "not_overdone",
+            "candid_imperfect"
+          ]
+        },
+        "subject_framing": {
+          "ids": [
+            "upper_body_framing",
+            "head_and_shoulders_crop",
+            "detail_crop_hands_accessories"
+          ]
+        },
+        "location": {
+          "ids": [
+            "clinic_corridor_handover",
+            "hospital_records_room",
+            "clinical_records_window"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "service_window_split_frame",
+            "document_foreground_face_background",
+            "medium_close"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "sealed_medical_chart_sleeve",
+            "clinical_chart_clipboard_prop",
+            "clinic_handover_chart_prop"
+          ]
+        },
+        "safety_profile": {
+          "ids": [
+            "clinical_clothed_procedural",
+            "role_by_object_not_costume",
+            "clinical_care_profile"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "clinical_stillness",
+            "procedural_focus",
+            "calm"
+          ]
+        }
+      }
+    },
+    {
+      "id": "sealed_records_counter",
+      "ko": "봉인된 기록 창구 인물 사진",
+      "en": "sealed records counter portrait",
+      "weight": 0.82,
+      "family": "procedural_station_semantic",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "prop",
+        "safety_profile"
+      ],
+      "optional_slots": [
+        {
+          "slot": "subject_framing",
+          "probability": 0.65
+        },
+        {
+          "slot": "safety_profile",
+          "probability": 0.5
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "concept_photo",
+            "film_still",
+            "documentary_photo",
+            "magazine_feature"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "documentary",
+            "cinematic",
+            "lifestyle"
+          ]
+        },
+        "subject": {
+          "tags_any": [
+            "human"
+          ]
+        },
+        "action": {
+          "ids": [
+            "standing_silence",
+            "holding_story_prop",
+            "checking_wristwatch_timing",
+            "presenting_file_folder",
+            "reviewing_ledger_columns"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "fluorescent",
+            "monitor_glow",
+            "low_key",
+            "candlelit_ritual_light"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "not_overdone",
+            "candid_imperfect"
+          ]
+        },
+        "subject_framing": {
+          "ids": [
+            "upper_body_framing",
+            "head_and_shoulders_crop",
+            "detail_crop_hands_accessories"
+          ]
+        },
+        "location": {
+          "ids": [
+            "public_records_office",
+            "clinical_records_window",
+            "city_permit_counter",
+            "notary_office_after_hours"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "service_window_split_frame",
+            "table_edge_threshold_frame",
+            "document_foreground_face_background"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "unreadable_stamp_pad_prop",
+            "sealed_verdict_packet_prop",
+            "wax_seal_kit_prop",
+            "blank_token_box_prop"
+          ]
+        },
+        "safety_profile": {
+          "ids": [
+            "role_by_object_not_costume",
+            "uniformed_role_object_anchor",
+            "text_sensitive_profile"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "bureaucratic_dread",
+            "procedural_focus",
+            "clinical_stillness"
+          ]
+        }
+      }
+    },
+    {
+      "id": "office_access_gate_pact",
+      "ko": "오피스 출입 게이트 계약 인물 사진",
+      "en": "office access gate pact portrait",
+      "weight": 0.82,
+      "family": "procedural_station_semantic",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "prop",
+        "light_shape",
+        "safety_profile"
+      ],
+      "optional_slots": [
+        {
+          "slot": "subject_framing",
+          "probability": 0.65
+        },
+        {
+          "slot": "safety_profile",
+          "probability": 0.5
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "concept_photo",
+            "film_still",
+            "documentary_photo",
+            "magazine_feature"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "documentary",
+            "cinematic",
+            "lifestyle"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "office_worker"
+          ]
+        },
+        "action": {
+          "ids": [
+            "standing_silence",
+            "holding_story_prop",
+            "checking_wristwatch_timing",
+            "presenting_file_folder",
+            "reviewing_ledger_columns"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "fluorescent",
+            "monitor_glow",
+            "low_key",
+            "candlelit_ritual_light"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "not_overdone",
+            "candid_imperfect"
+          ]
+        },
+        "subject_framing": {
+          "ids": [
+            "upper_body_framing",
+            "head_and_shoulders_crop",
+            "detail_crop_hands_accessories"
+          ]
+        },
+        "location": {
+          "ids": [
+            "office_access_gate_lobby",
+            "glass_office",
+            "corporate_high_floor_office"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "badge_reflection_close_frame",
+            "elevator_gap_frame",
+            "first_person_token_handoff_macro"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "black_wax_access_card_prop",
+            "blank_access_badge_prop",
+            "security_access_card_prop"
+          ]
+        },
+        "light_shape": {
+          "ids": [
+            "turnstile_scanner_sliver",
+            "monitor_glow_pull",
+            "elevator_gap_sliver_light"
+          ]
+        },
+        "safety_profile": {
+          "ids": [
+            "screen_workplace_profile",
+            "role_by_object_not_costume",
+            "uniformed_role_object_anchor"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "bureaucratic_dread",
+            "soft_surveillance",
+            "procedural_focus"
+          ]
+        }
+      }
+    },
+    {
+      "id": "desk_paperwork_pact_portrait",
+      "ko": "책상 서류 계약 인물 사진",
+      "en": "desk paperwork pact portrait",
+      "weight": 0.82,
+      "family": "procedural_station_semantic",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "prop",
+        "relational_action",
+        "light_shape"
+      ],
+      "optional_slots": [
+        {
+          "slot": "subject_framing",
+          "probability": 0.65
+        },
+        {
+          "slot": "safety_profile",
+          "probability": 0.5
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "concept_photo",
+            "film_still",
+            "documentary_photo",
+            "magazine_feature"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "documentary",
+            "cinematic",
+            "lifestyle"
+          ]
+        },
+        "subject": {
+          "tags_any": [
+            "human"
+          ]
+        },
+        "action": {
+          "ids": [
+            "standing_silence",
+            "holding_story_prop",
+            "checking_wristwatch_timing",
+            "presenting_file_folder",
+            "reviewing_ledger_columns"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "fluorescent",
+            "monitor_glow",
+            "low_key",
+            "candlelit_ritual_light"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "not_overdone",
+            "candid_imperfect"
+          ]
+        },
+        "subject_framing": {
+          "ids": [
+            "upper_body_framing",
+            "head_and_shoulders_crop",
+            "detail_crop_hands_accessories"
+          ]
+        },
+        "location": {
+          "ids": [
+            "accountant_office_late",
+            "notary_office_after_hours",
+            "glass_office"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "document_foreground_face_background",
+            "table_edge_threshold_frame",
+            "first_person_token_handoff_macro"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "unreadable_stamp_pad_prop",
+            "wax_seal_kit_prop",
+            "soul_contract_scroll_prop",
+            "blank_token_box_prop"
+          ]
+        },
+        "relational_action": {
+          "ids": [
+            "placing_seal_between",
+            "presenting_blank_token",
+            "sliding_chart_across_counter"
+          ]
+        },
+        "light_shape": {
+          "ids": [
+            "contract_table_pool_light",
+            "monitor_glow_pull",
+            "blinds_stripes"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "bureaucratic_dread",
+            "liminal_invitation",
+            "procedural_focus"
+          ]
+        }
+      }
+    },
+    {
+      "id": "pharmacy_afterhours_counter",
+      "ko": "야간 약국 카운터 인물 사진",
+      "en": "after-hours pharmacy counter portrait",
+      "weight": 0.82,
+      "family": "procedural_station_semantic",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "prop",
+        "safety_profile"
+      ],
+      "optional_slots": [
+        {
+          "slot": "subject_framing",
+          "probability": 0.65
+        },
+        {
+          "slot": "safety_profile",
+          "probability": 0.5
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "concept_photo",
+            "film_still",
+            "documentary_photo",
+            "magazine_feature"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "documentary",
+            "cinematic",
+            "lifestyle"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "nurse_role",
+            "office_worker"
+          ]
+        },
+        "action": {
+          "ids": [
+            "standing_silence",
+            "holding_story_prop",
+            "checking_wristwatch_timing",
+            "presenting_file_folder",
+            "reviewing_ledger_columns"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "fluorescent",
+            "monitor_glow",
+            "low_key",
+            "candlelit_ritual_light"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "not_overdone",
+            "candid_imperfect"
+          ]
+        },
+        "subject_framing": {
+          "ids": [
+            "upper_body_framing",
+            "head_and_shoulders_crop",
+            "detail_crop_hands_accessories"
+          ]
+        },
+        "location": {
+          "ids": [
+            "pharmacy_dispensing_counter",
+            "clinical_records_window",
+            "hospital_records_room"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "service_window_split_frame",
+            "hands_first_task_pov",
+            "medium_close"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "sealed_medical_chart_sleeve",
+            "blank_access_badge_prop",
+            "clinical_chart_clipboard_prop"
+          ]
+        },
+        "safety_profile": {
+          "ids": [
+            "clinical_clothed_procedural",
+            "role_by_object_not_costume"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "clinical_stillness",
+            "procedural_focus",
+            "calm"
+          ]
+        }
+      }
+    },
+    {
+      "id": "peephole_fisheye_portrait",
+      "ko": "문구멍 어안 시점 인물 사진",
+      "en": "peephole fisheye portrait",
+      "weight": 0.82,
+      "family": "apparatus_pov_semantic",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "apparatus_pov"
+      ],
+      "optional_slots": [
+        {
+          "slot": "subject_framing",
+          "probability": 0.65
+        },
+        {
+          "slot": "safety_profile",
+          "probability": 0.5
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "concept_photo",
+            "film_still",
+            "documentary_photo",
+            "magazine_feature"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "documentary",
+            "cinematic",
+            "lifestyle"
+          ]
+        },
+        "subject": {
+          "tags_any": [
+            "human"
+          ]
+        },
+        "action": {
+          "ids": [
+            "standing_silence",
+            "holding_story_prop",
+            "checking_wristwatch_timing",
+            "presenting_file_folder",
+            "reviewing_ledger_columns"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "fluorescent",
+            "monitor_glow",
+            "low_key",
+            "candlelit_ritual_light"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "not_overdone",
+            "candid_imperfect"
+          ]
+        },
+        "subject_framing": {
+          "ids": [
+            "upper_body_framing",
+            "head_and_shoulders_crop",
+            "detail_crop_hands_accessories"
+          ]
+        },
+        "location": {
+          "ids": [
+            "apartment_door_threshold",
+            "service_corridor_interim",
+            "reflective_dark_corridor"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "obstructed_observer_frame",
+            "door_chain_gap_frame",
+            "frame_within_frame"
+          ]
+        },
+        "apparatus_pov": {
+          "ids": [
+            "peephole_fisheye_pov",
+            "keyhole_vignette_pov"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "soft_surveillance",
+            "liminal_invitation",
+            "tense"
+          ]
+        }
+      }
+    },
+    {
+      "id": "two_way_mirror_observation",
+      "ko": "매직미러 관찰 인물 사진",
+      "en": "two-way mirror observation portrait",
+      "weight": 0.82,
+      "family": "apparatus_pov_semantic",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "apparatus_pov",
+        "reflection_logic"
+      ],
+      "optional_slots": [
+        {
+          "slot": "subject_framing",
+          "probability": 0.65
+        },
+        {
+          "slot": "safety_profile",
+          "probability": 0.5
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "concept_photo",
+            "film_still",
+            "documentary_photo",
+            "magazine_feature"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "documentary",
+            "cinematic",
+            "lifestyle"
+          ]
+        },
+        "subject": {
+          "tags_any": [
+            "human"
+          ]
+        },
+        "action": {
+          "ids": [
+            "standing_silence",
+            "holding_story_prop",
+            "checking_wristwatch_timing",
+            "presenting_file_folder",
+            "reviewing_ledger_columns"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "fluorescent",
+            "monitor_glow",
+            "low_key",
+            "candlelit_ritual_light"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "not_overdone",
+            "candid_imperfect"
+          ]
+        },
+        "subject_framing": {
+          "ids": [
+            "upper_body_framing",
+            "head_and_shoulders_crop",
+            "detail_crop_hands_accessories"
+          ]
+        },
+        "location": {
+          "ids": [
+            "two_way_observation_room",
+            "clinical_observation_lab"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "one_way_mirror_frame",
+            "layered_reflection_depth",
+            "obstructed_observer_frame"
+          ]
+        },
+        "apparatus_pov": {
+          "ids": [
+            "two_way_mirror_pov"
+          ]
+        },
+        "reflection_logic": {
+          "ids": [
+            "reflection_extra_presence",
+            "reflection_holds_still",
+            "faithful_reflection"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "soft_surveillance",
+            "clinical_stillness",
+            "tense"
+          ]
+        }
+      }
+    },
+    {
+      "id": "scanner_platen_topdown_portrait",
+      "ko": "스캐너 평면광 탑다운 인물 사진",
+      "en": "scanner platen top-down portrait",
+      "weight": 0.82,
+      "family": "apparatus_pov_semantic",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "apparatus_pov",
+        "light_shape"
+      ],
+      "optional_slots": [
+        {
+          "slot": "subject_framing",
+          "probability": 0.65
+        },
+        {
+          "slot": "safety_profile",
+          "probability": 0.5
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "concept_photo",
+            "film_still",
+            "documentary_photo",
+            "magazine_feature"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "documentary",
+            "cinematic",
+            "lifestyle"
+          ]
+        },
+        "subject": {
+          "tags_any": [
+            "human"
+          ]
+        },
+        "action": {
+          "ids": [
+            "standing_silence",
+            "holding_story_prop",
+            "checking_wristwatch_timing",
+            "presenting_file_folder",
+            "reviewing_ledger_columns"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "fluorescent",
+            "monitor_glow",
+            "low_key",
+            "candlelit_ritual_light"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "not_overdone",
+            "candid_imperfect"
+          ]
+        },
+        "subject_framing": {
+          "ids": [
+            "upper_body_framing",
+            "head_and_shoulders_crop",
+            "detail_crop_hands_accessories"
+          ]
+        },
+        "location": {
+          "ids": [
+            "copy_scanner_room_night",
+            "accountant_office_late",
+            "public_records_office"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "top_down",
+            "hands_first_task_pov",
+            "document_foreground_face_background"
+          ]
+        },
+        "apparatus_pov": {
+          "ids": [
+            "scanner_platen_topdown"
+          ]
+        },
+        "light_shape": {
+          "ids": [
+            "turnstile_scanner_sliver",
+            "monitor_rectangle_glow"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "bureaucratic_dread",
+            "procedural_focus",
+            "soft_surveillance"
+          ]
+        }
+      }
+    },
+    {
+      "id": "thermal_lowfi_apparatus_portrait",
+      "ko": "저해상 열화상 장치 인물 사진",
+      "en": "thermal low-fi apparatus portrait",
+      "weight": 0.82,
+      "family": "apparatus_pov_semantic",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "apparatus_pov"
+      ],
+      "optional_slots": [
+        {
+          "slot": "subject_framing",
+          "probability": 0.65
+        },
+        {
+          "slot": "safety_profile",
+          "probability": 0.5
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "concept_photo",
+            "film_still",
+            "documentary_photo",
+            "magazine_feature"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "documentary",
+            "cinematic",
+            "lifestyle"
+          ]
+        },
+        "subject": {
+          "tags_any": [
+            "human"
+          ]
+        },
+        "action": {
+          "ids": [
+            "standing_silence",
+            "holding_story_prop",
+            "checking_wristwatch_timing",
+            "presenting_file_folder",
+            "reviewing_ledger_columns"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "fluorescent",
+            "monitor_glow",
+            "low_key",
+            "candlelit_ritual_light"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "not_overdone",
+            "candid_imperfect"
+          ]
+        },
+        "subject_framing": {
+          "ids": [
+            "upper_body_framing",
+            "head_and_shoulders_crop",
+            "detail_crop_hands_accessories"
+          ]
+        },
+        "location": {
+          "ids": [
+            "clinical_observation_lab",
+            "two_way_observation_room",
+            "service_corridor_interim"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "obstructed_observer_frame",
+            "medium_close",
+            "layered_reflection_depth"
+          ]
+        },
+        "apparatus_pov": {
+          "ids": [
+            "thermal_lowfi_pov"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "soft_surveillance",
+            "clinical_stillness",
+            "glitch_anxiety"
+          ]
+        }
+      }
+    },
+    {
+      "id": "stage_costume_safety_check",
+      "ko": "무대 의상 안전 점검 인물 사진",
+      "en": "stage costume safety check portrait",
+      "weight": 0.82,
+      "family": "covered_stage_backstage_semantic",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "costume_absorption_guard",
+        "safety_profile"
+      ],
+      "optional_slots": [
+        {
+          "slot": "subject_framing",
+          "probability": 0.65
+        },
+        {
+          "slot": "safety_profile",
+          "probability": 0.5
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "concept_photo",
+            "film_still",
+            "documentary_photo",
+            "magazine_feature"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "documentary",
+            "cinematic",
+            "lifestyle"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "adult_stage_dancer",
+            "maid_cafe_staff"
+          ]
+        },
+        "action": {
+          "ids": [
+            "standing_silence",
+            "holding_story_prop",
+            "checking_wristwatch_timing",
+            "presenting_file_folder",
+            "reviewing_ledger_columns"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "fluorescent",
+            "monitor_glow",
+            "low_key",
+            "candlelit_ritual_light"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "not_overdone",
+            "candid_imperfect"
+          ]
+        },
+        "subject_framing": {
+          "ids": [
+            "upper_body_framing",
+            "head_and_shoulders_crop",
+            "detail_crop_hands_accessories"
+          ]
+        },
+        "location": {
+          "ids": [
+            "costume_workshop_backstage",
+            "backstage_vanity_corner",
+            "stage_door_staff_entry"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "hands_first_task_pov",
+            "through_specimen_case_frame",
+            "medium_close"
+          ]
+        },
+        "costume_absorption_guard": {
+          "ids": [
+            "bunny_ears_secondary_only",
+            "uniform_not_primary_anchor_guard",
+            "maid_uniform_service_guard"
+          ]
+        },
+        "safety_profile": {
+          "ids": [
+            "stage_costume_covered_profile",
+            "role_by_object_not_costume"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "backstage_trap_calm",
+            "offstage_workaday_calm",
+            "procedural_focus"
+          ]
+        }
+      }
+    },
+    {
+      "id": "vanity_bulbs_token_handoff",
+      "ko": "화장대 전구 토큰 전달 인물 사진",
+      "en": "vanity bulbs token handoff portrait",
+      "weight": 0.82,
+      "family": "covered_stage_backstage_semantic",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "light_shape",
+        "relational_action",
+        "prop"
+      ],
+      "optional_slots": [
+        {
+          "slot": "subject_framing",
+          "probability": 0.65
+        },
+        {
+          "slot": "safety_profile",
+          "probability": 0.5
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "concept_photo",
+            "film_still",
+            "documentary_photo",
+            "magazine_feature"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "documentary",
+            "cinematic",
+            "lifestyle"
+          ]
+        },
+        "subject": {
+          "tags_any": [
+            "human"
+          ]
+        },
+        "action": {
+          "ids": [
+            "standing_silence",
+            "holding_story_prop",
+            "checking_wristwatch_timing",
+            "presenting_file_folder",
+            "reviewing_ledger_columns"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "fluorescent",
+            "monitor_glow",
+            "low_key",
+            "candlelit_ritual_light"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "not_overdone",
+            "candid_imperfect"
+          ]
+        },
+        "subject_framing": {
+          "ids": [
+            "upper_body_framing",
+            "head_and_shoulders_crop",
+            "detail_crop_hands_accessories"
+          ]
+        },
+        "location": {
+          "ids": [
+            "backstage_vanity_corner",
+            "makeup_vanity",
+            "stage_lighting_booth"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "mirror_mismatch_same_frame",
+            "first_person_token_handoff_macro",
+            "layered_reflection_depth"
+          ]
+        },
+        "light_shape": {
+          "ids": [
+            "vanity_bulbs_dim_sequence",
+            "candle_flame_drawn_sideways"
+          ]
+        },
+        "relational_action": {
+          "ids": [
+            "presenting_blank_token",
+            "placing_seal_between"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "blank_token_box_prop",
+            "compact_mirror",
+            "sealed_black_envelope_prop"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "backstage_trap_calm",
+            "liminal_invitation",
+            "tense"
+          ]
+        }
+      }
+    },
+    {
+      "id": "stage_door_threshold_invitation",
+      "ko": "스테이지 도어 문턱 초대 인물 사진",
+      "en": "stage-door threshold invitation portrait",
+      "weight": 0.82,
+      "family": "covered_stage_backstage_semantic",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "viewer_position",
+        "distance_narrative"
+      ],
+      "optional_slots": [
+        {
+          "slot": "subject_framing",
+          "probability": 0.65
+        },
+        {
+          "slot": "safety_profile",
+          "probability": 0.5
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "concept_photo",
+            "film_still",
+            "documentary_photo",
+            "magazine_feature"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "documentary",
+            "cinematic",
+            "lifestyle"
+          ]
+        },
+        "subject": {
+          "tags_any": [
+            "human"
+          ]
+        },
+        "action": {
+          "ids": [
+            "standing_silence",
+            "holding_story_prop",
+            "checking_wristwatch_timing",
+            "presenting_file_folder",
+            "reviewing_ledger_columns"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "fluorescent",
+            "monitor_glow",
+            "low_key",
+            "candlelit_ritual_light"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "not_overdone",
+            "candid_imperfect"
+          ]
+        },
+        "subject_framing": {
+          "ids": [
+            "upper_body_framing",
+            "head_and_shoulders_crop",
+            "detail_crop_hands_accessories"
+          ]
+        },
+        "location": {
+          "ids": [
+            "stage_door_staff_entry",
+            "backstage_room",
+            "service_corridor_interim"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "through_doorway_handoff",
+            "obstructed_observer_frame",
+            "frame_within_frame"
+          ]
+        },
+        "viewer_position": {
+          "ids": [
+            "viewer_through_doorway",
+            "viewer_as_contract_party",
+            "viewer_as_witness"
+          ]
+        },
+        "distance_narrative": {
+          "ids": [
+            "threshold_one_inside",
+            "arm_offered_across_gap"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "backstage_trap_calm",
+            "liminal_invitation",
+            "soft_surveillance"
+          ]
+        }
+      }
+    },
+    {
+      "id": "costume_rack_reflection_mismatch",
+      "ko": "의상 랙 반사 불일치 인물 사진",
+      "en": "costume rack reflection mismatch portrait",
+      "weight": 0.82,
+      "family": "covered_stage_backstage_semantic",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "reflection_logic",
+        "costume_absorption_guard"
+      ],
+      "optional_slots": [
+        {
+          "slot": "subject_framing",
+          "probability": 0.65
+        },
+        {
+          "slot": "safety_profile",
+          "probability": 0.5
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "concept_photo",
+            "film_still",
+            "documentary_photo",
+            "magazine_feature"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "documentary",
+            "cinematic",
+            "lifestyle"
+          ]
+        },
+        "subject": {
+          "tags_any": [
+            "human"
+          ]
+        },
+        "action": {
+          "ids": [
+            "standing_silence",
+            "holding_story_prop",
+            "checking_wristwatch_timing",
+            "presenting_file_folder",
+            "reviewing_ledger_columns"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "fluorescent",
+            "monitor_glow",
+            "low_key",
+            "candlelit_ritual_light"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "not_overdone",
+            "candid_imperfect"
+          ]
+        },
+        "subject_framing": {
+          "ids": [
+            "upper_body_framing",
+            "head_and_shoulders_crop",
+            "detail_crop_hands_accessories"
+          ]
+        },
+        "location": {
+          "ids": [
+            "costume_workshop_backstage",
+            "backstage_vanity_corner"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "layered_reflection_depth",
+            "mirror_mismatch_same_frame",
+            "obstructed_observer_frame"
+          ]
+        },
+        "reflection_logic": {
+          "ids": [
+            "reflection_lags_motion",
+            "reflection_extra_presence",
+            "reflection_doll_self"
+          ]
+        },
+        "costume_absorption_guard": {
+          "ids": [
+            "bunny_ears_secondary_only",
+            "uniform_not_primary_anchor_guard",
+            "stage_feathers_not_body_guard"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "backstage_trap_calm",
+            "domestic_wrongness",
+            "tense"
+          ]
+        }
+      }
+    },
+    {
+      "id": "one_seat_gap_tension_portrait",
+      "ko": "한 자리 거리 긴장 인물 사진",
+      "en": "one-seat gap tension portrait",
+      "weight": 0.82,
+      "family": "psychological_distance_semantic",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "distance_narrative",
+        "gaze_target"
+      ],
+      "optional_slots": [
+        {
+          "slot": "subject_framing",
+          "probability": 0.65
+        },
+        {
+          "slot": "safety_profile",
+          "probability": 0.5
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "concept_photo",
+            "film_still",
+            "documentary_photo",
+            "magazine_feature"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "documentary",
+            "cinematic",
+            "lifestyle"
+          ]
+        },
+        "subject": {
+          "tags_any": [
+            "human"
+          ]
+        },
+        "action": {
+          "ids": [
+            "standing_silence",
+            "holding_story_prop",
+            "checking_wristwatch_timing",
+            "presenting_file_folder",
+            "reviewing_ledger_columns"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "fluorescent",
+            "monitor_glow",
+            "low_key",
+            "candlelit_ritual_light"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "not_overdone",
+            "candid_imperfect"
+          ]
+        },
+        "subject_framing": {
+          "ids": [
+            "upper_body_framing",
+            "head_and_shoulders_crop",
+            "detail_crop_hands_accessories"
+          ]
+        },
+        "location": {
+          "ids": [
+            "terminal_waiting_after_last_train",
+            "quiet_cafe",
+            "city_bus_one_seat_gap"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "wide_establishing",
+            "table_edge_threshold_frame",
+            "medium_close"
+          ]
+        },
+        "distance_narrative": {
+          "ids": [
+            "one_seat_gap",
+            "turned_away_shared_bench",
+            "object_between_two_people"
+          ]
+        },
+        "gaze_target": {
+          "ids": [
+            "to_empty_chair_opposite",
+            "window_avoiding_partner",
+            "to_handoff_object"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "melancholic",
+            "domestic_wrongness",
+            "calm"
+          ]
+        }
+      }
+    },
+    {
+      "id": "turned_away_handoff_portrait",
+      "ko": "등 돌린 전달 인물 사진",
+      "en": "turned-away handoff portrait",
+      "weight": 0.82,
+      "family": "psychological_distance_semantic",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "relational_action",
+        "distance_narrative",
+        "gaze_target"
+      ],
+      "optional_slots": [
+        {
+          "slot": "subject_framing",
+          "probability": 0.65
+        },
+        {
+          "slot": "safety_profile",
+          "probability": 0.5
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "concept_photo",
+            "film_still",
+            "documentary_photo",
+            "magazine_feature"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "documentary",
+            "cinematic",
+            "lifestyle"
+          ]
+        },
+        "subject": {
+          "tags_any": [
+            "human"
+          ]
+        },
+        "action": {
+          "ids": [
+            "standing_silence",
+            "holding_story_prop",
+            "checking_wristwatch_timing",
+            "presenting_file_folder",
+            "reviewing_ledger_columns"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "fluorescent",
+            "monitor_glow",
+            "low_key",
+            "candlelit_ritual_light"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "not_overdone",
+            "candid_imperfect"
+          ]
+        },
+        "subject_framing": {
+          "ids": [
+            "upper_body_framing",
+            "head_and_shoulders_crop",
+            "detail_crop_hands_accessories"
+          ]
+        },
+        "location": {
+          "ids": [
+            "quiet_cafe",
+            "campus_cafe",
+            "apartment_door_threshold"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "table_edge_threshold_frame",
+            "first_person_token_handoff_macro",
+            "medium_close"
+          ]
+        },
+        "relational_action": {
+          "ids": [
+            "returning_unopened_gift",
+            "pulling_handoff_back",
+            "placing_prop_on_table_for_partner"
+          ]
+        },
+        "distance_narrative": {
+          "ids": [
+            "turned_away_shared_bench",
+            "arm_offered_across_gap",
+            "one_step_hesitation"
+          ]
+        },
+        "gaze_target": {
+          "ids": [
+            "avoiding_camera_downcast",
+            "floor_after_handoff",
+            "to_empty_chair_opposite"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "melancholic",
+            "calm",
+            "domestic_wrongness"
+          ]
+        }
+      }
+    },
+    {
+      "id": "empty_chair_gaze_portrait",
+      "ko": "빈 의자 응시 인물 사진",
+      "en": "empty chair gaze portrait",
+      "weight": 0.82,
+      "family": "psychological_distance_semantic",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "gaze_target",
+        "aftermath_trace"
+      ],
+      "optional_slots": [
+        {
+          "slot": "subject_framing",
+          "probability": 0.65
+        },
+        {
+          "slot": "safety_profile",
+          "probability": 0.5
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "concept_photo",
+            "film_still",
+            "documentary_photo",
+            "magazine_feature"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "documentary",
+            "cinematic",
+            "lifestyle"
+          ]
+        },
+        "subject": {
+          "tags_any": [
+            "human"
+          ]
+        },
+        "action": {
+          "ids": [
+            "standing_silence",
+            "holding_story_prop",
+            "checking_wristwatch_timing",
+            "presenting_file_folder",
+            "reviewing_ledger_columns"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "fluorescent",
+            "monitor_glow",
+            "low_key",
+            "candlelit_ritual_light"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "not_overdone",
+            "candid_imperfect"
+          ]
+        },
+        "subject_framing": {
+          "ids": [
+            "upper_body_framing",
+            "head_and_shoulders_crop",
+            "detail_crop_hands_accessories"
+          ]
+        },
+        "location": {
+          "ids": [
+            "quiet_cafe",
+            "terminal_waiting_after_last_train",
+            "coin_laundry_midnight"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "frame_within_frame",
+            "table_edge_threshold_frame",
+            "wide_establishing"
+          ]
+        },
+        "gaze_target": {
+          "ids": [
+            "to_empty_chair_opposite",
+            "gaze_toward_empty_throne"
+          ]
+        },
+        "aftermath_trace": {
+          "ids": [
+            "single_glove_left",
+            "cooling_untouched_drink",
+            "overturned_chair_trace"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "melancholic",
+            "domestic_wrongness",
+            "soft_surveillance"
+          ]
+        }
+      }
+    },
+    {
+      "id": "too_close_no_contact_portrait",
+      "ko": "닿지 않는 과밀 거리 인물 사진",
+      "en": "too-close no-contact portrait",
+      "weight": 0.82,
+      "family": "psychological_distance_semantic",
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "composition",
+        "lens",
+        "mood",
+        "quality",
+        "distance_narrative",
+        "gaze_target"
+      ],
+      "optional_slots": [
+        {
+          "slot": "subject_framing",
+          "probability": 0.65
+        },
+        {
+          "slot": "safety_profile",
+          "probability": 0.5
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "concept_photo",
+            "film_still",
+            "documentary_photo",
+            "magazine_feature"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "documentary",
+            "cinematic",
+            "lifestyle"
+          ]
+        },
+        "subject": {
+          "tags_any": [
+            "human"
+          ]
+        },
+        "action": {
+          "ids": [
+            "standing_silence",
+            "holding_story_prop",
+            "checking_wristwatch_timing",
+            "presenting_file_folder",
+            "reviewing_ledger_columns"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "fluorescent",
+            "monitor_glow",
+            "low_key",
+            "candlelit_ritual_light"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm",
+            "macro_100mm"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "not_overdone",
+            "candid_imperfect"
+          ]
+        },
+        "subject_framing": {
+          "ids": [
+            "upper_body_framing",
+            "head_and_shoulders_crop",
+            "detail_crop_hands_accessories"
+          ]
+        },
+        "location": {
+          "ids": [
+            "mirrored_elevator_box",
+            "quiet_cafe",
+            "service_corridor_interim"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "medium_close",
+            "layered_reflection_depth",
+            "obstructed_observer_frame"
+          ]
+        },
+        "distance_narrative": {
+          "ids": [
+            "half_step_too_close",
+            "counter_between_service",
+            "mirrored_distance"
+          ]
+        },
+        "gaze_target": {
+          "ids": [
+            "to_viewer_through_glass",
+            "camera_direct_ignoring_partner",
+            "to_own_reflection_doubt"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "tense",
+            "soft_surveillance",
+            "domestic_wrongness"
+          ]
+        }
+      }
     }
   ],
   "templates": {
@@ -111854,6 +115290,92 @@
           "brass"
         ],
         "embedding_text": "mechanical astrolabe pocket watch for celestial and time magic"
+      },
+      {
+        "id": "blank_access_badge_prop",
+        "ko": "글자가 보이지 않는 빈 출입 배지",
+        "en": "a blank access badge with no readable text",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "office",
+          "token",
+          "textless",
+          "procedural"
+        ]
+      },
+      {
+        "id": "sealed_medical_chart_sleeve",
+        "ko": "봉인된 의료 차트 슬리브",
+        "en": "a sealed medical chart sleeve with an unreadable seal",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "clinical",
+          "sealed",
+          "textless",
+          "procedural"
+        ]
+      },
+      {
+        "id": "unreadable_stamp_pad_prop",
+        "ko": "읽을 수 없는 문양만 남기는 낡은 스탬프 패드",
+        "en": "a worn stamp pad leaving only unreadable symbolic marks",
+        "weight": 0.72,
+        "tags": [
+          "human",
+          "office",
+          "contract",
+          "textless"
+        ]
+      },
+      {
+        "id": "metronome_stopped_prop",
+        "ko": "한쪽으로 멈춘 메트로놈",
+        "en": "a metronome stopped at one side",
+        "weight": 0.72,
+        "tags": [
+          "human",
+          "time",
+          "aftermath",
+          "trace"
+        ]
+      },
+      {
+        "id": "condensation_glass_cup_prop",
+        "ko": "손대지 않아 김이 서린 유리컵",
+        "en": "an untouched glass cup clouded with condensation",
+        "weight": 0.72,
+        "tags": [
+          "human",
+          "trace",
+          "cold",
+          "aftermath"
+        ]
+      },
+      {
+        "id": "black_wax_access_card_prop",
+        "ko": "검은 왁스 봉인이 붙은 출입 카드",
+        "en": "an access card sealed with black wax",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "office",
+          "contract",
+          "threshold"
+        ]
+      },
+      {
+        "id": "blank_token_box_prop",
+        "ko": "글자 없는 작은 토큰 상자",
+        "en": "a small token box with no readable lettering",
+        "weight": 0.72,
+        "tags": [
+          "human",
+          "token",
+          "textless",
+          "contract"
+        ]
       }
     ],
     "fetish_styling": [
@@ -117941,6 +121463,104 @@
           "traffic"
         ],
         "embedding_text": "night city intersection with crosswalks, traffic signals, headlights and urban ritual markings"
+      },
+      {
+        "id": "service_corridor_interim",
+        "ko": "출입 제한 서비스 복도의 중간 지대",
+        "en": "a restricted service corridor between public and staff areas",
+        "phrase_en": "in a restricted service corridor between public and staff areas",
+        "phrase_ko": "출입 제한 서비스 복도의 중간 지대에서",
+        "weight": 0.8,
+        "tags": [
+          "human",
+          "threshold",
+          "work",
+          "liminal"
+        ]
+      },
+      {
+        "id": "stairwell_landing_after_hours",
+        "ko": "퇴근 후 비상계단 계단참",
+        "en": "an after-hours stairwell landing with emergency light",
+        "phrase_en": "on an after-hours stairwell landing under emergency light",
+        "phrase_ko": "퇴근 후 비상계단 계단참에서",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "threshold",
+          "office",
+          "liminal"
+        ]
+      },
+      {
+        "id": "clinical_records_window",
+        "ko": "병원 기록실 유리 접수창",
+        "en": "a hospital records window with a glass partition",
+        "phrase_en": "at a hospital records window with a glass partition",
+        "phrase_ko": "병원 기록실 유리 접수창에서",
+        "weight": 0.82,
+        "tags": [
+          "human",
+          "clinical",
+          "records",
+          "procedural"
+        ]
+      },
+      {
+        "id": "office_access_gate_lobby",
+        "ko": "사무실 출입 게이트 로비",
+        "en": "an office access-gate lobby with turnstiles",
+        "phrase_en": "in an office access-gate lobby with turnstiles",
+        "phrase_ko": "사무실 출입 게이트 로비에서",
+        "weight": 0.82,
+        "tags": [
+          "human",
+          "office",
+          "procedural",
+          "threshold"
+        ]
+      },
+      {
+        "id": "copy_scanner_room_night",
+        "ko": "야간 복사기와 스캐너가 켜진 작은 사무실",
+        "en": "a small night copy room lit by a scanner bed",
+        "phrase_en": "in a small night copy room lit by a scanner bed",
+        "phrase_ko": "스캐너 빛만 켜진 야간 복사실에서",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "office",
+          "apparatus",
+          "night"
+        ]
+      },
+      {
+        "id": "terminal_waiting_after_last_train",
+        "ko": "막차가 지난 환승 터미널 대기석",
+        "en": "a transit terminal waiting area after the last train",
+        "phrase_en": "in a transit terminal waiting area after the last train",
+        "phrase_ko": "막차가 지난 환승 터미널 대기석에서",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "transit",
+          "liminal",
+          "melancholy"
+        ]
+      },
+      {
+        "id": "two_way_observation_room",
+        "ko": "매직미러가 있는 관찰실",
+        "en": "an observation room divided by a two-way mirror",
+        "phrase_en": "in an observation room divided by a two-way mirror",
+        "phrase_ko": "매직미러가 있는 관찰실에서",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "apparatus",
+          "reflection",
+          "procedural"
+        ]
       }
     ],
     "world": [
@@ -122829,6 +126449,78 @@
           "surreal"
         ],
         "embedding_text": "firelight playing only on the ceiling, hidden source and uncanny room physics"
+      },
+      {
+        "id": "candle_flame_drawn_sideways",
+        "ko": "옆으로 빨려가는 촛불 모양",
+        "en": "candle flame pulled sideways toward the subject",
+        "weight": 0.74,
+        "tags": [
+          "human",
+          "ritual",
+          "life_drain",
+          "light"
+        ]
+      },
+      {
+        "id": "monitor_glow_pull",
+        "ko": "피사체 쪽으로 당겨지는 모니터 빛",
+        "en": "monitor glow visually drawn toward the subject",
+        "weight": 0.74,
+        "tags": [
+          "human",
+          "office",
+          "screen",
+          "life_drain"
+        ]
+      },
+      {
+        "id": "headlamp_beam_kink",
+        "ko": "중간에서 꺾이는 헤드램프 빔",
+        "en": "headlamp beam bending with a visible kink",
+        "weight": 0.72,
+        "tags": [
+          "human",
+          "work",
+          "miner",
+          "surreal"
+        ]
+      },
+      {
+        "id": "vanity_bulbs_dim_sequence",
+        "ko": "순서대로 어두워지는 화장대 전구",
+        "en": "vanity bulbs dimming one by one",
+        "weight": 0.72,
+        "tags": [
+          "human",
+          "backstage",
+          "stage",
+          "life_drain"
+        ]
+      },
+      {
+        "id": "turnstile_scanner_sliver",
+        "ko": "출입 게이트 스캐너의 얇은 빛",
+        "en": "thin scanner sliver from an access turnstile",
+        "weight": 0.7,
+        "tags": [
+          "human",
+          "office",
+          "procedural",
+          "threshold"
+        ]
+      },
+      {
+        "id": "contract_table_pool_light",
+        "ko": "계약 테이블 위 좁은 빛 웅덩이",
+        "en": "narrow pool of light on a contract table",
+        "weight": 0.72,
+        "tags": [
+          "human",
+          "contract",
+          "procedural",
+          "low_key"
+        ]
       }
     ],
     "camera_type": [
@@ -125611,6 +129303,87 @@
         "tags": [
           "pov",
           "work"
+        ]
+      },
+      {
+        "id": "layered_reflection_depth",
+        "ko": "여러 반사면이 깊이를 만드는 레이어드 구도",
+        "en": "layered depth built from several reflective surfaces",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "reflection",
+          "concept"
+        ]
+      },
+      {
+        "id": "obstructed_observer_frame",
+        "ko": "문틀이나 기둥에 일부 가려진 관찰 구도",
+        "en": "partly obstructed observer framing through a doorframe or column",
+        "weight": 0.75,
+        "tags": [
+          "human",
+          "pov",
+          "surveillance"
+        ]
+      },
+      {
+        "id": "through_specimen_case_frame",
+        "ko": "유리 표본 케이스 너머의 프레임",
+        "en": "framed through a glass specimen case",
+        "weight": 0.72,
+        "tags": [
+          "human",
+          "glass",
+          "reflection",
+          "procedural"
+        ]
+      },
+      {
+        "id": "first_person_token_handoff_macro",
+        "ko": "1인칭 토큰 전달 매크로 구도",
+        "en": "first-person macro frame of a token handoff",
+        "weight": 0.8,
+        "tags": [
+          "human",
+          "pov",
+          "handoff",
+          "contract"
+        ]
+      },
+      {
+        "id": "table_edge_threshold_frame",
+        "ko": "테이블 가장자리를 문턱처럼 쓰는 구도",
+        "en": "table edge used as a visual threshold",
+        "weight": 0.74,
+        "tags": [
+          "human",
+          "threshold",
+          "relational"
+        ]
+      },
+      {
+        "id": "service_window_split_frame",
+        "ko": "서비스 창 유리로 둘로 나뉜 구도",
+        "en": "split frame through a service-window glass partition",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "service",
+          "procedural",
+          "glass"
+        ]
+      },
+      {
+        "id": "badge_reflection_close_frame",
+        "ko": "배지 표면 반사를 크게 잡은 구도",
+        "en": "close frame using the reflection on a badge or access card",
+        "weight": 0.72,
+        "tags": [
+          "human",
+          "reflection",
+          "office",
+          "authority"
         ]
       }
     ],
@@ -129442,6 +133215,72 @@
         "tags": [
           "stage",
           "work"
+        ]
+      },
+      {
+        "id": "clinical_stillness",
+        "ko": "임상적인 정적",
+        "en": "clinical stillness",
+        "weight": 0.72,
+        "tags": [
+          "clinical",
+          "quiet",
+          "procedural"
+        ]
+      },
+      {
+        "id": "bureaucratic_dread",
+        "ko": "관료적 불길함",
+        "en": "bureaucratic dread",
+        "weight": 0.72,
+        "tags": [
+          "office",
+          "dread",
+          "procedural"
+        ]
+      },
+      {
+        "id": "liminal_invitation",
+        "ko": "문턱에서 초대하는 긴장",
+        "en": "liminal invitation",
+        "weight": 0.74,
+        "tags": [
+          "threshold",
+          "surreal",
+          "concept"
+        ]
+      },
+      {
+        "id": "backstage_trap_calm",
+        "ko": "백스테이지의 차분한 함정감",
+        "en": "calm backstage trap mood",
+        "weight": 0.72,
+        "tags": [
+          "stage",
+          "backstage",
+          "tension"
+        ]
+      },
+      {
+        "id": "soft_surveillance",
+        "ko": "부드러운 감시감",
+        "en": "soft surveillance mood",
+        "weight": 0.7,
+        "tags": [
+          "surveillance",
+          "quiet",
+          "pov"
+        ]
+      },
+      {
+        "id": "domestic_wrongness",
+        "ko": "일상 공간의 어긋남",
+        "en": "domestic wrongness",
+        "weight": 0.7,
+        "tags": [
+          "domestic",
+          "uncanny",
+          "subtle"
         ]
       }
     ],
@@ -137416,6 +141255,77 @@
         "for_any": [
           "human"
         ]
+      },
+      {
+        "id": "presenting_blank_token",
+        "ko": "글자 없는 토큰을 내미는",
+        "en": "presenting a blank token",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "relational",
+          "handoff",
+          "textless"
+        ]
+      },
+      {
+        "id": "placing_seal_between",
+        "ko": "두 사람 사이에 봉인을 내려놓는",
+        "en": "placing a seal between two people",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "relational",
+          "contract",
+          "threshold"
+        ]
+      },
+      {
+        "id": "pulling_handoff_back",
+        "ko": "건네려던 물건을 살짝 거두는",
+        "en": "pulling a handoff object slightly back",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "relational",
+          "tension",
+          "yandere"
+        ]
+      },
+      {
+        "id": "holding_door_half_open",
+        "ko": "문을 반쯤 열어 잡고 있는",
+        "en": "holding a door half open",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "threshold",
+          "invitation"
+        ]
+      },
+      {
+        "id": "sliding_chart_across_counter",
+        "ko": "카운터 너머로 차트를 밀어주는",
+        "en": "sliding a chart across the counter",
+        "weight": 0.74,
+        "tags": [
+          "human",
+          "clinical",
+          "procedural",
+          "handoff"
+        ]
+      },
+      {
+        "id": "returning_unopened_gift",
+        "ko": "뜯지 않은 선물을 돌려주는",
+        "en": "returning an unopened gift",
+        "weight": 0.72,
+        "tags": [
+          "human",
+          "relational",
+          "distance",
+          "tsundere"
+        ]
       }
     ],
     "prop_direction": [
@@ -138269,6 +142179,111 @@
           "gaze_target"
         ],
         "embedding_text": "gaze past attendants and court gaze",
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "to_offered_contract",
+        "ko": "내밀어진 계약이나 봉인으로 향한 시선",
+        "en": "gaze toward an offered contract or seal",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "gaze",
+          "contract",
+          "succubus"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "to_blank_badge",
+        "ko": "글자 없는 배지를 향한 시선",
+        "en": "gaze toward a blank badge or access card",
+        "weight": 0.74,
+        "tags": [
+          "human",
+          "gaze",
+          "office",
+          "procedural"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "to_own_reflection_doubt",
+        "ko": "자기 반사를 의심스럽게 보는 시선",
+        "en": "gaze at own reflection with doubt",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "gaze",
+          "reflection",
+          "identity"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "to_empty_chair_opposite",
+        "ko": "맞은편 빈 의자를 향한 시선",
+        "en": "gaze toward the empty chair opposite",
+        "weight": 0.72,
+        "tags": [
+          "human",
+          "gaze",
+          "absence",
+          "relational"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "to_dimming_light",
+        "ko": "어두워지는 빛을 향한 시선",
+        "en": "gaze toward a dimming light",
+        "weight": 0.72,
+        "tags": [
+          "human",
+          "gaze",
+          "light",
+          "life_drain"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "to_viewer_through_glass",
+        "ko": "유리 너머 시청자를 직시하는 시선",
+        "en": "gaze locking onto the viewer through glass",
+        "weight": 0.74,
+        "tags": [
+          "human",
+          "gaze",
+          "glass",
+          "tension"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "avoiding_camera_downcast",
+        "ko": "카메라를 피해 아래로 내리깐 시선",
+        "en": "downcast gaze avoiding the camera",
+        "weight": 0.7,
+        "tags": [
+          "human",
+          "gaze",
+          "restraint",
+          "tsundere"
+        ],
         "for_any": [
           "human"
         ]
@@ -139208,6 +143223,90 @@
           "viewer_position"
         ],
         "embedding_text": "viewer hidden behind a screen in court"
+      },
+      {
+        "id": "viewer_as_contract_party",
+        "ko": "시청자가 계약 상대인 POV",
+        "en": "viewer as the other party to a bargain",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "pov",
+          "contract",
+          "relational",
+          "narrative_safe"
+        ]
+      },
+      {
+        "id": "viewer_as_records_auditor",
+        "ko": "시청자가 기록 감사자인 POV",
+        "en": "viewer as a records auditor across the desk",
+        "weight": 0.74,
+        "tags": [
+          "human",
+          "pov",
+          "office",
+          "procedural"
+        ]
+      },
+      {
+        "id": "viewer_as_clinical_colleague",
+        "ko": "시청자가 임상 동료인 POV",
+        "en": "viewer as a clinical colleague during handover",
+        "weight": 0.74,
+        "tags": [
+          "human",
+          "pov",
+          "clinical",
+          "procedural"
+        ]
+      },
+      {
+        "id": "viewer_as_interviewer",
+        "ko": "시청자가 면접자/심문자 맞은편인 POV",
+        "en": "viewer seated across an interview table",
+        "weight": 0.74,
+        "tags": [
+          "human",
+          "pov",
+          "office",
+          "tension"
+        ]
+      },
+      {
+        "id": "viewer_as_confidant",
+        "ko": "시청자가 비밀을 듣는 가까운 사람인 POV",
+        "en": "viewer leaned in as a trusted confidant",
+        "weight": 0.74,
+        "tags": [
+          "human",
+          "pov",
+          "relational",
+          "intimate_safe"
+        ]
+      },
+      {
+        "id": "viewer_as_summoner",
+        "ko": "시청자가 호출한 사람인 POV",
+        "en": "viewer as the one who summoned the subject",
+        "weight": 0.72,
+        "tags": [
+          "human",
+          "pov",
+          "ritual",
+          "supernatural"
+        ]
+      },
+      {
+        "id": "viewer_through_doorway",
+        "ko": "문 너머에서 들여다보는 POV",
+        "en": "viewer peering in from a doorway",
+        "weight": 0.72,
+        "tags": [
+          "human",
+          "pov",
+          "threshold"
+        ]
       }
     ],
     "narrative_phase": [
@@ -139605,6 +143704,61 @@
           "safety",
           "screen",
           "anti_diagram_context"
+        ]
+      },
+      {
+        "id": "role_by_object_not_costume",
+        "ko": "역할을 의상보다 사물과 절차로 읽히게 하는 안전 프로필",
+        "en": "role conveyed through objects and procedure, not costume or body",
+        "weight": 0.5,
+        "tags": [
+          "safety",
+          "anti_fetish",
+          "procedural"
+        ]
+      },
+      {
+        "id": "clinical_clothed_procedural",
+        "ko": "임상 역할을 커버된 복장과 도구 중심으로 읽히게 하는 프로필",
+        "en": "clinical role shown clothed through tools, records, and tray only",
+        "weight": 0.5,
+        "tags": [
+          "safety",
+          "clinical",
+          "anti_fetish"
+        ]
+      },
+      {
+        "id": "uniformed_role_object_anchor",
+        "ko": "제복 역할을 배지와 업무 사물 중심으로 고정하는 프로필",
+        "en": "uniform role anchored by badge, tools, and workplace objects",
+        "weight": 0.5,
+        "tags": [
+          "safety",
+          "uniform",
+          "procedural"
+        ]
+      },
+      {
+        "id": "stage_costume_covered_profile",
+        "ko": "무대 의상을 커버드 백스테이지 역할로 유지하는 프로필",
+        "en": "covered stage costume profile centered on backstage work, not display",
+        "weight": 0.5,
+        "tags": [
+          "safety",
+          "stage",
+          "anti_fetish"
+        ]
+      },
+      {
+        "id": "athletic_functional_profile",
+        "ko": "운동복을 기능적 훈련 맥락으로 고정하는 프로필",
+        "en": "athletic outfit kept functional, covered, and training-focused",
+        "weight": 0.5,
+        "tags": [
+          "safety",
+          "sports",
+          "anti_fetish"
         ]
       }
     ],
@@ -140320,6 +144474,98 @@
           "beastkin",
           "shadow"
         ]
+      },
+      {
+        "id": "no_reflection_void",
+        "ko": "거울에 피사체가 비치지 않는 빈자리",
+        "en": "subject absent from the mirror, empty reflection where they stand",
+        "weight": 0.84,
+        "tags": [
+          "reflection",
+          "supernatural",
+          "vampire",
+          "primary_anchor"
+        ]
+      },
+      {
+        "id": "reflection_lags_motion",
+        "ko": "반사가 동작보다 한 박자 늦음",
+        "en": "reflection moving a beat after the subject",
+        "weight": 0.8,
+        "tags": [
+          "reflection",
+          "surreal",
+          "succubus",
+          "primary_anchor"
+        ]
+      },
+      {
+        "id": "reflection_holds_still",
+        "ko": "본체가 움직여도 반사는 멈춰 있음",
+        "en": "subject moves but the reflection stays frozen",
+        "weight": 0.78,
+        "tags": [
+          "reflection",
+          "surreal",
+          "haunting"
+        ]
+      },
+      {
+        "id": "reflection_extra_presence",
+        "ko": "반사에만 보이는 또 다른 존재",
+        "en": "an extra presence visible only in the reflection",
+        "weight": 0.8,
+        "tags": [
+          "reflection",
+          "haunting",
+          "yandere",
+          "primary_anchor"
+        ]
+      },
+      {
+        "id": "reflection_wireframe_self",
+        "ko": "반사에만 보이는 와이어프레임 기계 골격",
+        "en": "reflection revealing a wireframe or mechanical skeleton",
+        "weight": 0.78,
+        "tags": [
+          "reflection",
+          "android",
+          "robot",
+          "primary_anchor"
+        ]
+      },
+      {
+        "id": "reflection_doll_self",
+        "ko": "반사가 관절 인형처럼 보임",
+        "en": "reflection showing a jointed doll instead of a person",
+        "weight": 0.78,
+        "tags": [
+          "reflection",
+          "living_doll",
+          "identity"
+        ]
+      },
+      {
+        "id": "reflection_other_age",
+        "ko": "거울 속 나이나 얼굴이 다름",
+        "en": "reflection showing a different age or face",
+        "weight": 0.76,
+        "tags": [
+          "reflection",
+          "glamour",
+          "identity"
+        ]
+      },
+      {
+        "id": "puddle_inverted_self",
+        "ko": "웅덩이에 뒤집혀 비친 다른 자아",
+        "en": "inverted self in a rain puddle that differs subtly",
+        "weight": 0.74,
+        "tags": [
+          "reflection",
+          "surreal",
+          "street"
+        ]
       }
     ],
     "camera_height": [
@@ -140483,6 +144729,77 @@
           "social",
           "distance"
         ]
+      },
+      {
+        "id": "arm_offered_across_gap",
+        "ko": "간격 너머로 손을 내민 거리",
+        "en": "one hand offered across the gap",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "distance",
+          "invitation",
+          "relational"
+        ]
+      },
+      {
+        "id": "half_step_too_close",
+        "ko": "사회적 거리보다 반 발 가까운 거리",
+        "en": "half a step closer than is comfortable",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "distance",
+          "tension",
+          "yandere"
+        ]
+      },
+      {
+        "id": "counter_between_service",
+        "ko": "서비스 카운터를 사이에 둔 거리",
+        "en": "a service counter between the two",
+        "weight": 0.74,
+        "tags": [
+          "human",
+          "distance",
+          "service",
+          "procedural"
+        ]
+      },
+      {
+        "id": "threshold_one_inside",
+        "ko": "한쪽은 안쪽, 한쪽은 문턱 밖인 거리",
+        "en": "one person inside, one held at the threshold",
+        "weight": 0.74,
+        "tags": [
+          "human",
+          "distance",
+          "threshold",
+          "liminal"
+        ]
+      },
+      {
+        "id": "mirrored_distance",
+        "ko": "거울을 사이에 둔 거리",
+        "en": "facing across a mirror rather than directly",
+        "weight": 0.72,
+        "tags": [
+          "human",
+          "distance",
+          "reflection"
+        ]
+      },
+      {
+        "id": "turned_away_shared_bench",
+        "ko": "같은 벤치에서 등을 돌린 거리",
+        "en": "sharing a bench while turned away",
+        "weight": 0.72,
+        "tags": [
+          "human",
+          "distance",
+          "relational",
+          "tsundere"
+        ]
       }
     ],
     "sensory_focus": [
@@ -140568,6 +144885,78 @@
         "tags": [
           "clinical",
           "sensory"
+        ]
+      },
+      {
+        "id": "cold_radiating_from_subject",
+        "ko": "피사체 주변에서 보이는 한기",
+        "en": "cold visibly radiating from the subject",
+        "weight": 0.74,
+        "tags": [
+          "human",
+          "sensory",
+          "cold",
+          "supernatural"
+        ]
+      },
+      {
+        "id": "static_hair_charge",
+        "ko": "정전기로 잔머리가 떠오른 감각",
+        "en": "fine hair lifted by static charge",
+        "weight": 0.7,
+        "tags": [
+          "human",
+          "sensory",
+          "electric",
+          "android"
+        ]
+      },
+      {
+        "id": "ozone_after_spark",
+        "ko": "스파크 뒤 남은 오존 아지랑이",
+        "en": "ozone shimmer after a small spark",
+        "weight": 0.7,
+        "tags": [
+          "human",
+          "sensory",
+          "machine",
+          "magic"
+        ]
+      },
+      {
+        "id": "incense_smoke_drift",
+        "ko": "향 연기가 천천히 흐르는 감각",
+        "en": "slow drift of incense smoke",
+        "weight": 0.72,
+        "tags": [
+          "human",
+          "sensory",
+          "ritual",
+          "smoke"
+        ]
+      },
+      {
+        "id": "heartbeat_fabric_pulse",
+        "ko": "옷깃에 비치는 미세한 맥동",
+        "en": "faint pulse visible in fabric near the collar",
+        "weight": 0.66,
+        "tags": [
+          "human",
+          "sensory",
+          "tension",
+          "intimate_safe"
+        ]
+      },
+      {
+        "id": "warmth_haze_off_metal",
+        "ko": "금속 표면 위로 올라오는 열 아지랑이",
+        "en": "heat haze rising off warm metal or synthetic skin",
+        "weight": 0.68,
+        "tags": [
+          "human",
+          "sensory",
+          "android",
+          "machine"
         ]
       }
     ],
@@ -140957,6 +145346,256 @@
         ],
         "for_any": [
           "human"
+        ]
+      },
+      {
+        "id": "uniform_not_primary_anchor_guard",
+        "ko": "유니폼이 초자연 컨셉의 주 앵커가 되지 않게 하는 가드",
+        "en": "uniform remains role identity, not the primary supernatural concept anchor",
+        "weight": 0.72,
+        "tags": [
+          "human",
+          "safety",
+          "uniform",
+          "anti_fetish"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "bunny_ears_secondary_only",
+        "ko": "바니 귀와 커프스는 보조 단서로만 남기는 가드",
+        "en": "bunny ears and cuffs stay secondary, never the primary concept cue",
+        "weight": 0.74,
+        "tags": [
+          "human",
+          "safety",
+          "bunny",
+          "anti_fetish"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "nurse_uniform_procedural_guard",
+        "ko": "간호사 유니폼을 절차와 기록 사물로 보강하는 가드",
+        "en": "nurse uniform is reinforced by clinical procedure and records, not fetish styling",
+        "weight": 0.74,
+        "tags": [
+          "human",
+          "safety",
+          "clinical",
+          "anti_fetish"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "maid_uniform_service_guard",
+        "ko": "메이드복을 서비스 동작과 카운터 사물로 읽히게 하는 가드",
+        "en": "maid outfit reads through service action and counter objects, not body display",
+        "weight": 0.72,
+        "tags": [
+          "human",
+          "safety",
+          "service",
+          "anti_fetish"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "office_look_not_siren_guard",
+        "ko": "오피스룩을 오피스 사이렌 대신 업무 사물 중심으로 고정하는 가드",
+        "en": "office look stays workplace-object centered, not office-siren framing",
+        "weight": 0.72,
+        "tags": [
+          "human",
+          "safety",
+          "office",
+          "anti_fetish"
+        ],
+        "for_any": [
+          "human"
+        ]
+      }
+    ],
+    "aftermath_trace": [
+      {
+        "id": "withered_flowers_trace",
+        "ko": "가장자리에서 시드는 꽃다발 흔적",
+        "en": "a bouquet wilting at the edge of frame",
+        "weight": 0.82,
+        "tags": [
+          "human",
+          "trace",
+          "life_drain",
+          "succubus",
+          "primary_anchor"
+        ]
+      },
+      {
+        "id": "stopped_clock_trace",
+        "ko": "멈추거나 거꾸로 가는 시계 흔적",
+        "en": "a clock stopped or running backward",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "trace",
+          "time",
+          "surreal"
+        ]
+      },
+      {
+        "id": "cooling_untouched_drink",
+        "ko": "손대지 않은 음료가 식은 흔적",
+        "en": "an untouched drink gone cold with a faint film on top",
+        "weight": 0.74,
+        "tags": [
+          "human",
+          "trace",
+          "aftermath",
+          "domestic"
+        ]
+      },
+      {
+        "id": "dimmed_bulb_trace",
+        "ko": "피사체 주변 전구만 어두워진 흔적",
+        "en": "a bulb dimming only around the subject",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "trace",
+          "light",
+          "life_drain"
+        ]
+      },
+      {
+        "id": "frost_creep_trace",
+        "ko": "사물 가장자리로 번지는 서리 흔적",
+        "en": "frost creeping inward from object edges",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "trace",
+          "cold",
+          "supernatural"
+        ]
+      },
+      {
+        "id": "single_glove_left",
+        "ko": "남겨진 한 짝 장갑이나 소지품",
+        "en": "a single glove or token left behind",
+        "weight": 0.7,
+        "tags": [
+          "human",
+          "trace",
+          "departure",
+          "narrative"
+        ]
+      },
+      {
+        "id": "drained_color_patch",
+        "ko": "한 구역만 색이 빠진 자리",
+        "en": "a patch of the scene drained of color",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "trace",
+          "life_drain",
+          "surreal"
+        ]
+      },
+      {
+        "id": "overturned_chair_trace",
+        "ko": "방금 흐트러진 의자와 자리",
+        "en": "an overturned chair and recently disturbed seat",
+        "weight": 0.72,
+        "tags": [
+          "human",
+          "trace",
+          "aftermath",
+          "tension"
+        ]
+      }
+    ],
+    "apparatus_pov": [
+      {
+        "id": "peephole_fisheye_pov",
+        "ko": "문구멍 어안 왜곡 시점",
+        "en": "fisheye view through a door peephole",
+        "weight": 0.72,
+        "tags": [
+          "human",
+          "pov",
+          "apparatus",
+          "threshold"
+        ]
+      },
+      {
+        "id": "two_way_mirror_pov",
+        "ko": "매직미러 너머 관찰 시점",
+        "en": "view through a two-way observation mirror",
+        "weight": 0.72,
+        "tags": [
+          "human",
+          "pov",
+          "apparatus",
+          "reflection"
+        ]
+      },
+      {
+        "id": "scanner_platen_topdown",
+        "ko": "스캐너 유리판 위 평면 탑다운 시점",
+        "en": "top-down flatbed-scanner platen light",
+        "weight": 0.68,
+        "tags": [
+          "human",
+          "pov",
+          "apparatus",
+          "office",
+          "topdown"
+        ]
+      },
+      {
+        "id": "thermal_lowfi_pov",
+        "ko": "저해상 열화상 장치 시점",
+        "en": "low-fi thermal-imaging viewpoint",
+        "weight": 0.66,
+        "tags": [
+          "human",
+          "pov",
+          "apparatus",
+          "android",
+          "surveillance"
+        ]
+      },
+      {
+        "id": "microscope_field_pov",
+        "ko": "현미경이나 루페의 원형 시야",
+        "en": "circular magnified field of view",
+        "weight": 0.64,
+        "tags": [
+          "pov",
+          "apparatus",
+          "macro",
+          "inspection"
+        ]
+      },
+      {
+        "id": "keyhole_vignette_pov",
+        "ko": "열쇠구멍 모양 비네트 시점",
+        "en": "keyhole-shaped vignette framing",
+        "weight": 0.66,
+        "tags": [
+          "human",
+          "pov",
+          "apparatus",
+          "threshold"
         ]
       }
     ]
@@ -141491,6 +146130,7 @@
     "weather",
     "world",
     "reflection_logic",
+    "aftermath_trace",
     "aesthetic_trend",
     "film_emulation",
     "lighting",
@@ -141500,6 +146140,7 @@
     "light_shape",
     "camera_type",
     "camera_direction",
+    "apparatus_pov",
     "composition",
     "subject_framing",
     "body_framing",
@@ -141581,7 +146222,7 @@
     "emotional_contradiction": 1.75,
     "viewer_position": 1.65,
     "narrative_phase": 1.55,
-    "safety_profile": 0.7,
+    "safety_profile": 1.05,
     "species_marker": 2.4,
     "transition_stage": 2.2,
     "procedure_step": 2.1,
@@ -141594,7 +146235,9 @@
     "frame_anchor_medium": 1.8,
     "anatomical_connection": 2.35,
     "body_evidence_region": 2.05,
-    "costume_absorption_guard": 1.7
+    "costume_absorption_guard": 2.0,
+    "aftermath_trace": 1.95,
+    "apparatus_pov": 1.85
   },
   "generation_settings": {
     "priority_bias": 0.45,
@@ -141641,6 +146284,14 @@
         "slot": "capture_context",
         "probability": 0.18,
         "requires_filter": true
+      },
+      {
+        "slot": "aftermath_trace",
+        "probability": 0.22
+      },
+      {
+        "slot": "apparatus_pov",
+        "probability": 0.18
       }
     ]
   },
@@ -148267,6 +152918,39 @@
         ]
       },
       "safety_profile": {
+        "subject_categories": [
+          "human"
+        ],
+        "deny_domains": [
+          "product",
+          "jewelry",
+          "food",
+          "wildlife"
+        ]
+      },
+      "aftermath_trace": {
+        "subject_categories": [
+          "human"
+        ],
+        "deny_domains": [
+          "product",
+          "jewelry",
+          "food",
+          "wildlife"
+        ]
+      },
+      "apparatus_pov": {
+        "subject_categories": [
+          "human"
+        ],
+        "deny_domains": [
+          "product",
+          "jewelry",
+          "food",
+          "wildlife"
+        ]
+      },
+      "costume_absorption_guard": {
         "subject_categories": [
           "human"
         ],

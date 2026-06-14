@@ -429,6 +429,160 @@ def soft_min_anchors_for_recipe(recipe: dict[str, Any], default: int) -> int:
     return max(0, value)
 
 
+def normalize_recipe_identity_axes(raw: Any) -> list[dict[str, Any]]:
+    if isinstance(raw, dict):
+        raw = raw.get("required") or raw.get("axes") or []
+    if not isinstance(raw, list):
+        raw = normalize_list(raw)
+    axes: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for item in raw:
+        if isinstance(item, dict):
+            axis_id = str(item.get("id") or item.get("axis") or "").strip()
+            if not axis_id:
+                continue
+            axis = {
+                "id": axis_id,
+                "terms": normalize_list(item.get("terms")),
+                "description": str(item.get("description") or "").strip(),
+            }
+        else:
+            axis_id = str(item or "").strip()
+            if not axis_id:
+                continue
+            axis = {"id": axis_id, "terms": [], "description": ""}
+        if axis_id in seen:
+            continue
+        seen.add(axis_id)
+        axes.append(axis)
+    return axes
+
+
+def normalize_recipe_motif_pools(raw: Any) -> dict[str, Any]:
+    if not isinstance(raw, dict):
+        return {}
+    pools: dict[str, Any] = {}
+    for motif, pool in raw.items():
+        motif_id = str(motif or "").strip()
+        if not motif_id or not isinstance(pool, dict):
+            continue
+        normalized: dict[str, Any] = {
+            "axis": str(pool.get("axis") or "").strip(),
+            "bucket": str(pool.get("bucket") or "").strip(),
+            "terms": normalize_list(pool.get("terms")),
+        }
+        slot_candidates = pool.get("slot_candidates")
+        if isinstance(slot_candidates, dict):
+            normalized["slot_candidates"] = {
+                str(slot): normalize_list(ids)
+                for slot, ids in slot_candidates.items()
+                if normalize_list(ids)
+            }
+        exemplars = normalize_list(pool.get("exemplars"))
+        if exemplars:
+            normalized["exemplars"] = exemplars
+        pools[motif_id] = {key: value for key, value in normalized.items() if value}
+    return pools
+
+
+def normalize_recipe_motif_quotas(raw: Any) -> dict[str, Any]:
+    if not isinstance(raw, dict):
+        return {}
+    quotas: dict[str, Any] = {}
+    for motif, quota in raw.items():
+        motif_id = str(motif or "").strip()
+        if not motif_id:
+            continue
+        if isinstance(quota, dict):
+            normalized: dict[str, Any] = {}
+            for key in ("max_batch_share", "max_recent_share"):
+                if key in quota:
+                    try:
+                        normalized[key] = max(0.0, min(1.0, float(quota.get(key))))
+                    except (TypeError, ValueError):
+                        pass
+            for key in ("max_batch_uses", "max_recent_uses"):
+                if key in quota:
+                    try:
+                        value = int(quota.get(key))
+                    except (TypeError, ValueError):
+                        continue
+                    if value >= 0:
+                        normalized[key] = value
+            if quota.get("avoid_when_pressure"):
+                normalized["avoid_when_pressure"] = True
+            if normalized:
+                quotas[motif_id] = normalized
+        else:
+            try:
+                quotas[motif_id] = {"max_batch_share": max(0.0, min(1.0, float(quota)))}
+            except (TypeError, ValueError):
+                continue
+    return quotas
+
+
+def normalize_recipe_semantic_dropout(raw: Any) -> dict[str, Any]:
+    if not isinstance(raw, dict):
+        return {}
+    normalized: dict[str, Any] = {"enabled": bool(raw.get("enabled", True))}
+    buckets = normalize_list(raw.get("maskable_buckets"))
+    if buckets:
+        normalized["maskable_buckets"] = buckets
+    for key in ("min_buckets", "max_buckets"):
+        if key in raw:
+            normalized[key] = max(0, normalize_int(raw.get(key), 0))
+    if "probability" in raw:
+        try:
+            normalized["probability"] = max(0.0, min(1.0, float(raw.get("probability"))))
+        except (TypeError, ValueError):
+            normalized["probability"] = 0.0
+    return normalized
+
+
+def normalize_recipe_exemplar_set(raw: Any) -> dict[str, Any]:
+    if isinstance(raw, dict):
+        normalized: dict[str, Any] = {}
+        for key, value in raw.items():
+            values = normalize_list(value)
+            if values:
+                normalized[str(key)] = values
+        return normalized
+    values = normalize_list(raw)
+    return {"examples": values} if values else {}
+
+
+def apply_reference_scaffold_fields(spec: dict[str, Any], recipes: Sequence[dict[str, Any]]) -> dict[str, Any]:
+    identity_axes: list[dict[str, Any]] = []
+    seen_axes: set[str] = set()
+    motif_pools: dict[str, Any] = {}
+    motif_quotas: dict[str, Any] = {}
+    semantic_dropout: dict[str, Any] = {}
+    exemplar_set: dict[str, Any] = {}
+    for recipe in recipes:
+        if not isinstance(recipe, dict):
+            continue
+        for axis in normalize_recipe_identity_axes(recipe.get("identity_axes")):
+            axis_id = str(axis.get("id") or "")
+            if axis_id and axis_id not in seen_axes:
+                identity_axes.append(axis)
+                seen_axes.add(axis_id)
+        motif_pools.update(normalize_recipe_motif_pools(recipe.get("motif_pools")))
+        motif_quotas.update(normalize_recipe_motif_quotas(recipe.get("motif_quotas")))
+        semantic_dropout.update(normalize_recipe_semantic_dropout(recipe.get("semantic_dropout")))
+        exemplar_set.update(normalize_recipe_exemplar_set(recipe.get("exemplar_set")))
+    if identity_axes:
+        spec["identity_axes"] = identity_axes
+    if motif_pools:
+        spec["motif_pools"] = motif_pools
+    if motif_quotas:
+        spec["motif_quotas"] = motif_quotas
+    if semantic_dropout:
+        spec["semantic_dropout"] = semantic_dropout
+    if exemplar_set:
+        spec["exemplar_set"] = exemplar_set
+    return spec
+
+
 def soft_anchor_specs_from_mapping(
     recipes: dict[str, Any],
     mapping: dict[str, list[str]],
@@ -1483,6 +1637,7 @@ def resolve_concepts(
         selected_species_variants: list[dict[str, Any]] = []
         set_groups: list[tuple[Sequence[str], set[str]]] = []
         applied_recipes = [recipe] if recipe else []
+        scaffold_recipes: list[dict[str, Any]] = [recipe] if recipe else []
         additional_requirements: list[str] = []
         soft_safety_requirements: list[str] = []
         soft_salience_cues: list[str] = []
@@ -1522,6 +1677,7 @@ def resolve_concepts(
 
         for mixin, mixin_recipe in mixin_matches:
             applied_recipes.append(mixin_recipe)
+            scaffold_recipes.append(mixin_recipe)
             selected_bundle = select_bundle_for_mixin(concept, mixin, mixin_recipe, args, role)
             mixin_base_set = set_values_to_forced(mixin_recipe.get("set"))
             additional_requirements.extend(normalize_list(mixin_recipe.get("additional")))
@@ -1542,6 +1698,7 @@ def resolve_concepts(
                 additional_requirements.extend(normalize_list(weapon_cues.get(role)))
             species_variant = select_mixin_species_variant(concept, mixin, mixin_recipe, args, role=role or "")
             if species_variant:
+                scaffold_recipes.append(species_variant)
                 species_variant_set = set_values_to_forced(species_variant.get("set"))
                 species_family_policy = species_family_policy_for_variant(mixin, species_variant)
                 if species_variant_set:
@@ -1578,6 +1735,7 @@ def resolve_concepts(
                     }
                 )
             if selected_bundle:
+                scaffold_recipes.append(selected_bundle)
                 bundle_preset = str(selected_bundle.get("preset") or "")
                 if effective_mode == "legacy" and bundle_preset and not has_preset_value:
                     add_option(resolved_args, "--preset", bundle_preset)
@@ -1670,8 +1828,11 @@ def resolve_concepts(
             for forced in combined_sets:
                 add_option(resolved_args, "--set", forced)
             if soft_anchor_specs:
-                soft_anchor_spec = build_soft_anchor_spec(
-                    soft_anchor_specs, soft_min_anchor_candidates, concept, expansion_config
+                soft_anchor_spec = apply_reference_scaffold_fields(
+                    build_soft_anchor_spec(
+                        soft_anchor_specs, soft_min_anchor_candidates, concept, expansion_config
+                    ),
+                    scaffold_recipes,
                 )
                 if (
                     soft_anchor_spec["anchors"]
@@ -1686,8 +1847,11 @@ def resolve_concepts(
             for requirement in additional_requirements:
                 add_option(resolved_args, "--additional-requirement", requirement)
         elif soft_anchor_specs:
-            soft_anchor_spec = build_soft_anchor_spec(
-                soft_anchor_specs, soft_min_anchor_candidates, concept, expansion_config
+            soft_anchor_spec = apply_reference_scaffold_fields(
+                build_soft_anchor_spec(
+                    soft_anchor_specs, soft_min_anchor_candidates, concept, expansion_config
+                ),
+                scaffold_recipes,
             )
             merge_affine_presets(soft_anchor_spec, affine_presets)
             if soft_anchor_spec["anchors"] and soft_anchor_spec["min_anchors"] > 0:
@@ -1741,8 +1905,11 @@ def resolve_concepts(
             "selected_species_variants": selected_species_variants,
             "combined_forced_slots": forced_sets_to_mapping(combined_sets),
             "soft_anchor_spec": merge_affine_presets(
-                build_soft_anchor_spec(
-                    soft_anchor_specs, soft_min_anchor_candidates, concept, expansion_config
+                apply_reference_scaffold_fields(
+                    build_soft_anchor_spec(
+                        soft_anchor_specs, soft_min_anchor_candidates, concept, expansion_config
+                    ),
+                    scaffold_recipes,
                 ),
                 affine_presets,
             ),

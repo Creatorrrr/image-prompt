@@ -141,6 +141,129 @@ CANDIDATE_PACK_DEFAULT_FORBIDDEN_TERMS = (
     "teen",
     "coercion",
 )
+CANDIDATE_PACK_SEMANTIC_DROPOUT_BUCKETS: Dict[str, tuple[str, ...]] = {
+    "environment": (
+        "location",
+        "weather",
+        "time_of_day",
+        "lighting",
+        "light_type",
+        "light_shape",
+        "light_direction",
+        "light_intensity",
+    ),
+    "action_prop": (
+        "action",
+        "prop",
+        "capture_context",
+        "relational_action",
+        "prop_direction",
+        "pose",
+    ),
+    "camera_composition": (
+        "composition",
+        "subject_framing",
+        "camera_direction",
+        "camera_type",
+        "lens",
+        "focus",
+        "motion",
+        "body_framing",
+    ),
+    "style_finish": (
+        "mood",
+        "color",
+        "texture",
+        "film_emulation",
+        "format",
+        "quality",
+        "aesthetic_trend",
+    ),
+}
+CANDIDATE_PACK_DROPOUT_PROTECTED_SLOTS = {
+    "subject",
+    "person_origin",
+    "appearance_type",
+    "costume_style",
+    "wardrobe_style",
+    "anatomical_connection",
+    "species_marker",
+    "body_evidence_region",
+    "surface_material",
+}
+CANDIDATE_PACK_MOTIF_TAXONOMY: Dict[str, tuple[str, ...]] = {
+    "phone_selfie_mirror": (
+        "clear_case_smartphone",
+        "phone",
+        "selfie",
+        "mirror selfie",
+        "mirror_selfie",
+        "over_shoulder_phone_screen",
+        "phone_arm_length_selfie",
+        "checking_phone",
+        "bedroom_mirror",
+        "repeated-message phone",
+    ),
+    "red_thread": (
+        "red thread",
+        "red string",
+        "red-string",
+        "red ribbon",
+        "붉은 실",
+    ),
+    "photo_wall": (
+        "instant_photo_stack",
+        "obsession_photo_wall_prop",
+        "photo wall",
+        "same-person photos",
+        "repeated photos",
+        "photo shrine",
+        "scrapbook_photo_cutout_layout",
+    ),
+    "surveillance_evidence": (
+        "surveillance evidence",
+        "cctv",
+        "cctv_corner_frame",
+        "cctv_monitor_stack_prop",
+        "contact sheet",
+        "case-file",
+        "one-way mirror",
+    ),
+    "sealed_keepsake": (
+        "sealed_mission_envelope_prop",
+        "sealed decree",
+        "sealed letter",
+        "sealed keepsake",
+        "portrait keepsake",
+        "wilted flower",
+    ),
+    "digital_fixation": (
+        "clear_case_smartphone",
+        "unread message",
+        "notification",
+        "phone-screen evidence",
+        "repeated-message phone",
+        "digital fixation",
+    ),
+    "threshold_watch": (
+        "doorframe_shadow_watch",
+        "doorway",
+        "threshold",
+        "frame_within_frame",
+        "watching from the doorway",
+    ),
+    "record_board": (
+        "logo_board_prop",
+        "clinical_chart_clipboard_prop",
+        "care_record_board_prop",
+        "appointment_ledger_prop",
+        "chart_records_board_prop",
+        "records board",
+        "care record",
+        "appointment ledger",
+        "route board",
+    ),
+}
 
 SEMANTIC_PROFILE_CONFIGS: Dict[str, Dict[str, float]] = {
     "conservative": {
@@ -523,6 +646,53 @@ def result_choice_ids(result: JsonDict) -> Dict[str, str]:
     return choices
 
 
+def motif_group_taxonomy_from_policy(policy: Optional[JsonDict] = None) -> Dict[str, List[str]]:
+    taxonomy: Dict[str, List[str]] = {
+        group: list(terms)
+        for group, terms in CANDIDATE_PACK_MOTIF_TAXONOMY.items()
+    }
+    raw_pools = (policy or {}).get("motif_pools") if isinstance(policy, dict) else {}
+    if isinstance(raw_pools, dict):
+        for group, pool in raw_pools.items():
+            group_id = str(group or "").strip()
+            if not group_id or not isinstance(pool, dict):
+                continue
+            values = taxonomy.setdefault(group_id, [])
+            for term in normalize_list(pool.get("terms")):
+                if term not in values:
+                    values.append(term)
+            slot_candidates = pool.get("slot_candidates")
+            if isinstance(slot_candidates, dict):
+                for ids in slot_candidates.values():
+                    for entry_id in normalize_list(ids):
+                        if entry_id not in values:
+                            values.append(entry_id)
+    return taxonomy
+
+
+def infer_motif_groups_from_blob(blob: str, taxonomy: Optional[Dict[str, Sequence[str]]] = None) -> List[str]:
+    normalized_blob = str(blob or "").lower()
+    if not normalized_blob:
+        return []
+    groups: List[str] = []
+    for group, terms in (taxonomy or CANDIDATE_PACK_MOTIF_TAXONOMY).items():
+        for term in terms:
+            normalized_term = str(term or "").strip().lower()
+            if normalized_term and normalized_term in normalized_blob:
+                groups.append(str(group))
+                break
+    return sorted(dict.fromkeys(groups))
+
+
+def infer_motif_groups_from_choice_ids(
+    choices: Dict[str, str],
+    policy: Optional[JsonDict] = None,
+) -> List[str]:
+    taxonomy = motif_group_taxonomy_from_policy(policy)
+    blob = " ".join(f"{slot} {entry_id}" for slot, entry_id in choices.items() if entry_id)
+    return infer_motif_groups_from_blob(blob, taxonomy)
+
+
 def update_anchor_diversity_ledger(ledger: JsonDict, result: JsonDict) -> None:
     trace = result.get("semantic_trace", {}) or {}
     contract = trace.get("generation_contract", {}) or {}
@@ -545,6 +715,9 @@ def update_anchor_diversity_ledger(ledger: JsonDict, result: JsonDict) -> None:
     if role_policy.get("enabled") and selected_location and selected_location in allowed_locations:
         location_counts = ledger.setdefault("location", {})
         location_counts[selected_location] = int(location_counts.get(selected_location, 0)) + 1
+    motif_counts = ledger.setdefault("motif_group", {})
+    for motif_group in infer_motif_groups_from_choice_ids(choices, policy):
+        motif_counts[motif_group] = int(motif_counts.get(motif_group, 0)) + 1
     for anchor in policy.get("anchors", []) or []:
         group = str(anchor.get("variant_group") or "")
         slot = str(anchor.get("slot") or "")
@@ -1716,6 +1889,248 @@ def candidate_pack_diversity_state(trace: JsonDict) -> JsonDict:
     }
 
 
+def candidate_pack_concept_axes(soft_policy: JsonDict) -> JsonDict:
+    axes = normalize_reference_identity_axes(soft_policy.get("identity_axes"))
+    return {
+        "required": axes,
+        "required_count": len(axes),
+        "source": "identity_axes" if axes else "none",
+    }
+
+
+def candidate_pack_slot_selected_entry_id(slot_payload: JsonDict) -> str:
+    selected = str(slot_payload.get("selected") or "")
+    parts = selected.split(":", 2)
+    if len(parts) == 3 and parts[0] == "slot":
+        return parts[2]
+    return ""
+
+
+def candidate_pack_selected_choice_entry(result: JsonDict, slot: str, entry_id: str) -> JsonDict:
+    choices = result.get("choices") if isinstance(result.get("choices"), dict) else {}
+    choice = choices.get(slot)
+    if isinstance(choice, dict) and str(choice.get("id") or "") == entry_id:
+        return choice
+    return {"id": entry_id}
+
+
+def candidate_pack_entry_terms(entry: JsonDict, candidate: Optional[JsonDict] = None) -> List[str]:
+    terms: List[str] = []
+    for source in (entry, candidate or {}):
+        for key in ("id", "en", "ko", "label_en", "label_ko", "description", "embedding_text", "tags", "kind"):
+            raw = source.get(key)
+            if isinstance(raw, list):
+                terms.extend(str(item) for item in raw if str(item).strip())
+            elif raw is not None and str(raw).strip():
+                terms.append(str(raw))
+    return list(dict.fromkeys(terms))[:16]
+
+
+def candidate_pack_motif_budget(result: JsonDict, trace: JsonDict, soft_policy: JsonDict) -> JsonDict:
+    taxonomy = motif_group_taxonomy_from_policy(soft_policy)
+    choice_ids = result_choice_ids(result)
+    selected_motifs = infer_motif_groups_from_choice_ids(choice_ids, soft_policy)
+    quotas = normalize_reference_motif_quotas(soft_policy.get("motif_quotas"))
+    ledger_summary = (
+        trace.get("anchor_diversity_ledger_summary")
+        if isinstance(trace.get("anchor_diversity_ledger_summary"), dict)
+        else {"enabled": False, "counts": {}}
+    )
+    ledger_counts = {}
+    if isinstance(trace.get("anchor_diversity_ledger_summary"), dict):
+        counts = trace["anchor_diversity_ledger_summary"].get("counts")
+        if isinstance(counts, dict):
+            ledger_counts = counts.get("motif_group") if isinstance(counts.get("motif_group"), dict) else {}
+    batch_counts = {}
+    history = trace.get("batch_history_summary") if isinstance(trace.get("batch_history_summary"), dict) else {}
+    if isinstance(history.get("counts"), dict):
+        batch_counts = history["counts"].get("motif_group") if isinstance(history["counts"].get("motif_group"), dict) else {}
+    discouraged: List[str] = []
+    for motif, quota in quotas.items():
+        batch_count = int(batch_counts.get(motif, 0) or 0)
+        recent_count = int(ledger_counts.get(motif, 0) or 0)
+        max_batch_uses = quota.get("max_batch_uses")
+        max_recent_uses = quota.get("max_recent_uses")
+        if isinstance(max_batch_uses, int) and batch_count >= max_batch_uses:
+            discouraged.append(motif)
+            continue
+        if isinstance(max_recent_uses, int) and recent_count >= max_recent_uses:
+            discouraged.append(motif)
+    return {
+        "quotas": quotas,
+        "motif_taxonomy": taxonomy,
+        "selected_motifs": selected_motifs,
+        "discouraged_now": sorted(dict.fromkeys(discouraged)),
+        "ledger": ledger_summary,
+    }
+
+
+def candidate_pack_dropout_config(soft_policy: JsonDict) -> JsonDict:
+    return normalize_reference_semantic_dropout(soft_policy.get("semantic_dropout"))
+
+
+def candidate_pack_protected_dropout_slots(contract: JsonDict, soft_policy: JsonDict) -> Set[str]:
+    protected = set(CANDIDATE_PACK_DROPOUT_PROTECTED_SLOTS)
+    protected.update(str(slot) for slot in contract.get("forced_slots", []) or [])
+    for anchor in soft_policy.get("anchors", []) or []:
+        if anchor.get("critical"):
+            protected.add(str(anchor.get("slot") or ""))
+    return {slot for slot in protected if slot}
+
+
+def candidate_pack_bucket_slots(bucket: str) -> tuple[str, ...]:
+    return CANDIDATE_PACK_SEMANTIC_DROPOUT_BUCKETS.get(bucket, ())
+
+
+def candidate_pack_eligible_dropout_buckets(
+    slots: JsonDict,
+    contract: JsonDict,
+    soft_policy: JsonDict,
+    config: JsonDict,
+) -> Dict[str, List[str]]:
+    if not config.get("enabled"):
+        return {}
+    protected = candidate_pack_protected_dropout_slots(contract, soft_policy)
+    configured = normalize_list(config.get("maskable_buckets"))
+    buckets = configured or list(CANDIDATE_PACK_SEMANTIC_DROPOUT_BUCKETS)
+    eligible: Dict[str, List[str]] = {}
+    for bucket in buckets:
+        selected_slots: List[str] = []
+        for slot in candidate_pack_bucket_slots(bucket):
+            slot_payload = slots.get(slot)
+            if not isinstance(slot_payload, dict) or slot in protected:
+                continue
+            if candidate_pack_slot_selected_entry_id(slot_payload):
+                selected_slots.append(slot)
+        if selected_slots:
+            eligible[bucket] = selected_slots
+    return eligible
+
+
+def candidate_pack_choose_masked_buckets(
+    result: JsonDict,
+    contract: JsonDict,
+    soft_policy: JsonDict,
+    slots: JsonDict,
+) -> List[str]:
+    config = candidate_pack_dropout_config(soft_policy)
+    eligible = candidate_pack_eligible_dropout_buckets(slots, contract, soft_policy, config)
+    if not eligible:
+        return []
+    min_buckets = int(config.get("min_buckets", 0) or 0)
+    max_buckets = int(config.get("max_buckets", 0) or 0)
+    if max_buckets <= 0:
+        max_buckets = max(1, min(2, len(eligible)))
+    max_buckets = max(0, min(max_buckets, len(eligible)))
+    min_buckets = min(max(min_buckets, 0), max_buckets)
+    probability = float(config.get("probability", 1.0 if min_buckets else 0.0) or 0.0)
+    seed = str((result.get("provenance") or {}).get("seed") or "")
+    concept = str(soft_policy.get("concept") or "")
+    preset = str((result.get("provenance") or {}).get("preset_id") or result.get("preset_id") or "")
+    ordered = sorted(
+        eligible,
+        key=lambda bucket: hashlib.sha256(f"{seed}|{concept}|{preset}|{bucket}".encode("utf-8")).hexdigest(),
+    )
+    selected: List[str] = []
+    for bucket in ordered:
+        digest = hashlib.sha256(f"dropout|{seed}|{concept}|{preset}|{bucket}".encode("utf-8")).digest()
+        threshold = int.from_bytes(digest[:8], "big") / 2**64
+        if len(selected) < min_buckets or threshold <= probability:
+            selected.append(bucket)
+        if len(selected) >= max_buckets:
+            break
+    if len(selected) < min_buckets:
+        selected.extend(bucket for bucket in ordered if bucket not in selected)
+    return selected[:max_buckets]
+
+
+def candidate_pack_open_slots(
+    result: JsonDict,
+    slots: JsonDict,
+    masked_buckets: Sequence[str],
+) -> List[JsonDict]:
+    open_slots: List[JsonDict] = []
+    for bucket in masked_buckets:
+        for slot in candidate_pack_bucket_slots(bucket):
+            slot_payload = slots.get(slot)
+            if not isinstance(slot_payload, dict):
+                continue
+            entry_id = candidate_pack_slot_selected_entry_id(slot_payload)
+            if not entry_id:
+                continue
+            candidate_id = str(slot_payload.get("selected") or "")
+            candidate = next(
+                (
+                    item
+                    for item in slot_payload.get("candidates", []) or []
+                    if isinstance(item, dict) and str(item.get("id") or "") == candidate_id
+                ),
+                {},
+            )
+            entry = candidate_pack_selected_choice_entry(result, slot, entry_id)
+            terms = candidate_pack_entry_terms(entry, candidate)
+            open_slot = {
+                "slot": slot,
+                "bucket": bucket,
+                "status": "intentionally_open",
+                "reason": "semantic_dropout",
+                "masked_entry_id": entry_id,
+                "candidate_id": candidate_id,
+                "terms": terms,
+            }
+            open_slots.append(open_slot)
+            slot_payload["reference_status"] = "intentionally_open"
+            slot_payload["masked_bucket"] = bucket
+            slot_payload["masked_selected"] = candidate_id
+    return open_slots
+
+
+def candidate_pack_preset_reference(
+    result: JsonDict,
+    soft_policy: JsonDict,
+    masked_buckets: Sequence[str],
+    open_slots: Sequence[JsonDict],
+) -> JsonDict:
+    masked_slot_values = {
+        str(slot.get("slot")): {
+            "entry_id": slot.get("masked_entry_id"),
+            "candidate_id": slot.get("candidate_id"),
+            "terms": slot.get("terms", []),
+            "bucket": slot.get("bucket"),
+        }
+        for slot in open_slots
+        if isinstance(slot, dict) and slot.get("slot")
+    }
+    used_sections: List[str] = []
+    if soft_policy.get("identity_axes"):
+        used_sections.append("identity_axes")
+    if soft_policy.get("motif_pools"):
+        used_sections.append("motif_pools")
+    if soft_policy.get("motif_quotas"):
+        used_sections.append("motif_quotas")
+    if soft_policy.get("safety_negative_floor"):
+        used_sections.append("safety_constraints")
+    dropped_sections = [f"bucket:{bucket}" for bucket in masked_buckets]
+    return {
+        "role": "reference_scaffold",
+        "preset_id": (result.get("provenance") or {}).get("preset_id") or result.get("preset_id"),
+        "used_sections": used_sections,
+        "dropped_sections": dropped_sections,
+        "masked_slot_values": masked_slot_values,
+        "exemplar_role": "optional_example_only" if soft_policy.get("exemplar_set") else "none",
+    }
+
+
+def candidate_pack_template_echo_risk(open_slots: Sequence[JsonDict]) -> JsonDict:
+    masked_count = len([slot for slot in open_slots if isinstance(slot, dict)])
+    return {
+        "score": 0.0,
+        "max_allowed_score": 0.2,
+        "masked_slot_count": masked_count,
+        "basis": "pre_composition_scaffold",
+    }
+
+
 def build_candidate_pack(result: JsonDict, data: JsonDict) -> JsonDict:
     trace = result.get("semantic_trace") if isinstance(result.get("semantic_trace"), dict) else {}
     provenance = result.get("provenance") if isinstance(result.get("provenance"), dict) else {}
@@ -1729,12 +2144,20 @@ def build_candidate_pack(result: JsonDict, data: JsonDict) -> JsonDict:
     mandatory_intents, uncovered_intents = candidate_pack_mandatory_intents(result, trace, candidate_blobs, candidate_terms)
     contract = trace.get("generation_contract") if isinstance(trace.get("generation_contract"), dict) else {}
     soft_policy = contract.get("soft_anchor_policy") if isinstance(contract.get("soft_anchor_policy"), dict) else {}
+    masked_buckets = candidate_pack_choose_masked_buckets(result, contract, soft_policy, slots)
+    open_slots = candidate_pack_open_slots(result, slots, masked_buckets)
     pack: JsonDict = {
         "pack_id": "",
         "mandatory_intents": mandatory_intents,
         "uncovered_intents": uncovered_intents,
         "presets": presets,
         "slots": slots,
+        "concept_axes": candidate_pack_concept_axes(soft_policy),
+        "motif_budget": candidate_pack_motif_budget(result, trace, soft_policy),
+        "preset_reference": candidate_pack_preset_reference(result, soft_policy, masked_buckets, open_slots),
+        "masked_buckets": masked_buckets,
+        "open_slots": open_slots,
+        "template_echo_risk": candidate_pack_template_echo_risk(open_slots),
         "role_scene_policy": soft_policy.get("role_scene_policy", {"enabled": False}),
         "species_family": soft_policy.get("species_family_policy", {"enabled": False, "allowed": {}}),
         "diversity_state": candidate_pack_diversity_state(trace),
@@ -5462,6 +5885,135 @@ def merge_forced_choices(*choices: Dict[str, List[str]]) -> Dict[str, List[str]]
     return merged
 
 
+def normalize_reference_identity_axes(raw: Any) -> List[JsonDict]:
+    if isinstance(raw, dict):
+        raw = raw.get("required") or raw.get("axes") or []
+    if not isinstance(raw, list):
+        raw = normalize_list(raw)
+    axes: List[JsonDict] = []
+    seen: Set[str] = set()
+    for item in raw:
+        if isinstance(item, dict):
+            axis_id = str(item.get("id") or item.get("axis") or "").strip()
+            if not axis_id:
+                continue
+            axis = {
+                "id": axis_id,
+                "terms": normalize_list(item.get("terms")),
+                "description": str(item.get("description") or "").strip(),
+            }
+        else:
+            axis_id = str(item or "").strip()
+            if not axis_id:
+                continue
+            axis = {"id": axis_id, "terms": [], "description": ""}
+        if axis_id in seen:
+            continue
+        seen.add(axis_id)
+        axes.append(axis)
+    return axes
+
+
+def normalize_reference_motif_pools(raw: Any) -> JsonDict:
+    if not isinstance(raw, dict):
+        return {}
+    pools: JsonDict = {}
+    for motif, pool in raw.items():
+        motif_id = str(motif or "").strip()
+        if not motif_id or not isinstance(pool, dict):
+            continue
+        normalized: JsonDict = {
+            "axis": str(pool.get("axis") or "").strip(),
+            "bucket": str(pool.get("bucket") or "").strip(),
+            "terms": normalize_list(pool.get("terms")),
+        }
+        slot_candidates = pool.get("slot_candidates")
+        if isinstance(slot_candidates, dict):
+            normalized["slot_candidates"] = {
+                str(slot): normalize_list(ids)
+                for slot, ids in slot_candidates.items()
+                if normalize_list(ids)
+            }
+        exemplars = normalize_list(pool.get("exemplars"))
+        if exemplars:
+            normalized["exemplars"] = exemplars
+        pools[motif_id] = {key: value for key, value in normalized.items() if value}
+    return pools
+
+
+def normalize_reference_motif_quotas(raw: Any) -> JsonDict:
+    if not isinstance(raw, dict):
+        return {}
+    quotas: JsonDict = {}
+    for motif, quota in raw.items():
+        motif_id = str(motif or "").strip()
+        if not motif_id:
+            continue
+        if isinstance(quota, dict):
+            normalized: JsonDict = {}
+            for key in ("max_batch_share", "max_recent_share"):
+                if key in quota:
+                    try:
+                        value = float(quota.get(key))
+                    except (TypeError, ValueError):
+                        continue
+                    normalized[key] = max(0.0, min(1.0, value))
+            for key in ("max_batch_uses", "max_recent_uses"):
+                if key in quota:
+                    try:
+                        value = int(quota.get(key))
+                    except (TypeError, ValueError):
+                        continue
+                    if value >= 0:
+                        normalized[key] = value
+            if quota.get("avoid_when_pressure"):
+                normalized["avoid_when_pressure"] = True
+            if normalized:
+                quotas[motif_id] = normalized
+        else:
+            try:
+                share = float(quota)
+            except (TypeError, ValueError):
+                continue
+            quotas[motif_id] = {"max_batch_share": max(0.0, min(1.0, share))}
+    return quotas
+
+
+def normalize_reference_semantic_dropout(raw: Any) -> JsonDict:
+    if not isinstance(raw, dict):
+        return {"enabled": False}
+    normalized: JsonDict = {"enabled": bool(raw.get("enabled", True))}
+    buckets = normalize_list(raw.get("maskable_buckets"))
+    if buckets:
+        normalized["maskable_buckets"] = [
+            bucket for bucket in buckets if bucket in CANDIDATE_PACK_SEMANTIC_DROPOUT_BUCKETS
+        ]
+    for key, default in (("min_buckets", 0), ("max_buckets", 0)):
+        if key in raw:
+            try:
+                normalized[key] = max(0, int(raw.get(key)))
+            except (TypeError, ValueError):
+                normalized[key] = default
+    if "probability" in raw:
+        try:
+            normalized["probability"] = max(0.0, min(1.0, float(raw.get("probability"))))
+        except (TypeError, ValueError):
+            normalized["probability"] = 0.0
+    return normalized
+
+
+def normalize_reference_exemplar_set(raw: Any) -> JsonDict:
+    if isinstance(raw, dict):
+        normalized: JsonDict = {}
+        for key, value in raw.items():
+            values = normalize_list(value)
+            if values:
+                normalized[str(key)] = values
+        return normalized
+    values = normalize_list(raw)
+    return {"examples": values} if values else {}
+
+
 def normalize_soft_anchor_spec(payload: Any) -> JsonDict:
     if not payload:
         return {
@@ -5484,6 +6036,11 @@ def normalize_soft_anchor_spec(payload: Any) -> JsonDict:
             "diversity_state": {},
             "soft_repair_policy": normalize_soft_repair_policy({}),
             "safety_negative_floor": [],
+            "identity_axes": [],
+            "motif_pools": {},
+            "motif_quotas": {},
+            "semantic_dropout": {"enabled": False},
+            "exemplar_set": {},
         }
     if isinstance(payload, list):
         raw_anchors = payload
@@ -5506,6 +6063,11 @@ def normalize_soft_anchor_spec(payload: Any) -> JsonDict:
         raw_diversity_state = {}
         raw_soft_repair_policy = {}
         raw_safety_negative_floor = []
+        raw_identity_axes = []
+        raw_motif_pools = {}
+        raw_motif_quotas = {}
+        raw_semantic_dropout = {}
+        raw_exemplar_set = {}
     elif isinstance(payload, dict):
         raw_anchors = payload.get("anchors", [])
         min_anchors = payload.get("min_anchors", payload.get("soft_min_anchors", 0))
@@ -5527,6 +6089,11 @@ def normalize_soft_anchor_spec(payload: Any) -> JsonDict:
         raw_diversity_state = payload.get("diversity_state", {}) or {}
         raw_soft_repair_policy = payload.get("soft_repair_policy", {}) or {}
         raw_safety_negative_floor = payload.get("safety_negative_floor", []) or []
+        raw_identity_axes = payload.get("identity_axes", []) or []
+        raw_motif_pools = payload.get("motif_pools", {}) or {}
+        raw_motif_quotas = payload.get("motif_quotas", {}) or {}
+        raw_semantic_dropout = payload.get("semantic_dropout", {}) or {}
+        raw_exemplar_set = payload.get("exemplar_set", {}) or {}
     else:
         raise ValueError("--soft-anchor-spec must be a JSON object or list")
     if not isinstance(raw_anchors, list):
@@ -5611,6 +6178,11 @@ def normalize_soft_anchor_spec(payload: Any) -> JsonDict:
     diversity_state = raw_diversity_state if isinstance(raw_diversity_state, dict) else {}
     soft_repair_policy = normalize_soft_repair_policy(raw_soft_repair_policy)
     safety_negative_floor = normalize_list(raw_safety_negative_floor)
+    identity_axes = normalize_reference_identity_axes(raw_identity_axes)
+    motif_pools = normalize_reference_motif_pools(raw_motif_pools)
+    motif_quotas = normalize_reference_motif_quotas(raw_motif_quotas)
+    semantic_dropout = normalize_reference_semantic_dropout(raw_semantic_dropout)
+    exemplar_set = normalize_reference_exemplar_set(raw_exemplar_set)
     selected_rate_floor = SOFT_ANCHOR_SELECTED_RATE_FLOOR
     if isinstance(payload, dict) and payload.get("selected_rate_floor") is not None:
         try:
@@ -5650,6 +6222,11 @@ def normalize_soft_anchor_spec(payload: Any) -> JsonDict:
         "diversity_state": diversity_state,
         "soft_repair_policy": soft_repair_policy,
         "safety_negative_floor": safety_negative_floor,
+        "identity_axes": identity_axes,
+        "motif_pools": motif_pools,
+        "motif_quotas": motif_quotas,
+        "semantic_dropout": semantic_dropout,
+        "exemplar_set": exemplar_set,
         "anchors": anchors,
     }
 
@@ -5706,6 +6283,20 @@ def parse_soft_anchor_specs(items: Optional[Sequence[str]]) -> JsonDict:
             merged.setdefault("soft_repair_policy", {}).update(spec.get("soft_repair_policy") or {})
         if spec.get("anchor_expansion"):
             merged.setdefault("anchor_expansion", {}).update(spec.get("anchor_expansion") or {})
+        merged.setdefault("identity_axes", [])
+        existing_axes = {str(axis.get("id")) for axis in merged["identity_axes"] if isinstance(axis, dict)}
+        for axis in spec.get("identity_axes", []) or []:
+            if isinstance(axis, dict) and str(axis.get("id")) not in existing_axes:
+                merged["identity_axes"].append(axis)
+                existing_axes.add(str(axis.get("id")))
+        if spec.get("motif_pools"):
+            merged.setdefault("motif_pools", {}).update(spec.get("motif_pools") or {})
+        if spec.get("motif_quotas"):
+            merged.setdefault("motif_quotas", {}).update(spec.get("motif_quotas") or {})
+        if spec.get("semantic_dropout"):
+            merged.setdefault("semantic_dropout", {}).update(spec.get("semantic_dropout") or {})
+        if spec.get("exemplar_set"):
+            merged.setdefault("exemplar_set", {}).update(spec.get("exemplar_set") or {})
         merged.setdefault("safety_negative_floor", [])
         for term in normalize_list(spec.get("safety_negative_floor")):
             if term not in merged["safety_negative_floor"]:
@@ -6440,6 +7031,11 @@ def soft_anchor_trace(policy: Optional[JsonDict], picked: Optional[Dict[str, Ent
         "diversity_state": policy.get("diversity_state", {}) or {},
         "soft_repair_policy": policy.get("soft_repair_policy", {}) or normalize_soft_repair_policy({}),
         "safety_negative_floor": policy.get("safety_negative_floor", []) or [],
+        "identity_axes": policy.get("identity_axes", []) or [],
+        "motif_pools": policy.get("motif_pools", {}) or {},
+        "motif_quotas": policy.get("motif_quotas", {}) or {},
+        "semantic_dropout": policy.get("semantic_dropout", {}) or {"enabled": False},
+        "exemplar_set": policy.get("exemplar_set", {}) or {},
         "required_anchor_count": soft_anchor_required_count(policy),
         "selected_anchor_count": len(selected_slots),
         "selected_anchor_slots": sorted(selected_slots),

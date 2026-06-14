@@ -77,6 +77,31 @@ def chosen_slot_entry_ids(chosen: set[str]) -> dict[str, set[str]]:
     return slots
 
 
+def composed_search_text(composed: dict[str, Any]) -> str:
+    values = [str(composed.get("prompt_en") or "")]
+    assertions = composed.get("coverage_assertions") or {}
+    if isinstance(assertions, dict):
+        for value in assertions.values():
+            if isinstance(value, str):
+                values.append(value)
+            elif isinstance(value, list):
+                values.extend(str(item) for item in value if str(item).strip())
+            elif isinstance(value, dict):
+                values.extend(str(item) for item in value.values() if str(item).strip())
+    return " ".join(values)
+
+
+def candidate_id_matches_term(candidate_id: str, term: str) -> bool:
+    term = str(term or "").strip().lower()
+    if not term:
+        return False
+    return term in str(candidate_id or "").lower()
+
+
+def chosen_matches_terms(chosen: set[str], terms: Sequence[str]) -> bool:
+    return any(candidate_id_matches_term(candidate_id, term) for candidate_id in chosen for term in terms)
+
+
 def candidate_ids_from_pack(pack: dict[str, Any]) -> set[str]:
     ids = {str(candidate.get("id")) for candidate in pack.get("presets", []) if isinstance(candidate, dict)}
     slots = pack.get("slots") or {}
@@ -111,10 +136,40 @@ def assertion_terms_for_intent(intent: dict[str, Any], composed: dict[str, Any])
     return list(dict.fromkeys(term for term in terms if str(term).strip()))
 
 
+def terms_for_identity_axis(axis: dict[str, Any]) -> list[str]:
+    terms = [str(axis.get("id") or "")]
+    for term in axis.get("terms") or []:
+        if isinstance(term, str):
+            terms.append(term)
+    description = str(axis.get("description") or "").strip()
+    if description:
+        terms.append(description)
+    return [term for term in dict.fromkeys(terms) if term.strip()]
+
+
+def open_slot_terms(open_slot: dict[str, Any]) -> list[str]:
+    terms: list[str] = []
+    for key in ("masked_entry_id", "candidate_id"):
+        value = str(open_slot.get(key) or "").strip()
+        if value:
+            terms.append(value)
+    for term in open_slot.get("terms") or []:
+        if isinstance(term, str) and term.strip():
+            terms.append(term)
+    return list(dict.fromkeys(terms))
+
+
+def motif_taxonomy_terms(pack: dict[str, Any], motif: str) -> list[str]:
+    budget = pack.get("motif_budget") if isinstance(pack.get("motif_budget"), dict) else {}
+    taxonomy = budget.get("motif_taxonomy") if isinstance(budget.get("motif_taxonomy"), dict) else {}
+    return [str(term) for term in taxonomy.get(motif, []) if str(term).strip()]
+
+
 def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dict[str, Any]:
     failures: list[dict[str, Any]] = []
     warnings: list[dict[str, Any]] = []
     prompt_en = str(composed.get("prompt_en") or "")
+    search_text = composed_search_text(composed)
     negative_en = composed.get("negative_en")
 
     if not prompt_en.strip():
@@ -162,6 +217,97 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
     invalid = sorted(candidate_id for candidate_id in chosen if candidate_id not in valid_ids)
     if invalid:
         failures.append({"check": "chosen_candidate_ids", "reason": "unknown candidate id", "ids": invalid})
+
+    concept_axes = pack.get("concept_axes") if isinstance(pack.get("concept_axes"), dict) else {}
+    for axis in concept_axes.get("required") or []:
+        if not isinstance(axis, dict):
+            continue
+        terms = terms_for_identity_axis(axis)
+        if terms and not any(text_contains_term(search_text, term) or chosen_matches_terms(chosen, [term]) for term in terms):
+            failures.append(
+                {
+                    "check": "identity_axis",
+                    "reason": "required identity axis not represented",
+                    "axis": axis.get("id"),
+                    "accepted_terms": terms,
+                }
+            )
+
+    masked_echo_count = 0
+    for open_slot in pack.get("open_slots") or []:
+        if not isinstance(open_slot, dict):
+            continue
+        terms = open_slot_terms(open_slot)
+        chosen_hit = chosen_matches_terms(chosen, [str(open_slot.get("candidate_id") or ""), str(open_slot.get("masked_entry_id") or "")])
+        text_hits = [term for term in terms if text_contains_term(search_text, term)]
+        if chosen_hit or text_hits:
+            masked_echo_count += 1
+            failures.append(
+                {
+                    "check": "masked_bucket_echo",
+                    "reason": "masked/open preset section was copied back into the composed prompt",
+                    "slot": open_slot.get("slot"),
+                    "bucket": open_slot.get("bucket"),
+                    "candidate_id": open_slot.get("candidate_id"),
+                    "text_hits": text_hits[:8],
+                    "chosen_hit": chosen_hit,
+                }
+            )
+
+    motif_budget = pack.get("motif_budget") if isinstance(pack.get("motif_budget"), dict) else {}
+    for motif in motif_budget.get("discouraged_now") or []:
+        motif_id = str(motif or "")
+        terms = motif_taxonomy_terms(pack, motif_id)
+        if not terms:
+            terms = [motif_id]
+        text_hits = [term for term in terms if text_contains_term(search_text, term)]
+        chosen_hit = chosen_matches_terms(chosen, terms)
+        if text_hits or chosen_hit:
+            failures.append(
+                {
+                    "check": "motif_quota",
+                    "reason": "discouraged motif selected despite quota pressure",
+                    "motif": motif_id,
+                    "text_hits": text_hits[:8],
+                    "chosen_hit": chosen_hit,
+                }
+            )
+
+    taxonomy = motif_budget.get("motif_taxonomy") if isinstance(motif_budget.get("motif_taxonomy"), dict) else {}
+    quota_motifs = set((motif_budget.get("quotas") or {}).keys()) if isinstance(motif_budget.get("quotas"), dict) else set()
+    hit_motifs: set[str] = set()
+    for motif, terms_raw in taxonomy.items():
+        terms = [str(term) for term in terms_raw or [] if str(term).strip()]
+        if terms and (chosen_matches_terms(chosen, terms) or any(text_contains_term(search_text, term) for term in terms)):
+            hit_motifs.add(str(motif))
+    if quota_motifs and hit_motifs and hit_motifs <= quota_motifs:
+        warnings.append(
+            {
+                "check": "cliche_only_concept_coverage",
+                "reason": "concept coverage relies only on capped/cliche motif groups",
+                "motifs": sorted(hit_motifs),
+            }
+        )
+
+    echo_risk = pack.get("template_echo_risk") if isinstance(pack.get("template_echo_risk"), dict) else {}
+    if pack.get("open_slots"):
+        try:
+            max_allowed = float(echo_risk.get("max_allowed_score", 0.2))
+        except (TypeError, ValueError):
+            max_allowed = 0.2
+        masked_total = max(1, len([slot for slot in pack.get("open_slots") or [] if isinstance(slot, dict)]))
+        score = masked_echo_count / masked_total
+        if score > max_allowed:
+            failures.append(
+                {
+                    "check": "template_echo_risk",
+                    "reason": "excessive overlap with masked source preset/bundle",
+                    "score": round(score, 4),
+                    "max_allowed_score": max_allowed,
+                    "masked_echo_count": masked_echo_count,
+                    "masked_slot_count": masked_total,
+                }
+            )
 
     chosen_slots = chosen_slot_entry_ids(chosen)
     role_scene_policy = pack.get("role_scene_policy") if isinstance(pack.get("role_scene_policy"), dict) else {}

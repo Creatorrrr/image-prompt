@@ -218,6 +218,40 @@ CANDIDATE_PACK_COVERAGE_CASES: List[JsonDict] = [
         "selection_mode": "rule",
         "required_intents": ["카리나", "메이드", "드래곤", "고양이손", "흡혈귀"],
         "expected_uncovered": ["드래곤", "고양이손"],
+    },
+    {
+        "name": "karina_maid_yandere_scaffold",
+        "concept": "카리나 메이드 얀데레",
+        "selection_mode": "rule",
+        "required_intents": ["카리나", "메이드", "얀데레"],
+        "required_identity_axes": ["obsessive_possession", "surveillance_gaze", "boundary_collapse"],
+        "required_motif_quotas": ["red_thread", "photo_wall", "phone_selfie_mirror"],
+        "expect_masked_buckets": True,
+    },
+    {
+        "name": "wonhee_casual_girlfriend_angel",
+        "concept": "아일릿 원희 사복 여친 천사",
+        "selection_mode": "rule",
+        "required_intents": ["아일릿", "원희", "사복", "여친", "천사"],
+    },
+    {
+        "name": "winter_casual_menhera",
+        "concept": "윈터 사복 여친 멘헤라",
+        "selection_mode": "rule",
+        "required_intents": ["윈터", "사복", "여친", "멘헤라"],
+    },
+    {
+        "name": "karina_maid_vampire",
+        "concept": "카리나 메이드 흡혈귀",
+        "selection_mode": "rule",
+        "required_intents": ["카리나", "메이드", "흡혈귀"],
+    },
+    {
+        "name": "karina_maid_succubus",
+        "concept": "카리나 메이드 서큐버스",
+        "selection_mode": "rule",
+        "required_intents": ["카리나", "메이드", "서큐버스"],
+        "required_identity_axes": ["dream_threshold", "life_drain_trace", "contractual_invitation"],
     }
 ]
 
@@ -229,6 +263,16 @@ CONCEPT_BENCHMARK_CASES: List[JsonDict] = [
         "required_legacy_choices": {
             "costume_style": ["frill_apron_maid_costume"],
             "location": ["maid_cafe_interior"],
+        },
+    },
+    {
+        "name": "karina_maid_succubus",
+        "concept": "카리나 메이드 서큐버스",
+        "prompt_terms": ["maid", "succubus", "invitation", "life-drain"],
+        "required_legacy_choices": {
+            "costume_style": ["frill_apron_maid_costume"],
+            "location": ["maid_cafe_interior"],
+            "prop": ["soul_contract_scroll_prop"],
         },
     },
     {
@@ -1857,6 +1901,38 @@ def evaluate_candidate_pack_coverage(tags_path: Path, seed: int, cases: Sequence
             row["failures"].append("missing_expected_uncovered_intents")
         if "prompt_en" in pack:
             row["failures"].append("candidate_pack_contains_final_prompt")
+        required_pack_fields = {
+            "concept_axes",
+            "motif_budget",
+            "preset_reference",
+            "masked_buckets",
+            "open_slots",
+            "template_echo_risk",
+        }
+        missing_pack_fields = sorted(required_pack_fields - set(pack.keys()))
+        if missing_pack_fields:
+            row["failures"].append("missing_scaffold_fields")
+            row["missing_scaffold_fields"] = missing_pack_fields
+        concept_axes = pack.get("concept_axes") if isinstance(pack.get("concept_axes"), dict) else {}
+        axis_ids = {
+            str(axis.get("id"))
+            for axis in concept_axes.get("required", []) or []
+            if isinstance(axis, dict) and axis.get("id")
+        }
+        required_axes = set(normalize_list(case.get("required_identity_axes")))
+        missing_axes = sorted(required_axes - axis_ids)
+        if missing_axes:
+            row["failures"].append("missing_identity_axes")
+            row["missing_identity_axes"] = missing_axes
+        motif_budget = pack.get("motif_budget") if isinstance(pack.get("motif_budget"), dict) else {}
+        quotas = motif_budget.get("quotas") if isinstance(motif_budget.get("quotas"), dict) else {}
+        required_quotas = set(normalize_list(case.get("required_motif_quotas")))
+        missing_quotas = sorted(required_quotas - set(quotas))
+        if missing_quotas:
+            row["failures"].append("missing_motif_quotas")
+            row["missing_motif_quotas"] = missing_quotas
+        if case.get("expect_masked_buckets") and not pack.get("masked_buckets"):
+            row["failures"].append("missing_masked_buckets")
         if len(pack.get("presets", []) or []) > 5:
             row["failures"].append("preset_candidate_cap_exceeded")
         total_slot_candidates = 0
@@ -1883,6 +1959,9 @@ def evaluate_candidate_pack_coverage(tags_path: Path, seed: int, cases: Sequence
                 "uncovered_intents": sorted(uncovered),
                 "missing_mandatory_intents": missing,
                 "missing_expected_uncovered_intents": missing_uncovered,
+                "identity_axes": sorted(axis_ids),
+                "masked_buckets": pack.get("masked_buckets", []),
+                "motif_quotas": sorted(quotas),
                 "preset_candidate_count": len(pack.get("presets", []) or []),
                 "slot_candidate_count": total_slot_candidates,
             }

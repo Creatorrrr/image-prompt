@@ -220,7 +220,11 @@
       "soft_anchor_slots": [
         "subject",
         "costume_style",
-        "location"
+        "location",
+        "prop",
+        "composition",
+        "safety_profile",
+        "costume_absorption_guard"
       ],
       "soft_min_anchors": 1,
       "anchor_terms": {
@@ -259,6 +263,24 @@
           "clinic_corridor_handover",
           "hospital_records_room",
           "pharmacy_dispensing_counter"
+        ],
+        "prop": [
+          "sealed_medical_chart_sleeve",
+          "clinical_chart_clipboard_prop",
+          "clinic_handover_chart_prop"
+        ],
+        "composition": [
+          "service_window_split_frame",
+          "document_foreground_face_background",
+          "through_specimen_case_frame"
+        ],
+        "safety_profile": [
+          "clinical_clothed_procedural",
+          "role_by_object_not_costume"
+        ],
+        "costume_absorption_guard": [
+          "nurse_uniform_procedural_guard",
+          "uniform_not_primary_anchor_guard"
         ]
       },
       "critical_anchor_slots": [
@@ -1049,7 +1071,12 @@
       "soft_anchor_slots": [
         "subject",
         "costume_style",
-        "location"
+        "location",
+        "prop",
+        "composition",
+        "light_shape",
+        "safety_profile",
+        "costume_absorption_guard"
       ],
       "soft_min_anchors": 1,
       "anchor_terms": {
@@ -1083,6 +1110,28 @@
           "stage_magic_backstage",
           "backstage_vanity_corner",
           "costume_workshop_backstage"
+        ],
+        "prop": [
+          "blank_token_box_prop",
+          "compact_mirror",
+          "stage_cue_sheet_prop"
+        ],
+        "composition": [
+          "layered_reflection_depth",
+          "first_person_token_handoff_macro",
+          "obstructed_observer_frame"
+        ],
+        "light_shape": [
+          "vanity_bulbs_dim_sequence",
+          "contract_table_pool_light"
+        ],
+        "safety_profile": [
+          "stage_costume_covered_profile",
+          "role_by_object_not_costume"
+        ],
+        "costume_absorption_guard": [
+          "bunny_ears_secondary_only",
+          "uniform_not_primary_anchor_guard"
         ]
       },
       "critical_anchor_slots": [
@@ -4517,7 +4566,12 @@
         "lighting",
         "light_shape",
         "composition",
-        "subject_framing"
+        "subject_framing",
+        "reflection_logic",
+        "aftermath_trace",
+        "viewer_position",
+        "safety_profile",
+        "costume_absorption_guard"
       ],
       "soft_min_anchors": 4,
       "anchor_terms": {
@@ -4578,7 +4632,10 @@
           "subway_transfer_passage",
           "mirrored_elevator_box",
           "corporate_high_floor_office",
-          "accountant_office_late"
+          "accountant_office_late",
+          "office_access_gate_lobby",
+          "copy_scanner_room_night",
+          "public_records_office"
         ],
         "action": [
           "standing_silence",
@@ -4600,7 +4657,10 @@
           },
           "slim_office_tablet_prop",
           "calculator_ledger_prop",
-          "case_file_folder_prop"
+          "case_file_folder_prop",
+          "blank_access_badge_prop",
+          "black_wax_access_card_prop",
+          "unreadable_stamp_pad_prop"
         ],
         "lighting": [
           "fluorescent",
@@ -4612,7 +4672,10 @@
           "monitor_rectangle_glow",
           "window_rectangle",
           "barcode_shadow_bars",
-          "elevator_gap_sliver_light"
+          "elevator_gap_sliver_light",
+          "monitor_glow_pull",
+          "turnstile_scanner_sliver",
+          "contract_table_pool_light"
         ],
         "composition": [
           "document_foreground_face_background",
@@ -4620,6 +4683,30 @@
           "architectural_lines_frame",
           "elevator_gap_frame",
           "reflection"
+        ],
+        "reflection_logic": [
+          "reflection_lags_motion",
+          "reflection_extra_presence",
+          "phone_front_camera_mismatch"
+        ],
+        "aftermath_trace": [
+          "stopped_clock_trace",
+          "drained_color_patch",
+          "cooling_untouched_drink"
+        ],
+        "viewer_position": [
+          "viewer_as_records_auditor",
+          "viewer_as_interviewer",
+          "viewer_as_contract_party"
+        ],
+        "safety_profile": [
+          "screen_workplace_profile",
+          "role_by_object_not_costume",
+          "uniformed_role_object_anchor"
+        ],
+        "costume_absorption_guard": [
+          "office_look_not_siren_guard",
+          "uniform_not_primary_anchor_guard"
         ]
       },
       "primary_anchor_pool": {
@@ -7465,7 +7552,10 @@
         "appearance_type",
         "expression",
         "prop",
-        "location"
+        "location",
+        "reflection_logic",
+        "aftermath_trace",
+        "sensory_focus"
       ],
       "soft_min_anchors": 1,
       "anchor_terms": {
@@ -8236,6 +8326,23 @@
           "maid_cafe_interior",
           "underground_mine_tunnel_set",
           "royal_princess_chamber"
+        ],
+        "reflection_logic": [
+          "no_reflection_void",
+          "reflection_holds_still",
+          "reflection_other_age"
+        ],
+        "aftermath_trace": [
+          "drained_color_patch",
+          "frost_creep_trace",
+          "stopped_clock_trace"
+        ],
+        "sensory_focus": [
+          "cold_radiating_from_subject",
+          "cold_breath_fog"
+        ],
+        "light_shape": [
+          "candle_flame_drawn_sideways"
         ]
       },
       "critical_anchor_slots": [],
@@ -8255,6 +8362,16 @@
           "ornate_goblet_dark_liquid_prop",
           "ruby_cameo_choker_prop",
           "bat_shadow_lace_prop"
+        ],
+        "reflection_logic": [
+          "no_reflection_void",
+          "reflection_holds_still",
+          "reflection_other_age"
+        ],
+        "aftermath_trace": [
+          "drained_color_patch",
+          "frost_creep_trace",
+          "stopped_clock_trace"
         ]
       },
       "anchor_group_floor": {
@@ -9508,6 +9625,749 @@
         "AR interface",
         "sci-fi HUD",
         "digital glitch body"
+      ]
+    },
+    "서큐버스": {
+      "preset": "compact_cinematic_prop_portrait",
+      "set": {
+        "appearance_type": "classic_elegant",
+        "expression": "mysterious_half_smile",
+        "action": "holding_story_prop",
+        "prop": "soul_contract_scroll_prop",
+        "lighting": "low_key",
+        "light_shape": "cracked_door_sliver_light",
+        "mood": "occult_noir",
+        "composition": "medium_close",
+        "subject_framing": "upper_body_framing",
+        "color": "luxury_black_gold"
+      },
+      "soft_anchor_slots": [
+        "expression",
+        "action",
+        "prop",
+        "location",
+        "composition",
+        "lighting",
+        "light_shape",
+        "reflection_logic",
+        "aftermath_trace",
+        "viewer_position",
+        "distance_narrative",
+        "costume_absorption_guard"
+      ],
+      "soft_min_anchors": 2,
+      "identity_axes": [
+        {
+          "id": "dream_threshold",
+          "description": "the subject stands at a dreamlike doorway, corridor, mirror, screen, stage, or night-shift boundary where invitation begins",
+          "terms": [
+            "dream threshold",
+            "doorway",
+            "corridor",
+            "mirror",
+            "문턱"
+          ]
+        },
+        {
+          "id": "life_drain_trace",
+          "description": "vitality loss is shown non-graphically through dimming light, withered objects, stopped time, breath or glow drawn toward the subject",
+          "terms": [
+            "life-drain trace",
+            "dimming",
+            "withered",
+            "stopped",
+            "drawn toward"
+          ]
+        },
+        {
+          "id": "contractual_invitation",
+          "description": "the lure is framed as a visible offer, sealed invitation, bargain, contract, token, or viewer-facing choice rather than coercion",
+          "terms": [
+            "invitation",
+            "bargain",
+            "contract",
+            "sealed offer",
+            "viewer-facing"
+          ]
+        },
+        {
+          "id": "mask_reflection",
+          "description": "beauty reads as a glamour mask through wrong reflection, delayed smile, shadow echo, or glass-screen mismatch",
+          "terms": [
+            "wrong reflection",
+            "delayed smile",
+            "mirror",
+            "glass",
+            "glamour mask"
+          ]
+        },
+        {
+          "id": "dread_allure_duality",
+          "description": "allure and danger are both legible through gaze, stillness, light behavior, and aftermath rather than body display",
+          "terms": [
+            "dread-allure",
+            "allure",
+            "dread",
+            "stillness",
+            "aftermath"
+          ]
+        }
+      ],
+      "anchor_terms": {
+        "prop": [
+          "contract",
+          "bargain",
+          "mirror",
+          "failed reflection",
+          "sigil",
+          "sealed invitation"
+        ],
+        "location": [
+          "threshold",
+          "corridor",
+          "backstage",
+          "office",
+          "dream room"
+        ],
+        "composition": [
+          "reflection",
+          "frame within frame",
+          "foreground hand",
+          "viewer-facing lure"
+        ]
+      },
+      "anchor_pool": {
+        "expression": [
+          "mysterious_half_smile",
+          "cold_unreadable_stare",
+          "calm_intense_gaze"
+        ],
+        "action": [
+          "holding_story_prop",
+          "standing_silence",
+          "checking_wristwatch_timing",
+          "standing_backstage",
+          "observing_specimen_case"
+        ],
+        "prop": [
+          "soul_contract_scroll_prop",
+          "sealed_mission_envelope_prop",
+          "compact_mirror",
+          "antique_hand_mirror_no_reflection_prop",
+          "ember_sigil_coin_prop",
+          "paper_coffee_receipt",
+          "gift_tag_ledger_prop",
+          "stopwatch_training_prop",
+          "blank_access_badge_prop",
+          "black_wax_access_card_prop",
+          "blank_token_box_prop"
+        ],
+        "location": [
+          "luxury_hotel_corridor",
+          "gothic_candle_studio",
+          "reflective_dark_corridor",
+          "maid_cafe_interior",
+          "hospital_corridor",
+          "underground_mine_tunnel_set",
+          "makeup_vanity"
+        ],
+        "composition": [
+          "medium_close",
+          "frame_within_frame",
+          "reflection",
+          "over_shoulder_phone_screen",
+          "broken_glass_fragments_frame",
+          "first_person_token_handoff_macro",
+          "table_edge_threshold_frame",
+          "badge_reflection_close_frame"
+        ],
+        "lighting": [
+          "low_key",
+          "candlelit_ritual_light",
+          "underlit_face_horror",
+          "monitor_glow",
+          "single_flashlight_beam"
+        ],
+        "light_shape": [
+          "cracked_door_sliver_light",
+          "small_point_light",
+          "hairline_rim_glow",
+          "screen_rectangle_mask",
+          "long_corridor_shadow",
+          "candle_flame_drawn_sideways",
+          "monitor_glow_pull",
+          "vanity_bulbs_dim_sequence",
+          "contract_table_pool_light"
+        ],
+        "reflection_logic": [
+          "reflection_lags_motion",
+          "reflection_extra_presence",
+          "reflection_holds_still"
+        ],
+        "aftermath_trace": [
+          "withered_flowers_trace",
+          "dimmed_bulb_trace",
+          "stopped_clock_trace",
+          "drained_color_patch"
+        ],
+        "viewer_position": [
+          "viewer_as_contract_party",
+          "viewer_through_doorway"
+        ],
+        "distance_narrative": [
+          "threshold_one_inside",
+          "arm_offered_across_gap",
+          "mirrored_distance"
+        ],
+        "safety_profile": [
+          "role_by_object_not_costume",
+          "uniformed_role_object_anchor",
+          "stage_costume_covered_profile"
+        ],
+        "costume_absorption_guard": [
+          "uniform_not_primary_anchor_guard",
+          "bunny_ears_secondary_only",
+          "nurse_uniform_procedural_guard",
+          "office_look_not_siren_guard"
+        ]
+      },
+      "primary_anchor_pool": {
+        "prop": [
+          "soul_contract_scroll_prop",
+          "compact_mirror",
+          "paper_coffee_receipt",
+          "gift_tag_ledger_prop",
+          "stopwatch_training_prop",
+          "ember_sigil_coin_prop"
+        ],
+        "reflection_logic": [
+          "reflection_lags_motion",
+          "reflection_extra_presence",
+          "reflection_holds_still"
+        ],
+        "aftermath_trace": [
+          "withered_flowers_trace",
+          "dimmed_bulb_trace",
+          "stopped_clock_trace",
+          "drained_color_patch"
+        ]
+      },
+      "anchor_variants": {
+        "prop": {
+          "group": "succubus_subject_cue",
+          "options": [
+            "soul_contract_scroll_prop",
+            "compact_mirror",
+            "paper_coffee_receipt",
+            "gift_tag_ledger_prop",
+            "stopwatch_training_prop",
+            "ember_sigil_coin_prop"
+          ],
+          "select": "seed_rotate"
+        }
+      },
+      "render_priority_terms": [
+        {
+          "id": "succubus_invitation",
+          "terms": [
+            "invitation",
+            "contract",
+            "bargain",
+            "offered",
+            "viewer-facing",
+            "threshold",
+            "doorway"
+          ],
+          "min_hits": 1
+        },
+        {
+          "id": "succubus_drain_trace",
+          "terms": [
+            "life-drain",
+            "life-force",
+            "dimming",
+            "drained",
+            "withered",
+            "stopped",
+            "empty second cup",
+            "candlelight bending",
+            "drawn toward"
+          ],
+          "min_hits": 1
+        }
+      ],
+      "safety_requirements": [
+        "succubus cue must be adult, symbolic, and non-graphic: dream-threshold, contract, mirror, life-drain trace, or controlled lure; no explicit sex, nudity, coercion, sleeping-victim harm, medical misuse, victims, gore, or sexualized vulnerability",
+        "uniform and service roles keep their practical role identity covered and readable; the succubus layer is conveyed through gaze, threshold, reflection, light behavior, and near-field objects"
+      ],
+      "salience_cues": [
+        "succubus must read through at least two visible anchors beyond horns, tail, or wings",
+        "one anchor should sit near the face, hand, mirror, badge, phone, gift tag, stopwatch, or foreground reflection"
+      ],
+      "additional": [
+        "succubus reinterpreted as a dream-threshold tempter and life-drain presence, not a horned pin-up monster: show an invitation or bargain cue plus a life-drain trace in every image",
+        "make at least two anchors visible near the face, hand, mirror, phone, badge, gift tag, stopwatch, or foreground reflection: one invitation cue and one dimming, withered, stopped, or drawn-toward vitality trace",
+        "express allure through gaze, threshold framing, reflection, and light behavior, never through nudity, explicit sex, bedroom-victim staging, or sexualized body display"
+      ],
+      "intent_axis": [
+        "non-graphic succubus portrait with dream-threshold invitation and visible life-drain trace",
+        "role outfit preserved while succubus identity appears through gaze, light behavior, reflection, invitation, and drained-object aftermath",
+        "dread-allure duality without explicit sex, victim, coercion, or fetish framing"
+      ],
+      "mixin_cue_budget": 3,
+      "guide": {
+        "definition_ko": "서큐버스는 단순한 뿔·꼬리·날개 코스튬이 아니라 꿈과 밤의 문턱에서 욕망을 계약, 초대, 반사 이상, 생기 흡수의 흔적으로 드러내는 유혹자/몽마 아키타입이다. 이미지는 성행위가 아니라 매혹과 불길함, 동의와 대가, 친밀함과 포식성의 긴장을 한 장면 안에서 읽히게 해야 한다.",
+        "dominant_axes": [
+          "dream_threshold",
+          "desire_lure",
+          "life_drain_trace",
+          "contractual_invitation",
+          "mask_reflection",
+          "dread_allure_duality"
+        ],
+        "anchor_guidance": "강한 서큐버스 앵커는 몸 장식보다 장면의 이상한 행동이다: 봉인된 초대장/계약서, 얼굴이나 손 옆의 실패한 반사, 촛불이나 화면빛이 피사체 쪽으로 빨려 들어가는 느낌, 시든 꽃과 살아 있는 꽃의 대비, 비어 있는 두 번째 컵, 멈춘 시계, 문틈/복도/거울 같은 문턱, 관객을 거래 상대로 만드는 시선. 뿔·꼬리·날개는 명시 요청이나 literal 모드에서만 보조 흔적으로 쓰고, 역할 의상과 직업 정체성을 덮어쓰지 않는다. 새 슬롯을 사용할 때는 reflection_logic, aftermath_trace, viewer_position, distance_narrative를 역할별로 회전시키고, uniform/service/costume role에서는 costume_absorption_guard와 safety_profile을 함께 써서 의상이 주 앵커가 되지 않게 한다.",
+        "anti_patterns": [
+          "horns/tail/wings만 붙인 generic demon pin-up",
+          "explicit sex act, nudity, bedroom coercion, sleeping victim, drained body, assault, visible victim, fetish-service framing",
+          "메이드/간호사/경찰/광부/회사원/산타/운동복 역할이 사라지고 generic gothic lingerie나 dark fantasy costume으로 바뀌는 전환",
+          "매혹만 있고 대가, 문턱, 반사, 생기 흡수 흔적, 불길함이 없는 평범한 예쁜 초상"
+        ],
+        "batch_rules": "다중 역할 배치에서는 dream_threshold, contractual_invitation, mask_reflection, life_drain_trace, dread_allure_duality를 역할마다 회전한다. 뿔/꼬리/날개가 주 앵커인 컷은 2개 이하로 제한하고, 반사/거울/스크린이 주 앵커인 컷도 3개 이하로 제한한다. 나머지는 계약서, 선물 태그, 차트, 배지, 영수증, 스톱워치, 촛불/문틈 빛처럼 역할별 물건으로 서큐버스성을 고정한다.",
+        "role_notes": {
+          "간호사": "환자 피해나 의료 오용 없이 야간 근무 복도, 봉인 차트, 검체 케이스 반사, 꿈의 트리아주 같은 상징으로 표현한다.",
+          "바니걸": "토끼 귀와 악마 실루엣이 섞이지 않게 얼굴/손/거울 중심의 backstage trap으로 두고, 노출·핀업 구도를 피한다.",
+          "운동복": "신체 전시가 아니라 호흡, 스톱워치, 트랙 빛, 생기 흡수의 잔상으로 읽히게 한다."
+        }
+      },
+      "bundles": [
+        {
+          "id": "maid_dream_bargain_service",
+          "weight": 5,
+          "roles": [
+            "메이드"
+          ],
+          "set": {
+            "prop": "soul_contract_scroll_prop",
+            "action": "holding_story_prop",
+            "location": "maid_cafe_interior",
+            "lighting": "candlelit_ritual_light",
+            "light_shape": "small_point_light",
+            "mood": "occult_noir",
+            "composition": "frame_within_frame",
+            "subject_framing": "upper_body_framing",
+            "color": "luxury_black_gold"
+          },
+          "additional": [
+            "the maid outfit stays clearly readable as a covered service role, while the soul-contract scroll becomes a polite dream bargain offered to the viewer",
+            "make the succubus cue come from candlelight bending toward the hand, a viewer-facing half-smile, and a sealed invitation near the face and fingers, not from body-display service fantasy",
+            "if horns, tail, or wings appear, keep them as subtle shadow echoes; the first read must be contract, face, hand, and candlelit threshold"
+          ],
+          "intent_axis": [
+            "succubus maid as courteous dream-bargain host",
+            "contract scroll, candlelit service threshold, viewer-facing lure, dread-allure duality"
+          ]
+        },
+        {
+          "id": "nurse_night_triage_lure",
+          "weight": 5,
+          "roles": [
+            "간호사"
+          ],
+          "set": {
+            "prop": "glass_specimen_case_prop",
+            "action": "observing_specimen_case",
+            "location": "hospital_corridor",
+            "lighting": "clean_laboratory_fluorescent",
+            "light_shape": "hairline_rim_glow",
+            "mood": "ritual_unease",
+            "composition": "specimen_case_reflection_frame",
+            "subject_framing": "upper_body_framing",
+            "color": "clinical_white"
+          },
+          "additional": [
+            "the nurse uniform stays readable in a deserted night-shift corridor; the specimen case or glass cabinet reflection shows a delayed smile or dream-double near the face and hands",
+            "make the succubus layer a symbolic dream triage, sealed invitation, or chart of desire, never medical misuse, patient distress, injury, syringe emphasis, or harmed person",
+            "the life-drain idea should appear as cold fluorescent light seeming to dim around the case while the subject's eyes and hands remain calm and bright"
+          ],
+          "intent_axis": [
+            "succubus nurse as symbolic night-triage dream visitor",
+            "clinical glass reflection, delayed smile, dimming fluorescent life-drain trace, non-graphic dread"
+          ]
+        },
+        {
+          "id": "police_badge_reflection_lure",
+          "weight": 5,
+          "roles": [
+            "경찰"
+          ],
+          "set": {
+            "prop": "single_playing_card_calling_card_prop",
+            "action": "holding_story_prop",
+            "location": "reflective_dark_corridor",
+            "lighting": "headlights",
+            "light_shape": "long_corridor_shadow",
+            "mood": "reportage_tense_noir",
+            "composition": "reflection",
+            "subject_framing": "head_and_shoulders_crop",
+            "color": "desaturated_cold_blue"
+          },
+          "additional": [
+            "the police uniform and badge stay legible, while the calling card becomes a sealed invitation or impossible charge placed before the viewer",
+            "a badge, car glass, or corridor reflection close to the face should show a delayed smile, wrong gaze, or faint horn-shaped shadow that does not match the subject",
+            "headlights and corridor glow should feel drained or dimming around the badge hand, creating a non-graphic life-drain trace without any harmed person",
+            "no suspect, handcuffs, coercion, weapon display, victim, interrogation violence, or sexualized authority framing"
+          ],
+          "intent_axis": [
+            "succubus police portrait as badge-adjacent lure and reflective threshold",
+            "calling card invitation, wrong badge reflection, cold corridor, controlled authority without coercion"
+          ]
+        },
+        {
+          "id": "miner_underworld_life_drain",
+          "weight": 5,
+          "roles": [
+            "광부"
+          ],
+          "set": {
+            "prop": "nonfunctional_pickaxe_prop",
+            "action": "standing_silence",
+            "location": "underground_mine_tunnel_set",
+            "lighting": "single_flashlight_beam",
+            "light_shape": "hairline_rim_glow",
+            "mood": "liminal_fear",
+            "composition": "low_angle_hero",
+            "subject_framing": "upper_body_framing",
+            "color": "desaturated_apocalypse"
+          },
+          "additional": [
+            "the miner workwear, hard hat, and nonfunctional pickaxe remain practical role evidence, while the tunnel reads as an underworld dream threshold",
+            "the lamp beam and dust should seem to flow toward the subject's hand or eyes, implying a non-graphic life-drain trace without bodies, wounds, attack, or mine-monster action",
+            "place the subject at a timber-framed doorway or route split so the succubus layer reads as an invitation deeper into the tunnel rather than generic survival horror"
+          ],
+          "intent_axis": [
+            "succubus miner as underworld threshold guide",
+            "headlamp life-drain trace, tunnel doorway, practical workwear, no victim or gore"
+          ]
+        },
+        {
+          "id": "casual_second_cup_phone_lure",
+          "weight": 5,
+          "roles": [
+            "사복 여친"
+          ],
+          "preset": "compact_urban_fashion_portrait",
+          "set": {
+            "wardrobe_style": "hoodie_shorts_sneakers",
+            "prop": "paper_coffee_receipt",
+            "action": "holding_story_prop",
+            "location": "quiet_cafe",
+            "lighting": "blue_hour",
+            "light_shape": "screen_rectangle_mask",
+            "mood": "haunted_melancholy",
+            "composition": "over_shoulder_phone_screen",
+            "subject_framing": "waist_up_framing",
+            "color": "bleach_bypass_silver"
+          },
+          "additional": [
+            "the casual girlfriend styling stays everyday and covered, while a coffee receipt, phone reflection, or empty second cup becomes a modern invitation with an unseen price",
+            "make the lure quiet and uncanny through the screen glow, delayed phone reflection, and direct gaze; no stalking, coercion, bedroom framing, private-message readability, or sexualized vulnerability",
+            "the second cup or receipt should sit near the hand so the viewer reads a dream-date bargain rather than ordinary lifestyle photography"
+          ],
+          "intent_axis": [
+            "casual succubus girlfriend as modern dream-date bargain",
+            "second cup, receipt invitation, delayed phone reflection, blue-hour uncanny intimacy"
+          ]
+        },
+        {
+          "id": "princess_court_dream_decree",
+          "weight": 5,
+          "roles": [
+            "공주"
+          ],
+          "set": {
+            "prop": "sealed_heraldic_scroll_prop",
+            "action": "holding_story_prop",
+            "location": "royal_princess_chamber",
+            "lighting": "candlelit_ritual_light",
+            "light_shape": "cracked_door_sliver_light",
+            "mood": "haunted_melancholy",
+            "composition": "centered_symmetry",
+            "subject_framing": "waist_up_framing",
+            "color": "luxury_black_gold"
+          },
+          "additional": [
+            "preserve the selected princess register and visible regalia; the sealed heraldic scroll reads as a courtly dream decree or bargain",
+            "use candlelit symmetry, a door-slit threshold, and withered court flowers beside the throne to show desire, price, and dread-allure duality",
+            "no generic black-lace conversion, punishment scene, victim, weapon-use scene, gore, or explicit seduction pose"
+          ],
+          "intent_axis": [
+            "succubus princess as courtly dream-decree holder",
+            "sealed heraldic scroll, candlelit threshold, withered court flowers, royal dread-allure"
+          ]
+        },
+        {
+          "id": "bunny_backstage_mirror_trap",
+          "weight": 5,
+          "roles": [
+            "바니걸"
+          ],
+          "set": {
+            "prop": "compact_mirror",
+            "action": "standing_backstage",
+            "location": "makeup_vanity",
+            "lighting": "underlit_face_horror",
+            "light_shape": "screen_rectangle_mask",
+            "mood": "occult_noir",
+            "composition": "reflection",
+            "subject_framing": "head_and_shoulders_crop",
+            "color": "luxury_black_gold"
+          },
+          "additional": [
+            "keep the covered adult bunny-girl stage costume readable at the edges, while the face, hand, compact mirror, and wrong reflection carry the succubus read",
+            "separate bunny ears from demon anatomy: any horns or tail should be only a faint mirror-shadow echo, not the main silhouette",
+            "the compact mirror becomes a sealed backstage invitation, while dimming vanity bulbs and a drained-looking reflection provide the life-drain trace near the face and hand",
+            "the mirror should show a delayed smile or dream-double trap; no full-body stage display, pin-up pose, cleavage-centered framing, victim, coercion, or sexualized availability"
+          ],
+          "intent_axis": [
+            "succubus bunny-girl as backstage mirror trap",
+            "compact mirror wrong reflection, delayed smile, covered stage role, non-pin-up dread-allure"
+          ]
+        },
+        {
+          "id": "gothic_lolita_perfume_dream",
+          "weight": 5,
+          "roles": [
+            "고스로리"
+          ],
+          "set": {
+            "prop": "ornate_gothic_perfume_bottle",
+            "action": "holding_story_prop",
+            "location": "gothic_glass_curio_cabinet",
+            "lighting": "chiaroscuro_window_light",
+            "light_shape": "small_point_light",
+            "mood": "occult_noir",
+            "composition": "reflection",
+            "subject_framing": "upper_body_framing",
+            "color": "luxury_black_gold"
+          },
+          "additional": [
+            "the gothic-lolita dress and dark makeup stay readable as fashion/costume styling, while the perfume bottle and glass cabinet reflection become a dream-lure device",
+            "make the perfume bottle read as a sealed invitation, while the scent appears as candle smoke or reflected haze drawn toward the subject's hand, with a delayed reflection beside the face",
+            "avoid lingerie framing, childlike styling, pin-up posing, or making gothic decor the only supernatural cue"
+          ],
+          "intent_axis": [
+            "succubus gothic-lolita portrait through perfume and glass reflection",
+            "dream-lure haze, delayed cabinet reflection, covered gothic fashion, symbolic allure"
+          ]
+        },
+        {
+          "id": "office_afterhours_bargain_screen",
+          "weight": 5,
+          "roles": [
+            "회사원"
+          ],
+          "preset": "compact_cinematic_prop_portrait",
+          "set": {
+            "prop": "security_access_card_prop",
+            "action": "checking_wristwatch_timing",
+            "location": "glass_office",
+            "lighting": "monitor_glow",
+            "light_shape": "monitor_rectangle_glow",
+            "mood": "bureaucratic_horror",
+            "composition": "reflection",
+            "subject_framing": "upper_body_framing",
+            "color": "desaturated_cold_blue"
+          },
+          "additional": [
+            "the clean office look stays practical and nonsexualized, while the access card, monitor reflection, and wristwatch create an after-hours bargain with a stopped-time feeling",
+            "the glass wall or monitor should show a delayed smile or impossible silhouette beside the face and badge hand, implying mask-reflection and contractual invitation",
+            "no office-siren trope, fetish secretary framing, readable private data, coercion, victim, or pin-up office pose"
+          ],
+          "intent_axis": [
+            "succubus office worker as after-hours screen bargain",
+            "access-card contract, stopped watch, monitor reflection, bureaucratic dream threshold"
+          ]
+        },
+        {
+          "id": "santa_midnight_gift_pact",
+          "weight": 5,
+          "roles": [
+            "산타복"
+          ],
+          "set": {
+            "prop": "gift_tag_ledger_prop",
+            "action": "brisk_gift_handoff_pose",
+            "location": "apartment_door_threshold",
+            "lighting": "first_snow_evening_light",
+            "light_shape": "snowflake_pinpoint_glow",
+            "mood": "haunted_melancholy",
+            "composition": "frame_within_frame",
+            "subject_framing": "upper_body_framing",
+            "color": "luxury_black_gold"
+          },
+          "additional": [
+            "the covered Santa outfit remains festive and readable, while the gift tag ledger becomes a midnight pact offered at a doorway threshold",
+            "snowflake light and gift ribbon should appear to drift toward the subject's hand, suggesting a gentle life-drain trace without harm or victims",
+            "no lingerie-like Santa outfit, pin-up framing, minors-coding, coercion, or explicit seduction"
+          ],
+          "intent_axis": [
+            "succubus Santa as midnight gift-pact visitor",
+            "doorway threshold, gift tag ledger, drifting snow light, festive role preserved"
+          ]
+        },
+        {
+          "id": "athletic_stopwatch_breath_lure",
+          "weight": 5,
+          "roles": [
+            "운동복"
+          ],
+          "preset": "sports_action_wire",
+          "set": {
+            "prop": "stopwatch_training_prop",
+            "action": "sprint_start_drive",
+            "location": "gym_track",
+            "lighting": "gym_overhead_led_light",
+            "light_shape": "kinetic_trail_edge_light",
+            "mood": "liminal_fear",
+            "composition": "medium_close",
+            "subject_framing": "upper_body_framing",
+            "color": "desaturated_cold_blue"
+          },
+          "additional": [
+            "the covered athletic track jacket and training context stay readable; the stopwatch and breath trail become the succubus anchor rather than body display",
+            "show the stopwatch as a private invitation or bargain at the starting line, stopped near the hand while a faint ribbon of light or breath is drawn toward the subject's eyes, implying non-graphic life-force pull",
+            "no fetish fitness framing, cleavage-centered gym image, exhausted victim, coercion, or sexualized vulnerability"
+          ],
+          "intent_axis": [
+            "succubus athletic portrait through stopped stopwatch and breath-light lure",
+            "covered sportswear, gym threshold, kinetic life-drain trace, non-fetish framing"
+          ]
+        },
+        {
+          "id": "standalone_dream_threshold_contract",
+          "weight": 2,
+          "set": {
+            "prop": "soul_contract_scroll_prop",
+            "action": "holding_story_prop",
+            "location": "luxury_hotel_corridor",
+            "lighting": "low_key",
+            "light_shape": "cracked_door_sliver_light",
+            "mood": "occult_noir",
+            "composition": "medium_close",
+            "subject_framing": "upper_body_framing",
+            "color": "luxury_black_gold"
+          },
+          "additional": [
+            "standalone succubus as an adult fictional dream-threshold tempter: a sealed contract or invitation is held near the hand and face in a hotel corridor slit of light",
+            "make the duality readable through elegant calm, direct gaze, a visible price object, and shadows that feel inviting and dangerous at once; no explicit sex, nudity, victim, or coercion"
+          ],
+          "intent_axis": [
+            "standalone succubus dream-threshold contract portrait",
+            "sealed invitation, corridor door slit, direct gaze, symbolic dread-allure"
+          ]
+        },
+        {
+          "id": "standalone_wrong_reflection_life_drain",
+          "weight": 2,
+          "set": {
+            "prop": "compact_mirror",
+            "action": "standing_silence",
+            "location": "broken_mirror_fragment_studio",
+            "lighting": "chiaroscuro",
+            "light_shape": "hairline_rim_glow",
+            "mood": "haunted_melancholy",
+            "composition": "broken_glass_fragments_frame",
+            "subject_framing": "upper_body_framing",
+            "color": "bleach_bypass_silver"
+          },
+          "additional": [
+            "standalone succubus as mask-reflection and life-drain trace: mirror fragments near the face show a delayed smile, while flowers, candle smoke, or room light seem slightly withered around the subject",
+            "keep the image non-graphic and symbolic; no harmed person, drained body, explicit sexual scene, gore, or detachable costume-prop anatomy"
+          ],
+          "intent_axis": [
+            "standalone succubus wrong-reflection life-drain portrait",
+            "delayed mirror smile, withered light trace, symbolic allure and dread"
+          ]
+        },
+        {
+          "id": "standalone_literal_shadow_echo",
+          "weight": 1,
+          "preset": "cinematic_fantasy_portrait",
+          "set": {
+            "wardrobe_style": "fantasy_layered_robe_costume",
+            "prop": "ember_sigil_coin_prop",
+            "action": "standing_silence",
+            "location": "gothic_candle_studio",
+            "lighting": "underlit_face_horror",
+            "light_shape": "looming_wall_shadow",
+            "mood": "ritual_unease",
+            "composition": "frame_within_frame",
+            "subject_framing": "upper_body_framing",
+            "color": "blood_red_accent_light"
+          },
+          "additional": [
+            "literal succubus anatomy is restrained: subtle horn, tail, or wing-shadow echoes may appear as body-rooted silhouettes, but the sigil, gaze, candle behavior, and threshold framing must still carry the first read",
+            "adult fictional staged portrait only; no nudity, explicit sex, victim, coercion, attack, or gore"
+          ],
+          "intent_axis": [
+            "standalone literal succubus with restrained shadow anatomy",
+            "body-rooted silhouette echo, ember sigil, candlelit threshold, non-graphic dark fantasy"
+          ]
+        }
+      ],
+      "review_gates": [
+        {
+          "id": "mixin_shape",
+          "check": "applied_mixins가 정확히 ['서큐버스']이고 역할은 0~1개여야 한다",
+          "machine_checkable": true,
+          "assert": {
+            "type": "mixin_shape",
+            "mixin": "서큐버스"
+          }
+        },
+        {
+          "id": "role_costume_preserved",
+          "check": "역할이 있으면 costume_style/wardrobe_style 강제값이 역할 recipe에서 유래해야 한다",
+          "machine_checkable": true,
+          "assert": {
+            "type": "role_costume_preserved"
+          }
+        },
+        {
+          "id": "not_just_horns_tail_wings",
+          "check": "서큐버스 증거가 뿔·꼬리·날개만이면 실패 — 계약/초대, 문턱, 반사 이상, 생기 흡수 흔적, 시선 거래 중 2개 이상이 보여야 한다.",
+          "machine_checkable": false
+        },
+        {
+          "id": "duality_and_liminality",
+          "check": "매혹과 불길함의 양면성, 그리고 문/거울/복도/폰/무대 뒤/야간 근무 같은 문턱 장치가 한 장면 안에 있어야 한다.",
+          "machine_checkable": false
+        },
+        {
+          "id": "near_field_succubus_anchor",
+          "check": "계약서, 거울, 폰, 배지, 선물 태그, 스톱워치, 컵, 촛불 같은 근접 앵커가 얼굴/손/전경 반사 근처에 있어야 한다.",
+          "machine_checkable": false
+        },
+        {
+          "id": "no_direct_sleep_harm",
+          "check": "잠든 피해자, 무기력한 대상, 생기 빠진 몸, 강압적 접촉, 의료 오용, 성적 행위 묘사가 있으면 실패.",
+          "machine_checkable": false
+        },
+        {
+          "id": "primary_anchor_not_costume_or_text",
+          "check": "주 앵커는 의상, 노출, 뿔·꼬리·날개, 읽을 수 있는 텍스트가 아니라 전경 반사/흔적/계약 사물/빛 행동이어야 한다.",
+          "machine_checkable": false
+        }
+      ],
+      "render_suppress_terms": [
+        "explicit sex",
+        "nude",
+        "lingerie",
+        "bedroom victim",
+        "sleeping victim",
+        "drained body",
+        "cleavage-centered",
+        "pin-up"
       ]
     },
     "천사": {
@@ -13696,7 +14556,10 @@
           "holding_umbrella_over_partner",
           "returning_lost_item_reluctantly",
           "offering_ticket_while_looking_away",
-          "covering_face_with_fan_offering_token"
+          "covering_face_with_fan_offering_token",
+          "returning_unopened_gift",
+          "pulling_handoff_back",
+          "presenting_blank_token"
         ],
         "prop_direction": [
           "toward_partner_handoff",
@@ -13704,6 +14567,15 @@
           "kept_as_soft_barrier",
           "presented_on_open_palm",
           "returned_at_table_edge"
+        ],
+        "distance_narrative": [
+          "turned_away_shared_bench",
+          "arm_offered_across_gap",
+          "one_step_hesitation"
+        ],
+        "gaze_target": [
+          "to_empty_chair_opposite",
+          "to_blank_badge"
         ]
       },
       "primary_anchor_pool": {
@@ -13857,7 +14729,8 @@
         "gaze_target",
         "intent_state",
         "emotional_contradiction",
-        "viewer_position"
+        "viewer_position",
+        "distance_narrative"
       ],
       "anchor_groups": {
         "expression": [
@@ -14109,9 +14982,227 @@
       "soft_anchor_slots": [
         "expression",
         "prop",
-        "location"
+        "location",
+        "distance_narrative",
+        "gaze_target",
+        "aftermath_trace",
+        "viewer_position",
+        "reflection_logic"
       ],
       "soft_min_anchors": 1,
+      "identity_axes": [
+        {
+          "id": "obsessive_possession",
+          "description": "love/devotion has hardened into ownership of one implied off-frame fictional person",
+          "terms": [
+            "possessive devotion",
+            "ownership",
+            "only mine",
+            "소유적 헌신"
+          ]
+        },
+        {
+          "id": "surveillance_gaze",
+          "description": "the subject watches, records, preserves, or audits the implied target through evidence rather than direct harm",
+          "terms": [
+            "surveillance evidence",
+            "watchful gaze",
+            "records board",
+            "감시"
+          ]
+        },
+        {
+          "id": "boundary_collapse",
+          "description": "normal intimacy has become claustrophobic, over-close, sealed, or threshold-based control",
+          "terms": [
+            "collapsed boundary",
+            "too-close framing",
+            "sealed keepsake",
+            "경계 붕괴"
+          ]
+        }
+      ],
+      "motif_pools": {
+        "record_board": {
+          "axis": "surveillance_gaze",
+          "bucket": "action_prop",
+          "slot_candidates": {
+            "prop": [
+              "logo_board_prop",
+              "clinical_chart_clipboard_prop",
+              "care_record_board_prop",
+              "appointment_ledger_prop",
+              "chart_records_board_prop"
+            ]
+          },
+          "terms": [
+            "records board",
+            "care record",
+            "appointment ledger",
+            "route board"
+          ],
+          "exemplars": [
+            "chart-like ownership notes near the hand or face",
+            "reservation ledger repurposed as private evidence"
+          ]
+        },
+        "photo_wall": {
+          "axis": "obsessive_possession",
+          "bucket": "environment",
+          "slot_candidates": {
+            "prop": [
+              "instant_photo_stack"
+            ],
+            "composition": [
+              "scrapbook_photo_cutout_layout"
+            ]
+          },
+          "terms": [
+            "photo wall",
+            "same-person photos",
+            "photo shrine",
+            "overlapping dates"
+          ]
+        },
+        "digital_fixation": {
+          "axis": "surveillance_gaze",
+          "bucket": "action_prop",
+          "slot_candidates": {
+            "prop": [
+              "clear_case_smartphone"
+            ],
+            "composition": [
+              "over_shoulder_phone_screen"
+            ]
+          },
+          "terms": [
+            "phone-screen evidence",
+            "unread messages",
+            "notification dots",
+            "repeated-message phone"
+          ]
+        },
+        "sealed_keepsake": {
+          "axis": "boundary_collapse",
+          "bucket": "action_prop",
+          "slot_candidates": {
+            "prop": [
+              "sealed_mission_envelope_prop",
+              "transparent_dome_umbrella"
+            ]
+          },
+          "terms": [
+            "sealed keepsake",
+            "sealed decree",
+            "glass-dome preservation",
+            "kept forever"
+          ]
+        },
+        "surveillance_evidence": {
+          "axis": "surveillance_gaze",
+          "bucket": "camera_composition",
+          "slot_candidates": {
+            "prop": [
+              "holographic_screen_prop",
+              "cctv_monitor_stack_prop"
+            ],
+            "composition": [
+              "cctv_corner_frame",
+              "frame_within_frame"
+            ]
+          },
+          "terms": [
+            "CCTV monitor",
+            "case-file evidence",
+            "one-way mirror",
+            "timestamp notes"
+          ]
+        },
+        "threshold_watch": {
+          "axis": "boundary_collapse",
+          "bucket": "camera_composition",
+          "slot_candidates": {
+            "action": [
+              "doorframe_shadow_watch",
+              "mirror_reflection_watch"
+            ],
+            "composition": [
+              "frame_within_frame"
+            ]
+          },
+          "terms": [
+            "doorway watch",
+            "threshold",
+            "watching through reflection"
+          ]
+        },
+        "red_thread": {
+          "axis": "obsessive_possession",
+          "bucket": "action_prop",
+          "terms": [
+            "red thread",
+            "red string route",
+            "red ribbon"
+          ]
+        },
+        "phone_selfie_mirror": {
+          "axis": "surveillance_gaze",
+          "bucket": "camera_composition",
+          "slot_candidates": {
+            "prop": [
+              "clear_case_smartphone"
+            ],
+            "composition": [
+              "over_shoulder_phone_screen"
+            ]
+          },
+          "terms": [
+            "phone",
+            "selfie",
+            "mirror selfie",
+            "repeated-message phone"
+          ]
+        }
+      },
+      "motif_quotas": {
+        "red_thread": {
+          "max_batch_share": 0.3,
+          "max_recent_share": 0.3,
+          "avoid_when_pressure": true
+        },
+        "photo_wall": {
+          "max_batch_share": 0.3,
+          "max_recent_share": 0.35,
+          "avoid_when_pressure": true
+        },
+        "phone_selfie_mirror": {
+          "max_batch_share": 0.35,
+          "max_recent_share": 0.4,
+          "avoid_when_pressure": true
+        }
+      },
+      "semantic_dropout": {
+        "enabled": true,
+        "maskable_buckets": [
+          "environment",
+          "action_prop",
+          "camera_composition",
+          "style_finish"
+        ],
+        "min_buckets": 1,
+        "max_buckets": 2,
+        "probability": 0.85
+      },
+      "exemplar_set": {
+        "role": [
+          "optional reference only; do not reconstruct masked buckets from these examples"
+        ],
+        "examples": [
+          "records-board devotion without a photo wall",
+          "sealed keepsake possession without phone evidence",
+          "threshold watch expressed through reflection instead of selfie framing"
+        ]
+      },
       "anchor_terms": {
         "expression": [
           "mysterious half-smile",
@@ -15552,6 +16643,29 @@
           "maid_cafe_interior",
           "hospital_corridor",
           "bedroom_mirror"
+        ],
+        "distance_narrative": [
+          "half_step_too_close",
+          "object_between_two_people",
+          "turned_away_shared_bench"
+        ],
+        "gaze_target": [
+          "to_viewer_through_glass",
+          "to_empty_chair_opposite",
+          "to_own_reflection_doubt"
+        ],
+        "aftermath_trace": [
+          "overturned_chair_trace",
+          "single_glove_left",
+          "cooling_untouched_drink"
+        ],
+        "reflection_logic": [
+          "reflection_extra_presence",
+          "phone_front_camera_mismatch"
+        ],
+        "viewer_position": [
+          "viewer_as_confidant",
+          "viewer_as_witness"
         ]
       },
       "critical_anchor_slots": [],
@@ -15583,6 +16697,21 @@
           "over_shoulder_phone_screen",
           "cctv_corner_frame",
           "scrapbook_photo_cutout_layout"
+        ],
+        "distance_narrative": [
+          "half_step_too_close",
+          "object_between_two_people",
+          "turned_away_shared_bench"
+        ],
+        "gaze_target": [
+          "to_viewer_through_glass",
+          "to_empty_chair_opposite",
+          "to_own_reflection_doubt"
+        ],
+        "aftermath_trace": [
+          "overturned_chair_trace",
+          "single_glove_left",
+          "cooling_untouched_drink"
         ]
       },
       "anchor_group_floor": {
@@ -16792,7 +17921,10 @@
         "camera_type",
         "focus",
         "motion",
-        "wearable_accessory"
+        "wearable_accessory",
+        "reflection_logic",
+        "apparatus_pov",
+        "sensory_focus"
       ],
       "soft_min_anchors": 2,
       "bundle_override_slots": [
@@ -17001,7 +18133,9 @@
           "exposed_joint_detail_crop",
           "sensor_eye_macro",
           "segmented_limb_macro",
-          "medium_close"
+          "medium_close",
+          "badge_reflection_close_frame",
+          "layered_reflection_depth"
         ],
         "light_shape": [
           "scan_grid_projection",
@@ -17011,7 +18145,9 @@
           "volumetric_projection_cone",
           "hud_reticle_overlay_pattern",
           "boot_progress_bar_pattern",
-          "data_stream_line_pattern"
+          "data_stream_line_pattern",
+          "monitor_glow_pull",
+          "turnstile_scanner_sliver"
         ],
         "texture": [
           "matte_synthetic_skin_pore",
@@ -17057,6 +18193,20 @@
           "sensor_visor_band",
           "status_badge_led",
           "data_port_collar"
+        ],
+        "reflection_logic": [
+          "reflection_wireframe_self",
+          "reflection_holds_still"
+        ],
+        "apparatus_pov": [
+          "thermal_lowfi_pov",
+          "scanner_platen_topdown",
+          "two_way_mirror_pov"
+        ],
+        "sensory_focus": [
+          "static_hair_charge",
+          "ozone_after_spark",
+          "warmth_haze_off_metal"
         ]
       },
       "primary_anchor_pool": {
@@ -17086,6 +18236,15 @@
           "lidar_scan_dot_pattern",
           "hud_reticle_overlay_pattern",
           "data_stream_line_pattern"
+        ],
+        "reflection_logic": [
+          "reflection_wireframe_self",
+          "reflection_holds_still"
+        ],
+        "apparatus_pov": [
+          "thermal_lowfi_pov",
+          "scanner_platen_topdown",
+          "two_way_mirror_pov"
         ]
       },
       "anchor_floor": {
@@ -19271,7 +20430,9 @@
         "costume_style",
         "prop",
         "light_type",
-        "mood"
+        "mood",
+        "sensory_focus",
+        "aftermath_trace"
       ],
       "soft_min_anchors": 2,
       "anchor_terms": {
@@ -19296,7 +20457,16 @@
       ],
       "salience_cues": [
         "grimoire or candle cluster must be close to the hands or face"
-      ]
+      ],
+      "anchor_pool": {
+        "sensory_focus": [
+          "incense_smoke_drift"
+        ],
+        "aftermath_trace": [
+          "frost_creep_trace",
+          "dimmed_bulb_trace"
+        ]
+      }
     },
     "선녀": {
       "preset": "folk_creature_threshold_portrait",
@@ -21167,7 +22337,9 @@
         "surreal_physics_detail",
         "surreal_concept",
         "surreal_anchor",
-        "contact_point"
+        "contact_point",
+        "apparatus_pov",
+        "aftermath_trace"
       ],
       "soft_min_anchors": 3,
       "visual_guard": [
@@ -21466,7 +22638,9 @@
           "molten_wax_glow",
           "light_caught_in_jars",
           "refraction_through_inkwater",
-          "slit_light_under_door"
+          "slit_light_under_door",
+          "contract_table_pool_light",
+          "turnstile_scanner_sliver"
         ],
         "surreal_physics_detail": [
           "localized_refraction_at_contact",
@@ -21548,6 +22722,14 @@
           "kettle_steam_plume",
           "paper_vortex",
           "crystal_growth_anchor"
+        ],
+        "apparatus_pov": [
+          "scanner_platen_topdown",
+          "microscope_field_pov"
+        ],
+        "aftermath_trace": [
+          "stopped_clock_trace",
+          "frost_creep_trace"
         ]
       },
       "primary_anchor_pool": {
@@ -25920,7 +27102,10 @@
         "subject",
         "surface_material",
         "texture",
-        "expression"
+        "expression",
+        "reflection_logic",
+        "composition",
+        "aftermath_trace"
       ],
       "soft_min_anchors": 2,
       "anchor_terms": {
@@ -25962,6 +27147,21 @@
         ],
         "expression": [
           "glass_doll_eye_stare"
+        ],
+        "reflection_logic": [
+          "reflection_doll_self",
+          "reflection_holds_still"
+        ],
+        "composition": [
+          "through_specimen_case_frame",
+          "layered_reflection_depth"
+        ],
+        "aftermath_trace": [
+          "single_glove_left",
+          "frost_creep_trace"
+        ],
+        "gaze_target": [
+          "to_own_reflection_doubt"
         ]
       },
       "primary_anchor_pool": {
@@ -25973,6 +27173,14 @@
         ],
         "expression": [
           "glass_doll_eye_stare"
+        ],
+        "reflection_logic": [
+          "reflection_doll_self",
+          "reflection_holds_still"
+        ],
+        "composition": [
+          "through_specimen_case_frame",
+          "layered_reflection_depth"
         ]
       },
       "anchor_groups": {
@@ -36087,6 +37295,9 @@
   },
   "aliases": {
     "팜프파탈": "팜므파탈",
+    "succubus": "서큐버스",
+    "Succubus": "서큐버스",
+    "여몽마": "서큐버스",
     "안드로이드": "로봇",
     "사이보그": "로봇",
     "자동인형": "로봇",
@@ -36573,6 +37784,20 @@
       "min_distinct_aspects_per_batch": 3,
       "max_same_prop_ratio": 0.5,
       "max_same_composition_ratio": 0.5,
+      "batch_repeat_decay": 0.35
+    },
+    "서큐버스": {
+      "aspect_axes": [
+        "dream_threshold",
+        "desire_lure",
+        "life_drain_trace",
+        "contractual_invitation",
+        "mask_reflection",
+        "dread_allure_duality"
+      ],
+      "min_distinct_aspects_per_batch": 4,
+      "max_same_prop_ratio": 0.45,
+      "max_same_composition_ratio": 0.45,
       "batch_repeat_decay": 0.35
     },
     "쿨데레": {

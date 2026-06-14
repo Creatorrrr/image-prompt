@@ -3611,6 +3611,170 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             self.assertIn(expected_text, joined)
             self.assertIn("do not make horned shadows the default solution", joined)
 
+    def test_concept_recipe_expands_succubus_as_non_graphic_mixin(self):
+        payload = self.run_wrapper_json(
+            "--concept",
+            "서큐버스",
+            "--explain-concept",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "713",
+            "--plain",
+            "--no-negative",
+        )
+
+        concept = payload["concepts"][0]
+        self.assertEqual(concept["name"], "서큐버스")
+        self.assertIsNone(concept["role"])
+        self.assertIsNone(concept["applied_role"])
+        self.assertEqual(concept["applied_mixins"], ["서큐버스"])
+        self.assertTrue(concept["matched"])
+        self.assertEqual(concept["mixins"]["서큐버스"]["preset"], "compact_cinematic_prop_portrait")
+        self.assertEqual(concept["combined_forced_slots"]["appearance_type"], ["classic_elegant"])
+        self.assertEqual(concept["combined_forced_slots"]["subject_framing"], ["upper_body_framing"])
+        self.assertEqual(len(concept["selected_bundles"]), 1)
+        self.assertEqual(concept["selected_bundles"][0]["mixin"], "서큐버스")
+        self.assertTrue(concept["selected_bundles"][0]["bundle_id"].startswith("standalone_"))
+        joined = " ".join(payload["forward_args"])
+        self.assertIn("dream-threshold tempter and life-drain presence", joined)
+        self.assertIn("not a horned pin-up monster", joined)
+        self.assertIn("invitation or bargain cue plus a life-drain trace", joined)
+        self.assertIn("never through nudity, explicit sex, bedroom-victim staging", joined)
+        self.assertIn("dread-allure duality without explicit sex, victim, coercion, or fetish framing", joined)
+
+    def test_succubus_mixin_preserves_role_costume_and_dual_anchor(self):
+        payload = self.run_wrapper_json(
+            "--concept",
+            "카리나 메이드 서큐버스",
+            "--explain-concept",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "713",
+            "--plain",
+            "--no-negative",
+        )
+
+        concept = payload["concepts"][0]
+        self.assertEqual(concept["name"], "카리나")
+        self.assertEqual(concept["role"], "메이드")
+        self.assertEqual(concept["applied_role"], "메이드")
+        self.assertEqual(concept["applied_mixins"], ["서큐버스"])
+        self.assertEqual(concept["combined_forced_slots"]["subject"], ["maid_cafe_performer"])
+        self.assertEqual(concept["combined_forced_slots"]["costume_style"], ["frill_apron_maid_costume"])
+        self.assertEqual(concept["combined_forced_slots"]["prop"], ["soul_contract_scroll_prop"])
+        self.assertEqual(concept["combined_forced_slots"]["lighting"], ["candlelit_ritual_light"])
+        self.assertEqual(concept["combined_forced_slots"]["composition"], ["frame_within_frame"])
+        self.assertEqual(concept["combined_forced_slots"]["subject_framing"], ["upper_body_framing"])
+        self.assertEqual(concept["selected_bundles"][0]["bundle_id"], "maid_dream_bargain_service")
+        self.assertNotIn("gothic_doll_lace_dress", concept["combined_forced_slots"]["costume_style"])
+        joined = " ".join(payload["forward_args"])
+        self.assertIn("covered service role", joined)
+        self.assertIn("candlelight bending toward the hand", joined)
+        self.assertIn("not from body-display service fantasy", joined)
+        self.assertIn("one invitation cue and one dimming, withered, stopped, or drawn-toward vitality trace", joined)
+        self.assertNotIn("assassin persona", joined)
+
+    def test_succubus_role_batch_uses_role_specific_anchors(self):
+        cases = [
+            ("카리나 메이드 서큐버스", 713, "메이드", "maid_dream_bargain_service", "soul_contract_scroll_prop", "frame_within_frame", "upper_body_framing"),
+            ("윈터 간호사 서큐버스", 714, "간호사", "nurse_night_triage_lure", "glass_specimen_case_prop", "specimen_case_reflection_frame", "upper_body_framing"),
+            ("닝닝 경찰 서큐버스", 715, "경찰", "police_badge_reflection_lure", "single_playing_card_calling_card_prop", "reflection", "head_and_shoulders_crop"),
+            ("지젤 광부 서큐버스", 716, "광부", "miner_underworld_life_drain", "nonfunctional_pickaxe_prop", "low_angle_hero", "upper_body_framing"),
+            ("아일릿 원희 사복 여친 서큐버스", 717, "사복 여친", "casual_second_cup_phone_lure", "paper_coffee_receipt", "over_shoulder_phone_screen", "waist_up_framing"),
+            ("설윤 공주 서큐버스", 718, "공주", "princess_court_dream_decree", "sealed_heraldic_scroll_prop", "centered_symmetry", "waist_up_framing"),
+            ("유나 바니걸 서큐버스", 719, "바니걸", "bunny_backstage_mirror_trap", "compact_mirror", "reflection", "head_and_shoulders_crop"),
+            ("아이유 고스로리 서큐버스", 720, "고스로리", "gothic_lolita_perfume_dream", "ornate_gothic_perfume_bottle", "reflection", "upper_body_framing"),
+            ("장원영 오피스룩 서큐버스", 721, "회사원", "office_afterhours_bargain_screen", "security_access_card_prop", "reflection", "upper_body_framing"),
+            ("김채원 산타복 서큐버스", 722, "산타복", "santa_midnight_gift_pact", "gift_tag_ledger_prop", "frame_within_frame", "upper_body_framing"),
+            ("카즈하 운동복 서큐버스", 723, "운동복", "athletic_stopwatch_breath_lure", "stopwatch_training_prop", "medium_close", "upper_body_framing"),
+        ]
+        selected_bundle_ids = set()
+        selected_props = set()
+        selected_compositions = set()
+        for concept, seed, expected_role, expected_bundle, expected_prop, expected_composition, expected_framing in cases:
+            explanation = self.run_wrapper_json(
+                "--concept",
+                concept,
+                "--explain-concept",
+                "--selection-mode",
+                "rule",
+                "--seed",
+                str(seed),
+                "--plain",
+                "--no-negative",
+            )
+            concept_payload = explanation["concepts"][0]
+            selected_bundle = concept_payload["selected_bundles"][0]
+            self.assertEqual(concept_payload["applied_mixins"], ["서큐버스"])
+            self.assertEqual(concept_payload["role"], expected_role)
+            self.assertEqual(selected_bundle["bundle_id"], expected_bundle)
+            self.assertFalse(selected_bundle["bundle_id"].startswith("standalone_"))
+            self.assertEqual(concept_payload["combined_forced_slots"]["prop"], [expected_prop])
+            self.assertEqual(concept_payload["combined_forced_slots"]["composition"], [expected_composition])
+            self.assertEqual(concept_payload["combined_forced_slots"]["subject_framing"], [expected_framing])
+            self.assertNotEqual(concept_payload["combined_forced_slots"].get("costume_style"), ["gothic_doll_lace_dress"])
+            selected_bundle_ids.add(expected_bundle)
+            selected_props.add(expected_prop)
+            selected_compositions.add(expected_composition)
+
+        self.assertEqual(len(selected_bundle_ids), len(cases))
+        self.assertGreaterEqual(len(selected_props), 8)
+        self.assertGreaterEqual(len(selected_compositions), 5)
+
+    def test_succubus_prompts_include_invitation_and_drain_trace(self):
+        cases = [
+            ("서큐버스", 713),
+            ("카리나 메이드 서큐버스", 713),
+            ("윈터 간호사 서큐버스", 714),
+            ("닝닝 경찰 서큐버스", 715),
+            ("지젤 광부 서큐버스", 716),
+            ("아일릿 원희 사복 여친 서큐버스", 717),
+            ("설윤 공주 서큐버스", 718),
+            ("유나 바니걸 서큐버스", 719),
+            ("아이유 고스로리 서큐버스", 720),
+            ("장원영 오피스룩 서큐버스", 721),
+            ("김채원 산타복 서큐버스", 722),
+            ("카즈하 운동복 서큐버스", 723),
+        ]
+        invitation_terms = {
+            "invitation",
+            "contract",
+            "bargain",
+            "offered",
+            "viewer-facing",
+            "threshold",
+            "doorway",
+        }
+        drain_terms = {
+            "life-drain",
+            "life-force",
+            "dimming",
+            "drained",
+            "withered",
+            "stopped",
+            "empty second cup",
+            "candlelight bending",
+            "drawn toward",
+        }
+        for concept, seed in cases:
+            item = self.run_wrapper_json(
+                "--concept",
+                concept,
+                "--selection-mode",
+                "rule",
+                "--seed",
+                str(seed),
+                "--lang",
+                "en",
+                "--no-negative",
+                "--include-choices",
+            )[0]
+            prompt = item["prompt_en"].lower()
+            self.assertTrue(any(term in prompt for term in invitation_terms), msg=concept)
+            self.assertTrue(any(term in prompt for term in drain_terms), msg=concept)
+
     def test_concept_recipe_expands_femme_fatale_as_non_objectifying_mixin(self):
         payload = self.run_wrapper_json(
             "--concept",
@@ -5710,6 +5874,12 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "uncovered_intents",
                 "presets",
                 "slots",
+                "concept_axes",
+                "motif_budget",
+                "preset_reference",
+                "masked_buckets",
+                "open_slots",
+                "template_echo_risk",
                 "role_scene_policy",
                 "species_family",
                 "diversity_state",
@@ -5735,6 +5905,42 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             self.assertLessEqual(len(candidates), expected_limit)
             self.assertAlmostEqual(sum(candidate["probability"] for candidate in candidates), 1.0, places=5)
         self.assertLessEqual(total_slot_candidates, 120)
+
+    def test_candidate_pack_exposes_reference_scaffold_for_yandere(self):
+        args = (
+            "--concept",
+            "카리나 메이드 얀데레",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "701",
+            "--emit-candidate-pack",
+        )
+        payload = self.run_wrapper_json(*args)
+        repeat_payload = self.run_wrapper_json(*args)
+
+        pack = payload[0]
+        repeat_pack = repeat_payload[0]
+        self.assertEqual(pack["masked_buckets"], repeat_pack["masked_buckets"])
+        self.assertEqual(pack["open_slots"], repeat_pack["open_slots"])
+
+        required_axes = {axis["id"] for axis in pack["concept_axes"]["required"]}
+        self.assertTrue({"obsessive_possession", "surveillance_gaze", "boundary_collapse"} <= required_axes)
+        self.assertIn("motif_budget", pack)
+        self.assertIn("motif_taxonomy", pack["motif_budget"])
+        self.assertIn("phone_selfie_mirror", pack["motif_budget"]["motif_taxonomy"])
+        self.assertIn("red_thread", pack["motif_budget"]["quotas"])
+        self.assertIn("photo_wall", pack["motif_budget"]["quotas"])
+        self.assertIn("phone_selfie_mirror", pack["motif_budget"]["quotas"])
+        self.assertEqual(pack["preset_reference"]["role"], "reference_scaffold")
+        self.assertTrue(pack["preset_reference"]["used_sections"])
+        self.assertTrue(pack["preset_reference"]["dropped_sections"])
+        self.assertTrue(pack["masked_buckets"])
+        self.assertTrue(pack["open_slots"])
+        self.assertTrue({slot["bucket"] for slot in pack["open_slots"]} <= set(pack["masked_buckets"]))
+        self.assertTrue(all(slot["status"] == "intentionally_open" for slot in pack["open_slots"]))
+        self.assertIn("score", pack["template_echo_risk"])
+        self.assertLessEqual(pack["template_echo_risk"]["score"], pack["template_echo_risk"]["max_allowed_score"])
 
     def test_candidate_pack_defaults_concept_resolution_to_soft_mode(self):
         payload = self.run_wrapper_json(
@@ -5817,6 +6023,100 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             self.assertEqual(audit["status"], "fail")
             failure_checks = {failure["check"] for failure in audit["failures"]}
             self.assertTrue({"mandatory_intent", "chosen_candidate_ids", "hard_conflict", "safety_floor"} <= failure_checks)
+
+    def test_audit_composed_prompt_rejects_masked_bucket_and_motif_echo(self):
+        pack = {
+            "pack_id": "cccccccccccccccc",
+            "mandatory_intents": [],
+            "uncovered_intents": [],
+            "presets": [{"id": "preset:p1"}],
+            "slots": {
+                "prop": {
+                    "candidates": [
+                        {"id": "slot:prop:instant_photo_stack"},
+                        {"id": "slot:prop:logo_board_prop"},
+                    ]
+                }
+            },
+            "concept_axes": {
+                "required": [
+                    {"id": "surveillance_gaze", "terms": ["surveillance evidence", "records board"]}
+                ]
+            },
+            "motif_budget": {
+                "quotas": {"photo_wall": {"max_batch_share": 0.3}},
+                "discouraged_now": ["photo_wall"],
+                "motif_taxonomy": {
+                    "photo_wall": ["instant_photo_stack", "photo wall", "same-person photos"],
+                    "record_board": ["logo_board_prop", "records board"],
+                },
+            },
+            "preset_reference": {
+                "role": "reference_scaffold",
+                "masked_slot_values": {
+                    "prop": {
+                        "entry_id": "instant_photo_stack",
+                        "candidate_id": "slot:prop:instant_photo_stack",
+                        "terms": ["instant photo stack", "same-person photos"],
+                    }
+                },
+            },
+            "masked_buckets": ["action_prop"],
+            "open_slots": [
+                {
+                    "slot": "prop",
+                    "bucket": "action_prop",
+                    "status": "intentionally_open",
+                    "masked_entry_id": "instant_photo_stack",
+                    "candidate_id": "slot:prop:instant_photo_stack",
+                    "terms": ["instant photo stack", "same-person photos"],
+                }
+            ],
+            "template_echo_risk": {"max_allowed_score": 0.2},
+            "coverage": {},
+            "conflicts": [],
+            "safety_floor": {"forbidden_terms": []},
+            "negative_en": None,
+            "provenance": {},
+        }
+        good = {
+            "pack_id": "cccccccccccccccc",
+            "prompt_en": "A tense portrait built around surveillance evidence on a records board, no text or watermark.",
+            "chosen_candidate_ids": ["preset:p1", "slot:prop:logo_board_prop"],
+        }
+        bad = {
+            "pack_id": "cccccccccccccccc",
+            "prompt_en": "A tense portrait with surveillance evidence, an instant photo stack, and same-person photos on the wall, no text or watermark.",
+            "chosen_candidate_ids": ["preset:p1", "slot:prop:instant_photo_stack"],
+        }
+        with tempfile.TemporaryDirectory() as tmpdir:
+            pack_path = Path(tmpdir) / "pack.json"
+            good_path = Path(tmpdir) / "good.json"
+            bad_path = Path(tmpdir) / "bad.json"
+            pack_path.write_text(json.dumps(pack, ensure_ascii=False), encoding="utf-8")
+            good_path.write_text(json.dumps(good, ensure_ascii=False), encoding="utf-8")
+            bad_path.write_text(json.dumps(bad, ensure_ascii=False), encoding="utf-8")
+
+            passed = subprocess.run(
+                [sys.executable, str(AUDIT_COMPOSED_PATH), "--pack", str(pack_path), "--composed", str(good_path)],
+                cwd=ROOT,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+            self.assertEqual(passed.returncode, 0, passed.stdout + passed.stderr)
+
+            failed = subprocess.run(
+                [sys.executable, str(AUDIT_COMPOSED_PATH), "--pack", str(pack_path), "--composed", str(bad_path)],
+                cwd=ROOT,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+            self.assertEqual(failed.returncode, 1)
+            audit = json.loads(failed.stdout)
+            failure_checks = {failure["check"] for failure in audit["failures"]}
+            self.assertTrue({"masked_bucket_echo", "motif_quota", "template_echo_risk"} <= failure_checks)
 
     def test_audit_composed_prompt_rejects_role_scene_and_species_mismatch(self):
         pack = {
@@ -9607,6 +9907,44 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
 
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("slot_applicability.subject_category_overrides: unknown subject id missing_subject_id", result.stderr)
+
+    def test_dictionary_validator_rejects_unknown_motif_pool_slot_id(self):
+        data = json.loads(TAGS_PATH.read_text(encoding="utf-8"))
+        recipes_path = SKILL_DIR / "assets" / "concept_recipes.json"
+        recipes = json.loads(recipes_path.read_text(encoding="utf-8"))
+        recipes["mixins"]["얀데레"]["motif_pools"] = {
+            "bad_pool": {
+                "axis": "surveillance_gaze",
+                "slot_candidates": {"prop": ["missing_prop_id"]},
+                "terms": ["bad pool"],
+            }
+        }
+
+        with tempfile.TemporaryDirectory() as tmp:
+            tags_path = Path(tmp) / "tags.json"
+            recipes_tmp_path = Path(tmp) / "concept_recipes.json"
+            tags_path.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
+            recipes_tmp_path.write_text(json.dumps(recipes, ensure_ascii=False), encoding="utf-8")
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(VALIDATOR_PATH),
+                    "--tags",
+                    str(tags_path),
+                    "--concept-recipes",
+                    str(recipes_tmp_path),
+                ],
+                cwd=ROOT,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn(
+            "concept_recipes.mixins.얀데레.motif_pools.bad_pool.slot_candidates.prop: unknown id missing_prop_id",
+            result.stderr,
+        )
 
     def test_semantic_index_builder_records_gemini_metadata_and_entries(self):
         original_embedder = self.generator.embed_texts_with_gemini

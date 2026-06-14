@@ -791,6 +791,7 @@ def validate_concept_recipe_entry(
         errors.append(f"{label}.concept_mode_default: must be legacy or soft")
     validate_anchor_expansion(label, recipe.get("anchor_expansion"), errors)
     validate_concept_guide(label, recipe.get("guide"), errors)
+    validate_reference_scaffold_schema(label, recipe, by_slot, errors)
     validate_review_gates_schema(label, recipe.get("review_gates"), by_slot, errors)
 
     def weighted_pool_ids(pool_label: str, value: Any) -> list[str]:
@@ -1131,6 +1132,135 @@ def validate_concept_guide(label: str, guide: Any, errors: list[str]) -> None:
             continue
         if not isinstance(value, list) or not all(isinstance(item, str) and item.strip() for item in value):
             errors.append(f"{label}.guide.{key}: must be a list of non-empty strings")
+
+
+def validate_reference_scaffold_schema(
+    label: str,
+    recipe: dict[str, Any],
+    by_slot: dict[str, set[str]],
+    errors: list[str],
+) -> None:
+    identity_axes = recipe.get("identity_axes")
+    if identity_axes is not None:
+        raw_axes = identity_axes.get("required") if isinstance(identity_axes, dict) else identity_axes
+        if not isinstance(raw_axes, list):
+            errors.append(f"{label}.identity_axes: must be a list or object with required")
+        else:
+            seen_axes: set[str] = set()
+            for index, axis in enumerate(raw_axes):
+                axis_label = f"{label}.identity_axes[{index}]"
+                if isinstance(axis, str):
+                    if not axis.strip():
+                        errors.append(f"{axis_label}: empty axis")
+                    continue
+                if not isinstance(axis, dict):
+                    errors.append(f"{axis_label}: must be a string or object")
+                    continue
+                axis_id = str(axis.get("id") or axis.get("axis") or "").strip()
+                if not axis_id:
+                    errors.append(f"{axis_label}.id: required")
+                elif axis_id in seen_axes:
+                    errors.append(f"{axis_label}.id: duplicate {axis_id}")
+                else:
+                    seen_axes.add(axis_id)
+                for term in normalize_list(axis.get("terms")):
+                    if not term.strip():
+                        errors.append(f"{axis_label}.terms: empty term")
+
+    motif_pools = recipe.get("motif_pools")
+    if motif_pools is not None:
+        if not isinstance(motif_pools, dict):
+            errors.append(f"{label}.motif_pools: must be an object")
+        else:
+            for motif, pool in motif_pools.items():
+                motif_id = str(motif or "").strip()
+                pool_label = f"{label}.motif_pools.{motif_id or '<empty>'}"
+                if not motif_id:
+                    errors.append(f"{label}.motif_pools: empty motif id")
+                    continue
+                if not isinstance(pool, dict):
+                    errors.append(f"{pool_label}: must be an object")
+                    continue
+                if "axis" in pool and not str(pool.get("axis") or "").strip():
+                    errors.append(f"{pool_label}.axis: empty value")
+                slot_candidates = pool.get("slot_candidates") or {}
+                if slot_candidates and not isinstance(slot_candidates, dict):
+                    errors.append(f"{pool_label}.slot_candidates: must be an object")
+                elif isinstance(slot_candidates, dict):
+                    for slot, ids in slot_candidates.items():
+                        slot_label = f"{pool_label}.slot_candidates.{slot}"
+                        if slot not in by_slot:
+                            errors.append(f"{pool_label}.slot_candidates: unknown slot {slot}")
+                            continue
+                        values = normalize_list(ids)
+                        if not values:
+                            errors.append(f"{slot_label}: at least one id is required")
+                            continue
+                        for entry_id in values:
+                            if entry_id not in by_slot[slot]:
+                                errors.append(f"{slot_label}: unknown id {entry_id}")
+                if "terms" in pool and not normalize_list(pool.get("terms")):
+                    errors.append(f"{pool_label}.terms: at least one term is required when present")
+
+    motif_quotas = recipe.get("motif_quotas")
+    if motif_quotas is not None:
+        if not isinstance(motif_quotas, dict):
+            errors.append(f"{label}.motif_quotas: must be an object")
+        else:
+            for motif, quota in motif_quotas.items():
+                quota_label = f"{label}.motif_quotas.{motif}"
+                if not str(motif or "").strip():
+                    errors.append(f"{label}.motif_quotas: empty motif id")
+                    continue
+                if isinstance(quota, (int, float)):
+                    if not 0 <= float(quota) <= 1:
+                        errors.append(f"{quota_label}: numeric quota must be between 0 and 1")
+                    continue
+                if not isinstance(quota, dict):
+                    errors.append(f"{quota_label}: must be an object or number")
+                    continue
+                for key in ("max_batch_share", "max_recent_share"):
+                    if key in quota:
+                        try:
+                            value = float(quota.get(key))
+                        except (TypeError, ValueError):
+                            errors.append(f"{quota_label}.{key}: must be numeric")
+                            continue
+                        if not 0 <= value <= 1:
+                            errors.append(f"{quota_label}.{key}: must be between 0 and 1")
+                for key in ("max_batch_uses", "max_recent_uses"):
+                    if key in quota and (not isinstance(quota.get(key), int) or quota.get(key) < 0):
+                        errors.append(f"{quota_label}.{key}: must be a non-negative integer")
+                if "avoid_when_pressure" in quota and not isinstance(quota.get("avoid_when_pressure"), bool):
+                    errors.append(f"{quota_label}.avoid_when_pressure: must be a boolean")
+
+    semantic_dropout = recipe.get("semantic_dropout")
+    if semantic_dropout is not None:
+        if not isinstance(semantic_dropout, dict):
+            errors.append(f"{label}.semantic_dropout: must be an object")
+        else:
+            if "enabled" in semantic_dropout and not isinstance(semantic_dropout.get("enabled"), bool):
+                errors.append(f"{label}.semantic_dropout.enabled: must be a boolean")
+            for bucket in normalize_list(semantic_dropout.get("maskable_buckets")):
+                if bucket not in {"environment", "action_prop", "camera_composition", "style_finish"}:
+                    errors.append(f"{label}.semantic_dropout.maskable_buckets: unknown bucket {bucket}")
+            for key in ("min_buckets", "max_buckets"):
+                if key in semantic_dropout and (
+                    not isinstance(semantic_dropout.get(key), int) or semantic_dropout.get(key) < 0
+                ):
+                    errors.append(f"{label}.semantic_dropout.{key}: must be a non-negative integer")
+            if "probability" in semantic_dropout:
+                try:
+                    probability = float(semantic_dropout.get("probability"))
+                except (TypeError, ValueError):
+                    errors.append(f"{label}.semantic_dropout.probability: must be numeric")
+                else:
+                    if not 0 <= probability <= 1:
+                        errors.append(f"{label}.semantic_dropout.probability: must be between 0 and 1")
+
+    exemplar_set = recipe.get("exemplar_set")
+    if exemplar_set is not None and not isinstance(exemplar_set, (dict, list, str)):
+        errors.append(f"{label}.exemplar_set: must be an object, list, or string")
 
 
 def validate_review_gates_schema(

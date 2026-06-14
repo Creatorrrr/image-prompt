@@ -25,6 +25,7 @@ GUIDED_CONCEPTS = [
     "천사",
     "로봇",
     "악마",
+    "서큐버스",
     "얀데레",
     "암살자",
     "마법사",
@@ -139,14 +140,16 @@ class ShippedGuidedConceptTests(unittest.TestCase):
                 self.assertEqual(failures, [], msg=f"{concept} machine gate failures: {failures}")
 
     def test_role_plus_mixin_gates_pass(self) -> None:
-        explanation = self.explain("카리나 메이드 흡혈귀")
-        statuses = {g["id"]: g["status"] for g in explanation["gate_results"]}
-        self.assertEqual(statuses.get("mixin_shape"), "pass")
-        self.assertEqual(statuses.get("role_costume_preserved"), "pass")
+        for concept in ("카리나 메이드 흡혈귀", "카리나 메이드 서큐버스"):
+            with self.subTest(concept=concept):
+                explanation = self.explain(concept)
+                statuses = {g["id"]: g["status"] for g in explanation["gate_results"]}
+                self.assertEqual(statuses.get("mixin_shape"), "pass")
+                self.assertEqual(statuses.get("role_costume_preserved"), "pass")
 
     def test_guide_definitions_exist_in_data(self) -> None:
         mixins = self.recipes["mixins"]
-        for name in ("수인", "흡혈귀", "로봇", "얀데레"):
+        for name in ("수인", "흡혈귀", "서큐버스", "로봇", "얀데레"):
             guide = mixins[name].get("guide") or {}
             self.assertTrue(str(guide.get("definition_ko") or "").strip(), msg=name)
             self.assertTrue(mixins[name].get("review_gates"), msg=name)
