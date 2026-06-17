@@ -1,6 +1,6 @@
 {
-  "version": "1.20",
-  "description": "Photographic prompt dictionary with expanded concept-role, folklore, personality, season, era, digital-entity, and environmental-transformation coverage for semantic and recipe-driven prompt generation. Version 1.13 expands robot semantics with disembodied AI, screen-face terminals, sensory apparatus, fabrication origin, lifecycle wear/repair, drones, mecha, prosthetics, domestic systems, surveillance networks and AI-temple metaphors. Version 1.14 adds opt-in visible multi-subject relationship framing, visible in-frame partner roles, and a small-group documentary preset while preserving single-subject defaults. Version 1.15 adds perspective-rich beastkin evidence, procedural-duty, daily-errand, stagecraft, anti-diagram, POV-task, opt-in species, and expanded role/mixin coverage. Version 1.16 adds skin-finish, eye-detail, body-marking, summer stream, orchard shoot-through, cozy sofa, and CCD flash pet-closeup portrait coverage. Version 1.17 broadens realistic/candid portrait variation with expanded skin, eye, body-marking, lens-artifact, gaze-engagement, hand-pose, skin-state, ambient-particle, grain, garment-detail, companion-animal, color-grading, and natural-light lifestyle preset coverage. Version 1.18 adds 2026 fashion dailywear coverage with footwear and silhouette-proportion slots, clean social/dailywear presets, generalized trend tags, and no-readable-text fashion-commerce safeguards. Version 1.19 expands background, environment, and situation coverage with space-condition, crowd-density, everyday-situation, and occasion-context slots plus clean routine, commute, local-shop, event, digital-life, sustainable-local, and surreal-environment presets while keeping social/text cues non-readable. Version 1.20 expands flatlay, tabletop staging, prop styling, tactile surfaces, aesthetic still-life bundles, and product-riser scenes while keeping paper ephemera, packaging, screens, labels, tickets, and social-commerce cues blank, fictional, unreadable, or unbranded.",
+  "version": "1.21",
+  "description": "Photographic prompt dictionary with expanded concept-role, folklore, personality, season, era, digital-entity, and environmental-transformation coverage for semantic and recipe-driven prompt generation. Version 1.13 expands robot semantics with disembodied AI, screen-face terminals, sensory apparatus, fabrication origin, lifecycle wear/repair, drones, mecha, prosthetics, domestic systems, surveillance networks and AI-temple metaphors. Version 1.14 adds opt-in visible multi-subject relationship framing, visible in-frame partner roles, and a small-group documentary preset while preserving single-subject defaults. Version 1.15 adds perspective-rich beastkin evidence, procedural-duty, daily-errand, stagecraft, anti-diagram, POV-task, opt-in species, and expanded role/mixin coverage. Version 1.16 adds skin-finish, eye-detail, body-marking, summer stream, orchard shoot-through, cozy sofa, and CCD flash pet-closeup portrait coverage. Version 1.17 broadens realistic/candid portrait variation with expanded skin, eye, body-marking, lens-artifact, gaze-engagement, hand-pose, skin-state, ambient-particle, grain, garment-detail, companion-animal, color-grading, and natural-light lifestyle preset coverage. Version 1.18 adds 2026 fashion dailywear coverage with footwear and silhouette-proportion slots, clean social/dailywear presets, generalized trend tags, and no-readable-text fashion-commerce safeguards. Version 1.19 expands background, environment, and situation coverage with space-condition, crowd-density, everyday-situation, and occasion-context slots plus clean routine, commute, local-shop, event, digital-life, sustainable-local, and surreal-environment presets while keeping social/text cues non-readable. Version 1.20 expands flatlay, tabletop staging, prop styling, tactile surfaces, aesthetic still-life bundles, and product-riser scenes while keeping paper ephemera, packaging, screens, labels, tickets, and social-commerce cues blank, fictional, unreadable, or unbranded. Version 1.21 adds clean pose, shot-scale, and platform-safe framing controls for social, editorial, portrait, mirror-selfie, and composition-heavy photo prompts.",
   "facet_vocab": {
     "subject_kind": [
       "human",
@@ -178,6 +178,50 @@
       "decommissioned_abandoned",
       "powered_down_dormant",
       "reactivated_legacy"
+    ],
+    "shot_scale": [
+      "extreme_wide",
+      "wide",
+      "full_length",
+      "medium_long",
+      "medium",
+      "medium_close",
+      "close_up",
+      "extreme_close"
+    ],
+    "camera_angle": [
+      "eye_level",
+      "low",
+      "high",
+      "overhead_top_down",
+      "dutch",
+      "over_shoulder",
+      "pov",
+      "reflection",
+      "hidden_observer"
+    ],
+    "placement": [
+      "centered",
+      "rule_of_thirds",
+      "negative_space",
+      "frame_filling",
+      "edge_tension",
+      "entering_frame",
+      "exiting_frame",
+      "layered_depth",
+      "foreground_frame",
+      "symmetry"
+    ],
+    "platform_frame": [
+      "vertical_9_16_safe",
+      "vertical_4_5_safe",
+      "square_1_1_safe",
+      "ui_safe_negative_space",
+      "thumbnail_safe",
+      "face_upper_middle",
+      "center_safe",
+      "blank_lower_third",
+      "carousel_crop_safe"
     ]
   },
   "preset_families": [
@@ -1074,6 +1118,18 @@
       "ko": "날씨와 창가 인물 계열",
       "en": "weather and window portrait family",
       "embedding_text": "rainy windows, condensation, winter breath, after-rain balconies, soft window reflections and weather-shaped portrait mood"
+    },
+    {
+      "id": "pose_framing_system_family",
+      "ko": "포즈와 프레이밍 시스템 계열",
+      "en": "pose and framing system family",
+      "embedding_text": "body pose, hand pose, gaze, shot scale, camera angle, subject placement and composition controls for image-ready human photography"
+    },
+    {
+      "id": "social_vertical_framing_family",
+      "ko": "소셜 세로 프레이밍 계열",
+      "en": "social vertical framing family",
+      "embedding_text": "vertical social feed, reels-safe, short-form, thumbnail-safe, UI-safe negative space and no readable text framing for creator photos"
     }
   ],
   "recipes": [
@@ -5136,6 +5192,26 @@
         {
           "slot": "wearable_accessory",
           "probability": 0.55
+        },
+        {
+          "slot": "body_pose",
+          "probability": 0.42
+        },
+        {
+          "slot": "shot_scale",
+          "probability": 0.48
+        },
+        {
+          "slot": "platform_framing",
+          "probability": 0.36
+        },
+        {
+          "slot": "hand_pose",
+          "probability": 0.32
+        },
+        {
+          "slot": "gaze_engagement",
+          "probability": 0.32
         }
       ],
       "filters": {
@@ -5413,6 +5489,46 @@
             "charm_covered_bag",
             "silk_scarf_tied_on_bag",
             "oversized_leather_belt"
+          ]
+        },
+        "body_pose": {
+          "ids": [
+            "relaxed_standing_weight_shift",
+            "walking_mid_stride_pose",
+            "hands_in_pockets_stance",
+            "turning_back_over_shoulder_pose"
+          ]
+        },
+        "shot_scale": {
+          "ids": [
+            "full_length_body_shot",
+            "medium_long_knee_up_shot",
+            "medium_waist_up_shot",
+            "medium_close_chest_up_shot"
+          ]
+        },
+        "platform_framing": {
+          "ids": [
+            "vertical_9x16_ui_safe_frame",
+            "vertical_4x5_feed_safe_frame",
+            "center_safe_subject_frame",
+            "shop_feed_crop_safe_no_text"
+          ]
+        },
+        "hand_pose": {
+          "ids": [
+            "hands_in_pockets",
+            "holding_bag_strap",
+            "hand_on_hip",
+            "hand_adjusting_sunglasses"
+          ]
+        },
+        "gaze_engagement": {
+          "ids": [
+            "direct_camera_aware",
+            "looking_away_off_frame",
+            "candid_unaware_of_camera",
+            "looking_back_over_shoulder_gaze"
           ]
         }
       },
@@ -92908,6 +93024,26 @@
         {
           "slot": "capture_context",
           "probability": 0.35
+        },
+        {
+          "slot": "body_pose",
+          "probability": 0.42
+        },
+        {
+          "slot": "shot_scale",
+          "probability": 0.48
+        },
+        {
+          "slot": "platform_framing",
+          "probability": 0.22
+        },
+        {
+          "slot": "hand_pose",
+          "probability": 0.32
+        },
+        {
+          "slot": "gaze_engagement",
+          "probability": 0.32
         }
       ],
       "filters": {
@@ -93118,6 +93254,46 @@
             "light_brown_honey_iris",
             "dark_near_black_iris"
           ]
+        },
+        "body_pose": {
+          "ids": [
+            "relaxed_standing_weight_shift",
+            "walking_mid_stride_pose",
+            "hands_in_pockets_stance",
+            "turning_back_over_shoulder_pose"
+          ]
+        },
+        "shot_scale": {
+          "ids": [
+            "full_length_body_shot",
+            "medium_long_knee_up_shot",
+            "medium_waist_up_shot",
+            "medium_close_chest_up_shot"
+          ]
+        },
+        "platform_framing": {
+          "ids": [
+            "vertical_9x16_ui_safe_frame",
+            "vertical_4x5_feed_safe_frame",
+            "center_safe_subject_frame",
+            "shop_feed_crop_safe_no_text"
+          ]
+        },
+        "hand_pose": {
+          "ids": [
+            "hands_in_pockets",
+            "holding_bag_strap",
+            "hand_on_hip",
+            "hand_adjusting_sunglasses"
+          ]
+        },
+        "gaze_engagement": {
+          "ids": [
+            "direct_camera_aware",
+            "looking_away_off_frame",
+            "candid_unaware_of_camera",
+            "looking_back_over_shoulder_gaze"
+          ]
         }
       },
       "family": "clean_fashion_dailywear_family",
@@ -93201,6 +93377,26 @@
         {
           "slot": "capture_context",
           "probability": 0.35
+        },
+        {
+          "slot": "body_pose",
+          "probability": 0.42
+        },
+        {
+          "slot": "shot_scale",
+          "probability": 0.48
+        },
+        {
+          "slot": "platform_framing",
+          "probability": 0.22
+        },
+        {
+          "slot": "hand_pose",
+          "probability": 0.32
+        },
+        {
+          "slot": "gaze_engagement",
+          "probability": 0.32
         }
       ],
       "filters": {
@@ -93400,6 +93596,46 @@
             "light_brown_honey_iris",
             "dark_near_black_iris"
           ]
+        },
+        "body_pose": {
+          "ids": [
+            "relaxed_standing_weight_shift",
+            "walking_mid_stride_pose",
+            "hands_in_pockets_stance",
+            "turning_back_over_shoulder_pose"
+          ]
+        },
+        "shot_scale": {
+          "ids": [
+            "full_length_body_shot",
+            "medium_long_knee_up_shot",
+            "medium_waist_up_shot",
+            "medium_close_chest_up_shot"
+          ]
+        },
+        "platform_framing": {
+          "ids": [
+            "vertical_9x16_ui_safe_frame",
+            "vertical_4x5_feed_safe_frame",
+            "center_safe_subject_frame",
+            "shop_feed_crop_safe_no_text"
+          ]
+        },
+        "hand_pose": {
+          "ids": [
+            "hands_in_pockets",
+            "holding_bag_strap",
+            "hand_on_hip",
+            "hand_adjusting_sunglasses"
+          ]
+        },
+        "gaze_engagement": {
+          "ids": [
+            "direct_camera_aware",
+            "looking_away_off_frame",
+            "candid_unaware_of_camera",
+            "looking_back_over_shoulder_gaze"
+          ]
         }
       },
       "family": "clean_fashion_dailywear_family",
@@ -93484,6 +93720,26 @@
         {
           "slot": "capture_context",
           "probability": 0.35
+        },
+        {
+          "slot": "body_pose",
+          "probability": 0.42
+        },
+        {
+          "slot": "shot_scale",
+          "probability": 0.48
+        },
+        {
+          "slot": "platform_framing",
+          "probability": 0.22
+        },
+        {
+          "slot": "hand_pose",
+          "probability": 0.32
+        },
+        {
+          "slot": "gaze_engagement",
+          "probability": 0.32
         }
       ],
       "filters": {
@@ -93692,6 +93948,46 @@
             "light_brown_honey_iris",
             "dark_near_black_iris"
           ]
+        },
+        "body_pose": {
+          "ids": [
+            "relaxed_standing_weight_shift",
+            "walking_mid_stride_pose",
+            "hands_in_pockets_stance",
+            "turning_back_over_shoulder_pose"
+          ]
+        },
+        "shot_scale": {
+          "ids": [
+            "full_length_body_shot",
+            "medium_long_knee_up_shot",
+            "medium_waist_up_shot",
+            "medium_close_chest_up_shot"
+          ]
+        },
+        "platform_framing": {
+          "ids": [
+            "vertical_9x16_ui_safe_frame",
+            "vertical_4x5_feed_safe_frame",
+            "center_safe_subject_frame",
+            "shop_feed_crop_safe_no_text"
+          ]
+        },
+        "hand_pose": {
+          "ids": [
+            "hands_in_pockets",
+            "holding_bag_strap",
+            "hand_on_hip",
+            "hand_adjusting_sunglasses"
+          ]
+        },
+        "gaze_engagement": {
+          "ids": [
+            "direct_camera_aware",
+            "looking_away_off_frame",
+            "candid_unaware_of_camera",
+            "looking_back_over_shoulder_gaze"
+          ]
         }
       },
       "family": "clean_fashion_dailywear_family",
@@ -93776,6 +94072,26 @@
         {
           "slot": "capture_context",
           "probability": 0.35
+        },
+        {
+          "slot": "body_pose",
+          "probability": 0.42
+        },
+        {
+          "slot": "shot_scale",
+          "probability": 0.48
+        },
+        {
+          "slot": "platform_framing",
+          "probability": 0.36
+        },
+        {
+          "slot": "hand_pose",
+          "probability": 0.32
+        },
+        {
+          "slot": "gaze_engagement",
+          "probability": 0.32
         }
       ],
       "filters": {
@@ -93982,6 +94298,46 @@
             "light_brown_honey_iris",
             "dark_near_black_iris"
           ]
+        },
+        "body_pose": {
+          "ids": [
+            "relaxed_standing_weight_shift",
+            "walking_mid_stride_pose",
+            "hands_in_pockets_stance",
+            "turning_back_over_shoulder_pose"
+          ]
+        },
+        "shot_scale": {
+          "ids": [
+            "full_length_body_shot",
+            "medium_long_knee_up_shot",
+            "medium_waist_up_shot",
+            "medium_close_chest_up_shot"
+          ]
+        },
+        "platform_framing": {
+          "ids": [
+            "vertical_9x16_ui_safe_frame",
+            "vertical_4x5_feed_safe_frame",
+            "center_safe_subject_frame",
+            "shop_feed_crop_safe_no_text"
+          ]
+        },
+        "hand_pose": {
+          "ids": [
+            "hands_in_pockets",
+            "holding_bag_strap",
+            "hand_on_hip",
+            "hand_adjusting_sunglasses"
+          ]
+        },
+        "gaze_engagement": {
+          "ids": [
+            "direct_camera_aware",
+            "looking_away_off_frame",
+            "candid_unaware_of_camera",
+            "looking_back_over_shoulder_gaze"
+          ]
         }
       },
       "family": "clean_fashion_dailywear_family",
@@ -94072,6 +94428,26 @@
         {
           "slot": "weather",
           "probability": 0.25
+        },
+        {
+          "slot": "body_pose",
+          "probability": 0.42
+        },
+        {
+          "slot": "shot_scale",
+          "probability": 0.48
+        },
+        {
+          "slot": "platform_framing",
+          "probability": 0.22
+        },
+        {
+          "slot": "hand_pose",
+          "probability": 0.32
+        },
+        {
+          "slot": "gaze_engagement",
+          "probability": 0.32
         }
       ],
       "filters": {
@@ -94279,6 +94655,46 @@
             "light_brown_honey_iris",
             "dark_near_black_iris"
           ]
+        },
+        "body_pose": {
+          "ids": [
+            "relaxed_standing_weight_shift",
+            "walking_mid_stride_pose",
+            "hands_in_pockets_stance",
+            "turning_back_over_shoulder_pose"
+          ]
+        },
+        "shot_scale": {
+          "ids": [
+            "full_length_body_shot",
+            "medium_long_knee_up_shot",
+            "medium_waist_up_shot",
+            "medium_close_chest_up_shot"
+          ]
+        },
+        "platform_framing": {
+          "ids": [
+            "vertical_9x16_ui_safe_frame",
+            "vertical_4x5_feed_safe_frame",
+            "center_safe_subject_frame",
+            "shop_feed_crop_safe_no_text"
+          ]
+        },
+        "hand_pose": {
+          "ids": [
+            "hands_in_pockets",
+            "holding_bag_strap",
+            "hand_on_hip",
+            "hand_adjusting_sunglasses"
+          ]
+        },
+        "gaze_engagement": {
+          "ids": [
+            "direct_camera_aware",
+            "looking_away_off_frame",
+            "candid_unaware_of_camera",
+            "looking_back_over_shoulder_gaze"
+          ]
         }
       },
       "family": "clean_fashion_dailywear_family",
@@ -94357,6 +94773,26 @@
         {
           "slot": "capture_context",
           "probability": 0.35
+        },
+        {
+          "slot": "body_pose",
+          "probability": 0.42
+        },
+        {
+          "slot": "shot_scale",
+          "probability": 0.48
+        },
+        {
+          "slot": "platform_framing",
+          "probability": 0.22
+        },
+        {
+          "slot": "hand_pose",
+          "probability": 0.32
+        },
+        {
+          "slot": "gaze_engagement",
+          "probability": 0.32
         }
       ],
       "filters": {
@@ -94560,6 +94996,46 @@
             "light_brown_honey_iris",
             "dark_near_black_iris"
           ]
+        },
+        "body_pose": {
+          "ids": [
+            "relaxed_standing_weight_shift",
+            "walking_mid_stride_pose",
+            "hands_in_pockets_stance",
+            "turning_back_over_shoulder_pose"
+          ]
+        },
+        "shot_scale": {
+          "ids": [
+            "full_length_body_shot",
+            "medium_long_knee_up_shot",
+            "medium_waist_up_shot",
+            "medium_close_chest_up_shot"
+          ]
+        },
+        "platform_framing": {
+          "ids": [
+            "vertical_9x16_ui_safe_frame",
+            "vertical_4x5_feed_safe_frame",
+            "center_safe_subject_frame",
+            "shop_feed_crop_safe_no_text"
+          ]
+        },
+        "hand_pose": {
+          "ids": [
+            "hands_in_pockets",
+            "holding_bag_strap",
+            "hand_on_hip",
+            "hand_adjusting_sunglasses"
+          ]
+        },
+        "gaze_engagement": {
+          "ids": [
+            "direct_camera_aware",
+            "looking_away_off_frame",
+            "candid_unaware_of_camera",
+            "looking_back_over_shoulder_gaze"
+          ]
         }
       },
       "family": "clean_fashion_dailywear_family",
@@ -94646,6 +95122,26 @@
         {
           "slot": "capture_context",
           "probability": 0.35
+        },
+        {
+          "slot": "body_pose",
+          "probability": 0.42
+        },
+        {
+          "slot": "shot_scale",
+          "probability": 0.48
+        },
+        {
+          "slot": "platform_framing",
+          "probability": 0.22
+        },
+        {
+          "slot": "hand_pose",
+          "probability": 0.32
+        },
+        {
+          "slot": "gaze_engagement",
+          "probability": 0.32
         }
       ],
       "filters": {
@@ -94851,6 +95347,46 @@
             "light_brown_honey_iris",
             "dark_near_black_iris"
           ]
+        },
+        "body_pose": {
+          "ids": [
+            "relaxed_standing_weight_shift",
+            "walking_mid_stride_pose",
+            "hands_in_pockets_stance",
+            "turning_back_over_shoulder_pose"
+          ]
+        },
+        "shot_scale": {
+          "ids": [
+            "full_length_body_shot",
+            "medium_long_knee_up_shot",
+            "medium_waist_up_shot",
+            "medium_close_chest_up_shot"
+          ]
+        },
+        "platform_framing": {
+          "ids": [
+            "vertical_9x16_ui_safe_frame",
+            "vertical_4x5_feed_safe_frame",
+            "center_safe_subject_frame",
+            "shop_feed_crop_safe_no_text"
+          ]
+        },
+        "hand_pose": {
+          "ids": [
+            "hands_in_pockets",
+            "holding_bag_strap",
+            "hand_on_hip",
+            "hand_adjusting_sunglasses"
+          ]
+        },
+        "gaze_engagement": {
+          "ids": [
+            "direct_camera_aware",
+            "looking_away_off_frame",
+            "candid_unaware_of_camera",
+            "looking_back_over_shoulder_gaze"
+          ]
         }
       },
       "family": "clean_fashion_dailywear_family",
@@ -94935,6 +95471,26 @@
         {
           "slot": "capture_context",
           "probability": 0.35
+        },
+        {
+          "slot": "body_pose",
+          "probability": 0.42
+        },
+        {
+          "slot": "shot_scale",
+          "probability": 0.48
+        },
+        {
+          "slot": "platform_framing",
+          "probability": 0.22
+        },
+        {
+          "slot": "hand_pose",
+          "probability": 0.32
+        },
+        {
+          "slot": "gaze_engagement",
+          "probability": 0.32
         }
       ],
       "filters": {
@@ -95143,6 +95699,46 @@
             "light_brown_honey_iris",
             "dark_near_black_iris"
           ]
+        },
+        "body_pose": {
+          "ids": [
+            "relaxed_standing_weight_shift",
+            "walking_mid_stride_pose",
+            "hands_in_pockets_stance",
+            "turning_back_over_shoulder_pose"
+          ]
+        },
+        "shot_scale": {
+          "ids": [
+            "full_length_body_shot",
+            "medium_long_knee_up_shot",
+            "medium_waist_up_shot",
+            "medium_close_chest_up_shot"
+          ]
+        },
+        "platform_framing": {
+          "ids": [
+            "vertical_9x16_ui_safe_frame",
+            "vertical_4x5_feed_safe_frame",
+            "center_safe_subject_frame",
+            "shop_feed_crop_safe_no_text"
+          ]
+        },
+        "hand_pose": {
+          "ids": [
+            "hands_in_pockets",
+            "holding_bag_strap",
+            "hand_on_hip",
+            "hand_adjusting_sunglasses"
+          ]
+        },
+        "gaze_engagement": {
+          "ids": [
+            "direct_camera_aware",
+            "looking_away_off_frame",
+            "candid_unaware_of_camera",
+            "looking_back_over_shoulder_gaze"
+          ]
         }
       },
       "family": "clean_fashion_dailywear_family",
@@ -95227,6 +95823,26 @@
         {
           "slot": "capture_context",
           "probability": 0.35
+        },
+        {
+          "slot": "body_pose",
+          "probability": 0.42
+        },
+        {
+          "slot": "shot_scale",
+          "probability": 0.48
+        },
+        {
+          "slot": "platform_framing",
+          "probability": 0.36
+        },
+        {
+          "slot": "hand_pose",
+          "probability": 0.32
+        },
+        {
+          "slot": "gaze_engagement",
+          "probability": 0.32
         }
       ],
       "filters": {
@@ -95445,6 +96061,46 @@
             "double_lid_natural",
             "light_brown_honey_iris",
             "dark_near_black_iris"
+          ]
+        },
+        "body_pose": {
+          "ids": [
+            "relaxed_standing_weight_shift",
+            "walking_mid_stride_pose",
+            "hands_in_pockets_stance",
+            "turning_back_over_shoulder_pose"
+          ]
+        },
+        "shot_scale": {
+          "ids": [
+            "full_length_body_shot",
+            "medium_long_knee_up_shot",
+            "medium_waist_up_shot",
+            "medium_close_chest_up_shot"
+          ]
+        },
+        "platform_framing": {
+          "ids": [
+            "vertical_9x16_ui_safe_frame",
+            "vertical_4x5_feed_safe_frame",
+            "center_safe_subject_frame",
+            "shop_feed_crop_safe_no_text"
+          ]
+        },
+        "hand_pose": {
+          "ids": [
+            "hands_in_pockets",
+            "holding_bag_strap",
+            "hand_on_hip",
+            "hand_adjusting_sunglasses"
+          ]
+        },
+        "gaze_engagement": {
+          "ids": [
+            "direct_camera_aware",
+            "looking_away_off_frame",
+            "candid_unaware_of_camera",
+            "looking_back_over_shoulder_gaze"
           ]
         }
       },
@@ -99538,6 +100194,1408 @@
       },
       "embedding_text": "witchy mystic object still life with unreadable tarot cards, crystals, herbs, candlelight, and no readable labels",
       "family": "memory_object_still_life_family"
+    },
+    {
+      "id": "social_vertical_pose_hook",
+      "ko": "소셜 세로 포즈 훅",
+      "en": "social vertical pose hook",
+      "weight": 1.72,
+      "template_style": "natural",
+      "embedding_text": "vertical creator social portrait with clean pose hook, walking or looking-back posture, UI-safe negative space, thumbnail-safe face placement, no readable captions or hashtags",
+      "optional_slots": [
+        {
+          "slot": "body_pose",
+          "probability": 0.72
+        },
+        {
+          "slot": "shot_scale",
+          "probability": 0.76
+        },
+        {
+          "slot": "platform_framing",
+          "probability": 0.45
+        },
+        {
+          "slot": "hand_pose",
+          "probability": 0.42
+        },
+        {
+          "slot": "gaze_engagement",
+          "probability": 0.46
+        },
+        {
+          "slot": "body_orientation",
+          "probability": 0.36
+        },
+        {
+          "slot": "format",
+          "probability": 0.75
+        },
+        {
+          "slot": "texture",
+          "probability": 0.42
+        },
+        {
+          "slot": "wearable_accessory",
+          "probability": 0.42
+        },
+        {
+          "slot": "color",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "social_media_post",
+            "tiktok_vertical_photo",
+            "instagram_reels_cover",
+            "smartphone_snapshot"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "shortform_social",
+            "creator_lifestyle",
+            "portrait",
+            "fashion"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "influencer_creator",
+            "fashion_influencer",
+            "student_creator",
+            "young_actor",
+            "adult_woman_lifestyle_subject"
+          ]
+        },
+        "action": {
+          "ids": [
+            "walking_crosswalk",
+            "taking_selfie",
+            "checking_phone",
+            "slow_walk_turnaround",
+            "looking_camera"
+          ]
+        },
+        "body_pose": {
+          "ids": [
+            "walking_mid_stride_pose",
+            "turning_back_over_shoulder_pose",
+            "relaxed_standing_weight_shift",
+            "stepping_into_frame_pose",
+            "hands_in_pockets_stance"
+          ]
+        },
+        "shot_scale": {
+          "ids": [
+            "full_length_body_shot",
+            "medium_long_knee_up_shot",
+            "medium_waist_up_shot",
+            "medium_close_chest_up_shot"
+          ]
+        },
+        "platform_framing": {
+          "ids": [
+            "vertical_9x16_ui_safe_frame",
+            "reels_ui_safe_negative_space",
+            "shorts_thumbnail_safe_face_placement",
+            "face_upper_middle_safe_frame",
+            "center_safe_subject_frame"
+          ]
+        },
+        "hand_pose": {
+          "ids": [
+            "hands_in_pockets",
+            "holding_bag_strap",
+            "hand_adjusting_sunglasses",
+            "selfie_arm_extended",
+            "reaching_toward_camera"
+          ]
+        },
+        "gaze_engagement": {
+          "ids": [
+            "direct_camera_aware",
+            "looking_away_off_frame",
+            "looking_back_over_shoulder_gaze",
+            "candid_unaware_of_camera"
+          ]
+        },
+        "body_orientation": {
+          "ids": [
+            "front_facing_orientation",
+            "three_quarter_body_turn",
+            "looking_back_over_shoulder_orientation"
+          ]
+        },
+        "location": {
+          "ids": [
+            "urban_concrete_stairs",
+            "bedroom_mirror",
+            "creator_room",
+            "quiet_cafe",
+            "brutalist_plaza"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "first_person_phone_selfie_view",
+            "mirror_reflection_camera_view",
+            "eye_level_front",
+            "low_ground_angle",
+            "arm_length_selfie_direction",
+            "mirror_view_direction"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "thumbnail_center_safe_composition",
+            "large_negative_space_top_area",
+            "subject_entering_frame",
+            "third_grid_off_center_subject",
+            "vertical_centered_caption_space"
+          ]
+        },
+        "format": {
+          "ids": [
+            "vertical_9_16",
+            "tiktok_safe_vertical",
+            "story_cover_vertical",
+            "portrait_4_5"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "phone_1x_main",
+            "front_camera_wide",
+            "35mm"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "face_detection_focus",
+            "phone_auto_focus",
+            "eye_focus"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "hard_flash",
+            "overcast",
+            "ring_light"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "casual_authentic",
+            "energetic_shortform",
+            "playful",
+            "aspirational_lifestyle"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "phone_realism",
+            "authentic_creator",
+            "viral_thumbnail_clarity",
+            "not_overdone"
+          ]
+        }
+      }
+    },
+    {
+      "id": "editorial_full_body_pose_study",
+      "ko": "에디토리얼 전신 포즈 스터디",
+      "en": "editorial full-body pose study",
+      "weight": 1.45,
+      "template_style": "natural",
+      "embedding_text": "clean editorial full-body pose study with contrapposto, power stance, full-length shot scale, deliberate camera angle and no body-first adult framing",
+      "optional_slots": [
+        {
+          "slot": "body_pose",
+          "probability": 0.72
+        },
+        {
+          "slot": "shot_scale",
+          "probability": 0.76
+        },
+        {
+          "slot": "platform_framing",
+          "probability": 0.45
+        },
+        {
+          "slot": "hand_pose",
+          "probability": 0.42
+        },
+        {
+          "slot": "gaze_engagement",
+          "probability": 0.46
+        },
+        {
+          "slot": "body_orientation",
+          "probability": 0.36
+        },
+        {
+          "slot": "format",
+          "probability": 0.75
+        },
+        {
+          "slot": "texture",
+          "probability": 0.42
+        },
+        {
+          "slot": "wardrobe_style",
+          "probability": 0.45
+        },
+        {
+          "slot": "silhouette_proportion",
+          "probability": 0.42
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "fashion_editorial",
+            "lookbook",
+            "magazine_feature"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "fashion",
+            "portrait"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "fashion_model",
+            "androgynous_style_model",
+            "mature_elegant_model",
+            "adult_woman_lifestyle_subject"
+          ]
+        },
+        "action": {
+          "ids": [
+            "posing_editorial",
+            "looking_camera",
+            "turning_back",
+            "slow_walk_turnaround"
+          ]
+        },
+        "body_pose": {
+          "ids": [
+            "contrapposto_full_body",
+            "power_stance_feet_apart",
+            "relaxed_standing_weight_shift",
+            "editorial_s_curve_pose",
+            "half_turn_weight_shift_pose"
+          ]
+        },
+        "shot_scale": {
+          "ids": [
+            "full_length_body_shot",
+            "medium_long_knee_up_shot",
+            "wide_full_scene_shot"
+          ]
+        },
+        "platform_framing": {
+          "ids": [
+            "vertical_4x5_feed_safe_frame",
+            "center_safe_subject_frame",
+            "carousel_crop_safe_series_frame"
+          ]
+        },
+        "body_orientation": {
+          "ids": [
+            "front_facing_orientation",
+            "three_quarter_body_turn",
+            "torso_twist_orientation"
+          ]
+        },
+        "hand_pose": {
+          "ids": [
+            "hand_on_hip",
+            "hands_in_pockets",
+            "hands_crossed_front",
+            "hand_adjusting_sunglasses"
+          ]
+        },
+        "location": {
+          "ids": [
+            "white_studio",
+            "dark_studio",
+            "brutalist_plaza",
+            "luxury_hotel_corridor"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "eye_level_front",
+            "eye_level_three_quarter",
+            "low_ground_angle",
+            "extreme_low_hero_angle"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "centered_architecture_symmetry",
+            "low_horizon_environmental_portrait",
+            "centered_symmetry",
+            "rule_of_thirds",
+            "negative_space"
+          ]
+        },
+        "subject_framing": {
+          "ids": [
+            "full_body_framing",
+            "three_quarter_body_framing",
+            "full_body_ceremonial_framing"
+          ]
+        },
+        "format": {
+          "ids": [
+            "portrait_4_5",
+            "portrait_3_4",
+            "vertical_9_16",
+            "magazine_spread"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "50mm",
+            "85mm",
+            "medium_format"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "eye_focus",
+            "shallow_depth",
+            "face_detection_focus"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "softbox",
+            "rim_light",
+            "soft_window"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "elegant",
+            "calm",
+            "luxury",
+            "aspirational_lifestyle"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "editorial_quality",
+            "high_detail",
+            "not_overdone"
+          ]
+        }
+      }
+    },
+    {
+      "id": "environmental_portrait_composition",
+      "ko": "환경 인물 구도",
+      "en": "environmental portrait composition",
+      "weight": 1.48,
+      "template_style": "natural",
+      "embedding_text": "wide environmental portrait with tiny or full-length subject, leading lines, layered foreground depth, architecture or natural setting, clean human pose",
+      "optional_slots": [
+        {
+          "slot": "body_pose",
+          "probability": 0.55
+        },
+        {
+          "slot": "shot_scale",
+          "probability": 0.86
+        },
+        {
+          "slot": "hand_pose",
+          "probability": 0.28
+        },
+        {
+          "slot": "gaze_engagement",
+          "probability": 0.35
+        },
+        {
+          "slot": "weather",
+          "probability": 0.38
+        },
+        {
+          "slot": "time_of_day",
+          "probability": 0.38
+        },
+        {
+          "slot": "format",
+          "probability": 0.5
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "documentary_photo",
+            "magazine_feature",
+            "lifestyle_photo"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "street",
+            "documentary",
+            "architecture"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "adult_woman_lifestyle_subject",
+            "office_worker",
+            "traveler_backpack",
+            "fashion_model",
+            "young_actor"
+          ]
+        },
+        "action": {
+          "ids": [
+            "standing_silence",
+            "walking_crosswalk",
+            "looking_window",
+            "looking_camera"
+          ]
+        },
+        "body_pose": {
+          "ids": [
+            "neutral_standing_pose",
+            "relaxed_standing_weight_shift",
+            "casual_lean_against_wall",
+            "walking_mid_stride_pose"
+          ]
+        },
+        "shot_scale": {
+          "ids": [
+            "extreme_wide_environment_scale",
+            "wide_full_scene_shot",
+            "full_length_body_shot",
+            "medium_long_knee_up_shot"
+          ]
+        },
+        "location": {
+          "ids": [
+            "botanical_greenhouse",
+            "brutalist_plaza",
+            "museum_gallery",
+            "community_garden_late_summer",
+            "rooftop_city",
+            "urban_concrete_stairs"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "eye_level_front",
+            "high_observer_angle",
+            "drone_oblique_direction",
+            "over_shoulder_observer_clean"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "strong_leading_lines_vanish",
+            "layered_foreground_midground_background",
+            "low_horizon_environmental_portrait",
+            "centered_architecture_symmetry",
+            "foreground_blur_peek_through"
+          ]
+        },
+        "format": {
+          "ids": [
+            "photo_3_2",
+            "portrait_4_5",
+            "vertical_9_16",
+            "landscape_16_9"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "wide_24mm",
+            "35mm",
+            "50mm"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "deep_focus",
+            "zone_focus_street",
+            "eye_focus"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "golden_hour",
+            "overcast",
+            "blue_hour"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "calm",
+            "casual_authentic",
+            "melancholic",
+            "practical_local_realism"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "not_overdone",
+            "candid_imperfect",
+            "high_detail"
+          ]
+        }
+      }
+    },
+    {
+      "id": "mirror_selfie_pose_system",
+      "ko": "거울 셀피 포즈 시스템",
+      "en": "mirror selfie pose system",
+      "weight": 1.58,
+      "template_style": "natural",
+      "embedding_text": "clean mirror selfie pose system with body pose, reflection gaze, phone framing, full-length or medium shot scale, no readable captions or hashtags",
+      "optional_slots": [
+        {
+          "slot": "body_pose",
+          "probability": 0.72
+        },
+        {
+          "slot": "shot_scale",
+          "probability": 0.76
+        },
+        {
+          "slot": "platform_framing",
+          "probability": 0.45
+        },
+        {
+          "slot": "hand_pose",
+          "probability": 0.42
+        },
+        {
+          "slot": "gaze_engagement",
+          "probability": 0.46
+        },
+        {
+          "slot": "body_orientation",
+          "probability": 0.36
+        },
+        {
+          "slot": "format",
+          "probability": 0.75
+        },
+        {
+          "slot": "texture",
+          "probability": 0.42
+        },
+        {
+          "slot": "wardrobe_style",
+          "probability": 0.38
+        },
+        {
+          "slot": "wearable_accessory",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "selfie_camera_photo",
+            "smartphone_snapshot",
+            "social_media_post"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "selfie_portrait",
+            "creator_lifestyle",
+            "shortform_social",
+            "fashion"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "influencer_creator",
+            "fashion_influencer",
+            "beauty_influencer",
+            "adult_woman_lifestyle_subject"
+          ]
+        },
+        "action": {
+          "ids": [
+            "mirror_selfie",
+            "taking_selfie",
+            "doing_grwm",
+            "checking_phone"
+          ]
+        },
+        "body_pose": {
+          "ids": [
+            "crouching_street_pose",
+            "hands_in_pockets_stance",
+            "relaxed_standing_weight_shift",
+            "turning_back_over_shoulder_pose"
+          ]
+        },
+        "shot_scale": {
+          "ids": [
+            "full_length_body_shot",
+            "medium_long_knee_up_shot",
+            "medium_waist_up_shot"
+          ]
+        },
+        "platform_framing": {
+          "ids": [
+            "vertical_9x16_ui_safe_frame",
+            "vertical_4x5_feed_safe_frame",
+            "shop_feed_crop_safe_no_text",
+            "center_safe_subject_frame"
+          ]
+        },
+        "hand_pose": {
+          "ids": [
+            "selfie_arm_extended",
+            "holding_phone_visible",
+            "hands_in_pockets",
+            "hand_on_hip"
+          ]
+        },
+        "gaze_engagement": {
+          "ids": [
+            "mirror_reflection_gaze",
+            "reflection_direct_gaze",
+            "looking_away_off_frame",
+            "direct_camera_aware"
+          ]
+        },
+        "body_orientation": {
+          "ids": [
+            "front_facing_orientation",
+            "three_quarter_body_turn",
+            "looking_back_over_shoulder_orientation"
+          ]
+        },
+        "location": {
+          "ids": [
+            "bedroom_mirror",
+            "elevator_mirror",
+            "bathroom_mirror",
+            "plain_wall_mirror_selfie_room",
+            "creator_room"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "mirror_view_direction",
+            "mirror_reflection_camera_view",
+            "arm_length_selfie_direction"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "mirror_selfie_composition",
+            "crouching_mirror_full_body",
+            "thumbnail_center_safe_composition",
+            "large_negative_space_top_area"
+          ]
+        },
+        "format": {
+          "ids": [
+            "vertical_9_16",
+            "portrait_4_5",
+            "story_cover_vertical",
+            "tiktok_safe_vertical"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "front_camera_wide",
+            "phone_1x_main",
+            "phone_0_5x_ultrawide"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "phone_auto_focus",
+            "face_detection_focus",
+            "eye_focus"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "ring_light",
+            "hard_flash"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "casual_authentic",
+            "playful",
+            "aspirational_lifestyle"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "phone_realism",
+            "authentic_creator",
+            "not_overdone"
+          ]
+        }
+      }
+    },
+    {
+      "id": "couple_group_layered_pose",
+      "ko": "커플·그룹 레이어드 포즈",
+      "en": "couple and group layered pose",
+      "weight": 1.16,
+      "template_style": "natural",
+      "embedding_text": "small group or couple portrait with staggered layered pose, foreground shoulder, over-shoulder framing, documentary spacing and clean nonsexual social posing",
+      "optional_slots": [
+        {
+          "slot": "partner_role",
+          "probability": 0.65
+        },
+        {
+          "slot": "partner_framing",
+          "probability": 0.72
+        },
+        {
+          "slot": "proxemics",
+          "probability": 0.55
+        },
+        {
+          "slot": "body_pose",
+          "probability": 0.65
+        },
+        {
+          "slot": "shot_scale",
+          "probability": 0.62
+        },
+        {
+          "slot": "hand_pose",
+          "probability": 0.38
+        },
+        {
+          "slot": "gaze_engagement",
+          "probability": 0.38
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "lifestyle_photo",
+            "documentary_photo",
+            "social_media_post"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "lifestyle",
+            "documentary"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "photobooth_friend_pair",
+            "karaoke_friend_group",
+            "adult_woman_lifestyle_subject",
+            "influencer_creator"
+          ]
+        },
+        "action": {
+          "ids": [
+            "looking_camera",
+            "standing_silence",
+            "checking_phone",
+            "holding_coffee_phone"
+          ]
+        },
+        "body_pose": {
+          "ids": [
+            "group_layered_staggered_pose",
+            "relaxed_standing_weight_shift",
+            "seated_forward_lean",
+            "casual_lean_against_wall"
+          ]
+        },
+        "shot_scale": {
+          "ids": [
+            "medium_waist_up_shot",
+            "medium_long_knee_up_shot",
+            "wide_full_scene_shot"
+          ]
+        },
+        "partner_framing": {
+          "ids": [
+            "small_group_visible_midshot",
+            "partner_shoulder_blur_foreground",
+            "over_partner_shoulder_pov"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "eye_level_front",
+            "over_shoulder_observer_clean",
+            "over_shoulder",
+            "through_crowd_gap_direction"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "layered_foreground_midground_background",
+            "foreground_object_occlusion_frame",
+            "third_grid_off_center_subject",
+            "group_two_shot_composition"
+          ]
+        },
+        "location": {
+          "ids": [
+            "quiet_cafe",
+            "local_cafe_closing_window",
+            "lived_in_studio_room",
+            "coin_karaoke_neon_room"
+          ]
+        },
+        "format": {
+          "ids": [
+            "portrait_4_5",
+            "photo_3_2",
+            "vertical_9_16"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "phone_1x_main"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "eye_focus",
+            "deep_focus",
+            "selective_foreground_focus"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "overcast",
+            "hard_flash"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "casual_authentic",
+            "intimate",
+            "micro_drama_candid",
+            "calm"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "candid_imperfect",
+            "not_overdone"
+          ]
+        }
+      }
+    },
+    {
+      "id": "beauty_closeup_hand_gaze",
+      "ko": "뷰티 클로즈업 손과 시선",
+      "en": "beauty close-up hand and gaze",
+      "weight": 1.24,
+      "template_style": "natural",
+      "embedding_text": "beauty close-up portrait focused on face, hand pose, gaze direction, clean skin texture, close-up shot scale and no readable text",
+      "optional_slots": [
+        {
+          "slot": "shot_scale",
+          "probability": 0.9
+        },
+        {
+          "slot": "hand_pose",
+          "probability": 0.78
+        },
+        {
+          "slot": "gaze_engagement",
+          "probability": 0.75
+        },
+        {
+          "slot": "makeup_style",
+          "probability": 0.65
+        },
+        {
+          "slot": "eye_detail",
+          "probability": 0.55
+        },
+        {
+          "slot": "skin_finish",
+          "probability": 0.45
+        },
+        {
+          "slot": "platform_framing",
+          "probability": 0.25
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "beauty_campaign_photo",
+            "social_media_post",
+            "magazine_feature"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "beauty",
+            "portrait"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "beauty_influencer",
+            "beauty_campaign_model",
+            "adult_woman_lifestyle_subject",
+            "fashion_model"
+          ]
+        },
+        "action": {
+          "ids": [
+            "looking_camera",
+            "closing_compact_mirror",
+            "doing_grwm"
+          ]
+        },
+        "shot_scale": {
+          "ids": [
+            "close_up_face_shot",
+            "medium_close_chest_up_shot",
+            "extreme_close_detail_shot"
+          ]
+        },
+        "hand_pose": {
+          "ids": [
+            "hand_near_lips",
+            "hand_touching_face",
+            "tucking_hair_behind_ear",
+            "fingers_through_hair",
+            "hand_adjusting_sunglasses"
+          ]
+        },
+        "gaze_engagement": {
+          "ids": [
+            "direct_camera_aware",
+            "looking_just_past_lens",
+            "eyes_closed_serene",
+            "looking_away_off_frame"
+          ]
+        },
+        "subject_framing": {
+          "ids": [
+            "close_up_face_crop",
+            "head_and_shoulders_crop",
+            "detail_crop_hands_accessories"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "eye_level_front",
+            "eye_level_three_quarter",
+            "broadcast_close_camera_direction"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "frame_filling_face_crop",
+            "cheek_close_selfie_crop",
+            "centered_symmetry",
+            "negative_space"
+          ]
+        },
+        "location": {
+          "ids": [
+            "clean_kbeauty_white_studio",
+            "makeup_vanity",
+            "white_studio",
+            "bathroom_mirror"
+          ]
+        },
+        "format": {
+          "ids": [
+            "portrait_4_5",
+            "vertical_9_16",
+            "square_1_1"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "85mm",
+            "50mm",
+            "macro_100mm"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "eye_focus",
+            "face_detection_focus",
+            "shallow_depth"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "softbox",
+            "ring_light",
+            "soft_window"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "calm",
+            "elegant",
+            "aspirational_lifestyle"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "high_detail",
+            "not_overdone"
+          ]
+        }
+      }
+    },
+    {
+      "id": "street_observer_framing",
+      "ko": "거리 관찰자 프레이밍",
+      "en": "street observer framing",
+      "weight": 1.34,
+      "template_style": "natural",
+      "embedding_text": "street observer photography through crowd gaps, doorways, foreground blur, edge tension, walking pose and candid gaze, documentary non-voyeuristic framing",
+      "optional_slots": [
+        {
+          "slot": "body_pose",
+          "probability": 0.58
+        },
+        {
+          "slot": "shot_scale",
+          "probability": 0.6
+        },
+        {
+          "slot": "hand_pose",
+          "probability": 0.28
+        },
+        {
+          "slot": "gaze_engagement",
+          "probability": 0.42
+        },
+        {
+          "slot": "weather",
+          "probability": 0.45
+        },
+        {
+          "slot": "crowd_density",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "street_snapshot",
+            "documentary_photo",
+            "photojournalism"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "street",
+            "documentary",
+            "street_photography",
+            "portrait"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "office_worker",
+            "traveler_backpack",
+            "street_vendor",
+            "adult_woman_lifestyle_subject",
+            "influencer_creator"
+          ]
+        },
+        "action": {
+          "ids": [
+            "walking_crosswalk",
+            "waiting_train",
+            "checking_phone",
+            "looking_window",
+            "turning_back"
+          ]
+        },
+        "body_pose": {
+          "ids": [
+            "walking_mid_stride_pose",
+            "stepping_into_frame_pose",
+            "candid_adjusting_balance_pose",
+            "turning_back_over_shoulder_pose"
+          ]
+        },
+        "shot_scale": {
+          "ids": [
+            "wide_full_scene_shot",
+            "medium_long_knee_up_shot",
+            "medium_waist_up_shot"
+          ]
+        },
+        "gaze_engagement": {
+          "ids": [
+            "candid_unaware_of_camera",
+            "looking_away_off_frame",
+            "looking_back_over_shoulder_gaze"
+          ]
+        },
+        "location": {
+          "ids": [
+            "rainy_neon_alley",
+            "subway_platform",
+            "traditional_market",
+            "hong_kong_neon_alley",
+            "market_alley_dusk"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "through_crowd_gap_direction",
+            "hidden_observer_doorway_view",
+            "over_shoulder_observer_clean",
+            "long_lens_compressed_direction"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "foreground_blur_peek_through",
+            "edge_tension_partial_crop",
+            "subject_exiting_frame",
+            "layered_foreground_midground_background",
+            "leading_lines_depth"
+          ]
+        },
+        "format": {
+          "ids": [
+            "photo_3_2",
+            "portrait_4_5",
+            "vertical_9_16"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "135mm"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "zone_focus_street",
+            "selective_foreground_focus",
+            "slight_missed_focus"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "overcast",
+            "neon",
+            "hard_flash",
+            "headlights"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "raw",
+            "local_night_candid",
+            "melancholic",
+            "reportage_tense_noir"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "candid_imperfect",
+            "not_overdone"
+          ]
+        }
+      }
+    },
+    {
+      "id": "architecture_leading_lines_portrait",
+      "ko": "건축 리딩라인 인물",
+      "en": "architecture leading-lines portrait",
+      "weight": 1.22,
+      "template_style": "natural",
+      "embedding_text": "architectural portrait with leading lines, centered symmetry, vanishing point, full or wide shot scale, clean standing pose and deliberate subject placement",
+      "optional_slots": [
+        {
+          "slot": "body_pose",
+          "probability": 0.55
+        },
+        {
+          "slot": "shot_scale",
+          "probability": 0.78
+        },
+        {
+          "slot": "body_orientation",
+          "probability": 0.36
+        },
+        {
+          "slot": "gaze_engagement",
+          "probability": 0.32
+        },
+        {
+          "slot": "format",
+          "probability": 0.55
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "architecture_magazine_photo",
+            "magazine_feature",
+            "documentary_photo"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "architecture",
+            "portrait",
+            "fashion"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "fashion_model",
+            "adult_woman_lifestyle_subject",
+            "office_worker",
+            "androgynous_style_model"
+          ]
+        },
+        "action": {
+          "ids": [
+            "standing_silence",
+            "looking_camera",
+            "walking_crosswalk"
+          ]
+        },
+        "body_pose": {
+          "ids": [
+            "neutral_standing_pose",
+            "power_stance_feet_apart",
+            "relaxed_standing_weight_shift",
+            "walking_mid_stride_pose"
+          ]
+        },
+        "shot_scale": {
+          "ids": [
+            "wide_full_scene_shot",
+            "full_length_body_shot",
+            "extreme_wide_environment_scale"
+          ]
+        },
+        "body_orientation": {
+          "ids": [
+            "front_facing_orientation",
+            "three_quarter_body_turn",
+            "clean_side_profile_orientation"
+          ]
+        },
+        "location": {
+          "ids": [
+            "brutalist_plaza",
+            "gallery_white_cube",
+            "art_gallery_white_hall",
+            "museum_gallery",
+            "urban_concrete_stairs"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "eye_level_front",
+            "low_ground_angle",
+            "high_observer_angle",
+            "extreme_low_hero_angle"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "strong_leading_lines_vanish",
+            "centered_architecture_symmetry",
+            "architectural_lines_frame",
+            "centered_symmetry",
+            "rule_of_thirds"
+          ]
+        },
+        "format": {
+          "ids": [
+            "photo_3_2",
+            "portrait_4_5",
+            "vertical_9_16",
+            "landscape_16_9"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "wide_24mm",
+            "35mm",
+            "50mm"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "deep_focus",
+            "eye_focus",
+            "zone_focus_street"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "overcast",
+            "harsh_noon",
+            "blue_hour"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "calm",
+            "elegant",
+            "luxury",
+            "practical_local_realism"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "editorial_quality",
+            "high_detail",
+            "not_overdone"
+          ]
+        }
+      }
     }
   ],
   "templates": {
@@ -145444,7 +147502,12 @@
         "tags": [
           "portrait",
           "general"
-        ]
+        ],
+        "facets": {
+          "camera_angle": [
+            "eye_level"
+          ]
+        }
       },
       {
         "id": "eye_level_three_quarter",
@@ -145454,7 +147517,12 @@
         "tags": [
           "portrait",
           "fashion"
-        ]
+        ],
+        "facets": {
+          "camera_angle": [
+            "eye_level"
+          ]
+        }
       },
       {
         "id": "side_profile_view",
@@ -145464,7 +147532,12 @@
         "tags": [
           "portrait",
           "fashion"
-        ]
+        ],
+        "facets": {
+          "camera_angle": [
+            "eye_level"
+          ]
+        }
       },
       {
         "id": "rear_view",
@@ -145474,7 +147547,12 @@
         "tags": [
           "street",
           "travel"
-        ]
+        ],
+        "facets": {
+          "camera_angle": [
+            "eye_level"
+          ]
+        }
       },
       {
         "id": "over_shoulder",
@@ -145485,7 +147563,12 @@
           "documentary",
           "phone",
           "interior"
-        ]
+        ],
+        "facets": {
+          "camera_angle": [
+            "over_shoulder"
+          ]
+        }
       },
       {
         "id": "low_ground_angle",
@@ -145496,7 +147579,12 @@
           "street",
           "sports",
           "vehicle"
-        ]
+        ],
+        "facets": {
+          "camera_angle": [
+            "low"
+          ]
+        }
       },
       {
         "id": "high_observer_angle",
@@ -145506,7 +147594,12 @@
         "tags": [
           "documentary",
           "interior"
-        ]
+        ],
+        "facets": {
+          "camera_angle": [
+            "high"
+          ]
+        }
       },
       {
         "id": "birds_eye",
@@ -145517,7 +147610,12 @@
           "aerial",
           "architecture",
           "flatlay"
-        ]
+        ],
+        "facets": {
+          "camera_angle": [
+            "overhead_top_down"
+          ]
+        }
       },
       {
         "id": "worms_eye",
@@ -145527,7 +147625,12 @@
         "tags": [
           "dramatic",
           "architecture"
-        ]
+        ],
+        "facets": {
+          "camera_angle": [
+            "low"
+          ]
+        }
       },
       {
         "id": "dutch_tilt_direction",
@@ -145538,7 +147641,12 @@
           "dynamic",
           "social",
           "nightlife"
-        ]
+        ],
+        "facets": {
+          "camera_angle": [
+            "dutch"
+          ]
+        }
       },
       {
         "id": "arm_length_selfie_direction",
@@ -145549,7 +147657,12 @@
           "selfie",
           "social",
           "phone"
-        ]
+        ],
+        "facets": {
+          "camera_angle": [
+            "pov"
+          ]
+        }
       },
       {
         "id": "mirror_view_direction",
@@ -145560,7 +147673,12 @@
           "selfie",
           "interior",
           "social"
-        ]
+        ],
+        "facets": {
+          "camera_angle": [
+            "reflection"
+          ]
+        }
       },
       {
         "id": "dashcam_windshield_direction",
@@ -145602,7 +147720,12 @@
           "topdown",
           "food",
           "product"
-        ]
+        ],
+        "facets": {
+          "camera_angle": [
+            "overhead_top_down"
+          ]
+        }
       },
       {
         "id": "photobooth_front_direction",
@@ -145662,7 +147785,12 @@
         "requires_any_tags": [
           "floor",
           "pale_woven_floor_room"
-        ]
+        ],
+        "facets": {
+          "camera_angle": [
+            "high"
+          ]
+        }
       },
       {
         "id": "taxi_backseat_window_direction",
@@ -145700,7 +147828,12 @@
         "tags": [
           "human",
           "low_angle_social"
-        ]
+        ],
+        "facets": {
+          "camera_angle": [
+            "low"
+          ]
+        }
       },
       {
         "id": "passenger_seat_side_profile_view",
@@ -145721,7 +147854,12 @@
           "human",
           "phone_overlay",
           "perspective_trick"
-        ]
+        ],
+        "facets": {
+          "camera_angle": [
+            "pov"
+          ]
+        }
       },
       {
         "id": "first_person_pov_hand_foreground",
@@ -145732,7 +147870,12 @@
           "human",
           "interactive_pov",
           "pov_hand"
-        ]
+        ],
+        "facets": {
+          "camera_angle": [
+            "pov"
+          ]
+        }
       },
       {
         "id": "over_shoulder_back_seated",
@@ -145743,7 +147886,12 @@
           "human",
           "cosplay",
           "character"
-        ]
+        ],
+        "facets": {
+          "camera_angle": [
+            "over_shoulder"
+          ]
+        }
       },
       {
         "id": "long_lens_compressed_direction",
@@ -145763,7 +147911,12 @@
         "tags": [
           "interior",
           "reflection"
-        ]
+        ],
+        "facets": {
+          "camera_angle": [
+            "reflection"
+          ]
+        }
       },
       {
         "id": "through_crowd_gap_direction",
@@ -145813,7 +147966,12 @@
         "tags": [
           "interior",
           "surveillance"
-        ]
+        ],
+        "facets": {
+          "camera_angle": [
+            "hidden_observer"
+          ]
+        }
       },
       {
         "id": "from_inside_service_window",
@@ -145824,6 +147982,200 @@
           "interior",
           "service"
         ]
+      },
+      {
+        "id": "dutch_tilt_dynamic_view",
+        "ko": "다이내믹 더치 틸트 카메라 시점",
+        "en": "dynamic Dutch-tilt camera view",
+        "weight": 0.58,
+        "tags": [
+          "camera",
+          "dutch",
+          "dynamic"
+        ],
+        "embedding_text": "dynamic Dutch-tilt camera view for energetic social or editorial photos",
+        "aliases": [
+          "Dutch tilt view"
+        ],
+        "keywords": [
+          "dutch angle",
+          "tilt"
+        ],
+        "facets": {
+          "camera_angle": [
+            "dutch"
+          ]
+        }
+      },
+      {
+        "id": "extreme_low_hero_angle",
+        "ko": "극단적인 로우 히어로 앵글",
+        "en": "extreme low hero angle",
+        "weight": 0.58,
+        "tags": [
+          "camera",
+          "low_angle",
+          "editorial"
+        ],
+        "embedding_text": "extreme low hero angle from below the subject",
+        "aliases": [
+          "extreme low angle"
+        ],
+        "keywords": [
+          "low angle",
+          "from below"
+        ],
+        "facets": {
+          "camera_angle": [
+            "low"
+          ]
+        }
+      },
+      {
+        "id": "extreme_high_overhead_angle",
+        "ko": "극단적인 하이 오버헤드 앵글",
+        "en": "extreme high overhead angle",
+        "weight": 0.52,
+        "tags": [
+          "camera",
+          "high_angle",
+          "overhead"
+        ],
+        "embedding_text": "extreme high overhead angle looking down on the subject",
+        "aliases": [
+          "extreme high angle"
+        ],
+        "keywords": [
+          "high angle",
+          "overhead"
+        ],
+        "facets": {
+          "camera_angle": [
+            "high"
+          ]
+        }
+      },
+      {
+        "id": "strict_top_down_flat_view",
+        "ko": "수직 탑다운 플랫 카메라 시점",
+        "en": "strict top-down flat camera view",
+        "weight": 0.58,
+        "tags": [
+          "camera",
+          "top_down",
+          "flatlay"
+        ],
+        "embedding_text": "strict top-down flat camera view for overhead compositions",
+        "aliases": [
+          "strict top-down"
+        ],
+        "keywords": [
+          "top down",
+          "overhead"
+        ],
+        "facets": {
+          "camera_angle": [
+            "overhead_top_down"
+          ]
+        }
+      },
+      {
+        "id": "over_shoulder_observer_clean",
+        "ko": "클린한 어깨너머 관찰자 시점",
+        "en": "clean over-the-shoulder observer view",
+        "weight": 0.62,
+        "tags": [
+          "camera",
+          "over_shoulder",
+          "observer"
+        ],
+        "embedding_text": "clean over-the-shoulder observer view without voyeuristic framing",
+        "aliases": [
+          "over-the-shoulder observer"
+        ],
+        "keywords": [
+          "over shoulder",
+          "observer"
+        ],
+        "facets": {
+          "camera_angle": [
+            "over_shoulder"
+          ]
+        }
+      },
+      {
+        "id": "mirror_reflection_camera_view",
+        "ko": "거울 반사를 통한 카메라 시점",
+        "en": "camera view through a mirror reflection",
+        "weight": 0.64,
+        "tags": [
+          "camera",
+          "mirror",
+          "reflection",
+          "selfie"
+        ],
+        "embedding_text": "camera view through a mirror reflection for direct gaze via reflection",
+        "aliases": [
+          "mirror reflection view"
+        ],
+        "keywords": [
+          "mirror",
+          "reflection"
+        ],
+        "facets": {
+          "camera_angle": [
+            "reflection"
+          ]
+        }
+      },
+      {
+        "id": "hidden_observer_doorway_view",
+        "ko": "문간에서 숨어 보는 관찰자 시점",
+        "en": "hidden observer view from a doorway",
+        "weight": 0.46,
+        "tags": [
+          "camera",
+          "hidden_observer",
+          "doorway"
+        ],
+        "embedding_text": "hidden observer view from a doorway or room edge, documentary and non-invasive",
+        "aliases": [
+          "doorway observer view"
+        ],
+        "keywords": [
+          "hidden observer",
+          "doorway"
+        ],
+        "facets": {
+          "camera_angle": [
+            "hidden_observer"
+          ]
+        }
+      },
+      {
+        "id": "first_person_phone_selfie_view",
+        "ko": "1인칭 폰 셀피 시점",
+        "en": "first-person phone selfie view",
+        "weight": 0.66,
+        "tags": [
+          "camera",
+          "phone",
+          "selfie",
+          "pov"
+        ],
+        "embedding_text": "first-person phone selfie view with arm-length social framing",
+        "aliases": [
+          "phone selfie POV"
+        ],
+        "keywords": [
+          "phone selfie",
+          "pov"
+        ],
+        "facets": {
+          "camera_angle": [
+            "pov"
+          ]
+        }
       }
     ],
     "composition": [
@@ -145835,7 +148187,12 @@
         "tags": [
           "landscape",
           "street"
-        ]
+        ],
+        "facets": {
+          "shot_scale": [
+            "wide"
+          ]
+        }
       },
       {
         "id": "medium_close",
@@ -145844,7 +148201,12 @@
         "weight": 1.3,
         "tags": [
           "portrait"
-        ]
+        ],
+        "facets": {
+          "shot_scale": [
+            "medium_close"
+          ]
+        }
       },
       {
         "id": "extreme_close",
@@ -145854,7 +148216,12 @@
         "tags": [
           "macro",
           "product"
-        ]
+        ],
+        "facets": {
+          "shot_scale": [
+            "extreme_close"
+          ]
+        }
       },
       {
         "id": "top_down",
@@ -145864,7 +148231,12 @@
         "tags": [
           "food",
           "product"
-        ]
+        ],
+        "facets": {
+          "camera_angle": [
+            "overhead_top_down"
+          ]
+        }
       },
       {
         "id": "low_angle",
@@ -145874,7 +148246,12 @@
         "tags": [
           "street",
           "fashion"
-        ]
+        ],
+        "facets": {
+          "camera_angle": [
+            "low"
+          ]
+        }
       },
       {
         "id": "high_angle",
@@ -145883,7 +148260,12 @@
         "weight": 0.9,
         "tags": [
           "documentary"
-        ]
+        ],
+        "facets": {
+          "camera_angle": [
+            "high"
+          ]
+        }
       },
       {
         "id": "dutch_angle",
@@ -145893,7 +148275,12 @@
         "tags": [
           "cinematic",
           "urban"
-        ]
+        ],
+        "facets": {
+          "camera_angle": [
+            "dutch"
+          ]
+        }
       },
       {
         "id": "centered_symmetry",
@@ -145903,7 +148290,13 @@
         "tags": [
           "architecture",
           "product"
-        ]
+        ],
+        "facets": {
+          "placement": [
+            "centered",
+            "symmetry"
+          ]
+        }
       },
       {
         "id": "rule_of_thirds",
@@ -145912,7 +148305,12 @@
         "weight": 1.3,
         "tags": [
           "general"
-        ]
+        ],
+        "facets": {
+          "placement": [
+            "rule_of_thirds"
+          ]
+        }
       },
       {
         "id": "leading_lines",
@@ -145922,7 +148320,12 @@
         "tags": [
           "street",
           "architecture"
-        ]
+        ],
+        "facets": {
+          "placement": [
+            "layered_depth"
+          ]
+        }
       },
       {
         "id": "negative_space",
@@ -145932,7 +148335,12 @@
         "tags": [
           "product",
           "landscape"
-        ]
+        ],
+        "facets": {
+          "placement": [
+            "negative_space"
+          ]
+        }
       },
       {
         "id": "frame_within_frame",
@@ -145942,7 +148350,12 @@
         "tags": [
           "interior",
           "street"
-        ]
+        ],
+        "facets": {
+          "placement": [
+            "foreground_frame"
+          ]
+        }
       },
       {
         "id": "reflection",
@@ -145962,7 +148375,12 @@
         "tags": [
           "portrait",
           "landscape"
-        ]
+        ],
+        "facets": {
+          "placement": [
+            "negative_space"
+          ]
+        }
       },
       {
         "id": "crowded_layers",
@@ -146056,7 +148474,16 @@
           "social",
           "tiktok",
           "vertical"
-        ]
+        ],
+        "facets": {
+          "placement": [
+            "centered"
+          ],
+          "platform_frame": [
+            "vertical_9_16_safe",
+            "ui_safe_negative_space"
+          ]
+        }
       },
       {
         "id": "paparazzi_diagonal_flash",
@@ -146434,7 +148861,12 @@
           "dramatic",
           "fashion"
         ],
-        "embedding_text": "low-angle hero composition"
+        "embedding_text": "low-angle hero composition",
+        "facets": {
+          "camera_angle": [
+            "low"
+          ]
+        }
       },
       {
         "id": "worms_eye_view",
@@ -146523,7 +148955,12 @@
           "minimal",
           "negative_space"
         ],
-        "embedding_text": "negative-space advertising layout"
+        "embedding_text": "negative-space advertising layout",
+        "facets": {
+          "placement": [
+            "negative_space"
+          ]
+        }
       },
       {
         "id": "triptych_sequence",
@@ -146555,7 +148992,15 @@
           "human",
           "front_selfie",
           "social"
-        ]
+        ],
+        "facets": {
+          "shot_scale": [
+            "close_up"
+          ],
+          "placement": [
+            "frame_filling"
+          ]
+        }
       },
       {
         "id": "crouching_mirror_full_body",
@@ -146566,7 +149011,15 @@
           "human",
           "mirror_crouch",
           "social"
-        ]
+        ],
+        "facets": {
+          "shot_scale": [
+            "full_length"
+          ],
+          "platform_frame": [
+            "vertical_9_16_safe"
+          ]
+        }
       },
       {
         "id": "nonhumanoid_full_silhouette",
@@ -147563,7 +150016,12 @@
           "gallery",
           "control"
         ],
-        "embedding_text": "architectural lines, corridors, frames, controlled white cube composition"
+        "embedding_text": "architectural lines, corridors, frames, controlled white cube composition",
+        "facets": {
+          "placement": [
+            "layered_depth"
+          ]
+        }
       },
       {
         "id": "leaf_foreground_bokeh",
@@ -147944,7 +150402,12 @@
           "human",
           "pov",
           "surveillance"
-        ]
+        ],
+        "facets": {
+          "placement": [
+            "foreground_frame"
+          ]
+        }
       },
       {
         "id": "through_specimen_case_frame",
@@ -148295,7 +150758,12 @@
           "edge",
           "flatlay"
         ],
-        "embedding_text": "partially cropped edge props"
+        "embedding_text": "partially cropped edge props",
+        "facets": {
+          "placement": [
+            "edge_tension"
+          ]
+        }
       },
       {
         "id": "overlapping_paper_ephemera_layout",
@@ -148320,7 +150788,12 @@
           "negative_space",
           "product"
         ],
-        "embedding_text": "negative-space product flatlay"
+        "embedding_text": "negative-space product flatlay",
+        "facets": {
+          "placement": [
+            "negative_space"
+          ]
+        }
       },
       {
         "id": "diagonal_prop_trail",
@@ -148333,6 +150806,502 @@
           "flatlay"
         ],
         "embedding_text": "diagonal trail of props through the frame"
+      },
+      {
+        "id": "doorway_frame_subject",
+        "ko": "문틀이 피사체를 감싸는 프레임",
+        "en": "doorway frame around the subject",
+        "weight": 0.64,
+        "tags": [
+          "composition",
+          "frame",
+          "portrait"
+        ],
+        "embedding_text": "doorway frame around the subject, frame-within-frame portrait composition",
+        "aliases": [
+          "doorway frame"
+        ],
+        "keywords": [
+          "doorway",
+          "frame within frame"
+        ],
+        "facets": {
+          "placement": [
+            "foreground_frame"
+          ]
+        }
+      },
+      {
+        "id": "window_frame_subject",
+        "ko": "창틀이 피사체를 감싸는 프레임",
+        "en": "window frame around the subject",
+        "weight": 0.62,
+        "tags": [
+          "composition",
+          "frame",
+          "window"
+        ],
+        "embedding_text": "window frame around the subject, architectural frame-within-frame composition",
+        "aliases": [
+          "window frame"
+        ],
+        "keywords": [
+          "window",
+          "frame within frame"
+        ],
+        "facets": {
+          "placement": [
+            "foreground_frame"
+          ]
+        }
+      },
+      {
+        "id": "foreground_object_occlusion_frame",
+        "ko": "전경 오브젝트가 일부 가리는 프레임",
+        "en": "foreground object occlusion frame",
+        "weight": 0.58,
+        "tags": [
+          "composition",
+          "foreground",
+          "occlusion"
+        ],
+        "embedding_text": "foreground object occlusion frame with a natural peek-through view",
+        "aliases": [
+          "foreground occlusion"
+        ],
+        "keywords": [
+          "foreground",
+          "occlusion"
+        ],
+        "facets": {
+          "placement": [
+            "foreground_frame",
+            "layered_depth"
+          ]
+        }
+      },
+      {
+        "id": "layered_foreground_midground_background",
+        "ko": "전경-중경-배경이 층지는 깊이 구도",
+        "en": "layered foreground-midground-background depth",
+        "weight": 0.68,
+        "tags": [
+          "composition",
+          "layered",
+          "depth"
+        ],
+        "embedding_text": "layered foreground, midground, and background depth in a photographic composition",
+        "aliases": [
+          "layered depth"
+        ],
+        "keywords": [
+          "foreground",
+          "midground",
+          "background"
+        ],
+        "facets": {
+          "placement": [
+            "layered_depth"
+          ]
+        }
+      },
+      {
+        "id": "strong_leading_lines_vanish",
+        "ko": "소실점으로 이어지는 강한 리딩 라인",
+        "en": "strong leading lines to a vanishing point",
+        "weight": 0.68,
+        "tags": [
+          "composition",
+          "leading_lines",
+          "depth"
+        ],
+        "embedding_text": "strong leading lines pulling the eye toward a vanishing point",
+        "aliases": [
+          "vanishing point leading lines"
+        ],
+        "keywords": [
+          "leading lines",
+          "vanishing point"
+        ],
+        "facets": {
+          "placement": [
+            "layered_depth"
+          ]
+        }
+      },
+      {
+        "id": "centered_architecture_symmetry",
+        "ko": "중앙 정렬 건축 대칭 구도",
+        "en": "centered architectural symmetry",
+        "weight": 0.62,
+        "tags": [
+          "composition",
+          "architecture",
+          "symmetry",
+          "centered"
+        ],
+        "embedding_text": "centered architectural symmetry with the subject aligned to structural lines",
+        "aliases": [
+          "architectural symmetry"
+        ],
+        "keywords": [
+          "centered",
+          "symmetry",
+          "architecture"
+        ],
+        "facets": {
+          "placement": [
+            "centered",
+            "symmetry"
+          ]
+        }
+      },
+      {
+        "id": "third_grid_off_center_subject",
+        "ko": "삼분할 격자 위의 오프센터 피사체",
+        "en": "off-center subject on the rule-of-thirds grid",
+        "weight": 0.62,
+        "tags": [
+          "composition",
+          "rule_of_thirds",
+          "portrait"
+        ],
+        "embedding_text": "off-center subject placed on the rule-of-thirds grid",
+        "aliases": [
+          "thirds placement"
+        ],
+        "keywords": [
+          "rule of thirds",
+          "off-center"
+        ],
+        "facets": {
+          "placement": [
+            "rule_of_thirds"
+          ]
+        }
+      },
+      {
+        "id": "large_negative_space_top_area",
+        "ko": "상단에 큰 네거티브 스페이스가 있는 구도",
+        "en": "large top-area negative space",
+        "weight": 0.58,
+        "tags": [
+          "composition",
+          "negative_space",
+          "social"
+        ],
+        "embedding_text": "large top-area negative space for clean social or editorial framing without text",
+        "aliases": [
+          "top negative space"
+        ],
+        "keywords": [
+          "negative space",
+          "blank area"
+        ],
+        "facets": {
+          "placement": [
+            "negative_space"
+          ]
+        }
+      },
+      {
+        "id": "bottom_weighted_subject_placement",
+        "ko": "피사체가 하단에 무게 있게 놓인 구도",
+        "en": "bottom-weighted subject placement",
+        "weight": 0.52,
+        "tags": [
+          "composition",
+          "placement",
+          "negative_space"
+        ],
+        "embedding_text": "bottom-weighted subject placement with open space above",
+        "aliases": [
+          "bottom-weighted placement"
+        ],
+        "keywords": [
+          "bottom weighted",
+          "open space"
+        ],
+        "facets": {
+          "placement": [
+            "negative_space"
+          ]
+        }
+      },
+      {
+        "id": "edge_tension_partial_crop",
+        "ko": "프레임 가장자리에 긴장감을 주는 부분 크롭",
+        "en": "edge-tension partial crop",
+        "weight": 0.56,
+        "tags": [
+          "composition",
+          "edge",
+          "crop"
+        ],
+        "embedding_text": "edge-tension partial crop with the subject close to the frame boundary",
+        "aliases": [
+          "edge tension crop"
+        ],
+        "keywords": [
+          "edge tension",
+          "partial crop"
+        ],
+        "facets": {
+          "placement": [
+            "edge_tension"
+          ]
+        }
+      },
+      {
+        "id": "subject_entering_frame",
+        "ko": "피사체가 프레임 안으로 들어오는 구도",
+        "en": "subject entering the frame",
+        "weight": 0.58,
+        "tags": [
+          "composition",
+          "motion",
+          "candid"
+        ],
+        "embedding_text": "subject entering the frame as if caught mid-movement",
+        "aliases": [
+          "entering frame"
+        ],
+        "keywords": [
+          "entering frame",
+          "motion"
+        ],
+        "facets": {
+          "placement": [
+            "entering_frame"
+          ]
+        }
+      },
+      {
+        "id": "subject_exiting_frame",
+        "ko": "피사체가 프레임 밖으로 나가는 구도",
+        "en": "subject exiting the frame",
+        "weight": 0.5,
+        "tags": [
+          "composition",
+          "motion",
+          "candid"
+        ],
+        "embedding_text": "subject exiting the frame with documentary edge tension",
+        "aliases": [
+          "exiting frame"
+        ],
+        "keywords": [
+          "exiting frame",
+          "motion"
+        ],
+        "facets": {
+          "placement": [
+            "exiting_frame",
+            "edge_tension"
+          ]
+        }
+      },
+      {
+        "id": "frame_filling_face_crop",
+        "ko": "프레임을 가득 채우는 얼굴 크롭",
+        "en": "frame-filling face crop",
+        "weight": 0.54,
+        "tags": [
+          "composition",
+          "closeup",
+          "portrait"
+        ],
+        "embedding_text": "frame-filling face crop for an intense close portrait",
+        "aliases": [
+          "face filling crop"
+        ],
+        "keywords": [
+          "frame filling",
+          "face crop"
+        ],
+        "facets": {
+          "placement": [
+            "frame_filling"
+          ],
+          "shot_scale": [
+            "close_up"
+          ]
+        }
+      },
+      {
+        "id": "diagonal_motion_path_composition",
+        "ko": "대각선 움직임 경로 구도",
+        "en": "diagonal motion path composition",
+        "weight": 0.54,
+        "tags": [
+          "composition",
+          "diagonal",
+          "motion"
+        ],
+        "embedding_text": "diagonal motion path composition leading across the frame",
+        "aliases": [
+          "diagonal motion composition"
+        ],
+        "keywords": [
+          "diagonal",
+          "motion"
+        ],
+        "facets": {
+          "placement": [
+            "layered_depth"
+          ]
+        }
+      },
+      {
+        "id": "reflection_split_composition",
+        "ko": "반사면이 화면을 나누는 구도",
+        "en": "reflection split composition",
+        "weight": 0.58,
+        "tags": [
+          "composition",
+          "reflection"
+        ],
+        "embedding_text": "reflection split composition dividing reality and reflection",
+        "aliases": [
+          "reflection split"
+        ],
+        "keywords": [
+          "reflection",
+          "split composition"
+        ],
+        "facets": {
+          "placement": [
+            "symmetry"
+          ]
+        }
+      },
+      {
+        "id": "repeated_shape_rhythm_background",
+        "ko": "배경의 반복 형태 리듬 구도",
+        "en": "repeated-shape rhythm in the background",
+        "weight": 0.52,
+        "tags": [
+          "composition",
+          "rhythm",
+          "background"
+        ],
+        "embedding_text": "repeated-shape rhythm in the background supporting the subject",
+        "aliases": [
+          "repeated shape rhythm"
+        ],
+        "keywords": [
+          "repetition",
+          "rhythm"
+        ],
+        "facets": {
+          "placement": [
+            "layered_depth"
+          ]
+        }
+      },
+      {
+        "id": "silhouette_outline_negative_space",
+        "ko": "네거티브 스페이스 위 실루엣 윤곽 구도",
+        "en": "silhouette outline against negative space",
+        "weight": 0.5,
+        "tags": [
+          "composition",
+          "silhouette",
+          "negative_space"
+        ],
+        "embedding_text": "silhouette outline against negative space with limited facial detail",
+        "aliases": [
+          "silhouette negative space"
+        ],
+        "keywords": [
+          "silhouette",
+          "negative space"
+        ],
+        "facets": {
+          "placement": [
+            "negative_space"
+          ]
+        }
+      },
+      {
+        "id": "low_horizon_environmental_portrait",
+        "ko": "낮은 지평선의 환경 인물 구도",
+        "en": "low-horizon environmental portrait",
+        "weight": 0.52,
+        "tags": [
+          "composition",
+          "environmental_portrait",
+          "wide"
+        ],
+        "embedding_text": "low-horizon environmental portrait with open sky or architecture above",
+        "aliases": [
+          "low horizon portrait"
+        ],
+        "keywords": [
+          "environmental portrait",
+          "low horizon"
+        ],
+        "facets": {
+          "placement": [
+            "negative_space"
+          ],
+          "shot_scale": [
+            "wide"
+          ]
+        }
+      },
+      {
+        "id": "foreground_blur_peek_through",
+        "ko": "전경 블러 사이로 보는 피크스루 구도",
+        "en": "foreground blur peek-through composition",
+        "weight": 0.56,
+        "tags": [
+          "composition",
+          "foreground",
+          "bokeh"
+        ],
+        "embedding_text": "foreground blur peek-through composition with a candid observer feel",
+        "aliases": [
+          "peek-through foreground blur"
+        ],
+        "keywords": [
+          "foreground blur",
+          "peek through"
+        ],
+        "facets": {
+          "placement": [
+            "foreground_frame",
+            "layered_depth"
+          ]
+        }
+      },
+      {
+        "id": "thumbnail_center_safe_composition",
+        "ko": "썸네일 중심 세이프 구도",
+        "en": "thumbnail center-safe composition",
+        "weight": 0.56,
+        "tags": [
+          "composition",
+          "thumbnail",
+          "centered",
+          "social"
+        ],
+        "embedding_text": "thumbnail center-safe composition with the subject protected from crop edges and no readable text dependency",
+        "aliases": [
+          "thumbnail composition"
+        ],
+        "keywords": [
+          "thumbnail",
+          "center safe"
+        ],
+        "facets": {
+          "placement": [
+            "centered"
+          ],
+          "platform_frame": [
+            "thumbnail_safe"
+          ]
+        }
       }
     ],
     "subject_framing": [
@@ -148353,6 +151322,9 @@
         "facets": {
           "soft_body_role": [
             "body_emphasis"
+          ],
+          "shot_scale": [
+            "full_length"
           ]
         }
       },
@@ -148373,6 +151345,9 @@
         "facets": {
           "soft_body_role": [
             "narrative_safe"
+          ],
+          "shot_scale": [
+            "medium"
           ]
         }
       },
@@ -148393,6 +151368,9 @@
         "facets": {
           "soft_body_role": [
             "narrative_safe"
+          ],
+          "shot_scale": [
+            "medium_close"
           ]
         }
       },
@@ -148414,6 +151392,9 @@
         "facets": {
           "soft_body_role": [
             "narrative_safe"
+          ],
+          "shot_scale": [
+            "close_up"
           ]
         }
       },
@@ -148430,7 +151411,12 @@
         ],
         "for_any": [
           "human"
-        ]
+        ],
+        "facets": {
+          "shot_scale": [
+            "medium_long"
+          ]
+        }
       },
       {
         "id": "detail_crop_hands_accessories",
@@ -148450,6 +151436,9 @@
         "facets": {
           "soft_body_role": [
             "narrative_safe"
+          ],
+          "shot_scale": [
+            "extreme_close"
           ]
         }
       },
@@ -148475,7 +151464,12 @@
           "portrait",
           "neutral"
         ],
-        "embedding_text": "knee-up framing"
+        "embedding_text": "knee-up framing",
+        "facets": {
+          "shot_scale": [
+            "medium_long"
+          ]
+        }
       },
       {
         "id": "waist_up_framing",
@@ -148499,7 +151493,12 @@
           "portrait",
           "neutral"
         ],
-        "embedding_text": "waist-up framing"
+        "embedding_text": "waist-up framing",
+        "facets": {
+          "shot_scale": [
+            "medium"
+          ]
+        }
       },
       {
         "id": "profile_silhouette_crop",
@@ -148523,7 +151522,12 @@
           "silhouette",
           "neutral"
         ],
-        "embedding_text": "profile silhouette crop"
+        "embedding_text": "profile silhouette crop",
+        "facets": {
+          "shot_scale": [
+            "medium_close"
+          ]
+        }
       },
       {
         "id": "group_two_shot",
@@ -148547,7 +151551,12 @@
           "group",
           "neutral"
         ],
-        "embedding_text": "two-shot group framing"
+        "embedding_text": "two-shot group framing",
+        "facets": {
+          "shot_scale": [
+            "medium"
+          ]
+        }
       },
       {
         "id": "two_shot_handoff_waist_up",
@@ -148560,7 +151569,12 @@
         ],
         "for_any": [
           "human"
-        ]
+        ],
+        "facets": {
+          "shot_scale": [
+            "medium"
+          ]
+        }
       },
       {
         "id": "hands_only_exchange_macro",
@@ -148573,7 +151587,12 @@
         ],
         "for_any": [
           "human"
-        ]
+        ],
+        "facets": {
+          "shot_scale": [
+            "extreme_close"
+          ]
+        }
       },
       {
         "id": "over_partner_shoulder_subject_face",
@@ -148650,7 +151669,12 @@
         "embedding_text": "regal three-quarter framing showing regalia and posture",
         "for_any": [
           "human"
-        ]
+        ],
+        "facets": {
+          "shot_scale": [
+            "medium_long"
+          ]
+        }
       },
       {
         "id": "full_body_ceremonial_framing",
@@ -148674,7 +151698,12 @@
         "embedding_text": "full-body ceremonial framing without body-first emphasis",
         "for_any": [
           "human"
-        ]
+        ],
+        "facets": {
+          "shot_scale": [
+            "full_length"
+          ]
+        }
       },
       {
         "id": "waist_up_regalia_visible",
@@ -148698,7 +151727,12 @@
         "embedding_text": "waist-up framing where regalia remains visible",
         "for_any": [
           "human"
-        ]
+        ],
+        "facets": {
+          "shot_scale": [
+            "medium"
+          ]
+        }
       },
       {
         "id": "hands_and_regalia_visible",
@@ -148722,7 +151756,12 @@
         "embedding_text": "hands and royal object visible near face",
         "for_any": [
           "human"
-        ]
+        ],
+        "facets": {
+          "shot_scale": [
+            "medium_close"
+          ]
+        }
       }
     ],
     "body_framing": [
@@ -155777,7 +158816,12 @@
         "weight": 1.2,
         "tags": [
           "social"
-        ]
+        ],
+        "facets": {
+          "platform_frame": [
+            "vertical_9_16_safe"
+          ]
+        }
       },
       {
         "id": "square_1_1",
@@ -155786,7 +158830,12 @@
         "weight": 1,
         "tags": [
           "social"
-        ]
+        ],
+        "facets": {
+          "platform_frame": [
+            "square_1_1_safe"
+          ]
+        }
       },
       {
         "id": "landscape_16_9",
@@ -155853,7 +158902,13 @@
           "social",
           "tiktok",
           "vertical"
-        ]
+        ],
+        "facets": {
+          "platform_frame": [
+            "vertical_9_16_safe",
+            "ui_safe_negative_space"
+          ]
+        }
       },
       {
         "id": "caption_space_top_bottom",
@@ -155873,7 +158928,13 @@
         "tags": [
           "social",
           "vertical"
-        ]
+        ],
+        "facets": {
+          "platform_frame": [
+            "vertical_9_16_safe",
+            "thumbnail_safe"
+          ]
+        }
       },
       {
         "id": "split_screen_social",
@@ -155906,7 +158967,12 @@
           "portrait",
           "social",
           "vertical"
-        ]
+        ],
+        "facets": {
+          "platform_frame": [
+            "vertical_4_5_safe"
+          ]
+        }
       },
       {
         "id": "multi_image_series",
@@ -156038,7 +159104,12 @@
         "tags": [
           "vertical",
           "social"
-        ]
+        ],
+        "facets": {
+          "platform_frame": [
+            "vertical_4_5_safe"
+          ]
+        }
       },
       {
         "id": "horizontal_3_2",
@@ -164169,6 +167240,92 @@
         "for_any": [
           "human"
         ]
+      },
+      {
+        "id": "off_frame_light_gaze",
+        "ko": "프레임 밖 빛을 향한 시선",
+        "en": "gaze toward off-frame light",
+        "weight": 0.54,
+        "tags": [
+          "human",
+          "gaze",
+          "off_frame"
+        ],
+        "embedding_text": "gaze toward an off-frame light source",
+        "aliases": [
+          "off-frame light gaze"
+        ],
+        "keywords": [
+          "off-frame light"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "toward_handheld_object_gaze",
+        "ko": "손에 든 물건을 향한 시선",
+        "en": "gaze toward a handheld object",
+        "weight": 0.54,
+        "tags": [
+          "human",
+          "gaze",
+          "object"
+        ],
+        "embedding_text": "gaze toward a handheld object",
+        "aliases": [
+          "handheld object gaze"
+        ],
+        "keywords": [
+          "handheld object"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "toward_reflection_self_gaze",
+        "ko": "반사 속 자신을 향한 시선",
+        "en": "gaze toward the reflected self",
+        "weight": 0.5,
+        "tags": [
+          "human",
+          "gaze",
+          "reflection"
+        ],
+        "embedding_text": "gaze toward the reflected self in a mirror or window",
+        "aliases": [
+          "reflection self gaze"
+        ],
+        "keywords": [
+          "reflection",
+          "self"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "over_shoulder_back_gaze",
+        "ko": "어깨 너머 뒤를 보는 시선",
+        "en": "over-the-shoulder back gaze",
+        "weight": 0.5,
+        "tags": [
+          "human",
+          "gaze",
+          "over_shoulder"
+        ],
+        "embedding_text": "over-the-shoulder gaze back toward the viewer or scene",
+        "aliases": [
+          "over-shoulder gaze"
+        ],
+        "keywords": [
+          "over shoulder",
+          "back"
+        ],
+        "for_any": [
+          "human"
+        ]
       }
     ],
     "body_orientation": [
@@ -164243,6 +167400,134 @@
           "relationship",
           "relational",
           "narrative_safe"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "front_facing_orientation",
+        "ko": "정면을 향한 몸 방향",
+        "en": "front-facing body orientation",
+        "weight": 0.72,
+        "tags": [
+          "human",
+          "orientation",
+          "front"
+        ],
+        "embedding_text": "front-facing body orientation",
+        "aliases": [
+          "front-facing"
+        ],
+        "keywords": [
+          "front"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "three_quarter_body_turn",
+        "ko": "3/4로 몸을 튼 방향",
+        "en": "three-quarter body turn",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "orientation",
+          "portrait"
+        ],
+        "embedding_text": "three-quarter body turn for portrait posing",
+        "aliases": [
+          "three-quarter turn"
+        ],
+        "keywords": [
+          "three quarter"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "clean_side_profile_orientation",
+        "ko": "클린한 측면 프로필 방향",
+        "en": "clean side-profile body orientation",
+        "weight": 0.66,
+        "tags": [
+          "human",
+          "orientation",
+          "profile"
+        ],
+        "embedding_text": "clean side-profile body orientation",
+        "aliases": [
+          "side profile body"
+        ],
+        "keywords": [
+          "profile",
+          "side"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "back_view_orientation",
+        "ko": "등을 보이는 몸 방향",
+        "en": "back-view body orientation",
+        "weight": 0.58,
+        "tags": [
+          "human",
+          "orientation",
+          "back"
+        ],
+        "embedding_text": "back-view body orientation with no direct face unless reflected",
+        "aliases": [
+          "back view"
+        ],
+        "keywords": [
+          "back view"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "looking_back_over_shoulder_orientation",
+        "ko": "몸은 돌아서고 어깨 너머로 돌아보는 방향",
+        "en": "body turned away while looking back over the shoulder",
+        "weight": 0.68,
+        "tags": [
+          "human",
+          "orientation",
+          "over_shoulder"
+        ],
+        "embedding_text": "body turned away while looking back over the shoulder",
+        "aliases": [
+          "over-shoulder orientation"
+        ],
+        "keywords": [
+          "looking back",
+          "over shoulder"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "torso_twist_orientation",
+        "ko": "상체를 비트는 방향",
+        "en": "torso twist orientation",
+        "weight": 0.58,
+        "tags": [
+          "human",
+          "orientation",
+          "twist"
+        ],
+        "embedding_text": "torso twist orientation for dynamic but clean portrait posing",
+        "aliases": [
+          "torso twist"
+        ],
+        "keywords": [
+          "torso twist"
         ],
         "for_any": [
           "human"
@@ -168570,6 +171855,136 @@
         "for_any": [
           "human"
         ]
+      },
+      {
+        "id": "looking_away_off_frame",
+        "ko": "프레임 밖을 바라보는 시선",
+        "en": "looking away off-frame",
+        "weight": 0.72,
+        "tags": [
+          "human",
+          "gaze",
+          "off_frame"
+        ],
+        "embedding_text": "looking away off-frame",
+        "aliases": [
+          "off-frame gaze"
+        ],
+        "keywords": [
+          "looking away",
+          "off-frame"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "eyes_closed_serene",
+        "ko": "차분하게 눈을 감은 시선",
+        "en": "serene eyes-closed expression",
+        "weight": 0.54,
+        "tags": [
+          "human",
+          "gaze",
+          "eyes_closed"
+        ],
+        "embedding_text": "serene eyes-closed gaze with no direct eye contact",
+        "aliases": [
+          "eyes closed"
+        ],
+        "keywords": [
+          "eyes closed"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "looking_back_over_shoulder_gaze",
+        "ko": "어깨 너머로 돌아보는 시선",
+        "en": "looking back over the shoulder",
+        "weight": 0.64,
+        "tags": [
+          "human",
+          "gaze",
+          "over_shoulder"
+        ],
+        "embedding_text": "looking back over the shoulder toward camera or viewer",
+        "aliases": [
+          "looking back gaze"
+        ],
+        "keywords": [
+          "looking back",
+          "over shoulder"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "object_focused_gaze",
+        "ko": "손에 든 오브젝트를 보는 시선",
+        "en": "gaze focused on a held object",
+        "weight": 0.6,
+        "tags": [
+          "human",
+          "gaze",
+          "object"
+        ],
+        "embedding_text": "gaze focused on a held object rather than the lens",
+        "aliases": [
+          "object gaze"
+        ],
+        "keywords": [
+          "object focused"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "reflection_direct_gaze",
+        "ko": "반사면을 통한 직접 응시",
+        "en": "direct gaze through a reflection",
+        "weight": 0.6,
+        "tags": [
+          "human",
+          "gaze",
+          "reflection"
+        ],
+        "embedding_text": "direct gaze through a mirror or window reflection",
+        "aliases": [
+          "direct reflection gaze"
+        ],
+        "keywords": [
+          "direct gaze",
+          "reflection"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "phone_covering_face_gaze",
+        "ko": "폰이 얼굴 일부를 가린 상태의 시선",
+        "en": "gaze partly hidden by a phone covering the face",
+        "weight": 0.46,
+        "tags": [
+          "human",
+          "gaze",
+          "phone",
+          "covered_face"
+        ],
+        "embedding_text": "gaze partly hidden by a phone covering the face, not a full visible expression",
+        "aliases": [
+          "phone covering face"
+        ],
+        "keywords": [
+          "phone covering face"
+        ],
+        "for_any": [
+          "human"
+        ]
       }
     ],
     "hand_pose": [
@@ -168730,6 +172145,219 @@
           "foreground"
         ],
         "embedding_text": "hand reaching toward the camera",
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "hands_in_pockets",
+        "ko": "주머니에 손을 넣은 포즈",
+        "en": "hands tucked into pockets",
+        "weight": 0.72,
+        "tags": [
+          "human",
+          "hand",
+          "casual"
+        ],
+        "embedding_text": "hands tucked into pockets",
+        "aliases": [
+          "hands in pockets"
+        ],
+        "keywords": [
+          "pockets"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "hand_on_hip",
+        "ko": "한 손을 허리에 올린 포즈",
+        "en": "one hand resting on the hip",
+        "weight": 0.66,
+        "tags": [
+          "human",
+          "hand",
+          "pose"
+        ],
+        "embedding_text": "one hand resting on the hip as a clean fashion pose",
+        "aliases": [
+          "hand on hip"
+        ],
+        "keywords": [
+          "hip"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "hand_touching_face",
+        "ko": "손이 얼굴을 가볍게 만지는 포즈",
+        "en": "hand lightly touching the face",
+        "weight": 0.58,
+        "tags": [
+          "human",
+          "hand",
+          "face"
+        ],
+        "embedding_text": "hand lightly touching the face in a portrait",
+        "aliases": [
+          "touching face"
+        ],
+        "keywords": [
+          "face",
+          "hand"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "hand_adjusting_sunglasses",
+        "ko": "선글라스를 매만지는 손 포즈",
+        "en": "hand adjusting sunglasses",
+        "weight": 0.58,
+        "tags": [
+          "human",
+          "hand",
+          "accessory"
+        ],
+        "embedding_text": "hand adjusting sunglasses as a lifestyle gesture",
+        "aliases": [
+          "adjusting sunglasses"
+        ],
+        "keywords": [
+          "sunglasses"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "holding_bag_strap",
+        "ko": "가방 끈을 잡은 손 포즈",
+        "en": "hand holding a bag strap",
+        "weight": 0.62,
+        "tags": [
+          "human",
+          "hand",
+          "bag",
+          "fashion"
+        ],
+        "embedding_text": "hand holding a bag strap in an outfit portrait",
+        "aliases": [
+          "bag strap hold"
+        ],
+        "keywords": [
+          "bag strap"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "hand_on_railing",
+        "ko": "난간에 손을 올린 포즈",
+        "en": "hand resting on a railing",
+        "weight": 0.58,
+        "tags": [
+          "human",
+          "hand",
+          "railing"
+        ],
+        "embedding_text": "hand resting on a railing in a street or balcony scene",
+        "aliases": [
+          "hand on railing"
+        ],
+        "keywords": [
+          "railing"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "hand_on_table_edge",
+        "ko": "테이블 가장자리에 손을 올린 포즈",
+        "en": "hand resting on a table edge",
+        "weight": 0.54,
+        "tags": [
+          "human",
+          "hand",
+          "table"
+        ],
+        "embedding_text": "hand resting on a table edge in a cafe or workspace scene",
+        "aliases": [
+          "hand on table edge"
+        ],
+        "keywords": [
+          "table edge"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "hands_crossed_front",
+        "ko": "앞에서 손을 느슨하게 모은 포즈",
+        "en": "hands crossed loosely in front",
+        "weight": 0.54,
+        "tags": [
+          "human",
+          "hand",
+          "gesture"
+        ],
+        "embedding_text": "hands crossed loosely in front, modest and relaxed",
+        "aliases": [
+          "hands crossed front"
+        ],
+        "keywords": [
+          "hands crossed"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "arms_raised_overhead",
+        "ko": "양팔을 머리 위로 올린 포즈",
+        "en": "arms raised overhead",
+        "weight": 0.48,
+        "tags": [
+          "human",
+          "hand",
+          "motion"
+        ],
+        "embedding_text": "arms raised overhead as an energetic clean pose",
+        "aliases": [
+          "arms raised"
+        ],
+        "keywords": [
+          "raised arms"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "one_hand_reaching_off_frame",
+        "ko": "한 손이 프레임 밖으로 뻗는 포즈",
+        "en": "one hand reaching off-frame",
+        "weight": 0.46,
+        "tags": [
+          "human",
+          "hand",
+          "off_frame"
+        ],
+        "embedding_text": "one hand reaching off-frame as a narrative gesture",
+        "aliases": [
+          "off-frame reach"
+        ],
+        "keywords": [
+          "off-frame",
+          "reaching"
+        ],
         "for_any": [
           "human"
         ]
@@ -172685,6 +176313,1144 @@
           "service"
         ]
       }
+    ],
+    "body_pose": [
+      {
+        "id": "neutral_standing_pose",
+        "ko": "중립적으로 선 포즈",
+        "en": "neutral standing pose",
+        "weight": 0.82,
+        "tags": [
+          "human",
+          "pose",
+          "narrative_safe"
+        ],
+        "embedding_text": "neutral standing pose for a clean human portrait",
+        "aliases": [
+          "standing pose"
+        ],
+        "keywords": [
+          "standing",
+          "pose"
+        ],
+        "facets": {
+          "safety_tier": [
+            "general"
+          ],
+          "soft_body_role": [
+            "narrative_safe"
+          ]
+        }
+      },
+      {
+        "id": "relaxed_standing_weight_shift",
+        "ko": "한쪽 다리에 무게를 둔 편안한 스탠딩 포즈",
+        "en": "relaxed standing weight shift",
+        "weight": 0.86,
+        "tags": [
+          "human",
+          "pose",
+          "candid",
+          "narrative_safe"
+        ],
+        "embedding_text": "relaxed standing pose with a natural weight shift",
+        "aliases": [
+          "weight shift pose"
+        ],
+        "keywords": [
+          "standing",
+          "weight shift"
+        ],
+        "facets": {
+          "safety_tier": [
+            "general"
+          ],
+          "soft_body_role": [
+            "narrative_safe"
+          ]
+        }
+      },
+      {
+        "id": "contrapposto_full_body",
+        "ko": "클린한 전신 콘트라포스토 포즈",
+        "en": "clean full-body contrapposto pose",
+        "weight": 0.9,
+        "tags": [
+          "human",
+          "pose",
+          "editorial",
+          "narrative_safe"
+        ],
+        "embedding_text": "clean full-body contrapposto pose, fashion editorial posture without fetish framing",
+        "aliases": [
+          "contrapposto"
+        ],
+        "keywords": [
+          "full body",
+          "contrapposto"
+        ],
+        "facets": {
+          "safety_tier": [
+            "general"
+          ],
+          "soft_body_role": [
+            "narrative_safe"
+          ]
+        }
+      },
+      {
+        "id": "power_stance_feet_apart",
+        "ko": "발을 벌린 커버드 파워 스탠스",
+        "en": "covered power stance with feet apart",
+        "weight": 0.82,
+        "tags": [
+          "human",
+          "pose",
+          "editorial",
+          "narrative_safe"
+        ],
+        "embedding_text": "covered power stance with feet apart, confident but non-suggestive",
+        "aliases": [
+          "power stance"
+        ],
+        "keywords": [
+          "standing",
+          "confident"
+        ],
+        "facets": {
+          "safety_tier": [
+            "general"
+          ],
+          "soft_body_role": [
+            "narrative_safe"
+          ]
+        }
+      },
+      {
+        "id": "casual_lean_against_wall",
+        "ko": "벽에 기대 선 캐주얼 포즈",
+        "en": "casual lean against a wall",
+        "weight": 0.8,
+        "tags": [
+          "human",
+          "pose",
+          "casual",
+          "narrative_safe"
+        ],
+        "embedding_text": "casual human pose leaning against a wall",
+        "aliases": [
+          "wall lean"
+        ],
+        "keywords": [
+          "leaning",
+          "wall"
+        ],
+        "facets": {
+          "safety_tier": [
+            "general"
+          ],
+          "soft_body_role": [
+            "narrative_safe"
+          ]
+        }
+      },
+      {
+        "id": "leaning_on_railing_pose",
+        "ko": "난간에 가볍게 기대는 포즈",
+        "en": "leaning lightly on a railing",
+        "weight": 0.74,
+        "tags": [
+          "human",
+          "pose",
+          "street",
+          "narrative_safe"
+        ],
+        "embedding_text": "leaning lightly on a railing in a street or balcony portrait",
+        "aliases": [
+          "railing lean"
+        ],
+        "keywords": [
+          "leaning",
+          "railing"
+        ],
+        "facets": {
+          "safety_tier": [
+            "general"
+          ],
+          "soft_body_role": [
+            "narrative_safe"
+          ]
+        }
+      },
+      {
+        "id": "seated_forward_lean",
+        "ko": "앉아서 몸을 살짝 앞으로 기울인 포즈",
+        "en": "seated forward lean",
+        "weight": 0.76,
+        "tags": [
+          "human",
+          "pose",
+          "seated",
+          "narrative_safe"
+        ],
+        "embedding_text": "seated forward lean in a candid portrait",
+        "aliases": [
+          "forward lean seated"
+        ],
+        "keywords": [
+          "seated",
+          "leaning"
+        ],
+        "facets": {
+          "safety_tier": [
+            "general"
+          ],
+          "soft_body_role": [
+            "narrative_safe"
+          ]
+        }
+      },
+      {
+        "id": "seated_sideways_chair_pose",
+        "ko": "의자에 옆으로 앉은 포즈",
+        "en": "sideways seated chair pose",
+        "weight": 0.7,
+        "tags": [
+          "human",
+          "pose",
+          "seated",
+          "narrative_safe"
+        ],
+        "embedding_text": "sideways seated chair pose for lifestyle or editorial portraits",
+        "aliases": [
+          "sideways seated"
+        ],
+        "keywords": [
+          "seated",
+          "chair"
+        ],
+        "facets": {
+          "safety_tier": [
+            "general"
+          ],
+          "soft_body_role": [
+            "narrative_safe"
+          ]
+        }
+      },
+      {
+        "id": "relaxed_floor_sit_pose",
+        "ko": "바닥에 편하게 앉은 포즈",
+        "en": "relaxed floor-sit pose",
+        "weight": 0.68,
+        "tags": [
+          "human",
+          "pose",
+          "seated",
+          "narrative_safe"
+        ],
+        "embedding_text": "relaxed floor-sit pose in a lived-in room or studio",
+        "aliases": [
+          "floor sitting"
+        ],
+        "keywords": [
+          "seated",
+          "floor"
+        ],
+        "facets": {
+          "safety_tier": [
+            "general"
+          ],
+          "soft_body_role": [
+            "narrative_safe"
+          ]
+        }
+      },
+      {
+        "id": "crouching_street_pose",
+        "ko": "클린한 거리 크라우칭 포즈",
+        "en": "clean crouching street pose",
+        "weight": 0.68,
+        "tags": [
+          "human",
+          "pose",
+          "street",
+          "narrative_safe"
+        ],
+        "embedding_text": "clean crouching street pose for mirror selfies or street portraits",
+        "aliases": [
+          "crouching pose"
+        ],
+        "keywords": [
+          "crouching",
+          "street"
+        ],
+        "facets": {
+          "safety_tier": [
+            "general"
+          ],
+          "soft_body_role": [
+            "narrative_safe"
+          ]
+        }
+      },
+      {
+        "id": "kneeling_soft_pose",
+        "ko": "커버드 스타일의 부드러운 무릎 앉은 포즈",
+        "en": "soft kneeling pose with covered styling",
+        "weight": 0.58,
+        "tags": [
+          "human",
+          "pose",
+          "covered",
+          "narrative_safe"
+        ],
+        "embedding_text": "soft kneeling pose with covered styling and non-suggestive framing",
+        "aliases": [
+          "kneeling pose"
+        ],
+        "keywords": [
+          "kneeling",
+          "covered"
+        ],
+        "facets": {
+          "safety_tier": [
+            "general"
+          ],
+          "soft_body_role": [
+            "narrative_safe"
+          ]
+        }
+      },
+      {
+        "id": "reclining_lounge_pose",
+        "ko": "편안하게 기대 누운 라운지 포즈",
+        "en": "relaxed reclining lounge pose",
+        "weight": 0.5,
+        "tags": [
+          "human",
+          "pose",
+          "relaxed",
+          "narrative_safe"
+        ],
+        "embedding_text": "relaxed reclining lounge pose kept casual and non-suggestive",
+        "aliases": [
+          "reclining pose"
+        ],
+        "keywords": [
+          "reclining",
+          "lounge"
+        ],
+        "facets": {
+          "safety_tier": [
+            "general"
+          ],
+          "soft_body_role": [
+            "narrative_safe"
+          ]
+        }
+      },
+      {
+        "id": "walking_mid_stride_pose",
+        "ko": "걷는 중간 동작 포즈",
+        "en": "walking mid-stride pose",
+        "weight": 0.84,
+        "tags": [
+          "human",
+          "pose",
+          "motion",
+          "street",
+          "narrative_safe"
+        ],
+        "embedding_text": "walking mid-stride pose for street and social portraits",
+        "aliases": [
+          "walking pose"
+        ],
+        "keywords": [
+          "walking",
+          "mid stride"
+        ],
+        "facets": {
+          "safety_tier": [
+            "general"
+          ],
+          "soft_body_role": [
+            "narrative_safe"
+          ]
+        }
+      },
+      {
+        "id": "turning_back_over_shoulder_pose",
+        "ko": "어깨 너머로 돌아보는 포즈",
+        "en": "turning back over the shoulder",
+        "weight": 0.74,
+        "tags": [
+          "human",
+          "pose",
+          "over_shoulder",
+          "narrative_safe"
+        ],
+        "embedding_text": "turning back over the shoulder as a clean social portrait pose",
+        "aliases": [
+          "looking back pose"
+        ],
+        "keywords": [
+          "turning back",
+          "over shoulder"
+        ],
+        "facets": {
+          "safety_tier": [
+            "general"
+          ],
+          "soft_body_role": [
+            "narrative_safe"
+          ]
+        }
+      },
+      {
+        "id": "stepping_into_frame_pose",
+        "ko": "프레임 안으로 걸어 들어오는 포즈",
+        "en": "stepping into the frame",
+        "weight": 0.66,
+        "tags": [
+          "human",
+          "pose",
+          "motion",
+          "composition",
+          "narrative_safe"
+        ],
+        "embedding_text": "subject stepping into the frame as a candid composition cue",
+        "aliases": [
+          "entering frame pose"
+        ],
+        "keywords": [
+          "entering frame",
+          "walking"
+        ],
+        "facets": {
+          "safety_tier": [
+            "general"
+          ],
+          "soft_body_role": [
+            "narrative_safe"
+          ]
+        }
+      },
+      {
+        "id": "arms_crossed_stance",
+        "ko": "팔짱을 낀 스탠딩 포즈",
+        "en": "arms-crossed standing stance",
+        "weight": 0.64,
+        "tags": [
+          "human",
+          "pose",
+          "gesture",
+          "narrative_safe"
+        ],
+        "embedding_text": "arms-crossed standing stance, covered and non-suggestive",
+        "aliases": [
+          "crossed arms"
+        ],
+        "keywords": [
+          "arms crossed",
+          "standing"
+        ],
+        "facets": {
+          "safety_tier": [
+            "general"
+          ],
+          "soft_body_role": [
+            "narrative_safe"
+          ]
+        }
+      },
+      {
+        "id": "hands_in_pockets_stance",
+        "ko": "주머니에 손을 넣은 스탠스",
+        "en": "hands-in-pockets stance",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "pose",
+          "casual",
+          "narrative_safe"
+        ],
+        "embedding_text": "hands-in-pockets stance for casual fashion and street portraits",
+        "aliases": [
+          "hands in pockets pose"
+        ],
+        "keywords": [
+          "hands in pockets"
+        ],
+        "facets": {
+          "safety_tier": [
+            "general"
+          ],
+          "soft_body_role": [
+            "narrative_safe"
+          ]
+        }
+      },
+      {
+        "id": "one_knee_raised_seated_pose",
+        "ko": "한쪽 무릎을 세운 앉은 포즈",
+        "en": "one-knee-raised seated pose",
+        "weight": 0.58,
+        "tags": [
+          "human",
+          "pose",
+          "seated",
+          "narrative_safe"
+        ],
+        "embedding_text": "one-knee-raised seated pose with casual covered styling",
+        "aliases": [
+          "knee up seated pose"
+        ],
+        "keywords": [
+          "seated",
+          "knee raised"
+        ],
+        "facets": {
+          "safety_tier": [
+            "general"
+          ],
+          "soft_body_role": [
+            "narrative_safe"
+          ]
+        }
+      },
+      {
+        "id": "tiptoe_reach_pose",
+        "ko": "까치발로 손을 뻗는 포즈",
+        "en": "tiptoe reach pose",
+        "weight": 0.58,
+        "tags": [
+          "human",
+          "pose",
+          "motion",
+          "narrative_safe"
+        ],
+        "embedding_text": "tiptoe reach pose for playful candid photography",
+        "aliases": [
+          "tiptoe pose"
+        ],
+        "keywords": [
+          "tiptoe",
+          "reach"
+        ],
+        "facets": {
+          "safety_tier": [
+            "general"
+          ],
+          "soft_body_role": [
+            "narrative_safe"
+          ]
+        }
+      },
+      {
+        "id": "jumping_motion_pose",
+        "ko": "점프 중간 동작 포즈",
+        "en": "mid-jump motion pose",
+        "weight": 0.52,
+        "tags": [
+          "human",
+          "pose",
+          "motion",
+          "narrative_safe"
+        ],
+        "embedding_text": "mid-jump motion pose for energetic clean social photography",
+        "aliases": [
+          "jumping pose"
+        ],
+        "keywords": [
+          "jump",
+          "motion"
+        ],
+        "facets": {
+          "safety_tier": [
+            "general"
+          ],
+          "soft_body_role": [
+            "narrative_safe"
+          ]
+        }
+      },
+      {
+        "id": "editorial_s_curve_pose",
+        "ko": "클린한 에디토리얼 S-커브 스탠딩 포즈",
+        "en": "clean editorial S-curve standing pose",
+        "weight": 0.72,
+        "tags": [
+          "human",
+          "pose",
+          "editorial",
+          "narrative_safe"
+        ],
+        "embedding_text": "clean editorial S-curve standing pose without body-first framing",
+        "aliases": [
+          "editorial pose"
+        ],
+        "keywords": [
+          "editorial",
+          "standing"
+        ],
+        "facets": {
+          "safety_tier": [
+            "general"
+          ],
+          "soft_body_role": [
+            "narrative_safe"
+          ]
+        }
+      },
+      {
+        "id": "half_turn_weight_shift_pose",
+        "ko": "반쯤 돌아선 웨이트 시프트 포즈",
+        "en": "half-turn weight-shift pose",
+        "weight": 0.74,
+        "tags": [
+          "human",
+          "pose",
+          "portrait",
+          "narrative_safe"
+        ],
+        "embedding_text": "half-turn pose with a natural weight shift",
+        "aliases": [
+          "half turn pose"
+        ],
+        "keywords": [
+          "half turn",
+          "weight shift"
+        ],
+        "facets": {
+          "safety_tier": [
+            "general"
+          ],
+          "soft_body_role": [
+            "narrative_safe"
+          ]
+        }
+      },
+      {
+        "id": "candid_adjusting_balance_pose",
+        "ko": "균형을 잡으며 움직이는 캔디드 포즈",
+        "en": "candid pose while adjusting balance",
+        "weight": 0.62,
+        "tags": [
+          "human",
+          "pose",
+          "candid",
+          "motion",
+          "narrative_safe"
+        ],
+        "embedding_text": "candid pose while adjusting balance or stepping naturally",
+        "aliases": [
+          "candid balance pose"
+        ],
+        "keywords": [
+          "candid",
+          "balance"
+        ],
+        "facets": {
+          "safety_tier": [
+            "general"
+          ],
+          "soft_body_role": [
+            "narrative_safe"
+          ]
+        }
+      },
+      {
+        "id": "group_layered_staggered_pose",
+        "ko": "작은 그룹의 층진 포즈 배열",
+        "en": "staggered small-group layered pose",
+        "weight": 0.54,
+        "tags": [
+          "human",
+          "pose",
+          "group",
+          "layered",
+          "narrative_safe"
+        ],
+        "embedding_text": "staggered small-group layered pose with people at different depths",
+        "aliases": [
+          "group layered pose"
+        ],
+        "keywords": [
+          "group",
+          "layered"
+        ],
+        "facets": {
+          "safety_tier": [
+            "general"
+          ],
+          "soft_body_role": [
+            "narrative_safe"
+          ]
+        }
+      }
+    ],
+    "shot_scale": [
+      {
+        "id": "extreme_wide_environment_scale",
+        "ko": "환경이 크게 보이는 익스트림 와이드 샷 스케일",
+        "en": "extreme wide environmental shot scale",
+        "weight": 0.78,
+        "tags": [
+          "camera",
+          "scale",
+          "environment"
+        ],
+        "embedding_text": "extreme wide environmental shot scale with a tiny subject in the setting",
+        "aliases": [
+          "extreme wide shot"
+        ],
+        "keywords": [
+          "extreme wide",
+          "tiny subject"
+        ],
+        "facets": {
+          "shot_scale": [
+            "extreme_wide"
+          ]
+        }
+      },
+      {
+        "id": "wide_full_scene_shot",
+        "ko": "장면 전체가 보이는 와이드 샷 스케일",
+        "en": "wide full-scene shot scale",
+        "weight": 0.82,
+        "tags": [
+          "camera",
+          "scale",
+          "wide"
+        ],
+        "embedding_text": "wide full-scene shot scale showing subject and environment",
+        "aliases": [
+          "wide shot"
+        ],
+        "keywords": [
+          "wide",
+          "environment"
+        ],
+        "facets": {
+          "shot_scale": [
+            "wide"
+          ]
+        }
+      },
+      {
+        "id": "full_length_body_shot",
+        "ko": "전신이 보이는 풀 렝스 샷 스케일",
+        "en": "full-length body shot scale",
+        "weight": 0.9,
+        "tags": [
+          "camera",
+          "scale",
+          "human",
+          "fashion"
+        ],
+        "embedding_text": "full-length body shot scale for outfit, pose, and full silhouette",
+        "aliases": [
+          "full body shot",
+          "full-length shot"
+        ],
+        "keywords": [
+          "full body",
+          "full length"
+        ],
+        "facets": {
+          "shot_scale": [
+            "full_length"
+          ],
+          "soft_body_role": [
+            "narrative_safe"
+          ]
+        }
+      },
+      {
+        "id": "medium_long_knee_up_shot",
+        "ko": "무릎 위까지 보이는 미디엄 롱 샷 스케일",
+        "en": "medium-long knee-up shot scale",
+        "weight": 0.78,
+        "tags": [
+          "camera",
+          "scale",
+          "portrait"
+        ],
+        "embedding_text": "medium-long knee-up shot scale for portrait and fashion framing",
+        "aliases": [
+          "knee-up shot"
+        ],
+        "keywords": [
+          "medium long",
+          "knee up"
+        ],
+        "facets": {
+          "shot_scale": [
+            "medium_long"
+          ]
+        }
+      },
+      {
+        "id": "medium_waist_up_shot",
+        "ko": "허리 위 미디엄 샷 스케일",
+        "en": "medium waist-up shot scale",
+        "weight": 0.84,
+        "tags": [
+          "camera",
+          "scale",
+          "portrait"
+        ],
+        "embedding_text": "medium waist-up shot scale for natural portraits",
+        "aliases": [
+          "waist-up shot"
+        ],
+        "keywords": [
+          "medium",
+          "waist up"
+        ],
+        "facets": {
+          "shot_scale": [
+            "medium"
+          ]
+        }
+      },
+      {
+        "id": "medium_close_chest_up_shot",
+        "ko": "가슴 위 미디엄 클로즈 샷 스케일",
+        "en": "medium close chest-up shot scale",
+        "weight": 0.8,
+        "tags": [
+          "camera",
+          "scale",
+          "portrait"
+        ],
+        "embedding_text": "medium close chest-up shot scale emphasizing face, hands, and upper body",
+        "aliases": [
+          "medium close-up"
+        ],
+        "keywords": [
+          "medium close",
+          "chest up"
+        ],
+        "facets": {
+          "shot_scale": [
+            "medium_close"
+          ]
+        }
+      },
+      {
+        "id": "close_up_face_shot",
+        "ko": "얼굴 중심 클로즈업 샷 스케일",
+        "en": "close-up face shot scale",
+        "weight": 0.76,
+        "tags": [
+          "camera",
+          "scale",
+          "portrait",
+          "beauty"
+        ],
+        "embedding_text": "close-up face shot scale emphasizing expression and gaze",
+        "aliases": [
+          "close-up shot"
+        ],
+        "keywords": [
+          "close up",
+          "face"
+        ],
+        "facets": {
+          "shot_scale": [
+            "close_up"
+          ]
+        }
+      },
+      {
+        "id": "extreme_close_detail_shot",
+        "ko": "디테일 중심 익스트림 클로즈업 샷 스케일",
+        "en": "extreme close-up detail shot scale",
+        "weight": 0.62,
+        "tags": [
+          "camera",
+          "scale",
+          "macro",
+          "detail"
+        ],
+        "embedding_text": "extreme close-up detail shot scale for hands, eyes, accessories, texture, or product detail",
+        "aliases": [
+          "extreme close-up"
+        ],
+        "keywords": [
+          "extreme close",
+          "detail"
+        ],
+        "facets": {
+          "shot_scale": [
+            "extreme_close"
+          ]
+        }
+      }
+    ],
+    "platform_framing": [
+      {
+        "id": "vertical_9x16_ui_safe_frame",
+        "ko": "읽히는 오버레이 텍스트 없는 9:16 UI 세이프 프레임",
+        "en": "vertical 9:16 UI-safe frame with no readable overlay text",
+        "weight": 0.86,
+        "tags": [
+          "social",
+          "vertical",
+          "no_text"
+        ],
+        "embedding_text": "vertical 9:16 UI-safe frame with blank areas for interface chrome and no readable overlay text",
+        "aliases": [
+          "vertical safe frame"
+        ],
+        "keywords": [
+          "9:16",
+          "ui safe",
+          "no readable text"
+        ],
+        "facets": {
+          "platform_frame": [
+            "vertical_9_16_safe"
+          ]
+        }
+      },
+      {
+        "id": "vertical_4x5_feed_safe_frame",
+        "ko": "읽히는 텍스트 없는 4:5 피드 세이프 크롭",
+        "en": "vertical 4:5 feed-safe crop with no readable text",
+        "weight": 0.82,
+        "tags": [
+          "social",
+          "vertical",
+          "feed",
+          "no_text"
+        ],
+        "embedding_text": "vertical 4:5 feed-safe crop for social portraits with no readable text",
+        "aliases": [
+          "4:5 feed crop"
+        ],
+        "keywords": [
+          "4:5",
+          "feed safe",
+          "no readable text"
+        ],
+        "facets": {
+          "platform_frame": [
+            "vertical_4_5_safe"
+          ]
+        }
+      },
+      {
+        "id": "square_1x1_center_safe_frame",
+        "ko": "정사각 1:1 센터 세이프 크롭",
+        "en": "square 1:1 center-safe crop",
+        "weight": 0.66,
+        "tags": [
+          "social",
+          "square",
+          "centered"
+        ],
+        "embedding_text": "square 1:1 center-safe crop for thumbnails and profile-like social photos",
+        "aliases": [
+          "square safe crop"
+        ],
+        "keywords": [
+          "square",
+          "center safe"
+        ],
+        "facets": {
+          "platform_frame": [
+            "square_1_1_safe",
+            "center_safe"
+          ]
+        }
+      },
+      {
+        "id": "reels_ui_safe_negative_space",
+        "ko": "읽히는 자막 없는 숏폼 UI 세이프 네거티브 스페이스",
+        "en": "short-form UI-safe negative space with no readable captions",
+        "weight": 0.82,
+        "tags": [
+          "social",
+          "vertical",
+          "negative_space",
+          "no_text"
+        ],
+        "embedding_text": "short-form vertical frame with UI-safe negative space, blank overlay area, and no readable captions or hashtags",
+        "aliases": [
+          "reels safe negative space"
+        ],
+        "keywords": [
+          "ui safe",
+          "negative space",
+          "no readable captions"
+        ],
+        "facets": {
+          "platform_frame": [
+            "ui_safe_negative_space"
+          ],
+          "placement": [
+            "negative_space"
+          ]
+        }
+      },
+      {
+        "id": "shorts_thumbnail_safe_face_placement",
+        "ko": "읽히는 텍스트 없는 썸네일 세이프 얼굴 배치",
+        "en": "thumbnail-safe face placement with no readable text",
+        "weight": 0.78,
+        "tags": [
+          "social",
+          "thumbnail",
+          "portrait",
+          "no_text"
+        ],
+        "embedding_text": "thumbnail-safe face placement, clear silhouette, no readable text or labels",
+        "aliases": [
+          "thumbnail safe face"
+        ],
+        "keywords": [
+          "thumbnail",
+          "face placement",
+          "no readable text"
+        ],
+        "facets": {
+          "platform_frame": [
+            "thumbnail_safe",
+            "face_upper_middle"
+          ]
+        }
+      },
+      {
+        "id": "face_upper_middle_safe_frame",
+        "ko": "얼굴이 상단 중간 안전 영역에 놓인 프레임",
+        "en": "face in the upper-middle safe frame",
+        "weight": 0.74,
+        "tags": [
+          "social",
+          "portrait",
+          "thumbnail"
+        ],
+        "embedding_text": "face placed in the upper-middle safe frame for vertical social portraits",
+        "aliases": [
+          "upper-middle face frame"
+        ],
+        "keywords": [
+          "face upper middle",
+          "safe frame"
+        ],
+        "facets": {
+          "platform_frame": [
+            "face_upper_middle"
+          ]
+        }
+      },
+      {
+        "id": "center_safe_subject_frame",
+        "ko": "피사체 중심 세이프 프레임",
+        "en": "center-safe subject frame",
+        "weight": 0.72,
+        "tags": [
+          "social",
+          "centered",
+          "portrait"
+        ],
+        "embedding_text": "center-safe subject frame that survives feed and thumbnail cropping",
+        "aliases": [
+          "center-safe frame"
+        ],
+        "keywords": [
+          "center safe",
+          "subject"
+        ],
+        "facets": {
+          "platform_frame": [
+            "center_safe"
+          ],
+          "placement": [
+            "centered"
+          ]
+        }
+      },
+      {
+        "id": "blank_lower_third_safe_area",
+        "ko": "읽히는 텍스트 없는 빈 하단 세이프 영역",
+        "en": "blank lower-third safe area with no readable text",
+        "weight": 0.6,
+        "tags": [
+          "social",
+          "lower_third",
+          "no_text"
+        ],
+        "embedding_text": "blank lower-third safe area with no readable text, captions, labels, or hashtags",
+        "aliases": [
+          "blank lower third"
+        ],
+        "keywords": [
+          "lower third",
+          "blank",
+          "no readable text"
+        ],
+        "facets": {
+          "platform_frame": [
+            "blank_lower_third"
+          ]
+        }
+      },
+      {
+        "id": "shop_feed_crop_safe_no_text",
+        "ko": "읽히는 문구 없는 쇼핑 피드 크롭 세이프 구성",
+        "en": "shoppable feed crop-safe composition with no readable text",
+        "weight": 0.62,
+        "tags": [
+          "social",
+          "shopping",
+          "feed",
+          "no_text"
+        ],
+        "embedding_text": "shoppable feed crop-safe composition, creator recommendation feel, no readable text or hashtags",
+        "aliases": [
+          "shoppable feed crop safe"
+        ],
+        "keywords": [
+          "shop feed",
+          "crop safe",
+          "no readable text"
+        ],
+        "facets": {
+          "platform_frame": [
+            "vertical_4_5_safe",
+            "ui_safe_negative_space"
+          ]
+        }
+      },
+      {
+        "id": "carousel_crop_safe_series_frame",
+        "ko": "캐러셀 크롭 세이프 시리즈 프레임",
+        "en": "carousel crop-safe series frame",
+        "weight": 0.54,
+        "tags": [
+          "social",
+          "carousel",
+          "series"
+        ],
+        "embedding_text": "carousel crop-safe series frame with the subject protected across multiple feed crops",
+        "aliases": [
+          "carousel safe frame"
+        ],
+        "keywords": [
+          "carousel",
+          "crop safe"
+        ],
+        "facets": {
+          "platform_frame": [
+            "carousel_crop_safe"
+          ]
+        }
+      }
     ]
   },
   "negative_prompt": [
@@ -173195,6 +177961,7 @@
     "gaze_target",
     "gaze_engagement",
     "body_orientation",
+    "body_pose",
     "proxemics",
     "distance_narrative",
     "contact_point",
@@ -173243,8 +178010,10 @@
     "light_shape",
     "camera_type",
     "camera_direction",
+    "shot_scale",
     "apparatus_pov",
     "composition",
+    "platform_framing",
     "subject_framing",
     "body_framing",
     "lens",
@@ -173360,7 +178129,10 @@
     "space_condition": 2.05,
     "situation_context": 1.95,
     "crowd_density": 1.65,
-    "occasion_context": 1.55
+    "occasion_context": 1.55,
+    "body_pose": 2.05,
+    "shot_scale": 1.95,
+    "platform_framing": 1.65
   },
   "generation_settings": {
     "priority_bias": 0.45,
@@ -180724,9 +185496,230 @@
             ]
           }
         }
+      },
+      "pose_framing_system": {
+        "policy_id": "pose-framing-system-semantic-policy-v1",
+        "keywords": [
+          "body pose",
+          "shot scale",
+          "camera angle",
+          "framing",
+          "composition",
+          "gaze",
+          "hand pose",
+          "contrapposto",
+          "full body",
+          "full body portrait",
+          "full-length portrait",
+          "low angle",
+          "close-up portrait"
+        ],
+        "axis_label": "pose and photographic framing system",
+        "axis_embedding_text": "human body pose, hand pose, gaze, shot scale, camera angle, subject placement, composition principles and portrait framing controls",
+        "steering_slots": [
+          "body_pose",
+          "shot_scale",
+          "hand_pose",
+          "body_orientation",
+          "gaze_engagement",
+          "camera_direction",
+          "composition",
+          "subject_framing"
+        ],
+        "routed_slots": [
+          "body_pose",
+          "shot_scale",
+          "hand_pose",
+          "body_orientation",
+          "gaze_engagement",
+          "camera_direction",
+          "composition",
+          "subject_framing"
+        ],
+        "preset_policy": {
+          "allow_ids": [
+            "social_vertical_pose_hook",
+            "editorial_full_body_pose_study",
+            "environmental_portrait_composition",
+            "architecture_leading_lines_portrait",
+            "street_observer_framing",
+            "couple_group_layered_pose",
+            "mirror_selfie_pose_system",
+            "beauty_closeup_hand_gaze"
+          ],
+          "fallback_terms": [
+            "pose",
+            "shot scale",
+            "framing",
+            "composition",
+            "camera angle"
+          ]
+        },
+        "signal_lexicon": {
+          "strong": [
+            "body pose",
+            "shot scale",
+            "camera angle",
+            "framing",
+            "contrapposto",
+            "close-up",
+            "full body"
+          ],
+          "ambient": [
+            "gaze",
+            "hand pose",
+            "composition",
+            "rule of thirds",
+            "leading lines"
+          ]
+        },
+        "slot_signals": {
+          "body_pose": {
+            "core": [
+              "contrapposto_full_body",
+              "walking_mid_stride_pose",
+              "turning_back_over_shoulder_pose",
+              "stepping_into_frame_pose",
+              "power_stance_feet_apart",
+              "editorial_s_curve_pose"
+            ],
+            "support": [
+              "relaxed_standing_weight_shift",
+              "half_turn_weight_shift_pose",
+              "hands_in_pockets_stance"
+            ]
+          },
+          "shot_scale": {
+            "core": [
+              "full_length_body_shot",
+              "medium_long_knee_up_shot",
+              "close_up_face_shot",
+              "extreme_wide_environment_scale"
+            ],
+            "support": [
+              "wide_full_scene_shot",
+              "medium_waist_up_shot",
+              "medium_close_chest_up_shot",
+              "extreme_close_detail_shot"
+            ]
+          },
+          "composition": {
+            "support": [
+              "third_grid_off_center_subject",
+              "strong_leading_lines_vanish",
+              "layered_foreground_midground_background",
+              "edge_tension_partial_crop"
+            ]
+          }
+        }
+      },
+      "social_vertical_framing": {
+        "policy_id": "social-vertical-framing-semantic-policy-v1",
+        "keywords": [
+          "vertical social frame",
+          "social vertical safe framing",
+          "vertical social",
+          "vertical safe frame",
+          "safe framing",
+          "platform-safe framing",
+          "platform safe frame",
+          "feed safe frame",
+          "9:16 safe frame",
+          "safe frame",
+          "reels safe",
+          "shorts thumbnail",
+          "UI safe negative space",
+          "creator feed",
+          "no readable text"
+        ],
+        "axis_label": "social vertical safe framing",
+        "axis_embedding_text": "vertical short-form social photo framing, UI-safe blank negative space, thumbnail-safe face placement, creator feed composition, no readable captions or hashtags",
+        "steering_slots": [
+          "platform_framing",
+          "format",
+          "composition",
+          "camera_direction",
+          "capture_context",
+          "shot_scale"
+        ],
+        "routed_slots": [
+          "platform_framing",
+          "format",
+          "composition",
+          "camera_direction",
+          "capture_context",
+          "shot_scale"
+        ],
+        "preset_policy": {
+          "allow_ids": [
+            "social_vertical_pose_hook",
+            "editorial_full_body_pose_study",
+            "environmental_portrait_composition",
+            "architecture_leading_lines_portrait",
+            "mirror_selfie_pose_system",
+            "social_ootd_shop_feed",
+            "ootd_contrast_styling",
+            "clean_mirror_selfie_snapshot"
+          ],
+          "fallback_terms": [
+            "vertical",
+            "9:16",
+            "safe frame",
+            "thumbnail",
+            "creator feed"
+          ]
+        },
+        "signal_lexicon": {
+          "strong": [
+            "vertical social frame",
+            "9:16 safe frame",
+            "UI safe",
+            "thumbnail safe",
+            "no readable text"
+          ],
+          "ambient": [
+            "creator feed",
+            "reels",
+            "short-form",
+            "blank negative space"
+          ]
+        },
+        "slot_signals": {
+          "platform_framing": {
+            "core": [
+              "vertical_9x16_ui_safe_frame",
+              "vertical_4x5_feed_safe_frame",
+              "reels_ui_safe_negative_space",
+              "shorts_thumbnail_safe_face_placement",
+              "center_safe_subject_frame"
+            ],
+            "support": [
+              "face_upper_middle_safe_frame",
+              "blank_lower_third_safe_area",
+              "shop_feed_crop_safe_no_text"
+            ]
+          },
+          "format": {
+            "support": [
+              "vertical_9_16",
+              "tiktok_safe_vertical",
+              "story_cover_vertical",
+              "portrait_4_5"
+            ]
+          },
+          "composition": {
+            "support": [
+              "thumbnail_center_safe_composition",
+              "large_negative_space_top_area",
+              "vertical_centered_caption_space"
+            ]
+          }
+        }
       }
     },
     "steering_priority": [
+      "pose_framing_system",
+      "social_vertical_framing",
       "skincare_product_riser_scene",
       "travel_ephemera_flatlay_scene",
       "dark_academia_flatlay_scene",
@@ -180784,6 +185777,72 @@
   },
   "coherence_rules": {
     "family_strength": {
+      "pose_framing_system": {
+        "strong": [
+          "editorial_full_body_pose_study",
+          "environmental_portrait_composition",
+          "architecture_leading_lines_portrait",
+          "beauty_closeup_hand_gaze",
+          "social_vertical_pose_hook",
+          "contrapposto_full_body",
+          "power_stance_feet_apart",
+          "editorial_s_curve_pose",
+          "full_length_body_shot",
+          "medium_long_knee_up_shot",
+          "close_up_face_shot",
+          "extreme_wide_environment_scale",
+          "low_ground_angle",
+          "extreme_low_hero_angle",
+          "strict_top_down_flat_view",
+          "strong_leading_lines_vanish",
+          "centered_architecture_symmetry",
+          "architectural_lines_frame"
+        ],
+        "ambient": [
+          "mirror_selfie_pose_system",
+          "street_observer_framing",
+          "couple_group_layered_pose",
+          "relaxed_standing_weight_shift",
+          "walking_mid_stride_pose",
+          "turning_back_over_shoulder_pose",
+          "stepping_into_frame_pose",
+          "medium_waist_up_shot",
+          "medium_close_chest_up_shot",
+          "wide_full_scene_shot",
+          "vertical_9x16_ui_safe_frame",
+          "vertical_4x5_feed_safe_frame",
+          "center_safe_subject_frame",
+          "thumbnail_center_safe_composition",
+          "third_grid_off_center_subject",
+          "layered_foreground_midground_background"
+        ]
+      },
+      "social_vertical_framing": {
+        "strong": [
+          "social_vertical_pose_hook",
+          "editorial_full_body_pose_study",
+          "vertical_9x16_ui_safe_frame",
+          "vertical_4x5_feed_safe_frame",
+          "reels_ui_safe_negative_space",
+          "shorts_thumbnail_safe_face_placement",
+          "center_safe_subject_frame",
+          "tiktok_safe_vertical",
+          "story_cover_vertical",
+          "thumbnail_center_safe_composition",
+          "large_negative_space_top_area"
+        ],
+        "ambient": [
+          "mirror_selfie_pose_system",
+          "social_ootd_shop_feed",
+          "ootd_contrast_styling",
+          "clean_mirror_selfie_snapshot",
+          "face_upper_middle_safe_frame",
+          "blank_lower_third_safe_area",
+          "shop_feed_crop_safe_no_text",
+          "portrait_4_5",
+          "vertical_centered_caption_space"
+        ]
+      },
       "horror": {
         "strong": [
           "quiet_dread",
@@ -181942,6 +187001,38 @@
         ],
         "context_scope": "all",
         "severity": "hard"
+      },
+      {
+        "id": "platform_framing_must_stay_non_readable",
+        "slots": [
+          "platform_framing",
+          "format",
+          "capture_context",
+          "composition"
+        ],
+        "match_tokens": [
+          "tiktok",
+          "reels",
+          "shorts",
+          "thumbnail",
+          "caption",
+          "hashtag",
+          "overlay",
+          "ui",
+          "shop",
+          "shoppable"
+        ],
+        "requires_item_any": [
+          "safe",
+          "blank",
+          "no_text",
+          "no",
+          "unreadable",
+          "non-legible",
+          "crop"
+        ],
+        "context_scope": "all",
+        "severity": "hard"
       }
     ],
     "slot_conflicts": [
@@ -182404,6 +187495,237 @@
         },
         "severity": "soft",
         "penalty": 0.25
+      },
+      {
+        "id": "closeup_shot_scale_vs_full_body_pose",
+        "left": {
+          "slot": "shot_scale",
+          "facets": [
+            "shot_scale:close_up",
+            "shot_scale:extreme_close"
+          ]
+        },
+        "right": {
+          "slot": "body_pose",
+          "ids": [
+            "contrapposto_full_body",
+            "power_stance_feet_apart",
+            "walking_mid_stride_pose",
+            "stepping_into_frame_pose",
+            "jumping_motion_pose",
+            "editorial_s_curve_pose"
+          ]
+        },
+        "severity": "hard"
+      },
+      {
+        "id": "closeup_shot_scale_vs_full_body_framing",
+        "left": {
+          "slot": "shot_scale",
+          "facets": [
+            "shot_scale:close_up",
+            "shot_scale:extreme_close"
+          ]
+        },
+        "right": {
+          "slot": "subject_framing",
+          "facets": [
+            "shot_scale:full_length"
+          ]
+        },
+        "severity": "hard"
+      },
+      {
+        "id": "full_length_shot_vs_tight_face_crop",
+        "left": {
+          "slot": "shot_scale",
+          "facets": [
+            "shot_scale:full_length",
+            "shot_scale:wide",
+            "shot_scale:extreme_wide"
+          ]
+        },
+        "right": {
+          "slot": "subject_framing",
+          "ids": [
+            "close_up_face_crop",
+            "hands_only_exchange_macro"
+          ]
+        },
+        "severity": "hard"
+      },
+      {
+        "id": "back_view_orientation_vs_direct_gaze",
+        "left": {
+          "slot": "body_orientation",
+          "ids": [
+            "back_view_orientation"
+          ]
+        },
+        "right": {
+          "slot": "gaze_engagement",
+          "ids": [
+            "direct_camera_aware"
+          ]
+        },
+        "severity": "hard"
+      },
+      {
+        "id": "rear_view_camera_vs_direct_gaze",
+        "left": {
+          "slot": "camera_direction",
+          "ids": [
+            "rear_view"
+          ]
+        },
+        "right": {
+          "slot": "gaze_engagement",
+          "ids": [
+            "direct_camera_aware"
+          ]
+        },
+        "severity": "hard"
+      },
+      {
+        "id": "top_down_angle_vs_low_angle",
+        "left": {
+          "slot": "camera_direction",
+          "facets": [
+            "camera_angle:overhead_top_down"
+          ]
+        },
+        "right": {
+          "slot": "composition",
+          "facets": [
+            "camera_angle:low"
+          ]
+        },
+        "severity": "hard"
+      },
+      {
+        "id": "low_angle_camera_vs_top_down_composition",
+        "left": {
+          "slot": "camera_direction",
+          "facets": [
+            "camera_angle:low"
+          ]
+        },
+        "right": {
+          "slot": "composition",
+          "facets": [
+            "camera_angle:overhead_top_down"
+          ]
+        },
+        "severity": "hard"
+      },
+      {
+        "id": "eyes_closed_vs_camera_direct_action",
+        "left": {
+          "slot": "gaze_engagement",
+          "ids": [
+            "eyes_closed_serene"
+          ]
+        },
+        "right": {
+          "slot": "action",
+          "ids": [
+            "looking_camera"
+          ]
+        },
+        "severity": "hard"
+      },
+      {
+        "id": "phone_covering_face_vs_full_expression",
+        "left": {
+          "slot": "gaze_engagement",
+          "ids": [
+            "phone_covering_face_gaze"
+          ]
+        },
+        "right": {
+          "slot": "expression",
+          "ids": [
+            "bright_friendly_smile",
+            "candid_laugh",
+            "relaxed_open_mouth_smile",
+            "confident_direct_gaze"
+          ]
+        },
+        "severity": "hard"
+      },
+      {
+        "id": "negative_space_vs_frame_filling_close_crop",
+        "left": {
+          "slot": "composition",
+          "facets": [
+            "placement:negative_space"
+          ]
+        },
+        "right": {
+          "slot": "shot_scale",
+          "facets": [
+            "shot_scale:extreme_close"
+          ]
+        },
+        "severity": "soft",
+        "penalty": 0.3
+      },
+      {
+        "id": "center_safe_platform_vs_thirds_subject",
+        "left": {
+          "slot": "platform_framing",
+          "facets": [
+            "platform_frame:center_safe"
+          ]
+        },
+        "right": {
+          "slot": "composition",
+          "facets": [
+            "placement:rule_of_thirds"
+          ]
+        },
+        "severity": "soft",
+        "penalty": 0.18
+      },
+      {
+        "id": "profile_orientation_vs_direct_camera_gaze",
+        "left": {
+          "slot": "body_orientation",
+          "ids": [
+            "clean_side_profile_orientation"
+          ]
+        },
+        "right": {
+          "slot": "gaze_engagement",
+          "ids": [
+            "direct_camera_aware"
+          ]
+        },
+        "severity": "soft",
+        "penalty": 0.3
+      },
+      {
+        "id": "silhouette_composition_vs_detailed_expression",
+        "left": {
+          "slot": "composition",
+          "ids": [
+            "silhouette",
+            "silhouette_outline_negative_space",
+            "window_silhouette_negative_space"
+          ]
+        },
+        "right": {
+          "slot": "expression",
+          "ids": [
+            "bright_friendly_smile",
+            "candid_laugh",
+            "playful_smirk",
+            "soft_smile",
+            "confident_direct_gaze"
+          ]
+        },
+        "severity": "soft",
+        "penalty": 0.24
       }
     ]
   },
@@ -184807,9 +190129,6 @@
         ]
       },
       "gaze_engagement": {
-        "subject_categories": [
-          "human"
-        ],
         "deny_domains": [
           "product",
           "jewelry",
@@ -184818,9 +190137,6 @@
         ]
       },
       "hand_pose": {
-        "subject_categories": [
-          "human"
-        ],
         "deny_domains": [
           "product",
           "jewelry",
@@ -184941,6 +190257,23 @@
           "food",
           "wildlife",
           "adult"
+        ]
+      },
+      "body_pose": {
+        "deny_domains": [
+          "product",
+          "jewelry",
+          "food",
+          "wildlife"
+        ]
+      },
+      "shot_scale": {
+        "deny_domains": []
+      },
+      "platform_framing": {
+        "deny_domains": [
+          "wildlife",
+          "food"
         ]
       }
     }

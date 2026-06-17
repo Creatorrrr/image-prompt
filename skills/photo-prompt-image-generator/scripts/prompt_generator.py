@@ -95,6 +95,7 @@ CANDIDATE_PACK_CORE_SLOTS = {
     "costume_style",
     "anatomical_connection",
     "body_evidence_region",
+    "body_pose",
     "species_marker",
     "surface_material",
     "wardrobe_style",
@@ -112,6 +113,10 @@ CANDIDATE_PACK_CORE_SLOTS = {
     "light_type",
     "light_shape",
     "composition",
+    "shot_scale",
+    "platform_framing",
+    "subject_framing",
+    "camera_direction",
 }
 CANDIDATE_PACK_INTENT_STOPWORDS = {
     "달린",
@@ -169,10 +174,12 @@ CANDIDATE_PACK_SEMANTIC_DROPOUT_BUCKETS: Dict[str, tuple[str, ...]] = {
         "capture_context",
         "relational_action",
         "prop_direction",
-        "pose",
+        "body_pose",
     ),
     "camera_composition": (
         "composition",
+        "shot_scale",
+        "platform_framing",
         "subject_framing",
         "camera_direction",
         "camera_type",
@@ -465,8 +472,159 @@ CROSS_SLOT_AFFINITY_CONTEXT_SLOTS: Dict[str, tuple[str, ...]] = {
     "crowd_density": ("location", "situation_context", "occasion_context"),
     "situation_context": ("location", "action", "time_of_day", "crowd_density"),
     "occasion_context": ("location", "prop", "mood", "situation_context"),
+    "body_pose": ("subject", "action", "hand_pose", "body_orientation", "shot_scale", "composition"),
+    "shot_scale": ("composition", "subject_framing", "body_pose", "camera_direction", "lens"),
+    "platform_framing": ("format", "composition", "capture_context", "shot_scale", "camera_direction"),
+    "hand_pose": ("subject", "action", "body_pose", "gaze_engagement", "wardrobe_style"),
+    "gaze_engagement": ("subject", "expression", "body_orientation", "camera_direction", "composition"),
     "capture_context": ("action", "prop", "location", "situation_context", "camera_direction", "composition"),
     "surreal_anchor": ("surreal_concept", "location", "space_condition"),
+}
+
+SEMANTIC_INTENT_SLOT_HINTS: Dict[str, List[JsonDict]] = {
+    "body_pose": [
+        {
+            "id": "intent_contrapposto_pose",
+            "any": ["contrapposto"],
+            "ids": ["contrapposto_full_body", "editorial_s_curve_pose", "power_stance_feet_apart"],
+        },
+        {
+            "id": "intent_walking_lookback_pose",
+            "any": ["walking away", "looking back hook", "look back hook", "turning back"],
+            "ids": ["walking_mid_stride_pose", "turning_back_over_shoulder_pose", "stepping_into_frame_pose"],
+        },
+    ],
+    "shot_scale": [
+        {
+            "id": "intent_full_body_shot_scale",
+            "any": ["full body", "full length", "full-length"],
+            "ids": ["full_length_body_shot", "medium_long_knee_up_shot"],
+        },
+        {
+            "id": "intent_closeup_shot_scale",
+            "any": ["close up", "close-up", "beauty close", "face close"],
+            "ids": ["close_up_face_shot", "medium_close_chest_up_shot", "extreme_close_detail_shot"],
+        },
+        {
+            "id": "intent_wide_environment_shot_scale",
+            "any": ["wide environmental", "tiny subject", "extreme wide", "architecture leading"],
+            "ids": ["extreme_wide_environment_scale", "wide_full_scene_shot"],
+        },
+    ],
+    "platform_framing": [
+        {
+            "id": "intent_tiktok_safe_frame",
+            "any": ["tiktok safe", "reels safe", "shorts thumbnail"],
+            "ids": [
+                "vertical_9x16_ui_safe_frame",
+                "reels_ui_safe_negative_space",
+                "shorts_thumbnail_safe_face_placement",
+            ],
+        },
+        {
+            "id": "intent_vertical_safe_frame",
+            "any": ["vertical safe frame", "9:16 safe", "tiktok safe", "reels safe", "safe frame"],
+            "ids": [
+                "vertical_9x16_ui_safe_frame",
+                "vertical_4x5_feed_safe_frame",
+                "center_safe_subject_frame",
+                "reels_ui_safe_negative_space",
+                "shorts_thumbnail_safe_face_placement",
+            ],
+        }
+    ],
+    "camera_direction": [
+        {
+            "id": "intent_low_angle_camera",
+            "any": ["low angle"],
+            "not_any": ["no low angle", "not low angle", "without low angle"],
+            "ids": ["low_ground_angle", "extreme_low_hero_angle"],
+        },
+        {
+            "id": "intent_top_down_camera",
+            "any": ["top down", "top-down", "flatlay"],
+            "ids": ["strict_top_down_flat_view", "top_down_90", "birds_eye"],
+        },
+        {
+            "id": "intent_mirror_reflection_camera",
+            "any": ["mirror selfie", "mirror reflection", "via reflection"],
+            "ids": ["mirror_reflection_camera_view", "mirror_view_direction", "reflected_in_mirror_direction"],
+        },
+    ],
+    "composition": [
+        {
+            "id": "intent_leading_lines_composition",
+            "any": ["leading lines", "architecture leading"],
+            "ids": ["strong_leading_lines_vanish", "leading_lines_depth", "architectural_lines_frame", "centered_architecture_symmetry"],
+        },
+        {
+            "id": "intent_top_down_composition",
+            "any": ["top down", "top-down", "flatlay"],
+            "ids": ["top_down", "curated_flatlay_grid", "asymmetrical_flatlay_layering"],
+        },
+    ],
+    "hand_pose": [
+        {
+            "id": "intent_hand_near_lips",
+            "any": ["hand near lips", "hand near mouth", "hand touching face"],
+            "ids": ["hand_near_lips", "hand_touching_face"],
+        }
+    ],
+    "gaze_engagement": [
+        {
+            "id": "intent_eyes_closed",
+            "any": ["eyes closed"],
+            "ids": ["eyes_closed_serene"],
+        },
+        {
+            "id": "intent_reflection_direct_gaze",
+            "any": ["direct eye contact via reflection", "reflection direct", "mirror reflection gaze"],
+            "ids": ["reflection_direct_gaze", "mirror_reflection_gaze"],
+        },
+        {
+            "id": "intent_direct_gaze",
+            "any": ["direct gaze", "looking camera", "looking at camera"],
+            "ids": ["direct_camera_aware", "looking_just_past_lens"],
+        },
+        {
+            "id": "intent_lookback_gaze",
+            "any": ["walking away looking back", "looking back hook", "look back hook"],
+            "ids": ["looking_back_over_shoulder_gaze", "looking_away_off_frame"],
+        },
+    ],
+    "body_orientation": [
+        {
+            "id": "intent_back_reflection_orientation",
+            "any": ["back view", "looking back", "over shoulder"],
+            "ids": ["looking_back_over_shoulder_orientation", "back_view_orientation"],
+        }
+    ],
+    "subject_framing": [
+        {
+            "id": "intent_closeup_subject_framing",
+            "any": ["close up", "close-up", "eyes closed"],
+            "ids": ["close_up_face_crop", "head_and_shoulders_crop"],
+        }
+    ],
+    "genre": [
+        {
+            "id": "intent_food_table_genre",
+            "any": ["food table", "top down food", "top-down food"],
+            "ids": ["food", "still_life"],
+        },
+        {
+            "id": "intent_architecture_portrait_genre",
+            "any": ["architecture leading", "wide environmental portrait", "environmental portrait"],
+            "ids": ["portrait", "architecture", "documentary"],
+        },
+    ],
+    "location": [
+        {
+            "id": "intent_architecture_leading_location",
+            "any": ["architecture leading", "centered symmetry"],
+            "ids": ["brutalist_plaza", "gallery_white_cube", "art_gallery_white_hall", "museum_gallery", "modernist_facade"],
+        }
+    ],
 }
 
 SLOT_TEMPERATURE_MULTIPLIERS: Dict[str, float] = {
@@ -484,6 +642,11 @@ SLOT_TEMPERATURE_MULTIPLIERS: Dict[str, float] = {
     "crowd_density": 1.14,
     "situation_context": 1.2,
     "occasion_context": 1.16,
+    "body_pose": 1.2,
+    "shot_scale": 1.16,
+    "platform_framing": 1.14,
+    "hand_pose": 1.12,
+    "gaze_engagement": 1.1,
     "hair_color": 1.12,
     "footwear": 1.16,
     "silhouette_proportion": 1.14,
@@ -513,6 +676,11 @@ COHERENT_DIVERSITY_SLOTS = {
     "occasion_context",
     "camera_type",
     "composition",
+    "body_pose",
+    "shot_scale",
+    "platform_framing",
+    "hand_pose",
+    "gaze_engagement",
     "capture_context",
     "footwear",
     "silhouette_proportion",
@@ -538,6 +706,9 @@ SEMANTIC_SLOT_CAPTION_TEMPLATES: Dict[str, str] = {
     "crowd_density": "Crowd density and social arrangement concept: {description}. It should retrieve empty, sparse, solo, small-group, queue, packed commute, festival crowd, bystander-ring, and stage-facing crowd layouts.",
     "situation_context": "Everyday situation and routine concept: {description}. It should retrieve commute, errands, cafe work, room reset, laundry day, moving day, small-business packing, behind-the-scenes, and social routine grammar without readable text.",
     "occasion_context": "Occasion and event context concept: {description}. It should retrieve graduation, birthday, opening day, closing cleanup, holiday gathering, festival, exhibition opening, workshop, volunteer, and community event atmosphere using non-readable set dressing.",
+    "body_pose": "Clean human body-pose concept: {description}. It should retrieve standing, seated, leaning, crouching, walking, turning, group layering, and editorial posture without adult body-first framing.",
+    "shot_scale": "Photographic shot-scale concept: {description}. It should retrieve extreme wide, wide, full-length, medium-long, medium, medium close-up, close-up, and extreme close-up framing.",
+    "platform_framing": "Platform-safe framing concept: {description}. It should retrieve vertical social crops, UI-safe blank space, thumbnail-safe face placement, feed-safe composition, and no readable text or hashtags.",
     "surreal_concept": "Photoreal surreal event concept: {description}. It should retrieve impossible events that still look like real photographed scenes.",
     "surreal_anchor": "Physical anchor for a photoreal surreal scene: {description}. It should retrieve the real object or surface where the impossible event is grounded.",
 }
@@ -551,6 +722,11 @@ DEFAULT_FACET_VOCAB: JsonDict = {
     "mood_family": ["calm", "tense", "romantic", "surreal", "nostalgic", "commercial", "documentary"],
     "camera_register": ["phone", "professional", "surveillance", "vintage", "studio", "macro"],
     "safety_tier": ["general", "adult_compatible", "adult_only"],
+    "soft_body_role": ["body_emphasis", "narrative_safe"],
+    "shot_scale": ["extreme_wide", "wide", "full_length", "medium_long", "medium", "medium_close", "close_up", "extreme_close"],
+    "camera_angle": ["eye_level", "low", "high", "overhead_top_down", "dutch", "over_shoulder", "pov", "reflection", "hidden_observer"],
+    "placement": ["centered", "rule_of_thirds", "negative_space", "frame_filling", "edge_tension", "entering_frame", "exiting_frame", "layered_depth", "foreground_frame", "symmetry"],
+    "platform_frame": ["vertical_9_16_safe", "vertical_4_5_safe", "square_1_1_safe", "ui_safe_negative_space", "thumbnail_safe", "face_upper_middle", "center_safe", "blank_lower_third", "carousel_crop_safe"],
 }
 
 VALID_SUBJECT_CATEGORIES = {"human", "animal", "food", "object", "sign", "plant", "environment", "generic"}
@@ -619,6 +795,15 @@ DEFAULT_SLOT_APPLICABILITY: JsonDict = {
         "body_framing": {
             "subject_categories": ["human"],
             "deny_domains": ["product", "jewelry", "food", "wildlife"],
+        },
+        "body_pose": {
+            "deny_domains": ["product", "jewelry", "food", "wildlife"],
+        },
+        "shot_scale": {
+            "deny_domains": [],
+        },
+        "platform_framing": {
+            "deny_domains": ["wildlife", "food"],
         },
         "fetish_styling": {
             "subject_categories": ["human"],
@@ -7734,6 +7919,94 @@ def record_intent_steering(context: JsonDict, decision: JsonDict) -> None:
         decisions.append(decision)
 
 
+def normalized_intent_hint_text(context: Optional[JsonDict]) -> str:
+    if not context:
+        return ""
+    parts: List[str] = [str(context.get("intent") or "")]
+    axes = (context.get("intent_axes") or {}).get("items", []) or []
+    for axis in axes:
+        parts.append(str(axis.get("text") or ""))
+        parts.append(str(axis.get("embedding_text") or ""))
+    text = " ".join(part for part in parts if part)
+    return re.sub(r"[-_/]+", " ", text.lower())
+
+
+def semantic_intent_hint_matches(rule: JsonDict, text: str) -> bool:
+    any_terms = [re.sub(r"[-_/]+", " ", str(term).lower()).strip() for term in normalize_list(rule.get("any"))]
+    all_terms = [re.sub(r"[-_/]+", " ", str(term).lower()).strip() for term in normalize_list(rule.get("all"))]
+    not_any_terms = [re.sub(r"[-_/]+", " ", str(term).lower()).strip() for term in normalize_list(rule.get("not_any"))]
+    any_terms = [term for term in any_terms if term]
+    all_terms = [term for term in all_terms if term]
+    not_any_terms = [term for term in not_any_terms if term]
+    if not_any_terms and any(term in text for term in not_any_terms):
+        return False
+    if any_terms and not any(term in text for term in any_terms):
+        return False
+    if all_terms and not all(term in text for term in all_terms):
+        return False
+    return bool(any_terms or all_terms)
+
+
+def semantic_intent_hint_slots(context: Optional[JsonDict], data: Optional[JsonDict] = None) -> List[str]:
+    if not context or not intent_steering_enabled(context):
+        return []
+    text = normalized_intent_hint_text(context)
+    if not text:
+        return []
+    known_slots = set((data or {}).get("slots", {}).keys()) if data else set(SEMANTIC_INTENT_SLOT_HINTS)
+    slots: List[str] = []
+    for slot, rules in SEMANTIC_INTENT_SLOT_HINTS.items():
+        if slot not in known_slots:
+            continue
+        if any(semantic_intent_hint_matches(rule, text) for rule in rules):
+            slots.append(slot)
+    return slots
+
+
+def semantic_intent_slot_has_active_hint(slot: str, context: Optional[JsonDict]) -> bool:
+    if not context or not intent_steering_enabled(context):
+        return False
+    text = normalized_intent_hint_text(context)
+    if not text:
+        return False
+    return any(semantic_intent_hint_matches(rule, text) for rule in SEMANTIC_INTENT_SLOT_HINTS.get(slot, []))
+
+
+def apply_semantic_intent_slot_hints(
+    slot: str,
+    pool: Sequence[Entry],
+    context: Optional[JsonDict],
+) -> List[Entry]:
+    if not context or not intent_steering_enabled(context):
+        return list(pool)
+    rules = SEMANTIC_INTENT_SLOT_HINTS.get(slot, [])
+    if not rules:
+        return list(pool)
+    text = normalized_intent_hint_text(context)
+    if not text:
+        return list(pool)
+    for rule in rules:
+        if not semantic_intent_hint_matches(rule, text):
+            continue
+        allowed = set(normalize_list(rule.get("ids")))
+        filtered = [item for item in pool if str(item.get("id")) in allowed]
+        if not filtered:
+            continue
+        record_intent_steering(
+            context,
+            {
+                "slot": slot,
+                "reason": "explicit_intent_slot_hint",
+                "reason_code": str(rule.get("id") or "explicit_intent_slot_hint"),
+                "before": len(pool),
+                "after": len(filtered),
+                "allowed_ids": sorted(allowed),
+            },
+        )
+        return filtered
+    return list(pool)
+
+
 def family_steering_slots(context: Optional[JsonDict], family: str) -> tuple[str, ...]:
     configured = normalize_list(semantic_policy_family_config(context, family).get("steering_slots"))
     return tuple(configured)
@@ -8445,6 +8718,7 @@ def choose_slot(
         slot_anchor_ids = soft_anchor_pool_for_slot(
             (generation_contract or {}).get("soft_anchor_policy"), slot
         )
+        pool = apply_semantic_intent_slot_hints(slot, pool, semantic_context)
         pool = steer_semantic_candidate_pool(slot, pool, semantic_context, anchor_ids=slot_anchor_ids)
         pool = apply_anchor_reachability_guard(slot, pool, data, generation_contract)
         pool = apply_soft_free_slot_constraints(slot, pool, semantic_context, generation_contract)
@@ -8501,6 +8775,26 @@ def choose_slot(
     compatible = compatible_with_picked(pool, picked, forced=forced, slot=slot, source=data)
     if compatible:
         pool = compatible
+    elif semantic_intent_slot_has_active_hint(slot, semantic_context):
+        relaxed = [
+            item
+            for item in pool
+            if not violates_declared_slot_context_rules(slot, item, picked, data)
+            and not slot_conflict_violations(slot, item, picked, data, "hard")
+        ]
+        if relaxed:
+            record_generation_contract_event(
+                generation_contract,
+                "semantic_intent_hint_relaxed_compatibility",
+                {
+                    "slot": slot,
+                    "reason": "explicit_intent_hint_relaxed_to_declared_hard_rules",
+                    "reason_code": "explicit_intent_hint_relaxed_to_declared_hard_rules",
+                    "before": len(pool),
+                    "after": len(relaxed),
+                },
+            )
+            pool = relaxed
     elif slot == "action":
         fallback = compatible_with_picked(full_pool, picked, forced=False, slot=slot, source=data)
         pool = fallback or pool or full_pool
@@ -9003,6 +9297,7 @@ def apply_soft_anchor_repair(
 DETAIL_REINFORCEMENT_SLOTS = (
     "camera_type",
     "camera_direction",
+    "shot_scale",
     "focus",
     "motion",
     "light_direction",
@@ -9031,7 +9326,7 @@ def reinforce_detail_slots(
     }
     slot_groups = {
         "lighting": ("lighting", "light_direction", "light_type", "light_intensity", "light_shape"),
-        "camera": ("camera_type", "camera_direction", "composition", "lens", "focus", "motion", "body_framing"),
+        "camera": ("camera_type", "camera_direction", "composition", "shot_scale", "platform_framing", "lens", "focus", "motion", "body_framing"),
         "finish": ("texture", "format", "quality"),
     }
 
@@ -9068,6 +9363,7 @@ def build_fields(picked: Dict[str, Entry], lang: str, data: Optional[JsonDict] =
     wardrobe = values.get("wardrobe_style", "")
     footwear = values.get("footwear", "")
     silhouette = values.get("silhouette_proportion", "")
+    body_pose = values.get("body_pose", "")
     costume = values.get("costume_style", "")
 
     if lang == "ko":
@@ -9093,7 +9389,8 @@ def build_fields(picked: Dict[str, Entry], lang: str, data: Optional[JsonDict] =
         if costume:
             subject_mods.append(costume + josa(costume, "을", "를") + " 입은")
         subject_with_mods = clean_spaces(" ".join(subject_mods + ([subject] if subject else [])))
-        subject_phrase = clean_spaces(f"{action} {subject_with_mods}")
+        pose_action = clean_spaces(" ".join(part for part in (action, body_pose) if part))
+        subject_phrase = clean_spaces(f"{pose_action} {subject_with_mods}")
         object_phrase = subject_phrase + josa(subject_phrase, "을", "를") if subject_phrase else ""
     else:
         subject_suffixes = []
@@ -9135,7 +9432,7 @@ def build_fields(picked: Dict[str, Entry], lang: str, data: Optional[JsonDict] =
         if wearing_details:
             subject_suffixes.append("wearing " + unique_join(wearing_details))
         subject_with_mods = clean_spaces(" ".join(([subject] if subject else []) + subject_suffixes))
-        subject_phrase = clean_spaces(f"{subject_with_mods} {action}")
+        subject_phrase = clean_spaces(f"{subject_with_mods} {action} {body_pose}")
         object_phrase = subject_phrase
 
     location_entry = picked.get("location")
@@ -9180,6 +9477,8 @@ def build_fields(picked: Dict[str, Entry], lang: str, data: Optional[JsonDict] =
         "camera_type",
         "capture_context",
         "camera_direction",
+        "shot_scale",
+        "platform_framing",
         "composition",
         "subject_framing",
         "body_framing",
@@ -9203,6 +9502,10 @@ def build_fields(picked: Dict[str, Entry], lang: str, data: Optional[JsonDict] =
     detail_slots = (
         "wearable_accessory",
         "facial_hair",
+        "body_pose",
+        "body_orientation",
+        "hand_pose",
+        "gaze_engagement",
         "wardrobe_style",
         "footwear",
         "silhouette_proportion",
@@ -9590,6 +9893,9 @@ def build_prompt_sections(
     sections["action"] = selected(
         (
             "action",
+            "body_pose",
+            "hand_pose",
+            "gaze_engagement",
             "procedure_step",
             "duty_prop_state",
             "relational_action",
@@ -9619,6 +9925,8 @@ def build_prompt_sections(
             "viewer_position",
             "camera_height",
             "camera_direction",
+            "shot_scale",
+            "platform_framing",
             "composition",
             "partner_framing",
             "gaze_target",
@@ -9759,7 +10067,7 @@ def render_detailed_prompt(
                 f"{medium}로 렌더링할 {genre}. "
                 f"중심 피사체와 상태: {subject_state}; {subject_guidance}. "
                 f"장면과 장소: {location}; {scene_guidance}. "
-                f"카메라와 구도: {camera}; 피사체 크기, 프레임 가장자리, 원근감, 초점 위치, 움직임 처리를 명확히 한다. "
+                f"카메라와 구도: {camera}; 피사체 크기, 포즈 가시성, 플랫폼 안전 프레임, 프레임 가장자리, 원근감, 초점 위치, 움직임 처리를 명확히 한다. "
                 f"조명: {lighting}; 그림자 방향, 하이라이트, 반사광, 노출 균형, 대기감을 실제 촬영처럼 보이게 한다. "
                 f"색감과 분위기: {mood}; 색 대비, 감정 톤, 세계관 맥락이 피사체와 장소에 맞아야 한다. ",
                 special,
@@ -9792,7 +10100,7 @@ def render_detailed_prompt(
                 f"Create {with_indefinite_article(medium)} in the style of {genre}. "
                 f"Subject and state: {subject_state}; {subject_guidance}. "
                 f"Scene and location: {location}; {scene_guidance}. "
-                f"Camera and composition: {camera}; define subject scale, frame edges, perspective, focus behavior, and any motion treatment clearly. "
+                f"Camera and composition: {camera}; define subject scale, pose visibility, platform-safe frame edges, perspective, focus behavior, and any motion treatment clearly. "
                 f"Lighting: {lighting}; make shadow direction, highlights, reflected light, exposure balance, and atmosphere feel like a real photographic capture. "
                 f"Color and mood: {mood}; keep the palette, emotional tone, and world context coherent with the subject and setting. ",
                 special,
@@ -10287,6 +10595,19 @@ def generate_once(
                 record_intent_steering(
                     semantic_context,
                     {"slot": slot, "reason": "required_by_axis", "before": len(slots_to_pick) - 1, "after": len(slots_to_pick)},
+                )
+    for slot in semantic_intent_hint_slots(semantic_context, data):
+        if slot not in slots_to_pick:
+            slots_to_pick.append(slot)
+            if semantic_context:
+                record_intent_steering(
+                    semantic_context,
+                    {
+                        "slot": slot,
+                        "reason": "required_by_explicit_intent_hint",
+                        "before": len(slots_to_pick) - 1,
+                        "after": len(slots_to_pick),
+                    },
                 )
 
     for slot in slots_to_pick:
