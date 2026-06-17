@@ -102,6 +102,10 @@ CANDIDATE_PACK_CORE_SLOTS = {
     "silhouette_proportion",
     "prop",
     "location",
+    "space_condition",
+    "crowd_density",
+    "situation_context",
+    "occasion_context",
     "action",
     "mood",
     "lighting",
@@ -147,6 +151,9 @@ CANDIDATE_PACK_DEFAULT_FORBIDDEN_TERMS = (
 CANDIDATE_PACK_SEMANTIC_DROPOUT_BUCKETS: Dict[str, tuple[str, ...]] = {
     "environment": (
         "location",
+        "space_condition",
+        "crowd_density",
+        "occasion_context",
         "weather",
         "time_of_day",
         "lighting",
@@ -158,6 +165,7 @@ CANDIDATE_PACK_SEMANTIC_DROPOUT_BUCKETS: Dict[str, tuple[str, ...]] = {
     "action_prop": (
         "action",
         "prop",
+        "situation_context",
         "capture_context",
         "relational_action",
         "prop_direction",
@@ -443,18 +451,22 @@ BATCH_DIVERSITY_CONFIGS: Dict[str, Dict[str, Any]] = {
 }
 
 CROSS_SLOT_AFFINITY_CONTEXT_SLOTS: Dict[str, tuple[str, ...]] = {
-    "lighting": ("location", "time_of_day", "weather", "mood"),
-    "light_type": ("location", "time_of_day", "weather", "mood", "lighting"),
-    "light_shape": ("location", "time_of_day", "weather", "mood", "lighting"),
-    "color": ("location", "time_of_day", "weather", "mood", "lighting"),
-    "texture": ("location", "weather", "mood", "lighting", "color"),
+    "lighting": ("location", "space_condition", "situation_context", "time_of_day", "weather", "mood"),
+    "light_type": ("location", "space_condition", "situation_context", "time_of_day", "weather", "mood", "lighting"),
+    "light_shape": ("location", "space_condition", "situation_context", "time_of_day", "weather", "mood", "lighting"),
+    "color": ("location", "space_condition", "occasion_context", "time_of_day", "weather", "mood", "lighting"),
+    "texture": ("location", "space_condition", "weather", "mood", "lighting", "color"),
     "hair_color": ("subject", "appearance_type", "hair_style", "costume_style", "aesthetic_trend"),
     "wardrobe_style": ("subject", "location", "aesthetic_trend", "footwear", "silhouette_proportion"),
     "footwear": ("subject", "location", "aesthetic_trend", "wardrobe_style", "weather"),
     "silhouette_proportion": ("subject", "location", "aesthetic_trend", "wardrobe_style"),
     "makeup_style": ("subject", "location", "aesthetic_trend", "wardrobe_style"),
-    "capture_context": ("action", "prop", "location", "camera_direction", "composition"),
-    "surreal_anchor": ("surreal_concept", "location"),
+    "space_condition": ("location", "weather", "texture", "time_of_day"),
+    "crowd_density": ("location", "situation_context", "occasion_context"),
+    "situation_context": ("location", "action", "time_of_day", "crowd_density"),
+    "occasion_context": ("location", "prop", "mood", "situation_context"),
+    "capture_context": ("action", "prop", "location", "situation_context", "camera_direction", "composition"),
+    "surreal_anchor": ("surreal_concept", "location", "space_condition"),
 }
 
 SLOT_TEMPERATURE_MULTIPLIERS: Dict[str, float] = {
@@ -468,6 +480,10 @@ SLOT_TEMPERATURE_MULTIPLIERS: Dict[str, float] = {
     "light_type": 1.18,
     "film_emulation": 1.22,
     "weather": 1.16,
+    "space_condition": 1.18,
+    "crowd_density": 1.14,
+    "situation_context": 1.2,
+    "occasion_context": 1.16,
     "hair_color": 1.12,
     "footwear": 1.16,
     "silhouette_proportion": 1.14,
@@ -491,6 +507,10 @@ COHERENT_DIVERSITY_SLOTS = {
     "light_shape",
     "film_emulation",
     "weather",
+    "space_condition",
+    "crowd_density",
+    "situation_context",
+    "occasion_context",
     "camera_type",
     "composition",
     "capture_context",
@@ -514,6 +534,10 @@ SEMANTIC_SLOT_CAPTION_TEMPLATES: Dict[str, str] = {
     "mood": "Image mood concept: {description}. It should retrieve emotional tone, genre feeling, tension, romance, nostalgia, horror, calm, or surreal atmosphere.",
     "film_emulation": "Film and camera-emulation concept: {description}. It should retrieve analog film stocks, halation, grain, color cast, instant film, disposable camera, or CCD looks.",
     "weather": "Weather and atmosphere concept: {description}. It should retrieve rain, fog, snow, humidity, frost, sea spray, heat haze, and environmental air effects.",
+    "space_condition": "Space and environment condition concept: {description}. It should retrieve cleanliness, clutter, construction, decay, flooding, renovation, power outage, and lived-in state of a photographed place.",
+    "crowd_density": "Crowd density and social arrangement concept: {description}. It should retrieve empty, sparse, solo, small-group, queue, packed commute, festival crowd, bystander-ring, and stage-facing crowd layouts.",
+    "situation_context": "Everyday situation and routine concept: {description}. It should retrieve commute, errands, cafe work, room reset, laundry day, moving day, small-business packing, behind-the-scenes, and social routine grammar without readable text.",
+    "occasion_context": "Occasion and event context concept: {description}. It should retrieve graduation, birthday, opening day, closing cleanup, holiday gathering, festival, exhibition opening, workshop, volunteer, and community event atmosphere using non-readable set dressing.",
     "surreal_concept": "Photoreal surreal event concept: {description}. It should retrieve impossible events that still look like real photographed scenes.",
     "surreal_anchor": "Physical anchor for a photoreal surreal scene: {description}. It should retrieve the real object or surface where the impossible event is grounded.",
 }
@@ -623,6 +647,18 @@ DEFAULT_SLOT_APPLICABILITY: JsonDict = {
         "surface_material": {
             "subject_categories": ["object", "food", "plant", "environment", "sign"],
             "allow_domains": ["product", "jewelry", "food", "architecture"],
+        },
+        "space_condition": {
+            "deny_domains": ["product", "jewelry", "food", "wildlife", "adult"],
+        },
+        "crowd_density": {
+            "deny_domains": ["product", "jewelry", "food", "wildlife", "adult"],
+        },
+        "situation_context": {
+            "deny_domains": ["product", "jewelry", "food", "wildlife", "adult"],
+        },
+        "occasion_context": {
+            "deny_domains": ["product", "jewelry", "food", "wildlife", "adult"],
         },
     },
 }
@@ -9115,6 +9151,30 @@ def build_fields(picked: Dict[str, Entry], lang: str, data: Optional[JsonDict] =
     else:
         location_phrase = ""
 
+    def slot_phrase(slot_name: str) -> str:
+        entry = picked.get(slot_name)
+        if not entry:
+            return ""
+        if lang == "ko":
+            return entry.get("phrase_ko") or localize(entry, "ko")
+        return entry.get("phrase_en") or localize(entry, "en")
+
+    scene_context_slots = (
+        "space_condition",
+        "crowd_density",
+        "situation_context",
+        "occasion_context",
+    )
+    scene_context_parts = [slot_phrase(slot) for slot in scene_context_slots if slot_phrase(slot)]
+    if lang == "ko":
+        scene_context_sentence = (
+            ensure_period("장면 맥락은 " + ", ".join(scene_context_parts)) if scene_context_parts else ""
+        )
+    else:
+        scene_context_sentence = (
+            ensure_period("Scene context: " + ", ".join(scene_context_parts)) if scene_context_parts else ""
+        )
+
     lighting_slots = ("lighting", "light_direction", "light_type", "light_intensity", "light_shape")
     camera_slots = (
         "camera_type",
@@ -9171,6 +9231,8 @@ def build_fields(picked: Dict[str, Entry], lang: str, data: Optional[JsonDict] =
         style_sentence = ensure_period("전체 분위기는 " + ", ".join(style_parts)) if style_parts else ""
 
         detail_parts = [values[s] for s in detail_slots if values.get(s)]
+        if scene_context_sentence:
+            detail_parts.insert(0, scene_context_sentence)
         detail_sentence = ensure_period("디테일은 " + ", ".join(detail_parts)) if detail_parts else ""
     else:
         technique_chunks = []
@@ -9184,11 +9246,14 @@ def build_fields(picked: Dict[str, Entry], lang: str, data: Optional[JsonDict] =
         style_sentence = ensure_period("Overall mood: " + ", ".join(style_parts)) if style_parts else ""
 
         detail_parts = [values[s] for s in detail_slots if values.get(s)]
+        if scene_context_sentence:
+            detail_parts.insert(0, scene_context_sentence)
         detail_sentence = ensure_period("Finishing details: " + ", ".join(detail_parts)) if detail_parts else ""
 
     fields = {
         **values,
         "location_phrase": location_phrase,
+        "scene_context_sentence": scene_context_sentence,
         "subject_with_mods": subject_with_mods,
         "subject_phrase": subject_phrase,
         "object_phrase": object_phrase,
@@ -9540,6 +9605,7 @@ def build_prompt_sections(
     )
     sections["scene"] = [
         fields.get("location_phrase") or values.get("location", ""),
+        fields.get("scene_context_sentence", ""),
         values.get("time_of_day", ""),
         values.get("weather", ""),
         values.get("surface_material", ""),

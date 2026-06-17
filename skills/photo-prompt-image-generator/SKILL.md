@@ -107,8 +107,8 @@ python3 skills/photo-prompt-image-generator/scripts/generate_images_via_api.py -
 
 ```bash
 # Discovery
-python3 .../generate_photo_prompt.py --list-presets --plain          # 441+ presets (add --include-virtual for recipe presets)
-python3 .../generate_photo_prompt.py --show-slots --plain            # 74+ slots
+python3 .../generate_photo_prompt.py --list-presets --plain          # 502+ presets (add --include-virtual for recipe presets)
+python3 .../generate_photo_prompt.py --show-slots --plain            # 94+ slots
 python3 .../generate_photo_prompt.py --list-tags <slot> --plain      # ids for one slot
 python3 .../generate_photo_prompt.py --concept "카리나 메이드 흡혈귀" --emit-candidate-pack > candidate_pack.json
 python3 .../audit_composed_prompt.py --pack candidate_pack.json --composed composed_prompt.json
@@ -215,6 +215,7 @@ Safety floor for all concepts (recipes carry concept-specific rules in `safety_r
 - For photoreal surreal requests use the closest photo preset plus `--surreal-mode on` (optionally `--surreal-intensity`, `--set surreal_anchor=...`); `--surreal-mode auto --surreal-probability <p>` only for explicitly mixed batches.
 - For physical fantasy/cosplay-prop/cinematic story portraits use `cinematic_fantasy_portrait`; keep weapons framed as nonfunctional cosplay props.
 - For ordinary non-adult social trends prefer `clean_mirror_selfie_snapshot`, `retro_direct_flash_party_snapshot`, `candid_iphone_portrait`, `creator_brand_profile`, or the clean 2026 dailywear presets (`sport_luxe_jersey_street`, `utility_cargo_dailywear`, `genz_minimal_dailywear`, `ootd_contrast_styling`, `dockside_sailorcore_casual`, `lace_trim_soft_casual`, `y2k_90s_nostalgia_casual`, `social_ootd_shop_feed`). Use `--reference-edit-mode` only with actual reference images; `--trend-layer` only when the user asks for that format.
+- For background/environment/situation requests prefer the clean v1.19 scene-context presets (`daily_routine_photodump`, `commute_transit_candid`, `lived_in_room_reset`, `local_shop_bts_documentary`, `event_afterglow_documentary`, `crowd_queue_street_scene`, `weathered_space_condition_study`, `digital_life_workspace_candid`, `sustainable_local_craft_scene`, `surreal_environment_contrast`). Keep social, screen, sign, receipt, label, hashtag, and ad-copy cues non-readable.
 - For sexual-suggestive or fetish-fashion moderation tests, use only adult-compatible presets (`adult_boundary_social_stress_test`, `adult_fetish_fashion_editorial`); never attach adult-only styling slots to childlike, student, family, pet, wildlife, or other incompatible contexts.
 
 ## Prompt Handling
@@ -222,6 +223,7 @@ Safety floor for all concepts (recipes carry concept-specific rules in `safety_r
 - Prefer `prompt_en` for image tools.
 - Preserve user-specified subject, location, format, camera, lighting, mood, and aspect instructions by mapping them to `--preset` or `--set` when an exact tag exists; keep unrepresented constraints in `--concept-lock` first, then `--additional-requirement` for concrete leftover details. Do not add hidden LLM calls to the deterministic scripts.
 - Map neutral fashion/selfie terms to `wardrobe_style`/`footwear`/`silhouette_proportion`/`wearable_accessory`/`garment_detail`/`makeup_style`/`expression`/`subject_framing`, separate from adult-only slots. Social shopping, ad-copy, hashtag, jersey-number, and team-graphic requests should become shoppable/creator composition and abstract non-readable graphics, not visible text.
+- Map scene context terms separately: place names to `location`, place state to `space_condition`, people/crowd layout to `crowd_density`, everyday routines and social process grammar to `situation_context`, and events or occasion timing to `occasion_context`. Background-detail objects stay in `prop` with non-readable set-dressing wording rather than a separate visible-text slot.
 - Do not force non-photo requests (posters, infographics, stickers, UI, typography, webtoon, illustration) through this generator, and do not add design-only concepts to the dictionary. Treat ReactorPrompt export artifacts (EXIF notes, scraper labels) as noise.
 - Preserve candidate-pack ids, chosen slot selections, `negative_en`, and audited `prompt_en` exactly after composition unless the user explicitly asks to edit them or the output is unusable. Do not silently soften or rewrite an audited prompt before image generation; if it is off-theme, regenerate or revise the composed prompt and rerun `audit_composed_prompt.py`.
 - Do not edit `assets/photo_prompt_tags.json` unless the user explicitly asks to change the tag dictionary. Use `--plain` only for human-readable list commands.
