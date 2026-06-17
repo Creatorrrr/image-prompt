@@ -32,6 +32,20 @@ VALID_MATCH_RULE_KEYS = {
 }
 VALID_MATCH_FIELDS = {"id", "en", "ko", "embedding_text", "semantic_anchor"}
 DEFAULT_CONCEPT_RECIPES = Path(__file__).resolve().parents[1] / "assets" / "concept_recipes.json"
+NO_TEXT_REQUIRED_TAG = "no_text_required"
+NO_TEXT_ANCHOR_TERMS = {
+    "abstract",
+    "blank",
+    "blurred",
+    "fictional",
+    "generic",
+    "no readable",
+    "no_text",
+    "non-legible",
+    "non_legible",
+    "unbranded",
+    "unreadable",
+}
 
 
 def merged_facet_vocab(data: dict[str, Any]) -> dict[str, set[str]]:
@@ -98,6 +112,26 @@ def validate_filter_ids(data: dict[str, Any], errors: list[str]) -> None:
             for tag_id in flt.get("ids", []):
                 if tag_id not in valid_ids:
                     errors.append(f"preset:{preset.get('id')}: unknown {slot} id {tag_id}")
+
+
+def validate_no_text_required_entries(data: dict[str, Any], errors: list[str]) -> None:
+    """Require explicit non-readable anchors for text-prone flatlay props and contexts."""
+    for label, entry in all_entries(data):
+        tags = {str(tag).lower() for tag in normalize_list(entry.get("tags"))}
+        if NO_TEXT_REQUIRED_TAG not in tags:
+            continue
+        text = " ".join(
+            [
+                str(entry.get("id", "")),
+                str(entry.get("en", "")),
+                str(entry.get("ko", "")),
+                str(entry.get("embedding_text", "")),
+                " ".join(str(tag) for tag in normalize_list(entry.get("tags"))),
+                " ".join(str(keyword) for keyword in normalize_list(entry.get("keywords"))),
+            ]
+        ).lower()
+        if not any(anchor in text for anchor in NO_TEXT_ANCHOR_TERMS):
+            errors.append(f"{label}: no_text_required entries need a blank/unreadable/non-legible/unbranded anchor")
 
 
 def entry_ids_by_slot(data: dict[str, Any]) -> dict[str, set[str]]:
@@ -1563,6 +1597,7 @@ def main() -> int:
     vocab = merged_facet_vocab(data)
 
     validate_filter_ids(data, errors)
+    validate_no_text_required_entries(data, errors)
     validate_coherence_rules(data, errors)
     validate_semantic_policy(data, errors)
     validate_semantic_metadata(data, errors)

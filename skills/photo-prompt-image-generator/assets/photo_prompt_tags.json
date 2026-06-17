@@ -1,6 +1,6 @@
 {
-  "version": "1.19",
-  "description": "Photographic prompt dictionary with expanded concept-role, folklore, personality, season, era, digital-entity, and environmental-transformation coverage for semantic and recipe-driven prompt generation. Version 1.13 expands robot semantics with disembodied AI, screen-face terminals, sensory apparatus, fabrication origin, lifecycle wear/repair, drones, mecha, prosthetics, domestic systems, surveillance networks and AI-temple metaphors. Version 1.14 adds opt-in visible multi-subject relationship framing, visible in-frame partner roles, and a small-group documentary preset while preserving single-subject defaults. Version 1.15 adds perspective-rich beastkin evidence, procedural-duty, daily-errand, stagecraft, anti-diagram, POV-task, opt-in species, and expanded role/mixin coverage. Version 1.16 adds skin-finish, eye-detail, body-marking, summer stream, orchard shoot-through, cozy sofa, and CCD flash pet-closeup portrait coverage. Version 1.17 broadens realistic/candid portrait variation with expanded skin, eye, body-marking, lens-artifact, gaze-engagement, hand-pose, skin-state, ambient-particle, grain, garment-detail, companion-animal, color-grading, and natural-light lifestyle preset coverage. Version 1.18 adds 2026 fashion dailywear coverage with footwear and silhouette-proportion slots, clean social/dailywear presets, generalized trend tags, and no-readable-text fashion-commerce safeguards. Version 1.19 expands background, environment, and situation coverage with space-condition, crowd-density, everyday-situation, and occasion-context slots plus clean routine, commute, local-shop, event, digital-life, sustainable-local, and surreal-environment presets while keeping social/text cues non-readable.",
+  "version": "1.20",
+  "description": "Photographic prompt dictionary with expanded concept-role, folklore, personality, season, era, digital-entity, and environmental-transformation coverage for semantic and recipe-driven prompt generation. Version 1.13 expands robot semantics with disembodied AI, screen-face terminals, sensory apparatus, fabrication origin, lifecycle wear/repair, drones, mecha, prosthetics, domestic systems, surveillance networks and AI-temple metaphors. Version 1.14 adds opt-in visible multi-subject relationship framing, visible in-frame partner roles, and a small-group documentary preset while preserving single-subject defaults. Version 1.15 adds perspective-rich beastkin evidence, procedural-duty, daily-errand, stagecraft, anti-diagram, POV-task, opt-in species, and expanded role/mixin coverage. Version 1.16 adds skin-finish, eye-detail, body-marking, summer stream, orchard shoot-through, cozy sofa, and CCD flash pet-closeup portrait coverage. Version 1.17 broadens realistic/candid portrait variation with expanded skin, eye, body-marking, lens-artifact, gaze-engagement, hand-pose, skin-state, ambient-particle, grain, garment-detail, companion-animal, color-grading, and natural-light lifestyle preset coverage. Version 1.18 adds 2026 fashion dailywear coverage with footwear and silhouette-proportion slots, clean social/dailywear presets, generalized trend tags, and no-readable-text fashion-commerce safeguards. Version 1.19 expands background, environment, and situation coverage with space-condition, crowd-density, everyday-situation, and occasion-context slots plus clean routine, commute, local-shop, event, digital-life, sustainable-local, and surreal-environment presets while keeping social/text cues non-readable. Version 1.20 expands flatlay, tabletop staging, prop styling, tactile surfaces, aesthetic still-life bundles, and product-riser scenes while keeping paper ephemera, packaging, screens, labels, tickets, and social-commerce cues blank, fictional, unreadable, or unbranded.",
   "facet_vocab": {
     "subject_kind": [
       "human",
@@ -97416,6 +97416,2128 @@
           ]
         }
       }
+    },
+    {
+      "id": "flatlay_food_styling",
+      "ko": "flatlay food styling",
+      "en": "flatlay food styling",
+      "weight": 0.44,
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "surface_material",
+        "lighting",
+        "light_direction",
+        "light_type",
+        "camera_type",
+        "camera_direction",
+        "composition",
+        "lens",
+        "focus",
+        "color",
+        "texture",
+        "format",
+        "quality",
+        "prop"
+      ],
+      "optional_slots": [
+        {
+          "slot": "light_shape",
+          "probability": 0.65
+        },
+        {
+          "slot": "mood",
+          "probability": 0.55
+        },
+        {
+          "slot": "motion",
+          "probability": 0.3
+        }
+      ],
+      "filters": {
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "softbox",
+            "studio_flash",
+            "overcast"
+          ]
+        },
+        "light_direction": {
+          "ids": [
+            "window_left_light",
+            "top_light",
+            "three_quarter_light"
+          ]
+        },
+        "light_type": {
+          "ids": [
+            "open_shade",
+            "softbox",
+            "led_panel",
+            "studio_strobe"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "full_frame_mirrorless",
+            "smartphone_camera",
+            "medium_format_camera"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "top_down_90",
+            "high_observer_angle",
+            "birds_eye"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "topdown_macro_60mm",
+            "macro_100mm",
+            "50mm"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "deep_focus",
+            "macro_focus_stack",
+            "selective_foreground_focus"
+          ]
+        },
+        "color": {
+          "ids": [
+            "warm_earth",
+            "muted",
+            "matte_pastel_editorial",
+            "luxury_black_gold"
+          ]
+        },
+        "format": {
+          "ids": [
+            "square_1_1",
+            "photo_3_2",
+            "portrait_4_5"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "commercial_crisp",
+            "not_overdone"
+          ]
+        },
+        "medium": {
+          "ids": [
+            "menu_photo",
+            "magazine_feature",
+            "social_media_post",
+            "still_life_photo"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "food",
+            "still_life"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "styled_food_flatlay_plate",
+            "croissant",
+            "coffee_cup",
+            "matcha_latte_art"
+          ]
+        },
+        "action": {
+          "ids": [
+            "styled_flatlay_arrangement",
+            "captured_topdown",
+            "neatly_arranged"
+          ]
+        },
+        "location": {
+          "ids": [
+            "flatlay_studio_tabletop",
+            "wooden_table",
+            "marble_table",
+            "home_coffee_table_flatlay"
+          ]
+        },
+        "surface_material": {
+          "ids": [
+            "parchment_paper_surface",
+            "weathered_wood_board_surface",
+            "linen_fabric_surface",
+            "tile_tabletop_surface"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "moka_pot_coffee_beans_prop",
+            "parchment_paper_herbs_prop",
+            "baking_whisk_rolling_pin_prop",
+            "dried_flower_petals_prop"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "curated_flatlay_grid",
+            "asymmetrical_flatlay_layering",
+            "topdown_flatlay_social"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "flour_dust_texture",
+            "parchment_fiber_texture",
+            "steam_haze",
+            "dew_water_droplets_texture"
+          ]
+        },
+        "light_shape": {
+          "ids": [
+            "soft_prop_shadow_falloff",
+            "plant_leaf_shadow_pattern"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "calm",
+            "intimate",
+            "elegant"
+          ]
+        }
+      },
+      "facets": {
+        "safety_tier": [
+          "general"
+        ]
+      },
+      "embedding_text": "flatlay food styling with tabletop props, food styling surfaces, and no readable packaging text",
+      "family": "kitchen_smoke_steam_family"
+    },
+    {
+      "id": "flatlay_beauty_jewelry_hero",
+      "ko": "flatlay beauty jewelry hero",
+      "en": "flatlay beauty jewelry hero",
+      "weight": 0.44,
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "surface_material",
+        "lighting",
+        "light_direction",
+        "light_type",
+        "camera_type",
+        "camera_direction",
+        "composition",
+        "lens",
+        "focus",
+        "color",
+        "texture",
+        "format",
+        "quality",
+        "prop",
+        "aesthetic_trend"
+      ],
+      "optional_slots": [
+        {
+          "slot": "light_shape",
+          "probability": 0.65
+        },
+        {
+          "slot": "mood",
+          "probability": 0.55
+        },
+        {
+          "slot": "motion",
+          "probability": 0.3
+        }
+      ],
+      "filters": {
+        "lighting": {
+          "ids": [
+            "beauty_white_studio_light",
+            "softbox",
+            "soft_window",
+            "studio_flash"
+          ]
+        },
+        "light_direction": {
+          "ids": [
+            "window_left_light",
+            "top_light",
+            "three_quarter_light"
+          ]
+        },
+        "light_type": {
+          "ids": [
+            "open_shade",
+            "softbox",
+            "led_panel",
+            "studio_strobe"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "full_frame_mirrorless",
+            "smartphone_camera",
+            "medium_format_camera"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "top_down_90",
+            "high_observer_angle",
+            "birds_eye"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "topdown_macro_60mm",
+            "macro_100mm",
+            "50mm"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "deep_focus",
+            "macro_focus_stack",
+            "selective_foreground_focus"
+          ]
+        },
+        "color": {
+          "ids": [
+            "clinical_white",
+            "beauty_clean_skin_tone",
+            "matte_pastel_editorial",
+            "luxury_black_gold"
+          ]
+        },
+        "format": {
+          "ids": [
+            "square_1_1",
+            "photo_3_2",
+            "portrait_4_5"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "commercial_crisp",
+            "object_catalog_realism",
+            "high_detail"
+          ]
+        },
+        "medium": {
+          "ids": [
+            "product_catalog",
+            "commercial_photo",
+            "magazine_feature",
+            "still_life_photo"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "product",
+            "still_life"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "skincare_bottle_single",
+            "skincare_bottle_set",
+            "pearl_jewelry_set",
+            "silver_ring_jewelry"
+          ]
+        },
+        "action": {
+          "ids": [
+            "product_centered_on_riser",
+            "styled_flatlay_arrangement",
+            "neatly_arranged"
+          ]
+        },
+        "location": {
+          "ids": [
+            "product_riser_studio_tabletop",
+            "flatlay_studio_tabletop",
+            "bathroom_countertop",
+            "marble_table"
+          ]
+        },
+        "surface_material": {
+          "ids": [
+            "frosted_acrylic_surface",
+            "acrylic_plinth",
+            "velvet_fabric_surface",
+            "white_marble_surface",
+            "mirror_board_surface"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "frosted_skincare_bottle_prop",
+            "serum_dropper_bottle_prop",
+            "velvet_jewelry_tray_prop",
+            "ring_box_flatlay_prop",
+            "pearl_strand_flatlay_prop",
+            "acrylic_riser_display_prop"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "hero_object_centered_flatlay",
+            "negative_space_product_flatlay",
+            "curated_flatlay_grid"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "frosted_acrylic_haze_texture",
+            "soft_velvet_pile_texture",
+            "tarnished_silver_texture",
+            "pearlescent_shell_texture"
+          ]
+        },
+        "light_shape": {
+          "ids": [
+            "prism_rainbow_fragment",
+            "soft_prop_shadow_falloff",
+            "lace_shadow_pattern"
+          ]
+        },
+        "aesthetic_trend": {
+          "ids": [
+            "clean_girl_wellness_still_life",
+            "coquette_balletcore_flatlay"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "luxury",
+            "elegant",
+            "calm"
+          ]
+        }
+      },
+      "facets": {
+        "safety_tier": [
+          "general"
+        ]
+      },
+      "embedding_text": "beauty and jewelry flatlay hero with unbranded skincare, pearls, frosted acrylic, and no readable labels",
+      "family": "product_surface_family"
+    },
+    {
+      "id": "flatlay_travel_desk_documentary",
+      "ko": "flatlay travel desk documentary",
+      "en": "flatlay travel desk documentary",
+      "weight": 0.42,
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "surface_material",
+        "lighting",
+        "light_direction",
+        "light_type",
+        "camera_type",
+        "camera_direction",
+        "composition",
+        "lens",
+        "focus",
+        "color",
+        "texture",
+        "format",
+        "quality",
+        "prop"
+      ],
+      "optional_slots": [
+        {
+          "slot": "light_shape",
+          "probability": 0.65
+        },
+        {
+          "slot": "mood",
+          "probability": 0.55
+        },
+        {
+          "slot": "motion",
+          "probability": 0.3
+        },
+        {
+          "slot": "aesthetic_trend",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "softbox",
+            "studio_flash",
+            "overcast"
+          ]
+        },
+        "light_direction": {
+          "ids": [
+            "window_left_light",
+            "top_light",
+            "three_quarter_light"
+          ]
+        },
+        "light_type": {
+          "ids": [
+            "open_shade",
+            "softbox",
+            "led_panel",
+            "studio_strobe"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "full_frame_mirrorless",
+            "smartphone_camera",
+            "medium_format_camera"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "top_down_90",
+            "high_observer_angle",
+            "birds_eye"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "topdown_macro_60mm",
+            "macro_100mm",
+            "50mm"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "deep_focus",
+            "macro_focus_stack",
+            "selective_foreground_focus"
+          ]
+        },
+        "color": {
+          "ids": [
+            "warm_earth",
+            "muted",
+            "matte_pastel_editorial",
+            "luxury_black_gold"
+          ]
+        },
+        "format": {
+          "ids": [
+            "square_1_1",
+            "photo_3_2",
+            "portrait_4_5"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "candid_imperfect",
+            "not_overdone"
+          ]
+        },
+        "medium": {
+          "ids": [
+            "travel_photo",
+            "documentary_photo",
+            "smartphone_snapshot",
+            "still_life_photo"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "travel",
+            "still_life",
+            "documentary"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "travel_journal_flatlay_subject",
+            "old_camera",
+            "coffee_cup",
+            "typewriter_on_desk"
+          ]
+        },
+        "action": {
+          "ids": [
+            "layered_prop_story_arrangement",
+            "styled_flatlay_arrangement",
+            "captured_topdown"
+          ]
+        },
+        "location": {
+          "ids": [
+            "travel_desk_flatlay",
+            "creator_desk_setup",
+            "hostel_common_kitchen_3am",
+            "flatlay_studio_tabletop"
+          ]
+        },
+        "surface_material": {
+          "ids": [
+            "kraft_paper_surface",
+            "linen_fabric_surface",
+            "weathered_wood_board_surface",
+            "rattan_mat_surface"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "fictional_boarding_pass_prop",
+            "fictional_passport_prop",
+            "generic_hotel_keycard_prop",
+            "non_legible_city_map_prop",
+            "camping_mug_compass_prop",
+            "vintage_camera_flatlay_prop"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "overlapping_paper_ephemera_layout",
+            "scattered_prop_story_layout",
+            "partially_cropped_edge_props"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "handmade_paper_texture",
+            "torn_paper_fiber_texture",
+            "rattan_woven_texture",
+            "fine_grain"
+          ]
+        },
+        "light_shape": {
+          "ids": [
+            "plant_leaf_shadow_pattern",
+            "soft_prop_shadow_falloff"
+          ]
+        },
+        "aesthetic_trend": {
+          "ids": [
+            "granola_outdoor_flatlay_aesthetic",
+            "sustainable_local_aesthetic"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "nostalgic",
+            "calm",
+            "casual_authentic"
+          ]
+        }
+      },
+      "facets": {
+        "safety_tier": [
+          "general"
+        ]
+      },
+      "embedding_text": "travel desk flatlay documentary with fictional boarding pass, blank passport, non-legible map, and no readable text",
+      "family": "memory_object_still_life_family"
+    },
+    {
+      "id": "flatlay_cozy_home_still_life",
+      "ko": "flatlay cozy home still life",
+      "en": "flatlay cozy home still life",
+      "weight": 0.42,
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "surface_material",
+        "lighting",
+        "light_direction",
+        "light_type",
+        "camera_type",
+        "camera_direction",
+        "composition",
+        "lens",
+        "focus",
+        "color",
+        "texture",
+        "format",
+        "quality",
+        "prop",
+        "aesthetic_trend"
+      ],
+      "optional_slots": [
+        {
+          "slot": "light_shape",
+          "probability": 0.65
+        },
+        {
+          "slot": "mood",
+          "probability": 0.55
+        },
+        {
+          "slot": "motion",
+          "probability": 0.3
+        }
+      ],
+      "filters": {
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "softbox",
+            "studio_flash",
+            "overcast"
+          ]
+        },
+        "light_direction": {
+          "ids": [
+            "window_left_light",
+            "top_light",
+            "three_quarter_light"
+          ]
+        },
+        "light_type": {
+          "ids": [
+            "open_shade",
+            "softbox",
+            "led_panel",
+            "studio_strobe"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "full_frame_mirrorless",
+            "smartphone_camera",
+            "medium_format_camera"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "top_down_90",
+            "high_observer_angle",
+            "birds_eye"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "topdown_macro_60mm",
+            "macro_100mm",
+            "50mm"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "deep_focus",
+            "macro_focus_stack",
+            "selective_foreground_focus"
+          ]
+        },
+        "color": {
+          "ids": [
+            "warm_earth",
+            "muted",
+            "matte_pastel_editorial",
+            "luxury_black_gold"
+          ]
+        },
+        "format": {
+          "ids": [
+            "square_1_1",
+            "photo_3_2",
+            "portrait_4_5"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "not_overdone",
+            "phone_realism"
+          ]
+        },
+        "medium": {
+          "ids": [
+            "still_life_photo",
+            "lifestyle_photo",
+            "smartphone_snapshot",
+            "magazine_feature"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "still_life",
+            "lifestyle"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "cozy_home_still_life_objects",
+            "coffee_cup",
+            "vinyl_record_player",
+            "ceramic_bowl"
+          ]
+        },
+        "action": {
+          "ids": [
+            "styled_flatlay_arrangement",
+            "layered_prop_story_arrangement",
+            "neatly_arranged"
+          ]
+        },
+        "location": {
+          "ids": [
+            "home_coffee_table_flatlay",
+            "bright_sofa_apartment_living_room",
+            "cozy_apartment",
+            "flatlay_studio_tabletop"
+          ]
+        },
+        "surface_material": {
+          "ids": [
+            "linen_fabric_surface",
+            "rattan_mat_surface",
+            "weathered_wood_board_surface",
+            "velvet_fabric_surface"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "porcelain_teacup_saucer_prop",
+            "wildflower_bundle_prop",
+            "eucalyptus_sprig_prop",
+            "vinyl_record_sleeve_blank_prop"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "asymmetrical_flatlay_layering",
+            "draped_fabric_corner_frame",
+            "partially_cropped_edge_props"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "rattan_woven_texture",
+            "soft_velvet_pile_texture",
+            "handmade_paper_texture",
+            "fine_grain"
+          ]
+        },
+        "light_shape": {
+          "ids": [
+            "plant_leaf_shadow_pattern",
+            "fairy_light_bokeh_dots",
+            "soft_prop_shadow_falloff"
+          ]
+        },
+        "aesthetic_trend": {
+          "ids": [
+            "burrowcore_cozy_home_aesthetic",
+            "coastal_grandmother_aesthetic",
+            "poetcore_study_aesthetic"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "calm",
+            "intimate",
+            "lazy_sunday_calm"
+          ]
+        }
+      },
+      "facets": {
+        "safety_tier": [
+          "general"
+        ]
+      },
+      "embedding_text": "cozy home flatlay still life with mug, fabric, plants, soft clutter, and no readable text",
+      "family": "memory_object_still_life_family"
+    },
+    {
+      "id": "flatlay_coquette_balletcore",
+      "ko": "flatlay coquette balletcore",
+      "en": "flatlay coquette balletcore",
+      "weight": 0.42,
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "surface_material",
+        "lighting",
+        "light_direction",
+        "light_type",
+        "camera_type",
+        "camera_direction",
+        "composition",
+        "lens",
+        "focus",
+        "color",
+        "texture",
+        "format",
+        "quality",
+        "prop",
+        "aesthetic_trend"
+      ],
+      "optional_slots": [
+        {
+          "slot": "light_shape",
+          "probability": 0.65
+        },
+        {
+          "slot": "mood",
+          "probability": 0.55
+        },
+        {
+          "slot": "motion",
+          "probability": 0.3
+        }
+      ],
+      "filters": {
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "softbox",
+            "studio_flash",
+            "overcast"
+          ]
+        },
+        "light_direction": {
+          "ids": [
+            "window_left_light",
+            "top_light",
+            "three_quarter_light"
+          ]
+        },
+        "light_type": {
+          "ids": [
+            "open_shade",
+            "softbox",
+            "led_panel",
+            "studio_strobe"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "full_frame_mirrorless",
+            "smartphone_camera",
+            "medium_format_camera"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "top_down_90",
+            "high_observer_angle",
+            "birds_eye"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "topdown_macro_60mm",
+            "macro_100mm",
+            "50mm"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "deep_focus",
+            "macro_focus_stack",
+            "selective_foreground_focus"
+          ]
+        },
+        "color": {
+          "ids": [
+            "pastel",
+            "matte_pastel_editorial",
+            "beauty_clean_skin_tone"
+          ]
+        },
+        "format": {
+          "ids": [
+            "square_1_1",
+            "photo_3_2",
+            "portrait_4_5"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "commercial_crisp",
+            "not_overdone"
+          ]
+        },
+        "medium": {
+          "ids": [
+            "still_life_photo",
+            "social_media_post",
+            "magazine_feature"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "still_life",
+            "product",
+            "lifestyle"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "pearl_jewelry_set",
+            "coffee_cup",
+            "skincare_bottle_single"
+          ]
+        },
+        "action": {
+          "ids": [
+            "styled_flatlay_arrangement",
+            "layered_prop_story_arrangement",
+            "captured_topdown"
+          ]
+        },
+        "location": {
+          "ids": [
+            "coquette_tea_table_flatlay",
+            "flatlay_studio_tabletop",
+            "quiet_cafe",
+            "marble_table"
+          ]
+        },
+        "surface_material": {
+          "ids": [
+            "lace_fabric_surface",
+            "velvet_fabric_surface",
+            "white_marble_surface",
+            "linen_fabric_surface"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "satin_ribbon_flatlay_prop",
+            "pearl_strand_flatlay_prop",
+            "lace_glove_flatlay_prop",
+            "porcelain_teacup_saucer_prop",
+            "dried_flower_petals_prop"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "asymmetrical_flatlay_layering",
+            "draped_fabric_corner_frame",
+            "curated_flatlay_grid"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "soft_velvet_pile_texture",
+            "pearlescent_shell_texture",
+            "fine_silk_ribbon_texture",
+            "embroidered_thread_texture"
+          ]
+        },
+        "light_shape": {
+          "ids": [
+            "lace_shadow_pattern",
+            "soft_prop_shadow_falloff",
+            "prism_rainbow_fragment"
+          ]
+        },
+        "aesthetic_trend": {
+          "ids": [
+            "coquette_balletcore_flatlay",
+            "coquette_aesthetic",
+            "balletcore_aesthetic"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "dreamy",
+            "calm",
+            "elegant"
+          ]
+        }
+      },
+      "facets": {
+        "safety_tier": [
+          "general"
+        ]
+      },
+      "embedding_text": "coquette balletcore ribbon pearl teacup flatlay, soft lace and satin, no readable text",
+      "family": "memory_object_still_life_family"
+    },
+    {
+      "id": "flatlay_dark_academia_study",
+      "ko": "flatlay dark academia study",
+      "en": "flatlay dark academia study",
+      "weight": 0.42,
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "surface_material",
+        "lighting",
+        "light_direction",
+        "light_type",
+        "camera_type",
+        "camera_direction",
+        "composition",
+        "lens",
+        "focus",
+        "color",
+        "texture",
+        "format",
+        "quality",
+        "prop",
+        "aesthetic_trend"
+      ],
+      "optional_slots": [
+        {
+          "slot": "light_shape",
+          "probability": 0.65
+        },
+        {
+          "slot": "mood",
+          "probability": 0.55
+        },
+        {
+          "slot": "motion",
+          "probability": 0.3
+        }
+      ],
+      "filters": {
+        "lighting": {
+          "ids": [
+            "candlelight",
+            "chiaroscuro",
+            "soft_window",
+            "tungsten"
+          ]
+        },
+        "light_direction": {
+          "ids": [
+            "window_left_light",
+            "top_light",
+            "three_quarter_light"
+          ]
+        },
+        "light_type": {
+          "ids": [
+            "candlelight",
+            "tungsten_practical",
+            "soft_window"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "full_frame_mirrorless",
+            "smartphone_camera",
+            "medium_format_camera"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "top_down_90",
+            "high_observer_angle",
+            "birds_eye"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "topdown_macro_60mm",
+            "macro_100mm",
+            "50mm"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "deep_focus",
+            "macro_focus_stack",
+            "selective_foreground_focus"
+          ]
+        },
+        "color": {
+          "ids": [
+            "warm_earth",
+            "sepia",
+            "luxury_black_gold",
+            "muted"
+          ]
+        },
+        "format": {
+          "ids": [
+            "square_1_1",
+            "photo_3_2",
+            "portrait_4_5"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "commercial_crisp",
+            "not_overdone"
+          ]
+        },
+        "medium": {
+          "ids": [
+            "still_life_photo",
+            "magazine_feature",
+            "fine_art_print"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "still_life",
+            "fine_art",
+            "documentary"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "dark_academia_book_stack",
+            "typewriter_on_desk",
+            "mechanical_watch"
+          ]
+        },
+        "action": {
+          "ids": [
+            "layered_prop_story_arrangement",
+            "styled_flatlay_arrangement",
+            "neatly_arranged"
+          ]
+        },
+        "location": {
+          "ids": [
+            "dark_academia_study_tabletop",
+            "oak_library_dark_academia",
+            "library_archive_room",
+            "flatlay_studio_tabletop"
+          ]
+        },
+        "surface_material": {
+          "ids": [
+            "dark_walnut_table",
+            "velvet_fabric_surface",
+            "weathered_wood_board_surface",
+            "brass_tray_surface"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "vintage_book_unreadable_pages_prop",
+            "brass_candlestick_prop",
+            "pocket_watch_prop",
+            "fountain_pen_inkwell_prop",
+            "pressed_botanical_specimen_prop"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "stacked_books_prop_tower",
+            "overlapping_paper_ephemera_layout",
+            "asymmetrical_flatlay_layering"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "brass_patina_texture",
+            "torn_paper_fiber_texture",
+            "cracked_leather_texture",
+            "dust_film_texture",
+            "pressed_paper_archive_dust"
+          ]
+        },
+        "light_shape": {
+          "ids": [
+            "candle_teardrop_flame",
+            "hard_object_shadow_still_life",
+            "projector_pool_of_light"
+          ]
+        },
+        "aesthetic_trend": {
+          "ids": [
+            "dark_academia_still_life",
+            "light_academia_aesthetic",
+            "poetcore_study_aesthetic"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "nostalgic",
+            "melancholic",
+            "elegant"
+          ]
+        }
+      },
+      "facets": {
+        "safety_tier": [
+          "general"
+        ]
+      },
+      "embedding_text": "dark academia flatlay with unreadable old book pages, brass candle, fountain pen, and no readable text",
+      "family": "memory_object_still_life_family"
+    },
+    {
+      "id": "flatlay_y2k_indie_sleaze",
+      "ko": "flatlay Y2K indie sleaze",
+      "en": "flatlay Y2K indie sleaze",
+      "weight": 0.42,
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "surface_material",
+        "lighting",
+        "light_direction",
+        "light_type",
+        "camera_type",
+        "camera_direction",
+        "composition",
+        "lens",
+        "focus",
+        "color",
+        "texture",
+        "format",
+        "quality",
+        "prop",
+        "aesthetic_trend"
+      ],
+      "optional_slots": [
+        {
+          "slot": "light_shape",
+          "probability": 0.65
+        },
+        {
+          "slot": "mood",
+          "probability": 0.55
+        },
+        {
+          "slot": "motion",
+          "probability": 0.3
+        }
+      ],
+      "filters": {
+        "lighting": {
+          "ids": [
+            "hard_flash",
+            "studio_flash",
+            "neon",
+            "softbox"
+          ]
+        },
+        "light_direction": {
+          "ids": [
+            "window_left_light",
+            "top_light",
+            "three_quarter_light"
+          ]
+        },
+        "light_type": {
+          "ids": [
+            "on_camera_flash",
+            "studio_strobe",
+            "led_panel"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "compact_digital_camera",
+            "digicam_2000s_camera",
+            "smartphone_camera"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "top_down_90",
+            "high_observer_angle",
+            "birds_eye"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "phone_1x_main",
+            "35mm",
+            "topdown_macro_60mm"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "phone_auto_focus",
+            "selective_foreground_focus",
+            "deep_focus"
+          ]
+        },
+        "color": {
+          "ids": [
+            "kpop_y2k_pastel_chrome",
+            "neon_magenta_cyan",
+            "candy_color",
+            "phone_hdr_color"
+          ]
+        },
+        "format": {
+          "ids": [
+            "square_1_1",
+            "vertical_9_16",
+            "portrait_4_5"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "phone_realism",
+            "real_optical_imperfection",
+            "photoreal"
+          ]
+        },
+        "medium": {
+          "ids": [
+            "still_life_photo",
+            "social_media_post",
+            "smartphone_snapshot",
+            "vhs_video_frame_photo"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "still_life",
+            "lifestyle",
+            "product"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "y2k_desk_gadget_stack",
+            "old_camera",
+            "vinyl_record_player"
+          ]
+        },
+        "action": {
+          "ids": [
+            "layered_prop_story_arrangement",
+            "styled_flatlay_arrangement",
+            "captured_topdown"
+          ]
+        },
+        "location": {
+          "ids": [
+            "y2k_scrapbook_tabletop",
+            "creator_desk_setup",
+            "flatlay_studio_tabletop"
+          ]
+        },
+        "surface_material": {
+          "ids": [
+            "colored_paper_backdrop_surface",
+            "mirror_board_surface",
+            "black_acrylic_reflection",
+            "frosted_acrylic_surface"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "retro_flip_phone_prop",
+            "mp3_cd_sticker_stack_prop",
+            "holographic_stickers_prop",
+            "beaded_phone_charm_prop",
+            "vintage_camera_flatlay_prop"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "scattered_prop_story_layout",
+            "partially_cropped_edge_props",
+            "diagonal_prop_trail"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "iridescent_holographic_film_texture",
+            "sticker_layered_surface_texture",
+            "brushed_steel_micrograin_texture",
+            "compact_digicam_noise"
+          ]
+        },
+        "light_shape": {
+          "ids": [
+            "disco_ball_sparkle_pattern",
+            "hard_object_shadow_still_life",
+            "prism_rainbow_fragment"
+          ]
+        },
+        "aesthetic_trend": {
+          "ids": [
+            "y2k_indie_sleaze_flatlay",
+            "cyber_y2k_aesthetic",
+            "y2k_dailywear_nostalgia"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "playful",
+            "nostalgic",
+            "casual_authentic"
+          ]
+        }
+      },
+      "facets": {
+        "safety_tier": [
+          "general"
+        ]
+      },
+      "embedding_text": "Y2K desk flatlay with unbranded flip phone, holographic stickers, compact camera flash, and no readable text",
+      "family": "memory_object_still_life_family"
+    },
+    {
+      "id": "product_hero_on_riser",
+      "ko": "product hero on riser",
+      "en": "product hero on riser",
+      "weight": 0.44,
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "surface_material",
+        "lighting",
+        "light_direction",
+        "light_type",
+        "camera_type",
+        "camera_direction",
+        "composition",
+        "lens",
+        "focus",
+        "color",
+        "texture",
+        "format",
+        "quality",
+        "prop"
+      ],
+      "optional_slots": [
+        {
+          "slot": "light_shape",
+          "probability": 0.65
+        },
+        {
+          "slot": "mood",
+          "probability": 0.55
+        },
+        {
+          "slot": "motion",
+          "probability": 0.3
+        }
+      ],
+      "filters": {
+        "lighting": {
+          "ids": [
+            "softbox",
+            "studio_flash",
+            "beauty_white_studio_light"
+          ]
+        },
+        "light_direction": {
+          "ids": [
+            "window_left_light",
+            "top_light",
+            "three_quarter_light"
+          ]
+        },
+        "light_type": {
+          "ids": [
+            "open_shade",
+            "softbox",
+            "led_panel",
+            "studio_strobe"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "full_frame_mirrorless",
+            "smartphone_camera",
+            "medium_format_camera"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "top_down_90",
+            "high_observer_angle",
+            "birds_eye"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "topdown_macro_60mm",
+            "macro_100mm",
+            "50mm"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "deep_focus",
+            "macro_focus_stack",
+            "selective_foreground_focus"
+          ]
+        },
+        "color": {
+          "ids": [
+            "warm_earth",
+            "muted",
+            "matte_pastel_editorial",
+            "luxury_black_gold"
+          ]
+        },
+        "format": {
+          "ids": [
+            "square_1_1",
+            "photo_3_2",
+            "portrait_4_5"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "commercial_crisp",
+            "object_catalog_realism",
+            "high_detail"
+          ]
+        },
+        "medium": {
+          "ids": [
+            "product_catalog",
+            "commercial_photo",
+            "ecommerce_photo",
+            "magazine_feature"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "product",
+            "still_life"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "skincare_bottle_single",
+            "perfume_bottle",
+            "silver_ring_jewelry",
+            "ceramic_bowl"
+          ]
+        },
+        "action": {
+          "ids": [
+            "product_centered_on_riser",
+            "floating_product",
+            "neatly_arranged"
+          ]
+        },
+        "location": {
+          "ids": [
+            "product_riser_studio_tabletop",
+            "white_studio",
+            "dark_studio",
+            "flatlay_studio_tabletop"
+          ]
+        },
+        "surface_material": {
+          "ids": [
+            "frosted_acrylic_surface",
+            "curved_riser_surface",
+            "ceramic_pedestal_surface",
+            "acrylic_plinth",
+            "mirror_board_surface"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "acrylic_riser_display_prop",
+            "marble_pedestal_prop",
+            "chrome_sphere_prop",
+            "blank_brand_card_prop",
+            "generic_blank_label_packaging_prop"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "hero_object_centered_flatlay",
+            "negative_space_product_flatlay",
+            "product_floating_centered",
+            "clean_catalog"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "frosted_acrylic_haze_texture",
+            "glass_refraction",
+            "clean_digital",
+            "macro_detail"
+          ]
+        },
+        "light_shape": {
+          "ids": [
+            "strip_light_shape",
+            "large_softbox_shape",
+            "soft_prop_shadow_falloff"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "luxury",
+            "elegant",
+            "calm"
+          ]
+        }
+      },
+      "facets": {
+        "safety_tier": [
+          "general"
+        ]
+      },
+      "embedding_text": "minimal product hero on acrylic or ceramic riser, unbranded packaging, no readable labels",
+      "family": "product_surface_family"
+    },
+    {
+      "id": "neo_deco_interior_still_life",
+      "ko": "neo-deco interior still life",
+      "en": "neo-deco interior still life",
+      "weight": 0.42,
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "surface_material",
+        "lighting",
+        "light_direction",
+        "light_type",
+        "camera_type",
+        "camera_direction",
+        "composition",
+        "lens",
+        "focus",
+        "color",
+        "texture",
+        "format",
+        "quality",
+        "prop",
+        "aesthetic_trend"
+      ],
+      "optional_slots": [
+        {
+          "slot": "light_shape",
+          "probability": 0.65
+        },
+        {
+          "slot": "mood",
+          "probability": 0.55
+        },
+        {
+          "slot": "motion",
+          "probability": 0.3
+        }
+      ],
+      "filters": {
+        "lighting": {
+          "ids": [
+            "studio_flash",
+            "chiaroscuro",
+            "softbox"
+          ]
+        },
+        "light_direction": {
+          "ids": [
+            "window_left_light",
+            "top_light",
+            "three_quarter_light"
+          ]
+        },
+        "light_type": {
+          "ids": [
+            "open_shade",
+            "softbox",
+            "led_panel",
+            "studio_strobe"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "full_frame_mirrorless",
+            "smartphone_camera",
+            "medium_format_camera"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "top_down_90",
+            "high_observer_angle",
+            "birds_eye"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "topdown_macro_60mm",
+            "macro_100mm",
+            "50mm"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "deep_focus",
+            "macro_focus_stack",
+            "selective_foreground_focus"
+          ]
+        },
+        "color": {
+          "ids": [
+            "luxury_black_gold",
+            "warm_earth",
+            "muted"
+          ]
+        },
+        "format": {
+          "ids": [
+            "square_1_1",
+            "photo_3_2",
+            "portrait_4_5"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "commercial_crisp",
+            "not_overdone"
+          ]
+        },
+        "medium": {
+          "ids": [
+            "still_life_photo",
+            "magazine_feature",
+            "commercial_photo"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "still_life",
+            "product",
+            "interior"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "neo_deco_decor_object_arrangement",
+            "perfume_bottle",
+            "silver_ring_jewelry",
+            "ceramic_bowl"
+          ]
+        },
+        "action": {
+          "ids": [
+            "product_centered_on_riser",
+            "styled_flatlay_arrangement",
+            "neatly_arranged"
+          ]
+        },
+        "location": {
+          "ids": [
+            "neo_deco_console_tabletop",
+            "minimal_korean_living_room",
+            "flatlay_studio_tabletop",
+            "marble_table"
+          ]
+        },
+        "surface_material": {
+          "ids": [
+            "red_marble_slab_surface",
+            "travertine_slab_surface",
+            "brass_tray_surface",
+            "mirror_board_surface",
+            "black_acrylic_reflection"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "chrome_sphere_prop",
+            "brass_tray_prop",
+            "fan_arch_deco_object_prop",
+            "marble_pedestal_prop",
+            "blank_brand_card_prop"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "hero_object_centered_flatlay",
+            "centered_symmetry",
+            "layered_reflection_depth",
+            "negative_space_product_flatlay"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "brass_patina_texture",
+            "travertine_pores_texture",
+            "brushed_steel_micrograin_texture",
+            "glass_refraction"
+          ]
+        },
+        "light_shape": {
+          "ids": [
+            "hard_object_shadow_still_life",
+            "strip_light_shape",
+            "prism_rainbow_fragment"
+          ]
+        },
+        "aesthetic_trend": {
+          "ids": [
+            "neo_deco_interior_aesthetic"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "luxury",
+            "elegant",
+            "calm"
+          ]
+        }
+      },
+      "facets": {
+        "safety_tier": [
+          "general"
+        ]
+      },
+      "embedding_text": "neo-deco product still life with chrome brass marble travertine geometry and no readable text",
+      "family": "product_surface_family"
+    },
+    {
+      "id": "witchy_mystic_object_scene",
+      "ko": "witchy mystic object scene",
+      "en": "witchy mystic object scene",
+      "weight": 0.42,
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "surface_material",
+        "lighting",
+        "light_direction",
+        "light_type",
+        "camera_type",
+        "camera_direction",
+        "composition",
+        "lens",
+        "focus",
+        "color",
+        "texture",
+        "format",
+        "quality",
+        "prop",
+        "aesthetic_trend"
+      ],
+      "optional_slots": [
+        {
+          "slot": "light_shape",
+          "probability": 0.65
+        },
+        {
+          "slot": "mood",
+          "probability": 0.55
+        },
+        {
+          "slot": "motion",
+          "probability": 0.3
+        },
+        {
+          "slot": "world",
+          "probability": 0.35
+        }
+      ],
+      "filters": {
+        "lighting": {
+          "ids": [
+            "candlelight",
+            "low_key",
+            "chiaroscuro"
+          ]
+        },
+        "light_direction": {
+          "ids": [
+            "window_left_light",
+            "top_light",
+            "three_quarter_light"
+          ]
+        },
+        "light_type": {
+          "ids": [
+            "candlelight",
+            "tungsten_practical",
+            "narrow_spotlight"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "full_frame_mirrorless",
+            "smartphone_camera",
+            "medium_format_camera"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "top_down_90",
+            "high_observer_angle",
+            "birds_eye"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "topdown_macro_60mm",
+            "macro_100mm",
+            "50mm"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "deep_focus",
+            "macro_focus_stack",
+            "selective_foreground_focus"
+          ]
+        },
+        "color": {
+          "ids": [
+            "luxury_black_gold",
+            "sepia",
+            "muted"
+          ]
+        },
+        "format": {
+          "ids": [
+            "square_1_1",
+            "photo_3_2",
+            "portrait_4_5"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "commercial_crisp",
+            "not_overdone"
+          ]
+        },
+        "medium": {
+          "ids": [
+            "still_life_photo",
+            "fine_art_print",
+            "magazine_feature"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "still_life",
+            "fine_art"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "mystic_tabletop_object_arrangement",
+            "typewriter_on_desk",
+            "ceramic_bowl"
+          ]
+        },
+        "action": {
+          "ids": [
+            "layered_prop_story_arrangement",
+            "styled_flatlay_arrangement",
+            "neatly_arranged"
+          ]
+        },
+        "location": {
+          "ids": [
+            "witchy_apothecary_tabletop",
+            "witch_apothecary_room",
+            "flatlay_studio_tabletop"
+          ]
+        },
+        "surface_material": {
+          "ids": [
+            "dark_walnut_table",
+            "velvet_fabric_surface",
+            "brass_tray_surface",
+            "weathered_wood_board_surface"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "tarot_cards_unreadable_prop",
+            "crystal_cluster_prop",
+            "dried_herbs_glass_vials_prop",
+            "brass_candlestick_prop",
+            "herb_bundle_prop"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "asymmetrical_flatlay_layering",
+            "overlapping_paper_ephemera_layout",
+            "diagonal_prop_trail"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "brass_patina_texture",
+            "soft_velvet_pile_texture",
+            "torn_paper_fiber_texture",
+            "glass_refraction"
+          ]
+        },
+        "light_shape": {
+          "ids": [
+            "candle_teardrop_flame",
+            "hard_object_shadow_still_life",
+            "projector_pool_of_light"
+          ]
+        },
+        "aesthetic_trend": {
+          "ids": [
+            "witchy_mystic_still_life",
+            "whimsigoth_aesthetic"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "uncanny",
+            "ritual_unease",
+            "occult_noir"
+          ]
+        },
+        "world": {
+          "ids": [
+            "realistic_modern",
+            "world_where_small_rituals_protect"
+          ]
+        }
+      },
+      "facets": {
+        "safety_tier": [
+          "general"
+        ]
+      },
+      "embedding_text": "witchy mystic object still life with unreadable tarot cards, crystals, herbs, candlelight, and no readable labels",
+      "family": "memory_object_still_life_family"
     }
   ],
   "templates": {
@@ -105243,6 +107365,250 @@
           "human"
         ],
         "embedding_text": "adult East Asian woman portrait subject, natural realistic lifestyle photo"
+      },
+      {
+        "id": "skincare_bottle_single",
+        "ko": "an unbranded frosted skincare bottle",
+        "en": "an unbranded frosted skincare bottle",
+        "weight": 0.62,
+        "tags": [
+          "object",
+          "product",
+          "beauty",
+          "skincare",
+          "unbranded"
+        ],
+        "embedding_text": "an unbranded frosted skincare bottle",
+        "aliases": [
+          "skincare bottle",
+          "frosted bottle"
+        ],
+        "keywords": [
+          "skincare",
+          "product",
+          "frosted",
+          "unbranded"
+        ],
+        "kind": [
+          "object",
+          "product"
+        ]
+      },
+      {
+        "id": "pearl_jewelry_set",
+        "ko": "a pearl and silver jewelry set",
+        "en": "a pearl and silver jewelry set",
+        "weight": 0.58,
+        "tags": [
+          "object",
+          "product",
+          "jewelry",
+          "pearl",
+          "macro"
+        ],
+        "embedding_text": "a pearl and silver jewelry set",
+        "aliases": [
+          "pearl jewelry",
+          "jewelry set"
+        ],
+        "keywords": [
+          "pearl",
+          "jewelry",
+          "silver",
+          "macro"
+        ],
+        "kind": [
+          "object",
+          "product"
+        ]
+      },
+      {
+        "id": "travel_journal_flatlay_subject",
+        "ko": "a travel journal flatlay with blank paper ephemera",
+        "en": "a travel journal flatlay with blank paper ephemera",
+        "weight": 0.54,
+        "tags": [
+          "object",
+          "travel",
+          "still_life",
+          "paper",
+          "blank",
+          "no_text_required",
+          "no_text"
+        ],
+        "embedding_text": "a travel journal flatlay with fictional blank paper ephemera and no readable text",
+        "aliases": [
+          "travel journal flatlay"
+        ],
+        "keywords": [
+          "travel",
+          "journal",
+          "flatlay",
+          "blank paper"
+        ],
+        "kind": [
+          "object"
+        ]
+      },
+      {
+        "id": "cozy_home_still_life_objects",
+        "ko": "cozy home still-life objects on a tabletop",
+        "en": "cozy home still-life objects on a tabletop",
+        "weight": 0.52,
+        "tags": [
+          "object",
+          "still_life",
+          "home",
+          "cozy"
+        ],
+        "embedding_text": "cozy home still-life objects on a tabletop",
+        "aliases": [
+          "cozy home still life"
+        ],
+        "keywords": [
+          "cozy",
+          "home",
+          "still life",
+          "tabletop"
+        ],
+        "kind": [
+          "object"
+        ]
+      },
+      {
+        "id": "dark_academia_book_stack",
+        "ko": "a stack of old books with unreadable pages",
+        "en": "a stack of old books with unreadable pages",
+        "weight": 0.56,
+        "tags": [
+          "object",
+          "book",
+          "academia",
+          "still_life",
+          "unreadable",
+          "no_text_required",
+          "no_text"
+        ],
+        "embedding_text": "dark academia old book stack with unreadable pages and no readable text",
+        "aliases": [
+          "dark academia books"
+        ],
+        "keywords": [
+          "dark academia",
+          "old books",
+          "unreadable pages"
+        ],
+        "kind": [
+          "object"
+        ]
+      },
+      {
+        "id": "y2k_desk_gadget_stack",
+        "ko": "a Y2K desk gadget stack with an unbranded flip phone",
+        "en": "a Y2K desk gadget stack with an unbranded flip phone",
+        "weight": 0.55,
+        "tags": [
+          "object",
+          "retro",
+          "y2k",
+          "desk",
+          "unbranded"
+        ],
+        "embedding_text": "Y2K desk gadget stack with unbranded flip phone and holographic stickers with no readable lettering",
+        "aliases": [
+          "Y2K desk gadgets"
+        ],
+        "keywords": [
+          "y2k",
+          "flip phone",
+          "stickers",
+          "desk"
+        ],
+        "kind": [
+          "object"
+        ]
+      },
+      {
+        "id": "neo_deco_decor_object_arrangement",
+        "ko": "a neo-deco decor object arrangement",
+        "en": "a neo-deco decor object arrangement",
+        "weight": 0.53,
+        "tags": [
+          "object",
+          "product",
+          "interior",
+          "neo_deco",
+          "brass",
+          "marble"
+        ],
+        "embedding_text": "a neo-deco decor object arrangement",
+        "aliases": [
+          "neo deco objects"
+        ],
+        "keywords": [
+          "neo deco",
+          "brass",
+          "marble",
+          "chrome"
+        ],
+        "kind": [
+          "object",
+          "product"
+        ]
+      },
+      {
+        "id": "mystic_tabletop_object_arrangement",
+        "ko": "a witchy mystic tabletop object arrangement",
+        "en": "a witchy mystic tabletop object arrangement",
+        "weight": 0.53,
+        "tags": [
+          "object",
+          "mystic",
+          "witchy",
+          "still_life",
+          "unreadable",
+          "no_text_required",
+          "no_text"
+        ],
+        "embedding_text": "witchy mystic tabletop object arrangement with tarot cards kept unreadable and no readable text",
+        "aliases": [
+          "mystic tabletop",
+          "witchy still life"
+        ],
+        "keywords": [
+          "witchy",
+          "mystic",
+          "crystal",
+          "tarot"
+        ],
+        "kind": [
+          "object"
+        ]
+      },
+      {
+        "id": "styled_food_flatlay_plate",
+        "ko": "a styled food flatlay plate",
+        "en": "a styled food flatlay plate",
+        "weight": 0.55,
+        "tags": [
+          "food",
+          "object",
+          "still_life",
+          "flatlay"
+        ],
+        "embedding_text": "a styled food flatlay plate",
+        "aliases": [
+          "food flatlay"
+        ],
+        "keywords": [
+          "food",
+          "flatlay",
+          "plate",
+          "styling"
+        ],
+        "kind": [
+          "food"
+        ]
       }
     ],
     "person_origin": [
@@ -118876,6 +121242,114 @@
           "prepping",
           "materials"
         ]
+      },
+      {
+        "id": "styled_flatlay_arrangement",
+        "ko": "styled as a top-down flatlay arrangement",
+        "en": "styled as a top-down flatlay arrangement",
+        "weight": 0.62,
+        "tags": [
+          "object",
+          "product",
+          "food",
+          "flatlay",
+          "arranged"
+        ],
+        "embedding_text": "styled as a top-down flatlay arrangement",
+        "aliases": [
+          "flatlay arrangement"
+        ],
+        "keywords": [
+          "flatlay",
+          "top-down",
+          "arranged"
+        ],
+        "for_any": [
+          "object",
+          "product",
+          "food",
+          "plant",
+          "sign"
+        ]
+      },
+      {
+        "id": "layered_prop_story_arrangement",
+        "ko": "arranged as a layered prop story",
+        "en": "arranged as a layered prop story",
+        "weight": 0.54,
+        "tags": [
+          "object",
+          "still_life",
+          "paper",
+          "layered"
+        ],
+        "embedding_text": "arranged as a layered prop story",
+        "aliases": [
+          "layered prop story"
+        ],
+        "keywords": [
+          "layered",
+          "prop story",
+          "flatlay"
+        ],
+        "for_any": [
+          "object",
+          "product",
+          "food",
+          "plant"
+        ]
+      },
+      {
+        "id": "product_centered_on_riser",
+        "ko": "centered as a hero product on a riser",
+        "en": "centered as a hero product on a riser",
+        "weight": 0.6,
+        "tags": [
+          "object",
+          "product",
+          "studio",
+          "riser"
+        ],
+        "embedding_text": "centered as a hero product on a riser",
+        "aliases": [
+          "product on riser"
+        ],
+        "keywords": [
+          "product hero",
+          "riser",
+          "centered"
+        ],
+        "for_any": [
+          "object",
+          "product"
+        ]
+      },
+      {
+        "id": "knolled_grid_arrangement",
+        "ko": "arranged in a precise knolled grid",
+        "en": "arranged in a precise knolled grid",
+        "weight": 0.52,
+        "tags": [
+          "object",
+          "product",
+          "flatlay",
+          "knolling",
+          "grid"
+        ],
+        "embedding_text": "arranged in a precise knolled grid",
+        "aliases": [
+          "knolling grid"
+        ],
+        "keywords": [
+          "knolling",
+          "grid",
+          "flatlay"
+        ],
+        "for_any": [
+          "object",
+          "product",
+          "food"
+        ]
       }
     ],
     "capture_context": [
@@ -119563,6 +122037,70 @@
           "dressing",
           "context"
         ]
+      },
+      {
+        "id": "editorial_still_life_context",
+        "ko": "editorial still-life capture context",
+        "en": "editorial still-life capture context",
+        "weight": 0.48,
+        "tags": [
+          "still_life",
+          "editorial",
+          "objects"
+        ],
+        "embedding_text": "editorial still-life capture context"
+      },
+      {
+        "id": "product_hero_flatlay_context",
+        "ko": "product hero flatlay capture context",
+        "en": "product hero flatlay capture context",
+        "weight": 0.48,
+        "tags": [
+          "product",
+          "flatlay",
+          "objects"
+        ],
+        "embedding_text": "product hero flatlay capture context"
+      },
+      {
+        "id": "social_flatlay_set_dressing_context",
+        "ko": "social flatlay set-dressing context without captions",
+        "en": "social flatlay set-dressing context without captions",
+        "weight": 0.46,
+        "tags": [
+          "social",
+          "flatlay",
+          "no_text",
+          "objects"
+        ],
+        "embedding_text": "social flatlay set-dressing context without captions"
+      },
+      {
+        "id": "unbranded_packaging_flatlay_context",
+        "ko": "unbranded packaging flatlay context with no readable labels",
+        "en": "unbranded packaging flatlay context with no readable labels",
+        "weight": 0.44,
+        "tags": [
+          "product",
+          "packaging",
+          "unbranded",
+          "no_text"
+        ],
+        "embedding_text": "unbranded packaging flatlay context with no readable labels"
+      },
+      {
+        "id": "no_text_paper_ephemera_context",
+        "ko": "paper ephemera context with all text blank or unreadable",
+        "en": "paper ephemera context with all text blank or unreadable",
+        "weight": 0.44,
+        "tags": [
+          "paper",
+          "ephemera",
+          "blank",
+          "unreadable",
+          "no_text"
+        ],
+        "embedding_text": "paper ephemera context with all text blank or unreadable"
       }
     ],
     "prop": [
@@ -128319,6 +130857,1156 @@
           "wreath",
           "letters"
         ]
+      },
+      {
+        "id": "satin_ribbon_flatlay_prop",
+        "ko": "a satin ribbon flatlay prop",
+        "en": "a satin ribbon flatlay prop",
+        "weight": 0.58,
+        "tags": [
+          "ribbon",
+          "fabric",
+          "coquette",
+          "flatlay"
+        ],
+        "embedding_text": "a satin ribbon flatlay prop",
+        "aliases": [
+          "satin ribbon"
+        ],
+        "keywords": [
+          "ribbon",
+          "satin",
+          "coquette"
+        ],
+        "for_any": [
+          "object",
+          "product",
+          "food"
+        ]
+      },
+      {
+        "id": "pearl_strand_flatlay_prop",
+        "ko": "a pearl strand flatlay prop",
+        "en": "a pearl strand flatlay prop",
+        "weight": 0.58,
+        "tags": [
+          "pearl",
+          "jewelry",
+          "coquette",
+          "flatlay"
+        ],
+        "embedding_text": "a pearl strand flatlay prop",
+        "aliases": [
+          "pearl strand"
+        ],
+        "keywords": [
+          "pearl",
+          "jewelry",
+          "flatlay"
+        ],
+        "for_any": [
+          "object",
+          "product"
+        ]
+      },
+      {
+        "id": "lace_glove_flatlay_prop",
+        "ko": "a lace glove flatlay prop",
+        "en": "a lace glove flatlay prop",
+        "weight": 0.48,
+        "tags": [
+          "lace",
+          "fabric",
+          "fashion",
+          "coquette"
+        ],
+        "embedding_text": "a lace glove flatlay prop",
+        "aliases": [
+          "lace glove"
+        ],
+        "keywords": [
+          "lace",
+          "glove",
+          "flatlay"
+        ],
+        "for_any": [
+          "object",
+          "product"
+        ]
+      },
+      {
+        "id": "porcelain_teacup_saucer_prop",
+        "ko": "a porcelain teacup and saucer prop",
+        "en": "a porcelain teacup and saucer prop",
+        "weight": 0.56,
+        "tags": [
+          "tea",
+          "porcelain",
+          "cafe",
+          "flatlay"
+        ],
+        "embedding_text": "a porcelain teacup and saucer prop",
+        "aliases": [
+          "porcelain teacup"
+        ],
+        "keywords": [
+          "teacup",
+          "porcelain",
+          "saucer"
+        ],
+        "for_any": [
+          "object",
+          "food",
+          "product"
+        ]
+      },
+      {
+        "id": "vintage_book_unreadable_pages_prop",
+        "ko": "a vintage book opened to unreadable pages",
+        "en": "a vintage book opened to unreadable pages",
+        "weight": 0.55,
+        "tags": [
+          "book",
+          "paper",
+          "academia",
+          "vintage",
+          "unreadable",
+          "no_text_required",
+          "no_text"
+        ],
+        "embedding_text": "a vintage old book opened to unreadable pages with no readable text",
+        "aliases": [
+          "unreadable old book"
+        ],
+        "keywords": [
+          "book",
+          "unreadable",
+          "pages"
+        ],
+        "for_any": [
+          "object",
+          "product"
+        ]
+      },
+      {
+        "id": "fictional_boarding_pass_prop",
+        "ko": "a fictional boarding pass with no readable text",
+        "en": "a fictional boarding pass with no readable text",
+        "weight": 0.52,
+        "tags": [
+          "paper",
+          "travel",
+          "ticket",
+          "fictional",
+          "no_text_required",
+          "no_text"
+        ],
+        "embedding_text": "a fictional boarding pass with no readable text",
+        "aliases": [
+          "fictional boarding pass"
+        ],
+        "keywords": [
+          "fictional",
+          "boarding pass",
+          "no readable text"
+        ],
+        "for_any": [
+          "object",
+          "product"
+        ]
+      },
+      {
+        "id": "fictional_passport_prop",
+        "ko": "a fictional unbranded passport prop with unreadable details",
+        "en": "a fictional unbranded passport prop with unreadable details",
+        "weight": 0.5,
+        "tags": [
+          "paper",
+          "travel",
+          "passport",
+          "unbranded",
+          "fictional",
+          "unreadable",
+          "no_text_required",
+          "no_text"
+        ],
+        "embedding_text": "a fictional unbranded passport prop with unreadable details",
+        "aliases": [
+          "fictional passport"
+        ],
+        "keywords": [
+          "fictional",
+          "passport",
+          "unbranded",
+          "unreadable"
+        ],
+        "for_any": [
+          "object",
+          "product"
+        ]
+      },
+      {
+        "id": "generic_hotel_keycard_prop",
+        "ko": "a generic unbranded hotel keycard with no readable text",
+        "en": "a generic unbranded hotel keycard with no readable text",
+        "weight": 0.48,
+        "tags": [
+          "travel",
+          "card",
+          "hotel",
+          "unbranded",
+          "generic",
+          "no_text_required",
+          "no_text"
+        ],
+        "embedding_text": "a generic unbranded hotel keycard with no readable text",
+        "aliases": [
+          "generic hotel keycard"
+        ],
+        "keywords": [
+          "generic",
+          "hotel keycard",
+          "unbranded"
+        ],
+        "for_any": [
+          "object",
+          "product"
+        ]
+      },
+      {
+        "id": "non_legible_city_map_prop",
+        "ko": "a non-legible city map prop",
+        "en": "a non-legible city map prop",
+        "weight": 0.5,
+        "tags": [
+          "paper",
+          "travel",
+          "map",
+          "non_legible",
+          "no_text_required",
+          "no_text"
+        ],
+        "embedding_text": "a non-legible city map prop",
+        "aliases": [
+          "non-legible map"
+        ],
+        "keywords": [
+          "map",
+          "non-legible",
+          "travel"
+        ],
+        "for_any": [
+          "object",
+          "product"
+        ]
+      },
+      {
+        "id": "blank_brand_card_prop",
+        "ko": "a blank brand card with no readable logo or text",
+        "en": "a blank brand card with no readable logo or text",
+        "weight": 0.48,
+        "tags": [
+          "paper",
+          "card",
+          "packaging",
+          "unbranded",
+          "blank",
+          "no_text_required",
+          "no_text"
+        ],
+        "embedding_text": "a blank brand card with no readable logo or text",
+        "aliases": [
+          "blank brand card"
+        ],
+        "keywords": [
+          "blank",
+          "brand card",
+          "unbranded"
+        ],
+        "for_any": [
+          "object",
+          "product"
+        ]
+      },
+      {
+        "id": "generic_blank_label_packaging_prop",
+        "ko": "generic unbranded packaging with blank labels",
+        "en": "generic unbranded packaging with blank labels",
+        "weight": 0.5,
+        "tags": [
+          "packaging",
+          "label",
+          "unbranded",
+          "product",
+          "generic",
+          "blank",
+          "no_text_required",
+          "no_text"
+        ],
+        "embedding_text": "generic unbranded packaging with blank labels",
+        "aliases": [
+          "blank label packaging"
+        ],
+        "keywords": [
+          "generic",
+          "blank label",
+          "unbranded packaging"
+        ],
+        "for_any": [
+          "object",
+          "product"
+        ]
+      },
+      {
+        "id": "washi_tape_paper_clips_prop",
+        "ko": "washi tape and paper clips",
+        "en": "washi tape and paper clips",
+        "weight": 0.48,
+        "tags": [
+          "stationery",
+          "paper",
+          "craft",
+          "flatlay"
+        ],
+        "embedding_text": "washi tape and paper clips",
+        "aliases": [
+          "washi tape paper clips"
+        ],
+        "keywords": [
+          "washi tape",
+          "paper clips",
+          "stationery"
+        ],
+        "for_any": [
+          "object",
+          "product"
+        ]
+      },
+      {
+        "id": "pressed_botanical_specimen_prop",
+        "ko": "a pressed botanical specimen prop",
+        "en": "a pressed botanical specimen prop",
+        "weight": 0.5,
+        "tags": [
+          "botanical",
+          "plant",
+          "paper",
+          "flatlay"
+        ],
+        "embedding_text": "a pressed botanical specimen prop",
+        "aliases": [
+          "pressed botanical specimen"
+        ],
+        "keywords": [
+          "pressed flower",
+          "botanical",
+          "specimen"
+        ],
+        "for_any": [
+          "object",
+          "product",
+          "plant"
+        ]
+      },
+      {
+        "id": "brass_candlestick_prop",
+        "ko": "a brass candlestick prop",
+        "en": "a brass candlestick prop",
+        "weight": 0.54,
+        "tags": [
+          "brass",
+          "candle",
+          "academia",
+          "vintage"
+        ],
+        "embedding_text": "a brass candlestick prop",
+        "aliases": [
+          "brass candlestick"
+        ],
+        "keywords": [
+          "brass",
+          "candlestick",
+          "dark academia"
+        ],
+        "for_any": [
+          "object",
+          "product"
+        ]
+      },
+      {
+        "id": "pocket_watch_prop",
+        "ko": "a pocket watch prop",
+        "en": "a pocket watch prop",
+        "weight": 0.48,
+        "tags": [
+          "watch",
+          "vintage",
+          "academia",
+          "brass"
+        ],
+        "embedding_text": "a pocket watch prop",
+        "aliases": [
+          "pocket watch"
+        ],
+        "keywords": [
+          "pocket watch",
+          "vintage",
+          "brass"
+        ],
+        "for_any": [
+          "object",
+          "product"
+        ]
+      },
+      {
+        "id": "fountain_pen_inkwell_prop",
+        "ko": "a fountain pen and inkwell prop",
+        "en": "a fountain pen and inkwell prop",
+        "weight": 0.5,
+        "tags": [
+          "stationery",
+          "academia",
+          "paper",
+          "vintage"
+        ],
+        "embedding_text": "a fountain pen and inkwell prop",
+        "aliases": [
+          "fountain pen inkwell"
+        ],
+        "keywords": [
+          "fountain pen",
+          "inkwell",
+          "academia"
+        ],
+        "for_any": [
+          "object",
+          "product"
+        ]
+      },
+      {
+        "id": "dried_flower_petals_prop",
+        "ko": "scattered dried flower petals",
+        "en": "scattered dried flower petals",
+        "weight": 0.52,
+        "tags": [
+          "flower",
+          "botanical",
+          "romance",
+          "flatlay"
+        ],
+        "embedding_text": "scattered dried flower petals",
+        "aliases": [
+          "dried flower petals"
+        ],
+        "keywords": [
+          "dried flowers",
+          "petals",
+          "flatlay"
+        ],
+        "for_any": [
+          "object",
+          "product",
+          "food"
+        ]
+      },
+      {
+        "id": "wildflower_bundle_prop",
+        "ko": "a small wildflower bundle prop",
+        "en": "a small wildflower bundle prop",
+        "weight": 0.5,
+        "tags": [
+          "flower",
+          "botanical",
+          "garden",
+          "flatlay"
+        ],
+        "embedding_text": "a small wildflower bundle prop",
+        "aliases": [
+          "wildflower bundle"
+        ],
+        "keywords": [
+          "wildflower",
+          "bundle",
+          "botanical"
+        ],
+        "for_any": [
+          "object",
+          "product",
+          "plant"
+        ]
+      },
+      {
+        "id": "eucalyptus_sprig_prop",
+        "ko": "a eucalyptus sprig prop",
+        "en": "a eucalyptus sprig prop",
+        "weight": 0.48,
+        "tags": [
+          "plant",
+          "botanical",
+          "wellness",
+          "flatlay"
+        ],
+        "embedding_text": "a eucalyptus sprig prop",
+        "aliases": [
+          "eucalyptus sprig"
+        ],
+        "keywords": [
+          "eucalyptus",
+          "botanical",
+          "wellness"
+        ],
+        "for_any": [
+          "object",
+          "product",
+          "plant"
+        ]
+      },
+      {
+        "id": "seashell_sea_glass_prop",
+        "ko": "seashells and sea glass props",
+        "en": "seashells and sea glass props",
+        "weight": 0.5,
+        "tags": [
+          "coastal",
+          "shell",
+          "glass",
+          "flatlay"
+        ],
+        "embedding_text": "seashells and sea glass props",
+        "aliases": [
+          "seashell sea glass"
+        ],
+        "keywords": [
+          "seashell",
+          "sea glass",
+          "coastal"
+        ],
+        "for_any": [
+          "object",
+          "product"
+        ]
+      },
+      {
+        "id": "moka_pot_coffee_beans_prop",
+        "ko": "a moka pot with coffee beans",
+        "en": "a moka pot with coffee beans",
+        "weight": 0.52,
+        "tags": [
+          "coffee",
+          "cafe",
+          "food",
+          "flatlay"
+        ],
+        "embedding_text": "a moka pot with coffee beans",
+        "aliases": [
+          "moka pot coffee beans"
+        ],
+        "keywords": [
+          "moka pot",
+          "coffee beans",
+          "cafe"
+        ],
+        "for_any": [
+          "object",
+          "food",
+          "product"
+        ]
+      },
+      {
+        "id": "parchment_paper_herbs_prop",
+        "ko": "parchment paper with herbs",
+        "en": "parchment paper with herbs",
+        "weight": 0.5,
+        "tags": [
+          "food",
+          "paper",
+          "herb",
+          "flatlay"
+        ],
+        "embedding_text": "parchment paper with herbs",
+        "aliases": [
+          "parchment herbs"
+        ],
+        "keywords": [
+          "parchment",
+          "herbs",
+          "food styling"
+        ],
+        "for_any": [
+          "object",
+          "food",
+          "product"
+        ]
+      },
+      {
+        "id": "baking_whisk_rolling_pin_prop",
+        "ko": "a baking whisk and rolling pin",
+        "en": "a baking whisk and rolling pin",
+        "weight": 0.48,
+        "tags": [
+          "baking",
+          "food",
+          "wood",
+          "flatlay"
+        ],
+        "embedding_text": "a baking whisk and rolling pin",
+        "aliases": [
+          "whisk rolling pin"
+        ],
+        "keywords": [
+          "baking",
+          "whisk",
+          "rolling pin"
+        ],
+        "for_any": [
+          "object",
+          "food",
+          "product"
+        ]
+      },
+      {
+        "id": "frosted_skincare_bottle_prop",
+        "ko": "a frosted unbranded skincare bottle prop",
+        "en": "a frosted unbranded skincare bottle prop",
+        "weight": 0.56,
+        "tags": [
+          "beauty",
+          "product",
+          "skincare",
+          "unbranded"
+        ],
+        "embedding_text": "a frosted unbranded skincare bottle prop",
+        "aliases": [
+          "frosted skincare bottle"
+        ],
+        "keywords": [
+          "skincare",
+          "frosted bottle",
+          "unbranded"
+        ],
+        "for_any": [
+          "object",
+          "product"
+        ]
+      },
+      {
+        "id": "serum_dropper_bottle_prop",
+        "ko": "an unbranded serum dropper bottle prop",
+        "en": "an unbranded serum dropper bottle prop",
+        "weight": 0.54,
+        "tags": [
+          "beauty",
+          "product",
+          "skincare",
+          "unbranded"
+        ],
+        "embedding_text": "an unbranded serum dropper bottle prop",
+        "aliases": [
+          "serum dropper bottle"
+        ],
+        "keywords": [
+          "serum",
+          "dropper",
+          "unbranded"
+        ],
+        "for_any": [
+          "object",
+          "product"
+        ]
+      },
+      {
+        "id": "velvet_jewelry_tray_prop",
+        "ko": "a velvet jewelry tray prop",
+        "en": "a velvet jewelry tray prop",
+        "weight": 0.54,
+        "tags": [
+          "jewelry",
+          "velvet",
+          "product",
+          "flatlay"
+        ],
+        "embedding_text": "a velvet jewelry tray prop",
+        "aliases": [
+          "velvet jewelry tray"
+        ],
+        "keywords": [
+          "velvet",
+          "jewelry tray",
+          "product"
+        ],
+        "for_any": [
+          "object",
+          "product"
+        ]
+      },
+      {
+        "id": "ring_box_flatlay_prop",
+        "ko": "an unbranded ring box flatlay prop",
+        "en": "an unbranded ring box flatlay prop",
+        "weight": 0.5,
+        "tags": [
+          "jewelry",
+          "box",
+          "product",
+          "unbranded"
+        ],
+        "embedding_text": "an unbranded ring box flatlay prop",
+        "aliases": [
+          "ring box"
+        ],
+        "keywords": [
+          "ring box",
+          "jewelry",
+          "unbranded"
+        ],
+        "for_any": [
+          "object",
+          "product"
+        ]
+      },
+      {
+        "id": "acrylic_riser_display_prop",
+        "ko": "a frosted acrylic riser display prop",
+        "en": "a frosted acrylic riser display prop",
+        "weight": 0.58,
+        "tags": [
+          "riser",
+          "acrylic",
+          "product",
+          "studio"
+        ],
+        "embedding_text": "a frosted acrylic riser display prop",
+        "aliases": [
+          "acrylic riser"
+        ],
+        "keywords": [
+          "acrylic",
+          "riser",
+          "product hero"
+        ],
+        "for_any": [
+          "object",
+          "product"
+        ]
+      },
+      {
+        "id": "marble_pedestal_prop",
+        "ko": "a marble pedestal prop",
+        "en": "a marble pedestal prop",
+        "weight": 0.54,
+        "tags": [
+          "marble",
+          "pedestal",
+          "product",
+          "studio"
+        ],
+        "embedding_text": "a marble pedestal prop",
+        "aliases": [
+          "marble pedestal"
+        ],
+        "keywords": [
+          "marble",
+          "pedestal",
+          "product"
+        ],
+        "for_any": [
+          "object",
+          "product"
+        ]
+      },
+      {
+        "id": "chrome_sphere_prop",
+        "ko": "a chrome sphere prop",
+        "en": "a chrome sphere prop",
+        "weight": 0.5,
+        "tags": [
+          "chrome",
+          "metal",
+          "reflection",
+          "neo_deco"
+        ],
+        "embedding_text": "a chrome sphere prop",
+        "aliases": [
+          "chrome sphere"
+        ],
+        "keywords": [
+          "chrome",
+          "sphere",
+          "reflection"
+        ],
+        "for_any": [
+          "object",
+          "product"
+        ]
+      },
+      {
+        "id": "brass_tray_prop",
+        "ko": "a brass tray prop",
+        "en": "a brass tray prop",
+        "weight": 0.5,
+        "tags": [
+          "brass",
+          "tray",
+          "metal",
+          "neo_deco"
+        ],
+        "embedding_text": "a brass tray prop",
+        "aliases": [
+          "brass tray"
+        ],
+        "keywords": [
+          "brass",
+          "tray",
+          "neo deco"
+        ],
+        "for_any": [
+          "object",
+          "product",
+          "food"
+        ]
+      },
+      {
+        "id": "fan_arch_deco_object_prop",
+        "ko": "a fan-arch deco object prop",
+        "en": "a fan-arch deco object prop",
+        "weight": 0.46,
+        "tags": [
+          "neo_deco",
+          "geometric",
+          "interior",
+          "object"
+        ],
+        "embedding_text": "a fan-arch deco object prop",
+        "aliases": [
+          "fan arch deco object"
+        ],
+        "keywords": [
+          "fan arch",
+          "deco",
+          "geometric"
+        ],
+        "for_any": [
+          "object",
+          "product"
+        ]
+      },
+      {
+        "id": "retro_flip_phone_prop",
+        "ko": "an unbranded retro flip phone prop",
+        "en": "an unbranded retro flip phone prop",
+        "weight": 0.56,
+        "tags": [
+          "y2k",
+          "phone",
+          "retro",
+          "unbranded"
+        ],
+        "embedding_text": "an unbranded retro flip phone prop",
+        "aliases": [
+          "retro flip phone"
+        ],
+        "keywords": [
+          "flip phone",
+          "y2k",
+          "unbranded"
+        ],
+        "for_any": [
+          "object",
+          "product"
+        ]
+      },
+      {
+        "id": "mp3_cd_sticker_stack_prop",
+        "ko": "a stack of MP3 player, blank CD, and stickers without readable text",
+        "en": "a stack of MP3 player, blank CD, and stickers without readable text",
+        "weight": 0.54,
+        "tags": [
+          "y2k",
+          "music",
+          "sticker",
+          "desk",
+          "blank",
+          "no_text_required",
+          "no_text"
+        ],
+        "embedding_text": "a stack of MP3 player, blank CD, and stickers without readable text",
+        "aliases": [
+          "mp3 cd sticker stack"
+        ],
+        "keywords": [
+          "mp3",
+          "cd",
+          "stickers",
+          "no readable text"
+        ],
+        "for_any": [
+          "object",
+          "product"
+        ]
+      },
+      {
+        "id": "holographic_stickers_prop",
+        "ko": "holographic stickers with no readable lettering",
+        "en": "holographic stickers with no readable lettering",
+        "weight": 0.5,
+        "tags": [
+          "sticker",
+          "holographic",
+          "y2k",
+          "unreadable",
+          "no_text_required",
+          "no_text"
+        ],
+        "embedding_text": "holographic stickers with no readable lettering",
+        "aliases": [
+          "holographic stickers"
+        ],
+        "keywords": [
+          "holographic",
+          "stickers",
+          "no readable lettering"
+        ],
+        "for_any": [
+          "object",
+          "product"
+        ]
+      },
+      {
+        "id": "beaded_phone_charm_prop",
+        "ko": "a beaded phone charm prop",
+        "en": "a beaded phone charm prop",
+        "weight": 0.46,
+        "tags": [
+          "y2k",
+          "beads",
+          "phone",
+          "accessory"
+        ],
+        "embedding_text": "a beaded phone charm prop",
+        "aliases": [
+          "beaded phone charm"
+        ],
+        "keywords": [
+          "beaded",
+          "phone charm",
+          "y2k"
+        ],
+        "for_any": [
+          "object",
+          "product"
+        ]
+      },
+      {
+        "id": "camping_mug_compass_prop",
+        "ko": "a camping mug and compass prop",
+        "en": "a camping mug and compass prop",
+        "weight": 0.48,
+        "tags": [
+          "outdoor",
+          "travel",
+          "camping",
+          "flatlay"
+        ],
+        "embedding_text": "a camping mug and compass prop",
+        "aliases": [
+          "camping mug compass"
+        ],
+        "keywords": [
+          "camping",
+          "mug",
+          "compass"
+        ],
+        "for_any": [
+          "object",
+          "product"
+        ]
+      },
+      {
+        "id": "tarot_cards_unreadable_prop",
+        "ko": "tarot cards with unreadable symbolic faces",
+        "en": "tarot cards with unreadable symbolic faces",
+        "weight": 0.56,
+        "tags": [
+          "tarot",
+          "mystic",
+          "witchy",
+          "paper",
+          "unreadable",
+          "no_text_required",
+          "no_text"
+        ],
+        "embedding_text": "tarot cards with unreadable symbolic faces and no legible text",
+        "aliases": [
+          "unreadable tarot cards"
+        ],
+        "keywords": [
+          "tarot",
+          "unreadable",
+          "mystic"
+        ],
+        "for_any": [
+          "object",
+          "product"
+        ]
+      },
+      {
+        "id": "crystal_cluster_prop",
+        "ko": "a crystal cluster prop",
+        "en": "a crystal cluster prop",
+        "weight": 0.5,
+        "tags": [
+          "crystal",
+          "mystic",
+          "witchy",
+          "object"
+        ],
+        "embedding_text": "a crystal cluster prop",
+        "aliases": [
+          "crystal cluster"
+        ],
+        "keywords": [
+          "crystal",
+          "cluster",
+          "mystic"
+        ],
+        "for_any": [
+          "object",
+          "product"
+        ]
+      },
+      {
+        "id": "dried_herbs_glass_vials_prop",
+        "ko": "dried herbs and blank glass vials",
+        "en": "dried herbs and blank glass vials",
+        "weight": 0.5,
+        "tags": [
+          "herb",
+          "glass",
+          "mystic",
+          "label",
+          "blank",
+          "no_text_required",
+          "no_text"
+        ],
+        "embedding_text": "dried herbs and blank glass vials",
+        "aliases": [
+          "dried herbs glass vials"
+        ],
+        "keywords": [
+          "dried herbs",
+          "blank vials",
+          "no labels"
+        ],
+        "for_any": [
+          "object",
+          "product"
+        ]
+      },
+      {
+        "id": "paintbrush_palette_prop",
+        "ko": "paintbrushes and a palette prop",
+        "en": "paintbrushes and a palette prop",
+        "weight": 0.48,
+        "tags": [
+          "art",
+          "craft",
+          "color",
+          "flatlay"
+        ],
+        "embedding_text": "paintbrushes and a palette prop",
+        "aliases": [
+          "paintbrush palette"
+        ],
+        "keywords": [
+          "paintbrush",
+          "palette",
+          "art"
+        ],
+        "for_any": [
+          "object",
+          "product"
+        ]
+      },
+      {
+        "id": "film_roll_contact_sheet_prop",
+        "ko": "a film roll and non-legible contact sheet prop",
+        "en": "a film roll and non-legible contact sheet prop",
+        "weight": 0.48,
+        "tags": [
+          "film",
+          "photo",
+          "paper",
+          "analog",
+          "non_legible",
+          "no_text_required",
+          "no_text"
+        ],
+        "embedding_text": "a film roll and non-legible contact sheet prop",
+        "aliases": [
+          "film roll contact sheet"
+        ],
+        "keywords": [
+          "film roll",
+          "contact sheet",
+          "non-legible"
+        ],
+        "for_any": [
+          "object",
+          "product"
+        ]
+      },
+      {
+        "id": "vintage_camera_flatlay_prop",
+        "ko": "a vintage camera flatlay prop",
+        "en": "a vintage camera flatlay prop",
+        "weight": 0.5,
+        "tags": [
+          "camera",
+          "analog",
+          "vintage",
+          "flatlay"
+        ],
+        "embedding_text": "a vintage camera flatlay prop",
+        "aliases": [
+          "vintage camera flatlay"
+        ],
+        "keywords": [
+          "vintage camera",
+          "flatlay",
+          "analog"
+        ],
+        "for_any": [
+          "object",
+          "product"
+        ]
+      },
+      {
+        "id": "vinyl_record_sleeve_blank_prop",
+        "ko": "a blank vinyl record sleeve with no readable text",
+        "en": "a blank vinyl record sleeve with no readable text",
+        "weight": 0.48,
+        "tags": [
+          "music",
+          "vinyl",
+          "paper",
+          "retro",
+          "blank",
+          "no_text_required",
+          "no_text"
+        ],
+        "embedding_text": "a blank vinyl record sleeve with no readable text",
+        "aliases": [
+          "blank vinyl sleeve"
+        ],
+        "keywords": [
+          "vinyl",
+          "blank sleeve",
+          "no readable text"
+        ],
+        "for_any": [
+          "object",
+          "product"
+        ]
       }
     ],
     "fetish_styling": [
@@ -135798,6 +139486,186 @@
           "bedroom",
           "set"
         ]
+      },
+      {
+        "id": "flatlay_studio_tabletop",
+        "ko": "a flatlay studio tabletop",
+        "en": "a flatlay studio tabletop",
+        "weight": 0.56,
+        "tags": [
+          "studio",
+          "tabletop",
+          "product",
+          "flatlay"
+        ],
+        "embedding_text": "a top-down flatlay studio tabletop setup",
+        "aliases": [
+          "flatlay studio tabletop"
+        ],
+        "keywords": [
+          "flatlay",
+          "studio",
+          "tabletop"
+        ]
+      },
+      {
+        "id": "home_coffee_table_flatlay",
+        "ko": "a home coffee-table flatlay setup",
+        "en": "a home coffee-table flatlay setup",
+        "weight": 0.52,
+        "tags": [
+          "interior",
+          "home",
+          "tabletop",
+          "flatlay"
+        ],
+        "embedding_text": "a home coffee-table flatlay setup",
+        "aliases": [
+          "home coffee table flatlay"
+        ],
+        "keywords": [
+          "home",
+          "coffee table",
+          "flatlay"
+        ]
+      },
+      {
+        "id": "travel_desk_flatlay",
+        "ko": "a travel desk flatlay setup with blank fictional travel papers",
+        "en": "a travel desk flatlay setup with blank fictional travel papers",
+        "weight": 0.52,
+        "tags": [
+          "interior",
+          "travel",
+          "desk",
+          "flatlay",
+          "blank",
+          "fictional",
+          "no_text_required",
+          "no_text"
+        ],
+        "embedding_text": "a travel desk flatlay setup with fictional blank travel papers and no readable text",
+        "aliases": [
+          "travel desk flatlay"
+        ],
+        "keywords": [
+          "travel",
+          "desk",
+          "flatlay"
+        ]
+      },
+      {
+        "id": "dark_academia_study_tabletop",
+        "ko": "a dark-academia study tabletop",
+        "en": "a dark-academia study tabletop",
+        "weight": 0.54,
+        "tags": [
+          "interior",
+          "academia",
+          "tabletop",
+          "library"
+        ],
+        "embedding_text": "a dark-academia study tabletop",
+        "aliases": [
+          "dark academia tabletop"
+        ],
+        "keywords": [
+          "dark academia",
+          "study",
+          "tabletop"
+        ]
+      },
+      {
+        "id": "coquette_tea_table_flatlay",
+        "ko": "a coquette tea-table flatlay",
+        "en": "a coquette tea-table flatlay",
+        "weight": 0.52,
+        "tags": [
+          "interior",
+          "cafe",
+          "coquette",
+          "tabletop",
+          "flatlay"
+        ],
+        "embedding_text": "a coquette tea-table flatlay",
+        "aliases": [
+          "coquette tea table"
+        ],
+        "keywords": [
+          "coquette",
+          "tea table",
+          "ribbon",
+          "pearl"
+        ]
+      },
+      {
+        "id": "neo_deco_console_tabletop",
+        "ko": "a neo-deco console tabletop",
+        "en": "a neo-deco console tabletop",
+        "weight": 0.52,
+        "tags": [
+          "interior",
+          "neo_deco",
+          "tabletop",
+          "product"
+        ],
+        "embedding_text": "a neo-deco console tabletop",
+        "aliases": [
+          "neo deco console tabletop"
+        ],
+        "keywords": [
+          "neo deco",
+          "console",
+          "brass",
+          "marble"
+        ]
+      },
+      {
+        "id": "witchy_apothecary_tabletop",
+        "ko": "a witchy apothecary tabletop with unreadable labels",
+        "en": "a witchy apothecary tabletop with unreadable labels",
+        "weight": 0.52,
+        "tags": [
+          "interior",
+          "witchy",
+          "mystic",
+          "tabletop",
+          "unreadable",
+          "no_text_required",
+          "no_text"
+        ],
+        "embedding_text": "a witchy apothecary tabletop with unreadable tarot cards and non-legible labels",
+        "aliases": [
+          "witchy apothecary tabletop"
+        ],
+        "keywords": [
+          "witchy",
+          "apothecary",
+          "crystal",
+          "tarot"
+        ]
+      },
+      {
+        "id": "product_riser_studio_tabletop",
+        "ko": "a product-riser studio tabletop",
+        "en": "a product-riser studio tabletop",
+        "weight": 0.54,
+        "tags": [
+          "studio",
+          "product",
+          "riser",
+          "tabletop"
+        ],
+        "embedding_text": "a product-riser studio tabletop",
+        "aliases": [
+          "product riser studio"
+        ],
+        "keywords": [
+          "product",
+          "riser",
+          "studio",
+          "tabletop"
+        ]
       }
     ],
     "world": [
@@ -141156,6 +145024,122 @@
           "urban"
         ],
         "embedding_text": "balcony rail shadow pattern"
+      },
+      {
+        "id": "lace_shadow_pattern",
+        "ko": "lace shadow pattern across the surface",
+        "en": "lace shadow pattern across the surface",
+        "weight": 0.5,
+        "tags": [
+          "shadow",
+          "lace",
+          "pattern",
+          "flatlay"
+        ],
+        "embedding_text": "lace shadow pattern across the surface"
+      },
+      {
+        "id": "plant_leaf_shadow_pattern",
+        "ko": "plant-leaf shadow pattern across the surface",
+        "en": "plant-leaf shadow pattern across the surface",
+        "weight": 0.5,
+        "tags": [
+          "shadow",
+          "plant",
+          "pattern",
+          "botanical"
+        ],
+        "embedding_text": "plant-leaf shadow pattern across the surface"
+      },
+      {
+        "id": "water_caustic_table_pattern",
+        "ko": "water caustic pattern on the tabletop",
+        "en": "water caustic pattern on the tabletop",
+        "weight": 0.48,
+        "tags": [
+          "water",
+          "caustic",
+          "reflection",
+          "pattern"
+        ],
+        "embedding_text": "water caustic pattern on the tabletop"
+      },
+      {
+        "id": "prism_rainbow_fragment",
+        "ko": "small prism rainbow fragments",
+        "en": "small prism rainbow fragments",
+        "weight": 0.48,
+        "tags": [
+          "prism",
+          "rainbow",
+          "reflection",
+          "product"
+        ],
+        "embedding_text": "small prism rainbow fragments"
+      },
+      {
+        "id": "fairy_light_bokeh_dots",
+        "ko": "fairy-light bokeh dots",
+        "en": "fairy-light bokeh dots",
+        "weight": 0.44,
+        "tags": [
+          "bokeh",
+          "warm",
+          "party",
+          "home"
+        ],
+        "embedding_text": "fairy-light bokeh dots"
+      },
+      {
+        "id": "disco_ball_sparkle_pattern",
+        "ko": "disco-ball sparkle pattern",
+        "en": "disco-ball sparkle pattern",
+        "weight": 0.44,
+        "tags": [
+          "sparkle",
+          "party",
+          "reflection",
+          "y2k"
+        ],
+        "embedding_text": "disco-ball sparkle pattern"
+      },
+      {
+        "id": "projector_pool_of_light",
+        "ko": "a projector pool of light with no readable projection",
+        "en": "a projector pool of light with no readable projection",
+        "weight": 0.42,
+        "tags": [
+          "projector",
+          "light",
+          "no_text",
+          "studio"
+        ],
+        "embedding_text": "a projector pool of light with no readable projection"
+      },
+      {
+        "id": "hard_object_shadow_still_life",
+        "ko": "hard object shadows in a still-life setup",
+        "en": "hard object shadows in a still-life setup",
+        "weight": 0.46,
+        "tags": [
+          "shadow",
+          "still_life",
+          "product"
+        ],
+        "embedding_text": "hard object shadows in a still-life setup"
+      },
+      {
+        "id": "soft_prop_shadow_falloff",
+        "ko": "soft prop-shadow falloff",
+        "en": "soft prop-shadow falloff",
+        "weight": 0.46,
+        "tags": [
+          "shadow",
+          "soft",
+          "flatlay",
+          "product"
+        ],
+        "embedding_text": "soft prop-shadow falloff"
       }
     ],
     "camera_type": [
@@ -144226,6 +148210,129 @@
           "bokeh"
         ],
         "embedding_text": "flower-bucket foreground bokeh"
+      },
+      {
+        "id": "curated_flatlay_grid",
+        "ko": "curated flatlay grid composition",
+        "en": "curated flatlay grid composition",
+        "weight": 0.58,
+        "tags": [
+          "flatlay",
+          "grid",
+          "product",
+          "still_life"
+        ],
+        "embedding_text": "curated flatlay grid composition"
+      },
+      {
+        "id": "asymmetrical_flatlay_layering",
+        "ko": "asymmetrical flatlay layering",
+        "en": "asymmetrical flatlay layering",
+        "weight": 0.56,
+        "tags": [
+          "flatlay",
+          "layered",
+          "still_life"
+        ],
+        "embedding_text": "asymmetrical flatlay layering"
+      },
+      {
+        "id": "scattered_prop_story_layout",
+        "ko": "scattered prop story layout",
+        "en": "scattered prop story layout",
+        "weight": 0.54,
+        "tags": [
+          "flatlay",
+          "story",
+          "paper",
+          "still_life"
+        ],
+        "embedding_text": "scattered prop story layout"
+      },
+      {
+        "id": "hero_object_centered_flatlay",
+        "ko": "hero object centered in a flatlay",
+        "en": "hero object centered in a flatlay",
+        "weight": 0.56,
+        "tags": [
+          "flatlay",
+          "centered",
+          "product"
+        ],
+        "embedding_text": "hero object centered in a flatlay"
+      },
+      {
+        "id": "draped_fabric_corner_frame",
+        "ko": "draped fabric corner framing",
+        "en": "draped fabric corner framing",
+        "weight": 0.46,
+        "tags": [
+          "fabric",
+          "frame",
+          "flatlay"
+        ],
+        "embedding_text": "draped fabric corner framing"
+      },
+      {
+        "id": "stacked_books_prop_tower",
+        "ko": "stacked books and prop tower composition",
+        "en": "stacked books and prop tower composition",
+        "weight": 0.46,
+        "tags": [
+          "books",
+          "academia",
+          "stacked"
+        ],
+        "embedding_text": "stacked books and prop tower composition"
+      },
+      {
+        "id": "partially_cropped_edge_props",
+        "ko": "partially cropped edge props",
+        "en": "partially cropped edge props",
+        "weight": 0.48,
+        "tags": [
+          "cropped",
+          "edge",
+          "flatlay"
+        ],
+        "embedding_text": "partially cropped edge props"
+      },
+      {
+        "id": "overlapping_paper_ephemera_layout",
+        "ko": "overlapping paper ephemera layout with no readable text",
+        "en": "overlapping paper ephemera layout with no readable text",
+        "weight": 0.5,
+        "tags": [
+          "paper",
+          "ephemera",
+          "flatlay",
+          "no_text"
+        ],
+        "embedding_text": "overlapping paper ephemera layout with no readable text"
+      },
+      {
+        "id": "negative_space_product_flatlay",
+        "ko": "negative-space product flatlay",
+        "en": "negative-space product flatlay",
+        "weight": 0.54,
+        "tags": [
+          "flatlay",
+          "negative_space",
+          "product"
+        ],
+        "embedding_text": "negative-space product flatlay"
+      },
+      {
+        "id": "diagonal_prop_trail",
+        "ko": "diagonal trail of props through the frame",
+        "en": "diagonal trail of props through the frame",
+        "weight": 0.46,
+        "tags": [
+          "diagonal",
+          "props",
+          "flatlay"
+        ],
+        "embedding_text": "diagonal trail of props through the frame"
       }
     ],
     "subject_framing": [
@@ -151417,6 +155524,249 @@
           "cluttered",
           "surface"
         ]
+      },
+      {
+        "id": "frosted_acrylic_haze_texture",
+        "ko": "frosted acrylic haze texture",
+        "en": "frosted acrylic haze texture",
+        "weight": 0.52,
+        "tags": [
+          "acrylic",
+          "frosted",
+          "product",
+          "texture"
+        ],
+        "embedding_text": "frosted acrylic haze texture"
+      },
+      {
+        "id": "brushed_steel_micrograin_texture",
+        "ko": "brushed steel micrograin texture",
+        "en": "brushed steel micrograin texture",
+        "weight": 0.46,
+        "tags": [
+          "metal",
+          "steel",
+          "brushed",
+          "texture"
+        ],
+        "embedding_text": "brushed steel micrograin texture"
+      },
+      {
+        "id": "brass_patina_texture",
+        "ko": "brass patina texture",
+        "en": "brass patina texture",
+        "weight": 0.48,
+        "tags": [
+          "brass",
+          "patina",
+          "metal",
+          "texture"
+        ],
+        "embedding_text": "brass patina texture"
+      },
+      {
+        "id": "tarnished_silver_texture",
+        "ko": "tarnished silver texture",
+        "en": "tarnished silver texture",
+        "weight": 0.44,
+        "tags": [
+          "silver",
+          "metal",
+          "jewelry",
+          "texture"
+        ],
+        "embedding_text": "tarnished silver texture"
+      },
+      {
+        "id": "travertine_pores_texture",
+        "ko": "travertine stone pore texture",
+        "en": "travertine stone pore texture",
+        "weight": 0.48,
+        "tags": [
+          "stone",
+          "travertine",
+          "texture"
+        ],
+        "embedding_text": "travertine stone pore texture"
+      },
+      {
+        "id": "torn_paper_fiber_texture",
+        "ko": "torn paper fiber texture without readable text",
+        "en": "torn paper fiber texture without readable text",
+        "weight": 0.48,
+        "tags": [
+          "paper",
+          "fiber",
+          "no_text",
+          "texture"
+        ],
+        "embedding_text": "torn paper fiber texture without readable text"
+      },
+      {
+        "id": "handmade_paper_texture",
+        "ko": "handmade paper texture without readable text",
+        "en": "handmade paper texture without readable text",
+        "weight": 0.46,
+        "tags": [
+          "paper",
+          "handmade",
+          "no_text",
+          "texture"
+        ],
+        "embedding_text": "handmade paper texture without readable text"
+      },
+      {
+        "id": "parchment_fiber_texture",
+        "ko": "parchment fiber texture",
+        "en": "parchment fiber texture",
+        "weight": 0.46,
+        "tags": [
+          "paper",
+          "parchment",
+          "food",
+          "texture"
+        ],
+        "embedding_text": "parchment fiber texture"
+      },
+      {
+        "id": "cracked_leather_texture",
+        "ko": "cracked leather texture",
+        "en": "cracked leather texture",
+        "weight": 0.42,
+        "tags": [
+          "leather",
+          "vintage",
+          "texture"
+        ],
+        "embedding_text": "cracked leather texture"
+      },
+      {
+        "id": "suede_nap_texture",
+        "ko": "soft suede nap texture",
+        "en": "soft suede nap texture",
+        "weight": 0.42,
+        "tags": [
+          "suede",
+          "fabric",
+          "texture"
+        ],
+        "embedding_text": "soft suede nap texture"
+      },
+      {
+        "id": "crochet_loop_texture",
+        "ko": "crochet loop texture",
+        "en": "crochet loop texture",
+        "weight": 0.44,
+        "tags": [
+          "crochet",
+          "fabric",
+          "craft",
+          "texture"
+        ],
+        "embedding_text": "crochet loop texture"
+      },
+      {
+        "id": "embroidered_thread_texture",
+        "ko": "embroidered thread texture",
+        "en": "embroidered thread texture",
+        "weight": 0.44,
+        "tags": [
+          "thread",
+          "embroidery",
+          "craft",
+          "texture"
+        ],
+        "embedding_text": "embroidered thread texture"
+      },
+      {
+        "id": "pearlescent_shell_texture",
+        "ko": "pearlescent shell texture",
+        "en": "pearlescent shell texture",
+        "weight": 0.46,
+        "tags": [
+          "shell",
+          "pearl",
+          "iridescent",
+          "texture"
+        ],
+        "embedding_text": "pearlescent shell texture"
+      },
+      {
+        "id": "flour_dust_texture",
+        "ko": "soft flour dust texture",
+        "en": "soft flour dust texture",
+        "weight": 0.44,
+        "tags": [
+          "food",
+          "baking",
+          "dust",
+          "texture"
+        ],
+        "embedding_text": "soft flour dust texture"
+      },
+      {
+        "id": "powder_dusting_texture",
+        "ko": "fine powder dusting texture",
+        "en": "fine powder dusting texture",
+        "weight": 0.44,
+        "tags": [
+          "powder",
+          "beauty",
+          "food",
+          "texture"
+        ],
+        "embedding_text": "fine powder dusting texture"
+      },
+      {
+        "id": "dew_water_droplets_texture",
+        "ko": "dew water droplets texture",
+        "en": "dew water droplets texture",
+        "weight": 0.44,
+        "tags": [
+          "water",
+          "droplet",
+          "fresh",
+          "texture"
+        ],
+        "embedding_text": "dew water droplets texture"
+      },
+      {
+        "id": "iridescent_holographic_film_texture",
+        "ko": "iridescent holographic film texture with no readable lettering",
+        "en": "iridescent holographic film texture with no readable lettering",
+        "weight": 0.46,
+        "tags": [
+          "holographic",
+          "iridescent",
+          "y2k",
+          "no_text"
+        ],
+        "embedding_text": "iridescent holographic film texture with no readable lettering"
+      },
+      {
+        "id": "soft_velvet_pile_texture",
+        "ko": "soft velvet pile texture",
+        "en": "soft velvet pile texture",
+        "weight": 0.48,
+        "tags": [
+          "velvet",
+          "fabric",
+          "jewelry",
+          "texture"
+        ],
+        "embedding_text": "soft velvet pile texture"
+      },
+      {
+        "id": "rattan_woven_texture",
+        "ko": "rattan woven texture",
+        "en": "rattan woven texture",
+        "weight": 0.42,
+        "tags": [
+          "rattan",
+          "woven",
+          "texture"
+        ],
+        "embedding_text": "rattan woven texture"
       }
     ],
     "format": [
@@ -156776,6 +161126,510 @@
           "fabric"
         ],
         "embedding_text": "velvet surface dulled by a fine layer of soot, aftermath texture"
+      },
+      {
+        "id": "travertine_slab_surface",
+        "ko": "a travertine slab surface",
+        "en": "a travertine slab surface",
+        "weight": 0.58,
+        "tags": [
+          "surface",
+          "stone",
+          "product",
+          "interior"
+        ],
+        "embedding_text": "a travertine slab surface",
+        "aliases": [
+          "travertine slab"
+        ],
+        "keywords": [
+          "travertine",
+          "stone",
+          "slab"
+        ],
+        "for_any": [
+          "object",
+          "product",
+          "food",
+          "plant",
+          "sign"
+        ]
+      },
+      {
+        "id": "red_marble_slab_surface",
+        "ko": "a red marble slab surface",
+        "en": "a red marble slab surface",
+        "weight": 0.5,
+        "tags": [
+          "surface",
+          "marble",
+          "product",
+          "neo_deco"
+        ],
+        "embedding_text": "a red marble slab surface",
+        "aliases": [
+          "red marble slab"
+        ],
+        "keywords": [
+          "red marble",
+          "marble",
+          "slab"
+        ],
+        "for_any": [
+          "object",
+          "product",
+          "food",
+          "plant",
+          "sign"
+        ]
+      },
+      {
+        "id": "frosted_acrylic_surface",
+        "ko": "a frosted acrylic surface",
+        "en": "a frosted acrylic surface",
+        "weight": 0.62,
+        "tags": [
+          "surface",
+          "acrylic",
+          "product",
+          "studio"
+        ],
+        "embedding_text": "a frosted acrylic surface",
+        "aliases": [
+          "frosted acrylic"
+        ],
+        "keywords": [
+          "frosted",
+          "acrylic",
+          "surface"
+        ],
+        "for_any": [
+          "object",
+          "product",
+          "food",
+          "plant",
+          "sign"
+        ]
+      },
+      {
+        "id": "mirror_board_surface",
+        "ko": "a mirror board surface",
+        "en": "a mirror board surface",
+        "weight": 0.54,
+        "tags": [
+          "surface",
+          "mirror",
+          "reflection",
+          "product"
+        ],
+        "embedding_text": "a mirror board surface",
+        "aliases": [
+          "mirror board"
+        ],
+        "keywords": [
+          "mirror",
+          "reflective",
+          "board"
+        ],
+        "for_any": [
+          "object",
+          "product",
+          "food",
+          "plant",
+          "sign"
+        ]
+      },
+      {
+        "id": "colored_paper_backdrop_surface",
+        "ko": "a colored paper backdrop surface",
+        "en": "a colored paper backdrop surface",
+        "weight": 0.54,
+        "tags": [
+          "surface",
+          "paper",
+          "studio",
+          "product"
+        ],
+        "embedding_text": "a colored paper backdrop surface",
+        "aliases": [
+          "colored paper backdrop"
+        ],
+        "keywords": [
+          "colored paper",
+          "backdrop",
+          "studio"
+        ],
+        "for_any": [
+          "object",
+          "product",
+          "food",
+          "plant",
+          "sign"
+        ]
+      },
+      {
+        "id": "gradient_paper_backdrop_surface",
+        "ko": "a gradient paper backdrop surface",
+        "en": "a gradient paper backdrop surface",
+        "weight": 0.5,
+        "tags": [
+          "surface",
+          "paper",
+          "studio",
+          "product"
+        ],
+        "embedding_text": "a gradient paper backdrop surface",
+        "aliases": [
+          "gradient paper backdrop"
+        ],
+        "keywords": [
+          "gradient paper",
+          "backdrop",
+          "studio"
+        ],
+        "for_any": [
+          "object",
+          "product",
+          "food",
+          "plant",
+          "sign"
+        ]
+      },
+      {
+        "id": "kraft_paper_surface",
+        "ko": "a kraft paper surface",
+        "en": "a kraft paper surface",
+        "weight": 0.5,
+        "tags": [
+          "surface",
+          "paper",
+          "craft",
+          "flatlay"
+        ],
+        "embedding_text": "a kraft paper surface",
+        "aliases": [
+          "kraft paper"
+        ],
+        "keywords": [
+          "kraft paper",
+          "surface",
+          "flatlay"
+        ],
+        "for_any": [
+          "object",
+          "product",
+          "food",
+          "plant",
+          "sign"
+        ]
+      },
+      {
+        "id": "parchment_paper_surface",
+        "ko": "a parchment paper surface",
+        "en": "a parchment paper surface",
+        "weight": 0.52,
+        "tags": [
+          "surface",
+          "paper",
+          "food",
+          "flatlay"
+        ],
+        "embedding_text": "a parchment paper surface",
+        "aliases": [
+          "parchment paper"
+        ],
+        "keywords": [
+          "parchment",
+          "paper",
+          "food"
+        ],
+        "for_any": [
+          "object",
+          "product",
+          "food",
+          "plant",
+          "sign"
+        ]
+      },
+      {
+        "id": "weathered_wood_board_surface",
+        "ko": "a weathered wood board surface",
+        "en": "a weathered wood board surface",
+        "weight": 0.52,
+        "tags": [
+          "surface",
+          "wood",
+          "rustic",
+          "food"
+        ],
+        "embedding_text": "a weathered wood board surface",
+        "aliases": [
+          "weathered wood board"
+        ],
+        "keywords": [
+          "weathered wood",
+          "board",
+          "rustic"
+        ],
+        "for_any": [
+          "object",
+          "product",
+          "food",
+          "plant",
+          "sign"
+        ]
+      },
+      {
+        "id": "rattan_mat_surface",
+        "ko": "a rattan mat surface",
+        "en": "a rattan mat surface",
+        "weight": 0.48,
+        "tags": [
+          "surface",
+          "rattan",
+          "woven",
+          "home"
+        ],
+        "embedding_text": "a rattan mat surface",
+        "aliases": [
+          "rattan mat"
+        ],
+        "keywords": [
+          "rattan",
+          "woven",
+          "mat"
+        ],
+        "for_any": [
+          "object",
+          "product",
+          "food",
+          "plant",
+          "sign"
+        ]
+      },
+      {
+        "id": "velvet_fabric_surface",
+        "ko": "a velvet fabric surface",
+        "en": "a velvet fabric surface",
+        "weight": 0.54,
+        "tags": [
+          "surface",
+          "fabric",
+          "velvet",
+          "jewelry"
+        ],
+        "embedding_text": "a velvet fabric surface",
+        "aliases": [
+          "velvet fabric"
+        ],
+        "keywords": [
+          "velvet",
+          "fabric",
+          "surface"
+        ],
+        "for_any": [
+          "object",
+          "product",
+          "food",
+          "plant",
+          "sign"
+        ]
+      },
+      {
+        "id": "lace_fabric_surface",
+        "ko": "a lace fabric surface",
+        "en": "a lace fabric surface",
+        "weight": 0.5,
+        "tags": [
+          "surface",
+          "fabric",
+          "lace",
+          "coquette"
+        ],
+        "embedding_text": "a lace fabric surface",
+        "aliases": [
+          "lace fabric"
+        ],
+        "keywords": [
+          "lace",
+          "fabric",
+          "surface"
+        ],
+        "for_any": [
+          "object",
+          "product",
+          "food",
+          "plant",
+          "sign"
+        ]
+      },
+      {
+        "id": "tile_tabletop_surface",
+        "ko": "a tile tabletop surface",
+        "en": "a tile tabletop surface",
+        "weight": 0.48,
+        "tags": [
+          "surface",
+          "tile",
+          "cafe",
+          "food"
+        ],
+        "embedding_text": "a tile tabletop surface",
+        "aliases": [
+          "tile tabletop"
+        ],
+        "keywords": [
+          "tile",
+          "tabletop",
+          "surface"
+        ],
+        "for_any": [
+          "object",
+          "product",
+          "food",
+          "plant",
+          "sign"
+        ]
+      },
+      {
+        "id": "sand_surface_flatlay",
+        "ko": "a sand flatlay surface",
+        "en": "a sand flatlay surface",
+        "weight": 0.42,
+        "tags": [
+          "surface",
+          "sand",
+          "coastal",
+          "travel"
+        ],
+        "embedding_text": "a sand flatlay surface",
+        "aliases": [
+          "sand flatlay surface"
+        ],
+        "keywords": [
+          "sand",
+          "surface",
+          "coastal"
+        ],
+        "for_any": [
+          "object",
+          "product",
+          "food",
+          "plant",
+          "sign"
+        ]
+      },
+      {
+        "id": "water_surface_flatlay",
+        "ko": "a shallow water flatlay surface",
+        "en": "a shallow water flatlay surface",
+        "weight": 0.42,
+        "tags": [
+          "surface",
+          "water",
+          "reflection",
+          "coastal"
+        ],
+        "embedding_text": "a shallow water flatlay surface",
+        "aliases": [
+          "water flatlay surface"
+        ],
+        "keywords": [
+          "water",
+          "surface",
+          "reflection"
+        ],
+        "for_any": [
+          "object",
+          "product",
+          "food",
+          "plant",
+          "sign"
+        ]
+      },
+      {
+        "id": "brass_tray_surface",
+        "ko": "a brass tray surface",
+        "en": "a brass tray surface",
+        "weight": 0.5,
+        "tags": [
+          "surface",
+          "brass",
+          "metal",
+          "neo_deco"
+        ],
+        "embedding_text": "a brass tray surface",
+        "aliases": [
+          "brass tray surface"
+        ],
+        "keywords": [
+          "brass",
+          "tray",
+          "surface"
+        ],
+        "for_any": [
+          "object",
+          "product",
+          "food",
+          "plant",
+          "sign"
+        ]
+      },
+      {
+        "id": "ceramic_pedestal_surface",
+        "ko": "a ceramic pedestal surface",
+        "en": "a ceramic pedestal surface",
+        "weight": 0.48,
+        "tags": [
+          "surface",
+          "ceramic",
+          "pedestal",
+          "product"
+        ],
+        "embedding_text": "a ceramic pedestal surface",
+        "aliases": [
+          "ceramic pedestal"
+        ],
+        "keywords": [
+          "ceramic",
+          "pedestal",
+          "surface"
+        ],
+        "for_any": [
+          "object",
+          "product",
+          "food",
+          "plant",
+          "sign"
+        ]
+      },
+      {
+        "id": "curved_riser_surface",
+        "ko": "a curved riser surface",
+        "en": "a curved riser surface",
+        "weight": 0.5,
+        "tags": [
+          "surface",
+          "riser",
+          "product",
+          "studio"
+        ],
+        "embedding_text": "a curved riser surface",
+        "aliases": [
+          "curved riser"
+        ],
+        "keywords": [
+          "curved riser",
+          "surface",
+          "studio"
+        ],
+        "for_any": [
+          "object",
+          "product",
+          "food",
+          "plant",
+          "sign"
+        ]
       }
     ],
     "aesthetic_trend": [
@@ -157649,6 +162503,161 @@
           "chaos",
           "social",
           "culture"
+        ]
+      },
+      {
+        "id": "dark_academia_still_life",
+        "ko": "dark academia still-life aesthetic with old books, brass, and candlelight",
+        "en": "dark academia still-life aesthetic with old books, brass, and candlelight",
+        "weight": 0.64,
+        "tags": [
+          "aesthetic",
+          "academia",
+          "still_life",
+          "books"
+        ],
+        "embedding_text": "dark academia still-life aesthetic with old books, brass, and candlelight",
+        "aliases": [
+          "dark academia still life"
+        ],
+        "keywords": [
+          "dark academia",
+          "old books",
+          "brass",
+          "candlelight"
+        ]
+      },
+      {
+        "id": "clean_girl_wellness_still_life",
+        "ko": "clean-girl wellness still-life aesthetic with skincare, eucalyptus, and frosted glass",
+        "en": "clean-girl wellness still-life aesthetic with skincare, eucalyptus, and frosted glass",
+        "weight": 0.58,
+        "tags": [
+          "aesthetic",
+          "wellness",
+          "beauty",
+          "skincare"
+        ],
+        "embedding_text": "clean-girl wellness still-life aesthetic with skincare, eucalyptus, and frosted glass",
+        "aliases": [
+          "clean girl wellness still life"
+        ],
+        "keywords": [
+          "clean girl",
+          "wellness",
+          "skincare",
+          "eucalyptus"
+        ]
+      },
+      {
+        "id": "granola_outdoor_flatlay_aesthetic",
+        "ko": "granola outdoor flatlay aesthetic with trail gear, mug, and natural textures",
+        "en": "granola outdoor flatlay aesthetic with trail gear, mug, and natural textures",
+        "weight": 0.5,
+        "tags": [
+          "aesthetic",
+          "outdoor",
+          "granola",
+          "flatlay"
+        ],
+        "embedding_text": "granola outdoor flatlay aesthetic with trail gear, mug, and natural textures",
+        "aliases": [
+          "granola outdoor flatlay"
+        ],
+        "keywords": [
+          "granola",
+          "outdoor",
+          "trail gear",
+          "flatlay"
+        ]
+      },
+      {
+        "id": "burrowcore_cozy_home_aesthetic",
+        "ko": "burrowcore cozy home still-life aesthetic with blankets, mugs, and soft clutter",
+        "en": "burrowcore cozy home still-life aesthetic with blankets, mugs, and soft clutter",
+        "weight": 0.52,
+        "tags": [
+          "aesthetic",
+          "home",
+          "cozy",
+          "still_life"
+        ],
+        "embedding_text": "burrowcore cozy home still-life aesthetic with blankets, mugs, and soft clutter",
+        "aliases": [
+          "burrowcore cozy home"
+        ],
+        "keywords": [
+          "burrowcore",
+          "cozy home",
+          "mug",
+          "blanket"
+        ]
+      },
+      {
+        "id": "witchy_mystic_still_life",
+        "ko": "witchy mystic still-life aesthetic with crystals, herbs, candles, and unreadable cards",
+        "en": "witchy mystic still-life aesthetic with crystals, herbs, candles, and unreadable cards",
+        "weight": 0.56,
+        "tags": [
+          "aesthetic",
+          "witchy",
+          "mystic",
+          "no_text"
+        ],
+        "embedding_text": "witchy mystic still-life aesthetic with crystals, herbs, candles, and unreadable cards",
+        "aliases": [
+          "witchy mystic still life"
+        ],
+        "keywords": [
+          "witchy",
+          "mystic",
+          "crystals",
+          "unreadable cards"
+        ]
+      },
+      {
+        "id": "coquette_balletcore_flatlay",
+        "ko": "coquette balletcore flatlay aesthetic with satin ribbon, pearls, lace, and teacup softness",
+        "en": "coquette balletcore flatlay aesthetic with satin ribbon, pearls, lace, and teacup softness",
+        "weight": 0.58,
+        "tags": [
+          "aesthetic",
+          "coquette",
+          "balletcore",
+          "flatlay"
+        ],
+        "embedding_text": "coquette balletcore flatlay aesthetic with satin ribbon, pearls, lace, and teacup softness",
+        "aliases": [
+          "coquette balletcore flatlay"
+        ],
+        "keywords": [
+          "coquette",
+          "balletcore",
+          "ribbon",
+          "pearls"
+        ]
+      },
+      {
+        "id": "y2k_indie_sleaze_flatlay",
+        "ko": "Y2K indie sleaze flatlay aesthetic with unbranded flip phone, stickers, chrome, and flash",
+        "en": "Y2K indie sleaze flatlay aesthetic with unbranded flip phone, stickers, chrome, and flash",
+        "weight": 0.54,
+        "tags": [
+          "aesthetic",
+          "y2k",
+          "indie_sleaze",
+          "flatlay",
+          "no_text"
+        ],
+        "embedding_text": "Y2K indie sleaze flatlay aesthetic with unbranded flip phone, stickers, chrome, and flash",
+        "aliases": [
+          "Y2K indie sleaze flatlay"
+        ],
+        "keywords": [
+          "Y2K",
+          "indie sleaze",
+          "flip phone",
+          "stickers"
         ]
       }
     ],
@@ -171514,7 +176523,6 @@
           "environmental erosion",
           "moss",
           "reclaimed",
-          "crystal",
           "salt crystal",
           "paper dust",
           "mineral growth",
@@ -173864,8 +178872,6 @@
           "AI designer desk",
           "designer desk",
           "blurred screen glow",
-          "no readable text",
-          "no readable UI",
           "desk setup",
           "late-night editing",
           "algorithm fatigue",
@@ -173918,7 +178924,6 @@
             "blurred screen glow",
             "desk setup",
             "late-night editing",
-            "no readable text",
             "digital workspace"
           ],
           "ambient": [
@@ -174310,9 +179315,1428 @@
             ]
           }
         }
+      },
+      "flatlay_staging_scene": {
+        "policy_id": "flatlay-staging-scene-semantic-policy-v1",
+        "keywords": [
+          "flatlay",
+          "flat lay",
+          "top-down still life",
+          "tabletop styling",
+          "set dressing",
+          "knolling",
+          "paper ephemera",
+          "props flatlay",
+          "플랫레이",
+          "소품 스타일링",
+          "travel journal",
+          "boarding pass",
+          "fictional boarding pass",
+          "no readable flatlay",
+          "paper flatlay",
+          "desk flatlay",
+          "Y2K desk flatlay",
+          "stickers flatlay"
+        ],
+        "axis_label": "flatlay tabletop staging scene",
+        "axis_embedding_text": "top-down flatlay tabletop styling, curated prop arrangement, tactile staging surface, paper ephemera kept blank or unreadable, still-life set dressing",
+        "steering_slots": [
+          "composition",
+          "surface_material",
+          "prop",
+          "action",
+          "location",
+          "texture",
+          "light_shape",
+          "aesthetic_trend"
+        ],
+        "routed_slots": [
+          "composition",
+          "surface_material",
+          "prop",
+          "action",
+          "location",
+          "texture",
+          "light_shape",
+          "aesthetic_trend"
+        ],
+        "preset_policy": {
+          "allow_ids": [
+            "flatlay_food_styling",
+            "flatlay_beauty_jewelry_hero",
+            "flatlay_travel_desk_documentary",
+            "flatlay_cozy_home_still_life",
+            "flatlay_coquette_balletcore",
+            "flatlay_dark_academia_study",
+            "flatlay_y2k_indie_sleaze",
+            "product_flatlay_ingredient_story"
+          ],
+          "fallback_terms": [
+            "flatlay",
+            "flat lay",
+            "top-down",
+            "tabletop styling",
+            "prop arrangement",
+            "set dressing"
+          ],
+          "deny_ids": [
+            "creator_desk_setup_flatlay"
+          ]
+        },
+        "signal_lexicon": {
+          "strong": [
+            "flatlay",
+            "flat lay",
+            "top-down still life",
+            "tabletop styling",
+            "prop arrangement",
+            "knolling",
+            "travel journal",
+            "boarding pass",
+            "fictional boarding pass",
+            "desk flatlay",
+            "Y2K desk flatlay"
+          ],
+          "ambient": [
+            "ribbon",
+            "paper ephemera",
+            "surface",
+            "props",
+            "styled objects",
+            "set dressing"
+          ]
+        },
+        "slot_signals": {
+          "composition": {
+            "core": [
+              "curated_flatlay_grid",
+              "asymmetrical_flatlay_layering",
+              "hero_object_centered_flatlay",
+              "overlapping_paper_ephemera_layout"
+            ],
+            "support": [
+              "topdown_flatlay_social",
+              "parts_laid_flat_knolling",
+              "scattered_prop_story_layout",
+              "negative_space_product_flatlay"
+            ]
+          },
+          "surface_material": {
+            "core": [
+              "frosted_acrylic_surface",
+              "travertine_slab_surface",
+              "colored_paper_backdrop_surface",
+              "velvet_fabric_surface"
+            ],
+            "support": [
+              "linen_fabric_surface",
+              "white_marble_surface",
+              "weathered_wood_board_surface",
+              "rattan_mat_surface"
+            ]
+          },
+          "prop": {
+            "support": [
+              "satin_ribbon_flatlay_prop",
+              "pearl_strand_flatlay_prop",
+              "fictional_boarding_pass_prop",
+              "vintage_book_unreadable_pages_prop",
+              "acrylic_riser_display_prop",
+              "retro_flip_phone_prop",
+              "tarot_cards_unreadable_prop"
+            ]
+          },
+          "action": {
+            "core": [
+              "styled_flatlay_arrangement",
+              "layered_prop_story_arrangement"
+            ],
+            "support": [
+              "captured_topdown",
+              "neatly_arranged",
+              "knolled_grid_arrangement"
+            ]
+          },
+          "location": {
+            "support": [
+              "flatlay_studio_tabletop",
+              "travel_desk_flatlay",
+              "dark_academia_study_tabletop",
+              "coquette_tea_table_flatlay",
+              "product_riser_studio_tabletop"
+            ]
+          },
+          "texture": {
+            "support": [
+              "frosted_acrylic_haze_texture",
+              "handmade_paper_texture",
+              "soft_velvet_pile_texture",
+              "iridescent_holographic_film_texture"
+            ]
+          },
+          "light_shape": {
+            "support": [
+              "lace_shadow_pattern",
+              "plant_leaf_shadow_pattern",
+              "soft_prop_shadow_falloff",
+              "hard_object_shadow_still_life"
+            ]
+          }
+        }
+      },
+      "product_hero_still_life": {
+        "policy_id": "product-hero-still-life-semantic-policy-v1",
+        "keywords": [
+          "product hero",
+          "riser",
+          "acrylic riser",
+          "skincare product",
+          "jewelry hero",
+          "frosted acrylic",
+          "unbranded packaging",
+          "packshot still life",
+          "제품 히어로",
+          "minimal skincare",
+          "skincare",
+          "frosted",
+          "frosted acrylic riser",
+          "unbranded skincare",
+          "beauty product hero"
+        ],
+        "axis_label": "product hero still life on tactile riser",
+        "axis_embedding_text": "minimal product hero still life on acrylic or ceramic riser, skincare or jewelry, tactile surfaces, unbranded blank packaging, no readable labels",
+        "steering_slots": [
+          "subject",
+          "action",
+          "surface_material",
+          "prop",
+          "composition",
+          "texture",
+          "light_shape",
+          "genre"
+        ],
+        "routed_slots": [
+          "subject",
+          "action",
+          "surface_material",
+          "prop",
+          "composition",
+          "texture",
+          "light_shape",
+          "genre"
+        ],
+        "preset_policy": {
+          "allow_ids": [
+            "product_hero_on_riser",
+            "flatlay_beauty_jewelry_hero",
+            "product_packshot_white_sweep",
+            "skincare_bathroom_countertop",
+            "jewelry_macro_reflection",
+            "cinematic_product_reflection_stage"
+          ],
+          "fallback_terms": [
+            "product hero",
+            "riser",
+            "skincare product",
+            "jewelry hero",
+            "packshot",
+            "unbranded packaging"
+          ]
+        },
+        "signal_lexicon": {
+          "strong": [
+            "product hero",
+            "acrylic riser",
+            "skincare product",
+            "jewelry hero",
+            "packshot",
+            "riser",
+            "minimal skincare",
+            "skincare",
+            "frosted acrylic riser",
+            "unbranded skincare"
+          ],
+          "ambient": [
+            "frosted",
+            "unbranded",
+            "blank label",
+            "pedestal",
+            "macro",
+            "reflection"
+          ]
+        },
+        "slot_signals": {
+          "subject": {
+            "core": [
+              "skincare_bottle_single",
+              "skincare_bottle_set",
+              "pearl_jewelry_set",
+              "silver_ring_jewelry"
+            ],
+            "support": [
+              "perfume_bottle",
+              "ceramic_bowl"
+            ]
+          },
+          "action": {
+            "core": [
+              "product_centered_on_riser"
+            ],
+            "support": [
+              "floating_product",
+              "neatly_arranged",
+              "styled_flatlay_arrangement"
+            ]
+          },
+          "surface_material": {
+            "core": [
+              "frosted_acrylic_surface",
+              "curved_riser_surface",
+              "ceramic_pedestal_surface",
+              "acrylic_plinth"
+            ],
+            "support": [
+              "mirror_board_surface",
+              "white_marble_surface",
+              "black_acrylic_reflection"
+            ]
+          },
+          "prop": {
+            "core": [
+              "acrylic_riser_display_prop",
+              "marble_pedestal_prop",
+              "frosted_skincare_bottle_prop"
+            ],
+            "support": [
+              "blank_brand_card_prop",
+              "generic_blank_label_packaging_prop",
+              "chrome_sphere_prop"
+            ]
+          },
+          "composition": {
+            "core": [
+              "hero_object_centered_flatlay",
+              "negative_space_product_flatlay"
+            ],
+            "support": [
+              "clean_catalog",
+              "product_floating_centered"
+            ]
+          },
+          "texture": {
+            "support": [
+              "frosted_acrylic_haze_texture",
+              "glass_refraction",
+              "macro_detail",
+              "clean_digital"
+            ]
+          },
+          "light_shape": {
+            "support": [
+              "strip_light_shape",
+              "large_softbox_shape",
+              "soft_prop_shadow_falloff"
+            ]
+          },
+          "genre": {
+            "core": [
+              "product",
+              "still_life"
+            ]
+          }
+        }
+      },
+      "aesthetic_still_life_bundle": {
+        "policy_id": "aesthetic-still-life-bundle-semantic-policy-v1",
+        "keywords": [
+          "coquette flatlay",
+          "dark academia flatlay",
+          "Y2K desk flatlay",
+          "neo deco still life",
+          "witchy mystic still life",
+          "aesthetic still life",
+          "balletcore flatlay",
+          "다크 아카데미아",
+          "코케트 플랫레이",
+          "neo deco",
+          "chrome brass marble",
+          "chrome",
+          "brass",
+          "marble",
+          "Y2K",
+          "y2k",
+          "flip phone",
+          "stickers",
+          "witchy",
+          "mystic",
+          "tarot",
+          "crystal",
+          "crystals",
+          "coquette",
+          "ribbon",
+          "pearl",
+          "teacup",
+          "dark academia",
+          "old book",
+          "brass candle",
+          "unreadable old book",
+          "aesthetic still-life",
+          "aesthetic still-life prop bundle"
+        ],
+        "axis_label": "aesthetic still-life prop bundle",
+        "axis_embedding_text": "aesthetic still-life flatlay bundles: coquette balletcore ribbon pearl teacup, dark academia books brass candle, Y2K flip phone stickers, neo-deco chrome brass marble, witchy mystic unreadable cards",
+        "steering_slots": [
+          "aesthetic_trend",
+          "prop",
+          "surface_material",
+          "composition",
+          "location",
+          "texture",
+          "light_shape",
+          "subject"
+        ],
+        "routed_slots": [
+          "aesthetic_trend",
+          "prop",
+          "surface_material",
+          "composition",
+          "location",
+          "texture",
+          "light_shape",
+          "subject"
+        ],
+        "preset_policy": {
+          "allow_ids": [
+            "flatlay_coquette_balletcore",
+            "flatlay_dark_academia_study",
+            "flatlay_y2k_indie_sleaze",
+            "neo_deco_interior_still_life",
+            "witchy_mystic_object_scene",
+            "flatlay_cozy_home_still_life"
+          ],
+          "fallback_terms": [
+            "coquette flatlay",
+            "dark academia",
+            "Y2K desk flatlay",
+            "neo deco",
+            "witchy mystic",
+            "aesthetic still life"
+          ]
+        },
+        "signal_lexicon": {
+          "strong": [
+            "coquette flatlay",
+            "dark academia",
+            "Y2K desk flatlay",
+            "neo deco still life",
+            "witchy mystic",
+            "balletcore flatlay",
+            "neo deco",
+            "chrome brass marble",
+            "Y2K",
+            "flip phone",
+            "stickers",
+            "witchy",
+            "mystic",
+            "tarot",
+            "crystal",
+            "coquette",
+            "ribbon",
+            "pearl",
+            "teacup",
+            "old book",
+            "brass candle"
+          ],
+          "ambient": [
+            "ribbon",
+            "pearls",
+            "old books",
+            "brass candle",
+            "flip phone",
+            "chrome brass marble",
+            "tarot cards"
+          ]
+        },
+        "slot_signals": {
+          "aesthetic_trend": {
+            "core": [
+              "coquette_balletcore_flatlay",
+              "dark_academia_still_life",
+              "y2k_indie_sleaze_flatlay",
+              "neo_deco_interior_aesthetic",
+              "witchy_mystic_still_life"
+            ],
+            "support": [
+              "burrowcore_cozy_home_aesthetic",
+              "clean_girl_wellness_still_life"
+            ]
+          },
+          "prop": {
+            "core": [
+              "satin_ribbon_flatlay_prop",
+              "pearl_strand_flatlay_prop",
+              "vintage_book_unreadable_pages_prop",
+              "brass_candlestick_prop",
+              "retro_flip_phone_prop",
+              "holographic_stickers_prop",
+              "chrome_sphere_prop",
+              "brass_tray_prop",
+              "tarot_cards_unreadable_prop",
+              "crystal_cluster_prop"
+            ],
+            "support": [
+              "porcelain_teacup_saucer_prop",
+              "fountain_pen_inkwell_prop",
+              "mp3_cd_sticker_stack_prop",
+              "fan_arch_deco_object_prop"
+            ]
+          },
+          "surface_material": {
+            "support": [
+              "lace_fabric_surface",
+              "velvet_fabric_surface",
+              "dark_walnut_table",
+              "red_marble_slab_surface",
+              "brass_tray_surface",
+              "mirror_board_surface"
+            ]
+          },
+          "composition": {
+            "support": [
+              "asymmetrical_flatlay_layering",
+              "overlapping_paper_ephemera_layout",
+              "scattered_prop_story_layout",
+              "hero_object_centered_flatlay"
+            ]
+          },
+          "location": {
+            "support": [
+              "coquette_tea_table_flatlay",
+              "dark_academia_study_tabletop",
+              "y2k_scrapbook_tabletop",
+              "neo_deco_console_tabletop",
+              "witchy_apothecary_tabletop"
+            ]
+          },
+          "texture": {
+            "support": [
+              "soft_velvet_pile_texture",
+              "torn_paper_fiber_texture",
+              "iridescent_holographic_film_texture",
+              "brass_patina_texture"
+            ]
+          },
+          "light_shape": {
+            "support": [
+              "lace_shadow_pattern",
+              "candle_teardrop_flame",
+              "disco_ball_sparkle_pattern",
+              "hard_object_shadow_still_life"
+            ]
+          },
+          "subject": {
+            "support": [
+              "dark_academia_book_stack",
+              "y2k_desk_gadget_stack",
+              "neo_deco_decor_object_arrangement",
+              "mystic_tabletop_object_arrangement"
+            ]
+          }
+        }
+      },
+      "skincare_product_riser_scene": {
+        "policy_id": "skincare-product-riser-scene-semantic-policy-v1",
+        "keywords": [
+          "minimal skincare",
+          "skincare product",
+          "skincare bottle",
+          "frosted acrylic riser",
+          "acrylic riser",
+          "frosted acrylic",
+          "unbranded skincare",
+          "beauty product hero"
+        ],
+        "axis_label": "minimal skincare product on frosted acrylic riser",
+        "axis_embedding_text": "minimal unbranded skincare bottle product hero on frosted acrylic riser, acrylic display prop, clean beauty still life, no readable label",
+        "steering_slots": [
+          "subject",
+          "prop",
+          "surface_material",
+          "action",
+          "location",
+          "composition",
+          "texture",
+          "light_shape",
+          "aesthetic_trend"
+        ],
+        "routed_slots": [
+          "subject",
+          "prop",
+          "surface_material",
+          "action",
+          "location",
+          "composition",
+          "texture",
+          "light_shape",
+          "aesthetic_trend"
+        ],
+        "preset_policy": {
+          "allow_ids": [
+            "product_hero_on_riser",
+            "flatlay_beauty_jewelry_hero"
+          ],
+          "fallback_terms": [
+            "skincare product",
+            "frosted acrylic riser",
+            "acrylic riser",
+            "beauty product hero"
+          ]
+        },
+        "signal_lexicon": {
+          "strong": [
+            "minimal skincare",
+            "skincare product",
+            "frosted acrylic riser",
+            "acrylic riser",
+            "skincare bottle"
+          ],
+          "ambient": [
+            "frosted acrylic",
+            "unbranded skincare",
+            "beauty product hero"
+          ]
+        },
+        "slot_signals": {
+          "subject": {
+            "core": [
+              "skincare_bottle_single"
+            ],
+            "support": [
+              "skincare_bottle_set"
+            ]
+          },
+          "prop": {
+            "core": [
+              "acrylic_riser_display_prop"
+            ],
+            "support": [
+              "frosted_skincare_bottle_prop",
+              "generic_blank_label_packaging_prop"
+            ]
+          },
+          "surface_material": {
+            "core": [
+              "frosted_acrylic_surface"
+            ],
+            "support": [
+              "acrylic_plinth",
+              "curved_riser_surface",
+              "mirror_board_surface"
+            ]
+          },
+          "action": {
+            "core": [
+              "product_centered_on_riser"
+            ],
+            "support": [
+              "styled_flatlay_arrangement"
+            ]
+          },
+          "location": {
+            "core": [
+              "product_riser_studio_tabletop"
+            ],
+            "support": [
+              "flatlay_studio_tabletop",
+              "clean_kbeauty_white_studio"
+            ]
+          },
+          "composition": {
+            "core": [
+              "hero_object_centered_flatlay",
+              "negative_space_product_flatlay"
+            ]
+          },
+          "texture": {
+            "core": [
+              "frosted_acrylic_haze_texture"
+            ],
+            "support": [
+              "glass_refraction",
+              "clean_digital"
+            ]
+          },
+          "light_shape": {
+            "support": [
+              "soft_prop_shadow_falloff",
+              "strip_light_shape",
+              "large_softbox_shape"
+            ]
+          },
+          "aesthetic_trend": {
+            "support": [
+              "clean_girl_wellness_still_life"
+            ]
+          }
+        }
+      },
+      "travel_ephemera_flatlay_scene": {
+        "policy_id": "travel-ephemera-flatlay-scene-semantic-policy-v1",
+        "keywords": [
+          "travel journal flatlay",
+          "travel journal",
+          "fictional boarding pass",
+          "boarding pass",
+          "passport flatlay",
+          "hotel keycard",
+          "city map flatlay",
+          "no readable travel documents"
+        ],
+        "axis_label": "travel journal flatlay with fictional paper ephemera",
+        "axis_embedding_text": "travel journal flatlay with fictional boarding pass, passport, hotel keycard, non-legible city map, paper ephemera arranged without readable text",
+        "steering_slots": [
+          "subject",
+          "prop",
+          "location",
+          "surface_material",
+          "composition",
+          "texture",
+          "light_shape",
+          "capture_context"
+        ],
+        "routed_slots": [
+          "subject",
+          "prop",
+          "location",
+          "surface_material",
+          "composition",
+          "texture",
+          "light_shape",
+          "capture_context"
+        ],
+        "preset_policy": {
+          "allow_ids": [
+            "flatlay_travel_desk_documentary"
+          ],
+          "fallback_terms": [
+            "travel journal flatlay",
+            "fictional boarding pass",
+            "hotel keycard",
+            "city map flatlay"
+          ]
+        },
+        "signal_lexicon": {
+          "strong": [
+            "travel journal",
+            "fictional boarding pass",
+            "boarding pass",
+            "passport flatlay",
+            "hotel keycard"
+          ],
+          "ambient": [
+            "city map",
+            "paper ephemera",
+            "no readable travel documents"
+          ]
+        },
+        "slot_signals": {
+          "subject": {
+            "core": [
+              "travel_journal_flatlay_subject"
+            ]
+          },
+          "prop": {
+            "core": [
+              "fictional_boarding_pass_prop",
+              "fictional_passport_prop",
+              "generic_hotel_keycard_prop",
+              "non_legible_city_map_prop"
+            ],
+            "support": [
+              "vintage_camera_flatlay_prop",
+              "camping_mug_compass_prop"
+            ]
+          },
+          "location": {
+            "core": [
+              "travel_desk_flatlay"
+            ],
+            "support": [
+              "flatlay_studio_tabletop"
+            ]
+          },
+          "surface_material": {
+            "support": [
+              "kraft_paper_surface",
+              "linen_fabric_surface",
+              "weathered_wood_board_surface"
+            ]
+          },
+          "composition": {
+            "core": [
+              "overlapping_paper_ephemera_layout"
+            ],
+            "support": [
+              "scattered_prop_story_layout",
+              "partially_cropped_edge_props"
+            ]
+          },
+          "texture": {
+            "support": [
+              "handmade_paper_texture",
+              "torn_paper_fiber_texture",
+              "rattan_woven_texture"
+            ]
+          },
+          "light_shape": {
+            "support": [
+              "soft_prop_shadow_falloff",
+              "plant_leaf_shadow_pattern"
+            ]
+          },
+          "capture_context": {
+            "support": [
+              "no_text_paper_ephemera_context",
+              "editorial_still_life_context"
+            ]
+          }
+        }
+      },
+      "dark_academia_flatlay_scene": {
+        "policy_id": "dark-academia-flatlay-scene-semantic-policy-v1",
+        "keywords": [
+          "dark academia flatlay",
+          "dark academia",
+          "unreadable old book",
+          "old book",
+          "brass candle",
+          "candlelit book stack"
+        ],
+        "axis_label": "dark academia flatlay with unreadable old book and brass candle",
+        "axis_embedding_text": "dark academia tabletop flatlay with unreadable old book pages, brass candlestick, candlelit study surface, archival paper texture, no readable text",
+        "steering_slots": [
+          "subject",
+          "prop",
+          "location",
+          "aesthetic_trend",
+          "surface_material",
+          "composition",
+          "texture",
+          "light_shape"
+        ],
+        "routed_slots": [
+          "subject",
+          "prop",
+          "location",
+          "aesthetic_trend",
+          "surface_material",
+          "composition",
+          "texture",
+          "light_shape"
+        ],
+        "preset_policy": {
+          "allow_ids": [
+            "flatlay_dark_academia_study"
+          ],
+          "fallback_terms": [
+            "dark academia",
+            "old book",
+            "brass candle"
+          ]
+        },
+        "signal_lexicon": {
+          "strong": [
+            "dark academia",
+            "unreadable old book",
+            "brass candle"
+          ],
+          "ambient": [
+            "candlelit book stack",
+            "study tabletop"
+          ]
+        },
+        "slot_signals": {
+          "subject": {
+            "core": [
+              "dark_academia_book_stack"
+            ],
+            "support": [
+              "typewriter_on_desk"
+            ]
+          },
+          "prop": {
+            "core": [
+              "vintage_book_unreadable_pages_prop",
+              "brass_candlestick_prop"
+            ],
+            "support": [
+              "fountain_pen_inkwell_prop",
+              "pocket_watch_prop",
+              "pressed_botanical_specimen_prop"
+            ]
+          },
+          "location": {
+            "core": [
+              "dark_academia_study_tabletop"
+            ],
+            "support": [
+              "oak_library_dark_academia",
+              "library_archive_room"
+            ]
+          },
+          "aesthetic_trend": {
+            "core": [
+              "dark_academia_still_life"
+            ]
+          },
+          "surface_material": {
+            "support": [
+              "dark_walnut_table",
+              "brass_tray_surface",
+              "velvet_fabric_surface",
+              "weathered_wood_board_surface"
+            ]
+          },
+          "composition": {
+            "support": [
+              "stacked_books_prop_tower",
+              "overlapping_paper_ephemera_layout",
+              "asymmetrical_flatlay_layering"
+            ]
+          },
+          "texture": {
+            "support": [
+              "brass_patina_texture",
+              "torn_paper_fiber_texture",
+              "pressed_paper_archive_dust"
+            ]
+          },
+          "light_shape": {
+            "support": [
+              "candle_teardrop_flame",
+              "candle_flicker_pool",
+              "hard_object_shadow_still_life"
+            ]
+          }
+        }
+      },
+      "coquette_balletcore_flatlay_scene": {
+        "policy_id": "coquette-balletcore-flatlay-scene-semantic-policy-v1",
+        "keywords": [
+          "coquette ribbon",
+          "coquette flatlay",
+          "balletcore flatlay",
+          "pearl teacup",
+          "ribbon pearl teacup",
+          "coquette",
+          "balletcore"
+        ],
+        "axis_label": "coquette ribbon pearl teacup flatlay",
+        "axis_embedding_text": "coquette balletcore flatlay with satin ribbon, pearl strand, lace fabric, porcelain teacup saucer, soft pastel tabletop styling",
+        "steering_slots": [
+          "subject",
+          "prop",
+          "location",
+          "aesthetic_trend",
+          "surface_material",
+          "composition",
+          "texture",
+          "light_shape"
+        ],
+        "routed_slots": [
+          "subject",
+          "prop",
+          "location",
+          "aesthetic_trend",
+          "surface_material",
+          "composition",
+          "texture",
+          "light_shape"
+        ],
+        "preset_policy": {
+          "allow_ids": [
+            "flatlay_coquette_balletcore"
+          ],
+          "fallback_terms": [
+            "coquette flatlay",
+            "balletcore flatlay",
+            "pearl teacup"
+          ]
+        },
+        "signal_lexicon": {
+          "strong": [
+            "coquette",
+            "balletcore",
+            "ribbon pearl teacup",
+            "pearl teacup"
+          ],
+          "ambient": [
+            "satin ribbon",
+            "lace",
+            "pearls"
+          ]
+        },
+        "slot_signals": {
+          "subject": {
+            "core": [
+              "pearl_jewelry_set"
+            ]
+          },
+          "prop": {
+            "core": [
+              "satin_ribbon_flatlay_prop",
+              "pearl_strand_flatlay_prop",
+              "porcelain_teacup_saucer_prop"
+            ],
+            "support": [
+              "lace_glove_flatlay_prop",
+              "dried_flower_petals_prop"
+            ]
+          },
+          "location": {
+            "core": [
+              "coquette_tea_table_flatlay"
+            ],
+            "support": [
+              "flatlay_studio_tabletop"
+            ]
+          },
+          "aesthetic_trend": {
+            "core": [
+              "coquette_balletcore_flatlay"
+            ],
+            "support": [
+              "coquette_aesthetic",
+              "balletcore_aesthetic"
+            ]
+          },
+          "surface_material": {
+            "support": [
+              "lace_fabric_surface",
+              "velvet_fabric_surface",
+              "white_marble_surface",
+              "linen_fabric_surface"
+            ]
+          },
+          "composition": {
+            "support": [
+              "asymmetrical_flatlay_layering",
+              "draped_fabric_corner_frame",
+              "curated_flatlay_grid"
+            ]
+          },
+          "texture": {
+            "support": [
+              "fine_silk_ribbon_texture",
+              "pearlescent_shell_texture",
+              "soft_velvet_pile_texture"
+            ]
+          },
+          "light_shape": {
+            "support": [
+              "lace_shadow_pattern",
+              "soft_prop_shadow_falloff",
+              "prism_rainbow_fragment"
+            ]
+          }
+        }
+      },
+      "y2k_desk_flatlay_scene": {
+        "policy_id": "y2k-desk-flatlay-scene-semantic-policy-v1",
+        "keywords": [
+          "Y2K desk flatlay",
+          "y2k desk flatlay",
+          "Y2K flatlay",
+          "y2k flatlay",
+          "flip phone stickers",
+          "flip phone",
+          "holographic stickers",
+          "mp3 cd"
+        ],
+        "axis_label": "Y2K desk flatlay with flip phone and stickers",
+        "axis_embedding_text": "Y2K desk flatlay with retro flip phone, holographic stickers, MP3 CD stack, indie sleaze scrapbook tabletop, no readable text",
+        "steering_slots": [
+          "subject",
+          "prop",
+          "location",
+          "aesthetic_trend",
+          "surface_material",
+          "composition",
+          "texture",
+          "light_shape"
+        ],
+        "routed_slots": [
+          "subject",
+          "prop",
+          "location",
+          "aesthetic_trend",
+          "surface_material",
+          "composition",
+          "texture",
+          "light_shape"
+        ],
+        "preset_policy": {
+          "allow_ids": [
+            "flatlay_y2k_indie_sleaze"
+          ],
+          "fallback_terms": [
+            "Y2K desk flatlay",
+            "flip phone stickers",
+            "holographic stickers"
+          ]
+        },
+        "signal_lexicon": {
+          "strong": [
+            "Y2K desk flatlay",
+            "y2k flatlay",
+            "flip phone",
+            "holographic stickers"
+          ],
+          "ambient": [
+            "mp3 cd",
+            "indie sleaze",
+            "scrapbook"
+          ]
+        },
+        "slot_signals": {
+          "subject": {
+            "core": [
+              "y2k_desk_gadget_stack"
+            ]
+          },
+          "prop": {
+            "core": [
+              "retro_flip_phone_prop",
+              "holographic_stickers_prop",
+              "mp3_cd_sticker_stack_prop"
+            ],
+            "support": [
+              "beaded_phone_charm_prop",
+              "vintage_camera_flatlay_prop"
+            ]
+          },
+          "location": {
+            "core": [
+              "y2k_scrapbook_tabletop"
+            ],
+            "support": [
+              "flatlay_studio_tabletop",
+              "creator_desk_setup"
+            ]
+          },
+          "aesthetic_trend": {
+            "core": [
+              "y2k_indie_sleaze_flatlay"
+            ],
+            "support": [
+              "cyber_y2k_aesthetic",
+              "y2k_dailywear_nostalgia"
+            ]
+          },
+          "surface_material": {
+            "support": [
+              "colored_paper_backdrop_surface",
+              "mirror_board_surface",
+              "black_acrylic_reflection",
+              "frosted_acrylic_surface"
+            ]
+          },
+          "composition": {
+            "support": [
+              "scattered_prop_story_layout",
+              "partially_cropped_edge_props",
+              "diagonal_prop_trail"
+            ]
+          },
+          "texture": {
+            "support": [
+              "iridescent_holographic_film_texture",
+              "sticker_layered_surface_texture",
+              "brushed_steel_micrograin_texture",
+              "compact_digicam_noise"
+            ]
+          },
+          "light_shape": {
+            "support": [
+              "disco_ball_sparkle_pattern",
+              "hard_object_shadow_still_life",
+              "prism_rainbow_fragment"
+            ]
+          }
+        }
+      },
+      "neo_deco_still_life_scene": {
+        "policy_id": "neo-deco-still-life-scene-semantic-policy-v1",
+        "keywords": [
+          "neo deco still life",
+          "neo deco",
+          "chrome brass marble",
+          "chrome brass",
+          "brass marble",
+          "deco console",
+          "art deco still life"
+        ],
+        "axis_label": "neo deco product still life with chrome brass marble",
+        "axis_embedding_text": "neo-deco product still life with chrome sphere, brass tray, marble pedestal, red marble slab, mirror board, luxury geometric tabletop styling",
+        "steering_slots": [
+          "subject",
+          "prop",
+          "location",
+          "aesthetic_trend",
+          "surface_material",
+          "composition",
+          "texture",
+          "light_shape"
+        ],
+        "routed_slots": [
+          "subject",
+          "prop",
+          "location",
+          "aesthetic_trend",
+          "surface_material",
+          "composition",
+          "texture",
+          "light_shape"
+        ],
+        "preset_policy": {
+          "allow_ids": [
+            "neo_deco_interior_still_life"
+          ],
+          "fallback_terms": [
+            "neo deco",
+            "chrome brass marble",
+            "deco console"
+          ]
+        },
+        "signal_lexicon": {
+          "strong": [
+            "neo deco",
+            "chrome brass marble",
+            "chrome brass",
+            "art deco still life"
+          ],
+          "ambient": [
+            "marble",
+            "brass",
+            "chrome",
+            "deco console"
+          ]
+        },
+        "slot_signals": {
+          "subject": {
+            "core": [
+              "neo_deco_decor_object_arrangement"
+            ],
+            "support": [
+              "perfume_bottle",
+              "silver_ring_jewelry"
+            ]
+          },
+          "prop": {
+            "core": [
+              "chrome_sphere_prop",
+              "brass_tray_prop",
+              "marble_pedestal_prop"
+            ],
+            "support": [
+              "fan_arch_deco_object_prop",
+              "blank_brand_card_prop"
+            ]
+          },
+          "location": {
+            "core": [
+              "neo_deco_console_tabletop"
+            ],
+            "support": [
+              "flatlay_studio_tabletop",
+              "marble_table"
+            ]
+          },
+          "aesthetic_trend": {
+            "core": [
+              "neo_deco_interior_aesthetic"
+            ]
+          },
+          "surface_material": {
+            "core": [
+              "red_marble_slab_surface",
+              "brass_tray_surface",
+              "mirror_board_surface"
+            ],
+            "support": [
+              "travertine_slab_surface",
+              "black_acrylic_reflection",
+              "white_marble_surface"
+            ]
+          },
+          "composition": {
+            "support": [
+              "hero_object_centered_flatlay",
+              "centered_symmetry",
+              "layered_reflection_depth",
+              "negative_space_product_flatlay"
+            ]
+          },
+          "texture": {
+            "support": [
+              "brass_patina_texture",
+              "travertine_pores_texture",
+              "brushed_steel_micrograin_texture",
+              "glass_refraction"
+            ]
+          },
+          "light_shape": {
+            "support": [
+              "hard_object_shadow_still_life",
+              "strip_light_shape",
+              "prism_rainbow_fragment"
+            ]
+          }
+        }
+      },
+      "witchy_mystic_still_life_scene": {
+        "policy_id": "witchy-mystic-still-life-scene-semantic-policy-v1",
+        "keywords": [
+          "witchy mystic still life",
+          "witchy mystic",
+          "tarot crystal",
+          "tarot cards",
+          "crystal cluster",
+          "witchy apothecary",
+          "mystic tabletop"
+        ],
+        "axis_label": "witchy mystic tarot crystal still life",
+        "axis_embedding_text": "witchy mystic still life with unreadable tarot cards, crystal cluster, dried herbs, brass candle, dark apothecary tabletop, no readable text",
+        "steering_slots": [
+          "subject",
+          "prop",
+          "location",
+          "aesthetic_trend",
+          "surface_material",
+          "composition",
+          "texture",
+          "light_shape",
+          "mood"
+        ],
+        "routed_slots": [
+          "subject",
+          "prop",
+          "location",
+          "aesthetic_trend",
+          "surface_material",
+          "composition",
+          "texture",
+          "light_shape",
+          "mood"
+        ],
+        "preset_policy": {
+          "allow_ids": [
+            "witchy_mystic_object_scene"
+          ],
+          "fallback_terms": [
+            "witchy mystic",
+            "tarot crystal",
+            "witchy apothecary"
+          ]
+        },
+        "signal_lexicon": {
+          "strong": [
+            "witchy mystic",
+            "tarot crystal",
+            "tarot cards",
+            "crystal cluster"
+          ],
+          "ambient": [
+            "apothecary",
+            "dried herbs",
+            "brass candle"
+          ]
+        },
+        "slot_signals": {
+          "subject": {
+            "core": [
+              "mystic_tabletop_object_arrangement"
+            ]
+          },
+          "prop": {
+            "core": [
+              "tarot_cards_unreadable_prop",
+              "crystal_cluster_prop"
+            ],
+            "support": [
+              "dried_herbs_glass_vials_prop",
+              "brass_candlestick_prop",
+              "herb_bundle_prop"
+            ]
+          },
+          "location": {
+            "core": [
+              "witchy_apothecary_tabletop"
+            ],
+            "support": [
+              "witch_apothecary_room",
+              "flatlay_studio_tabletop"
+            ]
+          },
+          "aesthetic_trend": {
+            "core": [
+              "witchy_mystic_still_life"
+            ],
+            "support": [
+              "whimsigoth_aesthetic"
+            ]
+          },
+          "surface_material": {
+            "support": [
+              "dark_walnut_table",
+              "velvet_fabric_surface",
+              "brass_tray_surface",
+              "weathered_wood_board_surface"
+            ]
+          },
+          "composition": {
+            "support": [
+              "asymmetrical_flatlay_layering",
+              "overlapping_paper_ephemera_layout",
+              "diagonal_prop_trail"
+            ]
+          },
+          "texture": {
+            "support": [
+              "brass_patina_texture",
+              "soft_velvet_pile_texture",
+              "torn_paper_fiber_texture",
+              "glass_refraction"
+            ]
+          },
+          "light_shape": {
+            "support": [
+              "candle_teardrop_flame",
+              "hard_object_shadow_still_life",
+              "projector_pool_of_light"
+            ]
+          },
+          "mood": {
+            "support": [
+              "uncanny",
+              "ritual_unease",
+              "occult_noir"
+            ]
+          }
+        }
       }
     },
     "steering_priority": [
+      "skincare_product_riser_scene",
+      "travel_ephemera_flatlay_scene",
+      "dark_academia_flatlay_scene",
+      "coquette_balletcore_flatlay_scene",
+      "y2k_desk_flatlay_scene",
+      "neo_deco_still_life_scene",
+      "witchy_mystic_still_life_scene",
+      "flatlay_staging_scene",
+      "product_hero_still_life",
+      "aesthetic_still_life_bundle",
       "transit_commute_scene",
       "daily_reset_scene",
       "cafe_work_closing_scene",
@@ -174753,6 +181177,155 @@
           "rain_damp_hairline_skin",
           "hand_on_window_glass",
           "window_side_soft"
+        ]
+      },
+      "flatlay_staging_scene": {
+        "strong": [
+          "flatlay_food_styling",
+          "flatlay_beauty_jewelry_hero",
+          "flatlay_travel_desk_documentary",
+          "styled_flatlay_arrangement",
+          "curated_flatlay_grid",
+          "frosted_acrylic_surface",
+          "overlapping_paper_ephemera_layout"
+        ],
+        "ambient": [
+          "satin_ribbon_flatlay_prop",
+          "fictional_boarding_pass_prop",
+          "vintage_book_unreadable_pages_prop",
+          "soft_prop_shadow_falloff",
+          "handmade_paper_texture"
+        ]
+      },
+      "product_hero_still_life": {
+        "strong": [
+          "product_hero_on_riser",
+          "flatlay_beauty_jewelry_hero",
+          "product_centered_on_riser",
+          "skincare_bottle_single",
+          "acrylic_riser_display_prop",
+          "frosted_acrylic_surface"
+        ],
+        "ambient": [
+          "marble_pedestal_prop",
+          "generic_blank_label_packaging_prop",
+          "hero_object_centered_flatlay",
+          "frosted_acrylic_haze_texture"
+        ]
+      },
+      "aesthetic_still_life_bundle": {
+        "strong": [
+          "flatlay_coquette_balletcore",
+          "flatlay_dark_academia_study",
+          "flatlay_y2k_indie_sleaze",
+          "neo_deco_interior_still_life",
+          "witchy_mystic_object_scene"
+        ],
+        "ambient": [
+          "coquette_balletcore_flatlay",
+          "dark_academia_still_life",
+          "y2k_indie_sleaze_flatlay",
+          "witchy_mystic_still_life",
+          "neo_deco_interior_aesthetic"
+        ]
+      },
+      "skincare_product_riser_scene": {
+        "strong": [
+          "product_hero_on_riser",
+          "flatlay_beauty_jewelry_hero",
+          "skincare_bottle_single",
+          "acrylic_riser_display_prop",
+          "frosted_acrylic_surface",
+          "product_centered_on_riser"
+        ],
+        "ambient": [
+          "frosted_skincare_bottle_prop",
+          "frosted_acrylic_haze_texture",
+          "hero_object_centered_flatlay"
+        ]
+      },
+      "travel_ephemera_flatlay_scene": {
+        "strong": [
+          "flatlay_travel_desk_documentary",
+          "travel_journal_flatlay_subject",
+          "fictional_boarding_pass_prop",
+          "non_legible_city_map_prop",
+          "travel_desk_flatlay"
+        ],
+        "ambient": [
+          "fictional_passport_prop",
+          "generic_hotel_keycard_prop",
+          "overlapping_paper_ephemera_layout"
+        ]
+      },
+      "dark_academia_flatlay_scene": {
+        "strong": [
+          "flatlay_dark_academia_study",
+          "dark_academia_book_stack",
+          "vintage_book_unreadable_pages_prop",
+          "brass_candlestick_prop",
+          "dark_academia_still_life"
+        ],
+        "ambient": [
+          "dark_academia_study_tabletop",
+          "brass_patina_texture",
+          "candle_teardrop_flame"
+        ]
+      },
+      "coquette_balletcore_flatlay_scene": {
+        "strong": [
+          "flatlay_coquette_balletcore",
+          "pearl_jewelry_set",
+          "satin_ribbon_flatlay_prop",
+          "pearl_strand_flatlay_prop",
+          "coquette_balletcore_flatlay"
+        ],
+        "ambient": [
+          "porcelain_teacup_saucer_prop",
+          "lace_shadow_pattern",
+          "fine_silk_ribbon_texture"
+        ]
+      },
+      "y2k_desk_flatlay_scene": {
+        "strong": [
+          "flatlay_y2k_indie_sleaze",
+          "y2k_desk_gadget_stack",
+          "retro_flip_phone_prop",
+          "holographic_stickers_prop",
+          "y2k_indie_sleaze_flatlay"
+        ],
+        "ambient": [
+          "mp3_cd_sticker_stack_prop",
+          "sticker_layered_surface_texture",
+          "disco_ball_sparkle_pattern"
+        ]
+      },
+      "neo_deco_still_life_scene": {
+        "strong": [
+          "neo_deco_interior_still_life",
+          "neo_deco_decor_object_arrangement",
+          "chrome_sphere_prop",
+          "brass_tray_prop",
+          "neo_deco_interior_aesthetic"
+        ],
+        "ambient": [
+          "marble_pedestal_prop",
+          "red_marble_slab_surface",
+          "brass_patina_texture"
+        ]
+      },
+      "witchy_mystic_still_life_scene": {
+        "strong": [
+          "witchy_mystic_object_scene",
+          "mystic_tabletop_object_arrangement",
+          "tarot_cards_unreadable_prop",
+          "crystal_cluster_prop",
+          "witchy_mystic_still_life"
+        ],
+        "ambient": [
+          "witchy_apothecary_tabletop",
+          "brass_candlestick_prop",
+          "candle_teardrop_flame"
         ]
       }
     },
@@ -175323,6 +181896,49 @@
           "objects",
           "glow",
           "candid"
+        ],
+        "context_scope": "all",
+        "severity": "hard"
+      },
+      {
+        "id": "flatlay_text_ephemera_must_be_non_readable",
+        "slots": [
+          "subject",
+          "prop",
+          "location",
+          "capture_context",
+          "composition"
+        ],
+        "match_ids": [
+          "travel_journal_flatlay_subject",
+          "dark_academia_book_stack",
+          "mystic_tabletop_object_arrangement",
+          "vintage_book_unreadable_pages_prop",
+          "fictional_boarding_pass_prop",
+          "fictional_passport_prop",
+          "generic_hotel_keycard_prop",
+          "non_legible_city_map_prop",
+          "blank_brand_card_prop",
+          "generic_blank_label_packaging_prop",
+          "mp3_cd_sticker_stack_prop",
+          "holographic_stickers_prop",
+          "tarot_cards_unreadable_prop",
+          "dried_herbs_glass_vials_prop",
+          "film_roll_contact_sheet_prop",
+          "vinyl_record_sleeve_blank_prop",
+          "travel_desk_flatlay",
+          "witchy_apothecary_tabletop",
+          "no_text_paper_ephemera_context",
+          "overlapping_paper_ephemera_layout"
+        ],
+        "requires_item_any": [
+          "no_text",
+          "unreadable",
+          "blank",
+          "fictional",
+          "generic",
+          "unbranded",
+          "non_legible"
         ],
         "context_scope": "all",
         "severity": "hard"
@@ -176173,14 +182789,20 @@
           "silver_ring_jewelry",
           "mechanical_watch",
           "vinyl_record_player",
-          "typewriter_on_desk"
+          "typewriter_on_desk",
+          "skincare_bottle_single",
+          "pearl_jewelry_set",
+          "neo_deco_decor_object_arrangement"
         ],
         "surface_material": [
           "white_marble_surface",
           "matte_concrete_surface",
           "brushed_steel_surface",
           "translucent_glass_block",
-          "dark_walnut_table"
+          "dark_walnut_table",
+          "frosted_acrylic_surface",
+          "curved_riser_surface",
+          "ceramic_pedestal_surface"
         ],
         "lens": [
           "105mm_macro",
@@ -176192,12 +182814,18 @@
           "macro_detail",
           "clear_plastic_packaging_glare",
           "chromatic_aberration_edges"
+        ],
+        "prop": [
+          "acrylic_riser_display_prop",
+          "generic_blank_label_packaging_prop",
+          "blank_brand_card_prop"
         ]
       },
       "jewelry_strong": {
         "subject": [
           "silver_ring_jewelry",
-          "mechanical_watch"
+          "mechanical_watch",
+          "pearl_jewelry_set"
         ],
         "lens": [
           "105mm_macro",
@@ -176212,6 +182840,11 @@
           "glass_refraction",
           "macro_detail",
           "chromatic_aberration_edges"
+        ],
+        "prop": [
+          "velvet_jewelry_tray_prop",
+          "ring_box_flatlay_prop",
+          "pearl_strand_flatlay_prop"
         ]
       },
       "craft_strong": {
@@ -176285,7 +182918,8 @@
           "sushi_omakase_plate",
           "bibimbap_bowl",
           "matcha_latte_art",
-          "bubble_tea_cup"
+          "bubble_tea_cup",
+          "styled_food_flatlay_plate"
         ],
         "location": [
           "street_food_stall",
@@ -176300,6 +182934,11 @@
           "noodle_sauce_surface",
           "steam_haze",
           "wet_surface"
+        ],
+        "prop": [
+          "moka_pot_coffee_beans_prop",
+          "parchment_paper_herbs_prop",
+          "baking_whisk_rolling_pin_prop"
         ]
       },
       "analog_strong": {
@@ -176907,6 +183546,199 @@
           "liminal_fear",
           "melancholic",
           "uncanny"
+        ]
+      },
+      "flatlay_staging_scene_strong": {
+        "composition": [
+          "curated_flatlay_grid",
+          "asymmetrical_flatlay_layering",
+          "overlapping_paper_ephemera_layout",
+          "topdown_flatlay_social"
+        ],
+        "surface_material": [
+          "frosted_acrylic_surface",
+          "travertine_slab_surface",
+          "colored_paper_backdrop_surface",
+          "velvet_fabric_surface"
+        ],
+        "prop": [
+          "satin_ribbon_flatlay_prop",
+          "fictional_boarding_pass_prop",
+          "vintage_book_unreadable_pages_prop",
+          "acrylic_riser_display_prop"
+        ],
+        "action": [
+          "styled_flatlay_arrangement",
+          "layered_prop_story_arrangement"
+        ]
+      },
+      "product_hero_still_life_strong": {
+        "genre": [
+          "product",
+          "still_life"
+        ],
+        "subject": [
+          "skincare_bottle_single",
+          "skincare_bottle_set",
+          "pearl_jewelry_set",
+          "silver_ring_jewelry"
+        ],
+        "surface_material": [
+          "frosted_acrylic_surface",
+          "curved_riser_surface",
+          "ceramic_pedestal_surface",
+          "acrylic_plinth"
+        ],
+        "prop": [
+          "acrylic_riser_display_prop",
+          "marble_pedestal_prop",
+          "frosted_skincare_bottle_prop"
+        ],
+        "composition": [
+          "hero_object_centered_flatlay",
+          "negative_space_product_flatlay"
+        ]
+      },
+      "aesthetic_still_life_bundle_strong": {
+        "aesthetic_trend": [
+          "coquette_balletcore_flatlay",
+          "dark_academia_still_life",
+          "y2k_indie_sleaze_flatlay",
+          "neo_deco_interior_aesthetic",
+          "witchy_mystic_still_life"
+        ],
+        "prop": [
+          "satin_ribbon_flatlay_prop",
+          "pearl_strand_flatlay_prop",
+          "vintage_book_unreadable_pages_prop",
+          "brass_candlestick_prop",
+          "retro_flip_phone_prop",
+          "chrome_sphere_prop",
+          "tarot_cards_unreadable_prop"
+        ],
+        "location": [
+          "coquette_tea_table_flatlay",
+          "dark_academia_study_tabletop",
+          "neo_deco_console_tabletop",
+          "witchy_apothecary_tabletop"
+        ]
+      },
+      "skincare_product_riser_scene_strong": {
+        "subject": [
+          "skincare_bottle_single"
+        ],
+        "prop": [
+          "acrylic_riser_display_prop",
+          "frosted_skincare_bottle_prop"
+        ],
+        "surface_material": [
+          "frosted_acrylic_surface"
+        ],
+        "action": [
+          "product_centered_on_riser"
+        ],
+        "location": [
+          "product_riser_studio_tabletop"
+        ]
+      },
+      "travel_ephemera_flatlay_scene_strong": {
+        "subject": [
+          "travel_journal_flatlay_subject"
+        ],
+        "prop": [
+          "fictional_boarding_pass_prop",
+          "fictional_passport_prop",
+          "generic_hotel_keycard_prop",
+          "non_legible_city_map_prop"
+        ],
+        "location": [
+          "travel_desk_flatlay"
+        ],
+        "composition": [
+          "overlapping_paper_ephemera_layout"
+        ]
+      },
+      "dark_academia_flatlay_scene_strong": {
+        "subject": [
+          "dark_academia_book_stack"
+        ],
+        "prop": [
+          "vintage_book_unreadable_pages_prop",
+          "brass_candlestick_prop"
+        ],
+        "location": [
+          "dark_academia_study_tabletop"
+        ],
+        "aesthetic_trend": [
+          "dark_academia_still_life"
+        ]
+      },
+      "coquette_balletcore_flatlay_scene_strong": {
+        "subject": [
+          "pearl_jewelry_set"
+        ],
+        "prop": [
+          "satin_ribbon_flatlay_prop",
+          "pearl_strand_flatlay_prop",
+          "porcelain_teacup_saucer_prop"
+        ],
+        "location": [
+          "coquette_tea_table_flatlay"
+        ],
+        "aesthetic_trend": [
+          "coquette_balletcore_flatlay"
+        ]
+      },
+      "y2k_desk_flatlay_scene_strong": {
+        "subject": [
+          "y2k_desk_gadget_stack"
+        ],
+        "prop": [
+          "retro_flip_phone_prop",
+          "holographic_stickers_prop",
+          "mp3_cd_sticker_stack_prop"
+        ],
+        "location": [
+          "y2k_scrapbook_tabletop"
+        ],
+        "aesthetic_trend": [
+          "y2k_indie_sleaze_flatlay"
+        ]
+      },
+      "neo_deco_still_life_scene_strong": {
+        "subject": [
+          "neo_deco_decor_object_arrangement"
+        ],
+        "prop": [
+          "chrome_sphere_prop",
+          "brass_tray_prop",
+          "marble_pedestal_prop"
+        ],
+        "location": [
+          "neo_deco_console_tabletop"
+        ],
+        "aesthetic_trend": [
+          "neo_deco_interior_aesthetic"
+        ],
+        "surface_material": [
+          "red_marble_slab_surface",
+          "brass_tray_surface",
+          "mirror_board_surface"
+        ]
+      },
+      "witchy_mystic_still_life_scene_strong": {
+        "subject": [
+          "mystic_tabletop_object_arrangement"
+        ],
+        "prop": [
+          "tarot_cards_unreadable_prop",
+          "crystal_cluster_prop"
+        ],
+        "location": [
+          "witchy_apothecary_tabletop"
+        ],
+        "aesthetic_trend": [
+          "witchy_mystic_still_life"
         ]
       }
     },
@@ -177519,6 +184351,46 @@
       "surreal_environment_contrast": [
         "portrait",
         "documentary",
+        "surreal"
+      ],
+      "flatlay_food_styling": [
+        "food",
+        "product"
+      ],
+      "flatlay_beauty_jewelry_hero": [
+        "product",
+        "jewelry",
+        "beauty"
+      ],
+      "flatlay_travel_desk_documentary": [
+        "product",
+        "social"
+      ],
+      "flatlay_cozy_home_still_life": [
+        "product",
+        "social"
+      ],
+      "flatlay_coquette_balletcore": [
+        "product",
+        "beauty",
+        "fashion"
+      ],
+      "flatlay_dark_academia_study": [
+        "product"
+      ],
+      "flatlay_y2k_indie_sleaze": [
+        "product",
+        "social"
+      ],
+      "product_hero_on_riser": [
+        "product"
+      ],
+      "neo_deco_interior_still_life": [
+        "product",
+        "architecture"
+      ],
+      "witchy_mystic_object_scene": [
+        "product",
         "surreal"
       ]
     },
