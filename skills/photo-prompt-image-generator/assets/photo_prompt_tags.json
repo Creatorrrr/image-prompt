@@ -1,6 +1,6 @@
 {
-  "version": "1.17",
-  "description": "Photographic prompt dictionary with expanded concept-role, folklore, personality, season, era, digital-entity, and environmental-transformation coverage for semantic and recipe-driven prompt generation. Version 1.13 expands robot semantics with disembodied AI, screen-face terminals, sensory apparatus, fabrication origin, lifecycle wear/repair, drones, mecha, prosthetics, domestic systems, surveillance networks and AI-temple metaphors. Version 1.14 adds opt-in visible multi-subject relationship framing, visible in-frame partner roles, and a small-group documentary preset while preserving single-subject defaults. Version 1.15 adds perspective-rich beastkin evidence, procedural-duty, daily-errand, stagecraft, anti-diagram, POV-task, opt-in species, and expanded role/mixin coverage. Version 1.16 adds skin-finish, eye-detail, body-marking, summer stream, orchard shoot-through, cozy sofa, and CCD flash pet-closeup portrait coverage. Version 1.17 broadens realistic/candid portrait variation with expanded skin, eye, body-marking, lens-artifact, gaze-engagement, hand-pose, skin-state, ambient-particle, grain, garment-detail, companion-animal, color-grading, and natural-light lifestyle preset coverage.",
+  "version": "1.18",
+  "description": "Photographic prompt dictionary with expanded concept-role, folklore, personality, season, era, digital-entity, and environmental-transformation coverage for semantic and recipe-driven prompt generation. Version 1.13 expands robot semantics with disembodied AI, screen-face terminals, sensory apparatus, fabrication origin, lifecycle wear/repair, drones, mecha, prosthetics, domestic systems, surveillance networks and AI-temple metaphors. Version 1.14 adds opt-in visible multi-subject relationship framing, visible in-frame partner roles, and a small-group documentary preset while preserving single-subject defaults. Version 1.15 adds perspective-rich beastkin evidence, procedural-duty, daily-errand, stagecraft, anti-diagram, POV-task, opt-in species, and expanded role/mixin coverage. Version 1.16 adds skin-finish, eye-detail, body-marking, summer stream, orchard shoot-through, cozy sofa, and CCD flash pet-closeup portrait coverage. Version 1.17 broadens realistic/candid portrait variation with expanded skin, eye, body-marking, lens-artifact, gaze-engagement, hand-pose, skin-state, ambient-particle, grain, garment-detail, companion-animal, color-grading, and natural-light lifestyle preset coverage. Version 1.18 adds 2026 fashion dailywear coverage with footwear and silhouette-proportion slots, clean social/dailywear presets, generalized trend tags, and no-readable-text fashion-commerce safeguards.",
   "facet_vocab": {
     "subject_kind": [
       "human",
@@ -1702,7 +1702,11 @@
           ]
         }
       },
-      "family": "studio_editorial_clean_family"
+      "family": "studio_editorial_clean_family",
+      "tags": [
+        "adult",
+        "fashion"
+      ]
     },
     {
       "id": "nature_wildlife",
@@ -3760,7 +3764,11 @@
           ]
         }
       },
-      "family": "creator_branding_family"
+      "family": "creator_branding_family",
+      "tags": [
+        "adult",
+        "fashion"
+      ]
     },
     {
       "id": "tiktok_food_review",
@@ -4315,7 +4323,11 @@
           ]
         }
       },
-      "family": "creator_branding_family"
+      "family": "creator_branding_family",
+      "tags": [
+        "adult",
+        "fashion"
+      ]
     },
     {
       "id": "idol_magazine_portrait",
@@ -5104,6 +5116,26 @@
         {
           "slot": "hair_color",
           "probability": 0.45
+        },
+        {
+          "slot": "aesthetic_trend",
+          "probability": 0.65
+        },
+        {
+          "slot": "footwear",
+          "probability": 0.75
+        },
+        {
+          "slot": "silhouette_proportion",
+          "probability": 0.55
+        },
+        {
+          "slot": "garment_detail",
+          "probability": 0.45
+        },
+        {
+          "slot": "wearable_accessory",
+          "probability": 0.55
         }
       ],
       "filters": {
@@ -5282,11 +5314,19 @@
         },
         "wardrobe_style": {
           "ids": [
+            "oversized_jersey_denim_jorts",
+            "athletic_shorts_oversized_blazer",
+            "tracksuit_streetwear_set",
+            "cargo_utility_tank_set",
+            "little_white_summer_dress",
             "hoodie_shorts_sneakers",
             "knit_cardigan_jeans",
             "summer_dress_sneakers",
             "clean_blazer_trousers",
-            "crop_top_wide_pants"
+            "crop_top_wide_pants",
+            "sailor_stripe_linen_shorts",
+            "lace_trim_tee_satin_skirt",
+            "capri_cropped_windbreaker"
           ]
         },
         "makeup_style": {
@@ -5323,6 +5363,56 @@
           "ids": [
             "glossy_black_hair",
             "soft_dark_brown_hair"
+          ]
+        },
+        "aesthetic_trend": {
+          "ids": [
+            "sport_luxe_fandom",
+            "khaki_utility_coded",
+            "genz_clean_minimal",
+            "dockside_sailorcore",
+            "y2k_dailywear_nostalgia",
+            "vamp_romantic"
+          ]
+        },
+        "footwear": {
+          "ids": [
+            "chunky_dad_sneakers",
+            "sporty_racing_sneakers",
+            "slim_low_profile_sneakers",
+            "mary_jane_flats",
+            "penny_loafers",
+            "boat_deck_shoes",
+            "pointed_ankle_boots"
+          ]
+        },
+        "silhouette_proportion": {
+          "ids": [
+            "oversized_top_tiny_bottom",
+            "sculpted_power_shoulders",
+            "wide_leg_long_line",
+            "dropped_low_waistline",
+            "advanced_clever_layering",
+            "cinched_hourglass_waist"
+          ]
+        },
+        "garment_detail": {
+          "ids": [
+            "abstract_sporty_colorblock_graphic",
+            "lace_trim_edge",
+            "broderie_anglaise_eyelet",
+            "ripstop_nylon_crinkle",
+            "patchwork_denim_panel"
+          ]
+        },
+        "wearable_accessory": {
+          "ids": [
+            "shield_sport_sunglasses",
+            "wraparound_sport_sunglasses",
+            "oval_90s_sunglasses",
+            "charm_covered_bag",
+            "silk_scarf_tied_on_bag",
+            "oversized_leather_belt"
           ]
         }
       },
@@ -8651,7 +8741,11 @@
           ]
         }
       },
-      "family": "service_access_family"
+      "family": "service_access_family",
+      "tags": [
+        "adult",
+        "fashion"
+      ]
     },
     {
       "id": "vintage_family_archive",
@@ -9258,7 +9352,11 @@
           ]
         }
       },
-      "family": "social_character_realism_family"
+      "family": "social_character_realism_family",
+      "tags": [
+        "adult",
+        "fashion"
+      ]
     },
     {
       "id": "japanese_otaku_costume_portrait",
@@ -9929,7 +10027,9 @@
         "mood",
         "texture",
         "format",
-        "quality"
+        "quality",
+        "aesthetic_trend",
+        "garment_detail"
       ],
       "optional_slots": [
         {
@@ -9955,6 +10055,18 @@
         {
           "slot": "subject_framing",
           "probability": 0.28
+        },
+        {
+          "slot": "footwear",
+          "probability": 0.75
+        },
+        {
+          "slot": "silhouette_proportion",
+          "probability": 0.55
+        },
+        {
+          "slot": "wearable_accessory",
+          "probability": 0.55
         }
       ],
       "filters": {
@@ -10001,11 +10113,22 @@
         },
         "wardrobe_style": {
           "ids": [
+            "lace_trim_tee_satin_skirt",
+            "broderie_anglaise_mini_dress",
+            "dropwaist_satin_slip_dress",
+            "oversized_jersey_denim_jorts",
+            "athletic_shorts_oversized_blazer",
+            "tracksuit_streetwear_set",
+            "cargo_utility_tank_set",
+            "little_white_summer_dress",
             "eighties_glam_dress_big_hair",
             "nineties_slip_dress_layered",
             "minimal_black_dress",
             "crop_top_wide_pants",
-            "street_jacket_boots"
+            "street_jacket_boots",
+            "sailor_stripe_linen_shorts",
+            "capri_cropped_windbreaker",
+            "clean_blazer_trousers"
           ]
         },
         "action": {
@@ -10090,6 +10213,7 @@
         },
         "color": {
           "ids": [
+            "oxblood_wine_palette",
             "film_faded",
             "muted",
             "candy_color",
@@ -10174,6 +10298,56 @@
             "upper_body_framing",
             "three_quarter_body_framing",
             "close_up_face_crop"
+          ]
+        },
+        "aesthetic_trend": {
+          "ids": [
+            "vamp_romantic",
+            "sport_luxe_fandom",
+            "khaki_utility_coded",
+            "genz_clean_minimal",
+            "dockside_sailorcore",
+            "y2k_dailywear_nostalgia"
+          ]
+        },
+        "footwear": {
+          "ids": [
+            "chunky_dad_sneakers",
+            "sporty_racing_sneakers",
+            "slim_low_profile_sneakers",
+            "mary_jane_flats",
+            "penny_loafers",
+            "boat_deck_shoes",
+            "pointed_ankle_boots"
+          ]
+        },
+        "silhouette_proportion": {
+          "ids": [
+            "oversized_top_tiny_bottom",
+            "sculpted_power_shoulders",
+            "wide_leg_long_line",
+            "dropped_low_waistline",
+            "advanced_clever_layering",
+            "cinched_hourglass_waist"
+          ]
+        },
+        "garment_detail": {
+          "ids": [
+            "lace_trim_edge",
+            "broderie_anglaise_eyelet",
+            "abstract_sporty_colorblock_graphic",
+            "ripstop_nylon_crinkle",
+            "patchwork_denim_panel"
+          ]
+        },
+        "wearable_accessory": {
+          "ids": [
+            "shield_sport_sunglasses",
+            "wraparound_sport_sunglasses",
+            "oval_90s_sunglasses",
+            "charm_covered_bag",
+            "silk_scarf_tied_on_bag",
+            "oversized_leather_belt"
           ]
         }
       },
@@ -10722,7 +10896,11 @@
           ]
         }
       },
-      "family": "studio_editorial_clean_family"
+      "family": "studio_editorial_clean_family",
+      "tags": [
+        "adult",
+        "fashion"
+      ]
     },
     {
       "id": "compact_urban_fashion_portrait",
@@ -10775,6 +10953,26 @@
         {
           "slot": "subject_framing",
           "probability": 0.38
+        },
+        {
+          "slot": "aesthetic_trend",
+          "probability": 0.65
+        },
+        {
+          "slot": "footwear",
+          "probability": 0.75
+        },
+        {
+          "slot": "silhouette_proportion",
+          "probability": 0.55
+        },
+        {
+          "slot": "garment_detail",
+          "probability": 0.45
+        },
+        {
+          "slot": "wearable_accessory",
+          "probability": 0.55
         }
       ],
       "filters": {
@@ -10961,12 +11159,20 @@
         },
         "wardrobe_style": {
           "ids": [
+            "oversized_jersey_denim_jorts",
+            "athletic_shorts_oversized_blazer",
+            "tracksuit_streetwear_set",
+            "cargo_utility_tank_set",
+            "little_white_summer_dress",
             "casual_bomber_jacket_miniskirt",
             "hoodie_shorts_sneakers",
             "crop_top_wide_pants",
             "minimal_black_dress",
             "street_jacket_boots",
-            "clean_blazer_trousers"
+            "clean_blazer_trousers",
+            "sailor_stripe_linen_shorts",
+            "lace_trim_tee_satin_skirt",
+            "capri_cropped_windbreaker"
           ]
         },
         "makeup_style": {
@@ -10992,6 +11198,56 @@
             "upper_body_framing",
             "three_quarter_body_framing",
             "close_up_face_crop"
+          ]
+        },
+        "aesthetic_trend": {
+          "ids": [
+            "sport_luxe_fandom",
+            "khaki_utility_coded",
+            "genz_clean_minimal",
+            "dockside_sailorcore",
+            "y2k_dailywear_nostalgia",
+            "vamp_romantic"
+          ]
+        },
+        "footwear": {
+          "ids": [
+            "chunky_dad_sneakers",
+            "sporty_racing_sneakers",
+            "slim_low_profile_sneakers",
+            "mary_jane_flats",
+            "penny_loafers",
+            "boat_deck_shoes",
+            "pointed_ankle_boots"
+          ]
+        },
+        "silhouette_proportion": {
+          "ids": [
+            "oversized_top_tiny_bottom",
+            "sculpted_power_shoulders",
+            "wide_leg_long_line",
+            "dropped_low_waistline",
+            "advanced_clever_layering",
+            "cinched_hourglass_waist"
+          ]
+        },
+        "garment_detail": {
+          "ids": [
+            "abstract_sporty_colorblock_graphic",
+            "lace_trim_edge",
+            "broderie_anglaise_eyelet",
+            "ripstop_nylon_crinkle",
+            "patchwork_denim_panel"
+          ]
+        },
+        "wearable_accessory": {
+          "ids": [
+            "shield_sport_sunglasses",
+            "wraparound_sport_sunglasses",
+            "oval_90s_sunglasses",
+            "charm_covered_bag",
+            "silk_scarf_tied_on_bag",
+            "oversized_leather_belt"
           ]
         }
       },
@@ -24333,7 +24589,8 @@
         "format",
         "quality",
         "makeup_style",
-        "wearable_accessory"
+        "wearable_accessory",
+        "garment_detail"
       ],
       "optional_slots": [],
       "filters": {
@@ -24346,7 +24603,8 @@
         },
         "aesthetic_trend": {
           "ids": [
-            "office_siren_aesthetic"
+            "office_siren_aesthetic",
+            "vamp_romantic"
           ]
         },
         "makeup_style": {
@@ -24478,14 +24736,20 @@
         },
         "color": {
           "ids": [
-            "muted",
-            "film_faded",
-            "warm_kodak_gold",
-            "cool_fujifilm_green",
-            "matte_pastel_editorial",
-            "neon_magenta_cyan",
-            "tungsten_cinestill_blue_red",
-            "beauty_clean_skin_tone"
+            "oxblood_wine_palette"
+          ]
+        },
+        "garment_detail": {
+          "ids": [
+            "lace_trim_edge",
+            "broderie_anglaise_eyelet"
+          ]
+        },
+        "wardrobe_style": {
+          "ids": [
+            "lace_trim_tee_satin_skirt",
+            "clean_blazer_trousers",
+            "minimal_black_dress"
           ]
         }
       },
@@ -92574,6 +92838,2629 @@
           ]
         }
       }
+    },
+    {
+      "id": "sport_luxe_jersey_street",
+      "ko": "스포츠 럭스 저지 스트리트",
+      "en": "sport-luxe jersey street style",
+      "weight": 2.15,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "camera_type",
+        "camera_direction",
+        "composition",
+        "lens",
+        "focus",
+        "mood",
+        "quality",
+        "aesthetic_trend",
+        "wardrobe_style",
+        "footwear",
+        "silhouette_proportion"
+      ],
+      "optional_slots": [
+        {
+          "slot": "person_origin",
+          "probability": 0.25
+        },
+        {
+          "slot": "appearance_type",
+          "probability": 0.45
+        },
+        {
+          "slot": "hair_style",
+          "probability": 0.35
+        },
+        {
+          "slot": "wearable_accessory",
+          "probability": 0.65
+        },
+        {
+          "slot": "garment_detail",
+          "probability": 0.45
+        },
+        {
+          "slot": "color",
+          "probability": 0.7
+        },
+        {
+          "slot": "texture",
+          "probability": 0.5
+        },
+        {
+          "slot": "format",
+          "probability": 0.85
+        },
+        {
+          "slot": "makeup_style",
+          "probability": 0.25
+        },
+        {
+          "slot": "expression",
+          "probability": 0.3
+        },
+        {
+          "slot": "capture_context",
+          "probability": 0.35
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "street_snapshot",
+            "social_media_post",
+            "airport_fashion_snapshot",
+            "smartphone_snapshot"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "street",
+            "fashion",
+            "portrait",
+            "creator_lifestyle"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "fashion_influencer",
+            "influencer_creator",
+            "student_creator",
+            "airport_traveler",
+            "young_actor"
+          ]
+        },
+        "appearance_type": {
+          "ids": [
+            "streetwear_style",
+            "influencer_like",
+            "tiktok_creator_style",
+            "natural_everyday"
+          ]
+        },
+        "aesthetic_trend": {
+          "ids": [
+            "sport_luxe_fandom"
+          ]
+        },
+        "wardrobe_style": {
+          "ids": [
+            "oversized_jersey_denim_jorts",
+            "tracksuit_streetwear_set"
+          ]
+        },
+        "footwear": {
+          "ids": [
+            "chunky_dad_sneakers",
+            "slim_low_profile_sneakers",
+            "sporty_racing_sneakers"
+          ]
+        },
+        "silhouette_proportion": {
+          "ids": [
+            "oversized_top_tiny_bottom",
+            "micro_short_proportion",
+            "sculpted_power_shoulders"
+          ]
+        },
+        "garment_detail": {
+          "ids": [
+            "abstract_sporty_colorblock_graphic",
+            "ribbed_knit_texture"
+          ]
+        },
+        "wearable_accessory": {
+          "ids": [
+            "shield_sport_sunglasses",
+            "wraparound_sport_sunglasses",
+            "charm_covered_bag"
+          ]
+        },
+        "action": {
+          "ids": [
+            "walking_crosswalk",
+            "fit_check_pose",
+            "checking_phone",
+            "holding_coffee_phone",
+            "posing_airport"
+          ]
+        },
+        "location": {
+          "ids": [
+            "brutalist_plaza",
+            "urban_concrete_stairs",
+            "airport_terminal",
+            "subway_platform",
+            "rooftop_sunset"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "golden_hour",
+            "overcast",
+            "hard_flash",
+            "soft_window"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "full_frame_mirrorless",
+            "smartphone_camera",
+            "compact_digital_camera"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "eye_level_front",
+            "eye_level_three_quarter",
+            "low_ground_angle",
+            "arm_length_selfie_direction"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "medium_close",
+            "handheld_candid",
+            "vertical_centered_caption_space",
+            "rule_of_thirds"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "phone_1x_main",
+            "wide_24mm"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "eye_focus",
+            "face_detection_focus",
+            "phone_auto_focus"
+          ]
+        },
+        "color": {
+          "ids": [
+            "butter_yellow_palette",
+            "powder_blue_palette",
+            "tomato_red_accent_palette",
+            "phone_hdr_color"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "jpeg_social",
+            "phone_hdr_crispness",
+            "fine_grain"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "casual_authentic",
+            "energetic_shortform",
+            "aspirational_lifestyle",
+            "playful"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "authentic_creator",
+            "not_overdone",
+            "phone_realism"
+          ]
+        },
+        "format": {
+          "ids": [
+            "vertical_9_16",
+            "portrait_4_5",
+            "story_cover_vertical"
+          ]
+        },
+        "capture_context": {
+          "ids": [
+            "hidden_in_crowd_candid_capture",
+            "accidental_phone_snapshot",
+            "single_photo_not_diagram_context"
+          ]
+        },
+        "expression": {
+          "ids": [
+            "confident_direct_gaze",
+            "playful_smirk",
+            "fierce_competitive_glare",
+            "neutral_camera_gaze",
+            "bright_friendly_smile"
+          ]
+        },
+        "makeup_style": {
+          "ids": [
+            "natural_makeup",
+            "minimal_no_makeup_look",
+            "clean_kbeauty_makeup",
+            "soft_barely_there_makeup",
+            "smudged_tough_eye_makeup"
+          ]
+        },
+        "eye_detail": {
+          "ids": [
+            "warm_brown_natural_iris",
+            "glossy_wet_catchlight_eyes",
+            "monolid_natural_eyes",
+            "double_lid_natural",
+            "light_brown_honey_iris",
+            "dark_near_black_iris"
+          ]
+        }
+      },
+      "family": "clean_fashion_dailywear_family",
+      "aliases": [
+        "sport-luxe jersey street style",
+        "jersey street style",
+        "sport luxe dailywear"
+      ],
+      "keywords": [
+        "sport-luxe",
+        "jersey street style",
+        "oversized jersey",
+        "denim jorts",
+        "sporty sneakers"
+      ],
+      "embedding_text": "sport-luxe jersey street style, oversized sporty jersey with denim jorts, sporty sneakers, abstract non-readable team graphics, clean dailywear fashion"
+    },
+    {
+      "id": "utility_cargo_dailywear",
+      "ko": "유틸리티 카고 데일리웨어",
+      "en": "utility cargo dailywear",
+      "weight": 1.85,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "camera_type",
+        "camera_direction",
+        "composition",
+        "lens",
+        "focus",
+        "mood",
+        "quality",
+        "aesthetic_trend",
+        "wardrobe_style",
+        "footwear",
+        "silhouette_proportion",
+        "color"
+      ],
+      "optional_slots": [
+        {
+          "slot": "person_origin",
+          "probability": 0.25
+        },
+        {
+          "slot": "appearance_type",
+          "probability": 0.45
+        },
+        {
+          "slot": "hair_style",
+          "probability": 0.35
+        },
+        {
+          "slot": "wearable_accessory",
+          "probability": 0.65
+        },
+        {
+          "slot": "garment_detail",
+          "probability": 0.45
+        },
+        {
+          "slot": "texture",
+          "probability": 0.5
+        },
+        {
+          "slot": "format",
+          "probability": 0.85
+        },
+        {
+          "slot": "makeup_style",
+          "probability": 0.25
+        },
+        {
+          "slot": "expression",
+          "probability": 0.3
+        },
+        {
+          "slot": "capture_context",
+          "probability": 0.35
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "lookbook",
+            "street_snapshot",
+            "social_media_post",
+            "lifestyle_photo"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "fashion",
+            "street",
+            "lifestyle",
+            "portrait"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "fashion_model",
+            "fashion_influencer",
+            "cyclist_commuter",
+            "student_creator",
+            "office_worker"
+          ]
+        },
+        "appearance_type": {
+          "ids": [
+            "natural_everyday",
+            "streetwear_style",
+            "normcore_style",
+            "fashion_model_like"
+          ]
+        },
+        "aesthetic_trend": {
+          "ids": [
+            "khaki_utility_coded"
+          ]
+        },
+        "wardrobe_style": {
+          "ids": [
+            "cargo_utility_tank_set"
+          ]
+        },
+        "footwear": {
+          "ids": [
+            "slim_low_profile_sneakers",
+            "penny_loafers",
+            "fisherman_sandals",
+            "backless_loafers"
+          ]
+        },
+        "silhouette_proportion": {
+          "ids": [
+            "wide_leg_long_line",
+            "cinched_hourglass_waist",
+            "advanced_clever_layering"
+          ]
+        },
+        "garment_detail": {
+          "ids": [
+            "ripstop_nylon_crinkle",
+            "patchwork_denim_panel",
+            "sleeve_pushed_up",
+            "sunlit_fabric_weave"
+          ]
+        },
+        "wearable_accessory": {
+          "ids": [
+            "oversized_leather_belt",
+            "bandana_scarf_neck",
+            "silk_scarf_tied_on_bag"
+          ]
+        },
+        "action": {
+          "ids": [
+            "checking_phone",
+            "walking_crosswalk",
+            "looking_camera",
+            "holding_coffee_phone"
+          ]
+        },
+        "location": {
+          "ids": [
+            "urban_concrete_stairs",
+            "brutalist_plaza",
+            "train_station_concourse",
+            "subway_platform",
+            "quiet_cafe"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "overcast",
+            "soft_window",
+            "golden_hour",
+            "harsh_noon"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "full_frame_mirrorless",
+            "smartphone_camera"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "eye_level_front",
+            "eye_level_three_quarter",
+            "side_profile_view"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "rule_of_thirds",
+            "medium_close",
+            "handheld_candid",
+            "leading_lines"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "phone_1x_main"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "eye_focus",
+            "zone_focus_street",
+            "face_detection_focus"
+          ]
+        },
+        "color": {
+          "ids": [
+            "sage_green_palette"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "clean_digital",
+            "fine_grain"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "casual_authentic",
+            "calm",
+            "aspirational_lifestyle"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "not_overdone",
+            "editorial_quality"
+          ]
+        },
+        "format": {
+          "ids": [
+            "portrait_4_5",
+            "vertical_9_16",
+            "photo_3_2"
+          ]
+        },
+        "expression": {
+          "ids": [
+            "soft_smile",
+            "neutral_camera_gaze",
+            "confident_direct_gaze",
+            "composed_camera_look",
+            "bright_friendly_smile",
+            "candid_laugh",
+            "playful_smirk",
+            "looking_away_pensive"
+          ]
+        },
+        "makeup_style": {
+          "ids": [
+            "natural_makeup",
+            "minimal_no_makeup_look",
+            "clean_kbeauty_makeup",
+            "soft_barely_there_makeup",
+            "clean_girl_makeup",
+            "soft_coral_lip_makeup"
+          ]
+        },
+        "eye_detail": {
+          "ids": [
+            "warm_brown_natural_iris",
+            "glossy_wet_catchlight_eyes",
+            "monolid_natural_eyes",
+            "double_lid_natural",
+            "light_brown_honey_iris",
+            "dark_near_black_iris"
+          ]
+        }
+      },
+      "family": "clean_fashion_dailywear_family",
+      "aliases": [
+        "khaki utility cargo dailywear",
+        "cargo utility dailywear"
+      ],
+      "keywords": [
+        "khaki utility",
+        "cargo outfit",
+        "utility dailywear",
+        "sage green"
+      ],
+      "embedding_text": "khaki utility cargo dailywear, cargo tank set, sage green palette, practical city outfit, clean non-adult fashion"
+    },
+    {
+      "id": "genz_minimal_dailywear",
+      "ko": "젠지 미니멀 데일리웨어",
+      "en": "Gen Z minimal dailywear",
+      "weight": 1.65,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "camera_type",
+        "camera_direction",
+        "composition",
+        "lens",
+        "focus",
+        "mood",
+        "quality",
+        "aesthetic_trend",
+        "wardrobe_style",
+        "footwear",
+        "silhouette_proportion"
+      ],
+      "optional_slots": [
+        {
+          "slot": "person_origin",
+          "probability": 0.25
+        },
+        {
+          "slot": "appearance_type",
+          "probability": 0.45
+        },
+        {
+          "slot": "hair_style",
+          "probability": 0.35
+        },
+        {
+          "slot": "wearable_accessory",
+          "probability": 0.65
+        },
+        {
+          "slot": "garment_detail",
+          "probability": 0.45
+        },
+        {
+          "slot": "color",
+          "probability": 0.7
+        },
+        {
+          "slot": "texture",
+          "probability": 0.5
+        },
+        {
+          "slot": "format",
+          "probability": 0.85
+        },
+        {
+          "slot": "makeup_style",
+          "probability": 0.25
+        },
+        {
+          "slot": "expression",
+          "probability": 0.3
+        },
+        {
+          "slot": "capture_context",
+          "probability": 0.35
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "lookbook",
+            "social_media_post",
+            "smartphone_snapshot",
+            "lifestyle_photo"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "fashion",
+            "portrait",
+            "creator_lifestyle",
+            "lifestyle"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "student_creator",
+            "influencer_creator",
+            "fashion_influencer",
+            "young_actor"
+          ]
+        },
+        "appearance_type": {
+          "ids": [
+            "natural_everyday",
+            "normcore_style",
+            "tiktok_creator_style",
+            "influencer_like"
+          ]
+        },
+        "aesthetic_trend": {
+          "ids": [
+            "genz_clean_minimal"
+          ]
+        },
+        "wardrobe_style": {
+          "ids": [
+            "little_white_summer_dress",
+            "broderie_anglaise_mini_dress",
+            "white_tee_cardigan_home",
+            "linen_shirt_loose_trousers"
+          ]
+        },
+        "footwear": {
+          "ids": [
+            "mary_jane_flats",
+            "ballet_flat_sneakers",
+            "slim_low_profile_sneakers",
+            "leather_flip_flops"
+          ]
+        },
+        "silhouette_proportion": {
+          "ids": [
+            "wide_leg_long_line",
+            "dropped_low_waistline",
+            "cocoon_relaxed_drape"
+          ]
+        },
+        "garment_detail": {
+          "ids": [
+            "broderie_anglaise_eyelet",
+            "lace_trim_edge",
+            "sunlit_fabric_weave"
+          ]
+        },
+        "wearable_accessory": {
+          "ids": [
+            "silk_scarf_tied_on_bag",
+            "simple_pearl_studs",
+            "thin_gold_chain_necklace"
+          ]
+        },
+        "action": {
+          "ids": [
+            "looking_camera",
+            "checking_phone",
+            "holding_coffee_phone",
+            "mirror_selfie"
+          ]
+        },
+        "location": {
+          "ids": [
+            "quiet_cafe",
+            "small_cafe_window_table",
+            "cozy_apartment",
+            "campus_cafe",
+            "flower_market_awning"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "overcast",
+            "soft_overexposed_garden_backlight",
+            "golden_hour"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "smartphone_camera",
+            "full_frame_mirrorless",
+            "compact_digital_camera"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "eye_level_front",
+            "eye_level_three_quarter",
+            "arm_length_selfie_direction"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "medium_close",
+            "centered_symmetry",
+            "rule_of_thirds",
+            "mirror_selfie_composition"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "50mm",
+            "35mm",
+            "phone_1x_main"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "eye_focus",
+            "face_detection_focus",
+            "phone_auto_focus"
+          ]
+        },
+        "color": {
+          "ids": [
+            "chalky_off_white_palette",
+            "cloud_dancer_white_palette",
+            "butter_yellow_palette",
+            "powder_blue_palette"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "clean_digital",
+            "skin_texture",
+            "phone_hdr_crispness",
+            "fine_grain"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "calm",
+            "casual_authentic",
+            "youthful_bright",
+            "dreamy"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "not_overdone",
+            "authentic_creator",
+            "no_hdr_natural_snapshot"
+          ]
+        },
+        "format": {
+          "ids": [
+            "portrait_4_5",
+            "vertical_9_16",
+            "story_cover_vertical"
+          ]
+        },
+        "expression": {
+          "ids": [
+            "soft_smile",
+            "neutral_camera_gaze",
+            "confident_direct_gaze",
+            "composed_camera_look",
+            "bright_friendly_smile",
+            "candid_laugh",
+            "playful_smirk",
+            "looking_away_pensive"
+          ]
+        },
+        "makeup_style": {
+          "ids": [
+            "natural_makeup",
+            "minimal_no_makeup_look",
+            "clean_kbeauty_makeup",
+            "soft_barely_there_makeup",
+            "clean_girl_makeup",
+            "soft_coral_lip_makeup"
+          ]
+        },
+        "eye_detail": {
+          "ids": [
+            "warm_brown_natural_iris",
+            "glossy_wet_catchlight_eyes",
+            "monolid_natural_eyes",
+            "double_lid_natural",
+            "light_brown_honey_iris",
+            "dark_near_black_iris"
+          ]
+        }
+      },
+      "family": "clean_fashion_dailywear_family",
+      "aliases": [
+        "Gen Z minimal little white dress",
+        "Gen Z clean minimal dailywear"
+      ],
+      "keywords": [
+        "Gen Z minimal",
+        "little white dress",
+        "Mary Jane flats",
+        "clean minimal"
+      ],
+      "embedding_text": "Gen Z minimal little white dress, clean minimal dailywear, Mary Jane flats or ballet-flat sneakers, chalky off-white palette"
+    },
+    {
+      "id": "ootd_contrast_styling",
+      "ko": "OOTD 콘트라스트 스타일링",
+      "en": "OOTD contrast styling",
+      "weight": 2.2,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "camera_type",
+        "camera_direction",
+        "composition",
+        "lens",
+        "focus",
+        "mood",
+        "quality",
+        "aesthetic_trend",
+        "wardrobe_style",
+        "footwear",
+        "silhouette_proportion"
+      ],
+      "optional_slots": [
+        {
+          "slot": "person_origin",
+          "probability": 0.25
+        },
+        {
+          "slot": "appearance_type",
+          "probability": 0.45
+        },
+        {
+          "slot": "hair_style",
+          "probability": 0.35
+        },
+        {
+          "slot": "wearable_accessory",
+          "probability": 0.65
+        },
+        {
+          "slot": "garment_detail",
+          "probability": 0.45
+        },
+        {
+          "slot": "color",
+          "probability": 0.7
+        },
+        {
+          "slot": "texture",
+          "probability": 0.5
+        },
+        {
+          "slot": "format",
+          "probability": 0.85
+        },
+        {
+          "slot": "makeup_style",
+          "probability": 0.25
+        },
+        {
+          "slot": "expression",
+          "probability": 0.3
+        },
+        {
+          "slot": "capture_context",
+          "probability": 0.35
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "social_media_post",
+            "street_snapshot",
+            "tiktok_vertical_photo",
+            "instagram_reels_cover"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "shortform_social",
+            "creator_lifestyle",
+            "fashion",
+            "street"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "fashion_influencer",
+            "student_creator",
+            "influencer_creator",
+            "young_actor"
+          ]
+        },
+        "appearance_type": {
+          "ids": [
+            "tiktok_creator_style",
+            "streetwear_style",
+            "influencer_like",
+            "natural_everyday"
+          ]
+        },
+        "aesthetic_trend": {
+          "ids": [
+            "sport_luxe_fandom",
+            "y2k_dailywear_nostalgia"
+          ]
+        },
+        "wardrobe_style": {
+          "ids": [
+            "athletic_shorts_oversized_blazer"
+          ]
+        },
+        "footwear": {
+          "ids": [
+            "sporty_racing_sneakers",
+            "chunky_dad_sneakers",
+            "mary_jane_flats"
+          ]
+        },
+        "silhouette_proportion": {
+          "ids": [
+            "oversized_top_tiny_bottom",
+            "sculpted_power_shoulders",
+            "micro_short_proportion"
+          ]
+        },
+        "garment_detail": {
+          "ids": [
+            "abstract_sporty_colorblock_graphic",
+            "patchwork_denim_panel",
+            "ribbed_knit_texture"
+          ]
+        },
+        "wearable_accessory": {
+          "ids": [
+            "oval_90s_sunglasses",
+            "oversized_leather_belt",
+            "charm_covered_bag"
+          ]
+        },
+        "action": {
+          "ids": [
+            "fit_check_pose",
+            "mirror_selfie",
+            "slow_walk_turnaround",
+            "checking_phone"
+          ]
+        },
+        "location": {
+          "ids": [
+            "bedroom_mirror",
+            "elevator_mirror",
+            "urban_concrete_stairs",
+            "brutalist_plaza"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "hard_flash",
+            "ring_light",
+            "overcast"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "smartphone_camera",
+            "front_facing_phone",
+            "compact_digital_camera"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "mirror_view_direction",
+            "arm_length_selfie_direction",
+            "eye_level_front"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "mirror_selfie_composition",
+            "crouching_mirror_full_body",
+            "vertical_centered_caption_space",
+            "phone_arm_length_selfie"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "phone_1x_main",
+            "front_camera_wide",
+            "35mm"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "face_detection_focus",
+            "phone_auto_focus",
+            "eye_focus"
+          ]
+        },
+        "color": {
+          "ids": [
+            "tomato_red_accent_palette",
+            "powder_blue_palette",
+            "butter_yellow_palette",
+            "phone_hdr_color"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "jpeg_social",
+            "phone_hdr_crispness",
+            "compact_digicam_noise"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "energetic_shortform",
+            "playful",
+            "casual_authentic",
+            "aspirational_lifestyle"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "phone_realism",
+            "authentic_creator",
+            "viral_thumbnail_clarity",
+            "not_overdone"
+          ]
+        },
+        "format": {
+          "ids": [
+            "vertical_9_16",
+            "tiktok_safe_vertical",
+            "story_cover_vertical"
+          ]
+        },
+        "capture_context": {
+          "ids": [
+            "mirror_crouch_selfie_context",
+            "accidental_phone_snapshot",
+            "single_photo_not_diagram_context"
+          ]
+        },
+        "expression": {
+          "ids": [
+            "confident_direct_gaze",
+            "playful_smirk",
+            "fierce_competitive_glare",
+            "neutral_camera_gaze",
+            "bright_friendly_smile"
+          ]
+        },
+        "makeup_style": {
+          "ids": [
+            "natural_makeup",
+            "minimal_no_makeup_look",
+            "clean_kbeauty_makeup",
+            "soft_barely_there_makeup",
+            "smudged_tough_eye_makeup"
+          ]
+        },
+        "eye_detail": {
+          "ids": [
+            "warm_brown_natural_iris",
+            "glossy_wet_catchlight_eyes",
+            "monolid_natural_eyes",
+            "double_lid_natural",
+            "light_brown_honey_iris",
+            "dark_near_black_iris"
+          ]
+        }
+      },
+      "family": "clean_fashion_dailywear_family",
+      "aliases": [
+        "TikTok contrast styling athletic shorts blazer",
+        "OOTD contrast styling",
+        "athletic shorts oversized blazer"
+      ],
+      "keywords": [
+        "TikTok contrast styling",
+        "athletic shorts blazer",
+        "oversized blazer",
+        "sport-luxe OOTD",
+        "fit check"
+      ],
+      "embedding_text": "TikTok contrast styling athletic shorts blazer, OOTD fit check, athletic shorts with oversized blazer, oversized top with tiny-bottom proportion, sporty sneakers, creator outfit photo, no visible text graphics"
+    },
+    {
+      "id": "dockside_sailorcore_casual",
+      "ko": "도크사이드 세일러코어 캐주얼",
+      "en": "dockside sailorcore casual",
+      "weight": 1.5,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "camera_type",
+        "camera_direction",
+        "composition",
+        "lens",
+        "focus",
+        "mood",
+        "quality",
+        "aesthetic_trend",
+        "wardrobe_style",
+        "footwear",
+        "silhouette_proportion"
+      ],
+      "optional_slots": [
+        {
+          "slot": "person_origin",
+          "probability": 0.25
+        },
+        {
+          "slot": "appearance_type",
+          "probability": 0.45
+        },
+        {
+          "slot": "hair_style",
+          "probability": 0.35
+        },
+        {
+          "slot": "wearable_accessory",
+          "probability": 0.65
+        },
+        {
+          "slot": "garment_detail",
+          "probability": 0.45
+        },
+        {
+          "slot": "color",
+          "probability": 0.7
+        },
+        {
+          "slot": "texture",
+          "probability": 0.5
+        },
+        {
+          "slot": "format",
+          "probability": 0.85
+        },
+        {
+          "slot": "makeup_style",
+          "probability": 0.25
+        },
+        {
+          "slot": "expression",
+          "probability": 0.3
+        },
+        {
+          "slot": "capture_context",
+          "probability": 0.35
+        },
+        {
+          "slot": "weather",
+          "probability": 0.25
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "lifestyle_photo",
+            "lookbook",
+            "street_snapshot",
+            "social_media_post"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "fashion",
+            "lifestyle",
+            "portrait",
+            "travel"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "traveler_backpack",
+            "fashion_influencer",
+            "influencer_creator",
+            "young_actor"
+          ]
+        },
+        "appearance_type": {
+          "ids": [
+            "natural_everyday",
+            "classic_elegant",
+            "influencer_like"
+          ]
+        },
+        "aesthetic_trend": {
+          "ids": [
+            "dockside_sailorcore"
+          ]
+        },
+        "wardrobe_style": {
+          "ids": [
+            "sailor_stripe_linen_shorts",
+            "linen_shirt_loose_trousers",
+            "little_white_summer_dress"
+          ]
+        },
+        "footwear": {
+          "ids": [
+            "boat_deck_shoes",
+            "fisherman_sandals",
+            "strappy_flat_sandals"
+          ]
+        },
+        "silhouette_proportion": {
+          "ids": [
+            "wide_leg_long_line",
+            "scarf_drape_wrap",
+            "cocoon_relaxed_drape"
+          ]
+        },
+        "garment_detail": {
+          "ids": [
+            "sunlit_fabric_weave",
+            "crochet_open_weave",
+            "broderie_anglaise_eyelet"
+          ]
+        },
+        "wearable_accessory": {
+          "ids": [
+            "bandana_scarf_neck",
+            "silk_scarf_tied_on_bag",
+            "oval_90s_sunglasses"
+          ]
+        },
+        "action": {
+          "ids": [
+            "walking_crosswalk",
+            "looking_window",
+            "checking_phone",
+            "looking_camera"
+          ]
+        },
+        "location": {
+          "ids": [
+            "beach_boardwalk",
+            "rocky_coast",
+            "city_bridge",
+            "flower_market_awning"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "golden_hour",
+            "overcast",
+            "soft_window",
+            "harsh_noon"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "full_frame_mirrorless",
+            "smartphone_camera",
+            "compact_digital_camera"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "eye_level_three_quarter",
+            "eye_level_front",
+            "side_profile_view"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "rule_of_thirds",
+            "medium_close",
+            "leading_lines",
+            "handheld_candid"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "phone_1x_main"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "eye_focus",
+            "face_detection_focus",
+            "zone_focus_street"
+          ]
+        },
+        "color": {
+          "ids": [
+            "powder_blue_palette",
+            "cloud_dancer_white_palette",
+            "chalky_off_white_palette"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "fine_grain",
+            "clean_digital"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "calm",
+            "casual_authentic",
+            "dreamy",
+            "aspirational_lifestyle"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "not_overdone",
+            "editorial_quality"
+          ]
+        },
+        "format": {
+          "ids": [
+            "portrait_4_5",
+            "vertical_9_16",
+            "photo_3_2"
+          ]
+        },
+        "weather": {
+          "ids": [
+            "sea_spray",
+            "clear_oxygen_rich_summer_air",
+            "dry_summer_wind"
+          ]
+        },
+        "expression": {
+          "ids": [
+            "soft_smile",
+            "neutral_camera_gaze",
+            "confident_direct_gaze",
+            "composed_camera_look",
+            "bright_friendly_smile",
+            "candid_laugh",
+            "playful_smirk",
+            "looking_away_pensive"
+          ]
+        },
+        "makeup_style": {
+          "ids": [
+            "natural_makeup",
+            "minimal_no_makeup_look",
+            "clean_kbeauty_makeup",
+            "soft_barely_there_makeup",
+            "clean_girl_makeup",
+            "soft_coral_lip_makeup"
+          ]
+        },
+        "eye_detail": {
+          "ids": [
+            "warm_brown_natural_iris",
+            "glossy_wet_catchlight_eyes",
+            "monolid_natural_eyes",
+            "double_lid_natural",
+            "light_brown_honey_iris",
+            "dark_near_black_iris"
+          ]
+        }
+      },
+      "family": "clean_fashion_dailywear_family",
+      "aliases": [
+        "dockside sailorcore weekend outfit",
+        "sailorcore casual"
+      ],
+      "keywords": [
+        "dockside sailorcore",
+        "sailor stripe",
+        "linen shorts",
+        "boat deck shoes"
+      ],
+      "embedding_text": "dockside sailorcore weekend outfit, sailor stripe top, linen shorts, boat deck shoes, waterfront casual fashion"
+    },
+    {
+      "id": "lace_trim_soft_casual",
+      "ko": "레이스 트림 소프트 캐주얼 / 뱀프 로맨틱 레이스 에디토리얼",
+      "en": "lace-trim soft casual / vamp romantic lace editorial",
+      "weight": 20.0,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "camera_type",
+        "camera_direction",
+        "composition",
+        "lens",
+        "focus",
+        "mood",
+        "quality",
+        "aesthetic_trend",
+        "wardrobe_style",
+        "footwear",
+        "silhouette_proportion",
+        "garment_detail",
+        "color"
+      ],
+      "optional_slots": [
+        {
+          "slot": "person_origin",
+          "probability": 0.25
+        },
+        {
+          "slot": "appearance_type",
+          "probability": 0.45
+        },
+        {
+          "slot": "hair_style",
+          "probability": 0.35
+        },
+        {
+          "slot": "wearable_accessory",
+          "probability": 0.65
+        },
+        {
+          "slot": "texture",
+          "probability": 0.5
+        },
+        {
+          "slot": "format",
+          "probability": 0.85
+        },
+        {
+          "slot": "makeup_style",
+          "probability": 0.25
+        },
+        {
+          "slot": "expression",
+          "probability": 0.3
+        },
+        {
+          "slot": "capture_context",
+          "probability": 0.35
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "lookbook",
+            "lifestyle_photo",
+            "social_media_post",
+            "fashion_editorial"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "fashion",
+            "portrait",
+            "lifestyle",
+            "beauty"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "fashion_model",
+            "fashion_influencer",
+            "beauty_influencer",
+            "young_actor"
+          ]
+        },
+        "appearance_type": {
+          "ids": [
+            "natural_everyday",
+            "classic_elegant",
+            "fashion_model_like",
+            "influencer_like"
+          ]
+        },
+        "aesthetic_trend": {
+          "ids": [
+            "vamp_romantic"
+          ]
+        },
+        "wardrobe_style": {
+          "ids": [
+            "lace_trim_tee_satin_skirt",
+            "broderie_anglaise_mini_dress",
+            "dropwaist_satin_slip_dress"
+          ]
+        },
+        "footwear": {
+          "ids": [
+            "mary_jane_flats",
+            "glove_pumps",
+            "kitten_heel_thong_sandals"
+          ]
+        },
+        "silhouette_proportion": {
+          "ids": [
+            "dropped_low_waistline",
+            "scarf_drape_wrap",
+            "asymmetrical_hemline"
+          ]
+        },
+        "garment_detail": {
+          "ids": [
+            "lace_trim_edge",
+            "broderie_anglaise_eyelet"
+          ]
+        },
+        "wearable_accessory": {
+          "ids": [
+            "vintage_lapel_brooch",
+            "thin_gold_chain_necklace",
+            "simple_pearl_studs"
+          ]
+        },
+        "action": {
+          "ids": [
+            "looking_camera",
+            "posing_editorial",
+            "turning_back",
+            "holding_coffee_phone"
+          ]
+        },
+        "location": {
+          "ids": [
+            "quiet_cafe",
+            "small_cafe_window_table",
+            "flower_market_awning",
+            "luxury_hotel_lobby",
+            "backstage_room"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "softbox",
+            "golden_hour",
+            "soft_overexposed_garden_backlight"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "full_frame_mirrorless",
+            "medium_format_camera",
+            "smartphone_camera"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "eye_level_front",
+            "eye_level_three_quarter",
+            "side_profile_view"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "medium_close",
+            "rule_of_thirds",
+            "negative_space",
+            "centered_symmetry"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "50mm",
+            "85mm",
+            "35mm"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "eye_focus",
+            "shallow_depth",
+            "face_detection_focus"
+          ]
+        },
+        "color": {
+          "ids": [
+            "oxblood_wine_palette"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "fine_grain",
+            "skin_texture",
+            "silk_hanbok_texture"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "dreamy",
+            "elegant",
+            "calm",
+            "casual_authentic"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "editorial_quality",
+            "not_overdone"
+          ]
+        },
+        "format": {
+          "ids": [
+            "portrait_4_5",
+            "portrait_3_4",
+            "vertical_9_16"
+          ]
+        },
+        "makeup_style": {
+          "ids": [
+            "natural_makeup",
+            "minimal_no_makeup_look",
+            "clean_kbeauty_makeup",
+            "soft_barely_there_makeup",
+            "clean_girl_makeup",
+            "soft_coral_lip_makeup",
+            "red_lip_classic"
+          ]
+        },
+        "expression": {
+          "ids": [
+            "soft_smile",
+            "neutral_camera_gaze",
+            "confident_direct_gaze",
+            "composed_camera_look",
+            "bright_friendly_smile",
+            "candid_laugh",
+            "playful_smirk",
+            "looking_away_pensive",
+            "calm_intense_gaze",
+            "mysterious_half_smile"
+          ]
+        },
+        "eye_detail": {
+          "ids": [
+            "warm_brown_natural_iris",
+            "glossy_wet_catchlight_eyes",
+            "monolid_natural_eyes",
+            "double_lid_natural",
+            "light_brown_honey_iris",
+            "dark_near_black_iris"
+          ]
+        }
+      },
+      "family": "clean_fashion_dailywear_family",
+      "aliases": [
+        "vamp romantic lace editorial",
+        "lace-trim soft casual",
+        "romantic lace editorial"
+      ],
+      "keywords": [
+        "vamp romantic lace editorial",
+        "lace trim",
+        "oxblood",
+        "broderie anglaise",
+        "satin skirt"
+      ],
+      "embedding_text": "vamp romantic lace editorial, lace-trim soft casual, lace trim edge, oxblood wine palette, satin skirt, broderie anglaise, dark romantic non-fetish fashion styling"
+    },
+    {
+      "id": "y2k_90s_nostalgia_casual",
+      "ko": "Y2K·90년대 노스탤지어 캐주얼",
+      "en": "Y2K and 90s nostalgia casual",
+      "weight": 1.5,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "camera_type",
+        "camera_direction",
+        "composition",
+        "lens",
+        "focus",
+        "mood",
+        "quality",
+        "aesthetic_trend",
+        "wardrobe_style",
+        "footwear",
+        "silhouette_proportion"
+      ],
+      "optional_slots": [
+        {
+          "slot": "person_origin",
+          "probability": 0.25
+        },
+        {
+          "slot": "appearance_type",
+          "probability": 0.45
+        },
+        {
+          "slot": "hair_style",
+          "probability": 0.35
+        },
+        {
+          "slot": "wearable_accessory",
+          "probability": 0.65
+        },
+        {
+          "slot": "garment_detail",
+          "probability": 0.45
+        },
+        {
+          "slot": "color",
+          "probability": 0.7
+        },
+        {
+          "slot": "texture",
+          "probability": 0.5
+        },
+        {
+          "slot": "format",
+          "probability": 0.85
+        },
+        {
+          "slot": "makeup_style",
+          "probability": 0.25
+        },
+        {
+          "slot": "expression",
+          "probability": 0.3
+        },
+        {
+          "slot": "capture_context",
+          "probability": 0.35
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "street_snapshot",
+            "social_media_post",
+            "smartphone_snapshot",
+            "tiktok_vertical_photo"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "fashion",
+            "street",
+            "creator_lifestyle",
+            "shortform_social"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "student_creator",
+            "fashion_influencer",
+            "influencer_creator",
+            "indie_musician"
+          ]
+        },
+        "appearance_type": {
+          "ids": [
+            "streetwear_style",
+            "retro_film_protagonist",
+            "tiktok_creator_style",
+            "natural_everyday"
+          ]
+        },
+        "aesthetic_trend": {
+          "ids": [
+            "y2k_dailywear_nostalgia"
+          ]
+        },
+        "wardrobe_style": {
+          "ids": [
+            "capri_cropped_windbreaker",
+            "darkwash_skinny_oversized_shirt",
+            "crop_top_wide_pants"
+          ]
+        },
+        "footwear": {
+          "ids": [
+            "colorful_jelly_shoes",
+            "wedge_sneakers",
+            "slim_low_profile_sneakers",
+            "pointed_ankle_boots"
+          ]
+        },
+        "silhouette_proportion": {
+          "ids": [
+            "skirt_over_pants_layering",
+            "wide_leg_long_line",
+            "dropped_low_waistline"
+          ]
+        },
+        "garment_detail": {
+          "ids": [
+            "patchwork_denim_panel",
+            "ribbed_knit_texture",
+            "ripstop_nylon_crinkle"
+          ]
+        },
+        "wearable_accessory": {
+          "ids": [
+            "oval_90s_sunglasses",
+            "charm_covered_bag",
+            "wired_earphones_dangling"
+          ]
+        },
+        "action": {
+          "ids": [
+            "checking_phone",
+            "mirror_selfie",
+            "walking_crosswalk",
+            "taking_selfie"
+          ]
+        },
+        "location": {
+          "ids": [
+            "retro_diner_booth",
+            "night_convenience_store_entrance",
+            "subway_platform",
+            "bedroom_mirror"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "hard_flash",
+            "fluorescent",
+            "soft_window",
+            "neon"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "compact_digital_camera",
+            "smartphone_camera",
+            "digicam_2000s_camera"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "eye_level_front",
+            "mirror_view_direction",
+            "arm_length_selfie_direction"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "handheld_candid",
+            "mirror_selfie_composition",
+            "medium_close",
+            "vertical_centered_caption_space"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "phone_1x_main",
+            "35mm",
+            "front_camera_wide"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "face_detection_focus",
+            "phone_auto_focus",
+            "slight_missed_focus"
+          ]
+        },
+        "color": {
+          "ids": [
+            "tomato_red_accent_palette",
+            "powder_blue_palette",
+            "candy_color",
+            "film_faded"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "compact_digicam_noise",
+            "jpeg_social",
+            "flash_shadow_edges"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "nostalgic",
+            "playful",
+            "casual_authentic",
+            "energetic_shortform"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "phone_realism",
+            "authentic_creator",
+            "candid_imperfect",
+            "not_overdone"
+          ]
+        },
+        "format": {
+          "ids": [
+            "vertical_9_16",
+            "story_cover_vertical",
+            "portrait_4_5"
+          ]
+        },
+        "expression": {
+          "ids": [
+            "soft_smile",
+            "neutral_camera_gaze",
+            "confident_direct_gaze",
+            "composed_camera_look",
+            "bright_friendly_smile",
+            "candid_laugh",
+            "playful_smirk",
+            "looking_away_pensive"
+          ]
+        },
+        "makeup_style": {
+          "ids": [
+            "natural_makeup",
+            "minimal_no_makeup_look",
+            "clean_kbeauty_makeup",
+            "soft_barely_there_makeup",
+            "clean_girl_makeup",
+            "soft_coral_lip_makeup"
+          ]
+        },
+        "eye_detail": {
+          "ids": [
+            "warm_brown_natural_iris",
+            "glossy_wet_catchlight_eyes",
+            "monolid_natural_eyes",
+            "double_lid_natural",
+            "light_brown_honey_iris",
+            "dark_near_black_iris"
+          ]
+        }
+      },
+      "family": "clean_fashion_dailywear_family",
+      "aliases": [
+        "Y2K 90s nostalgia casual",
+        "Y2K dailywear nostalgia"
+      ],
+      "keywords": [
+        "Y2K dailywear",
+        "capri pants",
+        "cropped windbreaker",
+        "jelly shoes"
+      ],
+      "embedding_text": "Y2K and 90s nostalgia casual, capri pants, cropped windbreaker, jelly shoes, skirt-over-pants layering, playful dailywear"
+    },
+    {
+      "id": "runway_2026_statement_editorial",
+      "ko": "2026 런웨이 스테이트먼트 에디토리얼",
+      "en": "2026 runway statement editorial",
+      "weight": 1.35,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "camera_type",
+        "camera_direction",
+        "composition",
+        "lens",
+        "focus",
+        "mood",
+        "quality",
+        "aesthetic_trend",
+        "wardrobe_style",
+        "footwear",
+        "silhouette_proportion"
+      ],
+      "optional_slots": [
+        {
+          "slot": "person_origin",
+          "probability": 0.25
+        },
+        {
+          "slot": "appearance_type",
+          "probability": 0.45
+        },
+        {
+          "slot": "hair_style",
+          "probability": 0.35
+        },
+        {
+          "slot": "wearable_accessory",
+          "probability": 0.65
+        },
+        {
+          "slot": "garment_detail",
+          "probability": 0.45
+        },
+        {
+          "slot": "color",
+          "probability": 0.7
+        },
+        {
+          "slot": "texture",
+          "probability": 0.5
+        },
+        {
+          "slot": "format",
+          "probability": 0.85
+        },
+        {
+          "slot": "makeup_style",
+          "probability": 0.25
+        },
+        {
+          "slot": "expression",
+          "probability": 0.3
+        },
+        {
+          "slot": "capture_context",
+          "probability": 0.35
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "fashion_editorial",
+            "magazine_feature",
+            "magazine_cover",
+            "lookbook"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "fashion",
+            "portrait",
+            "fine_art_portrait"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "fashion_model",
+            "androgynous_style_model",
+            "mature_elegant_model",
+            "young_actor"
+          ]
+        },
+        "appearance_type": {
+          "ids": [
+            "fashion_model_like",
+            "androgynous_cool_presence",
+            "classic_elegant",
+            "mature_elegant_presence"
+          ]
+        },
+        "aesthetic_trend": {
+          "ids": [
+            "glamoratti_80s_luxury",
+            "jazz_age_modern",
+            "vamp_romantic",
+            "sport_luxe_fandom"
+          ]
+        },
+        "wardrobe_style": {
+          "ids": [
+            "dropwaist_satin_slip_dress",
+            "athletic_shorts_oversized_blazer",
+            "broderie_anglaise_mini_dress",
+            "clean_blazer_trousers"
+          ]
+        },
+        "footwear": {
+          "ids": [
+            "block_heel_pumps",
+            "square_toe_heels",
+            "pointed_ankle_boots",
+            "tall_suede_boots"
+          ]
+        },
+        "silhouette_proportion": {
+          "ids": [
+            "architectural_peplum",
+            "sculpted_power_shoulders",
+            "dropped_low_waistline",
+            "asymmetrical_hemline",
+            "cinched_hourglass_waist"
+          ]
+        },
+        "garment_detail": {
+          "ids": [
+            "liquid_satin_sheen",
+            "abstract_sporty_colorblock_graphic",
+            "lace_trim_edge"
+          ]
+        },
+        "wearable_accessory": {
+          "ids": [
+            "oversized_leather_belt",
+            "chunky_gold_cuff",
+            "vintage_lapel_brooch"
+          ]
+        },
+        "action": {
+          "ids": [
+            "posing_editorial",
+            "posing_cover",
+            "turning_back",
+            "looking_camera"
+          ]
+        },
+        "location": {
+          "ids": [
+            "white_studio",
+            "backstage_room",
+            "luxury_hotel_corridor",
+            "brutalist_plaza"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "softbox",
+            "studio_flash",
+            "rim_light",
+            "hard_flash"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "medium_format_camera",
+            "full_frame_mirrorless"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "eye_level_front",
+            "eye_level_three_quarter",
+            "low_ground_angle"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "medium_close",
+            "centered_symmetry",
+            "negative_space",
+            "low_angle"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "85mm",
+            "50mm",
+            "medium_format"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "eye_focus",
+            "shallow_depth",
+            "face_detection_focus"
+          ]
+        },
+        "color": {
+          "ids": [
+            "oxblood_wine_palette",
+            "chalky_off_white_palette",
+            "luxury_black_gold",
+            "powder_blue_palette"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "clean_digital",
+            "fine_grain",
+            "flash_shadow_edges"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "elegant",
+            "luxury",
+            "glamorous_backstage",
+            "dreamy"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "editorial_quality",
+            "high_detail",
+            "not_overdone"
+          ]
+        },
+        "format": {
+          "ids": [
+            "portrait_4_5",
+            "magazine_spread",
+            "vertical_9_16"
+          ]
+        },
+        "makeup_style": {
+          "ids": [
+            "natural_makeup",
+            "clean_kbeauty_makeup",
+            "bold_editorial_makeup",
+            "smoky_eye_makeup",
+            "red_lip_classic",
+            "graphic_eyeliner",
+            "soft_barely_there_makeup"
+          ]
+        },
+        "expression": {
+          "ids": [
+            "calm_intense_gaze",
+            "confident_direct_gaze",
+            "composed_camera_look",
+            "fierce_editorial_stare",
+            "mysterious_half_smile",
+            "aloof_composed_gaze"
+          ]
+        },
+        "eye_detail": {
+          "ids": [
+            "warm_brown_natural_iris",
+            "glossy_wet_catchlight_eyes",
+            "monolid_natural_eyes",
+            "double_lid_natural",
+            "light_brown_honey_iris",
+            "dark_near_black_iris"
+          ]
+        }
+      },
+      "family": "clean_fashion_dailywear_family",
+      "aliases": [
+        "2026 runway statement editorial",
+        "runway statement fashion"
+      ],
+      "keywords": [
+        "2026 runway",
+        "power shoulders",
+        "drop waist",
+        "peplum"
+      ],
+      "embedding_text": "2026 runway statement editorial, power shoulders, architectural peplum, dropped waist, polished fashion editorial"
+    },
+    {
+      "id": "social_ootd_shop_feed",
+      "ko": "소셜 OOTD 쇼핑 피드",
+      "en": "social OOTD shop feed",
+      "weight": 1.55,
+      "template_style": "natural",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "lighting",
+        "camera_type",
+        "camera_direction",
+        "composition",
+        "lens",
+        "focus",
+        "mood",
+        "quality",
+        "aesthetic_trend",
+        "wardrobe_style",
+        "footwear",
+        "silhouette_proportion"
+      ],
+      "optional_slots": [
+        {
+          "slot": "person_origin",
+          "probability": 0.25
+        },
+        {
+          "slot": "appearance_type",
+          "probability": 0.45
+        },
+        {
+          "slot": "hair_style",
+          "probability": 0.35
+        },
+        {
+          "slot": "wearable_accessory",
+          "probability": 0.65
+        },
+        {
+          "slot": "garment_detail",
+          "probability": 0.45
+        },
+        {
+          "slot": "color",
+          "probability": 0.7
+        },
+        {
+          "slot": "texture",
+          "probability": 0.5
+        },
+        {
+          "slot": "format",
+          "probability": 0.85
+        },
+        {
+          "slot": "makeup_style",
+          "probability": 0.25
+        },
+        {
+          "slot": "expression",
+          "probability": 0.3
+        },
+        {
+          "slot": "capture_context",
+          "probability": 0.35
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "social_media_post",
+            "instagram_reels_cover",
+            "tiktok_vertical_photo",
+            "smartphone_snapshot"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "shortform_social",
+            "creator_lifestyle",
+            "fashion",
+            "lifestyle"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "fashion_influencer",
+            "influencer_creator",
+            "student_creator",
+            "young_actor"
+          ]
+        },
+        "appearance_type": {
+          "ids": [
+            "tiktok_creator_style",
+            "influencer_like",
+            "natural_everyday",
+            "streetwear_style"
+          ]
+        },
+        "aesthetic_trend": {
+          "ids": [
+            "sport_luxe_fandom",
+            "khaki_utility_coded",
+            "genz_clean_minimal",
+            "y2k_dailywear_nostalgia"
+          ]
+        },
+        "wardrobe_style": {
+          "ids": [
+            "athletic_shorts_oversized_blazer",
+            "cargo_utility_tank_set",
+            "little_white_summer_dress",
+            "capri_cropped_windbreaker"
+          ]
+        },
+        "footwear": {
+          "ids": [
+            "slim_low_profile_sneakers",
+            "mary_jane_flats",
+            "boat_deck_shoes",
+            "chunky_dad_sneakers"
+          ]
+        },
+        "silhouette_proportion": {
+          "ids": [
+            "oversized_top_tiny_bottom",
+            "wide_leg_long_line",
+            "advanced_clever_layering"
+          ]
+        },
+        "garment_detail": {
+          "ids": [
+            "abstract_sporty_colorblock_graphic",
+            "lace_trim_edge",
+            "ripstop_nylon_crinkle"
+          ]
+        },
+        "wearable_accessory": {
+          "ids": [
+            "charm_covered_bag",
+            "silk_scarf_tied_on_bag",
+            "oval_90s_sunglasses",
+            "oversized_leather_belt"
+          ]
+        },
+        "action": {
+          "ids": [
+            "fit_check_pose",
+            "mirror_selfie",
+            "doing_grwm",
+            "checking_comments",
+            "holding_coffee_phone"
+          ]
+        },
+        "location": {
+          "ids": [
+            "bedroom_mirror",
+            "elevator_mirror",
+            "creator_room",
+            "urban_concrete_stairs",
+            "quiet_cafe"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "ring_light",
+            "hard_flash",
+            "overcast"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "smartphone_camera",
+            "front_facing_phone",
+            "compact_digital_camera"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "mirror_view_direction",
+            "arm_length_selfie_direction",
+            "eye_level_front"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "vertical_centered_caption_space",
+            "mirror_selfie_composition",
+            "phone_arm_length_selfie",
+            "crouching_mirror_full_body"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "phone_1x_main",
+            "front_camera_wide",
+            "35mm"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "face_detection_focus",
+            "phone_auto_focus",
+            "eye_focus"
+          ]
+        },
+        "color": {
+          "ids": [
+            "butter_yellow_palette",
+            "powder_blue_palette",
+            "chalky_off_white_palette",
+            "phone_hdr_color"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "jpeg_social",
+            "phone_hdr_crispness",
+            "front_camera_smoothing"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "energetic_shortform",
+            "casual_authentic",
+            "aspirational_lifestyle",
+            "playful"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "phone_realism",
+            "authentic_creator",
+            "viral_thumbnail_clarity",
+            "not_overdone"
+          ]
+        },
+        "format": {
+          "ids": [
+            "vertical_9_16",
+            "tiktok_safe_vertical",
+            "story_cover_vertical"
+          ]
+        },
+        "capture_context": {
+          "ids": [
+            "mirror_crouch_selfie_context",
+            "accidental_phone_snapshot",
+            "single_photo_not_diagram_context"
+          ]
+        },
+        "expression": {
+          "ids": [
+            "soft_smile",
+            "neutral_camera_gaze",
+            "confident_direct_gaze",
+            "composed_camera_look",
+            "bright_friendly_smile",
+            "candid_laugh",
+            "playful_smirk",
+            "looking_away_pensive"
+          ]
+        },
+        "makeup_style": {
+          "ids": [
+            "natural_makeup",
+            "minimal_no_makeup_look",
+            "clean_kbeauty_makeup",
+            "soft_barely_there_makeup",
+            "clean_girl_makeup",
+            "soft_coral_lip_makeup"
+          ]
+        },
+        "eye_detail": {
+          "ids": [
+            "warm_brown_natural_iris",
+            "glossy_wet_catchlight_eyes",
+            "monolid_natural_eyes",
+            "double_lid_natural",
+            "light_brown_honey_iris",
+            "dark_near_black_iris"
+          ]
+        }
+      },
+      "family": "clean_fashion_dailywear_family",
+      "aliases": [
+        "social OOTD shop feed",
+        "shoppable feed outfit",
+        "creator recommendation outfit"
+      ],
+      "keywords": [
+        "social OOTD",
+        "shop feed",
+        "creator recommendation",
+        "no readable text"
+      ],
+      "embedding_text": "social OOTD shop feed, shoppable feed composition, creator recommendation outfit, clean dailywear, no readable text or hashtags"
     }
   ],
   "templates": {
@@ -107204,6 +110091,259 @@
         "embedding_text": "linen shirt with loose trousers",
         "for_any": [
           "human"
+        ]
+      },
+      {
+        "id": "oversized_jersey_denim_jorts",
+        "ko": "오버사이즈 스포츠 저지와 데님 조츠",
+        "en": "oversized sporty jersey with denim jorts",
+        "weight": 1.05,
+        "tags": [
+          "human",
+          "wardrobe",
+          "sport_luxe",
+          "denim",
+          "casual"
+        ],
+        "embedding_text": "sport-luxe jersey street style, oversized sporty jersey with long denim jorts, abstract colorblock graphic, no readable numbers or team text, casual street fashion",
+        "keywords": [
+          "sport-luxe jersey",
+          "jersey street style",
+          "oversized jersey",
+          "denim jorts",
+          "no readable team text"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "sport-luxe jersey street style",
+          "oversized jersey denim jorts",
+          "jersey and jorts",
+          "sporty jersey streetwear"
+        ]
+      },
+      {
+        "id": "cargo_utility_tank_set",
+        "ko": "카고 유틸리티 탱크탑 세트",
+        "en": "cargo utility tank set",
+        "weight": 0.92,
+        "tags": [
+          "human",
+          "wardrobe",
+          "utility",
+          "cargo",
+          "casual"
+        ],
+        "embedding_text": "khaki utility cargo dailywear, cargo utility tank set, practical pockets, sage green city outfit",
+        "keywords": [
+          "khaki utility",
+          "cargo dailywear",
+          "cargo pockets",
+          "utility tank"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "khaki utility cargo dailywear",
+          "cargo utility dailywear",
+          "cargo utility tank set"
+        ]
+      },
+      {
+        "id": "little_white_summer_dress",
+        "ko": "리틀 화이트 서머 드레스",
+        "en": "little white summer dress",
+        "weight": 0.62,
+        "tags": [
+          "human",
+          "wardrobe",
+          "dress",
+          "white",
+          "minimal"
+        ],
+        "embedding_text": "little white summer dress, clean minimal dailywear, soft cotton or broderie anglaise feel",
+        "keywords": [
+          "little white dress",
+          "summer dress"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "sailor_stripe_linen_shorts",
+        "ko": "세일러 스트라이프 톱과 리넨 쇼츠",
+        "en": "sailor stripe top with linen shorts",
+        "weight": 0.6,
+        "tags": [
+          "human",
+          "wardrobe",
+          "sailorcore",
+          "linen",
+          "summer"
+        ],
+        "embedding_text": "sailor stripe top with linen shorts, dockside sailorcore weekend outfit",
+        "keywords": [
+          "sailor stripe",
+          "linen shorts"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "lace_trim_tee_satin_skirt",
+        "ko": "레이스 트림 티셔츠와 새틴 스커트",
+        "en": "lace-trim tee with satin skirt",
+        "weight": 0.56,
+        "tags": [
+          "human",
+          "wardrobe",
+          "lace",
+          "satin",
+          "soft"
+        ],
+        "embedding_text": "lace-trim tee with satin skirt, soft romantic dailywear, delicate edge detail",
+        "keywords": [
+          "lace trim tee",
+          "satin skirt"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "darkwash_skinny_oversized_shirt",
+        "ko": "다크워시 스키니 진과 오버사이즈 셔츠",
+        "en": "dark-wash skinny jeans with oversized shirt",
+        "weight": 0.5,
+        "tags": [
+          "human",
+          "wardrobe",
+          "denim",
+          "90s",
+          "casual"
+        ],
+        "embedding_text": "dark-wash skinny jeans with oversized shirt, 90s dailywear nostalgia, casual street outfit",
+        "keywords": [
+          "darkwash skinny jeans",
+          "oversized shirt"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "capri_cropped_windbreaker",
+        "ko": "카프리 팬츠와 크롭 윈드브레이커",
+        "en": "capri pants with cropped windbreaker",
+        "weight": 0.5,
+        "tags": [
+          "human",
+          "wardrobe",
+          "y2k",
+          "sporty",
+          "casual"
+        ],
+        "embedding_text": "capri pants with cropped windbreaker, Y2K sporty dailywear nostalgia",
+        "keywords": [
+          "capri pants",
+          "cropped windbreaker"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "tracksuit_streetwear_set",
+        "ko": "트랙수트 스트리트웨어 세트",
+        "en": "tracksuit streetwear set",
+        "weight": 0.52,
+        "tags": [
+          "human",
+          "wardrobe",
+          "sporty",
+          "street"
+        ],
+        "embedding_text": "tracksuit streetwear set, sporty dailywear, clean social outfit",
+        "keywords": [
+          "tracksuit",
+          "streetwear"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "broderie_anglaise_mini_dress",
+        "ko": "브로더리 앙글레즈 미니 드레스",
+        "en": "broderie anglaise mini dress",
+        "weight": 0.48,
+        "tags": [
+          "human",
+          "wardrobe",
+          "dress",
+          "eyelet",
+          "summer"
+        ],
+        "embedding_text": "broderie anglaise mini dress, eyelet cotton summer dress, clean soft casual styling",
+        "keywords": [
+          "broderie anglaise",
+          "eyelet dress"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "dropwaist_satin_slip_dress",
+        "ko": "드롭웨이스트 새틴 슬립 드레스",
+        "en": "drop-waist satin slip dress",
+        "weight": 0.46,
+        "tags": [
+          "human",
+          "wardrobe",
+          "dress",
+          "satin",
+          "editorial"
+        ],
+        "embedding_text": "drop-waist satin slip dress, modern jazz-age editorial proportion",
+        "keywords": [
+          "drop waist",
+          "satin slip dress"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "athletic_shorts_oversized_blazer",
+        "ko": "애슬레틱 쇼츠와 오버사이즈 블레이저",
+        "en": "athletic shorts with oversized blazer",
+        "weight": 1.0,
+        "tags": [
+          "human",
+          "wardrobe",
+          "contrast",
+          "sport_luxe",
+          "casual"
+        ],
+        "embedding_text": "athletic shorts with oversized blazer, TikTok contrast styling, sport-luxe dailywear, oversized top tiny-bottom proportion, no visible text graphics",
+        "keywords": [
+          "athletic shorts blazer",
+          "contrast styling",
+          "sport-luxe",
+          "TikTok contrast styling"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "athletic shorts blazer",
+          "athletic shorts with oversized blazer",
+          "TikTok contrast styling"
         ]
       }
     ],
@@ -139289,6 +142429,140 @@
             "general"
           ]
         }
+      },
+      {
+        "id": "butter_yellow_palette",
+        "ko": "버터 옐로 팔레트",
+        "en": "butter yellow palette",
+        "weight": 0.58,
+        "tags": [
+          "color",
+          "yellow",
+          "soft",
+          "fashion"
+        ],
+        "embedding_text": "butter yellow fashion palette, soft warm yellow dailywear accent",
+        "keywords": [
+          "butter yellow"
+        ]
+      },
+      {
+        "id": "powder_blue_palette",
+        "ko": "파우더 블루 팔레트",
+        "en": "powder blue palette",
+        "weight": 0.56,
+        "tags": [
+          "color",
+          "blue",
+          "soft",
+          "fashion"
+        ],
+        "embedding_text": "powder blue fashion palette, soft airy blue dailywear tone",
+        "keywords": [
+          "powder blue"
+        ]
+      },
+      {
+        "id": "chalky_off_white_palette",
+        "ko": "초키 오프 화이트 팔레트",
+        "en": "chalky off-white palette",
+        "weight": 0.56,
+        "tags": [
+          "color",
+          "white",
+          "neutral",
+          "fashion"
+        ],
+        "embedding_text": "chalky off-white fashion palette, clean neutral white dress styling",
+        "keywords": [
+          "chalky off-white",
+          "off white"
+        ]
+      },
+      {
+        "id": "sage_green_palette",
+        "ko": "세이지 그린 팔레트",
+        "en": "sage green palette",
+        "weight": 0.75,
+        "tags": [
+          "color",
+          "green",
+          "utility",
+          "fashion"
+        ],
+        "embedding_text": "sage green and khaki utility fashion palette, muted practical green dailywear, cargo outfit color",
+        "keywords": [
+          "sage green",
+          "khaki green"
+        ]
+      },
+      {
+        "id": "aquamarine_teal_palette",
+        "ko": "아쿠아마린 틸 팔레트",
+        "en": "aquamarine teal palette",
+        "weight": 0.46,
+        "tags": [
+          "color",
+          "teal",
+          "summer",
+          "fashion"
+        ],
+        "embedding_text": "aquamarine teal fashion palette, bright summer water tone",
+        "keywords": [
+          "aquamarine",
+          "teal"
+        ]
+      },
+      {
+        "id": "oxblood_wine_palette",
+        "ko": "옥스블러드 와인 팔레트",
+        "en": "oxblood wine palette",
+        "weight": 0.72,
+        "tags": [
+          "color",
+          "red",
+          "wine",
+          "fashion"
+        ],
+        "embedding_text": "oxblood wine fashion palette, deep red vamp romantic lace editorial accent",
+        "keywords": [
+          "oxblood",
+          "wine red"
+        ]
+      },
+      {
+        "id": "cloud_dancer_white_palette",
+        "ko": "클라우드 댄서 화이트 팔레트",
+        "en": "cloud-dancer white palette",
+        "weight": 0.48,
+        "tags": [
+          "color",
+          "white",
+          "clean",
+          "fashion"
+        ],
+        "embedding_text": "cloud-dancer white fashion palette, airy bright white summer outfit",
+        "keywords": [
+          "cloud white",
+          "clean white"
+        ]
+      },
+      {
+        "id": "tomato_red_accent_palette",
+        "ko": "토마토 레드 포인트 팔레트",
+        "en": "tomato red accent palette",
+        "weight": 0.44,
+        "tags": [
+          "color",
+          "red",
+          "accent",
+          "fashion"
+        ],
+        "embedding_text": "tomato red accent palette, playful fashion accessory color",
+        "keywords": [
+          "tomato red",
+          "red accent"
+        ]
       }
     ],
     "mood": [
@@ -146852,6 +150126,180 @@
         "for_any": [
           "human"
         ]
+      },
+      {
+        "id": "silk_scarf_tied_on_bag",
+        "ko": "가방에 묶은 실크 스카프",
+        "en": "silk scarf tied on a bag",
+        "weight": 0.5,
+        "tags": [
+          "human",
+          "accessory",
+          "scarf",
+          "bag"
+        ],
+        "embedding_text": "silk scarf tied on a bag",
+        "keywords": [
+          "silk scarf on bag"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "bandana_scarf_neck",
+        "ko": "목에 묶은 반다나 스카프",
+        "en": "bandana scarf tied at the neck",
+        "weight": 0.52,
+        "tags": [
+          "human",
+          "accessory",
+          "bandana",
+          "scarf"
+        ],
+        "embedding_text": "bandana scarf tied at the neck",
+        "keywords": [
+          "bandana scarf"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "oversized_leather_belt",
+        "ko": "오버사이즈 레더 벨트",
+        "en": "oversized leather belt",
+        "weight": 0.52,
+        "tags": [
+          "human",
+          "accessory",
+          "belt",
+          "waist"
+        ],
+        "embedding_text": "oversized leather belt",
+        "keywords": [
+          "oversized belt",
+          "cinched waist"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "vintage_lapel_brooch",
+        "ko": "빈티지 라펠 브로치",
+        "en": "vintage lapel brooch",
+        "weight": 0.42,
+        "tags": [
+          "human",
+          "accessory",
+          "brooch",
+          "vintage"
+        ],
+        "embedding_text": "vintage lapel brooch",
+        "keywords": [
+          "vintage brooch"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "shield_sport_sunglasses",
+        "ko": "쉴드형 스포츠 선글라스",
+        "en": "shield sport sunglasses",
+        "weight": 0.46,
+        "tags": [
+          "human",
+          "accessory",
+          "sunglasses",
+          "sport"
+        ],
+        "embedding_text": "shield sport sunglasses",
+        "keywords": [
+          "shield sunglasses"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "wraparound_sport_sunglasses",
+        "ko": "랩어라운드 스포츠 선글라스",
+        "en": "wraparound sport sunglasses",
+        "weight": 0.48,
+        "tags": [
+          "human",
+          "accessory",
+          "sunglasses",
+          "sport"
+        ],
+        "embedding_text": "wraparound sport sunglasses",
+        "keywords": [
+          "wraparound sunglasses"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "oval_90s_sunglasses",
+        "ko": "90년대 오벌 선글라스",
+        "en": "90s oval sunglasses",
+        "weight": 0.5,
+        "tags": [
+          "human",
+          "accessory",
+          "sunglasses",
+          "90s"
+        ],
+        "embedding_text": "90s oval sunglasses",
+        "keywords": [
+          "oval sunglasses",
+          "90s sunglasses"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "charm_covered_bag",
+        "ko": "참 장식이 달린 가방",
+        "en": "charm-covered bag",
+        "weight": 0.5,
+        "tags": [
+          "human",
+          "accessory",
+          "bag",
+          "charm"
+        ],
+        "embedding_text": "bag covered with small charms, playful accessory detail without branded characters",
+        "keywords": [
+          "charm bag",
+          "bag charms"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "chunky_gold_cuff",
+        "ko": "청키 골드 커프",
+        "en": "chunky gold cuff bracelet",
+        "weight": 0.42,
+        "tags": [
+          "human",
+          "accessory",
+          "jewelry",
+          "gold"
+        ],
+        "embedding_text": "chunky gold cuff bracelet",
+        "keywords": [
+          "chunky gold cuff"
+        ],
+        "for_any": [
+          "human"
+        ]
       }
     ],
     "facial_hair": [
@@ -149090,6 +152538,199 @@
           "food",
           "korea",
           "night"
+        ]
+      },
+      {
+        "id": "sport_luxe_fandom",
+        "ko": "스포츠 럭스 팬덤 스타일",
+        "en": "sport-luxe fandom styling",
+        "weight": 0.9,
+        "tags": [
+          "aesthetic",
+          "fashion",
+          "sport_luxe",
+          "street"
+        ],
+        "embedding_text": "sport-luxe dailywear, oversized jersey street style, denim jorts, sporty sneakers, athletic casual fashion, no readable team text",
+        "aliases": [
+          "sport luxe",
+          "sport-luxe",
+          "jersey street style"
+        ],
+        "keywords": [
+          "sport-luxe",
+          "jersey street style",
+          "athletic shorts blazer"
+        ]
+      },
+      {
+        "id": "khaki_utility_coded",
+        "ko": "카키 유틸리티 코드 스타일",
+        "en": "khaki utility-coded dailywear",
+        "weight": 0.86,
+        "tags": [
+          "aesthetic",
+          "fashion",
+          "utility",
+          "khaki"
+        ],
+        "embedding_text": "khaki utility dailywear, cargo pockets, tank layers, practical city outfit",
+        "aliases": [
+          "khaki utility",
+          "cargo dailywear"
+        ],
+        "keywords": [
+          "khaki utility",
+          "cargo outfit"
+        ]
+      },
+      {
+        "id": "genz_clean_minimal",
+        "ko": "젠지 클린 미니멀",
+        "en": "Gen Z clean minimal style",
+        "weight": 0.68,
+        "tags": [
+          "aesthetic",
+          "fashion",
+          "minimal",
+          "clean"
+        ],
+        "embedding_text": "Gen Z clean minimal fashion, little white dress, low profile shoes, quiet everyday styling",
+        "aliases": [
+          "Gen Z minimal",
+          "clean minimal"
+        ],
+        "keywords": [
+          "Gen Z minimal",
+          "little white dress"
+        ]
+      },
+      {
+        "id": "dockside_sailorcore",
+        "ko": "도크사이드 세일러코어",
+        "en": "dockside sailorcore casual",
+        "weight": 0.64,
+        "tags": [
+          "aesthetic",
+          "fashion",
+          "sailorcore",
+          "summer"
+        ],
+        "embedding_text": "dockside sailorcore casual, sailor stripes, linen shorts, boat deck shoes, weekend waterfront outfit",
+        "aliases": [
+          "sailorcore",
+          "dockside casual"
+        ],
+        "keywords": [
+          "sailorcore",
+          "boat shoes",
+          "striped top"
+        ]
+      },
+      {
+        "id": "poetcore_literary",
+        "ko": "문학적인 포엣코어",
+        "en": "poetcore literary soft style",
+        "weight": 0.5,
+        "tags": [
+          "aesthetic",
+          "fashion",
+          "poetcore",
+          "soft"
+        ],
+        "embedding_text": "poetcore literary soft fashion, romantic blouse, soft layers, quiet bookish styling",
+        "aliases": [
+          "poetcore"
+        ],
+        "keywords": [
+          "poetcore",
+          "romantic blouse"
+        ]
+      },
+      {
+        "id": "vamp_romantic",
+        "ko": "뱀프 로맨틱 스타일",
+        "en": "vamp romantic lace styling",
+        "weight": 0.82,
+        "tags": [
+          "aesthetic",
+          "fashion",
+          "vamp",
+          "romantic"
+        ],
+        "embedding_text": "vamp romantic lace editorial, oxblood accents, lace trim edge, dark romantic styling without fetish cues",
+        "aliases": [
+          "vamp romantic",
+          "dark romantic"
+        ],
+        "keywords": [
+          "vamp romantic",
+          "lace editorial",
+          "oxblood"
+        ]
+      },
+      {
+        "id": "glamoratti_80s_luxury",
+        "ko": "1980년대 글래머 럭셔리 스타일",
+        "en": "80s glamoratti luxury styling",
+        "weight": 0.5,
+        "tags": [
+          "aesthetic",
+          "fashion",
+          "80s",
+          "glamour"
+        ],
+        "embedding_text": "80s glamoratti luxury fashion, power shoulders, bold belt, polished evening editorial",
+        "aliases": [
+          "80s glamoratti",
+          "glam luxury"
+        ],
+        "keywords": [
+          "80s glamoratti",
+          "power shoulder"
+        ]
+      },
+      {
+        "id": "y2k_dailywear_nostalgia",
+        "ko": "Y2K 데일리웨어 노스탤지어",
+        "en": "Y2K dailywear nostalgia",
+        "weight": 0.58,
+        "tags": [
+          "aesthetic",
+          "fashion",
+          "y2k",
+          "nostalgia"
+        ],
+        "embedding_text": "Y2K and 90s dailywear nostalgia, capri pants, cropped windbreaker, jelly shoes, playful casual styling",
+        "aliases": [
+          "Y2K dailywear",
+          "90s nostalgia"
+        ],
+        "keywords": [
+          "Y2K dailywear",
+          "capri pants",
+          "windbreaker"
+        ]
+      },
+      {
+        "id": "jazz_age_modern",
+        "ko": "현대적인 재즈 에이지 레퍼런스",
+        "en": "modern jazz-age reference",
+        "weight": 0.42,
+        "tags": [
+          "aesthetic",
+          "fashion",
+          "jazz_age",
+          "editorial"
+        ],
+        "embedding_text": "modern jazz-age fashion reference, dropped waist, satin dress, polished editorial styling",
+        "aliases": [
+          "jazz age modern"
+        ],
+        "keywords": [
+          "jazz age",
+          "drop waist",
+          "satin dress"
         ]
       }
     ],
@@ -155602,6 +159243,162 @@
         "for_any": [
           "human"
         ]
+      },
+      {
+        "id": "lace_trim_edge",
+        "ko": "레이스 트림 가장자리",
+        "en": "lace trim edge",
+        "weight": 0.54,
+        "tags": [
+          "human",
+          "garment",
+          "lace",
+          "detail"
+        ],
+        "embedding_text": "lace trim edge",
+        "keywords": [
+          "lace trim"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "broderie_anglaise_eyelet",
+        "ko": "브로더리 앙글레즈 아이렛 자수",
+        "en": "broderie anglaise eyelet",
+        "weight": 0.5,
+        "tags": [
+          "human",
+          "garment",
+          "eyelet",
+          "embroidery"
+        ],
+        "embedding_text": "broderie anglaise eyelet",
+        "keywords": [
+          "broderie anglaise",
+          "eyelet"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "patchwork_denim_panel",
+        "ko": "패치워크 데님 패널",
+        "en": "patchwork denim panel",
+        "weight": 0.48,
+        "tags": [
+          "human",
+          "garment",
+          "denim",
+          "patchwork"
+        ],
+        "embedding_text": "patchwork denim panel",
+        "keywords": [
+          "patchwork denim"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "abstract_sporty_colorblock_graphic",
+        "ko": "읽히지 않는 추상 스포츠 컬러블록 그래픽",
+        "en": "abstract sporty colorblock graphic with no readable text",
+        "weight": 0.52,
+        "tags": [
+          "human",
+          "garment",
+          "sporty",
+          "graphic",
+          "no_text"
+        ],
+        "embedding_text": "abstract sporty colorblock graphic on clothing, no readable numbers, no team logo, no legible text",
+        "keywords": [
+          "abstract sporty graphic",
+          "no readable text"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "ribbed_knit_texture",
+        "ko": "골지 니트 질감",
+        "en": "ribbed knit texture",
+        "weight": 0.46,
+        "tags": [
+          "human",
+          "garment",
+          "knit",
+          "texture"
+        ],
+        "embedding_text": "ribbed knit texture",
+        "keywords": [
+          "ribbed knit"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "crochet_open_weave",
+        "ko": "크로셰 오픈 위브",
+        "en": "crochet open weave",
+        "weight": 0.44,
+        "tags": [
+          "human",
+          "garment",
+          "crochet",
+          "texture"
+        ],
+        "embedding_text": "crochet open weave",
+        "keywords": [
+          "crochet",
+          "open weave"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "ripstop_nylon_crinkle",
+        "ko": "립스톱 나일론 크링클",
+        "en": "ripstop nylon crinkle",
+        "weight": 0.46,
+        "tags": [
+          "human",
+          "garment",
+          "nylon",
+          "utility"
+        ],
+        "embedding_text": "ripstop nylon crinkle",
+        "keywords": [
+          "ripstop nylon"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "liquid_satin_sheen",
+        "ko": "리퀴드 새틴 광택",
+        "en": "liquid satin sheen",
+        "weight": 0.44,
+        "tags": [
+          "human",
+          "garment",
+          "satin",
+          "sheen"
+        ],
+        "embedding_text": "liquid satin sheen",
+        "keywords": [
+          "liquid satin"
+        ],
+        "for_any": [
+          "human"
+        ]
       }
     ],
     "companion_animal": [
@@ -155775,6 +159572,784 @@
           "window"
         ],
         "embedding_text": "desaturated rainy-window color grade"
+      }
+    ],
+    "footwear": [
+      {
+        "id": "chunky_dad_sneakers",
+        "ko": "청키 대드 스니커즈",
+        "en": "chunky dad sneakers",
+        "weight": 0.74,
+        "tags": [
+          "human",
+          "footwear",
+          "sneakers",
+          "street",
+          "casual"
+        ],
+        "embedding_text": "chunky dad sneakers",
+        "aliases": [
+          "chunky sneakers",
+          "dad sneakers"
+        ],
+        "keywords": [
+          "chunky sneakers",
+          "street style"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "slim_low_profile_sneakers",
+        "ko": "슬림한 로우 프로파일 스니커즈",
+        "en": "slim low-profile sneakers",
+        "weight": 0.72,
+        "tags": [
+          "human",
+          "footwear",
+          "sneakers",
+          "minimal",
+          "casual"
+        ],
+        "embedding_text": "slim low-profile sneakers",
+        "aliases": [
+          "low profile sneakers"
+        ],
+        "keywords": [
+          "minimal sneaker",
+          "dailywear"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "sporty_racing_sneakers",
+        "ko": "스포티한 레이싱 실루엣 스니커즈",
+        "en": "sporty racing-silhouette sneakers",
+        "weight": 0.64,
+        "tags": [
+          "human",
+          "footwear",
+          "sneakers",
+          "sport_luxe",
+          "speed"
+        ],
+        "embedding_text": "sporty racing-silhouette sneakers",
+        "aliases": [
+          "racing sneakers",
+          "motorsport-inspired sneakers"
+        ],
+        "keywords": [
+          "sport-luxe",
+          "racing sneaker"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "ballet_flat_sneakers",
+        "ko": "발레 플랫 느낌의 스니커즈",
+        "en": "ballet-flat sneakers",
+        "weight": 0.56,
+        "tags": [
+          "human",
+          "footwear",
+          "sneakers",
+          "ballet",
+          "soft"
+        ],
+        "embedding_text": "ballet-flat sneakers",
+        "aliases": [
+          "ballet sneaker",
+          "sneakerina"
+        ],
+        "keywords": [
+          "ballet sneaker",
+          "Gen Z minimal"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "wedge_sneakers",
+        "ko": "웨지 스니커즈",
+        "en": "wedge sneakers",
+        "weight": 0.42,
+        "tags": [
+          "human",
+          "footwear",
+          "sneakers",
+          "y2k"
+        ],
+        "embedding_text": "wedge sneakers",
+        "aliases": [
+          "platform wedge sneakers"
+        ],
+        "keywords": [
+          "Y2K sneaker",
+          "nostalgia"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "mary_jane_flats",
+        "ko": "메리제인 플랫",
+        "en": "Mary Jane flats",
+        "weight": 0.62,
+        "tags": [
+          "human",
+          "footwear",
+          "flats",
+          "classic",
+          "soft"
+        ],
+        "embedding_text": "Mary Jane flats",
+        "aliases": [
+          "Mary Janes",
+          "strap flats"
+        ],
+        "keywords": [
+          "Mary Jane flats",
+          "minimal dress"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "penny_loafers",
+        "ko": "페니 로퍼",
+        "en": "penny loafers",
+        "weight": 0.6,
+        "tags": [
+          "human",
+          "footwear",
+          "loafers",
+          "classic"
+        ],
+        "embedding_text": "penny loafers",
+        "aliases": [
+          "classic loafers"
+        ],
+        "keywords": [
+          "penny loafers",
+          "preppy shoes"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "backless_loafers",
+        "ko": "백리스 로퍼",
+        "en": "backless loafers",
+        "weight": 0.5,
+        "tags": [
+          "human",
+          "footwear",
+          "loafers",
+          "casual"
+        ],
+        "embedding_text": "backless loafers",
+        "aliases": [
+          "mule loafers"
+        ],
+        "keywords": [
+          "backless loafer",
+          "commuter outfit"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "boat_deck_shoes",
+        "ko": "보트 데크 슈즈",
+        "en": "boat deck shoes",
+        "weight": 0.58,
+        "tags": [
+          "human",
+          "footwear",
+          "deck",
+          "sailorcore",
+          "casual"
+        ],
+        "embedding_text": "boat deck shoes",
+        "aliases": [
+          "deck shoes",
+          "boat shoes"
+        ],
+        "keywords": [
+          "boat shoes",
+          "sailorcore weekend"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "fisherman_sandals",
+        "ko": "피셔맨 샌들",
+        "en": "fisherman sandals",
+        "weight": 0.48,
+        "tags": [
+          "human",
+          "footwear",
+          "sandals",
+          "summer"
+        ],
+        "embedding_text": "fisherman sandals",
+        "aliases": [
+          "closed toe sandals"
+        ],
+        "keywords": [
+          "fisherman sandals",
+          "summer dailywear"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "strappy_flat_sandals",
+        "ko": "스트랩 플랫 샌들",
+        "en": "strappy flat sandals",
+        "weight": 0.52,
+        "tags": [
+          "human",
+          "footwear",
+          "sandals",
+          "summer"
+        ],
+        "embedding_text": "strappy flat sandals",
+        "aliases": [
+          "flat strappy sandals"
+        ],
+        "keywords": [
+          "strappy flat sandals",
+          "resort casual"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "kitten_heel_thong_sandals",
+        "ko": "키튼힐 통 샌들",
+        "en": "kitten-heel thong sandals",
+        "weight": 0.46,
+        "tags": [
+          "human",
+          "footwear",
+          "sandals",
+          "heel",
+          "summer"
+        ],
+        "embedding_text": "kitten-heel thong sandals",
+        "aliases": [
+          "kitten heel flip-flop sandals"
+        ],
+        "keywords": [
+          "kitten heel thong sandals",
+          "summer editorial"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "leather_flip_flops",
+        "ko": "레더 플립플롭",
+        "en": "leather flip-flops",
+        "weight": 0.46,
+        "tags": [
+          "human",
+          "footwear",
+          "sandals",
+          "casual"
+        ],
+        "embedding_text": "leather flip-flops",
+        "aliases": [
+          "leather flip flops"
+        ],
+        "keywords": [
+          "leather flip-flops",
+          "minimal summer shoes"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "colorful_jelly_shoes",
+        "ko": "컬러풀 젤리 슈즈",
+        "en": "colorful jelly shoes",
+        "weight": 0.38,
+        "tags": [
+          "human",
+          "footwear",
+          "jelly",
+          "summer",
+          "playful"
+        ],
+        "embedding_text": "colorful jelly shoes",
+        "aliases": [
+          "jelly shoes",
+          "red jelly shoes"
+        ],
+        "keywords": [
+          "jelly shoes",
+          "nostalgia"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "pointed_ankle_boots",
+        "ko": "포인티드 앵클부츠",
+        "en": "pointed ankle boots",
+        "weight": 0.52,
+        "tags": [
+          "human",
+          "footwear",
+          "boots",
+          "sharp"
+        ],
+        "embedding_text": "pointed ankle boots",
+        "aliases": [
+          "pointed boots"
+        ],
+        "keywords": [
+          "pointed ankle boots",
+          "street fashion"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "western_cowboy_boots",
+        "ko": "웨스턴 카우보이 부츠",
+        "en": "western cowboy boots",
+        "weight": 0.48,
+        "tags": [
+          "human",
+          "footwear",
+          "boots",
+          "western"
+        ],
+        "embedding_text": "western cowboy boots",
+        "aliases": [
+          "western boots"
+        ],
+        "keywords": [
+          "cowboy boots",
+          "contrast styling"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "tall_suede_boots",
+        "ko": "톨 스웨이드 부츠",
+        "en": "tall suede boots",
+        "weight": 0.5,
+        "tags": [
+          "human",
+          "footwear",
+          "boots",
+          "soft"
+        ],
+        "embedding_text": "tall suede boots",
+        "aliases": [
+          "suede tall boots"
+        ],
+        "keywords": [
+          "tall suede boots",
+          "fall outfit"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "block_heel_pumps",
+        "ko": "블록힐 펌프스",
+        "en": "block-heel pumps",
+        "weight": 0.48,
+        "tags": [
+          "human",
+          "footwear",
+          "pumps",
+          "classic"
+        ],
+        "embedding_text": "block-heel pumps",
+        "aliases": [
+          "block heel shoes"
+        ],
+        "keywords": [
+          "block heel pumps",
+          "editorial fashion"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "glove_pumps",
+        "ko": "글러브 펌프스",
+        "en": "glove pumps",
+        "weight": 0.4,
+        "tags": [
+          "human",
+          "footwear",
+          "pumps",
+          "soft"
+        ],
+        "embedding_text": "glove pumps",
+        "aliases": [
+          "soft glove pumps"
+        ],
+        "keywords": [
+          "glove pumps",
+          "elegant outfit"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "square_toe_heels",
+        "ko": "스퀘어 토 힐",
+        "en": "square-toe heels",
+        "weight": 0.42,
+        "tags": [
+          "human",
+          "footwear",
+          "heels",
+          "modern"
+        ],
+        "embedding_text": "square-toe heels",
+        "aliases": [
+          "square toe pumps"
+        ],
+        "keywords": [
+          "square-toe heels",
+          "modern heels"
+        ],
+        "for_any": [
+          "human"
+        ]
+      }
+    ],
+    "silhouette_proportion": [
+      {
+        "id": "dropped_low_waistline",
+        "ko": "드롭된 로우 웨이스트라인",
+        "en": "dropped low waistline",
+        "weight": 0.62,
+        "tags": [
+          "human",
+          "silhouette",
+          "waistline",
+          "runway"
+        ],
+        "embedding_text": "dropped low waistline",
+        "aliases": [
+          "drop waist",
+          "low waistline"
+        ],
+        "keywords": [
+          "dropped waist",
+          "runway proportion"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "architectural_peplum",
+        "ko": "구조적인 페플럼 웨이스트",
+        "en": "architectural peplum waist",
+        "weight": 0.58,
+        "tags": [
+          "human",
+          "silhouette",
+          "peplum",
+          "tailoring"
+        ],
+        "embedding_text": "architectural peplum waist",
+        "aliases": [
+          "peplum waist"
+        ],
+        "keywords": [
+          "peplum",
+          "tailored silhouette"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "sculpted_power_shoulders",
+        "ko": "조각적인 파워 숄더",
+        "en": "sculpted power shoulders",
+        "weight": 0.54,
+        "tags": [
+          "human",
+          "silhouette",
+          "shoulders",
+          "tailoring"
+        ],
+        "embedding_text": "sculpted power shoulders",
+        "aliases": [
+          "power shoulders"
+        ],
+        "keywords": [
+          "power shoulder",
+          "tailored blazer"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "cinched_hourglass_waist",
+        "ko": "잘록하게 조인 아워글래스 허리선",
+        "en": "cinched hourglass waist",
+        "weight": 0.54,
+        "tags": [
+          "human",
+          "silhouette",
+          "waist",
+          "tailoring"
+        ],
+        "embedding_text": "cinched hourglass waist",
+        "aliases": [
+          "cinched waist"
+        ],
+        "keywords": [
+          "cinched waist",
+          "belted proportion"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "body_con_second_skin",
+        "ko": "세컨드스킨 바디콘 핏",
+        "en": "body-con second-skin fit",
+        "weight": 0.42,
+        "tags": [
+          "human",
+          "silhouette",
+          "bodycon",
+          "editorial"
+        ],
+        "embedding_text": "body-con second-skin fit",
+        "aliases": [
+          "bodycon fit",
+          "second skin fit"
+        ],
+        "keywords": [
+          "body-con",
+          "close fitting outfit"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "oversized_top_tiny_bottom",
+        "ko": "오버사이즈 상의와 작은 하의 비례",
+        "en": "oversized top with tiny-bottom proportion",
+        "weight": 0.6,
+        "tags": [
+          "human",
+          "silhouette",
+          "oversized",
+          "contrast"
+        ],
+        "embedding_text": "oversized top with tiny-bottom proportion",
+        "aliases": [
+          "oversized top tiny bottom"
+        ],
+        "keywords": [
+          "contrast styling",
+          "athletic shorts blazer"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "cocoon_relaxed_drape",
+        "ko": "코쿤형 릴랙스 드레이프",
+        "en": "cocoon relaxed drape",
+        "weight": 0.44,
+        "tags": [
+          "human",
+          "silhouette",
+          "cocoon",
+          "drape"
+        ],
+        "embedding_text": "cocoon relaxed drape",
+        "aliases": [
+          "cocoon silhouette"
+        ],
+        "keywords": [
+          "cocoon drape",
+          "soft volume"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "skirt_over_pants_layering",
+        "ko": "스커트 오버 팬츠 레이어링",
+        "en": "skirt-over-pants layering",
+        "weight": 0.5,
+        "tags": [
+          "human",
+          "silhouette",
+          "layering",
+          "y2k"
+        ],
+        "embedding_text": "skirt-over-pants layering",
+        "aliases": [
+          "skirt over pants"
+        ],
+        "keywords": [
+          "Y2K layering",
+          "nostalgia outfit"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "advanced_clever_layering",
+        "ko": "복합적인 클레버 레이어링",
+        "en": "advanced clever layering",
+        "weight": 0.46,
+        "tags": [
+          "human",
+          "silhouette",
+          "layering",
+          "styling"
+        ],
+        "embedding_text": "advanced clever layering",
+        "aliases": [
+          "clever layering"
+        ],
+        "keywords": [
+          "layered dailywear"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "wide_leg_long_line",
+        "ko": "와이드 레그 롱라인 비례",
+        "en": "wide-leg long-line proportion",
+        "weight": 0.56,
+        "tags": [
+          "human",
+          "silhouette",
+          "wide_leg",
+          "longline"
+        ],
+        "embedding_text": "wide-leg long-line proportion",
+        "aliases": [
+          "wide-leg proportion"
+        ],
+        "keywords": [
+          "wide-leg trousers",
+          "minimal dailywear"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "micro_short_proportion",
+        "ko": "마이크로 쇼츠 비례",
+        "en": "micro-short proportion",
+        "weight": 0.4,
+        "tags": [
+          "human",
+          "silhouette",
+          "shorts",
+          "summer"
+        ],
+        "embedding_text": "micro-short proportion",
+        "aliases": [
+          "micro shorts"
+        ],
+        "keywords": [
+          "micro shorts",
+          "sport-luxe contrast"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "asymmetrical_hemline",
+        "ko": "비대칭 헴라인",
+        "en": "asymmetrical hemline",
+        "weight": 0.44,
+        "tags": [
+          "human",
+          "silhouette",
+          "hemline",
+          "editorial"
+        ],
+        "embedding_text": "asymmetrical hemline",
+        "aliases": [
+          "asymmetric hem"
+        ],
+        "keywords": [
+          "asymmetrical hemline",
+          "editorial silhouette"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "scarf_drape_wrap",
+        "ko": "스카프처럼 감싼 드레이프",
+        "en": "scarf drape wrap",
+        "weight": 0.42,
+        "tags": [
+          "human",
+          "silhouette",
+          "drape",
+          "scarf"
+        ],
+        "embedding_text": "scarf drape wrap",
+        "aliases": [
+          "scarf drape"
+        ],
+        "keywords": [
+          "soft wrap silhouette",
+          "resort layering"
+        ],
+        "for_any": [
+          "human"
+        ]
       }
     ]
   },
@@ -156295,6 +160870,8 @@
     "narrative_phase",
     "costume_style",
     "wardrobe_style",
+    "silhouette_proportion",
+    "footwear",
     "garment_detail",
     "adult_context",
     "action",
@@ -156439,7 +161016,9 @@
     "ambient_particle": 1.55,
     "grain_profile": 1.45,
     "lens_artifact": 1.6,
-    "color_grading": 1.45
+    "color_grading": 1.45,
+    "silhouette_proportion": 1.6,
+    "footwear": 1.4
   },
   "generation_settings": {
     "priority_bias": 0.45,
@@ -162355,6 +166934,91 @@
           ]
         },
         "severity": "hard"
+      },
+      {
+        "id": "bad_weather_vs_open_fashion_sandals",
+        "left": {
+          "slot": "weather",
+          "ids": [
+            "heavy_downpour",
+            "thunderstorm_flash",
+            "windblown_snow",
+            "morning_frost",
+            "cold_dry_clear_breath_visible"
+          ]
+        },
+        "right": {
+          "slot": "footwear",
+          "ids": [
+            "leather_flip_flops",
+            "strappy_flat_sandals",
+            "kitten_heel_thong_sandals",
+            "colorful_jelly_shoes"
+          ]
+        },
+        "severity": "hard"
+      },
+      {
+        "id": "evening_editorial_vs_chunky_sneakers",
+        "left": {
+          "slot": "wardrobe_style",
+          "ids": [
+            "dropwaist_satin_slip_dress",
+            "broderie_anglaise_mini_dress"
+          ]
+        },
+        "right": {
+          "slot": "footwear",
+          "ids": [
+            "chunky_dad_sneakers",
+            "sporty_racing_sneakers"
+          ]
+        },
+        "severity": "soft",
+        "penalty": 0.28
+      },
+      {
+        "id": "gym_track_vs_delicate_open_footwear",
+        "left": {
+          "slot": "location",
+          "ids": [
+            "gym_track",
+            "track_lane_stadium",
+            "boxing_gym"
+          ]
+        },
+        "right": {
+          "slot": "footwear",
+          "ids": [
+            "glove_pumps",
+            "square_toe_heels",
+            "kitten_heel_thong_sandals",
+            "strappy_flat_sandals",
+            "leather_flip_flops",
+            "colorful_jelly_shoes"
+          ]
+        },
+        "severity": "soft",
+        "penalty": 0.35
+      },
+      {
+        "id": "bodycon_vs_oversized_sport_volume",
+        "left": {
+          "slot": "wardrobe_style",
+          "ids": [
+            "tracksuit_streetwear_set",
+            "oversized_jersey_denim_jorts",
+            "athletic_shorts_oversized_blazer"
+          ]
+        },
+        "right": {
+          "slot": "silhouette_proportion",
+          "ids": [
+            "body_con_second_skin"
+          ]
+        },
+        "severity": "soft",
+        "penalty": 0.35
       }
     ]
   },
@@ -163847,6 +168511,58 @@
         "portrait",
         "street",
         "documentary"
+      ],
+      "sport_luxe_jersey_street": [
+        "portrait",
+        "fashion",
+        "social",
+        "street"
+      ],
+      "utility_cargo_dailywear": [
+        "portrait",
+        "fashion",
+        "social",
+        "street"
+      ],
+      "genz_minimal_dailywear": [
+        "portrait",
+        "fashion",
+        "social",
+        "street"
+      ],
+      "ootd_contrast_styling": [
+        "portrait",
+        "fashion",
+        "social",
+        "street"
+      ],
+      "dockside_sailorcore_casual": [
+        "portrait",
+        "fashion",
+        "social",
+        "street"
+      ],
+      "lace_trim_soft_casual": [
+        "portrait",
+        "fashion",
+        "social",
+        "street"
+      ],
+      "y2k_90s_nostalgia_casual": [
+        "portrait",
+        "fashion",
+        "social",
+        "street"
+      ],
+      "social_ootd_shop_feed": [
+        "portrait",
+        "fashion",
+        "social",
+        "street"
+      ],
+      "runway_2026_statement_editorial": [
+        "portrait",
+        "fashion"
       ]
     },
     "slots": {
@@ -164334,6 +169050,32 @@
           "jewelry",
           "food",
           "wildlife"
+        ]
+      },
+      "silhouette_proportion": {
+        "subject_categories": [
+          "human"
+        ],
+        "deny_domains": [
+          "documentary",
+          "craft",
+          "wildlife",
+          "product",
+          "jewelry",
+          "food"
+        ]
+      },
+      "footwear": {
+        "subject_categories": [
+          "human"
+        ],
+        "deny_domains": [
+          "documentary",
+          "craft",
+          "wildlife",
+          "product",
+          "jewelry",
+          "food"
         ]
       }
     }
