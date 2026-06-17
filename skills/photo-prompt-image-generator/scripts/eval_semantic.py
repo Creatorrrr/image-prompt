@@ -84,6 +84,12 @@ GOLDEN_CASES: List[JsonDict] = [
     {"intent": "compact CCD digicam party snapshot", "required": {"film_emulation": ["compact_ccd_digicam"], "camera_type": ["compact_digital_camera", "digicam_2000s_camera"]}, "forbidden_tags": ["adult", "fetish"]},
     {"intent": "dense fog bank rural gas station", "required": {"weather": ["dense_fog_bank"], "location": ["rural_gas_station"]}, "forbidden_tags": ["adult", "fetish"]},
     {"intent": "office siren corporate editorial", "required": {"aesthetic_trend": ["office_siren_aesthetic"], "genre": ["fashion", "portrait"]}, "forbidden_tags": ["adult", "fetish"]},
+    {"intent": "sport-luxe jersey street style", "required": {"aesthetic_trend": ["sport_luxe_fandom"], "wardrobe_style": ["oversized_jersey_denim_jorts", "athletic_shorts_oversized_blazer"], "footwear": ["chunky_dad_sneakers", "slim_low_profile_sneakers", "sporty_racing_sneakers"]}, "forbidden_tags": ["adult", "fetish"]},
+    {"intent": "khaki utility cargo dailywear", "required": {"aesthetic_trend": ["khaki_utility_coded"], "wardrobe_style": ["cargo_utility_tank_set"], "color": ["sage_green_palette"]}, "forbidden_tags": ["adult", "fetish"]},
+    {"intent": "Gen Z minimal little white dress", "required": {"aesthetic_trend": ["genz_clean_minimal"], "wardrobe_style": ["little_white_summer_dress", "broderie_anglaise_mini_dress"], "footwear": ["mary_jane_flats", "ballet_flat_sneakers", "slim_low_profile_sneakers"]}, "forbidden_tags": ["adult", "fetish"]},
+    {"intent": "dockside sailorcore weekend outfit", "required": {"aesthetic_trend": ["dockside_sailorcore"], "wardrobe_style": ["sailor_stripe_linen_shorts"], "footwear": ["boat_deck_shoes"]}, "forbidden_tags": ["adult", "fetish"]},
+    {"intent": "vamp romantic lace editorial", "required": {"aesthetic_trend": ["vamp_romantic"], "garment_detail": ["lace_trim_edge", "broderie_anglaise_eyelet"], "color": ["oxblood_wine_palette"]}, "forbidden_tags": ["adult", "fetish"]},
+    {"intent": "TikTok contrast styling athletic shorts blazer", "required": {"wardrobe_style": ["athletic_shorts_oversized_blazer"], "silhouette_proportion": ["oversized_top_tiny_bottom", "sculpted_power_shoulders"], "footwear": ["sporty_racing_sneakers", "chunky_dad_sneakers", "mary_jane_flats"]}, "forbidden_tags": ["adult", "fetish"]},
     {"intent": "street food tteokbokki night stall", "required": {"subject": ["street_food_tteokbokki"], "location": ["street_food_stall", "pojangmacha_tent_night"]}, "forbidden_tags": ["adult", "fetish"]},
 ]
 

@@ -97,6 +97,9 @@ CANDIDATE_PACK_CORE_SLOTS = {
     "body_evidence_region",
     "species_marker",
     "surface_material",
+    "wardrobe_style",
+    "footwear",
+    "silhouette_proportion",
     "prop",
     "location",
     "action",
@@ -178,6 +181,10 @@ CANDIDATE_PACK_SEMANTIC_DROPOUT_BUCKETS: Dict[str, tuple[str, ...]] = {
         "format",
         "quality",
         "aesthetic_trend",
+        "wardrobe_style",
+        "footwear",
+        "silhouette_proportion",
+        "garment_detail",
     ),
 }
 CANDIDATE_PACK_DROPOUT_PROTECTED_SLOTS = {
@@ -186,6 +193,8 @@ CANDIDATE_PACK_DROPOUT_PROTECTED_SLOTS = {
     "appearance_type",
     "costume_style",
     "wardrobe_style",
+    "footwear",
+    "silhouette_proportion",
     "anatomical_connection",
     "species_marker",
     "body_evidence_region",
@@ -439,8 +448,10 @@ CROSS_SLOT_AFFINITY_CONTEXT_SLOTS: Dict[str, tuple[str, ...]] = {
     "light_shape": ("location", "time_of_day", "weather", "mood", "lighting"),
     "color": ("location", "time_of_day", "weather", "mood", "lighting"),
     "texture": ("location", "weather", "mood", "lighting", "color"),
-        "hair_color": ("subject", "appearance_type", "hair_style", "costume_style", "aesthetic_trend"),
-    "wardrobe_style": ("subject", "location", "aesthetic_trend"),
+    "hair_color": ("subject", "appearance_type", "hair_style", "costume_style", "aesthetic_trend"),
+    "wardrobe_style": ("subject", "location", "aesthetic_trend", "footwear", "silhouette_proportion"),
+    "footwear": ("subject", "location", "aesthetic_trend", "wardrobe_style", "weather"),
+    "silhouette_proportion": ("subject", "location", "aesthetic_trend", "wardrobe_style"),
     "makeup_style": ("subject", "location", "aesthetic_trend", "wardrobe_style"),
     "capture_context": ("action", "prop", "location", "camera_direction", "composition"),
     "surreal_anchor": ("surreal_concept", "location"),
@@ -458,6 +469,8 @@ SLOT_TEMPERATURE_MULTIPLIERS: Dict[str, float] = {
     "film_emulation": 1.22,
     "weather": 1.16,
     "hair_color": 1.12,
+    "footwear": 1.16,
+    "silhouette_proportion": 1.14,
     "capture_context": 1.18,
     "surreal_concept": 1.34,
     "surreal_anchor": 1.28,
@@ -481,6 +494,8 @@ COHERENT_DIVERSITY_SLOTS = {
     "camera_type",
     "composition",
     "capture_context",
+    "footwear",
+    "silhouette_proportion",
     "motion",
     "focus",
     "hair_color",
@@ -493,6 +508,8 @@ SEMANTIC_SLOT_CAPTION_TEMPLATES: Dict[str, str] = {
     "light_type": "Specific light-source concept: {description}. It should retrieve lamps, neon, flash, sun, screens, strobes, and practical light sources.",
     "light_shape": "Light-shape concept: {description}. It should retrieve visible beam shapes, shadow patterns, edge light, caustics, diffusion, and photographic light geometry.",
     "hair_color": "Hair-color concept: {description}. It should retrieve natural hair color, cosplay wig color, character hair color, and photographic hair-color cues.",
+    "footwear": "Footwear concept: {description}. It should retrieve shoes, sandals, boots, heels, sneakers, loafers, and how they fit fashion dailywear context.",
+    "silhouette_proportion": "Fashion silhouette and proportion concept: {description}. It should retrieve waistline, shoulder shape, layering, volume, body-con, oversized, and garment proportion cues.",
     "capture_context": "Capture-context concept: {description}. It should retrieve social-photo capture grammar, selfie viewpoint, POV interaction, screen overlay tricks, mirror capture, and passenger-seat observation.",
     "mood": "Image mood concept: {description}. It should retrieve emotional tone, genre feeling, tension, romance, nostalgia, horror, calm, or surreal atmosphere.",
     "film_emulation": "Film and camera-emulation concept: {description}. It should retrieve analog film stocks, halation, grain, color cast, instant film, disposable camera, or CCD looks.",
@@ -560,6 +577,14 @@ DEFAULT_SLOT_APPLICABILITY: JsonDict = {
             "deny_domains": ["product", "jewelry", "food", "wildlife"],
         },
         "wardrobe_style": {
+            "subject_categories": ["human"],
+            "deny_domains": ["documentary", "craft", "wildlife", "product", "jewelry", "food"],
+        },
+        "footwear": {
+            "subject_categories": ["human"],
+            "deny_domains": ["documentary", "craft", "wildlife", "product", "jewelry", "food"],
+        },
+        "silhouette_proportion": {
             "subject_categories": ["human"],
             "deny_domains": ["documentary", "craft", "wildlife", "product", "jewelry", "food"],
         },
@@ -9005,6 +9030,8 @@ def build_fields(picked: Dict[str, Entry], lang: str, data: Optional[JsonDict] =
     facial_hair = values.get("facial_hair", "")
     accessory = values.get("wearable_accessory", "")
     wardrobe = values.get("wardrobe_style", "")
+    footwear = values.get("footwear", "")
+    silhouette = values.get("silhouette_proportion", "")
     costume = values.get("costume_style", "")
 
     if lang == "ko":
@@ -9023,6 +9050,10 @@ def build_fields(picked: Dict[str, Entry], lang: str, data: Optional[JsonDict] =
             subject_mods.append(accessory + josa(accessory, "을", "를") + " 착용한")
         if wardrobe:
             subject_mods.append(wardrobe + josa(wardrobe, "을", "를") + " 입은")
+        if footwear:
+            subject_mods.append(footwear + josa(footwear, "을", "를") + " 신은")
+        if silhouette:
+            subject_mods.append(silhouette + " 실루엣의")
         if costume:
             subject_mods.append(costume + josa(costume, "을", "를") + " 입은")
         subject_with_mods = clean_spaces(" ".join(subject_mods + ([subject] if subject else [])))
@@ -9057,6 +9088,10 @@ def build_fields(picked: Dict[str, Entry], lang: str, data: Optional[JsonDict] =
             wearing_details.append(accessory)
         if wardrobe:
             wearing_details.append(wardrobe)
+        if footwear:
+            wearing_details.append(footwear)
+        if silhouette:
+            with_details.append(silhouette)
         if costume:
             wearing_details.append(costume)
         if with_details:
@@ -9109,6 +9144,9 @@ def build_fields(picked: Dict[str, Entry], lang: str, data: Optional[JsonDict] =
         "wearable_accessory",
         "facial_hair",
         "wardrobe_style",
+        "footwear",
+        "silhouette_proportion",
+        "garment_detail",
         "makeup_style",
         "costume_style",
         "fetish_styling",
