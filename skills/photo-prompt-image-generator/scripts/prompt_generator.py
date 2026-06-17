@@ -107,6 +107,8 @@ CANDIDATE_PACK_CORE_SLOTS = {
     "crowd_density",
     "situation_context",
     "occasion_context",
+    "narrative_core",
+    "concept_tension",
     "action",
     "mood",
     "lighting",
@@ -196,6 +198,8 @@ CANDIDATE_PACK_SEMANTIC_DROPOUT_BUCKETS: Dict[str, tuple[str, ...]] = {
         "format",
         "quality",
         "aesthetic_trend",
+        "narrative_core",
+        "concept_tension",
         "wardrobe_style",
         "footwear",
         "silhouette_proportion",
@@ -472,6 +476,8 @@ CROSS_SLOT_AFFINITY_CONTEXT_SLOTS: Dict[str, tuple[str, ...]] = {
     "crowd_density": ("location", "situation_context", "occasion_context"),
     "situation_context": ("location", "action", "time_of_day", "crowd_density"),
     "occasion_context": ("location", "prop", "mood", "situation_context"),
+    "narrative_core": ("mood", "situation_context", "occasion_context", "location", "prop", "capture_context", "aesthetic_trend"),
+    "concept_tension": ("narrative_core", "mood", "location", "surface_material", "texture", "lighting", "world", "composition"),
     "body_pose": ("subject", "action", "hand_pose", "body_orientation", "shot_scale", "composition"),
     "shot_scale": ("composition", "subject_framing", "body_pose", "camera_direction", "lens"),
     "platform_framing": ("format", "composition", "capture_context", "shot_scale", "camera_direction"),
@@ -482,6 +488,96 @@ CROSS_SLOT_AFFINITY_CONTEXT_SLOTS: Dict[str, tuple[str, ...]] = {
 }
 
 SEMANTIC_INTENT_SLOT_HINTS: Dict[str, List[JsonDict]] = {
+    "narrative_core": [
+        {
+            "id": "intent_analog_diary_narrative_core",
+            "any": ["analog diary", "family archive", "memory archive", "bedroom shrine", "found photograph"],
+            "ids": ["analog_diary_memory_core", "private_ritual_core", "fragile_intimacy_core"],
+        },
+        {
+            "id": "intent_quiet_rebellion_narrative_core",
+            "any": ["quiet rebellion", "soft protest", "quiet defiance"],
+            "ids": ["quiet_rebellion_core", "urban_solitude_core", "public_private_self_core"],
+        },
+        {
+            "id": "intent_digital_privacy_narrative_core",
+            "any": ["digital privacy", "privacy anxiety", "public persona", "private self", "phone glow"],
+            "ids": ["digital_privacy_core", "public_private_self_core", "ai_companion_core"],
+        },
+        {
+            "id": "intent_romantic_decay_narrative_core",
+            "any": ["romantic decay", "broken luxury", "faded glamour"],
+            "ids": ["romantic_decay_core", "broken_luxury_core", "fragile_intimacy_core"],
+        },
+        {
+            "id": "intent_near_future_ai_narrative_core",
+            "any": ["near-future nostalgia", "near future nostalgia", "ai companion"],
+            "ids": ["near_future_nostalgia_core", "ai_companion_core", "ordinary_magic_core"],
+        },
+    ],
+    "concept_tension": [
+        {
+            "id": "intent_organic_synthetic_tension",
+            "any": ["organic vs synthetic", "organic versus synthetic", "natural vs artificial"],
+            "ids": ["organic_vs_synthetic_tension", "urban_vs_wilderness_tension", "human_touch_vs_automation_tension"],
+        },
+        {
+            "id": "intent_analog_ai_tension",
+            "any": ["analog vs ai", "analog versus ai", "analog vs AI"],
+            "ids": ["analog_vs_ai_tension", "nostalgic_vs_futuristic_tension"],
+        },
+        {
+            "id": "intent_luxury_decay_tension",
+            "any": ["luxury vs decay", "luxury versus decay", "broken luxury"],
+            "ids": ["luxury_vs_decay_tension", "polished_vs_imperfect_tension"],
+        },
+        {
+            "id": "intent_public_private_tension",
+            "any": ["public vs private", "public versus private", "public persona", "private self"],
+            "ids": ["public_vs_private_tension", "visibility_vs_secrecy_tension"],
+        },
+    ],
+    "location": [
+        {
+            "id": "intent_archive_bedroom_location",
+            "any": ["bedroom shrine", "family archive", "attic archive"],
+            "ids": ["bedroom_shrine", "attic_archive_room", "lived_in_studio_room"],
+        },
+        {
+            "id": "intent_broken_luxury_location",
+            "any": ["broken luxury", "romantic decay", "hotel lobby"],
+            "ids": ["old_hotel_lobby_decay", "luxury_hotel_lobby", "luxury_hotel_corridor"],
+        },
+        {
+            "id": "intent_organic_synthetic_location",
+            "any": ["organic vs synthetic", "rooftop garden", "rooftop greenhouse"],
+            "ids": ["rooftop_greenhouse", "botanical_greenhouse", "secret_garden_path", "indoor_forest_room"],
+        },
+    ],
+    "prop": [
+        {
+            "id": "intent_analog_diary_props",
+            "any": ["analog diary", "family archive", "memory archive", "bedroom shrine", "found photograph"],
+            "ids": ["unreadable_diary_prop", "old_postcard_unreadable_prop", "polaroid_stack_unreadable_prop", "fountain_pen_prop", "film_roll_contact_sheet_prop"],
+        },
+        {
+            "id": "intent_privacy_screen_props",
+            "any": ["digital privacy", "phone glow", "no readable text", "blurred screen"],
+            "ids": ["smartphone_in_hand", "blurred_laptop_screen_glow_prop", "crt_tv_abstract_glow_prop"],
+        },
+    ],
+    "capture_context": [
+        {
+            "id": "intent_analog_diary_capture_context",
+            "any": ["analog diary", "family archive", "memory archive", "bedroom shrine"],
+            "ids": ["analog_diary_snapshot_context", "contact_sheet_archive_context", "no_text_paper_ephemera_context"],
+        },
+        {
+            "id": "intent_privacy_screen_capture_context",
+            "any": ["digital privacy", "phone glow", "blurred screen", "no readable text"],
+            "ids": ["privacy_screen_glow_context", "blurred_screen_over_shoulder_context"],
+        },
+    ],
     "body_pose": [
         {
             "id": "intent_contrapposto_pose",
@@ -642,6 +738,8 @@ SLOT_TEMPERATURE_MULTIPLIERS: Dict[str, float] = {
     "crowd_density": 1.14,
     "situation_context": 1.2,
     "occasion_context": 1.16,
+    "narrative_core": 1.2,
+    "concept_tension": 1.16,
     "body_pose": 1.2,
     "shot_scale": 1.16,
     "platform_framing": 1.14,
@@ -674,6 +772,8 @@ COHERENT_DIVERSITY_SLOTS = {
     "crowd_density",
     "situation_context",
     "occasion_context",
+    "narrative_core",
+    "concept_tension",
     "camera_type",
     "composition",
     "body_pose",
@@ -706,6 +806,8 @@ SEMANTIC_SLOT_CAPTION_TEMPLATES: Dict[str, str] = {
     "crowd_density": "Crowd density and social arrangement concept: {description}. It should retrieve empty, sparse, solo, small-group, queue, packed commute, festival crowd, bystander-ring, and stage-facing crowd layouts.",
     "situation_context": "Everyday situation and routine concept: {description}. It should retrieve commute, errands, cafe work, room reset, laundry day, moving day, small-business packing, behind-the-scenes, and social routine grammar without readable text.",
     "occasion_context": "Occasion and event context concept: {description}. It should retrieve graduation, birthday, opening day, closing cleanup, holiday gathering, festival, exhibition opening, workshop, volunteer, and community event atmosphere using non-readable set dressing.",
+    "narrative_core": "Narrative-core concept: {description}. It should retrieve poetic story anchors such as quiet rebellion, analog diary memory, urban solitude, ordinary magic, digital privacy, AI companion, romantic decay, broken luxury, and community ritual without relying on readable text.",
+    "concept_tension": "Concept-tension concept: {description}. It should retrieve visual contrast pairs such as organic versus synthetic, analog versus AI, luxury versus decay, public versus private, documentary versus staged, and realistic versus dreamlike through material, light, setting, and composition.",
     "body_pose": "Clean human body-pose concept: {description}. It should retrieve standing, seated, leaning, crouching, walking, turning, group layering, and editorial posture without adult body-first framing.",
     "shot_scale": "Photographic shot-scale concept: {description}. It should retrieve extreme wide, wide, full-length, medium-long, medium, medium close-up, close-up, and extreme close-up framing.",
     "platform_framing": "Platform-safe framing concept: {description}. It should retrieve vertical social crops, UI-safe blank space, thumbnail-safe face placement, feed-safe composition, and no readable text or hashtags.",
@@ -844,6 +946,12 @@ DEFAULT_SLOT_APPLICABILITY: JsonDict = {
         },
         "occasion_context": {
             "deny_domains": ["product", "jewelry", "food", "wildlife", "adult"],
+        },
+        "narrative_core": {
+            "deny_domains": ["food", "wildlife", "adult"],
+        },
+        "concept_tension": {
+            "deny_domains": ["food", "wildlife", "adult"],
         },
     },
 }
@@ -9472,6 +9580,22 @@ def build_fields(picked: Dict[str, Entry], lang: str, data: Optional[JsonDict] =
             ensure_period("Scene context: " + ", ".join(scene_context_parts)) if scene_context_parts else ""
         )
 
+    narrative_context_slots = (
+        "narrative_core",
+        "concept_tension",
+    )
+    narrative_context_parts = [slot_phrase(slot) for slot in narrative_context_slots if slot_phrase(slot)]
+    if lang == "ko":
+        narrative_context_sentence = (
+            ensure_period("서사와 대비는 " + ", ".join(narrative_context_parts)) if narrative_context_parts else ""
+        )
+    else:
+        narrative_context_sentence = (
+            ensure_period("Narrative and visual tension: " + ", ".join(narrative_context_parts))
+            if narrative_context_parts
+            else ""
+        )
+
     lighting_slots = ("lighting", "light_direction", "light_type", "light_intensity", "light_shape")
     camera_slots = (
         "camera_type",
@@ -9534,6 +9658,8 @@ def build_fields(picked: Dict[str, Entry], lang: str, data: Optional[JsonDict] =
         style_sentence = ensure_period("전체 분위기는 " + ", ".join(style_parts)) if style_parts else ""
 
         detail_parts = [values[s] for s in detail_slots if values.get(s)]
+        if narrative_context_sentence:
+            detail_parts.insert(0, narrative_context_sentence)
         if scene_context_sentence:
             detail_parts.insert(0, scene_context_sentence)
         detail_sentence = ensure_period("디테일은 " + ", ".join(detail_parts)) if detail_parts else ""
@@ -9549,6 +9675,8 @@ def build_fields(picked: Dict[str, Entry], lang: str, data: Optional[JsonDict] =
         style_sentence = ensure_period("Overall mood: " + ", ".join(style_parts)) if style_parts else ""
 
         detail_parts = [values[s] for s in detail_slots if values.get(s)]
+        if narrative_context_sentence:
+            detail_parts.insert(0, narrative_context_sentence)
         if scene_context_sentence:
             detail_parts.insert(0, scene_context_sentence)
         detail_sentence = ensure_period("Finishing details: " + ", ".join(detail_parts)) if detail_parts else ""
@@ -9557,6 +9685,7 @@ def build_fields(picked: Dict[str, Entry], lang: str, data: Optional[JsonDict] =
         **values,
         "location_phrase": location_phrase,
         "scene_context_sentence": scene_context_sentence,
+        "narrative_context_sentence": narrative_context_sentence,
         "subject_with_mods": subject_with_mods,
         "subject_phrase": subject_phrase,
         "object_phrase": object_phrase,
@@ -9912,6 +10041,7 @@ def build_prompt_sections(
     sections["scene"] = [
         fields.get("location_phrase") or values.get("location", ""),
         fields.get("scene_context_sentence", ""),
+        fields.get("narrative_context_sentence", ""),
         values.get("time_of_day", ""),
         values.get("weather", ""),
         values.get("surface_material", ""),

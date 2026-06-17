@@ -1,6 +1,6 @@
 {
-  "version": "1.21",
-  "description": "Photographic prompt dictionary with expanded concept-role, folklore, personality, season, era, digital-entity, and environmental-transformation coverage for semantic and recipe-driven prompt generation. Version 1.13 expands robot semantics with disembodied AI, screen-face terminals, sensory apparatus, fabrication origin, lifecycle wear/repair, drones, mecha, prosthetics, domestic systems, surveillance networks and AI-temple metaphors. Version 1.14 adds opt-in visible multi-subject relationship framing, visible in-frame partner roles, and a small-group documentary preset while preserving single-subject defaults. Version 1.15 adds perspective-rich beastkin evidence, procedural-duty, daily-errand, stagecraft, anti-diagram, POV-task, opt-in species, and expanded role/mixin coverage. Version 1.16 adds skin-finish, eye-detail, body-marking, summer stream, orchard shoot-through, cozy sofa, and CCD flash pet-closeup portrait coverage. Version 1.17 broadens realistic/candid portrait variation with expanded skin, eye, body-marking, lens-artifact, gaze-engagement, hand-pose, skin-state, ambient-particle, grain, garment-detail, companion-animal, color-grading, and natural-light lifestyle preset coverage. Version 1.18 adds 2026 fashion dailywear coverage with footwear and silhouette-proportion slots, clean social/dailywear presets, generalized trend tags, and no-readable-text fashion-commerce safeguards. Version 1.19 expands background, environment, and situation coverage with space-condition, crowd-density, everyday-situation, and occasion-context slots plus clean routine, commute, local-shop, event, digital-life, sustainable-local, and surreal-environment presets while keeping social/text cues non-readable. Version 1.20 expands flatlay, tabletop staging, prop styling, tactile surfaces, aesthetic still-life bundles, and product-riser scenes while keeping paper ephemera, packaging, screens, labels, tickets, and social-commerce cues blank, fictional, unreadable, or unbranded. Version 1.21 adds clean pose, shot-scale, and platform-safe framing controls for social, editorial, portrait, mirror-selfie, and composition-heavy photo prompts.",
+  "version": "1.22",
+  "description": "Photographic prompt dictionary with expanded concept-role, folklore, personality, season, era, digital-entity, and environmental-transformation coverage for semantic and recipe-driven prompt generation. Version 1.13 expands robot semantics with disembodied AI, screen-face terminals, sensory apparatus, fabrication origin, lifecycle wear/repair, drones, mecha, prosthetics, domestic systems, surveillance networks and AI-temple metaphors. Version 1.14 adds opt-in visible multi-subject relationship framing, visible in-frame partner roles, and a small-group documentary preset while preserving single-subject defaults. Version 1.15 adds perspective-rich beastkin evidence, procedural-duty, daily-errand, stagecraft, anti-diagram, POV-task, opt-in species, and expanded role/mixin coverage. Version 1.16 adds skin-finish, eye-detail, body-marking, summer stream, orchard shoot-through, cozy sofa, and CCD flash pet-closeup portrait coverage. Version 1.17 broadens realistic/candid portrait variation with expanded skin, eye, body-marking, lens-artifact, gaze-engagement, hand-pose, skin-state, ambient-particle, grain, garment-detail, companion-animal, color-grading, and natural-light lifestyle preset coverage. Version 1.18 adds 2026 fashion dailywear coverage with footwear and silhouette-proportion slots, clean social/dailywear presets, generalized trend tags, and no-readable-text fashion-commerce safeguards. Version 1.19 expands background, environment, and situation coverage with space-condition, crowd-density, everyday-situation, and occasion-context slots plus clean routine, commute, local-shop, event, digital-life, sustainable-local, and surreal-environment presets while keeping social/text cues non-readable. Version 1.20 expands flatlay, tabletop staging, prop styling, tactile surfaces, aesthetic still-life bundles, and product-riser scenes while keeping paper ephemera, packaging, screens, labels, tickets, and social-commerce cues blank, fictional, unreadable, or unbranded. Version 1.21 adds clean pose, shot-scale, and platform-safe framing controls for social, editorial, portrait, mirror-selfie, and composition-heavy photo prompts. Version 1.22 adds narrative-core and concept-tension slots for poetic story anchors, modern social themes, analog/AI contrast, romantic decay, ordinary magic, and clean concept-rich editorial scenes while keeping persona and photo-approach ideas mapped to existing subject, medium, genre, capture-context, and composition controls with no readable text.",
   "facet_vocab": {
     "subject_kind": [
       "human",
@@ -1130,6 +1130,12 @@
       "ko": "소셜 세로 프레이밍 계열",
       "en": "social vertical framing family",
       "embedding_text": "vertical social feed, reels-safe, short-form, thumbnail-safe, UI-safe negative space and no readable text framing for creator photos"
+    },
+    {
+      "id": "narrative_concept_scene_family",
+      "ko": "서사와 대립쌍 컨셉 장면 계열",
+      "en": "narrative and concept-tension scene family",
+      "embedding_text": "poetic narrative-core scenes, concept tension pairs, analog memory, urban solitude, privacy anxiety, ordinary magic, romantic decay and clean editorial documentary photography"
     }
   ],
   "recipes": [
@@ -101596,6 +101602,2250 @@
           ]
         }
       }
+    },
+    {
+      "id": "quiet_rebellion_editorial",
+      "ko": "조용한 반항 에디토리얼",
+      "en": "quiet rebellion editorial portrait",
+      "weight": 1.25,
+      "template_style": "natural",
+      "family": "narrative_concept_scene_family",
+      "embedding_text": "quiet rebellion editorial portrait, subtle resistance, adult subject, urban public-private tension, no readable signs or captions",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "narrative_core",
+        "lighting",
+        "camera_type",
+        "camera_direction",
+        "composition",
+        "lens",
+        "focus",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "aesthetic_trend",
+          "probability": 0.58
+        },
+        {
+          "slot": "concept_tension",
+          "probability": 0.42
+        },
+        {
+          "slot": "prop",
+          "probability": 0.62
+        },
+        {
+          "slot": "color",
+          "probability": 0.58
+        },
+        {
+          "slot": "texture",
+          "probability": 0.55
+        },
+        {
+          "slot": "shot_scale",
+          "probability": 0.45
+        },
+        {
+          "slot": "platform_framing",
+          "probability": 0.22
+        },
+        {
+          "slot": "capture_context",
+          "probability": 0.42
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "fashion_editorial",
+            "magazine_feature",
+            "street_snapshot",
+            "urban_candid_photo"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "fashion",
+            "street",
+            "cinematic"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "fashion_model",
+            "influencer_creator",
+            "adult_woman_lifestyle_subject",
+            "urban_late_errand_subject",
+            "office_worker"
+          ]
+        },
+        "action": {
+          "ids": [
+            "looking_camera",
+            "standing_silence",
+            "late_night_errand_walk",
+            "turning_back",
+            "walking_crosswalk"
+          ]
+        },
+        "location": {
+          "ids": [
+            "subway_platform",
+            "rainy_neon_alley",
+            "glass_office",
+            "old_hotel_lobby_decay",
+            "brutalist_plaza"
+          ]
+        },
+        "narrative_core": {
+          "ids": [
+            "quiet_rebellion_core",
+            "urban_solitude_core",
+            "public_private_self_core"
+          ]
+        },
+        "concept_tension": {
+          "ids": [
+            "public_vs_private_tension",
+            "visibility_vs_secrecy_tension",
+            "polished_vs_imperfect_tension"
+          ]
+        },
+        "aesthetic_trend": {
+          "ids": [
+            "normcore_everyday_realism",
+            "glitchy_glam_aesthetic",
+            "quiet_luxury_aesthetic"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "hard_flash",
+            "diary_direct_flash",
+            "sodium_streetlight",
+            "neon",
+            "overcast"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "full_frame_mirrorless",
+            "compact_digital_camera",
+            "smartphone_camera"
+          ]
+        },
+        "camera_direction": {
+          "ids": [
+            "eye_level_front",
+            "eye_level_three_quarter",
+            "low_ground_angle"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "handheld_candid",
+            "frame_within_frame",
+            "doorway_threshold_framing",
+            "window_reflection_layering",
+            "negative_space"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "85mm"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "eye_focus",
+            "face_detection_focus",
+            "shallow_depth"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "quiet_defiance",
+            "casual_authentic",
+            "tense",
+            "privacy_anxiety",
+            "micro_drama_candid"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "editorial_quality",
+            "not_overdone",
+            "candid_imperfect"
+          ]
+        },
+        "capture_context": {
+          "ids": [
+            "street_observation_documentary_context",
+            "privacy_screen_glow_context",
+            "single_photo_not_diagram_context"
+          ]
+        }
+      }
+    },
+    {
+      "id": "analog_diary_memory_portrait",
+      "ko": "아날로그 다이어리 메모리 포트레이트",
+      "en": "analog diary memory portrait",
+      "weight": 1.18,
+      "template_style": "natural",
+      "family": "narrative_concept_scene_family",
+      "embedding_text": "analog diary memory portrait with blank unreadable pages, found photographs, archive room, no readable handwriting",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "narrative_core",
+        "prop",
+        "lighting",
+        "composition",
+        "lens",
+        "focus",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "aesthetic_trend",
+          "probability": 0.7
+        },
+        {
+          "slot": "concept_tension",
+          "probability": 0.35
+        },
+        {
+          "slot": "texture",
+          "probability": 0.75
+        },
+        {
+          "slot": "color",
+          "probability": 0.55
+        },
+        {
+          "slot": "capture_context",
+          "probability": 0.65
+        },
+        {
+          "slot": "surface_material",
+          "probability": 0.35
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "documentary_photo",
+            "lifestyle_photo",
+            "vhs_video_frame_photo",
+            "street_snapshot"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "documentary",
+            "lifestyle",
+            "fine_art"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "analog_diary_keeper",
+            "adult_woman_lifestyle_subject",
+            "influencer_creator",
+            "office_worker"
+          ]
+        },
+        "action": {
+          "ids": [
+            "writing_unreadable_diary",
+            "arranging_archive_photos_no_text",
+            "looking_window",
+            "standing_silence"
+          ]
+        },
+        "location": {
+          "ids": [
+            "bedroom_shrine",
+            "attic_archive_room",
+            "lived_in_studio_room",
+            "cozy_apartment"
+          ]
+        },
+        "narrative_core": {
+          "ids": [
+            "analog_diary_memory_core",
+            "private_ritual_core",
+            "fragile_intimacy_core"
+          ]
+        },
+        "concept_tension": {
+          "ids": [
+            "analog_vs_ai_tension",
+            "nostalgic_vs_futuristic_tension",
+            "public_vs_private_tension"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "unreadable_diary_prop",
+            "old_postcard_unreadable_prop",
+            "polaroid_stack_unreadable_prop",
+            "fountain_pen_prop",
+            "vintage_book_unreadable_pages_prop",
+            "film_roll_contact_sheet_prop"
+          ]
+        },
+        "aesthetic_trend": {
+          "ids": [
+            "analog_diary_aesthetic",
+            "poetcore_aesthetic",
+            "dark_academia_still_life"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "diary_direct_flash",
+            "red_darkroom_light",
+            "warm_kitchen_window_light"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "contact_sheet_grid",
+            "scrapbook_grid_layout",
+            "medium_close",
+            "frame_within_frame",
+            "top_down"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "50mm",
+            "35mm",
+            "85mm"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "shallow_depth",
+            "eye_focus",
+            "selective_foreground_focus"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "nostalgic",
+            "fragile_intimacy_mood",
+            "domestic_melancholy",
+            "ordinary_magic_mood"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "candid_imperfect",
+            "not_overdone"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "fine_grain",
+            "archive_dust",
+            "dusty_sunbeam_texture",
+            "photocopy_halftone_grain_texture"
+          ]
+        },
+        "color": {
+          "ids": [
+            "faded_film_palette",
+            "milky_taupe_palette",
+            "muted",
+            "warm_earth"
+          ]
+        },
+        "capture_context": {
+          "ids": [
+            "analog_diary_snapshot_context",
+            "contact_sheet_archive_context",
+            "no_text_paper_ephemera_context"
+          ]
+        }
+      }
+    },
+    {
+      "id": "urban_solitude_late_errand",
+      "ko": "도시 고독의 늦은 밤 심부름",
+      "en": "urban solitude late-night errand",
+      "weight": 1.15,
+      "template_style": "natural",
+      "family": "narrative_concept_scene_family",
+      "embedding_text": "urban solitude late-night errand candid, convenience store poetry, public solitude, wet asphalt, no readable signage",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "situation_context",
+        "narrative_core",
+        "lighting",
+        "composition",
+        "lens",
+        "focus",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "concept_tension",
+          "probability": 0.45
+        },
+        {
+          "slot": "weather",
+          "probability": 0.5
+        },
+        {
+          "slot": "prop",
+          "probability": 0.55
+        },
+        {
+          "slot": "texture",
+          "probability": 0.6
+        },
+        {
+          "slot": "color",
+          "probability": 0.45
+        },
+        {
+          "slot": "capture_context",
+          "probability": 0.35
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "street_snapshot",
+            "documentary_photo",
+            "urban_candid_photo",
+            "smartphone_snapshot"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "street",
+            "documentary",
+            "portrait",
+            "cinematic"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "urban_late_errand_subject",
+            "elderly_commuter",
+            "office_worker",
+            "traveler_backpack"
+          ]
+        },
+        "action": {
+          "ids": [
+            "late_night_errand_walk",
+            "walking_rain",
+            "holding_coffee_phone",
+            "checking_phone",
+            "standing_silence"
+          ]
+        },
+        "location": {
+          "ids": [
+            "convenience_store_night",
+            "after_rain_convenience_store_front",
+            "rainy_bus_stop_shelter",
+            "subway_platform",
+            "rainy_neon_alley"
+          ]
+        },
+        "situation_context": {
+          "ids": [
+            "late_night_errand",
+            "convenience_store_run",
+            "side_quest_errand",
+            "rain_walk"
+          ]
+        },
+        "narrative_core": {
+          "ids": [
+            "urban_solitude_core",
+            "quiet_rebellion_core",
+            "digital_privacy_core"
+          ]
+        },
+        "concept_tension": {
+          "ids": [
+            "public_vs_private_tension",
+            "warmth_vs_distance_tension",
+            "visibility_vs_secrecy_tension"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "sodium_streetlight",
+            "neon",
+            "hard_flash",
+            "headlights"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "handheld_candid",
+            "isolated_subject",
+            "negative_space",
+            "window_reflection_layering"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "phone_1x_main"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "zone_focus_street",
+            "phone_auto_focus",
+            "slight_missed_focus"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "melancholic",
+            "local_night_candid",
+            "lonely_euphoria",
+            "privacy_anxiety"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "candid_imperfect",
+            "phone_realism",
+            "not_overdone"
+          ]
+        },
+        "weather": {
+          "ids": [
+            "after_rain_wet_pavement",
+            "light_drizzle",
+            "post_rain_mist"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "grocery_tote_prop",
+            "blank_bus_ticket_prop",
+            "transparent_dome_umbrella",
+            "smartphone_in_hand"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "wet_asphalt_reflection_texture",
+            "wet_surface",
+            "jpeg_social"
+          ]
+        },
+        "capture_context": {
+          "ids": [
+            "street_observation_documentary_context",
+            "accidental_phone_snapshot"
+          ]
+        }
+      }
+    },
+    {
+      "id": "poetcore_laundromat_portrait",
+      "ko": "포엣코어 세탁소 포트레이트",
+      "en": "poetcore laundromat portrait",
+      "weight": 1.08,
+      "template_style": "natural",
+      "family": "narrative_concept_scene_family",
+      "embedding_text": "poetcore laundromat portrait with fountain pen, unreadable diary, fluorescent light, analog melancholy, no readable text",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "narrative_core",
+        "aesthetic_trend",
+        "prop",
+        "lighting",
+        "composition",
+        "lens",
+        "focus",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "concept_tension",
+          "probability": 0.35
+        },
+        {
+          "slot": "texture",
+          "probability": 0.55
+        },
+        {
+          "slot": "color",
+          "probability": 0.42
+        },
+        {
+          "slot": "wardrobe_style",
+          "probability": 0.28
+        },
+        {
+          "slot": "capture_context",
+          "probability": 0.35
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "documentary_photo",
+            "lifestyle_photo",
+            "street_snapshot",
+            "vhs_video_frame_photo"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "documentary",
+            "lifestyle"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "analog_diary_keeper",
+            "student_creator",
+            "young_barista",
+            "adult_woman_lifestyle_subject"
+          ]
+        },
+        "action": {
+          "ids": [
+            "writing_unreadable_diary",
+            "waiting_train",
+            "looking_window",
+            "standing_silence"
+          ]
+        },
+        "location": {
+          "ids": [
+            "laundromat_night",
+            "lived_in_studio_room"
+          ]
+        },
+        "narrative_core": {
+          "ids": [
+            "analog_diary_memory_core",
+            "urban_solitude_core",
+            "fragile_intimacy_core"
+          ]
+        },
+        "aesthetic_trend": {
+          "ids": [
+            "poetcore_aesthetic",
+            "analog_diary_aesthetic",
+            "dark_academia_still_life"
+          ]
+        },
+        "concept_tension": {
+          "ids": [
+            "analog_vs_ai_tension",
+            "public_vs_private_tension"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "fountain_pen_prop",
+            "unreadable_diary_prop",
+            "old_postcard_unreadable_prop",
+            "overflowing_laundry_basket_prop"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "laundromat_fluorescent_flat",
+            "fluorescent",
+            "diary_direct_flash",
+            "soft_window"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "medium_close",
+            "frame_within_frame",
+            "handheld_candid",
+            "window_reflection_layering"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "50mm",
+            "35mm"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "eye_focus",
+            "shallow_depth",
+            "phone_auto_focus"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "domestic_melancholy",
+            "nostalgic",
+            "fragile_intimacy_mood",
+            "melancholic"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "candid_imperfect",
+            "not_overdone"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "fine_grain",
+            "dusty_sunbeam_texture",
+            "photocopy_halftone_grain_texture"
+          ]
+        },
+        "color": {
+          "ids": [
+            "faded_film_palette",
+            "cool_blue",
+            "milky_taupe_palette"
+          ]
+        }
+      }
+    },
+    {
+      "id": "digital_privacy_phone_glow_candid",
+      "ko": "디지털 프라이버시 화면광 캔디드",
+      "en": "digital privacy phone-glow candid",
+      "weight": 1.0,
+      "template_style": "natural",
+      "family": "narrative_concept_scene_family",
+      "embedding_text": "digital privacy phone-glow candid with blurred abstract screens, public persona private self, no readable UI or captions",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "narrative_core",
+        "concept_tension",
+        "capture_context",
+        "lighting",
+        "camera_type",
+        "composition",
+        "lens",
+        "focus",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.62
+        },
+        {
+          "slot": "color",
+          "probability": 0.5
+        },
+        {
+          "slot": "texture",
+          "probability": 0.45
+        },
+        {
+          "slot": "platform_framing",
+          "probability": 0.24
+        },
+        {
+          "slot": "shot_scale",
+          "probability": 0.35
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "smartphone_snapshot",
+            "social_media_post",
+            "urban_candid_photo",
+            "documentary_photo"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "creator_lifestyle",
+            "shortform_social",
+            "documentary"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "influencer_creator",
+            "office_worker",
+            "adult_woman_lifestyle_subject",
+            "ai_companion_pair_subject"
+          ]
+        },
+        "action": {
+          "ids": [
+            "looking_at_blurred_screen_glow",
+            "checking_phone",
+            "holding_coffee_phone",
+            "standing_silence"
+          ]
+        },
+        "location": {
+          "ids": [
+            "glass_office",
+            "creator_room",
+            "local_cafe_closing_window",
+            "subway_platform"
+          ]
+        },
+        "narrative_core": {
+          "ids": [
+            "digital_privacy_core",
+            "public_private_self_core",
+            "ai_companion_core"
+          ]
+        },
+        "concept_tension": {
+          "ids": [
+            "visibility_vs_secrecy_tension",
+            "public_vs_private_tension",
+            "analog_vs_ai_tension"
+          ]
+        },
+        "capture_context": {
+          "ids": [
+            "privacy_screen_glow_context",
+            "blurred_screen_over_shoulder_context",
+            "single_photo_not_diagram_context"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "monitor_glow",
+            "projector_pool_light",
+            "soft_window",
+            "neon"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "smartphone_camera",
+            "compact_digital_camera",
+            "full_frame_mirrorless"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "surveillance_high_corner_angle",
+            "window_reflection_layering",
+            "medium_close",
+            "large_negative_space_top_area"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "phone_1x_main",
+            "35mm",
+            "50mm"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "phone_auto_focus",
+            "face_detection_focus",
+            "eye_focus"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "privacy_anxiety",
+            "quiet_defiance",
+            "casual_authentic",
+            "tense"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "phone_realism",
+            "photoreal",
+            "not_overdone",
+            "authentic_creator"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "smartphone_in_hand",
+            "blurred_laptop_screen_glow_prop",
+            "crt_tv_abstract_glow_prop"
+          ]
+        },
+        "color": {
+          "ids": [
+            "holographic_neon_palette",
+            "cool_blue",
+            "muted"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "low_res_pixel_glitch_texture",
+            "screen_grab_softness",
+            "jpeg_social"
+          ]
+        }
+      }
+    },
+    {
+      "id": "near_future_nostalgia_room",
+      "ko": "근미래 향수 룸 포트레이트",
+      "en": "near-future nostalgia room portrait",
+      "weight": 0.98,
+      "template_style": "natural",
+      "family": "narrative_concept_scene_family",
+      "embedding_text": "near-future nostalgia room portrait, analog memory and soft sci-fi glow, non-readable screens",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "narrative_core",
+        "concept_tension",
+        "world",
+        "lighting",
+        "composition",
+        "lens",
+        "focus",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.55
+        },
+        {
+          "slot": "surface_material",
+          "probability": 0.45
+        },
+        {
+          "slot": "texture",
+          "probability": 0.5
+        },
+        {
+          "slot": "color",
+          "probability": 0.55
+        },
+        {
+          "slot": "capture_context",
+          "probability": 0.4
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "fashion_editorial",
+            "synthetic_being_portrait_photo",
+            "documentary_photo"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "cinematic",
+            "fantasy",
+            "fine_art"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "near_future_drifter",
+            "ai_companion_pair_subject",
+            "office_worker",
+            "adult_woman_lifestyle_subject"
+          ]
+        },
+        "action": {
+          "ids": [
+            "looking_at_blurred_screen_glow",
+            "standing_between_nature_machine",
+            "looking_window",
+            "standing_silence"
+          ]
+        },
+        "location": {
+          "ids": [
+            "creator_room",
+            "glass_office",
+            "mirror_portal_room",
+            "indoor_forest_room"
+          ]
+        },
+        "narrative_core": {
+          "ids": [
+            "near_future_nostalgia_core",
+            "ai_companion_core",
+            "ordinary_magic_core"
+          ]
+        },
+        "concept_tension": {
+          "ids": [
+            "nostalgic_vs_futuristic_tension",
+            "analog_vs_ai_tension",
+            "organic_vs_synthetic_tension"
+          ]
+        },
+        "world": {
+          "ids": [
+            "near_future_nostalgia_world",
+            "analog_ai_parallel_present_world",
+            "synthetic_eden_world",
+            "realistic_modern"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "projector_pool_light",
+            "bioluminescent_soft_glow",
+            "monitor_glow"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "window_reflection_layering",
+            "centered_symmetry",
+            "diptych_composition"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "50mm",
+            "35mm",
+            "85mm"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "eye_focus",
+            "shallow_depth",
+            "selective_foreground_focus"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "privacy_anxiety",
+            "ordinary_magic_mood",
+            "calm"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "editorial_quality",
+            "not_overdone"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "crt_tv_abstract_glow_prop",
+            "field_notebook_unreadable_prop",
+            "polaroid_stack_unreadable_prop"
+          ]
+        },
+        "surface_material": {
+          "ids": [
+            "frosted_glass_surface",
+            "chrome_mirror_surface",
+            "mossy_concrete_surface"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "low_res_pixel_glitch_texture",
+            "frosted_glass_haze_texture",
+            "fine_grain"
+          ]
+        },
+        "color": {
+          "ids": [
+            "glacier_blue_palette",
+            "faded_film_palette",
+            "holographic_neon_palette"
+          ]
+        },
+        "capture_context": {
+          "ids": [
+            "privacy_screen_glow_context",
+            "analog_diary_snapshot_context"
+          ]
+        }
+      }
+    },
+    {
+      "id": "romantic_decay_hotel_editorial",
+      "ko": "로맨틱 데케이 호텔 에디토리얼",
+      "en": "romantic decay hotel editorial",
+      "weight": 1.02,
+      "template_style": "natural",
+      "family": "narrative_concept_scene_family",
+      "embedding_text": "romantic decay hotel editorial, faded glamour, broken luxury, old hotel lobby, non-graphic stylized atmosphere",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "narrative_core",
+        "concept_tension",
+        "aesthetic_trend",
+        "lighting",
+        "composition",
+        "lens",
+        "focus",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "surface_material",
+          "probability": 0.62
+        },
+        {
+          "slot": "texture",
+          "probability": 0.62
+        },
+        {
+          "slot": "color",
+          "probability": 0.55
+        },
+        {
+          "slot": "prop",
+          "probability": 0.4
+        },
+        {
+          "slot": "wardrobe_style",
+          "probability": 0.25
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "fashion_editorial",
+            "magazine_feature",
+            "fine_art_print"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "fashion",
+            "portrait",
+            "cinematic",
+            "fine_art"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "fashion_model",
+            "adult_woman_lifestyle_subject",
+            "young_actor",
+            "influencer_creator"
+          ]
+        },
+        "action": {
+          "ids": [
+            "posing_editorial",
+            "standing_silence",
+            "looking_camera",
+            "turning_back"
+          ]
+        },
+        "location": {
+          "ids": [
+            "old_hotel_lobby_decay",
+            "luxury_hotel_lobby",
+            "luxury_hotel_corridor",
+            "retro_diner_booth"
+          ]
+        },
+        "narrative_core": {
+          "ids": [
+            "romantic_decay_core",
+            "broken_luxury_core",
+            "fragile_intimacy_core"
+          ]
+        },
+        "concept_tension": {
+          "ids": [
+            "luxury_vs_decay_tension",
+            "polished_vs_imperfect_tension",
+            "warmth_vs_distance_tension"
+          ]
+        },
+        "aesthetic_trend": {
+          "ids": [
+            "vamp_romantic",
+            "neo_deco_editorial_aesthetic",
+            "laced_up_delicate_aesthetic"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "candlelight",
+            "chiaroscuro",
+            "sodium_streetlight",
+            "hard_flash"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "centered_symmetry",
+            "frame_within_frame",
+            "doorway_threshold_framing",
+            "negative_space"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "85mm",
+            "50mm",
+            "medium_format"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "eye_focus",
+            "shallow_depth",
+            "soft_focus_glow"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "romantic_decay_mood",
+            "vulnerable_glamour",
+            "elegant",
+            "melancholic"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "editorial_quality",
+            "not_overdone"
+          ]
+        },
+        "surface_material": {
+          "ids": [
+            "red_velvet_banquette_surface",
+            "cracked_marble_surface",
+            "tarnished_brass_surface"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "peeling_paint_decay_texture",
+            "soft_velvet_pile_texture",
+            "dusty_sunbeam_texture"
+          ]
+        },
+        "color": {
+          "ids": [
+            "black_cherry_palette",
+            "oxblood_wine_palette",
+            "luxury_black_gold",
+            "faded_film_palette"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "flower_bouquet",
+            "wax_seal_envelope_unreadable_prop",
+            "blank_diner_receipt_prop"
+          ]
+        }
+      }
+    },
+    {
+      "id": "broken_luxury_still_life",
+      "ko": "브로큰 럭셔리 스틸라이프",
+      "en": "broken luxury still life",
+      "weight": 0.92,
+      "template_style": "natural",
+      "family": "narrative_concept_scene_family",
+      "embedding_text": "broken luxury still life with cracked marble, velvet, brass, blank paper ephemera, no brand or readable text",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "narrative_core",
+        "concept_tension",
+        "surface_material",
+        "lighting",
+        "composition",
+        "lens",
+        "focus",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.75
+        },
+        {
+          "slot": "texture",
+          "probability": 0.7
+        },
+        {
+          "slot": "color",
+          "probability": 0.58
+        },
+        {
+          "slot": "aesthetic_trend",
+          "probability": 0.48
+        },
+        {
+          "slot": "capture_context",
+          "probability": 0.32
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "still_life_photo",
+            "magazine_feature",
+            "commercial_photo",
+            "fine_art_print"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "still_life",
+            "product",
+            "fine_art"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "neo_deco_decor_object_arrangement",
+            "perfume_bottle",
+            "pearl_jewelry_set",
+            "ceramic_bowl"
+          ]
+        },
+        "action": {
+          "ids": [
+            "neatly_arranged",
+            "styled_flatlay_arrangement",
+            "displayed_on_table"
+          ]
+        },
+        "location": {
+          "ids": [
+            "old_hotel_lobby_decay",
+            "neo_deco_console_tabletop",
+            "dark_studio",
+            "marble_table"
+          ]
+        },
+        "narrative_core": {
+          "ids": [
+            "broken_luxury_core",
+            "romantic_decay_core"
+          ]
+        },
+        "concept_tension": {
+          "ids": [
+            "luxury_vs_decay_tension",
+            "polished_vs_imperfect_tension"
+          ]
+        },
+        "surface_material": {
+          "ids": [
+            "cracked_marble_surface",
+            "red_velvet_banquette_surface",
+            "tarnished_brass_surface",
+            "chrome_mirror_surface"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "softbox",
+            "candlelight",
+            "chiaroscuro",
+            "projector_pool_light"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "centered_symmetry",
+            "negative_space",
+            "hero_object_centered_flatlay",
+            "asymmetrical_flatlay_layering"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "macro_100mm",
+            "85mm",
+            "50mm"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "macro_focus_stack",
+            "selective_foreground_focus",
+            "shallow_depth"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "romantic_decay_mood",
+            "luxury",
+            "elegant",
+            "vulnerable_glamour"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "commercial_crisp",
+            "editorial_quality",
+            "not_overdone"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "wax_seal_envelope_unreadable_prop",
+            "blank_diner_receipt_prop",
+            "pearl_strand_flatlay_prop",
+            "brass_tray_prop"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "peeling_paint_decay_texture",
+            "soft_velvet_pile_texture",
+            "dusty_sunbeam_texture"
+          ]
+        },
+        "color": {
+          "ids": [
+            "black_cherry_palette",
+            "luxury_black_gold",
+            "milky_taupe_palette"
+          ]
+        },
+        "aesthetic_trend": {
+          "ids": [
+            "neo_deco_editorial_aesthetic",
+            "neo_deco_interior_aesthetic"
+          ]
+        },
+        "capture_context": {
+          "ids": [
+            "editorial_still_life_context",
+            "no_text_paper_ephemera_context"
+          ]
+        }
+      }
+    },
+    {
+      "id": "organic_synthetic_contrast_portrait",
+      "ko": "유기물과 합성물 대비 포트레이트",
+      "en": "organic synthetic contrast portrait",
+      "weight": 0.96,
+      "template_style": "natural",
+      "family": "narrative_concept_scene_family",
+      "embedding_text": "organic versus synthetic portrait with plants, chrome, frosted glass, human touch and automation contrast",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "narrative_core",
+        "concept_tension",
+        "surface_material",
+        "lighting",
+        "composition",
+        "lens",
+        "focus",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "world",
+          "probability": 0.62
+        },
+        {
+          "slot": "aesthetic_trend",
+          "probability": 0.45
+        },
+        {
+          "slot": "texture",
+          "probability": 0.6
+        },
+        {
+          "slot": "color",
+          "probability": 0.5
+        },
+        {
+          "slot": "prop",
+          "probability": 0.35
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "fashion_editorial",
+            "fine_art_print",
+            "documentary_photo"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "portrait",
+            "fine_art",
+            "fashion",
+            "cinematic"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "near_future_drifter",
+            "local_artisan_neighbor",
+            "ai_companion_pair_subject",
+            "fashion_model"
+          ]
+        },
+        "action": {
+          "ids": [
+            "standing_between_nature_machine",
+            "looking_window",
+            "posing_editorial",
+            "standing_silence"
+          ]
+        },
+        "location": {
+          "ids": [
+            "indoor_forest_room",
+            "rooftop_greenhouse",
+            "botanical_greenhouse",
+            "glass_office",
+            "secret_garden_path"
+          ]
+        },
+        "narrative_core": {
+          "ids": [
+            "ordinary_magic_core",
+            "near_future_nostalgia_core",
+            "secret_garden_core"
+          ]
+        },
+        "concept_tension": {
+          "ids": [
+            "organic_vs_synthetic_tension",
+            "human_touch_vs_automation_tension",
+            "urban_vs_wilderness_tension"
+          ]
+        },
+        "surface_material": {
+          "ids": [
+            "mossy_concrete_surface",
+            "chrome_mirror_surface",
+            "frosted_glass_surface",
+            "brushed_steel_surface"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "bioluminescent_soft_glow",
+            "soft_window",
+            "prism_flare_light",
+            "overcast"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "centered_symmetry",
+            "window_reflection_layering",
+            "layered_foreground_midground_background",
+            "medium_close"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "50mm",
+            "85mm",
+            "35mm"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "eye_focus",
+            "shallow_depth",
+            "deep_focus"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "ordinary_magic_mood",
+            "calm",
+            "uncanny",
+            "human_made_authenticity"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "editorial_quality",
+            "not_overdone"
+          ]
+        },
+        "world": {
+          "ids": [
+            "synthetic_eden_world",
+            "near_future_nostalgia_world",
+            "realistic_modern"
+          ]
+        },
+        "aesthetic_trend": {
+          "ids": [
+            "wilderkind_forest_aesthetic",
+            "frutiger_aero_aesthetic",
+            "cybercore_editorial_aesthetic"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "frosted_glass_haze_texture",
+            "low_res_pixel_glitch_texture",
+            "wet_surface"
+          ]
+        },
+        "color": {
+          "ids": [
+            "glacier_blue_palette",
+            "sage_green_palette",
+            "holographic_neon_palette"
+          ]
+        }
+      }
+    },
+    {
+      "id": "surreal_silliness_everyday_scene",
+      "ko": "초현실적 장난스러움 일상 장면",
+      "en": "surreal silliness everyday scene",
+      "weight": 0.92,
+      "template_style": "natural",
+      "family": "narrative_concept_scene_family",
+      "embedding_text": "surreal silliness everyday photoreal scene, ordinary magic, playful uncanny objects, no readable text",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "narrative_core",
+        "concept_tension",
+        "aesthetic_trend",
+        "lighting",
+        "composition",
+        "lens",
+        "focus",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "surreal_concept",
+          "probability": 0.62
+        },
+        {
+          "slot": "surreal_anchor",
+          "probability": 0.48
+        },
+        {
+          "slot": "prop",
+          "probability": 0.45
+        },
+        {
+          "slot": "texture",
+          "probability": 0.42
+        },
+        {
+          "slot": "color",
+          "probability": 0.5
+        },
+        {
+          "slot": "world",
+          "probability": 0.38
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "fine_art_print",
+            "lifestyle_photo",
+            "optical_experiment_photo"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "fine_art",
+            "fantasy",
+            "portrait",
+            "lifestyle"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "adult_woman_lifestyle_subject",
+            "influencer_creator",
+            "analog_diary_keeper",
+            "young_actor"
+          ]
+        },
+        "action": {
+          "ids": [
+            "looking_camera",
+            "standing_silence",
+            "sharing_community_table",
+            "arranging_archive_photos_no_text"
+          ]
+        },
+        "location": {
+          "ids": [
+            "flower_flooded_room",
+            "mirror_portal_room",
+            "indoor_forest_room",
+            "bedroom_shrine",
+            "cozy_apartment"
+          ]
+        },
+        "narrative_core": {
+          "ids": [
+            "ordinary_magic_core",
+            "tender_chaos_core",
+            "private_ritual_core"
+          ]
+        },
+        "concept_tension": {
+          "ids": [
+            "playful_vs_eerie_tension",
+            "realistic_vs_dreamlike_tension",
+            "sacred_vs_mundane_tension"
+          ]
+        },
+        "aesthetic_trend": {
+          "ids": [
+            "surreal_silliness_aesthetic",
+            "cottagecore_aesthetic",
+            "wilderkind_forest_aesthetic"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "bioluminescent_soft_glow",
+            "prism_flare_light",
+            "moonlight"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "frame_within_frame",
+            "doorway_threshold_framing",
+            "centered_symmetry",
+            "wide_establishing"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "wide_24mm"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "deep_focus",
+            "shallow_depth",
+            "eye_focus"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "ordinary_magic_mood",
+            "playful",
+            "uncanny",
+            "tender_chaos_mood"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "not_overdone",
+            "editorial_quality"
+          ]
+        },
+        "world": {
+          "ids": [
+            "world_where_small_rituals_protect",
+            "synthetic_eden_world",
+            "realistic_modern"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "unreadable_diary_prop",
+            "field_notebook_unreadable_prop",
+            "flower_bouquet"
+          ]
+        },
+        "color": {
+          "ids": [
+            "glacier_blue_palette",
+            "pastel",
+            "faded_film_palette"
+          ]
+        }
+      }
+    },
+    {
+      "id": "community_memory_documentary",
+      "ko": "공동체 기억 다큐멘터리",
+      "en": "community memory documentary",
+      "weight": 0.95,
+      "template_style": "natural",
+      "family": "narrative_concept_scene_family",
+      "embedding_text": "community memory documentary, local pride, shared table, repair culture, no readable signage or labels",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "situation_context",
+        "narrative_core",
+        "lighting",
+        "camera_type",
+        "composition",
+        "lens",
+        "focus",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "occasion_context",
+          "probability": 0.52
+        },
+        {
+          "slot": "concept_tension",
+          "probability": 0.35
+        },
+        {
+          "slot": "prop",
+          "probability": 0.65
+        },
+        {
+          "slot": "aesthetic_trend",
+          "probability": 0.55
+        },
+        {
+          "slot": "crowd_density",
+          "probability": 0.42
+        },
+        {
+          "slot": "texture",
+          "probability": 0.45
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "documentary_photo",
+            "photojournalism",
+            "magazine_feature",
+            "urban_candid_photo"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "documentary",
+            "portrait",
+            "street",
+            "lifestyle"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "local_artisan_neighbor",
+            "street_vendor",
+            "young_barista",
+            "office_worker"
+          ]
+        },
+        "action": {
+          "ids": [
+            "sharing_community_table",
+            "prepping_workshop_materials",
+            "arranging_archive_photos_no_text",
+            "standing_silence"
+          ]
+        },
+        "location": {
+          "ids": [
+            "community_kitchen_table",
+            "artisan_workshop_corner",
+            "neighborhood_market_evening",
+            "community_garden_late_summer"
+          ]
+        },
+        "situation_context": {
+          "ids": [
+            "community_ritual_setup",
+            "repair_culture_session",
+            "local_pride_market_walk"
+          ]
+        },
+        "occasion_context": {
+          "ids": [
+            "neighborhood_meeting",
+            "harvest_market_day",
+            "community_volunteer_break",
+            "blackout_night_gathering"
+          ]
+        },
+        "narrative_core": {
+          "ids": [
+            "community_ritual_core",
+            "analog_diary_memory_core",
+            "ordinary_magic_core"
+          ]
+        },
+        "concept_tension": {
+          "ids": [
+            "human_touch_vs_automation_tension",
+            "sacred_vs_mundane_tension",
+            "documentary_vs_staged_tension"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "overcast",
+            "warm_kitchen_window_light",
+            "sodium_streetlight"
+          ]
+        },
+        "camera_type": {
+          "ids": [
+            "full_frame_mirrorless",
+            "smartphone_camera",
+            "compact_digital_camera"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "handheld_candid",
+            "crowded_layers",
+            "rule_of_thirds",
+            "frame_within_frame"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "35mm",
+            "50mm",
+            "wide_24mm"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "deep_focus",
+            "zone_focus_street",
+            "eye_focus"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "human_made_authenticity",
+            "practical_local_realism",
+            "calm",
+            "tender_chaos_mood"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "candid_imperfect",
+            "not_overdone"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "field_notebook_unreadable_prop",
+            "volunteer_gloves_seedlings_prop",
+            "unreadable_diary_prop",
+            "paintbrush_palette_prop"
+          ]
+        },
+        "aesthetic_trend": {
+          "ids": [
+            "local_pride_documentary_aesthetic",
+            "repair_culture_slow_fashion",
+            "normcore_everyday_realism"
+          ]
+        },
+        "crowd_density": {
+          "ids": [
+            "small_friend_group",
+            "volunteer_group_scatter",
+            "sparse_passersby"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "dusty_sunbeam_texture",
+            "rattan_woven_texture",
+            "handmade_paper_texture"
+          ]
+        }
+      }
+    },
+    {
+      "id": "repair_culture_slow_fashion_scene",
+      "ko": "수선 문화 슬로우 패션 장면",
+      "en": "repair culture slow-fashion scene",
+      "weight": 0.88,
+      "template_style": "natural",
+      "family": "narrative_concept_scene_family",
+      "embedding_text": "repair culture slow-fashion scene, visible mending, human touch versus automation, local craft process",
+      "required_slots": [
+        "medium",
+        "genre",
+        "subject",
+        "action",
+        "location",
+        "situation_context",
+        "narrative_core",
+        "concept_tension",
+        "aesthetic_trend",
+        "lighting",
+        "composition",
+        "lens",
+        "focus",
+        "mood",
+        "quality"
+      ],
+      "optional_slots": [
+        {
+          "slot": "prop",
+          "probability": 0.72
+        },
+        {
+          "slot": "texture",
+          "probability": 0.6
+        },
+        {
+          "slot": "surface_material",
+          "probability": 0.42
+        },
+        {
+          "slot": "color",
+          "probability": 0.35
+        },
+        {
+          "slot": "capture_context",
+          "probability": 0.4
+        }
+      ],
+      "filters": {
+        "medium": {
+          "ids": [
+            "documentary_photo",
+            "magazine_feature",
+            "lifestyle_photo",
+            "commercial_photo"
+          ]
+        },
+        "genre": {
+          "ids": [
+            "documentary",
+            "fashion",
+            "lifestyle",
+            "portrait"
+          ]
+        },
+        "subject": {
+          "ids": [
+            "local_artisan_neighbor",
+            "fashion_influencer",
+            "adult_woman_lifestyle_subject",
+            "young_barista"
+          ]
+        },
+        "action": {
+          "ids": [
+            "prepping_workshop_materials",
+            "prepping_workshop_materials",
+            "sharing_community_table",
+            "standing_silence"
+          ]
+        },
+        "location": {
+          "ids": [
+            "artisan_workshop_corner",
+            "thrift_shop_backroom",
+            "community_kitchen_table"
+          ]
+        },
+        "situation_context": {
+          "ids": [
+            "repair_culture_session",
+            "community_ritual_setup"
+          ]
+        },
+        "narrative_core": {
+          "ids": [
+            "community_ritual_core",
+            "ordinary_magic_core",
+            "quiet_rebellion_core"
+          ]
+        },
+        "concept_tension": {
+          "ids": [
+            "human_touch_vs_automation_tension",
+            "polished_vs_imperfect_tension",
+            "documentary_vs_staged_tension"
+          ]
+        },
+        "aesthetic_trend": {
+          "ids": [
+            "repair_culture_slow_fashion",
+            "poetcore_aesthetic",
+            "khaki_utility_coded",
+            "normcore_everyday_realism"
+          ]
+        },
+        "lighting": {
+          "ids": [
+            "soft_window",
+            "overcast",
+            "warm_kitchen_window_light",
+            "mixed_daylight_tungsten"
+          ]
+        },
+        "composition": {
+          "ids": [
+            "hands_foreground_face_behind",
+            "medium_close"
+          ]
+        },
+        "lens": {
+          "ids": [
+            "50mm",
+            "35mm",
+            "macro_100mm"
+          ]
+        },
+        "focus": {
+          "ids": [
+            "selective_foreground_focus",
+            "shallow_depth",
+            "eye_focus"
+          ]
+        },
+        "mood": {
+          "ids": [
+            "human_made_authenticity",
+            "practical_local_realism",
+            "quiet_defiance",
+            "calm"
+          ]
+        },
+        "quality": {
+          "ids": [
+            "photoreal",
+            "not_overdone",
+            "candid_imperfect"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "paintbrush_palette_prop",
+            "field_notebook_unreadable_prop",
+            "fountain_pen_prop"
+          ]
+        },
+        "texture": {
+          "ids": [
+            "embroidered_thread_texture",
+            "photocopy_halftone_grain_texture",
+            "rattan_woven_texture"
+          ]
+        },
+        "surface_material": {
+          "ids": [
+            "linen_fabric_surface",
+            "weathered_wood_board_surface",
+            "tarnished_brass_surface"
+          ]
+        },
+        "capture_context": {
+          "ids": [
+            "bts_process_capture_context",
+            "street_observation_documentary_context"
+          ]
+        }
+      }
     }
   ],
   "templates": {
@@ -109667,6 +111917,118 @@
         "kind": [
           "food"
         ]
+      },
+      {
+        "id": "analog_diary_keeper",
+        "ko": "아날로그 다이어리를 간직한 성인 인물",
+        "en": "an adult analog diary keeper",
+        "weight": 0.62,
+        "tags": [
+          "human",
+          "adult",
+          "analog",
+          "diary",
+          "no_text"
+        ],
+        "aliases": [
+          "analog diary keeper",
+          "diary keeper"
+        ],
+        "keywords": [
+          "analog diary keeper",
+          "memory collector",
+          "adult subject"
+        ],
+        "embedding_text": "adult analog diary keeper, memory collector figure, diary pages kept blank or unreadable"
+      },
+      {
+        "id": "urban_late_errand_subject",
+        "ko": "늦은 밤 심부름 중인 성인 도시 인물",
+        "en": "an adult late-night urban errand runner",
+        "weight": 0.64,
+        "tags": [
+          "human",
+          "adult",
+          "urban",
+          "errand"
+        ],
+        "aliases": [
+          "late-night errand runner",
+          "anonymous commuter"
+        ],
+        "keywords": [
+          "late-night errand",
+          "urban solitude",
+          "adult subject"
+        ],
+        "embedding_text": "adult late-night urban errand runner, anonymous public-solitude figure in city light"
+      },
+      {
+        "id": "local_artisan_neighbor",
+        "ko": "동네 장인 성인 인물",
+        "en": "an adult local artisan neighbor",
+        "weight": 0.58,
+        "tags": [
+          "human",
+          "adult",
+          "local",
+          "craft"
+        ],
+        "aliases": [
+          "local artisan",
+          "neighborhood craftsperson"
+        ],
+        "keywords": [
+          "local artisan",
+          "community craft",
+          "adult subject"
+        ],
+        "embedding_text": "adult local artisan neighbor, human-made craft process, local documentary presence"
+      },
+      {
+        "id": "ai_companion_pair_subject",
+        "ko": "성인 인물과 추상적 AI 동반자",
+        "en": "an adult person with an abstract AI companion light",
+        "weight": 0.56,
+        "tags": [
+          "human",
+          "adult",
+          "ai",
+          "companion",
+          "no_text"
+        ],
+        "aliases": [
+          "AI companion pair",
+          "human and AI companion"
+        ],
+        "keywords": [
+          "AI companion",
+          "abstract AI light",
+          "adult subject"
+        ],
+        "embedding_text": "adult person with abstract AI companion light, human-machine intimacy without readable UI or brand interface"
+      },
+      {
+        "id": "near_future_drifter",
+        "ko": "근미래의 성인 방랑자",
+        "en": "an adult near-future drifter",
+        "weight": 0.56,
+        "tags": [
+          "human",
+          "adult",
+          "future",
+          "nostalgia"
+        ],
+        "aliases": [
+          "near-future drifter",
+          "future nostalgia figure"
+        ],
+        "keywords": [
+          "near-future drifter",
+          "soft sci-fi adult",
+          "future nostalgia"
+        ],
+        "embedding_text": "adult near-future drifter, soft sci-fi clothing and analog emotional residue"
       }
     ],
     "person_origin": [
@@ -123408,6 +125770,135 @@
           "product",
           "food"
         ]
+      },
+      {
+        "id": "late_night_errand_walk",
+        "ko": "늦은 밤 심부름을 하며 걷는 동작",
+        "en": "walking through a late-night errand",
+        "weight": 0.66,
+        "tags": [
+          "walking",
+          "errand",
+          "night",
+          "urban"
+        ],
+        "aliases": [
+          "late-night errand walk"
+        ],
+        "keywords": [
+          "late-night errand",
+          "walking at night",
+          "urban solitude"
+        ],
+        "embedding_text": "walking through a late-night errand, small grocery or transit moment, urban solitude"
+      },
+      {
+        "id": "writing_unreadable_diary",
+        "ko": "글자가 보이지 않는 다이어리를 쓰는 동작",
+        "en": "writing in a diary with unreadable marks",
+        "weight": 0.58,
+        "tags": [
+          "writing",
+          "diary",
+          "no_text_required",
+          "no_text"
+        ],
+        "aliases": [
+          "writing diary",
+          "unreadable diary writing"
+        ],
+        "keywords": [
+          "writing diary",
+          "unreadable marks",
+          "no readable text"
+        ],
+        "embedding_text": "writing in a diary with unreadable marks, hand gesture and paper texture, no readable words"
+      },
+      {
+        "id": "sharing_community_table",
+        "ko": "공동체 테이블을 함께 준비하는 동작",
+        "en": "sharing a community table setup",
+        "weight": 0.56,
+        "tags": [
+          "community",
+          "table",
+          "sharing"
+        ],
+        "aliases": [
+          "sharing table",
+          "community table setup"
+        ],
+        "keywords": [
+          "community table",
+          "shared table",
+          "mutual aid"
+        ],
+        "embedding_text": "sharing a community table setup, arranging objects and food without brand or text focus"
+      },
+      {
+        "id": "standing_between_nature_machine",
+        "ko": "자연과 기계 사이에 서 있는 동작",
+        "en": "standing between natural growth and synthetic machinery",
+        "weight": 0.54,
+        "tags": [
+          "standing",
+          "nature",
+          "machine",
+          "contrast"
+        ],
+        "aliases": [
+          "standing between nature and machine"
+        ],
+        "keywords": [
+          "organic synthetic",
+          "natural machine contrast"
+        ],
+        "embedding_text": "standing between natural growth and synthetic machinery, material contrast staged visually"
+      },
+      {
+        "id": "looking_at_blurred_screen_glow",
+        "ko": "흐릿한 화면광을 바라보는 동작",
+        "en": "looking at blurred non-readable screen glow",
+        "weight": 0.56,
+        "tags": [
+          "screen",
+          "looking",
+          "no_text_required",
+          "no_text"
+        ],
+        "aliases": [
+          "looking at screen glow",
+          "blurred screen gaze"
+        ],
+        "keywords": [
+          "blurred screen glow",
+          "non-readable UI",
+          "privacy anxiety"
+        ],
+        "embedding_text": "looking at blurred non-readable screen glow, abstract interface light, no legible UI text"
+      },
+      {
+        "id": "arranging_archive_photos_no_text",
+        "ko": "글자 없는 아카이브 사진을 정리하는 동작",
+        "en": "arranging archive photos with blank non-readable margins",
+        "weight": 0.56,
+        "tags": [
+          "archive",
+          "photo",
+          "arranging",
+          "no_text_required",
+          "no_text"
+        ],
+        "aliases": [
+          "arranging archive photos",
+          "memory archive arranging"
+        ],
+        "keywords": [
+          "archive photos",
+          "blank margins",
+          "no readable captions"
+        ],
+        "embedding_text": "arranging archive photos with blank non-readable margins, memory archive gesture, no captions"
       }
     ],
     "capture_context": [
@@ -124159,6 +126650,116 @@
           "no_text"
         ],
         "embedding_text": "paper ephemera context with all text blank or unreadable"
+      },
+      {
+        "id": "analog_diary_snapshot_context",
+        "ko": "아날로그 다이어리 스냅샷 촬영 맥락",
+        "en": "analog diary snapshot context with unreadable pages",
+        "weight": 0.66,
+        "tags": [
+          "analog",
+          "diary",
+          "snapshot",
+          "no_text_required",
+          "no_text"
+        ],
+        "aliases": [
+          "analog diary snapshot",
+          "diary photo context"
+        ],
+        "keywords": [
+          "analog diary",
+          "unreadable pages",
+          "snapshot"
+        ],
+        "embedding_text": "analog diary snapshot context, blank or unreadable pages, found-photo feeling, no readable handwriting"
+      },
+      {
+        "id": "privacy_screen_glow_context",
+        "ko": "텍스트 없는 프라이버시 화면광 촬영 맥락",
+        "en": "privacy-anxiety screen-glow context with blurred non-readable interfaces",
+        "weight": 0.6,
+        "tags": [
+          "privacy",
+          "screen",
+          "glow",
+          "no_text_required",
+          "no_text"
+        ],
+        "aliases": [
+          "privacy screen glow",
+          "blurred screen glow"
+        ],
+        "keywords": [
+          "privacy anxiety",
+          "blurred screen",
+          "non-readable interface"
+        ],
+        "embedding_text": "privacy-anxiety screen-glow context, blurred non-readable interfaces, abstract feed light, no legible UI"
+      },
+      {
+        "id": "contact_sheet_archive_context",
+        "ko": "컨택트 시트 아카이브 촬영 맥락",
+        "en": "contact-sheet archive context with non-legible margins",
+        "weight": 0.56,
+        "tags": [
+          "archive",
+          "contact_sheet",
+          "analog",
+          "no_text"
+        ],
+        "aliases": [
+          "contact sheet archive",
+          "archive contact sheet"
+        ],
+        "keywords": [
+          "contact sheet",
+          "archive",
+          "non-legible margins"
+        ],
+        "embedding_text": "contact-sheet archive context, analog frames and non-legible margins, no readable captions"
+      },
+      {
+        "id": "staged_tableau_editorial_context",
+        "ko": "연출된 타블로 에디토리얼 촬영 맥락",
+        "en": "staged-tableau editorial capture context",
+        "weight": 0.6,
+        "tags": [
+          "editorial",
+          "tableau",
+          "staged"
+        ],
+        "aliases": [
+          "staged tableau",
+          "tableau editorial"
+        ],
+        "keywords": [
+          "staged tableau",
+          "editorial composition",
+          "documentary staged tension"
+        ],
+        "embedding_text": "staged-tableau editorial capture context, arranged photographic scene with controlled narrative composition"
+      },
+      {
+        "id": "street_observation_documentary_context",
+        "ko": "거리 관찰 다큐멘터리 촬영 맥락",
+        "en": "street-observation documentary capture context",
+        "weight": 0.62,
+        "tags": [
+          "street",
+          "documentary",
+          "observation"
+        ],
+        "aliases": [
+          "street observation",
+          "observational documentary"
+        ],
+        "keywords": [
+          "street observation",
+          "documentary candid",
+          "public solitude"
+        ],
+        "embedding_text": "street-observation documentary capture context, candid distance, public solitude, realistic urban observation"
       }
     ],
     "prop": [
@@ -134065,6 +136666,244 @@
           "object",
           "product"
         ]
+      },
+      {
+        "id": "fountain_pen_prop",
+        "ko": "만년필 소품",
+        "en": "a fountain pen prop",
+        "weight": 0.72,
+        "tags": [
+          "pen",
+          "analog",
+          "writer",
+          "prop"
+        ],
+        "aliases": [
+          "fountain pen"
+        ],
+        "keywords": [
+          "fountain pen",
+          "writer prop",
+          "poetcore"
+        ],
+        "embedding_text": "fountain pen prop for poetcore or analog diary scenes"
+      },
+      {
+        "id": "unreadable_diary_prop",
+        "ko": "판독 불가한 다이어리 페이지",
+        "en": "a diary with blank unreadable pages",
+        "weight": 0.78,
+        "tags": [
+          "diary",
+          "paper",
+          "unreadable",
+          "no_text_required",
+          "no_text"
+        ],
+        "aliases": [
+          "diary",
+          "blank diary",
+          "unreadable diary"
+        ],
+        "keywords": [
+          "diary",
+          "blank pages",
+          "unreadable handwriting",
+          "non-legible notes"
+        ],
+        "embedding_text": "diary with blank unreadable pages, non-legible handwriting-like marks, no readable text"
+      },
+      {
+        "id": "old_postcard_unreadable_prop",
+        "ko": "글자가 보이지 않는 오래된 엽서",
+        "en": "old postcards with non-legible writing",
+        "weight": 0.68,
+        "tags": [
+          "postcard",
+          "paper",
+          "archive",
+          "non_legible",
+          "no_text_required",
+          "no_text"
+        ],
+        "aliases": [
+          "old postcard",
+          "unreadable postcard"
+        ],
+        "keywords": [
+          "old postcard",
+          "non-legible writing",
+          "archive paper"
+        ],
+        "embedding_text": "old postcards with non-legible writing and blank fictional marks, no readable address or text"
+      },
+      {
+        "id": "typewriter_blank_page_prop",
+        "ko": "빈 종이가 끼워진 타자기",
+        "en": "a typewriter with a blank unreadable page",
+        "weight": 0.68,
+        "tags": [
+          "typewriter",
+          "paper",
+          "analog",
+          "blank",
+          "no_text_required",
+          "no_text"
+        ],
+        "aliases": [
+          "typewriter",
+          "blank typewriter page"
+        ],
+        "keywords": [
+          "typewriter",
+          "blank page",
+          "unreadable page"
+        ],
+        "embedding_text": "typewriter with a blank unreadable page, analog writing prop with no readable text"
+      },
+      {
+        "id": "polaroid_stack_unreadable_prop",
+        "ko": "글자가 없는 폴라로이드 사진 더미",
+        "en": "a stack of blank-caption Polaroids",
+        "weight": 0.74,
+        "tags": [
+          "polaroid",
+          "photo",
+          "archive",
+          "blank",
+          "no_text_required",
+          "no_text"
+        ],
+        "aliases": [
+          "Polaroid stack",
+          "blank Polaroids"
+        ],
+        "keywords": [
+          "Polaroid stack",
+          "blank caption",
+          "found photographs"
+        ],
+        "embedding_text": "stack of Polaroids with blank caption borders, found photographs, no readable handwriting"
+      },
+      {
+        "id": "crt_tv_abstract_glow_prop",
+        "ko": "추상적인 빛만 보이는 CRT TV",
+        "en": "a CRT television with abstract non-readable glow",
+        "weight": 0.62,
+        "tags": [
+          "crt",
+          "screen",
+          "analog",
+          "glow",
+          "no_text_required",
+          "no_text"
+        ],
+        "aliases": [
+          "CRT TV",
+          "abstract CRT glow"
+        ],
+        "keywords": [
+          "CRT TV",
+          "abstract glow",
+          "no readable screen"
+        ],
+        "embedding_text": "CRT television with abstract non-readable glow and scanlines, no legible UI or broadcast text"
+      },
+      {
+        "id": "wax_seal_envelope_unreadable_prop",
+        "ko": "글자 없는 왁스 실링 봉투",
+        "en": "a wax-sealed envelope with no readable writing",
+        "weight": 0.62,
+        "tags": [
+          "envelope",
+          "wax_seal",
+          "paper",
+          "blank",
+          "no_text_required",
+          "no_text"
+        ],
+        "aliases": [
+          "wax seal envelope",
+          "sealed envelope"
+        ],
+        "keywords": [
+          "wax seal",
+          "blank envelope",
+          "no readable writing"
+        ],
+        "embedding_text": "wax-sealed envelope with no readable writing, symbolic paper prop, blank fictional surface"
+      },
+      {
+        "id": "blank_bus_ticket_prop",
+        "ko": "글자 없는 버스표 소품",
+        "en": "a blank fictional bus ticket",
+        "weight": 0.58,
+        "tags": [
+          "ticket",
+          "paper",
+          "blank",
+          "transit",
+          "no_text_required",
+          "no_text"
+        ],
+        "aliases": [
+          "blank bus ticket",
+          "fictional ticket"
+        ],
+        "keywords": [
+          "blank bus ticket",
+          "fictional ticket",
+          "no readable text"
+        ],
+        "embedding_text": "blank fictional bus ticket prop, non-legible transit ephemera, no readable text"
+      },
+      {
+        "id": "blank_diner_receipt_prop",
+        "ko": "글자 없는 식당 영수증 소품",
+        "en": "a blank diner receipt with no readable text",
+        "weight": 0.56,
+        "tags": [
+          "receipt",
+          "paper",
+          "blank",
+          "diner",
+          "no_text_required",
+          "no_text"
+        ],
+        "aliases": [
+          "blank receipt",
+          "diner receipt"
+        ],
+        "keywords": [
+          "blank receipt",
+          "no readable text",
+          "diner paper"
+        ],
+        "embedding_text": "blank diner receipt with no readable text, fictional paper ephemera, non-legible marks only"
+      },
+      {
+        "id": "field_notebook_unreadable_prop",
+        "ko": "글자가 보이지 않는 현장 노트",
+        "en": "a field notebook with unreadable notes",
+        "weight": 0.62,
+        "tags": [
+          "notebook",
+          "field",
+          "paper",
+          "unreadable",
+          "no_text_required",
+          "no_text"
+        ],
+        "aliases": [
+          "field notebook",
+          "unreadable notes"
+        ],
+        "keywords": [
+          "field notebook",
+          "unreadable notes",
+          "research prop"
+        ],
+        "embedding_text": "field notebook with unreadable notes and sketch-like non-legible marks, no readable text"
       }
     ],
     "fetish_styling": [
@@ -141724,6 +144563,294 @@
           "studio",
           "tabletop"
         ]
+      },
+      {
+        "id": "bedroom_shrine",
+        "ko": "개인 물건으로 가득한 침실 제단 같은 공간",
+        "en": "in a bedroom shrine of personal objects with no readable notes",
+        "weight": 0.82,
+        "tags": [
+          "interior",
+          "bedroom",
+          "archive",
+          "no_text_required",
+          "no_text"
+        ],
+        "aliases": [
+          "bedroom shrine",
+          "bedroom universe"
+        ],
+        "keywords": [
+          "bedroom shrine",
+          "personal objects",
+          "unreadable notes"
+        ],
+        "embedding_text": "bedroom shrine of personal objects, blank photos, unreadable notes, intimate room archive"
+      },
+      {
+        "id": "attic_archive_room",
+        "ko": "먼지 낀 다락 아카이브 룸",
+        "en": "in a dusty attic archive room",
+        "weight": 0.72,
+        "tags": [
+          "interior",
+          "archive",
+          "dust",
+          "memory"
+        ],
+        "aliases": [
+          "attic archive",
+          "family archive room"
+        ],
+        "keywords": [
+          "attic archive",
+          "dusty album",
+          "storage room"
+        ],
+        "embedding_text": "dusty attic archive room, old albums, storage boxes, memory-collector atmosphere"
+      },
+      {
+        "id": "indoor_forest_room",
+        "ko": "식물이 실내를 점령한 방",
+        "en": "in an indoor forest room",
+        "weight": 0.7,
+        "tags": [
+          "interior",
+          "nature",
+          "surreal",
+          "plants"
+        ],
+        "aliases": [
+          "indoor forest",
+          "forest growing in bedroom"
+        ],
+        "keywords": [
+          "indoor forest",
+          "plants in room",
+          "forest bedroom"
+        ],
+        "embedding_text": "indoor forest room, plant life overtaking an interior, photoreal surreal nature intrusion"
+      },
+      {
+        "id": "mirror_portal_room",
+        "ko": "거울 포털이 있는 방",
+        "en": "in a mirror-portal room with no readable reflections",
+        "weight": 0.68,
+        "tags": [
+          "interior",
+          "mirror",
+          "surreal",
+          "no_text"
+        ],
+        "aliases": [
+          "mirror portal room",
+          "mirror portal"
+        ],
+        "keywords": [
+          "mirror portal",
+          "impossible reflection",
+          "room mirror"
+        ],
+        "embedding_text": "mirror-portal room, impossible reflection and doorway-like mirror surface, no readable text or signage"
+      },
+      {
+        "id": "flower_flooded_room",
+        "ko": "꽃으로 넘쳐나는 방",
+        "en": "in a room flooded with flowers",
+        "weight": 0.72,
+        "tags": [
+          "interior",
+          "flowers",
+          "surreal",
+          "nature"
+        ],
+        "aliases": [
+          "room flooded with flowers",
+          "flowers flooding the room"
+        ],
+        "keywords": [
+          "flower flooded room",
+          "wildflowers indoors",
+          "surreal domesticity"
+        ],
+        "embedding_text": "room flooded with flowers, wildflowers overtaking domestic space, photoreal surreal stillness"
+      },
+      {
+        "id": "old_hotel_lobby_decay",
+        "ko": "낡은 호텔 로비의 퇴락한 럭셔리 공간",
+        "en": "in a decaying old hotel lobby with faded luxury",
+        "weight": 0.74,
+        "tags": [
+          "interior",
+          "hotel",
+          "luxury",
+          "decay"
+        ],
+        "aliases": [
+          "old hotel lobby",
+          "faded hotel lobby"
+        ],
+        "keywords": [
+          "old hotel lobby",
+          "faded luxury",
+          "broken luxury"
+        ],
+        "embedding_text": "decaying old hotel lobby with faded luxury, velvet chairs, brass, dusty marble, no brand names"
+      },
+      {
+        "id": "thrift_shop_backroom",
+        "ko": "중고 상점 백룸",
+        "en": "in a thrift-shop backroom",
+        "weight": 0.7,
+        "tags": [
+          "interior",
+          "shop",
+          "vintage",
+          "local"
+        ],
+        "aliases": [
+          "thrift shop backroom",
+          "vintage shop backroom"
+        ],
+        "keywords": [
+          "thrift shop",
+          "backroom",
+          "vintage objects"
+        ],
+        "embedding_text": "thrift-shop backroom, vintage clothing racks, unbranded objects, local secondhand atmosphere"
+      },
+      {
+        "id": "neighborhood_market_evening",
+        "ko": "동네 시장 저녁 풍경",
+        "en": "at a neighborhood market evening with non-readable signage",
+        "weight": 0.74,
+        "tags": [
+          "street",
+          "market",
+          "local",
+          "community",
+          "no_text"
+        ],
+        "aliases": [
+          "neighborhood market",
+          "local market evening"
+        ],
+        "keywords": [
+          "neighborhood market",
+          "local pride",
+          "non-readable signage"
+        ],
+        "embedding_text": "neighborhood market evening, local stalls, community bustle, non-readable signage and unbranded set dressing"
+      },
+      {
+        "id": "community_kitchen_table",
+        "ko": "공동체 주방 테이블",
+        "en": "around a community kitchen table",
+        "weight": 0.68,
+        "tags": [
+          "interior",
+          "community",
+          "kitchen",
+          "documentary"
+        ],
+        "aliases": [
+          "community kitchen",
+          "shared table"
+        ],
+        "keywords": [
+          "community kitchen",
+          "shared table",
+          "mutual aid"
+        ],
+        "embedding_text": "community kitchen table, shared dishes and tools, practical local documentary setting"
+      },
+      {
+        "id": "artisan_workshop_corner",
+        "ko": "지역 장인의 작업실 구석",
+        "en": "in a local artisan workshop corner",
+        "weight": 0.7,
+        "tags": [
+          "interior",
+          "workshop",
+          "craft",
+          "local"
+        ],
+        "aliases": [
+          "artisan workshop",
+          "local craft workshop"
+        ],
+        "keywords": [
+          "artisan workshop",
+          "craftsperson",
+          "handmade process"
+        ],
+        "embedding_text": "local artisan workshop corner, hands-on tools, visible craft process, human-made authenticity"
+      },
+      {
+        "id": "closed_swimming_pool_liminal",
+        "ko": "문 닫은 수영장의 리미널 공간",
+        "en": "in a closed swimming pool liminal interior",
+        "weight": 0.62,
+        "tags": [
+          "interior",
+          "liminal",
+          "pool",
+          "empty"
+        ],
+        "aliases": [
+          "closed swimming pool",
+          "liminal pool"
+        ],
+        "keywords": [
+          "closed swimming pool",
+          "empty pool",
+          "liminal architecture"
+        ],
+        "embedding_text": "closed swimming pool liminal interior, tiled echoes, empty waterline, quiet uncanny space"
+      },
+      {
+        "id": "foggy_empty_beach",
+        "ko": "안개 낀 빈 해변",
+        "en": "on a foggy empty beach",
+        "weight": 0.68,
+        "tags": [
+          "nature",
+          "beach",
+          "fog",
+          "solitude"
+        ],
+        "aliases": [
+          "foggy beach",
+          "empty beach"
+        ],
+        "keywords": [
+          "foggy beach",
+          "coastal melancholy",
+          "empty shore"
+        ],
+        "embedding_text": "foggy empty beach, coastal melancholy, muted air, solitary shoreline"
+      },
+      {
+        "id": "secret_garden_path",
+        "ko": "숨겨진 정원 산책로",
+        "en": "on a secret garden path",
+        "weight": 0.72,
+        "tags": [
+          "nature",
+          "garden",
+          "hidden",
+          "romantic"
+        ],
+        "aliases": [
+          "secret garden",
+          "hidden garden path"
+        ],
+        "keywords": [
+          "secret garden",
+          "wildflower path",
+          "hidden greenery"
+        ],
+        "embedding_text": "secret garden path, hidden greenery, wildflower ritual, quiet escape"
       }
     ],
     "world": [
@@ -142719,6 +145846,114 @@
           "social"
         ],
         "embedding_text": "everyday public-transit coexistence world: buses, subways, and platforms where visibly different beings share seats, handrails, gaps, and quiet glances; social distance, bystander reactions, and unspoken seating choices in ordinary commuting"
+      },
+      {
+        "id": "near_future_nostalgia_world",
+        "ko": "근미래 향수가 흐르는 세계",
+        "en": "a near-future nostalgia world",
+        "weight": 0.62,
+        "tags": [
+          "future",
+          "nostalgia",
+          "soft_sci_fi"
+        ],
+        "aliases": [
+          "near future nostalgia",
+          "future nostalgia"
+        ],
+        "keywords": [
+          "near-future nostalgia",
+          "soft sci-fi",
+          "analog future"
+        ],
+        "embedding_text": "near-future nostalgia world, soft sci-fi spaces with analog emotional residue"
+      },
+      {
+        "id": "gentle_apocalypse_world",
+        "ko": "부드러운 종말 이후 세계",
+        "en": "a gentle apocalypse world",
+        "weight": 0.58,
+        "tags": [
+          "apocalypse",
+          "soft",
+          "non_graphic"
+        ],
+        "aliases": [
+          "gentle apocalypse",
+          "tender dystopia"
+        ],
+        "keywords": [
+          "gentle apocalypse",
+          "soft survival",
+          "quiet aftermath"
+        ],
+        "embedding_text": "gentle apocalypse world, non-graphic quiet aftermath, soft survival and climate-dream stillness"
+      },
+      {
+        "id": "synthetic_eden_world",
+        "ko": "합성된 에덴 같은 세계",
+        "en": "a synthetic Eden world",
+        "weight": 0.56,
+        "tags": [
+          "synthetic",
+          "eden",
+          "nature",
+          "technology"
+        ],
+        "aliases": [
+          "synthetic Eden",
+          "artificial paradise"
+        ],
+        "keywords": [
+          "synthetic Eden",
+          "artificial paradise",
+          "organic synthetic"
+        ],
+        "embedding_text": "synthetic Eden world, engineered garden, organic and synthetic material contrast"
+      },
+      {
+        "id": "analog_ai_parallel_present_world",
+        "ko": "아날로그와 AI가 공존하는 평행 현재",
+        "en": "an analog-and-AI parallel-present world with non-readable screens",
+        "weight": 0.56,
+        "tags": [
+          "analog",
+          "ai",
+          "present",
+          "no_text_required",
+          "no_text"
+        ],
+        "aliases": [
+          "analog and AI world",
+          "parallel present"
+        ],
+        "keywords": [
+          "analog AI",
+          "parallel present",
+          "non-readable screen glow"
+        ],
+        "embedding_text": "analog-and-AI parallel-present world, paper archive and abstract non-readable screen glow coexisting"
+      },
+      {
+        "id": "romantic_decay_world",
+        "ko": "로맨틱한 퇴락이 남은 세계",
+        "en": "a romantic decay world",
+        "weight": 0.56,
+        "tags": [
+          "romantic",
+          "decay",
+          "gothic"
+        ],
+        "aliases": [
+          "romantic decay world",
+          "faded glamour world"
+        ],
+        "keywords": [
+          "romantic decay",
+          "faded glamour",
+          "old hotel world"
+        ],
+        "embedding_text": "romantic decay world, faded glamour and elegant atmospheric ruin without gore"
       }
     ],
     "lighting": [
@@ -144383,6 +147618,155 @@
           "documentary"
         ],
         "embedding_text": "flat laundromat fluorescent light"
+      },
+      {
+        "id": "diary_direct_flash",
+        "ko": "다이어리 스냅샷 같은 정면 플래시",
+        "en": "diary-snapshot direct flash",
+        "weight": 0.7,
+        "tags": [
+          "flash",
+          "analog",
+          "snapshot"
+        ],
+        "aliases": [
+          "direct flash",
+          "diary flash"
+        ],
+        "keywords": [
+          "direct flash",
+          "snapshot flash",
+          "point and shoot flash"
+        ],
+        "embedding_text": "diary-snapshot direct flash, frontal point-and-shoot flash with raw analog immediacy"
+      },
+      {
+        "id": "sodium_streetlight",
+        "ko": "나트륨 가로등 조명",
+        "en": "sodium streetlight glow",
+        "weight": 0.66,
+        "tags": [
+          "streetlight",
+          "night",
+          "urban",
+          "warm"
+        ],
+        "aliases": [
+          "sodium streetlight",
+          "orange streetlight"
+        ],
+        "keywords": [
+          "sodium streetlight",
+          "orange night glow",
+          "urban night"
+        ],
+        "embedding_text": "sodium streetlight glow, orange urban night pool of light"
+      },
+      {
+        "id": "projector_pool_light",
+        "ko": "프로젝터가 만드는 빛 웅덩이",
+        "en": "projector pool of light with no readable projection",
+        "weight": 0.58,
+        "tags": [
+          "projector",
+          "light",
+          "no_text"
+        ],
+        "aliases": [
+          "projector light",
+          "projection light"
+        ],
+        "keywords": [
+          "projector light",
+          "abstract projection",
+          "no readable projection"
+        ],
+        "embedding_text": "projector pool of light with abstract non-readable projection, cinematic interior glow"
+      },
+      {
+        "id": "red_darkroom_light",
+        "ko": "암실의 붉은 조명",
+        "en": "red darkroom light",
+        "weight": 0.58,
+        "tags": [
+          "darkroom",
+          "red",
+          "analog"
+        ],
+        "aliases": [
+          "darkroom red",
+          "red darkroom"
+        ],
+        "keywords": [
+          "red darkroom",
+          "film processing light",
+          "analog red light"
+        ],
+        "embedding_text": "red darkroom light, analog photographic processing atmosphere"
+      },
+      {
+        "id": "blacklight_glow",
+        "ko": "블랙라이트 글로우",
+        "en": "blacklight glow",
+        "weight": 0.54,
+        "tags": [
+          "blacklight",
+          "glow",
+          "night"
+        ],
+        "aliases": [
+          "blacklight",
+          "UV glow"
+        ],
+        "keywords": [
+          "blacklight",
+          "UV glow",
+          "club glow"
+        ],
+        "embedding_text": "blacklight glow, ultraviolet-like color on surfaces and makeup"
+      },
+      {
+        "id": "prism_flare_light",
+        "ko": "프리즘 플레어 조명",
+        "en": "prism flare light",
+        "weight": 0.56,
+        "tags": [
+          "prism",
+          "flare",
+          "color"
+        ],
+        "aliases": [
+          "prism flare",
+          "rainbow flare"
+        ],
+        "keywords": [
+          "prism flare",
+          "rainbow highlight",
+          "light refraction"
+        ],
+        "embedding_text": "prism flare light, refracted color streaks and tactile optical sparkle"
+      },
+      {
+        "id": "bioluminescent_soft_glow",
+        "ko": "생물발광 같은 부드러운 빛",
+        "en": "bioluminescent soft glow",
+        "weight": 0.52,
+        "tags": [
+          "glow",
+          "bioluminescent",
+          "surreal",
+          "nature"
+        ],
+        "aliases": [
+          "bioluminescent glow",
+          "soft glow"
+        ],
+        "keywords": [
+          "bioluminescent",
+          "soft glow",
+          "surreal nature light"
+        ],
+        "embedding_text": "bioluminescent soft glow, surreal natural light emitted from plants or atmosphere"
       }
     ],
     "light_direction": [
@@ -151302,6 +154686,160 @@
             "thumbnail_safe"
           ]
         }
+      },
+      {
+        "id": "contact_sheet_grid",
+        "ko": "컨택트 시트 격자 구성",
+        "en": "contact-sheet grid composition",
+        "weight": 0.68,
+        "tags": [
+          "composition",
+          "grid",
+          "contact_sheet",
+          "analog",
+          "no_text"
+        ],
+        "aliases": [
+          "contact sheet",
+          "contact-sheet grid"
+        ],
+        "keywords": [
+          "contact sheet",
+          "analog photo grid",
+          "non-legible frames"
+        ],
+        "embedding_text": "contact-sheet grid composition, analog photo frames and non-legible margins, no readable captions"
+      },
+      {
+        "id": "diptych_composition",
+        "ko": "딥틱 두 장면 구성",
+        "en": "diptych two-panel composition",
+        "weight": 0.62,
+        "tags": [
+          "composition",
+          "diptych",
+          "editorial"
+        ],
+        "aliases": [
+          "diptych",
+          "two panel composition"
+        ],
+        "keywords": [
+          "diptych",
+          "two-panel",
+          "parallel scene"
+        ],
+        "embedding_text": "diptych two-panel composition, paired photographic moments with visual contrast"
+      },
+      {
+        "id": "triptych_composition",
+        "ko": "트립틱 세 장면 구성",
+        "en": "triptych three-panel composition",
+        "weight": 0.58,
+        "tags": [
+          "composition",
+          "triptych",
+          "editorial"
+        ],
+        "aliases": [
+          "triptych",
+          "three panel composition"
+        ],
+        "keywords": [
+          "triptych",
+          "three-panel",
+          "editorial sequence"
+        ],
+        "embedding_text": "triptych three-panel composition, three related photographic panels with rhythm"
+      },
+      {
+        "id": "scrapbook_grid_layout",
+        "ko": "스크랩북 격자 레이아웃",
+        "en": "scrapbook grid layout with no readable captions",
+        "weight": 0.58,
+        "tags": [
+          "composition",
+          "scrapbook",
+          "grid",
+          "no_text_required",
+          "no_text"
+        ],
+        "aliases": [
+          "scrapbook layout",
+          "scrapbook grid"
+        ],
+        "keywords": [
+          "scrapbook grid",
+          "blank captions",
+          "photo dump layout"
+        ],
+        "embedding_text": "scrapbook grid layout with blank caption areas and no readable text, photo-dump archive composition"
+      },
+      {
+        "id": "surveillance_high_corner_angle",
+        "ko": "감시 카메라 같은 높은 코너 앵글",
+        "en": "surveillance-like high corner angle",
+        "weight": 0.54,
+        "tags": [
+          "composition",
+          "surveillance",
+          "high_angle",
+          "privacy"
+        ],
+        "aliases": [
+          "surveillance angle",
+          "high corner angle"
+        ],
+        "keywords": [
+          "surveillance angle",
+          "privacy anxiety",
+          "high corner view"
+        ],
+        "embedding_text": "surveillance-like high corner angle, observational distance and privacy-anxiety framing"
+      },
+      {
+        "id": "doorway_threshold_framing",
+        "ko": "문턱을 이용한 프레임 구성",
+        "en": "doorway threshold framing",
+        "weight": 0.62,
+        "tags": [
+          "composition",
+          "doorway",
+          "threshold",
+          "frame"
+        ],
+        "aliases": [
+          "doorway framing",
+          "threshold frame"
+        ],
+        "keywords": [
+          "doorway framing",
+          "threshold",
+          "frame within frame"
+        ],
+        "embedding_text": "doorway threshold framing, frame-within-frame composition through a door or hallway edge"
+      },
+      {
+        "id": "window_reflection_layering",
+        "ko": "창문 반사 레이어링 구성",
+        "en": "window-reflection layered composition",
+        "weight": 0.62,
+        "tags": [
+          "composition",
+          "window",
+          "reflection",
+          "layered"
+        ],
+        "aliases": [
+          "window reflection",
+          "reflection layering"
+        ],
+        "keywords": [
+          "window reflection",
+          "layered depth",
+          "private public contrast"
+        ],
+        "embedding_text": "window-reflection layered composition, interior and exterior layers through glass"
       }
     ],
     "subject_framing": [
@@ -153727,6 +157265,119 @@
           "tomato red",
           "red accent"
         ]
+      },
+      {
+        "id": "glacier_blue_palette",
+        "ko": "글레이셔 블루 팔레트",
+        "en": "glacier blue palette",
+        "weight": 0.7,
+        "tags": [
+          "color",
+          "blue",
+          "glacier",
+          "cool"
+        ],
+        "aliases": [
+          "glacier blue",
+          "icy blue"
+        ],
+        "keywords": [
+          "glacier blue",
+          "icy cyan",
+          "frosted silver"
+        ],
+        "embedding_text": "glacier blue palette, icy cyan, frosted silver, arctic cool tones"
+      },
+      {
+        "id": "faded_film_palette",
+        "ko": "빛바랜 필름 팔레트",
+        "en": "faded film palette",
+        "weight": 0.72,
+        "tags": [
+          "color",
+          "film",
+          "faded",
+          "analog"
+        ],
+        "aliases": [
+          "faded film",
+          "expired film color"
+        ],
+        "keywords": [
+          "faded film",
+          "washed-out pastel",
+          "light leak orange"
+        ],
+        "embedding_text": "faded film palette, washed-out pastel, dusty rose, expired film color"
+      },
+      {
+        "id": "holographic_neon_palette",
+        "ko": "홀로그래픽 네온 팔레트",
+        "en": "holographic neon palette",
+        "weight": 0.62,
+        "tags": [
+          "color",
+          "holographic",
+          "neon",
+          "digital"
+        ],
+        "aliases": [
+          "holographic neon",
+          "iridescent neon"
+        ],
+        "keywords": [
+          "holographic",
+          "neon magenta",
+          "electric violet",
+          "RGB glow"
+        ],
+        "embedding_text": "holographic neon palette, iridescent highlights, electric violet, cyber pink, RGB glow"
+      },
+      {
+        "id": "black_cherry_palette",
+        "ko": "블랙 체리 팔레트",
+        "en": "black cherry palette",
+        "weight": 0.62,
+        "tags": [
+          "color",
+          "red",
+          "gothic",
+          "dark"
+        ],
+        "aliases": [
+          "black cherry",
+          "dark rose"
+        ],
+        "keywords": [
+          "black cherry",
+          "dark rose",
+          "burgundy",
+          "wine red"
+        ],
+        "embedding_text": "black cherry palette, burgundy, dark rose, oxblood shadow tones"
+      },
+      {
+        "id": "milky_taupe_palette",
+        "ko": "밀키 토프 뉴트럴 팔레트",
+        "en": "milky taupe neutral palette",
+        "weight": 0.58,
+        "tags": [
+          "color",
+          "neutral",
+          "taupe",
+          "soft"
+        ],
+        "aliases": [
+          "milky taupe",
+          "soft neutral"
+        ],
+        "keywords": [
+          "milky taupe",
+          "bone white",
+          "pearl",
+          "soft neutral"
+        ],
+        "embedding_text": "milky taupe neutral palette, bone white, pearl, soft neutral quiet tones"
       }
     ],
     "mood": [
@@ -155669,6 +159320,218 @@
           "made",
           "authenticity"
         ]
+      },
+      {
+        "id": "quiet_defiance",
+        "ko": "조용한 저항감",
+        "en": "quiet defiance",
+        "weight": 0.86,
+        "tags": [
+          "mood",
+          "quiet",
+          "defiance"
+        ],
+        "aliases": [
+          "quiet rebellion",
+          "quiet defiance"
+        ],
+        "keywords": [
+          "quiet defiance",
+          "subtle resistance",
+          "soft protest"
+        ],
+        "embedding_text": "quiet defiance, subtle resistance, controlled nonverbal rebellion"
+      },
+      {
+        "id": "tender_chaos_mood",
+        "ko": "다정하지만 어수선한 분위기",
+        "en": "tender chaos mood",
+        "weight": 0.82,
+        "tags": [
+          "mood",
+          "tender",
+          "chaos"
+        ],
+        "aliases": [
+          "tender chaos",
+          "soft chaos"
+        ],
+        "keywords": [
+          "tender chaos",
+          "warm disorder",
+          "messy intimacy"
+        ],
+        "embedding_text": "tender chaos mood, affectionate disorder, messy but human warmth"
+      },
+      {
+        "id": "fragile_intimacy_mood",
+        "ko": "깨지기 쉬운 친밀감",
+        "en": "fragile intimacy mood",
+        "weight": 0.82,
+        "tags": [
+          "mood",
+          "intimate",
+          "fragile"
+        ],
+        "aliases": [
+          "fragile intimacy",
+          "vulnerable intimacy"
+        ],
+        "keywords": [
+          "fragile intimacy",
+          "vulnerable closeness",
+          "delicate emotion"
+        ],
+        "embedding_text": "fragile intimacy mood, delicate closeness, vulnerable quiet emotional tone"
+      },
+      {
+        "id": "ordinary_magic_mood",
+        "ko": "평범한 마법 같은 감각",
+        "en": "ordinary magic mood",
+        "weight": 0.84,
+        "tags": [
+          "mood",
+          "ordinary",
+          "magic"
+        ],
+        "aliases": [
+          "ordinary magic",
+          "sacred everyday"
+        ],
+        "keywords": [
+          "ordinary magic",
+          "everyday wonder",
+          "small ritual"
+        ],
+        "embedding_text": "ordinary magic mood, everyday wonder made visible through light and objects"
+      },
+      {
+        "id": "domestic_melancholy",
+        "ko": "가정적인 멜랑콜리",
+        "en": "domestic melancholy",
+        "weight": 0.78,
+        "tags": [
+          "mood",
+          "domestic",
+          "melancholic"
+        ],
+        "aliases": [
+          "domestic melancholy",
+          "home melancholy"
+        ],
+        "keywords": [
+          "domestic melancholy",
+          "quiet home sadness",
+          "lived-in loneliness"
+        ],
+        "embedding_text": "domestic melancholy, lived-in home sadness, quiet room mood"
+      },
+      {
+        "id": "lonely_euphoria",
+        "ko": "외로운 도취감",
+        "en": "lonely euphoria",
+        "weight": 0.76,
+        "tags": [
+          "mood",
+          "lonely",
+          "euphoric"
+        ],
+        "aliases": [
+          "lonely euphoria"
+        ],
+        "keywords": [
+          "lonely euphoria",
+          "private joy",
+          "city night high"
+        ],
+        "embedding_text": "lonely euphoria, private joy in a public or night setting"
+      },
+      {
+        "id": "vulnerable_glamour",
+        "ko": "취약한 글래머",
+        "en": "vulnerable glamour",
+        "weight": 0.78,
+        "tags": [
+          "mood",
+          "glamour",
+          "vulnerable"
+        ],
+        "aliases": [
+          "vulnerable glamour",
+          "fragile glamour"
+        ],
+        "keywords": [
+          "vulnerable glamour",
+          "soft luxury",
+          "intimate editorial"
+        ],
+        "embedding_text": "vulnerable glamour, polished beauty with emotional softness, non-explicit editorial mood"
+      },
+      {
+        "id": "romantic_decay_mood",
+        "ko": "로맨틱한 퇴락감",
+        "en": "romantic decay mood",
+        "weight": 0.82,
+        "tags": [
+          "mood",
+          "romantic",
+          "decay",
+          "gothic"
+        ],
+        "aliases": [
+          "romantic decay",
+          "faded glamour"
+        ],
+        "keywords": [
+          "romantic decay",
+          "faded glamour",
+          "gothic tenderness"
+        ],
+        "embedding_text": "romantic decay mood, faded glamour, elegant ruin, gothic tenderness without gore"
+      },
+      {
+        "id": "privacy_anxiety",
+        "ko": "프라이버시 불안감",
+        "en": "privacy anxiety",
+        "weight": 0.74,
+        "tags": [
+          "mood",
+          "privacy",
+          "digital",
+          "no_text"
+        ],
+        "aliases": [
+          "privacy anxiety",
+          "hypervisibility anxiety"
+        ],
+        "keywords": [
+          "privacy anxiety",
+          "hypervisibility",
+          "screen glow no text"
+        ],
+        "embedding_text": "privacy anxiety, hypervisibility, tense digital glow with no readable screen text"
+      },
+      {
+        "id": "gentle_apocalypse_mood",
+        "ko": "부드러운 종말 이후의 정서",
+        "en": "gentle apocalypse mood",
+        "weight": 0.72,
+        "tags": [
+          "mood",
+          "apocalypse",
+          "soft",
+          "non_graphic"
+        ],
+        "aliases": [
+          "gentle apocalypse",
+          "tender dystopia"
+        ],
+        "keywords": [
+          "gentle apocalypse",
+          "soft survival",
+          "quiet aftermath"
+        ],
+        "embedding_text": "gentle apocalypse mood, soft survival, quiet non-graphic aftermath, tender dystopian calm"
       }
     ],
     "surreal_concept": [
@@ -158806,6 +162669,159 @@
           "texture"
         ],
         "embedding_text": "rattan woven texture"
+      },
+      {
+        "id": "wet_asphalt_reflection_texture",
+        "ko": "젖은 아스팔트 반사 질감",
+        "en": "wet asphalt reflection texture",
+        "weight": 0.76,
+        "tags": [
+          "wet",
+          "asphalt",
+          "reflection",
+          "texture"
+        ],
+        "aliases": [
+          "wet asphalt",
+          "rain reflection"
+        ],
+        "keywords": [
+          "wet asphalt",
+          "rain reflection",
+          "street texture"
+        ],
+        "embedding_text": "wet asphalt reflection texture, rain-slick street shine"
+      },
+      {
+        "id": "frosted_glass_haze_texture",
+        "ko": "성에 낀 유리 헤이즈 질감",
+        "en": "frosted glass haze texture",
+        "weight": 0.7,
+        "tags": [
+          "frosted",
+          "glass",
+          "haze",
+          "texture"
+        ],
+        "aliases": [
+          "frosted glass",
+          "frosted haze"
+        ],
+        "keywords": [
+          "frosted glass",
+          "hazy glass",
+          "cold texture"
+        ],
+        "embedding_text": "frosted glass haze texture, cold translucent surface and diffused light"
+      },
+      {
+        "id": "peeling_paint_decay_texture",
+        "ko": "벗겨진 페인트 퇴락 질감",
+        "en": "peeling paint decay texture",
+        "weight": 0.72,
+        "tags": [
+          "peeling_paint",
+          "decay",
+          "texture"
+        ],
+        "aliases": [
+          "peeling paint",
+          "decay texture"
+        ],
+        "keywords": [
+          "peeling paint",
+          "faded wall",
+          "decay texture"
+        ],
+        "embedding_text": "peeling paint decay texture, faded wall layers, romantic ruin surface"
+      },
+      {
+        "id": "cracked_concrete_grit_texture",
+        "ko": "갈라진 콘크리트의 거친 질감",
+        "en": "cracked concrete grit texture",
+        "weight": 0.68,
+        "tags": [
+          "concrete",
+          "cracked",
+          "grit",
+          "texture"
+        ],
+        "aliases": [
+          "cracked concrete",
+          "concrete grit"
+        ],
+        "keywords": [
+          "cracked concrete",
+          "urban grit",
+          "rough concrete"
+        ],
+        "embedding_text": "cracked concrete grit texture, urban roughness and tactile imperfections"
+      },
+      {
+        "id": "low_res_pixel_glitch_texture",
+        "ko": "저해상도 픽셀 글리치 질감",
+        "en": "low-resolution pixel glitch texture without readable text",
+        "weight": 0.64,
+        "tags": [
+          "pixel",
+          "glitch",
+          "digital",
+          "no_text"
+        ],
+        "aliases": [
+          "pixel glitch",
+          "low-res glitch"
+        ],
+        "keywords": [
+          "pixel glitch",
+          "low resolution",
+          "digital distortion no text"
+        ],
+        "embedding_text": "low-resolution pixel glitch texture, abstract digital distortion, no readable letters or interface"
+      },
+      {
+        "id": "photocopy_halftone_grain_texture",
+        "ko": "복사 인쇄 하프톤 질감",
+        "en": "photocopy halftone grain texture",
+        "weight": 0.64,
+        "tags": [
+          "photocopy",
+          "halftone",
+          "print",
+          "texture"
+        ],
+        "aliases": [
+          "photocopy texture",
+          "halftone grain"
+        ],
+        "keywords": [
+          "photocopy",
+          "halftone",
+          "print grain"
+        ],
+        "embedding_text": "photocopy halftone grain texture, imperfect print dots and analog reproduction noise"
+      },
+      {
+        "id": "dusty_sunbeam_texture",
+        "ko": "먼지 낀 햇살 입자 질감",
+        "en": "dusty sunbeam particle texture",
+        "weight": 0.68,
+        "tags": [
+          "dust",
+          "sunbeam",
+          "air",
+          "texture"
+        ],
+        "aliases": [
+          "dusty sunbeam",
+          "dust beam"
+        ],
+        "keywords": [
+          "dusty sunbeam",
+          "dust particles",
+          "archive air"
+        ],
+        "embedding_text": "dusty sunbeam particle texture, visible dust in warm light and archive air"
       }
     ],
     "format": [
@@ -164701,6 +168717,139 @@
           "plant",
           "sign"
         ]
+      },
+      {
+        "id": "tarnished_brass_surface",
+        "ko": "빛바랜 브라스 표면",
+        "en": "a tarnished brass surface",
+        "weight": 0.62,
+        "tags": [
+          "surface",
+          "brass",
+          "tarnished",
+          "luxury"
+        ],
+        "aliases": [
+          "tarnished brass",
+          "aged brass"
+        ],
+        "keywords": [
+          "tarnished brass",
+          "aged metal",
+          "neo deco decay"
+        ],
+        "embedding_text": "tarnished brass surface, aged metallic luxury with soft patina"
+      },
+      {
+        "id": "red_velvet_banquette_surface",
+        "ko": "붉은 벨벳 벤치 표면",
+        "en": "a red velvet banquette surface",
+        "weight": 0.64,
+        "tags": [
+          "surface",
+          "velvet",
+          "red",
+          "luxury"
+        ],
+        "aliases": [
+          "red velvet booth",
+          "velvet banquette"
+        ],
+        "keywords": [
+          "red velvet",
+          "velvet booth",
+          "old hotel luxury"
+        ],
+        "embedding_text": "red velvet banquette surface, faded lounge luxury, soft pile texture"
+      },
+      {
+        "id": "cracked_marble_surface",
+        "ko": "금 간 대리석 표면",
+        "en": "a cracked marble surface",
+        "weight": 0.66,
+        "tags": [
+          "surface",
+          "marble",
+          "cracked",
+          "luxury",
+          "decay"
+        ],
+        "aliases": [
+          "cracked marble",
+          "broken marble"
+        ],
+        "keywords": [
+          "cracked marble",
+          "broken luxury",
+          "marble decay"
+        ],
+        "embedding_text": "cracked marble surface, luxury versus decay material contrast"
+      },
+      {
+        "id": "chrome_mirror_surface",
+        "ko": "크롬 거울 표면",
+        "en": "a chrome mirror surface",
+        "weight": 0.62,
+        "tags": [
+          "surface",
+          "chrome",
+          "mirror",
+          "synthetic"
+        ],
+        "aliases": [
+          "chrome mirror",
+          "reflective chrome"
+        ],
+        "keywords": [
+          "chrome mirror",
+          "synthetic shine",
+          "neo deco"
+        ],
+        "embedding_text": "chrome mirror surface, synthetic reflective polish and cold specular highlights"
+      },
+      {
+        "id": "mossy_concrete_surface",
+        "ko": "이끼 낀 콘크리트 표면",
+        "en": "a mossy concrete surface",
+        "weight": 0.62,
+        "tags": [
+          "surface",
+          "concrete",
+          "moss",
+          "organic"
+        ],
+        "aliases": [
+          "mossy concrete",
+          "moss concrete"
+        ],
+        "keywords": [
+          "mossy concrete",
+          "urban nature",
+          "organic synthetic contrast"
+        ],
+        "embedding_text": "mossy concrete surface, plant growth over urban material, organic versus built environment"
+      },
+      {
+        "id": "frosted_glass_surface",
+        "ko": "프로스트 글라스 표면",
+        "en": "a frosted glass surface",
+        "weight": 0.62,
+        "tags": [
+          "surface",
+          "glass",
+          "frosted",
+          "cool"
+        ],
+        "aliases": [
+          "frosted glass",
+          "milky glass"
+        ],
+        "keywords": [
+          "frosted glass",
+          "cool blue",
+          "diffused surface"
+        ],
+        "embedding_text": "frosted glass surface, milky translucent material and cool diffused reflections"
       }
     ],
     "aesthetic_trend": [
@@ -165730,6 +169879,319 @@
           "flip phone",
           "stickers"
         ]
+      },
+      {
+        "id": "poetcore_aesthetic",
+        "ko": "시인 감성의 북ish poetcore 스타일",
+        "en": "poetcore bookish writer aesthetic",
+        "weight": 1.02,
+        "tags": [
+          "aesthetic",
+          "poetcore",
+          "bookish",
+          "analog",
+          "no_text"
+        ],
+        "aliases": [
+          "poetcore",
+          "writer aesthetic",
+          "bookish aesthetic"
+        ],
+        "keywords": [
+          "poetcore",
+          "fountain pen",
+          "bookish",
+          "satchel",
+          "writer room"
+        ],
+        "embedding_text": "poetcore bookish writer aesthetic, fountain pen, satchel, old books with unreadable pages, quiet literary portrait styling"
+      },
+      {
+        "id": "neo_deco_editorial_aesthetic",
+        "ko": "크롬과 브라스의 네오 데코 에디토리얼 스타일",
+        "en": "neo-deco chrome brass editorial aesthetic",
+        "weight": 0.9,
+        "tags": [
+          "aesthetic",
+          "neo_deco",
+          "chrome",
+          "brass",
+          "editorial"
+        ],
+        "aliases": [
+          "neo deco",
+          "neo-deco editorial"
+        ],
+        "keywords": [
+          "neo deco",
+          "chrome",
+          "brass",
+          "art deco",
+          "geometric luxury"
+        ],
+        "embedding_text": "neo-deco chrome brass editorial aesthetic, geometric luxury, chrome edges, brass, marble, polished shadows"
+      },
+      {
+        "id": "glitchy_glam_aesthetic",
+        "ko": "글리치 글램 뷰티 에디토리얼 스타일",
+        "en": "glitchy glam beauty editorial aesthetic",
+        "weight": 0.86,
+        "tags": [
+          "aesthetic",
+          "glitch",
+          "glam",
+          "beauty",
+          "no_text"
+        ],
+        "aliases": [
+          "glitchy glam",
+          "pixel glamour"
+        ],
+        "keywords": [
+          "glitchy glam",
+          "asymmetrical beauty",
+          "pixel glamour",
+          "digital distortion"
+        ],
+        "embedding_text": "glitchy glam beauty editorial aesthetic, asymmetrical color, pixel-like light artifacts, imperfect symmetry, no readable screen text"
+      },
+      {
+        "id": "laced_up_delicate_aesthetic",
+        "ko": "레이스업 섬세 맥시멀 감성",
+        "en": "laced-up delicate heirloom aesthetic",
+        "weight": 0.82,
+        "tags": [
+          "aesthetic",
+          "lace",
+          "delicate",
+          "heirloom"
+        ],
+        "aliases": [
+          "laced up",
+          "lace aesthetic",
+          "heirloom lace"
+        ],
+        "keywords": [
+          "laced up",
+          "lace collar",
+          "crochet detail",
+          "heirloom lace"
+        ],
+        "embedding_text": "laced-up delicate heirloom aesthetic, lace trim, crochet detail, soft stitched accessories, tactile delicacy"
+      },
+      {
+        "id": "cool_blue_glacier_aesthetic",
+        "ko": "차가운 글레이셔 블루 감성",
+        "en": "cool blue glacier aesthetic",
+        "weight": 0.82,
+        "tags": [
+          "aesthetic",
+          "blue",
+          "glacier",
+          "cold"
+        ],
+        "aliases": [
+          "cool blue",
+          "glacier aesthetic",
+          "icy blue"
+        ],
+        "keywords": [
+          "cool blue",
+          "glacier blue",
+          "frosted makeup",
+          "icy elegance"
+        ],
+        "embedding_text": "cool blue glacier aesthetic, icy blue palette, frosted light, pearl blue highlights, cold clean glamour"
+      },
+      {
+        "id": "wilderkind_forest_aesthetic",
+        "ko": "숲과 생물 모티프의 wilderkind 감성",
+        "en": "wilderkind forest creature aesthetic",
+        "weight": 0.78,
+        "tags": [
+          "aesthetic",
+          "forest",
+          "nature",
+          "creature"
+        ],
+        "aliases": [
+          "wilderkind",
+          "forest creature aesthetic"
+        ],
+        "keywords": [
+          "wilderkind",
+          "forest-core",
+          "butterfly wing",
+          "dragonfly",
+          "moss"
+        ],
+        "embedding_text": "wilderkind forest creature aesthetic, forest-core motifs, moss, butterfly or dragonfly details, nature-inflected styling"
+      },
+      {
+        "id": "surreal_silliness_aesthetic",
+        "ko": "초현실적 장난스러움 감성",
+        "en": "surreal silliness playful uncanny aesthetic",
+        "weight": 0.84,
+        "tags": [
+          "aesthetic",
+          "surreal",
+          "playful",
+          "uncanny"
+        ],
+        "aliases": [
+          "surreal silliness",
+          "playful uncanny"
+        ],
+        "keywords": [
+          "surreal silliness",
+          "absurd elegance",
+          "playful uncanny",
+          "dreamcore"
+        ],
+        "embedding_text": "surreal silliness playful uncanny aesthetic, absurd objects, logic-bending scene, photoreal playful strangeness"
+      },
+      {
+        "id": "frutiger_aero_aesthetic",
+        "ko": "프루티거 에어로 초기 인터넷 감성",
+        "en": "Frutiger Aero early-internet glossy aesthetic",
+        "weight": 0.76,
+        "tags": [
+          "aesthetic",
+          "frutiger",
+          "y2k",
+          "digital",
+          "no_text"
+        ],
+        "aliases": [
+          "frutiger aero",
+          "early internet aesthetic"
+        ],
+        "keywords": [
+          "frutiger aero",
+          "glossy aqua",
+          "early internet",
+          "bubble UI no text"
+        ],
+        "embedding_text": "Frutiger Aero early-internet glossy aesthetic, aqua glass, chrome, bubble-like reflections, abstract non-readable UI shapes"
+      },
+      {
+        "id": "cybercore_editorial_aesthetic",
+        "ko": "사이버코어 에디토리얼 감성",
+        "en": "cybercore editorial aesthetic",
+        "weight": 0.78,
+        "tags": [
+          "aesthetic",
+          "cybercore",
+          "digital",
+          "editorial",
+          "no_text"
+        ],
+        "aliases": [
+          "cybercore",
+          "cyber editorial"
+        ],
+        "keywords": [
+          "cybercore",
+          "digital glow",
+          "synthetic color",
+          "non-readable screens"
+        ],
+        "embedding_text": "cybercore editorial aesthetic, synthetic color, abstract screen glow, digital textures, no readable interface text"
+      },
+      {
+        "id": "normcore_everyday_realism",
+        "ko": "노멀코어 일상 리얼리즘 감성",
+        "en": "normcore everyday realism aesthetic",
+        "weight": 0.86,
+        "tags": [
+          "aesthetic",
+          "normcore",
+          "everyday",
+          "realism"
+        ],
+        "aliases": [
+          "normcore",
+          "everyday realism",
+          "plain beauty"
+        ],
+        "keywords": [
+          "normcore",
+          "clean casual",
+          "quiet mundane",
+          "plain beauty"
+        ],
+        "embedding_text": "normcore everyday realism aesthetic, plain beauty, clean casual wardrobe, ordinary lived-in photographic realism"
+      },
+      {
+        "id": "analog_diary_aesthetic",
+        "ko": "아날로그 다이어리 메모리 감성",
+        "en": "analog diary memory aesthetic with unreadable paper",
+        "weight": 0.88,
+        "tags": [
+          "aesthetic",
+          "analog",
+          "diary",
+          "memory",
+          "no_text_required",
+          "no_text"
+        ],
+        "aliases": [
+          "analog diary",
+          "memory archive aesthetic"
+        ],
+        "keywords": [
+          "analog diary",
+          "found photograph",
+          "blank diary",
+          "non-legible notes"
+        ],
+        "embedding_text": "analog diary memory aesthetic, found photographs, blank diary pages, non-legible notes, film grain archive mood"
+      },
+      {
+        "id": "local_pride_documentary_aesthetic",
+        "ko": "로컬 프라이드 다큐멘터리 감성",
+        "en": "local-pride community documentary aesthetic",
+        "weight": 0.82,
+        "tags": [
+          "aesthetic",
+          "local",
+          "community",
+          "documentary"
+        ],
+        "aliases": [
+          "local pride",
+          "community documentary"
+        ],
+        "keywords": [
+          "local pride",
+          "neighborhood intimacy",
+          "community ritual"
+        ],
+        "embedding_text": "local-pride community documentary aesthetic, neighborhood intimacy, shared table, practical local realism, unbranded signage"
+      },
+      {
+        "id": "repair_culture_slow_fashion",
+        "ko": "수선 문화와 슬로우 패션 감성",
+        "en": "repair-culture slow-fashion aesthetic",
+        "weight": 0.8,
+        "tags": [
+          "aesthetic",
+          "repair",
+          "slow_fashion",
+          "craft"
+        ],
+        "aliases": [
+          "repair culture",
+          "slow fashion",
+          "visible mending"
+        ],
+        "keywords": [
+          "repair culture",
+          "visible mending",
+          "upcycled fashion",
+          "slow fashion"
+        ],
+        "embedding_text": "repair-culture slow-fashion aesthetic, visible mending, hands repairing fabric, slow fashion, process-focused documentary styling"
       }
     ],
     "relational_action": [
@@ -175755,6 +180217,159 @@
           "side",
           "quest"
         ]
+      },
+      {
+        "id": "late_night_errand",
+        "ko": "늦은 밤 심부름 상황",
+        "en": "late-night errand situation",
+        "weight": 0.7,
+        "tags": [
+          "situation",
+          "errand",
+          "night",
+          "urban"
+        ],
+        "aliases": [
+          "late-night errand",
+          "night errand"
+        ],
+        "keywords": [
+          "late-night errand",
+          "convenience store run",
+          "urban solitude"
+        ],
+        "embedding_text": "late-night errand situation, small night routine, convenience store or transit mood"
+      },
+      {
+        "id": "digital_detox_afternoon",
+        "ko": "디지털 디톡스 오후 상황",
+        "en": "digital-detox offline afternoon situation",
+        "weight": 0.58,
+        "tags": [
+          "situation",
+          "offline",
+          "digital_detox"
+        ],
+        "aliases": [
+          "digital detox",
+          "offline afternoon"
+        ],
+        "keywords": [
+          "digital detox",
+          "offline afternoon",
+          "phone put away"
+        ],
+        "embedding_text": "digital-detox offline afternoon situation, phone put away, quiet analog routine"
+      },
+      {
+        "id": "community_ritual_setup",
+        "ko": "공동체 의식 준비 상황",
+        "en": "community ritual setup situation",
+        "weight": 0.62,
+        "tags": [
+          "situation",
+          "community",
+          "ritual",
+          "local"
+        ],
+        "aliases": [
+          "community ritual",
+          "shared table setup"
+        ],
+        "keywords": [
+          "community ritual",
+          "shared table",
+          "local pride"
+        ],
+        "embedding_text": "community ritual setup situation, shared table, chairs, flowers, local documentary gathering without readable signage"
+      },
+      {
+        "id": "repair_culture_session",
+        "ko": "수선 문화 작업 상황",
+        "en": "repair-culture visible-mending session",
+        "weight": 0.58,
+        "tags": [
+          "situation",
+          "repair",
+          "slow_fashion",
+          "craft"
+        ],
+        "aliases": [
+          "repair culture session",
+          "visible mending"
+        ],
+        "keywords": [
+          "repair culture",
+          "visible mending",
+          "slow fashion"
+        ],
+        "embedding_text": "repair-culture visible-mending session, hands repairing fabric, slow fashion and craft process"
+      },
+      {
+        "id": "local_pride_market_walk",
+        "ko": "로컬 시장을 걷는 상황",
+        "en": "local-pride market walk with non-readable signage",
+        "weight": 0.6,
+        "tags": [
+          "situation",
+          "local",
+          "market",
+          "no_text"
+        ],
+        "aliases": [
+          "local market walk",
+          "local pride walk"
+        ],
+        "keywords": [
+          "local pride",
+          "market walk",
+          "non-readable signs"
+        ],
+        "embedding_text": "local-pride market walk, neighborhood stalls and non-readable signage, documentary realism"
+      },
+      {
+        "id": "photo_dump_diary_sequence",
+        "ko": "포토덤프 다이어리 시퀀스 상황",
+        "en": "photo-dump diary sequence with no captions",
+        "weight": 0.56,
+        "tags": [
+          "situation",
+          "photodump",
+          "diary",
+          "no_text_required",
+          "no_text"
+        ],
+        "aliases": [
+          "photo dump diary",
+          "diary sequence"
+        ],
+        "keywords": [
+          "photo dump",
+          "diary sequence",
+          "no captions"
+        ],
+        "embedding_text": "photo-dump diary sequence with no captions, casual archive rhythm, no readable hashtags or text overlays"
+      },
+      {
+        "id": "public_private_persona_moment",
+        "ko": "공적 페르소나와 사적 자아가 갈라지는 순간",
+        "en": "public-persona private-self moment with no readable social UI",
+        "weight": 0.56,
+        "tags": [
+          "situation",
+          "identity",
+          "privacy",
+          "no_text"
+        ],
+        "aliases": [
+          "public persona private self moment"
+        ],
+        "keywords": [
+          "public persona",
+          "private self",
+          "no readable social UI"
+        ],
+        "embedding_text": "public-persona private-self moment, identity contrast shown through posture and reflection without readable social UI"
       }
     ],
     "occasion_context": [
@@ -176312,6 +180927,94 @@
           "after",
           "service"
         ]
+      },
+      {
+        "id": "afterparty_dawn_cleanup",
+        "ko": "애프터파티 새벽 정리 후의 맥락",
+        "en": "afterparty dawn cleanup context",
+        "weight": 0.56,
+        "tags": [
+          "occasion",
+          "afterparty",
+          "dawn",
+          "cleanup"
+        ],
+        "aliases": [
+          "afterparty dawn",
+          "dawn cleanup"
+        ],
+        "keywords": [
+          "afterparty dawn",
+          "quiet afterglow",
+          "cleanup"
+        ],
+        "embedding_text": "afterparty dawn cleanup context, quiet afterglow, cups and chairs arranged without readable labels"
+      },
+      {
+        "id": "last_summer_evening",
+        "ko": "마지막 여름 저녁 맥락",
+        "en": "last-summer evening context",
+        "weight": 0.54,
+        "tags": [
+          "occasion",
+          "summer",
+          "evening",
+          "nostalgia"
+        ],
+        "aliases": [
+          "last summer",
+          "last summer evening"
+        ],
+        "keywords": [
+          "last summer",
+          "summer dusk",
+          "nostalgia"
+        ],
+        "embedding_text": "last-summer evening context, seasonal nostalgia, warm humid light"
+      },
+      {
+        "id": "blackout_night_gathering",
+        "ko": "정전된 밤의 모임 맥락",
+        "en": "blackout night gathering context",
+        "weight": 0.52,
+        "tags": [
+          "occasion",
+          "blackout",
+          "night",
+          "community"
+        ],
+        "aliases": [
+          "blackout night",
+          "power outage gathering"
+        ],
+        "keywords": [
+          "blackout night",
+          "candle gathering",
+          "power outage"
+        ],
+        "embedding_text": "blackout night gathering context, candle and window light, community stillness, no readable screens"
+      },
+      {
+        "id": "eclipse_evening_watch",
+        "ko": "일식/월식을 기다리는 저녁 맥락",
+        "en": "eclipse evening watch context",
+        "weight": 0.48,
+        "tags": [
+          "occasion",
+          "eclipse",
+          "evening",
+          "sky"
+        ],
+        "aliases": [
+          "eclipse evening",
+          "eclipse watch"
+        ],
+        "keywords": [
+          "eclipse evening",
+          "sky watch",
+          "event atmosphere"
+        ],
+        "embedding_text": "eclipse evening watch context, sky-facing crowd arrangement and quiet anticipation without readable banners"
       }
     ],
     "body_pose": [
@@ -177451,6 +182154,715 @@
           ]
         }
       }
+    ],
+    "narrative_core": [
+      {
+        "id": "quiet_rebellion_core",
+        "ko": "조용한 반항의 서사 코어",
+        "en": "quiet rebellion narrative core",
+        "weight": 1.08,
+        "tags": [
+          "narrative",
+          "quiet",
+          "rebellion",
+          "editorial"
+        ],
+        "aliases": [
+          "quiet rebellion",
+          "soft protest",
+          "quiet defiance"
+        ],
+        "keywords": [
+          "quiet rebellion",
+          "soft protest",
+          "defiance",
+          "subtle resistance"
+        ],
+        "embedding_text": "quiet rebellion narrative core, subtle resistance, soft protest, understated defiance in a clean photographic scene"
+      },
+      {
+        "id": "tender_chaos_core",
+        "ko": "다정한 혼란의 서사 코어",
+        "en": "tender chaos narrative core",
+        "weight": 1.0,
+        "tags": [
+          "narrative",
+          "tender",
+          "chaos",
+          "candid"
+        ],
+        "aliases": [
+          "tender chaos",
+          "soft chaos"
+        ],
+        "keywords": [
+          "tender chaos",
+          "soft chaos",
+          "messy intimacy"
+        ],
+        "embedding_text": "tender chaos narrative core, warm human disorder, messy but affectionate candid scene energy"
+      },
+      {
+        "id": "ordinary_magic_core",
+        "ko": "평범한 마법의 서사 코어",
+        "en": "ordinary magic narrative core",
+        "weight": 1.04,
+        "tags": [
+          "narrative",
+          "ordinary",
+          "magic",
+          "domestic"
+        ],
+        "aliases": [
+          "ordinary magic",
+          "sacred everyday"
+        ],
+        "keywords": [
+          "ordinary magic",
+          "everyday wonder",
+          "domestic ritual"
+        ],
+        "embedding_text": "ordinary magic narrative core, everyday wonder shown through light, objects, and small domestic rituals"
+      },
+      {
+        "id": "fragile_intimacy_core",
+        "ko": "깨지기 쉬운 친밀감의 서사 코어",
+        "en": "fragile intimacy narrative core",
+        "weight": 0.96,
+        "tags": [
+          "narrative",
+          "intimate",
+          "fragile",
+          "quiet"
+        ],
+        "aliases": [
+          "fragile intimacy",
+          "vulnerable intimacy"
+        ],
+        "keywords": [
+          "fragile intimacy",
+          "vulnerable",
+          "delicate closeness"
+        ],
+        "embedding_text": "fragile intimacy narrative core, delicate closeness, vulnerable quiet mood without body-first framing"
+      },
+      {
+        "id": "private_ritual_core",
+        "ko": "사적인 의식의 서사 코어",
+        "en": "private ritual narrative core",
+        "weight": 0.92,
+        "tags": [
+          "narrative",
+          "ritual",
+          "private",
+          "domestic"
+        ],
+        "aliases": [
+          "private ritual",
+          "small ritual"
+        ],
+        "keywords": [
+          "private ritual",
+          "domestic ritual",
+          "quiet routine"
+        ],
+        "embedding_text": "private ritual narrative core, small personal routine shown through objects, gesture, and room atmosphere"
+      },
+      {
+        "id": "public_private_self_core",
+        "ko": "공적 페르소나와 사적 자아의 서사 코어",
+        "en": "public persona versus private self narrative core",
+        "weight": 0.92,
+        "tags": [
+          "narrative",
+          "identity",
+          "social",
+          "privacy",
+          "no_text"
+        ],
+        "aliases": [
+          "public persona private self",
+          "self curation",
+          "private self"
+        ],
+        "keywords": [
+          "public persona",
+          "private self",
+          "self-curation",
+          "identity split"
+        ],
+        "embedding_text": "public persona versus private self narrative core, self-curation, privacy and social identity shown without readable captions or UI text"
+      },
+      {
+        "id": "analog_diary_memory_core",
+        "ko": "아날로그 다이어리와 기억 아카이브 서사 코어",
+        "en": "analog diary memory archive narrative core with unreadable pages",
+        "weight": 1.05,
+        "tags": [
+          "narrative",
+          "analog",
+          "memory",
+          "archive",
+          "no_text_required",
+          "no_text"
+        ],
+        "aliases": [
+          "analog diary",
+          "family archive",
+          "memory archive"
+        ],
+        "keywords": [
+          "analog diary",
+          "family archive",
+          "found photograph",
+          "unreadable pages"
+        ],
+        "embedding_text": "analog diary memory archive narrative core, found photographs, blank or unreadable diary pages, non-legible handwritten marks, family archive mood"
+      },
+      {
+        "id": "urban_solitude_core",
+        "ko": "도시적 고독의 서사 코어",
+        "en": "urban solitude narrative core",
+        "weight": 1.0,
+        "tags": [
+          "narrative",
+          "urban",
+          "solitude",
+          "street"
+        ],
+        "aliases": [
+          "urban solitude",
+          "public solitude",
+          "anonymous commuter"
+        ],
+        "keywords": [
+          "urban solitude",
+          "anonymous commuter",
+          "late-night errand"
+        ],
+        "embedding_text": "urban solitude narrative core, anonymous commuter, late-night errand, public solitude in city light"
+      },
+      {
+        "id": "secret_garden_core",
+        "ko": "비밀 정원의 서사 코어",
+        "en": "secret garden narrative core",
+        "weight": 0.88,
+        "tags": [
+          "narrative",
+          "garden",
+          "nature",
+          "escape"
+        ],
+        "aliases": [
+          "secret garden",
+          "wildflower ritual"
+        ],
+        "keywords": [
+          "secret garden",
+          "hidden garden",
+          "wildflower ritual"
+        ],
+        "embedding_text": "secret garden narrative core, hidden garden escape, wildflower ritual, quiet nature intimacy"
+      },
+      {
+        "id": "near_future_nostalgia_core",
+        "ko": "근미래 향수의 서사 코어",
+        "en": "near-future nostalgia narrative core",
+        "weight": 0.96,
+        "tags": [
+          "narrative",
+          "future",
+          "nostalgia",
+          "technology"
+        ],
+        "aliases": [
+          "near-future nostalgia",
+          "future nostalgia",
+          "retrofuturist longing"
+        ],
+        "keywords": [
+          "near-future nostalgia",
+          "soft sci-fi",
+          "retrofuturist longing"
+        ],
+        "embedding_text": "near-future nostalgia narrative core, soft sci-fi, retrofuturist longing, future objects with analog emotion"
+      },
+      {
+        "id": "ai_companion_core",
+        "ko": "AI 동반자의 서사 코어",
+        "en": "AI companion narrative core with abstract non-readable screen glow",
+        "weight": 0.9,
+        "tags": [
+          "narrative",
+          "ai",
+          "technology",
+          "companion",
+          "no_text_required",
+          "no_text"
+        ],
+        "aliases": [
+          "AI companion",
+          "human-machine intimacy",
+          "AI apprentice"
+        ],
+        "keywords": [
+          "AI companion",
+          "human machine intimacy",
+          "abstract screen glow"
+        ],
+        "embedding_text": "AI companion narrative core, human-machine intimacy, abstract screen glow, blurred non-readable interface light, no legible UI text"
+      },
+      {
+        "id": "romantic_decay_core",
+        "ko": "로맨틱한 퇴락의 서사 코어",
+        "en": "romantic decay narrative core",
+        "weight": 0.98,
+        "tags": [
+          "narrative",
+          "romantic",
+          "decay",
+          "gothic"
+        ],
+        "aliases": [
+          "romantic decay",
+          "haunted domesticity",
+          "gothic tenderness"
+        ],
+        "keywords": [
+          "romantic decay",
+          "gothic tenderness",
+          "faded room"
+        ],
+        "embedding_text": "romantic decay narrative core, elegant atmospheric decay, faded glamour, gothic tenderness, non-graphic and stylized"
+      },
+      {
+        "id": "broken_luxury_core",
+        "ko": "무너진 럭셔리의 서사 코어",
+        "en": "broken luxury narrative core",
+        "weight": 0.98,
+        "tags": [
+          "narrative",
+          "luxury",
+          "decay",
+          "editorial"
+        ],
+        "aliases": [
+          "broken luxury",
+          "faded glamour",
+          "champagne melancholy"
+        ],
+        "keywords": [
+          "broken luxury",
+          "faded glamour",
+          "old hotel lobby"
+        ],
+        "embedding_text": "broken luxury narrative core, faded glamour, cracked marble, velvet shadow, old hotel mood without brand names"
+      },
+      {
+        "id": "community_ritual_core",
+        "ko": "공동체 의식의 서사 코어",
+        "en": "community ritual narrative core",
+        "weight": 0.9,
+        "tags": [
+          "narrative",
+          "community",
+          "local",
+          "documentary"
+        ],
+        "aliases": [
+          "community ritual",
+          "local pride",
+          "mutual aid"
+        ],
+        "keywords": [
+          "community ritual",
+          "local pride",
+          "shared table",
+          "mutual aid"
+        ],
+        "embedding_text": "community ritual narrative core, local pride, shared table, mutual aid, ordinary community documentary atmosphere"
+      },
+      {
+        "id": "digital_privacy_core",
+        "ko": "디지털 프라이버시 불안의 서사 코어",
+        "en": "digital privacy anxiety narrative core with blurred non-readable screens",
+        "weight": 0.86,
+        "tags": [
+          "narrative",
+          "privacy",
+          "digital",
+          "screen",
+          "no_text_required",
+          "no_text"
+        ],
+        "aliases": [
+          "digital privacy",
+          "privacy anxiety",
+          "hypervisibility"
+        ],
+        "keywords": [
+          "digital privacy",
+          "privacy anxiety",
+          "blurred screen glow",
+          "hypervisibility"
+        ],
+        "embedding_text": "digital privacy anxiety narrative core, hypervisibility, phone-lit face, blurred non-readable screens, abstract feed glow, no readable text"
+      },
+      {
+        "id": "gentle_apocalypse_core",
+        "ko": "부드러운 종말감의 서사 코어",
+        "en": "gentle apocalypse narrative core",
+        "weight": 0.82,
+        "tags": [
+          "narrative",
+          "apocalypse",
+          "soft_sci_fi",
+          "surreal"
+        ],
+        "aliases": [
+          "gentle apocalypse",
+          "tender dystopia",
+          "climate dream"
+        ],
+        "keywords": [
+          "gentle apocalypse",
+          "tender dystopia",
+          "climate dream"
+        ],
+        "embedding_text": "gentle apocalypse narrative core, tender dystopia, climate dream, soft survival, non-graphic quiet aftermath"
+      },
+      {
+        "id": "offline_afternoon_core",
+        "ko": "오프라인 오후와 디지털 디톡스 서사 코어",
+        "en": "offline afternoon digital-detox narrative core",
+        "weight": 0.78,
+        "tags": [
+          "narrative",
+          "offline",
+          "digital_detox",
+          "quiet"
+        ],
+        "aliases": [
+          "digital detox",
+          "offline afternoon",
+          "appstinence"
+        ],
+        "keywords": [
+          "digital detox",
+          "offline afternoon",
+          "slow living"
+        ],
+        "embedding_text": "offline afternoon digital-detox narrative core, slow living, phone put away, quiet human routine without screen focus"
+      }
+    ],
+    "concept_tension": [
+      {
+        "id": "organic_vs_synthetic_tension",
+        "ko": "유기적인 것과 합성적인 것의 대립",
+        "en": "organic versus synthetic concept tension",
+        "weight": 1.05,
+        "tags": [
+          "tension",
+          "organic",
+          "synthetic",
+          "material"
+        ],
+        "aliases": [
+          "organic vs synthetic",
+          "natural vs artificial"
+        ],
+        "keywords": [
+          "organic vs synthetic",
+          "natural artificial",
+          "plants chrome"
+        ],
+        "embedding_text": "organic versus synthetic concept tension, natural textures against chrome, plant life with engineered surfaces"
+      },
+      {
+        "id": "nostalgic_vs_futuristic_tension",
+        "ko": "향수와 미래감의 대립",
+        "en": "nostalgic versus futuristic concept tension",
+        "weight": 1.0,
+        "tags": [
+          "tension",
+          "nostalgia",
+          "future"
+        ],
+        "aliases": [
+          "nostalgic vs futuristic",
+          "future nostalgia"
+        ],
+        "keywords": [
+          "nostalgic versus futuristic",
+          "analog future",
+          "retrofuturist"
+        ],
+        "embedding_text": "nostalgic versus futuristic concept tension, analog memory cues contrasted with soft futuristic light"
+      },
+      {
+        "id": "polished_vs_imperfect_tension",
+        "ko": "광택과 불완전함의 대립",
+        "en": "polished versus imperfect concept tension",
+        "weight": 0.92,
+        "tags": [
+          "tension",
+          "polished",
+          "imperfect",
+          "texture"
+        ],
+        "aliases": [
+          "polished vs imperfect",
+          "gloss versus flaw"
+        ],
+        "keywords": [
+          "polished imperfect",
+          "glossy damaged",
+          "refined flaw"
+        ],
+        "embedding_text": "polished versus imperfect concept tension, glossy clean surfaces beside scratches, dust, grain, or lived-in flaws"
+      },
+      {
+        "id": "public_vs_private_tension",
+        "ko": "공적 공간과 사적 감정의 대립",
+        "en": "public versus private concept tension",
+        "weight": 0.96,
+        "tags": [
+          "tension",
+          "public",
+          "private",
+          "identity"
+        ],
+        "aliases": [
+          "public vs private",
+          "public persona private self"
+        ],
+        "keywords": [
+          "public versus private",
+          "private emotion public space"
+        ],
+        "embedding_text": "public versus private concept tension, private emotion held inside public space, identity contrast without readable captions"
+      },
+      {
+        "id": "sacred_vs_mundane_tension",
+        "ko": "신성함과 일상의 대립",
+        "en": "respectful sacred versus mundane concept tension",
+        "weight": 0.82,
+        "tags": [
+          "tension",
+          "sacred",
+          "mundane",
+          "respectful"
+        ],
+        "aliases": [
+          "sacred vs mundane",
+          "sacred everyday"
+        ],
+        "keywords": [
+          "sacred mundane",
+          "respectful ritual",
+          "everyday sacred"
+        ],
+        "embedding_text": "respectful sacred versus mundane concept tension, everyday objects arranged like quiet symbolic ritual, non-graphic and respectful"
+      },
+      {
+        "id": "documentary_vs_staged_tension",
+        "ko": "다큐멘터리와 연출성의 대립",
+        "en": "documentary versus staged concept tension",
+        "weight": 0.9,
+        "tags": [
+          "tension",
+          "documentary",
+          "staged",
+          "editorial"
+        ],
+        "aliases": [
+          "documentary vs staged",
+          "candid tableau"
+        ],
+        "keywords": [
+          "documentary versus staged",
+          "staged candid",
+          "tableau realism"
+        ],
+        "embedding_text": "documentary versus staged concept tension, candid realism arranged with subtle tableau-like visual order"
+      },
+      {
+        "id": "analog_vs_ai_tension",
+        "ko": "아날로그와 AI의 대립",
+        "en": "analog versus AI concept tension with non-readable interfaces",
+        "weight": 1.0,
+        "tags": [
+          "tension",
+          "analog",
+          "ai",
+          "no_text_required",
+          "no_text"
+        ],
+        "aliases": [
+          "analog vs AI",
+          "analog versus artificial intelligence"
+        ],
+        "keywords": [
+          "analog versus AI",
+          "diary and AI",
+          "non-readable interface"
+        ],
+        "embedding_text": "analog versus AI concept tension, film grain, paper objects, abstract blurred AI screen glow, no readable interface or handwriting"
+      },
+      {
+        "id": "luxury_vs_decay_tension",
+        "ko": "럭셔리와 퇴락의 대립",
+        "en": "luxury versus decay concept tension",
+        "weight": 1.0,
+        "tags": [
+          "tension",
+          "luxury",
+          "decay",
+          "editorial"
+        ],
+        "aliases": [
+          "luxury vs decay",
+          "broken luxury"
+        ],
+        "keywords": [
+          "luxury versus decay",
+          "velvet decay",
+          "cracked marble"
+        ],
+        "embedding_text": "luxury versus decay concept tension, velvet, brass, marble, dust, peeling paint, faded glamour"
+      },
+      {
+        "id": "visibility_vs_secrecy_tension",
+        "ko": "가시성과 비밀스러움의 대립",
+        "en": "visibility versus secrecy concept tension",
+        "weight": 0.86,
+        "tags": [
+          "tension",
+          "visibility",
+          "secrecy",
+          "privacy"
+        ],
+        "aliases": [
+          "visibility vs secrecy",
+          "hypervisibility secrecy"
+        ],
+        "keywords": [
+          "visibility versus secrecy",
+          "privacy anxiety",
+          "hidden face"
+        ],
+        "embedding_text": "visibility versus secrecy concept tension, hypervisible light and hidden details, privacy anxiety without readable UI"
+      },
+      {
+        "id": "warmth_vs_distance_tension",
+        "ko": "따뜻함과 거리감의 대립",
+        "en": "warmth versus distance concept tension",
+        "weight": 0.78,
+        "tags": [
+          "tension",
+          "warmth",
+          "distance",
+          "emotion"
+        ],
+        "aliases": [
+          "warmth vs distance",
+          "intimate distance"
+        ],
+        "keywords": [
+          "warmth distance",
+          "emotional distance",
+          "warm light cold posture"
+        ],
+        "embedding_text": "warmth versus distance concept tension, warm light with emotionally distant posture or spatial gap"
+      },
+      {
+        "id": "playful_vs_eerie_tension",
+        "ko": "장난스러움과 섬뜩함의 대립",
+        "en": "playful versus eerie concept tension",
+        "weight": 0.86,
+        "tags": [
+          "tension",
+          "playful",
+          "eerie",
+          "surreal"
+        ],
+        "aliases": [
+          "playful vs eerie",
+          "surreal silliness"
+        ],
+        "keywords": [
+          "playful eerie",
+          "funny uncanny",
+          "surreal playful"
+        ],
+        "embedding_text": "playful versus eerie concept tension, toy-like color or odd humor with uncanny photographic stillness"
+      },
+      {
+        "id": "urban_vs_wilderness_tension",
+        "ko": "도시와 야생 자연의 대립",
+        "en": "urban versus wilderness concept tension",
+        "weight": 0.84,
+        "tags": [
+          "tension",
+          "urban",
+          "wilderness",
+          "nature"
+        ],
+        "aliases": [
+          "urban vs wilderness",
+          "city wilderness"
+        ],
+        "keywords": [
+          "urban wilderness",
+          "city nature contrast",
+          "plants subway"
+        ],
+        "embedding_text": "urban versus wilderness concept tension, city infrastructure interrupted by plant life, weather, moss, or garden elements"
+      },
+      {
+        "id": "human_touch_vs_automation_tension",
+        "ko": "인간의 손길과 자동화의 대립",
+        "en": "human touch versus automation concept tension",
+        "weight": 0.86,
+        "tags": [
+          "tension",
+          "human",
+          "automation",
+          "craft"
+        ],
+        "aliases": [
+          "human touch vs automation",
+          "handmade vs automated"
+        ],
+        "keywords": [
+          "human touch automation",
+          "craft machine",
+          "handmade digital"
+        ],
+        "embedding_text": "human touch versus automation concept tension, visible handmade process contrasted with automated screens or machines with no readable interface text"
+      },
+      {
+        "id": "realistic_vs_dreamlike_tension",
+        "ko": "현실감과 꿈결 같은 감각의 대립",
+        "en": "realistic versus dreamlike concept tension",
+        "weight": 0.88,
+        "tags": [
+          "tension",
+          "realistic",
+          "dreamlike",
+          "surreal"
+        ],
+        "aliases": [
+          "realistic vs dreamlike",
+          "real dream tension"
+        ],
+        "keywords": [
+          "realistic dreamlike",
+          "dream logic realism",
+          "photoreal surreal"
+        ],
+        "embedding_text": "realistic versus dreamlike concept tension, grounded photographic detail with dream logic or impossible quiet atmosphere"
+      }
     ]
   },
   "negative_prompt": [
@@ -177993,6 +183405,8 @@
     "crowd_density",
     "situation_context",
     "occasion_context",
+    "narrative_core",
+    "concept_tension",
     "surface_material",
     "time_of_day",
     "weather",
@@ -178132,7 +183546,9 @@
     "occasion_context": 1.55,
     "body_pose": 2.05,
     "shot_scale": 1.95,
-    "platform_framing": 1.65
+    "platform_framing": 1.65,
+    "narrative_core": 1.85,
+    "concept_tension": 1.45
   },
   "generation_settings": {
     "priority_bias": 0.45,
@@ -178264,7 +183680,6 @@
       "homebody_room": {
         "policy_id": "homebody_room-semantic-policy-v1",
         "aliases": [
-          "bedroom",
           "blanket",
           "cozy apartment",
           "game controller",
@@ -178283,7 +183698,6 @@
           "침실"
         ],
         "keywords": [
-          "bedroom",
           "blanket",
           "cozy apartment",
           "game controller",
@@ -178306,8 +183720,6 @@
         "signal_lexicon": {
           "strong": [
             "homebody",
-            "bedroom",
-            "apartment",
             "gamer",
             "gaming",
             "monitor",
@@ -178315,7 +183727,6 @@
             "blanket"
           ],
           "ambient": [
-            "home",
             "interior",
             "creator_room",
             "cozy",
@@ -178358,7 +183769,9 @@
           "allow_ids": [
             "esports_streamer_room",
             "interior_lifestyle",
-            "vhs_camcorder_home_video"
+            "vhs_camcorder_home_video",
+            "analog_diary_memory_portrait",
+            "surreal_silliness_everyday_scene"
           ],
           "deny_ids": [
             "bedroom_mirror",
@@ -185715,9 +191128,568 @@
             ]
           }
         }
+      },
+      "narrative_concept_scene": {
+        "policy_id": "narrative-concept-scene-semantic-policy-v1",
+        "keywords": [
+          "narrative core",
+          "quiet rebellion",
+          "ordinary magic",
+          "analog diary",
+          "urban solitude",
+          "near-future nostalgia",
+          "AI companion",
+          "romantic decay",
+          "broken luxury",
+          "community ritual",
+          "digital privacy",
+          "gentle apocalypse",
+          "narrative-core",
+          "narrative-core photographic scene",
+          "bedroom shrine",
+          "family archive",
+          "memory archive",
+          "diary archive",
+          "analog diary family archive",
+          "found photograph",
+          "private ritual"
+        ],
+        "axis_label": "narrative-core photographic scene",
+        "axis_embedding_text": "poetic narrative-core photo scenes with quiet rebellion, analog diary memory, urban solitude, ordinary magic, digital privacy, AI companion, romantic decay, broken luxury and clean no-readable-text storytelling",
+        "steering_slots": [
+          "narrative_core",
+          "mood",
+          "situation_context",
+          "occasion_context",
+          "location",
+          "prop",
+          "capture_context",
+          "aesthetic_trend",
+          "world"
+        ],
+        "routed_slots": [
+          "narrative_core",
+          "mood",
+          "situation_context",
+          "occasion_context",
+          "location",
+          "prop",
+          "capture_context",
+          "aesthetic_trend",
+          "world"
+        ],
+        "preset_policy": {
+          "allow_ids": [
+            "quiet_rebellion_editorial",
+            "analog_diary_memory_portrait",
+            "urban_solitude_late_errand",
+            "poetcore_laundromat_portrait",
+            "digital_privacy_phone_glow_candid",
+            "near_future_nostalgia_room",
+            "romantic_decay_hotel_editorial",
+            "community_memory_documentary",
+            "surreal_silliness_everyday_scene"
+          ],
+          "fallback_terms": [
+            "narrative core",
+            "analog diary",
+            "urban solitude",
+            "ordinary magic",
+            "romantic decay",
+            "broken luxury",
+            "digital privacy"
+          ]
+        },
+        "signal_lexicon": {
+          "strong": [
+            "quiet rebellion",
+            "ordinary magic",
+            "analog diary",
+            "urban solitude",
+            "near-future nostalgia",
+            "AI companion",
+            "romantic decay",
+            "broken luxury",
+            "digital privacy"
+          ],
+          "ambient": [
+            "poetcore",
+            "memory archive",
+            "private ritual",
+            "community ritual",
+            "gentle apocalypse",
+            "secret garden"
+          ]
+        },
+        "slot_signals": {
+          "narrative_core": {
+            "core": [
+              "quiet_rebellion_core",
+              "analog_diary_memory_core",
+              "urban_solitude_core",
+              "near_future_nostalgia_core",
+              "ai_companion_core",
+              "romantic_decay_core",
+              "broken_luxury_core",
+              "digital_privacy_core"
+            ],
+            "support": [
+              "ordinary_magic_core",
+              "fragile_intimacy_core",
+              "community_ritual_core",
+              "gentle_apocalypse_core",
+              "private_ritual_core"
+            ]
+          },
+          "mood": {
+            "support": [
+              "quiet_defiance",
+              "ordinary_magic_mood",
+              "fragile_intimacy_mood",
+              "romantic_decay_mood",
+              "privacy_anxiety",
+              "domestic_melancholy",
+              "human_made_authenticity"
+            ]
+          },
+          "location": {
+            "support": [
+              "bedroom_shrine",
+              "attic_archive_room",
+              "old_hotel_lobby_decay",
+              "neighborhood_market_evening",
+              "indoor_forest_room",
+              "flower_flooded_room",
+              "mirror_portal_room"
+            ]
+          },
+          "prop": {
+            "support": [
+              "unreadable_diary_prop",
+              "old_postcard_unreadable_prop",
+              "polaroid_stack_unreadable_prop",
+              "fountain_pen_prop",
+              "crt_tv_abstract_glow_prop",
+              "field_notebook_unreadable_prop"
+            ]
+          },
+          "capture_context": {
+            "support": [
+              "analog_diary_snapshot_context",
+              "privacy_screen_glow_context",
+              "contact_sheet_archive_context",
+              "staged_tableau_editorial_context"
+            ]
+          }
+        },
+        "aliases": [
+          "narrative-core",
+          "narrative-core photographic scene",
+          "narrative core",
+          "bedroom shrine",
+          "family archive",
+          "memory archive",
+          "diary archive",
+          "analog diary family archive",
+          "found photograph",
+          "ordinary magic",
+          "private ritual"
+        ]
+      },
+      "concept_tension_scene": {
+        "policy_id": "concept-tension-scene-semantic-policy-v1",
+        "keywords": [
+          "concept tension",
+          "organic vs synthetic",
+          "analog vs AI",
+          "luxury vs decay",
+          "public vs private",
+          "documentary vs staged",
+          "realistic vs dreamlike",
+          "visibility vs secrecy",
+          "human touch vs automation",
+          "concept-tension",
+          "concept-tension photographic scene",
+          "visual tension",
+          "visual contrast pair",
+          "organic versus synthetic",
+          "analog versus AI",
+          "luxury versus decay"
+        ],
+        "axis_label": "concept-tension photographic scene",
+        "axis_embedding_text": "photographic concept-tension scene using visual contrast pairs such as organic versus synthetic, analog versus AI, luxury versus decay, public versus private, documentary versus staged, and realistic versus dreamlike",
+        "steering_slots": [
+          "concept_tension",
+          "narrative_core",
+          "location",
+          "surface_material",
+          "texture",
+          "lighting",
+          "composition",
+          "world",
+          "mood",
+          "aesthetic_trend"
+        ],
+        "routed_slots": [
+          "concept_tension",
+          "narrative_core",
+          "location",
+          "surface_material",
+          "texture",
+          "lighting",
+          "composition",
+          "world",
+          "mood",
+          "aesthetic_trend"
+        ],
+        "preset_policy": {
+          "allow_ids": [
+            "organic_synthetic_contrast_portrait",
+            "broken_luxury_still_life",
+            "romantic_decay_hotel_editorial",
+            "near_future_nostalgia_room",
+            "digital_privacy_phone_glow_candid",
+            "surreal_silliness_everyday_scene",
+            "quiet_rebellion_editorial"
+          ],
+          "fallback_terms": [
+            "concept tension",
+            "visual contrast",
+            "organic synthetic",
+            "analog AI",
+            "luxury decay",
+            "public private"
+          ]
+        },
+        "signal_lexicon": {
+          "strong": [
+            "organic vs synthetic",
+            "analog vs AI",
+            "luxury vs decay",
+            "public vs private",
+            "documentary vs staged",
+            "realistic vs dreamlike"
+          ],
+          "ambient": [
+            "visual contrast",
+            "polished imperfect",
+            "human touch automation",
+            "visibility secrecy",
+            "playful eerie"
+          ]
+        },
+        "slot_signals": {
+          "concept_tension": {
+            "core": [
+              "organic_vs_synthetic_tension",
+              "analog_vs_ai_tension",
+              "luxury_vs_decay_tension",
+              "public_vs_private_tension",
+              "documentary_vs_staged_tension",
+              "realistic_vs_dreamlike_tension"
+            ],
+            "support": [
+              "polished_vs_imperfect_tension",
+              "visibility_vs_secrecy_tension",
+              "human_touch_vs_automation_tension",
+              "playful_vs_eerie_tension",
+              "urban_vs_wilderness_tension"
+            ]
+          },
+          "surface_material": {
+            "support": [
+              "mossy_concrete_surface",
+              "chrome_mirror_surface",
+              "cracked_marble_surface",
+              "red_velvet_banquette_surface",
+              "frosted_glass_surface"
+            ]
+          },
+          "texture": {
+            "support": [
+              "low_res_pixel_glitch_texture",
+              "wet_asphalt_reflection_texture",
+              "peeling_paint_decay_texture",
+              "frosted_glass_haze_texture",
+              "photocopy_halftone_grain_texture"
+            ]
+          },
+          "composition": {
+            "support": [
+              "diptych_composition",
+              "triptych_composition",
+              "window_reflection_layering",
+              "surveillance_high_corner_angle",
+              "doorway_threshold_framing"
+            ]
+          }
+        },
+        "aliases": [
+          "concept-tension",
+          "concept-tension photographic scene",
+          "concept tension",
+          "visual tension",
+          "visual contrast pair",
+          "organic versus synthetic",
+          "analog versus AI",
+          "luxury versus decay"
+        ]
+      },
+      "analog_diary_archive_scene": {
+        "policy_id": "analog-diary-archive-scene-semantic-policy-v1",
+        "keywords": [
+          "analog diary",
+          "family archive",
+          "memory archive",
+          "bedroom shrine",
+          "found photograph",
+          "diary archive",
+          "attic archive",
+          "old postcard",
+          "blank diary"
+        ],
+        "aliases": [
+          "analog diary archive",
+          "bedroom shrine archive",
+          "family archive portrait"
+        ],
+        "axis_label": "analog diary archive scene",
+        "axis_embedding_text": "analog diary archive photo scene with blank unreadable diary pages, family archive, bedroom shrine, attic archive, old postcards, Polaroids and non-legible paper ephemera",
+        "steering_slots": [
+          "narrative_core",
+          "location",
+          "prop",
+          "capture_context",
+          "aesthetic_trend",
+          "texture",
+          "composition",
+          "mood"
+        ],
+        "routed_slots": [
+          "narrative_core",
+          "location",
+          "prop",
+          "capture_context",
+          "aesthetic_trend",
+          "texture",
+          "composition",
+          "mood"
+        ],
+        "preset_policy": {
+          "allow_ids": [
+            "analog_diary_memory_portrait",
+            "poetcore_laundromat_portrait"
+          ],
+          "fallback_terms": [
+            "analog diary",
+            "family archive",
+            "bedroom shrine",
+            "memory archive",
+            "found photograph"
+          ]
+        },
+        "signal_lexicon": {
+          "strong": [
+            "analog diary",
+            "family archive",
+            "memory archive",
+            "bedroom shrine",
+            "found photograph"
+          ],
+          "ambient": [
+            "old postcard",
+            "Polaroid",
+            "blank diary",
+            "attic archive",
+            "contact sheet"
+          ]
+        },
+        "slot_signals": {
+          "narrative_core": {
+            "core": [
+              "analog_diary_memory_core"
+            ],
+            "support": [
+              "private_ritual_core",
+              "fragile_intimacy_core"
+            ]
+          },
+          "location": {
+            "core": [
+              "bedroom_shrine",
+              "attic_archive_room"
+            ],
+            "support": [
+              "lived_in_studio_room"
+            ]
+          },
+          "prop": {
+            "core": [
+              "unreadable_diary_prop",
+              "old_postcard_unreadable_prop",
+              "polaroid_stack_unreadable_prop"
+            ],
+            "support": [
+              "fountain_pen_prop",
+              "film_roll_contact_sheet_prop",
+              "vintage_book_unreadable_pages_prop"
+            ]
+          },
+          "capture_context": {
+            "core": [
+              "analog_diary_snapshot_context",
+              "contact_sheet_archive_context"
+            ],
+            "support": [
+              "no_text_paper_ephemera_context"
+            ]
+          },
+          "aesthetic_trend": {
+            "support": [
+              "analog_diary_aesthetic",
+              "poetcore_aesthetic"
+            ]
+          },
+          "composition": {
+            "support": [
+              "contact_sheet_grid",
+              "scrapbook_grid_layout"
+            ]
+          },
+          "mood": {
+            "support": [
+              "nostalgic",
+              "fragile_intimacy_mood",
+              "domestic_melancholy"
+            ]
+          }
+        }
+      },
+      "digital_privacy_identity_scene": {
+        "policy_id": "digital-privacy-identity-scene-semantic-policy-v1",
+        "keywords": [
+          "digital privacy",
+          "privacy anxiety",
+          "public persona",
+          "private self",
+          "phone glow",
+          "blurred screen",
+          "no readable text",
+          "hypervisibility"
+        ],
+        "aliases": [
+          "public persona private self",
+          "privacy phone glow",
+          "blurred screen identity scene"
+        ],
+        "axis_label": "digital privacy identity scene",
+        "axis_embedding_text": "digital privacy identity photo scene with public persona versus private self, phone glow, blurred non-readable screens, abstract interface light and no readable UI text",
+        "steering_slots": [
+          "narrative_core",
+          "concept_tension",
+          "capture_context",
+          "prop",
+          "location",
+          "composition",
+          "mood",
+          "lighting"
+        ],
+        "routed_slots": [
+          "narrative_core",
+          "concept_tension",
+          "capture_context",
+          "prop",
+          "location",
+          "composition",
+          "mood",
+          "lighting"
+        ],
+        "preset_policy": {
+          "allow_ids": [
+            "digital_privacy_phone_glow_candid",
+            "quiet_rebellion_editorial",
+            "near_future_nostalgia_room"
+          ],
+          "fallback_terms": [
+            "digital privacy",
+            "public persona",
+            "private self",
+            "phone glow",
+            "blurred screen"
+          ]
+        },
+        "signal_lexicon": {
+          "strong": [
+            "digital privacy",
+            "privacy anxiety",
+            "public persona",
+            "private self",
+            "phone glow",
+            "blurred screen"
+          ],
+          "ambient": [
+            "hypervisibility",
+            "no readable text",
+            "abstract interface",
+            "screen glow"
+          ]
+        },
+        "slot_signals": {
+          "narrative_core": {
+            "core": [
+              "digital_privacy_core",
+              "public_private_self_core"
+            ],
+            "support": [
+              "ai_companion_core"
+            ]
+          },
+          "concept_tension": {
+            "core": [
+              "public_vs_private_tension",
+              "visibility_vs_secrecy_tension"
+            ],
+            "support": [
+              "analog_vs_ai_tension"
+            ]
+          },
+          "capture_context": {
+            "core": [
+              "privacy_screen_glow_context",
+              "blurred_screen_over_shoulder_context"
+            ]
+          },
+          "prop": {
+            "core": [
+              "blurred_laptop_screen_glow_prop",
+              "crt_tv_abstract_glow_prop"
+            ],
+            "support": [
+              "smartphone_in_hand"
+            ]
+          },
+          "location": {
+            "support": [
+              "glass_office",
+              "creator_room",
+              "local_cafe_closing_window"
+            ]
+          },
+          "mood": {
+            "support": [
+              "privacy_anxiety",
+              "quiet_defiance",
+              "tense"
+            ]
+          }
+        }
       }
     },
     "steering_priority": [
+      "analog_diary_archive_scene",
+      "digital_privacy_identity_scene",
+      "narrative_concept_scene",
+      "concept_tension_scene",
       "pose_framing_system",
       "social_vertical_framing",
       "skincare_product_riser_scene",
@@ -186386,6 +192358,67 @@
           "brass_candlestick_prop",
           "candle_teardrop_flame"
         ]
+      },
+      "narrative_concept_scene": {
+        "strong": [
+          "analog_diary_memory_portrait",
+          "quiet_rebellion_editorial",
+          "analog_diary_memory_core",
+          "bedroom_shrine",
+          "unreadable_diary_prop",
+          "analog_diary_aesthetic"
+        ],
+        "ambient": [
+          "ordinary_magic_core",
+          "fragile_intimacy_core",
+          "urban_solitude_core",
+          "private_ritual_core",
+          "contact_sheet_archive_context"
+        ]
+      },
+      "concept_tension_scene": {
+        "strong": [
+          "organic_synthetic_contrast_portrait",
+          "organic_vs_synthetic_tension",
+          "analog_vs_ai_tension",
+          "luxury_vs_decay_tension"
+        ],
+        "ambient": [
+          "polished_vs_imperfect_tension",
+          "public_vs_private_tension",
+          "realistic_vs_dreamlike_tension",
+          "window_reflection_layering"
+        ]
+      },
+      "analog_diary_archive_scene": {
+        "strong": [
+          "analog_diary_memory_portrait",
+          "analog_diary_memory_core",
+          "bedroom_shrine",
+          "unreadable_diary_prop",
+          "analog_diary_snapshot_context"
+        ],
+        "ambient": [
+          "poetcore_laundromat_portrait",
+          "old_postcard_unreadable_prop",
+          "polaroid_stack_unreadable_prop",
+          "contact_sheet_archive_context"
+        ]
+      },
+      "digital_privacy_identity_scene": {
+        "strong": [
+          "digital_privacy_phone_glow_candid",
+          "digital_privacy_core",
+          "public_private_self_core",
+          "public_vs_private_tension",
+          "privacy_screen_glow_context"
+        ],
+        "ambient": [
+          "quiet_rebellion_editorial",
+          "visibility_vs_secrecy_tension",
+          "blurred_laptop_screen_glow_prop",
+          "privacy_anxiety"
+        ]
       }
     },
     "family_conflicts": {
@@ -187030,6 +193063,101 @@
           "unreadable",
           "non-legible",
           "crop"
+        ],
+        "context_scope": "all",
+        "severity": "hard"
+      },
+      {
+        "id": "narrative_text_cues_must_be_non_readable",
+        "slots": [
+          "narrative_core",
+          "prop",
+          "capture_context",
+          "situation_context"
+        ],
+        "match_tokens": [
+          "diary",
+          "postcard",
+          "letter",
+          "page",
+          "screen",
+          "receipt",
+          "ticket",
+          "label",
+          "caption",
+          "hashtag",
+          "ui",
+          "chat",
+          "interface"
+        ],
+        "requires_item_any": [
+          "no_text",
+          "unreadable",
+          "blank",
+          "non-legible",
+          "non_legible",
+          "abstract",
+          "blurred",
+          "fictional",
+          "unbranded"
+        ],
+        "context_scope": "all",
+        "severity": "hard"
+      },
+      {
+        "id": "concept_tension_ai_digital_no_readable_ui",
+        "slots": [
+          "concept_tension",
+          "narrative_core",
+          "prop",
+          "capture_context",
+          "world"
+        ],
+        "match_tokens": [
+          "ai",
+          "screen",
+          "interface",
+          "ui",
+          "chat",
+          "algorithm",
+          "digital",
+          "feed"
+        ],
+        "requires_item_any": [
+          "no_text",
+          "unreadable",
+          "blurred",
+          "non-readable",
+          "non-legible",
+          "abstract",
+          "glow"
+        ],
+        "context_scope": "all",
+        "severity": "hard"
+      },
+      {
+        "id": "sacred_mundane_stays_respectful_symbolic",
+        "slots": [
+          "concept_tension",
+          "narrative_core",
+          "occasion_context",
+          "mood"
+        ],
+        "match_tokens": [
+          "sacred",
+          "ritual",
+          "memorial",
+          "chapel"
+        ],
+        "requires_item_any": [
+          "respectful",
+          "quiet",
+          "symbolic",
+          "everyday",
+          "non-graphic",
+          "non_graphic",
+          "domestic",
+          "ordinary"
         ],
         "context_scope": "all",
         "severity": "hard"
@@ -187726,6 +193854,48 @@
         },
         "severity": "soft",
         "penalty": 0.24
+      },
+      {
+        "id": "offline_detox_vs_screen_heavy_props",
+        "left": {
+          "slot": "narrative_core",
+          "ids": [
+            "offline_afternoon_core"
+          ]
+        },
+        "right": {
+          "slot": "prop",
+          "tokens": [
+            "screen",
+            "phone",
+            "smartphone",
+            "laptop",
+            "crt",
+            "monitor"
+          ]
+        },
+        "severity": "soft",
+        "penalty": 0.36
+      },
+      {
+        "id": "private_ritual_vs_packed_crowd",
+        "left": {
+          "slot": "narrative_core",
+          "ids": [
+            "private_ritual_core",
+            "fragile_intimacy_core"
+          ]
+        },
+        "right": {
+          "slot": "crowd_density",
+          "ids": [
+            "packed_commute_crowd",
+            "festival_dense_crowd",
+            "concert_stage_facing_crowd"
+          ]
+        },
+        "severity": "soft",
+        "penalty": 0.28
       }
     ]
   },
@@ -189062,6 +195232,123 @@
         "aesthetic_trend": [
           "witchy_mystic_still_life"
         ]
+      },
+      "narrative_concept_scene_strong": {
+        "narrative_core": [
+          "quiet_rebellion_core",
+          "analog_diary_memory_core",
+          "urban_solitude_core",
+          "ordinary_magic_core",
+          "near_future_nostalgia_core",
+          "ai_companion_core",
+          "romantic_decay_core",
+          "broken_luxury_core",
+          "digital_privacy_core"
+        ],
+        "location": [
+          "bedroom_shrine",
+          "attic_archive_room",
+          "old_hotel_lobby_decay",
+          "neighborhood_market_evening",
+          "indoor_forest_room",
+          "flower_flooded_room",
+          "mirror_portal_room"
+        ],
+        "prop": [
+          "unreadable_diary_prop",
+          "old_postcard_unreadable_prop",
+          "polaroid_stack_unreadable_prop",
+          "fountain_pen_prop",
+          "crt_tv_abstract_glow_prop",
+          "field_notebook_unreadable_prop"
+        ],
+        "capture_context": [
+          "analog_diary_snapshot_context",
+          "privacy_screen_glow_context",
+          "contact_sheet_archive_context",
+          "staged_tableau_editorial_context"
+        ],
+        "aesthetic_trend": [
+          "analog_diary_aesthetic",
+          "poetcore_aesthetic",
+          "surreal_silliness_aesthetic",
+          "local_pride_documentary_aesthetic"
+        ]
+      },
+      "concept_tension_scene_strong": {
+        "concept_tension": [
+          "organic_vs_synthetic_tension",
+          "analog_vs_ai_tension",
+          "luxury_vs_decay_tension",
+          "public_vs_private_tension",
+          "documentary_vs_staged_tension",
+          "realistic_vs_dreamlike_tension"
+        ],
+        "surface_material": [
+          "mossy_concrete_surface",
+          "chrome_mirror_surface",
+          "cracked_marble_surface",
+          "red_velvet_banquette_surface",
+          "frosted_glass_surface"
+        ],
+        "texture": [
+          "low_res_pixel_glitch_texture",
+          "wet_asphalt_reflection_texture",
+          "peeling_paint_decay_texture",
+          "frosted_glass_haze_texture",
+          "photocopy_halftone_grain_texture"
+        ],
+        "composition": [
+          "diptych_composition",
+          "triptych_composition",
+          "window_reflection_layering",
+          "surveillance_high_corner_angle",
+          "doorway_threshold_framing"
+        ]
+      },
+      "analog_diary_archive_scene_strong": {
+        "narrative_core": [
+          "analog_diary_memory_core"
+        ],
+        "location": [
+          "bedroom_shrine",
+          "attic_archive_room"
+        ],
+        "prop": [
+          "unreadable_diary_prop",
+          "old_postcard_unreadable_prop",
+          "polaroid_stack_unreadable_prop"
+        ],
+        "capture_context": [
+          "analog_diary_snapshot_context",
+          "contact_sheet_archive_context"
+        ],
+        "aesthetic_trend": [
+          "analog_diary_aesthetic",
+          "poetcore_aesthetic"
+        ]
+      },
+      "digital_privacy_identity_scene_strong": {
+        "narrative_core": [
+          "digital_privacy_core",
+          "public_private_self_core"
+        ],
+        "concept_tension": [
+          "public_vs_private_tension",
+          "visibility_vs_secrecy_tension"
+        ],
+        "capture_context": [
+          "privacy_screen_glow_context",
+          "blurred_screen_over_shoulder_context"
+        ],
+        "prop": [
+          "blurred_laptop_screen_glow_prop",
+          "crt_tv_abstract_glow_prop"
+        ],
+        "mood": [
+          "privacy_anxiety",
+          "quiet_defiance"
+        ]
       }
     },
     "family_tone_conflicts": {
@@ -190274,6 +196561,20 @@
         "deny_domains": [
           "wildlife",
           "food"
+        ]
+      },
+      "narrative_core": {
+        "deny_domains": [
+          "food",
+          "wildlife",
+          "adult"
+        ]
+      },
+      "concept_tension": {
+        "deny_domains": [
+          "food",
+          "wildlife",
+          "adult"
         ]
       }
     }
