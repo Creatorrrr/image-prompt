@@ -154,6 +154,7 @@
     "axes": [
       {
         "id": "person_presence",
+        "facet_match": {"subject_kind": ["human"]},
         "terms": ["adult", "person", "portrait", "human", "model", "performer", "worker", "idol", "사람", "인물", "아이돌"],
         "required_categories": ["human_trace"],
         "principles": ["Let one small bodily or behavioral trace interrupt pure polish: loose hair, breath, fabric creasing, sweat, handling, or an unguarded expression."],
@@ -163,6 +164,7 @@
       },
       {
         "id": "animal_presence",
+        "facet_match": {"subject_kind": ["animal"]},
         "terms": ["animal", "cat", "dog", "bird", "pet", "feline", "canine", "동물", "고양이", "강아지", "반려동물"],
         "required_categories": ["physical_contact", "material_trace"],
         "principles": ["Make animal presence physical through fur, weight, pressure, contact shadows, shared light, or small behavioral timing."],
@@ -173,6 +175,7 @@
       },
       {
         "id": "object_or_product_presence",
+        "facet_match": {"subject_kind": ["object", "food", "plant", "sign"]},
         "terms": ["product", "object", "flatlay", "still life", "food", "jewelry", "perfume", "packaging", "제품", "정물", "음식", "소품", "오브젝트"],
         "required_categories": ["physical_contact", "material_trace"],
         "principles": ["Let objects show weight, surface finish, handling marks, cast shadows, reflection, condensation, crumbs, scratches, or use traces instead of floating as labels."],
@@ -183,6 +186,7 @@
       },
       {
         "id": "interior_environment",
+        "facet_match": {"place_type": ["interior", "home", "domestic", "studio", "commercial"]},
         "terms": ["interior", "room", "living room", "bedroom", "kitchen", "studio", "home", "indoor", "실내", "방", "거실", "집", "스튜디오"],
         "required_categories": ["environment_binding"],
         "principles": ["Use window light, practical lamps, room color bounce, dust, and foreground domestic objects to make the subject belong to the room."],
@@ -192,6 +196,7 @@
       },
       {
         "id": "sacred_or_monumental_interior",
+        "facet_match": {"place_type": ["temple"], "mood_family": ["sacred", "awe"]},
         "terms": ["cathedral", "chapel", "church", "temple", "nave", "altar", "stained glass", "votive", "대성당", "성당", "사원", "사찰"],
         "required_categories": ["environment_binding", "optical_depth"],
         "principles": ["Use scale, vertical architecture, colored window light, candle warmth, dust, foreground occlusion, and floor reflection to bind a small figure to a large interior."],
@@ -202,6 +207,7 @@
       },
       {
         "id": "performance_stage_environment",
+        "facet_match": {"place_type": ["stage"], "lighting_family": ["colored_light", "projection_light", "artificial_light"]},
         "terms": ["stage", "performance", "concert", "broadcast", "music show", "microphone", "LED", "무대", "스테이지", "공연", "전광판", "마이크"],
         "required_categories": ["environment_binding", "event_timing"],
         "principles": ["Make performance light physical through color spill, haze, sweat, microphone metal, hair movement, and one captured choreographic instant."],
@@ -212,6 +218,7 @@
       },
       {
         "id": "handmade_or_miniature_set",
+        "facet_match": {"camera_register": ["macro"], "subject_kind": ["object", "plant"]},
         "terms": ["felt", "wool", "handmade", "miniature", "storybook", "fairy", "craft", "펠트", "양모", "수제", "동화", "미니어처"],
         "required_categories": ["environment_binding", "material_trace"],
         "principles": ["Treat constructed worlds as photographed sets: fibers, seams, scale cues, color bounce, and foreground blur should affect the subject or object."],
@@ -222,6 +229,7 @@
       },
       {
         "id": "wet_or_weather_trace",
+        "facet_match": {"weather": ["rain", "snow", "fog", "underwater"]},
         "terms": ["rain", "wet", "damp", "moisture", "mist", "storm", "비", "젖은", "비에", "습기", "안개"],
         "required_categories": ["material_trace", "environment_binding"],
         "principles": ["Let moisture change surfaces through darkened fabric, wet hair, floor reflection, beads, haze, or softened light."],
@@ -232,6 +240,7 @@
       },
       {
         "id": "colored_or_mixed_light",
+        "facet_match": {"lighting_family": ["colored_light", "projection_light", "machine_light", "hazard_light"]},
         "terms": ["colored light", "neon", "LED", "stained glass", "screen glow", "gel", "magenta", "cyan", "네온", "전광판", "스테인드글라스", "색조명"],
         "required_categories": ["environment_binding"],
         "principles": ["Colored or mixed light should spill consistently across subject, wardrobe, props, and nearby surfaces instead of sitting only in the background."],
@@ -241,6 +250,7 @@
       },
       {
         "id": "close_camera_depth",
+        "facet_match": {"camera_register": ["macro", "professional"], "shot_scale": ["medium_close", "close_up", "extreme_close"], "placement": ["layered_depth", "foreground_frame"]},
         "terms": ["close-up", "medium close", "macro", "35mm", "50mm", "shallow depth", "foreground", "보케", "근접", "클로즈업"],
         "required_categories": ["optical_depth"],
         "principles": ["Close camera positions need visible focus falloff, foreground occlusion, lens perspective, or grain so the image does not flatten into a composite."],
@@ -256,22 +266,26 @@
     "subject_classes": [
       {
         "id": "person",
+        "facet_match": {"subject_kind": ["human"]},
         "terms": ["adult", "idol", "model", "person", "portrait", "human", "woman", "man", "worker", "performer", "dancer", "사람", "인물", "아이돌"],
         "core_policy": "allow"
       },
       {
         "id": "animal",
+        "facet_match": {"subject_kind": ["animal"]},
         "terms": ["animal", "cat", "dog", "bird", "pet", "feline", "canine", "동물", "고양이", "강아지", "반려동물"],
         "core_policy": "contextual"
       },
       {
         "id": "object_scene",
+        "facet_match": {"subject_kind": ["object", "food", "environment", "plant", "sign"]},
         "terms": ["product", "object", "food", "flatlay", "still life", "jewelry", "perfume", "catalog", "packaging", "architecture", "landscape", "interior", "제품", "정물", "음식", "건축", "풍경"],
         "core_policy": "contextual"
       }
     ],
     "registers": {
       "observational": {
+        "facet_match": {"subject_kind": ["animal", "object", "food", "environment", "plant", "sign"], "mood_family": ["documentary", "commercial", "clinical", "calm"]},
         "terms": ["product", "flatlay", "still life", "food", "object", "catalog", "architecture", "landscape", "documentary", "study", "animal", "제품", "정물", "음식", "풍경", "동물"],
         "minimum_hits": 1,
         "principles": [
@@ -280,6 +294,7 @@
         ]
       },
       "understated": {
+        "facet_match": {"mood_family": ["calm", "intimate", "nostalgic", "romantic", "melancholic", "documentary"]},
         "terms": [],
         "minimum_hits": 1,
         "principles": [
@@ -288,6 +303,7 @@
         ]
       },
       "charged": {
+        "facet_match": {"place_type": ["stage", "temple"], "mood_family": ["tense", "surreal", "uncanny", "sacred", "awe", "anxious"], "lighting_family": ["colored_light", "low_light", "projection_light", "hazard_light"]},
         "terms": ["charged", "cinematic", "dramatic", "editorial", "performance", "ritual", "stage", "noir", "decay", "rebellion", "threshold", "강렬", "극적", "무대", "스테이지", "역동", "장엄"],
         "minimum_hits": 1,
         "principles": [

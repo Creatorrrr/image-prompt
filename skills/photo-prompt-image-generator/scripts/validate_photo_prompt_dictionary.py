@@ -479,6 +479,31 @@ def validate_quality_layer_suggested_phrases(
         validate_string_list(f"{label}.{category}", phrases, errors)
 
 
+def validate_quality_layer_facet_match(
+    label: str,
+    value: Any,
+    vocab: dict[str, set[str]],
+    errors: list[str],
+) -> None:
+    if value is None:
+        return
+    if not isinstance(value, dict) or not value:
+        errors.append(f"{label}: must be a non-empty object")
+        return
+    for facet, raw_values in value.items():
+        facet_key = str(facet)
+        if facet_key not in vocab:
+            errors.append(f"{label}: unknown facet key {facet_key}")
+            continue
+        values = normalize_list(raw_values)
+        if not values:
+            errors.append(f"{label}.{facet_key}: at least one value is required")
+            continue
+        for facet_value in values:
+            if facet_value not in vocab[facet_key]:
+                errors.append(f"{label}.{facet_key}: unknown value {facet_value}")
+
+
 def validate_quality_layers(path: Path, data: dict[str, Any], errors: list[str]) -> None:
     try:
         quality = load_json(path)
@@ -506,6 +531,7 @@ def validate_quality_layers(path: Path, data: dict[str, Any], errors: list[str])
     categories = photographic.get("categories") if isinstance(photographic, dict) else {}
     validate_quality_layer_category_terms("quality_layers.photographic_integration.categories", categories, errors)
     valid_categories = {str(category) for category in categories} if isinstance(categories, dict) else set()
+    vocab = merged_facet_vocab(data)
 
     baseline = photographic.get("baseline") if isinstance(photographic, dict) else {}
     if not isinstance(baseline, dict):
@@ -548,6 +574,7 @@ def validate_quality_layers(path: Path, data: dict[str, Any], errors: list[str])
             errors.append(f"{label}.id: duplicate id {axis_id}")
         else:
             seen_axis_ids.add(axis_id)
+        validate_quality_layer_facet_match(f"{label}.facet_match", axis.get("facet_match"), vocab, errors)
         validate_string_list(f"{label}.terms", axis.get("terms"), errors)
         validate_string_list(f"{label}.required_categories", axis.get("required_categories"), errors)
         for category in normalize_list(axis.get("required_categories")):
@@ -597,6 +624,7 @@ def validate_quality_layers(path: Path, data: dict[str, Any], errors: list[str])
             errors.append(f"{label}.id: duplicate id {class_id}")
         else:
             seen_class_ids.add(class_id)
+        validate_quality_layer_facet_match(f"{label}.facet_match", subject_class.get("facet_match"), vocab, errors)
         validate_string_list(f"{label}.terms", subject_class.get("terms"), errors)
         if str(subject_class.get("core_policy", "allow")) not in {"allow", "contextual", "none"}:
             errors.append(f"{label}.core_policy: must be allow, contextual, or none")
@@ -614,6 +642,7 @@ def validate_quality_layers(path: Path, data: dict[str, Any], errors: list[str])
             for term in normalize_list(policy.get("terms")):
                 if not str(term).strip():
                     errors.append(f"{label}.terms: empty value")
+        validate_quality_layer_facet_match(f"{label}.facet_match", policy.get("facet_match"), vocab, errors)
         try:
             minimum = int(policy.get("minimum_hits", 1))
         except (TypeError, ValueError):
