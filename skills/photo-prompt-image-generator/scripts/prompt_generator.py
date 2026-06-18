@@ -74,6 +74,8 @@ SEMANTIC_MODEL_ID = "gemini-embedding-2"
 SEMANTIC_TEXT_RECIPE_VERSION = "semantic-text-v2"
 GENERATOR_VERSION = "2026.06.0"
 LIKENESS_MODES = ("off", "inspired")
+QUALITY_LAYERS_FILENAME = "photo_prompt_quality_layers.json"
+QUALITY_LAYERS_DATA_KEY = "_quality_layers"
 SOFT_ANCHOR_WEIGHT_MULTIPLIER = 24.0
 SOFT_ANCHOR_PROMOTED_WEIGHT_MULTIPLIER = 36.0
 SOFT_ANCHOR_PRIMARY_WEIGHT_MULTIPLIER = 48.0
@@ -220,239 +222,6 @@ CANDIDATE_PACK_DROPOUT_PROTECTED_SLOTS = {
     "body_evidence_region",
     "surface_material",
 }
-PHOTOGRAPHIC_INTEGRATION_CATEGORY_TERMS: Dict[str, tuple[str, ...]] = {
-    "environment_binding": (
-        "binds",
-        "bounce",
-        "bounced",
-        "cast",
-        "catchlight",
-        "color spill",
-        "contaminate",
-        "contaminated",
-        "contact shadow",
-        "dust",
-        "fiber",
-        "grazes",
-        "haze",
-        "LED",
-        "reflection",
-        "reflected",
-        "rim light",
-        "shadow",
-        "spill",
-        "wraps",
-    ),
-    "optical_depth": (
-        "asymmetrical",
-        "falloff",
-        "foreground",
-        "grain",
-        "high ISO",
-        "lens",
-        "macro",
-        "motion blur",
-        "off-axis",
-        "occlusion",
-        "shallow depth",
-        "soft blur",
-        "telephoto",
-    ),
-    "human_trace": (
-        "breathless",
-        "creased",
-        "damp",
-        "flushed",
-        "half-smile",
-        "loose strand",
-        "rain",
-        "slouched",
-        "stray hair",
-        "sweat",
-        "unguarded",
-        "wet hair",
-    ),
-}
-PHOTOGRAPHIC_INTEGRATION_DEFAULT_PROFILE: JsonDict = {
-    "profile_id": "general_photo_integration",
-    "required_categories": ["environment_binding", "optical_depth"],
-    "minimum_category_hits": 2,
-    "principles": [
-        "Bind the subject and setting with shared light, reflected color, contact shadow, moisture, haze, or material behavior.",
-        "Use a photographic point of view with foreground depth, asymmetry, focus falloff, grain, or lens artifacts instead of a clean pasted-on portrait.",
-        "Keep one small human or material imperfection so the image reads as a captured moment rather than a beauty composite.",
-    ],
-    "suggested_phrases": {
-        "environment_binding": [
-            "ambient light spills across both the subject and nearby surfaces",
-            "reflected color from the room catches on hair, skin, wardrobe, and props",
-        ],
-        "optical_depth": [
-            "off-axis composition with foreground occlusion and gentle focus falloff",
-            "subtle lens grain and imperfect depth cues from a real camera position",
-        ],
-        "human_trace": [
-            "a small unguarded expression, loose hair, creased fabric, or damp skin breaks the polished pose",
-        ],
-    },
-    "anti_patterns": [
-        "centered beauty headshot pasted over a scenic background",
-        "separate studio face light that ignores the location's light direction",
-        "props listed as labels without contact shadow, reflection, or physical interaction",
-    ],
-}
-PHOTOGRAPHIC_INTEGRATION_PROFILES: tuple[JsonDict, ...] = (
-    {
-        "profile_id": "cathedral_reverent_environmental_portrait",
-        "match_terms": (
-            "cathedral",
-            "chapel",
-            "cassock",
-            "priest",
-            "stained glass",
-            "votive",
-            "대성당",
-            "성당",
-            "사제",
-            "프리스트",
-        ),
-        "required_categories": ["environment_binding", "optical_depth", "human_trace"],
-        "minimum_category_hits": 2,
-        "principles": [
-            "Let stained-glass color, candle warmth, stone darkness, dust, or wet fabric touch the face and cassock so the figure belongs to the nave.",
-            "Use cathedral scale, foreground candles, off-center framing, bloom, and falloff; avoid an evenly lit idol bust against a generic church backdrop.",
-            "Preserve respectful priest styling while allowing rain-damp hair, a damp collar, or restrained fatigue to make the moment photographic.",
-        ],
-        "suggested_phrases": {
-            "environment_binding": [
-                "stained-glass color spill contaminates the wet black cassock, cheek, and stone floor",
-                "candle bokeh and dust in the light shafts share the same air around the subject",
-            ],
-            "optical_depth": [
-                "off-center environmental portrait inside a towering nave with foreground candle blur",
-                "window bloom and gentle focus falloff push the altar and columns into depth",
-            ],
-            "human_trace": [
-                "rain-damp hair strands and a slightly tired, restrained expression break the polished idol pose",
-            ],
-        },
-    },
-    {
-        "profile_id": "indoor_pet_lifestyle_capture",
-        "match_terms": (
-            "persian",
-            "cat",
-            "feline",
-            "pet",
-            "sofa",
-            "living room",
-            "window",
-            "고양이",
-            "페르시안",
-            "실내",
-            "일상복",
-        ),
-        "required_categories": ["environment_binding", "optical_depth", "human_trace"],
-        "minimum_category_hits": 2,
-        "principles": [
-            "Make the pet physically share the pose through lap weight, fur compression, contact shadows, and the same window light on hair, knit, cushion, and whiskers.",
-            "Use lived-in domestic clutter, foreground objects, and natural lens falloff instead of catalog-like sofa posing.",
-            "Favor a quiet real-life gesture over a perfected face-forward idol portrait.",
-        ],
-        "suggested_phrases": {
-            "environment_binding": [
-                "window light binds her hair, knit cardigan, compressed cushion, and Persian cat fur",
-                "cat fur casts small contact shadows on the lap and catches the same dusty sunlight",
-            ],
-            "optical_depth": [
-                "foreground mug and book fall softly out of focus from a close domestic camera position",
-                "asymmetrical sofa framing with mild 35mm lens falloff",
-            ],
-            "human_trace": [
-                "creased loungewear, a slouched shoulder, and an absent-minded hand buried in fur",
-            ],
-        },
-    },
-    {
-        "profile_id": "live_stage_performance_capture",
-        "match_terms": (
-            "stage",
-            "music show",
-            "broadcast",
-            "idol",
-            "케이팝",
-            "kpop",
-            "microphone",
-            "led",
-            "sweat",
-            "performance",
-            "무대",
-            "스테이지",
-            "아이돌",
-            "전광판",
-            "땀",
-            "웃음",
-        ),
-        "required_categories": ["environment_binding", "optical_depth", "human_trace"],
-        "minimum_category_hits": 2,
-        "principles": [
-            "Let LED wall color, haze, sweat, microphone metal, in-ear monitors, and hair share the same concert light.",
-            "Use pit-camera immediacy, high ISO grain, foreground hand or mic blur, and imperfect motion rather than a frozen beauty poster.",
-            "Keep the smile breathless and performance-specific, with stray hair or sweat visible but not glamour-retouched away.",
-        ],
-        "suggested_phrases": {
-            "environment_binding": [
-                "LED color spill reflects across sweat, hair, the microphone grille, and black stagewear",
-                "backlight catches haze and tiny droplets around the performer",
-            ],
-            "optical_depth": [
-                "telephoto pit-camera angle with foreground hand blur and high ISO grain",
-                "LED wall scan texture and shallow depth separate the performer from the stage",
-            ],
-            "human_trace": [
-                "breathless wide smile, flushed skin, stray hair, and real sweat from the choreography",
-            ],
-        },
-    },
-    {
-        "profile_id": "felt_storybook_set_portrait",
-        "match_terms": (
-            "felt",
-            "wool",
-            "apple",
-            "storybook",
-            "fairy",
-            "nekomimi",
-            "cat ear",
-            "handmade",
-            "펠트",
-            "동화",
-            "사과",
-            "네코미미",
-            "상큼",
-        ),
-        "required_categories": ["environment_binding", "optical_depth", "human_trace"],
-        "minimum_category_hits": 2,
-        "principles": [
-            "Treat the felt world as a photographed miniature set: fibers, seams, color bounce, and scale should affect the person and apple.",
-            "Partly embed the figure among wool trees, foreground felt flowers, and shallow macro-like depth instead of posing her in front of a flat backdrop.",
-            "Let the expression and hands feel playful and slightly imperfect, not porcelain-smooth cosplay product photography.",
-        ],
-        "suggested_phrases": {
-            "environment_binding": [
-                "felt color bounce warms her cheeks, sleeves, apple skin, and nearby wool trees",
-                "loose wool fibers catch on the bow, cat ears, and apple stem",
-            ],
-            "optical_depth": [
-                "foreground felt flowers blur across the frame with macro-like focus falloff",
-                "slight set seams and handmade texture reveal the photographed miniature environment",
-            ],
-            "human_trace": [
-                "a playful asymmetric smile and natural hand pressure on the apple keep it from feeling like a pasted prop",
-            ],
-        },
-    },
-)
 CANDIDATE_PACK_MOTIF_TAXONOMY: Dict[str, tuple[str, ...]] = {
     "phone_selfie_mirror": (
         "clear_case_smartphone",
@@ -1201,6 +970,17 @@ def load_json(path: str | Path) -> JsonDict:
         raise FileNotFoundError(f"Tag JSON not found: {p}")
     with p.open("r", encoding="utf-8") as f:
         return json.load(f)
+
+
+def default_quality_layers_path(tags_path: str | Path) -> Path:
+    tags = Path(tags_path)
+    if tags.parent:
+        return tags.parent / QUALITY_LAYERS_FILENAME
+    return Path(QUALITY_LAYERS_FILENAME)
+
+
+def load_quality_layers(path: str | Path) -> JsonDict:
+    return load_json(path)
 
 
 def load_anchor_diversity_ledger(path: Optional[str]) -> JsonDict:
@@ -2814,7 +2594,47 @@ def candidate_pack_integration_source_corpus(
     return " ".join(value for value in values if value.strip())
 
 
+def candidate_pack_quality_layers(data: JsonDict) -> JsonDict:
+    quality = data.get(QUALITY_LAYERS_DATA_KEY)
+    return quality if isinstance(quality, dict) else {}
+
+
+def candidate_pack_photographic_policy(data: JsonDict) -> JsonDict:
+    policy = candidate_pack_quality_layers(data).get("photographic_integration")
+    return policy if isinstance(policy, dict) else {}
+
+
+def candidate_pack_visual_policy(data: JsonDict) -> JsonDict:
+    policy = candidate_pack_quality_layers(data).get("visual_proposition")
+    return policy if isinstance(policy, dict) else {}
+
+
+def candidate_pack_quality_matched_terms(text: str, terms: Any) -> List[str]:
+    return [
+        str(term)
+        for term in normalize_list(terms)
+        if candidate_pack_integration_text_has_term(text, str(term))
+    ]
+
+
+def candidate_pack_quality_merge_phrases(
+    target: Dict[str, List[str]],
+    suggested: Any,
+) -> None:
+    if not isinstance(suggested, dict):
+        return
+    for category, phrases in suggested.items():
+        values = normalize_list(phrases)
+        if not values:
+            continue
+        bucket = target.setdefault(str(category), [])
+        for phrase in values:
+            if phrase not in bucket:
+                bucket.append(phrase)
+
+
 def candidate_pack_photographic_integration(
+    data: JsonDict,
     result: JsonDict,
     trace: JsonDict,
     presets: Sequence[JsonDict],
@@ -2823,48 +2643,305 @@ def candidate_pack_photographic_integration(
 ) -> JsonDict:
     corpus = candidate_pack_integration_corpus(result, trace, presets, slots, mandatory_intents)
     source_corpus = candidate_pack_integration_source_corpus(result, trace, mandatory_intents)
-    selected_profile = PHOTOGRAPHIC_INTEGRATION_DEFAULT_PROFILE
-    matched_terms: List[str] = []
-    best_score = (0, 0)
-    for profile in PHOTOGRAPHIC_INTEGRATION_PROFILES:
-        source_terms = [
-            str(term)
-            for term in profile.get("match_terms", ())
-            if candidate_pack_integration_text_has_term(source_corpus, str(term))
-        ]
-        all_terms = [
-            str(term)
-            for term in profile.get("match_terms", ())
-            if candidate_pack_integration_text_has_term(corpus, str(term))
-        ]
-        score = (len(source_terms), len(all_terms))
-        if score > best_score and (source_terms or all_terms):
-            best_score = score
-            selected_profile = profile
-            matched_terms = (source_terms or all_terms)[:12]
+    policy = candidate_pack_photographic_policy(data)
+    categories = policy.get("categories") if isinstance(policy.get("categories"), dict) else {}
+    baseline = policy.get("baseline") if isinstance(policy.get("baseline"), dict) else {}
+    axes = [axis for axis in policy.get("axes", []) or [] if isinstance(axis, dict)]
 
-    suggested = selected_profile.get("suggested_phrases") if isinstance(selected_profile.get("suggested_phrases"), dict) else {}
+    required_categories = normalize_list(baseline.get("required_categories")) or ["environment_binding", "optical_depth"]
+    principles = normalize_list(baseline.get("principles"))
+    phrase_budget: Dict[str, List[str]] = {}
+    candidate_pack_quality_merge_phrases(phrase_budget, baseline.get("suggested_phrases"))
+    active_axes: List[JsonDict] = []
+    matched_terms: List[str] = []
+
+    scored_axes: List[tuple[int, str, JsonDict, List[str], List[str]]] = []
+    for axis in axes:
+        source_terms = candidate_pack_quality_matched_terms(source_corpus, axis.get("terms"))
+        context_terms = candidate_pack_quality_matched_terms(corpus, axis.get("terms"))
+        score = len(source_terms) * 4 + len(context_terms)
+        if score <= 0:
+            continue
+        scored_axes.append((score, str(axis.get("id") or ""), axis, source_terms, context_terms))
+    scored_axes.sort(key=lambda item: (-item[0], item[1]))
+
+    for score, axis_id, axis, source_terms, context_terms in scored_axes[:5]:
+        axis_required = normalize_list(axis.get("required_categories"))
+        for category in axis_required:
+            if category not in required_categories:
+                required_categories.append(category)
+        for principle in normalize_list(axis.get("principles")):
+            if principle not in principles:
+                principles.append(principle)
+        candidate_pack_quality_merge_phrases(phrase_budget, axis.get("suggested_phrases"))
+        axis_terms = (source_terms or context_terms)[:12]
+        matched_terms.extend(term for term in axis_terms if term not in matched_terms)
+        active_axes.append(
+            {
+                "id": axis_id,
+                "score": score,
+                "matched_terms": axis_terms,
+                "required_categories": axis_required,
+            }
+        )
+
     phrase_budget = {
-        category: normalize_list(phrases)[:3]
-        for category, phrases in suggested.items()
-        if normalize_list(phrases)
+        category: phrases[:3]
+        for category, phrases in phrase_budget.items()
+        if phrases
     }
+    try:
+        minimum_hits = int(baseline.get("minimum_category_hits", 2) or 2)
+    except (TypeError, ValueError):
+        minimum_hits = 2
+    minimum_hits = max(1, min(minimum_hits, len(required_categories)))
     return {
         "enabled": True,
-        "profile_id": selected_profile.get("profile_id", "general_photo_integration"),
-        "source": "candidate_pack_context",
-        "matched_terms": matched_terms,
-        "required_categories": normalize_list(selected_profile.get("required_categories")) or ["environment_binding", "optical_depth"],
-        "minimum_category_hits": int(selected_profile.get("minimum_category_hits", 2) or 2),
-        "principles": normalize_list(selected_profile.get("principles"))[:5],
+        "profile_id": str(baseline.get("profile_id") or "axis_composite_photo_integration"),
+        "source": "quality_layers_axis_composite",
+        "active_axes": active_axes,
+        "matched_terms": matched_terms[:12],
+        "required_categories": required_categories,
+        "minimum_category_hits": minimum_hits,
+        "principles": principles[:7],
         "suggested_phrases": phrase_budget,
         "category_terms": {
             category: list(terms)
-            for category, terms in PHOTOGRAPHIC_INTEGRATION_CATEGORY_TERMS.items()
+            for category, terms in categories.items()
+            if normalize_list(terms)
         },
-        "anti_patterns": normalize_list(
-            selected_profile.get("anti_patterns") or PHOTOGRAPHIC_INTEGRATION_DEFAULT_PROFILE.get("anti_patterns")
-        )[:5],
+        "anti_patterns": normalize_list(baseline.get("anti_patterns"))[:5],
+    }
+
+
+def candidate_pack_visual_entry_terms(entry: JsonDict) -> List[str]:
+    terms: List[str] = []
+    for key in ("id", "en", "ko", "keywords", "aliases", "tags", "embedding_text"):
+        raw = entry.get(key)
+        if isinstance(raw, list):
+            terms.extend(str(item) for item in raw if str(item).strip())
+        elif raw is not None and str(raw).strip():
+            terms.append(str(raw))
+    return list(dict.fromkeys(terms))[:18]
+
+
+def candidate_pack_visual_subject_blob(result: JsonDict, slots: JsonDict) -> str:
+    values: List[str] = []
+    choices = result.get("choices") if isinstance(result.get("choices"), dict) else {}
+    for slot in ("subject", "appearance_type", "costume_style", "wardrobe_style", "prop", "location", "medium", "genre"):
+        choice = choices.get(slot)
+        if isinstance(choice, dict):
+            values.extend(candidate_pack_visual_entry_terms(choice))
+    for slot in ("subject", "appearance_type", "costume_style", "wardrobe_style", "prop", "location"):
+        slot_payload = slots.get(slot) if isinstance(slots, dict) else None
+        if not isinstance(slot_payload, dict):
+            continue
+        for candidate in slot_payload.get("candidates") or []:
+            if isinstance(candidate, dict):
+                values.extend(
+                    [
+                        str(candidate.get("id") or ""),
+                        str(candidate.get("entry_id") or ""),
+                        str(candidate.get("label_en") or ""),
+                        str(candidate.get("label_ko") or ""),
+                        " ".join(normalize_list(candidate.get("tags"))),
+                        " ".join(normalize_list(candidate.get("kind"))),
+                    ]
+                )
+    return " ".join(value for value in values if value.strip())
+
+
+def candidate_pack_visual_subject_classes(
+    result: JsonDict,
+    slots: JsonDict,
+    corpus: str,
+    policy: JsonDict,
+) -> List[JsonDict]:
+    subject_blob = candidate_pack_visual_subject_blob(result, slots) or corpus
+    scored: List[JsonDict] = []
+    for config in policy.get("subject_classes", []) or []:
+        if not isinstance(config, dict):
+            continue
+        class_id = str(config.get("id") or "")
+        if not class_id:
+            continue
+        score = sum(
+            1
+            for term in normalize_list(config.get("terms"))
+            if candidate_pack_integration_text_has_term(subject_blob, term)
+        )
+        if score <= 0:
+            continue
+        scored.append(
+            {
+                "id": class_id,
+                "score": score,
+                "core_policy": str(config.get("core_policy", "allow")),
+            }
+        )
+    scored.sort(key=lambda item: (-int(item.get("score", 0)), str(item.get("id") or "")))
+    return scored or [{"id": "general", "score": 0, "core_policy": "allow"}]
+
+
+def candidate_pack_visual_register(subject_classes: Sequence[JsonDict], source_corpus: str, corpus: str, policy: JsonDict) -> str:
+    registers = policy.get("registers") if isinstance(policy.get("registers"), dict) else {}
+    charged_policy = registers.get("charged") if isinstance(registers.get("charged"), dict) else {}
+    observational_policy = registers.get("observational") if isinstance(registers.get("observational"), dict) else {}
+    charged_terms = normalize_list(charged_policy.get("terms"))
+    observational_terms = normalize_list(observational_policy.get("terms"))
+    source_text_present = bool(source_corpus.strip())
+    charged_source_hits = sum(
+        1
+        for term in charged_terms
+        if candidate_pack_integration_text_has_term(source_corpus, term)
+    )
+    charged_context_hits = sum(
+        1
+        for term in charged_terms
+        if candidate_pack_integration_text_has_term(corpus, term)
+    )
+    if charged_source_hits > 0 or (not source_text_present and charged_context_hits >= 2):
+        return "charged"
+    class_ids = {str(item.get("id") or "") for item in subject_classes}
+    if class_ids & {"object_scene", "animal"} and "person" not in class_ids:
+        return "observational"
+    observational_hits = sum(
+        1
+        for term in observational_terms
+        if candidate_pack_integration_text_has_term(source_corpus, term)
+        or candidate_pack_integration_text_has_term(corpus, term)
+    )
+    if observational_hits >= 2 and charged_source_hits == 0:
+        return "observational"
+    return "understated"
+
+
+def candidate_pack_visual_entry_score(entry: JsonDict, source_corpus: str, corpus: str, selected_id: str) -> int:
+    entry_id = str(entry.get("id") or "")
+    terms = candidate_pack_visual_entry_terms(entry)
+    score = 0
+    if entry_id and entry_id == selected_id:
+        score += 20
+    for term in terms:
+        if candidate_pack_integration_text_has_term(source_corpus, term):
+            score += 4
+        elif candidate_pack_integration_text_has_term(corpus, term):
+            score += 1
+    return score
+
+
+def candidate_pack_visual_fallback_order(entry: JsonDict, slot: str, result: JsonDict, corpus: str, policy: JsonDict) -> str:
+    seed = str((result.get("provenance") or {}).get("seed") or "")
+    preset = str((result.get("provenance") or {}).get("preset_id") or result.get("preset_id") or "")
+    concept = str((result.get("provenance") or {}).get("concept_lock") or corpus)
+    entry_id = str(entry.get("id") or "")
+    fallback = policy.get("fallback") if isinstance(policy.get("fallback"), dict) else {}
+    preferred = normalize_list(fallback.get(slot))
+    prefix = "0" if entry_id in preferred else "1"
+    return prefix + hashlib.sha256(f"visual-proposition|{seed}|{preset}|{concept}|{slot}|{entry_id}".encode("utf-8")).hexdigest()
+
+
+def candidate_pack_visual_candidates_for_slot(
+    data: JsonDict,
+    result: JsonDict,
+    slots: JsonDict,
+    slot: str,
+    source_corpus: str,
+    corpus: str,
+    policy: JsonDict,
+    candidate_limit: int,
+) -> List[JsonDict]:
+    entries = [entry for entry in data.get("slots", {}).get(slot, []) or [] if isinstance(entry, dict)]
+    if not entries:
+        return []
+    selected_id = ""
+    slot_payload = slots.get(slot) if isinstance(slots, dict) else None
+    if isinstance(slot_payload, dict):
+        selected_id = candidate_pack_slot_selected_entry_id(slot_payload)
+    ranked = sorted(
+        entries,
+        key=lambda entry: (
+            -candidate_pack_visual_entry_score(entry, source_corpus, corpus, selected_id),
+            candidate_pack_visual_fallback_order(entry, slot, result, corpus, policy),
+        ),
+    )
+    candidates: List[JsonDict] = []
+    for entry in ranked[:candidate_limit]:
+        entry_id = str(entry.get("id") or "")
+        if not entry_id:
+            continue
+        candidates.append(
+            {
+                "id": candidate_pack_candidate_id("slot", entry_id, slot),
+                "slot": slot,
+                "entry_id": entry_id,
+                "label_en": localize(entry, "en") or entry_id,
+                "label_ko": localize(entry, "ko") or entry_id,
+                "terms": candidate_pack_visual_entry_terms(entry),
+                "score": candidate_pack_visual_entry_score(entry, source_corpus, corpus, selected_id),
+                "selected_by_sampler": bool(selected_id and entry_id == selected_id),
+            }
+        )
+    return candidates
+
+
+def candidate_pack_visual_proposition(
+    data: JsonDict,
+    result: JsonDict,
+    trace: JsonDict,
+    presets: Sequence[JsonDict],
+    slots: JsonDict,
+    mandatory_intents: Sequence[JsonDict],
+) -> JsonDict:
+    corpus = candidate_pack_integration_corpus(result, trace, presets, slots, mandatory_intents)
+    source_corpus = candidate_pack_integration_source_corpus(result, trace, mandatory_intents)
+    policy = candidate_pack_visual_policy(data)
+    subject_classes = candidate_pack_visual_subject_classes(result, slots, corpus, policy)
+    subject_class = str(subject_classes[0].get("id") or "general")
+    register = candidate_pack_visual_register(subject_classes, source_corpus, corpus, policy)
+    registers = policy.get("registers") if isinstance(policy.get("registers"), dict) else {}
+    register_policy = registers.get(register) if isinstance(registers.get(register), dict) else {}
+    if not register_policy:
+        register_policy = registers.get("understated") if isinstance(registers.get("understated"), dict) else {}
+    proposition_slots = normalize_list(policy.get("slots")) or ["narrative_core", "concept_tension"]
+    core_slot = proposition_slots[0]
+    tension_slot = proposition_slots[1] if len(proposition_slots) > 1 else "concept_tension"
+    try:
+        candidate_limit = int(policy.get("candidate_limit", 3) or 3)
+    except (TypeError, ValueError):
+        candidate_limit = 3
+    candidate_limit = max(1, candidate_limit)
+    core_allowed = any(str(item.get("core_policy", "allow")) != "none" for item in subject_classes)
+    core_candidates = (
+        candidate_pack_visual_candidates_for_slot(data, result, slots, core_slot, source_corpus, corpus, policy, candidate_limit)
+        if core_allowed
+        else []
+    )
+    tension_candidates = candidate_pack_visual_candidates_for_slot(
+        data, result, slots, tension_slot, source_corpus, corpus, policy, candidate_limit
+    )
+    category_terms = {
+        "narrative_core": list(
+            dict.fromkeys(term for candidate in core_candidates for term in candidate.get("terms", []))
+        )[:40],
+        "concept_tension": list(
+            dict.fromkeys(term for candidate in tension_candidates for term in candidate.get("terms", []))
+        )[:40],
+        "evidence": normalize_list(policy.get("evidence_terms"))[:40],
+    }
+    return {
+        "enabled": True,
+        "source": "quality_layers_narrative_core_and_concept_tension_slots",
+        "subject_class": subject_class,
+        "subject_classes": subject_classes,
+        "register": register,
+        "minimum_hits": int(register_policy.get("minimum_hits", 1) or 0),
+        "core_candidates": core_candidates,
+        "tension_candidates": tension_candidates,
+        "principles": normalize_list(register_policy.get("principles"))[:4],
+        "anti_patterns": normalize_list(policy.get("anti_patterns"))[:5],
+        "audit_categories": ["narrative_core", "concept_tension", "evidence"],
+        "category_terms": category_terms,
     }
 
 
@@ -2890,7 +2967,8 @@ def build_candidate_pack(result: JsonDict, data: JsonDict) -> JsonDict:
         "presets": presets,
         "slots": slots,
         "concept_axes": candidate_pack_concept_axes(soft_policy),
-        "photographic_integration": candidate_pack_photographic_integration(result, trace, presets, slots, mandatory_intents),
+        "photographic_integration": candidate_pack_photographic_integration(data, result, trace, presets, slots, mandatory_intents),
+        "visual_proposition": candidate_pack_visual_proposition(data, result, trace, presets, slots, mandatory_intents),
         "motif_budget": candidate_pack_motif_budget(result, trace, soft_policy),
         "preset_reference": candidate_pack_preset_reference(result, soft_policy, masked_buckets, open_slots),
         "masked_buckets": masked_buckets,
@@ -11594,6 +11672,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     raw_args = list(argv or sys.argv[1:])
     parser = argparse.ArgumentParser(description="Random photo prompt generator using JSON-managed tags.")
     parser.add_argument("--tags", default="photo_prompt_tags.json", help="Path to tag JSON file.")
+    parser.add_argument("--quality-layers", default=None, help=argparse.SUPPRESS)
     parser.add_argument("--lang", choices=["ko", "en", "both"], default="both", help="Output language.")
     parser.add_argument("--n", type=int, default=5, help="Number of prompts to generate.")
     parser.add_argument("--preset", default=None, help="Preset id. Omit for random preset.")
@@ -11674,6 +11753,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     args = parser.parse_args(raw_args)
 
     data = load_json(args.tags)
+    quality_layers_path = Path(args.quality_layers) if args.quality_layers else default_quality_layers_path(args.tags)
+    data[QUALITY_LAYERS_DATA_KEY] = load_quality_layers(quality_layers_path)
 
     if args.list_presets:
         list_presets(data, args.include_virtual)
