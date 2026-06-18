@@ -29,7 +29,7 @@ import re
 import sys
 import time
 from pathlib import Path
-from typing import Any, Callable, Dict, List, Optional, Sequence, Set
+from typing import Any, Callable, Dict, Iterator, List, Optional, Sequence, Set
 
 JsonDict = Dict[str, Any]
 Entry = Dict[str, Any]
@@ -2519,10 +2519,13 @@ def candidate_pack_integration_text_has_term(text: str, term: str) -> bool:
     if not term:
         return False
     lowered = text.lower()
+    normalized_text = re.sub(r"[_/-]+", " ", lowered)
+    normalized_term = re.sub(r"[_/-]+", " ", term)
     if term.isascii() and re.search(r"[A-Za-z0-9]", term):
         pattern = r"(?<![A-Za-z0-9])" + re.escape(term) + r"(?![A-Za-z0-9])"
-        return re.search(pattern, lowered) is not None
-    return term in lowered
+        normalized_pattern = r"(?<![A-Za-z0-9])" + re.escape(normalized_term) + r"(?![A-Za-z0-9])"
+        return re.search(pattern, lowered) is not None or re.search(normalized_pattern, normalized_text) is not None
+    return term in lowered or normalized_term in normalized_text
 
 
 def candidate_pack_integration_corpus(
@@ -2583,7 +2586,11 @@ def candidate_pack_integration_source_corpus(
     mandatory_intents: Sequence[JsonDict],
 ) -> str:
     provenance = result.get("provenance") if isinstance(result.get("provenance"), dict) else {}
-    values: List[str] = [str(trace.get("intent") or "")]
+    values: List[str] = [
+        str(result.get("preset_id") or ""),
+        str(provenance.get("preset_id") or ""),
+        str(trace.get("intent") or ""),
+    ]
     values.extend(normalize_list(provenance.get("concept_lock")))
     values.extend(normalize_list(provenance.get("additional_requirements")))
     for intent in mandatory_intents:
@@ -2599,6 +2606,16 @@ def candidate_pack_quality_layers(data: JsonDict) -> JsonDict:
     return quality if isinstance(quality, dict) else {}
 
 
+def candidate_pack_quality_facet_vocab(data: JsonDict) -> Dict[str, Set[str]]:
+    vocab: Dict[str, Set[str]] = {
+        str(key): {str(item) for item in normalize_list(values)}
+        for key, values in DEFAULT_FACET_VOCAB.items()
+    }
+    for key, values in (data.get("facet_vocab") or {}).items():
+        vocab.setdefault(str(key), set()).update(str(item) for item in normalize_list(values))
+    return vocab
+
+
 def candidate_pack_photographic_policy(data: JsonDict) -> JsonDict:
     policy = candidate_pack_quality_layers(data).get("photographic_integration")
     return policy if isinstance(policy, dict) else {}
@@ -2607,6 +2624,142 @@ def candidate_pack_photographic_policy(data: JsonDict) -> JsonDict:
 def candidate_pack_visual_policy(data: JsonDict) -> JsonDict:
     policy = candidate_pack_quality_layers(data).get("visual_proposition")
     return policy if isinstance(policy, dict) else {}
+
+
+def candidate_pack_quality_add_facet(
+    facets: Dict[str, Set[str]],
+    vocab: Dict[str, Set[str]],
+    key: str,
+    values: Any,
+) -> None:
+    if key not in vocab:
+        return
+    for value in normalize_list(values):
+        if value in vocab[key]:
+            facets.setdefault(key, set()).add(value)
+
+
+def candidate_pack_quality_add_entry_facets(
+    facets: Dict[str, Set[str]],
+    vocab: Dict[str, Set[str]],
+    entry: JsonDict,
+    inferred_tag_facet_keys: Optional[Set[str]] = None,
+) -> None:
+    raw_facets = entry.get("facets") if isinstance(entry.get("facets"), dict) else {}
+    for key, values in raw_facets.items():
+        candidate_pack_quality_add_facet(facets, vocab, str(key), values)
+    candidate_pack_quality_add_facet(facets, vocab, "subject_kind", entry.get("kind"))
+    for token in normalize_list(entry.get("tags")) + normalize_list(entry.get("kind")):
+        for key, allowed in vocab.items():
+            if inferred_tag_facet_keys is not None and key not in inferred_tag_facet_keys:
+                continue
+            if token in allowed:
+                facets.setdefault(key, set()).add(token)
+
+
+def candidate_pack_quality_entry_match_blob(entry: JsonDict) -> str:
+    values: List[str] = []
+    for key in ("id", "en", "ko", "label_en", "label_ko", "keywords", "aliases"):
+        raw = entry.get(key)
+        if isinstance(raw, list):
+            values.extend(str(item) for item in raw if str(item).strip())
+        elif raw is not None and str(raw).strip():
+            values.append(str(raw))
+    return " ".join(values).lower()
+
+
+def candidate_pack_quality_dictionary_entries(data: JsonDict) -> Iterator[JsonDict]:
+    for preset in data.get("presets", []) or []:
+        if isinstance(preset, dict):
+            yield preset
+    slots = data.get("slots") if isinstance(data.get("slots"), dict) else {}
+    for entries in slots.values():
+        for entry in entries or []:
+            if isinstance(entry, dict):
+                yield entry
+
+
+def candidate_pack_quality_add_intent_facets(
+    facets: Dict[str, Set[str]],
+    vocab: Dict[str, Set[str]],
+    data: JsonDict,
+    mandatory_intents: Sequence[JsonDict],
+) -> List[str]:
+    intent_terms = [
+        str(intent.get("text") or "").strip().lower()
+        for intent in mandatory_intents
+        if intent.get("status") == "uncovered" and str(intent.get("text") or "").strip()
+    ]
+    if not intent_terms:
+        return []
+    matched_entry_ids: List[str] = []
+    for entry in candidate_pack_quality_dictionary_entries(data):
+        blob = candidate_pack_quality_entry_match_blob(entry)
+        if not blob:
+            continue
+        if not any(candidate_pack_integration_text_has_term(blob, term) for term in intent_terms):
+            continue
+        before = {key: set(values) for key, values in facets.items()}
+        candidate_pack_quality_add_entry_facets(facets, vocab, entry, inferred_tag_facet_keys={"subject_kind"})
+        if before == facets:
+            continue
+        entry_id = str(entry.get("id") or "")
+        if entry_id and entry_id not in matched_entry_ids:
+            matched_entry_ids.append(entry_id)
+        if len(matched_entry_ids) >= 16:
+            break
+    return matched_entry_ids
+
+
+def candidate_pack_quality_profile(
+    data: JsonDict,
+    result: JsonDict,
+    slots: JsonDict,
+    mandatory_intents: Sequence[JsonDict],
+) -> JsonDict:
+    vocab = candidate_pack_quality_facet_vocab(data)
+    facets: Dict[str, Set[str]] = {}
+    preset_id = str((result.get("provenance") or {}).get("preset_id") or result.get("preset_id") or "")
+    preset = candidate_pack_preset_by_id(data, preset_id) if preset_id else None
+    if isinstance(preset, dict):
+        candidate_pack_quality_add_entry_facets(facets, vocab, preset)
+
+    choices = result.get("choices") if isinstance(result.get("choices"), dict) else {}
+    for choice in choices.values():
+        if isinstance(choice, dict):
+            candidate_pack_quality_add_entry_facets(facets, vocab, choice)
+
+    for slot, slot_payload in slots.items():
+        if not isinstance(slot_payload, dict):
+            continue
+        entry_id = candidate_pack_slot_selected_entry_id(slot_payload)
+        if not entry_id:
+            continue
+        entry = candidate_pack_selected_choice_entry(result, str(slot), entry_id)
+        if entry.get("id") == entry_id and len(entry) == 1:
+            entry = candidate_pack_slot_entry_by_id(data, str(slot), entry_id) or entry
+        if isinstance(entry, dict):
+            candidate_pack_quality_add_entry_facets(facets, vocab, entry)
+
+    matched_entries = candidate_pack_quality_add_intent_facets(facets, vocab, data, mandatory_intents)
+    return {
+        "source": "selected_preset_slots_and_uncovered_intent_dictionary_matches",
+        "facets": {key: sorted(values) for key, values in sorted(facets.items()) if values},
+        "matched_uncovered_intent_entries": matched_entries,
+    }
+
+
+def candidate_pack_quality_facet_hits(quality_profile: JsonDict, facet_match: Any) -> List[str]:
+    if not isinstance(facet_match, dict) or not facet_match:
+        return []
+    profile_facets = quality_profile.get("facets") if isinstance(quality_profile.get("facets"), dict) else {}
+    hits: List[str] = []
+    for key, values in facet_match.items():
+        profile_values = {str(item) for item in normalize_list(profile_facets.get(str(key)))}
+        wanted = {str(item) for item in normalize_list(values)}
+        for value in sorted(profile_values & wanted):
+            hits.append(f"{key}:{value}")
+    return hits
 
 
 def candidate_pack_quality_matched_terms(text: str, terms: Any) -> List[str]:
@@ -2640,6 +2793,7 @@ def candidate_pack_photographic_integration(
     presets: Sequence[JsonDict],
     slots: JsonDict,
     mandatory_intents: Sequence[JsonDict],
+    quality_profile: JsonDict,
 ) -> JsonDict:
     corpus = candidate_pack_integration_corpus(result, trace, presets, slots, mandatory_intents)
     source_corpus = candidate_pack_integration_source_corpus(result, trace, mandatory_intents)
@@ -2655,17 +2809,21 @@ def candidate_pack_photographic_integration(
     active_axes: List[JsonDict] = []
     matched_terms: List[str] = []
 
-    scored_axes: List[tuple[int, str, JsonDict, List[str], List[str]]] = []
+    scored_axes: List[tuple[int, int, str, JsonDict, List[str], List[str], List[str]]] = []
     for axis in axes:
+        facet_hits = candidate_pack_quality_facet_hits(quality_profile, axis.get("facet_match"))
         source_terms = candidate_pack_quality_matched_terms(source_corpus, axis.get("terms"))
         context_terms = candidate_pack_quality_matched_terms(corpus, axis.get("terms"))
-        score = len(source_terms) * 4 + len(context_terms)
+        score = len(facet_hits) * 10 + len(source_terms) * 3 + len(context_terms)
         if score <= 0:
             continue
-        scored_axes.append((score, str(axis.get("id") or ""), axis, source_terms, context_terms))
-    scored_axes.sort(key=lambda item: (-item[0], item[1]))
+        if not facet_hits and not source_terms and len(context_terms) < 2:
+            continue
+        scored_axes.append((score, len(facet_hits), str(axis.get("id") or ""), axis, facet_hits, source_terms, context_terms))
+    scored_axes.sort(key=lambda item: (-item[1], -item[0], item[2]))
 
-    for score, axis_id, axis, source_terms, context_terms in scored_axes[:5]:
+    matched_facets: List[str] = []
+    for score, _facet_hit_count, axis_id, axis, facet_hits, source_terms, context_terms in scored_axes[:5]:
         axis_required = normalize_list(axis.get("required_categories"))
         for category in axis_required:
             if category not in required_categories:
@@ -2676,10 +2834,12 @@ def candidate_pack_photographic_integration(
         candidate_pack_quality_merge_phrases(phrase_budget, axis.get("suggested_phrases"))
         axis_terms = (source_terms or context_terms)[:12]
         matched_terms.extend(term for term in axis_terms if term not in matched_terms)
+        matched_facets.extend(hit for hit in facet_hits if hit not in matched_facets)
         active_axes.append(
             {
                 "id": axis_id,
                 "score": score,
+                "matched_facets": facet_hits[:12],
                 "matched_terms": axis_terms,
                 "required_categories": axis_required,
             }
@@ -2700,6 +2860,8 @@ def candidate_pack_photographic_integration(
         "profile_id": str(baseline.get("profile_id") or "axis_composite_photo_integration"),
         "source": "quality_layers_axis_composite",
         "active_axes": active_axes,
+        "quality_profile": quality_profile,
+        "matched_facets": matched_facets[:12],
         "matched_terms": matched_terms[:12],
         "required_categories": required_categories,
         "minimum_category_hits": minimum_hits,
@@ -2756,6 +2918,7 @@ def candidate_pack_visual_subject_classes(
     slots: JsonDict,
     corpus: str,
     policy: JsonDict,
+    quality_profile: JsonDict,
 ) -> List[JsonDict]:
     subject_blob = candidate_pack_visual_subject_blob(result, slots) or corpus
     scored: List[JsonDict] = []
@@ -2765,17 +2928,20 @@ def candidate_pack_visual_subject_classes(
         class_id = str(config.get("id") or "")
         if not class_id:
             continue
-        score = sum(
+        facet_hits = candidate_pack_quality_facet_hits(quality_profile, config.get("facet_match"))
+        term_score = sum(
             1
             for term in normalize_list(config.get("terms"))
             if candidate_pack_integration_text_has_term(subject_blob, term)
         )
+        score = len(facet_hits) * 10 + term_score
         if score <= 0:
             continue
         scored.append(
             {
                 "id": class_id,
                 "score": score,
+                "matched_facets": facet_hits[:12],
                 "core_policy": str(config.get("core_policy", "allow")),
             }
         )
@@ -2783,13 +2949,21 @@ def candidate_pack_visual_subject_classes(
     return scored or [{"id": "general", "score": 0, "core_policy": "allow"}]
 
 
-def candidate_pack_visual_register(subject_classes: Sequence[JsonDict], source_corpus: str, corpus: str, policy: JsonDict) -> str:
+def candidate_pack_visual_register(
+    subject_classes: Sequence[JsonDict],
+    source_corpus: str,
+    corpus: str,
+    policy: JsonDict,
+    quality_profile: JsonDict,
+) -> str:
     registers = policy.get("registers") if isinstance(policy.get("registers"), dict) else {}
     charged_policy = registers.get("charged") if isinstance(registers.get("charged"), dict) else {}
     observational_policy = registers.get("observational") if isinstance(registers.get("observational"), dict) else {}
     charged_terms = normalize_list(charged_policy.get("terms"))
     observational_terms = normalize_list(observational_policy.get("terms"))
     source_text_present = bool(source_corpus.strip())
+    charged_facet_hits = candidate_pack_quality_facet_hits(quality_profile, charged_policy.get("facet_match"))
+    observational_facet_hits = candidate_pack_quality_facet_hits(quality_profile, observational_policy.get("facet_match"))
     charged_source_hits = sum(
         1
         for term in charged_terms
@@ -2800,7 +2974,7 @@ def candidate_pack_visual_register(subject_classes: Sequence[JsonDict], source_c
         for term in charged_terms
         if candidate_pack_integration_text_has_term(corpus, term)
     )
-    if charged_source_hits > 0 or (not source_text_present and charged_context_hits >= 2):
+    if charged_facet_hits or charged_source_hits > 0 or (not source_text_present and charged_context_hits >= 2):
         return "charged"
     class_ids = {str(item.get("id") or "") for item in subject_classes}
     if class_ids & {"object_scene", "animal"} and "person" not in class_ids:
@@ -2811,7 +2985,7 @@ def candidate_pack_visual_register(subject_classes: Sequence[JsonDict], source_c
         if candidate_pack_integration_text_has_term(source_corpus, term)
         or candidate_pack_integration_text_has_term(corpus, term)
     )
-    if observational_hits >= 2 and charged_source_hits == 0:
+    if "person" not in class_ids and (observational_facet_hits or observational_hits >= 2) and charged_source_hits == 0:
         return "observational"
     return "understated"
 
@@ -2892,13 +3066,14 @@ def candidate_pack_visual_proposition(
     presets: Sequence[JsonDict],
     slots: JsonDict,
     mandatory_intents: Sequence[JsonDict],
+    quality_profile: JsonDict,
 ) -> JsonDict:
     corpus = candidate_pack_integration_corpus(result, trace, presets, slots, mandatory_intents)
     source_corpus = candidate_pack_integration_source_corpus(result, trace, mandatory_intents)
     policy = candidate_pack_visual_policy(data)
-    subject_classes = candidate_pack_visual_subject_classes(result, slots, corpus, policy)
+    subject_classes = candidate_pack_visual_subject_classes(result, slots, corpus, policy, quality_profile)
     subject_class = str(subject_classes[0].get("id") or "general")
-    register = candidate_pack_visual_register(subject_classes, source_corpus, corpus, policy)
+    register = candidate_pack_visual_register(subject_classes, source_corpus, corpus, policy, quality_profile)
     registers = policy.get("registers") if isinstance(policy.get("registers"), dict) else {}
     register_policy = registers.get(register) if isinstance(registers.get(register), dict) else {}
     if not register_policy:
@@ -2932,6 +3107,7 @@ def candidate_pack_visual_proposition(
     return {
         "enabled": True,
         "source": "quality_layers_narrative_core_and_concept_tension_slots",
+        "quality_profile": quality_profile,
         "subject_class": subject_class,
         "subject_classes": subject_classes,
         "register": register,
@@ -2956,6 +3132,7 @@ def build_candidate_pack(result: JsonDict, data: JsonDict) -> JsonDict:
     candidate_blobs = candidate_pack_candidate_blobs(presets, slots)
     candidate_terms = candidate_pack_candidate_terms(presets, slots)
     mandatory_intents, uncovered_intents = candidate_pack_mandatory_intents(result, trace, candidate_blobs, candidate_terms)
+    quality_profile = candidate_pack_quality_profile(data, result, slots, mandatory_intents)
     contract = trace.get("generation_contract") if isinstance(trace.get("generation_contract"), dict) else {}
     soft_policy = contract.get("soft_anchor_policy") if isinstance(contract.get("soft_anchor_policy"), dict) else {}
     masked_buckets = candidate_pack_choose_masked_buckets(result, contract, soft_policy, slots)
@@ -2966,9 +3143,14 @@ def build_candidate_pack(result: JsonDict, data: JsonDict) -> JsonDict:
         "uncovered_intents": uncovered_intents,
         "presets": presets,
         "slots": slots,
+        "quality_profile": quality_profile,
         "concept_axes": candidate_pack_concept_axes(soft_policy),
-        "photographic_integration": candidate_pack_photographic_integration(data, result, trace, presets, slots, mandatory_intents),
-        "visual_proposition": candidate_pack_visual_proposition(data, result, trace, presets, slots, mandatory_intents),
+        "photographic_integration": candidate_pack_photographic_integration(
+            data, result, trace, presets, slots, mandatory_intents, quality_profile
+        ),
+        "visual_proposition": candidate_pack_visual_proposition(
+            data, result, trace, presets, slots, mandatory_intents, quality_profile
+        ),
         "motif_budget": candidate_pack_motif_budget(result, trace, soft_policy),
         "preset_reference": candidate_pack_preset_reference(result, soft_policy, masked_buckets, open_slots),
         "masked_buckets": masked_buckets,

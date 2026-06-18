@@ -24,6 +24,7 @@ AUDIT_COMPOSED_PATH = SKILL_DIR / "scripts" / "audit_composed_prompt.py"
 VALIDATOR_PATH = SKILL_DIR / "scripts" / "validate_photo_prompt_dictionary.py"
 INDEX_BUILDER_PATH = SKILL_DIR / "scripts" / "build_semantic_index.py"
 EVAL_SEMANTIC_PATH = SKILL_DIR / "scripts" / "eval_semantic.py"
+QUALITY_LAYERS_PATH = SKILL_DIR / "assets" / "photo_prompt_quality_layers.json"
 
 CREATIVE_PRESET_IDS = {
     "cinematic_fantasy_portrait",
@@ -5874,6 +5875,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "uncovered_intents",
                 "presets",
                 "slots",
+                "quality_profile",
                 "concept_axes",
                 "photographic_integration",
                 "visual_proposition",
@@ -5903,8 +5905,11 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertTrue(integration["enabled"])
         self.assertIn("environment_binding", integration["required_categories"])
         self.assertGreaterEqual(integration["minimum_category_hits"], 1)
+        self.assertIn("facets", pack["quality_profile"])
+        self.assertEqual(integration["quality_profile"], pack["quality_profile"])
         proposition = pack["visual_proposition"]
         self.assertTrue(proposition["enabled"])
+        self.assertEqual(proposition["quality_profile"], pack["quality_profile"])
         self.assertIn(proposition["register"], {"observational", "understated", "charged"})
         self.assertTrue(proposition["core_candidates"])
         self.assertTrue(proposition["tension_candidates"])
@@ -5929,11 +5934,20 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             "--emit-candidate-pack",
         )
 
-        integration = payload[0]["photographic_integration"]
+        pack = payload[0]
+        integration = pack["photographic_integration"]
+        quality_profile = pack["quality_profile"]
         self.assertEqual(integration["profile_id"], "axis_composite_photo_integration")
         self.assertEqual(integration["source"], "quality_layers_axis_composite")
+        self.assertEqual(integration["quality_profile"], quality_profile)
+        self.assertIn("human", quality_profile["facets"].get("subject_kind", []))
         active_axes = {axis["id"] for axis in integration["active_axes"]}
         self.assertTrue({"sacred_or_monumental_interior", "colored_or_mixed_light", "person_presence"} <= active_axes)
+        person_axis = next(axis for axis in integration["active_axes"] if axis["id"] == "person_presence")
+        self.assertIn("subject_kind:human", person_axis["matched_facets"])
+        self.assertIn("subject_kind:human", integration["matched_facets"])
+        colored_axis = next(axis for axis in integration["active_axes"] if axis["id"] == "colored_or_mixed_light")
+        self.assertIn("stained glass", colored_axis["matched_terms"])
         self.assertTrue({"environment_binding", "optical_depth", "human_trace"} <= set(integration["required_categories"]))
         self.assertIn("environment_binding", integration["suggested_phrases"])
         self.assertIn("optical_depth", integration["suggested_phrases"])
@@ -5966,12 +5980,17 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             active_axes = {axis["id"] for axis in integration["active_axes"]}
             axis_sets.append(tuple(sorted(active_axes)))
             self.assertEqual(integration["source"], "quality_layers_axis_composite")
+            self.assertEqual(integration["quality_profile"], pack["quality_profile"])
+            self.assertTrue(
+                integration["matched_facets"] or any(axis["matched_facets"] for axis in integration["active_axes"])
+            )
             self.assertTrue(expected_axes <= active_axes)
             self.assertTrue({"environment_binding", "optical_depth"} <= set(integration["required_categories"]))
             self.assertGreaterEqual(len(active_axes), 3)
 
             proposition = pack["visual_proposition"]
             self.assertEqual(proposition["source"], "quality_layers_narrative_core_and_concept_tension_slots")
+            self.assertEqual(proposition["quality_profile"], pack["quality_profile"])
             self.assertIn("evidence", proposition["category_terms"])
             self.assertTrue(proposition["core_candidates"])
             self.assertTrue(proposition["tension_candidates"])
@@ -5989,10 +6008,14 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             "--emit-candidate-pack",
         )
 
-        proposition = payload[0]["visual_proposition"]
+        pack = payload[0]
+        proposition = pack["visual_proposition"]
         self.assertEqual(proposition["source"], "quality_layers_narrative_core_and_concept_tension_slots")
+        self.assertEqual(proposition["quality_profile"], pack["quality_profile"])
         self.assertEqual(proposition["subject_class"], "person")
         self.assertIn("person", {subject["id"] for subject in proposition["subject_classes"]})
+        person_class = next(subject for subject in proposition["subject_classes"] if subject["id"] == "person")
+        self.assertIn("subject_kind:human", person_class["matched_facets"])
         self.assertIn(proposition["register"], {"understated", "charged"})
         core_ids = {candidate["entry_id"] for candidate in proposition["core_candidates"]}
         tension_ids = {candidate["entry_id"] for candidate in proposition["tension_candidates"]}
@@ -6001,6 +6024,51 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertEqual(proposition["audit_categories"], ["narrative_core", "concept_tension", "evidence"])
         self.assertIn("evidence", proposition["category_terms"])
         self.assertNotIn("visual_argument", proposition["category_terms"])
+
+    def test_candidate_pack_uses_object_facets_before_context_term_fallback(self):
+        payload = self.run_wrapper_json(
+            "--preset",
+            "product_packshot_white_sweep",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "715",
+            "--emit-candidate-pack",
+        )
+
+        pack = payload[0]
+        integration = pack["photographic_integration"]
+        active_axes = {axis["id"] for axis in integration["active_axes"]}
+        self.assertIn("object_or_product_presence", active_axes)
+        self.assertIn("interior_environment", active_axes)
+        self.assertNotIn("person_presence", active_axes)
+        object_axis = next(axis for axis in integration["active_axes"] if axis["id"] == "object_or_product_presence")
+        self.assertTrue(
+            {"subject_kind:object", "subject_kind:food"} & set(object_axis["matched_facets"]),
+            object_axis,
+        )
+        proposition = pack["visual_proposition"]
+        self.assertEqual(proposition["subject_class"], "object_scene")
+        self.assertEqual(proposition["register"], "observational")
+
+    def test_dictionary_validator_rejects_unknown_quality_layer_facet_match(self):
+        quality_layers = json.loads(QUALITY_LAYERS_PATH.read_text(encoding="utf-8"))
+        quality_layers["photographic_integration"]["axes"][0]["facet_match"] = {
+            "subject_kind": ["not_a_subject_kind"]
+        }
+        with tempfile.TemporaryDirectory() as tmpdir:
+            quality_layers_path = Path(tmpdir) / "photo_prompt_quality_layers.json"
+            quality_layers_path.write_text(json.dumps(quality_layers, ensure_ascii=False), encoding="utf-8")
+            result = subprocess.run(
+                [sys.executable, str(VALIDATOR_PATH), "--quality-layers", str(quality_layers_path)],
+                cwd=ROOT,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("unknown value not_a_subject_kind", result.stderr)
 
     def test_candidate_pack_exposes_reference_scaffold_for_yandere(self):
         args = (
