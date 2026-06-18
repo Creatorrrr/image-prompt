@@ -67,6 +67,7 @@ SEMANTIC_PROFILES = ("conservative", "balanced", "exploratory")
 SEMANTIC_AXIS_MODES = ("auto", "off")
 INTENT_STEERING_MODES = ("auto", "off")
 LLM_POLISH_MODES = ("off", "strict")
+SAFETY_TRANSFORM_POLICIES = ("approval-required", "approved")
 SEMANTIC_PROVIDER = "gemini"
 DEFAULT_SEMANTIC_DIMENSIONS = 768
 SEMANTIC_MODEL_ID = "gemini-embedding-2"
@@ -219,6 +220,239 @@ CANDIDATE_PACK_DROPOUT_PROTECTED_SLOTS = {
     "body_evidence_region",
     "surface_material",
 }
+PHOTOGRAPHIC_INTEGRATION_CATEGORY_TERMS: Dict[str, tuple[str, ...]] = {
+    "environment_binding": (
+        "binds",
+        "bounce",
+        "bounced",
+        "cast",
+        "catchlight",
+        "color spill",
+        "contaminate",
+        "contaminated",
+        "contact shadow",
+        "dust",
+        "fiber",
+        "grazes",
+        "haze",
+        "LED",
+        "reflection",
+        "reflected",
+        "rim light",
+        "shadow",
+        "spill",
+        "wraps",
+    ),
+    "optical_depth": (
+        "asymmetrical",
+        "falloff",
+        "foreground",
+        "grain",
+        "high ISO",
+        "lens",
+        "macro",
+        "motion blur",
+        "off-axis",
+        "occlusion",
+        "shallow depth",
+        "soft blur",
+        "telephoto",
+    ),
+    "human_trace": (
+        "breathless",
+        "creased",
+        "damp",
+        "flushed",
+        "half-smile",
+        "loose strand",
+        "rain",
+        "slouched",
+        "stray hair",
+        "sweat",
+        "unguarded",
+        "wet hair",
+    ),
+}
+PHOTOGRAPHIC_INTEGRATION_DEFAULT_PROFILE: JsonDict = {
+    "profile_id": "general_photo_integration",
+    "required_categories": ["environment_binding", "optical_depth"],
+    "minimum_category_hits": 2,
+    "principles": [
+        "Bind the subject and setting with shared light, reflected color, contact shadow, moisture, haze, or material behavior.",
+        "Use a photographic point of view with foreground depth, asymmetry, focus falloff, grain, or lens artifacts instead of a clean pasted-on portrait.",
+        "Keep one small human or material imperfection so the image reads as a captured moment rather than a beauty composite.",
+    ],
+    "suggested_phrases": {
+        "environment_binding": [
+            "ambient light spills across both the subject and nearby surfaces",
+            "reflected color from the room catches on hair, skin, wardrobe, and props",
+        ],
+        "optical_depth": [
+            "off-axis composition with foreground occlusion and gentle focus falloff",
+            "subtle lens grain and imperfect depth cues from a real camera position",
+        ],
+        "human_trace": [
+            "a small unguarded expression, loose hair, creased fabric, or damp skin breaks the polished pose",
+        ],
+    },
+    "anti_patterns": [
+        "centered beauty headshot pasted over a scenic background",
+        "separate studio face light that ignores the location's light direction",
+        "props listed as labels without contact shadow, reflection, or physical interaction",
+    ],
+}
+PHOTOGRAPHIC_INTEGRATION_PROFILES: tuple[JsonDict, ...] = (
+    {
+        "profile_id": "cathedral_reverent_environmental_portrait",
+        "match_terms": (
+            "cathedral",
+            "chapel",
+            "cassock",
+            "priest",
+            "stained glass",
+            "votive",
+            "대성당",
+            "성당",
+            "사제",
+            "프리스트",
+        ),
+        "required_categories": ["environment_binding", "optical_depth", "human_trace"],
+        "minimum_category_hits": 2,
+        "principles": [
+            "Let stained-glass color, candle warmth, stone darkness, dust, or wet fabric touch the face and cassock so the figure belongs to the nave.",
+            "Use cathedral scale, foreground candles, off-center framing, bloom, and falloff; avoid an evenly lit idol bust against a generic church backdrop.",
+            "Preserve respectful priest styling while allowing rain-damp hair, a damp collar, or restrained fatigue to make the moment photographic.",
+        ],
+        "suggested_phrases": {
+            "environment_binding": [
+                "stained-glass color spill contaminates the wet black cassock, cheek, and stone floor",
+                "candle bokeh and dust in the light shafts share the same air around the subject",
+            ],
+            "optical_depth": [
+                "off-center environmental portrait inside a towering nave with foreground candle blur",
+                "window bloom and gentle focus falloff push the altar and columns into depth",
+            ],
+            "human_trace": [
+                "rain-damp hair strands and a slightly tired, restrained expression break the polished idol pose",
+            ],
+        },
+    },
+    {
+        "profile_id": "indoor_pet_lifestyle_capture",
+        "match_terms": (
+            "persian",
+            "cat",
+            "feline",
+            "pet",
+            "sofa",
+            "living room",
+            "window",
+            "고양이",
+            "페르시안",
+            "실내",
+            "일상복",
+        ),
+        "required_categories": ["environment_binding", "optical_depth", "human_trace"],
+        "minimum_category_hits": 2,
+        "principles": [
+            "Make the pet physically share the pose through lap weight, fur compression, contact shadows, and the same window light on hair, knit, cushion, and whiskers.",
+            "Use lived-in domestic clutter, foreground objects, and natural lens falloff instead of catalog-like sofa posing.",
+            "Favor a quiet real-life gesture over a perfected face-forward idol portrait.",
+        ],
+        "suggested_phrases": {
+            "environment_binding": [
+                "window light binds her hair, knit cardigan, compressed cushion, and Persian cat fur",
+                "cat fur casts small contact shadows on the lap and catches the same dusty sunlight",
+            ],
+            "optical_depth": [
+                "foreground mug and book fall softly out of focus from a close domestic camera position",
+                "asymmetrical sofa framing with mild 35mm lens falloff",
+            ],
+            "human_trace": [
+                "creased loungewear, a slouched shoulder, and an absent-minded hand buried in fur",
+            ],
+        },
+    },
+    {
+        "profile_id": "live_stage_performance_capture",
+        "match_terms": (
+            "stage",
+            "music show",
+            "broadcast",
+            "idol",
+            "케이팝",
+            "kpop",
+            "microphone",
+            "led",
+            "sweat",
+            "performance",
+            "무대",
+            "스테이지",
+            "아이돌",
+            "전광판",
+            "땀",
+            "웃음",
+        ),
+        "required_categories": ["environment_binding", "optical_depth", "human_trace"],
+        "minimum_category_hits": 2,
+        "principles": [
+            "Let LED wall color, haze, sweat, microphone metal, in-ear monitors, and hair share the same concert light.",
+            "Use pit-camera immediacy, high ISO grain, foreground hand or mic blur, and imperfect motion rather than a frozen beauty poster.",
+            "Keep the smile breathless and performance-specific, with stray hair or sweat visible but not glamour-retouched away.",
+        ],
+        "suggested_phrases": {
+            "environment_binding": [
+                "LED color spill reflects across sweat, hair, the microphone grille, and black stagewear",
+                "backlight catches haze and tiny droplets around the performer",
+            ],
+            "optical_depth": [
+                "telephoto pit-camera angle with foreground hand blur and high ISO grain",
+                "LED wall scan texture and shallow depth separate the performer from the stage",
+            ],
+            "human_trace": [
+                "breathless wide smile, flushed skin, stray hair, and real sweat from the choreography",
+            ],
+        },
+    },
+    {
+        "profile_id": "felt_storybook_set_portrait",
+        "match_terms": (
+            "felt",
+            "wool",
+            "apple",
+            "storybook",
+            "fairy",
+            "nekomimi",
+            "cat ear",
+            "handmade",
+            "펠트",
+            "동화",
+            "사과",
+            "네코미미",
+            "상큼",
+        ),
+        "required_categories": ["environment_binding", "optical_depth", "human_trace"],
+        "minimum_category_hits": 2,
+        "principles": [
+            "Treat the felt world as a photographed miniature set: fibers, seams, color bounce, and scale should affect the person and apple.",
+            "Partly embed the figure among wool trees, foreground felt flowers, and shallow macro-like depth instead of posing her in front of a flat backdrop.",
+            "Let the expression and hands feel playful and slightly imperfect, not porcelain-smooth cosplay product photography.",
+        ],
+        "suggested_phrases": {
+            "environment_binding": [
+                "felt color bounce warms her cheeks, sleeves, apple skin, and nearby wool trees",
+                "loose wool fibers catch on the bow, cat ears, and apple stem",
+            ],
+            "optical_depth": [
+                "foreground felt flowers blur across the frame with macro-like focus falloff",
+                "slight set seams and handmade texture reveal the photographed miniature environment",
+            ],
+            "human_trace": [
+                "a playful asymmetric smile and natural hand pressure on the apple keep it from feeling like a pasted prop",
+            ],
+        },
+    },
+)
 CANDIDATE_PACK_MOTIF_TAXONOMY: Dict[str, tuple[str, ...]] = {
     "phone_selfie_mirror": (
         "clear_case_smartphone",
@@ -1344,9 +1578,13 @@ def make_generation_contract(
     additional_requirements: Optional[Sequence[str]] = None,
     likeness_mode: str = "off",
     soft_anchor_spec: Optional[JsonDict] = None,
+    safety_transform_policy: str = "approved",
 ) -> JsonDict:
     forced_slots = sorted((forced_choices or {}).keys())
     domains = sorted(preset_domains(preset, data))
+    soft_anchor_policy = soft_anchor_trace(normalize_soft_anchor_spec(soft_anchor_spec), picked)
+    if safety_transform_policy != "approved":
+        strip_unapproved_safety_transforms(soft_anchor_policy)
     contract: JsonDict = {
         "subject_category": subject_category(picked, data),
         "preset_domains": domains,
@@ -1364,7 +1602,8 @@ def make_generation_contract(
         "concept_locks": normalize_concept_locks(concept_locks),
         "additional_requirements": normalize_additional_requirements(additional_requirements),
         "likeness_mode": likeness_mode,
-        "soft_anchor_policy": soft_anchor_trace(normalize_soft_anchor_spec(soft_anchor_spec), picked),
+        "soft_anchor_policy": soft_anchor_policy,
+        "safety_transform_policy": safety_transform_policy,
         "soft_anchor_repair": {"status": "not_evaluated", "repair_attempts": []},
     }
     return contract
@@ -1381,6 +1620,7 @@ def refresh_generation_contract(
     additional_requirements: Optional[Sequence[str]] = None,
     likeness_mode: Optional[str] = None,
     soft_anchor_spec: Optional[JsonDict] = None,
+    safety_transform_policy: Optional[str] = None,
 ) -> JsonDict:
     if contract is None:
         return make_generation_contract(
@@ -1393,6 +1633,7 @@ def refresh_generation_contract(
             additional_requirements=additional_requirements,
             likeness_mode=likeness_mode or "off",
             soft_anchor_spec=soft_anchor_spec,
+            safety_transform_policy=safety_transform_policy or "approved",
         )
     contract["subject_category"] = subject_category(picked, data)
     contract["preset_domains"] = sorted(preset_domains(preset, data))
@@ -1414,10 +1655,16 @@ def refresh_generation_contract(
     if any(slot in picked for slot in SURREAL_LAYER_SLOTS):
         contract["surreal_enabled"] = True
     contract["adult_allowed"] = bool("adult" in set(contract.get("preset_domains", [])) or preset_uses_adult_context(preset))
+    if safety_transform_policy is not None:
+        contract["safety_transform_policy"] = safety_transform_policy
+    else:
+        contract.setdefault("safety_transform_policy", "approved")
     if soft_anchor_spec is not None:
         contract["soft_anchor_policy"] = soft_anchor_trace(normalize_soft_anchor_spec(soft_anchor_spec), picked)
     else:
         contract["soft_anchor_policy"] = soft_anchor_trace(contract.get("soft_anchor_policy", {}), picked)
+    if contract.get("safety_transform_policy") != "approved":
+        strip_unapproved_safety_transforms(contract["soft_anchor_policy"])
     contract.setdefault("soft_anchor_repair", {"status": "not_evaluated", "repair_attempts": []})
     for key in (
         "must_cover_axes",
@@ -2225,6 +2472,8 @@ def candidate_pack_safety_floor(trace: JsonDict, result: JsonDict) -> JsonDict:
         "forbidden_terms": list(CANDIDATE_PACK_DEFAULT_FORBIDDEN_TERMS),
         "requirements": list(dict.fromkeys(requirements)),
         "negative_required": bool(result.get("negative_en")),
+        "safety_transform_policy": contract.get("safety_transform_policy", "approved"),
+        "approval_required_safety_transforms": soft_policy.get("approval_required_safety_transforms", {}) or {},
     }
 
 
@@ -2485,6 +2734,140 @@ def candidate_pack_template_echo_risk(open_slots: Sequence[JsonDict]) -> JsonDic
     }
 
 
+def candidate_pack_integration_text_has_term(text: str, term: str) -> bool:
+    term = str(term or "").strip().lower()
+    if not term:
+        return False
+    lowered = text.lower()
+    if term.isascii() and re.search(r"[A-Za-z0-9]", term):
+        pattern = r"(?<![A-Za-z0-9])" + re.escape(term) + r"(?![A-Za-z0-9])"
+        return re.search(pattern, lowered) is not None
+    return term in lowered
+
+
+def candidate_pack_integration_corpus(
+    result: JsonDict,
+    trace: JsonDict,
+    presets: Sequence[JsonDict],
+    slots: JsonDict,
+    mandatory_intents: Sequence[JsonDict],
+) -> str:
+    provenance = result.get("provenance") if isinstance(result.get("provenance"), dict) else {}
+    values: List[str] = [
+        str(result.get("preset_id") or ""),
+        str(provenance.get("preset_id") or ""),
+        str(trace.get("intent") or ""),
+    ]
+    values.extend(normalize_list(provenance.get("concept_lock")))
+    values.extend(normalize_list(provenance.get("additional_requirements")))
+    for intent in mandatory_intents:
+        if isinstance(intent, dict):
+            values.append(str(intent.get("text") or ""))
+            values.append(str(intent.get("source_text") or ""))
+    for preset in presets:
+        if not isinstance(preset, dict):
+            continue
+        values.extend(
+            [
+                str(preset.get("preset_id") or ""),
+                str(preset.get("label_en") or ""),
+                str(preset.get("label_ko") or ""),
+                str(preset.get("family") or ""),
+            ]
+        )
+    for slot_payload in slots.values():
+        if not isinstance(slot_payload, dict):
+            continue
+        selected = str(slot_payload.get("selected") or "")
+        if selected:
+            values.append(selected)
+        for candidate in slot_payload.get("candidates") or []:
+            if not isinstance(candidate, dict):
+                continue
+            values.extend(
+                [
+                    str(candidate.get("id") or ""),
+                    str(candidate.get("entry_id") or ""),
+                    str(candidate.get("label_en") or ""),
+                    str(candidate.get("label_ko") or ""),
+                    " ".join(normalize_list(candidate.get("tags"))),
+                    " ".join(normalize_list(candidate.get("kind"))),
+                ]
+            )
+    return " ".join(value for value in values if value.strip())
+
+
+def candidate_pack_integration_source_corpus(
+    result: JsonDict,
+    trace: JsonDict,
+    mandatory_intents: Sequence[JsonDict],
+) -> str:
+    provenance = result.get("provenance") if isinstance(result.get("provenance"), dict) else {}
+    values: List[str] = [str(trace.get("intent") or "")]
+    values.extend(normalize_list(provenance.get("concept_lock")))
+    values.extend(normalize_list(provenance.get("additional_requirements")))
+    for intent in mandatory_intents:
+        if not isinstance(intent, dict):
+            continue
+        values.append(str(intent.get("text") or ""))
+        values.append(str(intent.get("source_text") or ""))
+    return " ".join(value for value in values if value.strip())
+
+
+def candidate_pack_photographic_integration(
+    result: JsonDict,
+    trace: JsonDict,
+    presets: Sequence[JsonDict],
+    slots: JsonDict,
+    mandatory_intents: Sequence[JsonDict],
+) -> JsonDict:
+    corpus = candidate_pack_integration_corpus(result, trace, presets, slots, mandatory_intents)
+    source_corpus = candidate_pack_integration_source_corpus(result, trace, mandatory_intents)
+    selected_profile = PHOTOGRAPHIC_INTEGRATION_DEFAULT_PROFILE
+    matched_terms: List[str] = []
+    best_score = (0, 0)
+    for profile in PHOTOGRAPHIC_INTEGRATION_PROFILES:
+        source_terms = [
+            str(term)
+            for term in profile.get("match_terms", ())
+            if candidate_pack_integration_text_has_term(source_corpus, str(term))
+        ]
+        all_terms = [
+            str(term)
+            for term in profile.get("match_terms", ())
+            if candidate_pack_integration_text_has_term(corpus, str(term))
+        ]
+        score = (len(source_terms), len(all_terms))
+        if score > best_score and (source_terms or all_terms):
+            best_score = score
+            selected_profile = profile
+            matched_terms = (source_terms or all_terms)[:12]
+
+    suggested = selected_profile.get("suggested_phrases") if isinstance(selected_profile.get("suggested_phrases"), dict) else {}
+    phrase_budget = {
+        category: normalize_list(phrases)[:3]
+        for category, phrases in suggested.items()
+        if normalize_list(phrases)
+    }
+    return {
+        "enabled": True,
+        "profile_id": selected_profile.get("profile_id", "general_photo_integration"),
+        "source": "candidate_pack_context",
+        "matched_terms": matched_terms,
+        "required_categories": normalize_list(selected_profile.get("required_categories")) or ["environment_binding", "optical_depth"],
+        "minimum_category_hits": int(selected_profile.get("minimum_category_hits", 2) or 2),
+        "principles": normalize_list(selected_profile.get("principles"))[:5],
+        "suggested_phrases": phrase_budget,
+        "category_terms": {
+            category: list(terms)
+            for category, terms in PHOTOGRAPHIC_INTEGRATION_CATEGORY_TERMS.items()
+        },
+        "anti_patterns": normalize_list(
+            selected_profile.get("anti_patterns") or PHOTOGRAPHIC_INTEGRATION_DEFAULT_PROFILE.get("anti_patterns")
+        )[:5],
+    }
+
+
 def build_candidate_pack(result: JsonDict, data: JsonDict) -> JsonDict:
     trace = result.get("semantic_trace") if isinstance(result.get("semantic_trace"), dict) else {}
     provenance = result.get("provenance") if isinstance(result.get("provenance"), dict) else {}
@@ -2507,6 +2890,7 @@ def build_candidate_pack(result: JsonDict, data: JsonDict) -> JsonDict:
         "presets": presets,
         "slots": slots,
         "concept_axes": candidate_pack_concept_axes(soft_policy),
+        "photographic_integration": candidate_pack_photographic_integration(result, trace, presets, slots, mandatory_intents),
         "motif_budget": candidate_pack_motif_budget(result, trace, soft_policy),
         "preset_reference": candidate_pack_preset_reference(result, soft_policy, masked_buckets, open_slots),
         "masked_buckets": masked_buckets,
@@ -2514,6 +2898,7 @@ def build_candidate_pack(result: JsonDict, data: JsonDict) -> JsonDict:
         "template_echo_risk": candidate_pack_template_echo_risk(open_slots),
         "role_scene_policy": soft_policy.get("role_scene_policy", {"enabled": False}),
         "species_family": soft_policy.get("species_family_policy", {"enabled": False, "allowed": {}}),
+        "approval_required_safety_transforms": soft_policy.get("approval_required_safety_transforms", {}) or {},
         "diversity_state": candidate_pack_diversity_state(trace),
         "coverage": {
             "mandatory_intent_count": len(mandatory_intents),
@@ -2546,6 +2931,7 @@ def build_candidate_pack(result: JsonDict, data: JsonDict) -> JsonDict:
             "concept_lock": provenance.get("concept_lock", []),
             "additional_requirements": provenance.get("additional_requirements", []),
             "likeness_mode": provenance.get("likeness_mode"),
+            "safety_transform_policy": provenance.get("safety_transform_policy"),
             "argv": provenance.get("argv", []),
             "sample_prompt_id": provenance.get("prompt_id"),
         },
@@ -6395,6 +6781,7 @@ def normalize_soft_anchor_spec(payload: Any) -> JsonDict:
             "motif_quotas": {},
             "semantic_dropout": {"enabled": False},
             "exemplar_set": {},
+            "approval_required_safety_transforms": {},
         }
     if isinstance(payload, list):
         raw_anchors = payload
@@ -6422,6 +6809,7 @@ def normalize_soft_anchor_spec(payload: Any) -> JsonDict:
         raw_motif_quotas = {}
         raw_semantic_dropout = {}
         raw_exemplar_set = {}
+        raw_approval_required_safety_transforms = {}
     elif isinstance(payload, dict):
         raw_anchors = payload.get("anchors", [])
         min_anchors = payload.get("min_anchors", payload.get("soft_min_anchors", 0))
@@ -6448,6 +6836,7 @@ def normalize_soft_anchor_spec(payload: Any) -> JsonDict:
         raw_motif_quotas = payload.get("motif_quotas", {}) or {}
         raw_semantic_dropout = payload.get("semantic_dropout", {}) or {}
         raw_exemplar_set = payload.get("exemplar_set", {}) or {}
+        raw_approval_required_safety_transforms = payload.get("approval_required_safety_transforms", {}) or {}
     else:
         raise ValueError("--soft-anchor-spec must be a JSON object or list")
     if not isinstance(raw_anchors, list):
@@ -6537,6 +6926,11 @@ def normalize_soft_anchor_spec(payload: Any) -> JsonDict:
     motif_quotas = normalize_reference_motif_quotas(raw_motif_quotas)
     semantic_dropout = normalize_reference_semantic_dropout(raw_semantic_dropout)
     exemplar_set = normalize_reference_exemplar_set(raw_exemplar_set)
+    approval_required_safety_transforms = (
+        raw_approval_required_safety_transforms
+        if isinstance(raw_approval_required_safety_transforms, dict)
+        else {}
+    )
     selected_rate_floor = SOFT_ANCHOR_SELECTED_RATE_FLOOR
     if isinstance(payload, dict) and payload.get("selected_rate_floor") is not None:
         try:
@@ -6581,6 +6975,7 @@ def normalize_soft_anchor_spec(payload: Any) -> JsonDict:
         "motif_quotas": motif_quotas,
         "semantic_dropout": semantic_dropout,
         "exemplar_set": exemplar_set,
+        "approval_required_safety_transforms": approval_required_safety_transforms,
         "anchors": anchors,
     }
 
@@ -6651,6 +7046,10 @@ def parse_soft_anchor_specs(items: Optional[Sequence[str]]) -> JsonDict:
             merged.setdefault("semantic_dropout", {}).update(spec.get("semantic_dropout") or {})
         if spec.get("exemplar_set"):
             merged.setdefault("exemplar_set", {}).update(spec.get("exemplar_set") or {})
+        if spec.get("approval_required_safety_transforms"):
+            merged.setdefault("approval_required_safety_transforms", {}).update(
+                spec.get("approval_required_safety_transforms") or {}
+            )
         merged.setdefault("safety_negative_floor", [])
         for term in normalize_list(spec.get("safety_negative_floor")):
             if term not in merged["safety_negative_floor"]:
@@ -7390,6 +7789,7 @@ def soft_anchor_trace(policy: Optional[JsonDict], picked: Optional[Dict[str, Ent
         "motif_quotas": policy.get("motif_quotas", {}) or {},
         "semantic_dropout": policy.get("semantic_dropout", {}) or {"enabled": False},
         "exemplar_set": policy.get("exemplar_set", {}) or {},
+        "approval_required_safety_transforms": policy.get("approval_required_safety_transforms", {}) or {},
         "required_anchor_count": soft_anchor_required_count(policy),
         "selected_anchor_count": len(selected_slots),
         "selected_anchor_slots": sorted(selected_slots),
@@ -7397,6 +7797,17 @@ def soft_anchor_trace(policy: Optional[JsonDict], picked: Optional[Dict[str, Ent
         "match_status": status,
         "anchors": anchors,
     }
+
+
+def strip_unapproved_safety_transforms(policy: Optional[JsonDict]) -> None:
+    if not isinstance(policy, dict):
+        return
+    policy["visual_guards"] = []
+    policy["free_slot_constraints"] = {}
+    policy["render_suppress_terms"] = []
+    policy["render_directives"] = []
+    policy["soft_repair_policy"] = normalize_soft_repair_policy({})
+    policy["safety_negative_floor"] = []
 
 
 def entry_matches_guard_facets(item: Entry, raw_facets: Sequence[str]) -> bool:
@@ -10280,6 +10691,8 @@ def render_compact_prompt(
                 continue
             if section == "scene" and "world" in drop_sections:
                 content = unique_join(sections.get("scene", [])[:1])
+            elif section == "finish" and values.get("format"):
+                content = unique_join([part for part in sections.get("finish", []) if part != values.get("format")])
             else:
                 content = section_text(sections, section)
             if content:
@@ -10306,9 +10719,27 @@ def render_compact_prompt(
 
     drop_sections: Set[str] = set()
     prompt = render_with_drops(drop_sections)
+    forced_slots = set((generation_contract or {}).get("forced_slots", []) or [])
+    section_forced_slots = {
+        "palette_mood": {"color", "color_grading", "mood", "world"},
+        "finish": {
+            "texture",
+            "format",
+            "quality",
+            "skin_finish",
+            "skin_condition",
+            "film_emulation",
+            "grain_profile",
+            "lens_artifact",
+        },
+        "caption_context": {"caption_context"},
+        "world": {"world"},
+    }
     for section in ("palette_mood", "finish", "caption_context", "world"):
         if lang != "en" or len(prompt.split()) <= 140:
             break
+        if forced_slots & section_forced_slots.get(section, set()):
+            continue
         drop_sections.add(section)
         prompt = render_with_drops(drop_sections)
     return clean_spaces(prompt)
@@ -10383,6 +10814,7 @@ def choose_negative_entries(
     count: int = 12,
     include_surreal: bool = False,
     picked: Optional[Dict[str, Entry]] = None,
+    safety_transform_approved: bool = True,
 ) -> List[Entry]:
     picked = picked or {}
     negative_pools = data.get("negative_prompt_pools", {})
@@ -10429,7 +10861,7 @@ def choose_negative_entries(
                 entries.append(entry)
                 seen.add(key)
 
-    if negative_pools:
+    if negative_pools and safety_transform_approved:
         screen_context = {
             "screen",
             "server",
@@ -10488,6 +10920,13 @@ def choose_negative_entries(
             "costume_style:covered_santa_fur_trim_costume",
             "costume_style:bunny_girl_costume",
         }
+        food_mouth_context = {
+            "single_ripe_tomato_near_lips",
+            "prop:single_ripe_tomato_near_lips",
+            "food_mouth_non_sensual",
+            "anti_sensual_food",
+            "mouth_nearby",
+        }
         if context & screen_context or core_context & screen_context:
             append_context_pool("anti_diagram")
             append_context_pool("screen_workplace")
@@ -10497,6 +10936,8 @@ def choose_negative_entries(
                 append_context_pool("anti_ornament_absorption")
         if context & uniform_context or core_context & uniform_context:
             append_context_pool("role_dignity")
+        if context & food_mouth_context or core_context & food_mouth_context:
+            append_context_pool("anti_food_sensual")
 
     if include_surreal:
         seen = {localize(entry, "en") for entry in entries}
@@ -10639,6 +11080,7 @@ def generate_once(
     anchor_diversity_ledger: Optional[JsonDict] = None,
     creativity: Optional[float] = None,
     novelty_explicit: bool = False,
+    safety_transform_policy: str = "approved",
 ) -> JsonDict:
     requested_selection_mode = requested_selection_mode or selection_mode
     effective_selection_mode = selection_mode
@@ -10688,6 +11130,7 @@ def generate_once(
         additional_requirements=additional_requirements,
         likeness_mode=likeness_mode,
         soft_anchor_spec=soft_anchor_spec,
+        safety_transform_policy=safety_transform_policy,
     )
     expand_soft_anchor_pools(generation_contract, semantic_context, data)
     affinity_status = soft_preset_affinity_status(
@@ -10937,7 +11380,15 @@ def generate_once(
         }
 
     if include_negative:
-        negative_entries = choose_negative_entries(data, rng, negative_count, has_surreal_layer(render_picked), render_picked)
+        safety_transform_approved = safety_transform_policy == "approved"
+        negative_entries = choose_negative_entries(
+            data,
+            rng,
+            negative_count,
+            has_surreal_layer(render_picked),
+            render_picked,
+            safety_transform_approved=safety_transform_approved,
+        )
         soft_suppress_entries = soft_render_suppress_negative_entries(generation_contract.get("soft_anchor_policy"))
         soft_suppress_entries.extend(soft_render_directive_negative_entries(directive_events))
         if soft_suppress_entries:
@@ -10967,6 +11418,7 @@ def generate_once(
         "concept_lock": normalize_concept_locks(concept_locks),
         "additional_requirements": effective_additional_requirements,
         "likeness_mode": likeness_mode,
+        "safety_transform_policy": safety_transform_policy,
         "creativity": (semantic_context or {}).get("creativity"),
         "argv": list(source_argv or []),
     }
@@ -11194,6 +11646,12 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     parser.add_argument("--semantic-dimensions", type=int, default=DEFAULT_SEMANTIC_DIMENSIONS, help="Gemini embedding dimensions required by the semantic index.")
     parser.add_argument("--soft-anchor-spec", dest="soft_anchor_specs", action="append", default=[], help=argparse.SUPPRESS)
     parser.add_argument("--soft-requirement", dest="soft_requirements", action="append", default=[], help=argparse.SUPPRESS)
+    parser.add_argument(
+        "--safety-transform-policy",
+        choices=SAFETY_TRANSFORM_POLICIES,
+        default="approved",
+        help=argparse.SUPPRESS,
+    )
     parser.add_argument("--anchor-diversity-ledger", default=None, help=argparse.SUPPRESS)
     parser.add_argument("--include-trace", action="store_true", help="Include semantic/rewrite trace metadata in JSON output.")
     parser.add_argument("--llm-polish", choices=LLM_POLISH_MODES, default="off", help="Optional strict prompt polish contract. strict currently preserves the deterministic prompt unless a provider is wired explicitly.")
@@ -11338,6 +11796,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             anchor_diversity_ledger=anchor_diversity_ledger if args.anchor_diversity_ledger else None,
             creativity=args.creativity,
             novelty_explicit=novelty_explicit,
+            safety_transform_policy=args.safety_transform_policy,
         )
         results.append(result)
         if args.anchor_diversity_ledger:

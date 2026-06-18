@@ -165,6 +165,60 @@ def motif_taxonomy_terms(pack: dict[str, Any], motif: str) -> list[str]:
     return [str(term) for term in taxonomy.get(motif, []) if str(term).strip()]
 
 
+def photographic_integration_category_terms(integration: dict[str, Any], category: str) -> list[str]:
+    terms: list[str] = []
+    category_terms = integration.get("category_terms") if isinstance(integration.get("category_terms"), dict) else {}
+    for term in category_terms.get(category) or []:
+        if isinstance(term, str) and term.strip():
+            terms.append(term)
+    suggested = integration.get("suggested_phrases") if isinstance(integration.get("suggested_phrases"), dict) else {}
+    for phrase in suggested.get(category) or []:
+        if isinstance(phrase, str) and phrase.strip():
+            terms.append(phrase)
+    return list(dict.fromkeys(terms))
+
+
+def audit_photographic_integration(pack: dict[str, Any], search_text: str) -> dict[str, Any] | None:
+    integration = pack.get("photographic_integration")
+    if not isinstance(integration, dict) or not integration.get("enabled", True):
+        return None
+
+    required_categories = [
+        str(category)
+        for category in integration.get("required_categories") or []
+        if str(category).strip()
+    ]
+    if not required_categories:
+        required_categories = ["environment_binding", "optical_depth"]
+    try:
+        minimum_hits = int(integration.get("minimum_category_hits", 2) or 2)
+    except (TypeError, ValueError):
+        minimum_hits = 2
+    minimum_hits = max(1, min(minimum_hits, len(required_categories)))
+
+    hits: dict[str, list[str]] = {}
+    missing: list[str] = []
+    for category in required_categories:
+        terms = photographic_integration_category_terms(integration, category)
+        matched = [term for term in terms if text_contains_term(search_text, term)]
+        if matched:
+            hits[category] = matched[:5]
+        else:
+            missing.append(category)
+
+    if len(hits) >= minimum_hits:
+        return None
+    return {
+        "check": "photographic_integration",
+        "reason": "composed prompt underuses the candidate pack's photographic integration layer",
+        "profile_id": integration.get("profile_id"),
+        "minimum_category_hits": minimum_hits,
+        "hit_categories": sorted(hits),
+        "missing_categories": missing,
+        "principles": integration.get("principles", [])[:3] if isinstance(integration.get("principles"), list) else [],
+    }
+
+
 def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dict[str, Any]:
     failures: list[dict[str, Any]] = []
     warnings: list[dict[str, Any]] = []
@@ -384,6 +438,10 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
     for term in safety_floor.get("forbidden_terms") or []:
         if text_contains_term(prompt_en, str(term)):
             failures.append({"check": "safety_floor", "reason": "forbidden term appears in prompt_en", "term": term})
+
+    photographic_warning = audit_photographic_integration(pack, search_text)
+    if photographic_warning:
+        warnings.append(photographic_warning)
 
     status = "fail" if failures else "pass"
     return {

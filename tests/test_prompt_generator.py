@@ -5875,6 +5875,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "presets",
                 "slots",
                 "concept_axes",
+                "photographic_integration",
                 "motif_budget",
                 "preset_reference",
                 "masked_buckets",
@@ -5882,6 +5883,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "template_echo_risk",
                 "role_scene_policy",
                 "species_family",
+                "approval_required_safety_transforms",
                 "diversity_state",
                 "coverage",
                 "conflicts",
@@ -5896,6 +5898,10 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         uncovered = {item["text"] for item in pack["uncovered_intents"]}
         self.assertIn("드래곤", uncovered)
         self.assertIn("고양이손", uncovered)
+        integration = pack["photographic_integration"]
+        self.assertTrue(integration["enabled"])
+        self.assertIn("environment_binding", integration["required_categories"])
+        self.assertGreaterEqual(integration["minimum_category_hits"], 1)
         self.assertLessEqual(len(pack["presets"]), 5)
         total_slot_candidates = 0
         for slot, slot_payload in pack["slots"].items():
@@ -5905,6 +5911,23 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             self.assertLessEqual(len(candidates), expected_limit)
             self.assertAlmostEqual(sum(candidate["probability"] for candidate in candidates), 1.0, places=5)
         self.assertLessEqual(total_slot_candidates, 120)
+
+    def test_candidate_pack_profiles_photographic_integration_for_cathedral(self):
+        payload = self.run_wrapper_json(
+            "--preset",
+            "stained_glass_cathedral_portrait",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "701",
+            "--emit-candidate-pack",
+        )
+
+        integration = payload[0]["photographic_integration"]
+        self.assertEqual(integration["profile_id"], "cathedral_reverent_environmental_portrait")
+        self.assertTrue({"environment_binding", "optical_depth", "human_trace"} <= set(integration["required_categories"]))
+        self.assertIn("stained-glass color spill contaminates", " ".join(integration["suggested_phrases"]["environment_binding"]))
+        self.assertIn("centered beauty headshot pasted over a scenic background", integration["anti_patterns"])
 
     def test_candidate_pack_exposes_reference_scaffold_for_yandere(self):
         args = (
@@ -6023,6 +6046,75 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             self.assertEqual(audit["status"], "fail")
             failure_checks = {failure["check"] for failure in audit["failures"]}
             self.assertTrue({"mandatory_intent", "chosen_candidate_ids", "hard_conflict", "safety_floor"} <= failure_checks)
+
+    def test_audit_composed_prompt_warns_for_missing_photographic_integration(self):
+        pack = {
+            "pack_id": "dddddddddddddddd",
+            "mandatory_intents": [{"text": "cathedral", "status": "covered", "covered_by": ["preset:p1"], "audit_terms": ["cathedral"]}],
+            "uncovered_intents": [],
+            "presets": [{"id": "preset:p1"}],
+            "slots": {},
+            "photographic_integration": {
+                "enabled": True,
+                "profile_id": "cathedral_reverent_environmental_portrait",
+                "required_categories": ["environment_binding", "optical_depth", "human_trace"],
+                "minimum_category_hits": 2,
+                "category_terms": {
+                    "environment_binding": ["color spill", "dust", "reflection"],
+                    "optical_depth": ["foreground", "falloff", "grain"],
+                    "human_trace": ["rain-damp", "stray hair", "tired"],
+                },
+                "principles": ["bind the subject and cathedral with shared light"],
+            },
+            "coverage": {},
+            "conflicts": [],
+            "safety_floor": {"forbidden_terms": []},
+            "negative_en": None,
+            "provenance": {},
+        }
+        bland = {
+            "pack_id": "dddddddddddddddd",
+            "prompt_en": "A polished cathedral portrait, no text or watermark.",
+            "chosen_candidate_ids": ["preset:p1"],
+        }
+        integrated = {
+            "pack_id": "dddddddddddddddd",
+            "prompt_en": (
+                "A cathedral portrait where stained-glass color spill crosses the cheek and cassock, "
+                "with foreground candle blur and gentle falloff through dusty nave air, no text or watermark."
+            ),
+            "chosen_candidate_ids": ["preset:p1"],
+        }
+        with tempfile.TemporaryDirectory() as tmpdir:
+            pack_path = Path(tmpdir) / "pack.json"
+            bland_path = Path(tmpdir) / "bland.json"
+            integrated_path = Path(tmpdir) / "integrated.json"
+            pack_path.write_text(json.dumps(pack, ensure_ascii=False), encoding="utf-8")
+            bland_path.write_text(json.dumps(bland, ensure_ascii=False), encoding="utf-8")
+            integrated_path.write_text(json.dumps(integrated, ensure_ascii=False), encoding="utf-8")
+
+            warned = subprocess.run(
+                [sys.executable, str(AUDIT_COMPOSED_PATH), "--pack", str(pack_path), "--composed", str(bland_path)],
+                cwd=ROOT,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+            self.assertEqual(warned.returncode, 0, warned.stdout + warned.stderr)
+            warned_audit = json.loads(warned.stdout)
+            self.assertEqual(warned_audit["status"], "pass")
+            self.assertIn("photographic_integration", {warning["check"] for warning in warned_audit["warnings"]})
+
+            passed = subprocess.run(
+                [sys.executable, str(AUDIT_COMPOSED_PATH), "--pack", str(pack_path), "--composed", str(integrated_path)],
+                cwd=ROOT,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+            self.assertEqual(passed.returncode, 0, passed.stdout + passed.stderr)
+            passed_audit = json.loads(passed.stdout)
+            self.assertNotIn("photographic_integration", {warning["check"] for warning in passed_audit["warnings"]})
 
     def test_audit_composed_prompt_rejects_masked_bucket_and_motif_echo(self):
         pack = {
