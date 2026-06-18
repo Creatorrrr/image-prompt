@@ -5876,6 +5876,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "slots",
                 "concept_axes",
                 "photographic_integration",
+                "visual_proposition",
                 "motif_budget",
                 "preset_reference",
                 "masked_buckets",
@@ -5902,6 +5903,11 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertTrue(integration["enabled"])
         self.assertIn("environment_binding", integration["required_categories"])
         self.assertGreaterEqual(integration["minimum_category_hits"], 1)
+        proposition = pack["visual_proposition"]
+        self.assertTrue(proposition["enabled"])
+        self.assertIn(proposition["register"], {"observational", "understated", "charged"})
+        self.assertTrue(proposition["core_candidates"])
+        self.assertTrue(proposition["tension_candidates"])
         self.assertLessEqual(len(pack["presets"]), 5)
         total_slot_candidates = 0
         for slot, slot_payload in pack["slots"].items():
@@ -5924,10 +5930,77 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         )
 
         integration = payload[0]["photographic_integration"]
-        self.assertEqual(integration["profile_id"], "cathedral_reverent_environmental_portrait")
+        self.assertEqual(integration["profile_id"], "axis_composite_photo_integration")
+        self.assertEqual(integration["source"], "quality_layers_axis_composite")
+        active_axes = {axis["id"] for axis in integration["active_axes"]}
+        self.assertTrue({"sacred_or_monumental_interior", "colored_or_mixed_light", "person_presence"} <= active_axes)
         self.assertTrue({"environment_binding", "optical_depth", "human_trace"} <= set(integration["required_categories"]))
-        self.assertIn("stained-glass color spill contaminates", " ".join(integration["suggested_phrases"]["environment_binding"]))
+        self.assertIn("environment_binding", integration["suggested_phrases"])
+        self.assertIn("optical_depth", integration["suggested_phrases"])
         self.assertIn("centered beauty headshot pasted over a scenic background", integration["anti_patterns"])
+
+    def test_candidate_pack_composes_quality_axes_across_domains(self):
+        cases = [
+            (
+                ("--concept", "kpop 여자 아이돌 페르시안 고양이 일상복 실내"),
+                {"person_presence", "animal_presence", "interior_environment"},
+            ),
+            (
+                ("--concept", "사과 펠트 동화느낌의 배경 kpop 아이돌 네코미미 상큼함"),
+                {"person_presence", "handmade_or_miniature_set", "object_or_product_presence"},
+            ),
+            (
+                ("--concept", "스테이지에서 공연하는 케이팝 여성 아이돌 전광판 역동적 살짝 땀이 맺힌 활짝 웃음"),
+                {"person_presence", "performance_stage_environment", "colored_or_mixed_light"},
+            ),
+            (
+                ("--preset", "product_packshot_white_sweep"),
+                {"object_or_product_presence", "interior_environment"},
+            ),
+        ]
+        axis_sets = []
+        for args, expected_axes in cases:
+            payload = self.run_wrapper_json(*args, "--selection-mode", "rule", "--seed", "715", "--emit-candidate-pack")
+            pack = payload[0]
+            integration = pack["photographic_integration"]
+            active_axes = {axis["id"] for axis in integration["active_axes"]}
+            axis_sets.append(tuple(sorted(active_axes)))
+            self.assertEqual(integration["source"], "quality_layers_axis_composite")
+            self.assertTrue(expected_axes <= active_axes)
+            self.assertTrue({"environment_binding", "optical_depth"} <= set(integration["required_categories"]))
+            self.assertGreaterEqual(len(active_axes), 3)
+
+            proposition = pack["visual_proposition"]
+            self.assertEqual(proposition["source"], "quality_layers_narrative_core_and_concept_tension_slots")
+            self.assertIn("evidence", proposition["category_terms"])
+            self.assertTrue(proposition["core_candidates"])
+            self.assertTrue(proposition["tension_candidates"])
+
+        self.assertEqual(len(set(axis_sets)), len(cases))
+
+    def test_candidate_pack_exposes_visual_proposition_layer(self):
+        payload = self.run_wrapper_json(
+            "--concept",
+            "도시에서 혼자 늦은 밤 돌아오는 사람",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "715",
+            "--emit-candidate-pack",
+        )
+
+        proposition = payload[0]["visual_proposition"]
+        self.assertEqual(proposition["source"], "quality_layers_narrative_core_and_concept_tension_slots")
+        self.assertEqual(proposition["subject_class"], "person")
+        self.assertIn("person", {subject["id"] for subject in proposition["subject_classes"]})
+        self.assertIn(proposition["register"], {"understated", "charged"})
+        core_ids = {candidate["entry_id"] for candidate in proposition["core_candidates"]}
+        tension_ids = {candidate["entry_id"] for candidate in proposition["tension_candidates"]}
+        self.assertTrue(core_ids)
+        self.assertTrue(tension_ids)
+        self.assertEqual(proposition["audit_categories"], ["narrative_core", "concept_tension", "evidence"])
+        self.assertIn("evidence", proposition["category_terms"])
+        self.assertNotIn("visual_argument", proposition["category_terms"])
 
     def test_candidate_pack_exposes_reference_scaffold_for_yandere(self):
         args = (
@@ -6056,7 +6129,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             "slots": {},
             "photographic_integration": {
                 "enabled": True,
-                "profile_id": "cathedral_reverent_environmental_portrait",
+                "profile_id": "axis_composite_photo_integration",
                 "required_categories": ["environment_binding", "optical_depth", "human_trace"],
                 "minimum_category_hits": 2,
                 "category_terms": {
@@ -6115,6 +6188,154 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             self.assertEqual(passed.returncode, 0, passed.stdout + passed.stderr)
             passed_audit = json.loads(passed.stdout)
             self.assertNotIn("photographic_integration", {warning["check"] for warning in passed_audit["warnings"]})
+
+    def test_audit_composed_prompt_warns_for_missing_visual_proposition(self):
+        pack = {
+            "pack_id": "eeeeeeeeeeeeeeee",
+            "mandatory_intents": [{"text": "portrait", "status": "covered", "covered_by": ["preset:p1"], "audit_terms": ["portrait"]}],
+            "uncovered_intents": [],
+            "presets": [{"id": "preset:p1"}],
+            "slots": {},
+            "visual_proposition": {
+                "enabled": True,
+                "subject_class": "person",
+                "register": "understated",
+                "minimum_hits": 1,
+                "core_candidates": [
+                    {
+                        "id": "slot:narrative_core:private_ritual_core",
+                        "slot": "narrative_core",
+                        "entry_id": "private_ritual_core",
+                        "terms": ["private ritual", "small personal routine"],
+                    }
+                ],
+                "tension_candidates": [
+                    {
+                        "id": "slot:concept_tension:public_vs_private_tension",
+                        "slot": "concept_tension",
+                        "entry_id": "public_vs_private_tension",
+                        "terms": ["public versus private", "private emotion held inside public space"],
+                    }
+                ],
+                "category_terms": {
+                    "narrative_core": ["private ritual", "small personal routine"],
+                    "concept_tension": ["public versus private", "private emotion held inside public space"],
+                    "evidence": ["hand", "placement", "trace"],
+                },
+                "audit_categories": ["narrative_core", "concept_tension", "evidence"],
+                "principles": ["Give the frame one quiet reason to exist beyond beauty."],
+            },
+            "coverage": {},
+            "conflicts": [],
+            "safety_floor": {"forbidden_terms": []},
+            "negative_en": None,
+            "provenance": {},
+        }
+        bland = {
+            "pack_id": "eeeeeeeeeeeeeeee",
+            "prompt_en": "A polished portrait in a detailed room, no text or watermark.",
+            "chosen_candidate_ids": ["preset:p1"],
+        }
+        integrated = {
+            "pack_id": "eeeeeeeeeeeeeeee",
+            "prompt_en": (
+                "A portrait built around a private ritual in public, her hand hiding a small personal routine "
+                "inside an otherwise polished room, no text or watermark."
+            ),
+            "chosen_candidate_ids": ["preset:p1", "slot:narrative_core:private_ritual_core"],
+        }
+        with tempfile.TemporaryDirectory() as tmpdir:
+            pack_path = Path(tmpdir) / "pack.json"
+            bland_path = Path(tmpdir) / "bland.json"
+            integrated_path = Path(tmpdir) / "integrated.json"
+            pack_path.write_text(json.dumps(pack, ensure_ascii=False), encoding="utf-8")
+            bland_path.write_text(json.dumps(bland, ensure_ascii=False), encoding="utf-8")
+            integrated_path.write_text(json.dumps(integrated, ensure_ascii=False), encoding="utf-8")
+
+            warned = subprocess.run(
+                [sys.executable, str(AUDIT_COMPOSED_PATH), "--pack", str(pack_path), "--composed", str(bland_path)],
+                cwd=ROOT,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+            self.assertEqual(warned.returncode, 0, warned.stdout + warned.stderr)
+            warned_audit = json.loads(warned.stdout)
+            self.assertIn("visual_proposition", {warning["check"] for warning in warned_audit["warnings"]})
+
+            passed = subprocess.run(
+                [sys.executable, str(AUDIT_COMPOSED_PATH), "--pack", str(pack_path), "--composed", str(integrated_path)],
+                cwd=ROOT,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+            self.assertEqual(passed.returncode, 0, passed.stdout + passed.stderr)
+            passed_audit = json.loads(passed.stdout)
+            self.assertNotIn("visual_proposition", {warning["check"] for warning in passed_audit["warnings"]})
+
+    def test_audit_visual_proposition_applies_lightweight_observational_register(self):
+        pack = {
+            "pack_id": "ffffffffffffffff",
+            "mandatory_intents": [],
+            "uncovered_intents": [],
+            "presets": [{"id": "preset:p1"}],
+            "slots": {},
+            "visual_proposition": {
+                "enabled": True,
+                "subject_class": "object_scene",
+                "register": "observational",
+                "minimum_hits": 1,
+                "category_terms": {
+                    "narrative_core": ["quiet arrangement"],
+                    "concept_tension": ["organic versus synthetic"],
+                    "evidence": ["placement", "contact", "trace"],
+                },
+                "audit_categories": ["narrative_core", "concept_tension", "evidence"],
+            },
+            "coverage": {},
+            "conflicts": [],
+            "safety_floor": {"forbidden_terms": []},
+            "negative_en": None,
+            "provenance": {},
+        }
+        bland = {
+            "pack_id": "ffffffffffffffff",
+            "prompt_en": "A clean product still life, no text or watermark.",
+            "chosen_candidate_ids": ["preset:p1"],
+        }
+        integrated = {
+            "pack_id": "ffffffffffffffff",
+            "prompt_en": "A product still life where placement, contact shadow, and small use trace organize the arrangement, no text or watermark.",
+            "chosen_candidate_ids": ["preset:p1"],
+        }
+        with tempfile.TemporaryDirectory() as tmpdir:
+            pack_path = Path(tmpdir) / "pack.json"
+            bland_path = Path(tmpdir) / "bland.json"
+            integrated_path = Path(tmpdir) / "integrated.json"
+            pack_path.write_text(json.dumps(pack, ensure_ascii=False), encoding="utf-8")
+            bland_path.write_text(json.dumps(bland, ensure_ascii=False), encoding="utf-8")
+            integrated_path.write_text(json.dumps(integrated, ensure_ascii=False), encoding="utf-8")
+            warned = subprocess.run(
+                [sys.executable, str(AUDIT_COMPOSED_PATH), "--pack", str(pack_path), "--composed", str(bland_path)],
+                cwd=ROOT,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+            passed = subprocess.run(
+                [sys.executable, str(AUDIT_COMPOSED_PATH), "--pack", str(pack_path), "--composed", str(integrated_path)],
+                cwd=ROOT,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+        self.assertEqual(warned.returncode, 0, warned.stdout + warned.stderr)
+        warned_audit = json.loads(warned.stdout)
+        self.assertIn("visual_proposition", {warning["check"] for warning in warned_audit["warnings"]})
+        self.assertEqual(passed.returncode, 0, passed.stdout + passed.stderr)
+        passed_audit = json.loads(passed.stdout)
+        self.assertNotIn("visual_proposition", {warning["check"] for warning in passed_audit["warnings"]})
 
     def test_audit_composed_prompt_rejects_masked_bucket_and_motif_echo(self):
         pack = {

@@ -32,6 +32,7 @@ VALID_MATCH_RULE_KEYS = {
 }
 VALID_MATCH_FIELDS = {"id", "en", "ko", "embedding_text", "semantic_anchor"}
 DEFAULT_CONCEPT_RECIPES = Path(__file__).resolve().parents[1] / "assets" / "concept_recipes.json"
+DEFAULT_QUALITY_LAYERS = Path(__file__).resolve().parents[1] / "assets" / "photo_prompt_quality_layers.json"
 NO_TEXT_REQUIRED_TAG = "no_text_required"
 NO_TEXT_ANCHOR_TERMS = {
     "abstract",
@@ -448,6 +449,193 @@ def validate_match_rules(label: str, rules: Any, errors: list[str]) -> None:
             validate_match_rule(f"{label}[{index}]", rule, errors)
         return
     errors.append(f"{label}: must be a string, object, or list")
+
+
+def validate_quality_layer_category_terms(label: str, value: Any, errors: list[str]) -> None:
+    if not isinstance(value, dict) or not value:
+        errors.append(f"{label}: must be a non-empty object")
+        return
+    for category, terms in value.items():
+        if not str(category).strip():
+            errors.append(f"{label}: empty category id")
+        validate_string_list(f"{label}.{category}", terms, errors)
+
+
+def validate_quality_layer_suggested_phrases(
+    label: str,
+    value: Any,
+    valid_categories: set[str],
+    errors: list[str],
+) -> None:
+    if value is None:
+        return
+    if not isinstance(value, dict):
+        errors.append(f"{label}: must be an object")
+        return
+    for category, phrases in value.items():
+        if category not in valid_categories:
+            errors.append(f"{label}: unknown category {category}")
+            continue
+        validate_string_list(f"{label}.{category}", phrases, errors)
+
+
+def validate_quality_layers(path: Path, data: dict[str, Any], errors: list[str]) -> None:
+    try:
+        quality = load_json(path)
+    except FileNotFoundError:
+        errors.append(f"quality_layers: missing file {path}")
+        return
+    except json.JSONDecodeError as exc:
+        errors.append(f"quality_layers: invalid JSON: {exc}")
+        return
+    if not isinstance(quality, dict):
+        errors.append("quality_layers: must be an object")
+        return
+    try:
+        schema_version = int(quality.get("schema_version"))
+    except (TypeError, ValueError):
+        errors.append("quality_layers.schema_version: must be 1")
+        schema_version = None
+    if schema_version != 1:
+        errors.append("quality_layers.schema_version: must be 1")
+
+    photographic = quality.get("photographic_integration")
+    if not isinstance(photographic, dict):
+        errors.append("quality_layers.photographic_integration: must be an object")
+        photographic = {}
+    categories = photographic.get("categories") if isinstance(photographic, dict) else {}
+    validate_quality_layer_category_terms("quality_layers.photographic_integration.categories", categories, errors)
+    valid_categories = {str(category) for category in categories} if isinstance(categories, dict) else set()
+
+    baseline = photographic.get("baseline") if isinstance(photographic, dict) else {}
+    if not isinstance(baseline, dict):
+        errors.append("quality_layers.photographic_integration.baseline: must be an object")
+        baseline = {}
+    validate_string_list("quality_layers.photographic_integration.baseline.required_categories", baseline.get("required_categories"), errors)
+    for category in normalize_list(baseline.get("required_categories")):
+        if category not in valid_categories:
+            errors.append(f"quality_layers.photographic_integration.baseline.required_categories: unknown category {category}")
+    validate_string_list("quality_layers.photographic_integration.baseline.principles", baseline.get("principles"), errors)
+    validate_quality_layer_suggested_phrases(
+        "quality_layers.photographic_integration.baseline.suggested_phrases",
+        baseline.get("suggested_phrases"),
+        valid_categories,
+        errors,
+    )
+    if "minimum_category_hits" in baseline:
+        try:
+            minimum = int(baseline.get("minimum_category_hits"))
+        except (TypeError, ValueError):
+            errors.append("quality_layers.photographic_integration.baseline.minimum_category_hits: must be an integer")
+        else:
+            if minimum < 1:
+                errors.append("quality_layers.photographic_integration.baseline.minimum_category_hits: must be at least 1")
+
+    axes = photographic.get("axes") if isinstance(photographic, dict) else []
+    if not isinstance(axes, list) or not axes:
+        errors.append("quality_layers.photographic_integration.axes: must be a non-empty list")
+        axes = []
+    seen_axis_ids: set[str] = set()
+    for index, axis in enumerate(axes):
+        label = f"quality_layers.photographic_integration.axes[{index}]"
+        if not isinstance(axis, dict):
+            errors.append(f"{label}: must be an object")
+            continue
+        axis_id = str(axis.get("id") or "")
+        if not axis_id:
+            errors.append(f"{label}.id: required")
+        elif axis_id in seen_axis_ids:
+            errors.append(f"{label}.id: duplicate id {axis_id}")
+        else:
+            seen_axis_ids.add(axis_id)
+        validate_string_list(f"{label}.terms", axis.get("terms"), errors)
+        validate_string_list(f"{label}.required_categories", axis.get("required_categories"), errors)
+        for category in normalize_list(axis.get("required_categories")):
+            if category not in valid_categories:
+                errors.append(f"{label}.required_categories: unknown category {category}")
+        validate_string_list(f"{label}.principles", axis.get("principles"), errors)
+        validate_quality_layer_suggested_phrases(
+            f"{label}.suggested_phrases",
+            axis.get("suggested_phrases"),
+            valid_categories,
+            errors,
+        )
+
+    proposition = quality.get("visual_proposition")
+    if not isinstance(proposition, dict):
+        errors.append("quality_layers.visual_proposition: must be an object")
+        proposition = {}
+    by_slot = entry_ids_by_slot(data)
+    proposition_slots = normalize_list(proposition.get("slots"))
+    if not proposition_slots:
+        errors.append("quality_layers.visual_proposition.slots: at least one slot is required")
+    for slot in proposition_slots:
+        if slot not in by_slot:
+            errors.append(f"quality_layers.visual_proposition.slots: unknown slot {slot}")
+    try:
+        candidate_limit = int(proposition.get("candidate_limit", 3))
+    except (TypeError, ValueError):
+        errors.append("quality_layers.visual_proposition.candidate_limit: must be an integer")
+    else:
+        if candidate_limit < 1:
+            errors.append("quality_layers.visual_proposition.candidate_limit: must be at least 1")
+
+    subject_classes = proposition.get("subject_classes") or []
+    if not isinstance(subject_classes, list) or not subject_classes:
+        errors.append("quality_layers.visual_proposition.subject_classes: must be a non-empty list")
+        subject_classes = []
+    seen_class_ids: set[str] = set()
+    for index, subject_class in enumerate(subject_classes):
+        label = f"quality_layers.visual_proposition.subject_classes[{index}]"
+        if not isinstance(subject_class, dict):
+            errors.append(f"{label}: must be an object")
+            continue
+        class_id = str(subject_class.get("id") or "")
+        if not class_id:
+            errors.append(f"{label}.id: required")
+        elif class_id in seen_class_ids:
+            errors.append(f"{label}.id: duplicate id {class_id}")
+        else:
+            seen_class_ids.add(class_id)
+        validate_string_list(f"{label}.terms", subject_class.get("terms"), errors)
+        if str(subject_class.get("core_policy", "allow")) not in {"allow", "contextual", "none"}:
+            errors.append(f"{label}.core_policy: must be allow, contextual, or none")
+
+    registers = proposition.get("registers") or {}
+    if not isinstance(registers, dict) or not registers:
+        errors.append("quality_layers.visual_proposition.registers: must be a non-empty object")
+        registers = {}
+    for register, policy in registers.items():
+        label = f"quality_layers.visual_proposition.registers.{register}"
+        if not isinstance(policy, dict):
+            errors.append(f"{label}: must be an object")
+            continue
+        if "terms" in policy:
+            for term in normalize_list(policy.get("terms")):
+                if not str(term).strip():
+                    errors.append(f"{label}.terms: empty value")
+        try:
+            minimum = int(policy.get("minimum_hits", 1))
+        except (TypeError, ValueError):
+            errors.append(f"{label}.minimum_hits: must be an integer")
+        else:
+            if minimum < 0:
+                errors.append(f"{label}.minimum_hits: must be non-negative")
+        validate_string_list(f"{label}.principles", policy.get("principles"), errors)
+
+    fallback = proposition.get("fallback") or {}
+    if not isinstance(fallback, dict):
+        errors.append("quality_layers.visual_proposition.fallback: must be an object")
+        fallback = {}
+    for slot, ids in fallback.items():
+        if slot not in by_slot:
+            errors.append(f"quality_layers.visual_proposition.fallback: unknown slot {slot}")
+            continue
+        for entry_id in normalize_list(ids):
+            if entry_id not in by_slot[slot]:
+                errors.append(f"quality_layers.visual_proposition.fallback.{slot}: unknown id {entry_id}")
+    validate_string_list("quality_layers.visual_proposition.evidence_terms", proposition.get("evidence_terms"), errors)
+    validate_string_list("quality_layers.visual_proposition.anti_patterns", proposition.get("anti_patterns"), errors)
 
 
 def validate_semantic_policy(data: dict[str, Any], errors: list[str]) -> None:
@@ -1589,6 +1777,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Validate photo prompt dictionary semantic metadata.")
     parser.add_argument("--tags", default=Path(__file__).resolve().parents[1] / "assets" / "photo_prompt_tags.json")
     parser.add_argument("--concept-recipes", default=DEFAULT_CONCEPT_RECIPES)
+    parser.add_argument("--quality-layers", default=DEFAULT_QUALITY_LAYERS)
     parser.add_argument("--skill-doc", default=Path(__file__).resolve().parents[1] / "SKILL.md")
     args = parser.parse_args()
 
@@ -1603,6 +1792,7 @@ def main() -> int:
     validate_semantic_metadata(data, errors)
     validate_slot_applicability(data, errors)
     validate_concept_recipes(Path(args.concept_recipes), data, errors)
+    validate_quality_layers(Path(args.quality_layers), data, errors)
     validate_skill_doc_literals(Path(args.skill_doc), data, errors)
     for label, entry in all_entries(data):
         validate_facets(label, entry, vocab, errors)

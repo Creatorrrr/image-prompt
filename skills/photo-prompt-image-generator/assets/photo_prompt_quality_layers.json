@@ -1,0 +1,334 @@
+{
+  "schema_version": 1,
+  "photographic_integration": {
+    "baseline": {
+      "profile_id": "axis_composite_photo_integration",
+      "required_categories": ["environment_binding", "optical_depth"],
+      "minimum_category_hits": 2,
+      "principles": [
+        "Bind the subject and setting with shared light, reflected color, contact shadow, moisture, haze, or material behavior.",
+        "Use a photographic point of view with foreground depth, asymmetry, focus falloff, grain, or lens artifacts instead of a clean pasted-on portrait.",
+        "Keep one small human, animal, object, or material imperfection so the image reads as a captured moment rather than a beauty composite."
+      ],
+      "suggested_phrases": {
+        "environment_binding": [
+          "ambient light spills across the subject, nearby surfaces, and props",
+          "reflected color catches on the main subject and the surrounding materials"
+        ],
+        "optical_depth": [
+          "off-axis composition with foreground occlusion and gentle focus falloff",
+          "subtle lens grain and imperfect depth cues from a real camera position"
+        ],
+        "human_trace": [
+          "a small unguarded expression, loose hair, creased fabric, handling mark, or material imperfection breaks the polished pose"
+        ]
+      },
+      "anti_patterns": [
+        "centered beauty headshot pasted over a scenic background",
+        "separate studio face light that ignores the location's light direction",
+        "props listed as labels without contact shadow, reflection, weight, or physical interaction"
+      ]
+    },
+    "categories": {
+      "environment_binding": [
+        "binds",
+        "bounce",
+        "bounced",
+        "cast",
+        "catchlight",
+        "color spill",
+        "contaminate",
+        "contaminated",
+        "contact shadow",
+        "dust",
+        "fiber",
+        "grazes",
+        "haze",
+        "reflection",
+        "reflected",
+        "rim light",
+        "shadow",
+        "spill",
+        "wraps",
+        "shared light",
+        "same light",
+        "공유된 빛",
+        "반사광",
+        "그림자",
+        "색 번짐",
+        "먼지",
+        "안개"
+      ],
+      "optical_depth": [
+        "asymmetrical",
+        "falloff",
+        "foreground",
+        "grain",
+        "high ISO",
+        "lens",
+        "macro",
+        "motion blur",
+        "off-axis",
+        "occlusion",
+        "shallow depth",
+        "soft blur",
+        "telephoto",
+        "foreground blur",
+        "초점 이탈",
+        "전경",
+        "렌즈",
+        "입자감",
+        "모션 블러"
+      ],
+      "physical_contact": [
+        "contact shadow",
+        "compress",
+        "compressed",
+        "weight",
+        "pressure",
+        "pressed",
+        "touches",
+        "rests on",
+        "leans into",
+        "손 압력",
+        "눌림",
+        "무게",
+        "접촉 그림자"
+      ],
+      "material_trace": [
+        "creased",
+        "damp",
+        "dust",
+        "fiber",
+        "fingerprint",
+        "fur",
+        "handling mark",
+        "moisture",
+        "rain",
+        "scratch",
+        "steam",
+        "sweat",
+        "wet hair",
+        "worn edge",
+        "구겨진",
+        "젖은",
+        "습기",
+        "땀",
+        "털",
+        "섬유",
+        "흠집"
+      ],
+      "human_trace": [
+        "breathless",
+        "creased",
+        "flushed",
+        "half-smile",
+        "loose hair",
+        "loose strand",
+        "slouched",
+        "stray hair",
+        "sweat",
+        "unguarded",
+        "손",
+        "시선",
+        "흐트러진 머리",
+        "구겨진 옷",
+        "땀",
+        "무방비한 표정"
+      ],
+      "event_timing": [
+        "after",
+        "before",
+        "mid-gesture",
+        "mid-motion",
+        "just stepped",
+        "caught",
+        "breathless",
+        "unguarded",
+        "찰나",
+        "방금",
+        "움직임",
+        "순간"
+      ]
+    },
+    "axes": [
+      {
+        "id": "person_presence",
+        "terms": ["adult", "person", "portrait", "human", "model", "performer", "worker", "idol", "사람", "인물", "아이돌"],
+        "required_categories": ["human_trace"],
+        "principles": ["Let one small bodily or behavioral trace interrupt pure polish: loose hair, breath, fabric creasing, sweat, handling, or an unguarded expression."],
+        "suggested_phrases": {
+          "human_trace": ["loose hair, creased fabric, breath, or an unguarded expression keeps the subject photographic"]
+        }
+      },
+      {
+        "id": "animal_presence",
+        "terms": ["animal", "cat", "dog", "bird", "pet", "feline", "canine", "동물", "고양이", "강아지", "반려동물"],
+        "required_categories": ["physical_contact", "material_trace"],
+        "principles": ["Make animal presence physical through fur, weight, pressure, contact shadows, shared light, or small behavioral timing."],
+        "suggested_phrases": {
+          "physical_contact": ["the animal's weight or posture creates pressure, contact shadow, and shared light on nearby surfaces"],
+          "material_trace": ["fur, whiskers, or small handling traces catch the same light as the surrounding scene"]
+        }
+      },
+      {
+        "id": "object_or_product_presence",
+        "terms": ["product", "object", "flatlay", "still life", "food", "jewelry", "perfume", "packaging", "제품", "정물", "음식", "소품", "오브젝트"],
+        "required_categories": ["physical_contact", "material_trace"],
+        "principles": ["Let objects show weight, surface finish, handling marks, cast shadows, reflection, condensation, crumbs, scratches, or use traces instead of floating as labels."],
+        "suggested_phrases": {
+          "physical_contact": ["object placement creates believable weight, contact shadows, and surface pressure"],
+          "material_trace": ["surface finish, handling marks, condensation, crumbs, scratches, or dust reveal the material"]
+        }
+      },
+      {
+        "id": "interior_environment",
+        "terms": ["interior", "room", "living room", "bedroom", "kitchen", "studio", "home", "indoor", "실내", "방", "거실", "집", "스튜디오"],
+        "required_categories": ["environment_binding"],
+        "principles": ["Use window light, practical lamps, room color bounce, dust, and foreground domestic objects to make the subject belong to the room."],
+        "suggested_phrases": {
+          "environment_binding": ["room light and color bounce touch the subject, nearby surfaces, and small foreground objects"]
+        }
+      },
+      {
+        "id": "sacred_or_monumental_interior",
+        "terms": ["cathedral", "chapel", "church", "temple", "nave", "altar", "stained glass", "votive", "대성당", "성당", "사원", "사찰"],
+        "required_categories": ["environment_binding", "optical_depth"],
+        "principles": ["Use scale, vertical architecture, colored window light, candle warmth, dust, foreground occlusion, and floor reflection to bind a small figure to a large interior."],
+        "suggested_phrases": {
+          "environment_binding": ["colored window light, candle warmth, dust, or floor reflection touch both the subject and the monumental interior"],
+          "optical_depth": ["foreground candles, columns, arches, or floor reflections create deep environmental perspective"]
+        }
+      },
+      {
+        "id": "performance_stage_environment",
+        "terms": ["stage", "performance", "concert", "broadcast", "music show", "microphone", "LED", "무대", "스테이지", "공연", "전광판", "마이크"],
+        "required_categories": ["environment_binding", "event_timing"],
+        "principles": ["Make performance light physical through color spill, haze, sweat, microphone metal, hair movement, and one captured choreographic instant."],
+        "suggested_phrases": {
+          "environment_binding": ["stage color spill, haze, and reflected highlights touch hair, skin, costume, and equipment"],
+          "event_timing": ["motion blur, breath, sweat, or a caught gesture makes the frame feel like a live instant"]
+        }
+      },
+      {
+        "id": "handmade_or_miniature_set",
+        "terms": ["felt", "wool", "handmade", "miniature", "storybook", "fairy", "craft", "펠트", "양모", "수제", "동화", "미니어처"],
+        "required_categories": ["environment_binding", "material_trace"],
+        "principles": ["Treat constructed worlds as photographed sets: fibers, seams, scale cues, color bounce, and foreground blur should affect the subject or object."],
+        "suggested_phrases": {
+          "environment_binding": ["set color bounce and nearby handmade materials affect the subject and central prop"],
+          "material_trace": ["visible fibers, seams, edges, or handmade irregularities reveal the photographed set"]
+        }
+      },
+      {
+        "id": "wet_or_weather_trace",
+        "terms": ["rain", "wet", "damp", "moisture", "mist", "storm", "비", "젖은", "비에", "습기", "안개"],
+        "required_categories": ["material_trace", "environment_binding"],
+        "principles": ["Let moisture change surfaces through darkened fabric, wet hair, floor reflection, beads, haze, or softened light."],
+        "suggested_phrases": {
+          "material_trace": ["moisture darkens fabric, gathers on hair or surfaces, and catches the same light as the environment"],
+          "environment_binding": ["wet surfaces and reflections share the scene's light and color"]
+        }
+      },
+      {
+        "id": "colored_or_mixed_light",
+        "terms": ["colored light", "neon", "LED", "stained glass", "screen glow", "gel", "magenta", "cyan", "네온", "전광판", "스테인드글라스", "색조명"],
+        "required_categories": ["environment_binding"],
+        "principles": ["Colored or mixed light should spill consistently across subject, wardrobe, props, and nearby surfaces instead of sitting only in the background."],
+        "suggested_phrases": {
+          "environment_binding": ["colored light spill touches the subject, wardrobe, props, and nearby surfaces in the same direction"]
+        }
+      },
+      {
+        "id": "close_camera_depth",
+        "terms": ["close-up", "medium close", "macro", "35mm", "50mm", "shallow depth", "foreground", "보케", "근접", "클로즈업"],
+        "required_categories": ["optical_depth"],
+        "principles": ["Close camera positions need visible focus falloff, foreground occlusion, lens perspective, or grain so the image does not flatten into a composite."],
+        "suggested_phrases": {
+          "optical_depth": ["foreground occlusion, focus falloff, lens perspective, or grain reveals a real camera position"]
+        }
+      }
+    ]
+  },
+  "visual_proposition": {
+    "slots": ["narrative_core", "concept_tension"],
+    "candidate_limit": 3,
+    "subject_classes": [
+      {
+        "id": "person",
+        "terms": ["adult", "idol", "model", "person", "portrait", "human", "woman", "man", "worker", "performer", "dancer", "사람", "인물", "아이돌"],
+        "core_policy": "allow"
+      },
+      {
+        "id": "animal",
+        "terms": ["animal", "cat", "dog", "bird", "pet", "feline", "canine", "동물", "고양이", "강아지", "반려동물"],
+        "core_policy": "contextual"
+      },
+      {
+        "id": "object_scene",
+        "terms": ["product", "object", "food", "flatlay", "still life", "jewelry", "perfume", "catalog", "packaging", "architecture", "landscape", "interior", "제품", "정물", "음식", "건축", "풍경"],
+        "core_policy": "contextual"
+      }
+    ],
+    "registers": {
+      "observational": {
+        "terms": ["product", "flatlay", "still life", "food", "object", "catalog", "architecture", "landscape", "documentary", "study", "animal", "제품", "정물", "음식", "풍경", "동물"],
+        "minimum_hits": 1,
+        "principles": [
+          "Keep the proposition observational: use placement, material contrast, timing, or use trace without forcing drama.",
+          "Make one small visual relationship legible through contact, light, arrangement, or surface behavior."
+        ]
+      },
+      "understated": {
+        "terms": [],
+        "minimum_hits": 1,
+        "principles": [
+          "Give the frame one quiet reason to exist beyond beauty: a private routine, contradiction, threshold, or unresolved relationship.",
+          "Show the proposition through behavior, object placement, light, or framing rather than abstract mood words."
+        ]
+      },
+      "charged": {
+        "terms": ["charged", "cinematic", "dramatic", "editorial", "performance", "ritual", "stage", "noir", "decay", "rebellion", "threshold", "강렬", "극적", "무대", "스테이지", "역동", "장엄"],
+        "minimum_hits": 1,
+        "principles": [
+          "Let one clear visual argument organize the image, but keep it grounded in the requested scene instead of turning it into generic melodrama.",
+          "Use tension, threshold, or public/private pressure as composition logic rather than caption-like explanation."
+        ]
+      }
+    },
+    "fallback": {
+      "narrative_core": ["private_ritual_core", "ordinary_magic_core", "fragile_intimacy_core", "public_private_self_core"],
+      "concept_tension": ["documentary_vs_staged_tension", "polished_vs_imperfect_tension", "public_vs_private_tension", "organic_vs_synthetic_tension"]
+    },
+    "evidence_terms": [
+      "gesture",
+      "hand",
+      "placement",
+      "contact",
+      "pressure",
+      "threshold",
+      "reflection",
+      "shared light",
+      "contrast",
+      "contradiction",
+      "routine",
+      "trace",
+      "caught",
+      "mid-gesture",
+      "배치",
+      "손",
+      "접촉",
+      "압력",
+      "반사",
+      "대비",
+      "흔적",
+      "찰나"
+    ],
+    "anti_patterns": [
+      "beautiful subject in a detailed environment with no stake, contradiction, or visual relationship",
+      "manufactured sadness, rain-window melancholy, or generic longing used as a substitute for a specific visual proposition",
+      "symbolic props listed as labels without changing behavior, light, framing, or object relationships",
+      "metacritical labels such as visual argument or unresolved tension used instead of visible action, placement, light, or material evidence"
+    ]
+  }
+}

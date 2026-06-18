@@ -115,6 +115,12 @@ def candidate_ids_from_pack(pack: dict[str, Any]) -> set[str]:
         for candidate in slot_payload.get("candidates") or []:
             if isinstance(candidate, dict) and candidate.get("id"):
                 ids.add(str(candidate["id"]))
+    proposition = pack.get("visual_proposition")
+    if isinstance(proposition, dict):
+        for key in ("core_candidates", "tension_candidates"):
+            for candidate in proposition.get(key) or []:
+                if isinstance(candidate, dict) and candidate.get("id"):
+                    ids.add(str(candidate["id"]))
     return ids
 
 
@@ -216,6 +222,68 @@ def audit_photographic_integration(pack: dict[str, Any], search_text: str) -> di
         "hit_categories": sorted(hits),
         "missing_categories": missing,
         "principles": integration.get("principles", [])[:3] if isinstance(integration.get("principles"), list) else [],
+    }
+
+
+def visual_proposition_category_terms(proposition: dict[str, Any], category: str) -> list[str]:
+    terms: list[str] = []
+    category_terms = proposition.get("category_terms") if isinstance(proposition.get("category_terms"), dict) else {}
+    for term in category_terms.get(category) or []:
+        if isinstance(term, str) and term.strip():
+            terms.append(term)
+    candidate_keys = {
+        "narrative_core": "core_candidates",
+        "concept_tension": "tension_candidates",
+    }
+    for candidate in proposition.get(candidate_keys.get(category, ""), []) or []:
+        if not isinstance(candidate, dict):
+            continue
+        for term in candidate.get("terms") or []:
+            if isinstance(term, str) and term.strip():
+                terms.append(term)
+    return list(dict.fromkeys(terms))
+
+
+def audit_visual_proposition(pack: dict[str, Any], search_text: str) -> dict[str, Any] | None:
+    proposition = pack.get("visual_proposition")
+    if not isinstance(proposition, dict) or not proposition.get("enabled", True):
+        return None
+    try:
+        minimum_hits = int(proposition.get("minimum_hits", 1) or 0)
+    except (TypeError, ValueError):
+        minimum_hits = 1
+    if minimum_hits <= 0:
+        return None
+
+    categories = [
+        str(category)
+        for category in proposition.get("audit_categories") or ["narrative_core", "concept_tension", "evidence"]
+        if str(category).strip()
+    ]
+    if not categories:
+        categories = ["narrative_core", "concept_tension", "evidence"]
+    hits: dict[str, list[str]] = {}
+    missing: list[str] = []
+    for category in categories:
+        terms = visual_proposition_category_terms(proposition, category)
+        matched = [term for term in terms if text_contains_term(search_text, term)]
+        if matched:
+            hits[category] = matched[:5]
+        else:
+            missing.append(category)
+
+    if len(hits) >= min(minimum_hits, len(categories)):
+        return None
+    return {
+        "check": "visual_proposition",
+        "reason": "composed prompt does not visibly use the candidate pack's emotional proposition or visual tension layer",
+        "register": proposition.get("register"),
+        "subject_class": proposition.get("subject_class"),
+        "subject_classes": proposition.get("subject_classes", []),
+        "minimum_hits": minimum_hits,
+        "hit_categories": sorted(hits),
+        "missing_categories": missing,
+        "principles": proposition.get("principles", [])[:3] if isinstance(proposition.get("principles"), list) else [],
     }
 
 
@@ -442,6 +510,9 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
     photographic_warning = audit_photographic_integration(pack, search_text)
     if photographic_warning:
         warnings.append(photographic_warning)
+    proposition_warning = audit_visual_proposition(pack, search_text)
+    if proposition_warning:
+        warnings.append(proposition_warning)
 
     status = "fail" if failures else "pass"
     return {
