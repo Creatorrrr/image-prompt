@@ -10605,9 +10605,7 @@ PROMPT_SECTION_ORDER = (
 
 
 def inline_constraints(lang: str) -> List[str]:
-    if lang == "ko":
-        return ["텍스트와 워터마크 없음"]
-    return ["no text or watermark"]
+    return []
 
 
 def dedupe_parts(parts: Sequence[str]) -> List[str]:
@@ -10900,6 +10898,7 @@ def render_detailed_prompt(
         subject_guidance = render_subject_guidance(category, lang)
         scene_guidance = render_scene_guidance(category, lang)
         finish_guidance = render_finish_guidance(category, lang, generation_contract)
+        constraint_sentence = f"제약: {constraints}. " if constraints else ""
         prompt = " ".join(
             part
             for part in [
@@ -10912,7 +10911,7 @@ def render_detailed_prompt(
                 f"색감과 분위기: {mood}; 색 대비, 감정 톤, 세계관 맥락이 피사체와 장소에 맞아야 한다. ",
                 special,
                 f"질감과 마감: {finish}; {finish_guidance}. "
-                f"제약: {constraints}. "
+                f"{constraint_sentence}"
                 "이미지 생성 시 요구사항을 빠뜨리지 말고, 막연한 스타일 요약보다 구체적인 사진 결과를 우선한다.",
             ]
             if part
@@ -10933,6 +10932,7 @@ def render_detailed_prompt(
         subject_guidance = render_subject_guidance(category, lang)
         scene_guidance = render_scene_guidance(category, lang)
         finish_guidance = render_finish_guidance(category, lang, generation_contract)
+        constraint_sentence = f"Constraints: {constraints}. " if constraints else ""
         prompt = " ".join(
             part
             for part in [
@@ -10945,7 +10945,7 @@ def render_detailed_prompt(
                 f"Color and mood: {mood}; keep the palette, emotional tone, and world context coherent with the subject and setting. ",
                 special,
                 f"Texture, format, and finish: {finish}; {finish_guidance}. "
-                f"Constraints: {constraints}. "
+                f"{constraint_sentence}"
                 "Prioritize a specific, image-ready photographic result over a vague style summary.",
             ]
             if part

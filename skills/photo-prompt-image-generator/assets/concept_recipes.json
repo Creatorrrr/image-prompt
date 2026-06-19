@@ -2035,6 +2035,50 @@
         ],
         "enforce": true,
         "reason": "adult student styling should rotate safe study/reference contexts instead of inheriting unrelated generic scenes"
+      },
+      "approval_required_routes": {
+        "adult_transit_reference": {
+          "default": "off",
+          "requires_user_approval": true,
+          "trigger_terms": [
+            "기차",
+            "플랫폼",
+            "헤드폰",
+            "백팩",
+            "train",
+            "platform",
+            "headphones",
+            "backpack"
+          ],
+          "ask_before_use": "학생+기차/플랫폼/헤드폰/백팩 조합을 성인 전용 transit fashion/reference portrait로 안전 라우팅할까요? 거절하면 이 라우트를 주입하지 않고 원래 요청 의도를 유지합니다.",
+          "on_accept": {
+            "preset_candidates": [
+              "adult_school_uniform_reference_portrait",
+              "train_station_platform_portrait"
+            ],
+            "set": [
+              "location=korean_train_platform,train_platform_last_car",
+              "prop=over_ear_headphones,black_backpack_one_shoulder,train_ticket_stub_prop"
+            ],
+            "additional": [
+              "user approved adult-only transit reference routing; keep the platform/headphones/backpack intent visible while avoiding minor coding or sexualized school-uniform framing"
+            ],
+            "safety_requirements": [
+              "adult transit route only after explicit user approval; no minors, no sexualized school-uniform framing"
+            ]
+          },
+          "on_decline": {
+            "do_not_inject_slots": [
+              "korean_train_platform",
+              "train_platform_last_car",
+              "over_ear_headphones",
+              "black_backpack_one_shoulder",
+              "train_ticket_stub_prop"
+            ],
+            "preserve_original_intent": true,
+            "instruction": "Do not silently convert the request to adult transit reference routing; keep the user-requested train/platform/headphone/backpack idea as original intent text or concept-lock material instead of adding this route."
+          }
+        }
       }
     },
     "무녀": {
@@ -37291,6 +37335,71 @@
         "mixin should preserve the base role and add one readable interpretive layer"
       ],
       "mixin_cue_budget": 2
+    },
+    "브라이덜": {
+      "preset": "wedding_candid_documentary",
+      "set": {
+        "costume_style": "bridal_veil_white_gown_costume",
+        "location": [
+          "wedding_hall",
+          "sunlit_floral_room"
+        ],
+        "prop": "flower_bouquet",
+        "lighting": "soft_window",
+        "mood": "pure_serene_softness"
+      },
+      "soft_anchor_slots": [
+        "costume_style",
+        "location",
+        "prop"
+      ],
+      "soft_min_anchors": 2,
+      "anchor_terms": {
+        "costume_style": [
+          "bridal veil",
+          "white bridal gown",
+          "covered wedding dress"
+        ],
+        "location": [
+          "wedding hall",
+          "sunlit floral room"
+        ],
+        "prop": [
+          "small flower bouquet"
+        ]
+      },
+      "additional": [
+        "bridal means bride or wedding styling, not a priest; keep it adult, covered, dignified, and non-fetishized"
+      ],
+      "intent_axis": [
+        "adult bridal portrait styling with white veil, covered gown, flowers, soft daylight, and no priest or clergy role cue"
+      ],
+      "likeness_mode": "inspired",
+      "anchor_pool": {
+        "costume_style": [
+          "bridal_veil_white_gown_costume"
+        ],
+        "location": [
+          "wedding_hall",
+          "sunlit_floral_room"
+        ],
+        "prop": [
+          "flower_bouquet"
+        ]
+      },
+      "critical_anchor_slots": [
+        "costume_style"
+      ],
+      "safety_requirements": [
+        "adult subject only; bridal styling stays covered, dignified, and nonsexualized; do not reinterpret bride as priest"
+      ],
+      "safety_negative_floor": [
+        "lingerie bridal styling",
+        "fetish wedding dress",
+        "minor-coded bride",
+        "priest cassock",
+        "clergy role"
+      ]
     }
   },
   "aliases": {
@@ -37405,7 +37514,7 @@
     "아이돌": "아이돌",
     "싱어": "가수",
     "우주인": "우주비행사",
-    "신부": "사제",
+    "신부": "브라이덜",
     "프리스트": "사제",
     "수녀": "수도자",
     "마술사": "마술사",
@@ -37574,7 +37683,17 @@
     "부사수": "사수-부사수",
     "교대": "교대자",
     "단골": "단골과 주인",
-    "탐정 의뢰": "의뢰인과 탐정"
+    "탐정 의뢰": "의뢰인과 탐정",
+    "신부님": "사제",
+    "priest": "사제",
+    "브라이덜": "브라이덜",
+    "브라이덜룩": "브라이덜",
+    "웨딩드레스": "브라이덜",
+    "웨딩": "브라이덜",
+    "bride": "브라이덜",
+    "bridal": "브라이덜",
+    "천사신부": "천사 브라이덜",
+    "천사 신부": "천사 브라이덜"
   },
   "mixin_diversity_policy": {
     "회사원": {

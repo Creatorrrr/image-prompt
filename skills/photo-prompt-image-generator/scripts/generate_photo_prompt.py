@@ -49,7 +49,6 @@ SAFETY_TRANSFORM_TEXT_TOKENS = (
     "covered",
     "readable text",
     "unreadable",
-    "watermark",
 )
 DEFAULT_SOFT_ANCHOR_SLOTS = {
     "appearance_type",
