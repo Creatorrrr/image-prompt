@@ -5879,6 +5879,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "concept_axes",
                 "photographic_integration",
                 "visual_proposition",
+                "artistic_final_touch",
                 "motif_budget",
                 "preset_reference",
                 "masked_buckets",
@@ -5913,6 +5914,10 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertIn(proposition["register"], {"observational", "understated", "charged"})
         self.assertTrue(proposition["core_candidates"])
         self.assertTrue(proposition["tension_candidates"])
+        final_touch = pack["artistic_final_touch"]
+        self.assertTrue(final_touch["enabled"])
+        self.assertIn("quiet imperfection", final_touch["final_sentence_en"])
+        self.assertIn("shared light", final_touch["audit_terms"])
         self.assertLessEqual(len(pack["presets"]), 5)
         total_slot_candidates = 0
         for slot, slot_payload in pack["slots"].items():
@@ -6069,6 +6074,88 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
 
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("unknown value not_a_subject_kind", result.stderr)
+
+    def test_final_prompt_appends_artistic_touch_as_last_sentence(self):
+        payload = self.run_wrapper_json(
+            "--preset",
+            "compact_urban_fashion_portrait",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "31",
+            "--detail-level",
+            "compact",
+        )
+
+        item = payload[0]
+        expected = (
+            "Let one quiet imperfection, shared light, and a small material trace make the frame feel "
+            "discovered rather than assembled."
+        )
+        self.assertTrue(item["prompt_en"].endswith(expected), item["prompt_en"])
+        self.assertIn("no text or watermark", item["prompt_en"])
+        self.assertEqual(item["provenance"]["prompt_id"], hashlib.sha256(item["prompt_en"].encode("utf-8")).hexdigest()[:16])
+
+    def test_audit_composed_prompt_warns_for_missing_artistic_final_touch(self):
+        final_sentence = (
+            "Let the final frame keep one quiet imperfection, shared light across subject and setting, "
+            "and a small material trace, so it feels discovered by a real photographer rather than assembled as a clean concept image."
+        )
+        pack = {
+            "pack_id": "abababababababab",
+            "mandatory_intents": [],
+            "uncovered_intents": [],
+            "presets": [],
+            "slots": {},
+            "artistic_final_touch": {
+                "enabled": True,
+                "final_sentence_en": final_sentence,
+                "audit_terms": ["quiet imperfection", "shared light", "material trace"],
+            },
+            "coverage": {},
+            "conflicts": [],
+            "safety_floor": {"forbidden_terms": []},
+            "negative_en": None,
+            "provenance": {},
+        }
+        bland = {
+            "pack_id": "abababababababab",
+            "prompt_en": "A quiet portrait with no text or watermark.",
+            "chosen_candidate_ids": [],
+        }
+        touched = {
+            "pack_id": "abababababababab",
+            "prompt_en": f"A quiet portrait with no text or watermark. {final_sentence}",
+            "chosen_candidate_ids": [],
+        }
+        with tempfile.TemporaryDirectory() as tmpdir:
+            pack_path = Path(tmpdir) / "pack.json"
+            bland_path = Path(tmpdir) / "bland.json"
+            touched_path = Path(tmpdir) / "touched.json"
+            pack_path.write_text(json.dumps(pack, ensure_ascii=False), encoding="utf-8")
+            bland_path.write_text(json.dumps(bland, ensure_ascii=False), encoding="utf-8")
+            touched_path.write_text(json.dumps(touched, ensure_ascii=False), encoding="utf-8")
+            warned = subprocess.run(
+                [sys.executable, str(AUDIT_COMPOSED_PATH), "--pack", str(pack_path), "--composed", str(bland_path)],
+                cwd=ROOT,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+            passed = subprocess.run(
+                [sys.executable, str(AUDIT_COMPOSED_PATH), "--pack", str(pack_path), "--composed", str(touched_path)],
+                cwd=ROOT,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+
+        self.assertEqual(warned.returncode, 0, warned.stdout + warned.stderr)
+        warned_audit = json.loads(warned.stdout)
+        self.assertIn("artistic_final_touch", {warning["check"] for warning in warned_audit["warnings"]})
+        self.assertEqual(passed.returncode, 0, passed.stdout + passed.stderr)
+        passed_audit = json.loads(passed.stdout)
+        self.assertNotIn("artistic_final_touch", {warning["check"] for warning in passed_audit["warnings"]})
 
     def test_candidate_pack_exposes_reference_scaffold_for_yandere(self):
         args = (

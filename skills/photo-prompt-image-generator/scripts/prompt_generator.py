@@ -2626,6 +2626,34 @@ def candidate_pack_visual_policy(data: JsonDict) -> JsonDict:
     return policy if isinstance(policy, dict) else {}
 
 
+def artistic_final_touch_policy(data: JsonDict) -> JsonDict:
+    policy = candidate_pack_quality_layers(data).get("artistic_final_touch")
+    if not isinstance(policy, dict) or policy.get("enabled") is False:
+        return {}
+    return policy
+
+
+def artistic_final_touch_sentence(data: JsonDict, lang: str, detail_level: str = "detailed") -> str:
+    policy = artistic_final_touch_policy(data)
+    sentences = policy.get("sentences") if isinstance(policy.get("sentences"), dict) else {}
+    localized = sentences.get(lang) if isinstance(sentences.get(lang), dict) else {}
+    sentence = str(localized.get(detail_level) or localized.get("default") or "").strip()
+    return ensure_period(sentence) if sentence else ""
+
+
+def candidate_pack_artistic_final_touch(data: JsonDict) -> JsonDict:
+    policy = artistic_final_touch_policy(data)
+    if not policy:
+        return {"enabled": False}
+    final_sentence = artistic_final_touch_sentence(data, "en", "detailed")
+    return {
+        "enabled": True,
+        "source": str(policy.get("source") or "quality_layers_artistic_final_touch"),
+        "final_sentence_en": final_sentence,
+        "audit_terms": normalize_list(policy.get("audit_terms"))[:12],
+    }
+
+
 def candidate_pack_quality_add_facet(
     facets: Dict[str, Set[str]],
     vocab: Dict[str, Set[str]],
@@ -3151,6 +3179,7 @@ def build_candidate_pack(result: JsonDict, data: JsonDict) -> JsonDict:
         "visual_proposition": candidate_pack_visual_proposition(
             data, result, trace, presets, slots, mandatory_intents, quality_profile
         ),
+        "artistic_final_touch": candidate_pack_artistic_final_touch(data),
         "motif_budget": candidate_pack_motif_budget(result, trace, soft_policy),
         "preset_reference": candidate_pack_preset_reference(result, soft_policy, masked_buckets, open_slots),
         "masked_buckets": masked_buckets,
@@ -10671,6 +10700,16 @@ def append_render_contract_sentences(
     return clean_spaces(prompt)
 
 
+def append_artistic_final_touch(data: JsonDict, prompt: str, lang: str, detail_level: str) -> str:
+    touch = artistic_final_touch_sentence(data, lang, detail_level)
+    if not touch:
+        return clean_spaces(prompt)
+    prompt_clean = clean_spaces(prompt)
+    if prompt_clean.lower().endswith(touch.lower()):
+        return prompt_clean
+    return clean_spaces(f"{prompt_clean} {touch}")
+
+
 def build_prompt_sections(
     data: JsonDict,
     preset: JsonDict,
@@ -11065,7 +11104,8 @@ def render_prompt(
         if additions:
             prompt = clean_spaces(" ".join([prompt] + [ensure_period(part) for part in additions]))
 
-    return append_render_contract_sentences(prompt, lang, additional_requirements, likeness_mode)
+    prompt = append_render_contract_sentences(prompt, lang, additional_requirements, likeness_mode)
+    return append_artistic_final_touch(data, prompt, lang, detail_level)
 
 
 def choose_negative_entries(
