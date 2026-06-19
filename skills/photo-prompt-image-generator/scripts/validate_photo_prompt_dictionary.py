@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from pathlib import Path
 from typing import Any
@@ -46,6 +47,38 @@ NO_TEXT_ANCHOR_TERMS = {
     "non_legible",
     "unbranded",
     "unreadable",
+}
+PHOTOGRAPHIC_CRAFT_ENTITY_BLOCKLIST = {
+    "apple",
+    "cat",
+    "cathedral",
+    "chapel",
+    "church",
+    "concert",
+    "dog",
+    "felt",
+    "feline",
+    "idol",
+    "k-pop",
+    "kpop",
+    "microphone",
+    "persian",
+    "priest",
+    "priestess",
+    "stage",
+    "stained glass",
+    "wool",
+    "고양이",
+    "대성당",
+    "마이크",
+    "무대",
+    "사과",
+    "성당",
+    "스테이지",
+    "아이돌",
+    "전광판",
+    "펠트",
+    "프리스트",
 }
 
 
@@ -504,6 +537,164 @@ def validate_quality_layer_facet_match(
                 errors.append(f"{label}.{facet_key}: unknown value {facet_value}")
 
 
+def validate_quality_layer_localized_text(label: str, value: Any, errors: list[str]) -> None:
+    if not isinstance(value, dict):
+        errors.append(f"{label}: must be an object")
+        return
+    for lang in ("en", "ko"):
+        if not str(value.get(lang) or "").strip():
+            errors.append(f"{label}.{lang}: required")
+    for key, text in value.items():
+        if key not in {"en", "ko"}:
+            errors.append(f"{label}.{key}: unsupported localized key")
+        if not str(text or "").strip():
+            errors.append(f"{label}.{key}: empty value")
+
+
+def quality_layer_craft_has_blocked_entity(text: str, blocked: str) -> bool:
+    lowered = text.lower()
+    blocked_lower = blocked.lower()
+    if re.search(r"[A-Za-z0-9]", blocked_lower):
+        if " " in blocked_lower:
+            return blocked_lower in lowered
+        tokens = set(re.findall(r"[a-z0-9][a-z0-9-]*", lowered))
+        return blocked_lower in tokens
+    return blocked_lower in lowered
+
+
+def validate_quality_layer_craft_text(label: str, value: Any, errors: list[str]) -> None:
+    texts: list[str] = []
+    if isinstance(value, dict):
+        texts.extend(str(item) for item in value.values() if str(item).strip())
+    elif isinstance(value, list):
+        texts.extend(str(item) for item in value if str(item).strip())
+    elif value is not None and str(value).strip():
+        texts.append(str(value))
+    for text in texts:
+        for blocked in PHOTOGRAPHIC_CRAFT_ENTITY_BLOCKLIST:
+            if quality_layer_craft_has_blocked_entity(text, blocked):
+                errors.append(f"{label}: blocked scene-specific craft term {blocked}")
+
+
+def validate_quality_layer_photographic_craft(
+    quality: dict[str, Any],
+    vocab: dict[str, set[str]],
+    errors: list[str],
+) -> None:
+    craft = quality.get("photographic_craft")
+    if not isinstance(craft, dict):
+        errors.append("quality_layers.photographic_craft: must be an object")
+        return
+    if "enabled" in craft and not isinstance(craft.get("enabled"), bool):
+        errors.append("quality_layers.photographic_craft.enabled: must be a boolean")
+    source = str(craft.get("source") or "").strip()
+    if not source:
+        errors.append("quality_layers.photographic_craft.source: required")
+    for integer_key, minimum, maximum in (
+        ("prompt_dimension_limit", 1, 3),
+        ("refinement_limit_per_dimension", 0, 4),
+    ):
+        try:
+            value = int(craft.get(integer_key))
+        except (TypeError, ValueError):
+            errors.append(f"quality_layers.photographic_craft.{integer_key}: must be an integer")
+            continue
+        if value < minimum or value > maximum:
+            errors.append(f"quality_layers.photographic_craft.{integer_key}: must be between {minimum} and {maximum}")
+
+    dimensions = craft.get("dimensions") or []
+    if not isinstance(dimensions, list) or not dimensions:
+        errors.append("quality_layers.photographic_craft.dimensions: must be a non-empty list")
+        dimensions = []
+    if len(dimensions) > 12:
+        errors.append("quality_layers.photographic_craft.dimensions: must contain at most 12 dimensions")
+    seen_dimension_ids: set[str] = set()
+    for index, dimension in enumerate(dimensions):
+        label = f"quality_layers.photographic_craft.dimensions[{index}]"
+        if not isinstance(dimension, dict):
+            errors.append(f"{label}: must be an object")
+            continue
+        if "terms" in dimension:
+            errors.append(f"{label}.terms: not allowed; use facet_match refinements only")
+        dimension_id = str(dimension.get("id") or "").strip()
+        if not dimension_id:
+            errors.append(f"{label}.id: required")
+        elif dimension_id in seen_dimension_ids:
+            errors.append(f"{label}.id: duplicate id {dimension_id}")
+        else:
+            seen_dimension_ids.add(dimension_id)
+        for text_key in ("id", "label", "baseline_principle"):
+            if text_key in dimension:
+                validate_quality_layer_craft_text(f"{label}.{text_key}", dimension.get(text_key), errors)
+        if not str(dimension.get("baseline_principle") or "").strip():
+            errors.append(f"{label}.baseline_principle: required")
+        validate_quality_layer_localized_text(f"{label}.guidance", dimension.get("guidance"), errors)
+        validate_quality_layer_craft_text(f"{label}.guidance", dimension.get("guidance"), errors)
+        validate_string_list(f"{label}.audit_terms", dimension.get("audit_terms"), errors)
+        validate_quality_layer_craft_text(f"{label}.audit_terms", dimension.get("audit_terms"), errors)
+        refinements = dimension.get("refinements") or []
+        if refinements and not isinstance(refinements, list):
+            errors.append(f"{label}.refinements: must be a list")
+            refinements = []
+        if len(refinements) > 8:
+            errors.append(f"{label}.refinements: must contain at most 8 refinements")
+        seen_refinement_ids: set[str] = set()
+        for refinement_index, refinement in enumerate(refinements):
+            refinement_label = f"{label}.refinements[{refinement_index}]"
+            if not isinstance(refinement, dict):
+                errors.append(f"{refinement_label}: must be an object")
+                continue
+            if "terms" in refinement:
+                errors.append(f"{refinement_label}.terms: not allowed; use facet_match only")
+            refinement_id = str(refinement.get("id") or "").strip()
+            if not refinement_id:
+                errors.append(f"{refinement_label}.id: required")
+            elif refinement_id in seen_refinement_ids:
+                errors.append(f"{refinement_label}.id: duplicate id {refinement_id}")
+            else:
+                seen_refinement_ids.add(refinement_id)
+            validate_quality_layer_facet_match(f"{refinement_label}.facet_match", refinement.get("facet_match"), vocab, errors)
+            if not str(refinement.get("principle") or "").strip():
+                errors.append(f"{refinement_label}.principle: required")
+            for text_key in ("id", "principle"):
+                if text_key in refinement:
+                    validate_quality_layer_craft_text(f"{refinement_label}.{text_key}", refinement.get(text_key), errors)
+            validate_quality_layer_localized_text(f"{refinement_label}.guidance", refinement.get("guidance"), errors)
+            validate_quality_layer_craft_text(f"{refinement_label}.guidance", refinement.get("guidance"), errors)
+            validate_string_list(f"{refinement_label}.audit_terms", refinement.get("audit_terms"), errors)
+            validate_quality_layer_craft_text(f"{refinement_label}.audit_terms", refinement.get("audit_terms"), errors)
+
+    strategies = craft.get("strategies") or []
+    if not isinstance(strategies, list) or not strategies:
+        errors.append("quality_layers.photographic_craft.strategies: must be a non-empty list")
+        strategies = []
+    seen_strategy_ids: set[str] = set()
+    for index, strategy in enumerate(strategies):
+        label = f"quality_layers.photographic_craft.strategies[{index}]"
+        if not isinstance(strategy, dict):
+            errors.append(f"{label}: must be an object")
+            continue
+        strategy_id = str(strategy.get("id") or "").strip()
+        if not strategy_id:
+            errors.append(f"{label}.id: required")
+        elif strategy_id in seen_strategy_ids:
+            errors.append(f"{label}.id: duplicate id {strategy_id}")
+        else:
+            seen_strategy_ids.add(strategy_id)
+        for text_key in ("id", "label"):
+            if text_key in strategy:
+                validate_quality_layer_craft_text(f"{label}.{text_key}", strategy.get(text_key), errors)
+        emphasize = normalize_list(strategy.get("emphasize"))
+        if not emphasize:
+            errors.append(f"{label}.emphasize: at least one dimension id is required")
+        for dimension_id in emphasize:
+            if dimension_id not in seen_dimension_ids:
+                errors.append(f"{label}.emphasize: unknown dimension id {dimension_id}")
+    default_strategy = str(craft.get("default_strategy") or "").strip()
+    if default_strategy and default_strategy not in seen_strategy_ids:
+        errors.append("quality_layers.photographic_craft.default_strategy: unknown strategy id")
+
+
 def validate_quality_layer_artistic_final_touch(quality: dict[str, Any], errors: list[str]) -> None:
     touch = quality.get("artistic_final_touch")
     if touch is None:
@@ -558,6 +749,8 @@ def validate_quality_layers(path: Path, data: dict[str, Any], errors: list[str])
     if schema_version != 1:
         errors.append("quality_layers.schema_version: must be 1")
     validate_quality_layer_artistic_final_touch(quality, errors)
+    vocab = merged_facet_vocab(data)
+    validate_quality_layer_photographic_craft(quality, vocab, errors)
 
     photographic = quality.get("photographic_integration")
     if not isinstance(photographic, dict):
@@ -566,8 +759,6 @@ def validate_quality_layers(path: Path, data: dict[str, Any], errors: list[str])
     categories = photographic.get("categories") if isinstance(photographic, dict) else {}
     validate_quality_layer_category_terms("quality_layers.photographic_integration.categories", categories, errors)
     valid_categories = {str(category) for category in categories} if isinstance(categories, dict) else set()
-    vocab = merged_facet_vocab(data)
-
     baseline = photographic.get("baseline") if isinstance(photographic, dict) else {}
     if not isinstance(baseline, dict):
         errors.append("quality_layers.photographic_integration.baseline: must be an object")

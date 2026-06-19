@@ -6,6 +6,7 @@ import io
 import json
 import os
 import random
+import re
 import subprocess
 import sys
 import tempfile
@@ -5879,6 +5880,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "concept_axes",
                 "photographic_integration",
                 "visual_proposition",
+                "photographic_craft",
                 "artistic_final_touch",
                 "motif_budget",
                 "preset_reference",
@@ -5914,6 +5916,17 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertIn(proposition["register"], {"observational", "understated", "charged"})
         self.assertTrue(proposition["core_candidates"])
         self.assertTrue(proposition["tension_candidates"])
+        craft = pack["photographic_craft"]
+        self.assertTrue(craft["enabled"])
+        self.assertEqual(craft["source"], "facet_only_photographer_decision_layer")
+        self.assertEqual(craft["selection_mode"], "facet_only")
+        self.assertEqual(craft["quality_profile"], pack["quality_profile"])
+        self.assertIn("top_strategy", craft)
+        self.assertTrue(craft["prompt_guidance_en"])
+        self.assertEqual(
+            {"shot_intent", "light_provenance", "frame_hierarchy", "decisive_moment", "environment_consequence"},
+            {dimension["id"] for dimension in craft["active_dimensions"]},
+        )
         final_touch = pack["artistic_final_touch"]
         self.assertTrue(final_touch["enabled"])
         self.assertIn("quiet imperfection", final_touch["final_sentence_en"])
@@ -6000,7 +6013,65 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             self.assertTrue(proposition["core_candidates"])
             self.assertTrue(proposition["tension_candidates"])
 
+            craft = pack["photographic_craft"]
+            self.assertEqual(craft["selection_mode"], "facet_only")
+            self.assertEqual(craft["quality_profile"], pack["quality_profile"])
+            self.assertTrue(craft["prompt_guidance_en"])
+            self.assertNotIn("matched_terms", craft)
+
         self.assertEqual(len(set(axis_sets)), len(cases))
+
+    def test_candidate_pack_photographic_craft_degrades_to_generic_for_empty_facets(self):
+        data = {
+            "facet_vocab": self.data.get("facet_vocab", {}),
+            self.generator.QUALITY_LAYERS_DATA_KEY: self.generator.load_quality_layers(QUALITY_LAYERS_PATH),
+        }
+
+        craft = self.generator.candidate_pack_photographic_craft(
+            data,
+            {"source": "test_empty", "facets": {}, "matched_uncovered_intent_entries": []},
+        )
+
+        self.assertTrue(craft["enabled"])
+        self.assertEqual(craft["selection_mode"], "facet_only")
+        self.assertEqual(craft["matched_facets"], [])
+        self.assertEqual(craft["top_strategy"]["id"], "structure_led")
+        self.assertEqual(craft["prompt_dimension_ids"], ["frame_hierarchy", "shot_intent"])
+        self.assertTrue(craft["prompt_guidance_en"])
+        self.assertEqual(
+            {"shot_intent", "light_provenance", "frame_hierarchy", "decisive_moment", "environment_consequence"},
+            {dimension["id"] for dimension in craft["active_dimensions"]},
+        )
+
+    def test_candidate_pack_photographic_craft_holdout_generalizes_without_example_nouns(self):
+        cases = [
+            ("--concept", "새벽 산 능선 풍경 안개 역광"),
+            ("--preset", "product_packshot_white_sweep"),
+            ("--concept", "비 오는 거리 다큐멘터리 사진 우산 없이 걷는 사람"),
+            ("--concept", "테이블 위 음식 정물 사진 자연광"),
+            ("--concept", "현대 건축 실내 넓은 공간 대칭 구도"),
+        ]
+        blocked_terms = {"kpop", "idol", "cathedral", "cat", "felt", "apple", "stage", "고양이", "성당", "사과", "펠트", "무대"}
+        strategies = []
+        matched_facet_sets = []
+        for args in cases:
+            payload = self.run_wrapper_json(*args, "--selection-mode", "rule", "--seed", "731", "--emit-candidate-pack")
+            craft = payload[0]["photographic_craft"]
+            strategies.append(craft["top_strategy"]["id"])
+            matched_facet_sets.append(tuple(craft["matched_facets"]))
+            craft_without_profile = {key: value for key, value in craft.items() if key != "quality_profile"}
+            craft_blob = json.dumps(craft_without_profile, ensure_ascii=False).lower()
+            ascii_tokens = set(re.findall(r"[a-z0-9][a-z0-9-]*", craft_blob))
+            for blocked in blocked_terms:
+                if re.search(r"[A-Za-z0-9]", blocked):
+                    self.assertNotIn(blocked, ascii_tokens)
+                else:
+                    self.assertNotIn(blocked, craft_blob)
+            self.assertTrue(craft["prompt_guidance_en"])
+            self.assertTrue(craft["active_dimensions"])
+
+        self.assertGreaterEqual(len(set(strategies)), 2)
+        self.assertGreaterEqual(len(set(matched_facet_sets)), 2)
 
     def test_candidate_pack_exposes_visual_proposition_layer(self):
         payload = self.run_wrapper_json(
@@ -6075,6 +6146,42 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("unknown value not_a_subject_kind", result.stderr)
 
+    def test_dictionary_validator_rejects_photographic_craft_terms_field(self):
+        quality_layers = json.loads(QUALITY_LAYERS_PATH.read_text(encoding="utf-8"))
+        quality_layers["photographic_craft"]["dimensions"][0]["terms"] = ["cathedral"]
+        with tempfile.TemporaryDirectory() as tmpdir:
+            quality_layers_path = Path(tmpdir) / "photo_prompt_quality_layers.json"
+            quality_layers_path.write_text(json.dumps(quality_layers, ensure_ascii=False), encoding="utf-8")
+            result = subprocess.run(
+                [sys.executable, str(VALIDATOR_PATH), "--quality-layers", str(quality_layers_path)],
+                cwd=ROOT,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("photographic_craft.dimensions[0].terms: not allowed", result.stderr)
+
+    def test_dictionary_validator_rejects_unknown_photographic_craft_facet_match(self):
+        quality_layers = json.loads(QUALITY_LAYERS_PATH.read_text(encoding="utf-8"))
+        quality_layers["photographic_craft"]["dimensions"][0]["refinements"][0]["facet_match"] = {
+            "subject_kind": ["not_a_subject_kind"]
+        }
+        with tempfile.TemporaryDirectory() as tmpdir:
+            quality_layers_path = Path(tmpdir) / "photo_prompt_quality_layers.json"
+            quality_layers_path.write_text(json.dumps(quality_layers, ensure_ascii=False), encoding="utf-8")
+            result = subprocess.run(
+                [sys.executable, str(VALIDATOR_PATH), "--quality-layers", str(quality_layers_path)],
+                cwd=ROOT,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("photographic_craft.dimensions[0].refinements[0].facet_match.subject_kind: unknown value not_a_subject_kind", result.stderr)
+
     def test_final_prompt_appends_artistic_touch_as_last_sentence(self):
         payload = self.run_wrapper_json(
             "--preset",
@@ -6093,6 +6200,8 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             "discovered rather than assembled."
         )
         self.assertTrue(item["prompt_en"].endswith(expected), item["prompt_en"])
+        self.assertIn("Frame it with clear photographic intent:", item["prompt_en"])
+        self.assertLess(item["prompt_en"].index("Frame it with clear photographic intent:"), item["prompt_en"].index(expected))
         self.assertIn("no text or watermark", item["prompt_en"])
         self.assertEqual(item["provenance"]["prompt_id"], hashlib.sha256(item["prompt_en"].encode("utf-8")).hexdigest()[:16])
 
@@ -6426,8 +6535,85 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 check=False,
             )
             self.assertEqual(passed.returncode, 0, passed.stdout + passed.stderr)
-            passed_audit = json.loads(passed.stdout)
-            self.assertNotIn("visual_proposition", {warning["check"] for warning in passed_audit["warnings"]})
+        passed_audit = json.loads(passed.stdout)
+        self.assertNotIn("visual_proposition", {warning["check"] for warning in passed_audit["warnings"]})
+
+    def test_audit_composed_prompt_warns_for_missing_photographic_craft(self):
+        pack = {
+            "pack_id": "1212121212121212",
+            "mandatory_intents": [],
+            "uncovered_intents": [],
+            "presets": [{"id": "preset:p1"}],
+            "slots": {},
+            "photographic_craft": {
+                "enabled": True,
+                "selection_mode": "facet_only",
+                "top_strategy": {"id": "structure_led", "emphasize": ["frame_hierarchy", "shot_intent"]},
+                "prompt_dimension_ids": ["frame_hierarchy", "shot_intent"],
+                "active_dimensions": [
+                    {
+                        "id": "frame_hierarchy",
+                        "selected_principle": "Organize the viewer's reading order.",
+                        "selected_guidance_en": "organize foreground, subject plane, and background into a clear reading order",
+                        "audit_terms": ["foreground", "subject plane", "background", "reading order"],
+                        "active_refinements": [],
+                    },
+                    {
+                        "id": "shot_intent",
+                        "selected_principle": "Make the frame's intent legible.",
+                        "selected_guidance_en": "make the frame's photographic intent legible before surface styling",
+                        "audit_terms": ["photographic intent", "frame intent"],
+                        "active_refinements": [],
+                    },
+                ],
+            },
+            "coverage": {},
+            "conflicts": [],
+            "safety_floor": {"forbidden_terms": []},
+            "negative_en": None,
+            "provenance": {},
+        }
+        bland = {
+            "pack_id": "1212121212121212",
+            "prompt_en": "A polished portrait in a detailed room, no text or watermark.",
+            "chosen_candidate_ids": ["preset:p1"],
+        }
+        crafted = {
+            "pack_id": "1212121212121212",
+            "prompt_en": (
+                "A portrait with foreground, subject plane, and background arranged into a clear reading order, "
+                "no text or watermark."
+            ),
+            "chosen_candidate_ids": ["preset:p1"],
+        }
+        with tempfile.TemporaryDirectory() as tmpdir:
+            pack_path = Path(tmpdir) / "pack.json"
+            bland_path = Path(tmpdir) / "bland.json"
+            crafted_path = Path(tmpdir) / "crafted.json"
+            pack_path.write_text(json.dumps(pack, ensure_ascii=False), encoding="utf-8")
+            bland_path.write_text(json.dumps(bland, ensure_ascii=False), encoding="utf-8")
+            crafted_path.write_text(json.dumps(crafted, ensure_ascii=False), encoding="utf-8")
+            warned = subprocess.run(
+                [sys.executable, str(AUDIT_COMPOSED_PATH), "--pack", str(pack_path), "--composed", str(bland_path)],
+                cwd=ROOT,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+            passed = subprocess.run(
+                [sys.executable, str(AUDIT_COMPOSED_PATH), "--pack", str(pack_path), "--composed", str(crafted_path)],
+                cwd=ROOT,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+
+        self.assertEqual(warned.returncode, 0, warned.stdout + warned.stderr)
+        warned_audit = json.loads(warned.stdout)
+        self.assertIn("photographic_craft", {warning["check"] for warning in warned_audit["warnings"]})
+        self.assertEqual(passed.returncode, 0, passed.stdout + passed.stderr)
+        passed_audit = json.loads(passed.stdout)
+        self.assertNotIn("photographic_craft", {warning["check"] for warning in passed_audit["warnings"]})
 
     def test_audit_visual_proposition_applies_lightweight_observational_register(self):
         pack = {

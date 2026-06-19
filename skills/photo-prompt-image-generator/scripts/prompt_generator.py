@@ -2626,6 +2626,13 @@ def candidate_pack_visual_policy(data: JsonDict) -> JsonDict:
     return policy if isinstance(policy, dict) else {}
 
 
+def candidate_pack_photographic_craft_policy(data: JsonDict) -> JsonDict:
+    policy = candidate_pack_quality_layers(data).get("photographic_craft")
+    if not isinstance(policy, dict) or policy.get("enabled") is False:
+        return {}
+    return policy
+
+
 def artistic_final_touch_policy(data: JsonDict) -> JsonDict:
     policy = candidate_pack_quality_layers(data).get("artistic_final_touch")
     if not isinstance(policy, dict) or policy.get("enabled") is False:
@@ -2788,6 +2795,258 @@ def candidate_pack_quality_facet_hits(quality_profile: JsonDict, facet_match: An
         for value in sorted(profile_values & wanted):
             hits.append(f"{key}:{value}")
     return hits
+
+
+def candidate_pack_quality_profile_from_selected(
+    data: JsonDict,
+    preset: JsonDict,
+    picked: Dict[str, Entry],
+) -> JsonDict:
+    vocab = candidate_pack_quality_facet_vocab(data)
+    facets: Dict[str, Set[str]] = {}
+    candidate_pack_quality_add_entry_facets(facets, vocab, preset)
+    for entry in picked.values():
+        if isinstance(entry, dict):
+            candidate_pack_quality_add_entry_facets(facets, vocab, entry)
+    return {
+        "source": "selected_preset_slots",
+        "facets": {key: sorted(values) for key, values in sorted(facets.items()) if values},
+        "matched_uncovered_intent_entries": [],
+    }
+
+
+def candidate_pack_craft_text(raw: Any, lang: str) -> str:
+    if isinstance(raw, dict):
+        return str(raw.get(lang) or raw.get("en") or raw.get("default") or "").strip()
+    return str(raw or "").strip()
+
+
+def candidate_pack_photographic_craft(
+    data: JsonDict,
+    quality_profile: JsonDict,
+) -> JsonDict:
+    policy = candidate_pack_photographic_craft_policy(data)
+    if not policy:
+        return {"enabled": False}
+    dimensions = [dimension for dimension in policy.get("dimensions", []) or [] if isinstance(dimension, dict)]
+    if not dimensions:
+        return {"enabled": False}
+    try:
+        refinement_limit = int(policy.get("refinement_limit_per_dimension", 2) or 2)
+    except (TypeError, ValueError):
+        refinement_limit = 2
+    refinement_limit = max(0, min(refinement_limit, 4))
+
+    active_dimensions: List[JsonDict] = []
+    dimension_scores: Dict[str, int] = {}
+    dimension_facets: Dict[str, List[str]] = {}
+    matched_facets: List[str] = []
+    all_audit_terms: List[str] = []
+    for dimension in dimensions:
+        dimension_id = str(dimension.get("id") or "").strip()
+        if not dimension_id:
+            continue
+        scored_refinements: List[tuple[int, str, JsonDict, List[str]]] = []
+        for refinement in dimension.get("refinements", []) or []:
+            if not isinstance(refinement, dict):
+                continue
+            refinement_id = str(refinement.get("id") or "").strip()
+            if not refinement_id:
+                continue
+            facet_hits = candidate_pack_quality_facet_hits(quality_profile, refinement.get("facet_match"))
+            if not facet_hits:
+                continue
+            scored_refinements.append((len(facet_hits), refinement_id, refinement, facet_hits))
+        scored_refinements.sort(key=lambda item: (-item[0], item[1]))
+
+        active_refinements: List[JsonDict] = []
+        selected_principle = str(dimension.get("baseline_principle") or "").strip()
+        selected_guidance_en = candidate_pack_craft_text(dimension.get("guidance"), "en")
+        selected_guidance_ko = candidate_pack_craft_text(dimension.get("guidance"), "ko")
+        dimension_score = 0
+        dimension_hits: List[str] = []
+        for score, refinement_id, refinement, facet_hits in scored_refinements[:refinement_limit]:
+            dimension_score += score
+            for hit in facet_hits:
+                if hit not in dimension_hits:
+                    dimension_hits.append(hit)
+                if hit not in matched_facets:
+                    matched_facets.append(hit)
+            refinement_guidance_en = candidate_pack_craft_text(refinement.get("guidance"), "en")
+            refinement_guidance_ko = candidate_pack_craft_text(refinement.get("guidance"), "ko")
+            active_refinements.append(
+                {
+                    "id": refinement_id,
+                    "score": score,
+                    "matched_facets": facet_hits[:12],
+                    "principle": str(refinement.get("principle") or "").strip(),
+                    "guidance_en": refinement_guidance_en,
+                    "guidance_ko": refinement_guidance_ko,
+                    "audit_terms": normalize_list(refinement.get("audit_terms"))[:10],
+                }
+            )
+        if active_refinements:
+            primary_refinement = active_refinements[0]
+            selected_principle = str(primary_refinement.get("principle") or selected_principle)
+            selected_guidance_en = str(primary_refinement.get("guidance_en") or selected_guidance_en)
+            selected_guidance_ko = str(primary_refinement.get("guidance_ko") or selected_guidance_ko)
+
+        audit_terms = normalize_list(dimension.get("audit_terms"))[:10]
+        for term in audit_terms:
+            if term not in all_audit_terms:
+                all_audit_terms.append(term)
+        for refinement in active_refinements:
+            for term in normalize_list(refinement.get("audit_terms")):
+                if term not in all_audit_terms:
+                    all_audit_terms.append(term)
+
+        dimension_scores[dimension_id] = dimension_score
+        dimension_facets[dimension_id] = dimension_hits
+        active_dimensions.append(
+            {
+                "id": dimension_id,
+                "label": str(dimension.get("label") or dimension_id),
+                "score": dimension_score,
+                "matched_facets": dimension_hits[:12],
+                "baseline_principle": str(dimension.get("baseline_principle") or "").strip(),
+                "selected_principle": selected_principle,
+                "guidance_en": candidate_pack_craft_text(dimension.get("guidance"), "en"),
+                "guidance_ko": candidate_pack_craft_text(dimension.get("guidance"), "ko"),
+                "selected_guidance_en": selected_guidance_en,
+                "selected_guidance_ko": selected_guidance_ko,
+                "audit_terms": audit_terms,
+                "active_refinements": active_refinements,
+            }
+        )
+
+    dimension_ids = [str(dimension.get("id") or "") for dimension in active_dimensions if dimension.get("id")]
+    strategies: List[JsonDict] = []
+    for strategy in policy.get("strategies", []) or []:
+        if not isinstance(strategy, dict):
+            continue
+        strategy_id = str(strategy.get("id") or "").strip()
+        if not strategy_id:
+            continue
+        emphasize = [
+            str(dimension_id)
+            for dimension_id in normalize_list(strategy.get("emphasize"))
+            if str(dimension_id) in dimension_ids
+        ]
+        if not emphasize:
+            continue
+        strategy_facets: List[str] = []
+        for dimension_id in emphasize:
+            for hit in dimension_facets.get(dimension_id, []):
+                if hit not in strategy_facets:
+                    strategy_facets.append(hit)
+        strategies.append(
+            {
+                "id": strategy_id,
+                "label": str(strategy.get("label") or strategy_id),
+                "score": sum(dimension_scores.get(dimension_id, 0) for dimension_id in emphasize),
+                "emphasize": emphasize,
+                "matched_facets": strategy_facets[:12],
+            }
+        )
+    default_strategy = str(policy.get("default_strategy") or "").strip()
+    if strategies:
+        if all(int(strategy.get("score", 0)) <= 0 for strategy in strategies) and default_strategy:
+            strategies.sort(key=lambda strategy: (0 if strategy.get("id") == default_strategy else 1, str(strategy.get("id") or "")))
+        else:
+            strategies.sort(key=lambda strategy: (-int(strategy.get("score", 0)), str(strategy.get("id") or "")))
+    else:
+        strategies = [
+            {
+                "id": default_strategy or "structure_led",
+                "label": default_strategy or "structure_led",
+                "score": 0,
+                "emphasize": dimension_ids[:2],
+                "matched_facets": [],
+            }
+        ]
+
+    try:
+        prompt_dimension_limit = int(policy.get("prompt_dimension_limit", 2) or 2)
+    except (TypeError, ValueError):
+        prompt_dimension_limit = 2
+    prompt_dimension_limit = max(1, min(prompt_dimension_limit, 3))
+    top_strategy = strategies[0]
+    prompt_dimension_ids = [dimension_id for dimension_id in top_strategy.get("emphasize", []) if dimension_id in dimension_ids]
+    if not prompt_dimension_ids:
+        prompt_dimension_ids = dimension_ids[:prompt_dimension_limit]
+    prompt_dimension_ids = prompt_dimension_ids[:prompt_dimension_limit]
+    by_dimension = {str(dimension.get("id")): dimension for dimension in active_dimensions}
+    prompt_guidance_en = [
+        str(by_dimension[dimension_id].get("selected_guidance_en") or "").strip()
+        for dimension_id in prompt_dimension_ids
+        if dimension_id in by_dimension and str(by_dimension[dimension_id].get("selected_guidance_en") or "").strip()
+    ]
+    prompt_guidance_ko = [
+        str(by_dimension[dimension_id].get("selected_guidance_ko") or "").strip()
+        for dimension_id in prompt_dimension_ids
+        if dimension_id in by_dimension and str(by_dimension[dimension_id].get("selected_guidance_ko") or "").strip()
+    ]
+    return {
+        "enabled": True,
+        "source": str(policy.get("source") or "facet_only_photographer_decision_layer"),
+        "quality_profile": quality_profile,
+        "selection_mode": "facet_only",
+        "active_dimensions": active_dimensions,
+        "matched_facets": matched_facets[:20],
+        "top_strategy": top_strategy,
+        "strategy_variants": strategies[:3],
+        "prompt_dimension_ids": prompt_dimension_ids,
+        "prompt_guidance_en": list(dict.fromkeys(prompt_guidance_en))[:prompt_dimension_limit],
+        "prompt_guidance_ko": list(dict.fromkeys(prompt_guidance_ko))[:prompt_dimension_limit],
+        "audit_terms": all_audit_terms[:40],
+    }
+
+
+def photographic_craft_sentence_from_pack(craft: JsonDict, lang: str, detail_level: str) -> str:
+    if not isinstance(craft, dict) or not craft.get("enabled", True):
+        return ""
+    guidance_key = "prompt_guidance_ko" if lang == "ko" else "prompt_guidance_en"
+    guidance = normalize_list(craft.get(guidance_key))
+    if not guidance and lang != "en":
+        guidance = normalize_list(craft.get("prompt_guidance_en"))
+    if not guidance:
+        return ""
+    limit = 1 if detail_level == "compact" else 2
+    guidance = guidance[:limit]
+    if lang == "ko":
+        return ensure_period("사진가의 촬영 판단으로 " + "; ".join(guidance))
+    return ensure_period("Frame it with clear photographic intent: " + "; ".join(guidance))
+
+
+def photographic_craft_sentence(
+    data: JsonDict,
+    preset: JsonDict,
+    picked: Dict[str, Entry],
+    lang: str,
+    detail_level: str,
+) -> str:
+    if not candidate_pack_photographic_craft_policy(data):
+        return ""
+    quality_profile = candidate_pack_quality_profile_from_selected(data, preset, picked)
+    craft = candidate_pack_photographic_craft(data, quality_profile)
+    return photographic_craft_sentence_from_pack(craft, lang, detail_level)
+
+
+def append_photographic_craft(
+    data: JsonDict,
+    prompt: str,
+    preset: JsonDict,
+    picked: Dict[str, Entry],
+    lang: str,
+    detail_level: str,
+) -> str:
+    sentence = photographic_craft_sentence(data, preset, picked, lang, detail_level)
+    if not sentence:
+        return clean_spaces(prompt)
+    prompt_clean = clean_spaces(prompt)
+    if sentence.lower() in prompt_clean.lower():
+        return prompt_clean
+    return clean_spaces(f"{prompt_clean} {sentence}")
 
 
 def candidate_pack_quality_matched_terms(text: str, terms: Any) -> List[str]:
@@ -3179,6 +3438,7 @@ def build_candidate_pack(result: JsonDict, data: JsonDict) -> JsonDict:
         "visual_proposition": candidate_pack_visual_proposition(
             data, result, trace, presets, slots, mandatory_intents, quality_profile
         ),
+        "photographic_craft": candidate_pack_photographic_craft(data, quality_profile),
         "artistic_final_touch": candidate_pack_artistic_final_touch(data),
         "motif_budget": candidate_pack_motif_budget(result, trace, soft_policy),
         "preset_reference": candidate_pack_preset_reference(result, soft_policy, masked_buckets, open_slots),
@@ -10605,7 +10865,9 @@ PROMPT_SECTION_ORDER = (
 
 
 def inline_constraints(lang: str) -> List[str]:
-    return []
+    if lang == "ko":
+        return ["텍스트나 워터마크 없음"]
+    return ["no text or watermark"]
 
 
 def dedupe_parts(parts: Sequence[str]) -> List[str]:
@@ -11105,6 +11367,7 @@ def render_prompt(
             prompt = clean_spaces(" ".join([prompt] + [ensure_period(part) for part in additions]))
 
     prompt = append_render_contract_sentences(prompt, lang, additional_requirements, likeness_mode)
+    prompt = append_photographic_craft(data, prompt, preset, render_picked, lang, detail_level)
     return append_artistic_final_touch(data, prompt, lang, detail_level)
 
 
