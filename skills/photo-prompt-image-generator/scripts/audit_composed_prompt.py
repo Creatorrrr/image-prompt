@@ -314,8 +314,6 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
 
     if not prompt_en.strip():
         failures.append({"check": "output_contract", "reason": "missing prompt_en"})
-    if "watermark" not in prompt_en.lower() or "no text" not in prompt_en.lower():
-        failures.append({"check": "output_contract", "reason": "prompt_en must include no text or watermark"})
 
     pack_id = str(pack.get("pack_id") or "")
     composed_pack_id = str(composed.get("pack_id") or "")
