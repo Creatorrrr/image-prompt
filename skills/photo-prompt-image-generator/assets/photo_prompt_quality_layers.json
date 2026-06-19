@@ -347,6 +347,242 @@
       "metacritical labels such as visual argument or unresolved tension used instead of visible action, placement, light, or material evidence"
     ]
   },
+  "photographic_craft": {
+    "enabled": true,
+    "source": "facet_only_photographer_decision_layer",
+    "prompt_dimension_limit": 2,
+    "refinement_limit_per_dimension": 2,
+    "default_strategy": "structure_led",
+    "dimensions": [
+      {
+        "id": "shot_intent",
+        "label": "shot intent",
+        "baseline_principle": "Decide what the frame is about before adding surface style, so the image has a visible reason for its distance, angle, and timing.",
+        "guidance": {
+          "en": "make the frame's photographic intent legible before surface styling",
+          "ko": "표면적인 스타일보다 먼저 프레임의 촬영 의도가 읽히게 한다"
+        },
+        "audit_terms": ["photographic intent", "frame intent", "visible reason", "deliberate distance"],
+        "refinements": [
+          {
+            "id": "intimate_observation",
+            "facet_match": {"subject_kind": ["human", "animal"], "shot_scale": ["medium_close", "close_up", "extreme_close"], "mood_family": ["calm", "intimate", "documentary"]},
+            "principle": "For close or intimate subjects, make the chosen distance feel observed rather than displayed.",
+            "guidance": {
+              "en": "let the close distance feel observed rather than displayed",
+              "ko": "가까운 거리가 과시가 아니라 관찰처럼 느껴지게 한다"
+            },
+            "audit_terms": ["observed", "close distance", "intimate distance"]
+          },
+          {
+            "id": "material_study",
+            "facet_match": {"subject_kind": ["object", "food", "plant", "sign"], "camera_register": ["professional", "studio", "macro"]},
+            "principle": "For non-human subjects, make the frame's reason come from surface, weight, use, or arrangement rather than a label-like display.",
+            "guidance": {
+              "en": "let surface, weight, use, or arrangement explain why this frame exists",
+              "ko": "표면, 무게, 사용감, 배치가 이 프레임의 이유를 설명하게 한다"
+            },
+            "audit_terms": ["surface", "weight", "use trace", "arrangement"]
+          },
+          {
+            "id": "spatial_relation",
+            "facet_match": {"subject_kind": ["environment"], "shot_scale": ["extreme_wide", "wide", "full_length"], "placement": ["negative_space", "layered_depth", "rule_of_thirds"]},
+            "principle": "For environment-led frames, make scale, distance, and spatial relation carry the photographic purpose.",
+            "guidance": {
+              "en": "let scale, distance, and spatial relation carry the frame's purpose",
+              "ko": "스케일, 거리, 공간 관계가 프레임의 목적을 이끌게 한다"
+            },
+            "audit_terms": ["scale", "distance", "spatial relation"]
+          }
+        ]
+      },
+      {
+        "id": "light_provenance",
+        "label": "light provenance",
+        "baseline_principle": "Light should appear to come from a believable source, with direction, falloff, bounce, and exposure behavior affecting both subject and setting.",
+        "guidance": {
+          "en": "give the light a believable source with direction, falloff, and bounce",
+          "ko": "빛이 방향, 감쇠, 반사광을 가진 설득력 있는 출처에서 오게 한다"
+        },
+        "audit_terms": ["light source", "direction", "falloff", "bounce"],
+        "refinements": [
+          {
+            "id": "available_light_logic",
+            "facet_match": {"lighting_family": ["natural_light", "low_light"], "time_of_day": ["day", "night", "dawn", "dusk", "indoor_unspecified"]},
+            "principle": "Available or low light should carry a traceable direction and exposure logic.",
+            "guidance": {
+              "en": "keep available light directional enough to reveal exposure and bounce",
+              "ko": "현장광의 방향, 노출, 반사광이 추적될 만큼 분명하게 남게 한다"
+            },
+            "audit_terms": ["available light", "exposure", "bounce"]
+          },
+          {
+            "id": "artificial_light_logic",
+            "facet_match": {"lighting_family": ["artificial_light", "colored_light", "projection_light", "machine_light", "hazard_light", "studio_light", "flash"]},
+            "principle": "Artificial light should leave consistent color, shadow, specular edge, or exposure evidence across the frame.",
+            "guidance": {
+              "en": "let artificial light leave consistent color, shadow, specular edges, or exposure evidence",
+              "ko": "인공광이 색, 그림자, 반짝이는 경계, 노출 흔적을 일관되게 남기게 한다"
+            },
+            "audit_terms": ["artificial light", "color", "shadow", "specular", "exposure"]
+          },
+          {
+            "id": "atmospheric_diffusion",
+            "facet_match": {"weather": ["rain", "snow", "fog", "underwater"]},
+            "principle": "Atmosphere should change the light through diffusion, reflection, softened contrast, or suspended particles.",
+            "guidance": {
+              "en": "let atmosphere alter the light through diffusion, reflection, or softened contrast",
+              "ko": "대기가 확산, 반사, 부드러운 대비로 빛을 바꾸게 한다"
+            },
+            "audit_terms": ["diffusion", "reflection", "softened contrast", "particles"]
+          }
+        ]
+      },
+      {
+        "id": "frame_hierarchy",
+        "label": "frame hierarchy",
+        "baseline_principle": "Organize the viewer's reading order across foreground, subject plane, and background instead of letting every detail compete equally.",
+        "guidance": {
+          "en": "organize foreground, subject plane, and background into a clear reading order",
+          "ko": "전경, 피사체면, 배경이 분명한 읽는 순서로 정리되게 한다"
+        },
+        "audit_terms": ["foreground", "subject plane", "background", "reading order"],
+        "refinements": [
+          {
+            "id": "layered_depth_order",
+            "facet_match": {"placement": ["layered_depth", "foreground_frame", "negative_space", "edge_tension"]},
+            "principle": "Layered frames need a deliberate foreground interruption, subject plane, and background falloff.",
+            "guidance": {
+              "en": "use foreground interruption, a clear subject plane, and background falloff",
+              "ko": "전경의 가림, 선명한 피사체면, 배경의 초점 이탈을 함께 사용한다"
+            },
+            "audit_terms": ["foreground interruption", "subject plane", "background falloff"]
+          },
+          {
+            "id": "close_focus_priority",
+            "facet_match": {"shot_scale": ["medium_close", "close_up", "extreme_close"], "camera_register": ["professional", "macro"]},
+            "principle": "Close frames should make focus priority and edge behavior unmistakable.",
+            "guidance": {
+              "en": "make focus priority and frame-edge behavior unmistakable",
+              "ko": "초점 우선순위와 프레임 가장자리의 처리가 분명하게 보이게 한다"
+            },
+            "audit_terms": ["focus priority", "frame edge", "edge behavior"]
+          },
+          {
+            "id": "wide_scale_order",
+            "facet_match": {"shot_scale": ["extreme_wide", "wide", "full_length"], "placement": ["rule_of_thirds", "negative_space", "symmetry"]},
+            "principle": "Wide frames should use negative space, scale, or symmetry as a reading path rather than empty scenery.",
+            "guidance": {
+              "en": "use negative space, scale, or symmetry as a reading path rather than empty scenery",
+              "ko": "여백, 스케일, 대칭이 빈 배경이 아니라 시선의 경로가 되게 한다"
+            },
+            "audit_terms": ["negative space", "scale", "symmetry", "reading path"]
+          }
+        ]
+      },
+      {
+        "id": "decisive_moment",
+        "label": "decisive moment",
+        "baseline_principle": "Give the frame a captured instant: a transition, hesitation, aftermath, or micro-event that could only exist at this moment.",
+        "guidance": {
+          "en": "give the frame a captured instant rather than a finished pose",
+          "ko": "완성된 포즈보다 포착된 찰나가 프레임에 남게 한다"
+        },
+        "audit_terms": ["captured instant", "transition", "hesitation", "aftermath", "micro-event"],
+        "refinements": [
+          {
+            "id": "human_or_animal_transition",
+            "facet_match": {"subject_kind": ["human", "animal"], "placement": ["entering_frame", "exiting_frame", "edge_tension", "layered_depth"]},
+            "principle": "Living subjects should feel caught in a transition rather than frozen at a perfect endpoint.",
+            "guidance": {
+              "en": "catch a transition before it settles into a perfect endpoint",
+              "ko": "동작이 완벽한 끝점으로 굳기 전의 전환을 포착한다"
+            },
+            "audit_terms": ["transition", "caught", "before it settles"]
+          },
+          {
+            "id": "observer_timing",
+            "facet_match": {"camera_angle": ["pov", "over_shoulder", "hidden_observer", "reflection"], "camera_register": ["phone", "surveillance", "vintage", "professional"]},
+            "principle": "Observer-like camera positions should imply timing: the photographer arrived just before, during, or just after something small happened.",
+            "guidance": {
+              "en": "make the camera feel timed to just before, during, or just after a small event",
+              "ko": "카메라가 작은 사건의 직전, 도중, 직후에 맞춰진 것처럼 보이게 한다"
+            },
+            "audit_terms": ["just before", "during", "just after", "small event"]
+          },
+          {
+            "id": "still_life_aftertouch",
+            "facet_match": {"subject_kind": ["object", "food", "plant", "sign"]},
+            "principle": "Still subjects can still carry time through an after-touch, slight displacement, use mark, or settling detail.",
+            "guidance": {
+              "en": "show time through after-touch, slight displacement, use mark, or a settling detail",
+              "ko": "손길 뒤의 흔적, 살짝 어긋난 배치, 사용감, 가라앉는 디테일로 시간을 보이게 한다"
+            },
+            "audit_terms": ["after-touch", "displacement", "use mark", "settling detail"]
+          }
+        ]
+      },
+      {
+        "id": "environment_consequence",
+        "label": "environment consequence",
+        "baseline_principle": "Let the setting affect the subject or let the subject disturb the setting, so place is a photographic cause rather than a decorative backdrop.",
+        "guidance": {
+          "en": "let the setting affect the subject or the subject disturb the setting",
+          "ko": "장소가 피사체에 영향을 주거나 피사체가 장소를 흐트러뜨리게 한다"
+        },
+        "audit_terms": ["setting affects", "disturb the setting", "consequence", "place"],
+        "refinements": [
+          {
+            "id": "weather_surface_consequence",
+            "facet_match": {"weather": ["rain", "snow", "fog", "underwater"]},
+            "principle": "Weather or atmosphere should visibly change surfaces, edges, contrast, or movement.",
+            "guidance": {
+              "en": "make weather or atmosphere visibly change surfaces, edges, contrast, or movement",
+              "ko": "날씨나 대기가 표면, 경계, 대비, 움직임을 눈에 보이게 바꾸게 한다"
+            },
+            "audit_terms": ["weather", "atmosphere", "surfaces", "movement"]
+          },
+          {
+            "id": "contact_with_place",
+            "facet_match": {"subject_kind": ["human", "animal", "object", "food", "plant"], "placement": ["layered_depth", "foreground_frame", "edge_tension"]},
+            "principle": "Contact with place should create pressure, occlusion, reflection, dust, surface change, or spatial interruption.",
+            "guidance": {
+              "en": "show contact with place through pressure, occlusion, reflection, dust, or surface change",
+              "ko": "압력, 가림, 반사, 먼지, 표면 변화로 장소와의 접촉을 보인다"
+            },
+            "audit_terms": ["pressure", "occlusion", "reflection", "dust", "surface change"]
+          },
+          {
+            "id": "public_space_pressure",
+            "facet_match": {"place_type": ["urban", "street", "transport", "commercial"], "mood_family": ["documentary", "tense", "calm"]},
+            "principle": "Shared spaces should affect spacing, paths, interruptions, or posture instead of acting as neutral scenery.",
+            "guidance": {
+              "en": "let shared space affect spacing, paths, interruptions, or posture",
+              "ko": "공유된 공간이 거리감, 동선, 가림, 자세에 영향을 주게 한다"
+            },
+            "audit_terms": ["spacing", "paths", "interruptions", "posture"]
+          }
+        ]
+      }
+    ],
+    "strategies": [
+      {
+        "id": "light_led",
+        "label": "light-led craft",
+        "emphasize": ["light_provenance", "environment_consequence"]
+      },
+      {
+        "id": "moment_led",
+        "label": "moment-led craft",
+        "emphasize": ["decisive_moment", "shot_intent"]
+      },
+      {
+        "id": "structure_led",
+        "label": "structure-led craft",
+        "emphasize": ["frame_hierarchy", "shot_intent"]
+      }
+    ]
+  },
   "artistic_final_touch": {
     "enabled": true,
     "source": "agent_final_photo_art_touch",

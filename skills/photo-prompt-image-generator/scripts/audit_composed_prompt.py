@@ -244,6 +244,76 @@ def visual_proposition_category_terms(proposition: dict[str, Any], category: str
     return list(dict.fromkeys(terms))
 
 
+def photographic_craft_dimension_terms(craft: dict[str, Any], dimension_id: str) -> list[str]:
+    terms: list[str] = []
+    for dimension in craft.get("active_dimensions") or []:
+        if not isinstance(dimension, dict) or str(dimension.get("id") or "") != dimension_id:
+            continue
+        for key in ("selected_guidance_en", "selected_guidance_ko", "guidance_en", "guidance_ko", "selected_principle"):
+            value = str(dimension.get(key) or "").strip()
+            if value:
+                terms.append(value)
+        for term in dimension.get("audit_terms") or []:
+            if isinstance(term, str) and term.strip():
+                terms.append(term)
+        for refinement in dimension.get("active_refinements") or []:
+            if not isinstance(refinement, dict):
+                continue
+            for key in ("guidance_en", "guidance_ko", "principle"):
+                value = str(refinement.get(key) or "").strip()
+                if value:
+                    terms.append(value)
+            for term in refinement.get("audit_terms") or []:
+                if isinstance(term, str) and term.strip():
+                    terms.append(term)
+    return list(dict.fromkeys(terms))
+
+
+def audit_photographic_craft(pack: dict[str, Any], search_text: str) -> dict[str, Any] | None:
+    craft = pack.get("photographic_craft")
+    if not isinstance(craft, dict) or not craft.get("enabled", True):
+        return None
+    strategy = craft.get("top_strategy") if isinstance(craft.get("top_strategy"), dict) else {}
+    dimensions = [
+        str(dimension_id)
+        for dimension_id in strategy.get("emphasize") or craft.get("prompt_dimension_ids") or []
+        if str(dimension_id).strip()
+    ]
+    if not dimensions:
+        dimensions = [
+            str(dimension.get("id"))
+            for dimension in craft.get("active_dimensions") or []
+            if isinstance(dimension, dict) and str(dimension.get("id") or "").strip()
+        ][:2]
+    if not dimensions:
+        return None
+
+    hits: dict[str, list[str]] = {}
+    missing: list[str] = []
+    for dimension_id in dimensions:
+        terms = photographic_craft_dimension_terms(craft, dimension_id)
+        matched = [term for term in terms if text_contains_term(search_text, term)]
+        if matched:
+            hits[dimension_id] = matched[:5]
+        else:
+            missing.append(dimension_id)
+
+    if hits:
+        return None
+    return {
+        "check": "photographic_craft",
+        "reason": "composed prompt does not visibly use the candidate pack's photographer craft decision layer",
+        "top_strategy": strategy.get("id"),
+        "expected_dimensions": dimensions,
+        "missing_dimensions": missing,
+        "principles": [
+            str(dimension.get("selected_principle") or dimension.get("baseline_principle") or "")
+            for dimension in craft.get("active_dimensions") or []
+            if isinstance(dimension, dict) and str(dimension.get("id") or "") in set(dimensions)
+        ][:3],
+    }
+
+
 def audit_visual_proposition(pack: dict[str, Any], search_text: str) -> dict[str, Any] | None:
     proposition = pack.get("visual_proposition")
     if not isinstance(proposition, dict) or not proposition.get("enabled", True):
@@ -529,6 +599,9 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
     proposition_warning = audit_visual_proposition(pack, search_text)
     if proposition_warning:
         warnings.append(proposition_warning)
+    craft_warning = audit_photographic_craft(pack, search_text)
+    if craft_warning:
+        warnings.append(craft_warning)
     final_touch_warning = audit_artistic_final_touch(pack, prompt_en)
     if final_touch_warning:
         warnings.append(final_touch_warning)
