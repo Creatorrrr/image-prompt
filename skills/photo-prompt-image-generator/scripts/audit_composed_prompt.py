@@ -287,6 +287,24 @@ def audit_visual_proposition(pack: dict[str, Any], search_text: str) -> dict[str
     }
 
 
+def audit_artistic_final_touch(pack: dict[str, Any], prompt_en: str) -> dict[str, Any] | None:
+    touch = pack.get("artistic_final_touch")
+    if not isinstance(touch, dict) or not touch.get("enabled", True):
+        return None
+    final_sentence = str(touch.get("final_sentence_en") or "").strip()
+    prompt_clean = prompt_en.strip()
+    if final_sentence and prompt_clean.lower().endswith(final_sentence.lower()):
+        return None
+    audit_terms = [str(term) for term in touch.get("audit_terms") or [] if str(term).strip()]
+    matched_terms = [term for term in audit_terms if text_contains_term(prompt_en, term)]
+    return {
+        "check": "artistic_final_touch",
+        "reason": "composed prompt does not end with the candidate pack's final photographic touch",
+        "expected_final_sentence": final_sentence or None,
+        "matched_terms": matched_terms[:5],
+    }
+
+
 def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dict[str, Any]:
     failures: list[dict[str, Any]] = []
     warnings: list[dict[str, Any]] = []
@@ -513,6 +531,9 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
     proposition_warning = audit_visual_proposition(pack, search_text)
     if proposition_warning:
         warnings.append(proposition_warning)
+    final_touch_warning = audit_artistic_final_touch(pack, prompt_en)
+    if final_touch_warning:
+        warnings.append(final_touch_warning)
 
     status = "fail" if failures else "pass"
     return {

@@ -504,6 +504,40 @@ def validate_quality_layer_facet_match(
                 errors.append(f"{label}.{facet_key}: unknown value {facet_value}")
 
 
+def validate_quality_layer_artistic_final_touch(quality: dict[str, Any], errors: list[str]) -> None:
+    touch = quality.get("artistic_final_touch")
+    if touch is None:
+        return
+    if not isinstance(touch, dict):
+        errors.append("quality_layers.artistic_final_touch: must be an object")
+        return
+    if "enabled" in touch and not isinstance(touch.get("enabled"), bool):
+        errors.append("quality_layers.artistic_final_touch.enabled: must be a boolean")
+    source = str(touch.get("source") or "").strip()
+    if not source:
+        errors.append("quality_layers.artistic_final_touch.source: required")
+    sentences = touch.get("sentences")
+    if not isinstance(sentences, dict):
+        errors.append("quality_layers.artistic_final_touch.sentences: must be an object")
+        sentences = {}
+    for lang in ("en", "ko"):
+        localized = sentences.get(lang)
+        label = f"quality_layers.artistic_final_touch.sentences.{lang}"
+        if not isinstance(localized, dict):
+            errors.append(f"{label}: must be an object")
+            continue
+        default_sentence = str(localized.get("default") or "").strip()
+        if not default_sentence:
+            errors.append(f"{label}.default: required")
+        for key, value in localized.items():
+            if key not in {"default", "compact", "detailed", "standard"}:
+                errors.append(f"{label}.{key}: unsupported sentence variant")
+            if not str(value or "").strip():
+                errors.append(f"{label}.{key}: empty value")
+    if "audit_terms" in touch:
+        validate_string_list("quality_layers.artistic_final_touch.audit_terms", touch.get("audit_terms"), errors)
+
+
 def validate_quality_layers(path: Path, data: dict[str, Any], errors: list[str]) -> None:
     try:
         quality = load_json(path)
@@ -523,6 +557,7 @@ def validate_quality_layers(path: Path, data: dict[str, Any], errors: list[str])
         schema_version = None
     if schema_version != 1:
         errors.append("quality_layers.schema_version: must be 1")
+    validate_quality_layer_artistic_final_touch(quality, errors)
 
     photographic = quality.get("photographic_integration")
     if not isinstance(photographic, dict):
