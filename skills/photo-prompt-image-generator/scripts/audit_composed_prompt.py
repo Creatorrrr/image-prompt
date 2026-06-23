@@ -588,11 +588,6 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
                 }
             )
 
-    safety_floor = pack.get("safety_floor") if isinstance(pack.get("safety_floor"), dict) else {}
-    for term in safety_floor.get("forbidden_terms") or []:
-        if text_contains_term(prompt_en, str(term)):
-            failures.append({"check": "safety_floor", "reason": "forbidden term appears in prompt_en", "term": term})
-
     photographic_warning = audit_photographic_integration(pack, search_text)
     if photographic_warning:
         warnings.append(photographic_warning)

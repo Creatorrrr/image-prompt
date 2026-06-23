@@ -5893,7 +5893,6 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "diversity_state",
                 "coverage",
                 "conflicts",
-                "safety_floor",
                 "negative_en",
                 "provenance",
             },
@@ -6223,7 +6222,6 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             },
             "coverage": {},
             "conflicts": [],
-            "safety_floor": {"forbidden_terms": []},
             "negative_en": None,
             "provenance": {},
         }
@@ -6337,7 +6335,6 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             },
             "coverage": {},
             "conflicts": [{"id": "conflict:1", "severity": "hard", "candidates": ["slot:mood:cozy", "slot:mood:tense"]}],
-            "safety_floor": {"forbidden_terms": ["blood"]},
             "negative_en": "bad anatomy",
             "provenance": {},
         }
@@ -6382,7 +6379,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             audit = json.loads(failed.stdout)
             self.assertEqual(audit["status"], "fail")
             failure_checks = {failure["check"] for failure in audit["failures"]}
-            self.assertTrue({"mandatory_intent", "chosen_candidate_ids", "hard_conflict", "safety_floor"} <= failure_checks)
+            self.assertTrue({"mandatory_intent", "chosen_candidate_ids", "hard_conflict"} <= failure_checks)
 
     def test_audit_composed_prompt_warns_for_missing_photographic_integration(self):
         pack = {
@@ -6405,7 +6402,6 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             },
             "coverage": {},
             "conflicts": [],
-            "safety_floor": {"forbidden_terms": []},
             "negative_en": None,
             "provenance": {},
         }
@@ -6491,7 +6487,6 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             },
             "coverage": {},
             "conflicts": [],
-            "safety_floor": {"forbidden_terms": []},
             "negative_en": None,
             "provenance": {},
         }
@@ -6569,7 +6564,6 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             },
             "coverage": {},
             "conflicts": [],
-            "safety_floor": {"forbidden_terms": []},
             "negative_en": None,
             "provenance": {},
         }
@@ -6636,7 +6630,6 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             },
             "coverage": {},
             "conflicts": [],
-            "safety_floor": {"forbidden_terms": []},
             "negative_en": None,
             "provenance": {},
         }
@@ -6729,7 +6722,6 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             "template_echo_risk": {"max_allowed_score": 0.2},
             "coverage": {},
             "conflicts": [],
-            "safety_floor": {"forbidden_terms": []},
             "negative_en": None,
             "provenance": {},
         }
@@ -6808,7 +6800,6 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             },
             "coverage": {},
             "conflicts": [],
-            "safety_floor": {"forbidden_terms": []},
             "negative_en": "bad anatomy",
             "provenance": {},
         }
