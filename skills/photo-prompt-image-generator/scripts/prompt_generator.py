@@ -145,19 +145,6 @@ CANDIDATE_PACK_INTENT_STOPWORDS = {
     "of",
     "in",
 }
-CANDIDATE_PACK_DEFAULT_FORBIDDEN_TERMS = (
-    "gore",
-    "blood",
-    "wound",
-    "injury",
-    "victim",
-    "self-harm",
-    "underage",
-    "minor",
-    "child",
-    "teen",
-    "coercion",
-)
 CANDIDATE_PACK_SEMANTIC_DROPOUT_BUCKETS: Dict[str, tuple[str, ...]] = {
     "environment": (
         "location",
@@ -2236,27 +2223,6 @@ def candidate_pack_mandatory_intents(
     return intents, uncovered
 
 
-def candidate_pack_safety_floor(trace: JsonDict, result: JsonDict) -> JsonDict:
-    contract = trace.get("generation_contract") if isinstance(trace.get("generation_contract"), dict) else {}
-    requirements: List[str] = []
-    for requirement in normalize_list(contract.get("additional_requirements")):
-        lowered = requirement.lower()
-        if any(token in lowered for token in ("safe", "adult", "non-graphic", "no ", "avoid", "covered")):
-            requirements.append(requirement)
-    soft_policy = contract.get("soft_anchor_policy") if isinstance(contract.get("soft_anchor_policy"), dict) else {}
-    for requirement in normalize_list(soft_policy.get("safety_requirements")):
-        if requirement not in requirements:
-            requirements.append(requirement)
-    return {
-        "non_graphic": True,
-        "forbidden_terms": list(CANDIDATE_PACK_DEFAULT_FORBIDDEN_TERMS),
-        "requirements": list(dict.fromkeys(requirements)),
-        "negative_required": bool(result.get("negative_en")),
-        "safety_transform_policy": contract.get("safety_transform_policy", "approved"),
-        "approval_required_safety_transforms": soft_policy.get("approval_required_safety_transforms", {}) or {},
-    }
-
-
 def candidate_pack_diversity_state(trace: JsonDict) -> JsonDict:
     batch = trace.get("batch_diversity") if isinstance(trace.get("batch_diversity"), dict) else {}
     history = trace.get("batch_history_summary") if isinstance(trace.get("batch_history_summary"), dict) else {}
@@ -3467,7 +3433,6 @@ def build_candidate_pack(result: JsonDict, data: JsonDict) -> JsonDict:
             },
         },
         "conflicts": conflicts,
-        "safety_floor": candidate_pack_safety_floor(trace, result),
         "negative_en": result.get("negative_en"),
         "provenance": {
             "generator_version": provenance.get("generator_version", GENERATOR_VERSION),
