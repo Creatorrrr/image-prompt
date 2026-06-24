@@ -4036,6 +4036,213 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             for phrase in expected["phrases"]:
                 self.assertIn(phrase, item["prompt_en"])
 
+    def test_concept_recipe_expands_bulpan_dogeza_as_public_pressure_mixin(self):
+        payload = self.run_wrapper_json(
+            "--concept",
+            "불판 도게자",
+            "--explain-concept",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "701",
+            "--plain",
+            "--no-negative",
+        )
+
+        concept = payload["concepts"][0]
+        self.assertEqual(concept["name"], "불판 도게자")
+        self.assertIsNone(concept["role"])
+        self.assertIsNone(concept["applied_role"])
+        self.assertEqual(concept["applied_mixins"], ["불판 도게자"])
+        self.assertTrue(concept["matched"])
+        self.assertEqual(concept["combined_forced_slots"]["body_pose"], ["kneeling_soft_pose"])
+        self.assertIn("underworld_red_underlight", concept["combined_forced_slots"]["light_type"])
+        self.assertIn("forge_ember_glow", concept["combined_forced_slots"]["light_type"])
+        self.assertIn("public_humiliation", concept["guide"]["불판 도게자"]["dominant_axes"])
+        identity_axis_ids = {axis["id"] for axis in concept["soft_anchor_spec"]["identity_axes"]}
+        self.assertTrue(
+            {
+                "abasement_pose",
+                "heat_pressure_from_below",
+                "public_surveillance_accountability",
+            }.issubset(identity_axis_ids)
+        )
+        gate_status = {item["id"]: item["status"] for item in concept["gate_results"]}
+        self.assertEqual(gate_status["mixin_shape"], "pass")
+        self.assertEqual(gate_status["heat_from_below_forced"], "pass")
+        self.assertEqual(gate_status["no_graphic_heat_injury"], "manual")
+        joined = " ".join(payload["forward_args"])
+        self.assertIn("깊은 도게자-style 부복", joined)
+        self.assertIn("do not silently replace", joined)
+        self.assertIn(
+            "adult fictional subject only",
+            " ".join(concept["mixins"]["불판 도게자"]["safety_requirements"]),
+        )
+
+    def test_bulpan_dogeza_alias_preserves_idol_role(self):
+        payload = self.run_wrapper_json(
+            "--concept",
+            "리아 아이돌 철판도게자",
+            "--explain-concept",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "702",
+            "--plain",
+            "--no-negative",
+        )
+
+        concept = payload["concepts"][0]
+        self.assertEqual(concept["name"], "리아")
+        self.assertEqual(concept["role"], "아이돌")
+        self.assertEqual(concept["applied_role"], "아이돌")
+        self.assertEqual(concept["applied_mixins"], ["불판 도게자"])
+        gate_status = {item["id"]: item["status"] for item in concept["gate_results"]}
+        self.assertEqual(gate_status["role_costume_preserved"], "pass")
+        self.assertIn("kneeling_soft_pose", concept["combined_forced_slots"]["body_pose"])
+        self.assertIn("underworld_red_underlight", concept["combined_forced_slots"]["light_type"])
+
+    def test_dogeza_alone_is_not_overbroad_bulpan_alias(self):
+        payload = self.run_wrapper_json(
+            "--concept",
+            "도게자",
+            "--explain-concept",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "703",
+            "--plain",
+            "--no-negative",
+        )
+
+        concept = payload["concepts"][0]
+        self.assertFalse(concept["matched"])
+        self.assertEqual(concept["applied_mixins"], [])
+
+    def test_concept_recipe_expands_white_bandage_fashion_as_couture_mixin(self):
+        payload = self.run_wrapper_json(
+            "--concept",
+            "흰 붕대 패션",
+            "--explain-concept",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "711",
+            "--plain",
+            "--no-negative",
+        )
+
+        concept = payload["concepts"][0]
+        self.assertEqual(concept["concept"], "흰 붕대 패션")
+        self.assertEqual(concept["applied_mixins"], ["흰 붕대 패션"])
+        self.assertTrue(concept["matched"])
+        self.assertIn(
+            "opaque_white_bandage_couture_costume",
+            concept["combined_forced_slots"]["costume_style"],
+        )
+        self.assertIn(
+            "opaque_cotton_gauze_wrap_layers",
+            concept["combined_forced_slots"]["garment_detail"],
+        )
+        self.assertIn(
+            "crisscross_linen_bandage_wrapping",
+            concept["combined_forced_slots"]["garment_detail"],
+        )
+        self.assertIn(
+            "sculptural_bandage_bodycon",
+            concept["combined_forced_slots"]["silhouette_proportion"],
+        )
+        guide_axes = set(concept["guide"]["흰 붕대 패션"]["dominant_axes"])
+        self.assertIn("opaque_full_coverage", guide_axes)
+        self.assertIn("fashion_not_medical_or_restraint", guide_axes)
+        identity_axis_ids = {axis["id"] for axis in concept["soft_anchor_spec"]["identity_axes"]}
+        self.assertTrue(
+            {
+                "opaque_full_coverage",
+                "sculptural_wrap_engineering",
+                "protective_rebirth_symbolism",
+            }.issubset(identity_axis_ids)
+        )
+        gate_status = {item["id"]: item["status"] for item in concept["gate_results"]}
+        self.assertEqual(gate_status["mixin_shape"], "pass")
+        self.assertEqual(gate_status["full_coverage_costume_forced"], "pass")
+        self.assertEqual(gate_status["wrapping_material_forced"], "pass")
+        self.assertEqual(gate_status["sculptural_silhouette_forced"], "pass")
+        self.assertEqual(gate_status["full_coverage_not_body_exposure"], "manual")
+        self.assertEqual(gate_status["dual_read_high_fashion_not_patient"], "manual")
+        joined = " ".join(payload["forward_args"])
+        self.assertIn("--preset white_bandage_couture_editorial", joined)
+        self.assertIn("opaque full intentional fashion coverage", joined)
+        self.assertIn("Do not silently convert", joined)
+
+    def test_white_bandage_alias_preserves_wrap_only_fashion_context(self):
+        payload = self.run_wrapper_json(
+            "--concept",
+            "흰 붕대만 감은 코스튬",
+            "--explain-concept",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "712",
+            "--plain",
+            "--no-negative",
+        )
+
+        concept = payload["concepts"][0]
+        self.assertEqual(concept["concept"], "흰 붕대 패션")
+        self.assertEqual(concept["applied_mixins"], ["흰 붕대 패션"])
+        self.assertIn("only visible garment", " ".join(concept["mixins"]["흰 붕대 패션"]["additional"]))
+        safety = " ".join(concept["mixins"]["흰 붕대 패션"]["safety_requirements"])
+        self.assertIn("adult fictional subject only", safety)
+        self.assertIn("no minors", safety)
+        self.assertIn("nudity", safety)
+        self.assertIn("restraint", safety)
+
+    def test_white_bandage_concept_generation_uses_fashion_wrap_slots(self):
+        item = self.run_wrapper_json(
+            "--concept",
+            "흰 붕대 패션",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "713",
+            "--lang",
+            "en",
+            "--include-choices",
+            "--no-negative",
+        )[0]
+
+        self.assertEqual(item["preset_id"], "white_bandage_couture_editorial")
+        self.assertIn(
+            item["choices"]["costume_style"]["id"],
+            {
+                "opaque_white_bandage_couture_costume",
+                "deconstructed_mummy_wrap_dress",
+                "sci_fi_rebirth_bandage_wrap_costume",
+            },
+        )
+        self.assertIn(
+            item["choices"]["garment_detail"]["id"],
+            {
+                "opaque_cotton_gauze_wrap_layers",
+                "crisscross_linen_bandage_wrapping",
+                "frayed_trailing_bandage_edges",
+                "matte_white_bandage_weave",
+            },
+        )
+        self.assertIn(
+            item["choices"]["silhouette_proportion"]["id"],
+            {"sculptural_bandage_bodycon", "protective_cocoon_wrap_silhouette"},
+        )
+        self.assertIn("Core concept lock: 흰 붕대 패션", item["prompt_en"])
+        self.assertIn("bandage", item["prompt_en"])
+        self.assertIn("gauze", item["prompt_en"])
+        self.assertNotIn(
+            item["choices"]["location"]["id"],
+            {"hospital_corridor", "clinic_corridor_handover", "clinical_observation_lab"},
+        )
+        self.assertNotIn("hospital", item["prompt_en"].lower())
+
     def test_concept_recipe_expands_menhera_as_non_graphic_mixin(self):
         payload = self.run_wrapper_json(
             "--concept",

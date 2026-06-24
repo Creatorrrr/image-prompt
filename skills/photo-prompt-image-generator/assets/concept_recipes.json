@@ -37400,6 +37400,792 @@
         "priest cassock",
         "clergy role"
       ]
+    },
+    "불판 도게자": {
+      "preset": "compact_cinematic_prop_portrait",
+      "set": {
+        "body_pose": "kneeling_soft_pose",
+        "light_direction": "under_light",
+        "light_type": [
+          "underworld_red_underlight",
+          "forge_ember_glow"
+        ],
+        "weather": "heat_haze",
+        "skin_finish": "sweat_beads_on_temple",
+        "composition": "surveillance_high_corner_angle",
+        "prop": "handheld_microphone",
+        "concept_tension": "public_vs_private_tension",
+        "narrative_core": "public_private_self_core"
+      },
+      "soft_anchor_slots": [
+        "body_pose",
+        "light_type",
+        "weather",
+        "skin_finish",
+        "composition",
+        "prop",
+        "concept_tension",
+        "narrative_core",
+        "crowd_density",
+        "capture_context"
+      ],
+      "soft_min_anchors": 3,
+      "identity_axes": [
+        {
+          "id": "abasement_pose",
+          "description": "the image must read as dogeza-style public prostration, not ordinary kneeling or a fashion pose",
+          "terms": [
+            "dogeza",
+            "deep formal kneeling bow",
+            "forehead lowered",
+            "도게자",
+            "부복"
+          ]
+        },
+        {
+          "id": "heat_pressure_from_below",
+          "description": "the grill/bulpan pressure is expressed through red underlight, ember glow, heat haze, sweat, and warmed metal or symbolic floor pressure",
+          "terms": [
+            "bulpan",
+            "red underlight",
+            "heat haze",
+            "ember glow",
+            "불판",
+            "열 압력"
+          ]
+        },
+        {
+          "id": "public_surveillance_accountability",
+          "description": "the scene must show public scrutiny through phone cameras, audience pressure, comment-thread glow, or status-symbol collapse",
+          "terms": [
+            "public scrutiny",
+            "phone cameras",
+            "comment-thread pressure",
+            "public apology",
+            "공개 사과",
+            "댓글 감시"
+          ]
+        }
+      ],
+      "anchor_terms": {
+        "body_pose": [
+          "full dogeza-style prostration",
+          "forehead lowered close to the floor",
+          "deep formal kneeling bow"
+        ],
+        "light_type": [
+          "red underlight from below",
+          "ember glow under the subject",
+          "heat pressure from the floor"
+        ],
+        "weather": [
+          "heat haze",
+          "air shimmering from below"
+        ],
+        "skin_finish": [
+          "sweat beads from public pressure",
+          "sweat at the temple"
+        ],
+        "composition": [
+          "surveillance-like high angle",
+          "public scrutiny looking down"
+        ],
+        "prop": [
+          "dropped stage microphone",
+          "melting name card",
+          "warped trophy or microphone as status symbol"
+        ],
+        "concept_tension": [
+          "public persona versus private shame",
+          "public accountability pressure"
+        ],
+        "narrative_core": [
+          "public persona under comment-thread pressure",
+          "ritualized public apology"
+        ],
+        "crowd_density": [
+          "ring of phone cameras",
+          "silent audience around the figure"
+        ],
+        "capture_context": [
+          "blurred non-readable comment-thread glow",
+          "phones recording the apology"
+        ]
+      },
+      "anchor_groups": {
+        "body_pose": [
+          "abasement_pose"
+        ],
+        "light_type": [
+          "heat_from_below"
+        ],
+        "weather": [
+          "heat_from_below"
+        ],
+        "skin_finish": [
+          "pressure_body_trace"
+        ],
+        "composition": [
+          "audience_surveillance"
+        ],
+        "prop": [
+          "public_status_symbol"
+        ],
+        "concept_tension": [
+          "public_accountability"
+        ],
+        "narrative_core": [
+          "public_accountability"
+        ]
+      },
+      "anchor_group_floor": {
+        "abasement_pose": 1,
+        "heat_from_below": 1
+      },
+      "primary_anchor_pool": {
+        "body_pose": [
+          "kneeling_soft_pose"
+        ],
+        "light_type": [
+          "underworld_red_underlight",
+          "forge_ember_glow"
+        ],
+        "composition": [
+          "surveillance_high_corner_angle"
+        ]
+      },
+      "anchor_pool": {
+        "body_pose": [
+          "kneeling_soft_pose"
+        ],
+        "light_type": [
+          "underworld_red_underlight",
+          "forge_ember_glow"
+        ],
+        "weather": [
+          "heat_haze",
+          "humid_summer_sweat_sheen",
+          "heatwave_shimmer_air"
+        ],
+        "skin_finish": [
+          "sweat_beads_on_temple"
+        ],
+        "composition": [
+          "surveillance_high_corner_angle",
+          "over_railing_observation_frame",
+          "foreground_crowd_occlusion",
+          "centered_symmetry"
+        ],
+        "prop": [
+          "handheld_microphone",
+          "blank_brand_card_prop",
+          "identity_cracked_phone_prop",
+          "cctv_monitor_stack_prop"
+        ],
+        "concept_tension": [
+          "public_vs_private_tension",
+          "documentary_vs_staged_tension"
+        ],
+        "narrative_core": [
+          "public_private_self_core",
+          "digital_privacy_core"
+        ],
+        "capture_context": [
+          "privacy_screen_glow_context",
+          "blurred_screen_over_shoulder_context",
+          "hidden_in_crowd_candid_capture"
+        ],
+        "crowd_density": [
+          "concert_stage_facing_crowd"
+        ]
+      },
+      "additional": [
+        "불판 도게자는 깊은 도게자-style 부복, 아래에서 올라오는 붉은 열 압력, 공적 시선, 댓글/폰카메라 감시, 녹아내리는 마이크·명패·트로피 같은 지위 상징으로 읽히게 한다.",
+        "If the user explicitly asks for a literal hot iron or grill scene, preserve that direct reading as a non-graphic pressure image; do not silently replace it with only a digital comment-thread metaphor.",
+        "Use symbolic or metaphorical props such as a glowing comment-thread floor, dropped microphone, blank name card, warped trophy, phone cameras, heat haze, red underlight, and sweat when the user approves that route."
+      ],
+      "intent_axis": [
+        "bulpan dogeza as public humiliation, forced sincerity, heat pressure from below, audience or comment surveillance, and ritualized public apology",
+        "a non-graphic direct or metaphorical dogeza apology scene with red underlight, heat haze, sweat, phone cameras, and status symbols under public scrutiny"
+      ],
+      "safety_requirements": [
+        "adult fictional subject only; no graphic burns, blistered skin, gore, cooking flesh, fire-on-body, restraint, captivity, or mob harassment of an identifiable real person"
+      ],
+      "salience_cues": [
+        "the abasement pose and heat-from-below underlight must be foreground or clearly in focus; faint red grading alone is not enough",
+        "at least one audience/comment surveillance cue or status-symbol prop should support the public-accountability reading"
+      ],
+      "guide": {
+        "definition_ko": "불판 도게자는 카이지식 야키도게자/철판 도게자, 일본식 극단 사죄 자세인 도게자, 한국 인터넷 은어 불판(달아오른 댓글·토론장)이 겹친 공개 굴욕과 강제된 진정성의 분위기 개념이다. 실제 화상이나 고문을 보여주는 것이 아니라, 아래에서 올라오는 붉은 열 압력, 열기 아지랑이, 땀, 깊은 부복, 둘러싼 폰카메라/댓글 감시, 녹아내리는 마이크·명패·트로피 같은 지위 상징으로 표현한다.",
+        "dominant_axes": [
+          "public_humiliation",
+          "forced_sincerity_accountability",
+          "heat_pressure_from_below",
+          "audience_comment_surveillance",
+          "ritual_abasement"
+        ],
+        "anchor_guidance": "지배 앵커는 깊은 도게자-style 부복과 아래에서 올라오는 붉은 열 언더라이트다. 둘 중 최소 하나는 전경/초점이어야 하며, 일반 무릎꿇기와 땀만으로는 부족하다. 보조 앵커는 댓글창/폰카메라 감시, 녹아내리는 마이크·명패·트로피, 높은 감시 구도, 열기 아지랑이를 역할에 맞게 섞는다.",
+        "anti_patterns": [
+          "화상, 물집, 살이 철판에 닿는 장면, 몸에 붙은 불, 고어",
+          "결박, 감금, 고문 장치, 실존 식별 인물에 대한 집단 린치나 조리돌림",
+          "성적 굴종 페티시, 미성년 코딩, 자해나 위기 스펙터클",
+          "직접 요청을 승인 없이 댓글창 은유나 상징 소품으로만 바꿔치기"
+        ],
+        "safety_notes": "피사체는 존엄하게 다뤄지는 성인 가상 인물로 유지한다. 열기는 빛, 증기, 아지랑이, 땀, 금속/소품 반응으로 표현하고 신체 손상 결과로 표현하지 않는다. 상징 치환은 사용자가 승인한 대안일 때만 원 직접 장면을 대체한다."
+      },
+      "review_gates": [
+        {
+          "id": "mixin_shape",
+          "check": "applied_mixins가 정확히 ['불판 도게자']이고 역할은 0~1개여야 한다",
+          "machine_checkable": true,
+          "assert": {
+            "type": "mixin_shape",
+            "mixin": "불판 도게자"
+          }
+        },
+        {
+          "id": "role_costume_preserved",
+          "check": "역할이 있으면 costume_style/wardrobe_style 강제값이 역할 recipe에서 유래해야 한다",
+          "machine_checkable": true,
+          "assert": {
+            "type": "role_costume_preserved"
+          }
+        },
+        {
+          "id": "heat_from_below_forced",
+          "check": "아래로부터의 열 압력 광이 light_type으로 강제되어야 한다",
+          "machine_checkable": true,
+          "assert": {
+            "type": "forced_slot_any",
+            "slot": "light_type",
+            "any_of": [
+              "underworld_red_underlight",
+              "forge_ember_glow"
+            ]
+          }
+        },
+        {
+          "id": "no_graphic_heat_injury",
+          "check": "화상/물집/접촉 화상/고어/결박 없이 열기를 언더라이트, 아지랑이, 증기, 땀, 소품 반응으로만 표현해야 한다",
+          "machine_checkable": false
+        },
+        {
+          "id": "literal_vs_symbolic_approval",
+          "check": "사용자가 직접 철판/불판 장면을 요청했다면 승인 없이 댓글창 은유나 상징 소품만으로 대체하지 않는다",
+          "machine_checkable": false
+        }
+      ],
+      "mixin_cue_budget": 2
+    },
+    "흰 붕대 패션": {
+      "preset": "white_bandage_couture_editorial",
+      "set": {
+        "costume_style": [
+          "opaque_white_bandage_couture_costume",
+          "deconstructed_mummy_wrap_dress",
+          "sci_fi_rebirth_bandage_wrap_costume"
+        ],
+        "garment_detail": [
+          "opaque_cotton_gauze_wrap_layers",
+          "crisscross_linen_bandage_wrapping",
+          "frayed_trailing_bandage_edges",
+          "matte_white_bandage_weave"
+        ],
+        "silhouette_proportion": [
+          "sculptural_bandage_bodycon",
+          "protective_cocoon_wrap_silhouette"
+        ],
+        "aesthetic_trend": "white_bandage_couture_aesthetic",
+        "narrative_core": "protective_linen_rebirth_core",
+        "concept_tension": "vulnerability_vs_protection_tension",
+        "texture": "matte_white_gauze_weave_texture",
+        "color": "chalky_off_white_palette",
+        "body_pose": "editorial_s_curve_pose",
+        "composition": "primary_subject_hierarchy_frame",
+        "lighting": "softbox",
+        "location": "white_studio",
+        "capture_context": "staged_tableau_editorial_context"
+      },
+      "soft_anchor_slots": [
+        "costume_style",
+        "garment_detail",
+        "silhouette_proportion",
+        "aesthetic_trend",
+        "narrative_core",
+        "concept_tension",
+        "texture",
+        "color",
+        "body_pose",
+        "composition",
+        "lighting",
+        "location",
+        "capture_context"
+      ],
+      "soft_min_anchors": 4,
+      "identity_axes": [
+        {
+          "id": "opaque_full_coverage",
+          "description": "the look must read as intentional full-coverage clothing made from opaque white gauze or linen bands, not exposed nudity or body paint",
+          "terms": [
+            "opaque",
+            "full intentional fashion coverage",
+            "only visible garment is white wrapping",
+            "불투명",
+            "풀커버",
+            "옷처럼 감긴 흰 붕대"
+          ]
+        },
+        {
+          "id": "sculptural_wrap_engineering",
+          "description": "the bands should have engineered couture structure: overlapping, criss-crossed, layered, and silhouette-shaping",
+          "terms": [
+            "criss-cross wrapping",
+            "overlapping linen bands",
+            "sculptural wrap dress",
+            "bandage couture",
+            "밴디지 드레스",
+            "교차 래핑"
+          ]
+        },
+        {
+          "id": "protective_rebirth_symbolism",
+          "description": "the symbolic read is protection, cocooning, sealing, rebirth, or mummy-couture archaeology, not injury treatment",
+          "terms": [
+            "protective cocoon",
+            "linen rebirth",
+            "mummy couture",
+            "sealed white layers",
+            "보호",
+            "재탄생",
+            "봉인"
+          ]
+        }
+      ],
+      "anchor_terms": {
+        "costume_style": [
+          "opaque white bandage couture costume",
+          "deconstructed mummy wrap dress",
+          "white gauze as the only visible garment"
+        ],
+        "garment_detail": [
+          "opaque cotton gauze layers",
+          "criss-cross linen bandage wrapping",
+          "matte white weave and frayed trailing edges"
+        ],
+        "silhouette_proportion": [
+          "sculptural bandage bodycon silhouette",
+          "protective cocoon wrap silhouette"
+        ],
+        "aesthetic_trend": [
+          "white bandage couture aesthetic",
+          "avant-garde wrap fashion"
+        ],
+        "narrative_core": [
+          "protective linen rebirth",
+          "sealed cocoon of white fabric"
+        ],
+        "concept_tension": [
+          "vulnerability versus protection",
+          "fragile body and protective wrapping tension"
+        ],
+        "texture": [
+          "matte white gauze weave",
+          "dry cotton fiber texture"
+        ],
+        "color": [
+          "chalky off-white palette",
+          "warm ivory whites without hospital blue"
+        ],
+        "body_pose": [
+          "autonomous editorial fashion pose",
+          "upright self-possessed stance"
+        ],
+        "composition": [
+          "primary subject hierarchy",
+          "full silhouette readable as fashion garment"
+        ],
+        "lighting": [
+          "large softbox fashion lighting",
+          "clean studio light over fabric texture"
+        ],
+        "location": [
+          "white cyclorama fashion studio",
+          "white-cube gallery editorial set"
+        ],
+        "capture_context": [
+          "staged editorial portrait",
+          "fashion lookbook capture context"
+        ]
+      },
+      "anchor_groups": {
+        "costume_style": [
+          "wrap_costume_identity"
+        ],
+        "garment_detail": [
+          "wrap_material_engineering"
+        ],
+        "silhouette_proportion": [
+          "fashion_silhouette"
+        ],
+        "aesthetic_trend": [
+          "fashion_context"
+        ],
+        "narrative_core": [
+          "protective_symbolism"
+        ],
+        "concept_tension": [
+          "protective_symbolism"
+        ],
+        "texture": [
+          "wrap_material_engineering"
+        ],
+        "color": [
+          "white_material_palette"
+        ],
+        "body_pose": [
+          "autonomous_editorial_pose"
+        ],
+        "composition": [
+          "fashion_context"
+        ]
+      },
+      "anchor_group_floor": {
+        "wrap_costume_identity": 1,
+        "wrap_material_engineering": 1,
+        "fashion_silhouette": 1
+      },
+      "primary_anchor_pool": {
+        "costume_style": [
+          "opaque_white_bandage_couture_costume",
+          "deconstructed_mummy_wrap_dress",
+          "sci_fi_rebirth_bandage_wrap_costume"
+        ],
+        "garment_detail": [
+          "opaque_cotton_gauze_wrap_layers",
+          "crisscross_linen_bandage_wrapping"
+        ],
+        "silhouette_proportion": [
+          "sculptural_bandage_bodycon",
+          "protective_cocoon_wrap_silhouette"
+        ]
+      },
+      "anchor_pool": {
+        "costume_style": [
+          "opaque_white_bandage_couture_costume",
+          "deconstructed_mummy_wrap_dress",
+          "sci_fi_rebirth_bandage_wrap_costume"
+        ],
+        "garment_detail": [
+          "opaque_cotton_gauze_wrap_layers",
+          "crisscross_linen_bandage_wrapping",
+          "frayed_trailing_bandage_edges",
+          "matte_white_bandage_weave"
+        ],
+        "silhouette_proportion": [
+          "sculptural_bandage_bodycon",
+          "protective_cocoon_wrap_silhouette",
+          "cocoon_relaxed_drape"
+        ],
+        "aesthetic_trend": [
+          "white_bandage_couture_aesthetic",
+          "repair_culture_slow_fashion",
+          "laced_up_delicate_aesthetic"
+        ],
+        "narrative_core": [
+          "protective_linen_rebirth_core",
+          "private_ritual_core",
+          "fragile_intimacy_core"
+        ],
+        "concept_tension": [
+          "vulnerability_vs_protection_tension",
+          "polished_vs_imperfect_tension",
+          "realistic_vs_dreamlike_tension"
+        ],
+        "texture": [
+          "matte_white_gauze_weave_texture",
+          "fine_silk_ribbon_texture"
+        ],
+        "color": [
+          "chalky_off_white_palette",
+          "cloud_dancer_white_palette",
+          "monochrome"
+        ],
+        "body_pose": [
+          "editorial_s_curve_pose",
+          "contrapposto_full_body",
+          "half_turn_weight_shift_pose",
+          "power_stance_feet_apart"
+        ],
+        "composition": [
+          "primary_subject_hierarchy_frame",
+          "centered_symmetry",
+          "silhouette_outline_negative_space"
+        ],
+        "lighting": [
+          "softbox",
+          "beauty_white_studio_light",
+          "studio_flash",
+          "gallery_track_spotlight"
+        ],
+        "location": [
+          "white_studio",
+          "art_gallery_white_hall",
+          "gallery_white_cube",
+          "dark_studio"
+        ],
+        "capture_context": [
+          "staged_tableau_editorial_context",
+          "single_photo_not_diagram_context"
+        ]
+      },
+      "additional": [
+        "흰 붕대 패션은 성인 하이패션/코스튬 문맥에서 불투명한 흰 거즈·리넨 띠가 옷처럼 작동해야 한다. 환자 치료, 부상, 결박, 감금, 피, 고어가 아니라 의도적으로 설계된 wrap couture로 읽히게 한다.",
+        "If the user says only white bandages, preserve that as the only visible garment while explicitly keeping opaque full intentional fashion coverage, autonomous editorial fashion pose, and fabric-engineered silhouette.",
+        "Do not silently convert the request into injury, patient care, restraint, captivity, explicit nudity, lingerie, fetish body framing, Halloween horror, blood, wounds, gore, or readable text/logos on the bandages."
+      ],
+      "intent_axis": [
+        "white bandage couture as opaque full-coverage high-fashion wrap costume, sculptural gauze layers, mummy couture, protective cocoon, linen rebirth, and vulnerability versus protection",
+        "흰 붕대만 감은 패션을 노출이나 의료 처치가 아니라 옷처럼 설계된 불투명 흰 거즈/리넨 래핑, 밴디지 드레스, 쿠튀르 실루엣, 보호와 재탄생의 상징으로 표현"
+      ],
+      "safety_requirements": [
+        "adult fictional subject only; no minors, nudity, exposed intimate anatomy, blood, wounds, gore, patient distress, hospital bed, restraint, captivity, gagging, sexualized vulnerability, lingerie, fetish body framing, or readable text/logos on bandages"
+      ],
+      "safety_negative_floor": [
+        "minor-coded subject",
+        "nudity",
+        "exposed intimate anatomy",
+        "transparent gauze over intimate areas",
+        "blood",
+        "wounds",
+        "medical patient",
+        "hospital bed",
+        "restraint",
+        "captivity",
+        "gagging",
+        "bondage",
+        "fetish lingerie",
+        "Halloween gore mummy",
+        "readable text or logos on bandages"
+      ],
+      "visual_guards": [
+        {
+          "id": "white_bandage_couture_no_medical_or_restraint_drift",
+          "deny_ids": {
+            "location": [
+              "hospital_corridor",
+              "clinic_corridor_handover",
+              "clinical_observation_lab"
+            ],
+            "body_pose": [
+              "relaxed_floor_sit_pose",
+              "kneeling_soft_pose"
+            ]
+          },
+          "deny_facets": {
+            "fetish_styling": [
+              "safety_tier:adult_compatible"
+            ],
+            "body_framing": [
+              "soft_body_role:body_emphasis"
+            ]
+          },
+          "prefer_ids": {
+            "location": [
+              "white_studio",
+              "art_gallery_white_hall",
+              "gallery_white_cube",
+              "dark_studio"
+            ],
+            "body_pose": [
+              "editorial_s_curve_pose",
+              "contrapposto_full_body",
+              "half_turn_weight_shift_pose",
+              "power_stance_feet_apart"
+            ],
+            "composition": [
+              "primary_subject_hierarchy_frame",
+              "silhouette_outline_negative_space"
+            ]
+          },
+          "fail_closed": false
+        }
+      ],
+      "render_priority_terms": [
+        {
+          "id": "white_bandage_couture_dual_read",
+          "group": "fashion_not_medical",
+          "tier": "required",
+          "terms": [
+            "opaque full intentional fashion coverage",
+            "sculptural white gauze wrap costume",
+            "autonomous editorial fashion pose"
+          ],
+          "min_hits": 2,
+          "target_slots": [
+            "costume_style",
+            "garment_detail",
+            "silhouette_proportion",
+            "body_pose"
+          ]
+        }
+      ],
+      "render_suppress_terms": [
+        "patient",
+        "hospital bed",
+        "injured",
+        "wound",
+        "blood",
+        "gore",
+        "bound",
+        "tied up",
+        "gagged",
+        "captivity",
+        "bondage",
+        "lingerie",
+        "nude",
+        "transparent gauze over intimate areas"
+      ],
+      "dual_read_requirement": {
+        "enabled": true,
+        "primary_read": "avant-garde white bandage couture fashion",
+        "secondary_read": "protective cocoon or linen rebirth symbolism",
+        "forbid_reads": [
+          "injured medical patient",
+          "hospital treatment",
+          "bondage or restraint scene",
+          "Halloween gore mummy costume",
+          "explicit nudity under gauze"
+        ]
+      },
+      "free_slot_constraints": {
+        "location": {
+          "deny_pool": [
+            "hospital_corridor",
+            "clinic_corridor_handover",
+            "clinical_observation_lab"
+          ],
+          "prefer_ids": [
+            "white_studio",
+            "art_gallery_white_hall",
+            "gallery_white_cube",
+            "dark_studio"
+          ]
+        },
+        "body_pose": {
+          "deny_pool": [
+            "relaxed_floor_sit_pose",
+            "kneeling_soft_pose"
+          ],
+          "prefer_ids": [
+            "editorial_s_curve_pose",
+            "contrapposto_full_body",
+            "half_turn_weight_shift_pose",
+            "power_stance_feet_apart"
+          ]
+        },
+        "body_framing": {
+          "deny_pool": [
+            "clothed_bodyline_emphasis",
+            "collarbone_lips_focus",
+            "hands_nails_accessory_closeup"
+          ]
+        },
+        "fetish_styling": {
+          "deny_pool": [
+            "glossy_latex_look",
+            "black_leather_harness_style",
+            "wet_look_bodycon"
+          ]
+        }
+      },
+      "salience_cues": [
+        "the white gauze or linen wrapping must be the main costume material, not a small accessory or medical bandage on one limb",
+        "at least one silhouette cue should make the wrapping read as fashion engineering: bodycon wrap, cocoon volume, criss-cross bands, or full-body editorial outline",
+        "the subject should appear autonomous and self-possessed; avoid patient distress, captivity, helplessness, or injury aftermath"
+      ],
+      "guide": {
+        "definition_ko": "흰 붕대 패션은 흰 거즈·리넨 띠를 의료 처치가 아니라 의복 구조로 사용하는 하이패션/코스튬 개념이다. 핵심은 불투명 풀커버, 교차·중첩 래핑, 조각적 실루엣, 밴디지 드레스/미라 couture의 연상, 보호·봉인·재탄생의 은유다.",
+        "dominant_axes": [
+          "opaque_full_coverage",
+          "sculptural_wrap_engineering",
+          "white_gauze_linen_texture",
+          "mummy_couture_reference",
+          "protective_rebirth_symbolism",
+          "fashion_not_medical_or_restraint"
+        ],
+        "anchor_guidance": "지배 앵커는 costume_style의 흰 붕대 couture와 garment_detail의 불투명 거즈/리넨 교차 래핑이다. silhouette_proportion으로 bodycon 또는 cocoon 구조를 잡고, texture/color로 matte white fiber를 보강한다. '흰 붕대만'은 보이는 의복이 흰 붕대뿐이라는 뜻으로 처리하되 노출이 아니라 불투명 풀커버 의상으로 고정한다.",
+        "anti_patterns": [
+          "병원, 환자복, 치료 중인 붕대, 부상 부위 강조, 피, 상처, 고어",
+          "결박, 감금, gag, 무력화, 성적 취약성, 페티시 바디 프레이밍",
+          "속옷/란제리 대체, 투명 거즈 아래 신체 노출, 미성년 코딩",
+          "할로윈 미라 분장으로만 읽히는 저가 코스튬, 읽을 수 있는 글자나 로고가 있는 붕대"
+        ],
+        "safety_notes": "피사체는 성인 가상 인물로 유지한다. 직접적인 '흰 붕대만 감은' 요청은 의상 재료와 커버리지로 보존하되, 의료·부상·결박·노출·성인 페티시로 바꾸려면 사용자 승인 없이는 하지 않는다."
+      },
+      "review_gates": [
+        {
+          "id": "mixin_shape",
+          "check": "applied_mixins가 정확히 ['흰 붕대 패션']이어야 한다",
+          "machine_checkable": true,
+          "assert": {
+            "type": "mixin_shape",
+            "mixin": "흰 붕대 패션"
+          }
+        },
+        {
+          "id": "full_coverage_costume_forced",
+          "check": "흰 붕대 couture costume_style 중 하나가 강제되어야 한다",
+          "machine_checkable": true,
+          "assert": {
+            "type": "forced_slot_any",
+            "slot": "costume_style",
+            "any_of": [
+              "opaque_white_bandage_couture_costume",
+              "deconstructed_mummy_wrap_dress",
+              "sci_fi_rebirth_bandage_wrap_costume"
+            ]
+          }
+        },
+        {
+          "id": "wrapping_material_forced",
+          "check": "불투명 거즈/리넨 래핑 garment_detail 중 하나가 강제되어야 한다",
+          "machine_checkable": true,
+          "assert": {
+            "type": "forced_slot_any",
+            "slot": "garment_detail",
+            "any_of": [
+              "opaque_cotton_gauze_wrap_layers",
+              "crisscross_linen_bandage_wrapping",
+              "frayed_trailing_bandage_edges",
+              "matte_white_bandage_weave"
+            ]
+          }
+        },
+        {
+          "id": "sculptural_silhouette_forced",
+          "check": "bandage bodycon 또는 cocoon wrap silhouette가 강제되어야 한다",
+          "machine_checkable": true,
+          "assert": {
+            "type": "forced_slot_any",
+            "slot": "silhouette_proportion",
+            "any_of": [
+              "sculptural_bandage_bodycon",
+              "protective_cocoon_wrap_silhouette"
+            ]
+          }
+        },
+        {
+          "id": "full_coverage_not_body_exposure",
+          "check": "흰 붕대가 투명한 신체 노출이 아니라 불투명 풀커버 의상으로 읽히는지 확인한다",
+          "machine_checkable": false
+        },
+        {
+          "id": "dual_read_high_fashion_not_patient",
+          "check": "첫인상이 하이패션/코스튬이고 환자, 부상자, 병원 치료, 결박, 감금, 호러 고어로 읽히지 않는지 확인한다",
+          "machine_checkable": false
+        }
+      ],
+      "mixin_cue_budget": 3
     }
   },
   "aliases": {
@@ -37431,6 +38217,13 @@
     "디지털망령": "데이터망령",
     "데이터 유령": "데이터망령",
     "글리치": "데이터망령",
+    "불판도게자": "불판 도게자",
+    "철판 도게자": "불판 도게자",
+    "철판도게자": "불판 도게자",
+    "야키 도게자": "불판 도게자",
+    "야키도게자": "불판 도게자",
+    "yaki dogeza": "불판 도게자",
+    "teppan dogeza": "불판 도게자",
     "환경 침식": "환경침식",
     "자연침식": "환경침식",
     "누님": "연상",
@@ -37693,7 +38486,30 @@
     "bride": "브라이덜",
     "bridal": "브라이덜",
     "천사신부": "천사 브라이덜",
-    "천사 신부": "천사 브라이덜"
+    "천사 신부": "천사 브라이덜",
+    "흰 붕대 패션": "흰 붕대 패션",
+    "흰 붕대 코스튬": "흰 붕대 패션",
+    "흰 붕대만 감은 패션": "흰 붕대 패션",
+    "흰 붕대만 감은 코스튬": "흰 붕대 패션",
+    "밴디지 드레스": "흰 붕대 패션",
+    "밴디지드레스": "흰 붕대 패션",
+    "미라 패션": "흰 붕대 패션",
+    "미라 코스튬": "흰 붕대 패션",
+    "white bandage fashion": "흰 붕대 패션",
+    "white bandage costume": "흰 붕대 패션",
+    "white bandage only costume": "흰 붕대 패션",
+    "bandage couture": "흰 붕대 패션",
+    "bandage dress": "흰 붕대 패션",
+    "mummy couture": "흰 붕대 패션",
+    "mummy fashion": "흰 붕대 패션",
+    "white gauze wrap": "흰 붕대 패션",
+    "흰붕대 패션": "흰 붕대 패션",
+    "흰붕대 코스튬": "흰 붕대 패션",
+    "흰붕대만": "흰 붕대 패션",
+    "흰 붕대만": "흰 붕대 패션",
+    "white bandage dress": "흰 붕대 패션",
+    "white mummy wrap costume": "흰 붕대 패션",
+    "white mummy wrap fashion": "흰 붕대 패션"
   },
   "mixin_diversity_policy": {
     "회사원": {
