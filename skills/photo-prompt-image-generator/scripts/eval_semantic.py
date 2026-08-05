@@ -51,6 +51,7 @@ JsonDict = Dict[str, Any]
 DEFAULT_TAGS = Path(__file__).resolve().parents[1] / "assets" / "photo_prompt_tags.json"
 DEFAULT_INDEX = Path(__file__).resolve().parents[1] / "assets" / "photo_prompt_semantic_index.json"
 DEFAULT_CONCEPT_RECIPES = Path(__file__).resolve().parents[1] / "assets" / "concept_recipes.json"
+DEFAULT_GENERALIZATION_CASES = Path(__file__).resolve().parents[1] / "assets" / "generalization_cases.jsonl"
 WRAPPER_PATH = Path(__file__).resolve().with_name("generate_photo_prompt.py")
 PROJECT_ROOT = Path(__file__).resolve().parents[1].parents[1]
 
@@ -1021,6 +1022,19 @@ def load_visual_review(path: Path) -> JsonDict:
 def summarize_visual_review(path: Path) -> JsonDict:
     payload = load_visual_review(path)
     cases = [case for case in payload.get("cases", []) if isinstance(case, dict)]
+    contract_failures: List[JsonDict] = []
+    if payload.get("schema_version") != "photo-visual-review/v1":
+        contract_failures.append({"check": "schema_version", "reason": "expected photo-visual-review/v1"})
+    provenance = payload.get("provenance") if isinstance(payload.get("provenance"), dict) else {}
+    missing_provenance = [
+        field
+        for field in ("generator_version", "tags_hash", "reviewer", "reviewed_at")
+        if not str(provenance.get(field) or "").strip()
+    ]
+    if missing_provenance:
+        contract_failures.append({"check": "provenance", "missing": missing_provenance})
+    if not cases:
+        contract_failures.append({"check": "cases", "reason": "at least one reviewed render is required"})
     field_summaries: JsonDict = {}
     failed_cases: List[JsonDict] = []
     for field in VISUAL_REVIEW_FIELDS:
@@ -1030,7 +1044,16 @@ def summarize_visual_review(path: Path) -> JsonDict:
             "counts": dict(sorted(counts.items())),
             "pass_rate": round(pass_count / max(len(cases), 1), 4),
         }
-    for case in cases:
+    for case_index, case in enumerate(cases):
+        missing_case_fields = [
+            field
+            for field in ("case", "prompt_id", "image_id", *VISUAL_REVIEW_FIELDS)
+            if field not in case or case.get(field) in {None, ""}
+        ]
+        if missing_case_fields:
+            contract_failures.append(
+                {"check": "case_fields", "case_index": case_index, "missing": missing_case_fields}
+            )
         failures: List[str] = []
         if case.get("dual_read") == "fail":
             failures.append("dual_read")
@@ -1059,7 +1082,9 @@ def summarize_visual_review(path: Path) -> JsonDict:
             "field_summaries": field_summaries,
             "failed_case_count": len(failed_cases),
             "failed_cases": failed_cases,
-            "passed": not failed_cases,
+            "contract_failure_count": len(contract_failures),
+            "contract_failures": contract_failures,
+            "passed": not failed_cases and not contract_failures,
         }
     }
 
@@ -1970,21 +1995,21 @@ def evaluate_candidate_pack_coverage(tags_path: Path, seed: int, cases: Sequence
             row["missing_motif_quotas"] = missing_quotas
         if case.get("expect_masked_buckets") and not pack.get("masked_buckets"):
             row["failures"].append("missing_masked_buckets")
-        if len(pack.get("presets", []) or []) > 5:
+        if len(pack.get("presets", []) or []) > 4:
             row["failures"].append("preset_candidate_cap_exceeded")
         total_slot_candidates = 0
         probability_failures: List[str] = []
         for slot, slot_payload in (pack.get("slots", {}) or {}).items():
             candidates = slot_payload.get("candidates", []) if isinstance(slot_payload, dict) else []
             total_slot_candidates += len(candidates)
-            limit = 5 if slot_payload.get("role") == "core" else 3
+            limit = 4 if slot_payload.get("role") == "core" else 2
             if len(candidates) > limit:
                 row["failures"].append(f"slot_candidate_cap_exceeded:{slot}")
             if candidates:
                 total_probability = sum(float(candidate.get("probability", 0.0)) for candidate in candidates)
                 if abs(total_probability - 1.0) > 0.00001:
                     probability_failures.append(str(slot))
-        if total_slot_candidates > 120:
+        if total_slot_candidates > 64:
             row["failures"].append("total_slot_candidate_cap_exceeded")
         if probability_failures:
             row["failures"].append("slot_probability_not_normalized")
@@ -2012,6 +2037,184 @@ def evaluate_candidate_pack_coverage(tags_path: Path, seed: int, cases: Sequence
     }
 
 
+def load_generalization_cases(path: Path) -> List[JsonDict]:
+    cases: List[JsonDict] = []
+    for line_number, raw in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1):
+        line = raw.strip()
+        if not line or line.startswith("#"):
+            continue
+        payload = json.loads(line)
+        if not isinstance(payload, dict) or not str(payload.get("id") or "").strip():
+            raise ValueError(f"{path}:{line_number}: each case needs an id")
+        cases.append(payload)
+    if not cases:
+        raise ValueError(f"{path}: at least one generalization case is required")
+    return cases
+
+
+def selected_candidate_rows(pack: JsonDict) -> List[JsonDict]:
+    rows = [
+        candidate
+        for candidate in pack.get("presets", []) or []
+        if isinstance(candidate, dict) and candidate.get("selected_by_sampler")
+    ]
+    for slot_payload in (pack.get("slots") or {}).values():
+        if not isinstance(slot_payload, dict):
+            continue
+        rows.extend(
+            candidate
+            for candidate in slot_payload.get("candidates", []) or []
+            if isinstance(candidate, dict) and candidate.get("selected_by_sampler")
+        )
+    return rows
+
+
+def evaluate_generalization_check(
+    tags_path: Path,
+    cases_path: Path,
+    seed: int,
+    limit: int = 0,
+) -> JsonDict:
+    cases = load_generalization_cases(cases_path)
+    if limit:
+        cases = cases[:limit]
+    rows: List[JsonDict] = []
+    for index, case in enumerate(cases):
+        cmd = [
+            sys.executable,
+            str(WRAPPER_PATH),
+            "--tags",
+            str(tags_path),
+            "--selection-mode",
+            "rule",
+            "--seed",
+            str(seed + index),
+            "--emit-candidate-pack",
+        ]
+        if case.get("preset"):
+            cmd.extend(["--preset", str(case["preset"])])
+        if case.get("concept"):
+            cmd.extend(["--concept", str(case["concept"])])
+        for requirement in case.get("additional_requirements") or []:
+            cmd.extend(["--additional-requirement", str(requirement)])
+        result = subprocess.run(cmd, cwd=PROJECT_ROOT, text=True, capture_output=True, check=False)
+        failures: List[str] = []
+        row: JsonDict = {"id": case.get("id"), "returncode": result.returncode}
+        if result.returncode != 0:
+            failures.append("wrapper_failed")
+            row["stderr"] = result.stderr.strip()
+            row["failures"] = failures
+            row["passed"] = False
+            rows.append(row)
+            continue
+        try:
+            payload = json.loads(result.stdout)
+            if not isinstance(payload, list) or len(payload) != 1 or not isinstance(payload[0], dict):
+                raise ValueError("expected one candidate pack")
+            pack = payload[0]
+        except Exception as exc:
+            failures.append("invalid_pack")
+            row["error"] = str(exc)
+            row["failures"] = failures
+            row["passed"] = False
+            rows.append(row)
+            continue
+
+        safety = pack.get("safety") if isinstance(pack.get("safety"), dict) else {}
+        expected_safety = {
+            "mode": "automatic",
+            "evaluation_requested": False,
+            "status": "pass",
+            "requires_user_approval": False,
+            "items": [],
+        }
+        if safety != expected_safety:
+            failures.append("default_safety_contract")
+        if "approval_required_safety_transforms" in pack:
+            failures.append("legacy_safety_contract_exposed")
+        if pack.get("contract_version") != "photo-candidate-pack/v2":
+            failures.append("candidate_pack_version")
+
+        presets = pack.get("presets", []) or []
+        slots = pack.get("slots") if isinstance(pack.get("slots"), dict) else {}
+        total_candidates = sum(
+            len(slot_payload.get("candidates", []) or [])
+            for slot_payload in slots.values()
+            if isinstance(slot_payload, dict)
+        )
+        if len(presets) > 4 or total_candidates > 64:
+            failures.append("candidate_caps")
+        if any(
+            len(slot_payload.get("candidates", []) or []) > (4 if slot_payload.get("role") == "core" else 2)
+            for slot_payload in slots.values()
+            if isinstance(slot_payload, dict)
+        ):
+            failures.append("slot_candidate_caps")
+        multi_candidate_slots = sum(
+            1
+            for slot_payload in slots.values()
+            if isinstance(slot_payload, dict) and len(slot_payload.get("candidates", []) or []) >= 2
+        )
+        if multi_candidate_slots < int(case.get("minimum_multi_candidate_slots", 0) or 0):
+            failures.append("insufficient_rule_alternatives")
+
+        mandatory = {
+            str(item.get("text") or "")
+            for item in pack.get("mandatory_intents", []) or []
+            if isinstance(item, dict)
+        }
+        for expected in case.get("expected_mandatory_intents") or []:
+            if str(expected) not in mandatory:
+                failures.append(f"missing_mandatory_intent:{expected}")
+
+        selected = selected_candidate_rows(pack)
+        selected_blob = json.dumps(selected, ensure_ascii=False).lower()
+        for term in case.get("forbidden_selected_terms") or []:
+            if str(term).lower() in selected_blob:
+                failures.append(f"implicit_theme_selected:{term}")
+        if case.get("no_people"):
+            selected_subjects = [candidate for candidate in selected if candidate.get("slot") == "subject"]
+            human_subject = any(
+                "human" in {str(item).lower() for item in candidate.get("kind", []) or []}
+                or "human" in {str(item).lower() for item in candidate.get("tags", []) or []}
+                for candidate in selected_subjects
+            )
+            if human_subject:
+                failures.append("negative_person_constraint_inverted")
+
+        expected_profile = str(case.get("expected_profile") or "")
+        actual_profile = str((pack.get("quality_profile") or {}).get("profile_id") or "")
+        if expected_profile and actual_profile != expected_profile:
+            failures.append("quality_profile_mismatch")
+        if case.get("expected_scene_variant") and not (pack.get("provenance") or {}).get("concept_scene_variants"):
+            failures.append("missing_scene_variant_provenance")
+        for open_slot in pack.get("open_slots") or []:
+            if isinstance(open_slot, dict) and set(open_slot) - {"slot", "bucket", "status", "reason"}:
+                failures.append("masked_detail_leak")
+                break
+
+        row.update(
+            {
+                "pack_id": pack.get("pack_id"),
+                "quality_profile": actual_profile,
+                "selected_ids": [candidate.get("id") for candidate in selected],
+                "mandatory_intents": sorted(mandatory),
+                "multi_candidate_slots": multi_candidate_slots,
+                "total_slot_candidates": total_candidates,
+                "scene_variants": (pack.get("provenance") or {}).get("concept_scene_variants", []),
+                "failures": failures,
+                "passed": not failures,
+            }
+        )
+        rows.append(row)
+    return {
+        "cases_path": str(cases_path),
+        "case_count": len(rows),
+        "failed_case_count": sum(1 for row in rows if not row.get("passed")),
+        "results": rows,
+    }
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Evaluate semantic prompt selection against golden intents.")
     parser.add_argument("--tags", default=DEFAULT_TAGS)
@@ -2025,6 +2228,8 @@ def main() -> int:
     parser.add_argument("--bleed-runs", type=int, default=10, help="Number of seeds per bleed-check case.")
     parser.add_argument("--diversity-check", action="store_true", help="Run V8 keyword preservation and free-slot diversity checks.")
     parser.add_argument("--candidate-pack-check", action="store_true", help="Run candidate-pack mandatory intent and cap checks.")
+    parser.add_argument("--generalization-check", action="store_true", help="Run versioned held-out rule-mode contract and overfitting checks without embedding or image API calls.")
+    parser.add_argument("--generalization-cases", default=DEFAULT_GENERALIZATION_CASES, help="Path to held-out JSONL cases for --generalization-check.")
     parser.add_argument("--quality-gate", action="store_true", help="Run the real embedding quality gate for semantic concept benchmarks and regression checks.")
     parser.add_argument("--quality-runs", type=int, default=2, help="Number of seeds per concept benchmark case for --quality-gate.")
     parser.add_argument("--quality-require-soft", action="store_true", help="Make soft concept-mode promotion readiness a hard --quality-gate failure.")
@@ -2091,6 +2296,7 @@ def main() -> int:
                     "diversity_check_cases": len(DIVERSITY_CHECK_CASES),
                     "candidate_pack_coverage_cases": len(CANDIDATE_PACK_COVERAGE_CASES),
                     "concept_benchmark_cases": len(CONCEPT_BENCHMARK_CASES),
+                    "generalization_cases": len(load_generalization_cases(Path(args.generalization_cases))),
                 },
                 indent=2,
             )
@@ -2098,6 +2304,18 @@ def main() -> int:
         return 0
 
     import prompt_generator as generator_module
+
+    if args.generalization_check:
+        summary = {
+            "generalization_check": evaluate_generalization_check(
+                tags_path,
+                Path(args.generalization_cases),
+                args.seed,
+                args.limit,
+            )
+        }
+        print(json.dumps(summary, ensure_ascii=False, indent=2))
+        return 0 if summary["generalization_check"]["failed_case_count"] == 0 else 12
 
     if args.quality_gate and args.mock_embeddings:
         print("--quality-gate requires real embeddings; remove --mock-embeddings.", file=sys.stderr)
@@ -2210,6 +2428,12 @@ def main() -> int:
                     args.seed,
                     CANDIDATE_PACK_COVERAGE_CASES[: args.limit] if args.limit else CANDIDATE_PACK_COVERAGE_CASES,
                 ),
+                "generalization_check": evaluate_generalization_check(
+                    tags_path,
+                    Path(args.generalization_cases),
+                    args.seed,
+                    args.limit,
+                ),
                 "preset_guards": evaluate_preset_guards(data, MULTI_AXIS_PRESET_GUARDS, args.seed, semantic_index, gemini_api_key),
                 "multi_axis_coverage": evaluate_multi_axis_coverage(data, MULTI_AXIS_COVERAGE_CASES, args.seed, semantic_index, gemini_api_key),
             }
@@ -2220,6 +2444,7 @@ def main() -> int:
                 or summary["diversity_check"]["failed_case_count"] > 0
                 or summary["bleed_check"]["failed_case_count"] > 0
                 or summary["candidate_pack_coverage"]["failed_case_count"] > 0
+                or summary["generalization_check"]["failed_case_count"] > 0
                 or summary["preset_guards"]["blacklisted_case_count"] > 0
                 or summary["multi_axis_coverage"]["failed_case_count"] > 0
                 or (args.quality_require_soft and not soft_ready)

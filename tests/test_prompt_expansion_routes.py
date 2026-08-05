@@ -73,7 +73,7 @@ class TestPromptExpansionRoutes(unittest.TestCase):
             explanation["combined_forced_slots"]["costume_style"],
         )
 
-    def test_student_train_platform_route_requires_approval_by_default(self):
+    def test_student_train_platform_route_is_opt_in_without_an_approval_contract(self):
         _args, explanations = generate_photo_prompt.resolve_concepts(
             ["--selection-mode", "rule", "--seed", "1"],
             ["성인 학생 기차 플랫폼 헤드폰"],
@@ -86,12 +86,13 @@ class TestPromptExpansionRoutes(unittest.TestCase):
         self.assertNotIn("train_platform_last_car", forced["location"])
         self.assertNotIn("prop", forced)
 
-        route = recipe["approval_required_routes"]["adult_transit_reference"]
-        self.assertTrue(route["requires_user_approval"])
+        route = recipe["optional_routes"]["adult_transit_reference"]
         self.assertEqual(route["default"], "off")
-        self.assertIn("location=korean_train_platform,train_platform_last_car", route["on_accept"]["set"])
-        self.assertIn("prop=over_ear_headphones,black_backpack_one_shoulder,train_ticket_stub_prop", route["on_accept"]["set"])
-        self.assertTrue(route["on_decline"]["preserve_original_intent"])
+        self.assertEqual(route["activation"], "explicit_request")
+        self.assertIn("location=korean_train_platform,train_platform_last_car", route["on_request"]["set"])
+        self.assertIn("prop=over_ear_headphones,black_backpack_one_shoulder,train_ticket_stub_prop", route["on_request"]["set"])
+        self.assertTrue(route["when_inactive"]["preserve_original_intent"])
+        self.assertNotIn("requires_user_approval", route)
 
     def test_digital_disintegration_preserves_integrity_policy(self):
         preset = self.preset("digital_disintegration_portrait")
@@ -108,68 +109,64 @@ class TestPromptExpansionRoutes(unittest.TestCase):
         policy = self.tags["semantic_policy"]["families"]["digital_entity"]
         self.assertIn("digital_disintegration_portrait", policy["preset_policy"]["allow_ids"])
 
-    def test_tomato_near_lips_appends_food_sensual_negatives(self):
+    def test_tomato_near_lips_always_appends_food_sensual_negatives(self):
         picked = {"prop": self.slot_entry("prop", "single_ripe_tomato_near_lips")}
-        entries_without_approval = prompt_generator.choose_negative_entries(
-            self.tags,
-            random.Random(7),
-            count=1,
-            picked=picked,
-            safety_transform_approved=False,
-        )
-        negative_en = {entry["en"] for entry in entries_without_approval}
-        self.assertNotIn("lip licking", negative_en)
-        self.assertNotIn("food fetish framing", negative_en)
-
         entries = prompt_generator.choose_negative_entries(
             self.tags,
             random.Random(7),
             count=1,
             picked=picked,
-            safety_transform_approved=True,
         )
-        approved_negative_en = {entry["en"] for entry in entries}
-        self.assertIn("lip licking", approved_negative_en)
-        self.assertIn("food fetish framing", approved_negative_en)
+        negative_en = {entry["en"] for entry in entries}
+        self.assertIn("lip licking", negative_en)
+        self.assertIn("food fetish framing", negative_en)
 
-    def test_candidate_pack_safety_transforms_are_pending_without_approval(self):
+    def test_candidate_pack_safety_defaults_to_automatic_pass(self):
         args, explanations = generate_photo_prompt.resolve_concepts(
             ["--selection-mode", "rule", "--seed", "1"],
             ["유나 바니걸"],
             concept_mode="soft",
-            safety_transform_approved=False,
         )
         explanation = explanations[0]
         policy = explanation["soft_anchor_spec"]
-        pending = explanation["approval_required_safety_transforms"]
+        safety = explanation["safety"]
 
-        self.assertEqual(pending["status"], "pending")
-        self.assertTrue(pending["requires_user_approval"])
-        self.assertEqual(policy["visual_guards"], [])
-        self.assertEqual(policy["free_slot_constraints"], {})
-        self.assertEqual(policy["safety_negative_floor"], [])
-        self.assertTrue(any(item["field"] == "safety_negative_floor" for item in pending["items"]))
-        additional_args = [
-            args[index + 1]
-            for index, value in enumerate(args[:-1])
-            if value == "--additional-requirement"
-        ]
-        self.assertNotIn(
-            "adult subject only; bunny-girl costume must be covered stage cosplay, not lingerie focus, nudity, or explicit sexual posing",
-            additional_args,
+        self.assertEqual(
+            safety,
+            {
+                "mode": "automatic",
+                "evaluation_requested": False,
+                "status": "pass",
+                "requires_user_approval": False,
+                "items": [],
+            },
         )
-        self.assertFalse(any("covered adult bunny-girl stage costume" in arg for arg in additional_args))
+        self.assertTrue(policy["visual_guards"])
+        self.assertIn("lingerie focus", policy["safety_negative_floor"])
+        self.assertIn(
+            "adult subject only; bunny-girl costume must be covered stage cosplay, not lingerie focus, nudity, or explicit sexual posing",
+            args,
+        )
+        self.assertTrue(any("covered adult bunny-girl stage costume" in arg for arg in args))
+        self.assertNotIn("approval_required_safety_transforms", explanation)
 
-    def test_candidate_pack_safety_transforms_apply_after_approval(self):
+    def test_candidate_pack_runs_safety_evaluation_only_when_requested(self):
         args, explanations = generate_photo_prompt.resolve_concepts(
             ["--selection-mode", "rule", "--seed", "1"],
             ["유나 바니걸"],
             concept_mode="soft",
-            safety_transform_approved=True,
+            safety_evaluation_requested=True,
         )
         policy = explanations[0]["soft_anchor_spec"]
+        safety = explanations[0]["safety"]
 
         self.assertNotIn("approval_required_safety_transforms", explanations[0])
+        self.assertEqual(safety["mode"], "explicit_evaluation")
+        self.assertTrue(safety["evaluation_requested"])
+        self.assertEqual(safety["status"], "pass")
+        self.assertFalse(safety["requires_user_approval"])
+        self.assertTrue(safety["items"])
+        self.assertTrue(all(item["status"] == "pass" for item in safety["items"]))
         self.assertTrue(policy["visual_guards"])
         self.assertIn("lingerie focus", policy["safety_negative_floor"])
         self.assertIn(
@@ -178,25 +175,25 @@ class TestPromptExpansionRoutes(unittest.TestCase):
         )
         self.assertTrue(any("covered adult bunny-girl stage costume" in arg for arg in args))
 
-    def test_candidate_pack_forward_args_default_to_safety_approval_required(self):
+    def test_candidate_pack_forward_args_expose_only_explicit_safety_evaluation(self):
         args = generate_photo_prompt.build_forward_args(
             ["--concept", "유나 바니걸", "--emit-candidate-pack", "--selection-mode", "rule"]
         )
-        self.assertIn("--safety-transform-policy", args)
-        self.assertEqual(args[args.index("--safety-transform-policy") + 1], "approval-required")
+        self.assertNotIn("--safety-transform-policy", args)
+        self.assertNotIn("--safety-evaluation", args)
 
-        approved_args = generate_photo_prompt.build_forward_args(
+        evaluated_args = generate_photo_prompt.build_forward_args(
             [
                 "--concept",
                 "유나 바니걸",
                 "--emit-candidate-pack",
                 "--selection-mode",
                 "rule",
-                "--approve-safety-transforms",
+                "--safety-evaluation",
             ]
         )
-        self.assertIn("--safety-transform-policy", approved_args)
-        self.assertEqual(approved_args[approved_args.index("--safety-transform-policy") + 1], "approved")
+        self.assertIn("--safety-evaluation", evaluated_args)
+        self.assertNotIn("--safety-transform-policy", evaluated_args)
 
     def test_modern_hanbok_fullbody_preset_pins_boundary_and_valley(self):
         preset = self.preset("modern_hanbok_valley_fullbody")

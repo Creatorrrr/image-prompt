@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import re
 import sys
@@ -20,8 +21,8 @@ def load_json_arg(raw: str) -> Any:
 
 def first_pack(payload: Any) -> dict[str, Any]:
     if isinstance(payload, list):
-        if not payload:
-            raise ValueError("candidate pack list is empty")
+        if len(payload) != 1:
+            raise ValueError("candidate pack list must contain exactly one pack")
         payload = payload[0]
     if not isinstance(payload, dict):
         raise ValueError("candidate pack must be a JSON object or a non-empty list")
@@ -78,17 +79,24 @@ def chosen_slot_entry_ids(chosen: set[str]) -> dict[str, set[str]]:
 
 
 def composed_search_text(composed: dict[str, Any]) -> str:
-    values = [str(composed.get("prompt_en") or "")]
-    assertions = composed.get("coverage_assertions") or {}
-    if isinstance(assertions, dict):
-        for value in assertions.values():
-            if isinstance(value, str):
-                values.append(value)
-            elif isinstance(value, list):
-                values.extend(str(item) for item in value if str(item).strip())
-            elif isinstance(value, dict):
-                values.extend(str(item) for item in value.values() if str(item).strip())
-    return " ".join(values)
+    return str(composed.get("prompt_en") or "")
+
+
+def computed_pack_id(pack: dict[str, Any]) -> str:
+    hashable = dict(pack)
+    hashable["pack_id"] = None
+    payload = json.dumps(hashable, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()[:16]
+
+
+def assertion_values(raw: Any) -> list[str]:
+    if isinstance(raw, str):
+        return [raw] if raw.strip() else []
+    if isinstance(raw, list):
+        return [str(item) for item in raw if str(item).strip()]
+    if isinstance(raw, dict):
+        return [str(item) for item in raw.values() if str(item).strip()]
+    return []
 
 
 def candidate_id_matches_term(candidate_id: str, term: str) -> bool:
@@ -127,18 +135,9 @@ def candidate_ids_from_pack(pack: dict[str, Any]) -> set[str]:
 def assertion_terms_for_intent(intent: dict[str, Any], composed: dict[str, Any]) -> list[str]:
     text = str(intent.get("text") or "")
     terms = [text]
-    for term in intent.get("audit_terms") or []:
-        if isinstance(term, str):
-            terms.append(term)
     assertions = composed.get("coverage_assertions") or {}
     if isinstance(assertions, dict):
-        raw = assertions.get(text)
-        if isinstance(raw, str):
-            terms.append(raw)
-        elif isinstance(raw, list):
-            terms.extend(str(item) for item in raw if str(item).strip())
-        elif isinstance(raw, dict):
-            terms.extend(str(item) for item in raw.values() if str(item).strip())
+        terms.extend(assertion_values(assertions.get(text)))
     return list(dict.fromkeys(term for term in terms if str(term).strip()))
 
 
@@ -362,14 +361,15 @@ def audit_artistic_final_touch(pack: dict[str, Any], prompt_en: str) -> dict[str
     if not isinstance(touch, dict) or not touch.get("enabled", True):
         return None
     final_sentence = str(touch.get("final_sentence_en") or "").strip()
-    prompt_clean = prompt_en.strip()
-    if final_sentence and prompt_clean.lower().endswith(final_sentence.lower()):
+    if final_sentence and final_sentence.lower() in prompt_en.lower():
         return None
     audit_terms = [str(term) for term in touch.get("audit_terms") or [] if str(term).strip()]
     matched_terms = [term for term in audit_terms if text_contains_term(prompt_en, term)]
+    if len(matched_terms) >= min(2, len(audit_terms)):
+        return None
     return {
         "check": "artistic_final_touch",
-        "reason": "composed prompt does not end with the candidate pack's final photographic touch",
+        "reason": "composed prompt does not represent the profile-specific photographic touch",
         "expected_final_sentence": final_sentence or None,
         "matched_terms": matched_terms[:5],
     }
@@ -382,19 +382,67 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
     search_text = composed_search_text(composed)
     negative_en = composed.get("negative_en")
 
+    required_fields = ("pack_id", "prompt_en", "negative_en", "chosen_candidate_ids", "composer")
+    missing_fields = [field for field in required_fields if field not in composed]
+    if missing_fields:
+        failures.append({"check": "output_contract", "reason": "missing required fields", "fields": missing_fields})
     if not prompt_en.strip():
         failures.append({"check": "output_contract", "reason": "missing prompt_en"})
+    if composed.get("composer") != "agent":
+        failures.append({"check": "output_contract", "reason": "composer must equal agent"})
 
     pack_id = str(pack.get("pack_id") or "")
     composed_pack_id = str(composed.get("pack_id") or "")
-    if composed_pack_id and pack_id and composed_pack_id != pack_id:
+    expected_pack_id = computed_pack_id(pack)
+    if not pack_id or pack_id != expected_pack_id:
+        failures.append(
+            {
+                "check": "pack_integrity",
+                "reason": "candidate pack content does not match pack_id",
+                "expected": expected_pack_id,
+                "actual": pack_id or None,
+            }
+        )
+    if composed_pack_id != pack_id:
         failures.append({"check": "pack_id", "reason": "pack_id mismatch", "expected": pack_id, "actual": composed_pack_id})
 
     pack_negative = pack.get("negative_en")
-    if pack_negative and negative_en is None:
-        warnings.append({"check": "negative_en", "reason": "candidate pack has negative_en but composed prompt omitted it"})
-    elif pack_negative and negative_en != pack_negative:
+    if negative_en != pack_negative:
         failures.append({"check": "negative_en", "reason": "negative_en differs from candidate pack"})
+
+    safety = pack.get("safety") if isinstance(pack.get("safety"), dict) else {}
+    if safety.get("status") != "pass" or safety.get("requires_user_approval") is True:
+        failures.append({"check": "safety", "reason": "candidate pack safety contract is not pass", "safety": safety})
+    failed_gates = [
+        gate
+        for gate in pack.get("concept_gates") or []
+        if isinstance(gate, dict) and gate.get("status") != "pass"
+    ]
+    if failed_gates:
+        failures.append({"check": "concept_gates", "reason": "candidate pack contains a failed concept gate", "gates": failed_gates})
+
+    mandatory_texts = {
+        str(intent.get("text") or "")
+        for intent in pack.get("mandatory_intents") or []
+        if isinstance(intent, dict) and str(intent.get("text") or "")
+    }
+    assertions = composed.get("coverage_assertions")
+    if assertions is not None and not isinstance(assertions, dict):
+        failures.append({"check": "coverage_assertions", "reason": "coverage_assertions must be an object"})
+    elif isinstance(assertions, dict):
+        for key, raw in assertions.items():
+            if str(key) not in mandatory_texts:
+                failures.append({"check": "coverage_assertions", "reason": "assertion key is not a mandatory intent", "intent": key})
+            for phrase in assertion_values(raw):
+                if not text_contains_term(prompt_en, phrase):
+                    failures.append(
+                        {
+                            "check": "coverage_assertions",
+                            "reason": "asserted phrase is not literal in prompt_en",
+                            "intent": key,
+                            "phrase": phrase,
+                        }
+                    )
 
     for intent in pack.get("mandatory_intents") or []:
         if not isinstance(intent, dict):
@@ -421,7 +469,7 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
     chosen = normalize_chosen_candidate_ids(composed.get("chosen_candidate_ids"))
     valid_ids = candidate_ids_from_pack(pack)
     if not chosen:
-        warnings.append({"check": "chosen_candidate_ids", "reason": "no chosen_candidate_ids supplied"})
+        failures.append({"check": "chosen_candidate_ids", "reason": "no chosen_candidate_ids supplied"})
     invalid = sorted(candidate_id for candidate_id in chosen if candidate_id not in valid_ids)
     if invalid:
         failures.append({"check": "chosen_candidate_ids", "reason": "unknown candidate id", "ids": invalid})
@@ -446,7 +494,10 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
         if not isinstance(open_slot, dict):
             continue
         terms = open_slot_terms(open_slot)
-        chosen_hit = chosen_matches_terms(chosen, [str(open_slot.get("candidate_id") or ""), str(open_slot.get("masked_entry_id") or "")])
+        open_slot_name = str(open_slot.get("slot") or "")
+        chosen_hit = bool(open_slot_name) and any(
+            candidate_id.startswith(f"slot:{open_slot_name}:") for candidate_id in chosen
+        )
         text_hits = [term for term in terms if text_contains_term(search_text, term)]
         if chosen_hit or text_hits:
             masked_echo_count += 1
@@ -456,7 +507,6 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
                     "reason": "masked/open preset section was copied back into the composed prompt",
                     "slot": open_slot.get("slot"),
                     "bucket": open_slot.get("bucket"),
-                    "candidate_id": open_slot.get("candidate_id"),
                     "text_hits": text_hits[:8],
                     "chosen_hit": chosen_hit,
                 }
@@ -545,8 +595,8 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
                     "scene_family": role_scene_policy.get("scene_family"),
                 }
             )
-        if allowed_locations and not selected_locations:
-            warnings.append(
+        if allowed_locations and not selected_locations and role_scene_policy.get("enforce"):
+            failures.append(
                 {
                     "check": "role_scene_policy",
                     "reason": "no location candidate id supplied for enforced role-scene audit",
@@ -560,6 +610,17 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
         for slot, allowed_ids_raw in allowed.items():
             selected_ids = chosen_slots.get(str(slot), set())
             allowed_ids = {str(item) for item in allowed_ids_raw or []}
+            if allowed_ids and not selected_ids:
+                failures.append(
+                    {
+                        "check": "species_family",
+                        "reason": "required species-family slot candidate id is missing",
+                        "slot": str(slot),
+                        "allowed_ids": sorted(allowed_ids),
+                        "family": species_policy.get("family"),
+                        "variant_id": species_policy.get("variant_id"),
+                    }
+                )
             mismatched = sorted(selected_ids - allowed_ids)
             if mismatched:
                 failures.append(
@@ -602,8 +663,10 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
         warnings.append(final_touch_warning)
 
     status = "fail" if failures else "pass"
+    quality_status = "warn" if warnings else "pass"
     return {
         "status": status,
+        "quality_status": quality_status,
         "pack_id": pack_id or None,
         "chosen_candidate_count": len(chosen),
         "failures": failures,

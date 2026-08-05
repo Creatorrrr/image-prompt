@@ -67,7 +67,6 @@ SEMANTIC_PROFILES = ("conservative", "balanced", "exploratory")
 SEMANTIC_AXIS_MODES = ("auto", "off")
 INTENT_STEERING_MODES = ("auto", "off")
 LLM_POLISH_MODES = ("off", "strict")
-SAFETY_TRANSFORM_POLICIES = ("approval-required", "approved")
 SEMANTIC_PROVIDER = "gemini"
 DEFAULT_SEMANTIC_DIMENSIONS = 768
 SEMANTIC_MODEL_ID = "gemini-embedding-2"
@@ -88,10 +87,10 @@ SOFT_ANCHOR_SELECTED_RATE_FLOOR = 0.80
 # "source_rate_floors".
 DEFAULT_SOFT_ANCHOR_SOURCE_RATE_FLOORS = {"role": 0.90, "mixin": 0.80}
 
-CANDIDATE_PACK_PRESET_LIMIT = 5
-CANDIDATE_PACK_CORE_SLOT_LIMIT = 5
-CANDIDATE_PACK_SUPPORT_SLOT_LIMIT = 3
-CANDIDATE_PACK_TOTAL_CANDIDATE_LIMIT = 120
+CANDIDATE_PACK_PRESET_LIMIT = 4
+CANDIDATE_PACK_CORE_SLOT_LIMIT = 4
+CANDIDATE_PACK_SUPPORT_SLOT_LIMIT = 2
+CANDIDATE_PACK_TOTAL_CANDIDATE_LIMIT = 64
 CANDIDATE_PACK_CORE_SLOTS = {
     "subject",
     "appearance_type",
@@ -126,7 +125,6 @@ CANDIDATE_PACK_CORE_SLOTS = {
 CANDIDATE_PACK_INTENT_STOPWORDS = {
     "달린",
     "있는",
-    "없는",
     "같은",
     "느낌",
     "스타일",
@@ -1344,14 +1342,25 @@ def make_generation_contract(
     concept_locks: Optional[Sequence[str]] = None,
     additional_requirements: Optional[Sequence[str]] = None,
     likeness_mode: str = "off",
+    likeness_references: Optional[Sequence[str]] = None,
+    user_mandatory_intents: Optional[Sequence[str]] = None,
+    concept_gate_results: Optional[Sequence[JsonDict]] = None,
+    concept_scene_variants: Optional[Sequence[str]] = None,
+    safety_evaluation_requested: bool = False,
     soft_anchor_spec: Optional[JsonDict] = None,
-    safety_transform_policy: str = "approved",
 ) -> JsonDict:
     forced_slots = sorted((forced_choices or {}).keys())
     domains = sorted(preset_domains(preset, data))
     soft_anchor_policy = soft_anchor_trace(normalize_soft_anchor_spec(soft_anchor_spec), picked)
-    if safety_transform_policy != "approved":
-        strip_unapproved_safety_transforms(soft_anchor_policy)
+    safety_evaluation = soft_anchor_policy.get("safety_evaluation")
+    if not isinstance(safety_evaluation, dict) or not safety_evaluation:
+        safety_evaluation = {
+            "mode": "explicit_evaluation" if safety_evaluation_requested else "automatic",
+            "evaluation_requested": bool(safety_evaluation_requested),
+            "status": "pass",
+            "requires_user_approval": False,
+            "items": [],
+        }
     contract: JsonDict = {
         "subject_category": subject_category(picked, data),
         "preset_domains": domains,
@@ -1369,8 +1378,12 @@ def make_generation_contract(
         "concept_locks": normalize_concept_locks(concept_locks),
         "additional_requirements": normalize_additional_requirements(additional_requirements),
         "likeness_mode": likeness_mode,
+        "likeness_references": normalize_list(likeness_references),
+        "user_mandatory_intents": normalize_list(user_mandatory_intents),
+        "concept_gate_results": [dict(item) for item in concept_gate_results or [] if isinstance(item, dict)],
+        "concept_scene_variants": normalize_list(concept_scene_variants),
+        "safety": safety_evaluation,
         "soft_anchor_policy": soft_anchor_policy,
-        "safety_transform_policy": safety_transform_policy,
         "soft_anchor_repair": {"status": "not_evaluated", "repair_attempts": []},
     }
     return contract
@@ -1386,8 +1399,12 @@ def refresh_generation_contract(
     concept_locks: Optional[Sequence[str]] = None,
     additional_requirements: Optional[Sequence[str]] = None,
     likeness_mode: Optional[str] = None,
+    likeness_references: Optional[Sequence[str]] = None,
+    user_mandatory_intents: Optional[Sequence[str]] = None,
+    concept_gate_results: Optional[Sequence[JsonDict]] = None,
+    concept_scene_variants: Optional[Sequence[str]] = None,
+    safety_evaluation_requested: Optional[bool] = None,
     soft_anchor_spec: Optional[JsonDict] = None,
-    safety_transform_policy: Optional[str] = None,
 ) -> JsonDict:
     if contract is None:
         return make_generation_contract(
@@ -1399,8 +1416,12 @@ def refresh_generation_contract(
             concept_locks=concept_locks,
             additional_requirements=additional_requirements,
             likeness_mode=likeness_mode or "off",
+            likeness_references=likeness_references,
+            user_mandatory_intents=user_mandatory_intents,
+            concept_gate_results=concept_gate_results,
+            concept_scene_variants=concept_scene_variants,
+            safety_evaluation_requested=bool(safety_evaluation_requested),
             soft_anchor_spec=soft_anchor_spec,
-            safety_transform_policy=safety_transform_policy or "approved",
         )
     contract["subject_category"] = subject_category(picked, data)
     contract["preset_domains"] = sorted(preset_domains(preset, data))
@@ -1417,21 +1438,47 @@ def refresh_generation_contract(
         contract["likeness_mode"] = likeness_mode
     else:
         contract.setdefault("likeness_mode", "off")
+    if likeness_references is not None:
+        contract["likeness_references"] = normalize_list(likeness_references)
+    else:
+        contract.setdefault("likeness_references", [])
+    if user_mandatory_intents is not None:
+        contract["user_mandatory_intents"] = normalize_list(user_mandatory_intents)
+    else:
+        contract.setdefault("user_mandatory_intents", [])
+    if concept_gate_results is not None:
+        contract["concept_gate_results"] = [
+            dict(item) for item in concept_gate_results if isinstance(item, dict)
+        ]
+    else:
+        contract.setdefault("concept_gate_results", [])
+    if concept_scene_variants is not None:
+        contract["concept_scene_variants"] = normalize_list(concept_scene_variants)
+    else:
+        contract.setdefault("concept_scene_variants", [])
     if surreal_enabled is not None:
         contract["surreal_enabled"] = bool(surreal_enabled)
     if any(slot in picked for slot in SURREAL_LAYER_SLOTS):
         contract["surreal_enabled"] = True
     contract["adult_allowed"] = bool("adult" in set(contract.get("preset_domains", [])) or preset_uses_adult_context(preset))
-    if safety_transform_policy is not None:
-        contract["safety_transform_policy"] = safety_transform_policy
-    else:
-        contract.setdefault("safety_transform_policy", "approved")
     if soft_anchor_spec is not None:
         contract["soft_anchor_policy"] = soft_anchor_trace(normalize_soft_anchor_spec(soft_anchor_spec), picked)
     else:
         contract["soft_anchor_policy"] = soft_anchor_trace(contract.get("soft_anchor_policy", {}), picked)
-    if contract.get("safety_transform_policy") != "approved":
-        strip_unapproved_safety_transforms(contract["soft_anchor_policy"])
+    safety_evaluation = contract["soft_anchor_policy"].get("safety_evaluation")
+    if isinstance(safety_evaluation, dict) and safety_evaluation:
+        contract["safety"] = safety_evaluation
+    else:
+        requested = bool(safety_evaluation_requested) if safety_evaluation_requested is not None else bool(
+            (contract.get("safety") or {}).get("evaluation_requested")
+        )
+        contract["safety"] = {
+            "mode": "explicit_evaluation" if requested else "automatic",
+            "evaluation_requested": requested,
+            "status": "pass",
+            "requires_user_approval": False,
+            "items": [],
+        }
     contract.setdefault("soft_anchor_repair", {"status": "not_evaluated", "repair_attempts": []})
     for key in (
         "must_cover_axes",
@@ -1968,7 +2015,8 @@ def candidate_pack_build_slots(
     slots: JsonDict = {}
     choices = result.get("choices") if isinstance(result.get("choices"), dict) else {}
     total = 0
-    for score_row in trace.get("slot_scores") or []:
+    score_rows = [row for row in trace.get("slot_scores") or [] if isinstance(row, dict)]
+    for score_index, score_row in enumerate(score_rows):
         if not isinstance(score_row, dict):
             continue
         slot = str(score_row.get("slot") or "")
@@ -1976,10 +2024,18 @@ def candidate_pack_build_slots(
             continue
         limit = candidate_pack_slot_limit(slot)
         selected_id = str(score_row.get("selected") or ((choices.get(slot) or {}).get("id") if isinstance(choices.get(slot), dict) else "") or "")
-        rows = candidate_pack_rows_with_selected(score_row.get("top") or [], selected_id, limit)
-        if total + len(rows) > CANDIDATE_PACK_TOTAL_CANDIDATE_LIMIT:
-            remaining = max(0, CANDIDATE_PACK_TOTAL_CANDIDATE_LIMIT - total)
-            rows = rows[:remaining]
+        future_selected_count = sum(
+            1
+            for future in score_rows[score_index + 1 :]
+            if str(future.get("selected") or "").strip()
+        )
+        available = max(
+            1 if selected_id else 0,
+            CANDIDATE_PACK_TOTAL_CANDIDATE_LIMIT - total - future_selected_count,
+        )
+        rows = candidate_pack_rows_with_selected(
+            score_row.get("top") or [], selected_id, min(limit, available)
+        )
         if not rows:
             continue
         probabilities = candidate_pack_normalized_probabilities(rows)
@@ -2000,35 +2056,87 @@ def candidate_pack_build_slots(
             "selected_filter": score_row.get("selected_filter"),
         }
         total += len(candidates)
-        if total >= CANDIDATE_PACK_TOTAL_CANDIDATE_LIMIT:
+        if total >= CANDIDATE_PACK_TOTAL_CANDIDATE_LIMIT and score_index + 1 >= len(score_rows):
             break
 
     if slots or not choices:
         return slots
 
-    # Rule mode has no semantic slot score trace. Keep it useful for CI and
-    # legacy/offline use by exposing the selected weighted-pool entries.
-    for slot, choice in choices.items():
+    # Rule mode has no semantic score trace. Expose the selected choice plus
+    # a small, meaningful alternative set from the selected preset's filtered
+    # pool so the agent still composes rather than merely echoing one sample.
+    preset = candidate_pack_preset_by_id(data, str(result.get("preset_id") or "")) or {}
+    filters = preset.get("filters") if isinstance(preset.get("filters"), dict) else {}
+    provenance = result.get("provenance") if isinstance(result.get("provenance"), dict) else {}
+    pack_request_text = " ".join(
+        [
+            str(trace.get("intent") or ""),
+            *normalize_list(provenance.get("concept_lock")),
+            *normalize_list(provenance.get("user_mandatory_intents")),
+        ]
+    ).lower()
+    choice_items = [(slot, choice) for slot, choice in choices.items() if isinstance(choice, dict)]
+    for choice_index, (slot, choice) in enumerate(choice_items):
         if not isinstance(choice, dict):
             continue
         raw_id = str(choice.get("id") or "")
-        if not raw_id or total >= CANDIDATE_PACK_TOTAL_CANDIDATE_LIMIT:
+        if not raw_id:
             continue
-        row = {"id": raw_id, "weight": 1.0, "rule_selected": True}
-        candidate, entry = candidate_pack_summarize_slot_candidate(data, str(slot), row, 1.0, raw_id)
+        pool = apply_filter(data.get("slots", {}).get(str(slot), []) or [], filters.get(str(slot)))
+        if not any(str(entry.get("id") or "") == raw_id for entry in pool):
+            selected_entry = candidate_pack_slot_entry_by_id(data, str(slot), raw_id)
+            if selected_entry:
+                pool = [selected_entry, *pool]
+        ranked = sorted(
+            pool,
+            key=lambda entry: (
+                0 if str(entry.get("id") or "") == raw_id else 1,
+                -float(entry.get("weight", 1) or 0)
+                * selection_balance_multiplier(data, entry, pack_request_text)[0],
+                str(entry.get("id") or ""),
+            ),
+        )
+        limit = candidate_pack_slot_limit(str(slot))
+        future_selected_count = sum(
+            1
+            for _future_slot, future_choice in choice_items[choice_index + 1 :]
+            if str(future_choice.get("id") or "").strip()
+        )
+        remaining = max(
+            1,
+            CANDIDATE_PACK_TOTAL_CANDIDATE_LIMIT - total - future_selected_count,
+        )
+        rows = [
+            {
+                "id": str(entry.get("id") or ""),
+                "weight": float(entry.get("weight", 1.0) or 1.0)
+                * selection_balance_multiplier(data, entry, pack_request_text)[0],
+                "rule_selected": str(entry.get("id") or "") == raw_id,
+            }
+            for entry in ranked[: min(limit, remaining)]
+            if str(entry.get("id") or "")
+        ]
+        rows = candidate_pack_rows_with_selected(rows, raw_id, min(limit, remaining))
+        probabilities = candidate_pack_normalized_probabilities(rows)
+        candidates: List[JsonDict] = []
+        for row, probability in zip(rows, probabilities):
+            candidate, entry = candidate_pack_summarize_slot_candidate(
+                data, str(slot), row, probability, raw_id
+            )
+            candidates.append(candidate)
+            candidate_entries[candidate["id"]] = ("slot", str(slot), entry)
         slots[str(slot)] = {
             "slot": str(slot),
             "role": "core" if str(slot) in CANDIDATE_PACK_CORE_SLOTS else "support",
-            "selected": candidate["id"],
-            "candidates": [candidate],
-            "candidate_count": 1,
-            "candidate_limit": 1,
+            "selected": candidate_pack_candidate_id("slot", raw_id, str(slot)),
+            "candidates": candidates,
+            "candidate_count": len(pool),
+            "candidate_limit": min(limit, remaining),
             "weight_floor": None,
             "score_window": None,
             "selected_filter": "rule",
         }
-        candidate_entries[candidate["id"]] = ("slot", str(slot), entry)
-        total += 1
+        total += len(candidates)
     return slots
 
 
@@ -2107,15 +2215,31 @@ def candidate_pack_source_texts(result: JsonDict, trace: JsonDict) -> List[tuple
     for concept in normalize_list(provenance.get("concept_lock")):
         if concept.strip():
             texts.append(("concept_lock", concept.strip()))
+    for requirement in normalize_list(provenance.get("user_mandatory_intents")):
+        if requirement.strip():
+            texts.append(("user_requirement", requirement.strip()))
     intent = str(trace.get("intent") or "").strip()
-    if not texts and intent and trace.get("intent_source") == "user":
+    if intent and trace.get("intent_source") == "user":
         texts.append(("intent", intent))
     return texts
 
 
 def candidate_pack_tokenize_intent_text(text: str) -> List[str]:
+    # Keep negative-presence phrases atomic. Splitting ``사람 없는`` into a
+    # positive ``사람`` token used to activate the human axis and invert the
+    # user's request.
+    negative_phrases = re.findall(
+        r"(?:사람|인물|인간)\s*(?:이\s*)?(?:없는|없이)|(?:no|without)\s+(?:people|person|persons|humans?)",
+        text,
+        flags=re.IGNORECASE,
+    )
+    masked = text
+    for phrase in negative_phrases:
+        masked = masked.replace(phrase, " ")
     tokens = re.findall(r"[A-Za-z0-9][A-Za-z0-9_+-]*|[가-힣]+", text)
-    normalized: List[str] = []
+    if negative_phrases:
+        tokens = re.findall(r"[A-Za-z0-9][A-Za-z0-9_+-]*|[가-힣]+", masked)
+    normalized: List[str] = [clean_spaces(phrase) for phrase in negative_phrases]
     for token in tokens:
         key = token.lower()
         if key in CANDIDATE_PACK_INTENT_STOPWORDS:
@@ -2124,6 +2248,26 @@ def candidate_pack_tokenize_intent_text(text: str) -> List[str]:
             continue
         normalized.append(token)
     return normalized or ([text.strip()] if text.strip() else [])
+
+
+def intent_explicitly_excludes_people(text: str) -> bool:
+    return bool(
+        re.search(
+            r"(?:사람|인물|인간)\s*(?:이\s*)?(?:없는|없이)|(?:no|without)\s+(?:people|person|persons|humans?)",
+            str(text or ""),
+            flags=re.IGNORECASE,
+        )
+    )
+
+
+def generation_explicitly_excludes_people(
+    semantic_context: Optional[JsonDict],
+    generation_contract: Optional[JsonDict],
+) -> bool:
+    values = [str((semantic_context or {}).get("intent") or "")]
+    values.extend(normalize_list((generation_contract or {}).get("user_mandatory_intents")))
+    values.extend(normalize_list((generation_contract or {}).get("concept_locks")))
+    return any(intent_explicitly_excludes_people(value) for value in values)
 
 
 def candidate_pack_candidate_blobs(presets: Sequence[JsonDict], slots: JsonDict) -> Dict[str, str]:
@@ -2206,9 +2350,10 @@ def candidate_pack_mandatory_intents(
                 for candidate_id, blob in candidate_blobs.items()
                 if token_lower in blob
             ][:12]
+            # Audit terms are literal user intent only. Candidate labels are
+            # discovery metadata, not proof that the composed text preserved
+            # the request.
             audit_terms = [token]
-            for candidate_id in covered_by:
-                audit_terms.extend(candidate_terms.get(candidate_id, []))
             intents.append(
                 {
                     "text": token,
@@ -2407,30 +2552,16 @@ def candidate_pack_open_slots(
             entry_id = candidate_pack_slot_selected_entry_id(slot_payload)
             if not entry_id:
                 continue
-            candidate_id = str(slot_payload.get("selected") or "")
-            candidate = next(
-                (
-                    item
-                    for item in slot_payload.get("candidates", []) or []
-                    if isinstance(item, dict) and str(item.get("id") or "") == candidate_id
-                ),
-                {},
-            )
-            entry = candidate_pack_selected_choice_entry(result, slot, entry_id)
-            terms = candidate_pack_entry_terms(entry, candidate)
             open_slot = {
                 "slot": slot,
                 "bucket": bucket,
                 "status": "intentionally_open",
                 "reason": "semantic_dropout",
-                "masked_entry_id": entry_id,
-                "candidate_id": candidate_id,
-                "terms": terms,
             }
             open_slots.append(open_slot)
-            slot_payload["reference_status"] = "intentionally_open"
-            slot_payload["masked_bucket"] = bucket
-            slot_payload["masked_selected"] = candidate_id
+            # The source choice itself is deliberately absent. Exposing its id,
+            # terms, or label makes "dropout" a copyable answer key.
+            slots.pop(slot, None)
     return open_slots
 
 
@@ -2440,16 +2571,6 @@ def candidate_pack_preset_reference(
     masked_buckets: Sequence[str],
     open_slots: Sequence[JsonDict],
 ) -> JsonDict:
-    masked_slot_values = {
-        str(slot.get("slot")): {
-            "entry_id": slot.get("masked_entry_id"),
-            "candidate_id": slot.get("candidate_id"),
-            "terms": slot.get("terms", []),
-            "bucket": slot.get("bucket"),
-        }
-        for slot in open_slots
-        if isinstance(slot, dict) and slot.get("slot")
-    }
     used_sections: List[str] = []
     if soft_policy.get("identity_axes"):
         used_sections.append("identity_axes")
@@ -2465,7 +2586,11 @@ def candidate_pack_preset_reference(
         "preset_id": (result.get("provenance") or {}).get("preset_id") or result.get("preset_id"),
         "used_sections": used_sections,
         "dropped_sections": dropped_sections,
-        "masked_slot_values": masked_slot_values,
+        "masked_slots": [
+            {"slot": slot.get("slot"), "bucket": slot.get("bucket")}
+            for slot in open_slots
+            if isinstance(slot, dict) and slot.get("slot")
+        ],
         "exemplar_role": "optional_example_only" if soft_policy.get("exemplar_set") else "none",
     }
 
@@ -2572,6 +2697,60 @@ def candidate_pack_quality_layers(data: JsonDict) -> JsonDict:
     return quality if isinstance(quality, dict) else {}
 
 
+def selection_balance_request_text(
+    semantic_context: Optional[JsonDict],
+    generation_contract: Optional[JsonDict],
+) -> str:
+    values = [str((semantic_context or {}).get("intent") or "")]
+    values.extend(normalize_list((generation_contract or {}).get("concept_locks")))
+    values.extend(normalize_list((generation_contract or {}).get("user_mandatory_intents")))
+    return " ".join(values).lower()
+
+
+def selection_balance_multiplier(data: JsonDict, entry: JsonDict, request_text: str) -> tuple[float, List[str]]:
+    policy = candidate_pack_quality_layers(data).get("selection_balance")
+    if not isinstance(policy, dict):
+        return 1.0, []
+    try:
+        implicit_multiplier = float(policy.get("implicit_theme_multiplier", 0.35))
+    except (TypeError, ValueError):
+        implicit_multiplier = 0.35
+    implicit_multiplier = min(max(implicit_multiplier, 0.0), 1.0)
+    blob = candidate_pack_entry_blob(entry)
+    matched: List[str] = []
+    for theme, raw_terms in (policy.get("themes") or {}).items():
+        terms = [str(term).lower() for term in normalize_list(raw_terms) if str(term).strip()]
+        if not terms or not any(term in blob for term in terms):
+            continue
+        if any(term in request_text for term in terms):
+            continue
+        matched.append(str(theme))
+    return (implicit_multiplier ** len(matched) if matched else 1.0), matched
+
+
+def apply_selection_balance_bias(
+    pool: Sequence[JsonDict],
+    data: JsonDict,
+    semantic_context: Optional[JsonDict],
+    generation_contract: Optional[JsonDict],
+) -> List[JsonDict]:
+    request_text = selection_balance_request_text(semantic_context, generation_contract)
+    balanced: List[JsonDict] = []
+    for entry in pool:
+        multiplier, matched = selection_balance_multiplier(data, entry, request_text)
+        if multiplier >= 1.0:
+            balanced.append(entry)
+            continue
+        cloned = dict(entry)
+        try:
+            cloned["weight"] = float(entry.get("weight", 1) or 1) * multiplier
+        except (TypeError, ValueError):
+            cloned["weight"] = multiplier
+        cloned["selection_balance"] = {"multiplier": multiplier, "implicit_themes": matched}
+        balanced.append(cloned)
+    return balanced
+
+
 def candidate_pack_quality_facet_vocab(data: JsonDict) -> Dict[str, Set[str]]:
     vocab: Dict[str, Set[str]] = {
         str(key): {str(item) for item in normalize_list(values)}
@@ -2606,21 +2785,35 @@ def artistic_final_touch_policy(data: JsonDict) -> JsonDict:
     return policy
 
 
-def artistic_final_touch_sentence(data: JsonDict, lang: str, detail_level: str = "detailed") -> str:
+def artistic_final_touch_sentence(
+    data: JsonDict,
+    lang: str,
+    detail_level: str = "detailed",
+    quality_profile_id: str = "general",
+) -> str:
     policy = artistic_final_touch_policy(data)
+    enabled_profiles = set(normalize_list(policy.get("enabled_profiles")))
+    if enabled_profiles and quality_profile_id not in enabled_profiles:
+        return ""
+    if not enabled_profiles and not bool(policy.get("default_enabled", True)):
+        return ""
     sentences = policy.get("sentences") if isinstance(policy.get("sentences"), dict) else {}
     localized = sentences.get(lang) if isinstance(sentences.get(lang), dict) else {}
     sentence = str(localized.get(detail_level) or localized.get("default") or "").strip()
     return ensure_period(sentence) if sentence else ""
 
 
-def candidate_pack_artistic_final_touch(data: JsonDict) -> JsonDict:
+def candidate_pack_artistic_final_touch(data: JsonDict, quality_profile: JsonDict) -> JsonDict:
     policy = artistic_final_touch_policy(data)
     if not policy:
         return {"enabled": False}
-    final_sentence = artistic_final_touch_sentence(data, "en", "detailed")
+    profile_id = str(quality_profile.get("profile_id") or "general")
+    final_sentence = artistic_final_touch_sentence(data, "en", "detailed", profile_id)
+    if not final_sentence:
+        return {"enabled": False, "profile_id": profile_id}
     return {
         "enabled": True,
+        "profile_id": profile_id,
         "source": str(policy.get("source") or "quality_layers_artistic_final_touch"),
         "final_sentence_en": final_sentence,
         "audit_terms": normalize_list(policy.get("audit_terms"))[:12],
@@ -2645,13 +2838,19 @@ def candidate_pack_quality_add_entry_facets(
     vocab: Dict[str, Set[str]],
     entry: JsonDict,
     inferred_tag_facet_keys: Optional[Set[str]] = None,
+    include_subject_kind: bool = True,
 ) -> None:
     raw_facets = entry.get("facets") if isinstance(entry.get("facets"), dict) else {}
     for key, values in raw_facets.items():
+        if key == "subject_kind" and not include_subject_kind:
+            continue
         candidate_pack_quality_add_facet(facets, vocab, str(key), values)
-    candidate_pack_quality_add_facet(facets, vocab, "subject_kind", entry.get("kind"))
+    if include_subject_kind:
+        candidate_pack_quality_add_facet(facets, vocab, "subject_kind", entry.get("kind"))
     for token in normalize_list(entry.get("tags")) + normalize_list(entry.get("kind")):
         for key, allowed in vocab.items():
+            if key == "subject_kind" and not include_subject_kind:
+                continue
             if inferred_tag_facet_keys is not None and key not in inferred_tag_facet_keys:
                 continue
             if token in allowed:
@@ -2686,30 +2885,138 @@ def candidate_pack_quality_add_intent_facets(
     data: JsonDict,
     mandatory_intents: Sequence[JsonDict],
 ) -> List[str]:
-    intent_terms = [
-        str(intent.get("text") or "").strip().lower()
-        for intent in mandatory_intents
-        if intent.get("status") == "uncovered" and str(intent.get("text") or "").strip()
-    ]
-    if not intent_terms:
-        return []
+    del data  # Intent facets are literal; unrelated dictionary rows must not influence the profile.
+    aliases: Dict[str, Dict[str, str]] = {
+        "subject_kind": {
+            "person": "human",
+            "people": "human",
+            "portrait": "human",
+            "인물": "human",
+            "사람": "human",
+            "animal": "animal",
+            "wildlife": "animal",
+            "동물": "animal",
+            "food": "food",
+            "meal": "food",
+            "dish": "food",
+            "음식": "food",
+            "product": "object",
+            "object": "object",
+            "제품": "object",
+            "plant": "plant",
+            "식물": "plant",
+            "robot": "robot",
+            "로봇": "robot",
+        },
+        "mood_family": {
+            "documentary": "documentary",
+            "다큐멘터리": "documentary",
+            "commercial": "commercial",
+            "광고": "commercial",
+            "romantic": "romantic",
+            "surreal": "surreal",
+            "nostalgic": "nostalgic",
+        },
+        "place_type": {
+            "street": "street",
+            "거리": "street",
+            "studio": "studio",
+            "스튜디오": "studio",
+            "nature": "nature",
+            "자연": "nature",
+            "interior": "interior",
+            "실내": "interior",
+        },
+    }
+    matched: List[str] = []
+    for intent in mandatory_intents:
+        if intent.get("status") != "uncovered":
+            continue
+        term = str(intent.get("text") or "").strip().lower()
+        if not term:
+            continue
+        normalized_term = re.sub(r"[_/-]+", " ", term).strip()
+        for facet_key, facet_aliases in aliases.items():
+            value = facet_aliases.get(normalized_term)
+            if value not in vocab.get(facet_key, set()):
+                continue
+            facets.setdefault(facet_key, set()).add(value)
+            marker = f"{facet_key}:{value}"
+            if marker not in matched:
+                matched.append(marker)
+    return matched
+
+
+def candidate_pack_quality_add_literal_subject_entity_facets(
+    facets: Dict[str, Set[str]],
+    vocab: Dict[str, Set[str]],
+    data: JsonDict,
+    mandatory_intents: Sequence[JsonDict],
+) -> List[str]:
+    """Infer secondary visible subject kinds only from literal subject labels.
+
+    Keywords and tags are intentionally excluded: a generic word such as
+    "styling" must not turn a portrait into a food profile merely because it
+    appears in an unrelated subject entry's retrieval metadata.
+    """
+    subject_entries = ((data.get("slots") or {}).get("subject") or [])
     matched_entry_ids: List[str] = []
-    for entry in candidate_pack_quality_dictionary_entries(data):
-        blob = candidate_pack_quality_entry_match_blob(entry)
-        if not blob:
+    for intent in mandatory_intents:
+        term = str(intent.get("text") or "").strip().lower()
+        if not term or intent_explicitly_excludes_people(term):
             continue
-        if not any(candidate_pack_integration_text_has_term(blob, term) for term in intent_terms):
-            continue
-        before = {key: set(values) for key, values in facets.items()}
-        candidate_pack_quality_add_entry_facets(facets, vocab, entry, inferred_tag_facet_keys={"subject_kind"})
-        if before == facets:
-            continue
-        entry_id = str(entry.get("id") or "")
-        if entry_id and entry_id not in matched_entry_ids:
-            matched_entry_ids.append(entry_id)
-        if len(matched_entry_ids) >= 16:
-            break
+        for entry in subject_entries:
+            if not isinstance(entry, dict):
+                continue
+            values: List[str] = []
+            for key in ("id", "en", "ko", "aliases"):
+                raw = entry.get(key)
+                values.extend(normalize_list(raw) if isinstance(raw, list) else [str(raw or "")])
+            label_blob = " ".join(value for value in values if value.strip()).lower()
+            if not candidate_pack_integration_text_has_term(label_blob, term):
+                continue
+            before = set(facets.get("subject_kind", set()))
+            raw_facets = entry.get("facets") if isinstance(entry.get("facets"), dict) else {}
+            candidate_pack_quality_add_facet(
+                facets,
+                vocab,
+                "subject_kind",
+                raw_facets.get("subject_kind"),
+            )
+            candidate_pack_quality_add_facet(facets, vocab, "subject_kind", entry.get("kind"))
+            candidate_pack_quality_add_facet(facets, vocab, "subject_kind", entry.get("tags"))
+            if set(facets.get("subject_kind", set())) == before:
+                continue
+            entry_id = str(entry.get("id") or "")
+            if entry_id and entry_id not in matched_entry_ids:
+                matched_entry_ids.append(entry_id)
+            if len(matched_entry_ids) >= 12:
+                return matched_entry_ids
     return matched_entry_ids
+
+
+def candidate_pack_quality_profile_id(data: JsonDict, preset: JsonDict, facets: Dict[str, Set[str]]) -> str:
+    domains = preset_domains(preset, data)
+    subject_kinds = facets.get("subject_kind", set())
+    mood_families = facets.get("mood_family", set())
+    blob = candidate_pack_quality_entry_match_blob(preset)
+    if "food" in subject_kinds or "food" in domains:
+        return "food"
+    if "architecture" in domains or "real_estate" in domains or any(term in blob for term in ("architecture", "interior", "building")):
+        return "architecture"
+    if subject_kinds & {"object", "sign"} or domains & {"product", "jewelry"}:
+        return "product"
+    if domains & {"wildlife", "landscape", "nature"} or subject_kinds & {"animal", "plant", "environment"}:
+        return "nature"
+    if "documentary" in domains:
+        return "documentary"
+    if domains & {"portrait", "fashion", "beauty", "editorial"}:
+        return "portrait_editorial"
+    if "documentary" in mood_families or any(term in blob for term in ("documentary", "candid", "reportage", "street")):
+        return "documentary"
+    if "human" in subject_kinds:
+        return "portrait_editorial"
+    return "general"
 
 
 def candidate_pack_quality_profile(
@@ -2723,12 +3030,14 @@ def candidate_pack_quality_profile(
     preset_id = str((result.get("provenance") or {}).get("preset_id") or result.get("preset_id") or "")
     preset = candidate_pack_preset_by_id(data, preset_id) if preset_id else None
     if isinstance(preset, dict):
-        candidate_pack_quality_add_entry_facets(facets, vocab, preset)
+        candidate_pack_quality_add_entry_facets(facets, vocab, preset, include_subject_kind=False)
 
     choices = result.get("choices") if isinstance(result.get("choices"), dict) else {}
-    for choice in choices.values():
+    for slot, choice in choices.items():
         if isinstance(choice, dict):
-            candidate_pack_quality_add_entry_facets(facets, vocab, choice)
+            candidate_pack_quality_add_entry_facets(
+                facets, vocab, choice, include_subject_kind=str(slot) == "subject"
+            )
 
     for slot, slot_payload in slots.items():
         if not isinstance(slot_payload, dict):
@@ -2740,13 +3049,24 @@ def candidate_pack_quality_profile(
         if entry.get("id") == entry_id and len(entry) == 1:
             entry = candidate_pack_slot_entry_by_id(data, str(slot), entry_id) or entry
         if isinstance(entry, dict):
-            candidate_pack_quality_add_entry_facets(facets, vocab, entry)
+            candidate_pack_quality_add_entry_facets(
+                facets, vocab, entry, include_subject_kind=str(slot) == "subject"
+            )
 
-    matched_entries = candidate_pack_quality_add_intent_facets(facets, vocab, data, mandatory_intents)
+    matched_facets = candidate_pack_quality_add_intent_facets(facets, vocab, data, mandatory_intents)
+    profile_id = candidate_pack_quality_profile_id(data, preset or {}, facets)
+    matched_subject_entries = candidate_pack_quality_add_literal_subject_entity_facets(
+        facets,
+        vocab,
+        data,
+        mandatory_intents,
+    )
     return {
-        "source": "selected_preset_slots_and_uncovered_intent_dictionary_matches",
+        "profile_id": profile_id,
+        "source": "selected_preset_slots_and_literal_uncovered_intent_facets",
         "facets": {key: sorted(values) for key, values in sorted(facets.items()) if values},
-        "matched_uncovered_intent_entries": matched_entries,
+        "matched_uncovered_intent_facets": matched_facets,
+        "matched_literal_subject_entries": matched_subject_entries,
     }
 
 
@@ -2770,14 +3090,18 @@ def candidate_pack_quality_profile_from_selected(
 ) -> JsonDict:
     vocab = candidate_pack_quality_facet_vocab(data)
     facets: Dict[str, Set[str]] = {}
-    candidate_pack_quality_add_entry_facets(facets, vocab, preset)
-    for entry in picked.values():
+    candidate_pack_quality_add_entry_facets(facets, vocab, preset, include_subject_kind=False)
+    for slot, entry in picked.items():
         if isinstance(entry, dict):
-            candidate_pack_quality_add_entry_facets(facets, vocab, entry)
+            candidate_pack_quality_add_entry_facets(
+                facets, vocab, entry, include_subject_kind=str(slot) == "subject"
+            )
     return {
+        "profile_id": candidate_pack_quality_profile_id(data, preset, facets),
         "source": "selected_preset_slots",
         "facets": {key: sorted(values) for key, values in sorted(facets.items()) if values},
-        "matched_uncovered_intent_entries": [],
+        "matched_uncovered_intent_facets": [],
+        "matched_literal_subject_entries": [],
     }
 
 
@@ -3012,6 +3336,9 @@ def append_photographic_craft(
     prompt_clean = clean_spaces(prompt)
     if sentence.lower() in prompt_clean.lower():
         return prompt_clean
+    word_budget = {"compact": 120, "standard": 150, "detailed": 190}.get(detail_level, 150)
+    if lang == "en" and len(f"{prompt_clean} {sentence}".split()) > word_budget:
+        return prompt_clean
     return clean_spaces(f"{prompt_clean} {sentence}")
 
 
@@ -3063,16 +3390,37 @@ def candidate_pack_photographic_integration(
     matched_terms: List[str] = []
 
     scored_axes: List[tuple[int, int, str, JsonDict, List[str], List[str], List[str]]] = []
+    subject_axis_kinds = {
+        "person_presence": {"human"},
+        "animal_presence": {"animal"},
+        "object_or_product_presence": {"object", "food", "plant", "sign"},
+    }
+    known_subject_kinds = {
+        str(value)
+        for value in normalize_list((quality_profile.get("facets") or {}).get("subject_kind"))
+    }
     for axis in axes:
+        axis_id = str(axis.get("id") or "")
+        if axis_id == "person_presence" and intent_explicitly_excludes_people(source_corpus):
+            continue
         facet_hits = candidate_pack_quality_facet_hits(quality_profile, axis.get("facet_match"))
         source_terms = candidate_pack_quality_matched_terms(source_corpus, axis.get("terms"))
         context_terms = candidate_pack_quality_matched_terms(corpus, axis.get("terms"))
+        if (
+            axis_id in subject_axis_kinds
+            and known_subject_kinds
+            and not (known_subject_kinds & subject_axis_kinds[axis_id])
+            and not source_terms
+        ):
+            # Candidate alternatives are context, not visible subjects. When a
+            # subject kind is known, they cannot invent a second presence axis.
+            continue
         score = len(facet_hits) * 10 + len(source_terms) * 3 + len(context_terms)
         if score <= 0:
             continue
         if not facet_hits and not source_terms and len(context_terms) < 2:
             continue
-        scored_axes.append((score, len(facet_hits), str(axis.get("id") or ""), axis, facet_hits, source_terms, context_terms))
+        scored_axes.append((score, len(facet_hits), axis_id, axis, facet_hits, source_terms, context_terms))
     scored_axes.sort(key=lambda item: (-item[1], -item[0], item[2]))
 
     matched_facets: List[str] = []
@@ -3390,7 +3738,25 @@ def build_candidate_pack(result: JsonDict, data: JsonDict) -> JsonDict:
     soft_policy = contract.get("soft_anchor_policy") if isinstance(contract.get("soft_anchor_policy"), dict) else {}
     masked_buckets = candidate_pack_choose_masked_buckets(result, contract, soft_policy, slots)
     open_slots = candidate_pack_open_slots(result, slots, masked_buckets)
+    masked_slot_names = {str(item.get("slot")) for item in open_slots if isinstance(item, dict)}
+    if masked_slot_names:
+        masked_prefixes = tuple(f"slot:{slot}:" for slot in sorted(masked_slot_names))
+        conflicts = [
+            conflict
+            for conflict in conflicts
+            if not any(str(candidate_id).startswith(masked_prefixes) for candidate_id in conflict.get("candidates", []))
+        ]
+        for intent_row in mandatory_intents:
+            covered_by = [
+                candidate_id
+                for candidate_id in intent_row.get("covered_by", [])
+                if not str(candidate_id).startswith(masked_prefixes)
+            ]
+            intent_row["covered_by"] = covered_by
+            intent_row["status"] = "covered" if covered_by else "uncovered"
+        uncovered_intents = [row for row in mandatory_intents if row.get("status") == "uncovered"]
     pack: JsonDict = {
+        "contract_version": "photo-candidate-pack/v2",
         "pack_id": "",
         "mandatory_intents": mandatory_intents,
         "uncovered_intents": uncovered_intents,
@@ -3405,7 +3771,7 @@ def build_candidate_pack(result: JsonDict, data: JsonDict) -> JsonDict:
             data, result, trace, presets, slots, mandatory_intents, quality_profile
         ),
         "photographic_craft": candidate_pack_photographic_craft(data, quality_profile),
-        "artistic_final_touch": candidate_pack_artistic_final_touch(data),
+        "artistic_final_touch": candidate_pack_artistic_final_touch(data, quality_profile),
         "motif_budget": candidate_pack_motif_budget(result, trace, soft_policy),
         "preset_reference": candidate_pack_preset_reference(result, soft_policy, masked_buckets, open_slots),
         "masked_buckets": masked_buckets,
@@ -3413,7 +3779,14 @@ def build_candidate_pack(result: JsonDict, data: JsonDict) -> JsonDict:
         "template_echo_risk": candidate_pack_template_echo_risk(open_slots),
         "role_scene_policy": soft_policy.get("role_scene_policy", {"enabled": False}),
         "species_family": soft_policy.get("species_family_policy", {"enabled": False, "allowed": {}}),
-        "approval_required_safety_transforms": soft_policy.get("approval_required_safety_transforms", {}) or {},
+        "safety": contract.get("safety") or {
+            "mode": "automatic",
+            "evaluation_requested": False,
+            "status": "pass",
+            "requires_user_approval": False,
+            "items": [],
+        },
+        "concept_gates": contract.get("concept_gate_results", []),
         "diversity_state": candidate_pack_diversity_state(trace),
         "coverage": {
             "mandatory_intent_count": len(mandatory_intents),
@@ -3445,7 +3818,11 @@ def build_candidate_pack(result: JsonDict, data: JsonDict) -> JsonDict:
             "concept_lock": provenance.get("concept_lock", []),
             "additional_requirements": provenance.get("additional_requirements", []),
             "likeness_mode": provenance.get("likeness_mode"),
-            "safety_transform_policy": provenance.get("safety_transform_policy"),
+            "likeness_references": provenance.get("likeness_references", []),
+            "user_mandatory_intents": provenance.get("user_mandatory_intents", []),
+            "concept_gate_results": provenance.get("concept_gate_results", []),
+            "concept_scene_variants": provenance.get("concept_scene_variants", []),
+            "safety": provenance.get("safety", contract.get("safety", {})),
             "argv": provenance.get("argv", []),
             "sample_prompt_id": provenance.get("prompt_id"),
         },
@@ -6160,6 +6537,17 @@ def choose_preset(
                 vector = semantic_vector(semantic_context, semantic_entry_key("preset", preset))
                 score, score_summary = semantic_preset_score_breakdown(vector, semantic_context, preset)
                 weight = semantic_preset_candidate_weight(preset, score, semantic_context)
+                balance_factor, balance_themes = selection_balance_multiplier(
+                    data,
+                    preset,
+                    " ".join(
+                        [
+                            str(semantic_context.get("intent") or ""),
+                            str(soft_policy.get("concept") or ""),
+                        ]
+                    ).lower(),
+                )
+                weight *= balance_factor
                 affinity_factor, affinity_summary = soft_preset_affinity_factor(preset, soft_policy, data)
                 weight *= affinity_factor
                 role_scene_factor, role_scene_summary = role_scene_policy_factor(preset, soft_policy)
@@ -6172,6 +6560,7 @@ def choose_preset(
                     "batch_penalty": batch_summary,
                     "soft_preset_affinity": affinity_summary,
                     "role_scene_policy": role_scene_summary,
+                    "selection_balance": {"multiplier": balance_factor, "implicit_themes": balance_themes},
                     **score_summary,
                 }
                 scored_presets.append((preset, weight, score, summary))
@@ -6355,7 +6744,8 @@ def choose_preset(
         }
         return selected
 
-    return weighted_choice(presets, rng)
+    balanced_presets = apply_selection_balance_bias(presets, data, None, None)
+    return weighted_choice(balanced_presets, rng)
 
 
 def record_batch_generation(
@@ -7295,7 +7685,13 @@ def normalize_soft_anchor_spec(payload: Any) -> JsonDict:
             "motif_quotas": {},
             "semantic_dropout": {"enabled": False},
             "exemplar_set": {},
-            "approval_required_safety_transforms": {},
+            "safety_evaluation": {
+                "mode": "automatic",
+                "evaluation_requested": False,
+                "status": "pass",
+                "requires_user_approval": False,
+                "items": [],
+            },
         }
     if isinstance(payload, list):
         raw_anchors = payload
@@ -7323,7 +7719,7 @@ def normalize_soft_anchor_spec(payload: Any) -> JsonDict:
         raw_motif_quotas = {}
         raw_semantic_dropout = {}
         raw_exemplar_set = {}
-        raw_approval_required_safety_transforms = {}
+        raw_safety_evaluation = {}
     elif isinstance(payload, dict):
         raw_anchors = payload.get("anchors", [])
         min_anchors = payload.get("min_anchors", payload.get("soft_min_anchors", 0))
@@ -7350,7 +7746,7 @@ def normalize_soft_anchor_spec(payload: Any) -> JsonDict:
         raw_motif_quotas = payload.get("motif_quotas", {}) or {}
         raw_semantic_dropout = payload.get("semantic_dropout", {}) or {}
         raw_exemplar_set = payload.get("exemplar_set", {}) or {}
-        raw_approval_required_safety_transforms = payload.get("approval_required_safety_transforms", {}) or {}
+        raw_safety_evaluation = payload.get("safety_evaluation", {}) or {}
     else:
         raise ValueError("--soft-anchor-spec must be a JSON object or list")
     if not isinstance(raw_anchors, list):
@@ -7440,11 +7836,7 @@ def normalize_soft_anchor_spec(payload: Any) -> JsonDict:
     motif_quotas = normalize_reference_motif_quotas(raw_motif_quotas)
     semantic_dropout = normalize_reference_semantic_dropout(raw_semantic_dropout)
     exemplar_set = normalize_reference_exemplar_set(raw_exemplar_set)
-    approval_required_safety_transforms = (
-        raw_approval_required_safety_transforms
-        if isinstance(raw_approval_required_safety_transforms, dict)
-        else {}
-    )
+    safety_evaluation = raw_safety_evaluation if isinstance(raw_safety_evaluation, dict) else {}
     selected_rate_floor = SOFT_ANCHOR_SELECTED_RATE_FLOOR
     if isinstance(payload, dict) and payload.get("selected_rate_floor") is not None:
         try:
@@ -7489,7 +7881,7 @@ def normalize_soft_anchor_spec(payload: Any) -> JsonDict:
         "motif_quotas": motif_quotas,
         "semantic_dropout": semantic_dropout,
         "exemplar_set": exemplar_set,
-        "approval_required_safety_transforms": approval_required_safety_transforms,
+        "safety_evaluation": safety_evaluation,
         "anchors": anchors,
     }
 
@@ -7560,16 +7952,25 @@ def parse_soft_anchor_specs(items: Optional[Sequence[str]]) -> JsonDict:
             merged.setdefault("semantic_dropout", {}).update(spec.get("semantic_dropout") or {})
         if spec.get("exemplar_set"):
             merged.setdefault("exemplar_set", {}).update(spec.get("exemplar_set") or {})
-        if spec.get("approval_required_safety_transforms"):
-            merged.setdefault("approval_required_safety_transforms", {}).update(
-                spec.get("approval_required_safety_transforms") or {}
-            )
+        if spec.get("safety_evaluation"):
+            merged.setdefault("safety_evaluation", {}).update(spec.get("safety_evaluation") or {})
         merged.setdefault("safety_negative_floor", [])
         for term in normalize_list(spec.get("safety_negative_floor")):
             if term not in merged["safety_negative_floor"]:
                 merged["safety_negative_floor"].append(term)
         merged["anchors"].extend(spec.get("anchors", []))
     return normalize_soft_anchor_spec(merged)
+
+
+def parse_json_object_list(items: Optional[Sequence[str]], option: str) -> List[JsonDict]:
+    parsed: List[JsonDict] = []
+    for raw in items or []:
+        payload = json.loads(raw)
+        rows = payload if isinstance(payload, list) else [payload]
+        if not all(isinstance(row, dict) for row in rows):
+            raise ValueError(f"{option} must contain a JSON object or array of objects")
+        parsed.extend(dict(row) for row in rows)
+    return parsed
 
 
 def normalize_slot_id_map(raw: Any) -> JsonDict:
@@ -8303,7 +8704,7 @@ def soft_anchor_trace(policy: Optional[JsonDict], picked: Optional[Dict[str, Ent
         "motif_quotas": policy.get("motif_quotas", {}) or {},
         "semantic_dropout": policy.get("semantic_dropout", {}) or {"enabled": False},
         "exemplar_set": policy.get("exemplar_set", {}) or {},
-        "approval_required_safety_transforms": policy.get("approval_required_safety_transforms", {}) or {},
+        "safety_evaluation": policy.get("safety_evaluation", {}) or {},
         "required_anchor_count": soft_anchor_required_count(policy),
         "selected_anchor_count": len(selected_slots),
         "selected_anchor_slots": sorted(selected_slots),
@@ -8311,17 +8712,6 @@ def soft_anchor_trace(policy: Optional[JsonDict], picked: Optional[Dict[str, Ent
         "match_status": status,
         "anchors": anchors,
     }
-
-
-def strip_unapproved_safety_transforms(policy: Optional[JsonDict]) -> None:
-    if not isinstance(policy, dict):
-        return
-    policy["visual_guards"] = []
-    policy["free_slot_constraints"] = {}
-    policy["render_suppress_terms"] = []
-    policy["render_directives"] = []
-    policy["soft_repair_policy"] = normalize_soft_repair_policy({})
-    policy["safety_negative_floor"] = []
 
 
 def entry_matches_guard_facets(item: Entry, raw_facets: Sequence[str]) -> bool:
@@ -9741,8 +10131,21 @@ def choose_slot(
 
     # If a human-only forced modifier is given, steer subject choice toward human.
     if slot == "subject" and not forced:
+        if generation_explicitly_excludes_people(semantic_context, generation_contract):
+            non_human_pool = [
+                item
+                for item in pool
+                if "human" not in entry_kinds(item) and "human" not in entry_tags(item)
+            ]
+            if non_human_pool:
+                pool = non_human_pool
+                record_generation_contract_event(
+                    generation_contract,
+                    "intent_constraints",
+                    {"slot": "subject", "reason": "explicit_no_people", "remaining": len(pool)},
+                )
         required_kinds = forced_required_subject_kinds(data, forced_choices or {})
-        if required_kinds:
+        if required_kinds and not generation_explicitly_excludes_people(semantic_context, generation_contract):
             steered = [x for x in pool if entry_kinds(x) & required_kinds]
             if steered:
                 pool = steered
@@ -9876,6 +10279,9 @@ def choose_slot(
 
     if not semantic_context and not forced:
         pool = apply_rule_policy_bias(slot, pool, data, generation_contract)
+
+    if not forced:
+        pool = apply_selection_balance_bias(pool, data, semantic_context, generation_contract)
 
     return semantic_weighted_choice(
         pool,
@@ -10925,12 +11331,28 @@ def append_render_contract_sentences(
     return clean_spaces(prompt)
 
 
-def append_artistic_final_touch(data: JsonDict, prompt: str, lang: str, detail_level: str) -> str:
-    touch = artistic_final_touch_sentence(data, lang, detail_level)
+def append_artistic_final_touch(
+    data: JsonDict,
+    prompt: str,
+    preset: JsonDict,
+    picked: Dict[str, Entry],
+    lang: str,
+    detail_level: str,
+) -> str:
+    quality_profile = candidate_pack_quality_profile_from_selected(data, preset, picked)
+    touch = artistic_final_touch_sentence(
+        data,
+        lang,
+        detail_level,
+        str(quality_profile.get("profile_id") or "general"),
+    )
     if not touch:
         return clean_spaces(prompt)
     prompt_clean = clean_spaces(prompt)
     if prompt_clean.lower().endswith(touch.lower()):
+        return prompt_clean
+    word_budget = {"compact": 120, "standard": 150, "detailed": 190}.get(detail_level, 150)
+    if lang == "en" and len(f"{prompt_clean} {touch}".split()) > word_budget:
         return prompt_clean
     return clean_spaces(f"{prompt_clean} {touch}")
 
@@ -11262,7 +11684,7 @@ def render_compact_prompt(
         "world": {"world"},
     }
     for section in ("palette_mood", "finish", "caption_context", "world"):
-        if lang != "en" or len(prompt.split()) <= 140:
+        if lang != "en" or len(prompt.split()) <= 120:
             break
         if forced_slots & section_forced_slots.get(section, set()):
             continue
@@ -11333,7 +11755,7 @@ def render_prompt(
 
     prompt = append_render_contract_sentences(prompt, lang, additional_requirements, likeness_mode)
     prompt = append_photographic_craft(data, prompt, preset, render_picked, lang, detail_level)
-    return append_artistic_final_touch(data, prompt, lang, detail_level)
+    return append_artistic_final_touch(data, prompt, preset, render_picked, lang, detail_level)
 
 
 def choose_negative_entries(
@@ -11342,7 +11764,6 @@ def choose_negative_entries(
     count: int = 12,
     include_surreal: bool = False,
     picked: Optional[Dict[str, Entry]] = None,
-    safety_transform_approved: bool = True,
 ) -> List[Entry]:
     picked = picked or {}
     negative_pools = data.get("negative_prompt_pools", {})
@@ -11389,7 +11810,7 @@ def choose_negative_entries(
                 entries.append(entry)
                 seen.add(key)
 
-    if negative_pools and safety_transform_approved:
+    if negative_pools:
         screen_context = {
             "screen",
             "server",
@@ -11602,13 +12023,17 @@ def generate_once(
     batch_index: int = 0,
     additional_requirements: Optional[Sequence[str]] = None,
     likeness_mode: str = "off",
+    likeness_references: Optional[Sequence[str]] = None,
+    user_mandatory_intents: Optional[Sequence[str]] = None,
+    concept_gate_results: Optional[Sequence[JsonDict]] = None,
+    concept_scene_variants: Optional[Sequence[str]] = None,
+    safety_evaluation_requested: bool = False,
     soft_anchor_spec: Optional[JsonDict] = None,
     source_argv: Optional[Sequence[str]] = None,
     seed: Optional[int] = None,
     anchor_diversity_ledger: Optional[JsonDict] = None,
     creativity: Optional[float] = None,
     novelty_explicit: bool = False,
-    safety_transform_policy: str = "approved",
 ) -> JsonDict:
     requested_selection_mode = requested_selection_mode or selection_mode
     effective_selection_mode = selection_mode
@@ -11657,8 +12082,12 @@ def generate_once(
         concept_locks=concept_locks,
         additional_requirements=additional_requirements,
         likeness_mode=likeness_mode,
+        likeness_references=likeness_references,
+        user_mandatory_intents=user_mandatory_intents,
+        concept_gate_results=concept_gate_results,
+        concept_scene_variants=concept_scene_variants,
+        safety_evaluation_requested=safety_evaluation_requested,
         soft_anchor_spec=soft_anchor_spec,
-        safety_transform_policy=safety_transform_policy,
     )
     expand_soft_anchor_pools(generation_contract, semantic_context, data)
     affinity_status = soft_preset_affinity_status(
@@ -11723,6 +12152,10 @@ def generate_once(
                 forced_choices,
                 additional_requirements=additional_requirements,
                 likeness_mode=likeness_mode,
+                likeness_references=likeness_references,
+                user_mandatory_intents=user_mandatory_intents,
+                concept_gate_results=concept_gate_results,
+                safety_evaluation_requested=safety_evaluation_requested,
                 soft_anchor_spec=soft_anchor_spec,
             )
             sync_generation_contract_axis_coverage(generation_contract, semantic_context)
@@ -11739,6 +12172,10 @@ def generate_once(
         forced_choices,
         additional_requirements=additional_requirements,
         likeness_mode=likeness_mode,
+        likeness_references=likeness_references,
+        user_mandatory_intents=user_mandatory_intents,
+        concept_gate_results=concept_gate_results,
+        safety_evaluation_requested=safety_evaluation_requested,
         soft_anchor_spec=soft_anchor_spec,
     )
     sync_generation_contract_axis_coverage(generation_contract, semantic_context)
@@ -11761,6 +12198,10 @@ def generate_once(
         surreal_enabled=surreal_active,
         additional_requirements=additional_requirements,
         likeness_mode=likeness_mode,
+        likeness_references=likeness_references,
+        user_mandatory_intents=user_mandatory_intents,
+        concept_gate_results=concept_gate_results,
+        safety_evaluation_requested=safety_evaluation_requested,
         soft_anchor_spec=soft_anchor_spec,
     )
     sync_generation_contract_axis_coverage(generation_contract, semantic_context)
@@ -11840,6 +12281,10 @@ def generate_once(
             surreal_enabled=surreal_active,
             additional_requirements=additional_requirements,
             likeness_mode=likeness_mode,
+            likeness_references=likeness_references,
+            user_mandatory_intents=user_mandatory_intents,
+            concept_gate_results=concept_gate_results,
+            safety_evaluation_requested=safety_evaluation_requested,
             soft_anchor_spec=soft_anchor_spec,
         )
         sync_generation_contract_axis_coverage(generation_contract, semantic_context)
@@ -11908,14 +12353,12 @@ def generate_once(
         }
 
     if include_negative:
-        safety_transform_approved = safety_transform_policy == "approved"
         negative_entries = choose_negative_entries(
             data,
             rng,
             negative_count,
             has_surreal_layer(render_picked),
             render_picked,
-            safety_transform_approved=safety_transform_approved,
         )
         soft_suppress_entries = soft_render_suppress_negative_entries(generation_contract.get("soft_anchor_policy"))
         soft_suppress_entries.extend(soft_render_directive_negative_entries(directive_events))
@@ -11946,7 +12389,13 @@ def generate_once(
         "concept_lock": normalize_concept_locks(concept_locks),
         "additional_requirements": effective_additional_requirements,
         "likeness_mode": likeness_mode,
-        "safety_transform_policy": safety_transform_policy,
+        "likeness_references": normalize_list(likeness_references),
+        "user_mandatory_intents": normalize_list(user_mandatory_intents),
+        "concept_gate_results": [
+            dict(item) for item in concept_gate_results or [] if isinstance(item, dict)
+        ],
+        "concept_scene_variants": normalize_list(concept_scene_variants),
+        "safety": generation_contract.get("safety", {}),
         "creativity": (semantic_context or {}).get("creativity"),
         "argv": list(source_argv or []),
     }
@@ -12159,6 +12608,15 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         default="off",
         help="Prompt-level real-person likeness handling. Use inspired for an original fictional person inspired by styling/vibe.",
     )
+    parser.add_argument("--likeness-reference", dest="likeness_references", action="append", default=[], help=argparse.SUPPRESS)
+    parser.add_argument("--user-mandatory-intent", dest="user_mandatory_intents", action="append", default=[], help=argparse.SUPPRESS)
+    parser.add_argument("--concept-gates-json", dest="concept_gate_payloads", action="append", default=[], help=argparse.SUPPRESS)
+    parser.add_argument("--concept-scene-variant", dest="concept_scene_variants", action="append", default=[], help=argparse.SUPPRESS)
+    parser.add_argument(
+        "--safety-evaluation",
+        action="store_true",
+        help="Explicitly include a safety evaluation report. Normal generation uses a simple automatic-pass safety contract.",
+    )
     parser.add_argument("--selection-mode", choices=SELECTION_MODES, default=DEFAULT_SELECTION_MODE, help="Selection mode. semantic is the default; use rule for the original deterministic weighted path.")
     parser.add_argument("--default-intent", action="store_true", help=argparse.SUPPRESS)
     parser.add_argument("--semantic-default", action="store_true", help=argparse.SUPPRESS)
@@ -12175,12 +12633,6 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     parser.add_argument("--semantic-dimensions", type=int, default=DEFAULT_SEMANTIC_DIMENSIONS, help="Gemini embedding dimensions required by the semantic index.")
     parser.add_argument("--soft-anchor-spec", dest="soft_anchor_specs", action="append", default=[], help=argparse.SUPPRESS)
     parser.add_argument("--soft-requirement", dest="soft_requirements", action="append", default=[], help=argparse.SUPPRESS)
-    parser.add_argument(
-        "--safety-transform-policy",
-        choices=SAFETY_TRANSFORM_POLICIES,
-        default="approved",
-        help=argparse.SUPPRESS,
-    )
     parser.add_argument("--anchor-diversity-ledger", default=None, help=argparse.SUPPRESS)
     parser.add_argument("--include-trace", action="store_true", help="Include semantic/rewrite trace metadata in JSON output.")
     parser.add_argument("--llm-polish", choices=LLM_POLISH_MODES, default="off", help="Optional strict prompt polish contract. strict currently preserves the deterministic prompt unless a provider is wired explicitly.")
@@ -12223,6 +12675,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         load_forced_choices_from_json(args.set_json),
     )
     soft_anchor_spec = parse_soft_anchor_specs(args.soft_anchor_specs)
+    concept_gate_results = parse_json_object_list(args.concept_gate_payloads, "--concept-gates-json")
     effective_additional_requirements = list(args.additional_requirements)
     effective_additional_requirements.extend(
         f"Soft visual guidance: {requirement}"
@@ -12321,13 +12774,17 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             semantic_dimensions=args.semantic_dimensions,
             additional_requirements=effective_additional_requirements,
             likeness_mode=args.likeness_mode,
+            likeness_references=args.likeness_references,
+            user_mandatory_intents=args.user_mandatory_intents,
+            concept_gate_results=concept_gate_results,
+            concept_scene_variants=args.concept_scene_variants,
+            safety_evaluation_requested=args.safety_evaluation,
             soft_anchor_spec=soft_anchor_spec,
             source_argv=raw_args,
             seed=args.seed,
             anchor_diversity_ledger=anchor_diversity_ledger if args.anchor_diversity_ledger else None,
             creativity=args.creativity,
             novelty_explicit=novelty_explicit,
-            safety_transform_policy=args.safety_transform_policy,
         )
         results.append(result)
         if args.anchor_diversity_ledger:
