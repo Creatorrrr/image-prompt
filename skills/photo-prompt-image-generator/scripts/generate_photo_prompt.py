@@ -24,8 +24,7 @@ DEFAULT_SEMANTIC_INTENT = (
     "lighting, mood, camera, composition, texture, and format"
 )
 CONCEPT_MODES = {"legacy", "soft"}
-SAFETY_TRANSFORM_APPROVAL_FLAG = "--approve-safety-transforms"
-SAFETY_TRANSFORM_POLICY_OPTION = "--safety-transform-policy"
+SAFETY_EVALUATION_FLAG = "--safety-evaluation"
 SAFETY_TRANSFORM_TEXT_TOKENS = (
     "adult",
     "minor",
@@ -451,16 +450,6 @@ def is_safety_transform_text(value: str) -> bool:
     return any(token in lowered for token in SAFETY_TRANSFORM_TEXT_TOKENS)
 
 
-def approved_or_neutral_additional_requirements(
-    values: Sequence[str],
-    *,
-    safety_transform_approved: bool,
-) -> list[str]:
-    if safety_transform_approved:
-        return list(values)
-    return [value for value in values if not is_safety_transform_text(str(value))]
-
-
 def safety_transform_items_for_recipe(label: str, recipe: dict[str, Any]) -> list[dict[str, Any]]:
     items: list[dict[str, Any]] = []
 
@@ -489,10 +478,10 @@ def safety_transform_items_for_recipe(label: str, recipe: dict[str, Any]) -> lis
     return items
 
 
-def approval_required_safety_transform_payload(
+def safety_evaluation_payload(
     items: Sequence[dict[str, Any]],
     *,
-    approved: bool,
+    requested: bool,
 ) -> dict[str, Any]:
     unique_items: list[dict[str, Any]] = []
     seen: set[str] = set()
@@ -502,17 +491,20 @@ def approval_required_safety_transform_payload(
             continue
         seen.add(key)
         unique_items.append(item)
-    if not unique_items:
-        return {}
+    evaluated_items = [
+        {
+            **item,
+            "status": "pass",
+            "finding": "declarative prompt transform retained",
+        }
+        for item in unique_items
+    ]
     return {
-        "requires_user_approval": True,
-        "default": "off",
-        "status": "approved" if approved else "pending",
-        "ask_before_use": (
-            "이 요청에는 안전을 위해 원문 프롬프트를 바꾸거나 negative/slot 보정을 추가하는 단계가 있습니다. "
-            "적용할까요? 거절하면 해당 안전 보정은 주입하지 않고 원래 의도를 유지하되, 생성이 차단될 수 있습니다."
-        ),
-        "items": unique_items,
+        "mode": "explicit_evaluation" if requested else "automatic",
+        "evaluation_requested": requested,
+        "status": "pass",
+        "requires_user_approval": False,
+        "items": evaluated_items if requested else [],
     }
 
 
@@ -685,19 +677,17 @@ def soft_anchor_specs_from_mapping(
     recipe: dict[str, Any],
     source: str,
     explicit_user_set_slots: set[str],
-    *,
-    safety_transform_approved: bool = True,
 ) -> list[dict[str, Any]]:
     anchor_slots = recipe_soft_anchor_slots(recipes, recipe)
     free_slots = recipe_soft_free_slots(recipes, recipe)
     critical_slots = critical_anchor_slots_for_recipe(recipe)
     floors = anchor_floor_for_recipe(recipe)
     group_floors = anchor_group_floor_for_recipe(recipe)
-    visual_guards = visual_guards_for_recipe(recipe) if safety_transform_approved else []
+    visual_guards = visual_guards_for_recipe(recipe)
     render_priority_terms = render_priority_terms_for_recipe(recipe)
-    free_slot_constraints = free_slot_constraints_for_recipe(recipe) if safety_transform_approved else {}
-    render_suppress_terms = render_suppress_terms_for_recipe(recipe) if safety_transform_approved else []
-    render_directives = render_directives_for_recipe(recipe) if safety_transform_approved else []
+    free_slot_constraints = free_slot_constraints_for_recipe(recipe)
+    render_suppress_terms = render_suppress_terms_for_recipe(recipe)
+    render_directives = render_directives_for_recipe(recipe)
     dual_read_requirement = dual_read_requirement_for_recipe(recipe)
     preset_affinity = preset_affinity_for_recipe(recipe)
     role_scene_policy = role_scene_policy_for_recipe(recipe)
@@ -706,8 +696,8 @@ def soft_anchor_specs_from_mapping(
     role_scene_group = ""
     if role_scene_policy.get("enabled") and role_scene_locations:
         role_scene_group = "role_scene:" + str(role_scene_policy.get("scene_family") or source)
-    soft_repair_policy = soft_repair_policy_for_recipe(recipe) if safety_transform_approved else {}
-    safety_negative_floor = safety_negative_floor_for_recipe(recipe) if safety_transform_approved else []
+    soft_repair_policy = soft_repair_policy_for_recipe(recipe)
+    safety_negative_floor = safety_negative_floor_for_recipe(recipe)
     mixin_cue_budget = mixin_cue_budget_for_recipe(recipe)
     specs: list[dict[str, Any]] = []
     mapped_slots: set[str] = set()
@@ -1037,9 +1027,16 @@ def evaluate_gate_assert(
 
     if kind == "mixin_shape":
         mixin = str(spec.get("mixin") or "")
-        if applied_mixins != [mixin]:
-            return False, f"applied_mixins={applied_mixins}, expected ['{mixin}']"
-        return True, f"applied_mixins == ['{mixin}']" + (f" with role {role}" if role else " standalone")
+        allowed = {mixin, *normalize_list(spec.get("allow_additional"))}
+        if mixin not in applied_mixins or any(item not in allowed for item in applied_mixins):
+            return False, (
+                f"applied_mixins={applied_mixins}, expected '{mixin}' with only allowed additions "
+                f"{sorted(allowed - {mixin})}"
+            )
+        if len(applied_mixins) != len(set(applied_mixins)):
+            return False, f"applied_mixins contains duplicates: {applied_mixins}"
+        detail = f"applied_mixins accepted {applied_mixins}"
+        return True, detail + (f" with role {role}" if role else " standalone")
 
     if kind == "forced_slot_any":
         slot = str(spec.get("slot") or "")
@@ -1072,14 +1069,27 @@ def evaluate_gate_assert(
         if not role or not role_recipe:
             return True, "no role applied (not applicable)"
         role_mapping = forced_sets_to_mapping(set_values_to_forced(role_recipe.get("set")))
+        bundle_mappings = [
+            forced_sets_to_mapping(set_values_to_forced(bundle.get("set")))
+            for bundle in explanation.get("selected_bundles") or []
+            if isinstance(bundle, dict)
+        ]
         for slot in ("costume_style", "wardrobe_style"):
             role_values = set(normalize_list(role_mapping.get(slot)))
             if not role_values:
                 continue
             forced_values = set(normalize_list(forced.get(slot)))
-            if forced_values and not (forced_values & role_values):
-                return False, f"slot {slot} forced to {sorted(forced_values)}, role expects {sorted(role_values)}"
-        return True, "role costume slots preserved"
+            authorized_values = set(role_values)
+            for bundle_mapping in bundle_mappings:
+                authorized_values.update(normalize_list(bundle_mapping.get(slot)))
+            if not forced_values:
+                return False, f"slot {slot} is not forced; expected role or selected-bundle wardrobe"
+            if not (forced_values & authorized_values):
+                return False, (
+                    f"slot {slot} forced to {sorted(forced_values)}, expected role or selected-bundle values "
+                    f"{sorted(authorized_values)}"
+                )
+        return True, "role costume slots preserved or explicitly transformed by the selected bundle"
 
     return False, f"unknown assert type {kind!r}"
 
@@ -1151,7 +1161,7 @@ def build_soft_anchor_spec(
     min_anchor_candidates: Sequence[int],
     concept: str,
     anchor_expansion: dict[str, Any] | None = None,
-    approval_required_safety_transforms: dict[str, Any] | None = None,
+    safety_evaluation: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     anchors = dedupe_soft_anchor_specs(specs)
     source_floors: dict[str, int] = {}
@@ -1283,13 +1293,20 @@ def build_soft_anchor_spec(
         "mixin_cue_budget": min(mixin_cue_budgets) if mixin_cue_budgets else 0,
         "anchors": anchors,
     }
-    if isinstance(approval_required_safety_transforms, dict) and approval_required_safety_transforms:
-        result["approval_required_safety_transforms"] = approval_required_safety_transforms
+    if isinstance(safety_evaluation, dict) and safety_evaluation:
+        result["safety_evaluation"] = safety_evaluation
     return result
 
 
 def soft_anchor_spec_has_runtime_controls(spec: dict[str, Any]) -> bool:
-    return bool(spec.get("visual_guards"))
+    return bool(
+        spec.get("anchors")
+        or spec.get("visual_guards")
+        or spec.get("free_slot_constraints")
+        or spec.get("render_directives")
+        or spec.get("render_suppress_terms")
+        or spec.get("safety_negative_floor")
+    )
 
 
 def resolve_concept_mode(values: Sequence[str]) -> str:
@@ -1310,11 +1327,35 @@ def canonicalize_concept(concept: str, recipes: dict[str, Any]) -> str:
     if not isinstance(aliases, dict):
         return concept
     normalized = concept
+    roles = recipes.get("roles", {}) if isinstance(recipes, dict) else {}
+    non_role_followers = {
+        "시스템",
+        "정책",
+        "기술",
+        "설정",
+        "카메라",
+        "솔루션",
+        "프로그램",
+        "장치",
+        "산업",
+    }
     for alias, canonical in sorted(aliases.items(), key=lambda item: len(str(item[0])), reverse=True):
         alias_text = str(alias or "").strip()
         canonical_text = str(canonical or "").strip()
         if alias_text and canonical_text:
-            normalized = normalized.replace(alias_text, canonical_text)
+            pattern = re.compile(
+                rf"(?<![A-Za-z0-9가-힣]){re.escape(alias_text)}(?![A-Za-z0-9가-힣])"
+            )
+
+            def replace(match: re.Match[str]) -> str:
+                if canonical_text in roles:
+                    tail = normalized[match.end() :].lstrip()
+                    follower = tail.split(None, 1)[0] if tail else ""
+                    if follower in non_role_followers:
+                        return match.group(0)
+                return canonical_text
+
+            normalized = pattern.sub(replace, normalized)
     return normalized
 
 
@@ -1682,6 +1723,46 @@ def select_bundle_for_mixin(
     return dict(bundles[-1])
 
 
+def select_recipe_scene_variant(
+    concept: str,
+    recipe: dict[str, Any],
+    args: Sequence[str],
+) -> dict[str, Any] | None:
+    raw_variants = recipe.get("scene_variants")
+    variants = [dict(item) for item in raw_variants or [] if isinstance(item, dict)]
+    if not variants:
+        return None
+    weights = [max(float(item.get("weight", 1) or 0), 0.0) for item in variants]
+    total = sum(weights)
+    if total <= 0:
+        return variants[0]
+    seed = option_value(args, "--seed") or ""
+    digest = hashlib.sha256(f"scene-variant|{concept}|{seed}".encode("utf-8")).digest()
+    threshold = int.from_bytes(digest[:8], "big") / 2**64 * total
+    cursor = 0.0
+    for variant, weight in zip(variants, weights):
+        cursor += weight
+        if threshold < cursor:
+            return variant
+    return variants[-1]
+
+
+def resolved_role_set(
+    recipe: dict[str, Any],
+    scene_variant: dict[str, Any] | None,
+) -> list[str]:
+    if not isinstance(recipe.get("identity_core"), dict):
+        return set_values_to_forced(recipe.get("set"))
+    identity = set_values_to_forced(recipe.get("identity_core"))
+    scene = set_values_to_forced((scene_variant or {}).get("set"))
+    return merge_forced_set_groups(
+        [
+            (identity, set()),
+            (scene, forced_set_slots(scene)),
+        ]
+    )
+
+
 def add_option(args: list[str], name: str, value: str) -> None:
     if value:
         args.extend([name, value])
@@ -1692,7 +1773,8 @@ def resolve_concepts(
     concepts: Sequence[str],
     concept_mode: str = "legacy",
     concept_mode_explicit: bool = True,
-    safety_transform_approved: bool = True,
+    safety_evaluation_requested: bool = False,
+    enforce_gates: bool = True,
 ) -> tuple[list[str], list[dict[str, Any]]]:
     if concept_mode not in CONCEPT_MODES:
         raise ValueError("--concept-mode must be one of: legacy, soft")
@@ -1738,12 +1820,13 @@ def resolve_concepts(
                 effective_mode = recipe_default
         selected_bundles: list[dict[str, Any]] = []
         selected_species_variants: list[dict[str, Any]] = []
+        selected_scene_variants: list[dict[str, Any]] = []
         set_groups: list[tuple[Sequence[str], set[str]]] = []
         applied_recipes = [recipe] if recipe else []
         scaffold_recipes: list[dict[str, Any]] = [recipe] if recipe else []
         additional_requirements: list[str] = []
         soft_safety_requirements: list[str] = []
-        approval_required_safety_transform_items: list[dict[str, Any]] = []
+        safety_evaluation_items: list[dict[str, Any]] = []
         soft_salience_cues: list[str] = []
         soft_mixin_cue_budgets: list[int] = []
         intent_axes: list[str] = []
@@ -1751,10 +1834,29 @@ def resolve_concepts(
         soft_min_anchor_candidates: list[int] = []
 
         if recipe:
-            approval_required_safety_transform_items.extend(
+            role_scene_variant = select_recipe_scene_variant(concept, recipe, args)
+            if role_scene_variant:
+                scaffold_recipes.append(role_scene_variant)
+                add_option(resolved_args, "--concept-scene-variant", str(role_scene_variant.get("id") or ""))
+                selected_scene_variants.append(
+                    {
+                        "role": role or concept,
+                        "id": str(role_scene_variant.get("id") or ""),
+                        "weight": role_scene_variant.get("weight", 1),
+                        "set": role_scene_variant.get("set", {}),
+                    }
+                )
+            safety_evaluation_items.extend(
                 safety_transform_items_for_recipe(role or concept, recipe)
             )
-            role_set = set_values_to_forced(recipe.get("set"))
+            if role_scene_variant:
+                safety_evaluation_items.extend(
+                    safety_transform_items_for_recipe(
+                        str(role_scene_variant.get("id") or f"{role}_scene"),
+                        role_scene_variant,
+                    )
+                )
+            role_set = resolved_role_set(recipe, role_scene_variant)
             set_groups.append((role_set, set()))
             role_mapping = forced_sets_to_mapping(role_set)
             soft_anchor_specs.extend(
@@ -1764,11 +1866,11 @@ def resolve_concepts(
                     recipe,
                     "role",
                     explicit_user_set_slots,
-                    safety_transform_approved=safety_transform_approved,
                 )
             )
             soft_min_anchor_candidates.append(soft_min_anchors_for_recipe(recipe, 1))
             additional_requirements.extend(normalize_list(recipe.get("additional")))
+            additional_requirements.extend(normalize_list((role_scene_variant or {}).get("additional")))
             soft_safety_requirements.extend(soft_safety_requirements_for_recipe(recipe))
             soft_salience_cues.extend(soft_salience_cues_for_recipe(recipe))
             budget = mixin_cue_budget_for_recipe(recipe)
@@ -1782,11 +1884,12 @@ def resolve_concepts(
                 )
             )
             intent_axes.extend(normalize_list(recipe.get("intent_axis")))
+            intent_axes.extend(normalize_list((role_scene_variant or {}).get("intent_axis")))
 
         for mixin, mixin_recipe in mixin_matches:
             applied_recipes.append(mixin_recipe)
             scaffold_recipes.append(mixin_recipe)
-            approval_required_safety_transform_items.extend(
+            safety_evaluation_items.extend(
                 safety_transform_items_for_recipe(mixin, mixin_recipe)
             )
             selected_bundle = select_bundle_for_mixin(concept, mixin, mixin_recipe, args, role)
@@ -1810,7 +1913,7 @@ def resolve_concepts(
             species_variant = select_mixin_species_variant(concept, mixin, mixin_recipe, args, role=role or "")
             if species_variant:
                 scaffold_recipes.append(species_variant)
-                approval_required_safety_transform_items.extend(
+                safety_evaluation_items.extend(
                     safety_transform_items_for_recipe(
                         str(species_variant.get("id") or f"{mixin}_variant"),
                         species_variant,
@@ -1826,7 +1929,6 @@ def resolve_concepts(
                         species_variant,
                         "mixin",
                         explicit_user_set_slots,
-                        safety_transform_approved=safety_transform_approved,
                     )
                     if species_family_policy:
                         for spec in variant_specs:
@@ -1854,7 +1956,7 @@ def resolve_concepts(
                 )
             if selected_bundle:
                 scaffold_recipes.append(selected_bundle)
-                approval_required_safety_transform_items.extend(
+                safety_evaluation_items.extend(
                     safety_transform_items_for_recipe(
                         str(selected_bundle.get("id") or f"{mixin}_bundle"),
                         selected_bundle,
@@ -1873,7 +1975,6 @@ def resolve_concepts(
                             mixin_recipe,
                             "mixin",
                             explicit_user_set_slots,
-                            safety_transform_approved=safety_transform_approved,
                         )
                     )
                     soft_min_anchor_candidates.append(soft_min_anchors_for_recipe(mixin_recipe, 1))
@@ -1887,7 +1988,6 @@ def resolve_concepts(
                         selected_bundle,
                         "bundle",
                         explicit_user_set_slots,
-                        safety_transform_approved=safety_transform_approved,
                     )
                 )
                 soft_min_anchor_candidates.append(
@@ -1930,20 +2030,15 @@ def resolve_concepts(
                             mixin_recipe,
                             "mixin",
                             explicit_user_set_slots,
-                            safety_transform_approved=safety_transform_approved,
                         )
                     )
                     soft_min_anchor_candidates.append(soft_min_anchors_for_recipe(mixin_recipe, 1))
 
         combined_sets = merge_forced_set_groups(set_groups)
         expansion_config = anchor_expansion_config(recipes, applied_recipes)
-        approval_required_safety_transforms = (
-            {}
-            if safety_transform_approved
-            else approval_required_safety_transform_payload(
-                approval_required_safety_transform_items,
-                approved=False,
-            )
+        safety_evaluation = safety_evaluation_payload(
+            safety_evaluation_items,
+            requested=safety_evaluation_requested,
         )
         add_option(resolved_args, "--concept-lock", concept)
 
@@ -1969,7 +2064,7 @@ def resolve_concepts(
                         soft_min_anchor_candidates,
                         concept,
                         expansion_config,
-                        approval_required_safety_transforms,
+                        safety_evaluation,
                     ),
                     scaffold_recipes,
                 )
@@ -1983,10 +2078,7 @@ def resolve_concepts(
                         "--soft-anchor-spec",
                         json.dumps(soft_anchor_spec, ensure_ascii=False, separators=(",", ":")),
                     )
-            for requirement in approved_or_neutral_additional_requirements(
-                additional_requirements,
-                safety_transform_approved=safety_transform_approved,
-            ):
+            for requirement in additional_requirements:
                 add_option(resolved_args, "--additional-requirement", requirement)
         elif soft_anchor_specs:
             soft_anchor_spec = apply_reference_scaffold_fields(
@@ -1995,7 +2087,7 @@ def resolve_concepts(
                     soft_min_anchor_candidates,
                     concept,
                     expansion_config,
-                    approval_required_safety_transforms,
+                    safety_evaluation,
                 ),
                 scaffold_recipes,
             )
@@ -2009,12 +2101,8 @@ def resolve_concepts(
                 # Role/mixin/bundle descriptive guidance is identity-bearing
                 # (e.g. Joseon-court styling); soft mode keeps it alongside the
                 # safety floor instead of dropping it with the forced slots.
-                effective_requirements = approved_or_neutral_additional_requirements(
-                    additional_requirements,
-                    safety_transform_approved=safety_transform_approved,
-                )
-                if safety_transform_approved:
-                    effective_requirements.extend(soft_safety_requirements)
+                effective_requirements = list(additional_requirements)
+                effective_requirements.extend(soft_safety_requirements)
                 for requirement in dict.fromkeys(effective_requirements):
                     add_option(resolved_args, "--additional-requirement", requirement)
                 defaults = recipes.get("soft_anchor_defaults", {}) if isinstance(recipes, dict) else {}
@@ -2032,8 +2120,9 @@ def resolve_concepts(
                 (str(mixin_recipe.get("likeness_mode") or "") for _, mixin_recipe in mixin_matches if mixin_recipe.get("likeness_mode")),
                 "",
             )
-        if effective_mode == "legacy" and likeness_mode and not has_likeness_value:
+        if likeness_mode and name and not has_likeness_value:
             add_option(resolved_args, "--likeness-mode", likeness_mode)
+            add_option(resolved_args, "--likeness-reference", name)
             has_likeness_value = True
 
         if not applied_recipes:
@@ -2055,6 +2144,7 @@ def resolve_concepts(
             "mixins": {mixin: mixin_recipe for mixin, mixin_recipe in mixin_matches},
             "selected_bundles": selected_bundles,
             "selected_species_variants": selected_species_variants,
+            "selected_scene_variants": selected_scene_variants,
             "combined_forced_slots": forced_sets_to_mapping(combined_sets),
             "soft_anchor_spec": merge_affine_presets(
                 apply_reference_scaffold_fields(
@@ -2063,7 +2153,7 @@ def resolve_concepts(
                         soft_min_anchor_candidates,
                         concept,
                         expansion_config,
-                        approval_required_safety_transforms,
+                        safety_evaluation,
                     ),
                     scaffold_recipes,
                 ),
@@ -2071,12 +2161,26 @@ def resolve_concepts(
             ),
             "forced_slots_applied": effective_mode == "legacy",
         }
-        if approval_required_safety_transforms:
-            explanation["approval_required_safety_transforms"] = approval_required_safety_transforms
+        explanation["safety"] = safety_evaluation
         explanation["guide"] = collect_concept_guides(applied_named)
         review_gates = collect_review_gates(applied_named)
         explanation["review_gates"] = review_gates
-        explanation["gate_results"] = evaluate_review_gates(review_gates, explanation, recipe)
+        gate_results = evaluate_review_gates(review_gates, explanation, recipe)
+        explanation["gate_results"] = gate_results
+        add_option(
+            resolved_args,
+            "--concept-gates-json",
+            json.dumps(gate_results, ensure_ascii=False, separators=(",", ":")),
+        )
+        failed_gates = [
+            str(gate.get("id") or "unknown")
+            for gate in gate_results
+            if isinstance(gate, dict) and gate.get("status") == "fail"
+        ]
+        if failed_gates and enforce_gates:
+            raise ValueError(
+                f"concept review gate failed for '{concept}': {', '.join(failed_gates)}"
+            )
         explanations.append(explanation)
 
     for forced in explicit_user_sets:
@@ -2116,19 +2220,21 @@ def build_forward_args(argv: Sequence[str]) -> list[str]:
 
     plain = "--plain" in args
     no_negative = "--no-negative" in args
-    safety_transform_approved = SAFETY_TRANSFORM_APPROVAL_FLAG in args
-    args = remove_flag(remove_flag(remove_flag(args, "--plain"), "--no-negative"), SAFETY_TRANSFORM_APPROVAL_FLAG)
+    safety_evaluation_requested = SAFETY_EVALUATION_FLAG in args
+    _, user_additional_requirements = extract_option_values(args, "--additional-requirement")
+    args = remove_flag(remove_flag(args, "--plain"), "--no-negative")
     args, concepts = extract_option_values(args, "--concept")
     args, concept_mode_values = extract_option_values(args, "--concept-mode")
     emit_candidate_pack = has_option(args, "--emit-candidate-pack")
     concept_mode = resolve_concept_mode(concept_mode_values or (["soft"] if emit_candidate_pack else []))
-    args, _ = extract_flag(args, "--explain-concept")
+    args, explain_concept = extract_flag(args, "--explain-concept")
     args, _ = resolve_concepts(
         args,
         concepts,
         concept_mode,
         concept_mode_explicit=bool(concept_mode_values) or emit_candidate_pack,
-        safety_transform_approved=safety_transform_approved or not emit_candidate_pack,
+        safety_evaluation_requested=safety_evaluation_requested,
+        enforce_gates=not explain_concept,
     )
     # Wrapper-only option: consumed by species-variant selection, not the engine.
     args, _ = extract_option_values(args, "--exclude-species")
@@ -2156,13 +2262,8 @@ def build_forward_args(argv: Sequence[str]) -> list[str]:
         args.append("--json-output")
     if not no_negative and not has_option(args, "--include-negative"):
         args.append("--include-negative")
-    if emit_candidate_pack and not has_option(args, SAFETY_TRANSFORM_POLICY_OPTION):
-        args.extend(
-            [
-                SAFETY_TRANSFORM_POLICY_OPTION,
-                "approved" if safety_transform_approved else "approval-required",
-            ]
-        )
+    for requirement in user_additional_requirements:
+        args.extend(["--user-mandatory-intent", requirement])
 
     return args
 
@@ -2175,7 +2276,6 @@ def main(argv: Sequence[str] | None = None) -> int:
     if explain_concept:
         forward_args = build_forward_args(raw_args)
         explain_args = extract_flag(concept_args, "--explain-concept")[0]
-        explain_args = remove_flag(explain_args, SAFETY_TRANSFORM_APPROVAL_FLAG)
         explain_args, concept_mode_values = extract_option_values(explain_args, "--concept-mode")
         emit_candidate_pack = has_option(explain_args, "--emit-candidate-pack")
         concept_mode = resolve_concept_mode(concept_mode_values or (["soft"] if emit_candidate_pack else []))
@@ -2184,7 +2284,8 @@ def main(argv: Sequence[str] | None = None) -> int:
             concepts,
             concept_mode,
             concept_mode_explicit=bool(concept_mode_values) or emit_candidate_pack,
-            safety_transform_approved=(SAFETY_TRANSFORM_APPROVAL_FLAG in raw_args) or not emit_candidate_pack,
+            safety_evaluation_requested=SAFETY_EVALUATION_FLAG in raw_args,
+            enforce_gates=False,
         )
         print(json.dumps({"concepts": explanations, "forward_args": forward_args}, ensure_ascii=False, indent=2))
         return 0

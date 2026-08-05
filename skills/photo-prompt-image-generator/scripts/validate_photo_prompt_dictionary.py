@@ -148,6 +148,36 @@ def validate_filter_ids(data: dict[str, Any], errors: list[str]) -> None:
                     errors.append(f"preset:{preset.get('id')}: unknown {slot} id {tag_id}")
 
 
+def validate_selection_contracts(data: dict[str, Any], errors: list[str]) -> None:
+    slots = data.get("slots", {}) or {}
+    for preset in data.get("presets", []) or []:
+        preset_id = str(preset.get("id") or "")
+        required = preset.get("required_slots")
+        if not isinstance(required, list) or not required:
+            errors.append(f"preset:{preset_id}: required_slots must be a non-empty list")
+            continue
+        for slot in required:
+            if str(slot) not in slots:
+                errors.append(f"preset:{preset_id}: required_slots references unknown slot {slot}")
+        try:
+            weight = float(preset.get("weight", 1))
+        except (TypeError, ValueError):
+            errors.append(f"preset:{preset_id}: weight must be numeric")
+        else:
+            if not 0 < weight <= 5:
+                errors.append(f"preset:{preset_id}: weight must be greater than 0 and at most 5")
+    for slot, entries in slots.items():
+        for entry in entries or []:
+            entry_id = str(entry.get("id") or "")
+            try:
+                weight = float(entry.get("weight", 1))
+            except (TypeError, ValueError):
+                errors.append(f"slot:{slot}:{entry_id}: weight must be numeric")
+            else:
+                if not 0 < weight <= 5:
+                    errors.append(f"slot:{slot}:{entry_id}: weight must be greater than 0 and at most 5")
+
+
 def validate_no_text_required_entries(data: dict[str, Any], errors: list[str]) -> None:
     """Require explicit non-readable anchors for text-prone flatlay props and contexts."""
     for label, entry in all_entries(data):
@@ -704,6 +734,12 @@ def validate_quality_layer_artistic_final_touch(quality: dict[str, Any], errors:
         return
     if "enabled" in touch and not isinstance(touch.get("enabled"), bool):
         errors.append("quality_layers.artistic_final_touch.enabled: must be a boolean")
+    if "default_enabled" in touch and not isinstance(touch.get("default_enabled"), bool):
+        errors.append("quality_layers.artistic_final_touch.default_enabled: must be a boolean")
+    profiles = quality.get("quality_profiles") if isinstance(quality.get("quality_profiles"), dict) else {}
+    for profile_id in normalize_list(touch.get("enabled_profiles")):
+        if profile_id not in profiles:
+            errors.append(f"quality_layers.artistic_final_touch.enabled_profiles: unknown profile {profile_id}")
     source = str(touch.get("source") or "").strip()
     if not source:
         errors.append("quality_layers.artistic_final_touch.source: required")
@@ -744,10 +780,13 @@ def validate_quality_layers(path: Path, data: dict[str, Any], errors: list[str])
     try:
         schema_version = int(quality.get("schema_version"))
     except (TypeError, ValueError):
-        errors.append("quality_layers.schema_version: must be 1")
+        errors.append("quality_layers.schema_version: must be 1 or 2")
         schema_version = None
-    if schema_version != 1:
-        errors.append("quality_layers.schema_version: must be 1")
+    if schema_version not in {1, 2}:
+        errors.append("quality_layers.schema_version: must be 1 or 2")
+    profiles = quality.get("quality_profiles", {}) or {}
+    if schema_version == 2 and (not isinstance(profiles, dict) or not profiles):
+        errors.append("quality_layers.quality_profiles: must be a non-empty object for schema 2")
     validate_quality_layer_artistic_final_touch(quality, errors)
     vocab = merged_facet_vocab(data)
     validate_quality_layer_photographic_craft(quality, vocab, errors)
@@ -1256,6 +1295,36 @@ def validate_concept_recipe_entry(
     if "register" in recipe and not isinstance(recipe.get("register"), bool):
         errors.append(f"{label}.register: must be a boolean")
     validate_recipe_set(label, recipe.get("set"), by_slot, errors)
+    identity_core = recipe.get("identity_core")
+    if identity_core is not None:
+        if not isinstance(identity_core, dict) or not identity_core:
+            errors.append(f"{label}.identity_core: must be a non-empty object")
+        else:
+            validate_recipe_set(f"{label}.identity_core", identity_core, by_slot, errors)
+    scene_variants = recipe.get("scene_variants")
+    if scene_variants is not None:
+        if not isinstance(scene_variants, list) or len(scene_variants) < 2:
+            errors.append(f"{label}.scene_variants: must contain at least two variants")
+        else:
+            seen_scene_ids: set[str] = set()
+            for index, variant in enumerate(scene_variants):
+                variant_label = f"{label}.scene_variants[{index}]"
+                if not isinstance(variant, dict):
+                    errors.append(f"{variant_label}: must be an object")
+                    continue
+                variant_id = str(variant.get("id") or "").strip()
+                if not variant_id:
+                    errors.append(f"{variant_label}.id: required")
+                elif variant_id in seen_scene_ids:
+                    errors.append(f"{variant_label}.id: duplicate id {variant_id}")
+                seen_scene_ids.add(variant_id)
+                try:
+                    weight = float(variant.get("weight", 1))
+                except (TypeError, ValueError):
+                    weight = 0.0
+                if weight <= 0:
+                    errors.append(f"{variant_label}.weight: must be greater than 0")
+                validate_recipe_set(variant_label, variant.get("set"), by_slot, errors)
     validate_recipe_slot_list(label, "override_slots", recipe.get("override_slots"), by_slot, errors)
     validate_recipe_slot_list(label, "bundle_override_slots", recipe.get("bundle_override_slots"), by_slot, errors)
     validate_recipe_slot_list(label, "soft_anchor_slots", recipe.get("soft_anchor_slots"), by_slot, errors)
@@ -2041,6 +2110,7 @@ def main() -> int:
     vocab = merged_facet_vocab(data)
 
     validate_filter_ids(data, errors)
+    validate_selection_contracts(data, errors)
     validate_no_text_required_entries(data, errors)
     validate_coherence_rules(data, errors)
     validate_semantic_policy(data, errors)

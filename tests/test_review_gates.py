@@ -52,6 +52,9 @@ class GateAssertTests(unittest.TestCase):
         self.assertTrue(ok)
         ok, _ = self.w.evaluate_gate_assert(spec, {"applied_mixins": ["흡혈귀", "수인"]}, None)
         self.assertFalse(ok)
+        compatible = {**spec, "allow_additional": ["브라이덜"]}
+        ok, _ = self.w.evaluate_gate_assert(compatible, {"applied_mixins": ["흡혈귀", "브라이덜"]}, None)
+        self.assertTrue(ok)
 
     def test_forced_slot_any_assert(self) -> None:
         explanation = {"combined_forced_slots": {"subject": ["beastkin_subject"]}}
@@ -86,10 +89,17 @@ class GateAssertTests(unittest.TestCase):
         role_recipe = {"set": ["costume_style=akihabara_maid_cafe_uniform"]}
         preserved = {"combined_forced_slots": {"costume_style": ["akihabara_maid_cafe_uniform"]}, "role": "메이드"}
         replaced = {"combined_forced_slots": {"costume_style": ["gothic_lolita_dress"]}, "role": "메이드"}
+        bundle_transformed = {
+            "combined_forced_slots": {"costume_style": ["gothic_lolita_dress"]},
+            "role": "메이드",
+            "selected_bundles": [{"set": {"costume_style": "gothic_lolita_dress"}}],
+        }
         ok, _ = self.w.evaluate_gate_assert({"type": "role_costume_preserved"}, preserved, role_recipe)
         self.assertTrue(ok)
         ok, _ = self.w.evaluate_gate_assert({"type": "role_costume_preserved"}, replaced, role_recipe)
         self.assertFalse(ok)
+        ok, _ = self.w.evaluate_gate_assert({"type": "role_costume_preserved"}, bundle_transformed, role_recipe)
+        self.assertTrue(ok)
 
     def test_unknown_assert_type_fails(self) -> None:
         ok, detail = self.w.evaluate_gate_assert({"type": "bogus"}, {}, None)

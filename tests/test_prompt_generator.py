@@ -796,12 +796,66 @@ def load_index_builder():
 
 
 def load_eval_semantic():
-    spec = importlib.util.spec_from_file_location("photo_prompt_eval_semantic", EVAL_SEMANTIC_PATH)
-    if spec is None or spec.loader is None:
-        raise RuntimeError(f"Could not load eval semantic module: {EVAL_SEMANTIC_PATH}")
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return module
+    scripts_dir = str(SKILL_DIR / "scripts")
+    inserted = False
+    if scripts_dir not in sys.path:
+        sys.path.insert(0, scripts_dir)
+        inserted = True
+    try:
+        spec = importlib.util.spec_from_file_location("photo_prompt_eval_semantic", EVAL_SEMANTIC_PATH)
+        if spec is None or spec.loader is None:
+            raise RuntimeError(f"Could not load eval semantic module: {EVAL_SEMANTIC_PATH}")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        return module
+    finally:
+        if inserted:
+            sys.path.remove(scripts_dir)
+
+
+def prepare_audit_fixture(pack, *composed_payloads):
+    """Finish hand-written audit fixtures with the strict v2 transport contract."""
+    pack.setdefault("contract_version", "photo-candidate-pack/v2")
+    pack.setdefault(
+        "safety",
+        {
+            "mode": "automatic",
+            "evaluation_requested": False,
+            "status": "pass",
+            "requires_user_approval": False,
+            "items": [],
+        },
+    )
+    pack.setdefault("concept_gates", [])
+
+    candidate_ids = [
+        str(candidate.get("id"))
+        for candidate in pack.get("presets", [])
+        if isinstance(candidate, dict) and candidate.get("id")
+    ]
+    for slot_payload in (pack.get("slots") or {}).values():
+        if not isinstance(slot_payload, dict):
+            continue
+        candidate_ids.extend(
+            str(candidate.get("id"))
+            for candidate in slot_payload.get("candidates", [])
+            if isinstance(candidate, dict) and candidate.get("id")
+        )
+    if not candidate_ids:
+        pack.setdefault("presets", []).append({"id": "preset:test_fixture"})
+        candidate_ids.append("preset:test_fixture")
+
+    hashable = dict(pack)
+    hashable["pack_id"] = None
+    canonical = json.dumps(hashable, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+    pack["pack_id"] = hashlib.sha256(canonical.encode("utf-8")).hexdigest()[:16]
+    for composed in composed_payloads:
+        composed["pack_id"] = pack["pack_id"]
+        composed.setdefault("negative_en", pack.get("negative_en"))
+        composed.setdefault("composer", "agent")
+        if not composed.get("chosen_candidate_ids"):
+            composed["chosen_candidate_ids"] = [candidate_ids[0]]
+    return (pack, *composed_payloads)
 
 
 class PromptGeneratorRegressionTests(unittest.TestCase):
@@ -1749,57 +1803,23 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertEqual(concept["role"], "회사원")
         self.assertEqual(concept["applied_mixins"], [])
         self.assertEqual(concept["combined_forced_slots"]["subject"], ["office_worker"])
-        self.assertEqual(concept["combined_forced_slots"]["person_origin"], ["south_korea"])
+        self.assertNotIn("person_origin", concept["combined_forced_slots"])
         self.assertEqual(concept["combined_forced_slots"]["appearance_type"], ["corporate_professional"])
         self.assertEqual(concept["combined_forced_slots"]["wardrobe_style"], ["clean_blazer_trousers"])
-        self.assertEqual(
-            set(concept["combined_forced_slots"]["prop"]),
-            {
-                "staff_lanyard_badge_prop",
-                "security_access_card_prop",
-            },
-        )
-        self.assertTrue(
-            {
-                "glass_office",
-                "subway_transfer_passage",
-                "mirrored_elevator_box",
-            }.issubset(set(concept["combined_forced_slots"]["location"]))
-        )
-        self.assertTrue(
-            {
-                "checking_wristwatch_timing",
-                "commuting_night",
-                "standing_in_subway_car",
-            }.issubset(set(concept["combined_forced_slots"]["action"]))
-        )
-        self.assertTrue(
-            {
-                "fluorescent",
-                "monitor_glow",
-                "subway_car_fluorescent_light",
-            }.issubset(set(concept["combined_forced_slots"]["lighting"]))
-        )
-        self.assertTrue(
-            {
-                "monitor_rectangle_glow",
-                "barcode_shadow_bars",
-                "elevator_gap_sliver_light",
-            }.issubset(set(concept["combined_forced_slots"]["light_shape"]))
-        )
-        self.assertTrue(
-            {
-                "one_still_in_motion_blur_frame",
-                "architectural_lines_frame",
-                "document_foreground_face_background",
-            }.issubset(set(concept["combined_forced_slots"]["composition"]))
-        )
+        self.assertEqual(len(concept["selected_scene_variants"]), 1)
+        selected_scene = concept["selected_scene_variants"][0]
+        self.assertIn(selected_scene["id"], {"glass_office_task", "commute_threshold", "late_ledger_shift"})
+        self.assertEqual(len(concept["recipe"]["scene_variants"]), 3)
+        for slot, values in selected_scene["set"].items():
+            expected_values = values if isinstance(values, list) else [values]
+            self.assertEqual(concept["combined_forced_slots"][slot], expected_values)
         joined = " ".join(payload["forward_args"])
         self.assertIn("organizational anonymity", joined)
         self.assertIn("time discipline", joined)
         self.assertIn("commute fatigue", joined)
         self.assertIn("Avoid office-siren glamour", joined)
-        self.assertIn("--likeness-mode", payload["forward_args"])
+        self.assertNotIn("Korean salaried", joined)
+        self.assertNotIn("--likeness-mode", payload["forward_args"])
         self.assertNotIn("witch_robe_wide_hat", joined)
         self.assertNotIn("traditional_shrine_interior", joined)
 
@@ -2776,7 +2796,39 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
 
     def test_visual_review_summary_reports_body_drift(self):
         eval_semantic = load_eval_semantic()
-        summary = eval_semantic.summarize_visual_review(ROOT / "review_images" / "semantic_soft_v4_review" / "review.json")
+        cases = []
+        for index in range(7):
+            cases.append(
+                {
+                    "case": f"review-{index}",
+                    "prompt_id": f"prompt-{index}",
+                    "image_id": f"image-{index}",
+                    "dual_read": "pass",
+                    "archetype_first_read": "pass",
+                    "body_drift": "present" if index == 3 else "none",
+                    "preset_conflict": "none",
+                    "role_anchor": "pass",
+                    "mixin_anchor": "pass",
+                    "body_coverage_guard": "pass",
+                    "render_modality": "pass",
+                    "framing_constraint": "pass",
+                    "body_emphasis_survived": "no",
+                }
+            )
+        payload = {
+            "schema_version": "photo-visual-review/v1",
+            "provenance": {
+                "generator_version": "test",
+                "tags_hash": "test-tags",
+                "reviewer": "unit-test",
+                "reviewed_at": "2026-08-05T00:00:00Z",
+            },
+            "cases": cases,
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            review_path = Path(tmp) / "review.json"
+            review_path.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
+            summary = eval_semantic.summarize_visual_review(review_path)
 
         self.assertEqual(summary["visual_review"]["case_count"], 7)
         self.assertEqual(summary["visual_review"]["failed_case_count"], 1)
@@ -2792,12 +2844,22 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             review_path.write_text(
                 json.dumps(
                     {
+                        "schema_version": "photo-visual-review/v1",
+                        "provenance": {
+                            "generator_version": "test",
+                            "tags_hash": "test-tags",
+                            "reviewer": "unit-test",
+                            "reviewed_at": "2026-08-05T00:00:00Z",
+                        },
                         "cases": [
                             {
                                 "case": "카리나 메이드 흡혈귀",
+                                "prompt_id": "prompt-1",
+                                "image_id": "image-1",
                                 "dual_read": "pass",
                                 "archetype_first_read": "pass",
                                 "body_drift": "none",
+                                "preset_conflict": "none",
                                 "role_anchor": "pass",
                                 "mixin_anchor": "pass",
                                 "body_coverage_guard": "pass",
@@ -2807,9 +2869,12 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                             },
                             {
                                 "case": "유나 바니걸 멘헤라",
+                                "prompt_id": "prompt-2",
+                                "image_id": "image-2",
                                 "dual_read": "pass",
                                 "archetype_first_read": "pass",
                                 "body_drift": "none",
+                                "preset_conflict": "none",
                                 "role_anchor": "pass",
                                 "mixin_anchor": "pass",
                                 "body_coverage_guard": "pass",
@@ -4945,7 +5010,13 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertIn("no listless body", joined)
         self.assertIn("no break-up melancholy", joined)
         self.assertIn("no phone-screen evidence", joined)
-        self.assertNotIn("hoodie_shorts_sneakers", joined)
+        forwarded_sets = [
+            payload["forward_args"][index + 1]
+            for index, value in enumerate(payload["forward_args"][:-1])
+            if value == "--set"
+        ]
+        self.assertIn("wardrobe_style=faded_hoodie_sweatpants", forwarded_sets)
+        self.assertNotIn("wardrobe_style=hoodie_shorts_sneakers", forwarded_sets)
 
     def test_tsundere_weak_roles_have_active_denial_and_anti_drift_guards(self):
         cases = [
@@ -6079,6 +6150,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertEqual(
             {
                 "pack_id",
+                "contract_version",
                 "mandatory_intents",
                 "uncovered_intents",
                 "presets",
@@ -6096,7 +6168,8 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "template_echo_risk",
                 "role_scene_policy",
                 "species_family",
-                "approval_required_safety_transforms",
+                "safety",
+                "concept_gates",
                 "diversity_state",
                 "coverage",
                 "conflicts",
@@ -6134,18 +6207,20 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             {dimension["id"] for dimension in craft["active_dimensions"]},
         )
         final_touch = pack["artistic_final_touch"]
-        self.assertTrue(final_touch["enabled"])
-        self.assertIn("quiet imperfection", final_touch["final_sentence_en"])
-        self.assertIn("shared light", final_touch["audit_terms"])
-        self.assertLessEqual(len(pack["presets"]), 5)
+        self.assertFalse(final_touch["enabled"])
+        self.assertEqual(final_touch["profile_id"], "portrait_editorial")
+        self.assertEqual(pack["contract_version"], "photo-candidate-pack/v2")
+        self.assertEqual(pack["safety"]["status"], "pass")
+        self.assertFalse(pack["safety"]["requires_user_approval"])
+        self.assertLessEqual(len(pack["presets"]), 4)
         total_slot_candidates = 0
         for slot, slot_payload in pack["slots"].items():
             candidates = slot_payload["candidates"]
             total_slot_candidates += len(candidates)
-            expected_limit = 5 if slot_payload["role"] == "core" else 3
+            expected_limit = 4 if slot_payload["role"] == "core" else 2
             self.assertLessEqual(len(candidates), expected_limit)
             self.assertAlmostEqual(sum(candidate["probability"] for candidate in candidates), 1.0, places=5)
-        self.assertLessEqual(total_slot_candidates, 120)
+        self.assertLessEqual(total_slot_candidates, 64)
 
     def test_candidate_pack_profiles_photographic_integration_for_cathedral(self):
         payload = self.run_wrapper_json(
@@ -6388,7 +6463,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("photographic_craft.dimensions[0].refinements[0].facet_match.subject_kind: unknown value not_a_subject_kind", result.stderr)
 
-    def test_final_prompt_appends_artistic_touch_as_last_sentence(self):
+    def test_artistic_touch_is_profile_specific_instead_of_global(self):
         payload = self.run_wrapper_json(
             "--preset",
             "compact_urban_fashion_portrait",
@@ -6405,11 +6480,21 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             "Let one quiet imperfection, shared light, and a small material trace make the frame feel "
             "discovered rather than assembled."
         )
-        self.assertTrue(item["prompt_en"].endswith(expected), item["prompt_en"])
-        self.assertIn("Frame it with clear photographic intent:", item["prompt_en"])
-        self.assertLess(item["prompt_en"].index("Frame it with clear photographic intent:"), item["prompt_en"].index(expected))
+        self.assertNotIn(expected, item["prompt_en"])
         self.assertIn("no text or watermark", item["prompt_en"])
         self.assertEqual(item["provenance"]["prompt_id"], hashlib.sha256(item["prompt_en"].encode("utf-8")).hexdigest()[:16])
+
+        documentary_pack = self.run_wrapper_json(
+            "--preset",
+            "street_observer_framing",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "31",
+            "--emit-candidate-pack",
+        )[0]
+        self.assertEqual(documentary_pack["quality_profile"]["profile_id"], "documentary")
+        self.assertTrue(documentary_pack["artistic_final_touch"]["enabled"])
 
     def test_audit_composed_prompt_warns_for_missing_artistic_final_touch(self):
         final_sentence = (
@@ -6442,6 +6527,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             "prompt_en": f"A quiet portrait with no text or watermark. {final_sentence}",
             "chosen_candidate_ids": [],
         }
+        pack, bland, touched = prepare_audit_fixture(pack, bland, touched)
         with tempfile.TemporaryDirectory() as tmpdir:
             pack_path = Path(tmpdir) / "pack.json"
             bland_path = Path(tmpdir) / "bland.json"
@@ -6557,6 +6643,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             "prompt_en": "A portrait with blood on the costume, no text or watermark.",
             "chosen_candidate_ids": ["slot:subject:dragon", "slot:mood:cozy", "slot:mood:tense", "slot:missing:nope"],
         }
+        pack, good, bad = prepare_audit_fixture(pack, good, bad)
         with tempfile.TemporaryDirectory() as tmpdir:
             pack_path = Path(tmpdir) / "pack.json"
             good_path = Path(tmpdir) / "good.json"
@@ -6625,6 +6712,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             ),
             "chosen_candidate_ids": ["preset:p1"],
         }
+        pack, bland, integrated = prepare_audit_fixture(pack, bland, integrated)
         with tempfile.TemporaryDirectory() as tmpdir:
             pack_path = Path(tmpdir) / "pack.json"
             bland_path = Path(tmpdir) / "bland.json"
@@ -6710,6 +6798,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             ),
             "chosen_candidate_ids": ["preset:p1", "slot:narrative_core:private_ritual_core"],
         }
+        pack, bland, integrated = prepare_audit_fixture(pack, bland, integrated)
         with tempfile.TemporaryDirectory() as tmpdir:
             pack_path = Path(tmpdir) / "pack.json"
             bland_path = Path(tmpdir) / "bland.json"
@@ -6787,6 +6876,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             ),
             "chosen_candidate_ids": ["preset:p1"],
         }
+        pack, bland, crafted = prepare_audit_fixture(pack, bland, crafted)
         with tempfile.TemporaryDirectory() as tmpdir:
             pack_path = Path(tmpdir) / "pack.json"
             bland_path = Path(tmpdir) / "bland.json"
@@ -6850,6 +6940,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             "prompt_en": "A product still life where placement, contact shadow, and small use trace organize the arrangement, no text or watermark.",
             "chosen_candidate_ids": ["preset:p1"],
         }
+        pack, bland, integrated = prepare_audit_fixture(pack, bland, integrated)
         with tempfile.TemporaryDirectory() as tmpdir:
             pack_path = Path(tmpdir) / "pack.json"
             bland_path = Path(tmpdir) / "bland.json"
@@ -6884,14 +6975,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             "mandatory_intents": [],
             "uncovered_intents": [],
             "presets": [{"id": "preset:p1"}],
-            "slots": {
-                "prop": {
-                    "candidates": [
-                        {"id": "slot:prop:instant_photo_stack"},
-                        {"id": "slot:prop:logo_board_prop"},
-                    ]
-                }
-            },
+            "slots": {},
             "concept_axes": {
                 "required": [
                     {"id": "surveillance_gaze", "terms": ["surveillance evidence", "records board"]}
@@ -6907,13 +6991,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             },
             "preset_reference": {
                 "role": "reference_scaffold",
-                "masked_slot_values": {
-                    "prop": {
-                        "entry_id": "instant_photo_stack",
-                        "candidate_id": "slot:prop:instant_photo_stack",
-                        "terms": ["instant photo stack", "same-person photos"],
-                    }
-                },
+                "masked_slots": [{"slot": "prop", "bucket": "action_prop"}],
             },
             "masked_buckets": ["action_prop"],
             "open_slots": [
@@ -6921,9 +6999,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                     "slot": "prop",
                     "bucket": "action_prop",
                     "status": "intentionally_open",
-                    "masked_entry_id": "instant_photo_stack",
-                    "candidate_id": "slot:prop:instant_photo_stack",
-                    "terms": ["instant photo stack", "same-person photos"],
+                    "reason": "semantic_dropout",
                 }
             ],
             "template_echo_risk": {"max_allowed_score": 0.2},
@@ -6935,13 +7011,14 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         good = {
             "pack_id": "cccccccccccccccc",
             "prompt_en": "A tense portrait built around surveillance evidence on a records board, no text or watermark.",
-            "chosen_candidate_ids": ["preset:p1", "slot:prop:logo_board_prop"],
+            "chosen_candidate_ids": ["preset:p1"],
         }
         bad = {
             "pack_id": "cccccccccccccccc",
             "prompt_en": "A tense portrait with surveillance evidence, an instant photo stack, and same-person photos on the wall, no text or watermark.",
             "chosen_candidate_ids": ["preset:p1", "slot:prop:instant_photo_stack"],
         }
+        pack, good, bad = prepare_audit_fixture(pack, good, bad)
         with tempfile.TemporaryDirectory() as tmpdir:
             pack_path = Path(tmpdir) / "pack.json"
             good_path = Path(tmpdir) / "good.json"
@@ -7022,6 +7099,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             ],
             "composer": "agent",
         }
+        pack, composed = prepare_audit_fixture(pack, composed)
         with tempfile.TemporaryDirectory() as tmpdir:
             pack_path = Path(tmpdir) / "pack.json"
             composed_path = Path(tmpdir) / "composed.json"
