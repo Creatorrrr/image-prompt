@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+from collections import Counter
 import json
 from pathlib import Path
 
@@ -14,6 +15,17 @@ REGISTRY = ROOT / "modules" / "_registry.md"
 REQUIRED_HEADINGS = ("## When to load",)
 VALID_TYPES = {"core", "concept", "subject", "detail", "medium", "style"}
 VALID_FACETS = {"core", "relationship", "subject", "medium", "detail-risk", "style"}
+MAX_MODULE_WORDS = 1200
+MAX_MODULE_LINES = 160
+MAX_TOTAL_MODULE_WORDS = 15000
+MAX_CORE_WORDS = 3500
+MAX_DUPLICATE_LINE_RATIO = 0.10
+PROHIBITED_RUNTIME_TEXT = (
+    "Legacy monolith fidelity rules preserved verbatim",
+    "Fill every field with source-specific values",
+    "Do not compress or summarize the output contract",
+    "include a dedicated coordinate-lock passage",
+)
 REQUIRED_FIELDS = (
     "id",
     "version",
@@ -32,6 +44,9 @@ REQUIRED_FIELDS = (
 
 def main() -> int:
     errors: list[str] = []
+    total_module_words = 0
+    core_words = 0
+    runtime_lines: list[str] = []
     if not MANIFEST.exists():
         errors.append(f"missing manifest: {MANIFEST}")
         print_errors(errors)
@@ -86,6 +101,8 @@ def main() -> int:
             errors.append(f"unknown facet for {rel}: {fm.get('facet')}")
         if not isinstance(fm.get("priority"), int):
             errors.append(f"priority missing/not numeric: {rel}")
+        if not isinstance(fm.get("version"), int) or int(fm.get("version", 0)) < 1:
+            errors.append(f"version missing/not positive numeric: {rel}")
         if not isinstance(fm.get("tier"), int) or int(fm.get("tier", -1)) not in {0, 1, 2, 3, 4}:
             errors.append(f"tier missing/not in 0..4: {rel}")
         if not fm.get("facet_values"):
@@ -95,6 +112,23 @@ def main() -> int:
         for heading in REQUIRED_HEADINGS:
             if heading not in body:
                 errors.append(f"required heading absent in {rel}: {heading}")
+        word_count = len(body.split())
+        line_count = len(body.splitlines())
+        total_module_words += word_count
+        if int(fm.get("tier", -1)) == 0:
+            core_words += word_count
+        runtime_lines.extend(
+            line.strip()
+            for line in body.splitlines()
+            if len(line.strip()) >= 30 and not line.lstrip().startswith("#")
+        )
+        if word_count > MAX_MODULE_WORDS:
+            errors.append(f"module body too large in {rel}: {word_count} words > {MAX_MODULE_WORDS}")
+        if line_count > MAX_MODULE_LINES:
+            errors.append(f"module body too long in {rel}: {line_count} lines > {MAX_MODULE_LINES}")
+        for prohibited in PROHIBITED_RUNTIME_TEXT:
+            if prohibited in text:
+                errors.append(f"prohibited runtime text in {rel}: {prohibited}")
 
         for dep in fm.get("dependencies", []):
             if dep not in id_set:
@@ -109,9 +143,21 @@ def main() -> int:
             elif anchor_text not in text:
                 errors.append(f"provided anchor text absent in {mid}: {anchor_id}")
 
-        legacy_preserved = "Legacy monolith fidelity rules preserved verbatim" in text
-        if not legacy_preserved and not fm.get("provides_anchors"):
-            errors.append(f"module lacks legacy-preserved block or source anchor ownership: {rel}")
+    if total_module_words > MAX_TOTAL_MODULE_WORDS:
+        errors.append(
+            f"runtime module corpus too large: {total_module_words} words > {MAX_TOTAL_MODULE_WORDS}"
+        )
+    if core_words > MAX_CORE_WORDS:
+        errors.append(f"tier 0 core too large: {core_words} words > {MAX_CORE_WORDS}")
+    if runtime_lines:
+        counts = Counter(runtime_lines)
+        duplicate_instances = sum(count - 1 for count in counts.values())
+        duplicate_ratio = duplicate_instances / len(runtime_lines)
+        if duplicate_ratio > MAX_DUPLICATE_LINE_RATIO:
+            errors.append(
+                "runtime exact-line duplication too high: "
+                f"{duplicate_ratio:.1%} > {MAX_DUPLICATE_LINE_RATIO:.1%}"
+            )
 
     if errors:
         print_errors(errors)
@@ -120,6 +166,9 @@ def main() -> int:
         "status": "ok",
         "module_count": len(modules),
         "required_core_modules": manifest.get("required_core_modules", []),
+        "runtime_module_words": total_module_words,
+        "tier_0_words": core_words,
+        "exact_line_duplicate_ratio": round(duplicate_ratio, 4) if runtime_lines else 0,
     }, indent=2, ensure_ascii=False))
     return 0
 

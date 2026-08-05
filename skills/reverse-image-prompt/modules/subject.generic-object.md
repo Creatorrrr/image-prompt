@@ -1,6 +1,6 @@
 ---
 id: subject.generic-object
-version: 2
+version: 4
 priority: 50
 type: subject
 tier: 2
@@ -40,10 +40,10 @@ Load when no specific subject module fits, but the router still needs a subject 
 
 Use direct visible descriptions such as `ordinary partial object`, `simple cropped surface`, `abstract/ambiguous foreground shape`, or `mostly empty scene` when that is more faithful than a category label.
 
-## Negative additions
+## Optional negative contribution
 
 Reject invented categories, added subjects, object completion, product-shot conversion, and subject centralization that is not visible.
 
-## Settings additions
+## Optional settings contribution
 
 - Generic subject fallback locks:

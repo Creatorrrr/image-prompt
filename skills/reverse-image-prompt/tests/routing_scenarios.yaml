@@ -18,10 +18,20 @@
         "core.output-contract",
         "subject.human",
         "medium.photographic-capture",
+        "detail.human-face-likeness",
         "detail.pose-hands-gesture",
         "detail.low-quality-artifacts"
       ],
-      "required_anchors": ["face_fidelity", "aesthetic_upgrade", "face_exposure_budget"]
+      "required_anchors": [
+        "face_fidelity",
+        "broad_person_gestalt_anchor",
+        "aesthetic_upgrade",
+        "face_exposure_budget",
+        "human_detail_hierarchy",
+        "face_anchor_budget",
+        "expression_gaze_hair_geometry",
+        "sharpness_topology"
+      ]
     },
     {
       "id": "clothing-neckline-crop",
@@ -62,6 +72,7 @@
       "expect_includes": [
         "subject.human",
         "medium.photographic-capture",
+        "detail.human-face-likeness",
         "detail.pose-hands-gesture",
         "detail.clothing-fashion",
         "detail.tight-selfie-hierarchy",
@@ -71,6 +82,7 @@
       "required_anchors": [
         "face_fidelity",
         "garment_geometry",
+        "face_anchor_budget",
         "tight_selfie_hierarchy",
         "accessory_torso_budget",
         "partial_cheek_hand_budget"
@@ -99,17 +111,23 @@
         "subjects": ["human"],
         "medium": ["photographic"],
         "relationships": ["occlusion", "screen-frame-within-frame"],
-        "detail_risks": ["hands", "gesture", "ui-text", "text-logo"]
+        "detail_risks": ["face", "hands", "gesture", "ui-text", "text-logo"]
       },
       "expect_includes": [
         "subject.human",
         "medium.photographic-capture",
+        "detail.human-face-likeness",
         "concept.occlusion-replacement",
         "concept.screen-frame-within-frame",
         "detail.pose-hands-gesture",
         "detail.text-logo-label"
       ],
-      "required_anchors": ["face_fidelity", "face_exposure_budget", "low_legibility_text"]
+      "required_anchors": [
+        "face_fidelity",
+        "face_exposure_budget",
+        "face_anchor_budget",
+        "low_legibility_text"
+      ]
     },
     {
       "id": "mirror-reflection",
@@ -117,16 +135,17 @@
         "subjects": ["human"],
         "medium": ["photographic"],
         "relationships": ["reflection", "mirror"],
-        "detail_risks": ["clothing", "hands", "low-quality"]
+        "detail_risks": ["face", "clothing", "hands", "low-quality"]
       },
       "expect_includes": [
         "subject.human",
         "medium.photographic-capture",
+        "detail.human-face-likeness",
         "concept.reflection-mirror",
         "detail.clothing-fashion",
         "detail.pose-hands-gesture"
       ],
-      "required_anchors": ["face_fidelity", "garment_geometry"]
+      "required_anchors": ["face_fidelity", "face_anchor_budget", "garment_geometry"]
     },
     {
       "id": "miniature-in-real",
@@ -204,10 +223,125 @@
       "expect_includes": [
         "subject.human",
         "medium.non-photographic-rendering",
+        "detail.human-face-likeness",
         "style.stylized-character-maturity",
         "detail.clothing-fashion"
       ],
-      "required_anchors": ["face_fidelity", "maturity_anti_collapse", "garment_geometry"]
+      "required_anchors": [
+        "face_fidelity",
+        "face_anchor_budget",
+        "maturity_anti_collapse",
+        "garment_geometry"
+      ]
+    },
+    {
+      "id": "capture-quality-routes-photo-medium",
+      "facets": {
+        "subjects": ["human"],
+        "relationships": ["ordinary"],
+        "capture_quality": ["flash", "casual-phone"]
+      },
+      "expect_includes": [
+        "subject.human",
+        "medium.photographic-capture"
+      ],
+      "expect_excludes": [
+        "medium.unspecified-visual",
+        "detail.human-face-likeness",
+        "detail.low-quality-artifacts"
+      ],
+      "required_anchors": ["face_fidelity"],
+      "max_non_core_modules": 2
+    },
+    {
+      "id": "mixed-media-photo-and-render",
+      "facets": {
+        "subjects": ["human"],
+        "medium": ["photographic", "non-photographic"],
+        "relationships": ["mixed-media"],
+        "detail_risks": ["face"]
+      },
+      "expect_includes": [
+        "subject.human",
+        "detail.human-face-likeness",
+        "medium.photographic-capture",
+        "medium.non-photographic-rendering",
+        "concept.mixed-media-illusion"
+      ],
+      "expect_excludes": [
+        "medium.unspecified-visual"
+      ],
+      "required_anchors": ["face_fidelity", "face_anchor_budget"],
+      "max_non_core_modules": 5
+    },
+    {
+      "id": "core-handled-and-ui-aliases",
+      "facets": {
+        "subjects": ["generic-object"],
+        "medium": ["unspecified"],
+        "relationships": ["ordinary"],
+        "detail_risks": ["UI", "small props", "cropped edges"]
+      },
+      "expect_includes": [
+        "subject.generic-object",
+        "medium.unspecified-visual",
+        "detail.text-logo-label"
+      ],
+      "expect_excludes": [
+        "medium.screenshot-ui"
+      ],
+      "required_anchors": ["low_legibility_text"],
+      "max_non_core_modules": 3
+    },
+    {
+      "id": "major-component-contact-topology",
+      "facets": {
+        "subjects": ["human", "architecture"],
+        "medium": ["photographic"],
+        "relationships": ["ordinary"],
+        "detail_risks": ["hands"]
+      },
+      "expect_includes": [
+        "concept.primary-relationship",
+        "subject.human",
+        "subject.architecture-interior",
+        "medium.photographic-capture",
+        "detail.pose-hands-gesture"
+      ],
+      "required_anchors": [
+        "major_component_relation_graph",
+        "major_component_topology",
+        "interaction_geometry_sentence",
+        "image_scene_space_distinction"
+      ],
+      "max_non_core_modules": 4
+    },
+    {
+      "id": "small-distant-human-no-face-detail",
+      "facets": {
+        "subjects": ["human"],
+        "medium": ["photographic"],
+        "relationships": ["ordinary"]
+      },
+      "expect_includes": [
+        "subject.human",
+        "medium.photographic-capture"
+      ],
+      "expect_excludes": [
+        "detail.human-face-likeness"
+      ],
+      "required_anchors": ["face_fidelity"],
+      "max_non_core_modules": 2
+    },
+    {
+      "id": "unknown-facet-value-fails-visibly",
+      "facets": {
+        "subjects": ["generic-object"],
+        "medium": ["photographic"],
+        "relationships": ["ordinary"],
+        "detail_risks": ["glossy-mystery"]
+      },
+      "expect_error_contains": "unmapped detail-risk value"
     }
   ]
 }

@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-"""Resolve reverse-image-prompt modules from detected facets or scenario fixtures."""
+"""Resolve reverse-image-prompt modules from detected facets or fixtures."""
 
 from __future__ import annotations
 
 import argparse
 import json
 from pathlib import Path
+import re
 import sys
 from typing import Any
 
@@ -14,7 +15,6 @@ from module_metadata import ROOT, expand_dependencies, load_manifest, module_map
 FACET_KEY_ALIASES = {
     "subject": "subject",
     "subjects": "subject",
-    "primary_subjects": "subject",
     "primary-subjects": "subject",
     "medium": "medium",
     "media": "medium",
@@ -22,40 +22,105 @@ FACET_KEY_ALIASES = {
     "relationships": "relationship",
     "concept": "relationship",
     "concepts": "relationship",
-    "capture_quality": "detail-risk",
-    "capture_qualities": "detail-risk",
-    "capture-quality": "detail-risk",
-    "capture-qualities": "detail-risk",
-    "detail_risk": "detail-risk",
-    "detail_risks": "detail-risk",
+    "capture-quality": "capture-quality",
+    "capture-qualities": "capture-quality",
     "detail-risk": "detail-risk",
     "detail-risks": "detail-risk",
     "style": "style",
     "styles": "style",
 }
 
+VALUE_ALIASES = {
+    "detail-risk": {
+        "ui": "ui-text",
+        "small-prop": "small-props",
+        "cropped-edge": "cropped-edges",
+    },
+    "medium": {
+        "photo-like": "photographic",
+    },
+}
+
+CORE_HANDLED_VALUES = {
+    "relationship": {"ordinary"},
+    "detail-risk": {"small-props", "cropped-edges"},
+}
+
+CAPTURE_QUALITY_TARGET_FACETS = {"medium", "detail-risk"}
+CAPTURE_QUALITY_VALUES = {
+    "low-quality",
+    "compressed",
+    "underexposed",
+    "motion-blurred",
+    "noise",
+    "haze",
+    "soft-focus",
+    "low-resolution",
+    "flash",
+    "casual-phone",
+    "low-light-photo",
+}
 MANDATORY_FALLBACKS = {
     "medium": "medium.unspecified-visual",
     "subject": "subject.generic-object",
 }
+MAX_NON_CORE_MODULES = 8
 
 
 def norm(value: Any) -> str:
-    return str(value).strip().lower().replace("_", "-")
+    normalized = str(value).strip().lower().replace("_", "-")
+    return re.sub(r"[\s-]+", "-", normalized)
 
 
 def normalize_facets(facets: dict[str, Any]) -> dict[str, set[str]]:
     normalized: dict[str, set[str]] = {}
     for raw_key, raw_values in facets.items():
-        key = FACET_KEY_ALIASES.get(norm(raw_key), norm(raw_key))
+        normalized_key = norm(raw_key)
+        key = FACET_KEY_ALIASES.get(normalized_key, normalized_key)
         if raw_values is None:
             values: list[Any] = []
         elif isinstance(raw_values, list):
             values = raw_values
         else:
             values = [raw_values]
-        normalized.setdefault(key, set()).update(norm(v) for v in values if str(v).strip())
+        aliases = VALUE_ALIASES.get(key, {})
+        for raw_value in values:
+            value = norm(raw_value)
+            if value:
+                normalized.setdefault(key, set()).add(aliases.get(value, value))
     return normalized
+
+
+def allowed_values(manifest: dict[str, Any]) -> dict[str, set[str]]:
+    allowed: dict[str, set[str]] = {}
+    for module in manifest.get("modules", []):
+        facet = str(module.get("facet", ""))
+        allowed.setdefault(facet, set()).update(norm(v) for v in module.get("facet_values", []))
+    for facet, values in CORE_HANDLED_VALUES.items():
+        allowed.setdefault(facet, set()).update(values)
+    allowed["capture-quality"] = set(CAPTURE_QUALITY_VALUES)
+    return allowed
+
+
+def validate_requested_facets(facet_values: dict[str, set[str]], manifest: dict[str, Any]) -> None:
+    allowed = allowed_values(manifest)
+    errors: list[str] = []
+    for facet, requested in sorted(facet_values.items()):
+        if facet not in allowed:
+            errors.append(f"unknown facet '{facet}'")
+            continue
+        unknown = sorted(requested - allowed[facet])
+        if unknown:
+            errors.append(f"unmapped {facet} value(s): {', '.join(unknown)}")
+    if errors:
+        raise ValueError("; ".join(errors))
+
+
+def requested_for_module(facet: str, facet_values: dict[str, set[str]]) -> set[str]:
+    requested = set(facet_values.get(facet, set()))
+    if facet in CAPTURE_QUALITY_TARGET_FACETS:
+        requested.update(facet_values.get("capture-quality", set()))
+    return requested
 
 
 def selected_has_facet(module_ids: set[str], manifest: dict[str, Any], facet: str) -> bool:
@@ -67,16 +132,17 @@ def resolve_modules(facets: dict[str, Any], manifest: dict[str, Any] | None = No
     manifest = manifest or load_manifest(ROOT)
     modules = module_map(manifest)
     facet_values = normalize_facets(facets)
+    validate_requested_facets(facet_values, manifest)
 
     selected: set[str] = set(manifest.get("required_core_modules", []))
 
     for module in manifest.get("modules", []):
         if int(module.get("tier", 99)) == 0:
             continue
-        facet = module.get("facet")
-        requested = facet_values.get(facet, set())
+        facet = str(module.get("facet", ""))
+        requested = requested_for_module(facet, facet_values)
         values = {norm(v) for v in module.get("facet_values", [])}
-        if requested and values.intersection(requested):
+        if requested.intersection(values):
             selected.add(module["id"])
 
     for facet, fallback_id in MANDATORY_FALLBACKS.items():
@@ -85,14 +151,21 @@ def resolve_modules(facets: dict[str, Any], manifest: dict[str, Any] | None = No
 
     expanded = expand_dependencies(list(selected), manifest)
     expanded_set = set(expanded)
-    conflicts: list[tuple[str, str]] = []
+    conflicts: set[tuple[str, str]] = set()
     for module_id in expanded:
         for conflict in modules[module_id].get("conflicts", []):
             if conflict in expanded_set:
-                conflicts.append((module_id, conflict))
+                conflicts.add(tuple(sorted((module_id, conflict))))
     if conflicts:
         rendered = ", ".join(f"{a} conflicts with {b}" for a, b in sorted(conflicts))
         raise ValueError(f"module conflict: {rendered}")
+
+    non_core = [mid for mid in expanded if int(modules[mid].get("tier", 99)) != 0]
+    if len(non_core) > MAX_NON_CORE_MODULES:
+        raise ValueError(
+            f"module budget exceeded: {len(non_core)} non-core modules selected "
+            f"(maximum {MAX_NON_CORE_MODULES}); refine the facet map"
+        )
 
     return [m["id"] for m in sorted((modules[mid] for mid in expanded), key=module_sort_key)]
 
@@ -110,21 +183,38 @@ def check_scenarios(path: Path, manifest: dict[str, Any]) -> int:
     scenarios = load_scenarios(path)
     failures: list[str] = []
     results: list[dict[str, Any]] = []
+    module_meta = module_map(manifest)
+
     for scenario in scenarios:
         sid = scenario.get("id", "<unnamed>")
         try:
-            modules = resolve_modules(scenario.get("facets", {}), manifest)
+            resolved = resolve_modules(scenario.get("facets", {}), manifest)
         except Exception as exc:  # noqa: BLE001 - CLI should show fixture failure plainly.
+            expected_error = scenario.get("expect_error_contains")
+            if expected_error and str(expected_error) in str(exc):
+                results.append({"id": sid, "expected_error": str(exc)})
+                continue
             failures.append(f"{sid}: resolver error: {exc}")
             continue
-        module_set = set(modules)
+
+        if scenario.get("expect_error_contains"):
+            failures.append(f"{sid}: expected resolver error containing {scenario['expect_error_contains']!r}")
+            continue
+
+        module_set = set(resolved)
         missing = [mid for mid in scenario.get("expect_includes", []) if mid not in module_set]
         unexpected = [mid for mid in scenario.get("expect_excludes", []) if mid in module_set]
         if missing:
             failures.append(f"{sid}: missing expected modules: {', '.join(missing)}")
         if unexpected:
             failures.append(f"{sid}: unexpected modules: {', '.join(unexpected)}")
-        results.append({"id": sid, "modules": modules})
+
+        non_core_count = sum(int(module_meta[mid].get("tier", 99)) != 0 for mid in resolved)
+        maximum = int(scenario.get("max_non_core_modules", MAX_NON_CORE_MODULES))
+        if non_core_count > maximum:
+            failures.append(f"{sid}: selected {non_core_count} non-core modules, maximum is {maximum}")
+
+        results.append({"id": sid, "non_core_count": non_core_count, "modules": resolved})
 
     if failures:
         print("ROUTING FAILED")
@@ -147,8 +237,10 @@ def main(argv: list[str]) -> int:
     if args.scenarios:
         return check_scenarios(Path(args.scenarios), manifest)
     if args.facets:
-        modules = resolve_modules(json.loads(args.facets), manifest)
-        print(json.dumps({"modules": modules}, indent=2, ensure_ascii=False))
+        resolved = resolve_modules(json.loads(args.facets), manifest)
+        modules = module_map(manifest)
+        non_core_count = sum(int(modules[mid].get("tier", 99)) != 0 for mid in resolved)
+        print(json.dumps({"non_core_count": non_core_count, "modules": resolved}, indent=2, ensure_ascii=False))
         return 0
     parser.error("provide --facets or --scenarios")
     return 2

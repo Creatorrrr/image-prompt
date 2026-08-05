@@ -1,6 +1,6 @@
 ---
 id: medium.unspecified-visual
-version: 2
+version: 4
 priority: 40
 type: medium
 tier: 2
@@ -40,10 +40,10 @@ Load only when no specific medium module clearly applies, or when the medium is 
 
 Use neutral wording such as `source-faithful visual medium`, `medium remains ambiguous`, or direct visible texture/capture cues.
 
-## Negative additions
+## Optional negative contribution
 
 Reject forced photo realism, forced illustration, forced 3D rendering, forced app UI, or a cleaner medium category than the source supports.
 
-## Settings additions
+## Optional settings contribution
 
 - Medium fallback locks:
