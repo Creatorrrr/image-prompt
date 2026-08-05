@@ -1178,6 +1178,174 @@
   ],
   "presets": [
     {
+      "id": "wetland_behavior_documentary",
+      "ko": "습지 생태 행동 다큐멘터리",
+      "en": "wetland wildlife behavior documentary",
+      "weight": 1.0,
+      "template_style": "natural",
+      "family": "ecology_documentary",
+      "embedding_text": "observational wetland wildlife documentary focused on natural behavior, habitat depth, water, reeds and weather without staged portrait cues",
+      "facets": {"place_type": ["nature"], "mood_family": ["documentary"], "camera_register": ["professional"], "safety_tier": ["general"]},
+      "required_slots": ["medium", "genre", "subject", "action", "location", "lighting", "composition", "lens", "focus", "quality"],
+      "optional_slots": [{"slot": "camera_type", "probability": 0.8}, {"slot": "camera_direction", "probability": 0.7}, {"slot": "motion", "probability": 0.6}, {"slot": "texture", "probability": 0.55}],
+      "filters": {
+        "medium": {"ids": ["wildlife_photo", "documentary_photo", "travel_photo"]},
+        "genre": {"ids": ["wildlife", "documentary"]},
+        "subject": {"ids": ["river_otter_foraging", "migratory_cranes_wetland", "tidepool_octopus", "pollinator_moth_night"]},
+        "action": {"ids": ["foraging_riverbank", "flock_landing_wetland", "probing_tidepool", "pollinating"]},
+        "location": {"ids": ["reed_wetland_dawn", "tidal_rock_pool", "rocky_coast", "misty_forest"]},
+        "lighting": {"ids": ["golden_hour", "blue_hour", "overcast", "moonlight"]},
+        "composition": {"ids": ["wide_establishing", "rule_of_thirds", "macro_detail"]},
+        "lens": {"ids": ["tele_200mm", "tele_400mm", "macro_100mm"]},
+        "focus": {"ids": ["eye_focus", "deep_focus", "selective_foreground_focus"]},
+        "quality": {"ids": ["photoreal", "candid_imperfect", "high_detail", "not_overdone"]},
+        "camera_type": {"ids": ["full_frame_mirrorless", "dslr_camera"]},
+        "camera_direction": {"ids": ["eye_level_front", "low_ground_angle", "high_observer_angle"]},
+        "motion": {"ids": ["frozen_action", "panning_blur"]},
+        "texture": {"ids": ["wet_surface", "fine_grain", "macro_detail"]}
+      }
+    },
+    {
+      "id": "forest_floor_macro_ecology",
+      "ko": "숲 바닥 매크로 생태 기록",
+      "en": "forest-floor macro ecology study",
+      "weight": 1.0,
+      "template_style": "natural",
+      "family": "ecology_documentary",
+      "embedding_text": "macro ecology photograph of fungi, unfurling ferns, pollinators, mycelium and damp forest-floor materials in their real habitat",
+      "facets": {"place_type": ["nature"], "camera_register": ["macro"], "mood_family": ["documentary"], "safety_tier": ["general"]},
+      "required_slots": ["medium", "genre", "subject", "action", "location", "lighting", "camera_type", "composition", "lens", "focus", "texture", "quality"],
+      "optional_slots": [{"slot": "surface_material", "probability": 0.7}, {"slot": "camera_direction", "probability": 0.6}],
+      "filters": {
+        "medium": {"ids": ["macro_photo", "wildlife_photo", "fine_art_print"]},
+        "genre": {"ids": ["wildlife", "documentary", "fine_art"]},
+        "subject": {"ids": ["fern_unfurling", "mycelium_forest_floor", "pollinator_moth_night", "wild_mushrooms"]},
+        "action": {"ids": ["unfurling_after_rain", "sprouting_soil", "pollinating", "covered_dew"]},
+        "location": {"ids": ["temperate_forest_floor", "misty_forest", "bamboo_forest"]},
+        "lighting": {"ids": ["overcast", "soft_window", "moonlight", "volumetric"]},
+        "camera_type": {"ids": ["inspection_macro_rig", "full_frame_mirrorless", "dslr_camera"]},
+        "composition": {"ids": ["macro_detail", "rule_of_thirds", "extreme_close"]},
+        "lens": {"ids": ["macro_100mm", "topdown_macro_60mm"]},
+        "focus": {"ids": ["macro_focus_stack", "selective_foreground_focus"]},
+        "texture": {"ids": ["wet_surface", "macro_detail", "fine_grain"]},
+        "surface_material": {"ids": ["lichen_bark_surface", "tidal_wet_stone_surface", "mossy_concrete_surface"]},
+        "camera_direction": {"ids": ["low_ground_angle", "top_down_90", "high_observer_angle"]},
+        "quality": {"ids": ["photoreal", "high_detail", "not_overdone"]}
+      }
+    },
+    {
+      "id": "industrial_process_documentary",
+      "ko": "산업 공정 다큐멘터리",
+      "en": "industrial process documentary",
+      "weight": 1.0,
+      "template_style": "natural",
+      "family": "technical_observation",
+      "embedding_text": "observational industrial process photograph of machines doing real work in a workshop, depot or cleanroom with operational light and material evidence",
+      "facets": {"place_type": ["industrial"], "camera_register": ["professional"], "mood_family": ["operational"], "safety_tier": ["general"]},
+      "required_slots": ["medium", "genre", "subject", "action", "location", "lighting", "camera_type", "composition", "lens", "focus", "quality"],
+      "optional_slots": [{"slot": "prop", "probability": 0.6}, {"slot": "surface_material", "probability": 0.7}, {"slot": "texture", "probability": 0.55}],
+      "filters": {
+        "medium": {"ids": ["documentary_photo", "architecture_magazine_photo", "magazine_feature"]},
+        "genre": {"ids": ["documentary", "technology", "architecture"]},
+        "subject": {"ids": ["cnc_milling_machine", "cleanroom_wafer_robot", "electric_bus_charging"]},
+        "action": {"ids": ["milling_metal_part", "calibrating_sensor_array", "charging_at_depot"]},
+        "location": {"ids": ["precision_machine_shop", "semiconductor_cleanroom", "municipal_bus_depot"]},
+        "lighting": {"ids": ["lab_led", "overcast", "harsh_noon", "soft_window"]},
+        "camera_type": {"ids": ["full_frame_mirrorless", "inspection_macro_rig", "dslr_camera"]},
+        "composition": {"ids": ["strong_leading_lines_vanish", "rule_of_thirds", "primary_subject_hierarchy_frame"]},
+        "lens": {"ids": ["35mm", "50mm", "wide_24mm", "macro_100mm"]},
+        "focus": {"ids": ["deep_focus", "zone_focus_street", "macro_focus_stack"]},
+        "quality": {"ids": ["photoreal", "high_detail", "not_overdone"]},
+        "prop": {"ids": ["handheld_vibration_meter_prop", "machined_component_tray_prop"]},
+        "surface_material": {"ids": ["brushed_machined_aluminum_surface", "frosted_glass_surface"]},
+        "texture": {"ids": ["clean_digital", "fine_grain"]}
+      }
+    },
+    {
+      "id": "infrastructure_inspection_record",
+      "ko": "기반 시설 점검 기록 사진",
+      "en": "infrastructure inspection record",
+      "weight": 1.0,
+      "template_style": "natural",
+      "family": "technical_observation",
+      "embedding_text": "field inspection photograph of bridges, floodgates, transit machinery and autonomous inspection tools, emphasizing scale, condition and diagnostic evidence",
+      "facets": {"place_type": ["infrastructure"], "camera_register": ["inspection"], "mood_family": ["operational"], "safety_tier": ["general"]},
+      "required_slots": ["medium", "genre", "subject", "action", "location", "lighting", "camera_direction", "composition", "lens", "focus", "quality"],
+      "optional_slots": [{"slot": "camera_type", "probability": 0.85}, {"slot": "prop", "probability": 0.45}, {"slot": "surface_material", "probability": 0.55}],
+      "filters": {
+        "medium": {"ids": ["documentary_photo", "architecture_magazine_photo"]},
+        "genre": {"ids": ["architecture", "documentary", "technology"]},
+        "subject": {"ids": ["bridge_inspection_drone", "floodgate_infrastructure", "electric_bus_charging"]},
+        "action": {"ids": ["scanning_bridge_joint", "calibrating_sensor_array", "charging_at_depot"]},
+        "location": {"ids": ["municipal_bus_depot", "precision_machine_shop", "rocky_coast"]},
+        "lighting": {"ids": ["overcast", "harsh_noon", "blue_hour"]},
+        "camera_direction": {"ids": ["high_observer_angle", "low_ground_angle", "drone_oblique_direction"]},
+        "composition": {"ids": ["strong_leading_lines_vanish", "centered_architecture_symmetry", "wide_establishing"]},
+        "lens": {"ids": ["wide_24mm", "35mm", "tele_200mm"]},
+        "focus": {"ids": ["deep_focus", "zone_focus_street"]},
+        "quality": {"ids": ["photoreal", "high_detail", "not_overdone"]},
+        "camera_type": {"ids": ["inspection_macro_rig", "drone_camera_type", "full_frame_mirrorless"]},
+        "prop": {"ids": ["handheld_vibration_meter_prop", "machined_component_tray_prop"]},
+        "surface_material": {"ids": ["brushed_machined_aluminum_surface", "mossy_concrete_surface"]}
+      }
+    },
+    {
+      "id": "farm_to_table_process",
+      "ko": "농장에서 식탁까지의 과정",
+      "en": "farm-to-table process documentary",
+      "weight": 1.0,
+      "template_style": "natural",
+      "family": "food_process_documentary",
+      "embedding_text": "farm-to-table documentary showing harvested ingredients, fermentation, sorting and preparation through honest food texture and agricultural context",
+      "facets": {"place_type": ["agricultural"], "mood_family": ["documentary"], "camera_register": ["professional"], "safety_tier": ["general"]},
+      "required_slots": ["medium", "genre", "subject", "action", "location", "surface_material", "lighting", "composition", "lens", "focus", "quality"],
+      "optional_slots": [{"slot": "prop", "probability": 0.8}, {"slot": "texture", "probability": 0.75}, {"slot": "camera_direction", "probability": 0.55}],
+      "filters": {
+        "medium": {"ids": ["documentary_photo", "menu_photo", "still_life_photo"]},
+        "genre": {"ids": ["food", "documentary", "still_life"]},
+        "subject": {"ids": ["seasonal_vegetable_crate", "rice_seedling_tray", "oyster_mushroom_harvest", "sourdough_fermentation_batch"]},
+        "action": {"ids": ["sorting_harvest", "misting_mushroom_blocks", "folding_dough", "neatly_arranged"]},
+        "location": {"ids": ["cooperative_farm_wash_station", "mushroom_growing_room", "wooden_table"]},
+        "surface_material": {"ids": ["flour_dusted_wood_surface", "weathered_wood_board_surface", "linen_fabric_surface"]},
+        "lighting": {"ids": ["soft_window", "overcast", "golden_hour"]},
+        "composition": {"ids": ["rule_of_thirds", "macro_detail", "primary_subject_hierarchy_frame"]},
+        "lens": {"ids": ["35mm", "50mm", "macro_100mm"]},
+        "focus": {"ids": ["deep_focus", "selective_foreground_focus", "macro_focus_stack"]},
+        "quality": {"ids": ["photoreal", "candid_imperfect", "not_overdone"]},
+        "prop": {"ids": ["proofing_basket_lame_prop", "harvest_scale_crates_prop"]},
+        "texture": {"ids": ["flour_dust_texture", "steam_haze", "macro_detail"]},
+        "camera_direction": {"ids": ["eye_level_front", "top_down_90", "high_observer_angle"]}
+      }
+    },
+    {
+      "id": "community_kitchen_documentary",
+      "ko": "지역 공동체 주방 다큐멘터리",
+      "en": "community kitchen documentary",
+      "weight": 1.0,
+      "template_style": "natural",
+      "family": "food_process_documentary",
+      "embedding_text": "community kitchen documentary centered on a shared meal, practical utensils, steam, service and collective care without branding or readable labels",
+      "facets": {"place_type": ["interior"], "mood_family": ["documentary"], "camera_register": ["professional"], "safety_tier": ["general"]},
+      "required_slots": ["medium", "genre", "subject", "action", "location", "lighting", "composition", "lens", "focus", "quality", "prop"],
+      "optional_slots": [{"slot": "surface_material", "probability": 0.65}, {"slot": "texture", "probability": 0.7}, {"slot": "mood", "probability": 0.55}],
+      "filters": {
+        "medium": {"ids": ["documentary_photo", "menu_photo", "magazine_feature"]},
+        "genre": {"ids": ["food", "documentary"]},
+        "subject": {"ids": ["community_soup_pot", "seasonal_vegetable_crate", "sourdough_fermentation_batch"]},
+        "action": {"ids": ["serving_community_meal", "sorting_harvest", "folding_dough"]},
+        "location": {"ids": ["neighborhood_community_kitchen", "cooperative_farm_wash_station", "wooden_table"]},
+        "lighting": {"ids": ["soft_window", "overcast", "softbox"]},
+        "composition": {"ids": ["rule_of_thirds", "primary_subject_hierarchy_frame", "wide_establishing"]},
+        "lens": {"ids": ["35mm", "50mm"]},
+        "focus": {"ids": ["deep_focus", "selective_foreground_focus"]},
+        "quality": {"ids": ["photoreal", "candid_imperfect", "not_overdone"]},
+        "prop": {"ids": ["stainless_ladle_enamel_bowls_prop", "proofing_basket_lame_prop", "harvest_scale_crates_prop"]},
+        "surface_material": {"ids": ["flour_dusted_wood_surface", "tile_tabletop_surface", "weathered_wood_board_surface"]},
+        "texture": {"ids": ["steam_haze", "flour_dust_texture", "fine_grain"]},
+        "mood": {"ids": ["hopeful", "calm", "practical_local_realism"]}
+      }
+    },
+    {
       "id": "street_documentary",
       "ko": "거리 다큐멘터리",
       "en": "street documentary",
@@ -47213,6 +47381,22 @@
       "weight": 0.62,
       "template_style": "natural",
       "family": "celestial_divine_light_family",
+      "facets": {
+        "place_type": [
+          "temple",
+          "interior"
+        ],
+        "lighting_family": [
+          "colored_light"
+        ],
+        "mood_family": [
+          "sacred",
+          "awe"
+        ],
+        "safety_tier": [
+          "general"
+        ]
+      },
       "required_slots": [
         "medium",
         "genre",
@@ -112982,6 +113166,198 @@
           "future nostalgia"
         ],
         "embedding_text": "adult near-future drifter, soft sci-fi clothing and analog emotional residue"
+      },
+      {
+        "id": "tidepool_octopus",
+        "ko": "조수 웅덩이의 문어",
+        "en": "a tidepool octopus moving between wet rocks",
+        "weight": 0.72,
+        "kind": ["animal"],
+        "tags": ["animal", "wildlife", "marine", "tidepool", "coast"],
+        "aliases": ["tidepool octopus", "coastal octopus", "문어", "조수 웅덩이 문어"],
+        "keywords": ["marine animal", "intertidal wildlife", "octopus behavior"],
+        "embedding_text": "tidepool octopus moving naturally between wet coastal rocks in shallow intertidal water",
+        "facets": {"subject_kind": ["animal"]}
+      },
+      {
+        "id": "river_otter_foraging",
+        "ko": "강가에서 먹이를 찾는 수달",
+        "en": "a river otter foraging along the bank",
+        "weight": 0.72,
+        "kind": ["animal"],
+        "tags": ["animal", "wildlife", "mammal", "river", "behavior"],
+        "aliases": ["river otter", "foraging otter", "수달", "강 수달"],
+        "keywords": ["wild mammal", "riverbank behavior", "otter foraging"],
+        "embedding_text": "wild river otter foraging at the waterline with wet fur and habitat context",
+        "facets": {"subject_kind": ["animal"]}
+      },
+      {
+        "id": "migratory_cranes_wetland",
+        "ko": "습지에 내려앉는 철새 두루미 무리",
+        "en": "migratory cranes landing in a wetland",
+        "weight": 0.7,
+        "kind": ["animal"],
+        "tags": ["animal", "wildlife", "bird", "wetland", "migration", "group"],
+        "aliases": ["migratory cranes", "wetland cranes", "철새 두루미", "습지 조류"],
+        "keywords": ["migratory birds", "wetland flock", "crane landing"],
+        "embedding_text": "migratory cranes landing together in a reed wetland with natural flock spacing",
+        "facets": {"subject_kind": ["animal"]}
+      },
+      {
+        "id": "pollinator_moth_night",
+        "ko": "밤꽃에서 수분하는 나방",
+        "en": "a nocturnal moth pollinating a flower",
+        "weight": 0.66,
+        "kind": ["animal"],
+        "tags": ["animal", "wildlife", "insect", "pollinator", "night", "macro"],
+        "aliases": ["pollinator moth", "night moth", "수분 나방", "밤나방"],
+        "keywords": ["nocturnal pollinator", "insect macro", "moth feeding"],
+        "embedding_text": "nocturnal moth pollinating a real flower, macro habitat photograph with wing-scale detail",
+        "facets": {"subject_kind": ["animal"]}
+      },
+      {
+        "id": "fern_unfurling",
+        "ko": "비 뒤에 잎을 펴는 고사리",
+        "en": "a fern frond unfurling after rain",
+        "weight": 0.66,
+        "kind": ["plant"],
+        "tags": ["plant", "botanical", "fern", "forest", "macro"],
+        "aliases": ["unfurling fern", "fern frond", "고사리", "고사리 새순"],
+        "keywords": ["botanical macro", "fern growth", "rain forest floor"],
+        "embedding_text": "fern frond unfurling after rain with droplets and forest-floor context",
+        "facets": {"subject_kind": ["plant"]}
+      },
+      {
+        "id": "mycelium_forest_floor",
+        "ko": "숲 바닥의 균사체와 작은 버섯",
+        "en": "mycelium and small fungi across a forest floor",
+        "weight": 0.64,
+        "kind": ["plant"],
+        "tags": ["plant", "fungus", "mushroom", "forest", "macro", "ecology"],
+        "aliases": ["forest mycelium", "small fungi", "균사체", "숲 버섯"],
+        "keywords": ["fungal ecology", "mycelium network", "forest floor macro"],
+        "embedding_text": "mycelium threads and small fungi emerging through leaf litter on a damp forest floor",
+        "facets": {"subject_kind": ["plant"]}
+      },
+      {
+        "id": "electric_bus_charging",
+        "ko": "차고지에서 충전 중인 전기 버스",
+        "en": "an electric city bus charging at a depot",
+        "weight": 0.7,
+        "kind": ["object", "vehicle"],
+        "tags": ["object", "vehicle", "transport", "technology", "infrastructure"],
+        "aliases": ["electric bus", "charging bus", "전기 버스", "충전 버스"],
+        "keywords": ["public transit", "electric vehicle", "depot charging"],
+        "embedding_text": "electric city bus connected to a depot charger with realistic cables, tires and municipal infrastructure",
+        "facets": {"subject_kind": ["object"]}
+      },
+      {
+        "id": "bridge_inspection_drone",
+        "ko": "교량 이음부를 점검하는 드론",
+        "en": "an inspection drone scanning a bridge joint",
+        "weight": 0.68,
+        "kind": ["robot", "object"],
+        "tags": ["robot", "object", "drone", "inspection", "infrastructure", "machine_vision"],
+        "aliases": ["bridge inspection drone", "inspection UAV", "교량 점검 드론"],
+        "keywords": ["infrastructure inspection", "machine vision", "bridge maintenance"],
+        "embedding_text": "autonomous inspection drone scanning bridge bearings and concrete joints with a visible sensor payload",
+        "facets": {"subject_kind": ["robot"], "robot_form": ["aerial_single_drone"], "robot_degree": ["full_machine"], "robot_proof_family": ["sensory_apparatus", "behavior_control"], "robot_condition": ["field_worn_operational"]}
+      },
+      {
+        "id": "cnc_milling_machine",
+        "ko": "금속 부품을 절삭하는 CNC 밀링 머신",
+        "en": "a CNC milling machine cutting a metal component",
+        "weight": 0.7,
+        "kind": ["object"],
+        "tags": ["object", "machine", "industrial", "manufacturing", "metal"],
+        "aliases": ["CNC mill", "milling machine", "CNC 밀링", "공작 기계"],
+        "keywords": ["precision machining", "industrial process", "metal cutting"],
+        "embedding_text": "CNC milling machine cutting a metal component with coolant, chips and guarded industrial enclosure",
+        "facets": {"subject_kind": ["object"]}
+      },
+      {
+        "id": "cleanroom_wafer_robot",
+        "ko": "클린룸의 웨이퍼 이송 로봇",
+        "en": "a wafer-handling robot in a semiconductor cleanroom",
+        "weight": 0.68,
+        "kind": ["robot", "object"],
+        "tags": ["robot", "object", "laboratory", "cleanroom", "semiconductor", "precision"],
+        "aliases": ["wafer robot", "cleanroom robot", "웨이퍼 로봇", "반도체 로봇"],
+        "keywords": ["semiconductor fabrication", "wafer handling", "cleanroom automation"],
+        "embedding_text": "precision wafer-handling robot operating inside a semiconductor cleanroom with sealed transparent equipment",
+        "facets": {"subject_kind": ["robot"], "robot_form": ["fixed_installation"], "robot_degree": ["full_machine"], "robot_proof_family": ["behavior_control", "fabrication_origin"], "robot_condition": ["pristine_factory_new"]}
+      },
+      {
+        "id": "floodgate_infrastructure",
+        "ko": "하천의 대형 수문 기반 시설",
+        "en": "a large river floodgate structure",
+        "weight": 0.66,
+        "kind": ["environment"],
+        "tags": ["environment", "architecture", "infrastructure", "water", "industrial"],
+        "aliases": ["floodgate", "river gate", "수문", "하천 수문"],
+        "keywords": ["water infrastructure", "civil engineering", "flood control"],
+        "embedding_text": "large river floodgate infrastructure showing concrete scale, steel mechanisms and water level evidence",
+        "facets": {"subject_kind": ["environment"], "place_type": ["infrastructure"]}
+      },
+      {
+        "id": "sourdough_fermentation_batch",
+        "ko": "발효 중인 사워도우 반죽 묶음",
+        "en": "a batch of sourdough loaves fermenting",
+        "weight": 0.7,
+        "kind": ["food"],
+        "tags": ["food", "bread", "fermentation", "process", "bakery"],
+        "aliases": ["sourdough batch", "fermenting dough", "사워도우", "발효 반죽"],
+        "keywords": ["bread fermentation", "bakery process", "proofing dough"],
+        "embedding_text": "batch of sourdough loaves fermenting in proofing baskets with visible bubbles and flour texture",
+        "facets": {"subject_kind": ["food"]}
+      },
+      {
+        "id": "seasonal_vegetable_crate",
+        "ko": "제철 채소가 담긴 수확 상자",
+        "en": "a harvest crate of seasonal vegetables",
+        "weight": 0.72,
+        "kind": ["food"],
+        "tags": ["food", "produce", "harvest", "agriculture", "market"],
+        "aliases": ["vegetable harvest crate", "seasonal produce", "제철 채소", "수확 상자"],
+        "keywords": ["farm produce", "harvest sorting", "seasonal vegetables"],
+        "embedding_text": "harvest crate filled with seasonal vegetables carrying field soil, leaves and varied natural shapes",
+        "facets": {"subject_kind": ["food"]}
+      },
+      {
+        "id": "oyster_mushroom_harvest",
+        "ko": "수확 직전의 느타리버섯 송이",
+        "en": "clusters of oyster mushrooms ready for harvest",
+        "weight": 0.68,
+        "kind": ["food"],
+        "tags": ["food", "mushroom", "agriculture", "indoor_farm", "harvest"],
+        "aliases": ["oyster mushroom harvest", "mushroom cluster", "느타리버섯", "버섯 수확"],
+        "keywords": ["mushroom cultivation", "indoor agriculture", "edible fungi"],
+        "embedding_text": "clusters of oyster mushrooms ready for harvest on cultivation blocks inside a humid growing room",
+        "facets": {"subject_kind": ["food"]}
+      },
+      {
+        "id": "rice_seedling_tray",
+        "ko": "논 이앙을 기다리는 벼 모판",
+        "en": "trays of rice seedlings ready for planting",
+        "weight": 0.66,
+        "kind": ["plant"],
+        "tags": ["plant", "agriculture", "rice", "seedling", "process"],
+        "aliases": ["rice seedling tray", "rice nursery", "벼 모판", "벼 묘판"],
+        "keywords": ["rice cultivation", "seedling nursery", "agricultural process"],
+        "embedding_text": "dense green rice seedlings in nursery trays ready for transplanting, with water and soil evidence",
+        "facets": {"subject_kind": ["plant"]}
+      },
+      {
+        "id": "community_soup_pot",
+        "ko": "공동체 주방의 큰 수프 냄비",
+        "en": "a large soup pot in a community kitchen",
+        "weight": 0.7,
+        "kind": ["food"],
+        "tags": ["food", "community", "kitchen", "meal", "steam"],
+        "aliases": ["community soup pot", "shared meal pot", "공동체 수프", "나눔 식사"],
+        "keywords": ["community meal", "mutual aid kitchen", "shared food"],
+        "embedding_text": "large soup pot in a community kitchen with steam, ladles and bowls prepared for a shared meal",
+        "facets": {"subject_kind": ["food"]}
       }
     ],
     "person_origin": [
@@ -122390,7 +122766,9 @@
           "robot_proof_family": [
             "power_command"
           ]
-        }
+        },
+        "requires_any_tags": ["robot", "technology", "charging", "vehicle"],
+        "requires_primary_any_tags": ["robot", "technology", "charging", "vehicle"]
       },
       {
         "id": "running_diagnostics",
@@ -126969,6 +127347,150 @@
           "no readable captions"
         ],
         "embedding_text": "arranging archive photos with blank non-readable margins, memory archive gesture, no captions"
+      },
+      {
+        "id": "probing_tidepool",
+        "ko": "촉수로 조수 웅덩이를 탐색하는",
+        "en": "probing naturally through a tidepool",
+        "weight": 0.72,
+        "tags": ["animal", "wildlife", "marine", "foraging", "behavior"],
+        "for_any": ["animal"],
+        "requires_any_tags": ["marine", "tidepool", "coast"],
+        "aliases": ["probing tidepool", "tidepool exploration", "조수 웅덩이 탐색"],
+        "keywords": ["marine behavior", "octopus foraging", "intertidal movement"],
+        "embedding_text": "probing naturally through a tidepool while navigating wet rocks and shallow water"
+      },
+      {
+        "id": "foraging_riverbank",
+        "ko": "강둑 물가에서 먹이를 찾는",
+        "en": "foraging along a riverbank waterline",
+        "weight": 0.72,
+        "tags": ["animal", "wildlife", "river", "foraging", "behavior"],
+        "for_any": ["animal"],
+        "requires_any_tags": ["river", "mammal"],
+        "aliases": ["riverbank foraging", "waterline foraging", "강둑 먹이 찾기"],
+        "keywords": ["wild mammal behavior", "river habitat", "foraging"],
+        "embedding_text": "foraging along a riverbank waterline with natural pauses, wet fur and habitat interaction"
+      },
+      {
+        "id": "flock_landing_wetland",
+        "ko": "무리를 이루어 습지에 내려앉는",
+        "en": "landing as a flock across a wetland",
+        "weight": 0.68,
+        "tags": ["animal", "wildlife", "bird", "flock", "migration", "motion"],
+        "for_any": ["animal"],
+        "requires_any_tags": ["bird", "migration", "group"],
+        "aliases": ["flock landing", "wetland bird landing", "철새 착지"],
+        "keywords": ["migratory bird behavior", "flock spacing", "wetland landing"],
+        "embedding_text": "landing as a flock across a wetland with layered wing positions and natural group spacing"
+      },
+      {
+        "id": "unfurling_after_rain",
+        "ko": "비 뒤에 천천히 잎을 펴는",
+        "en": "slowly unfurling after rain",
+        "weight": 0.66,
+        "tags": ["plant", "botanical", "growth", "rain", "macro"],
+        "for_any": ["plant"],
+        "requires_any_tags": ["fern"],
+        "aliases": ["unfurling after rain", "fern growth", "비 뒤 잎 펼침"],
+        "keywords": ["botanical growth", "fern frond", "rain droplets"],
+        "embedding_text": "slowly unfurling after rain with droplets held along the new leaf edge"
+      },
+      {
+        "id": "charging_at_depot",
+        "ko": "차고지 충전기에 연결되어 충전 중인",
+        "en": "charging from a depot power unit",
+        "weight": 0.7,
+        "tags": ["object", "vehicle", "transport", "charging", "infrastructure"],
+        "for_any": ["object", "robot"],
+        "requires_any_tags": ["vehicle", "transport", "charging"],
+        "aliases": ["depot charging", "vehicle charging", "차고지 충전"],
+        "keywords": ["electric transit", "charging cable", "municipal depot"],
+        "embedding_text": "charging from a depot power unit with a physically connected cable and operational indicator light"
+      },
+      {
+        "id": "scanning_bridge_joint",
+        "ko": "교량 이음부와 균열을 스캔하는",
+        "en": "scanning bridge joints and surface cracks",
+        "weight": 0.68,
+        "tags": ["robot", "object", "inspection", "infrastructure", "machine_vision"],
+        "for_any": ["object", "robot"],
+        "requires_any_tags": ["drone", "machine_vision"],
+        "aliases": ["bridge joint scan", "infrastructure scan", "교량 스캔"],
+        "keywords": ["bridge inspection", "machine vision", "surface crack survey"],
+        "embedding_text": "scanning bridge joints and surface cracks in a methodical machine-vision inspection pass"
+      },
+      {
+        "id": "milling_metal_part",
+        "ko": "냉각수와 절삭칩 속에서 금속 부품을 가공하는",
+        "en": "milling a metal component under coolant",
+        "weight": 0.7,
+        "tags": ["object", "machine", "industrial", "manufacturing", "metal"],
+        "for_any": ["object", "robot"],
+        "requires_any_tags": ["manufacturing", "machine", "metal"],
+        "aliases": ["metal milling", "CNC cutting", "금속 절삭"],
+        "keywords": ["machining process", "metal chips", "industrial cutting"],
+        "embedding_text": "milling a metal component under coolant with visible chips and guarded machine motion"
+      },
+      {
+        "id": "calibrating_sensor_array",
+        "ko": "정밀 센서 배열을 교정하는",
+        "en": "calibrating a precision sensor array",
+        "weight": 0.66,
+        "tags": ["object", "robot", "technology", "calibration", "inspection"],
+        "for_any": ["object", "robot"],
+        "requires_any_tags": ["semiconductor", "cleanroom", "precision"],
+        "aliases": ["sensor calibration", "calibrating sensors", "센서 교정"],
+        "keywords": ["precision calibration", "technical process", "diagnostic equipment"],
+        "embedding_text": "calibrating a precision sensor array through measured machine movement and diagnostic light"
+      },
+      {
+        "id": "folding_dough",
+        "ko": "발효 반죽을 접어 글루텐을 만드는",
+        "en": "folding fermented dough between rests",
+        "weight": 0.72,
+        "tags": ["food", "bread", "fermentation", "process", "craft"],
+        "for_any": ["food"],
+        "requires_any_tags": ["bread", "fermentation", "bakery"],
+        "aliases": ["dough folding", "folding sourdough", "반죽 접기"],
+        "keywords": ["bread process", "sourdough fermentation", "dough structure"],
+        "embedding_text": "folding fermented dough between rests with visible elasticity, flour and trapped air"
+      },
+      {
+        "id": "sorting_harvest",
+        "ko": "수확물을 크기와 상태에 따라 선별하는",
+        "en": "sorting a fresh harvest by size and condition",
+        "weight": 0.72,
+        "tags": ["food", "plant", "agriculture", "harvest", "process"],
+        "for_any": ["food", "plant"],
+        "requires_any_tags": ["produce", "harvest", "seedling", "rice"],
+        "aliases": ["harvest sorting", "sorting produce", "수확물 선별"],
+        "keywords": ["farm process", "seasonal produce", "quality sorting"],
+        "embedding_text": "sorting a fresh harvest by size and condition while preserving soil, leaves and natural variation"
+      },
+      {
+        "id": "misting_mushroom_blocks",
+        "ko": "버섯 배지를 고르게 분무하는",
+        "en": "misting mushroom cultivation blocks",
+        "weight": 0.66,
+        "tags": ["food", "plant", "mushroom", "agriculture", "humidity"],
+        "for_any": ["food", "plant"],
+        "requires_any_tags": ["mushroom", "indoor_farm"],
+        "aliases": ["misting mushrooms", "mushroom cultivation", "버섯 분무"],
+        "keywords": ["indoor farming", "humidity control", "mushroom process"],
+        "embedding_text": "misting mushroom cultivation blocks with fine droplets and visible humid growing-room air"
+      },
+      {
+        "id": "serving_community_meal",
+        "ko": "공동체 식사를 그릇에 나누어 담는",
+        "en": "serving a shared community meal into bowls",
+        "weight": 0.7,
+        "tags": ["food", "human", "community", "service", "meal", "care"],
+        "for_any": ["food", "human"],
+        "requires_any_tags": ["community", "meal", "kitchen"],
+        "aliases": ["serving community meal", "shared meal service", "공동체 식사 배식"],
+        "keywords": ["mutual aid kitchen", "meal service", "community care"],
+        "embedding_text": "serving a shared community meal into simple bowls with steam, practical utensils and collective care"
       }
     ],
     "capture_context": [
@@ -138074,6 +138596,61 @@
           "travel"
         ],
         "embedding_text": "black backpack slung over one shoulder on an adult transit or school-uniform reference portrait"
+      },
+      {
+        "id": "handheld_vibration_meter_prop",
+        "ko": "휴대용 진동 측정기",
+        "en": "a handheld vibration meter",
+        "weight": 0.58,
+        "tags": ["object", "prop", "inspection", "sensor", "industrial", "no_text"],
+        "for_any": ["object", "robot", "human"],
+        "aliases": ["vibration meter", "inspection sensor", "진동 측정기"],
+        "keywords": ["condition monitoring", "industrial inspection", "diagnostic instrument"],
+        "embedding_text": "handheld vibration meter used for condition monitoring, with the display unreadable and no brand emphasis"
+      },
+      {
+        "id": "machined_component_tray_prop",
+        "ko": "가공된 금속 부품이 놓인 트레이",
+        "en": "a tray of freshly machined metal components",
+        "weight": 0.6,
+        "tags": ["object", "prop", "industrial", "metal", "manufacturing"],
+        "for_any": ["object", "robot", "human"],
+        "aliases": ["machined parts tray", "metal component tray", "가공 부품 트레이"],
+        "keywords": ["precision parts", "machining process", "metal finish"],
+        "embedding_text": "tray of freshly machined metal components with visible tool marks, coolant residue and consistent geometry"
+      },
+      {
+        "id": "proofing_basket_lame_prop",
+        "ko": "발효 바구니와 빵 칼",
+        "en": "proofing baskets and a bread lame",
+        "weight": 0.62,
+        "tags": ["food", "prop", "bread", "bakery", "process"],
+        "for_any": ["food", "human"],
+        "aliases": ["proofing basket", "bread lame", "발효 바구니", "빵 칼"],
+        "keywords": ["sourdough tools", "bread scoring", "bakery process"],
+        "embedding_text": "rattan proofing baskets and a bread lame beside fermenting dough, practical bakery tools without branding"
+      },
+      {
+        "id": "harvest_scale_crates_prop",
+        "ko": "수확 상자와 저울",
+        "en": "harvest crates beside a simple produce scale",
+        "weight": 0.6,
+        "tags": ["food", "prop", "agriculture", "harvest", "market", "no_text"],
+        "for_any": ["food", "plant", "human"],
+        "aliases": ["harvest crates and scale", "produce scale", "수확 상자와 저울"],
+        "keywords": ["produce sorting", "farm harvest", "market preparation"],
+        "embedding_text": "harvest crates beside a simple produce scale with no readable labels, used for farm sorting"
+      },
+      {
+        "id": "stainless_ladle_enamel_bowls_prop",
+        "ko": "스테인리스 국자와 에나멜 그릇",
+        "en": "a stainless ladle with stacked enamel bowls",
+        "weight": 0.62,
+        "tags": ["food", "prop", "community", "kitchen", "service"],
+        "for_any": ["food", "human"],
+        "aliases": ["ladle and bowls", "community meal utensils", "국자와 그릇"],
+        "keywords": ["meal service", "community kitchen", "practical utensils"],
+        "embedding_text": "stainless ladle with stacked enamel bowls ready for a community meal service"
       }
     ],
     "fetish_styling": [
@@ -141393,6 +141970,12 @@
           "religious",
           "architecture"
         ],
+        "facets": {
+          "place_type": [
+            "temple",
+            "interior"
+          ]
+        },
         "phrase_en": "inside a cathedral nave",
         "phrase_ko": "성당 네이브 내부에서"
       },
@@ -142184,6 +142767,12 @@
           "location",
           "interior"
         ],
+        "facets": {
+          "place_type": [
+            "temple",
+            "interior"
+          ]
+        },
         "embedding_text": "a stained-glass chapel"
       },
       {
@@ -146088,6 +146677,105 @@
           "soft"
         ],
         "embedding_text": "sunlit floral room with soft daylight and gentle flowers for bridal or angelic portrait styling, no church or priest role cue"
+      },
+      {
+        "id": "tidal_rock_pool",
+        "ko": "썰물 때 드러난 바위 조수 웅덩이",
+        "en": "an exposed rocky tidepool at low tide",
+        "weight": 0.7,
+        "tags": ["nature", "coast", "tidepool", "marine", "outdoor"],
+        "aliases": ["rocky tidepool", "intertidal pool", "조수 웅덩이"],
+        "keywords": ["intertidal habitat", "wet coastal rocks", "marine ecology"],
+        "embedding_text": "exposed rocky tidepool at low tide with shallow seawater, algae and wet stone texture",
+        "facets": {"place_type": ["nature"]}
+      },
+      {
+        "id": "reed_wetland_dawn",
+        "ko": "새벽 물안개가 낀 갈대 습지",
+        "en": "a reed wetland under dawn mist",
+        "weight": 0.72,
+        "tags": ["nature", "wetland", "reeds", "dawn", "mist", "wildlife"],
+        "aliases": ["reed wetland", "dawn marsh", "갈대 습지", "새벽 습지"],
+        "keywords": ["wetland habitat", "dawn mist", "migratory birds"],
+        "embedding_text": "reed wetland under dawn mist with shallow water channels and layered habitat depth",
+        "facets": {"place_type": ["nature"], "time_of_day": ["dawn"], "weather": ["fog"]}
+      },
+      {
+        "id": "temperate_forest_floor",
+        "ko": "낙엽과 이끼가 쌓인 온대림 바닥",
+        "en": "a damp temperate forest floor",
+        "weight": 0.7,
+        "tags": ["nature", "forest", "moss", "leaf_litter", "macro"],
+        "aliases": ["temperate forest floor", "damp woodland floor", "온대림 바닥"],
+        "keywords": ["forest ecology", "leaf litter", "fungi habitat"],
+        "embedding_text": "damp temperate forest floor layered with leaf litter, bark, moss, fungi and small plants",
+        "facets": {"place_type": ["nature"]}
+      },
+      {
+        "id": "municipal_bus_depot",
+        "ko": "충전 설비가 있는 시내버스 차고지",
+        "en": "a municipal electric-bus depot",
+        "weight": 0.68,
+        "tags": ["transport", "infrastructure", "industrial", "depot", "urban"],
+        "aliases": ["bus depot", "electric bus garage", "버스 차고지"],
+        "keywords": ["public transit infrastructure", "charging depot", "municipal transport"],
+        "embedding_text": "municipal electric-bus depot with charging bays, service lanes and practical overhead lighting",
+        "facets": {"place_type": ["transport", "infrastructure"]}
+      },
+      {
+        "id": "precision_machine_shop",
+        "ko": "정밀 공작 기계가 놓인 기계 작업장",
+        "en": "a precision machine shop",
+        "weight": 0.68,
+        "tags": ["industrial", "workshop", "machine", "manufacturing", "interior"],
+        "aliases": ["machine shop", "precision workshop", "기계 작업장"],
+        "keywords": ["CNC workshop", "metal machining", "industrial process"],
+        "embedding_text": "precision machine shop with guarded CNC equipment, metal chips, coolant and organized work zones",
+        "facets": {"place_type": ["industrial"]}
+      },
+      {
+        "id": "semiconductor_cleanroom",
+        "ko": "반도체 제조 클린룸",
+        "en": "a semiconductor fabrication cleanroom",
+        "weight": 0.66,
+        "tags": ["laboratory", "cleanroom", "semiconductor", "technology", "industrial"],
+        "aliases": ["semiconductor cleanroom", "wafer fab", "반도체 클린룸"],
+        "keywords": ["wafer fabrication", "clean manufacturing", "precision automation"],
+        "embedding_text": "semiconductor fabrication cleanroom with sealed process tools, wafer handling robots and filtered white light",
+        "facets": {"place_type": ["laboratory", "industrial"]}
+      },
+      {
+        "id": "cooperative_farm_wash_station",
+        "ko": "협동 농장의 수확물 세척·선별장",
+        "en": "a cooperative farm wash and sorting station",
+        "weight": 0.7,
+        "tags": ["agricultural", "farm", "food", "harvest", "workplace"],
+        "aliases": ["farm wash station", "produce sorting shed", "농산물 세척장"],
+        "keywords": ["post-harvest process", "farm cooperative", "produce washing"],
+        "embedding_text": "cooperative farm wash and sorting station with crates, stainless sinks, water and seasonal produce",
+        "facets": {"place_type": ["agricultural"]}
+      },
+      {
+        "id": "mushroom_growing_room",
+        "ko": "습도가 유지되는 버섯 재배실",
+        "en": "a humid mushroom growing room",
+        "weight": 0.68,
+        "tags": ["agricultural", "interior", "mushroom", "food", "humidity"],
+        "aliases": ["mushroom growing room", "mushroom farm", "버섯 재배실"],
+        "keywords": ["indoor agriculture", "cultivation blocks", "humidity control"],
+        "embedding_text": "humid mushroom growing room with cultivation blocks, fine mist and orderly harvest aisles",
+        "facets": {"place_type": ["agricultural", "interior"]}
+      },
+      {
+        "id": "neighborhood_community_kitchen",
+        "ko": "동네 공동체 주방",
+        "en": "a neighborhood community kitchen",
+        "weight": 0.72,
+        "tags": ["interior", "community", "kitchen", "food", "service"],
+        "aliases": ["community kitchen", "shared neighborhood kitchen", "공동체 주방"],
+        "keywords": ["mutual aid kitchen", "shared meal", "community service"],
+        "embedding_text": "neighborhood community kitchen with large pots, practical counters, stacked bowls and shared meal preparation",
+        "facets": {"place_type": ["interior"]}
       }
     ],
     "world": [
@@ -147913,7 +148601,8 @@
           "safety_tier": [
             "general"
           ]
-        }
+        },
+        "requires_primary_any_tags": ["human", "portrait", "horror"]
       },
       {
         "id": "flickering_fluorescent_horror",
@@ -148280,7 +148969,12 @@
           "lighting",
           "underwater",
           "water"
-        ]
+        ],
+        "facets": {
+          "lighting_family": [
+            "projection_light"
+          ]
+        }
       },
       {
         "id": "high_speed_strobe",
@@ -148654,6 +149348,22 @@
           "studio",
           "technology"
         ],
+        "aliases": [
+          "전광판",
+          "LED wall",
+          "stage display"
+        ],
+        "keywords": [
+          "broadcast",
+          "stage",
+          "kpop",
+          "전광판"
+        ],
+        "facets": {
+          "lighting_family": [
+            "colored_light"
+          ]
+        },
         "embedding_text": "broadcast studio LED wall light and monitor glow"
       },
       {
@@ -149321,8 +150031,13 @@
         "tags": [
           "urban",
           "sci_fi",
-          "night"
-        ]
+          "night",
+          "neon"
+        ],
+        "facets": {
+          "lighting_family": ["colored_light"]
+        },
+        "requires_primary_any_tags": ["sci_fi", "night", "cyberpunk", "stage", "performance"]
       },
       {
         "id": "streetlamp",
@@ -149361,7 +150076,8 @@
         "weight": 1.0,
         "tags": [
           "lighting"
-        ]
+        ],
+        "requires_primary_any_tags": ["human", "portrait", "horror"]
       },
       {
         "id": "phone_screen_glow",
@@ -149475,6 +150191,22 @@
           "stage",
           "kpop"
         ],
+        "aliases": [
+          "전광판",
+          "LED wall",
+          "stage display"
+        ],
+        "keywords": [
+          "broadcast",
+          "stage",
+          "kpop",
+          "전광판"
+        ],
+        "facets": {
+          "lighting_family": [
+            "colored_light"
+          ]
+        },
         "requires_any_tags": [
           "broadcast",
           "stage",
@@ -149776,7 +150508,9 @@
           "robot_proof_family": [
             "power_command"
           ]
-        }
+        },
+        "requires_any_tags": ["robot", "technology", "charging", "vehicle"],
+        "requires_primary_any_tags": ["robot", "technology", "charging", "vehicle"]
       },
       {
         "id": "scan_line_light",
@@ -149891,7 +150625,12 @@
           "lighting",
           "underwater",
           "water"
-        ]
+        ],
+        "facets": {
+          "lighting_family": [
+            "projection_light"
+          ]
+        }
       },
       {
         "id": "high_speed_strobe",
@@ -150198,6 +150937,9 @@
           "glow"
         ],
         "embedding_text": "blue cooling-fan glow as robot concept proof or scene anchor"
+        ,
+        "requires_any_tags": ["robot", "technology", "computer", "machine", "industrial"],
+        "requires_primary_any_tags": ["robot", "technology", "computer", "machine", "industrial"]
       },
       {
         "id": "screen_face_emission",
@@ -150885,6 +151627,7 @@
           "array"
         ],
         "embedding_text": "status LED array pattern on a robot chassis, dock, wall panel, or sensor cluster",
+        "requires_primary_any_tags": ["robot", "android", "technology", "charging", "surveillance"],
         "facets": {
           "lighting_family": [
             "diagnostic_light"
@@ -150926,6 +151669,11 @@
           "divine",
           "interior"
         ],
+        "facets": {
+          "lighting_family": [
+            "colored_light"
+          ]
+        },
         "embedding_text": "a stained-glass color cast"
       },
       {
@@ -150937,7 +151685,8 @@
           "divine",
           "portrait"
         ],
-        "embedding_text": "a blooming halo aura"
+        "embedding_text": "a blooming halo aura",
+        "requires_primary_any_tags": ["divine", "religious", "fantasy", "magic", "portrait"]
       },
       {
         "id": "candle_flicker_pool",
@@ -151045,7 +151794,8 @@
           "small glow",
           "magic trace"
         ],
-        "embedding_text": "tiny snowflake-like pinpoint glows around a gift tag, holiday magic trace, small-scale winter light anomaly"
+        "embedding_text": "tiny snowflake-like pinpoint glows around a gift tag, holiday magic trace, small-scale winter light anomaly",
+        "requires_primary_any_tags": ["winter", "seasonal", "holiday", "gift"]
       },
       {
         "id": "kinetic_trail_edge_light",
@@ -151167,7 +151917,8 @@
           "princess",
           "light"
         ],
-        "embedding_text": "torch flicker in subterranean court exile"
+        "embedding_text": "torch flicker in subterranean court exile",
+        "requires_primary_any_tags": ["royal", "princess", "fantasy", "period", "ritual"]
       },
       {
         "id": "chandelier_sparkle",
@@ -151251,7 +152002,8 @@
           "princess",
           "light"
         ],
-        "embedding_text": "dawn sliver at threshold into rule"
+        "embedding_text": "dawn sliver at threshold into rule",
+        "requires_primary_any_tags": ["royal", "princess", "palace", "period", "historic"]
       },
       {
         "id": "palace_window_vertical_bars",
@@ -151272,7 +152024,8 @@
           "princess",
           "light"
         ],
-        "embedding_text": "vertical palace window shadows like ceremonial bars"
+        "embedding_text": "vertical palace window shadows like ceremonial bars",
+        "requires_primary_any_tags": ["royal", "princess", "palace", "period", "historic"]
       },
       {
         "id": "lidar_scan_dot_pattern",
@@ -151348,7 +152101,8 @@
           "line",
           "pattern"
         ],
-        "embedding_text": "data-stream line pattern as robot concept proof or scene anchor"
+        "embedding_text": "data-stream line pattern as robot concept proof or scene anchor",
+        "requires_primary_any_tags": ["robot", "android", "technology", "data", "sci_fi", "cyberpunk"]
       },
       {
         "id": "candle_teardrop_flame",
@@ -151536,7 +152290,8 @@
           "office",
           "procedural",
           "threshold"
-        ]
+        ],
+        "requires_primary_any_tags": ["office", "work", "procedural", "transport"]
       },
       {
         "id": "contract_table_pool_light",
@@ -151548,7 +152303,8 @@
           "contract",
           "procedural",
           "low_key"
-        ]
+        ],
+        "requires_primary_any_tags": ["contract", "office", "work", "procedural"]
       },
       {
         "id": "sparkling_water_reflection_highlights",
@@ -152189,7 +152945,8 @@
           "camera_angle": [
             "over_shoulder"
           ]
-        }
+        },
+        "for_any": ["human", "animal"]
       },
       {
         "id": "low_ground_angle",
@@ -152722,7 +153479,8 @@
           "camera_angle": [
             "over_shoulder"
           ]
-        }
+        },
+        "for_any": ["human", "animal"]
       },
       {
         "id": "mirror_reflection_camera_view",
@@ -157573,7 +158331,8 @@
           "winter",
           "small magic"
         ],
-        "embedding_text": "snowflakes and ribbon tips suspended briefly in midair as a small local winter magic response"
+        "embedding_text": "snowflakes and ribbon tips suspended briefly in midair as a small local winter magic response",
+        "requires_primary_any_tags": ["winter", "seasonal", "holiday", "gift"]
       },
       {
         "id": "kinetic_spell_trail_motion",
@@ -157598,6 +158357,9 @@
           "training"
         ],
         "embedding_text": "thin kinetic spell trail around an arm, stopwatch or training band, athletic motion as magic mechanism"
+        ,
+        "requires_any_tags": ["magic", "fantasy", "sports", "training"],
+        "requires_primary_any_tags": ["magic", "fantasy", "sports", "training"]
       },
       {
         "id": "frozen_action",
@@ -159775,6 +160537,11 @@
         "tags": [
           "divine"
         ],
+        "facets": {
+          "mood_family": [
+            "awe"
+          ]
+        },
         "embedding_text": "reverent awe"
       },
       {
@@ -159795,6 +160562,11 @@
         "tags": [
           "divine"
         ],
+        "facets": {
+          "mood_family": [
+            "sacred"
+          ]
+        },
         "embedding_text": "sacred stillness"
       },
       {
@@ -163012,7 +163784,8 @@
           "human",
           "social",
           "phone"
-        ]
+        ],
+        "requires_primary_any_tags": ["social", "phone", "selfie", "beauty", "creator"]
       },
       {
         "id": "cosplay_wig_fiber_detail",
@@ -163102,6 +163875,7 @@
           "automaton"
         ],
         "embedding_text": "porcelain ceramic glaze texture with fine cracks, joint seams, and delicate automaton casing detail",
+        "requires_primary_any_tags": ["robot", "android", "automaton", "porcelain"],
         "facets": {
           "robot_form": [
             "mythic_automaton"
@@ -163404,7 +164178,9 @@
           "texture",
           "doll",
           "joint"
-        ]
+        ],
+        "requires_any_tags": ["doll", "robot", "android", "porcelain"],
+        "requires_primary_any_tags": ["doll", "robot", "android", "porcelain"]
       },
       {
         "id": "fur_patch_skin_blend",
@@ -170330,6 +171106,50 @@
           "diffused surface"
         ],
         "embedding_text": "frosted glass surface, milky translucent material and cool diffused reflections"
+      },
+      {
+        "id": "lichen_bark_surface",
+        "ko": "지의류와 이끼가 붙은 나무껍질 표면",
+        "en": "lichen-covered bark surface",
+        "weight": 0.64,
+        "tags": ["surface", "bark", "lichen", "moss", "nature", "macro"],
+        "for_any": ["plant", "animal", "environment"],
+        "aliases": ["lichen bark", "mossy bark", "지의류 나무껍질"],
+        "keywords": ["forest material", "bark texture", "lichen macro"],
+        "embedding_text": "lichen-covered bark surface with moss, fissures and damp forest material detail"
+      },
+      {
+        "id": "tidal_wet_stone_surface",
+        "ko": "해조류가 붙은 젖은 조간대 돌 표면",
+        "en": "wet intertidal stone with algae",
+        "weight": 0.64,
+        "tags": ["surface", "stone", "wet", "algae", "coast", "nature"],
+        "for_any": ["animal", "plant", "environment"],
+        "aliases": ["wet tidepool stone", "algae rock", "젖은 조간대 돌"],
+        "keywords": ["intertidal material", "wet rock texture", "coastal ecology"],
+        "embedding_text": "wet intertidal stone with algae, saltwater sheen and small marine traces"
+      },
+      {
+        "id": "brushed_machined_aluminum_surface",
+        "ko": "절삭 자국이 남은 브러시드 알루미늄 표면",
+        "en": "brushed machined aluminum surface",
+        "weight": 0.66,
+        "tags": ["surface", "metal", "aluminum", "machined", "industrial"],
+        "for_any": ["object", "robot", "environment"],
+        "aliases": ["machined aluminum", "brushed metal", "가공 알루미늄"],
+        "keywords": ["tool marks", "precision metal", "industrial finish"],
+        "embedding_text": "brushed machined aluminum surface with precise tool marks, clean edges and controlled specular highlights"
+      },
+      {
+        "id": "flour_dusted_wood_surface",
+        "ko": "밀가루가 얇게 묻은 나무 작업대",
+        "en": "a flour-dusted wooden work surface",
+        "weight": 0.66,
+        "tags": ["surface", "wood", "flour", "food", "bakery", "process"],
+        "for_any": ["food", "plant", "human"],
+        "aliases": ["flour-dusted wood", "bakery worktop", "밀가루 나무 작업대"],
+        "keywords": ["bread making surface", "food process", "wood grain"],
+        "embedding_text": "flour-dusted wooden work surface with grain, handling marks and bread-making residue"
       }
     ],
     "aesthetic_trend": [
@@ -176761,7 +177581,8 @@
           "apparatus",
           "office",
           "topdown"
-        ]
+        ],
+        "requires_primary_any_tags": ["office", "document", "inspection", "science", "technology"]
       },
       {
         "id": "thermal_lowfi_pov",
@@ -176774,7 +177595,9 @@
           "apparatus",
           "android",
           "surveillance"
-        ]
+        ],
+        "requires_any_tags": ["surveillance", "robot", "android", "inspection", "wildlife", "science", "technology"],
+        "requires_primary_any_tags": ["surveillance", "robot", "android", "inspection", "wildlife", "science", "technology"]
       },
       {
         "id": "microscope_field_pov",
@@ -176786,7 +177609,8 @@
           "apparatus",
           "macro",
           "inspection"
-        ]
+        ],
+        "requires_primary_any_tags": ["science", "inspection", "macro", "laboratory", "wildlife"]
       },
       {
         "id": "keyhole_vignette_pov",
@@ -197227,6 +198051,28 @@
         "mass_production_line_clone_unit",
         "clockwork_brass_automaton",
         "combat_quadruped_robot"
+      ],
+      "ecology": [
+        "tidepool_octopus",
+        "river_otter_foraging",
+        "migratory_cranes_wetland",
+        "pollinator_moth_night",
+        "fern_unfurling",
+        "mycelium_forest_floor"
+      ],
+      "technical_process": [
+        "electric_bus_charging",
+        "bridge_inspection_drone",
+        "cnc_milling_machine",
+        "cleanroom_wafer_robot",
+        "floodgate_infrastructure"
+      ],
+      "food_system": [
+        "sourdough_fermentation_batch",
+        "seasonal_vegetable_crate",
+        "oyster_mushroom_harvest",
+        "rice_seedling_tray",
+        "community_soup_pot"
       ]
     },
     "location_tones": {
@@ -197354,6 +198200,21 @@
       "robot_ai_temple": [
         "ai_temple_machine_altar",
         "data_center_cold_aisle"
+      ],
+      "wetland_ecology": [
+        "tidal_rock_pool",
+        "reed_wetland_dawn",
+        "temperate_forest_floor"
+      ],
+      "technical_process": [
+        "municipal_bus_depot",
+        "precision_machine_shop",
+        "semiconductor_cleanroom"
+      ],
+      "food_system": [
+        "cooperative_farm_wash_station",
+        "mushroom_growing_room",
+        "neighborhood_community_kitchen"
       ]
     },
     "axis_signals": {
@@ -198687,6 +199548,32 @@
       "combat_quadruped_robot": "object"
     },
     "preset_domain_overrides": {
+      "wetland_behavior_documentary": [
+        "wildlife",
+        "documentary"
+      ],
+      "forest_floor_macro_ecology": [
+        "wildlife",
+        "documentary"
+      ],
+      "industrial_process_documentary": [
+        "documentary",
+        "craft",
+        "architecture"
+      ],
+      "infrastructure_inspection_record": [
+        "architecture",
+        "documentary"
+      ],
+      "farm_to_table_process": [
+        "food",
+        "documentary",
+        "craft"
+      ],
+      "community_kitchen_documentary": [
+        "food",
+        "documentary"
+      ],
       "jewelry_macro_reflection": [
         "product",
         "jewelry"

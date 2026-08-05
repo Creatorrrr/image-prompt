@@ -677,7 +677,10 @@ def soft_anchor_specs_from_mapping(
     recipe: dict[str, Any],
     source: str,
     explicit_user_set_slots: set[str],
+    local_pool_slots: set[str] | None = None,
+    atomic_group: str = "",
 ) -> list[dict[str, Any]]:
+    local_pool_slots = local_pool_slots or set()
     anchor_slots = recipe_soft_anchor_slots(recipes, recipe)
     free_slots = recipe_soft_free_slots(recipes, recipe)
     critical_slots = critical_anchor_slots_for_recipe(recipe)
@@ -716,16 +719,25 @@ def soft_anchor_specs_from_mapping(
         variant_options = normalize_list(variant.get("options")) if variant else []
         variant_group = str(variant.get("group") or "") if variant else ""
         primary_pool = primary_anchor_pool_for_slot(recipe, slot)
-        pool = primary_pool or variant_options or anchor_pool_for_slot(recipe, slot, clean_ids)
-        if primary_pool:
+        if slot in local_pool_slots:
+            pool = clean_ids
+        else:
+            pool = primary_pool or variant_options or anchor_pool_for_slot(recipe, slot, clean_ids)
+        if slot in local_pool_slots:
+            pool_weights = {}
+        elif primary_pool:
             pool_weights = primary_anchor_pool_weights_for_slot(recipe, slot)
         elif variant_options:
             pool_weights = {}
         else:
             pool_weights = anchor_pool_weights_for_slot(recipe, slot)
         pool_weights = {item_id: weight for item_id, weight in pool_weights.items() if item_id in pool}
-        effective_variant_group = variant_group
-        effective_variant_strategy = str(variant.get("select") or "") if variant else ""
+        effective_variant_group = atomic_group if slot in local_pool_slots and atomic_group else variant_group
+        effective_variant_strategy = (
+            "atomic_scene"
+            if slot in local_pool_slots and atomic_group
+            else (str(variant.get("select") or "") if variant else "")
+        )
         if slot == "location" and role_scene_group and set(pool) & role_scene_locations:
             effective_variant_group = role_scene_group
             effective_variant_strategy = "role_scene_rotation"
@@ -1705,6 +1717,11 @@ def select_bundle_for_mixin(
         generic_bundles = [bundle for bundle in bundles if not normalize_list(bundle.get("roles"))]
         if generic_bundles:
             bundles = generic_bundles
+        else:
+            # A standalone mixin must never inherit a bundle authored for an
+            # unrelated role. Fall back to the mixin core when no generic
+            # aspect exists.
+            return None
 
     weights = [max(float(bundle.get("weight", 1) or 0), 0.0) for bundle in bundles]
     total = sum(weights)
@@ -1859,6 +1876,15 @@ def resolve_concepts(
             role_set = resolved_role_set(recipe, role_scene_variant)
             set_groups.append((role_set, set()))
             role_mapping = forced_sets_to_mapping(role_set)
+            scene_variant_mapping = forced_sets_to_mapping(
+                set_values_to_forced((role_scene_variant or {}).get("set"))
+            )
+            atomic_scene_slots = set(scene_variant_mapping)
+            atomic_scene_group = (
+                f"role_scene:{str((role_scene_variant or {}).get('id') or '')}"
+                if role_scene_variant
+                else ""
+            )
             soft_anchor_specs.extend(
                 soft_anchor_specs_from_mapping(
                     recipes,
@@ -1866,6 +1892,8 @@ def resolve_concepts(
                     recipe,
                     "role",
                     explicit_user_set_slots,
+                    local_pool_slots=atomic_scene_slots,
+                    atomic_group=atomic_scene_group,
                 )
             )
             soft_min_anchor_candidates.append(soft_min_anchors_for_recipe(recipe, 1))

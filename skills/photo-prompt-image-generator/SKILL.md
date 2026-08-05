@@ -99,7 +99,8 @@ There is no separate approval flag or policy mode. This project-level automatic 
 ## Composition Rules
 
 - Preserve every `mandatory_intent` as visible image content. A candidate label is not proof of coverage.
-- Choose only IDs exposed in the pack; never invent or reconstruct a masked candidate.
+- Choose only IDs exposed in the pack whose `applicability.status` is `eligible`; never invent or reconstruct a masked candidate.
+- Treat `intent_contract` as typed request meaning and `scene_contract` as a hard boundary. An `atomic_scene` group may use only IDs allowed by that one selected variant.
 - Preserve `negative_en` byte-for-byte.
 - Respect hard conflicts, concept gates, enforced role-scene policy, and species-family locks.
 - `open_slots` expose only slot and bucket names. Invent a compatible detail; do not infer the hidden source choice.
@@ -117,8 +118,9 @@ See `references/composition-contract.md` for field-level details.
 - Use `--selection-mode rule` for reproducible offline generation or tests.
 - Use `--intent` for free-form semantic requests and `--concept-lock` for literal meaning that must remain dominant.
 - Use `--additional-requirement` only for concrete visible constraints not represented by tags.
+- Rule mode gives a uniquely strong explicit request-term match deterministic priority while retaining the other sampler-eligible alternatives in the candidate pack.
 - K-pop/K-beauty/idol and fantasy candidates receive an implicit-theme penalty unless the request names that theme.
-- Concept recipes may define `identity_core` plus weighted `scene_variants`; keep the identity stable while rotating the scene instead of repeating one exemplar.
+- Concept recipes may define `identity_core` plus weighted `scene_variants`; keep the identity stable while rotating one atomic scene instead of mixing slots from separate exemplars.
 
 See `references/concept-routing.md` before adding a new preset, concept, or slot.
 

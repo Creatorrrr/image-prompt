@@ -132,6 +132,22 @@ def candidate_ids_from_pack(pack: dict[str, Any]) -> set[str]:
     return ids
 
 
+def candidate_objects_from_pack(pack: dict[str, Any]) -> dict[str, dict[str, Any]]:
+    candidates: dict[str, dict[str, Any]] = {}
+    for candidate in pack.get("presets") or []:
+        if isinstance(candidate, dict) and candidate.get("id"):
+            candidates[str(candidate["id"])] = candidate
+    slots = pack.get("slots") or {}
+    slot_values = slots.values() if isinstance(slots, dict) else slots
+    for slot_payload in slot_values:
+        if not isinstance(slot_payload, dict):
+            continue
+        for candidate in slot_payload.get("candidates") or []:
+            if isinstance(candidate, dict) and candidate.get("id"):
+                candidates[str(candidate["id"])] = candidate
+    return candidates
+
+
 def assertion_terms_for_intent(intent: dict[str, Any], composed: dict[str, Any]) -> list[str]:
     text = str(intent.get("text") or "")
     terms = [text]
@@ -474,6 +490,80 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
     if invalid:
         failures.append({"check": "chosen_candidate_ids", "reason": "unknown candidate id", "ids": invalid})
 
+    candidate_objects = candidate_objects_from_pack(pack)
+    ineligible = []
+    for candidate_id in sorted(chosen):
+        candidate = candidate_objects.get(candidate_id)
+        if not isinstance(candidate, dict):
+            continue
+        applicability = candidate.get("applicability") if isinstance(candidate.get("applicability"), dict) else {}
+        if applicability and applicability.get("status") != "eligible":
+            ineligible.append(
+                {
+                    "id": candidate_id,
+                    "status": applicability.get("status"),
+                    "reason": applicability.get("reason"),
+                }
+            )
+    if ineligible:
+        failures.append(
+            {
+                "check": "candidate_applicability",
+                "reason": "chosen candidate is not eligible for this request",
+                "candidates": ineligible,
+            }
+        )
+
+    coverage = pack.get("coverage") if isinstance(pack.get("coverage"), dict) else {}
+    intent_constraints = coverage.get("intent_constraints") if isinstance(coverage.get("intent_constraints"), dict) else {}
+    no_people = bool(intent_constraints.get("no_people")) or any(
+        isinstance(intent, dict) and "no_people" in (intent.get("constraints") or [])
+        for intent in pack.get("intent_contract") or []
+    )
+    if no_people:
+        person_only_slots = {
+            "appearance_type",
+            "body_framing",
+            "body_orientation",
+            "body_pose",
+            "brow_style",
+            "costume_style",
+            "eye_detail",
+            "eye_makeup_line",
+            "facial_hair",
+            "footwear",
+            "gaze_engagement",
+            "hair_color",
+            "hair_style",
+            "hand_pose",
+            "lip_finish",
+            "makeup_style",
+            "person_origin",
+            "silhouette_proportion",
+            "skin_finish",
+            "wardrobe_style",
+        }
+        violations: list[dict[str, Any]] = []
+        for candidate_id in sorted(chosen):
+            candidate = candidate_objects.get(candidate_id)
+            if not isinstance(candidate, dict) or not candidate_id.startswith("slot:"):
+                continue
+            slot = str(candidate.get("slot") or "")
+            tokens = {
+                str(item).lower()
+                for item in [*(candidate.get("kind") or []), *(candidate.get("tags") or [])]
+            }
+            if slot in person_only_slots or "human" in tokens:
+                violations.append({"id": candidate_id, "slot": slot, "tokens": sorted(tokens)[:12]})
+        if violations:
+            failures.append(
+                {
+                    "check": "negative_presence_constraint",
+                    "reason": "no-people request contains person-only chosen candidates",
+                    "candidates": violations,
+                }
+            )
+
     concept_axes = pack.get("concept_axes") if isinstance(pack.get("concept_axes"), dict) else {}
     for axis in concept_axes.get("required") or []:
         if not isinstance(axis, dict):
@@ -568,6 +658,27 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
             )
 
     chosen_slots = chosen_slot_entry_ids(chosen)
+    scene_contract = pack.get("scene_contract") if isinstance(pack.get("scene_contract"), dict) else {}
+    for group in scene_contract.get("groups") or []:
+        if not isinstance(group, dict) or str(group.get("strategy") or "") != "atomic_scene":
+            continue
+        for slot, slot_contract in (group.get("slots") or {}).items():
+            if not isinstance(slot_contract, dict):
+                continue
+            allowed_ids = {str(item) for item in slot_contract.get("allowed_entry_ids") or []}
+            selected_ids = chosen_slots.get(str(slot), set())
+            outside = sorted(selected_ids - allowed_ids) if allowed_ids else sorted(selected_ids)
+            if outside:
+                failures.append(
+                    {
+                        "check": "atomic_scene_contract",
+                        "reason": "chosen candidate crosses the selected scene variant boundary",
+                        "group": group.get("group"),
+                        "slot": str(slot),
+                        "ids": outside,
+                        "allowed_ids": sorted(allowed_ids),
+                    }
+                )
     role_scene_policy = pack.get("role_scene_policy") if isinstance(pack.get("role_scene_policy"), dict) else {}
     if role_scene_policy.get("enabled"):
         selected_locations = chosen_slots.get("location", set())

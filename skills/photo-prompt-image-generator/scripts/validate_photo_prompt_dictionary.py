@@ -176,6 +176,12 @@ def validate_selection_contracts(data: dict[str, Any], errors: list[str]) -> Non
             else:
                 if not 0 < weight <= 5:
                     errors.append(f"slot:{slot}:{entry_id}: weight must be greater than 0 and at most 5")
+            if "requires_primary_any_tags" in entry:
+                primary_tags = entry.get("requires_primary_any_tags")
+                if not isinstance(primary_tags, list) or not primary_tags or any(not str(tag).strip() for tag in primary_tags):
+                    errors.append(
+                        f"slot:{slot}:{entry_id}: requires_primary_any_tags must be a non-empty string list"
+                    )
 
 
 def validate_no_text_required_entries(data: dict[str, Any], errors: list[str]) -> None:
@@ -765,6 +771,169 @@ def validate_quality_layer_artistic_final_touch(quality: dict[str, Any], errors:
         validate_string_list("quality_layers.artistic_final_touch.audit_terms", touch.get("audit_terms"), errors)
 
 
+def validate_quality_layer_intent_routing(quality: dict[str, Any], errors: list[str]) -> None:
+    routing = quality.get("intent_routing")
+    if not isinstance(routing, dict):
+        errors.append("quality_layers.intent_routing: must be an object")
+        return
+    for key in routing:
+        if key not in {"subject_categories", "domains", "literal_subject_stop_terms"}:
+            errors.append(f"quality_layers.intent_routing: unknown key {key}")
+    if "literal_subject_stop_terms" in routing:
+        validate_string_list(
+            "quality_layers.intent_routing.literal_subject_stop_terms",
+            routing.get("literal_subject_stop_terms"),
+            errors,
+        )
+
+    configured_categories: set[str] = set()
+    categories = routing.get("subject_categories")
+    if not isinstance(categories, list) or not categories:
+        errors.append("quality_layers.intent_routing.subject_categories: must be a non-empty list")
+        categories = []
+    for index, row in enumerate(categories):
+        label = f"quality_layers.intent_routing.subject_categories[{index}]"
+        if not isinstance(row, dict):
+            errors.append(f"{label}: must be an object")
+            continue
+        for key in row:
+            if key not in {"category", "aliases"}:
+                errors.append(f"{label}: unknown key {key}")
+        category = str(row.get("category") or "").strip()
+        if category not in VALID_SUBJECT_CATEGORIES:
+            errors.append(f"{label}.category: unknown subject category {category!r}")
+        elif category in configured_categories:
+            errors.append(f"{label}.category: duplicate category {category}")
+        else:
+            configured_categories.add(category)
+        validate_string_list(f"{label}.aliases", row.get("aliases"), errors)
+
+    configured_domains: set[str] = set()
+    domains = routing.get("domains")
+    if not isinstance(domains, list) or not domains:
+        errors.append("quality_layers.intent_routing.domains: must be a non-empty list")
+        domains = []
+    for index, row in enumerate(domains):
+        label = f"quality_layers.intent_routing.domains[{index}]"
+        if not isinstance(row, dict):
+            errors.append(f"{label}: must be an object")
+            continue
+        for key in row:
+            if key not in {"domain", "aliases"}:
+                errors.append(f"{label}: unknown key {key}")
+        domain = str(row.get("domain") or "").strip()
+        if domain not in VALID_PRESET_DOMAINS:
+            errors.append(f"{label}.domain: unknown preset domain {domain!r}")
+        elif domain in configured_domains:
+            errors.append(f"{label}.domain: duplicate domain {domain}")
+        else:
+            configured_domains.add(domain)
+        validate_string_list(f"{label}.aliases", row.get("aliases"), errors)
+
+
+def validate_quality_layer_selection_balance(quality: dict[str, Any], errors: list[str]) -> None:
+    balance = quality.get("selection_balance")
+    if not isinstance(balance, dict):
+        errors.append("quality_layers.selection_balance: must be an object")
+        return
+    for key in balance:
+        if key not in {"implicit_theme_multiplier", "request_relevance", "themes"}:
+            errors.append(f"quality_layers.selection_balance: unknown key {key}")
+    try:
+        multiplier = float(balance.get("implicit_theme_multiplier"))
+    except (TypeError, ValueError):
+        errors.append("quality_layers.selection_balance.implicit_theme_multiplier: must be numeric")
+    else:
+        if not 0.0 < multiplier <= 1.0:
+            errors.append("quality_layers.selection_balance.implicit_theme_multiplier: must be greater than 0 and at most 1")
+    relevance = balance.get("request_relevance")
+    if not isinstance(relevance, dict):
+        errors.append("quality_layers.selection_balance.request_relevance: must be an object")
+    else:
+        for key in relevance:
+            if key not in {
+                "enabled",
+                "per_term_multiplier",
+                "max_multiplier",
+                "minimum_term_length",
+                "deterministic_minimum_matches",
+                "deterministic_minimum_lead",
+            }:
+                errors.append(f"quality_layers.selection_balance.request_relevance: unknown key {key}")
+        if not isinstance(relevance.get("enabled"), bool):
+            errors.append("quality_layers.selection_balance.request_relevance.enabled: must be boolean")
+        for key in ("per_term_multiplier", "max_multiplier"):
+            try:
+                value = float(relevance.get(key))
+            except (TypeError, ValueError):
+                errors.append(f"quality_layers.selection_balance.request_relevance.{key}: must be numeric")
+            else:
+                if value <= 0:
+                    errors.append(f"quality_layers.selection_balance.request_relevance.{key}: must be greater than 0")
+        try:
+            minimum_term_length = int(relevance.get("minimum_term_length"))
+        except (TypeError, ValueError):
+            errors.append("quality_layers.selection_balance.request_relevance.minimum_term_length: must be an integer")
+        else:
+            if minimum_term_length < 2:
+                errors.append("quality_layers.selection_balance.request_relevance.minimum_term_length: must be at least 2")
+        for key in ("deterministic_minimum_matches", "deterministic_minimum_lead"):
+            try:
+                value = int(relevance.get(key))
+            except (TypeError, ValueError):
+                errors.append(f"quality_layers.selection_balance.request_relevance.{key}: must be an integer")
+            else:
+                if value < 1:
+                    errors.append(f"quality_layers.selection_balance.request_relevance.{key}: must be at least 1")
+    themes = balance.get("themes")
+    if not isinstance(themes, dict) or not themes:
+        errors.append("quality_layers.selection_balance.themes: must be a non-empty object")
+        return
+    for theme, aliases in themes.items():
+        label = f"quality_layers.selection_balance.themes.{theme}"
+        if not str(theme).strip():
+            errors.append("quality_layers.selection_balance.themes: empty theme id")
+        validate_string_list(label, aliases, errors)
+
+
+def validate_quality_layer_applicability_guards(quality: dict[str, Any], errors: list[str]) -> None:
+    guards = quality.get("applicability_guards")
+    if not isinstance(guards, list) or not guards:
+        errors.append("quality_layers.applicability_guards: must be a non-empty list")
+        return
+    seen_ids: set[str] = set()
+    for index, guard in enumerate(guards):
+        label = f"quality_layers.applicability_guards[{index}]"
+        if not isinstance(guard, dict):
+            errors.append(f"{label}: must be an object")
+            continue
+        for key in guard:
+            if key not in {
+                "id",
+                "match_any_tags",
+                "match_any_terms",
+                "slots",
+                "exclude_slots",
+                "requires_primary_any_tags",
+            }:
+                errors.append(f"{label}: unknown key {key}")
+        guard_id = str(guard.get("id") or "").strip()
+        if not guard_id:
+            errors.append(f"{label}.id: required")
+        elif guard_id in seen_ids:
+            errors.append(f"{label}.id: duplicate id {guard_id}")
+        else:
+            seen_ids.add(guard_id)
+        validate_string_list(f"{label}.match_any_tags", guard.get("match_any_tags"), errors)
+        if "match_any_terms" in guard:
+            validate_string_list(f"{label}.match_any_terms", guard.get("match_any_terms"), errors)
+        validate_string_list(f"{label}.requires_primary_any_tags", guard.get("requires_primary_any_tags"), errors)
+        if "slots" in guard:
+            validate_string_list(f"{label}.slots", guard.get("slots"), errors)
+        if "exclude_slots" in guard:
+            validate_string_list(f"{label}.exclude_slots", guard.get("exclude_slots"), errors)
+
+
 def validate_quality_layers(path: Path, data: dict[str, Any], errors: list[str]) -> None:
     try:
         quality = load_json(path)
@@ -787,6 +956,10 @@ def validate_quality_layers(path: Path, data: dict[str, Any], errors: list[str])
     profiles = quality.get("quality_profiles", {}) or {}
     if schema_version == 2 and (not isinstance(profiles, dict) or not profiles):
         errors.append("quality_layers.quality_profiles: must be a non-empty object for schema 2")
+    if schema_version == 2:
+        validate_quality_layer_intent_routing(quality, errors)
+        validate_quality_layer_applicability_guards(quality, errors)
+        validate_quality_layer_selection_balance(quality, errors)
     validate_quality_layer_artistic_final_touch(quality, errors)
     vocab = merged_facet_vocab(data)
     validate_quality_layer_photographic_craft(quality, vocab, errors)

@@ -81,12 +81,7 @@
               "holding_coffee_phone"
             ],
             "pool": [
-              "standing_silence",
-              "checking_wristwatch_timing",
-              "standing_in_subway_car",
-              "commuting_night",
               "presenting_file_folder",
-              "reviewing_ledger_columns",
               "holding_coffee_phone"
             ],
             "pool_weights": {},
@@ -100,8 +95,8 @@
               "commuting",
               "presenting files"
             ],
-            "variant_group": "",
-            "variant_strategy": ""
+            "variant_group": "role_scene:glass_office_task",
+            "variant_strategy": "atomic_scene"
           },
           {
             "critical": false,
@@ -137,10 +132,7 @@
             ],
             "pool": [
               "document_foreground_face_background",
-              "one_still_in_motion_blur_frame",
-              "architectural_lines_frame",
-              "elevator_gap_frame",
-              "reflection"
+              "architectural_lines_frame"
             ],
             "pool_weights": {},
             "primary": false,
@@ -153,8 +145,8 @@
               "architectural pressure",
               "elevator gap"
             ],
-            "variant_group": "",
-            "variant_strategy": ""
+            "variant_group": "role_scene:glass_office_task",
+            "variant_strategy": "atomic_scene"
           },
           {
             "critical": false,
@@ -167,9 +159,7 @@
             ],
             "pool": [
               "fluorescent",
-              "monitor_glow",
-              "subway_car_fluorescent_light",
-              "archive_desk_lamp"
+              "monitor_glow"
             ],
             "pool_weights": {},
             "primary": false,
@@ -181,8 +171,8 @@
               "monitor glow",
               "commute light"
             ],
-            "variant_group": "",
-            "variant_strategy": ""
+            "variant_group": "role_scene:glass_office_task",
+            "variant_strategy": "atomic_scene"
           },
           {
             "critical": true,
@@ -195,8 +185,7 @@
             ],
             "pool": [
               "glass_office",
-              "subway_transfer_passage",
-              "mirrored_elevator_box"
+              "corporate_high_floor_office"
             ],
             "pool_weights": {},
             "primary": true,
@@ -209,8 +198,8 @@
               "elevator",
               "late office"
             ],
-            "variant_group": "",
-            "variant_strategy": ""
+            "variant_group": "role_scene:glass_office_task",
+            "variant_strategy": "atomic_scene"
           },
           {
             "critical": true,
@@ -234,8 +223,8 @@
               "staff lanyard",
               "access card"
             ],
-            "variant_group": "",
-            "variant_strategy": ""
+            "variant_group": "role_scene:glass_office_task",
+            "variant_strategy": "atomic_scene"
           },
           {
             "critical": true,
@@ -350,7 +339,7 @@
     "--set",
     "composition=document_foreground_face_background,architectural_lines_frame",
     "--soft-anchor-spec",
-    "{\"mode\":\"soft\",\"concept\":\"회사원\",\"anchor_expansion\":{\"enabled\":false,\"top_k\":3,\"min_similarity\":0.78,\"weight_ratio\":0.5},\"min_anchors\":4,\"source_floors\":{\"role\":1},\"group_floors\":{},\"salience_floor\":0,\"visual_guards\":[],\"render_priority_terms\":[],\"free_slot_constraints\":{},\"render_suppress_terms\":[],\"render_directives\":[],\"dual_read_requirement\":{},\"preset_affinity\":{},\"role_scene_policy\":{},\"species_family_policy\":{},\"soft_repair_policy\":{},\"safety_negative_floor\":[],\"mixin_cue_budget\":0,\"anchors\":[{\"slot\":\"action\",\"ids\":[\"presenting_file_folder\",\"holding_coffee_phone\"],\"pool\":[\"standing_silence\",\"checking_wristwatch_timing\",\"standing_in_subway_car\",\"commuting_night\",\"presenting_file_folder\",\"reviewing_ledger_columns\",\"holding_coffee_phone\"],\"pool_weights\":{},\"terms\":[\"standing in silence\",\"checking wristwatch\",\"commuting\",\"presenting files\"],\"source\":\"role\",\"required\":true,\"critical\":false,\"groups\":[\"role_primary\"],\"primary\":false,\"variant_group\":\"\",\"variant_strategy\":\"\"},{\"slot\":\"appearance_type\",\"ids\":[\"corporate_professional\"],\"pool\":[\"corporate_professional\"],\"pool_weights\":{},\"terms\":[\"corporate professional\",\"business\"],\"source\":\"role\",\"required\":true,\"critical\":false,\"groups\":[\"role_primary\"],\"primary\":false,\"variant_group\":\"\",\"variant_strategy\":\"\"},{\"slot\":\"composition\",\"ids\":[\"document_foreground_face_background\",\"architectural_lines_frame\"],\"pool\":[\"document_foreground_face_background\",\"one_still_in_motion_blur_frame\",\"architectural_lines_frame\",\"elevator_gap_frame\",\"reflection\"],\"pool_weights\":{},\"terms\":[\"document foreground\",\"motion-blur crowd\",\"architectural pressure\",\"elevator gap\"],\"source\":\"role\",\"required\":true,\"critical\":false,\"groups\":[\"role_primary\"],\"primary\":false,\"variant_group\":\"\",\"variant_strategy\":\"\"},{\"slot\":\"lighting\",\"ids\":[\"fluorescent\",\"monitor_glow\"],\"pool\":[\"fluorescent\",\"monitor_glow\",\"subway_car_fluorescent_light\",\"archive_desk_lamp\"],\"pool_weights\":{},\"terms\":[\"fluorescent light\",\"monitor glow\",\"commute light\"],\"source\":\"role\",\"required\":true,\"critical\":false,\"groups\":[\"role_primary\"],\"primary\":false,\"variant_group\":\"\",\"variant_strategy\":\"\"},{\"slot\":\"location\",\"ids\":[\"glass_office\",\"corporate_high_floor_office\"],\"pool\":[\"glass_office\",\"subway_transfer_passage\",\"mirrored_elevator_box\"],\"pool_weights\":{},\"terms\":[\"glass office\",\"subway transfer\",\"elevator\",\"late office\"],\"source\":\"role\",\"required\":true,\"critical\":true,\"groups\":[\"role_primary\"],\"primary\":true,\"variant_group\":\"\",\"variant_strategy\":\"\"},{\"slot\":\"prop\",\"ids\":[\"staff_lanyard_badge_prop\",\"security_access_card_prop\"],\"pool\":[\"staff_lanyard_badge_prop\",\"security_access_card_prop\"],\"pool_weights\":{},\"terms\":[\"staff lanyard\",\"access card\"],\"source\":\"role\",\"required\":true,\"critical\":true,\"groups\":[\"role_primary\"],\"primary\":true,\"variant_group\":\"\",\"variant_strategy\":\"\"},{\"slot\":\"subject\",\"ids\":[\"office_worker\"],\"pool\":[\"office_worker\"],\"pool_weights\":{},\"terms\":[\"office worker\",\"company employee\",\"salaried worker\"],\"source\":\"role\",\"required\":true,\"critical\":true,\"groups\":[\"role_primary\"],\"primary\":true,\"variant_group\":\"\",\"variant_strategy\":\"\"},{\"slot\":\"wardrobe_style\",\"ids\":[\"clean_blazer_trousers\"],\"pool\":[\"clean_blazer_trousers\"],\"pool_weights\":{},\"terms\":[\"clean blazer\",\"tailored trousers\",\"businesswear\"],\"source\":\"role\",\"required\":true,\"critical\":true,\"groups\":[\"role_primary\"],\"primary\":true,\"variant_group\":\"\",\"variant_strategy\":\"\"}],\"safety_evaluation\":{\"mode\":\"automatic\",\"evaluation_requested\":false,\"status\":\"pass\",\"requires_user_approval\":false,\"items\":[]}}",
+    "{\"mode\":\"soft\",\"concept\":\"회사원\",\"anchor_expansion\":{\"enabled\":false,\"top_k\":3,\"min_similarity\":0.78,\"weight_ratio\":0.5},\"min_anchors\":4,\"source_floors\":{\"role\":1},\"group_floors\":{},\"salience_floor\":0,\"visual_guards\":[],\"render_priority_terms\":[],\"free_slot_constraints\":{},\"render_suppress_terms\":[],\"render_directives\":[],\"dual_read_requirement\":{},\"preset_affinity\":{},\"role_scene_policy\":{},\"species_family_policy\":{},\"soft_repair_policy\":{},\"safety_negative_floor\":[],\"mixin_cue_budget\":0,\"anchors\":[{\"slot\":\"action\",\"ids\":[\"presenting_file_folder\",\"holding_coffee_phone\"],\"pool\":[\"presenting_file_folder\",\"holding_coffee_phone\"],\"pool_weights\":{},\"terms\":[\"standing in silence\",\"checking wristwatch\",\"commuting\",\"presenting files\"],\"source\":\"role\",\"required\":true,\"critical\":false,\"groups\":[\"role_primary\"],\"primary\":false,\"variant_group\":\"role_scene:glass_office_task\",\"variant_strategy\":\"atomic_scene\"},{\"slot\":\"appearance_type\",\"ids\":[\"corporate_professional\"],\"pool\":[\"corporate_professional\"],\"pool_weights\":{},\"terms\":[\"corporate professional\",\"business\"],\"source\":\"role\",\"required\":true,\"critical\":false,\"groups\":[\"role_primary\"],\"primary\":false,\"variant_group\":\"\",\"variant_strategy\":\"\"},{\"slot\":\"composition\",\"ids\":[\"document_foreground_face_background\",\"architectural_lines_frame\"],\"pool\":[\"document_foreground_face_background\",\"architectural_lines_frame\"],\"pool_weights\":{},\"terms\":[\"document foreground\",\"motion-blur crowd\",\"architectural pressure\",\"elevator gap\"],\"source\":\"role\",\"required\":true,\"critical\":false,\"groups\":[\"role_primary\"],\"primary\":false,\"variant_group\":\"role_scene:glass_office_task\",\"variant_strategy\":\"atomic_scene\"},{\"slot\":\"lighting\",\"ids\":[\"fluorescent\",\"monitor_glow\"],\"pool\":[\"fluorescent\",\"monitor_glow\"],\"pool_weights\":{},\"terms\":[\"fluorescent light\",\"monitor glow\",\"commute light\"],\"source\":\"role\",\"required\":true,\"critical\":false,\"groups\":[\"role_primary\"],\"primary\":false,\"variant_group\":\"role_scene:glass_office_task\",\"variant_strategy\":\"atomic_scene\"},{\"slot\":\"location\",\"ids\":[\"glass_office\",\"corporate_high_floor_office\"],\"pool\":[\"glass_office\",\"corporate_high_floor_office\"],\"pool_weights\":{},\"terms\":[\"glass office\",\"subway transfer\",\"elevator\",\"late office\"],\"source\":\"role\",\"required\":true,\"critical\":true,\"groups\":[\"role_primary\"],\"primary\":true,\"variant_group\":\"role_scene:glass_office_task\",\"variant_strategy\":\"atomic_scene\"},{\"slot\":\"prop\",\"ids\":[\"staff_lanyard_badge_prop\",\"security_access_card_prop\"],\"pool\":[\"staff_lanyard_badge_prop\",\"security_access_card_prop\"],\"pool_weights\":{},\"terms\":[\"staff lanyard\",\"access card\"],\"source\":\"role\",\"required\":true,\"critical\":true,\"groups\":[\"role_primary\"],\"primary\":true,\"variant_group\":\"role_scene:glass_office_task\",\"variant_strategy\":\"atomic_scene\"},{\"slot\":\"subject\",\"ids\":[\"office_worker\"],\"pool\":[\"office_worker\"],\"pool_weights\":{},\"terms\":[\"office worker\",\"company employee\",\"salaried worker\"],\"source\":\"role\",\"required\":true,\"critical\":true,\"groups\":[\"role_primary\"],\"primary\":true,\"variant_group\":\"\",\"variant_strategy\":\"\"},{\"slot\":\"wardrobe_style\",\"ids\":[\"clean_blazer_trousers\"],\"pool\":[\"clean_blazer_trousers\"],\"pool_weights\":{},\"terms\":[\"clean blazer\",\"tailored trousers\",\"businesswear\"],\"source\":\"role\",\"required\":true,\"critical\":true,\"groups\":[\"role_primary\"],\"primary\":true,\"variant_group\":\"\",\"variant_strategy\":\"\"}],\"safety_evaluation\":{\"mode\":\"automatic\",\"evaluation_requested\":false,\"status\":\"pass\",\"requires_user_approval\":false,\"items\":[]}}",
     "--additional-requirement",
     "Salaried company-worker identity should read through organizational anonymity, time discipline, commute fatigue, and abstract labor pressure rather than nationality or generic business fashion.",
     "--additional-requirement",
