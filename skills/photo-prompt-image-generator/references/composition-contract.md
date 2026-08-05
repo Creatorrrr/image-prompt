@@ -6,7 +6,7 @@
 
 The audit rejects a changed pack, a list containing zero or multiple packs, a missing composed field, a non-agent composer, an empty candidate selection, a changed negative prompt, failed concept gates, and a non-pass safety record.
 
-Candidate caps are four presets, four candidates for core slots, two for support slots, and 64 slot candidates in total. Every sampled selection is reserved before alternatives so truncation cannot silently remove it. Rule mode exposes small filtered alternative pools instead of a one-choice answer key.
+Candidate caps are four presets, four candidates for core slots, two for support slots, and 64 slot candidates in total. Every sampled selection is reserved before alternatives so truncation cannot silently remove it. Each slot alternative is selected from the exact pool recorded after sampler applicability, no-people, compatibility, hard-conflict, and atomic-scene filtering. `applicability.source` must be `sampler_eligible_pool`; a reconstructed or ineligible candidate is a contract failure.
 
 ## Required Composition Behavior
 
@@ -14,6 +14,7 @@ Candidate caps are four presets, four candidates for core slots, two for support
 - `audit_terms` and candidate labels are discovery aids, not proof of user-intent coverage.
 - `coverage_assertions` may map an exact mandatory-intent key to one or more phrases. Every phrase must occur literally in `prompt_en`.
 - Choose IDs only from `presets`, `slots`, or proposition candidates included in the pack.
+- Choose only candidates with `applicability.status: eligible`.
 - Do not choose both sides of a hard conflict.
 - Preserve `negative_en` exactly, including `null`.
 - Set `composer` to `agent`.
@@ -26,6 +27,8 @@ If a composed ID names an open slot, the audit fails. Masked details are also re
 
 ## Meaning and Coherence
 
+- `intent_contract` and `coverage.intent_constraints`: typed subject categories, domains, negative-presence constraints, and their matching evidence. They are routing constraints, not prose suggestions.
+- `scene_contract`: every `atomic_scene` group is fail-closed. For each listed slot, chosen and exposed entry IDs must stay within the selected variant's `allowed_entry_ids`.
 - `concept_axes.required`: show each meaning axis through behavior, placement, expression, material, light, or framing.
 - `role_scene_policy`: when `enforce` is true, select an allowed location ID; omission is a failure.
 - `species_family`: select every required family slot from the allowed family. Missing IDs and mismatches both fail.
@@ -42,4 +45,4 @@ Use `photographic_integration` to bind subject and setting with believable light
 
 ## Safety
 
-Default safety is automatic pass with no approval wait. `--safety-evaluation` changes only the report mode and lists evaluated recipe transforms; it does not grant extra authority and does not replace platform or image-tool policy.
+Default safety is the small automatic-pass object documented in `SKILL.md`, with no approval wait. Run `--safety-evaluation` only when the user explicitly asks for a safety review. It changes only the report mode and lists evaluated recipe transforms; it does not grant extra authority and does not replace platform or image-tool policy.

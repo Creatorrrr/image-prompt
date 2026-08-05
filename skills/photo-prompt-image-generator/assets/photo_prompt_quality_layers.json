@@ -9,11 +9,119 @@
     "architecture": {"prompt_focus": ["spatial scale", "vertical and depth cues", "material light"]},
     "nature": {"prompt_focus": ["habitat context", "natural behavior", "weather and depth"]}
   },
+  "intent_routing": {
+    "literal_subject_stop_terms": ["is", "are", "be", "role", "model", "subject", "context", "identity", "through", "only"],
+    "subject_categories": [
+      {
+        "category": "human",
+        "aliases": ["person", "people", "portrait", "human subject", "worker", "family", "group portrait", "사람", "인물", "인물 사진", "작업자", "가족", "단체"]
+      },
+      {
+        "category": "animal",
+        "aliases": ["animal", "wildlife", "bird", "insect", "aquatic animal", "marine animal", "동물", "야생동물", "조류", "새", "곤충", "수중 생물", "해양 생물"]
+      },
+      {
+        "category": "food",
+        "aliases": ["food", "meal", "dish", "breakfast", "cuisine", "food photograph", "음식", "요리", "식사", "아침 식사", "푸드 사진"]
+      },
+      {
+        "category": "object",
+        "aliases": ["product", "object", "vehicle", "machine", "machinery", "industrial machine", "robot", "drone", "machine vision", "equipment", "technical equipment", "semiconductor", "automation", "제품", "사물", "차량", "기계", "로봇", "드론", "장비", "반도체", "자동화"]
+      },
+      {
+        "category": "plant",
+        "aliases": ["plant", "botanical", "flower", "fungi", "mushroom", "식물", "보태니컬", "꽃", "균류", "버섯"]
+      },
+      {
+        "category": "environment",
+        "aliases": ["architecture", "building", "building as the primary subject", "landscape", "interior space", "reading room", "infrastructure", "habitat", "건축", "건물", "건축물", "풍경", "실내 공간", "열람실", "기반 시설", "서식지"]
+      }
+    ],
+    "domains": [
+      {"domain": "architecture", "aliases": ["architecture", "building", "interior architecture", "infrastructure", "건축", "건축물", "실내 건축", "기반 시설"]},
+      {"domain": "food", "aliases": ["food", "meal", "dish", "cuisine", "food photograph", "음식", "요리", "푸드 사진"]},
+      {"domain": "wildlife", "aliases": ["wildlife", "habitat", "animal behavior", "야생동물", "서식지", "동물 행동"]},
+      {"domain": "product", "aliases": ["product", "packshot", "catalog object", "제품", "팩샷", "카탈로그"]},
+      {"domain": "documentary", "aliases": ["documentary", "reportage", "observational", "다큐멘터리", "기록 사진", "관찰 사진"]},
+      {"domain": "craft", "aliases": ["craft", "workshop process", "making process", "공예", "작업 과정", "제작 과정"]},
+      {"domain": "urban", "aliases": ["urban", "city", "도시", "도심"]},
+      {"domain": "street", "aliases": ["street", "거리", "노상"]}
+    ]
+  },
+  "applicability_guards": [
+    {
+      "id": "robot_modifier_requires_primary_context",
+      "match_any_tags": ["robot"],
+      "match_any_terms": ["robot concept proof or scene anchor"],
+      "exclude_slots": ["medium", "genre", "subject"],
+      "requires_primary_any_tags": ["robot", "android", "cyborg", "automaton", "technology", "machine", "industrial", "automation", "sci_fi", "cyberpunk"]
+    },
+    {
+      "id": "glitch_modifier_requires_primary_context",
+      "match_any_tags": ["glitch"],
+      "exclude_slots": ["medium", "genre", "subject"],
+      "requires_primary_any_tags": ["digital", "technology", "sci_fi", "cyberpunk", "experimental", "glitch"]
+    },
+    {
+      "id": "cosplay_modifier_requires_primary_context",
+      "match_any_tags": ["cosplay"],
+      "exclude_slots": ["medium", "genre", "subject"],
+      "requires_primary_any_tags": ["cosplay", "costume", "maid", "fantasy", "character"]
+    },
+    {
+      "id": "beastkin_modifier_requires_primary_context",
+      "match_any_tags": ["beastkin"],
+      "exclude_slots": ["medium", "genre", "subject"],
+      "requires_primary_any_tags": ["beastkin", "avian", "reptile", "feline", "canine", "animal", "fantasy"]
+    },
+    {
+      "id": "underwater_modifier_requires_primary_context",
+      "match_any_tags": ["underwater"],
+      "exclude_slots": ["medium", "genre", "subject", "location"],
+      "requires_primary_any_tags": ["underwater", "aquatic", "ocean", "marine", "swimming", "water"]
+    },
+    {
+      "id": "holographic_modifier_requires_primary_context",
+      "match_any_tags": ["holographic"],
+      "exclude_slots": ["medium", "genre", "subject", "location"],
+      "requires_primary_any_tags": ["holographic", "digital", "technology", "sci_fi", "cyberpunk", "futuristic", "nightlife", "stage", "performance", "kpop"]
+    },
+    {
+      "id": "horror_modifier_requires_primary_context",
+      "match_any_tags": ["horror"],
+      "exclude_slots": ["medium", "genre", "subject", "location"],
+      "requires_primary_any_tags": ["horror", "gothic", "haunted", "thriller", "noir", "supernatural", "dark_fantasy"]
+    },
+    {
+      "id": "surveillance_modifier_requires_primary_context",
+      "match_any_tags": ["surveillance"],
+      "exclude_slots": ["medium", "genre", "subject", "location"],
+      "requires_primary_any_tags": ["surveillance", "security", "cctv", "spy", "bodycam", "dashcam", "forensic"]
+    },
+    {
+      "id": "field_modifier_requires_primary_context",
+      "match_any_tags": ["field"],
+      "exclude_slots": ["medium", "genre", "subject", "location"],
+      "requires_primary_any_tags": ["field", "nature", "landscape", "botanical", "wildlife", "plant", "garden", "agricultural", "outdoor"]
+    }
+  ],
   "selection_balance": {
     "implicit_theme_multiplier": 0.35,
+    "request_relevance": {
+      "enabled": true,
+      "per_term_multiplier": 2.0,
+      "max_multiplier": 12.0,
+      "minimum_term_length": 3,
+      "deterministic_minimum_matches": 2,
+      "deterministic_minimum_lead": 2
+    },
     "themes": {
       "k_style": ["k-pop", "kpop", "idol-like", "idol style", "k-beauty", "kbeauty", "아이돌", "케이팝", "K-뷰티"],
-      "fantasy": ["fantasy", "fairy", "vampire", "princess", "succubus", "beastkin", "elf", "판타지", "요정", "흡혈귀", "공주", "서큐버스", "수인"]
+      "fantasy": ["fantasy", "fairy", "vampire", "princess", "succubus", "beastkin", "elf", "판타지", "요정", "흡혈귀", "공주", "서큐버스", "수인"],
+      "robot": ["robot", "android", "cyborg", "automaton", "mecha", "로봇", "안드로이드", "사이보그", "메카"],
+      "underwater": ["underwater", "submerged", "aquatic", "diver", "수중", "물속", "잠수"],
+      "cosplay": ["cosplay", "costume character", "코스프레"],
+      "horror": ["horror", "haunted", "gore", "호러", "공포", "귀신"]
     }
   },
   "photographic_integration": {

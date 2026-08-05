@@ -887,7 +887,24 @@ DEFAULT_SLOT_APPLICABILITY: JsonDict = {
             "deny_domains": ["product", "jewelry", "food", "wildlife"],
         },
         "body_pose": {
+            "subject_categories": ["human"],
             "deny_domains": ["product", "jewelry", "food", "wildlife"],
+        },
+        "hand_pose": {
+            "subject_categories": ["human"],
+            "deny_domains": ["product", "jewelry", "food", "wildlife"],
+        },
+        "body_orientation": {
+            "subject_categories": ["human"],
+            "deny_domains": ["product", "jewelry", "food", "wildlife"],
+        },
+        "gaze_engagement": {
+            "subject_categories": ["human"],
+            "deny_domains": ["product", "jewelry", "food"],
+        },
+        "gaze_target": {
+            "subject_categories": ["human", "animal"],
+            "deny_domains": ["product", "jewelry", "food"],
         },
         "shot_scale": {
             "deny_domains": [],
@@ -1382,10 +1399,13 @@ def make_generation_contract(
         "user_mandatory_intents": normalize_list(user_mandatory_intents),
         "concept_gate_results": [dict(item) for item in concept_gate_results or [] if isinstance(item, dict)],
         "concept_scene_variants": normalize_list(concept_scene_variants),
+        "intent_constraints": {},
+        "candidate_pool_trace": {},
         "safety": safety_evaluation,
         "soft_anchor_policy": soft_anchor_policy,
         "soft_anchor_repair": {"status": "not_evaluated", "repair_attempts": []},
     }
+    contract["intent_constraints"] = resolve_request_intent_constraints(data, None, contract)
     return contract
 
 
@@ -1456,6 +1476,8 @@ def refresh_generation_contract(
         contract["concept_scene_variants"] = normalize_list(concept_scene_variants)
     else:
         contract.setdefault("concept_scene_variants", [])
+    contract.setdefault("candidate_pool_trace", {})
+    contract["intent_constraints"] = resolve_request_intent_constraints(data, None, contract)
     if surreal_enabled is not None:
         contract["surreal_enabled"] = bool(surreal_enabled)
     if any(slot in picked for slot in SURREAL_LAYER_SLOTS):
@@ -1595,6 +1617,10 @@ def entry_block_reason(
 ) -> Optional[str]:
     if forced or generation_contract is None:
         return None
+    intent_constraints = generation_contract.get("intent_constraints") or {}
+    if isinstance(intent_constraints, dict) and intent_constraints.get("no_people"):
+        if "human" in (entry_kinds(item) | entry_tags(item)):
+            return "explicit_no_people"
     if not generation_contract.get("adult_allowed"):
         tokens = adult_semantic_tokens(item)
         if tokens & {"adult", "fetish", "suggestive"}:
@@ -1927,6 +1953,41 @@ def candidate_pack_entry_blob(entry: JsonDict, extra: Sequence[str] = ()) -> str
     return " ".join(values).lower()
 
 
+def candidate_pack_rule_context_score(entry: JsonDict, request_text: str, context_tokens: Set[str]) -> int:
+    """Rank sampler-eligible rule alternatives by request and scene relevance.
+
+    The selected sampler result is still pinned first. This score only orders
+    the remaining exact eligible pool so the bounded candidate pack exposes
+    useful alternatives instead of whichever generic entries have the highest
+    global weights.
+    """
+    compatibility_tokens = {
+        str(token).lower()
+        for key in (
+            "for_any",
+            "for_all",
+            "requires_any_tags",
+            "requires_primary_any_tags",
+            "required_context_any",
+        )
+        for token in normalize_list(entry.get(key))
+        if str(token).strip()
+    }
+    entry_tokens = {str(token).lower() for token in entry_context_tokens(entry)} | compatibility_tokens
+    normalized_context = {str(token).lower() for token in context_tokens if str(token).strip()}
+    context_hits = len(entry_tokens & normalized_context)
+
+    blob = candidate_pack_entry_blob(entry, sorted(compatibility_tokens))
+    request_hits = 0
+    for term in candidate_pack_tokenize_intent_text(request_text):
+        normalized = str(term).lower().strip()
+        if len(normalized) < 2:
+            continue
+        if normalized in blob:
+            request_hits += 1
+    return context_hits * 3 + request_hits
+
+
 def candidate_pack_summarize_preset_candidate(
     data: JsonDict,
     row: JsonDict,
@@ -1971,6 +2032,11 @@ def candidate_pack_summarize_slot_candidate(
         "tags": normalize_list(entry.get("tags"))[:12],
         "kind": normalize_list(entry.get("kind"))[:8],
         "scores": candidate_pack_score_payload(row),
+        "applicability": {
+            "status": str(row.get("applicability_status") or "eligible"),
+            "source": str(row.get("applicability_source") or "sampler_eligible_pool"),
+            "reason": row.get("applicability_reason"),
+        },
         "conflicts_with": [],
     }
     return candidate, entry
@@ -2014,6 +2080,8 @@ def candidate_pack_build_slots(
 ) -> JsonDict:
     slots: JsonDict = {}
     choices = result.get("choices") if isinstance(result.get("choices"), dict) else {}
+    contract = trace.get("generation_contract") if isinstance(trace.get("generation_contract"), dict) else {}
+    pool_trace = contract.get("candidate_pool_trace") if isinstance(contract.get("candidate_pool_trace"), dict) else {}
     total = 0
     score_rows = [row for row in trace.get("slot_scores") or [] if isinstance(row, dict)]
     for score_index, score_row in enumerate(score_rows):
@@ -2033,9 +2101,39 @@ def candidate_pack_build_slots(
             1 if selected_id else 0,
             CANDIDATE_PACK_TOTAL_CANDIDATE_LIMIT - total - future_selected_count,
         )
-        rows = candidate_pack_rows_with_selected(
-            score_row.get("top") or [], selected_id, min(limit, available)
-        )
+        eligible_record = pool_trace.get(slot) if isinstance(pool_trace.get(slot), dict) else {}
+        eligible_ids = [str(item) for item in eligible_record.get("eligible_ids") or [] if str(item).strip()]
+        eligible_weights = eligible_record.get("weights") if isinstance(eligible_record.get("weights"), dict) else {}
+        if eligible_ids:
+            eligible_set = set(eligible_ids)
+            scored_by_id = {
+                str(row.get("id")): dict(row)
+                for row in score_row.get("top") or []
+                if isinstance(row, dict) and str(row.get("id") or "") in eligible_set
+            }
+            ordered_ids = [
+                str(row.get("id"))
+                for row in score_row.get("top") or []
+                if isinstance(row, dict) and str(row.get("id") or "") in eligible_set
+            ]
+            ordered_ids.extend(item_id for item_id in eligible_ids if item_id not in set(ordered_ids))
+            exact_rows: List[JsonDict] = []
+            for item_id in ordered_ids:
+                row = dict(scored_by_id.get(item_id, {}))
+                row["id"] = item_id
+                if item_id in eligible_weights:
+                    row["weight"] = eligible_weights[item_id]
+                row["applicability_status"] = "eligible"
+                row["applicability_source"] = "sampler_eligible_pool"
+                exact_rows.append(row)
+            source_rows = exact_rows
+        else:
+            source_rows = [
+                {**dict(row), "applicability_source": "legacy_score_trace"}
+                for row in score_row.get("top") or []
+                if isinstance(row, dict)
+            ]
+        rows = candidate_pack_rows_with_selected(source_rows, selected_id, min(limit, available))
         if not rows:
             continue
         probabilities = candidate_pack_normalized_probabilities(rows)
@@ -2062,9 +2160,10 @@ def candidate_pack_build_slots(
     if slots or not choices:
         return slots
 
-    # Rule mode has no semantic score trace. Expose the selected choice plus
-    # a small, meaningful alternative set from the selected preset's filtered
-    # pool so the agent still composes rather than merely echoing one sample.
+    # Rule mode has no semantic score trace. Reuse the exact eligible pool
+    # captured by choose_slot instead of rebuilding a weaker approximation
+    # from preset filters. This keeps no-people, applicability, context, and
+    # hard-conflict guards identical between sampling and candidate exposure.
     preset = candidate_pack_preset_by_id(data, str(result.get("preset_id") or "")) or {}
     filters = preset.get("filters") if isinstance(preset.get("filters"), dict) else {}
     provenance = result.get("provenance") if isinstance(result.get("provenance"), dict) else {}
@@ -2082,17 +2181,33 @@ def candidate_pack_build_slots(
         raw_id = str(choice.get("id") or "")
         if not raw_id:
             continue
-        pool = apply_filter(data.get("slots", {}).get(str(slot), []) or [], filters.get(str(slot)))
+        eligible_record = pool_trace.get(str(slot)) if isinstance(pool_trace.get(str(slot)), dict) else {}
+        eligible_ids = [str(item) for item in eligible_record.get("eligible_ids") or [] if str(item).strip()]
+        eligible_weights = eligible_record.get("weights") if isinstance(eligible_record.get("weights"), dict) else {}
+        if eligible_ids:
+            by_id = {
+                str(entry.get("id") or ""): entry
+                for entry in data.get("slots", {}).get(str(slot), []) or []
+                if isinstance(entry, dict) and str(entry.get("id") or "")
+            }
+            pool = [by_id[item_id] for item_id in eligible_ids if item_id in by_id]
+        else:
+            # Compatibility fallback for older/synthetic result objects.
+            pool = apply_filter(data.get("slots", {}).get(str(slot), []) or [], filters.get(str(slot)))
         if not any(str(entry.get("id") or "") == raw_id for entry in pool):
             selected_entry = candidate_pack_slot_entry_by_id(data, str(slot), raw_id)
             if selected_entry:
                 pool = [selected_entry, *pool]
+        core_context_tokens = picked_core_context_tokens(
+            {key: value for key, value in choices.items() if isinstance(value, dict) and key != str(slot)}
+        )
         ranked = sorted(
             pool,
             key=lambda entry: (
                 0 if str(entry.get("id") or "") == raw_id else 1,
-                -float(entry.get("weight", 1) or 0)
-                * selection_balance_multiplier(data, entry, pack_request_text)[0],
+                -candidate_pack_rule_context_score(entry, pack_request_text, core_context_tokens),
+                -float(eligible_weights.get(str(entry.get("id") or ""), entry.get("weight", 1)) or 0)
+                * (1.0 if eligible_ids else selection_balance_multiplier(data, entry, pack_request_text)[0]),
                 str(entry.get("id") or ""),
             ),
         )
@@ -2109,9 +2224,14 @@ def candidate_pack_build_slots(
         rows = [
             {
                 "id": str(entry.get("id") or ""),
-                "weight": float(entry.get("weight", 1.0) or 1.0)
-                * selection_balance_multiplier(data, entry, pack_request_text)[0],
+                "weight": float(eligible_weights.get(str(entry.get("id") or ""), entry.get("weight", 1.0)) or 1.0)
+                * (1.0 if eligible_ids else selection_balance_multiplier(data, entry, pack_request_text)[0]),
                 "rule_selected": str(entry.get("id") or "") == raw_id,
+                "rule_context_score": candidate_pack_rule_context_score(
+                    entry, pack_request_text, core_context_tokens
+                ),
+                "applicability_status": "eligible",
+                "applicability_source": "sampler_eligible_pool" if eligible_ids else "legacy_filter_fallback",
             }
             for entry in ranked[: min(limit, remaining)]
             if str(entry.get("id") or "")
@@ -2211,15 +2331,22 @@ def candidate_pack_apply_conflicts(slots: JsonDict, conflicts: Sequence[JsonDict
 
 def candidate_pack_source_texts(result: JsonDict, trace: JsonDict) -> List[tuple[str, str]]:
     texts: List[tuple[str, str]] = []
+    seen_texts: Set[str] = set()
     provenance = result.get("provenance") if isinstance(result.get("provenance"), dict) else {}
     for concept in normalize_list(provenance.get("concept_lock")):
-        if concept.strip():
+        if concept.strip() and concept.strip().lower() not in seen_texts:
             texts.append(("concept_lock", concept.strip()))
+            seen_texts.add(concept.strip().lower())
     for requirement in normalize_list(provenance.get("user_mandatory_intents")):
-        if requirement.strip():
+        if requirement.strip() and requirement.strip().lower() not in seen_texts:
             texts.append(("user_requirement", requirement.strip()))
+            seen_texts.add(requirement.strip().lower())
+    for requirement in normalize_list(provenance.get("additional_requirements")):
+        if requirement.strip() and requirement.strip().lower() not in seen_texts:
+            texts.append(("additional_requirement", requirement.strip()))
+            seen_texts.add(requirement.strip().lower())
     intent = str(trace.get("intent") or "").strip()
-    if intent and trace.get("intent_source") == "user":
+    if intent and trace.get("intent_source") == "user" and intent.lower() not in seen_texts:
         texts.append(("intent", intent))
     return texts
 
@@ -2229,7 +2356,7 @@ def candidate_pack_tokenize_intent_text(text: str) -> List[str]:
     # positive ``사람`` token used to activate the human axis and invert the
     # user's request.
     negative_phrases = re.findall(
-        r"(?:사람|인물|인간)\s*(?:이\s*)?(?:없는|없이)|(?:no|without)\s+(?:people|person|persons|humans?)",
+        r"(?:사람|인물|인간)\s*(?:이\s*)?(?:없는|없이)|(?:no|without)\s+(?:(?:a|any)\s+)?(?:people|person|persons|humans?)",
         text,
         flags=re.IGNORECASE,
     )
@@ -2253,7 +2380,7 @@ def candidate_pack_tokenize_intent_text(text: str) -> List[str]:
 def intent_explicitly_excludes_people(text: str) -> bool:
     return bool(
         re.search(
-            r"(?:사람|인물|인간)\s*(?:이\s*)?(?:없는|없이)|(?:no|without)\s+(?:people|person|persons|humans?)",
+            r"(?:사람|인물|인간)\s*(?:이\s*)?(?:없는|없이)|(?:no|without)\s+(?:(?:a|any)\s+)?(?:people|person|persons|humans?)",
             str(text or ""),
             flags=re.IGNORECASE,
         )
@@ -2267,7 +2394,138 @@ def generation_explicitly_excludes_people(
     values = [str((semantic_context or {}).get("intent") or "")]
     values.extend(normalize_list((generation_contract or {}).get("user_mandatory_intents")))
     values.extend(normalize_list((generation_contract or {}).get("concept_locks")))
+    values.extend(normalize_list((generation_contract or {}).get("additional_requirements")))
     return any(intent_explicitly_excludes_people(value) for value in values)
+
+
+def candidate_pack_intent_routing_policy(data: JsonDict) -> JsonDict:
+    layers = data.get(QUALITY_LAYERS_DATA_KEY) if isinstance(data.get(QUALITY_LAYERS_DATA_KEY), dict) else {}
+    policy = layers.get("intent_routing") if isinstance(layers.get("intent_routing"), dict) else {}
+    return policy
+
+
+def intent_alias_matches(text: str, alias: str) -> bool:
+    normalized_text = clean_spaces(str(text or "").lower().replace("_", " "))
+    normalized_alias = clean_spaces(str(alias or "").lower().replace("_", " "))
+    if not normalized_text or not normalized_alias:
+        return False
+    if normalized_alias.isascii() and re.search(r"[a-z0-9]", normalized_alias):
+        negated = (
+            r"(?<![a-z0-9])(?:no|not|without)\s+(?:(?:a|any)\s+)?"
+            + re.escape(normalized_alias)
+            + r"(?![a-z0-9])"
+        )
+        if re.search(negated, normalized_text):
+            return False
+        pattern = r"(?<![a-z0-9])" + re.escape(normalized_alias) + r"(?![a-z0-9])"
+        return re.search(pattern, normalized_text) is not None
+    return normalized_alias in normalized_text
+
+
+def resolve_request_intent_constraints(
+    data: JsonDict,
+    semantic_context: Optional[JsonDict],
+    generation_contract: Optional[JsonDict],
+) -> JsonDict:
+    values = [str((semantic_context or {}).get("intent") or "")]
+    for key in ("concept_locks", "user_mandatory_intents", "additional_requirements"):
+        values.extend(normalize_list((generation_contract or {}).get(key)))
+    texts: List[str] = []
+    seen_texts: Set[str] = set()
+    for value in values:
+        normalized = clean_spaces(value)
+        dedupe_key = normalized.lower()
+        if normalized and dedupe_key not in seen_texts:
+            texts.append(normalized)
+            seen_texts.add(dedupe_key)
+    policy = candidate_pack_intent_routing_policy(data)
+    categories: Set[str] = set()
+    domains: Set[str] = set()
+    matched: List[JsonDict] = []
+    for rule in policy.get("subject_categories") or []:
+        if not isinstance(rule, dict):
+            continue
+        category = str(rule.get("category") or "")
+        aliases = normalize_list(rule.get("aliases"))
+        hits = sorted({alias for text in texts for alias in aliases if intent_alias_matches(text, alias)})
+        if category in VALID_SUBJECT_CATEGORIES and hits:
+            categories.add(category)
+            matched.append({"axis": "subject_category", "value": category, "aliases": hits[:8]})
+    for rule in policy.get("domains") or []:
+        if not isinstance(rule, dict):
+            continue
+        domain = str(rule.get("domain") or "")
+        aliases = normalize_list(rule.get("aliases"))
+        hits = sorted({alias for text in texts for alias in aliases if intent_alias_matches(text, alias)})
+        if domain in VALID_PRESET_DOMAINS and hits:
+            domains.add(domain)
+            matched.append({"axis": "domain", "value": domain, "aliases": hits[:8]})
+    no_people = any(intent_explicitly_excludes_people(text) for text in texts)
+    if no_people:
+        categories.discard("human")
+        matched = [
+            row
+            for row in matched
+            if not (row.get("axis") == "subject_category" and row.get("value") == "human")
+        ]
+    return {
+        "no_people": no_people,
+        "subject_categories": sorted(categories),
+        "domains": sorted(domains),
+        "matched": matched,
+        "source_text_count": len(texts),
+    }
+
+
+def candidate_pack_intent_contract(
+    data: JsonDict,
+    result: JsonDict,
+    trace: JsonDict,
+    candidate_blobs: Dict[str, str],
+) -> List[JsonDict]:
+    rows: List[JsonDict] = []
+    seen: Set[tuple[str, str]] = set()
+    policy = candidate_pack_intent_routing_policy(data)
+    for source, source_text in candidate_pack_source_texts(result, trace):
+        key = (source, source_text.lower())
+        if key in seen:
+            continue
+        seen.add(key)
+        no_people = intent_explicitly_excludes_people(source_text)
+        facets: List[str] = []
+        for axis, name_key, value_key in (
+            ("subject_category", "subject_categories", "category"),
+            ("domain", "domains", "domain"),
+        ):
+            for rule in policy.get(name_key) or []:
+                if not isinstance(rule, dict):
+                    continue
+                value = str(rule.get(value_key) or "")
+                if no_people and axis == "subject_category" and value == "human":
+                    continue
+                if value and any(intent_alias_matches(source_text, alias) for alias in normalize_list(rule.get("aliases"))):
+                    facets.append(f"{axis}:{value}")
+        meaningful_terms = candidate_pack_tokenize_intent_text(source_text)
+        covered_by = [
+            candidate_id
+            for candidate_id, blob in candidate_blobs.items()
+            if any(str(term).lower() in blob for term in meaningful_terms)
+        ][:12]
+        rows.append(
+            {
+                "id": f"intent:{stable_text_id(f'{source}|{source_text}', 12)}",
+                "text": source_text,
+                "source": source,
+                "polarity": "excluded" if no_people else "required",
+                "priority": "critical",
+                "axis_hints": sorted(set(facets)),
+                "constraints": ["no_people"] if no_people else [],
+                "coverage_mode": "literal_or_asserted_translation",
+                "status": "covered" if covered_by else "uncovered",
+                "covered_by": covered_by,
+            }
+        )
+    return rows
 
 
 def candidate_pack_candidate_blobs(presets: Sequence[JsonDict], slots: JsonDict) -> Dict[str, str]:
@@ -2389,6 +2647,39 @@ def candidate_pack_concept_axes(soft_policy: JsonDict) -> JsonDict:
         "required": axes,
         "required_count": len(axes),
         "source": "identity_axes" if axes else "none",
+    }
+
+
+def candidate_pack_scene_contract(soft_policy: JsonDict, slots: JsonDict) -> JsonDict:
+    groups: Dict[str, JsonDict] = {}
+    for anchor in soft_policy.get("anchors", []) or []:
+        if not isinstance(anchor, dict) or str(anchor.get("variant_strategy") or "") != "atomic_scene":
+            continue
+        group_id = str(anchor.get("variant_group") or "atomic_scene")
+        slot = str(anchor.get("slot") or "")
+        if not slot:
+            continue
+        group = groups.setdefault(
+            group_id,
+            {"group": group_id, "strategy": "atomic_scene", "fail_closed": True, "slots": {}},
+        )
+        allowed = normalize_list(anchor.get("pool")) or normalize_list(anchor.get("ids"))
+        slot_payload = slots.get(slot) if isinstance(slots.get(slot), dict) else {}
+        candidates = [
+            str(candidate.get("entry_id") or "")
+            for candidate in slot_payload.get("candidates", []) or []
+            if isinstance(candidate, dict) and str(candidate.get("entry_id") or "")
+        ]
+        selected = candidate_pack_slot_selected_entry_id(slot_payload)
+        group["slots"][slot] = {
+            "allowed_entry_ids": allowed,
+            "candidate_entry_ids": candidates,
+            "selected_entry_id": selected or None,
+        }
+    return {
+        "enabled": bool(groups),
+        "strategy": "atomic_scene" if groups else "none",
+        "groups": list(groups.values()),
     }
 
 
@@ -2728,6 +3019,135 @@ def selection_balance_multiplier(data: JsonDict, entry: JsonDict, request_text: 
     return (implicit_multiplier ** len(matched) if matched else 1.0), matched
 
 
+def candidate_pack_intent_term_is_negated(text: str, term: str) -> bool:
+    lowered = str(text or "").lower()
+    normalized = str(term or "").lower().strip()
+    if not normalized:
+        return False
+    if normalized.isascii():
+        return bool(
+            re.search(
+                rf"\b(?:no|not|without)\b[^,;.]{{0,48}}(?<![a-z0-9]){re.escape(normalized)}(?![a-z0-9])",
+                lowered,
+            )
+        )
+    return bool(re.search(rf"{re.escape(normalized)}[^,;.]{{0,12}}(?:없는|없이|아닌)", lowered))
+
+
+def request_relevance_match_terms(entry: JsonDict, request_text: str, minimum_length: int) -> List[str]:
+    blob = candidate_pack_entry_blob(
+        entry,
+        [
+            *normalize_list(entry.get("for_any")),
+            *normalize_list(entry.get("requires_any_tags")),
+            *normalize_list(entry.get("requires_primary_any_tags")),
+        ],
+    )
+    matched: List[str] = []
+    for term in candidate_pack_tokenize_intent_text(request_text):
+        normalized = str(term).lower().strip()
+        if len(normalized) < minimum_length or candidate_pack_intent_term_is_negated(request_text, normalized):
+            continue
+        if normalized in blob and normalized not in matched:
+            matched.append(normalized)
+    return matched
+
+
+def apply_rule_request_relevance_bias(
+    slot: str,
+    pool: Sequence[Entry],
+    data: JsonDict,
+    generation_contract: Optional[JsonDict],
+) -> List[Entry]:
+    balance = candidate_pack_quality_layers(data).get("selection_balance")
+    policy = balance.get("request_relevance") if isinstance(balance, dict) else None
+    if not isinstance(policy, dict) or policy.get("enabled") is not True:
+        return list(pool)
+    request_text = selection_balance_request_text(None, generation_contract)
+    if not request_text.strip():
+        return list(pool)
+    try:
+        per_term = float(policy.get("per_term_multiplier", 2.0))
+        max_multiplier = float(policy.get("max_multiplier", 12.0))
+        minimum_length = max(2, int(policy.get("minimum_term_length", 3)))
+    except (TypeError, ValueError):
+        return list(pool)
+
+    adjusted: List[Entry] = []
+    boosted: List[JsonDict] = []
+    for item in pool:
+        matched = request_relevance_match_terms(item, request_text, minimum_length)
+        if not matched:
+            adjusted.append(item)
+            continue
+        factor = min(max_multiplier, 1.0 + per_term * len(matched))
+        copied = dict(item)
+        copied["weight"] = round(item_base_weight(item) * factor, 6)
+        copied["request_relevance"] = {"multiplier": factor, "matched_terms": matched}
+        adjusted.append(copied)
+        boosted.append(
+            {
+                "id": str(item.get("id") or ""),
+                "factor": round(factor, 4),
+                "matched_terms": matched,
+            }
+        )
+    if boosted:
+        record_generation_contract_event(
+            generation_contract,
+            "request_relevance_bias",
+            {
+                "slot": slot,
+                "reason": "explicit_request_term_match",
+                "reason_code": "explicit_request_term_match",
+                "boosted": boosted,
+            },
+        )
+    return adjusted
+
+
+def rule_request_relevance_choice(
+    slot: str,
+    pool: Sequence[Entry],
+    data: JsonDict,
+    generation_contract: Optional[JsonDict],
+) -> Optional[Entry]:
+    balance = candidate_pack_quality_layers(data).get("selection_balance")
+    policy = balance.get("request_relevance") if isinstance(balance, dict) else None
+    if not isinstance(policy, dict) or policy.get("enabled") is not True:
+        return None
+    try:
+        minimum_matches = max(1, int(policy.get("deterministic_minimum_matches", 2)))
+        minimum_lead = max(1, int(policy.get("deterministic_minimum_lead", 2)))
+    except (TypeError, ValueError):
+        return None
+    ranked: List[tuple[int, str, Entry]] = []
+    for item in pool:
+        metadata = item.get("request_relevance") if isinstance(item.get("request_relevance"), dict) else {}
+        matched = normalize_list(metadata.get("matched_terms"))
+        ranked.append((len(matched), str(item.get("id") or ""), item))
+    ranked.sort(key=lambda row: (-row[0], row[1]))
+    if not ranked or ranked[0][0] < minimum_matches:
+        return None
+    runner_up = ranked[1][0] if len(ranked) > 1 else 0
+    if ranked[0][0] - runner_up < minimum_lead:
+        return None
+    selected = ranked[0][2]
+    record_generation_contract_event(
+        generation_contract,
+        "request_relevance_selection",
+        {
+            "slot": slot,
+            "reason": "explicit_request_unique_lexical_lead",
+            "reason_code": "explicit_request_unique_lexical_lead",
+            "selected_id": str(selected.get("id") or ""),
+            "matched_count": ranked[0][0],
+            "runner_up_count": runner_up,
+        },
+    )
+    return selected
+
+
 def apply_selection_balance_bias(
     pool: Sequence[JsonDict],
     data: JsonDict,
@@ -2960,10 +3380,16 @@ def candidate_pack_quality_add_literal_subject_entity_facets(
     appears in an unrelated subject entry's retrieval metadata.
     """
     subject_entries = ((data.get("slots") or {}).get("subject") or [])
+    routing_policy = candidate_pack_intent_routing_policy(data)
+    stop_terms = {
+        str(value).strip().lower()
+        for value in normalize_list(routing_policy.get("literal_subject_stop_terms"))
+        if str(value).strip()
+    }
     matched_entry_ids: List[str] = []
     for intent in mandatory_intents:
         term = str(intent.get("text") or "").strip().lower()
-        if not term or intent_explicitly_excludes_people(term):
+        if not term or term in stop_terms or intent_explicitly_excludes_people(term):
             continue
         for entry in subject_entries:
             if not isinstance(entry, dict):
@@ -3046,8 +3472,11 @@ def candidate_pack_quality_profile(
         if not entry_id:
             continue
         entry = candidate_pack_selected_choice_entry(result, str(slot), entry_id)
-        if entry.get("id") == entry_id and len(entry) == 1:
-            entry = candidate_pack_slot_entry_by_id(data, str(slot), entry_id) or entry
+        # Rendered ``choices`` intentionally contain a compact public subset
+        # and may omit dictionary-only facets. Always prefer the canonical
+        # entry when building the internal quality profile so data-authored
+        # lighting/material/place facets are not silently discarded.
+        entry = candidate_pack_slot_entry_by_id(data, str(slot), entry_id) or entry
         if isinstance(entry, dict):
             candidate_pack_quality_add_entry_facets(
                 facets, vocab, entry, include_subject_kind=str(slot) == "subject"
@@ -3421,7 +3850,21 @@ def candidate_pack_photographic_integration(
         if not facet_hits and not source_terms and len(context_terms) < 2:
             continue
         scored_axes.append((score, len(facet_hits), axis_id, axis, facet_hits, source_terms, context_terms))
-    scored_axes.sort(key=lambda item: (-item[1], -item[0], item[2]))
+    # A typed visible-subject facet and literal request/preset evidence are more
+    # authoritative than incidental facets from a sampled optional slot.
+    # Ranking raw facet count first allowed an unrelated texture or prop to
+    # crowd explicit concepts such as "apple", "stained glass", or "LED wall"
+    # out of the bounded axis set.
+    scored_axes.sort(
+        key=lambda item: (
+            -int(item[2] in subject_axis_kinds and bool(item[4])),
+            -int(bool(item[5])),
+            -len(item[5]),
+            -item[1],
+            -item[0],
+            item[2],
+        )
+    )
 
     matched_facets: List[str] = []
     for score, _facet_hit_count, axis_id, axis, facet_hits, source_terms, context_terms in scored_axes[:5]:
@@ -3575,11 +4018,13 @@ def candidate_pack_visual_register(
         for term in charged_terms
         if candidate_pack_integration_text_has_term(corpus, term)
     )
-    if charged_facet_hits or charged_source_hits > 0 or (not source_text_present and charged_context_hits >= 2):
+    if charged_source_hits > 0:
         return "charged"
     class_ids = {str(item.get("id") or "") for item in subject_classes}
     if class_ids & {"object_scene", "animal"} and "person" not in class_ids:
         return "observational"
+    if charged_facet_hits or (not source_text_present and charged_context_hits >= 2):
+        return "charged"
     observational_hits = sum(
         1
         for term in observational_terms
@@ -3733,6 +4178,7 @@ def build_candidate_pack(result: JsonDict, data: JsonDict) -> JsonDict:
     candidate_blobs = candidate_pack_candidate_blobs(presets, slots)
     candidate_terms = candidate_pack_candidate_terms(presets, slots)
     mandatory_intents, uncovered_intents = candidate_pack_mandatory_intents(result, trace, candidate_blobs, candidate_terms)
+    intent_contract = candidate_pack_intent_contract(data, result, trace, candidate_blobs)
     quality_profile = candidate_pack_quality_profile(data, result, slots, mandatory_intents)
     contract = trace.get("generation_contract") if isinstance(trace.get("generation_contract"), dict) else {}
     soft_policy = contract.get("soft_anchor_policy") if isinstance(contract.get("soft_anchor_policy"), dict) else {}
@@ -3758,12 +4204,14 @@ def build_candidate_pack(result: JsonDict, data: JsonDict) -> JsonDict:
     pack: JsonDict = {
         "contract_version": "photo-candidate-pack/v2",
         "pack_id": "",
+        "intent_contract": intent_contract,
         "mandatory_intents": mandatory_intents,
         "uncovered_intents": uncovered_intents,
         "presets": presets,
         "slots": slots,
         "quality_profile": quality_profile,
         "concept_axes": candidate_pack_concept_axes(soft_policy),
+        "scene_contract": candidate_pack_scene_contract(soft_policy, slots),
         "photographic_integration": candidate_pack_photographic_integration(
             data, result, trace, presets, slots, mandatory_intents, quality_profile
         ),
@@ -3792,6 +4240,7 @@ def build_candidate_pack(result: JsonDict, data: JsonDict) -> JsonDict:
             "mandatory_intent_count": len(mandatory_intents),
             "covered_mandatory_intent_count": len(mandatory_intents) - len(uncovered_intents),
             "uncovered_intent_count": len(uncovered_intents),
+            "intent_constraints": contract.get("intent_constraints", {}),
             "axis_coverage": trace.get("axis_coverage", {}),
             "contract": {
                 "must_cover_axes": contract.get("must_cover_axes", []),
@@ -8417,6 +8866,17 @@ def soft_anchor_pool_for_slot(policy: Optional[JsonDict], slot: str, critical_on
     return ids
 
 
+def soft_anchor_atomic_pool_for_slot(policy: Optional[JsonDict], slot: str) -> Set[str]:
+    if not policy or not policy.get("enabled"):
+        return set()
+    ids: Set[str] = set()
+    for anchor in policy.get("anchors", []):
+        if anchor.get("slot") != slot or str(anchor.get("variant_strategy") or "") != "atomic_scene":
+            continue
+        ids.update(normalize_list(anchor.get("pool")) or normalize_list(anchor.get("ids")))
+    return ids
+
+
 def soft_anchor_entries_for_slot(policy: Optional[JsonDict], slot: str) -> List[JsonDict]:
     if not policy or not policy.get("enabled"):
         return []
@@ -9731,6 +10191,7 @@ def apply_soft_anchor_bias(
     policy = (generation_contract or {}).get("soft_anchor_policy", {})
     ids = soft_anchor_pool_for_slot(policy, slot)
     critical_ids = soft_anchor_pool_for_slot(policy, slot, critical_only=True)
+    atomic_ids = soft_anchor_atomic_pool_for_slot(policy, slot)
     primary_ids: Set[str] = set()
     for anchor in soft_anchor_entries_for_slot(policy, slot):
         if anchor.get("primary"):
@@ -9739,8 +10200,27 @@ def apply_soft_anchor_bias(
         return list(pool)
 
     original_pool = list(pool)
+    if atomic_ids:
+        constrained = [item for item in original_pool if str(item.get("id")) in atomic_ids]
+        record_generation_contract_event(
+            generation_contract,
+            "soft_anchor_pool_constraints",
+            {
+                "slot": slot,
+                "reason": "atomic_scene_pool",
+                "reason_code": "atomic_scene_pool",
+                "before": len(original_pool),
+                "after": len(constrained),
+                "pool_ids": sorted(atomic_ids),
+                "fail_closed": True,
+                "policy_schema_version": (semantic_context or {}).get("policy_schema_version"),
+                "semantic_policy_hash": (semantic_context or {}).get("semantic_policy_hash"),
+            },
+        )
+        pool = constrained
     if critical_ids:
-        constrained = [item for item in original_pool if str(item.get("id")) in critical_ids]
+        critical_before = len(pool)
+        constrained = [item for item in pool if str(item.get("id")) in critical_ids]
         if constrained:
             pool = constrained
             record_generation_contract_event(
@@ -9750,7 +10230,7 @@ def apply_soft_anchor_bias(
                     "slot": slot,
                     "reason": "critical_soft_anchor_pool",
                     "reason_code": "critical_soft_anchor_pool",
-                    "before": len(original_pool),
+                    "before": critical_before,
                     "after": len(constrained),
                     "pool_ids": sorted(critical_ids),
                     "policy_schema_version": (semantic_context or {}).get("policy_schema_version"),
@@ -9964,6 +10444,32 @@ def semantic_steering_slots(context: Optional[JsonDict], data: JsonDict) -> List
     return wanted
 
 
+def quality_layer_primary_context_requirements(data: JsonDict, slot: str, item: Entry) -> Set[str]:
+    requirements: Set[str] = set()
+    item_tokens = {str(token) for token in entry_context_tokens(item)}
+    item_blob = candidate_pack_entry_blob(item)
+    for guard in candidate_pack_quality_layers(data).get("applicability_guards", []) or []:
+        if not isinstance(guard, dict):
+            continue
+        included_slots = {str(value) for value in normalize_list(guard.get("slots"))}
+        excluded_slots = {str(value) for value in normalize_list(guard.get("exclude_slots"))}
+        if (included_slots and slot not in included_slots) or slot in excluded_slots:
+            continue
+        match_tags = {str(value) for value in normalize_list(guard.get("match_any_tags"))}
+        match_terms = [
+            str(value).lower()
+            for value in normalize_list(guard.get("match_any_terms"))
+            if str(value).strip()
+        ]
+        if match_tags or match_terms:
+            tag_match = bool(match_tags & item_tokens)
+            term_match = any(term in item_blob for term in match_terms)
+            if not tag_match and not term_match:
+                continue
+        requirements.update(str(value) for value in normalize_list(guard.get("requires_primary_any_tags")))
+    return requirements
+
+
 def compatible_with_slot_context(
     slot: str,
     item: Entry,
@@ -9972,6 +10478,9 @@ def compatible_with_slot_context(
 ) -> bool:
     context = picked_context_tokens(picked)
     scene_context = picked_scene_context_tokens(picked)
+    primary_context = picked_core_context_tokens(picked)
+    if picked.get("action"):
+        primary_context |= entry_context_tokens(picked["action"])
     item_tokens = entry_context_tokens(item)
     item_id = str(item.get("id", ""))
 
@@ -9979,6 +10488,14 @@ def compatible_with_slot_context(
         values_as_set(item, "requires_any_tags", "requires_any") & context
     ):
         return False
+    if values_as_set(item, "requires_primary_any_tags") and not (
+        values_as_set(item, "requires_primary_any_tags") & primary_context
+    ):
+        return False
+    if source is not None:
+        quality_primary_requirements = quality_layer_primary_context_requirements(source, slot, item)
+        if quality_primary_requirements and not (quality_primary_requirements & primary_context):
+            return False
     if not values_as_set(item, "requires_all_tags", "requires_all").issubset(context):
         return False
     if values_as_set(item, "exclude_any_tags", "exclude_any") & context:
@@ -10057,7 +10574,11 @@ def compatible_with_picked(
         # Do not remove generic items when the subject is not chosen yet.
         return [item for item in pool if not item.get("for_any")]
 
-    subject_kinds = entry_kinds(subject)
+    # ``for_any`` is documented as matching either subject kind or subject
+    # tags. Subjects with an explicit ``kind`` previously lost all of their
+    # more specific tags here (for example an animal/insect subject could not
+    # activate an insect-only action).
+    subject_kinds = entry_kinds(subject) | entry_tags(subject)
     compatible: List[Entry] = []
     for item in pool:
         allowed = set(item.get("for_any", []))
@@ -10070,6 +10591,34 @@ def compatible_with_picked(
             continue
         compatible.append(item)
     return compatible
+
+
+def record_candidate_pool_trace(
+    generation_contract: Optional[JsonDict],
+    slot: str,
+    pool: Sequence[Entry],
+    selected: Optional[Entry],
+    *,
+    forced: bool,
+    stage: str,
+) -> None:
+    if generation_contract is None:
+        return
+    weights = {
+        str(item.get("id") or ""): candidate_pack_float(item.get("weight")) or 0.0
+        for item in pool
+        if str(item.get("id") or "")
+    }
+    generation_contract.setdefault("candidate_pool_trace", {})[slot] = {
+        "eligible_ids": [str(item.get("id")) for item in pool if str(item.get("id") or "")],
+        "weights": weights,
+        "selected": str((selected or {}).get("id") or ""),
+        "forced": forced,
+        "stage": stage,
+        "subject_category": generation_contract.get("subject_category", "generic"),
+        "preset_domains": list(generation_contract.get("preset_domains", [])),
+        "intent_constraints": dict(generation_contract.get("intent_constraints", {})),
+    }
 
 
 def choose_slot(
@@ -10104,6 +10653,7 @@ def choose_slot(
 
     soft_policy = (generation_contract or {}).get("soft_anchor_policy")
     critical_soft_anchor_slot = soft_anchor_critical_slot(soft_policy, slot)
+    atomic_soft_anchor_ids = soft_anchor_atomic_pool_for_slot(soft_policy, slot)
     block_reason = slot_block_reason(data, slot, generation_contract, forced=forced or critical_soft_anchor_slot)
     if block_reason:
         record_generation_contract_event(
@@ -10141,7 +10691,7 @@ def choose_slot(
                 pool = non_human_pool
                 record_generation_contract_event(
                     generation_contract,
-                    "intent_constraints",
+                    "typed_intent_events",
                     {"slot": "subject", "reason": "explicit_no_people", "remaining": len(pool)},
                 )
         required_kinds = forced_required_subject_kinds(data, forced_choices or {})
@@ -10149,6 +10699,29 @@ def choose_slot(
             steered = [x for x in pool if entry_kinds(x) & required_kinds]
             if steered:
                 pool = steered
+        request_categories = {
+            str(item)
+            for item in ((generation_contract or {}).get("intent_constraints", {}) or {}).get("subject_categories", [])
+            if str(item) in VALID_SUBJECT_CATEGORIES
+        }
+        if request_categories:
+            steered = [
+                item
+                for item in pool
+                if subject_category({"subject": item}, data) in request_categories
+            ]
+            if steered:
+                pool = steered
+                record_generation_contract_event(
+                    generation_contract,
+                    "typed_intent_events",
+                    {
+                        "slot": "subject",
+                        "reason": "typed_subject_category",
+                        "categories": sorted(request_categories),
+                        "remaining": len(pool),
+                    },
+                )
 
     if semantic_context and not forced:
         slot_anchor_ids = soft_anchor_pool_for_slot(
@@ -10231,7 +10804,7 @@ def choose_slot(
                 },
             )
             pool = relaxed
-    elif slot == "action":
+    elif slot == "action" and not atomic_soft_anchor_ids:
         fallback = compatible_with_picked(full_pool, picked, forced=False, slot=slot, source=data)
         pool = fallback or pool or full_pool
     elif forced:
@@ -10260,6 +10833,18 @@ def choose_slot(
     if not pool:
         if forced:
             return None
+        if atomic_soft_anchor_ids:
+            record_generation_contract_event(
+                generation_contract,
+                "fallback_blocked_slots",
+                {
+                    "slot": slot,
+                    "reason": "atomic_scene_pool_empty",
+                    "pool_ids": sorted(atomic_soft_anchor_ids),
+                    "fail_closed": True,
+                },
+            )
+            return None
         if not preset_required:
             record_generation_contract_event(
                 generation_contract,
@@ -10279,20 +10864,34 @@ def choose_slot(
 
     if not semantic_context and not forced:
         pool = apply_rule_policy_bias(slot, pool, data, generation_contract)
+        pool = apply_rule_request_relevance_bias(slot, pool, data, generation_contract)
 
     if not forced:
         pool = apply_selection_balance_bias(pool, data, semantic_context, generation_contract)
 
-    return semantic_weighted_choice(
-        pool,
-        rng,
+    selected = None
+    if not semantic_context and not forced:
+        selected = rule_request_relevance_choice(slot, pool, data, generation_contract)
+    if selected is None:
+        selected = semantic_weighted_choice(
+            pool,
+            rng,
+            slot,
+            preset,
+            semantic_context,
+            forced=forced,
+            slot_filter=filters,
+            picked=picked,
+        )
+    record_candidate_pool_trace(
+        generation_contract,
         slot,
-        preset,
-        semantic_context,
+        pool,
+        selected,
         forced=forced,
-        slot_filter=filters,
-        picked=picked,
+        stage="initial_selection",
     )
+    return selected
 
 
 def soft_anchor_repair_candidates(
@@ -10554,8 +11153,9 @@ def apply_soft_post_render_repair(
         candidates = apply_role_scene_policy(slot, candidates, semantic_context, generation_contract)
         candidates = apply_species_family_policy(slot, candidates, semantic_context, generation_contract)
         before_id = str((picked.get(slot) or {}).get("id") or "")
+        selection_candidates = candidates
         selected_entry = semantic_weighted_choice(
-            candidates,
+            selection_candidates,
             rng,
             slot,
             preset,
@@ -10568,8 +11168,9 @@ def apply_soft_post_render_repair(
         if after_id == before_id and len(candidates) > 1:
             alternatives = [item for item in candidates if str(item.get("id") or "") != before_id]
             if alternatives:
+                selection_candidates = alternatives
                 selected_entry = semantic_weighted_choice(
-                    alternatives,
+                    selection_candidates,
                     rng,
                     slot,
                     preset,
@@ -10579,6 +11180,14 @@ def apply_soft_post_render_repair(
                     picked={key: value for key, value in picked.items() if key != slot},
                 )
                 after_id = str(selected_entry.get("id") or "")
+        record_candidate_pool_trace(
+            generation_contract,
+            slot,
+            selection_candidates,
+            selected_entry,
+            forced=False,
+            stage="soft_post_render_repair",
+        )
         picked[slot] = selected_entry
         changed = changed or after_id != before_id
         attempts.append(
@@ -10701,6 +11310,14 @@ def apply_soft_anchor_repair(
             forced=False,
             slot_filter=preset.get("filters", {}).get(slot),
             picked={key: value for key, value in picked.items() if key != slot},
+        )
+        record_candidate_pool_trace(
+            generation_contract,
+            slot,
+            biased_candidates,
+            selected_entry,
+            forced=False,
+            stage="soft_anchor_repair",
         )
         picked[slot] = selected_entry
         status = soft_anchor_match_status(policy, picked)

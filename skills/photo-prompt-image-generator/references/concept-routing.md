@@ -17,9 +17,17 @@ Korean and English absence phrases are constraints, not positive nouns. `사람 
 
 Named-person references are provenance for likeness handling, not visual content to force into the prompt. Public/idol routes use an original fictional adult with `--likeness-mode inspired`.
 
+## Typed Request Routing
+
+Subject intent is resolved to `human`, `animal`, `food`, `object`, `plant`, or `environment`; domain intent is resolved independently. Keep aliases in `photo_prompt_quality_layers.json` so Korean and English routes share one data contract. Negated aliases such as `not a portrait` must not activate the human category.
+
+Literal secondary-subject inference uses entry IDs and labels but ignores the configured `literal_subject_stop_terms`. This prevents generated phrases such as `role`, `subject`, or `context` from turning a human request into an unrelated food or object scene.
+
+In rule mode, an entry with a uniquely stronger explicit request-term match may win deterministically. This affects the sampled choice but does not narrow the candidate pack: the remaining alternatives must still come from the exact eligible sampler pool.
+
 ## Avoid Theme Overfitting
 
-The selection balance layer reduces K-style and fantasy weights when the request does not mention those themes. Do not compensate by manually preferring idol, K-beauty, cosplay, fairy, vampire, princess, or beastkin candidates for a generic portrait.
+The selection balance layer reduces K-style, fantasy, robot, underwater, cosplay, and horror weights when the request does not mention those themes. Theme-specific supporting elements are also gated by primary scene context; robot, glitch, cosplay, beastkin, underwater, holographic, horror, surveillance, and field-only modifiers must not leak into unrelated candidates. Do not compensate by manually preferring any of these themes for a generic request.
 
 Presets and slot entries must have moderate positive weights. The validator rejects values above 5 and presets without a non-empty `required_slots` contract.
 
@@ -40,9 +48,11 @@ Prefer this structure for reusable roles:
 }
 ```
 
-Keep role-defining identity in `identity_core`. Put place, action, prop, light, composition, and time-specific examples in two or more weighted `scene_variants`. Selection is deterministic for a concept and seed. Do not hardwire nationality or one mood unless it is part of the requested identity.
+Keep role-defining identity in `identity_core`. Put place, action, prop, light, composition, and time-specific examples in two or more weighted `scene_variants`. Selection is deterministic for a concept and seed. A selected variant is atomic: its scene slots use only that variant's local pools and may not borrow values from a sibling variant. Do not hardwire nationality or one mood unless it is part of the requested identity.
 
 Use `anchor_pool` to keep all valid variant values reachable in soft mode. Use `critical_anchor_slots` only for meaning-bearing identity or role-scene evidence, not decorative defaults.
+
+A standalone mixin may use only a role-free generic bundle. If every bundle is authored for a role, keep the mixin core and return no bundle rather than borrowing an unrelated role scene.
 
 ## Slot Mapping
 
