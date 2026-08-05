@@ -1,6 +1,6 @@
 ---
 id: detail.face-hand-gesture
-version: 1
+version: 4
 priority: 75
 type: detail
 tier: 3
@@ -41,11 +41,11 @@ Keep cheek-hand contact as a partial edge-cropped support gesture when that is w
 - Preserve the sleeve, glove, hair, face, or crop edge that bounds the hand. Do not let the generator reveal the full wrist, full palm, full arm, or a cleaner hand pose unless visible.
 - Keep nail and manicure details brief when they are not the subject; tiny decorations should stay low-legibility and source-sized.
 
-## Negative additions
+## Optional negative contribution
 
 Reject full hand poses, peace signs, manicure-centered foregrounds, uncropped wrists, recentered hands, enlarged fingers, moved hands that reveal hidden cheek/jaw/neck areas, extra fingers, missing fingers, and hand gestures that no longer contact or frame the face as in the source.
 
-## Settings additions
+## Optional settings contribution
 
 - Pose fidelity locks: preserve hand-to-face contact geometry, side, crop, and partial visibility.
 - Occlusion fidelity locks: keep face, sleeve, glove, hair, and crop boundaries as the hand's limiting anchors.

@@ -17,14 +17,10 @@ from module_metadata import ROOT, expand_dependencies, load_manifest, module_map
 PROFILE_MODULES = {
     "portrait": [
         "subject.human",
+        "detail.human-face-likeness",
+        "medium.photographic-capture",
         "detail.pose-hands-gesture",
         "detail.clothing-fashion",
-        "detail.tight-selfie-hierarchy",
-        "detail.accessory-torso-budget",
-        "detail.face-hand-gesture",
-        "medium.photographic-capture",
-        "detail.low-quality-artifacts",
-        "detail.text-logo-label",
     ],
     "screenshot": [
         "medium.screenshot-ui",
@@ -35,18 +31,9 @@ PROFILE_MODULES = {
         "subject.product",
         "medium.photographic-capture",
         "detail.text-logo-label",
-        "detail.low-quality-artifacts",
         "detail.pose-hands-gesture",
     ],
 }
-
-
-def tier_one_concepts(manifest: dict) -> list[str]:
-    return [
-        module["id"]
-        for module in sorted(manifest.get("modules", []), key=module_sort_key)
-        if int(module.get("tier", 99)) == 1
-    ]
 
 
 def default_modules(manifest: dict, profile: str | None, selected: list[str]) -> list[str]:
@@ -58,7 +45,7 @@ def default_modules(manifest: dict, profile: str | None, selected: list[str]) ->
     elif profile == "core":
         ids = core
     elif profile in PROFILE_MODULES:
-        ids = core + tier_one_concepts(manifest) + PROFILE_MODULES[profile]
+        ids = core + PROFILE_MODULES[profile]
     else:
         ids = core
     return expand_dependencies(ids, manifest)
@@ -81,6 +68,13 @@ def compile_skill(module_ids: list[str], output: Path) -> None:
         path = ROOT / mods[mid]["file"]
         text = path.read_text(encoding="utf-8")
         parts.append(f"\n\n---\n\n# Included module: `{mid}`\n\n" + strip_frontmatter(text).rstrip())
+    adapter_reference = ROOT / "references" / "model-adapters.md"
+    if adapter_reference.exists():
+        parts.append(
+            "\n\n---\n\n# Optional model adapter reference\n\n"
+            "Apply only the section for the named downstream generator.\n\n"
+            + adapter_reference.read_text(encoding="utf-8").rstrip()
+        )
     output.write_text("\n".join(parts) + "\n", encoding="utf-8")
     print(f"wrote {output}")
 
