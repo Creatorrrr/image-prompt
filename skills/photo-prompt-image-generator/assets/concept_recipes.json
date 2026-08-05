@@ -2036,10 +2036,10 @@
         "enforce": true,
         "reason": "adult student styling should rotate safe study/reference contexts instead of inheriting unrelated generic scenes"
       },
-      "approval_required_routes": {
+      "optional_routes": {
         "adult_transit_reference": {
           "default": "off",
-          "requires_user_approval": true,
+          "activation": "explicit_request",
           "trigger_terms": [
             "기차",
             "플랫폼",
@@ -2050,8 +2050,7 @@
             "headphones",
             "backpack"
           ],
-          "ask_before_use": "학생+기차/플랫폼/헤드폰/백팩 조합을 성인 전용 transit fashion/reference portrait로 안전 라우팅할까요? 거절하면 이 라우트를 주입하지 않고 원래 요청 의도를 유지합니다.",
-          "on_accept": {
+          "on_request": {
             "preset_candidates": [
               "adult_school_uniform_reference_portrait",
               "train_station_platform_portrait"
@@ -2061,13 +2060,13 @@
               "prop=over_ear_headphones,black_backpack_one_shoulder,train_ticket_stub_prop"
             ],
             "additional": [
-              "user approved adult-only transit reference routing; keep the platform/headphones/backpack intent visible while avoiding minor coding or sexualized school-uniform framing"
+              "explicitly requested adult-only transit reference routing; keep the platform/headphones/backpack intent visible while avoiding minor coding or sexualized school-uniform framing"
             ],
             "safety_requirements": [
-              "adult transit route only after explicit user approval; no minors, no sexualized school-uniform framing"
+              "adult transit route only; no minors, no sexualized school-uniform framing"
             ]
           },
-          "on_decline": {
+          "when_inactive": {
             "do_not_inject_slots": [
               "korean_train_platform",
               "train_platform_last_car",
@@ -2076,7 +2075,7 @@
               "train_ticket_stub_prop"
             ],
             "preserve_original_intent": true,
-            "instruction": "Do not silently convert the request to adult transit reference routing; keep the user-requested train/platform/headphone/backpack idea as original intent text or concept-lock material instead of adding this route."
+            "instruction": "Keep the train/platform/headphone/backpack idea as original intent text or concept-lock material instead of injecting this optional route."
           }
         }
       }
@@ -4584,24 +4583,48 @@
     },
     "회사원": {
       "preset": "corporate_startup_profile",
-      "set": [
-        "subject=office_worker",
-        "person_origin=south_korea",
-        "appearance_type=corporate_professional",
-        "wardrobe_style=clean_blazer_trousers",
-        "location=glass_office,subway_transfer_passage,mirrored_elevator_box,corporate_high_floor_office,accountant_office_late",
-        "action=standing_silence,checking_wristwatch_timing,standing_in_subway_car,commuting_night,presenting_file_folder,reviewing_ledger_columns,holding_coffee_phone",
-        "prop=staff_lanyard_badge_prop,security_access_card_prop",
-        "lighting=fluorescent,monitor_glow,subway_car_fluorescent_light,archive_desk_lamp",
-        "light_shape=monitor_rectangle_glow,window_rectangle,barcode_shadow_bars,elevator_gap_sliver_light",
-        "composition=document_foreground_face_background,one_still_in_motion_blur_frame,architectural_lines_frame,elevator_gap_frame,reflection",
-        "camera_direction=elevator_corner_camera_direction,eye_level_three_quarter,high_observer_angle",
-        "subject_framing=upper_body_framing,head_and_shoulders_crop,waist_up_framing,detail_crop_hands_accessories",
-        "mood=melancholic,survival,surveilled_unease,bureaucratic_horror"
+      "identity_core": {
+        "subject": "office_worker",
+        "appearance_type": "corporate_professional",
+        "wardrobe_style": "clean_blazer_trousers"
+      },
+      "scene_variants": [
+        {
+          "id": "glass_office_task",
+          "weight": 1.0,
+          "set": {
+            "location": ["glass_office", "corporate_high_floor_office"],
+            "action": ["presenting_file_folder", "holding_coffee_phone"],
+            "prop": ["staff_lanyard_badge_prop", "security_access_card_prop"],
+            "lighting": ["fluorescent", "monitor_glow"],
+            "composition": ["document_foreground_face_background", "architectural_lines_frame"]
+          }
+        },
+        {
+          "id": "commute_threshold",
+          "weight": 1.0,
+          "set": {
+            "location": ["subway_transfer_passage", "mirrored_elevator_box"],
+            "action": ["checking_wristwatch_timing", "standing_in_subway_car", "commuting_night"],
+            "prop": "security_access_card_prop",
+            "lighting": ["subway_car_fluorescent_light", "fluorescent"],
+            "composition": ["one_still_in_motion_blur_frame", "elevator_gap_frame"]
+          }
+        },
+        {
+          "id": "late_ledger_shift",
+          "weight": 0.8,
+          "set": {
+            "location": "accountant_office_late",
+            "action": "reviewing_ledger_columns",
+            "prop": "staff_lanyard_badge_prop",
+            "lighting": ["archive_desk_lamp", "monitor_glow"],
+            "composition": "document_foreground_face_background"
+          }
+        }
       ],
       "soft_anchor_slots": [
         "subject",
-        "person_origin",
         "appearance_type",
         "wardrobe_style",
         "location",
@@ -4623,9 +4646,6 @@
           "office worker",
           "company employee",
           "salaried worker"
-        ],
-        "person_origin": [
-          "Korean"
         ],
         "appearance_type": [
           "corporate professional",
@@ -4774,7 +4794,6 @@
         "role_identity": {
           "slots": [
             "subject",
-            "person_origin",
             "appearance_type",
             "wardrobe_style"
           ],
@@ -4803,12 +4822,12 @@
         "location"
       ],
       "additional": [
-        "Korean salaried company worker identity should read through organizational anonymity, time discipline, commute fatigue, and abstract labor pressure rather than generic business fashion.",
+        "Salaried company-worker identity should read through organizational anonymity, time discipline, commute fatigue, and abstract labor pressure rather than nationality or generic business fashion.",
         "Make the role visible through an employee ID lanyard or access card, clean but slightly tired businesswear, cool fluorescent or monitor light, and a glass-office, subway-transfer, elevator, or late-office setting.",
         "Avoid office-siren glamour, pin-up office styling, heroic executive branding, fantasy drift, and purely sad stock-photo gestures; the emotion should come from the corporate space, commute routine, documents, badge, light, and posture."
       ],
       "intent_axis": [
-        "Korean company worker portrait with time discipline, organizational anonymity, commute fatigue, and abstract labor pressure",
+        "company worker portrait with time discipline, organizational anonymity, commute fatigue, and abstract labor pressure",
         "adult office worker in clean blazer and trousers with staff lanyard or access card under fluorescent or monitor light",
         "glass office, subway transfer passage, elevator, or late office as corporate-city pressure around the subject"
       ],
@@ -5922,12 +5941,41 @@
     },
     "제빵사": {
       "preset": "night_shift_handover_corridor",
-      "set": {
-        "subject": "baker_role_model",
-        "location": "pre_dawn_bakery",
-        "action": "calibrating_instrument",
-        "sensory_focus": "scent_steam_visible"
+      "identity_core": {
+        "subject": "baker_role_model"
       },
+      "scene_variants": [
+        {
+          "id": "pre_dawn_kneading",
+          "weight": 1.0,
+          "set": {
+            "location": "pre_dawn_bakery",
+            "action": "kneading_dough",
+            "sensory_focus": "scent_steam_visible"
+          },
+          "intent_axis": ["pre-dawn baker kneading dough amid visible steam"]
+        },
+        {
+          "id": "display_preparation",
+          "weight": 0.9,
+          "set": {
+            "location": "neighborhood_bakery_display",
+            "action": "neatly_arranged",
+            "sensory_focus": "tactile_fingertip_texture"
+          },
+          "intent_axis": ["neighborhood baker arranging a tactile morning display"]
+        },
+        {
+          "id": "kitchen_pass_service",
+          "weight": 0.8,
+          "set": {
+            "location": "professional_kitchen_pass",
+            "action": "serving_from_kitchen_pass",
+            "sensory_focus": "warmth_haze_off_metal"
+          },
+          "intent_axis": ["working baker at a warm professional kitchen pass"]
+        }
+      ],
       "soft_anchor_slots": [
         "subject",
         "location",
@@ -5940,20 +5988,26 @@
           "baker role model"
         ],
         "location": [
-          "pre dawn bakery"
+          "pre dawn bakery",
+          "neighborhood bakery display",
+          "professional kitchen pass"
         ],
         "action": [
-          "calibrating instrument"
+          "kneading dough",
+          "arranging a bakery display",
+          "serving from a kitchen pass"
         ],
         "sensory_focus": [
-          "scent steam visible"
+          "scent steam visible",
+          "tactile fingertip texture",
+          "warmth haze off metal"
         ]
       },
       "additional": [
-        "pre-dawn baker role with sensory steam"
+        "baker role reads through dough, baked-goods handling, work surfaces, and a physically grounded sensory trace"
       ],
       "intent_axis": [
-        "pre-dawn baker role with sensory steam"
+        "working baker with tactile food craft and believable workplace evidence"
       ],
       "likeness_mode": "inspired",
       "anchor_pool": {
@@ -5961,13 +6015,19 @@
           "baker_role_model"
         ],
         "location": [
-          "pre_dawn_bakery"
+          "pre_dawn_bakery",
+          "neighborhood_bakery_display",
+          "professional_kitchen_pass"
         ],
         "action": [
-          "calibrating_instrument"
+          "kneading_dough",
+          "neatly_arranged",
+          "serving_from_kitchen_pass"
         ],
         "sensory_focus": [
-          "scent_steam_visible"
+          "scent_steam_visible",
+          "tactile_fingertip_texture",
+          "warmth_haze_off_metal"
         ]
       },
       "critical_anchor_slots": [
@@ -11403,11 +11463,14 @@
       "review_gates": [
         {
           "id": "mixin_shape",
-          "check": "applied_mixins가 정확히 ['천사']이고 역할은 0~1개여야 한다",
+          "check": "applied_mixins에 천사가 포함되고 추가 믹스인은 명시된 호환 목록만 허용하며 역할은 0~1개여야 한다",
           "machine_checkable": true,
           "assert": {
             "type": "mixin_shape",
-            "mixin": "천사"
+            "mixin": "천사",
+            "allow_additional": [
+              "브라이덜"
+            ]
           }
         },
         {

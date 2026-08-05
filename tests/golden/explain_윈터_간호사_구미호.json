@@ -341,6 +341,13 @@
           "reason": "role scene pool must own location before generic beastkin atmosphere",
           "scene_family": "clinical_care_space"
         },
+        "safety_evaluation": {
+          "evaluation_requested": false,
+          "items": [],
+          "mode": "automatic",
+          "requires_user_approval": false,
+          "status": "pass"
+        },
         "safety_negative_floor": [
           "erotic nurse costume",
           "thirst-trap nurse",
@@ -405,6 +412,8 @@
     "world=folk_threshold_world",
     "--set",
     "composition=cornea_reflection_closeup",
+    "--soft-anchor-spec",
+    "{\"mode\":\"soft\",\"concept\":\"윈터 간호사 구미호\",\"anchor_expansion\":{\"enabled\":false,\"top_k\":3,\"min_similarity\":0.78,\"weight_ratio\":0.5},\"min_anchors\":2,\"source_floors\":{\"role\":1},\"group_floors\":{},\"salience_floor\":1,\"visual_guards\":[],\"render_priority_terms\":[],\"free_slot_constraints\":{\"subject_framing\":{\"deny_pool\":[\"full_body_framing\",\"three_quarter_body_framing\",\"knee_up_framing\"],\"prefer_ids\":[\"head_and_shoulders_crop\",\"upper_body_framing\",\"close_up_face_crop\",\"detail_crop_hands_accessories\"]},\"composition\":{\"deny_pool\":[\"phone_arm_length_selfie\",\"mirror_selfie_composition\",\"crouching_mirror_full_body\",\"low_angle\",\"low_angle_hero\",\"concert_low_angle_crowd\"],\"prefer_ids\":[\"medium_close\",\"frame_within_frame\",\"beauty_tight_face_crop\"]},\"action\":{\"deny_pool\":[\"turning_back\",\"over_shoulder_pose\",\"slow_walk_turnaround\",\"over_shoulder_floor_turn\",\"reacting_to_pov_hand_tail_pull\"]},\"body_framing\":{\"deny_pool\":[\"over_shoulder_hip_line\",\"clothed_bodyline_emphasis\",\"legs_heels_framing\"],\"prefer_ids\":[\"hands_nails_accessory_closeup\"]}},\"render_suppress_terms\":[],\"render_directives\":[],\"dual_read_requirement\":{\"enabled\":true,\"role_terms\":[\"nurse-uniform\",\"nurse\",\"medical\",\"hospital corridor\",\"clinical\",\"subject\",\"role\"],\"mixin_terms\":[\"golden fox-eye gaze\",\"lighting\",\"moonlit\",\"folk\",\"ritual\",\"light\",\"mood\",\"unease\"]},\"preset_affinity\":{\"discouraged_presets\":[\"adult_boundary_social_stress_test\",\"adult_fetish_fashion_editorial\",\"beastkin_threshold_portrait\"],\"preferred_axes\":[\"covered nurse uniform\",\"clinical chart\",\"face and hands\",\"professional role\"],\"discouraged_axes\":[\"erotic nurse\",\"pin-up\",\"medical horror\",\"body display\"],\"preferred_presets\":[\"clinical_handover_vitals\"]},\"role_scene_policy\":{\"enabled\":true,\"allowed_locations\":[\"hospital_corridor\",\"hospital_waiting_room\",\"clinic_corridor_handover\",\"hospital_records_room\",\"pharmacy_dispensing_counter\"],\"preferred_locations\":[\"hospital_corridor\",\"hospital_waiting_room\",\"clinic_corridor_handover\",\"hospital_records_room\",\"pharmacy_dispensing_counter\"],\"forbidden_locations\":[\"highland_pasture\"],\"enforce\":true,\"scene_family\":\"clinical_care_space\",\"reason\":\"role scene pool must own location before generic beastkin atmosphere\"},\"species_family_policy\":{},\"soft_repair_policy\":{\"enabled\":true,\"max_attempts\":2,\"trigger_checks\":[\"required_render_priority_missing\",\"dual_read_missing\",\"body_first_survivor\",\"free_slot_constraint_violation\"],\"target_slots\":[\"subject_framing\",\"composition\",\"action\",\"prop\",\"body_framing\"],\"strategy\":\"prefer_then_reselect\",\"fail_open\":false},\"safety_negative_floor\":[\"erotic nurse costume\",\"thirst-trap nurse\",\"pin-up nurse\",\"medical emergency\",\"patient distress\"],\"mixin_cue_budget\":0,\"anchors\":[{\"slot\":\"costume_style\",\"ids\":[\"nurse_uniform_costume\"],\"pool\":[\"nurse_uniform_costume\"],\"pool_weights\":{},\"terms\":[\"nurse-uniform\",\"nurse\",\"medical\"],\"source\":\"role\",\"required\":true,\"critical\":true,\"groups\":[\"role_primary\"],\"primary\":false,\"variant_group\":\"\",\"variant_strategy\":\"\"},{\"slot\":\"expression\",\"ids\":[\"golden_fox_eye_gaze\"],\"pool\":[\"golden_fox_eye_gaze\"],\"pool_weights\":{},\"terms\":[\"golden fox-eye gaze\"],\"source\":\"mixin\",\"required\":true,\"critical\":false,\"groups\":[],\"primary\":false,\"variant_group\":\"\",\"variant_strategy\":\"\"},{\"slot\":\"lighting\",\"ids\":[\"moonlit_folk_ritual_light\"],\"pool\":[\"moonlit_folk_ritual_light\"],\"pool_weights\":{},\"terms\":[\"lighting\",\"moonlit\",\"folk\",\"ritual\",\"light\"],\"source\":\"mixin\",\"required\":true,\"critical\":false,\"groups\":[],\"primary\":false,\"variant_group\":\"\",\"variant_strategy\":\"\"},{\"slot\":\"location\",\"ids\":[\"hospital_corridor\"],\"pool\":[\"hospital_corridor\",\"hospital_waiting_room\",\"clinic_corridor_handover\",\"hospital_records_room\",\"pharmacy_dispensing_counter\"],\"pool_weights\":{\"hospital_corridor\":2.0,\"hospital_waiting_room\":2.0},\"terms\":[\"hospital corridor\",\"clinical\"],\"source\":\"role\",\"required\":true,\"critical\":false,\"groups\":[\"role_primary\"],\"primary\":false,\"variant_group\":\"role_scene:clinical_care_space\",\"variant_strategy\":\"role_scene_rotation\"},{\"slot\":\"mood\",\"ids\":[\"folk_ritual_unease\"],\"pool\":[\"folk_ritual_unease\"],\"pool_weights\":{},\"terms\":[\"mood\",\"folk\",\"ritual\",\"unease\"],\"source\":\"mixin\",\"required\":true,\"critical\":false,\"groups\":[],\"primary\":false,\"variant_group\":\"\",\"variant_strategy\":\"\"},{\"slot\":\"prop\",\"ids\":[\"fox_fire_wisp_prop\"],\"pool\":[\"fox_fire_wisp_prop\"],\"pool_weights\":{},\"terms\":[\"fox-fire wisp\"],\"source\":\"mixin\",\"required\":true,\"critical\":false,\"groups\":[],\"primary\":false,\"variant_group\":\"\",\"variant_strategy\":\"\"},{\"slot\":\"subject\",\"ids\":[\"nurse_role\"],\"pool\":[\"nurse_role\"],\"pool_weights\":{},\"terms\":[\"subject\",\"nurse\",\"role\"],\"source\":\"role\",\"required\":true,\"critical\":false,\"groups\":[\"role_primary\"],\"primary\":false,\"variant_group\":\"\",\"variant_strategy\":\"\"}],\"safety_evaluation\":{\"mode\":\"automatic\",\"evaluation_requested\":false,\"status\":\"pass\",\"requires_user_approval\":false,\"items\":[]}}",
     "--additional-requirement",
     "adult nurse duty uniform with clear medical-uniform details",
     "--additional-requirement",
@@ -419,6 +428,10 @@
     "gumiho folklore allure, golden fox-eye gaze, fox-fire wisp, folk threshold, intelligent danger",
     "--likeness-mode",
     "inspired",
+    "--likeness-reference",
+    "윈터",
+    "--concept-gates-json",
+    "[]",
     "--n",
     "1",
     "--lang",
