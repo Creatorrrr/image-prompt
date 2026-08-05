@@ -106,6 +106,7 @@ def build_manifest(root: Path = ROOT) -> dict[str, Any]:
         rel = path.relative_to(root).as_posix()
         entry = {
             "id": meta["id"],
+            "version": int(meta["version"]),
             "file": rel,
             "type": meta["type"],
             "tier": int(meta["tier"]),
@@ -124,7 +125,7 @@ def build_manifest(root: Path = ROOT) -> dict[str, Any]:
     return {
         "name": "reverse-image-prompt",
         "architecture": "modular facet router",
-        "version": "2.1.0-tiered-routing",
+        "version": "3.0.0-adaptive-output",
         "entrypoint": "SKILL.md",
         "source": "generated from modules/*.md frontmatter by tools/gen_manifest.py",
         "tiers": {str(k): v for k, v in TIERS.items()},
@@ -149,14 +150,17 @@ def registry_markdown(manifest: dict[str, Any]) -> str:
         lines += [
             f"## Tier {tier}: {tier_name}",
             "",
-            "| Module | Facet | Values | Dependencies | Provides anchors |",
-            "|---|---|---|---|---|",
+            "| Module | Version | Facet | Values | Dependencies | Provides anchors |",
+            "|---|---:|---|---|---|---|",
         ]
         for module in tier_modules:
             values = ", ".join(module.get("facet_values", [])) or "-"
             deps = ", ".join(module.get("dependencies", [])) or "-"
             anchors = ", ".join(module.get("provides_anchors", [])) or "-"
-            lines.append(f"| `{module['id']}` | `{module['facet']}` | {values} | {deps} | {anchors} |")
+            lines.append(
+                f"| `{module['id']}` | {module['version']} | `{module['facet']}` | "
+                f"{values} | {deps} | {anchors} |"
+            )
         lines.append("")
     return "\n".join(lines).rstrip() + "\n"
 

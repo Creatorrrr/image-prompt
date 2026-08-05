@@ -1,6 +1,6 @@
 ---
 id: detail.tight-selfie-hierarchy
-version: 1
+version: 4
 priority: 77
 type: detail
 tier: 3
@@ -43,11 +43,11 @@ When tight selfie framing makes the face and hair the primary anchors, state tha
 - For wigs, dyed hair, bright hair, or strongly lit hair, separate local hair color from shadow color. Lock highlight masses and shadow masses so the generator does not average the hair into a cleaner single color.
 - If a generated comparison drifts into a more natural selfie, centered portrait, or clearer outfit study, strengthen these generic hierarchy and crop locks instead of adding source-only trivia.
 
-## Negative additions
+## Optional negative contribution
 
 Reject balanced head-and-shoulders portrait drift, fashion-editorial recentering, cleaned-up studio portrait lighting, reduced face/hair dominance, exposed hidden forehead or brows, completed hidden crop edges, and any prompt wording that lets secondary clothing or accessories overtake the face/hair hierarchy.
 
-## Settings additions
+## Optional settings contribution
 
 - Primary visual concept locks: face and hair remain the first-order anchors; secondary objects stay source-sized.
 - Boundary and visibility-budget locks: preserve tight selfie edge cuts, high-face crop, side crops, and incomplete lower-frame regions.
