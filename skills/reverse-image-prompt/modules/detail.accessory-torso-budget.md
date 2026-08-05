@@ -1,6 +1,6 @@
 ---
 id: detail.accessory-torso-budget
-version: 1
+version: 4
 priority: 76
 type: detail
 tier: 3
@@ -43,11 +43,11 @@ Treat accessories and cropped torso regions as measured support budgets, not as 
 - Lock lower garment, collar, neckline, ruffle, strap, or trim bands by y-start, height, width, interruption, and crop. If the source shows only a bottom or side band, keep it as a band and do not complete it into a bodice, dress, uniform, corset, or full outfit view.
 - Preserve side-specific asymmetry for shoulders, straps, hair occlusion, accessory position, and edge cuts instead of normalizing into a symmetrical fashion portrait.
 
-## Negative additions
+## Optional negative contribution
 
 Reject accessory enlargement, crisp ornate accessory upgrading, centered outfit views, complete costume construction, lower torso expansion, clarified hidden neckline, widened or deepened garment openings, cleaner symmetrical straps/collars, and clothing/body regions promoted beyond their visible source budget.
 
-## Settings additions
+## Optional settings contribution
 
 - Clothing-fit, neckline, and seam locks: describe incomplete bands, cropped trims, interrupted necklines, and occluding hair/hand/props before category labels.
 - Boundary and visibility-budget locks: accessories and torso regions remain source-sized, cropped, interrupted, and secondary.

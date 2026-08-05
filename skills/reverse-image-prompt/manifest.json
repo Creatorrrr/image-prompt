@@ -1,7 +1,7 @@
 {
   "name": "reverse-image-prompt",
   "architecture": "modular facet router",
-  "version": "2.1.0-tiered-routing",
+  "version": "3.0.0-adaptive-output",
   "entrypoint": "SKILL.md",
   "source": "generated from modules/*.md frontmatter by tools/gen_manifest.py",
   "tiers": {
@@ -23,6 +23,7 @@
   "modules": [
     {
       "id": "core.visual-evidence",
+      "version": 5,
       "file": "modules/core.visual-evidence.md",
       "type": "core",
       "tier": 0,
@@ -44,6 +45,7 @@
     },
     {
       "id": "core.frame-coordinates",
+      "version": 6,
       "file": "modules/core.frame-coordinates.md",
       "type": "core",
       "tier": 0,
@@ -65,11 +67,13 @@
       "conflicts": [],
       "provides_anchors": [
         "aspect_ratio_drift_major",
-        "normalized_coordinates"
+        "normalized_coordinates",
+        "subject_environment_balance"
       ]
     },
     {
       "id": "concept.primary-relationship",
+      "version": 5,
       "file": "modules/concept.primary-relationship.md",
       "type": "concept",
       "tier": 0,
@@ -90,11 +94,16 @@
       "conflicts": [],
       "provides_anchors": [
         "primary_visual_concept",
-        "concept_spec"
+        "concept_spec",
+        "major_component_relation_graph",
+        "major_component_topology",
+        "interaction_geometry_sentence",
+        "image_scene_space_distinction"
       ]
     },
     {
       "id": "core.fidelity-discipline",
+      "version": 6,
       "file": "modules/core.fidelity-discipline.md",
       "type": "core",
       "tier": 0,
@@ -116,11 +125,16 @@
       "provides_anchors": [
         "anti_polish",
         "broad_label_discipline",
-        "fidelity_ceiling"
+        "fidelity_ceiling",
+        "aesthetic_salience_gate",
+        "aesthetic_signature_early",
+        "detail_not_sharpness",
+        "attractiveness_polish_separation"
       ]
     },
     {
       "id": "core.background-color",
+      "version": 5,
       "file": "modules/core.background-color.md",
       "type": "core",
       "tier": 0,
@@ -144,11 +158,13 @@
       "provides_anchors": [
         "background_zoning",
         "low_legibility_background",
-        "color_mood"
+        "color_mood",
+        "background_legibility_ceiling"
       ]
     },
     {
       "id": "core.pre-emit-gate",
+      "version": 8,
       "file": "modules/core.pre-emit-gate.md",
       "type": "core",
       "tier": 0,
@@ -177,13 +193,14 @@
     },
     {
       "id": "core.output-contract",
+      "version": 8,
       "file": "modules/core.output-contract.md",
       "type": "core",
       "tier": 0,
       "facet": "core",
       "facet_values": [
         "output-contract",
-        "prompt-negative-settings"
+        "adaptive-output"
       ],
       "priority": 98,
       "triggers": [
@@ -199,13 +216,13 @@
       "conflicts": [],
       "provides_anchors": [
         "output_sections",
-        "prompt_contract_16",
         "negative_primary_concept",
         "recommended_settings_aspect"
       ]
     },
     {
       "id": "concept.occlusion-replacement",
+      "version": 4,
       "file": "modules/concept.occlusion-replacement.md",
       "type": "concept",
       "tier": 1,
@@ -233,6 +250,7 @@
     },
     {
       "id": "concept.reflection-mirror",
+      "version": 4,
       "file": "modules/concept.reflection-mirror.md",
       "type": "concept",
       "tier": 1,
@@ -260,6 +278,7 @@
     },
     {
       "id": "concept.screen-frame-within-frame",
+      "version": 4,
       "file": "modules/concept.screen-frame-within-frame.md",
       "type": "concept",
       "tier": 1,
@@ -287,6 +306,7 @@
     },
     {
       "id": "concept.scale-miniature",
+      "version": 4,
       "file": "modules/concept.scale-miniature.md",
       "type": "concept",
       "tier": 1,
@@ -318,6 +338,7 @@
     },
     {
       "id": "concept.mixed-media-illusion",
+      "version": 4,
       "file": "modules/concept.mixed-media-illusion.md",
       "type": "concept",
       "tier": 1,
@@ -346,6 +367,7 @@
     },
     {
       "id": "subject.human",
+      "version": 8,
       "file": "modules/subject.human.md",
       "type": "subject",
       "tier": 2,
@@ -377,11 +399,13 @@
         "aesthetic_upgrade",
         "symmetric_large_body_lock",
         "symmetric_moderate_body_lock",
-        "face_exposure_budget"
+        "face_exposure_budget",
+        "broad_person_gestalt_anchor"
       ]
     },
     {
       "id": "medium.screenshot-ui",
+      "version": 4,
       "file": "modules/medium.screenshot-ui.md",
       "type": "medium",
       "tier": 2,
@@ -422,6 +446,7 @@
     },
     {
       "id": "medium.non-photographic-rendering",
+      "version": 4,
       "file": "modules/medium.non-photographic-rendering.md",
       "type": "medium",
       "tier": 2,
@@ -449,13 +474,13 @@
         "core.fidelity-discipline"
       ],
       "conflicts": [
-        "medium.photographic-capture",
         "medium.unspecified-visual"
       ],
       "provides_anchors": []
     },
     {
       "id": "medium.photographic-capture",
+      "version": 5,
       "file": "modules/medium.photographic-capture.md",
       "type": "medium",
       "tier": 2,
@@ -482,13 +507,15 @@
         "core.fidelity-discipline"
       ],
       "conflicts": [
-        "medium.non-photographic-rendering",
         "medium.unspecified-visual"
       ],
-      "provides_anchors": []
+      "provides_anchors": [
+        "sharpness_topology"
+      ]
     },
     {
       "id": "subject.animal",
+      "version": 4,
       "file": "modules/subject.animal.md",
       "type": "subject",
       "tier": 2,
@@ -515,6 +542,7 @@
     },
     {
       "id": "subject.food",
+      "version": 4,
       "file": "modules/subject.food.md",
       "type": "subject",
       "tier": 2,
@@ -541,6 +569,7 @@
     },
     {
       "id": "subject.product",
+      "version": 4,
       "file": "modules/subject.product.md",
       "type": "subject",
       "tier": 2,
@@ -568,6 +597,7 @@
     },
     {
       "id": "subject.architecture-interior",
+      "version": 5,
       "file": "modules/subject.architecture-interior.md",
       "type": "subject",
       "tier": 2,
@@ -597,6 +627,7 @@
     },
     {
       "id": "subject.document-data-diagram",
+      "version": 4,
       "file": "modules/subject.document-data-diagram.md",
       "type": "subject",
       "tier": 2,
@@ -628,6 +659,7 @@
     },
     {
       "id": "subject.landscape-nature",
+      "version": 4,
       "file": "modules/subject.landscape-nature.md",
       "type": "subject",
       "tier": 2,
@@ -658,6 +690,7 @@
     },
     {
       "id": "subject.vehicle",
+      "version": 4,
       "file": "modules/subject.vehicle.md",
       "type": "subject",
       "tier": 2,
@@ -687,6 +720,7 @@
     },
     {
       "id": "subject.generic-object",
+      "version": 4,
       "file": "modules/subject.generic-object.md",
       "type": "subject",
       "tier": 2,
@@ -716,6 +750,7 @@
     },
     {
       "id": "medium.unspecified-visual",
+      "version": 4,
       "file": "modules/medium.unspecified-visual.md",
       "type": "medium",
       "tier": 2,
@@ -746,7 +781,43 @@
       ]
     },
     {
+      "id": "detail.human-face-likeness",
+      "version": 3,
+      "file": "modules/detail.human-face-likeness.md",
+      "type": "detail",
+      "tier": 3,
+      "facet": "detail-risk",
+      "facet_values": [
+        "face",
+        "face-detail",
+        "face-likeness",
+        "prominent-face",
+        "readable-face",
+        "portrait-likeness"
+      ],
+      "priority": 80,
+      "triggers": [
+        "prominent or clearly readable human face",
+        "portrait where facial likeness materially affects reconstruction"
+      ],
+      "avoid_when": [
+        "face is tiny, heavily blurred, deeply shadowed, or too occluded for reliable feature evidence"
+      ],
+      "dependencies": [
+        "subject.human",
+        "core.frame-coordinates",
+        "core.fidelity-discipline"
+      ],
+      "conflicts": [],
+      "provides_anchors": [
+        "human_detail_hierarchy",
+        "face_anchor_budget",
+        "expression_gaze_hair_geometry"
+      ]
+    },
+    {
       "id": "detail.clothing-fashion",
+      "version": 4,
       "file": "modules/detail.clothing-fashion.md",
       "type": "detail",
       "tier": 3,
@@ -780,6 +851,7 @@
     },
     {
       "id": "detail.pose-hands-gesture",
+      "version": 5,
       "file": "modules/detail.pose-hands-gesture.md",
       "type": "detail",
       "tier": 3,
@@ -809,6 +881,7 @@
     },
     {
       "id": "detail.tight-selfie-hierarchy",
+      "version": 4,
       "file": "modules/detail.tight-selfie-hierarchy.md",
       "type": "detail",
       "tier": 3,
@@ -841,6 +914,7 @@
     },
     {
       "id": "detail.accessory-torso-budget",
+      "version": 4,
       "file": "modules/detail.accessory-torso-budget.md",
       "type": "detail",
       "tier": 3,
@@ -873,6 +947,7 @@
     },
     {
       "id": "detail.face-hand-gesture",
+      "version": 4,
       "file": "modules/detail.face-hand-gesture.md",
       "type": "detail",
       "tier": 3,
@@ -904,6 +979,7 @@
     },
     {
       "id": "detail.low-quality-artifacts",
+      "version": 4,
       "file": "modules/detail.low-quality-artifacts.md",
       "type": "detail",
       "tier": 3,
@@ -935,6 +1011,7 @@
     },
     {
       "id": "detail.text-logo-label",
+      "version": 4,
       "file": "modules/detail.text-logo-label.md",
       "type": "detail",
       "tier": 3,
@@ -967,6 +1044,7 @@
     },
     {
       "id": "style.stylized-character-maturity",
+      "version": 4,
       "file": "modules/style.stylized-character-maturity.md",
       "type": "style",
       "tier": 4,
