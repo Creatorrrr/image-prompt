@@ -22,8 +22,10 @@ HOLDOUT_PATH = SKILL_DIR / "assets" / "generalization_holdout_cases.jsonl"
 DOMAIN_HOLDOUT_V2_PATH = SKILL_DIR / "assets" / "generalization_domain_holdout_v2.jsonl"
 RETRIEVAL_HOLDOUT_V3_PATH = SKILL_DIR / "assets" / "semantic_retrieval_holdout_v3.jsonl"
 RETRIEVAL_HOLDOUT_V4_PATH = SKILL_DIR / "assets" / "semantic_retrieval_holdout_v4.jsonl"
+SUBCULTURE_RETRIEVAL_HOLDOUT_V1_PATH = SKILL_DIR / "assets" / "semantic_retrieval_holdout_subculture_v1.jsonl"
 RESEARCH_EVIDENCE_PATH = SKILL_DIR / "assets" / "research_evidence.jsonl"
 RESEARCH_EXTENSION_PATH = SKILL_DIR / "assets" / "photo_prompt_research_extension.json"
+SUBCULTURE_EXTENSION_PATH = SKILL_DIR / "assets" / "photo_prompt_subculture_extension.json"
 QUALITY_LAYERS_PATH = SKILL_DIR / "assets" / "photo_prompt_quality_layers.json"
 DOMAIN_VISUAL_REVIEW_PLAN_PATH = SKILL_DIR / "assets" / "visual_review_domain_extension_plan.json"
 DOMAIN_VISUAL_REVIEW_RESULTS_PATH = SKILL_DIR / "assets" / "visual_review_domain_extension_results.json"
@@ -888,6 +890,293 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             }
         )
         self.assertLess(typed_window, generic_window)
+
+    def test_subculture_extension_routes_are_scoped_complete_and_runtime_selectable(self):
+        data = prompt_generator.load_json(TAGS_PATH)
+        extension = json.loads(SUBCULTURE_EXTENSION_PATH.read_text(encoding="utf-8"))
+        extension_ids = {preset["id"] for preset in extension["presets"]}
+        route_ids = extension_ids | {"punk_basement_show", "warehouse_rave_uv"}
+        presets = {preset["id"]: preset for preset in data["presets"]}
+
+        self.assertEqual(len(extension_ids), 33)
+        self.assertEqual(
+            set(extension["slot_applicability"]["preset_domain_overrides"]),
+            route_ids,
+        )
+        self.assertTrue(route_ids <= set(presets))
+
+        surface_policy = data["slot_applicability"]["slots"]["surface_material"]
+        self.assertNotIn("human", surface_policy["subject_categories"])
+        self.assertTrue(surface_policy["allow_domains_override_subject_categories"])
+        self.assertEqual(
+            prompt_generator.slot_block_reason(
+                data,
+                "surface_material",
+                {"subject_category": "human", "preset_domains": ["sports_motion"]},
+            ),
+            "subject_category_not_allowed",
+        )
+        self.assertIsNone(
+            prompt_generator.slot_block_reason(
+                data,
+                "surface_material",
+                {
+                    "subject_category": "human",
+                    "preset_domains": ["subculture_practice"],
+                },
+            )
+        )
+
+        requested_context = {
+            "intent_source": "user",
+            "intent_constraints": {"domains": ["subculture_practice"]},
+        }
+        for seed, preset_id in enumerate(sorted(route_ids), start=1):
+            preset = presets[preset_id]
+            self.assertEqual(
+                prompt_generator.preset_domains(preset, data),
+                {"subculture_practice"},
+            )
+            self.assertTrue(
+                {"subject", "action", "location", "prop"}
+                <= set(preset["required_slots"]),
+                preset_id,
+            )
+            self.assertFalse(
+                prompt_generator.preset_matches_automatic_intent_scope(preset, data, None),
+                preset_id,
+            )
+            self.assertTrue(
+                prompt_generator.preset_matches_automatic_intent_scope(
+                    preset, data, requested_context
+                ),
+                preset_id,
+            )
+
+            result = prompt_generator.generate_once(
+                data,
+                __import__("random").Random(seed),
+                preset_id,
+                ["en"],
+                False,
+                0,
+                True,
+                detail_level="detailed",
+                selection_mode="rule",
+                seed=seed,
+            )
+            choices = result["choices"]
+            self.assertTrue(
+                set(preset["required_slots"]) <= set(choices),
+                (preset_id, sorted(set(preset["required_slots"]) - set(choices))),
+            )
+            for slot, choice in choices.items():
+                authored_ids = set((preset.get("filters", {}).get(slot) or {}).get("ids", []))
+                if authored_ids:
+                    self.assertIn(choice["id"], authored_ids, (preset_id, slot, choice["id"]))
+
+        first_route, second_route = sorted(route_ids)[:2]
+        scoped_context = {
+            "intent_source": "user",
+            "intent_constraints": {
+                "domains": ["subculture_practice"],
+                "scoped_routes": [first_route],
+            },
+        }
+        self.assertTrue(
+            prompt_generator.preset_matches_automatic_intent_scope(
+                presets[first_route], data, scoped_context
+            )
+        )
+        self.assertFalse(
+            prompt_generator.preset_matches_automatic_intent_scope(
+                presets[second_route], data, scoped_context
+            )
+        )
+
+        age_only_entries = [
+            entry
+            for entries in data["slots"].values()
+            for entry in entries
+            if "age_context_only" in set(entry.get("tags", []))
+        ]
+        self.assertGreaterEqual(len(age_only_entries), 40)
+        for entry in age_only_entries:
+            self.assertNotIn("adult", prompt_generator.adult_semantic_tokens(entry), entry["id"])
+
+        legacy = presets["lowrider_night_meet"]
+        self.assertFalse(legacy["automatic_discovery"])
+        indexed_keys = {
+            key for key, _, _, _ in prompt_generator.iter_semantic_entries(data)
+        }
+        self.assertNotIn("preset:lowrider_night_meet", indexed_keys)
+        self.assertEqual(
+            prompt_generator.choose_preset(
+                data, __import__("random").Random(1), "lowrider_night_meet"
+            )["id"],
+            "lowrider_night_meet",
+        )
+
+        extension_text = json.dumps(extension, ensure_ascii=False).lower()
+        for specific_ip_or_brand in (
+            "pokemon",
+            "mario",
+            "gundam",
+            "vocaloid",
+            "hatsune miku",
+            "disney",
+            "sanrio",
+            "hello kitty",
+            "warhammer",
+            "dungeons & dragons",
+            "marvel",
+            "dc comics",
+            "nintendo",
+            "playstation",
+            "xbox",
+            "hololive",
+            "nijisanji",
+            "live2d",
+            "comiket",
+        ):
+            self.assertNotIn(specific_ip_or_brand, extension_text)
+
+    def test_subculture_holdout_and_evidence_cover_all_frozen_themes(self):
+        data = prompt_generator.load_json(TAGS_PATH)
+        preset_ids = {preset["id"] for preset in data["presets"]}
+        cases = eval_semantic.load_retrieval_holdout_cases(
+            SUBCULTURE_RETRIEVAL_HOLDOUT_V1_PATH
+        )
+        self.assertEqual(len(cases), 70)
+        self.assertEqual(len({case["id"] for case in cases}), 70)
+        target_ids = {
+            preset_id
+            for case in cases
+            for preset_id in case["allowed_selected_presets"]
+        }
+        self.assertEqual(len(target_ids), 35)
+        self.assertTrue(target_ids <= preset_ids)
+        data[prompt_generator.QUALITY_LAYERS_DATA_KEY] = prompt_generator.load_quality_layers(
+            QUALITY_LAYERS_PATH
+        )
+        routing_policy = prompt_generator.candidate_pack_intent_routing_policy(data)
+        scoped_rules = routing_policy["scoped_routes"]
+        self.assertEqual(len(scoped_rules), 35)
+        self.assertEqual({rule["preset_id"] for rule in scoped_rules}, target_ids)
+        for rule in scoped_rules:
+            self.assertEqual(rule["domain"], "subculture_practice")
+            self.assertTrue(rule["aliases"])
+        for case in cases:
+            routed = prompt_generator.resolve_request_intent_constraints(
+                data, {"intent": case["intent"]}, {}
+            )
+            self.assertIn("subculture_practice", routed["domains"], case["id"])
+            self.assertEqual(
+                set(routed["scoped_routes"]),
+                set(case["allowed_selected_presets"]),
+                case["id"],
+            )
+        self.assertTrue(
+            prompt_generator.intent_alias_matches("adult costume makers", "costume maker")
+        )
+        self.assertTrue(
+            prompt_generator.intent_alias_matches("resin garage-kit parts", "garage kit")
+        )
+        for generic_intent in (
+            "a generic studio portrait with neutral clothing and soft light",
+            "판타지 코스프레 인물 사진",
+            "K-style beauty editorial in a clean studio",
+            "자동차 정비사가 주차된 차량을 점검하는 일반 다큐멘터리",
+            "직업 교육 작업실에서 공구를 정리하는 모습",
+        ):
+            routed = prompt_generator.resolve_request_intent_constraints(
+                data, {"intent": generic_intent}, {}
+            )
+            self.assertNotIn("subculture_practice", routed["domains"], generic_intent)
+            self.assertFalse(routed["scoped_routes"], generic_intent)
+
+        evidence_rows = [
+            json.loads(line)
+            for line in RESEARCH_EVIDENCE_PATH.read_text(encoding="utf-8").splitlines()
+            if line.strip() and json.loads(line).get("domain") == "subculture_practice"
+        ]
+        self.assertGreaterEqual(len(evidence_rows), 46)
+        theme_targets = {
+            "cosplay": {"cosplay_fabrication_event_practice"},
+            "fan_publishing": {"artist_alley_fan_publishing_exchange"},
+            "zine_print": {"diy_zine_print_workshop"},
+            "virtual_creator": {"virtual_creator_production_session"},
+            "scale_models": {"scale_model_kitbash_workbench"},
+            "diorama": {"miniature_diorama_build_workbench"},
+            "toy_customization": {
+                "doll_toy_customization_workshop",
+                "plush_toy_repair_customization",
+            },
+            "character_suits": {
+                "fursuit_fabrication_care",
+                "mascot_suit_performance_care",
+            },
+            "lolita": {"lolita_coordinate_culture"},
+            "japanese_street_style": {
+                "decora_diy_maximalism",
+                "gyaru_shibuya_glam",
+                "heisei_y2k_revival",
+            },
+            "visual_kei": {"visual_kei_live_house"},
+            "goth_club_rave": {
+                "goth_scene_style_documentary",
+                "cybergoth_club_style_documentary",
+                "new_romantic_club_style_documentary",
+                "warehouse_rave_uv",
+            },
+            "independent_music": {
+                "punk_basement_show",
+                "noise_performance_space_documentary",
+                "shoegaze_small_venue_documentary",
+            },
+            "retro_gaming": {
+                "retro_arcade_community_practice",
+                "retro_lan_byoc_session",
+                "retro_speedrun_event_practice",
+            },
+            "tabletop": {
+                "ttrpg_collaborative_session",
+                "miniature_wargaming_social_practice",
+            },
+            "custom_hardware": {
+                "custom_pc_build_workbench",
+                "mechanical_keyboard_build_workbench",
+                "cyberdeck_enclosure_prototyping",
+            },
+            "vehicle_culture": {
+                "lowrider_community_craft",
+                "tuner_car_workshop_documentary",
+                "itasha_display_culture_documentary",
+            },
+            "fandom_material": {
+                "idol_fandom_material_culture",
+                "anime_fandom_collection_exchange",
+            },
+        }
+        self.assertEqual(len(theme_targets), 18)
+        for theme, targets in theme_targets.items():
+            independent_sources = {
+                row["source_url"]
+                for row in evidence_rows
+                if targets & set(row["candidate_ids"])
+            }
+            self.assertGreaterEqual(len(independent_sources), 2, (theme, independent_sources))
+
+    def test_subculture_extension_override_contract_rejects_unknown_metadata(self):
+        raw_tags = json.loads(TAGS_PATH.read_text(encoding="utf-8"))
+        invalid = {
+            "schema_version": prompt_generator.RESEARCH_EXTENSION_SCHEMA,
+            "existing_preset_metadata_overrides": {
+                raw_tags["presets"][0]["id"]: {"filters": {}}
+            },
+        }
+        with self.assertRaisesRegex(ValueError, "unsupported keys"):
+            prompt_generator.merge_research_extension(raw_tags, invalid)
 
     def test_research_presets_resist_legacy_bleed_and_misleading_intent(self):
         data = prompt_generator.load_json(TAGS_PATH)

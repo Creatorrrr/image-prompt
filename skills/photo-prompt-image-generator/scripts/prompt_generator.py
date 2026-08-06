@@ -20,6 +20,7 @@ Usage examples:
 from __future__ import annotations
 
 import argparse
+import copy
 import hashlib
 import json
 import math
@@ -75,6 +76,10 @@ GENERATOR_VERSION = "2026.06.0"
 LIKENESS_MODES = ("off", "inspired")
 QUALITY_LAYERS_FILENAME = "photo_prompt_quality_layers.json"
 RESEARCH_EXTENSION_FILENAME = "photo_prompt_research_extension.json"
+RESEARCH_EXTENSION_FILENAMES = (
+    RESEARCH_EXTENSION_FILENAME,
+    "photo_prompt_subculture_extension.json",
+)
 RESEARCH_EXTENSION_SCHEMA = "photo-prompt-research-extension/v1"
 QUALITY_LAYERS_DATA_KEY = "_quality_layers"
 SOFT_ANCHOR_WEIGHT_MULTIPLIER = 24.0
@@ -906,6 +911,7 @@ VALID_PRESET_DOMAINS = {
     "natural_process",
     "longitudinal_place_state",
     "visual_structure",
+    "subculture_practice",
     "surreal",
     "adult",
 }
@@ -1100,6 +1106,36 @@ def merge_research_extension(data: JsonDict, extension: JsonDict) -> JsonDict:
         if isinstance(preset, dict) and str(preset.get("id") or "")
     }
 
+    metadata_updates = extension.get("existing_preset_metadata_overrides") or {}
+    allowed_metadata_keys = {
+        "ko",
+        "en",
+        "weight",
+        "template_style",
+        "family",
+        "embedding_text",
+        "tags",
+        "aliases",
+        "keywords",
+        "facets",
+        "required_slots",
+        "optional_slots",
+        "automatic_discovery",
+    }
+    for preset_id, updates in metadata_updates.items():
+        preset = presets_by_id.get(str(preset_id))
+        if preset is None:
+            raise ValueError(f"existing preset metadata override references unknown preset {preset_id}")
+        if not isinstance(updates, dict):
+            raise ValueError(f"existing preset metadata override for {preset_id} must be an object")
+        unknown_keys = set(updates) - allowed_metadata_keys
+        if unknown_keys:
+            raise ValueError(
+                f"existing preset metadata override for {preset_id} has unsupported keys {sorted(unknown_keys)}"
+            )
+        for key, value in updates.items():
+            preset[str(key)] = copy.deepcopy(value)
+
     def existing_preset_filter_updates(mapping: Any, *, replace: bool) -> None:
         updates = mapping if isinstance(mapping, dict) else {}
         for preset_id, slot_updates in updates.items():
@@ -1152,6 +1188,30 @@ def merge_research_extension(data: JsonDict, extension: JsonDict) -> JsonDict:
                 raise ValueError(f"slot_applicability.{mapping_key}: duplicate extension key {key}")
             target_mapping[key] = value
 
+    applicability_slots = applicability.setdefault("slots", {})
+    for slot, policy_updates in (extension_applicability.get("slots") or {}).items():
+        if not isinstance(policy_updates, dict):
+            raise ValueError(f"slot_applicability.slots.{slot}: policy must be an object")
+        target_policy = applicability_slots.setdefault(str(slot), {})
+        if not isinstance(target_policy, dict):
+            raise ValueError(f"slot_applicability.slots.{slot}: target policy must be an object")
+        for key, value in policy_updates.items():
+            if isinstance(value, list):
+                target_values = target_policy.setdefault(str(key), [])
+                if not isinstance(target_values, list):
+                    raise ValueError(
+                        f"slot_applicability.slots.{slot}.{key}: target must be a list"
+                    )
+                for item in value:
+                    if item not in target_values:
+                        target_values.append(item)
+                continue
+            if key in target_policy and target_policy[key] != value:
+                raise ValueError(
+                    f"slot_applicability.slots.{slot}.{key}: extension cannot replace scalar"
+                )
+            target_policy[str(key)] = value
+
     return data
 
 
@@ -1162,8 +1222,10 @@ def load_json(path: str | Path) -> JsonDict:
     with p.open("r", encoding="utf-8") as f:
         data = json.load(f)
     if p.name == "photo_prompt_tags.json":
-        extension_path = p.with_name(RESEARCH_EXTENSION_FILENAME)
-        if extension_path.exists():
+        for extension_filename in RESEARCH_EXTENSION_FILENAMES:
+            extension_path = p.with_name(extension_filename)
+            if not extension_path.exists():
+                continue
             with extension_path.open("r", encoding="utf-8") as f:
                 extension = json.load(f)
             data = merge_research_extension(data, extension)
@@ -2652,19 +2714,33 @@ def candidate_pack_intent_routing_policy(data: JsonDict) -> JsonDict:
 
 
 def intent_alias_matches(text: str, alias: str) -> bool:
-    normalized_text = clean_spaces(str(text or "").lower().replace("_", " "))
-    normalized_alias = clean_spaces(str(alias or "").lower().replace("_", " "))
+    normalized_text = clean_spaces(
+        re.sub(r"[-\u2013\u2014/]+", " ", str(text or "").lower().replace("_", " "))
+    )
+    normalized_alias = clean_spaces(
+        re.sub(r"[-\u2013\u2014/]+", " ", str(alias or "").lower().replace("_", " "))
+    )
     if not normalized_text or not normalized_alias:
         return False
     if normalized_alias.isascii() and re.search(r"[a-z0-9]", normalized_alias):
+        plural_suffix = ""
+        final_word = normalized_alias.rsplit(" ", 1)[-1]
+        if final_word.isalpha() and not final_word.endswith("s"):
+            plural_suffix = r"(?:s|es)?"
         negated = (
             r"(?<![a-z0-9])(?:no|not|without)\s+(?:(?:a|any)\s+)?"
             + re.escape(normalized_alias)
+            + plural_suffix
             + r"(?![a-z0-9])"
         )
         if re.search(negated, normalized_text):
             return False
-        pattern = r"(?<![a-z0-9])" + re.escape(normalized_alias) + r"(?![a-z0-9])"
+        pattern = (
+            r"(?<![a-z0-9])"
+            + re.escape(normalized_alias)
+            + plural_suffix
+            + r"(?![a-z0-9])"
+        )
         return re.search(pattern, normalized_text) is not None
     return normalized_alias in normalized_text
 
@@ -2707,6 +2783,31 @@ def resolve_request_intent_constraints(
         if domain in VALID_PRESET_DOMAINS and hits:
             domains.add(domain)
             matched.append({"axis": "domain", "value": domain, "aliases": hits[:8]})
+    catalog_presets = {
+        str(preset.get("id"))
+        for preset in data.get("presets", [])
+        if isinstance(preset, dict) and str(preset.get("id") or "")
+    }
+    scoped_routes: Set[str] = set()
+    for rule in policy.get("scoped_routes") or []:
+        if not isinstance(rule, dict):
+            continue
+        domain = str(rule.get("domain") or "")
+        preset_id = str(rule.get("preset_id") or "")
+        if domain not in domains or preset_id not in catalog_presets:
+            continue
+        aliases = normalize_list(rule.get("aliases"))
+        hits = sorted({alias for text in texts for alias in aliases if intent_alias_matches(text, alias)})
+        if hits:
+            scoped_routes.add(preset_id)
+            matched.append(
+                {
+                    "axis": "scoped_route",
+                    "value": preset_id,
+                    "domain": domain,
+                    "aliases": hits[:8],
+                }
+            )
     no_people = any(intent_explicitly_excludes_people(text) for text in texts)
     if no_people:
         categories.discard("human")
@@ -2719,6 +2820,7 @@ def resolve_request_intent_constraints(
         "no_people": no_people,
         "subject_categories": sorted(categories),
         "domains": sorted(domains),
+        "scoped_routes": sorted(scoped_routes),
         "matched": matched,
         "source_text_count": len(texts),
     }
@@ -3680,6 +3782,7 @@ STRICT_TAG_FACET_SOURCE_DOMAINS = {
     "natural_process",
     "longitudinal_place_state",
     "visual_structure",
+    "subculture_practice",
 }
 
 # These packs are deliberately broad in subject matter but operationally
@@ -3699,6 +3802,7 @@ INTENT_SCOPED_PRESET_DOMAINS = {
     "natural_process",
     "longitudinal_place_state",
     "visual_structure",
+    "subculture_practice",
 }
 
 # Slot entries in the new packs already carry one of these authored tags. The
@@ -3717,6 +3821,7 @@ INTENT_SCOPED_ENTRY_DOMAIN_TAGS = {
     "natural_process": "natural_process",
     "longitudinal_place_state": "longitudinal_place_state",
     "visual_structure": "visual_structure",
+    "subculture_practice": "subculture_practice",
 }
 
 
@@ -5129,6 +5234,8 @@ def semantic_entry_key(kind: str, entry: Entry, slot: Optional[str] = None) -> s
 def iter_semantic_entries(data: JsonDict) -> List[tuple[str, str, Entry, Optional[str]]]:
     entries: List[tuple[str, str, Entry, Optional[str]]] = []
     for preset in data.get("presets", []):
+        if preset.get("automatic_discovery") is False:
+            continue
         key = semantic_entry_key("preset", preset)
         entries.append((key, "preset", preset, None))
     for recipe in data.get("recipes", []):
@@ -6744,6 +6851,11 @@ def adult_semantic_tokens(item: Entry) -> Set[str]:
         tokens.add("adult")
     if "fetish" in item_id:
         tokens.add("fetish")
+    # Some documentary taxonomies explicitly state that participants are
+    # adults to avoid accidental minor coding.  That age-only assertion must
+    # not route an otherwise general scene through adult-content handling.
+    if "age_context_only" in tokens:
+        tokens.discard("adult")
     return tokens
 
 
@@ -7613,6 +7725,8 @@ def preset_matches_automatic_intent_scope(
     semantic discovery admits the pack only when the user-authored intent was
     routed to the same typed domain.
     """
+    if preset.get("automatic_discovery") is False:
+        return False
     scoped_domains = preset_domains(preset, data) & INTENT_SCOPED_PRESET_DOMAINS
     if not scoped_domains:
         return True
@@ -7622,7 +7736,17 @@ def preset_matches_automatic_intent_scope(
         str(value)
         for value in normalize_list((semantic_context.get("intent_constraints") or {}).get("domains"))
     }
-    return bool(scoped_domains & requested_domains)
+    if not (scoped_domains & requested_domains):
+        return False
+    matched_routes = {
+        str(value)
+        for value in normalize_list(
+            (semantic_context.get("intent_constraints") or {}).get("scoped_routes")
+        )
+    }
+    if matched_routes and "subculture_practice" in scoped_domains:
+        return str(preset.get("id") or "") in matched_routes
+    return True
 
 
 def choose_preset(
