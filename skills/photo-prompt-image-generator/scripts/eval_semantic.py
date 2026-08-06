@@ -56,6 +56,7 @@ DEFAULT_GENERALIZATION_CASES = Path(__file__).resolve().parents[1] / "assets" / 
 DEFAULT_GENERALIZATION_HOLDOUT_CASES = Path(__file__).resolve().parents[1] / "assets" / "generalization_holdout_cases.jsonl"
 DEFAULT_DOMAIN_HOLDOUT_V2_CASES = Path(__file__).resolve().parents[1] / "assets" / "generalization_domain_holdout_v2.jsonl"
 DEFAULT_RETRIEVAL_HOLDOUT_V3_CASES = Path(__file__).resolve().parents[1] / "assets" / "semantic_retrieval_holdout_v3.jsonl"
+DEFAULT_RETRIEVAL_HOLDOUT_V4_CASES = Path(__file__).resolve().parents[1] / "assets" / "semantic_retrieval_holdout_v4.jsonl"
 WRAPPER_PATH = Path(__file__).resolve().with_name("generate_photo_prompt.py")
 PROJECT_ROOT = Path(__file__).resolve().parents[1].parents[1]
 
@@ -2776,7 +2777,7 @@ def main() -> int:
     parser.add_argument("--domain-holdout-v2-check", action="store_true", help="Run the frozen v2 rule-mode holdout for science, mobility, and climate domain packs.")
     parser.add_argument("--domain-holdout-v2-cases", default=DEFAULT_DOMAIN_HOLDOUT_V2_CASES, help="Path to the frozen domain holdout v2 cases for the standalone check and quality gate.")
     parser.add_argument("--retrieval-holdout-check", action="store_true", help="Run preset-free semantic retrieval holdout cases against the real index.")
-    parser.add_argument("--retrieval-holdout-cases", default=DEFAULT_RETRIEVAL_HOLDOUT_V3_CASES, help="Path to preset-free semantic retrieval holdout v3 cases.")
+    parser.add_argument("--retrieval-holdout-cases", default=DEFAULT_RETRIEVAL_HOLDOUT_V4_CASES, help="Path to preset-free semantic retrieval holdout v4 cases.")
     parser.add_argument("--quality-gate", action="store_true", help="Run the real embedding quality gate for semantic concept benchmarks and regression checks.")
     parser.add_argument("--acceptance-gate", action="store_true", help="Run the full quality gate and require a passing --visual-review artifact.")
     parser.add_argument("--quality-runs", type=int, default=2, help="Number of seeds per concept benchmark case for --quality-gate.")
@@ -2855,7 +2856,7 @@ def main() -> int:
                     "generalization_cases": len(load_generalization_cases(Path(args.generalization_cases))),
                     "holdout_cases": len(load_generalization_cases(Path(args.holdout_cases))),
                     "domain_holdout_v2_cases": len(load_generalization_cases(Path(args.domain_holdout_v2_cases))),
-                    "retrieval_holdout_v3_cases": len(load_retrieval_holdout_cases(Path(args.retrieval_holdout_cases))),
+                    "retrieval_holdout_v4_cases": len(load_retrieval_holdout_cases(Path(args.retrieval_holdout_cases))),
                 },
                 indent=2,
             )
@@ -2888,7 +2889,7 @@ def main() -> int:
                 args.limit,
             )
         if args.retrieval_holdout_check:
-            summary["retrieval_holdout_v3_check"] = evaluate_retrieval_holdout(
+            summary["retrieval_holdout_v4_check"] = evaluate_retrieval_holdout(
                 tags_path,
                 semantic_index_path,
                 Path(args.retrieval_holdout_cases),
@@ -3035,7 +3036,7 @@ def main() -> int:
                     args.seed,
                     args.limit,
                 ),
-                "retrieval_holdout_v3_check": evaluate_retrieval_holdout(
+                "retrieval_holdout_v4_check": evaluate_retrieval_holdout(
                     tags_path,
                     semantic_index_path,
                     Path(args.retrieval_holdout_cases),
@@ -3065,7 +3066,7 @@ def main() -> int:
                 or summary["generalization_check"]["failed_case_count"] > 0
                 or summary["holdout_check"]["failed_case_count"] > 0
                 or summary["domain_holdout_v2_check"]["failed_case_count"] > 0
-                or summary["retrieval_holdout_v3_check"]["failed_case_count"] > 0
+                or summary["retrieval_holdout_v4_check"]["failed_case_count"] > 0
                 or summary["preset_guards"]["blacklisted_case_count"] > 0
                 or summary["multi_axis_coverage"]["failed_case_count"] > 0
                 or (args.quality_require_soft and not soft_ready)

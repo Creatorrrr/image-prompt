@@ -868,7 +868,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
 
     def generate(self, preset: str, seed: int = 1, **kwargs):
         return self.generator.generate_once(
-            data=self.data,
+            data=kwargs.pop("data", self.data),
             rng=random.Random(seed),
             preset_id=preset,
             langs=["en"],
@@ -11130,6 +11130,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
 
     def test_real_compact_semantic_shards_preserve_candidate_pack_bytes(self):
         builder = load_index_builder()
+        merged_data = self.generator.load_json(TAGS_PATH)
         committed_manifest = json.loads(SEMANTIC_INDEX_PATH.read_text(encoding="utf-8"))
         for shard in committed_manifest["shards"]:
             shard_path = SEMANTIC_INDEX_PATH.parent / shard["path"]
@@ -11172,8 +11173,9 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                     include_trace=True,
                     semantic_index=index,
                     gemini_api_key="test-api-key",
+                    data=merged_data,
                 )
-            pack = self.generator.build_candidate_pack(result, self.data)
+            pack = self.generator.build_candidate_pack(result, merged_data)
             return json.dumps(pack, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
 
         source_digest = entry_digest(source_index["entries"])
