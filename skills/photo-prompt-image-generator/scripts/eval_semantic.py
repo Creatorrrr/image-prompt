@@ -29,6 +29,7 @@ from prompt_generator import (
     family_signal_strength,
     generate_once,
     load_json,
+    load_semantic_index_payload,
     make_batch_context,
     preset_family_signal_strength,
     semantic_metadata_from_source,
@@ -54,6 +55,7 @@ DEFAULT_CONCEPT_RECIPES = Path(__file__).resolve().parents[1] / "assets" / "conc
 DEFAULT_GENERALIZATION_CASES = Path(__file__).resolve().parents[1] / "assets" / "generalization_cases.jsonl"
 DEFAULT_GENERALIZATION_HOLDOUT_CASES = Path(__file__).resolve().parents[1] / "assets" / "generalization_holdout_cases.jsonl"
 DEFAULT_DOMAIN_HOLDOUT_V2_CASES = Path(__file__).resolve().parents[1] / "assets" / "generalization_domain_holdout_v2.jsonl"
+DEFAULT_RETRIEVAL_HOLDOUT_V3_CASES = Path(__file__).resolve().parents[1] / "assets" / "semantic_retrieval_holdout_v3.jsonl"
 WRAPPER_PATH = Path(__file__).resolve().with_name("generate_photo_prompt.py")
 PROJECT_ROOT = Path(__file__).resolve().parents[1].parents[1]
 
@@ -1032,26 +1034,26 @@ VISUAL_REVIEW_FIELDS = (
 VISUAL_REVIEW_ENUMS: Dict[str, set[str]] = {
     "dual_read": {"pass", "fail"},
     "archetype_first_read": {"pass", "fail"},
-    "body_drift": {"none", "present"},
+    "body_drift": {"none", "present", "not_applicable"},
     "preset_conflict": {"none", "present"},
-    "role_anchor": {"pass", "fail"},
-    "mixin_anchor": {"pass", "fail"},
-    "body_coverage_guard": {"pass", "fail"},
+    "role_anchor": {"pass", "fail", "not_applicable"},
+    "mixin_anchor": {"pass", "fail", "not_applicable"},
+    "body_coverage_guard": {"pass", "fail", "not_applicable"},
     "render_modality": {"pass", "fail"},
     "framing_constraint": {"pass", "fail"},
-    "body_emphasis_survived": {"no", "yes"},
+    "body_emphasis_survived": {"no", "yes", "not_applicable"},
 }
 VISUAL_REVIEW_PASS_VALUES: Dict[str, set[str]] = {
     "dual_read": {"pass"},
     "archetype_first_read": {"pass"},
-    "body_drift": {"none"},
+    "body_drift": {"none", "not_applicable"},
     "preset_conflict": {"none"},
-    "role_anchor": {"pass"},
-    "mixin_anchor": {"pass"},
-    "body_coverage_guard": {"pass"},
+    "role_anchor": {"pass", "not_applicable"},
+    "mixin_anchor": {"pass", "not_applicable"},
+    "body_coverage_guard": {"pass", "not_applicable"},
     "render_modality": {"pass"},
     "framing_constraint": {"pass"},
-    "body_emphasis_survived": {"no"},
+    "body_emphasis_survived": {"no", "not_applicable"},
 }
 
 
@@ -1086,6 +1088,8 @@ def summarize_visual_review(path: Path) -> JsonDict:
         contract_failures.append({"check": "cases", "reason": "at least one reviewed render is required"})
     field_summaries: JsonDict = {}
     failed_cases: List[JsonDict] = []
+    review_focus_result_count = 0
+    failed_review_focus_results: List[JsonDict] = []
     for field in VISUAL_REVIEW_FIELDS:
         counts: Counter[str] = Counter(str(case.get(field, "missing") or "missing") for case in cases)
         pass_count = sum(counts.get(value, 0) for value in VISUAL_REVIEW_PASS_VALUES[field])
@@ -1115,6 +1119,76 @@ def summarize_visual_review(path: Path) -> JsonDict:
                         "allowed": sorted(VISUAL_REVIEW_ENUMS[field]),
                     }
                 )
+        not_applicable_fields = [
+            field for field in VISUAL_REVIEW_FIELDS if case.get(field) == "not_applicable"
+        ]
+        if not_applicable_fields and not str(case.get("not_applicable_reason") or "").strip():
+            contract_failures.append(
+                {
+                    "check": "not_applicable_reason",
+                    "case_index": case_index,
+                    "fields": not_applicable_fields,
+                    "reason": "not_applicable values require a non-empty case-level reason",
+                }
+            )
+        case_focus_failed = False
+        focus_results = case.get("review_focus_results")
+        if focus_results is not None:
+            if not isinstance(focus_results, list) or not focus_results:
+                contract_failures.append(
+                    {
+                        "check": "review_focus_results",
+                        "case_index": case_index,
+                        "reason": "review_focus_results must be a non-empty list when supplied",
+                    }
+                )
+            else:
+                for focus_index, focus_result in enumerate(focus_results):
+                    if not isinstance(focus_result, dict):
+                        contract_failures.append(
+                            {
+                                "check": "review_focus_result",
+                                "case_index": case_index,
+                                "focus_index": focus_index,
+                                "reason": "review focus result must be an object",
+                            }
+                        )
+                        continue
+                    review_focus_result_count += 1
+                    missing_focus_fields = [
+                        field
+                        for field in ("focus", "outcome", "evidence")
+                        if not str(focus_result.get(field) or "").strip()
+                    ]
+                    if missing_focus_fields:
+                        contract_failures.append(
+                            {
+                                "check": "review_focus_result_fields",
+                                "case_index": case_index,
+                                "focus_index": focus_index,
+                                "missing": missing_focus_fields,
+                            }
+                        )
+                    outcome = str(focus_result.get("outcome") or "")
+                    if outcome and outcome not in {"pass", "fail"}:
+                        contract_failures.append(
+                            {
+                                "check": "review_focus_result_enum",
+                                "case_index": case_index,
+                                "focus_index": focus_index,
+                                "value": outcome,
+                                "allowed": ["fail", "pass"],
+                            }
+                        )
+                    if outcome == "fail":
+                        case_focus_failed = True
+                        failed_review_focus_results.append(
+                            {
+                                "case": case.get("case") or case.get("concept"),
+                                "focus": focus_result.get("focus"),
+                                "evidence": focus_result.get("evidence"),
+                            }
+                        )
         failures: List[str] = []
         if case.get("dual_read") == "fail":
             failures.append("dual_read")
@@ -1132,6 +1206,8 @@ def summarize_visual_review(path: Path) -> JsonDict:
             failures.append("framing_constraint")
         if case.get("body_emphasis_survived") == "yes":
             failures.append("body_emphasis_survived")
+        if case_focus_failed:
+            failures.append("review_focus")
         if case.get("role_anchor") == "fail":
             failures.append("role_anchor")
         if case.get("mixin_anchor") == "fail":
@@ -1147,6 +1223,9 @@ def summarize_visual_review(path: Path) -> JsonDict:
             "failed_cases": failed_cases,
             "contract_failure_count": len(contract_failures),
             "contract_failures": contract_failures,
+            "review_focus_result_count": review_focus_result_count,
+            "failed_review_focus_result_count": len(failed_review_focus_results),
+            "failed_review_focus_results": failed_review_focus_results,
             "passed": not failed_cases and not contract_failures,
         }
     }
@@ -2475,6 +2554,208 @@ def evaluate_generalization_check(
     }
 
 
+RETRIEVAL_HOLDOUT_CASE_KEYS = {
+    "id",
+    "intent",
+    "allowed_selected_presets",
+    "forbidden_selected_presets",
+    "expected_profile",
+    "expected_intent_domains",
+    "no_people",
+}
+
+
+def load_retrieval_holdout_cases(path: Path) -> List[JsonDict]:
+    cases: List[JsonDict] = []
+    seen_ids: Set[str] = set()
+    for line_number, raw in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1):
+        line = raw.strip()
+        if not line or line.startswith("#"):
+            continue
+        payload = json.loads(line)
+        if not isinstance(payload, dict):
+            raise ValueError(f"{path}:{line_number}: each retrieval case must be an object")
+        unknown = set(payload) - RETRIEVAL_HOLDOUT_CASE_KEYS
+        if unknown:
+            raise ValueError(f"{path}:{line_number}: unknown retrieval case fields {sorted(unknown)}")
+        case_id = str(payload.get("id") or "").strip()
+        intent = str(payload.get("intent") or "").strip()
+        allowed = payload.get("allowed_selected_presets")
+        if not case_id or not intent:
+            raise ValueError(f"{path}:{line_number}: id and intent are required")
+        if case_id in seen_ids:
+            raise ValueError(f"{path}:{line_number}: duplicate case id {case_id}")
+        if not isinstance(allowed, list) or not allowed or any(not str(item).strip() for item in allowed):
+            raise ValueError(f"{path}:{line_number}: allowed_selected_presets must be a non-empty string list")
+        for key in ("forbidden_selected_presets", "expected_intent_domains"):
+            value = payload.get(key)
+            if value is not None and (
+                not isinstance(value, list) or any(not str(item).strip() for item in value)
+            ):
+                raise ValueError(f"{path}:{line_number}: {key} must be a string list")
+        if "no_people" in payload and not isinstance(payload.get("no_people"), bool):
+            raise ValueError(f"{path}:{line_number}: no_people must be a boolean")
+        seen_ids.add(case_id)
+        cases.append(payload)
+    if not cases:
+        raise ValueError(f"{path}: at least one retrieval holdout case is required")
+    return cases
+
+
+def evaluate_retrieval_holdout(
+    tags_path: Path,
+    semantic_index_path: Path,
+    cases_path: Path,
+    seed: int,
+    limit: int = 0,
+) -> JsonDict:
+    cases = load_retrieval_holdout_cases(cases_path)
+    if limit:
+        cases = cases[:limit]
+    rows: List[JsonDict] = []
+    for index, case in enumerate(cases):
+        cmd = [
+            sys.executable,
+            str(WRAPPER_PATH),
+            "--tags",
+            str(tags_path),
+            "--semantic-index",
+            str(semantic_index_path),
+            "--selection-mode",
+            "semantic",
+            "--novelty",
+            "low",
+            "--semantic-profile",
+            "conservative",
+            "--intent",
+            str(case["intent"]),
+            "--seed",
+            str(seed + index),
+            "--emit-candidate-pack",
+        ]
+        result = subprocess.run(cmd, cwd=PROJECT_ROOT, text=True, capture_output=True, check=False)
+        failures: List[str] = []
+        row: JsonDict = {"id": case.get("id"), "returncode": result.returncode}
+        if result.returncode != 0:
+            row.update({"failures": ["wrapper_failed"], "passed": False, "stderr": result.stderr.strip()})
+            rows.append(row)
+            continue
+        try:
+            payload = json.loads(result.stdout)
+            if not isinstance(payload, list) or len(payload) != 1 or not isinstance(payload[0], dict):
+                raise ValueError("expected one candidate pack")
+            pack = payload[0]
+        except Exception as exc:
+            row.update({"failures": ["invalid_pack"], "passed": False, "error": str(exc)})
+            rows.append(row)
+            continue
+
+        selected_preset = str((pack.get("provenance") or {}).get("preset_id") or "")
+        allowed = {str(item) for item in case.get("allowed_selected_presets") or []}
+        forbidden = {str(item) for item in case.get("forbidden_selected_presets") or []}
+        if selected_preset not in allowed:
+            failures.append("selected_preset_not_allowed")
+        if selected_preset in forbidden:
+            failures.append("forbidden_preset_selected")
+        profile_id = str((pack.get("quality_profile") or {}).get("profile_id") or "")
+        if case.get("expected_profile") and profile_id != str(case["expected_profile"]):
+            failures.append("quality_profile")
+        actual_domains = {
+            str(item)
+            for item in ((pack.get("coverage") or {}).get("intent_constraints") or {}).get("domains", [])
+        }
+        expected_domains = {str(item) for item in case.get("expected_intent_domains") or []}
+        if not expected_domains.issubset(actual_domains):
+            failures.append("intent_domains")
+        if case.get("no_people"):
+            selected_rows = selected_candidate_rows(pack)
+            if any(candidate_reads_as_human(candidate) for candidate in selected_rows):
+                failures.append("person_candidate_selected")
+            selected_slots = {str(candidate.get("slot") or "") for candidate in selected_rows}
+            if selected_slots & PERSON_ONLY_CANDIDATE_SLOTS:
+                failures.append("person_only_slot_selected")
+
+        row.update(
+            {
+                "selected_preset": selected_preset,
+                "allowed_selected_presets": sorted(allowed),
+                "profile_id": profile_id,
+                "intent_domains": sorted(actual_domains),
+                "failures": failures,
+                "passed": not failures,
+            }
+        )
+        rows.append(row)
+    return {
+        "cases_path": str(cases_path),
+        "selection_mode": "semantic",
+        "semantic_profile": "conservative",
+        "novelty": "low",
+        "preset_pinned": False,
+        "case_count": len(rows),
+        "failed_case_count": sum(1 for row in rows if not row.get("passed")),
+        "results": rows,
+    }
+
+
+def compact_quality_gate_summary(summary: JsonDict) -> JsonDict:
+    compact: JsonDict = {"quality_gate": dict(summary.get("quality_gate") or {}), "checks": {}}
+    golden_rows = []
+    for row in summary.get("golden_modes") or []:
+        if not isinstance(row, dict):
+            continue
+        golden_rows.append(
+            {
+                key: row.get(key)
+                for key in ("mode", "average_coverage", "forbidden_case_count", "quality_fail_count")
+                if key in row
+            }
+        )
+    compact["checks"]["golden_modes"] = golden_rows
+    for name, result in summary.items():
+        if name in {"quality_gate", "golden_modes", "visual_review"} or not isinstance(result, dict):
+            continue
+        wanted = (
+            "case_count",
+            "failed_case_count",
+            "failed_run_count",
+            "legacy_failed_run_count",
+            "blacklisted_case_count",
+            "violation_count",
+            "soft_promotion_ready",
+            "passed",
+        )
+        compact["checks"][name] = {key: result.get(key) for key in wanted if key in result}
+    if isinstance(summary.get("visual_review"), dict):
+        compact["checks"]["visual_review"] = {
+            key: summary["visual_review"].get(key)
+            for key in (
+                "case_count",
+                "failed_case_count",
+                "contract_failure_count",
+                "review_focus_result_count",
+                "failed_review_focus_result_count",
+                "passed",
+            )
+            if key in summary["visual_review"]
+        }
+    return compact
+
+
+def emit_evaluation_summary(
+    summary: JsonDict,
+    *,
+    summary_only: bool = False,
+    report_json: str | Path | None = None,
+) -> None:
+    if report_json:
+        report_path = Path(report_json)
+        report_path.parent.mkdir(parents=True, exist_ok=True)
+        report_path.write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    output = compact_quality_gate_summary(summary) if summary_only else summary
+    print(json.dumps(output, ensure_ascii=False, indent=2))
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Evaluate semantic prompt selection against golden intents.")
     parser.add_argument("--tags", default=DEFAULT_TAGS)
@@ -2494,10 +2775,14 @@ def main() -> int:
     parser.add_argument("--holdout-cases", default=DEFAULT_GENERALIZATION_HOLDOUT_CASES, help="Path to frozen JSONL cases for --holdout-check and the quality gate.")
     parser.add_argument("--domain-holdout-v2-check", action="store_true", help="Run the frozen v2 rule-mode holdout for science, mobility, and climate domain packs.")
     parser.add_argument("--domain-holdout-v2-cases", default=DEFAULT_DOMAIN_HOLDOUT_V2_CASES, help="Path to the frozen domain holdout v2 cases for the standalone check and quality gate.")
+    parser.add_argument("--retrieval-holdout-check", action="store_true", help="Run preset-free semantic retrieval holdout cases against the real index.")
+    parser.add_argument("--retrieval-holdout-cases", default=DEFAULT_RETRIEVAL_HOLDOUT_V3_CASES, help="Path to preset-free semantic retrieval holdout v3 cases.")
     parser.add_argument("--quality-gate", action="store_true", help="Run the real embedding quality gate for semantic concept benchmarks and regression checks.")
     parser.add_argument("--acceptance-gate", action="store_true", help="Run the full quality gate and require a passing --visual-review artifact.")
     parser.add_argument("--quality-runs", type=int, default=2, help="Number of seeds per concept benchmark case for --quality-gate.")
     parser.add_argument("--quality-require-soft", action="store_true", help="Make soft concept-mode promotion readiness a hard --quality-gate failure.")
+    parser.add_argument("--summary-only", action="store_true", help="Print a compact quality-gate summary instead of per-case detail.")
+    parser.add_argument("--report-json", default=None, help="Write the complete quality-gate report JSON to this path even with --summary-only.")
     parser.add_argument("--visual-review", default=None, help="Summarize a manual visual review JSON without embedding/API calls.")
     parser.add_argument("--contradiction-check", action="store_true", help="Generate rule-mode prompts across presets and report violations of declared coherence_rules (no embedding API needed).")
     parser.add_argument("--contradiction-runs", type=int, default=3, help="Number of seeds per preset for --contradiction-check.")
@@ -2520,7 +2805,7 @@ def main() -> int:
     tags_path = Path(args.tags)
     semantic_index_path = Path(args.semantic_index)
     if args.check_index:
-        semantic_index = json.loads(semantic_index_path.read_text(encoding="utf-8"))
+        semantic_index = load_semantic_index_payload(semantic_index_path)
         validate_semantic_index_metadata(
             semantic_index,
             data,
@@ -2570,6 +2855,7 @@ def main() -> int:
                     "generalization_cases": len(load_generalization_cases(Path(args.generalization_cases))),
                     "holdout_cases": len(load_generalization_cases(Path(args.holdout_cases))),
                     "domain_holdout_v2_cases": len(load_generalization_cases(Path(args.domain_holdout_v2_cases))),
+                    "retrieval_holdout_v3_cases": len(load_retrieval_holdout_cases(Path(args.retrieval_holdout_cases))),
                 },
                 indent=2,
             )
@@ -2578,7 +2864,7 @@ def main() -> int:
 
     import prompt_generator as generator_module
 
-    if args.generalization_check or args.holdout_check or args.domain_holdout_v2_check:
+    if args.generalization_check or args.holdout_check or args.domain_holdout_v2_check or args.retrieval_holdout_check:
         summary: JsonDict = {}
         if args.generalization_check:
             summary["generalization_check"] = evaluate_generalization_check(
@@ -2601,6 +2887,14 @@ def main() -> int:
                 args.seed,
                 args.limit,
             )
+        if args.retrieval_holdout_check:
+            summary["retrieval_holdout_v3_check"] = evaluate_retrieval_holdout(
+                tags_path,
+                semantic_index_path,
+                Path(args.retrieval_holdout_cases),
+                args.seed,
+                args.limit,
+            )
         print(json.dumps(summary, ensure_ascii=False, indent=2))
         return 0 if all(result["failed_case_count"] == 0 for result in summary.values()) else 12
 
@@ -2612,7 +2906,7 @@ def main() -> int:
         print("The quality gate requires GEMINI_API_KEY or GOOGLE_API_KEY in the environment or project .env.", file=sys.stderr)
         return 8
 
-    semantic_index = build_mock_index(data, generator_module) if args.mock_embeddings else json.loads(semantic_index_path.read_text(encoding="utf-8"))
+    semantic_index = build_mock_index(data, generator_module) if args.mock_embeddings else load_semantic_index_payload(semantic_index_path)
     original_embed_texts = generator_module.embed_texts_with_gemini
     if args.mock_embeddings:
         generator_module.embed_texts_with_gemini = lambda texts, dimensions=DEFAULT_SEMANTIC_DIMENSIONS, **kwargs: fake_vectors(texts, dimensions=dimensions)
@@ -2741,6 +3035,13 @@ def main() -> int:
                     args.seed,
                     args.limit,
                 ),
+                "retrieval_holdout_v3_check": evaluate_retrieval_holdout(
+                    tags_path,
+                    semantic_index_path,
+                    Path(args.retrieval_holdout_cases),
+                    args.seed,
+                    args.limit,
+                ),
                 "preset_guards": evaluate_preset_guards(data, MULTI_AXIS_PRESET_GUARDS, args.seed, semantic_index, gemini_api_key),
                 "multi_axis_coverage": evaluate_multi_axis_coverage(data, MULTI_AXIS_COVERAGE_CASES, args.seed, semantic_index, gemini_api_key),
             }
@@ -2764,6 +3065,7 @@ def main() -> int:
                 or summary["generalization_check"]["failed_case_count"] > 0
                 or summary["holdout_check"]["failed_case_count"] > 0
                 or summary["domain_holdout_v2_check"]["failed_case_count"] > 0
+                or summary["retrieval_holdout_v3_check"]["failed_case_count"] > 0
                 or summary["preset_guards"]["blacklisted_case_count"] > 0
                 or summary["multi_axis_coverage"]["failed_case_count"] > 0
                 or (args.quality_require_soft and not soft_ready)
@@ -2773,7 +3075,11 @@ def main() -> int:
             summary["quality_gate"]["golden_passed"] = not golden_failed
             summary["quality_gate"]["soft_promotion_ready"] = soft_ready
             summary["quality_gate"]["passed"] = not failed
-            print(json.dumps(summary, ensure_ascii=False, indent=2))
+            emit_evaluation_summary(
+                summary,
+                summary_only=args.summary_only,
+                report_json=args.report_json,
+            )
             if failed:
                 print("real semantic quality gate failed", file=sys.stderr)
                 return 9

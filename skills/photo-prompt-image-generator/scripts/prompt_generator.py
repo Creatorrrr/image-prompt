@@ -843,6 +843,9 @@ VALID_PRESET_DOMAINS = {
     "science_inspection",
     "mobility_logistics",
     "climate_adaptation",
+    "biodiversity_monitoring",
+    "agriculture_food_systems",
+    "circular_materials",
     "surreal",
     "adult",
 }
@@ -934,8 +937,8 @@ DEFAULT_SLOT_APPLICABILITY: JsonDict = {
             "require_domain_match": True,
         },
         "capture_context": {
-            "subject_categories": ["human", "object", "environment"],
-            "allow_domains": ["portrait", "fashion", "beauty", "social", "adult", "science_inspection", "mobility_logistics", "climate_adaptation"],
+            "subject_categories": ["human", "animal", "food", "object", "plant", "environment"],
+            "allow_domains": ["portrait", "fashion", "beauty", "social", "adult", "science_inspection", "mobility_logistics", "climate_adaptation", "biodiversity_monitoring", "agriculture_food_systems", "circular_materials"],
             "deny_domains": ["documentary", "craft", "wildlife", "product", "jewelry", "food", "architecture"],
             "require_domain_match": True,
         },
@@ -1340,9 +1343,12 @@ def infer_preset_domains(preset: JsonDict) -> Set[str]:
         "street": ("street", "bus_stop", "subway", "alley", "pojangmacha"),
         "urban": ("urban", "city", "neon", "hotel_corridor", "laundromat", "parking"),
         "architecture": ("architecture", "real_estate", "interior", "brutalist"),
-        "science_inspection": ("science", "scientific", "laboratory", "measurement", "inspection", "sensor survey"),
-        "mobility_logistics": ("mobility", "logistics", "warehouse flow", "transit maintenance", "parcel sorting"),
-        "climate_adaptation": ("climate adaptation", "resilience", "heat monitoring", "air quality", "coastal erosion"),
+        "science_inspection": ("scientific inspection", "technical measurement", "inspection record", "sensor survey", "measurement record"),
+        "mobility_logistics": ("mobility logistics", "warehouse flow", "transit maintenance", "parcel sorting", "freight operations"),
+        "climate_adaptation": ("climate adaptation", "resilience monitoring", "heat monitoring", "air quality record", "coastal erosion monitoring"),
+        "biodiversity_monitoring": ("biodiversity monitoring", "species monitoring", "camera trap survey", "quadrat survey", "ecological monitoring"),
+        "agriculture_food_systems": ("agriculture food systems", "harvest grading record", "fermentation batch monitoring", "post-harvest traceability"),
+        "circular_materials": ("circular materials", "repair diagnostic record", "materials recovery sorting", "reuse inspection", "material flow audit"),
         "surreal": ("surreal", "fantasy", "impossible", "dream"),
         "adult": ("adult", "boudoir", "fetish", "lingerie"),
     }
@@ -1419,7 +1425,12 @@ def make_generation_contract(
         "soft_anchor_policy": soft_anchor_policy,
         "soft_anchor_repair": {"status": "not_evaluated", "repair_attempts": []},
     }
-    contract["intent_constraints"] = resolve_request_intent_constraints(data, None, contract)
+    semantic_intent = str(contract.get("semantic_intent") or "").strip()
+    contract["intent_constraints"] = resolve_request_intent_constraints(
+        data,
+        {"intent": semantic_intent} if semantic_intent else None,
+        contract,
+    )
     return contract
 
 
@@ -1491,7 +1502,12 @@ def refresh_generation_contract(
     else:
         contract.setdefault("concept_scene_variants", [])
     contract.setdefault("candidate_pool_trace", {})
-    contract["intent_constraints"] = resolve_request_intent_constraints(data, None, contract)
+    semantic_intent = str(contract.get("semantic_intent") or "").strip()
+    contract["intent_constraints"] = resolve_request_intent_constraints(
+        data,
+        {"intent": semantic_intent} if semantic_intent else None,
+        contract,
+    )
     if surreal_enabled is not None:
         contract["surreal_enabled"] = bool(surreal_enabled)
     if any(slot in picked for slot in SURREAL_LAYER_SLOTS):
@@ -1635,6 +1651,25 @@ def entry_block_reason(
     if isinstance(intent_constraints, dict) and intent_constraints.get("no_people"):
         if "human" in (entry_kinds(item) | entry_tags(item)):
             return "explicit_no_people"
+    requested_categories = {
+        str(value)
+        for value in normalize_list(intent_constraints.get("subject_categories"))
+        if str(value) in VALID_SUBJECT_CATEGORIES
+    } if isinstance(intent_constraints, dict) else set()
+    typed_nonhuman_person_slots = {
+        "appearance_type", "body_framing", "body_orientation", "body_pose", "brow_style",
+        "costume_style", "eye_detail", "eye_makeup_line", "facial_hair", "footwear",
+        "gaze_engagement", "hair_color", "hair_style", "hand_pose", "lip_finish",
+        "makeup_style", "person_origin", "silhouette_proportion", "skin_finish", "wardrobe_style",
+    }
+    if (
+        requested_categories
+        and "human" not in requested_categories
+        and str(generation_contract.get("subject_category") or "generic") != "human"
+        and slot in typed_nonhuman_person_slots
+    ):
+        if "human" in (entry_kinds(item) | entry_tags(item)):
+            return "typed_nonhuman_request"
     if not generation_contract.get("adult_allowed"):
         tokens = adult_semantic_tokens(item)
         if tokens & {"adult", "fetish", "suggestive"}:
@@ -3295,6 +3330,29 @@ STRICT_TAG_FACET_SOURCE_DOMAINS = {
     "science_inspection",
     "mobility_logistics",
     "climate_adaptation",
+    "biodiversity_monitoring",
+    "agriculture_food_systems",
+    "circular_materials",
+}
+
+# These packs are deliberately broad in subject matter but operationally
+# specific. Keep them out of unrelated random/concept preset pools unless the
+# user's semantic intent names the domain; an explicit ``--preset`` continues
+# to bypass this automatic-discovery scope.
+INTENT_SCOPED_PRESET_DOMAINS = {
+    "biodiversity_monitoring",
+    "agriculture_food_systems",
+    "circular_materials",
+}
+
+# Slot entries in the new packs already carry one of these authored tags. The
+# mapping prevents a generic overlap such as ``food`` or ``documentary`` from
+# making a fermentation batch or camera-trap record eligible in a legacy
+# portrait, while preserving direct preset filters and semantic discovery.
+INTENT_SCOPED_ENTRY_DOMAIN_TAGS = {
+    "biodiversity": "biodiversity_monitoring",
+    "agriculture_food_systems": "agriculture_food_systems",
+    "circular_materials": "circular_materials",
 }
 
 
@@ -3498,6 +3556,12 @@ def candidate_pack_quality_profile_id(data: JsonDict, preset: JsonDict, facets: 
         return "mobility_logistics"
     if "climate_adaptation" in domains:
         return "climate_adaptation"
+    if "biodiversity_monitoring" in domains:
+        return "biodiversity_monitoring"
+    if "agriculture_food_systems" in domains:
+        return "agriculture_food_systems"
+    if "circular_materials" in domains:
+        return "circular_materials"
     if "food" in subject_kinds or "food" in domains:
         return "food"
     if "architecture" in domains or "real_estate" in domains or any(term in blob for term in ("architecture", "interior", "building")):
@@ -3600,6 +3664,20 @@ def candidate_pack_quality_facet_hits(quality_profile: JsonDict, facet_match: An
     return hits
 
 
+def candidate_pack_quality_profile_matches(quality_profile: JsonDict, profile_match: Any) -> bool:
+    """Return whether an optional quality-layer profile guard applies.
+
+    Facets remain the reusable matching surface, while ``profile_match`` keeps
+    domain-specific axes and craft refinements from changing established
+    profiles that happen to share generic facets such as ``nature`` or
+    ``inspection``.
+    """
+    expected = {str(item) for item in normalize_list(profile_match) if str(item).strip()}
+    if not expected:
+        return True
+    return str(quality_profile.get("profile_id") or "") in expected
+
+
 def candidate_pack_quality_profile_from_selected(
     data: JsonDict,
     preset: JsonDict,
@@ -3668,6 +3746,8 @@ def candidate_pack_photographic_craft(
                 continue
             refinement_id = str(refinement.get("id") or "").strip()
             if not refinement_id:
+                continue
+            if not candidate_pack_quality_profile_matches(quality_profile, refinement.get("profile_match")):
                 continue
             facet_hits = candidate_pack_quality_facet_hits(quality_profile, refinement.get("facet_match"))
             if not facet_hits:
@@ -3742,6 +3822,8 @@ def candidate_pack_photographic_craft(
             continue
         strategy_id = str(strategy.get("id") or "").strip()
         if not strategy_id:
+            continue
+        if not candidate_pack_quality_profile_matches(quality_profile, strategy.get("profile_match")):
             continue
         emphasize = [
             str(dimension_id)
@@ -3927,6 +4009,8 @@ def candidate_pack_photographic_integration(
     }
     for axis in axes:
         axis_id = str(axis.get("id") or "")
+        if not candidate_pack_quality_profile_matches(quality_profile, axis.get("profile_match")):
+            continue
         if axis_id == "person_presence" and intent_explicitly_excludes_people(source_corpus):
             continue
         facet_hits = candidate_pack_quality_facet_hits(quality_profile, axis.get("facet_match"))
@@ -4729,6 +4813,72 @@ def build_semantic_index_payload(
     }
 
 
+SEMANTIC_INDEX_SHARDED_FORMAT = "sharded-json-v1"
+
+
+def load_semantic_index_payload(path: str | Path) -> JsonDict:
+    """Load either a legacy monolith or a sharded index with identical entry order.
+
+    Sharding is a storage concern only. Callers continue to receive the same
+    materialized ``entries`` mapping used by scoring, tie-breaking, and audit
+    code, so a storage migration cannot alter retrieval behavior.
+    """
+    index_path = Path(path)
+    payload = json.loads(index_path.read_text(encoding="utf-8"))
+    storage = payload.get("storage") if isinstance(payload.get("storage"), dict) else {}
+    if storage.get("format") != SEMANTIC_INDEX_SHARDED_FORMAT:
+        return payload
+
+    entry_order = payload.get("entry_order")
+    shard_rows = payload.get("shards")
+    if not isinstance(entry_order, list) or any(not isinstance(key, str) for key in entry_order):
+        raise ValueError(f"Invalid sharded semantic index entry_order: {index_path}")
+    if len(entry_order) != len(set(entry_order)):
+        raise ValueError(f"Duplicate keys in sharded semantic index entry_order: {index_path}")
+    if not isinstance(shard_rows, list) or not shard_rows:
+        raise ValueError(f"Invalid sharded semantic index shard list: {index_path}")
+
+    unordered_entries: JsonDict = {}
+    root = index_path.parent.resolve()
+    for shard_row in shard_rows:
+        if not isinstance(shard_row, dict) or not str(shard_row.get("path") or "").strip():
+            raise ValueError(f"Invalid shard descriptor in semantic index: {index_path}")
+        shard_path = (index_path.parent / str(shard_row["path"])).resolve()
+        if root not in shard_path.parents:
+            raise ValueError(f"Semantic index shard escapes index directory: {shard_path}")
+        raw = shard_path.read_bytes()
+        expected_hash = str(shard_row.get("sha256") or "")
+        if expected_hash and hashlib.sha256(raw).hexdigest() != expected_hash:
+            raise ValueError(f"Semantic index shard checksum mismatch: {shard_path}")
+        shard_payload = json.loads(raw.decode("utf-8"))
+        shard_entries = shard_payload.get("entries") if isinstance(shard_payload, dict) else None
+        if not isinstance(shard_entries, dict):
+            raise ValueError(f"Semantic index shard has no entries object: {shard_path}")
+        expected_count = shard_row.get("entry_count")
+        if expected_count is not None and int(expected_count) != len(shard_entries):
+            raise ValueError(f"Semantic index shard entry count mismatch: {shard_path}")
+        duplicate_keys = set(unordered_entries) & set(shard_entries)
+        if duplicate_keys:
+            raise ValueError(f"Duplicate semantic index entry across shards: {sorted(duplicate_keys)[0]}")
+        unordered_entries.update(shard_entries)
+
+    ordered_keys = set(entry_order)
+    if ordered_keys != set(unordered_entries):
+        missing = sorted(ordered_keys - set(unordered_entries))
+        unexpected = sorted(set(unordered_entries) - ordered_keys)
+        raise ValueError(
+            "Sharded semantic index manifest does not match shard entries "
+            f"(missing={missing[:3]}, unexpected={unexpected[:3]})."
+        )
+    expected_total = payload.get("entry_count")
+    if expected_total is not None and int(expected_total) != len(entry_order):
+        raise ValueError(f"Semantic index manifest entry count mismatch: {index_path}")
+
+    materialized = dict(payload)
+    materialized["entries"] = {key: unordered_entries[key] for key in entry_order}
+    return materialized
+
+
 def validate_semantic_index_metadata(
     payload: JsonDict,
     data: JsonDict,
@@ -4782,7 +4932,7 @@ def load_semantic_index(
         p = Path(path)
         if not p.exists():
             raise FileNotFoundError(f"Semantic index not found: {p}")
-        payload = json.loads(p.read_text(encoding="utf-8"))
+        payload = load_semantic_index_payload(p)
     validate_semantic_index_metadata(payload, data, provider, model, dimensions)
     return payload
 
@@ -6126,10 +6276,21 @@ def make_semantic_context(
         "semantic_policy": semantic_policy,
         "creativity_overrides": creativity_overrides,
     }
+    request_constraints = (
+        resolve_request_intent_constraints(data, {"intent": intent}, {})
+        if intent_source == "user"
+        else {"no_people": False, "subject_categories": [], "domains": [], "matched": [], "source_text_count": 0}
+    )
     return {
         "selection_mode": selection_mode,
         "intent": intent,
         "intent_source": intent_source,
+        "intent_constraints": request_constraints,
+        "preset_domain_map": {
+            str(preset.get("id")): sorted(preset_domains(preset, data))
+            for preset in data.get("presets", [])
+            if isinstance(preset, dict) and preset.get("id")
+        },
         "semantic_defaulted": semantic_defaulted,
         "novelty": novelty,
         "filter_strictness": resolved_filter,
@@ -6687,6 +6848,15 @@ def compatible_preset_with_semantic_hard_guards(
     tokens = facet_tokens(preset)
     if "safety_tier:adult_only" in tokens and not semantic_intent_allows_adult_context(context):
         return False, "adult_only"
+    requested_typed_domains = (
+        set(normalize_list((context.get("intent_constraints") or {}).get("domains")))
+        & STRICT_TAG_FACET_SOURCE_DOMAINS
+    )
+    if requested_typed_domains:
+        domain_map = context.get("preset_domain_map") if isinstance(context.get("preset_domain_map"), dict) else {}
+        candidate_domains = set(normalize_list(domain_map.get(str(preset.get("id")))))
+        if not (requested_typed_domains & candidate_domains):
+            return False, "typed_intent_domain"
     if not relax_family_policy:
         for family in sorted(context_axis_families(context)):
             preset_policy = family_preset_policy(context, family)
@@ -7038,6 +7208,29 @@ def soft_preset_affinity_status(preset: JsonDict, policy: Optional[JsonDict], da
     }
 
 
+def preset_matches_automatic_intent_scope(
+    preset: JsonDict,
+    data: JsonDict,
+    semantic_context: Optional[JsonDict],
+) -> bool:
+    """Keep on-demand typed packs out of unrelated automatic selection.
+
+    Direct preset selection is handled before this predicate. Automatic
+    semantic discovery admits the pack only when the user-authored intent was
+    routed to the same typed domain.
+    """
+    scoped_domains = preset_domains(preset, data) & INTENT_SCOPED_PRESET_DOMAINS
+    if not scoped_domains:
+        return True
+    if not semantic_context or semantic_context.get("intent_source") != "user":
+        return False
+    requested_domains = {
+        str(value)
+        for value in normalize_list((semantic_context.get("intent_constraints") or {}).get("domains"))
+    }
+    return bool(scoped_domains & requested_domains)
+
+
 def choose_preset(
     data: JsonDict,
     rng: random.Random,
@@ -7045,19 +7238,27 @@ def choose_preset(
     semantic_context: Optional[JsonDict] = None,
     soft_anchor_spec: Optional[JsonDict] = None,
 ) -> JsonDict:
-    presets = data.get("presets", [])
-    if not presets:
+    catalog_presets = data.get("presets", [])
+    if not catalog_presets:
         raise ValueError("No presets found in JSON.")
 
     if preset_id:
-        for p in presets:
+        for p in catalog_presets:
             if p.get("id") == preset_id:
                 return p
         virtual = materialize_virtual_preset(data, preset_id)
         if virtual:
             return virtual
-        valid = ", ".join(p.get("id", "?") for p in presets)
+        valid = ", ".join(p.get("id", "?") for p in catalog_presets)
         raise ValueError(f"Unknown preset '{preset_id}'. Available presets: {valid}")
+
+    presets = [
+        preset
+        for preset in catalog_presets
+        if preset_matches_automatic_intent_scope(preset, data, semantic_context)
+    ]
+    if not presets:
+        raise ValueError("No presets remain after applying automatic intent scope.")
 
     if semantic_context:
         soft_policy = normalize_soft_anchor_spec(soft_anchor_spec)
@@ -10648,6 +10849,19 @@ def compatible_with_slot_context(
     return True
 
 
+def entry_matches_preset_domain_scope(item: Entry, preset: JsonDict, data: JsonDict) -> bool:
+    """Restrict typed-pack entries to presets from their authored domain."""
+    item_tokens = entry_tags(item) | entry_kinds(item)
+    required_domains = {
+        domain
+        for marker, domain in INTENT_SCOPED_ENTRY_DOMAIN_TAGS.items()
+        if marker in item_tokens
+    }
+    if not required_domains:
+        return True
+    return bool(required_domains & preset_domains(preset, data))
+
+
 def compatible_with_picked(
     pool: Sequence[Entry],
     picked: Dict[str, Entry],
@@ -10732,7 +10946,7 @@ def choose_slot(
     if slot not in slots:
         raise ValueError(f"Slot '{slot}' is referenced but not defined in JSON.")
 
-    full_pool = list(slots[slot])
+    catalog_pool = list(slots[slot])
     filters = preset.get("filters", {}).get(slot)
     preset_required = slot in set(preset.get("required_slots", []))
 
@@ -10740,12 +10954,18 @@ def choose_slot(
     forced = bool(forced_ids)
     if forced_ids:
         ids = set(forced_ids)
-        forced_pool = [x for x in full_pool if x.get("id") in ids]
+        forced_pool = [x for x in catalog_pool if x.get("id") in ids]
         if not forced_pool:
-            valid = ", ".join(x.get("id", "?") for x in full_pool[:30])
+            valid = ", ".join(x.get("id", "?") for x in catalog_pool[:30])
             raise ValueError(f"Unknown id for slot '{slot}': {forced_ids}. Example valid ids: {valid}")
+        full_pool = catalog_pool
         pool = forced_pool
     else:
+        full_pool = [
+            item
+            for item in catalog_pool
+            if entry_matches_preset_domain_scope(item, preset, data)
+        ]
         pool = list(full_pool)
 
     soft_policy = (generation_contract or {}).get("soft_anchor_policy")
@@ -10862,7 +11082,28 @@ def choose_slot(
             )
             return None
 
-    if not semantic_context or forced or semantic_context.get("filter_strictness") == "hard":
+    typed_record_filter_contract = bool(
+        preset_domains(preset, data) & INTENT_SCOPED_PRESET_DOMAINS
+    )
+    semantic_hard_filter_contract = bool(
+        semantic_context
+        and not forced
+        and (
+            semantic_context.get("filter_strictness") == "hard"
+            or typed_record_filter_contract
+        )
+    )
+    if semantic_hard_filter_contract:
+        # Semantic steering may prune every authored filter id before this
+        # stage. A hard contract must recover from the original domain-scoped
+        # pool, and every later fallback must stay inside that recovered set.
+        filtered = apply_filter(pool, filters)
+        if not filtered:
+            filtered = apply_filter(full_pool, filters)
+        if filtered:
+            pool = filtered
+            full_pool = list(filtered)
+    elif not semantic_context or forced:
         filtered = apply_filter(pool, filters)
         if filtered:
             pool = filtered
@@ -11013,6 +11254,11 @@ def soft_anchor_repair_candidates(
     candidate_picked = dict(picked)
     candidate_picked.pop(slot, None)
     candidates = [item for item in data["slots"][slot] if str(item.get("id")) in ids]
+    candidates = [
+        item
+        for item in candidates
+        if entry_matches_preset_domain_scope(item, preset, data)
+    ]
     candidates = [item for item in candidates if not entry_block_reason(item, slot, generation_contract, forced=False)]
     candidates = [
         item
@@ -12819,6 +13065,13 @@ def generate_once(
         safety_evaluation_requested=safety_evaluation_requested,
         soft_anchor_spec=soft_anchor_spec,
     )
+    if semantic_context is not None and intent_source == "user":
+        generation_contract["semantic_intent"] = str(semantic_context.get("intent") or "")
+        generation_contract["intent_constraints"] = resolve_request_intent_constraints(
+            data,
+            semantic_context,
+            generation_contract,
+        )
     expand_soft_anchor_pools(generation_contract, semantic_context, data)
     affinity_status = soft_preset_affinity_status(
         preset,

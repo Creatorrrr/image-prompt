@@ -1571,6 +1571,191 @@
       }
     },
     {
+      "id": "camera_trap_species_monitoring",
+      "ko": "카메라 트랩 종 모니터링 기록",
+      "en": "camera-trap species monitoring record",
+      "weight": 1.0,
+      "template_style": "natural",
+      "family": "biodiversity_field_record",
+      "embedding_text": "biodiversity monitoring photograph of a nocturnal wildlife passage recorded by a fixed camera trap, retaining habitat, detection-zone and reference-scale evidence",
+      "facets": {"place_type": ["nature"], "camera_register": ["surveillance", "sensor"], "mood_family": ["documentary", "operational"], "safety_tier": ["general"], "event_phase": ["active_process"], "process_stage": ["monitoring"], "capture_modality": ["surveillance", "visible_light"], "movement_type": ["locomotion"]},
+      "required_slots": ["medium", "genre", "subject", "action", "location", "lighting", "camera_type", "capture_context", "procedure_step", "composition", "lens", "focus", "quality"],
+      "optional_slots": [{"slot": "prop", "probability": 0.95}, {"slot": "weather", "probability": 0.55}, {"slot": "camera_direction", "probability": 0.65}],
+      "filters": {
+        "medium": {"ids": ["wildlife_photo", "scientific_record", "documentary_photo"]},
+        "genre": {"ids": ["wildlife", "documentary", "science"]},
+        "subject": {"ids": ["camera_trap_wildlife_passage"]},
+        "action": {"ids": ["recording_nocturnal_animal_passage"]},
+        "location": {"ids": ["woodland_wildlife_corridor", "misty_forest"]},
+        "lighting": {"ids": ["moonlight", "overcast", "blue_hour"]},
+        "camera_type": {"ids": ["machine_vision_camera", "dslr_camera", "action_camera"]},
+        "capture_context": {"ids": ["fixed_camera_trap_capture"]},
+        "procedure_step": {"ids": ["species_detection_review_step"]},
+        "composition": {"ids": ["wide_establishing", "primary_subject_hierarchy_frame", "rule_of_thirds"]},
+        "lens": {"ids": ["35mm", "50mm", "600mm_wildlife"]},
+        "focus": {"ids": ["deep_focus", "zone_focus_street"]},
+        "quality": {"ids": ["photoreal", "high_detail", "not_overdone"]},
+        "prop": {"ids": ["camera_trap_reference_marker"]},
+        "weather": {"ids": ["autumn_mist", "overcast_noon_flat_light", "cold_dry_clear_breath_visible"]},
+        "camera_direction": {"ids": ["eye_level_front", "low_ground_angle", "high_observer_angle"]}
+      }
+    },
+    {
+      "id": "coastal_benthic_quadrat_survey",
+      "ko": "연안 저서생물 방형구 조사 기록",
+      "en": "coastal benthic quadrat survey record",
+      "weight": 1.0,
+      "template_style": "natural",
+      "family": "biodiversity_field_record",
+      "embedding_text": "repeatable biodiversity survey photograph of an intertidal benthic quadrat, preserving the complete sampling boundary, substrate, organism cover, water conditions and scale reference",
+      "facets": {"place_type": ["nature"], "weather": ["underwater"], "camera_register": ["inspection"], "mood_family": ["documentary", "operational"], "safety_tier": ["general"], "event_phase": ["preparation", "active_process"], "process_stage": ["setup", "sampling", "measurement"], "capture_modality": ["underwater", "visible_light"], "weather_effect": ["surface_wetness"], "movement_type": ["static", "fluid_flow"]},
+      "required_slots": ["medium", "genre", "subject", "action", "location", "surface_material", "lighting", "camera_type", "capture_context", "procedure_step", "composition", "lens", "focus", "quality"],
+      "optional_slots": [{"slot": "prop", "probability": 0.98}, {"slot": "motion", "probability": 0.55}, {"slot": "camera_direction", "probability": 0.8}],
+      "filters": {
+        "medium": {"ids": ["scientific_record", "macro_photo", "documentary_photo"]},
+        "genre": {"ids": ["wildlife", "documentary", "science"]},
+        "subject": {"ids": ["intertidal_quadrat_biota"]},
+        "action": {"ids": ["surveying_quadrat_cover"]},
+        "location": {"ids": ["rocky_intertidal_monitoring_plot", "rocky_coast"]},
+        "surface_material": {"ids": ["wet_rock_biofilm_surface", "tidal_wet_stone_surface"]},
+        "lighting": {"ids": ["overcast", "underwater_caustics", "soft_window"]},
+        "camera_type": {"ids": ["action_camera", "inspection_macro_rig", "full_frame_mirrorless"]},
+        "capture_context": {"ids": ["underwater_quadrat_capture"]},
+        "procedure_step": {"ids": ["quadrat_sampling_step"]},
+        "composition": {"ids": ["top_down", "macro_detail", "primary_subject_hierarchy_frame"]},
+        "lens": {"ids": ["topdown_macro_60mm", "macro_100mm", "35mm"]},
+        "focus": {"ids": ["deep_focus", "macro_focus_stack"]},
+        "quality": {"ids": ["photoreal", "high_detail", "not_overdone"]},
+        "prop": {"ids": ["survey_quadrat_frame"]},
+        "motion": {"ids": ["water_surface_ripple_motion", "stable_tripod"]},
+        "camera_direction": {"ids": ["top_down_90", "high_observer_angle", "eye_level_three_quarter"]}
+      }
+    },
+    {
+      "id": "orchard_harvest_grading_record",
+      "ko": "과수원 수확물 등급 선별 기록",
+      "en": "orchard harvest grading record",
+      "weight": 1.0,
+      "template_style": "natural",
+      "family": "agriculture_traceability_record",
+      "embedding_text": "agriculture and food-systems record of an orchard harvest batch moving from incoming lot through visible quality grading to separated crate handoff",
+      "facets": {"subject_kind": ["food"], "place_type": ["agricultural", "industrial", "interior"], "camera_register": ["inspection", "professional"], "mood_family": ["documentary", "operational"], "safety_tier": ["general"], "relation_type": ["cooperative", "handoff"], "event_phase": ["active_process", "handoff"], "process_stage": ["inspection", "transfer"], "capture_modality": ["inspection", "visible_light"], "movement_type": ["mechanical_cycle"]},
+      "required_slots": ["medium", "genre", "subject", "action", "location", "surface_material", "lighting", "capture_context", "procedure_step", "composition", "lens", "focus", "quality"],
+      "optional_slots": [{"slot": "prop", "probability": 0.98}, {"slot": "weather", "probability": 0.5}, {"slot": "motion", "probability": 0.65}],
+      "filters": {
+        "medium": {"ids": ["documentary_photo", "scientific_record", "magazine_feature"]},
+        "genre": {"ids": ["food", "documentary", "technology"]},
+        "subject": {"ids": ["orchard_fruit_grading_line"]},
+        "action": {"ids": ["sorting_harvest_by_grade"]},
+        "location": {"ids": ["orchard_packhouse", "cooperative_farm_wash_station"]},
+        "surface_material": {"ids": ["fruit_bloom_skin_surface", "weathered_wood_board_surface"]},
+        "lighting": {"ids": ["soft_window", "overcast", "fluorescent"]},
+        "capture_context": {"ids": ["harvest_batch_record_capture"]},
+        "procedure_step": {"ids": ["harvest_grading_step"]},
+        "composition": {"ids": ["primary_subject_hierarchy_frame", "strong_leading_lines_vanish", "rule_of_thirds"]},
+        "lens": {"ids": ["35mm", "50mm", "macro_100mm"]},
+        "focus": {"ids": ["deep_focus", "selective_foreground_focus"]},
+        "quality": {"ids": ["photoreal", "candid_imperfect", "not_overdone"]},
+        "prop": {"ids": ["produce_grade_crate", "harvest_scale_crates_prop"]},
+        "weather": {"ids": ["humid_green_orchard_air", "overcast_noon_flat_light"]},
+        "motion": {"ids": ["conveyor_indexing_motion", "fine_adjustment_motion"]}
+      }
+    },
+    {
+      "id": "fermentation_batch_monitoring",
+      "ko": "식품 발효 배치 모니터링 기록",
+      "en": "food fermentation batch monitoring record",
+      "weight": 1.0,
+      "template_style": "natural",
+      "family": "agriculture_traceability_record",
+      "embedding_text": "food-systems batch record linking a fermentation vessel, representative hydrometer sample, material activity and monitoring stage without readable labels",
+      "facets": {"subject_kind": ["food"], "place_type": ["agricultural", "interior"], "camera_register": ["inspection", "macro"], "mood_family": ["documentary", "operational"], "safety_tier": ["general"], "event_phase": ["pause", "active_process"], "process_stage": ["sampling", "measurement", "monitoring"], "capture_modality": ["inspection", "macro"], "movement_type": ["fluid_flow"]},
+      "required_slots": ["medium", "genre", "subject", "action", "location", "surface_material", "lighting", "camera_type", "capture_context", "procedure_step", "composition", "lens", "focus", "quality"],
+      "optional_slots": [{"slot": "prop", "probability": 0.98}, {"slot": "motion", "probability": 0.55}, {"slot": "texture", "probability": 0.55}],
+      "filters": {
+        "medium": {"ids": ["documentary_photo", "scientific_record", "macro_photo"]},
+        "genre": {"ids": ["food", "documentary", "science"]},
+        "subject": {"ids": ["fermentation_vessel_batch"]},
+        "action": {"ids": ["checking_fermentation_activity"]},
+        "location": {"ids": ["small_fermentation_room", "mushroom_growing_room"]},
+        "surface_material": {"ids": ["flour_dusted_wood_surface", "tile_tabletop_surface", "frosted_glass_surface"]},
+        "lighting": {"ids": ["soft_window", "fluorescent", "lab_led"]},
+        "camera_type": {"ids": ["inspection_macro_rig", "full_frame_mirrorless", "dslr_camera"]},
+        "capture_context": {"ids": ["fermentation_batch_record_capture"]},
+        "procedure_step": {"ids": ["fermentation_monitoring_step"]},
+        "composition": {"ids": ["macro_detail", "primary_subject_hierarchy_frame", "rule_of_thirds"]},
+        "lens": {"ids": ["macro_100mm", "50mm", "topdown_macro_60mm"]},
+        "focus": {"ids": ["macro_focus_stack", "deep_focus"]},
+        "quality": {"ids": ["photoreal", "candid_imperfect", "not_overdone"]},
+        "prop": {"ids": ["hydrometer_sample_jar"]},
+        "motion": {"ids": ["water_surface_ripple_motion", "fine_adjustment_motion"]},
+        "texture": {"ids": ["clean_digital", "fine_grain", "steam_haze"]}
+      }
+    },
+    {
+      "id": "electronics_repair_diagnostic_record",
+      "ko": "전자제품 수리 진단 기록",
+      "en": "electronics repair diagnostic record",
+      "weight": 1.0,
+      "template_style": "natural",
+      "family": "circular_material_record",
+      "embedding_text": "circular-materials repair record of an open electronics board undergoing continuity diagnosis, showing the component condition, probe contact and reuse decision evidence",
+      "facets": {"subject_kind": ["object"], "place_type": ["repair", "interior"], "camera_register": ["inspection", "macro"], "mood_family": ["documentary", "operational"], "safety_tier": ["general"], "relation_type": ["instructional", "cooperative"], "event_phase": ["maintenance", "active_process"], "process_stage": ["inspection", "measurement", "intervention"], "capture_modality": ["inspection", "macro"], "movement_type": ["fine_motor"]},
+      "required_slots": ["medium", "genre", "subject", "action", "location", "surface_material", "lighting", "camera_type", "capture_context", "procedure_step", "composition", "lens", "focus", "quality"],
+      "optional_slots": [{"slot": "prop", "probability": 0.99}, {"slot": "motion", "probability": 0.55}, {"slot": "camera_direction", "probability": 0.65}],
+      "filters": {
+        "medium": {"ids": ["documentary_photo", "scientific_record", "macro_photo"]},
+        "genre": {"ids": ["technology", "documentary", "craft_still_life"]},
+        "subject": {"ids": ["open_electronics_repair_board"]},
+        "action": {"ids": ["testing_component_continuity"]},
+        "location": {"ids": ["community_repair_bench", "precision_machine_shop"]},
+        "surface_material": {"ids": ["solder_flux_repair_surface", "brushed_machined_aluminum_surface"]},
+        "lighting": {"ids": ["inspection_droplight", "soft_window", "lab_led"]},
+        "camera_type": {"ids": ["inspection_macro_rig", "full_frame_mirrorless", "dslr_camera"]},
+        "capture_context": {"ids": ["repair_log_reference_capture"]},
+        "procedure_step": {"ids": ["repair_diagnosis_step"]},
+        "composition": {"ids": ["macro_detail", "primary_subject_hierarchy_frame", "rule_of_thirds"]},
+        "lens": {"ids": ["macro_100mm", "50mm", "35mm"]},
+        "focus": {"ids": ["macro_focus_stack", "deep_focus"]},
+        "quality": {"ids": ["photoreal", "high_detail", "not_overdone"]},
+        "prop": {"ids": ["multimeter_probe_pair"]},
+        "motion": {"ids": ["fine_adjustment_motion", "stable_tripod"]},
+        "camera_direction": {"ids": ["top_down_90", "eye_level_three_quarter", "high_observer_angle"]}
+      }
+    },
+    {
+      "id": "materials_recovery_sorting_record",
+      "ko": "자원 회수 재료 선별 기록",
+      "en": "materials-recovery sorting record",
+      "weight": 1.0,
+      "template_style": "natural",
+      "family": "circular_material_record",
+      "embedding_text": "circular-materials flow record showing an incoming mixed stream, contamination removal, machine sorting and separated recovery fractions with route continuity",
+      "facets": {"subject_kind": ["object"], "place_type": ["waste", "industrial", "warehouse"], "camera_register": ["machine_vision", "inspection"], "mood_family": ["documentary", "operational"], "safety_tier": ["general"], "relation_type": ["team", "handoff"], "event_phase": ["active_process", "handoff"], "process_stage": ["inspection", "transfer", "cleanup"], "capture_modality": ["machine_vision", "inspection"], "movement_type": ["mechanical_cycle"]},
+      "required_slots": ["medium", "genre", "subject", "action", "location", "surface_material", "lighting", "camera_type", "capture_context", "procedure_step", "motion", "composition", "lens", "focus", "quality"],
+      "optional_slots": [{"slot": "prop", "probability": 0.95}, {"slot": "camera_direction", "probability": 0.65}, {"slot": "texture", "probability": 0.5}],
+      "filters": {
+        "medium": {"ids": ["documentary_photo", "scientific_record", "magazine_feature"]},
+        "genre": {"ids": ["technology", "documentary"]},
+        "subject": {"ids": ["mixed_material_sorting_stream"]},
+        "action": {"ids": ["removing_sort_stream_contamination"]},
+        "location": {"ids": ["materials_recovery_line", "automated_warehouse_aisle"]},
+        "surface_material": {"ids": ["sorted_polymer_flake_surface", "brushed_machined_aluminum_surface"]},
+        "lighting": {"ids": ["fluorescent", "lab_led", "inspection_droplight"]},
+        "camera_type": {"ids": ["machine_vision_camera", "full_frame_mirrorless", "dslr_camera"]},
+        "capture_context": {"ids": ["material_flow_audit_capture"]},
+        "procedure_step": {"ids": ["contamination_removal_step"]},
+        "motion": {"ids": ["conveyor_indexing_motion", "fine_adjustment_motion"]},
+        "composition": {"ids": ["strong_leading_lines_vanish", "primary_subject_hierarchy_frame", "wide_establishing"]},
+        "lens": {"ids": ["35mm", "wide_24mm", "50mm"]},
+        "focus": {"ids": ["deep_focus", "zone_focus_street"]},
+        "quality": {"ids": ["photoreal", "high_detail", "not_overdone"]},
+        "prop": {"ids": ["sorted_material_tote"]},
+        "camera_direction": {"ids": ["high_observer_angle", "eye_level_three_quarter", "low_ground_angle"]},
+        "texture": {"ids": ["clean_digital", "fine_grain", "brushed_steel_micrograin_texture"]}
+      }
+    },
+    {
       "id": "farm_to_table_process",
       "ko": "농장에서 식탁까지의 과정",
       "en": "farm-to-table process documentary",
@@ -1632,6 +1817,7 @@
       "en": "street documentary",
       "weight": 2,
       "template_style": "natural",
+      "facets": {"place_type": ["street", "urban"], "mood_family": ["documentary"], "safety_tier": ["general"], "event_phase": ["active_process", "pause"]},
       "required_slots": [
         "medium",
         "genre",
@@ -2225,6 +2411,7 @@
       "en": "nature and wildlife",
       "weight": 1.5,
       "template_style": "natural",
+      "facets": {"place_type": ["nature"], "mood_family": ["documentary", "calm"], "safety_tier": ["general"]},
       "required_slots": [
         "medium",
         "genre",
@@ -2426,6 +2613,7 @@
       "en": "interior lifestyle",
       "weight": 1.4,
       "template_style": "natural",
+      "facets": {"place_type": ["interior", "home"], "mood_family": ["calm"], "safety_tier": ["general"]},
       "required_slots": [
         "medium",
         "genre",
@@ -2625,6 +2813,7 @@
       "en": "commercial product photography",
       "weight": 1.2,
       "template_style": "natural",
+      "facets": {"subject_kind": ["object"], "place_type": ["studio", "commercial"], "mood_family": ["commercial"], "safety_tier": ["general"]},
       "required_slots": [
         "medium",
         "genre",
@@ -2823,6 +3012,7 @@
       "en": "food editorial",
       "weight": 1.2,
       "template_style": "natural",
+      "facets": {"subject_kind": ["food"], "place_type": ["interior", "commercial"], "mood_family": ["commercial"], "safety_tier": ["general"]},
       "required_slots": [
         "medium",
         "genre",
@@ -3394,6 +3584,7 @@
       "en": "science documentary",
       "weight": 0.9,
       "template_style": "natural",
+      "facets": {"place_type": ["laboratory", "interior"], "mood_family": ["documentary", "clinical"], "safety_tier": ["general"]},
       "required_slots": [
         "medium",
         "genre",
@@ -7234,6 +7425,7 @@
       "en": "real-estate interior listing",
       "weight": 0.5,
       "template_style": "natural",
+      "facets": {"place_type": ["interior", "home", "commercial"], "mood_family": ["commercial"], "safety_tier": ["general"]},
       "required_slots": [
         "medium",
         "genre",
@@ -7366,6 +7558,7 @@
       "en": "brutalist architecture editorial",
       "weight": 0.5,
       "template_style": "natural",
+      "facets": {"place_type": ["urban", "infrastructure"], "mood_family": ["documentary"], "safety_tier": ["general"]},
       "required_slots": [
         "medium",
         "genre",
@@ -113711,6 +113904,84 @@
         "keywords": ["community meal", "mutual aid kitchen", "shared food"],
         "embedding_text": "large soup pot in a community kitchen with steam, ladles and bowls prepared for a shared meal",
         "facets": {"subject_kind": ["food"]}
+      },
+      {
+        "id": "camera_trap_wildlife_passage",
+        "ko": "카메라 트랩 기준점을 지나는 야생동물",
+        "en": "a wild animal passing a camera-trap reference point",
+        "weight": 0.72,
+        "kind": ["animal"],
+        "tags": ["animal", "wildlife", "biodiversity", "camera_trap", "ecology", "monitoring"],
+        "requires_primary_any_tags": ["wildlife", "documentary", "biodiversity", "ecology"],
+        "aliases": ["camera trap wildlife passage", "wildlife detection event", "카메라 트랩 야생동물", "야생동물 감지 기록"],
+        "keywords": ["species monitoring", "wildlife corridor", "remote observation"],
+        "embedding_text": "a wild animal crossing a fixed camera-trap station with habitat context, reference scale and an unobstructed detection zone",
+        "facets": {"subject_kind": ["animal"], "event_phase": ["active_process"], "movement_type": ["locomotion"]}
+      },
+      {
+        "id": "intertidal_quadrat_biota",
+        "ko": "조사 방형구 안의 조간대 생물 군집",
+        "en": "an intertidal biotic community inside a survey quadrat",
+        "weight": 0.7,
+        "kind": ["environment"],
+        "tags": ["environment", "biodiversity", "intertidal", "marine", "ecology", "quadrat"],
+        "requires_primary_any_tags": ["wildlife", "documentary", "biodiversity", "marine", "ecology"],
+        "aliases": ["intertidal quadrat biota", "rocky shore quadrat", "조간대 방형구", "해안 생물 군집"],
+        "keywords": ["percent cover survey", "benthic monitoring", "species assemblage"],
+        "embedding_text": "intertidal algae and attached organisms contained by a clearly visible survey quadrat, with substrate and percent-cover evidence",
+        "facets": {"subject_kind": ["environment"], "process_stage": ["sampling", "measurement"]}
+      },
+      {
+        "id": "orchard_fruit_grading_line",
+        "ko": "선별 라인을 따라 등급을 나누는 과수원 수확물",
+        "en": "orchard fruit moving through a harvest grading line",
+        "weight": 0.72,
+        "kind": ["food"],
+        "tags": ["food", "agriculture", "harvest", "grading", "traceability", "agriculture_food_systems"],
+        "requires_primary_any_tags": ["food", "agriculture", "harvest", "documentary"],
+        "aliases": ["orchard fruit grading line", "harvest grading batch", "과수원 선별 라인", "수확물 등급 선별"],
+        "keywords": ["post-harvest handling", "produce quality grade", "batch traceability"],
+        "embedding_text": "fresh orchard fruit advancing through a grading line with visible size variation, condition checks and separate destination crates",
+        "facets": {"subject_kind": ["food"], "process_stage": ["inspection", "transfer"], "movement_type": ["mechanical_cycle"]}
+      },
+      {
+        "id": "fermentation_vessel_batch",
+        "ko": "상태를 점검 중인 발효 용기 배치",
+        "en": "a monitored batch in a fermentation vessel",
+        "weight": 0.7,
+        "kind": ["food"],
+        "tags": ["food", "fermentation", "batch", "monitoring", "traceability", "agriculture_food_systems"],
+        "requires_primary_any_tags": ["food", "fermentation", "documentary", "agriculture"],
+        "aliases": ["fermentation vessel batch", "monitored ferment", "발효 배치", "발효 용기 점검"],
+        "keywords": ["fermentation activity", "batch monitoring", "food process"],
+        "embedding_text": "an active food-fermentation batch in a practical vessel with surface activity, sample access and batch-state evidence but no readable label",
+        "facets": {"subject_kind": ["food"], "event_phase": ["pause", "active_process"], "process_stage": ["sampling", "monitoring"], "movement_type": ["fluid_flow"]}
+      },
+      {
+        "id": "open_electronics_repair_board",
+        "ko": "고장 진단을 위해 열린 전자 회로 기판",
+        "en": "an exposed electronics board under repair diagnosis",
+        "weight": 0.72,
+        "kind": ["object"],
+        "tags": ["object", "electronics", "repair", "diagnostic", "reuse", "circular_materials"],
+        "requires_primary_any_tags": ["technology", "repair", "documentary", "inspection"],
+        "aliases": ["electronics repair board", "open circuit board diagnosis", "전자 기판 수리", "회로 진단"],
+        "keywords": ["component diagnosis", "repairability", "reuse workflow"],
+        "embedding_text": "an exposed electronics board at a repair bench with one component test point, tool contact and visible prior-use traces",
+        "facets": {"subject_kind": ["object"], "event_phase": ["maintenance"], "process_stage": ["inspection", "intervention"]}
+      },
+      {
+        "id": "mixed_material_sorting_stream",
+        "ko": "오염물을 제거하며 분류되는 혼합 재료 흐름",
+        "en": "a mixed-material stream being separated for recovery",
+        "weight": 0.72,
+        "kind": ["object"],
+        "tags": ["object", "materials", "sorting", "recovery", "recycling", "circular_materials"],
+        "requires_primary_any_tags": ["technology", "documentary", "industrial", "materials", "sorting"],
+        "aliases": ["mixed material sorting stream", "materials recovery line", "혼합 재료 선별", "자원 회수 라인"],
+        "keywords": ["material recovery", "contamination removal", "separation process"],
+        "embedding_text": "a mixed stream of recoverable materials moving through a sorting line with separated fractions, a contamination point and clear flow direction",
+        "facets": {"subject_kind": ["object"], "event_phase": ["active_process", "handoff"], "process_stage": ["inspection", "transfer", "cleanup"], "movement_type": ["mechanical_cycle"]}
       }
     ],
     "person_origin": [
@@ -127923,6 +128194,84 @@
         "aliases": ["serving community meal", "shared meal service", "공동체 식사 배식"],
         "keywords": ["mutual aid kitchen", "meal service", "community care"],
         "embedding_text": "serving a shared community meal into simple bowls with steam, practical utensils and collective care"
+      },
+      {
+        "id": "recording_nocturnal_animal_passage",
+        "ko": "야간 야생동물의 통과 순간을 고정 위치에서 기록하는",
+        "en": "recording a nocturnal wildlife passage from a fixed position",
+        "weight": 0.72,
+        "tags": ["animal", "wildlife", "biodiversity", "camera_trap", "monitoring"],
+        "for_any": ["animal", "environment"],
+        "requires_primary_any_tags": ["wildlife", "biodiversity", "ecology", "camera_trap"],
+        "aliases": ["recording wildlife passage", "camera trap detection", "야생동물 통과 기록"],
+        "keywords": ["species detection", "fixed observation", "activity record"],
+        "embedding_text": "recording the instant a nocturnal animal crosses a fixed detection zone while retaining habitat and scale evidence",
+        "facets": {"event_phase": ["active_process"], "process_stage": ["monitoring"], "capture_modality": ["surveillance", "visible_light"], "movement_type": ["locomotion"]}
+      },
+      {
+        "id": "surveying_quadrat_cover",
+        "ko": "방형구 안 생물의 피복과 분포를 조사하는",
+        "en": "surveying organism cover and distribution inside a quadrat",
+        "weight": 0.72,
+        "tags": ["environment", "biodiversity", "intertidal", "marine", "quadrat", "sampling"],
+        "for_any": ["environment", "animal", "plant"],
+        "requires_primary_any_tags": ["biodiversity", "marine", "ecology", "quadrat"],
+        "aliases": ["surveying quadrat cover", "benthic cover survey", "방형구 피복 조사"],
+        "keywords": ["percent cover", "ecological sampling", "benthic survey"],
+        "embedding_text": "surveying cover and distribution within a visible quadrat while preserving substrate, water depth and sampling boundaries",
+        "facets": {"event_phase": ["active_process"], "process_stage": ["sampling", "measurement"], "capture_modality": ["underwater", "visible_light"]}
+      },
+      {
+        "id": "sorting_harvest_by_grade",
+        "ko": "수확물을 상태와 크기에 따라 등급별로 나누는",
+        "en": "sorting a harvest into condition and size grades",
+        "weight": 0.74,
+        "tags": ["food", "agriculture", "harvest", "grading", "traceability", "agriculture_food_systems"],
+        "for_any": ["food", "plant", "object"],
+        "requires_primary_any_tags": ["food", "agriculture", "harvest", "grading"],
+        "aliases": ["sorting harvest by grade", "produce grading", "수확물 등급 선별"],
+        "keywords": ["post-harvest grading", "quality inspection", "batch transfer"],
+        "embedding_text": "sorting harvested produce by visible condition and size, then transferring each grade into a separate crate",
+        "facets": {"relation_type": ["cooperative", "handoff"], "event_phase": ["active_process", "handoff"], "process_stage": ["inspection", "transfer"], "movement_type": ["mechanical_cycle"]}
+      },
+      {
+        "id": "checking_fermentation_activity",
+        "ko": "소량의 시료로 발효 활동을 점검하는",
+        "en": "checking fermentation activity from a small batch sample",
+        "weight": 0.72,
+        "tags": ["food", "fermentation", "batch", "sampling", "monitoring", "agriculture_food_systems"],
+        "for_any": ["food", "object"],
+        "requires_primary_any_tags": ["food", "fermentation", "batch", "monitoring"],
+        "aliases": ["checking fermentation activity", "fermentation sample check", "발효 활동 점검"],
+        "keywords": ["hydrometer sample", "batch state", "fermentation monitoring"],
+        "embedding_text": "checking fermentation activity with a small representative sample while keeping the vessel, sample point and batch state visible",
+        "facets": {"event_phase": ["pause", "active_process"], "process_stage": ["sampling", "measurement", "monitoring"], "capture_modality": ["inspection", "macro"], "movement_type": ["fluid_flow"]}
+      },
+      {
+        "id": "testing_component_continuity",
+        "ko": "멀티미터 프로브로 부품의 연속성을 검사하는",
+        "en": "testing component continuity with multimeter probes",
+        "weight": 0.74,
+        "tags": ["object", "electronics", "repair", "diagnostic", "reuse", "circular_materials"],
+        "for_any": ["object", "human"],
+        "requires_primary_any_tags": ["technology", "electronics", "repair", "inspection"],
+        "aliases": ["testing component continuity", "multimeter board diagnosis", "부품 연속성 검사"],
+        "keywords": ["fault isolation", "repair diagnostic", "test point"],
+        "embedding_text": "testing one electronic component at a clear contact point with multimeter probes before deciding whether to repair or replace it",
+        "facets": {"event_phase": ["maintenance", "active_process"], "process_stage": ["inspection", "measurement", "intervention"], "capture_modality": ["inspection", "macro"], "movement_type": ["fine_motor"]}
+      },
+      {
+        "id": "removing_sort_stream_contamination",
+        "ko": "회수 재료 흐름에서 오염물을 제거하는",
+        "en": "removing contamination from a materials-recovery stream",
+        "weight": 0.74,
+        "tags": ["object", "materials", "sorting", "recovery", "cleanup", "circular_materials"],
+        "for_any": ["object", "environment", "human"],
+        "requires_primary_any_tags": ["materials", "sorting", "recovery", "industrial"],
+        "aliases": ["removing sort contamination", "material stream cleanup", "선별 오염물 제거"],
+        "keywords": ["quality control", "material separation", "recovery yield"],
+        "embedding_text": "removing a visible contaminant before the material stream separates into clean recovery fractions",
+        "facets": {"relation_type": ["team", "handoff"], "event_phase": ["active_process", "handoff"], "process_stage": ["inspection", "transfer", "cleanup"], "capture_modality": ["machine_vision", "inspection"], "movement_type": ["mechanical_cycle"]}
       }
     ],
     "capture_context": [
@@ -128832,6 +129181,78 @@
           "public solitude"
         ],
         "embedding_text": "street-observation documentary capture context, candid distance, public solitude, realistic urban observation"
+      },
+      {
+        "id": "fixed_camera_trap_capture",
+        "ko": "고정 카메라 트랩의 시각 감지 촬영",
+        "en": "fixed camera-trap detection capture",
+        "weight": 0.72,
+        "tags": ["capture", "camera_trap", "wildlife", "biodiversity", "remote_sensor"],
+        "requires_primary_any_tags": ["wildlife", "biodiversity", "ecology", "camera_trap"],
+        "aliases": ["camera trap capture", "fixed wildlife detection", "카메라 트랩 촬영"],
+        "keywords": ["remote species observation", "fixed field of view", "detection event"],
+        "embedding_text": "fixed camera-trap capture with a stable field of view, natural night exposure, reference scale and no human staging",
+        "facets": {"camera_register": ["surveillance", "sensor"], "capture_modality": ["surveillance", "visible_light"]}
+      },
+      {
+        "id": "underwater_quadrat_capture",
+        "ko": "방형구 경계를 유지한 수중 조사 촬영",
+        "en": "underwater quadrat survey capture",
+        "weight": 0.72,
+        "tags": ["capture", "underwater", "marine", "biodiversity", "quadrat"],
+        "requires_primary_any_tags": ["marine", "biodiversity", "ecology", "quadrat"],
+        "aliases": ["underwater quadrat capture", "benthic survey frame", "수중 방형구 촬영"],
+        "keywords": ["sampling boundary", "scale reference", "benthic observation"],
+        "embedding_text": "underwater quadrat capture keeping the full sampling boundary, scale reference, substrate texture and water-column visibility legible",
+        "facets": {"camera_register": ["inspection"], "capture_modality": ["underwater", "visible_light"]}
+      },
+      {
+        "id": "harvest_batch_record_capture",
+        "ko": "수확 배치의 등급과 인계 상태를 기록하는 촬영",
+        "en": "harvest-batch grading record capture",
+        "weight": 0.7,
+        "tags": ["capture", "agriculture", "harvest", "batch", "traceability", "agriculture_food_systems"],
+        "requires_primary_any_tags": ["food", "agriculture", "harvest", "grading"],
+        "aliases": ["harvest batch record", "produce grading capture", "수확 배치 기록"],
+        "keywords": ["grade separation", "batch handoff", "post-harvest evidence"],
+        "embedding_text": "harvest-batch record capture showing the incoming lot, visible grading criterion and separated outgoing crates without readable labels",
+        "facets": {"camera_register": ["inspection", "professional"], "capture_modality": ["inspection", "visible_light"]}
+      },
+      {
+        "id": "fermentation_batch_record_capture",
+        "ko": "발효 용기와 시료 접점을 함께 담는 배치 기록 촬영",
+        "en": "fermentation-batch state record capture",
+        "weight": 0.7,
+        "tags": ["capture", "food", "fermentation", "batch", "traceability", "agriculture_food_systems"],
+        "requires_primary_any_tags": ["food", "fermentation", "batch", "monitoring"],
+        "aliases": ["fermentation batch capture", "ferment state record", "발효 배치 촬영"],
+        "keywords": ["sample contact", "batch state", "food process record"],
+        "embedding_text": "fermentation-batch record capture connecting the vessel, sample point, hydrometer reading position and visible material state without readable text",
+        "facets": {"camera_register": ["inspection", "macro"], "capture_modality": ["inspection", "macro"]}
+      },
+      {
+        "id": "repair_log_reference_capture",
+        "ko": "수리 기록용 부품 접점 참조 촬영",
+        "en": "repair-log component reference capture",
+        "weight": 0.72,
+        "tags": ["capture", "electronics", "repair", "diagnostic", "reuse", "circular_materials"],
+        "requires_primary_any_tags": ["technology", "electronics", "repair", "inspection"],
+        "aliases": ["repair log reference", "component diagnosis capture", "수리 기록 촬영"],
+        "keywords": ["test point evidence", "component condition", "repair workflow"],
+        "embedding_text": "repair-log reference capture with the failed component area, probe contact, surrounding board context and prior-use condition visible",
+        "facets": {"camera_register": ["inspection", "macro"], "capture_modality": ["inspection", "macro"]}
+      },
+      {
+        "id": "material_flow_audit_capture",
+        "ko": "선별 전후의 재료 흐름을 비교하는 감사 촬영",
+        "en": "material-flow audit capture",
+        "weight": 0.72,
+        "tags": ["capture", "materials", "sorting", "recovery", "audit", "circular_materials"],
+        "requires_primary_any_tags": ["materials", "sorting", "recovery", "industrial"],
+        "aliases": ["material flow audit", "recovery line capture", "재료 흐름 감사 촬영"],
+        "keywords": ["input stream", "separated output", "contamination evidence"],
+        "embedding_text": "material-flow audit capture showing incoming mixture, contamination checkpoint, separated outputs and directional continuity in one frame",
+        "facets": {"camera_register": ["machine_vision", "inspection"], "capture_modality": ["machine_vision", "inspection"]}
       }
     ],
     "prop": [
@@ -139209,6 +139630,78 @@
         "aliases": ["ladle and bowls", "community meal utensils", "국자와 그릇"],
         "keywords": ["meal service", "community kitchen", "practical utensils"],
         "embedding_text": "stainless ladle with stacked enamel bowls ready for a community meal service"
+      },
+      {
+        "id": "camera_trap_reference_marker",
+        "ko": "카메라 트랩 앞의 작은 비문자 기준 표지",
+        "en": "a small non-text camera-trap reference marker",
+        "weight": 0.66,
+        "tags": ["prop", "wildlife", "biodiversity", "camera_trap", "scale", "no_text"],
+        "for_any": ["animal", "environment", "object"],
+        "requires_primary_any_tags": ["wildlife", "biodiversity", "ecology", "camera_trap"],
+        "aliases": ["camera trap reference marker", "wildlife scale marker", "카메라 트랩 기준 표지"],
+        "keywords": ["scale evidence", "detection zone", "non-readable marker"],
+        "embedding_text": "small weatherproof non-text reference marker defining scale and the detection zone near a camera trap"
+      },
+      {
+        "id": "survey_quadrat_frame",
+        "ko": "눈금 없는 생태 조사 방형구 프레임",
+        "en": "an ecological survey quadrat frame without readable markings",
+        "weight": 0.68,
+        "tags": ["prop", "biodiversity", "marine", "quadrat", "sampling", "no_text"],
+        "for_any": ["environment", "animal", "plant"],
+        "requires_primary_any_tags": ["biodiversity", "marine", "ecology", "quadrat"],
+        "aliases": ["survey quadrat frame", "ecology quadrat", "생태 조사 방형구"],
+        "keywords": ["sampling boundary", "percent cover", "field protocol"],
+        "embedding_text": "rigid ecological survey quadrat frame defining a repeatable sampling boundary without readable markings"
+      },
+      {
+        "id": "produce_grade_crate",
+        "ko": "등급별 수확물을 나누어 담는 무표기 상자",
+        "en": "unlabelled crates separating produce grades",
+        "weight": 0.68,
+        "tags": ["prop", "food", "agriculture", "harvest", "grading", "agriculture_food_systems", "no_text"],
+        "for_any": ["food", "plant", "object"],
+        "requires_primary_any_tags": ["food", "agriculture", "harvest", "grading"],
+        "aliases": ["produce grade crate", "harvest sorting crates", "수확물 등급 상자"],
+        "keywords": ["grade separation", "batch handoff", "post-harvest"],
+        "embedding_text": "clean unlabelled harvest crates physically separating produce grades at the handoff point"
+      },
+      {
+        "id": "hydrometer_sample_jar",
+        "ko": "발효 시료가 담긴 비문자 비중계 용기",
+        "en": "a hydrometer sample jar without readable markings",
+        "weight": 0.68,
+        "tags": ["prop", "food", "fermentation", "sampling", "measurement", "agriculture_food_systems", "no_text"],
+        "for_any": ["food", "object"],
+        "requires_primary_any_tags": ["food", "fermentation", "batch", "monitoring"],
+        "aliases": ["hydrometer sample jar", "fermentation sample vessel", "발효 비중계 시료"],
+        "keywords": ["fermentation activity", "sample contact", "batch measurement"],
+        "embedding_text": "transparent hydrometer sample jar holding a representative fermentation sample, with liquid level and tool contact visible but no readable scale"
+      },
+      {
+        "id": "multimeter_probe_pair",
+        "ko": "회로 접점에 닿은 멀티미터 프로브 한 쌍",
+        "en": "a pair of multimeter probes touching circuit test points",
+        "weight": 0.7,
+        "tags": ["prop", "electronics", "repair", "diagnostic", "measurement", "circular_materials", "no_text"],
+        "for_any": ["object", "human"],
+        "requires_primary_any_tags": ["technology", "electronics", "repair", "inspection"],
+        "aliases": ["multimeter probe pair", "circuit test probes", "멀티미터 프로브"],
+        "keywords": ["continuity test", "fault isolation", "repair evidence"],
+        "embedding_text": "pair of multimeter probes making precise contact with two circuit test points while the display remains out of frame or unreadable"
+      },
+      {
+        "id": "sorted_material_tote",
+        "ko": "회수 재료 분획을 담는 무표기 토트",
+        "en": "an unlabelled tote holding a separated material fraction",
+        "weight": 0.68,
+        "tags": ["prop", "materials", "sorting", "recovery", "circular_materials", "no_text"],
+        "for_any": ["object", "environment"],
+        "requires_primary_any_tags": ["materials", "sorting", "recovery", "industrial"],
+        "aliases": ["sorted material tote", "recovery fraction bin", "선별 재료 토트"],
+        "keywords": ["separated fraction", "material recovery", "flow destination"],
+        "embedding_text": "unlabelled industrial tote receiving one clean separated material fraction at the end of a sorting route"
       }
     ],
     "fetish_styling": [
@@ -147406,6 +147899,78 @@
         "keywords": ["mutual aid kitchen", "shared meal", "community service"],
         "embedding_text": "neighborhood community kitchen with large pots, practical counters, stacked bowls and shared meal preparation",
         "facets": {"place_type": ["interior"]}
+      },
+      {
+        "id": "woodland_wildlife_corridor",
+        "ko": "카메라 트랩이 설치된 숲속 야생동물 이동로",
+        "en": "a woodland wildlife corridor with a fixed camera-trap station",
+        "weight": 0.72,
+        "tags": ["nature", "wildlife", "biodiversity", "forest", "camera_trap", "ecology"],
+        "requires_primary_any_tags": ["wildlife", "biodiversity", "ecology", "camera_trap"],
+        "aliases": ["woodland wildlife corridor", "camera trap trail", "숲 야생동물 이동로"],
+        "keywords": ["habitat connectivity", "species passage", "remote monitoring"],
+        "embedding_text": "woodland wildlife corridor with leaf litter, natural cover, a fixed camera-trap station and an unobstructed passage zone",
+        "facets": {"place_type": ["nature"]}
+      },
+      {
+        "id": "rocky_intertidal_monitoring_plot",
+        "ko": "조위와 기질이 보이는 암반 조간대 조사 구역",
+        "en": "a rocky intertidal biodiversity monitoring plot",
+        "weight": 0.72,
+        "tags": ["nature", "biodiversity", "intertidal", "marine", "ecology", "quadrat", "underwater"],
+        "requires_primary_any_tags": ["biodiversity", "marine", "ecology", "quadrat"],
+        "aliases": ["intertidal monitoring plot", "rocky shore quadrat site", "암반 조간대 조사 구역"],
+        "keywords": ["tidal height", "benthic substrate", "repeat sampling"],
+        "embedding_text": "rocky intertidal monitoring plot with tidal height, wet substrate, attached organisms and a repeatable quadrat position visible",
+        "facets": {"place_type": ["nature"], "weather": ["underwater"], "weather_effect": ["surface_wetness"]}
+      },
+      {
+        "id": "orchard_packhouse",
+        "ko": "과수원 수확물 선별 포장장",
+        "en": "an orchard harvest grading packhouse",
+        "weight": 0.72,
+        "tags": ["agricultural", "food", "harvest", "grading", "packhouse", "agriculture_food_systems"],
+        "requires_primary_any_tags": ["food", "agriculture", "harvest", "grading"],
+        "aliases": ["orchard packhouse", "fruit grading shed", "과수원 선별장"],
+        "keywords": ["post-harvest handling", "grading line", "batch handoff"],
+        "embedding_text": "orchard packhouse with an incoming harvest lot, compact grading line and separated produce crates under practical work light",
+        "facets": {"place_type": ["agricultural", "industrial", "interior"]}
+      },
+      {
+        "id": "small_fermentation_room",
+        "ko": "소규모 식품 발효실",
+        "en": "a small practical food-fermentation room",
+        "weight": 0.7,
+        "tags": ["interior", "food", "fermentation", "batch", "monitoring", "agriculture_food_systems"],
+        "requires_primary_any_tags": ["food", "fermentation", "batch", "monitoring"],
+        "aliases": ["small fermentation room", "fermentation workspace", "소규모 발효실"],
+        "keywords": ["food batch process", "sample station", "controlled fermentation"],
+        "embedding_text": "small practical fermentation room with accessible vessels, a clean sample station, washable surfaces and no readable branding",
+        "facets": {"place_type": ["agricultural", "interior"]}
+      },
+      {
+        "id": "community_repair_bench",
+        "ko": "재사용을 위한 공동체 전자제품 수리 작업대",
+        "en": "a community electronics repair bench",
+        "weight": 0.72,
+        "tags": ["interior", "repair", "electronics", "reuse", "workshop", "circular_materials"],
+        "requires_primary_any_tags": ["technology", "electronics", "repair", "inspection"],
+        "aliases": ["community repair bench", "electronics repair workspace", "공동체 수리 작업대"],
+        "keywords": ["repairability", "reuse", "diagnostic workspace"],
+        "embedding_text": "community electronics repair bench with task lighting, organized hand tools, reusable parts and one open device under diagnosis",
+        "facets": {"place_type": ["repair", "interior"]}
+      },
+      {
+        "id": "materials_recovery_line",
+        "ko": "혼합 재료를 분리하는 자원 회수 선별 라인",
+        "en": "an industrial materials-recovery sorting line",
+        "weight": 0.72,
+        "tags": ["industrial", "waste", "materials", "sorting", "recovery", "circular_materials"],
+        "requires_primary_any_tags": ["materials", "sorting", "recovery", "industrial"],
+        "aliases": ["materials recovery line", "recycling sorting facility", "자원 회수 선별 라인"],
+        "keywords": ["material flow", "separation process", "contamination checkpoint"],
+        "embedding_text": "industrial materials-recovery line with a readable input route, contamination checkpoint, separation equipment and clean output fractions",
+        "facets": {"place_type": ["waste", "industrial", "warehouse"]}
       }
     ],
     "world": [
@@ -171857,6 +172422,55 @@
         "aliases": ["flour-dusted wood", "bakery worktop", "밀가루 나무 작업대"],
         "keywords": ["bread making surface", "food process", "wood grain"],
         "embedding_text": "flour-dusted wooden work surface with grain, handling marks and bread-making residue"
+      },
+      {
+        "id": "wet_rock_biofilm_surface",
+        "ko": "생물막과 패각이 붙은 젖은 암반 표면",
+        "en": "wet intertidal rock with biofilm and attached shell traces",
+        "weight": 0.66,
+        "tags": ["surface", "biodiversity", "marine", "intertidal", "biofilm", "ecology"],
+        "for_any": ["environment", "animal", "plant"],
+        "requires_primary_any_tags": ["biodiversity", "marine", "ecology", "quadrat"],
+        "aliases": ["intertidal biofilm surface", "wet survey rock", "조간대 생물막 표면"],
+        "keywords": ["substrate cover", "attached organisms", "tidal wetness"],
+        "embedding_text": "wet intertidal rock surface with biofilm, attached shell traces, shallow water sheen and natural sampling variation",
+        "facets": {"weather_effect": ["surface_wetness"]}
+      },
+      {
+        "id": "fruit_bloom_skin_surface",
+        "ko": "자연스러운 과분과 작은 흠집이 남은 과일 표면",
+        "en": "fruit skin with natural bloom and small harvest marks",
+        "weight": 0.66,
+        "tags": ["surface", "food", "agriculture", "harvest", "grading", "agriculture_food_systems"],
+        "for_any": ["food", "plant"],
+        "requires_primary_any_tags": ["food", "agriculture", "harvest", "grading"],
+        "aliases": ["fruit bloom surface", "harvest skin marks", "과일 과분 표면"],
+        "keywords": ["fresh produce", "condition evidence", "natural variation"],
+        "embedding_text": "fresh fruit skin retaining natural bloom, stem contact, tiny harvest marks and condition differences used for grading"
+      },
+      {
+        "id": "solder_flux_repair_surface",
+        "ko": "사용 흔적과 플럭스 잔류물이 있는 수리 기판 표면",
+        "en": "a used circuit-board surface with repair flux traces",
+        "weight": 0.66,
+        "tags": ["surface", "electronics", "repair", "diagnostic", "reuse", "circular_materials"],
+        "for_any": ["object"],
+        "requires_primary_any_tags": ["technology", "electronics", "repair", "inspection"],
+        "aliases": ["repair board surface", "solder flux traces", "수리 기판 표면"],
+        "keywords": ["component wear", "solder joint", "prior use"],
+        "embedding_text": "used circuit-board surface with solder joints, light flux residue, tool contact and localized wear around the diagnostic point"
+      },
+      {
+        "id": "sorted_polymer_flake_surface",
+        "ko": "세척·선별된 혼합 색상의 폴리머 플레이크 표면",
+        "en": "a cleaned fraction of sorted polymer flakes",
+        "weight": 0.66,
+        "tags": ["surface", "materials", "sorting", "recovery", "polymer", "circular_materials"],
+        "for_any": ["object", "environment"],
+        "requires_primary_any_tags": ["materials", "sorting", "recovery", "industrial"],
+        "aliases": ["sorted polymer flake", "recovered plastic fraction", "선별 폴리머 플레이크"],
+        "keywords": ["clean fraction", "material recovery", "contamination evidence"],
+        "embedding_text": "cleaned sorted polymer flakes with visible size distribution, mixed color and a clearly isolated contaminant fragment"
       }
     ],
     "aesthetic_trend": [
@@ -176980,6 +177594,78 @@
         "keywords": ["fixed interval", "intervention result", "repeat photograph"],
         "embedding_text": "restoration follow-up step photographed from a fixed comparable position after the intervention",
         "facets": {"event_phase": ["recovery", "aftermath"], "process_stage": ["intervention", "monitoring"]}
+      },
+      {
+        "id": "species_detection_review_step",
+        "ko": "감지 구역과 서식 환경을 함께 확인하는 종 탐지 단계",
+        "en": "species-detection review with habitat and detection-zone context",
+        "weight": 0.8,
+        "tags": ["procedure", "wildlife", "biodiversity", "camera_trap", "monitoring"],
+        "requires_primary_any_tags": ["wildlife", "biodiversity", "ecology", "camera_trap"],
+        "aliases": ["species detection review", "camera trap event review", "종 탐지 검토"],
+        "keywords": ["detection event", "habitat context", "reference scale"],
+        "embedding_text": "species-detection review step linking the animal event to the fixed detection zone, reference scale and surrounding habitat",
+        "facets": {"event_phase": ["active_process", "pause"], "process_stage": ["inspection", "monitoring"]}
+      },
+      {
+        "id": "quadrat_sampling_step",
+        "ko": "고정 방형구 안 피복을 반복 측정하는 단계",
+        "en": "repeatable quadrat sampling and cover-assessment step",
+        "weight": 0.8,
+        "tags": ["procedure", "biodiversity", "marine", "quadrat", "sampling"],
+        "requires_primary_any_tags": ["biodiversity", "marine", "ecology", "quadrat"],
+        "aliases": ["quadrat sampling step", "cover assessment", "방형구 표본 조사"],
+        "keywords": ["sampling boundary", "percent cover", "repeat position"],
+        "embedding_text": "quadrat sampling step preserving the full frame boundary, substrate, organism cover and repeat-position evidence",
+        "facets": {"event_phase": ["preparation", "active_process"], "process_stage": ["setup", "sampling", "measurement"]}
+      },
+      {
+        "id": "harvest_grading_step",
+        "ko": "수확 배치를 상태별로 선별하고 인계하는 단계",
+        "en": "harvest-batch grading and handoff step",
+        "weight": 0.8,
+        "tags": ["procedure", "food", "agriculture", "harvest", "grading", "agriculture_food_systems"],
+        "requires_primary_any_tags": ["food", "agriculture", "harvest", "grading"],
+        "aliases": ["harvest grading step", "produce batch handoff", "수확물 등급 선별 단계"],
+        "keywords": ["incoming batch", "grading criterion", "separated output"],
+        "embedding_text": "harvest grading step showing the incoming batch, visible condition criterion and handoff to separated output crates",
+        "facets": {"relation_type": ["cooperative", "handoff"], "event_phase": ["active_process", "handoff"], "process_stage": ["inspection", "transfer"]}
+      },
+      {
+        "id": "fermentation_monitoring_step",
+        "ko": "대표 시료로 발효 배치 상태를 확인하는 단계",
+        "en": "fermentation-batch sampling and monitoring step",
+        "weight": 0.8,
+        "tags": ["procedure", "food", "fermentation", "batch", "monitoring", "agriculture_food_systems"],
+        "requires_primary_any_tags": ["food", "fermentation", "batch", "monitoring"],
+        "aliases": ["fermentation monitoring step", "batch sample check", "발효 배치 모니터링"],
+        "keywords": ["representative sample", "batch state", "activity check"],
+        "embedding_text": "fermentation monitoring step connecting a representative sample, measurement contact and visible vessel state before the batch continues",
+        "facets": {"event_phase": ["pause", "active_process"], "process_stage": ["sampling", "measurement", "monitoring"]}
+      },
+      {
+        "id": "repair_diagnosis_step",
+        "ko": "교체 전에 고장 부품을 분리 진단하는 단계",
+        "en": "fault-isolation diagnosis before repair or replacement",
+        "weight": 0.82,
+        "tags": ["procedure", "electronics", "repair", "diagnostic", "reuse", "circular_materials"],
+        "requires_primary_any_tags": ["technology", "electronics", "repair", "inspection"],
+        "aliases": ["repair diagnosis step", "fault isolation", "수리 고장 진단"],
+        "keywords": ["component test", "repair decision", "reuse"],
+        "embedding_text": "repair diagnosis step isolating one fault through visible test contact and component condition before any replacement decision",
+        "facets": {"event_phase": ["maintenance", "active_process"], "process_stage": ["inspection", "measurement", "intervention"]}
+      },
+      {
+        "id": "contamination_removal_step",
+        "ko": "재료 분리 전에 오염물을 제거하는 단계",
+        "en": "contamination removal before material separation",
+        "weight": 0.82,
+        "tags": ["procedure", "materials", "sorting", "recovery", "cleanup", "circular_materials"],
+        "requires_primary_any_tags": ["materials", "sorting", "recovery", "industrial"],
+        "aliases": ["contamination removal step", "material stream cleanup", "재료 오염물 제거 단계"],
+        "keywords": ["quality checkpoint", "separation yield", "clean fraction"],
+        "embedding_text": "contamination-removal step showing the rejected item, clean continuing stream and destination fractions before the next transfer",
+        "facets": {"relation_type": ["team", "handoff"], "event_phase": ["active_process", "handoff"], "process_stage": ["inspection", "transfer", "cleanup"]}
       }
     ],
     "duty_prop_state": [
@@ -200344,7 +201030,13 @@
       "rusted_decommissioned_android": "human",
       "mass_production_line_clone_unit": "human",
       "clockwork_brass_automaton": "object",
-      "combat_quadruped_robot": "object"
+      "combat_quadruped_robot": "object",
+      "camera_trap_wildlife_passage": "animal",
+      "intertidal_quadrat_biota": "environment",
+      "orchard_fruit_grading_line": "food",
+      "fermentation_vessel_batch": "food",
+      "open_electronics_repair_board": "object",
+      "mixed_material_sorting_stream": "object"
     },
     "preset_domain_overrides": {
       "wetland_behavior_documentary": [
@@ -200381,6 +201073,27 @@
       ],
       "urban_heat_air_quality_record": [
         "climate_adaptation"
+      ],
+      "camera_trap_species_monitoring": [
+        "biodiversity_monitoring"
+      ],
+      "coastal_benthic_quadrat_survey": [
+        "biodiversity_monitoring"
+      ],
+      "orchard_harvest_grading_record": [
+        "agriculture_food_systems"
+      ],
+      "fermentation_batch_monitoring": [
+        "agriculture_food_systems"
+      ],
+      "electronics_repair_diagnostic_record": [
+        "circular_materials"
+      ],
+      "materials_recovery_sorting_record": [
+        "circular_materials"
+      ],
+      "science_documentary": [
+        "documentary"
       ],
       "farm_to_table_process": [
         "food",
@@ -201121,7 +201834,10 @@
       "capture_context": {
         "subject_categories": [
           "human",
+          "animal",
+          "food",
           "object",
+          "plant",
           "environment"
         ],
         "allow_domains": [
@@ -201132,7 +201848,10 @@
           "adult",
           "science_inspection",
           "mobility_logistics",
-          "climate_adaptation"
+          "climate_adaptation",
+          "biodiversity_monitoring",
+          "agriculture_food_systems",
+          "circular_materials"
         ],
         "deny_domains": [
           "documentary",
