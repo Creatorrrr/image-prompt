@@ -102,10 +102,15 @@ def load_checkpoint(path: Path, expected: dict, cache_indexes: Sequence[Path] = 
     return payload
 
 
-def write_payload(path: Path, payload: dict) -> None:
+def write_payload(path: Path, payload: dict, *, compact: bool = False) -> None:
+    """Atomically persist JSON, optionally without generated-artifact whitespace."""
     path.parent.mkdir(parents=True, exist_ok=True)
     tmp = path.with_name(path.name + ".tmp")
-    tmp.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+    if compact:
+        serialized = json.dumps(payload, ensure_ascii=False, separators=(",", ":"))
+    else:
+        serialized = json.dumps(payload, ensure_ascii=False, indent=2)
+    tmp.write_text(serialized, encoding="utf-8")
     tmp.replace(path)
 
 
@@ -135,7 +140,7 @@ def write_sharded_payload(path: Path, payload: dict, shard_count: int = 16) -> d
             "shard_id": shard_id,
             "entries": shard_entries,
         }
-        write_payload(shard_path, shard_payload)
+        write_payload(shard_path, shard_payload, compact=True)
         raw = shard_path.read_bytes()
         shard_rows.append(
             {
