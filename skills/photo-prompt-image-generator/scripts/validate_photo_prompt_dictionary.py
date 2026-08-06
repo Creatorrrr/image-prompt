@@ -786,13 +786,20 @@ def validate_quality_layer_artistic_final_touch(quality: dict[str, Any], errors:
         validate_string_list("quality_layers.artistic_final_touch.audit_terms", touch.get("audit_terms"), errors)
 
 
-def validate_quality_layer_intent_routing(quality: dict[str, Any], errors: list[str]) -> None:
+def validate_quality_layer_intent_routing(
+    quality: dict[str, Any], data: dict[str, Any], errors: list[str]
+) -> None:
     routing = quality.get("intent_routing")
     if not isinstance(routing, dict):
         errors.append("quality_layers.intent_routing: must be an object")
         return
     for key in routing:
-        if key not in {"subject_categories", "domains", "literal_subject_stop_terms"}:
+        if key not in {
+            "subject_categories",
+            "domains",
+            "scoped_routes",
+            "literal_subject_stop_terms",
+        }:
             errors.append(f"quality_layers.intent_routing: unknown key {key}")
     if "literal_subject_stop_terms" in routing:
         validate_string_list(
@@ -843,6 +850,37 @@ def validate_quality_layer_intent_routing(quality: dict[str, Any], errors: list[
             errors.append(f"{label}.domain: duplicate domain {domain}")
         else:
             configured_domains.add(domain)
+        validate_string_list(f"{label}.aliases", row.get("aliases"), errors)
+
+    scoped_routes = routing.get("scoped_routes", [])
+    if not isinstance(scoped_routes, list):
+        errors.append("quality_layers.intent_routing.scoped_routes: must be a list")
+        scoped_routes = []
+    preset_ids = {
+        str(preset.get("id"))
+        for preset in data.get("presets", [])
+        if isinstance(preset, dict) and str(preset.get("id") or "")
+    }
+    configured_routes: set[tuple[str, str]] = set()
+    for index, row in enumerate(scoped_routes):
+        label = f"quality_layers.intent_routing.scoped_routes[{index}]"
+        if not isinstance(row, dict):
+            errors.append(f"{label}: must be an object")
+            continue
+        for key in row:
+            if key not in {"domain", "preset_id", "aliases"}:
+                errors.append(f"{label}: unknown key {key}")
+        domain = str(row.get("domain") or "").strip()
+        preset_id = str(row.get("preset_id") or "").strip()
+        if domain not in VALID_PRESET_DOMAINS:
+            errors.append(f"{label}.domain: unknown preset domain {domain!r}")
+        if preset_id not in preset_ids:
+            errors.append(f"{label}.preset_id: unknown preset id {preset_id!r}")
+        route_key = (domain, preset_id)
+        if route_key in configured_routes:
+            errors.append(f"{label}: duplicate scoped route {domain}:{preset_id}")
+        else:
+            configured_routes.add(route_key)
         validate_string_list(f"{label}.aliases", row.get("aliases"), errors)
 
 
@@ -972,7 +1010,7 @@ def validate_quality_layers(path: Path, data: dict[str, Any], errors: list[str])
     if schema_version == 2 and (not isinstance(profiles, dict) or not profiles):
         errors.append("quality_layers.quality_profiles: must be a non-empty object for schema 2")
     if schema_version == 2:
-        validate_quality_layer_intent_routing(quality, errors)
+        validate_quality_layer_intent_routing(quality, data, errors)
         validate_quality_layer_applicability_guards(quality, errors)
         validate_quality_layer_selection_balance(quality, errors)
     validate_quality_layer_artistic_final_touch(quality, errors)

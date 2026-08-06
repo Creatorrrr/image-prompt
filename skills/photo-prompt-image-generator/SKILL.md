@@ -24,7 +24,8 @@ Do not load every reference for a simple prompt request.
 - `scripts/prompt_generator.py`: JSON-driven generation engine.
 - `scripts/audit_composed_prompt.py`: fail-closed composed-prompt audit.
 - `assets/photo_prompt_tags.json`: presets, slots, weights, facets, and coherence rules.
-- `assets/photo_prompt_research_extension.json`: append-only evidence-led presets, slots, facets, and typed-domain overrides loaded alongside the base dictionary.
+- `assets/photo_prompt_research_extension.json`: append-only evidence-led operational and scientific presets, slots, facets, and typed-domain overrides loaded alongside the base dictionary.
+- `assets/photo_prompt_subculture_extension.json`: separately loaded, on-demand subculture practice presets and shared craft/community taxonomy; keep specialty signals out of unrelated automatic pools.
 - `assets/concept_recipes.json`: Korean concepts, identity cores, scene variants, guides, and gates.
 - `assets/photo_prompt_quality_layers.json`: domain quality profiles and photographic decision layers.
 - `assets/photo_prompt_semantic_index.json`: semantic retrieval manifest; vector shards live under `assets/photo_prompt_semantic_index_shards/` and are materialized transparently.
