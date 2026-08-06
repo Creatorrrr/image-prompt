@@ -807,7 +807,7 @@ DEFAULT_FACET_VOCAB: JsonDict = {
     "subject_kind": ["human", "animal", "object", "food", "environment", "plant", "sign"],
     "place_type": ["urban", "street", "interior", "nature", "studio", "commercial", "transport", "home"],
     "time_of_day": ["day", "night", "dawn", "dusk", "indoor_unspecified"],
-    "weather": ["clear", "rain", "snow", "fog", "underwater", "none"],
+    "weather": ["clear", "rain", "snow", "fog", "storm", "heat", "haze", "dust", "wind", "flood", "underwater", "none"],
     "lighting_family": ["natural_light", "artificial_light", "colored_light", "flash", "studio_light", "low_light"],
     "mood_family": ["calm", "tense", "romantic", "surreal", "nostalgic", "commercial", "documentary"],
     "camera_register": ["phone", "professional", "surveillance", "vintage", "studio", "macro"],
@@ -817,6 +817,12 @@ DEFAULT_FACET_VOCAB: JsonDict = {
     "camera_angle": ["eye_level", "low", "high", "overhead_top_down", "dutch", "over_shoulder", "pov", "reflection", "hidden_observer"],
     "placement": ["centered", "rule_of_thirds", "negative_space", "frame_filling", "edge_tension", "entering_frame", "exiting_frame", "layered_depth", "foreground_frame", "symmetry"],
     "platform_frame": ["vertical_9_16_safe", "vertical_4_5_safe", "square_1_1_safe", "ui_safe_negative_space", "thumbnail_safe", "face_upper_middle", "center_safe", "blank_lower_third", "carousel_crop_safe"],
+    "relation_type": ["cooperative", "caregiving", "instructional", "transactional", "handoff", "team", "crowd"],
+    "event_phase": ["preparation", "active_process", "pause", "handoff", "aftermath", "maintenance", "recovery"],
+    "process_stage": ["setup", "calibration", "sampling", "measurement", "inspection", "transfer", "intervention", "monitoring", "cleanup"],
+    "capture_modality": ["visible_light", "macro", "microscopy", "thermal", "ultraviolet", "aerial", "underwater", "surveillance", "machine_vision", "inspection"],
+    "weather_effect": ["visibility_loss", "surface_wetness", "airborne_particles", "wind_deformation", "heat_distortion", "frost_accumulation", "flooding", "none"],
+    "movement_type": ["static", "fine_motor", "locomotion", "impact", "rotation", "fluid_flow", "crowd_flow", "mechanical_cycle", "vehicle_flow"],
 }
 
 VALID_SUBJECT_CATEGORIES = {"human", "animal", "food", "object", "sign", "plant", "environment", "generic"}
@@ -834,6 +840,9 @@ VALID_PRESET_DOMAINS = {
     "street",
     "urban",
     "architecture",
+    "science_inspection",
+    "mobility_logistics",
+    "climate_adaptation",
     "surreal",
     "adult",
 }
@@ -925,8 +934,8 @@ DEFAULT_SLOT_APPLICABILITY: JsonDict = {
             "require_domain_match": True,
         },
         "capture_context": {
-            "subject_categories": ["human"],
-            "allow_domains": ["portrait", "fashion", "beauty", "social", "adult"],
+            "subject_categories": ["human", "object", "environment"],
+            "allow_domains": ["portrait", "fashion", "beauty", "social", "adult", "science_inspection", "mobility_logistics", "climate_adaptation"],
             "deny_domains": ["documentary", "craft", "wildlife", "product", "jewelry", "food", "architecture"],
             "require_domain_match": True,
         },
@@ -1278,6 +1287,8 @@ def subject_category(picked: Dict[str, Entry], source: Optional[JsonDict] = None
         return "animal"
     if "food" in tokens:
         return "food"
+    if "environment" in entry_kinds(subject):
+        return "environment"
     if "sign" in subject_id or "screen" in tokens or "text" in tokens:
         return "sign"
     object_signals = {
@@ -1329,6 +1340,9 @@ def infer_preset_domains(preset: JsonDict) -> Set[str]:
         "street": ("street", "bus_stop", "subway", "alley", "pojangmacha"),
         "urban": ("urban", "city", "neon", "hotel_corridor", "laundromat", "parking"),
         "architecture": ("architecture", "real_estate", "interior", "brutalist"),
+        "science_inspection": ("science", "scientific", "laboratory", "measurement", "inspection", "sensor survey"),
+        "mobility_logistics": ("mobility", "logistics", "warehouse flow", "transit maintenance", "parcel sorting"),
+        "climate_adaptation": ("climate adaptation", "resilience", "heat monitoring", "air quality", "coastal erosion"),
         "surreal": ("surreal", "fantasy", "impossible", "dream"),
         "adult": ("adult", "boudoir", "fetish", "lingerie"),
     }
@@ -3253,6 +3267,58 @@ def candidate_pack_quality_add_facet(
             facets.setdefault(key, set()).add(value)
 
 
+QUALITY_TAG_FACET_SOURCE_SLOTS: Dict[str, Set[str]] = {
+    "subject_kind": {"subject"},
+    "place_type": {"subject", "location"},
+    "time_of_day": {"time_of_day", "weather", "lighting", "location"},
+    "weather": {"weather", "location"},
+    "lighting_family": {"lighting"},
+    "mood_family": {"mood", "genre"},
+    "camera_register": {"medium", "camera_type", "capture_context"},
+    "shot_scale": {"shot_scale", "composition"},
+    "camera_angle": {"camera_direction", "composition"},
+    "placement": {"composition", "platform_framing"},
+    "platform_frame": {"composition", "platform_framing"},
+    "relation_type": {"action", "relational_action", "procedure_step", "motion"},
+    "event_phase": {"action", "procedure_step", "capture_context"},
+    "process_stage": {"action", "procedure_step", "capture_context", "prop"},
+    "capture_modality": {"medium", "camera_type", "capture_context"},
+    "weather_effect": {"weather", "motion", "location"},
+    "movement_type": {"action", "motion"},
+    "robot_form": {"subject"},
+    "robot_degree": {"subject"},
+    "robot_proof_family": {"subject"},
+    "robot_metaphor": {"subject"},
+    "robot_condition": {"subject"},
+}
+STRICT_TAG_FACET_SOURCE_DOMAINS = {
+    "science_inspection",
+    "mobility_logistics",
+    "climate_adaptation",
+}
+
+
+def candidate_pack_quality_inferred_tag_facet_keys(
+    vocab: Dict[str, Set[str]],
+    slot: str,
+    strict: bool = False,
+) -> Set[str]:
+    """Limit implicit tag-to-facet inference for migrated typed domains.
+
+    Explicit ``facets`` remain valid on every entry. The slot boundary only
+    prevents incidental tokens such as ``street`` in a focus-mode tag from
+    being misread as the scene's actual place type. Legacy domains retain
+    their historical inference until their dictionaries are facet-migrated.
+    """
+    allowed = set(vocab)
+    if not strict:
+        return allowed
+    for facet_key, source_slots in QUALITY_TAG_FACET_SOURCE_SLOTS.items():
+        if slot not in source_slots:
+            allowed.discard(facet_key)
+    return allowed
+
+
 def candidate_pack_quality_add_entry_facets(
     facets: Dict[str, Set[str]],
     vocab: Dict[str, Set[str]],
@@ -3426,6 +3492,12 @@ def candidate_pack_quality_profile_id(data: JsonDict, preset: JsonDict, facets: 
     subject_kinds = facets.get("subject_kind", set())
     mood_families = facets.get("mood_family", set())
     blob = candidate_pack_quality_entry_match_blob(preset)
+    if "science_inspection" in domains:
+        return "science_inspection"
+    if "mobility_logistics" in domains:
+        return "mobility_logistics"
+    if "climate_adaptation" in domains:
+        return "climate_adaptation"
     if "food" in subject_kinds or "food" in domains:
         return "food"
     if "architecture" in domains or "real_estate" in domains or any(term in blob for term in ("architecture", "interior", "building")):
@@ -3457,12 +3529,22 @@ def candidate_pack_quality_profile(
     preset = candidate_pack_preset_by_id(data, preset_id) if preset_id else None
     if isinstance(preset, dict):
         candidate_pack_quality_add_entry_facets(facets, vocab, preset, include_subject_kind=False)
+    strict_tag_facet_sources = bool(
+        isinstance(preset, dict)
+        and preset_domains(preset, data) & STRICT_TAG_FACET_SOURCE_DOMAINS
+    )
 
     choices = result.get("choices") if isinstance(result.get("choices"), dict) else {}
     for slot, choice in choices.items():
         if isinstance(choice, dict):
             candidate_pack_quality_add_entry_facets(
-                facets, vocab, choice, include_subject_kind=str(slot) == "subject"
+                facets,
+                vocab,
+                choice,
+                inferred_tag_facet_keys=candidate_pack_quality_inferred_tag_facet_keys(
+                    vocab, str(slot), strict=strict_tag_facet_sources
+                ),
+                include_subject_kind=str(slot) == "subject",
             )
 
     for slot, slot_payload in slots.items():
@@ -3479,7 +3561,13 @@ def candidate_pack_quality_profile(
         entry = candidate_pack_slot_entry_by_id(data, str(slot), entry_id) or entry
         if isinstance(entry, dict):
             candidate_pack_quality_add_entry_facets(
-                facets, vocab, entry, include_subject_kind=str(slot) == "subject"
+                facets,
+                vocab,
+                entry,
+                inferred_tag_facet_keys=candidate_pack_quality_inferred_tag_facet_keys(
+                    vocab, str(slot), strict=strict_tag_facet_sources
+                ),
+                include_subject_kind=str(slot) == "subject",
             )
 
     matched_facets = candidate_pack_quality_add_intent_facets(facets, vocab, data, mandatory_intents)
@@ -3520,10 +3608,19 @@ def candidate_pack_quality_profile_from_selected(
     vocab = candidate_pack_quality_facet_vocab(data)
     facets: Dict[str, Set[str]] = {}
     candidate_pack_quality_add_entry_facets(facets, vocab, preset, include_subject_kind=False)
+    strict_tag_facet_sources = bool(
+        preset_domains(preset, data) & STRICT_TAG_FACET_SOURCE_DOMAINS
+    )
     for slot, entry in picked.items():
         if isinstance(entry, dict):
             candidate_pack_quality_add_entry_facets(
-                facets, vocab, entry, include_subject_kind=str(slot) == "subject"
+                facets,
+                vocab,
+                entry,
+                inferred_tag_facet_keys=candidate_pack_quality_inferred_tag_facet_keys(
+                    vocab, str(slot), strict=strict_tag_facet_sources
+                ),
+                include_subject_kind=str(slot) == "subject",
             )
     return {
         "profile_id": candidate_pack_quality_profile_id(data, preset, facets),

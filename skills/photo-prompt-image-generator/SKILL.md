@@ -27,6 +27,9 @@ Do not load every reference for a simple prompt request.
 - `assets/concept_recipes.json`: Korean concepts, identity cores, scene variants, guides, and gates.
 - `assets/photo_prompt_quality_layers.json`: domain quality profiles and photographic decision layers.
 - `assets/photo_prompt_semantic_index.json`: semantic retrieval index.
+- `assets/generalization_cases.jsonl`: inspectable public contract and anti-overfitting cases.
+- `assets/generalization_holdout_cases.jsonl` and `assets/generalization_domain_holdout_v2.jsonl`: frozen rule-mode holdouts.
+- `assets/visual_review_domain_extension_plan.json`: pending rendered-image review cases, not acceptance evidence.
 
 Prefer `.venv/bin/python` when the project virtual environment exists. Rule mode works without an API key. Semantic mode requires the configured Gemini dependency and `GEMINI_API_KEY` or `GOOGLE_API_KEY`.
 

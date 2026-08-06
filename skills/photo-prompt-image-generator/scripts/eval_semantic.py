@@ -53,6 +53,7 @@ DEFAULT_INDEX = Path(__file__).resolve().parents[1] / "assets" / "photo_prompt_s
 DEFAULT_CONCEPT_RECIPES = Path(__file__).resolve().parents[1] / "assets" / "concept_recipes.json"
 DEFAULT_GENERALIZATION_CASES = Path(__file__).resolve().parents[1] / "assets" / "generalization_cases.jsonl"
 DEFAULT_GENERALIZATION_HOLDOUT_CASES = Path(__file__).resolve().parents[1] / "assets" / "generalization_holdout_cases.jsonl"
+DEFAULT_DOMAIN_HOLDOUT_V2_CASES = Path(__file__).resolve().parents[1] / "assets" / "generalization_domain_holdout_v2.jsonl"
 WRAPPER_PATH = Path(__file__).resolve().with_name("generate_photo_prompt.py")
 PROJECT_ROOT = Path(__file__).resolve().parents[1].parents[1]
 
@@ -2491,6 +2492,8 @@ def main() -> int:
     parser.add_argument("--generalization-cases", default=DEFAULT_GENERALIZATION_CASES, help="Path to held-out JSONL cases for --generalization-check.")
     parser.add_argument("--holdout-check", action="store_true", help="Run the frozen rule-mode holdout suite independently from the public generalization cases.")
     parser.add_argument("--holdout-cases", default=DEFAULT_GENERALIZATION_HOLDOUT_CASES, help="Path to frozen JSONL cases for --holdout-check and the quality gate.")
+    parser.add_argument("--domain-holdout-v2-check", action="store_true", help="Run the frozen v2 rule-mode holdout for science, mobility, and climate domain packs.")
+    parser.add_argument("--domain-holdout-v2-cases", default=DEFAULT_DOMAIN_HOLDOUT_V2_CASES, help="Path to the frozen domain holdout v2 cases for the standalone check and quality gate.")
     parser.add_argument("--quality-gate", action="store_true", help="Run the real embedding quality gate for semantic concept benchmarks and regression checks.")
     parser.add_argument("--acceptance-gate", action="store_true", help="Run the full quality gate and require a passing --visual-review artifact.")
     parser.add_argument("--quality-runs", type=int, default=2, help="Number of seeds per concept benchmark case for --quality-gate.")
@@ -2566,6 +2569,7 @@ def main() -> int:
                     "concept_benchmark_cases": len(CONCEPT_BENCHMARK_CASES),
                     "generalization_cases": len(load_generalization_cases(Path(args.generalization_cases))),
                     "holdout_cases": len(load_generalization_cases(Path(args.holdout_cases))),
+                    "domain_holdout_v2_cases": len(load_generalization_cases(Path(args.domain_holdout_v2_cases))),
                 },
                 indent=2,
             )
@@ -2574,7 +2578,7 @@ def main() -> int:
 
     import prompt_generator as generator_module
 
-    if args.generalization_check or args.holdout_check:
+    if args.generalization_check or args.holdout_check or args.domain_holdout_v2_check:
         summary: JsonDict = {}
         if args.generalization_check:
             summary["generalization_check"] = evaluate_generalization_check(
@@ -2587,6 +2591,13 @@ def main() -> int:
             summary["holdout_check"] = evaluate_generalization_check(
                 tags_path,
                 Path(args.holdout_cases),
+                args.seed,
+                args.limit,
+            )
+        if args.domain_holdout_v2_check:
+            summary["domain_holdout_v2_check"] = evaluate_generalization_check(
+                tags_path,
+                Path(args.domain_holdout_v2_cases),
                 args.seed,
                 args.limit,
             )
@@ -2724,6 +2735,12 @@ def main() -> int:
                     args.seed,
                     args.limit,
                 ),
+                "domain_holdout_v2_check": evaluate_generalization_check(
+                    tags_path,
+                    Path(args.domain_holdout_v2_cases),
+                    args.seed,
+                    args.limit,
+                ),
                 "preset_guards": evaluate_preset_guards(data, MULTI_AXIS_PRESET_GUARDS, args.seed, semantic_index, gemini_api_key),
                 "multi_axis_coverage": evaluate_multi_axis_coverage(data, MULTI_AXIS_COVERAGE_CASES, args.seed, semantic_index, gemini_api_key),
             }
@@ -2746,6 +2763,7 @@ def main() -> int:
                 or summary["candidate_pack_coverage"]["failed_case_count"] > 0
                 or summary["generalization_check"]["failed_case_count"] > 0
                 or summary["holdout_check"]["failed_case_count"] > 0
+                or summary["domain_holdout_v2_check"]["failed_case_count"] > 0
                 or summary["preset_guards"]["blacklisted_case_count"] > 0
                 or summary["multi_axis_coverage"]["failed_case_count"] > 0
                 or (args.quality_require_soft and not soft_ready)
