@@ -91,6 +91,9 @@ CANDIDATE_PACK_PRESET_LIMIT = 4
 CANDIDATE_PACK_CORE_SLOT_LIMIT = 4
 CANDIDATE_PACK_SUPPORT_SLOT_LIMIT = 2
 CANDIDATE_PACK_TOTAL_CANDIDATE_LIMIT = 64
+CANDIDATE_PACK_CREATIVE_EXPLORATION_FLOOR = 0.75
+CANDIDATE_PACK_CREATIVE_EXPLORATION_MIN_DISTANCE = 0.45
+CANDIDATE_PACK_CREATIVE_EXPLORATION_LIMIT = 6
 CANDIDATE_PACK_CORE_SLOTS = {
     "subject",
     "appearance_type",
@@ -121,6 +124,40 @@ CANDIDATE_PACK_CORE_SLOTS = {
     "platform_framing",
     "subject_framing",
     "camera_direction",
+}
+CANDIDATE_PACK_CREATIVE_EXPLORATION_SLOTS = {
+    "action",
+    "aftermath_trace",
+    "ambient_particle",
+    "camera_direction",
+    "camera_height",
+    "camera_type",
+    "composition",
+    "concept_tension",
+    "crowd_density",
+    "duty_prop_state",
+    "frame_anchor_medium",
+    "lens",
+    "light_direction",
+    "light_intensity",
+    "light_shape",
+    "light_type",
+    "lighting",
+    "location",
+    "mood",
+    "narrative_core",
+    "occasion_context",
+    "procedure_step",
+    "prop",
+    "relational_action",
+    "sensory_focus",
+    "shot_scale",
+    "situation_context",
+    "space_condition",
+    "subject_framing",
+    "time_of_day",
+    "viewer_position",
+    "weather",
 }
 CANDIDATE_PACK_INTENT_STOPWORDS = {
     "달린",
@@ -2690,6 +2727,134 @@ def candidate_pack_diversity_state(trace: JsonDict) -> JsonDict:
     }
 
 
+def candidate_pack_creative_feature_tokens(entry: JsonDict) -> Set[str]:
+    values: List[str] = []
+    for key in ("en", "ko", "aliases", "keywords", "tags", "kind"):
+        raw = entry.get(key)
+        if isinstance(raw, list):
+            values.extend(str(item) for item in raw)
+        elif raw is not None:
+            values.append(str(raw))
+    tokens = {
+        str(token).lower()
+        for token in candidate_pack_tokenize_intent_text(
+            " ".join(values).replace("_", " ").replace("-", " ")
+        )
+        if str(token).strip()
+    }
+    tokens.update(str(token).lower() for token in facet_tokens(entry))
+    if not tokens and entry.get("id"):
+        tokens.update(
+            str(token).lower()
+            for token in candidate_pack_tokenize_intent_text(str(entry["id"]).replace("_", " "))
+        )
+    return tokens
+
+
+def candidate_pack_creative_feature_distance(left: JsonDict, right: JsonDict) -> tuple[float, int, int]:
+    left_tokens = candidate_pack_creative_feature_tokens(left)
+    right_tokens = candidate_pack_creative_feature_tokens(right)
+    union = left_tokens | right_tokens
+    shared = left_tokens & right_tokens
+    if not union:
+        return 0.0, 0, 0
+    return round(1.0 - (len(shared) / len(union)), 6), len(shared), len(union)
+
+
+def candidate_pack_creative_exploration(
+    result: JsonDict,
+    slots: JsonDict,
+    candidate_entries: Dict[str, tuple[str, Optional[str], JsonDict]],
+) -> Optional[JsonDict]:
+    provenance = result.get("provenance") if isinstance(result.get("provenance"), dict) else {}
+    creativity = candidate_pack_float(provenance.get("creativity"))
+    if creativity is None or creativity < CANDIDATE_PACK_CREATIVE_EXPLORATION_FLOOR:
+        return None
+
+    selected_ids = {
+        str(slot_payload.get("selected") or "")
+        for slot_payload in slots.values()
+        if isinstance(slot_payload, dict) and str(slot_payload.get("selected") or "")
+    }
+    contrast_rows: List[JsonDict] = []
+    for slot in sorted(CANDIDATE_PACK_CREATIVE_EXPLORATION_SLOTS):
+        slot_payload = slots.get(slot)
+        if not isinstance(slot_payload, dict):
+            continue
+        selected_id = str(slot_payload.get("selected") or "")
+        selected_record = candidate_entries.get(selected_id)
+        if not selected_id or not selected_record or selected_record[0] != "slot":
+            continue
+        selected_entry = selected_record[2]
+        alternatives: List[JsonDict] = []
+        for rank, candidate in enumerate(slot_payload.get("candidates") or [], start=1):
+            if not isinstance(candidate, dict) or candidate.get("selected_by_sampler"):
+                continue
+            candidate_id = str(candidate.get("id") or "")
+            applicability = candidate.get("applicability") if isinstance(candidate.get("applicability"), dict) else {}
+            if (
+                applicability.get("status") != "eligible"
+                or applicability.get("source") != "sampler_eligible_pool"
+            ):
+                continue
+            if set(normalize_list(candidate.get("conflicts_with"))) & (selected_ids - {selected_id}):
+                continue
+            entry_record = candidate_entries.get(candidate_id)
+            if not entry_record or entry_record[0] != "slot":
+                continue
+            distance, shared_count, union_count = candidate_pack_creative_feature_distance(
+                selected_entry, entry_record[2]
+            )
+            if distance < CANDIDATE_PACK_CREATIVE_EXPLORATION_MIN_DISTANCE:
+                continue
+            alternatives.append(
+                {
+                    "slot": slot,
+                    "candidate_id": candidate_id,
+                    "replaces_candidate_id": selected_id,
+                    "feature_distance": distance,
+                    "shared_feature_count": shared_count,
+                    "feature_union_count": union_count,
+                    "relevance_rank": rank,
+                    "applicability_source": "sampler_eligible_pool",
+                }
+            )
+        if alternatives:
+            alternatives.sort(
+                key=lambda row: (
+                    -float(row["feature_distance"]),
+                    int(row["relevance_rank"]),
+                    str(row["candidate_id"]),
+                )
+            )
+            contrast_rows.append(alternatives[0])
+
+    contrast_rows.sort(
+        key=lambda row: (
+            -float(row["feature_distance"]),
+            int(row["relevance_rank"]),
+            str(row["slot"]),
+            str(row["candidate_id"]),
+        )
+    )
+    contrast_rows = contrast_rows[:CANDIDATE_PACK_CREATIVE_EXPLORATION_LIMIT]
+    return {
+        "enabled": True,
+        "strategy": "relevance_anchored_contrast",
+        "creativity": creativity,
+        "activation_floor": CANDIDATE_PACK_CREATIVE_EXPLORATION_FLOOR,
+        "minimum_feature_distance": CANDIDATE_PACK_CREATIVE_EXPLORATION_MIN_DISTANCE,
+        "source": "exposed_sampler_eligible_pool",
+        "contrast_candidate_count": len(contrast_rows),
+        "contrast_candidates": contrast_rows,
+        "composition_guidance": {
+            "keep": ["sampler_selected_subject", "mandatory_intents", "scene_contract"],
+            "replace_at_most": 2,
+            "require_no_conflicts": True,
+        },
+    }
+
+
 def candidate_pack_concept_axes(soft_policy: JsonDict) -> JsonDict:
     axes = normalize_reference_identity_axes(soft_policy.get("identity_axes"))
     return {
@@ -4382,6 +4547,7 @@ def build_candidate_pack(result: JsonDict, data: JsonDict) -> JsonDict:
             intent_row["covered_by"] = covered_by
             intent_row["status"] = "covered" if covered_by else "uncovered"
         uncovered_intents = [row for row in mandatory_intents if row.get("status") == "uncovered"]
+    creative_exploration = candidate_pack_creative_exploration(result, slots, candidate_entries)
     pack: JsonDict = {
         "contract_version": "photo-candidate-pack/v2",
         "pack_id": "",
@@ -4457,6 +4623,8 @@ def build_candidate_pack(result: JsonDict, data: JsonDict) -> JsonDict:
             "sample_prompt_id": provenance.get("prompt_id"),
         },
     }
+    if creative_exploration is not None:
+        pack["creative_exploration"] = creative_exploration
     hashable = dict(pack)
     hashable["pack_id"] = None
     pack["pack_id"] = stable_text_id(json.dumps(hashable, ensure_ascii=False, sort_keys=True, separators=(",", ":"))) or ""
@@ -13379,7 +13547,7 @@ def generate_once(
         ],
         "concept_scene_variants": normalize_list(concept_scene_variants),
         "safety": generation_contract.get("safety", {}),
-        "creativity": (semantic_context or {}).get("creativity"),
+        "creativity": creativity if creativity is not None else (semantic_context or {}).get("creativity"),
         "argv": list(source_argv or []),
     }
 

@@ -2673,17 +2673,54 @@
     },
     "사진작가": {
       "preset": "analog_personal_brand_portrait",
-      "set": [
-        "subject=photographer_role_model",
-        "costume_style=photographer_utility_vest_costume",
-        "location=photo_studio_darkroom",
-        "action=adjusting_camera_lens",
-        "prop=camera_lens_prop"
+      "identity_core": {
+        "subject": "photographer_role_model",
+        "costume_style": "photographer_utility_vest_costume"
+      },
+      "scene_variants": [
+        {
+          "id": "darkroom_lens_check",
+          "weight": 1.0,
+          "set": {
+            "location": "photo_studio_darkroom",
+            "action": "adjusting_camera_lens",
+            "prop": "camera_lens_prop"
+          },
+          "intent_axis": [
+            "photographer checking a camera lens in a working darkroom"
+          ]
+        },
+        {
+          "id": "wildlife_corridor_record",
+          "weight": 0.9,
+          "set": {
+            "location": "woodland_wildlife_corridor",
+            "action": "recording_nocturnal_animal_passage",
+            "prop": "camera_trap_reference_marker"
+          },
+          "intent_axis": [
+            "field photographer documenting a nocturnal wildlife passage from a fixed observation point"
+          ]
+        },
+        {
+          "id": "contact_sheet_archive",
+          "weight": 0.8,
+          "set": {
+            "location": "archive_room",
+            "action": "arranging_archive_photos_no_text",
+            "prop": "film_roll_contact_sheet_prop"
+          },
+          "intent_axis": [
+            "photographer editing a film contact sheet in a quiet archive room"
+          ]
+        }
       ],
       "soft_anchor_slots": [
         "subject",
         "costume_style",
-        "location"
+        "location",
+        "action",
+        "prop"
       ],
       "soft_min_anchors": 2,
       "additional": [
@@ -3026,17 +3063,42 @@
     },
     "우주비행사": {
       "preset": "deepsea_space_ops_unit",
-      "set": [
-        "subject=astronaut_role_model",
-        "costume_style=astronaut_flight_suit_costume",
-        "location=spacecraft_cupola",
-        "action=floating_weightless_pose",
-        "prop=astronaut_helmet_prop"
+      "identity_core": {
+        "subject": "astronaut_role_model",
+        "costume_style": "astronaut_flight_suit_costume"
+      },
+      "scene_variants": [
+        {
+          "id": "cupola_weightlessness",
+          "weight": 1.0,
+          "set": {
+            "location": "spacecraft_cupola",
+            "action": "floating_weightless_pose",
+            "prop": "astronaut_helmet_prop"
+          },
+          "intent_axis": [
+            "astronaut floating beside a helmet in a spacecraft cupola"
+          ]
+        },
+        {
+          "id": "orbital_mission_briefing",
+          "weight": 0.9,
+          "set": {
+            "location": "orbital_station_interior",
+            "action": "reading_sealed_orders",
+            "prop": "sealed_mission_envelope_prop"
+          },
+          "intent_axis": [
+            "astronaut reading a sealed mission brief inside an orbital station"
+          ]
+        }
       ],
       "soft_anchor_slots": [
         "subject",
         "costume_style",
-        "location"
+        "location",
+        "action",
+        "prop"
       ],
       "soft_min_anchors": 2,
       "additional": [
@@ -3517,17 +3579,54 @@
     },
     "큐레이터": {
       "preset": "archivist_library_observation",
-      "set": [
-        "subject=museum_curator_role_model",
-        "costume_style=curator_suit_gloves_costume",
-        "location=museum_gallery_after_hours",
-        "action=cataloging_artifact",
-        "prop=museum_label_card_prop"
+      "identity_core": {
+        "subject": "museum_curator_role_model",
+        "costume_style": "curator_suit_gloves_costume"
+      },
+      "scene_variants": [
+        {
+          "id": "after_hours_catalog",
+          "weight": 1.0,
+          "set": {
+            "location": "museum_gallery_after_hours",
+            "action": "cataloging_artifact",
+            "prop": "museum_label_card_prop"
+          },
+          "intent_axis": [
+            "museum curator cataloging one artifact after gallery hours"
+          ]
+        },
+        {
+          "id": "white_cube_install",
+          "weight": 0.9,
+          "set": {
+            "location": "art_gallery_white_hall",
+            "action": "setting_up_gallery_wall",
+            "prop": "white_cotton_gloves_prop"
+          },
+          "intent_axis": [
+            "curator preparing one labeled gallery wall in a white-cube hall"
+          ]
+        },
+        {
+          "id": "microfilm_provenance_check",
+          "weight": 0.8,
+          "set": {
+            "location": "archive_room",
+            "action": "scanning_microfilm",
+            "prop": "microfilm_reader_prop"
+          },
+          "intent_axis": [
+            "curator checking artifact provenance on a microfilm reader"
+          ]
+        }
       ],
       "soft_anchor_slots": [
         "subject",
         "costume_style",
-        "location"
+        "location",
+        "action",
+        "prop"
       ],
       "soft_min_anchors": 2,
       "additional": [
@@ -3575,17 +3674,42 @@
     },
     "플로리스트": {
       "preset": "botanical_greenhouse_editorial",
-      "set": [
-        "subject=florist_arranging_bouquet",
-        "wardrobe_style=knit_cardigan_jeans",
-        "location=flower_shop_counter",
-        "action=arranging_flower_order",
-        "prop=flower_order_card_prop"
+      "identity_core": {
+        "subject": "florist_arranging_bouquet",
+        "wardrobe_style": "knit_cardigan_jeans"
+      },
+      "scene_variants": [
+        {
+          "id": "shop_order_arrangement",
+          "weight": 1.0,
+          "set": {
+            "location": "flower_shop_counter",
+            "action": "arranging_flower_order",
+            "prop": "flower_order_card_prop"
+          },
+          "intent_axis": [
+            "florist arranging one customer flower order at the shop counter"
+          ]
+        },
+        {
+          "id": "market_bundle_selection",
+          "weight": 0.9,
+          "set": {
+            "location": "flower_market_awning",
+            "action": "standing_under_flower_awning",
+            "prop": "market_flower_bundle_prop"
+          },
+          "intent_axis": [
+            "florist selecting one fresh bundle beneath a flower-market awning"
+          ]
+        }
       ],
       "soft_anchor_slots": [
         "subject",
-        "costume_style",
-        "location"
+        "wardrobe_style",
+        "location",
+        "action",
+        "prop"
       ],
       "soft_min_anchors": 2,
       "additional": [
@@ -3691,17 +3815,54 @@
     },
     "바리스타": {
       "preset": "tray_handoff_counter",
-      "set": [
-        "subject=young_barista",
-        "location=service_counter_close",
-        "action=setting_down_dessert_with_small_thunk",
-        "prop=coffee_cup_prop",
-        "relational_action=placing_hot_drink_without_eye_contact"
+      "identity_core": {
+        "subject": "young_barista"
+      },
+      "scene_variants": [
+        {
+          "id": "counter_dessert_handoff",
+          "weight": 1.0,
+          "set": {
+            "location": "service_counter_close",
+            "action": "setting_down_dessert_with_small_thunk",
+            "prop": "coffee_cup_prop",
+            "relational_action": "placing_hot_drink_without_eye_contact"
+          },
+          "intent_axis": [
+            "barista placing one hot drink and dessert across a narrow service counter"
+          ]
+        },
+        {
+          "id": "closing_counter_wipe",
+          "weight": 0.9,
+          "set": {
+            "location": "local_cafe_closing_window",
+            "action": "wiping_cafe_counter_closing",
+            "prop": "paper_coffee_receipt"
+          },
+          "intent_axis": [
+            "barista wiping the cafe counter beside the final receipt near closing time"
+          ]
+        },
+        {
+          "id": "quiet_afternoon_pour",
+          "weight": 0.8,
+          "set": {
+            "location": "quiet_cafe",
+            "action": "pouring_coffee",
+            "prop": "moka_pot_coffee_beans_prop"
+          },
+          "intent_axis": [
+            "barista pouring coffee beside a moka pot in a quiet afternoon cafe"
+          ]
+        }
       ],
       "soft_anchor_slots": [
         "subject",
         "location",
-        "action"
+        "action",
+        "prop",
+        "relational_action"
       ],
       "soft_min_anchors": 2,
       "additional": [
@@ -3838,17 +3999,54 @@
     },
     "도서관 사서": {
       "preset": "used_bookshop_reserved_note",
-      "set": [
-        "subject=librarian_at_desk",
-        "location=used_bookshop_aisle",
-        "action=passing_note_from_behind_prop",
-        "prop=pressed_flower_blank_note_prop",
-        "relational_action=passing_note_from_behind_prop"
+      "identity_core": {
+        "subject": "librarian_at_desk"
+      },
+      "scene_variants": [
+        {
+          "id": "reserved_note_handoff",
+          "weight": 1.0,
+          "set": {
+            "location": "used_bookshop_aisle",
+            "action": "passing_note_from_behind_prop",
+            "prop": "pressed_flower_blank_note_prop",
+            "relational_action": "passing_note_from_behind_prop"
+          },
+          "intent_axis": [
+            "librarian quietly passing one reserved note from behind a book"
+          ]
+        },
+        {
+          "id": "manuscript_archive_sort",
+          "weight": 0.9,
+          "set": {
+            "location": "library_archive_room",
+            "action": "organizing_old_manuscripts",
+            "prop": "archive_box_prop"
+          },
+          "intent_axis": [
+            "librarian organizing one archive box of old manuscripts"
+          ]
+        },
+        {
+          "id": "microfilm_lookup",
+          "weight": 0.8,
+          "set": {
+            "location": "archive_room",
+            "action": "scanning_microfilm",
+            "prop": "microfilm_reader_prop"
+          },
+          "intent_axis": [
+            "librarian checking one microfilm record in a quiet archive room"
+          ]
+        }
       ],
       "soft_anchor_slots": [
         "subject",
         "location",
-        "action"
+        "action",
+        "prop",
+        "relational_action"
       ],
       "soft_min_anchors": 2,
       "additional": [
@@ -3867,17 +4065,57 @@
     },
     "정비사": {
       "preset": "garage_returned_key_aftercare",
-      "set": [
-        "subject=garage_mechanic",
-        "location=auto_repair_garage",
-        "action=returning_lost_item_reluctantly",
-        "prop=returned_keychain_prop",
-        "relational_action=returning_lost_item_reluctantly"
+      "identity_core": {
+        "subject": "garage_mechanic"
+      },
+      "scene_variants": [
+        {
+          "id": "returned_key_aftercare",
+          "weight": 1.0,
+          "set": {
+            "location": "auto_repair_garage",
+            "action": "returning_lost_item_reluctantly",
+            "prop": "returned_keychain_prop",
+            "relational_action": "returning_lost_item_reluctantly"
+          },
+          "intent_axis": [
+            "garage mechanic returning one repaired vehicle key after service"
+          ]
+        },
+        {
+          "id": "garage_pit_inspection",
+          "weight": 0.9,
+          "set": {
+            "location": "repair_garage_pit",
+            "action": "kneeling_for_inspection",
+            "prop": "socket_wrench_prop",
+            "procedure_step": "safety_inspection"
+          },
+          "intent_axis": [
+            "mechanic kneeling for one safety inspection in an auto repair pit"
+          ]
+        },
+        {
+          "id": "electrical_fault_diagnosis",
+          "weight": 0.8,
+          "set": {
+            "location": "garage_workbench",
+            "action": "testing_component_continuity",
+            "prop": "multimeter_probe_pair",
+            "procedure_step": "repair_diagnosis_step"
+          },
+          "intent_axis": [
+            "mechanic isolating one electrical fault with multimeter probes at a garage workbench"
+          ]
+        }
       ],
       "soft_anchor_slots": [
         "subject",
         "location",
-        "action"
+        "action",
+        "prop",
+        "relational_action",
+        "procedure_step"
       ],
       "soft_min_anchors": 2,
       "additional": [
@@ -3954,16 +4192,52 @@
     },
     "도예가": {
       "preset": "documentary_craftsperson_workshop",
-      "set": [
-        "subject=ceramic_artist",
-        "location=craft_workshop",
-        "action=held_in_hand",
-        "prop=handmade_ceramic_cup_prop"
+      "identity_core": {
+        "subject": "ceramic_artist"
+      },
+      "scene_variants": [
+        {
+          "id": "finished_cup_inspection",
+          "weight": 1.0,
+          "set": {
+            "location": "craft_workshop",
+            "action": "held_in_hand",
+            "prop": "handmade_ceramic_cup_prop"
+          },
+          "intent_axis": [
+            "ceramic artist inspecting one handmade cup in a craft workshop"
+          ]
+        },
+        {
+          "id": "studio_material_preparation",
+          "weight": 0.9,
+          "set": {
+            "location": "ceramics_studio",
+            "action": "prepping_workshop_materials",
+            "prop": "craft_tools_scattered_prop"
+          },
+          "intent_axis": [
+            "ceramic artist preparing clay tools for one studio work session"
+          ]
+        },
+        {
+          "id": "catalog_tabletop_arrangement",
+          "weight": 0.8,
+          "set": {
+            "location": "craft_catalog_tabletop",
+            "action": "neatly_arranged",
+            "prop": "handmade_ceramic_cup_prop"
+          },
+          "intent_axis": [
+            "ceramic artist arranging one finished cup for a craft catalog photograph"
+          ]
+        }
       ],
       "soft_anchor_slots": [
         "subject",
         "location",
-        "action"
+        "action",
+        "prop"
       ],
       "soft_min_anchors": 2,
       "additional": [
@@ -3982,16 +4256,52 @@
     },
     "농부": {
       "preset": "farm_dawn_worker",
-      "set": [
-        "subject=farmer_at_dawn",
-        "location=wet_market_auction_aisle",
-        "action=standing_silence",
-        "prop=warm_thermos_cup_prop"
+      "identity_core": {
+        "subject": "farmer_at_dawn"
+      },
+      "scene_variants": [
+        {
+          "id": "market_auction_pause",
+          "weight": 1.0,
+          "set": {
+            "location": "wet_market_auction_aisle",
+            "action": "standing_silence",
+            "prop": "warm_thermos_cup_prop"
+          },
+          "intent_axis": [
+            "farmer pausing with a thermos in a dawn produce-auction aisle"
+          ]
+        },
+        {
+          "id": "terraced_rice_transplant",
+          "weight": 0.9,
+          "set": {
+            "location": "terraced_rice_paddy",
+            "action": "transplanting_rice",
+            "prop": "harvest_scale_crates_prop"
+          },
+          "intent_axis": [
+            "farmer transplanting one row of rice seedlings at dawn"
+          ]
+        },
+        {
+          "id": "cooperative_harvest_grading",
+          "weight": 0.8,
+          "set": {
+            "location": "cooperative_farm_wash_station",
+            "action": "sorting_harvest_by_grade",
+            "prop": "produce_grade_crate"
+          },
+          "intent_axis": [
+            "farmer grading one harvest batch at a cooperative wash station"
+          ]
+        }
       ],
       "soft_anchor_slots": [
         "subject",
         "location",
-        "action"
+        "action",
+        "prop"
       ],
       "soft_min_anchors": 2,
       "additional": [
@@ -4122,16 +4432,52 @@
     },
     "기자": {
       "preset": "studio_interview_portrait",
-      "set": [
-        "subject=field_reporter",
-        "location=under_awning_rain_stop",
-        "action=holding_story_prop",
-        "prop=handheld_microphone"
+      "identity_core": {
+        "subject": "field_reporter"
+      },
+      "scene_variants": [
+        {
+          "id": "rain_awning_standup",
+          "weight": 1.0,
+          "set": {
+            "location": "under_awning_rain_stop",
+            "action": "holding_story_prop",
+            "prop": "handheld_microphone"
+          },
+          "intent_axis": [
+            "field reporter preparing one stand-up beneath an awning after rain"
+          ]
+        },
+        {
+          "id": "yellow_tape_report",
+          "weight": 0.9,
+          "set": {
+            "location": "yellow_tape_alley_reportage",
+            "action": "reporting_near_yellow_tape",
+            "prop": "handheld_microphone"
+          },
+          "intent_axis": [
+            "field reporter delivering one update outside a secured yellow-tape alley"
+          ]
+        },
+        {
+          "id": "newsroom_live_update",
+          "weight": 0.8,
+          "set": {
+            "location": "newsroom_anchor_desk",
+            "action": "reading_teleprompter",
+            "prop": "handheld_microphone"
+          },
+          "intent_axis": [
+            "reporter reading one live update at a newsroom anchor desk"
+          ]
+        }
       ],
       "soft_anchor_slots": [
         "subject",
         "location",
-        "action"
+        "action",
+        "prop"
       ],
       "soft_min_anchors": 2,
       "additional": [

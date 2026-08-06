@@ -76,6 +76,25 @@ Fix every failure and rerun. Warnings are a separate quality signal; inspect the
 
 4. If the user asked only for a prompt, return the audited `prompt_en`. If the user asked for an image, follow `references/image-runtime.md`.
 
+## Creative Discovery Workflow
+
+Use the existing creativity lever when the user wants broader exploration rather than a single conservative interpretation:
+
+```bash
+.venv/bin/python skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py \
+  --concept "도예가" --creativity 0.85 --emit-candidate-pack --n 1
+```
+
+- `0..0.25`: conservative neighborhood and low novelty.
+- `0.5`: balanced exploration.
+- `0.75..1.0`: exploratory neighborhood and high novelty; candidate packs also mark bounded, relevance-preserving contrast candidates from the already exposed eligible pool. Prefer this range only when the user explicitly asks for creative alternatives.
+- The lever changes novelty and semantic candidate breadth. It does not relax applicability, conflict, theme, safety, or filter coherence.
+- Explicit `--novelty` or `--semantic-profile` values take precedence over the corresponding derived setting.
+- Add `--selection-mode rule` for offline, reproducible inspection. Rule mode keeps its deterministic sampler; the creativity value is still carried as an explicit candidate-pack exploration request.
+- For a role with `scene_variants`, change `--seed` to explore another atomic scene while keeping `identity_core` stable. Do not mix slots from separate variants.
+
+Keep the default workflow when the user did not ask for broader exploration. Do not silently raise creativity for ordinary prompt or image requests.
+
 ## Safety Contract
 
 Safety metadata is deliberately simple:
@@ -106,6 +125,7 @@ There is no separate approval flag or policy mode. This project-level automatic 
 - Preserve every `mandatory_intent` as visible image content. A candidate label is not proof of coverage.
 - Choose only IDs exposed in the pack whose `applicability.status` is `eligible`; never invent or reconstruct a masked candidate.
 - Treat `intent_contract` as typed request meaning and `scene_contract` as a hard boundary. An `atomic_scene` group may use only IDs allowed by that one selected variant.
+- When `creative_exploration` is present, keep the sampler-selected subject, mandatory intents, and scene contract. Replace at most the stated number of slots, and use only listed contrast IDs that remain conflict-free together.
 - Preserve `negative_en` byte-for-byte.
 - Respect hard conflicts, concept gates, enforced role-scene policy, and species-family locks.
 - `open_slots` expose only slot and bucket names. Invent a compatible detail; do not infer the hidden source choice.

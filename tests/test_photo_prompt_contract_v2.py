@@ -207,6 +207,122 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             self.assertNotIn("person_origin", forced)
         self.assertGreaterEqual(len(variant_ids), 2)
 
+    def test_creative_discovery_pilot_roles_keep_identity_and_reach_atomic_scenes(self):
+        expected_identity = {
+            "사진작가": {
+                "subject": ["photographer_role_model"],
+                "costume_style": ["photographer_utility_vest_costume"],
+            },
+            "바리스타": {"subject": ["young_barista"]},
+            "도예가": {"subject": ["ceramic_artist"]},
+            "농부": {"subject": ["farmer_at_dawn"]},
+            "기자": {"subject": ["field_reporter"]},
+            "우주비행사": {
+                "subject": ["astronaut_role_model"],
+                "costume_style": ["astronaut_flight_suit_costume"],
+            },
+            "큐레이터": {
+                "subject": ["museum_curator_role_model"],
+                "costume_style": ["curator_suit_gloves_costume"],
+            },
+            "정비사": {"subject": ["garage_mechanic"]},
+            "도서관 사서": {"subject": ["librarian_at_desk"]},
+            "플로리스트": {
+                "subject": ["florist_arranging_bouquet"],
+                "wardrobe_style": ["knit_cardigan_jeans"],
+            },
+        }
+        recipes = generate_photo_prompt.load_concept_recipes()
+
+        for role, identity in expected_identity.items():
+            with self.subTest(role=role):
+                recipe = recipes["roles"][role]
+                variants = recipe["scene_variants"]
+                expected_variant_ids = {variant["id"] for variant in variants}
+                self.assertGreaterEqual(len(expected_variant_ids), 2)
+                self.assertTrue(set(identity).isdisjoint({slot for variant in variants for slot in variant["set"]}))
+
+                observed_variant_ids = set()
+                for seed in range(1, 65):
+                    _args, explanations = generate_photo_prompt.resolve_concepts(
+                        ["--selection-mode", "rule", "--seed", str(seed)],
+                        [role],
+                        concept_mode="soft",
+                    )
+                    explanation = explanations[0]
+                    selected_scene = explanation["selected_scene_variants"][0]
+                    observed_variant_ids.add(selected_scene["id"])
+                    forced = explanation["combined_forced_slots"]
+                    for slot, ids in identity.items():
+                        self.assertEqual(forced[slot], ids)
+
+                    atomic_group = f"role_scene:{selected_scene['id']}"
+                    anchors = {
+                        anchor["slot"]: anchor
+                        for anchor in explanation["soft_anchor_spec"]["anchors"]
+                    }
+                    for slot, raw_ids in selected_scene["set"].items():
+                        ids = [raw_ids] if isinstance(raw_ids, str) else raw_ids
+                        self.assertEqual(anchors[slot]["pool"], ids)
+                        self.assertEqual(anchors[slot]["variant_group"], atomic_group)
+                        self.assertEqual(anchors[slot]["variant_strategy"], "atomic_scene")
+
+                self.assertEqual(observed_variant_ids, expected_variant_ids)
+
+    def test_high_creativity_marks_existing_contrasts_without_reordering_candidates(self):
+        base_args = (
+            "--concept",
+            "도예가",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "42",
+            "--emit-candidate-pack",
+        )
+        base_pack = self.run_wrapper(*base_args)[0]
+        low_pack = self.run_wrapper(*base_args, "--creativity", "0.74")[0]
+        creative_pack = self.run_wrapper(*base_args, "--creativity", "0.85")[0]
+        repeated_pack = self.run_wrapper(*base_args, "--creativity", "0.85")[0]
+
+        self.assertNotIn("creative_exploration", base_pack)
+        self.assertNotIn("creative_exploration", low_pack)
+        exploration = creative_pack["creative_exploration"]
+        self.assertEqual(exploration, repeated_pack["creative_exploration"])
+        self.assertEqual(exploration["source"], "exposed_sampler_eligible_pool")
+        self.assertGreater(exploration["contrast_candidate_count"], 0)
+
+        self.assertEqual(base_pack["presets"], creative_pack["presets"])
+        self.assertEqual(set(base_pack["slots"]), set(creative_pack["slots"]))
+        for slot in base_pack["slots"]:
+            base_slot = base_pack["slots"][slot]
+            creative_slot = creative_pack["slots"][slot]
+            self.assertEqual(base_slot["selected"], creative_slot["selected"])
+            self.assertEqual(
+                [candidate["id"] for candidate in base_slot["candidates"]],
+                [candidate["id"] for candidate in creative_slot["candidates"]],
+            )
+
+        selected_ids = {
+            slot_payload["selected"]
+            for slot_payload in creative_pack["slots"].values()
+            if slot_payload.get("selected")
+        }
+        for contrast in exploration["contrast_candidates"]:
+            slot_payload = creative_pack["slots"][contrast["slot"]]
+            candidates = {candidate["id"]: candidate for candidate in slot_payload["candidates"]}
+            candidate = candidates[contrast["candidate_id"]]
+            self.assertEqual(contrast["replaces_candidate_id"], slot_payload["selected"])
+            self.assertFalse(candidate["selected_by_sampler"])
+            self.assertEqual(candidate["applicability"]["status"], "eligible")
+            self.assertEqual(candidate["applicability"]["source"], "sampler_eligible_pool")
+            self.assertGreaterEqual(
+                contrast["feature_distance"],
+                exploration["minimum_feature_distance"],
+            )
+            self.assertFalse(
+                set(candidate["conflicts_with"]) & (selected_ids - {slot_payload["selected"]})
+            )
+
     def test_atomic_scene_candidate_pools_and_audit_are_fail_closed(self):
         pack = self.run_wrapper(
             "--concept",

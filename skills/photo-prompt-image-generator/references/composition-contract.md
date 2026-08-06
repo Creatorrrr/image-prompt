@@ -8,6 +8,8 @@ The audit rejects a changed pack, a list containing zero or multiple packs, a mi
 
 Candidate caps are four presets, four candidates for core slots, two for support slots, and 64 slot candidates in total. Every sampled selection is reserved before alternatives so truncation cannot silently remove it. Each slot alternative is selected from the exact pool recorded after sampler applicability, no-people, compatibility, hard-conflict, and atomic-scene filtering. `applicability.source` must be `sampler_eligible_pool`; a reconstructed or ineligible candidate is a contract failure.
 
+An explicit `--creativity` value from `0.75` through `1.0` may add `creative_exploration`. Its contrast rows never add, remove, or reorder candidates: each `candidate_id` is an already exposed `sampler_eligible_pool` alternative that replaces the selected candidate in the same slot, clears conflicts with selected candidates in other slots, and exceeds the declared feature-distance floor. Keep the selected subject, mandatory intents, and atomic scene; use no more than `composition_guidance.replace_at_most` mutually compatible contrasts. The field is absent below the activation floor, preserving the ordinary pack shape.
+
 ## Required Composition Behavior
 
 - Use every `mandatory_intents[].text` as literal or faithfully translated visible content.
@@ -37,7 +39,7 @@ If a composed ID names an open slot, the audit fails. Masked details are also re
 
 ## Quality Layers
 
-`quality_profile.profile_id` is one of `general`, `documentary`, `portrait_editorial`, `product`, `food`, `architecture`, or `nature`.
+`quality_profile.profile_id` is one of `general`, `documentary`, `portrait_editorial`, `product`, `food`, `architecture`, `nature`, `science_inspection`, `mobility_logistics`, `climate_adaptation`, `biodiversity_monitoring`, `agriculture_food_systems`, or `circular_materials`.
 
 Use `photographic_integration` to bind subject and setting with believable light, contact, material, or optical depth. Use one visible `visual_proposition`, then at most one or two `photographic_craft` decisions. These are quality signals, so the audit reports omissions as warnings.
 
