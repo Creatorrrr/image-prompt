@@ -17,7 +17,9 @@ EVAL_PATH = SCRIPT_DIR / "eval_semantic.py"
 TAGS_PATH = SKILL_DIR / "assets" / "photo_prompt_tags.json"
 GENERALIZATION_PATH = SKILL_DIR / "assets" / "generalization_cases.jsonl"
 HOLDOUT_PATH = SKILL_DIR / "assets" / "generalization_holdout_cases.jsonl"
+DOMAIN_HOLDOUT_V2_PATH = SKILL_DIR / "assets" / "generalization_domain_holdout_v2.jsonl"
 QUALITY_LAYERS_PATH = SKILL_DIR / "assets" / "photo_prompt_quality_layers.json"
+DOMAIN_VISUAL_REVIEW_PLAN_PATH = SKILL_DIR / "assets" / "visual_review_domain_extension_plan.json"
 
 if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
@@ -25,6 +27,7 @@ if str(SCRIPT_DIR) not in sys.path:
 import audit_composed_prompt  # noqa: E402
 import eval_semantic  # noqa: E402
 import generate_photo_prompt  # noqa: E402
+import prompt_generator  # noqa: E402
 
 
 class PhotoPromptContractV2Tests(unittest.TestCase):
@@ -347,11 +350,19 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             {"preset_conflict", "body_emphasis_survived"},
         )
 
-    def test_expanded_dictionary_has_three_new_domain_families_and_primary_guards(self):
+    def test_domain_visual_review_plan_is_pending_and_not_acceptance_evidence(self):
+        plan = json.loads(DOMAIN_VISUAL_REVIEW_PLAN_PATH.read_text(encoding="utf-8"))
+        self.assertEqual(plan["schema_version"], "photo-domain-visual-review-plan/v1")
+        self.assertEqual(plan["status"], "pending_generation_authorization")
+        self.assertFalse(plan["acceptance_artifact"])
+        self.assertEqual(len(plan["cases"]), 6)
+        self.assertEqual(len({case["preset"] for case in plan["cases"]}), 6)
+
+    def test_expanded_dictionary_has_operational_domain_packs_facets_and_primary_guards(self):
         tags = json.loads(TAGS_PATH.read_text(encoding="utf-8"))
         quality = json.loads(QUALITY_LAYERS_PATH.read_text(encoding="utf-8"))
         preset_ids = {preset["id"] for preset in tags["presets"]}
-        self.assertGreaterEqual(len(preset_ids), 543)
+        self.assertGreaterEqual(len(preset_ids), 549)
         self.assertTrue(
             {
                 "wetland_behavior_documentary",
@@ -360,12 +371,36 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
                 "infrastructure_inspection_record",
                 "farm_to_table_process",
                 "community_kitchen_documentary",
+                "laboratory_measurement_record",
+                "field_sensor_survey",
+                "warehouse_flow_documentary",
+                "transit_maintenance_record",
+                "coastal_resilience_monitoring",
+                "urban_heat_air_quality_record",
             }
             <= preset_ids
         )
         subject_ids = {entry["id"] for entry in tags["slots"]["subject"]}
         self.assertTrue(
-            {"pollinator_moth_night", "cleanroom_wafer_robot", "community_soup_pot"} <= subject_ids
+            {
+                "pollinator_moth_night",
+                "cleanroom_wafer_robot",
+                "community_soup_pot",
+                "microscope_sample_stage",
+                "field_air_quality_station",
+                "parcel_sorting_conveyor",
+                "rail_switch_actuator",
+                "coastal_erosion_marker_array",
+                "urban_heat_sensor_station",
+            }
+            <= subject_ids
+        )
+        coastal_subject = next(
+            entry for entry in tags["slots"]["subject"] if entry["id"] == "coastal_erosion_marker_array"
+        )
+        self.assertEqual(
+            prompt_generator.subject_category({"subject": coastal_subject}, tags),
+            "environment",
         )
         guarded_ids = {
             entry["id"]
@@ -374,13 +409,71 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             if entry.get("requires_primary_any_tags")
         }
         self.assertTrue(
-            {"kinetic_spell_trail_motion", "snowflake_pinpoint_glow", "thermal_lowfi_pov"}
+            {
+                "kinetic_spell_trail_motion",
+                "snowflake_pinpoint_glow",
+                "thermal_lowfi_pov",
+                "aligning_microscope_sample",
+                "collecting_air_sample",
+                "routing_parcels_conveyor",
+                "inspecting_rail_switch",
+                "measuring_shoreline_retreat",
+                "logging_surface_temperature",
+                "microscopy_measurement_capture",
+                "thermal_field_survey_capture",
+                "fixed_interval_monitoring_capture",
+            }
             <= guarded_ids
         )
+        self.assertTrue(
+            {
+                "relation_type",
+                "event_phase",
+                "process_stage",
+                "capture_modality",
+                "weather_effect",
+                "movement_type",
+            }
+            <= set(tags["facet_vocab"])
+        )
+        operational_domains = {"science_inspection", "mobility_logistics", "climate_adaptation"}
+        self.assertTrue(operational_domains <= set(quality["quality_profiles"]))
+        self.assertTrue(
+            operational_domains
+            <= {row["domain"] for row in quality["intent_routing"]["domains"]}
+        )
+        self.assertTrue(
+            {
+                "relational_coordination",
+                "process_stage_evidence",
+                "instrument_capture_modality",
+                "mobility_flow",
+                "climate_material_consequence",
+            }
+            <= {axis["id"] for axis in quality["photographic_integration"]["axes"]}
+        )
+        capture_policy = tags["slot_applicability"]["slots"]["capture_context"]
+        self.assertTrue({"object", "environment"} <= set(capture_policy["subject_categories"]))
+        self.assertTrue(operational_domains <= set(capture_policy["allow_domains"]))
         routing_categories = {
             row["category"] for row in quality["intent_routing"]["subject_categories"]
         }
         self.assertTrue({"animal", "object", "food", "plant", "environment"} <= routing_categories)
+
+    def test_quality_facets_do_not_treat_focus_metadata_as_scene_location(self):
+        pack = self.run_wrapper(
+            "--preset",
+            "laboratory_measurement_record",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "41",
+            "--set",
+            "focus=zone_focus_street",
+            "--emit-candidate-pack",
+        )[0]
+        self.assertEqual(pack["quality_profile"]["profile_id"], "science_inspection")
+        self.assertNotIn("street", pack["quality_profile"]["facets"].get("place_type", []))
 
     def test_generalization_suite_is_executable_and_green(self):
         completed = subprocess.run(
@@ -395,6 +488,9 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
                 "--holdout-cases",
                 str(HOLDOUT_PATH),
                 "--holdout-check",
+                "--domain-holdout-v2-cases",
+                str(DOMAIN_HOLDOUT_V2_PATH),
+                "--domain-holdout-v2-check",
             ],
             cwd=ROOT,
             text=True,
@@ -403,10 +499,12 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
         )
         self.assertEqual(completed.returncode, 0, completed.stdout + completed.stderr)
         payload = json.loads(completed.stdout)
-        self.assertEqual(payload["generalization_check"]["case_count"], 48)
+        self.assertEqual(payload["generalization_check"]["case_count"], 54)
         self.assertEqual(payload["generalization_check"]["failed_case_count"], 0)
         self.assertEqual(payload["holdout_check"]["case_count"], 24)
         self.assertEqual(payload["holdout_check"]["failed_case_count"], 0)
+        self.assertEqual(payload["domain_holdout_v2_check"]["case_count"], 6)
+        self.assertEqual(payload["domain_holdout_v2_check"]["failed_case_count"], 0)
 
 
 if __name__ == "__main__":

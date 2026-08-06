@@ -1,6 +1,6 @@
 {
-  "version": "1.22",
-  "description": "Photographic prompt dictionary with expanded concept-role, folklore, personality, season, era, digital-entity, and environmental-transformation coverage for semantic and recipe-driven prompt generation. Version 1.13 expands robot semantics with disembodied AI, screen-face terminals, sensory apparatus, fabrication origin, lifecycle wear/repair, drones, mecha, prosthetics, domestic systems, surveillance networks and AI-temple metaphors. Version 1.14 adds opt-in visible multi-subject relationship framing, visible in-frame partner roles, and a small-group documentary preset while preserving single-subject defaults. Version 1.15 adds perspective-rich beastkin evidence, procedural-duty, daily-errand, stagecraft, anti-diagram, POV-task, opt-in species, and expanded role/mixin coverage. Version 1.16 adds skin-finish, eye-detail, body-marking, summer stream, orchard shoot-through, cozy sofa, and CCD flash pet-closeup portrait coverage. Version 1.17 broadens realistic/candid portrait variation with expanded skin, eye, body-marking, lens-artifact, gaze-engagement, hand-pose, skin-state, ambient-particle, grain, garment-detail, companion-animal, color-grading, and natural-light lifestyle preset coverage. Version 1.18 adds 2026 fashion dailywear coverage with footwear and silhouette-proportion slots, clean social/dailywear presets, generalized trend tags, and no-readable-text fashion-commerce safeguards. Version 1.19 expands background, environment, and situation coverage with space-condition, crowd-density, everyday-situation, and occasion-context slots plus clean routine, commute, local-shop, event, digital-life, sustainable-local, and surreal-environment presets while keeping social/text cues non-readable. Version 1.20 expands flatlay, tabletop staging, prop styling, tactile surfaces, aesthetic still-life bundles, and product-riser scenes while keeping paper ephemera, packaging, screens, labels, tickets, and social-commerce cues blank, fictional, unreadable, or unbranded. Version 1.21 adds clean pose, shot-scale, and platform-safe framing controls for social, editorial, portrait, mirror-selfie, and composition-heavy photo prompts. Version 1.22 adds narrative-core and concept-tension slots for poetic story anchors, modern social themes, analog/AI contrast, romantic decay, ordinary magic, and clean concept-rich editorial scenes while keeping persona and photo-approach ideas mapped to existing subject, medium, genre, capture-context, and composition controls with no readable text.",
+  "version": "1.23",
+  "description": "Photographic prompt dictionary with expanded concept-role, folklore, personality, season, era, digital-entity, and environmental-transformation coverage for semantic and recipe-driven prompt generation. Version 1.13 expands robot semantics with disembodied AI, screen-face terminals, sensory apparatus, fabrication origin, lifecycle wear/repair, drones, mecha, prosthetics, domestic systems, surveillance networks and AI-temple metaphors. Version 1.14 adds opt-in visible multi-subject relationship framing, visible in-frame partner roles, and a small-group documentary preset while preserving single-subject defaults. Version 1.15 adds perspective-rich beastkin evidence, procedural-duty, daily-errand, stagecraft, anti-diagram, POV-task, opt-in species, and expanded role/mixin coverage. Version 1.16 adds skin-finish, eye-detail, body-marking, summer stream, orchard shoot-through, cozy sofa, and CCD flash pet-closeup portrait coverage. Version 1.17 broadens realistic/candid portrait variation with expanded skin, eye, body-marking, lens-artifact, gaze-engagement, hand-pose, skin-state, ambient-particle, grain, garment-detail, companion-animal, color-grading, and natural-light lifestyle preset coverage. Version 1.18 adds 2026 fashion dailywear coverage with footwear and silhouette-proportion slots, clean social/dailywear presets, generalized trend tags, and no-readable-text fashion-commerce safeguards. Version 1.19 expands background, environment, and situation coverage with space-condition, crowd-density, everyday-situation, and occasion-context slots plus clean routine, commute, local-shop, event, digital-life, sustainable-local, and surreal-environment presets while keeping social/text cues non-readable. Version 1.20 expands flatlay, tabletop staging, prop styling, tactile surfaces, aesthetic still-life bundles, and product-riser scenes while keeping paper ephemera, packaging, screens, labels, tickets, and social-commerce cues blank, fictional, unreadable, or unbranded. Version 1.21 adds clean pose, shot-scale, and platform-safe framing controls for social, editorial, portrait, mirror-selfie, and composition-heavy photo prompts. Version 1.22 adds narrative-core and concept-tension slots for poetic story anchors, modern social themes, analog/AI contrast, romantic decay, ordinary magic, and clean concept-rich editorial scenes while keeping persona and photo-approach ideas mapped to existing subject, medium, genre, capture-context, and composition controls with no readable text. Version 1.23 adds coherent science-inspection, mobility-logistics, and climate-adaptation packs plus reusable relation, event, process, capture-modality, weather-effect, and movement facets for broader operational photography.",
   "facet_vocab": {
     "subject_kind": [
       "human",
@@ -47,6 +47,12 @@
       "rain",
       "snow",
       "fog",
+      "storm",
+      "heat",
+      "haze",
+      "dust",
+      "wind",
+      "flood",
       "underwater",
       "none"
     ],
@@ -222,6 +228,68 @@
       "center_safe",
       "blank_lower_third",
       "carousel_crop_safe"
+    ],
+    "relation_type": [
+      "cooperative",
+      "caregiving",
+      "instructional",
+      "transactional",
+      "handoff",
+      "team",
+      "crowd"
+    ],
+    "event_phase": [
+      "preparation",
+      "active_process",
+      "pause",
+      "handoff",
+      "aftermath",
+      "maintenance",
+      "recovery"
+    ],
+    "process_stage": [
+      "setup",
+      "calibration",
+      "sampling",
+      "measurement",
+      "inspection",
+      "transfer",
+      "intervention",
+      "monitoring",
+      "cleanup"
+    ],
+    "capture_modality": [
+      "visible_light",
+      "macro",
+      "microscopy",
+      "thermal",
+      "ultraviolet",
+      "aerial",
+      "underwater",
+      "surveillance",
+      "machine_vision",
+      "inspection"
+    ],
+    "weather_effect": [
+      "visibility_loss",
+      "surface_wetness",
+      "airborne_particles",
+      "wind_deformation",
+      "heat_distortion",
+      "frost_accumulation",
+      "flooding",
+      "none"
+    ],
+    "movement_type": [
+      "static",
+      "fine_motor",
+      "locomotion",
+      "impact",
+      "rotation",
+      "fluid_flow",
+      "crowd_flow",
+      "mechanical_cycle",
+      "vehicle_flow"
     ]
   },
   "preset_families": [
@@ -1287,6 +1355,219 @@
         "camera_type": {"ids": ["inspection_macro_rig", "drone_camera_type", "full_frame_mirrorless"]},
         "prop": {"ids": ["handheld_vibration_meter_prop", "machined_component_tray_prop"]},
         "surface_material": {"ids": ["brushed_machined_aluminum_surface", "mossy_concrete_surface"]}
+      }
+    },
+    {
+      "id": "laboratory_measurement_record",
+      "ko": "실험실 측정 기록 사진",
+      "en": "laboratory measurement record",
+      "weight": 1.0,
+      "template_style": "natural",
+      "family": "scientific_observation",
+      "embedding_text": "scientific laboratory record of a microscope sample or calibrated instrument with visible scale, sample contact, measurement context and traceable capture method",
+      "facets": {"place_type": ["laboratory"], "camera_register": ["inspection"], "mood_family": ["clinical", "operational"], "safety_tier": ["general"], "process_stage": ["calibration", "measurement"]},
+      "required_slots": ["medium", "genre", "subject", "action", "location", "lighting", "camera_type", "capture_context", "procedure_step", "composition", "lens", "focus", "quality"],
+      "optional_slots": [{"slot": "prop", "probability": 0.85}, {"slot": "motion", "probability": 0.45}, {"slot": "surface_material", "probability": 0.45}],
+      "filters": {
+        "medium": {"ids": ["scientific_record", "macro_photo", "documentary_photo"]},
+        "genre": {"ids": ["technology", "documentary"]},
+        "subject": {"ids": ["microscope_sample_stage", "cleanroom_wafer_robot"]},
+        "action": {"ids": ["aligning_microscope_sample", "calibrating_sensor_array"]},
+        "location": {"ids": ["microscopy_workbench", "laboratory", "semiconductor_cleanroom"]},
+        "lighting": {"ids": ["lab_led", "inspection_droplight", "fluorescent"]},
+        "light_type": {"ids": ["fluorescent_ceiling", "led_panel", "operating_observation_light", "inspection_droplight", "lab_led"]},
+        "light_intensity": {"ids": ["balanced_exposure", "soft_low_contrast", "even_flat_overcast", "deep_shadow_detail"]},
+        "light_shape": {"ids": ["diffused_ambient", "window_rectangle", "narrow_spotlight", "monitor_rectangle_glow"]},
+        "camera_type": {"ids": ["inspection_macro_rig", "machine_vision_camera", "full_frame_mirrorless"]},
+        "camera_direction": {"ids": ["eye_level_front", "eye_level_three_quarter", "high_observer_angle", "top_down_90"]},
+        "capture_context": {"ids": ["microscopy_measurement_capture", "machine_vision_sensor_capture"]},
+        "procedure_step": {"ids": ["sample_preparation_step", "instrument_calibration_step"]},
+        "composition": {"ids": ["macro_detail", "primary_subject_hierarchy_frame", "centered_symmetry"]},
+        "lens": {"ids": ["macro_100mm", "topdown_macro_60mm", "50mm"]},
+        "focus": {"ids": ["macro_focus_stack", "deep_focus"]},
+        "quality": {"ids": ["photoreal", "high_detail", "not_overdone"]},
+        "prop": {"ids": ["calibration_target_card", "sealed_sample_vial_tray"]},
+        "motion": {"ids": ["fine_adjustment_motion"]},
+        "surface_material": {"ids": ["frosted_glass_surface", "brushed_machined_aluminum_surface"]},
+        "texture": {"ids": ["clean_digital", "fine_grain", "macro_detail", "brushed_steel_micrograin_texture", "frosted_glass_haze_texture"]}
+      }
+    },
+    {
+      "id": "field_sensor_survey",
+      "ko": "현장 센서 조사 기록",
+      "en": "field sensor survey record",
+      "weight": 1.0,
+      "template_style": "natural",
+      "family": "scientific_observation",
+      "embedding_text": "field science survey photograph of an environmental sensor station collecting a calibrated sample with location context, reference target and visible atmospheric conditions",
+      "facets": {"camera_register": ["inspection", "sensor"], "mood_family": ["documentary", "operational"], "safety_tier": ["general"], "process_stage": ["sampling", "monitoring"]},
+      "required_slots": ["medium", "genre", "subject", "action", "location", "weather", "lighting", "camera_type", "capture_context", "procedure_step", "composition", "lens", "focus", "quality"],
+      "optional_slots": [{"slot": "prop", "probability": 0.9}, {"slot": "motion", "probability": 0.4}],
+      "filters": {
+        "medium": {"ids": ["scientific_record", "documentary_photo"]},
+        "genre": {"ids": ["documentary", "technology"]},
+        "subject": {"ids": ["field_air_quality_station"]},
+        "action": {"ids": ["collecting_air_sample"]},
+        "location": {"ids": ["urban_air_monitoring_rooftop", "rocky_coast"]},
+        "weather": {"ids": ["yellow_dust_haze", "heatwave_shimmer_air", "overcast_noon_flat_light"]},
+        "lighting": {"ids": ["overcast", "harsh_noon"]},
+        "light_type": {"ids": ["direct_sun", "open_shade", "cold_dawn_overcast", "inspection_droplight"]},
+        "light_intensity": {"ids": ["balanced_exposure", "even_flat_overcast", "harsh_high_contrast", "soft_low_contrast"]},
+        "light_shape": {"ids": ["diffused_ambient", "dust_particles_backlight"]},
+        "camera_type": {"ids": ["thermal_camera", "machine_vision_camera", "full_frame_mirrorless"]},
+        "camera_direction": {"ids": ["eye_level_front", "eye_level_three_quarter", "high_observer_angle"]},
+        "capture_context": {"ids": ["thermal_field_survey_capture", "fixed_interval_monitoring_capture"]},
+        "procedure_step": {"ids": ["instrument_calibration_step", "condition_assessment_step"]},
+        "composition": {"ids": ["primary_subject_hierarchy_frame", "wide_establishing", "rule_of_thirds"]},
+        "lens": {"ids": ["35mm", "50mm", "tele_200mm"]},
+        "focus": {"ids": ["deep_focus", "zone_focus_street"]},
+        "quality": {"ids": ["photoreal", "high_detail", "not_overdone"]},
+        "prop": {"ids": ["calibration_target_card", "sealed_sample_vial_tray"]},
+        "motion": {"ids": ["fine_adjustment_motion"]},
+        "texture": {"ids": ["clean_digital", "fine_grain", "dusty_sunbeam_texture", "wet_asphalt_reflection_texture"]}
+      }
+    },
+    {
+      "id": "warehouse_flow_documentary",
+      "ko": "물류 흐름 다큐멘터리",
+      "en": "warehouse flow documentary",
+      "weight": 1.0,
+      "template_style": "natural",
+      "family": "mobility_operations",
+      "embedding_text": "operational warehouse documentary of parcels transferring through a conveyor and scanner handoff, with route flow, queue spacing and machine-cycle evidence visible",
+      "facets": {"place_type": ["warehouse"], "camera_register": ["professional", "machine_vision"], "mood_family": ["documentary", "operational"], "safety_tier": ["general"], "process_stage": ["transfer", "monitoring"], "movement_type": ["mechanical_cycle"]},
+      "required_slots": ["medium", "genre", "subject", "action", "location", "lighting", "camera_type", "capture_context", "procedure_step", "motion", "composition", "lens", "focus", "quality"],
+      "optional_slots": [{"slot": "prop", "probability": 0.9}, {"slot": "surface_material", "probability": 0.4}],
+      "filters": {
+        "medium": {"ids": ["documentary_photo", "scientific_record", "magazine_feature"]},
+        "genre": {"ids": ["documentary", "technology"]},
+        "subject": {"ids": ["parcel_sorting_conveyor"]},
+        "action": {"ids": ["routing_parcels_conveyor"]},
+        "location": {"ids": ["parcel_sorting_hub", "automated_warehouse_aisle"]},
+        "lighting": {"ids": ["fluorescent", "lab_led", "soft_window"]},
+        "light_type": {"ids": ["fluorescent_ceiling", "led_panel", "inspection_droplight"]},
+        "light_intensity": {"ids": ["balanced_exposure", "even_flat_overcast", "soft_low_contrast"]},
+        "light_shape": {"ids": ["diffused_ambient", "window_rectangle", "barcode_shadow_bars"]},
+        "camera_type": {"ids": ["machine_vision_camera", "full_frame_mirrorless", "dslr_camera"]},
+        "camera_direction": {"ids": ["eye_level_front", "eye_level_three_quarter", "high_observer_angle", "low_ground_angle"]},
+        "capture_context": {"ids": ["machine_vision_sensor_capture", "shift_log_attachment_photo"]},
+        "procedure_step": {"ids": ["route_sorting", "condition_assessment_step"]},
+        "motion": {"ids": ["conveyor_indexing_motion", "vehicle_queue_flow_motion"]},
+        "composition": {"ids": ["strong_leading_lines_vanish", "primary_subject_hierarchy_frame", "wide_establishing"]},
+        "lens": {"ids": ["35mm", "wide_24mm", "50mm"]},
+        "focus": {"ids": ["deep_focus", "zone_focus_street"]},
+        "quality": {"ids": ["photoreal", "high_detail", "not_overdone"]},
+        "prop": {"ids": ["parcel_tote_scanner_prop"]},
+        "surface_material": {"ids": ["brushed_machined_aluminum_surface"]},
+        "texture": {"ids": ["clean_digital", "fine_grain", "brushed_steel_micrograin_texture", "engine_grease_streak"]}
+      }
+    },
+    {
+      "id": "transit_maintenance_record",
+      "ko": "교통 설비 정비 기록",
+      "en": "transit maintenance record",
+      "weight": 1.0,
+      "template_style": "natural",
+      "family": "mobility_operations",
+      "embedding_text": "transit maintenance inspection photograph of a rail switch or depot mechanism, showing the adjustment point, gap gauge, travel path and condition evidence",
+      "facets": {"place_type": ["transport", "infrastructure"], "camera_register": ["inspection"], "mood_family": ["operational"], "safety_tier": ["general"], "event_phase": ["maintenance"], "process_stage": ["inspection", "intervention"]},
+      "required_slots": ["medium", "genre", "subject", "action", "location", "lighting", "camera_type", "capture_context", "procedure_step", "motion", "composition", "lens", "focus", "quality"],
+      "optional_slots": [{"slot": "prop", "probability": 0.95}, {"slot": "surface_material", "probability": 0.65}, {"slot": "weather", "probability": 0.55}],
+      "filters": {
+        "medium": {"ids": ["documentary_photo", "scientific_record", "architecture_magazine_photo"]},
+        "genre": {"ids": ["technology", "documentary", "architecture"]},
+        "subject": {"ids": ["rail_switch_actuator"]},
+        "action": {"ids": ["inspecting_rail_switch"]},
+        "location": {"ids": ["rail_maintenance_yard"]},
+        "lighting": {"ids": ["inspection_droplight", "overcast", "harsh_noon"]},
+        "light_type": {"ids": ["direct_sun", "open_shade", "cold_dawn_overcast", "inspection_droplight"]},
+        "light_intensity": {"ids": ["balanced_exposure", "even_flat_overcast", "soft_low_contrast", "harsh_high_contrast"]},
+        "light_shape": {"ids": ["diffused_ambient", "narrow_spotlight", "window_rectangle"]},
+        "camera_type": {"ids": ["inspection_macro_rig", "full_frame_mirrorless", "dslr_camera"]},
+        "camera_direction": {"ids": ["eye_level_front", "eye_level_three_quarter", "high_observer_angle", "low_ground_angle"]},
+        "capture_context": {"ids": ["repair_manual_reference_shot", "shift_log_attachment_photo", "workplace_safety_audit_photo"]},
+        "procedure_step": {"ids": ["safety_inspection", "condition_assessment_step"]},
+        "motion": {"ids": ["fine_adjustment_motion"]},
+        "composition": {"ids": ["strong_leading_lines_vanish", "macro_detail", "primary_subject_hierarchy_frame"]},
+        "lens": {"ids": ["35mm", "macro_100mm", "wide_24mm"]},
+        "focus": {"ids": ["deep_focus", "macro_focus_stack"]},
+        "quality": {"ids": ["photoreal", "high_detail", "not_overdone"]},
+        "prop": {"ids": ["rail_gap_gauge_prop"]},
+        "surface_material": {"ids": ["brushed_machined_aluminum_surface", "mossy_concrete_surface"]},
+        "weather": {"ids": ["overcast_noon_flat_light", "storm_flood_air"]},
+        "texture": {"ids": ["clean_digital", "fine_grain", "rust_concrete", "engine_grease_streak", "wet_surface"]}
+      }
+    },
+    {
+      "id": "coastal_resilience_monitoring",
+      "ko": "해안 회복력 모니터링",
+      "en": "coastal resilience monitoring record",
+      "weight": 1.0,
+      "template_style": "natural",
+      "family": "climate_field_record",
+      "embedding_text": "repeatable coastal adaptation monitoring photograph showing erosion markers, dune restoration, waterline change, wind response and comparable fixed-interval framing",
+      "facets": {"place_type": ["infrastructure", "nature"], "camera_register": ["inspection"], "mood_family": ["documentary", "operational"], "safety_tier": ["general"], "process_stage": ["measurement", "monitoring"]},
+      "required_slots": ["medium", "genre", "subject", "action", "location", "weather", "lighting", "capture_context", "procedure_step", "motion", "camera_direction", "composition", "lens", "focus", "quality"],
+      "optional_slots": [{"slot": "camera_type", "probability": 0.8}, {"slot": "prop", "probability": 0.95}, {"slot": "surface_material", "probability": 0.65}],
+      "filters": {
+        "medium": {"ids": ["scientific_record", "documentary_photo", "drone_photo"]},
+        "genre": {"ids": ["documentary", "architecture"]},
+        "subject": {"ids": ["coastal_erosion_marker_array"]},
+        "action": {"ids": ["measuring_shoreline_retreat"]},
+        "location": {"ids": ["coastal_dune_restoration_site", "rocky_coast"]},
+        "weather": {"ids": ["sea_fog_coast", "typhoon_eve_wind", "storm_flood_air"]},
+        "lighting": {"ids": ["overcast", "harsh_noon"]},
+        "light_type": {"ids": ["direct_sun", "open_shade", "cold_dawn_overcast"]},
+        "light_intensity": {"ids": ["balanced_exposure", "even_flat_overcast", "soft_low_contrast", "harsh_high_contrast"]},
+        "light_shape": {"ids": ["diffused_ambient"]},
+        "capture_context": {"ids": ["fixed_interval_monitoring_capture"]},
+        "procedure_step": {"ids": ["restoration_followup_step", "condition_assessment_step"]},
+        "motion": {"ids": ["wind_response_motion", "water_surface_ripple_motion"]},
+        "camera_direction": {"ids": ["high_observer_angle", "drone_oblique_direction", "low_ground_angle"]},
+        "composition": {"ids": ["wide_establishing", "strong_leading_lines_vanish", "rule_of_thirds"]},
+        "lens": {"ids": ["wide_24mm", "35mm", "tele_200mm"]},
+        "focus": {"ids": ["deep_focus", "zone_focus_street"]},
+        "quality": {"ids": ["photoreal", "high_detail", "not_overdone"]},
+        "camera_type": {"ids": ["drone_camera_type", "full_frame_mirrorless", "dslr_camera"]},
+        "prop": {"ids": ["erosion_marker_stake_prop"]},
+        "surface_material": {"ids": ["tidal_wet_stone_surface", "weathered_wood_board_surface"]},
+        "texture": {"ids": ["clean_digital", "fine_grain", "wet_surface", "rust_concrete", "salt_crystal_surface"]}
+      }
+    },
+    {
+      "id": "urban_heat_air_quality_record",
+      "ko": "도시 열·대기질 기록",
+      "en": "urban heat and air-quality record",
+      "weight": 1.0,
+      "template_style": "natural",
+      "family": "climate_field_record",
+      "embedding_text": "urban climate adaptation survey comparing shade, hot pavement and air-quality conditions through calibrated thermal reference, sensor placement and material response",
+      "facets": {"place_type": ["urban", "infrastructure"], "camera_register": ["sensor", "inspection"], "mood_family": ["documentary", "operational"], "safety_tier": ["general"], "process_stage": ["measurement", "monitoring"]},
+      "required_slots": ["medium", "genre", "subject", "action", "location", "weather", "lighting", "camera_type", "capture_context", "procedure_step", "composition", "lens", "focus", "quality"],
+      "optional_slots": [{"slot": "prop", "probability": 0.95}, {"slot": "surface_material", "probability": 0.65}, {"slot": "motion", "probability": 0.35}],
+      "filters": {
+        "medium": {"ids": ["scientific_record", "documentary_photo"]},
+        "genre": {"ids": ["documentary", "technology", "architecture"]},
+        "subject": {"ids": ["urban_heat_sensor_station", "field_air_quality_station"]},
+        "action": {"ids": ["logging_surface_temperature", "collecting_air_sample"]},
+        "location": {"ids": ["shaded_heat_monitoring_corridor", "urban_air_monitoring_rooftop"]},
+        "weather": {"ids": ["heatwave_shimmer_air", "yellow_dust_haze", "overcast_noon_flat_light"]},
+        "lighting": {"ids": ["harsh_noon", "overcast"]},
+        "light_type": {"ids": ["direct_sun", "open_shade", "cold_dawn_overcast"]},
+        "light_intensity": {"ids": ["balanced_exposure", "even_flat_overcast", "soft_low_contrast", "harsh_high_contrast"]},
+        "light_shape": {"ids": ["diffused_ambient", "dust_particles_backlight"]},
+        "camera_type": {"ids": ["thermal_camera", "machine_vision_camera", "full_frame_mirrorless"]},
+        "camera_direction": {"ids": ["eye_level_front", "eye_level_three_quarter", "high_observer_angle"]},
+        "capture_context": {"ids": ["thermal_field_survey_capture", "fixed_interval_monitoring_capture"]},
+        "procedure_step": {"ids": ["instrument_calibration_step", "condition_assessment_step"]},
+        "composition": {"ids": ["primary_subject_hierarchy_frame", "wide_establishing", "rule_of_thirds"]},
+        "lens": {"ids": ["35mm", "50mm", "wide_24mm"]},
+        "focus": {"ids": ["deep_focus", "zone_focus_street"]},
+        "quality": {"ids": ["photoreal", "high_detail", "not_overdone"]},
+        "prop": {"ids": ["infrared_reference_panel_prop", "calibration_target_card"]},
+        "surface_material": {"ids": ["sun_heated_asphalt_surface", "mossy_concrete_surface", "brushed_machined_aluminum_surface"]},
+        "motion": {"ids": ["fine_adjustment_motion"]},
+        "texture": {"ids": ["clean_digital", "fine_grain", "dusty_sunbeam_texture", "cracked_concrete_grit_texture"]}
       }
     },
     {
@@ -113300,6 +113581,78 @@
         "facets": {"subject_kind": ["environment"], "place_type": ["infrastructure"]}
       },
       {
+        "id": "microscope_sample_stage",
+        "ko": "눈금과 시료가 보이는 현미경 스테이지",
+        "en": "a microscope sample stage with visible scale and specimen",
+        "weight": 0.68,
+        "kind": ["object"],
+        "tags": ["object", "science", "laboratory", "microscopy", "sample", "measurement"],
+        "aliases": ["microscope specimen stage", "sample stage", "현미경 시료대"],
+        "keywords": ["microscopy", "specimen measurement", "laboratory record"],
+        "embedding_text": "microscope sample stage holding a prepared specimen beside a visible scale and calibration reference",
+        "facets": {"subject_kind": ["object"], "place_type": ["laboratory"]}
+      },
+      {
+        "id": "field_air_quality_station",
+        "ko": "현장 대기질 측정 스테이션",
+        "en": "a field air-quality monitoring station",
+        "weight": 0.68,
+        "kind": ["object"],
+        "tags": ["object", "science", "sensor", "air_quality", "environmental_monitoring", "infrastructure"],
+        "aliases": ["air quality sensor station", "environment monitor", "대기 측정소"],
+        "keywords": ["air sampling", "field sensor", "environmental monitoring"],
+        "embedding_text": "field air-quality monitoring station with sample inlet, weather shield and calibration access visible in place",
+        "facets": {"subject_kind": ["object"], "place_type": ["infrastructure"]}
+      },
+      {
+        "id": "parcel_sorting_conveyor",
+        "ko": "스캐너가 달린 소포 분류 컨베이어",
+        "en": "a parcel-sorting conveyor with scanner gates",
+        "weight": 0.7,
+        "kind": ["object"],
+        "tags": ["object", "logistics", "warehouse", "parcel", "conveyor", "scanner", "machine"],
+        "aliases": ["parcel conveyor", "sorting line", "소포 분류 라인"],
+        "keywords": ["warehouse flow", "route sorting", "scanner handoff"],
+        "embedding_text": "parcel-sorting conveyor carrying separated totes through scanner gates with route flow and machine spacing visible",
+        "facets": {"subject_kind": ["object"], "place_type": ["warehouse"]}
+      },
+      {
+        "id": "rail_switch_actuator",
+        "ko": "점검 중인 철도 분기기 구동부",
+        "en": "a rail-switch actuator under inspection",
+        "weight": 0.68,
+        "kind": ["object"],
+        "tags": ["object", "transport", "rail", "switch", "actuator", "maintenance", "infrastructure"],
+        "aliases": ["rail switch mechanism", "track switch actuator", "철도 분기기"],
+        "keywords": ["transit maintenance", "switch gap", "rail inspection"],
+        "embedding_text": "rail-switch actuator beside the moving points, showing adjustment hardware, gap position and field wear",
+        "facets": {"subject_kind": ["object"], "place_type": ["transport", "infrastructure"]}
+      },
+      {
+        "id": "coastal_erosion_marker_array",
+        "ko": "해안 침식 측정 표식 배열",
+        "en": "an array of coastal erosion monitoring markers",
+        "weight": 0.68,
+        "kind": ["environment"],
+        "tags": ["environment", "coastal", "erosion", "dune", "monitoring", "measurement", "climate"],
+        "aliases": ["shoreline erosion markers", "coastal survey stakes", "해안 침식 표식"],
+        "keywords": ["shoreline retreat", "dune restoration", "repeat photography"],
+        "embedding_text": "coastal erosion markers aligned across a restored dune and waterline for repeatable shoreline comparison",
+        "facets": {"subject_kind": ["environment"], "place_type": ["nature", "infrastructure"]}
+      },
+      {
+        "id": "urban_heat_sensor_station",
+        "ko": "그늘과 포장면을 비교하는 도시 열 센서",
+        "en": "an urban heat sensor station comparing shade and pavement",
+        "weight": 0.68,
+        "kind": ["object"],
+        "tags": ["object", "urban", "heat", "thermal", "sensor", "climate", "measurement", "infrastructure"],
+        "aliases": ["urban heat monitor", "pavement temperature sensor", "도시 열 측정기"],
+        "keywords": ["heat island", "surface temperature", "shade monitoring"],
+        "embedding_text": "urban heat sensor station positioned between shade and exposed pavement with reference surfaces and probe placement visible",
+        "facets": {"subject_kind": ["object"], "place_type": ["urban", "infrastructure"]}
+      },
+      {
         "id": "sourdough_fermentation_batch",
         "ko": "발효 중인 사워도우 반죽 묶음",
         "en": "a batch of sourdough loaves fermenting",
@@ -127442,7 +127795,86 @@
         "requires_any_tags": ["semiconductor", "cleanroom", "precision"],
         "aliases": ["sensor calibration", "calibrating sensors", "센서 교정"],
         "keywords": ["precision calibration", "technical process", "diagnostic equipment"],
-        "embedding_text": "calibrating a precision sensor array through measured machine movement and diagnostic light"
+        "embedding_text": "calibrating a precision sensor array through measured machine movement and diagnostic light",
+        "facets": {"event_phase": ["active_process"], "process_stage": ["calibration"], "movement_type": ["fine_motor"]}
+      },
+      {
+        "id": "aligning_microscope_sample",
+        "ko": "현미경 시료와 눈금을 정렬하는",
+        "en": "aligning a microscope sample with its measurement scale",
+        "weight": 0.68,
+        "tags": ["object", "science", "laboratory", "microscopy", "sample", "calibration", "measurement"],
+        "for_any": ["object"],
+        "requires_primary_any_tags": ["microscopy", "sample"],
+        "aliases": ["aligning microscope specimen", "sample alignment", "현미경 시료 정렬"],
+        "keywords": ["microscope calibration", "specimen stage", "measurement record"],
+        "embedding_text": "aligning a microscope sample against a scale before measurement with the contact point visible",
+        "facets": {"event_phase": ["preparation", "active_process"], "process_stage": ["calibration", "measurement"], "movement_type": ["fine_motor"]}
+      },
+      {
+        "id": "collecting_air_sample",
+        "ko": "교정된 흡입구로 공기 시료를 수집하는",
+        "en": "collecting an air sample through a calibrated inlet",
+        "weight": 0.68,
+        "tags": ["object", "science", "sensor", "air_quality", "environmental_monitoring", "sampling"],
+        "for_any": ["object"],
+        "requires_primary_any_tags": ["air_quality", "environmental_monitoring"],
+        "aliases": ["air sampling", "collecting atmospheric sample", "대기 시료 수집"],
+        "keywords": ["field sampling", "air quality", "calibrated inlet"],
+        "embedding_text": "collecting an air sample through a calibrated inlet while showing the station, airflow path and local conditions",
+        "facets": {"event_phase": ["active_process"], "process_stage": ["sampling"], "movement_type": ["fluid_flow"]}
+      },
+      {
+        "id": "routing_parcels_conveyor",
+        "ko": "스캐너 분기점에서 소포를 경로별로 이송하는",
+        "en": "routing parcels through a scanner-controlled conveyor junction",
+        "weight": 0.7,
+        "tags": ["object", "logistics", "warehouse", "parcel", "conveyor", "scanner", "transfer"],
+        "for_any": ["object", "robot"],
+        "requires_primary_any_tags": ["parcel", "conveyor", "logistics"],
+        "aliases": ["routing parcel totes", "conveyor sorting", "소포 경로 분류"],
+        "keywords": ["parcel transfer", "route sorting", "warehouse flow"],
+        "embedding_text": "routing separated parcels through a scanner-controlled conveyor junction with the handoff path readable from motion and spacing",
+        "facets": {"relation_type": ["handoff"], "event_phase": ["active_process"], "process_stage": ["transfer"], "movement_type": ["mechanical_cycle"]}
+      },
+      {
+        "id": "inspecting_rail_switch",
+        "ko": "철도 분기기의 간격과 구동부를 점검하는",
+        "en": "inspecting the gap and actuator of a rail switch",
+        "weight": 0.68,
+        "tags": ["object", "transport", "rail", "switch", "actuator", "inspection", "maintenance"],
+        "for_any": ["object"],
+        "requires_primary_any_tags": ["rail", "switch", "actuator"],
+        "aliases": ["rail switch inspection", "checking switch points", "철도 분기기 점검"],
+        "keywords": ["transit maintenance", "gap gauge", "switch actuator"],
+        "embedding_text": "inspecting the rail-switch gap and actuator at the adjustment point with field condition evidence visible",
+        "facets": {"event_phase": ["maintenance"], "process_stage": ["inspection", "intervention"], "movement_type": ["fine_motor"]}
+      },
+      {
+        "id": "measuring_shoreline_retreat",
+        "ko": "고정 표식으로 해안선 후퇴를 측정하는",
+        "en": "measuring shoreline retreat against fixed markers",
+        "weight": 0.68,
+        "tags": ["environment", "coastal", "erosion", "dune", "measurement", "monitoring", "climate"],
+        "for_any": ["environment"],
+        "requires_primary_any_tags": ["coastal", "erosion", "dune"],
+        "aliases": ["shoreline retreat measurement", "coastal erosion survey", "해안선 후퇴 측정"],
+        "keywords": ["fixed marker", "dune restoration", "repeat survey"],
+        "embedding_text": "measuring shoreline retreat against fixed markers in a repeatable frame that preserves waterline and restored-dune context",
+        "facets": {"event_phase": ["active_process"], "process_stage": ["measurement", "monitoring"], "movement_type": ["static"]}
+      },
+      {
+        "id": "logging_surface_temperature",
+        "ko": "기준 패널과 함께 표면 온도를 기록하는",
+        "en": "logging surface temperature against a reference panel",
+        "weight": 0.68,
+        "tags": ["object", "urban", "heat", "thermal", "sensor", "measurement", "climate"],
+        "for_any": ["object"],
+        "requires_primary_any_tags": ["heat", "thermal"],
+        "aliases": ["surface temperature survey", "thermal reference measurement", "표면 온도 기록"],
+        "keywords": ["heat island", "thermal calibration", "shade comparison"],
+        "embedding_text": "logging shaded and exposed surface temperatures against an infrared reference panel with material boundaries visible",
+        "facets": {"event_phase": ["active_process"], "process_stage": ["measurement", "monitoring"], "movement_type": ["static"]}
       },
       {
         "id": "folding_dough",
@@ -127897,7 +128329,8 @@
         ],
         "requires_any_tags": [
           "forensic"
-        ]
+        ],
+        "facets": {"process_stage": ["inspection"], "capture_modality": ["visible_light", "inspection"]}
       },
       {
         "id": "robot_qa_inspection_log",
@@ -127910,7 +128343,8 @@
           "inspection",
           "log"
         ],
-        "embedding_text": "robot QA inspection log photo as robot concept proof or scene anchor"
+        "embedding_text": "robot QA inspection log photo as robot concept proof or scene anchor",
+        "facets": {"process_stage": ["inspection"], "capture_modality": ["inspection"]}
       },
       {
         "id": "drone_flight_test_capture",
@@ -127923,7 +128357,10 @@
           "test",
           "capture"
         ],
-        "embedding_text": "drone flight-test capture as robot concept proof or scene anchor"
+        "for_any": ["object", "robot"],
+        "requires_primary_any_tags": ["drone", "aerial_single_drone"],
+        "embedding_text": "drone flight-test capture as robot concept proof or scene anchor",
+        "facets": {"process_stage": ["inspection"], "capture_modality": ["aerial"]}
       },
       {
         "id": "repair_manual_reference_shot",
@@ -127936,7 +128373,8 @@
           "reference",
           "shot"
         ],
-        "embedding_text": "repair manual reference shot as robot concept proof or scene anchor"
+        "embedding_text": "repair manual reference shot as robot concept proof or scene anchor",
+        "facets": {"event_phase": ["maintenance"], "process_stage": ["inspection"], "capture_modality": ["visible_light", "inspection"]}
       },
       {
         "id": "e_waste_survey_photo",
@@ -127975,7 +128413,49 @@
           "sensor",
           "capture"
         ],
-        "embedding_text": "machine-vision sensor capture as robot concept proof or scene anchor"
+        "for_any": ["object", "robot"],
+        "requires_primary_any_tags": ["robot", "machine", "semiconductor", "scanner", "machine_vision"],
+        "embedding_text": "machine-vision sensor capture as robot concept proof or scene anchor",
+        "facets": {"process_stage": ["inspection", "monitoring"], "capture_modality": ["machine_vision"]}
+      },
+      {
+        "id": "microscopy_measurement_capture",
+        "ko": "눈금과 시료 접점을 포함한 현미경 측정 캡처",
+        "en": "microscopy measurement capture with scale and sample contact",
+        "weight": 0.68,
+        "tags": ["science", "laboratory", "microscopy", "macro", "measurement", "inspection"],
+        "for_any": ["object"],
+        "requires_primary_any_tags": ["microscopy", "sample"],
+        "aliases": ["microscope measurement image", "specimen capture", "현미경 측정 사진"],
+        "keywords": ["visible scale", "sample contact", "measurement record"],
+        "embedding_text": "microscopy measurement capture preserving the specimen boundary, visible scale, focus plane and sample contact",
+        "facets": {"process_stage": ["measurement"], "capture_modality": ["microscopy", "macro"]}
+      },
+      {
+        "id": "thermal_field_survey_capture",
+        "ko": "가시광 맥락과 기준 패널을 함께 담은 열화상 현장 조사",
+        "en": "thermal field survey capture with visible-light context and reference panel",
+        "weight": 0.68,
+        "tags": ["science", "field_survey", "thermal", "sensor", "measurement", "climate"],
+        "for_any": ["object", "environment"],
+        "requires_primary_any_tags": ["thermal", "heat"],
+        "aliases": ["thermal survey", "field thermography", "열화상 현장 조사"],
+        "keywords": ["thermal reference", "surface comparison", "visible context"],
+        "embedding_text": "thermal field survey capture retaining a reference panel, visible material boundaries and surrounding context",
+        "facets": {"process_stage": ["measurement", "monitoring"], "capture_modality": ["thermal", "visible_light"]}
+      },
+      {
+        "id": "fixed_interval_monitoring_capture",
+        "ko": "고정 시점·구도 반복 모니터링 사진",
+        "en": "fixed-position interval monitoring photograph",
+        "weight": 0.68,
+        "tags": ["science", "field_survey", "monitoring", "repeat", "inspection", "climate"],
+        "for_any": ["object", "environment"],
+        "requires_primary_any_tags": ["monitoring", "environmental_monitoring", "erosion", "climate"],
+        "aliases": ["repeat monitoring photo", "fixed viewpoint record", "고정 구도 기록"],
+        "keywords": ["comparable interval", "fixed viewpoint", "condition change"],
+        "embedding_text": "fixed-position interval monitoring photograph with stable viewpoint, reference marker and comparable environmental extent",
+        "facets": {"event_phase": ["maintenance", "recovery"], "process_stage": ["monitoring"], "capture_modality": ["visible_light", "inspection"]}
       },
       {
         "id": "shift_log_attachment_photo",
@@ -138620,6 +139100,84 @@
         "embedding_text": "tray of freshly machined metal components with visible tool marks, coolant residue and consistent geometry"
       },
       {
+        "id": "calibration_target_card",
+        "ko": "글자 없는 교정 패턴 카드",
+        "en": "a calibration target card with geometric marks and no text",
+        "weight": 0.6,
+        "tags": ["object", "prop", "science", "calibration", "measurement", "no_text"],
+        "for_any": ["object", "robot", "environment"],
+        "requires_primary_any_tags": ["science", "measurement", "calibration", "sensor", "microscopy", "thermal"],
+        "aliases": ["calibration target", "reference card", "교정 표적 카드"],
+        "keywords": ["scale reference", "geometric target", "measurement calibration"],
+        "embedding_text": "matte calibration target card with geometric reference marks, known scale and no readable text",
+        "facets": {"process_stage": ["calibration", "measurement"]}
+      },
+      {
+        "id": "sealed_sample_vial_tray",
+        "ko": "밀봉 시료 바이알 트레이",
+        "en": "a tray of sealed sample vials with unreadable identifiers",
+        "weight": 0.58,
+        "tags": ["object", "prop", "science", "sample", "laboratory", "no_text"],
+        "for_any": ["object"],
+        "requires_primary_any_tags": ["sample", "sampling", "laboratory", "microscopy", "air_quality"],
+        "aliases": ["sample vial tray", "sealed specimens", "시료 바이알"],
+        "keywords": ["sample handling", "laboratory tray", "sealed specimen"],
+        "embedding_text": "organized tray of sealed sample vials with color-coded caps and deliberately unreadable identifiers",
+        "facets": {"process_stage": ["sampling", "transfer"]}
+      },
+      {
+        "id": "parcel_tote_scanner_prop",
+        "ko": "글자 없는 소포 토트와 스캐너",
+        "en": "a parcel tote passing an unbranded scanner gate",
+        "weight": 0.6,
+        "tags": ["object", "prop", "logistics", "parcel", "scanner", "warehouse", "no_text"],
+        "for_any": ["object", "robot"],
+        "requires_primary_any_tags": ["parcel", "conveyor", "logistics", "warehouse"],
+        "aliases": ["parcel tote scanner", "sorting tote", "소포 토트 스캐너"],
+        "keywords": ["route handoff", "warehouse scanner", "parcel flow"],
+        "embedding_text": "plain parcel tote passing an unbranded scanner gate with no readable shipping label",
+        "facets": {"relation_type": ["handoff"], "process_stage": ["transfer"], "capture_modality": ["machine_vision"]}
+      },
+      {
+        "id": "rail_gap_gauge_prop",
+        "ko": "철도 분기기 간격 게이지",
+        "en": "a rail-switch gap gauge",
+        "weight": 0.6,
+        "tags": ["object", "prop", "transport", "rail", "inspection", "maintenance"],
+        "for_any": ["object"],
+        "requires_primary_any_tags": ["rail", "switch", "actuator"],
+        "aliases": ["switch gap gauge", "rail inspection gauge", "분기기 간격 게이지"],
+        "keywords": ["rail maintenance", "switch clearance", "inspection tool"],
+        "embedding_text": "rail-switch gap gauge seated at the moving point to show the exact inspection contact location",
+        "facets": {"process_stage": ["inspection", "measurement"]}
+      },
+      {
+        "id": "erosion_marker_stake_prop",
+        "ko": "높이 기준이 보이는 해안 침식 표식 말뚝",
+        "en": "a coastal erosion marker stake with geometric height bands",
+        "weight": 0.6,
+        "tags": ["environment", "prop", "coastal", "erosion", "measurement", "no_text"],
+        "for_any": ["environment", "object"],
+        "requires_primary_any_tags": ["coastal", "erosion", "dune", "climate"],
+        "aliases": ["erosion survey stake", "shoreline marker", "해안 측정 말뚝"],
+        "keywords": ["fixed reference", "shoreline retreat", "repeat monitoring"],
+        "embedding_text": "coastal erosion marker stake with geometric height bands and no readable text, anchored as a fixed comparison reference",
+        "facets": {"process_stage": ["measurement", "monitoring"]}
+      },
+      {
+        "id": "infrared_reference_panel_prop",
+        "ko": "적외선 온도 기준 패널",
+        "en": "an infrared temperature reference panel",
+        "weight": 0.6,
+        "tags": ["object", "prop", "thermal", "calibration", "heat", "measurement", "no_text"],
+        "for_any": ["object", "environment"],
+        "requires_primary_any_tags": ["thermal", "heat"],
+        "aliases": ["thermal reference panel", "infrared calibration panel", "열화상 기준 패널"],
+        "keywords": ["thermal calibration", "surface temperature", "heat survey"],
+        "embedding_text": "matte infrared reference panel placed across shade and hot pavement boundaries with no readable text",
+        "facets": {"process_stage": ["calibration", "measurement"], "capture_modality": ["thermal"]}
+      },
+      {
         "id": "proofing_basket_lame_prop",
         "ko": "발효 바구니와 빵 칼",
         "en": "proofing baskets and a bread lame",
@@ -146743,6 +147301,78 @@
         "keywords": ["wafer fabrication", "clean manufacturing", "precision automation"],
         "embedding_text": "semiconductor fabrication cleanroom with sealed process tools, wafer handling robots and filtered white light",
         "facets": {"place_type": ["laboratory", "industrial"]}
+      },
+      {
+        "id": "microscopy_workbench",
+        "ko": "시료 준비 구역이 있는 현미경 작업대",
+        "en": "at a microscopy workbench with a specimen-preparation area",
+        "weight": 0.68,
+        "tags": ["laboratory", "science", "microscopy", "sample", "measurement", "interior"],
+        "requires_primary_any_tags": ["microscopy", "sample"],
+        "aliases": ["microscope bench", "specimen workbench", "현미경 작업대"],
+        "keywords": ["sample preparation", "laboratory measurement", "microscopy record"],
+        "embedding_text": "microscopy workbench with specimen preparation area, calibration target and controlled diagnostic light",
+        "facets": {"place_type": ["laboratory"]}
+      },
+      {
+        "id": "urban_air_monitoring_rooftop",
+        "ko": "주변 도시가 보이는 대기 관측 옥상",
+        "en": "on an urban air-monitoring rooftop",
+        "weight": 0.68,
+        "tags": ["urban", "infrastructure", "science", "sensor", "air_quality", "rooftop", "outdoor"],
+        "requires_primary_any_tags": ["air_quality", "environmental_monitoring"],
+        "aliases": ["air monitoring rooftop", "urban sensor roof", "대기 관측 옥상"],
+        "keywords": ["field station", "urban atmosphere", "sensor exposure"],
+        "embedding_text": "urban rooftop monitoring site with unobstructed sample inlet, nearby material surfaces and city atmosphere in context",
+        "facets": {"place_type": ["urban", "infrastructure"]}
+      },
+      {
+        "id": "parcel_sorting_hub",
+        "ko": "컨베이어 분기점이 보이는 소포 분류 허브",
+        "en": "inside a parcel-sorting hub with visible conveyor junctions",
+        "weight": 0.7,
+        "tags": ["warehouse", "logistics", "parcel", "conveyor", "transport", "industrial", "interior"],
+        "requires_primary_any_tags": ["parcel", "conveyor", "logistics"],
+        "aliases": ["parcel hub", "sorting warehouse", "소포 분류 허브"],
+        "keywords": ["logistics flow", "scanner junction", "route handoff"],
+        "embedding_text": "parcel-sorting hub with conveyor junctions, scanner gates, separated tote lanes and clear operational flow",
+        "facets": {"place_type": ["warehouse", "transport"]}
+      },
+      {
+        "id": "rail_maintenance_yard",
+        "ko": "분기기와 정비 통로가 있는 철도 차량기지",
+        "en": "in a rail maintenance yard with switch points and service paths",
+        "weight": 0.68,
+        "tags": ["transport", "rail", "maintenance", "infrastructure", "industrial", "outdoor"],
+        "requires_primary_any_tags": ["rail", "switch", "actuator"],
+        "aliases": ["rail service yard", "track maintenance depot", "철도 정비 기지"],
+        "keywords": ["switch inspection", "transit maintenance", "service path"],
+        "embedding_text": "rail maintenance yard showing switch points, ballast, service paths and safe working clearance",
+        "facets": {"place_type": ["transport", "infrastructure"]}
+      },
+      {
+        "id": "coastal_dune_restoration_site",
+        "ko": "식생과 침식 표식이 있는 해안 사구 복원지",
+        "en": "at a coastal dune restoration site with vegetation and erosion markers",
+        "weight": 0.68,
+        "tags": ["nature", "coastal", "dune", "erosion", "restoration", "climate", "outdoor"],
+        "requires_primary_any_tags": ["coastal", "erosion", "dune", "climate"],
+        "aliases": ["restored coastal dune", "shoreline monitoring site", "해안 사구 복원지"],
+        "keywords": ["climate adaptation", "erosion control", "repeat photography"],
+        "embedding_text": "coastal dune restoration site with planted grasses, sand fencing, fixed erosion markers and waterline context",
+        "facets": {"place_type": ["nature", "infrastructure"]}
+      },
+      {
+        "id": "shaded_heat_monitoring_corridor",
+        "ko": "그늘과 노출 포장면이 이어지는 열 모니터링 보행로",
+        "en": "along a shaded urban heat-monitoring corridor",
+        "weight": 0.68,
+        "tags": ["urban", "infrastructure", "heat", "shade", "pavement", "climate", "outdoor"],
+        "requires_primary_any_tags": ["heat", "thermal", "climate"],
+        "aliases": ["urban shade corridor", "heat monitoring walkway", "도시 그늘 측정 보행로"],
+        "keywords": ["heat island", "shade intervention", "surface comparison"],
+        "embedding_text": "urban monitoring corridor crossing tree shade, canopy shade and exposed pavement with clear material boundaries",
+        "facets": {"place_type": ["urban", "infrastructure"]}
       },
       {
         "id": "cooperative_farm_wash_station",
@@ -158274,7 +158904,8 @@
           "commercial",
           "interior",
           "architecture"
-        ]
+        ],
+        "facets": {"movement_type": ["static"]}
       },
       {
         "id": "handheld_microshake",
@@ -158307,7 +158938,8 @@
           "sports",
           "vehicle",
           "street"
-        ]
+        ],
+        "facets": {"movement_type": ["locomotion", "vehicle_flow"]}
       },
       {
         "id": "suspended_snowflake_motion",
@@ -158530,7 +159162,8 @@
           "pool",
           "underwater",
           "underwater_pool_surface"
-        ]
+        ],
+        "facets": {"movement_type": ["fluid_flow"]}
       },
       {
         "id": "long_exposure_streak",
@@ -158704,7 +159337,8 @@
         "tags": [
           "portrait",
           "relationship"
-        ]
+        ],
+        "facets": {"relation_type": ["handoff"], "movement_type": ["fine_motor"]}
       },
       {
         "id": "tray_set_down_mild_motion",
@@ -158736,7 +159370,8 @@
           "blur",
           "hover"
         ],
-        "embedding_text": "rotor blur hover as robot concept proof or scene anchor"
+        "embedding_text": "rotor blur hover as robot concept proof or scene anchor",
+        "facets": {"movement_type": ["rotation"]}
       },
       {
         "id": "servo_twitch_motion",
@@ -158748,7 +159383,8 @@
           "twitch",
           "motion"
         ],
-        "embedding_text": "servo twitch motion as robot concept proof or scene anchor"
+        "embedding_text": "servo twitch motion as robot concept proof or scene anchor",
+        "facets": {"movement_type": ["fine_motor", "mechanical_cycle"]}
       },
       {
         "id": "assembly_arm_sweep_blur",
@@ -158761,7 +159397,8 @@
           "sweep",
           "blur"
         ],
-        "embedding_text": "assembly-arm sweep blur as robot concept proof or scene anchor"
+        "embedding_text": "assembly-arm sweep blur as robot concept proof or scene anchor",
+        "facets": {"movement_type": ["mechanical_cycle"]}
       },
       {
         "id": "boot_flicker_motion",
@@ -158773,7 +159410,56 @@
           "flicker",
           "motion"
         ],
-        "embedding_text": "boot flicker motion as robot concept proof or scene anchor"
+        "embedding_text": "boot flicker motion as robot concept proof or scene anchor",
+        "facets": {"movement_type": ["static"]}
+      },
+      {
+        "id": "fine_adjustment_motion",
+        "ko": "측정점에서의 미세 조정 움직임",
+        "en": "fine adjustment motion at the measurement point",
+        "weight": 0.68,
+        "tags": ["science", "inspection", "calibration", "measurement", "motion"],
+        "requires_primary_any_tags": ["microscopy", "calibration", "inspection", "maintenance", "rail", "air_quality", "heat", "thermal"],
+        "aliases": ["fine instrument adjustment", "micro adjustment", "미세 조정"],
+        "keywords": ["measurement contact", "controlled motion", "calibration"],
+        "embedding_text": "small controlled adjustment at the exact measurement or inspection contact point",
+        "facets": {"movement_type": ["fine_motor"]}
+      },
+      {
+        "id": "conveyor_indexing_motion",
+        "ko": "컨베이어가 한 구간씩 이송되는 기계 움직임",
+        "en": "indexed conveyor movement through a sorting junction",
+        "weight": 0.7,
+        "tags": ["logistics", "warehouse", "conveyor", "machine", "motion"],
+        "requires_primary_any_tags": ["conveyor", "parcel", "logistics"],
+        "aliases": ["conveyor indexing", "sorting belt motion", "컨베이어 이송"],
+        "keywords": ["machine cycle", "parcel transfer", "route junction"],
+        "embedding_text": "indexed conveyor movement that keeps individual parcels separated through the scanner junction",
+        "facets": {"movement_type": ["mechanical_cycle"]}
+      },
+      {
+        "id": "vehicle_queue_flow_motion",
+        "ko": "차량과 운반 장비가 간격을 유지해 흐르는 움직임",
+        "en": "vehicle and carrier flow with visible queue spacing",
+        "weight": 0.66,
+        "tags": ["transport", "logistics", "vehicle", "queue", "motion"],
+        "requires_primary_any_tags": ["transport", "vehicle", "logistics", "warehouse"],
+        "aliases": ["vehicle queue flow", "carrier lane movement", "차량 대기 흐름"],
+        "keywords": ["traffic spacing", "logistics flow", "service lane"],
+        "embedding_text": "vehicle or carrier flow with visible queue spacing, lane direction and handoff point",
+        "facets": {"movement_type": ["vehicle_flow"]}
+      },
+      {
+        "id": "wind_response_motion",
+        "ko": "바람에 식생과 표식이 같은 방향으로 반응하는 움직임",
+        "en": "wind response visible across vegetation and field markers",
+        "weight": 0.66,
+        "tags": ["climate", "coastal", "wind", "vegetation", "motion"],
+        "requires_primary_any_tags": ["coastal", "dune", "wind", "climate"],
+        "aliases": ["wind response", "vegetation wind deformation", "바람 반응"],
+        "keywords": ["wind direction", "dune grass", "field marker"],
+        "embedding_text": "wind response made visible by dune grass, loose material and marker direction without obscuring the measurement frame",
+        "facets": {"movement_type": ["fluid_flow"], "weather_effect": ["wind_deformation"]}
       }
     ],
     "color": [
@@ -166840,7 +167526,8 @@
           "heatwave",
           "shimmer",
           "air"
-        ]
+        ],
+        "facets": {"weather": ["heat"], "weather_effect": ["heat_distortion"]}
       },
       {
         "id": "typhoon_eve_wind",
@@ -166874,7 +167561,8 @@
           "rain",
           "typhoon",
           "eve"
-        ]
+        ],
+        "facets": {"weather": ["storm", "wind", "rain"], "weather_effect": ["wind_deformation", "surface_wetness"]}
       },
       {
         "id": "yellow_dust_haze",
@@ -166905,7 +167593,8 @@
           "dust",
           "haze",
           "yellow"
-        ]
+        ],
+        "facets": {"weather": ["dust", "haze"], "weather_effect": ["airborne_particles", "visibility_loss"]}
       },
       {
         "id": "storm_flood_air",
@@ -166938,7 +167627,8 @@
           "rain",
           "wet",
           "air"
-        ]
+        ],
+        "facets": {"weather": ["storm", "flood", "rain"], "weather_effect": ["flooding", "surface_wetness"]}
       },
       {
         "id": "sea_fog_coast",
@@ -166970,7 +167660,8 @@
           "coast",
           "mist",
           "sea"
-        ]
+        ],
+        "facets": {"weather": ["fog", "haze"], "weather_effect": ["visibility_loss", "surface_wetness"]}
       },
       {
         "id": "overcast_noon_flat_light",
@@ -166992,6 +167683,9 @@
           ],
           "lighting_family": [
             "natural_light"
+          ],
+          "weather_effect": [
+            "none"
           ]
         },
         "embedding_text": "flat diffused overcast noon light with low contrast, no harsh shadows, realistic outdoor editorial exposure"
@@ -171139,6 +171833,19 @@
         "aliases": ["machined aluminum", "brushed metal", "가공 알루미늄"],
         "keywords": ["tool marks", "precision metal", "industrial finish"],
         "embedding_text": "brushed machined aluminum surface with precise tool marks, clean edges and controlled specular highlights"
+      },
+      {
+        "id": "sun_heated_asphalt_surface",
+        "ko": "햇볕에 달궈진 아스팔트 표면",
+        "en": "sun-heated asphalt beside a shaded reference patch",
+        "weight": 0.64,
+        "tags": ["surface", "asphalt", "urban", "heat", "pavement", "climate", "measurement"],
+        "for_any": ["object", "environment"],
+        "requires_primary_any_tags": ["heat", "thermal", "climate"],
+        "aliases": ["hot asphalt surface", "heated pavement", "달궈진 포장면"],
+        "keywords": ["urban heat island", "surface temperature", "shade boundary"],
+        "embedding_text": "sun-heated asphalt crossing a sharp shade boundary, with aggregate, repaired seams and a thermal reference area visible",
+        "facets": {"process_stage": ["measurement"]}
       },
       {
         "id": "flour_dusted_wood_surface",
@@ -176139,7 +176846,8 @@
           "human",
           "procedure",
           "work"
-        ]
+        ],
+        "facets": {"event_phase": ["preparation"], "process_stage": ["inspection"]}
       },
       {
         "id": "pre_shift_briefing",
@@ -176150,7 +176858,8 @@
           "human",
           "procedure",
           "work"
-        ]
+        ],
+        "facets": {"relation_type": ["team", "instructional"], "event_phase": ["preparation"], "process_stage": ["setup"]}
       },
       {
         "id": "mid_task_protocol",
@@ -176161,7 +176870,8 @@
           "human",
           "procedure",
           "work"
-        ]
+        ],
+        "facets": {"event_phase": ["active_process"]}
       },
       {
         "id": "handover_debrief",
@@ -176172,7 +176882,8 @@
           "human",
           "procedure",
           "work"
-        ]
+        ],
+        "facets": {"relation_type": ["handoff", "team"], "event_phase": ["handoff"], "process_stage": ["transfer"]}
       },
       {
         "id": "logging_report",
@@ -176183,7 +176894,8 @@
           "human",
           "procedure",
           "paperwork"
-        ]
+        ],
+        "facets": {"event_phase": ["aftermath"], "process_stage": ["monitoring"]}
       },
       {
         "id": "identity_verification",
@@ -176194,7 +176906,8 @@
           "human",
           "procedure",
           "service"
-        ]
+        ],
+        "facets": {"relation_type": ["transactional"], "event_phase": ["preparation"], "process_stage": ["inspection"]}
       },
       {
         "id": "safety_inspection",
@@ -176205,7 +176918,8 @@
           "human",
           "procedure",
           "safety"
-        ]
+        ],
+        "facets": {"event_phase": ["maintenance"], "process_stage": ["inspection"]}
       },
       {
         "id": "route_sorting",
@@ -176216,7 +176930,56 @@
           "human",
           "procedure",
           "logistics"
-        ]
+        ],
+        "facets": {"relation_type": ["handoff"], "event_phase": ["active_process"], "process_stage": ["transfer"]}
+      },
+      {
+        "id": "sample_preparation_step",
+        "ko": "시료 준비와 기준 위치 확인 단계",
+        "en": "sample preparation and reference-position check",
+        "weight": 0.78,
+        "tags": ["procedure", "science", "sample", "laboratory", "preparation"],
+        "requires_primary_any_tags": ["sample", "microscopy", "laboratory"],
+        "aliases": ["sample preparation", "specimen setup", "시료 준비"],
+        "keywords": ["prepared specimen", "reference position", "laboratory workflow"],
+        "embedding_text": "sample preparation step that establishes the specimen, contact surface and reference position before capture",
+        "facets": {"event_phase": ["preparation"], "process_stage": ["setup", "sampling"]}
+      },
+      {
+        "id": "instrument_calibration_step",
+        "ko": "기기 영점과 기준 표적 교정 단계",
+        "en": "instrument zeroing and reference-target calibration",
+        "weight": 0.8,
+        "tags": ["procedure", "science", "sensor", "calibration", "measurement"],
+        "requires_primary_any_tags": ["science", "sensor", "calibration", "measurement", "semiconductor", "air_quality", "heat", "thermal"],
+        "aliases": ["instrument calibration", "sensor zeroing", "기기 교정"],
+        "keywords": ["reference target", "zero check", "measurement traceability"],
+        "embedding_text": "instrument calibration step showing the sensor, reference target and physical measurement relationship",
+        "facets": {"event_phase": ["preparation", "active_process"], "process_stage": ["calibration"]}
+      },
+      {
+        "id": "condition_assessment_step",
+        "ko": "현재 상태와 이상 지점을 평가하는 단계",
+        "en": "condition assessment of the current state and anomaly point",
+        "weight": 0.8,
+        "tags": ["procedure", "inspection", "maintenance", "monitoring"],
+        "requires_primary_any_tags": ["inspection", "maintenance", "monitoring", "logistics", "rail", "climate", "air_quality"],
+        "aliases": ["condition assessment", "inspection assessment", "상태 평가"],
+        "keywords": ["anomaly location", "current condition", "inspection evidence"],
+        "embedding_text": "condition assessment step that records the current state, anomaly location and surrounding operational context",
+        "facets": {"event_phase": ["maintenance"], "process_stage": ["inspection", "monitoring"]}
+      },
+      {
+        "id": "restoration_followup_step",
+        "ko": "복원 조치 이후 고정 위치에서 재확인하는 단계",
+        "en": "fixed-position follow-up after a restoration intervention",
+        "weight": 0.78,
+        "tags": ["procedure", "climate", "restoration", "monitoring", "field"],
+        "requires_primary_any_tags": ["coastal", "erosion", "dune", "climate", "restoration"],
+        "aliases": ["restoration follow-up", "repeat monitoring", "복원 후속 조사"],
+        "keywords": ["fixed interval", "intervention result", "repeat photograph"],
+        "embedding_text": "restoration follow-up step photographed from a fixed comparable position after the intervention",
+        "facets": {"event_phase": ["recovery", "aftermath"], "process_stage": ["intervention", "monitoring"]}
       }
     ],
     "duty_prop_state": [
@@ -197188,6 +197951,42 @@
         "penalty": 0.3
       },
       {
+        "id": "overcast_lighting_vs_direct_sun_type",
+        "left": {
+          "slot": "lighting",
+          "ids": ["overcast"]
+        },
+        "right": {
+          "slot": "light_type",
+          "ids": ["direct_sun"]
+        },
+        "severity": "hard"
+      },
+      {
+        "id": "harsh_noon_lighting_vs_cold_dawn_type",
+        "left": {
+          "slot": "lighting",
+          "ids": ["harsh_noon"]
+        },
+        "right": {
+          "slot": "light_type",
+          "ids": ["cold_dawn_overcast"]
+        },
+        "severity": "hard"
+      },
+      {
+        "id": "blue_hour_lighting_vs_direct_sun_type",
+        "left": {
+          "slot": "lighting",
+          "ids": ["blue_hour"]
+        },
+        "right": {
+          "slot": "light_type",
+          "ids": ["direct_sun"]
+        },
+        "severity": "hard"
+      },
+      {
         "id": "rain_action_vs_interior_location",
         "left": {
           "slot": "action",
@@ -199565,6 +200364,24 @@
         "architecture",
         "documentary"
       ],
+      "laboratory_measurement_record": [
+        "science_inspection"
+      ],
+      "field_sensor_survey": [
+        "science_inspection"
+      ],
+      "warehouse_flow_documentary": [
+        "mobility_logistics"
+      ],
+      "transit_maintenance_record": [
+        "mobility_logistics"
+      ],
+      "coastal_resilience_monitoring": [
+        "climate_adaptation"
+      ],
+      "urban_heat_air_quality_record": [
+        "climate_adaptation"
+      ],
       "farm_to_table_process": [
         "food",
         "documentary",
@@ -200303,14 +201120,19 @@
       },
       "capture_context": {
         "subject_categories": [
-          "human"
+          "human",
+          "object",
+          "environment"
         ],
         "allow_domains": [
           "portrait",
           "fashion",
           "beauty",
           "social",
-          "adult"
+          "adult",
+          "science_inspection",
+          "mobility_logistics",
+          "climate_adaptation"
         ],
         "deny_domains": [
           "documentary",

@@ -7,7 +7,10 @@
     "product": {"prompt_focus": ["surface accuracy", "weight and contact", "commercial hierarchy"]},
     "food": {"prompt_focus": ["edible texture", "freshness cues", "plating hierarchy"]},
     "architecture": {"prompt_focus": ["spatial scale", "vertical and depth cues", "material light"]},
-    "nature": {"prompt_focus": ["habitat context", "natural behavior", "weather and depth"]}
+    "nature": {"prompt_focus": ["habitat context", "natural behavior", "weather and depth"]},
+    "science_inspection": {"prompt_focus": ["measurement legibility", "scale and calibration evidence", "controlled material state"]},
+    "mobility_logistics": {"prompt_focus": ["flow direction", "handoff and staging evidence", "machine-to-environment scale"]},
+    "climate_adaptation": {"prompt_focus": ["environmental consequence", "intervention evidence", "weather-driven material response"]}
   },
   "intent_routing": {
     "literal_subject_stop_terms": ["is", "are", "be", "role", "model", "subject", "context", "identity", "through", "only"],
@@ -45,7 +48,10 @@
       {"domain": "documentary", "aliases": ["documentary", "reportage", "observational", "다큐멘터리", "기록 사진", "관찰 사진"]},
       {"domain": "craft", "aliases": ["craft", "workshop process", "making process", "공예", "작업 과정", "제작 과정"]},
       {"domain": "urban", "aliases": ["urban", "city", "도시", "도심"]},
-      {"domain": "street", "aliases": ["street", "거리", "노상"]}
+      {"domain": "street", "aliases": ["street", "거리", "노상"]},
+      {"domain": "science_inspection", "aliases": ["scientific inspection", "inspection photography", "laboratory workflow", "field sampling", "scientific monitoring", "technical measurement", "과학 점검", "검사 기록", "실험실 작업", "현장 샘플링", "과학 모니터링", "기술 계측"]},
+      {"domain": "mobility_logistics", "aliases": ["mobility logistics", "transit operations", "warehouse logistics", "freight operations", "fleet maintenance", "대중교통 운영", "모빌리티 물류", "창고 물류", "화물 운영", "차량 정비"]},
+      {"domain": "climate_adaptation", "aliases": ["climate adaptation", "environmental monitoring", "flood resilience", "coastal erosion monitoring", "heatwave response", "기후 적응", "환경 모니터링", "침수 대응", "해안 침식 모니터링", "폭염 대응"]}
     ]
   },
   "applicability_guards": [
@@ -273,6 +279,21 @@
         "방금",
         "움직임",
         "순간"
+      ],
+      "operational_evidence": [
+        "calibration target",
+        "measurement scale",
+        "sample contact",
+        "inspection marker",
+        "condition trace",
+        "flow path",
+        "handoff point",
+        "reference surface",
+        "교정 표적",
+        "측정 눈금",
+        "검사 표식",
+        "상태 흔적",
+        "이송 경로"
       ]
     },
     "axes": [
@@ -360,6 +381,63 @@
         "suggested_phrases": {
           "material_trace": ["moisture darkens fabric, gathers on hair or surfaces, and catches the same light as the environment"],
           "environment_binding": ["wet surfaces and reflections share the scene's light and color"]
+        }
+      },
+      {
+        "id": "relational_coordination",
+        "facet_match": {"relation_type": ["cooperative", "caregiving", "instructional", "transactional", "handoff", "team", "crowd"]},
+        "terms": ["handoff", "team", "shared task", "care", "queue", "briefing", "인계", "협업", "공동 작업", "돌봄", "대기열"],
+        "required_categories": ["physical_contact", "event_timing"],
+        "principles": ["Make a relationship visible through gaze direction, hand position, spacing, and one shared task or object rather than by merely placing multiple people in frame."],
+        "suggested_phrases": {
+          "physical_contact": ["hands, spacing, and one shared object make the coordination physically legible"],
+          "event_timing": ["capture the exchange during a handoff, adjustment, briefing, or shared task"]
+        }
+      },
+      {
+        "id": "process_stage_evidence",
+        "facet_match": {"process_stage": ["setup", "calibration", "sampling", "measurement", "inspection", "transfer", "intervention", "monitoring", "cleanup"], "event_phase": ["preparation", "active_process", "handoff", "aftermath", "maintenance"]},
+        "terms": ["calibration", "sampling", "measurement", "inspection", "sorting", "loading", "maintenance", "교정", "샘플링", "측정", "점검", "분류", "정비"],
+        "required_categories": ["event_timing", "operational_evidence"],
+        "principles": ["Show the process at a specific stage and include the visible reference, contact point, or condition trace that explains what is being done."],
+        "suggested_phrases": {
+          "event_timing": ["the frame catches one specific stage before the task advances to the next"],
+          "operational_evidence": ["a calibration target, sample contact, inspection marker, or condition trace makes the operation verifiable"]
+        }
+      },
+      {
+        "id": "instrument_capture_modality",
+        "facet_match": {"capture_modality": ["macro", "microscopy", "thermal", "ultraviolet", "aerial", "underwater", "surveillance", "machine_vision", "inspection"]},
+        "terms": ["microscope", "thermal", "ultraviolet", "machine vision", "inspection camera", "sensor capture", "현미경", "열화상", "머신비전", "검사 카메라"],
+        "required_categories": ["optical_depth", "operational_evidence"],
+        "principles": ["Let the selected capture modality determine scale, depth, noise, field of view, and reference evidence instead of adding a generic technical overlay."],
+        "suggested_phrases": {
+          "optical_depth": ["scale, field of view, focus falloff, and sensor noise follow the selected capture modality"],
+          "operational_evidence": ["a physical reference surface or calibration target grounds the instrument view without relying on readable UI"]
+        }
+      },
+      {
+        "id": "mobility_flow",
+        "facet_match": {"movement_type": ["mechanical_cycle", "vehicle_flow", "crowd_flow"], "place_type": ["transport", "warehouse"]},
+        "terms": ["transit", "warehouse", "freight", "depot", "rail yard", "loading", "sorting line", "교통", "창고", "화물", "차고지", "철도", "적재"],
+        "required_categories": ["environment_binding", "event_timing", "operational_evidence"],
+        "principles": ["Make routes, staging zones, queues, and transfer points readable so vehicles, cargo, workers, and infrastructure form one operational flow."],
+        "suggested_phrases": {
+          "environment_binding": ["route markings, staging space, shared light, and contact shadows bind vehicles or cargo to the facility"],
+          "event_timing": ["capture one transfer, queue release, loading cycle, or maintenance pause"],
+          "operational_evidence": ["a visible flow path or handoff point explains how the system moves"]
+        }
+      },
+      {
+        "id": "climate_material_consequence",
+        "facet_match": {"weather_effect": ["visibility_loss", "surface_wetness", "airborne_particles", "wind_deformation", "heat_distortion", "frost_accumulation", "flooding"]},
+        "terms": ["heatwave", "air quality", "flood", "coastal erosion", "storm", "dust haze", "폭염", "대기질", "침수", "해안 침식", "폭풍", "황사"],
+        "required_categories": ["environment_binding", "material_trace", "operational_evidence"],
+        "principles": ["Show climate conditions through changed visibility, bent vegetation, water lines, heat shimmer, deposited particles, or damaged surfaces, together with one visible monitoring or adaptation intervention."],
+        "suggested_phrases": {
+          "environment_binding": ["the same weather condition changes foreground, subject, and distance rather than sitting as a background effect"],
+          "material_trace": ["water lines, deposited dust, wind-bent material, frost, or heat shimmer leave a physical trace"],
+          "operational_evidence": ["a monitoring reference or adaptation structure makes the environmental response legible"]
         }
       },
       {
@@ -517,6 +595,16 @@
               "ko": "스케일, 거리, 공간 관계가 프레임의 목적을 이끌게 한다"
             },
             "audit_terms": ["scale", "distance", "spatial relation"]
+          },
+          {
+            "id": "measurement_record",
+            "facet_match": {"process_stage": ["calibration", "sampling", "measurement", "inspection", "monitoring"], "capture_modality": ["microscopy", "thermal", "ultraviolet", "machine_vision", "inspection"]},
+            "principle": "For measurement and inspection frames, let scale, reference evidence, and the contact point explain why the photograph exists.",
+            "guidance": {
+              "en": "let scale, a physical reference, and the measurement contact point explain the frame",
+              "ko": "스케일, 물리적 기준물, 측정 접점이 프레임의 이유를 설명하게 한다"
+            },
+            "audit_terms": ["scale", "physical reference", "measurement contact"]
           }
         ]
       },
@@ -552,13 +640,23 @@
           },
           {
             "id": "atmospheric_diffusion",
-            "facet_match": {"weather": ["rain", "snow", "fog", "underwater"]},
+            "facet_match": {"weather": ["rain", "snow", "fog", "underwater", "storm", "heat", "haze", "dust"], "weather_effect": ["visibility_loss", "airborne_particles", "heat_distortion"]},
             "principle": "Atmosphere should change the light through diffusion, reflection, softened contrast, or suspended particles.",
             "guidance": {
               "en": "let atmosphere alter the light through diffusion, reflection, or softened contrast",
               "ko": "대기가 확산, 반사, 부드러운 대비로 빛을 바꾸게 한다"
             },
             "audit_terms": ["diffusion", "reflection", "softened contrast", "particles"]
+          },
+          {
+            "id": "instrument_light_logic",
+            "facet_match": {"capture_modality": ["microscopy", "thermal", "ultraviolet", "machine_vision", "inspection"], "lighting_family": ["diagnostic_light", "machine_light"]},
+            "principle": "Instrument-led imagery should keep illumination, sensor response, reference surface, and noise behavior consistent with the selected modality.",
+            "guidance": {
+              "en": "keep illumination, sensor response, reference surface, and noise consistent with the instrument",
+              "ko": "조명, 센서 반응, 기준 표면, 노이즈가 계측 장비와 일치하게 한다"
+            },
+            "audit_terms": ["sensor response", "reference surface", "instrument noise"]
           }
         ]
       },
@@ -601,6 +699,16 @@
               "ko": "여백, 스케일, 대칭이 빈 배경이 아니라 시선의 경로가 되게 한다"
             },
             "audit_terms": ["negative space", "scale", "symmetry", "reading path"]
+          },
+          {
+            "id": "operational_flow_order",
+            "facet_match": {"movement_type": ["mechanical_cycle", "vehicle_flow", "crowd_flow"], "place_type": ["transport", "warehouse", "industrial", "infrastructure"]},
+            "principle": "Operational scenes should reveal origin, route, transfer point, and destination through a clear spatial reading order.",
+            "guidance": {
+              "en": "organize origin, route, transfer point, and destination into a legible flow",
+              "ko": "출발점, 경로, 이송 지점, 도착점이 읽히는 흐름으로 구성한다"
+            },
+            "audit_terms": ["origin", "route", "transfer point", "destination"]
           }
         ]
       },
@@ -643,6 +751,16 @@
               "ko": "손길 뒤의 흔적, 살짝 어긋난 배치, 사용감, 가라앉는 디테일로 시간을 보이게 한다"
             },
             "audit_terms": ["after-touch", "displacement", "use mark", "settling detail"]
+          },
+          {
+            "id": "process_phase_transition",
+            "facet_match": {"event_phase": ["preparation", "active_process", "handoff", "aftermath", "maintenance", "recovery"], "process_stage": ["setup", "calibration", "sampling", "measurement", "inspection", "transfer", "intervention", "monitoring", "cleanup"]},
+            "principle": "Process photographs should catch the visible handoff between workflow phases rather than a generic machine or worker pose.",
+            "guidance": {
+              "en": "catch the handoff between workflow phases rather than a generic operational pose",
+              "ko": "일반적인 작업 포즈보다 공정 단계가 바뀌는 순간을 포착한다"
+            },
+            "audit_terms": ["workflow phase", "transition", "operational instant"]
           }
         ]
       },
@@ -685,6 +803,16 @@
               "ko": "공유된 공간이 거리감, 동선, 가림, 자세에 영향을 주게 한다"
             },
             "audit_terms": ["spacing", "paths", "interruptions", "posture"]
+          },
+          {
+            "id": "climate_material_response",
+            "facet_match": {"weather_effect": ["visibility_loss", "surface_wetness", "airborne_particles", "wind_deformation", "heat_distortion", "frost_accumulation", "flooding"]},
+            "principle": "Climate conditions should produce a visible material consequence and one monitoring or adaptation response in the same frame.",
+            "guidance": {
+              "en": "show a weather-driven material consequence together with a monitoring or adaptation response",
+              "ko": "날씨가 만든 물성 변화와 모니터링 또는 적응 대응을 한 프레임에 보인다"
+            },
+            "audit_terms": ["material consequence", "monitoring", "adaptation response"]
           }
         ]
       }
