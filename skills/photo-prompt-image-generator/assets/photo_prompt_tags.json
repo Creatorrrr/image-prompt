@@ -1365,6 +1365,7 @@
       "template_style": "natural",
       "family": "scientific_observation",
       "embedding_text": "scientific laboratory record of a microscope sample or calibrated instrument with visible scale, sample contact, measurement context and traceable capture method",
+      "tags": ["science_inspection"],
       "facets": {"place_type": ["laboratory"], "camera_register": ["inspection"], "mood_family": ["clinical", "operational"], "safety_tier": ["general"], "process_stage": ["calibration", "measurement"]},
       "required_slots": ["medium", "genre", "subject", "action", "location", "lighting", "camera_type", "capture_context", "procedure_step", "composition", "lens", "focus", "quality"],
       "optional_slots": [{"slot": "prop", "probability": 0.85}, {"slot": "motion", "probability": 0.45}, {"slot": "surface_material", "probability": 0.45}],
@@ -7244,16 +7245,13 @@
         },
         "subject": {
           "ids": [
-            "athlete_runner",
-            "cyclist_commuter",
-            "running_shoes"
+            "athlete_runner"
           ]
         },
         "action": {
           "ids": [
             "sprinting_track",
-            "frozen_action",
-            "walking_crosswalk"
+            "frozen_action"
           ]
         },
         "location": {
@@ -37912,10 +37910,6 @@
           "probability": 0.35
         },
         {
-          "slot": "prop",
-          "probability": 0.65
-        },
-        {
           "slot": "texture",
           "probability": 0.72
         },
@@ -38032,11 +38026,6 @@
             "editorial_quality"
           ]
         },
-        "prop": {
-          "ids": [
-            "chalk_bag_prop"
-          ]
-        },
         "texture": {
           "ids": [
             "water_droplet_freeze"
@@ -38107,10 +38096,6 @@
         {
           "slot": "appearance_type",
           "probability": 0.35
-        },
-        {
-          "slot": "prop",
-          "probability": 0.65
         },
         {
           "slot": "texture",
@@ -38229,11 +38214,6 @@
             "editorial_quality"
           ]
         },
-        "prop": {
-          "ids": [
-            "chalk_bag_prop"
-          ]
-        },
         "texture": {
           "ids": [
             "sweat_spray_backlit"
@@ -38304,10 +38284,6 @@
         {
           "slot": "appearance_type",
           "probability": 0.35
-        },
-        {
-          "slot": "prop",
-          "probability": 0.65
         },
         {
           "slot": "texture",
@@ -38426,11 +38402,6 @@
             "editorial_quality"
           ]
         },
-        "prop": {
-          "ids": [
-            "chalk_bag_prop"
-          ]
-        },
         "texture": {
           "ids": [
             "sweat_spray_backlit"
@@ -38501,10 +38472,6 @@
         {
           "slot": "appearance_type",
           "probability": 0.35
-        },
-        {
-          "slot": "prop",
-          "probability": 0.65
         },
         {
           "slot": "texture",
@@ -38621,11 +38588,6 @@
             "not_overdone",
             "high_detail",
             "editorial_quality"
-          ]
-        },
-        "prop": {
-          "ids": [
-            "chalk_bag_prop"
           ]
         },
         "texture": {
@@ -147790,6 +147752,7 @@
         "en": "a semiconductor fabrication cleanroom",
         "weight": 0.66,
         "tags": ["laboratory", "cleanroom", "semiconductor", "technology", "industrial"],
+        "requires_primary_any_tags": ["semiconductor", "wafer"],
         "aliases": ["semiconductor cleanroom", "wafer fab", "반도체 클린룸"],
         "keywords": ["wafer fabrication", "clean manufacturing", "precision automation"],
         "embedding_text": "semiconductor fabrication cleanroom with sealed process tools, wafer handling robots and filtered white light",
@@ -189730,7 +189693,6 @@
           "animal",
           "bird",
           "eagle",
-          "field",
           "nature",
           "penguin",
           "wildlife",
@@ -189742,7 +189704,6 @@
           "animal",
           "bird",
           "eagle",
-          "field",
           "nature",
           "penguin",
           "wildlife",
@@ -201851,7 +201812,14 @@
           "climate_adaptation",
           "biodiversity_monitoring",
           "agriculture_food_systems",
-          "circular_materials"
+          "circular_materials",
+          "heritage_documentation",
+          "health_access",
+          "sports_motion",
+          "education_training",
+          "disaster_risk_operations",
+          "natural_process",
+          "longitudinal_place_state"
         ],
         "deny_domains": [
           "documentary",
@@ -202011,6 +201979,12 @@
         "subject_categories": [
           "human"
         ],
+        "allow_domains": [
+          "disaster_risk_operations",
+          "longitudinal_place_state",
+          "visual_structure"
+        ],
+        "allow_domains_override_subject_categories": true,
         "deny_domains": [
           "product",
           "jewelry",

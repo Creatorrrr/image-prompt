@@ -13,7 +13,15 @@
     "climate_adaptation": {"prompt_focus": ["environmental consequence", "intervention evidence", "weather-driven material response"]},
     "biodiversity_monitoring": {"prompt_focus": ["habitat legibility", "repeatable observation protocol", "species-to-environment scale"]},
     "agriculture_food_systems": {"prompt_focus": ["material-state progression", "batch traceability", "farm-to-process continuity"]},
-    "circular_materials": {"prompt_focus": ["component or fraction state", "repair and separation evidence", "material-flow legibility"]}
+    "circular_materials": {"prompt_focus": ["component or fraction state", "repair and separation evidence", "material-flow legibility"]},
+    "heritage_documentation": {"prompt_focus": ["material condition legibility", "repeatable capture and scale reference", "intervention-stage and provenance continuity"]},
+    "health_access": {"prompt_focus": ["person-led function and participation", "support product and accessible-environment evidence", "privacy-safe non-graphic workflow"]},
+    "sports_motion": {"prompt_focus": ["movement phase legibility", "force and contact evidence", "equipment or surface response", "venue and weather coupling"]},
+    "education_training": {"prompt_focus": ["task and learning-stage legibility", "mentor-learner coordination", "tool, procedure, and result evidence"]},
+    "disaster_risk_operations": {"prompt_focus": ["time-bounded physical evidence", "safety and condition triage", "access flow or restoration state"]},
+    "natural_process": {"prompt_focus": ["state boundary or coexisting stages", "scale and reference evidence", "material trace without invented elapsed time"]},
+    "longitudinal_place_state": {"prompt_focus": ["stable spatial anchor", "operational or seasonal state evidence", "repeatable viewpoint continuity"]},
+    "visual_structure": {"prompt_focus": ["one dominant visual order", "physically consistent boundary or occlusion", "material, contact, rhythm, or scale evidence"]}
   },
   "intent_routing": {
     "literal_subject_stop_terms": ["is", "are", "be", "role", "model", "subject", "context", "identity", "through", "only"],
@@ -57,7 +65,16 @@
       {"domain": "climate_adaptation", "aliases": ["climate adaptation", "environmental monitoring", "flood resilience", "coastal erosion monitoring", "heatwave response", "기후 적응", "환경 모니터링", "침수 대응", "해안 침식 모니터링", "폭염 대응"]},
       {"domain": "biodiversity_monitoring", "aliases": ["biodiversity", "biodiversity monitoring", "species monitoring", "camera trap survey", "quadrat survey", "ecological quadrat", "benthic survey", "생물다양성", "생물다양성 모니터링", "종 모니터링", "카메라 트랩 조사", "생태 방형구", "저서생물 조사"]},
       {"domain": "agriculture_food_systems", "aliases": ["agriculture food systems", "harvest grading", "post-harvest traceability", "fermentation batch", "food batch monitoring", "농업 식품 시스템", "수확물 등급 선별", "수확 후 추적성", "발효 배치", "식품 배치 모니터링"]},
-      {"domain": "circular_materials", "aliases": ["circular materials", "repair diagnosis", "electronics repair", "materials recovery", "material sorting", "순환 재료", "수리 진단", "전자제품 수리", "자원 회수", "재료 선별"]}
+      {"domain": "circular_materials", "aliases": ["circular materials", "repair diagnosis", "electronics repair", "materials recovery", "material sorting", "direct reuse inspection", "remanufacturing requalification", "material lifecycle record", "순환 재료", "수리 진단", "전자제품 수리", "자원 회수", "재료 선별", "직접 재사용 점검", "재제조 재검증", "재료 생애 기록"]},
+      {"domain": "heritage_documentation", "aliases": ["cultural heritage documentation", "conservation photography", "condition assessment record", "museum digitization", "collection storage inspection", "photogrammetry capture", "문화유산 기록", "보존처리 기록", "상태 조사 기록", "박물관 디지털화", "소장품 수장고 점검", "포토그래메트리 촬영"]},
+      {"domain": "health_access", "aliases": ["person-centered rehabilitation", "assistive technology fitting", "assistive product fitting", "accessible route record", "community health access", "home care support", "사람 중심 재활", "보조기기 피팅", "보조공학", "무장애 동선", "접근 가능한 환경", "지역사회 보건", "재가 돌봄"]},
+      {"domain": "sports_motion", "aliases": ["sports biomechanics", "pre-contact anticipation", "impact material response", "post-exertion recovery", "운동 역학", "접촉 전 예측", "충돌 물성 반응", "운동 후 회복"]},
+      {"domain": "education_training", "aliases": ["guided skill learning", "supervised practice", "task demonstration", "competency assessment", "workplace learning", "apprenticeship training", "지도 실습", "감독하 실습", "작업 시범", "역량 평가", "직무 교육", "도제 훈련"]},
+      {"domain": "disaster_risk_operations", "aliases": ["post-disaster safety record", "post disaster safety record", "evacuation flow monitoring", "wildfire mitigation audit", "post-flood evidence survey", "post flood evidence survey", "재난 후 안전 점검", "대피 흐름 모니터링", "산불 완화 점검", "홍수 후 흔적 조사"]},
+      {"domain": "human_interaction", "aliases": ["shared task interaction", "two people coordinating", "joint gaze shared workpiece", "small group interaction", "shared workpiece", "공유 작업 상호작용", "두 사람이 협력", "공동 작업물", "공유 대상 시선"]},
+      {"domain": "natural_process", "aliases": ["natural process trace", "biological soil crust", "erosion deposition balance", "condensation boundary", "radicle germination", "freeze-thaw soil", "자연 과정 흔적", "생물 토양 피각", "침식 퇴적 균형", "결로 경계", "유근 발아", "토양 동결 융해"]},
+      {"domain": "longitudinal_place_state", "aliases": ["longitudinal place state", "repeat photography", "same viewpoint record", "temporary closure record", "reopening readiness", "seasonal place change", "장소 시간 변화", "반복 촬영", "같은 시점 기록", "임시 폐쇄 기록", "재개장 준비", "계절 장소 변화"]},
+      {"domain": "visual_structure", "aliases": ["visual structure study", "figure-ground boundary", "occlusion continuity", "repeated rhythm", "contact residue", "material-state boundary", "canonical size anchor", "시각 구조 연구", "도형 배경 경계", "가림 연속성", "반복 리듬", "접촉 흔적", "물성 경계", "크기 기준"]}
     ]
   },
   "applicability_guards": [
@@ -130,9 +147,57 @@
     },
     {
       "id": "circular_material_support_requires_primary_context",
-      "match_any_tags": ["circular_materials", "repair", "recovery"],
+      "match_any_tags": ["circular_materials"],
       "exclude_slots": ["medium", "genre", "subject", "location"],
-      "requires_primary_any_tags": ["circular_materials", "repair", "electronics", "materials", "sorting", "recovery"]
+      "requires_primary_any_tags": ["circular_materials", "electronics_repair", "material_recovery", "reuse_assessment", "remanufacture"]
+    },
+    {
+      "id": "heritage_documentation_support_requires_primary_context",
+      "match_any_tags": ["heritage_documentation", "conservation_capture", "photogrammetry_capture"],
+      "exclude_slots": ["medium", "genre", "subject", "location"],
+      "requires_primary_any_tags": ["heritage_documentation", "collection_object", "conservation_lab", "museum_digitization"]
+    },
+    {
+      "id": "health_access_support_requires_primary_context",
+      "match_any_tags": ["health_access", "assistive_real_world", "accessibility"],
+      "exclude_slots": ["medium", "genre", "subject", "location"],
+      "requires_primary_any_tags": ["health_access", "assistive_real_world", "rehabilitation", "accessible_environment"]
+    },
+    {
+      "id": "sports_motion_support_requires_primary_context",
+      "match_any_tags": ["sports_motion", "sports_contact", "sports_recovery"],
+      "exclude_slots": ["medium", "genre", "subject", "location"],
+      "requires_primary_any_tags": ["sports_motion", "athlete", "sports_venue", "competitive_motion"]
+    },
+    {
+      "id": "education_training_support_requires_primary_context",
+      "match_any_tags": ["education_training", "guided_learning", "instructional_task"],
+      "exclude_slots": ["medium", "genre", "subject", "location"],
+      "requires_primary_any_tags": ["education_training", "guided_learning", "instructional_task"]
+    },
+    {
+      "id": "disaster_risk_support_requires_primary_context",
+      "match_any_tags": ["disaster_risk_operations", "post_disaster_survey"],
+      "exclude_slots": ["medium", "genre", "subject", "location"],
+      "requires_primary_any_tags": ["disaster_risk_operations", "post_disaster_survey", "building_safety_triage"]
+    },
+    {
+      "id": "atmospheric_observation_support_requires_primary_context",
+      "match_any_tags": ["atmospheric_observation", "ground_truth_weather"],
+      "exclude_slots": ["medium", "genre", "subject", "location"],
+      "requires_primary_any_tags": ["atmospheric_observation", "ground_truth_weather", "meteorological_observation"]
+    },
+    {
+      "id": "natural_process_support_requires_primary_context",
+      "match_any_tags": ["natural_process"],
+      "exclude_slots": ["medium", "genre", "subject", "location"],
+      "requires_primary_any_tags": ["natural_process", "biocrust", "germination", "geomorphology", "freeze_thaw", "condensation_process"]
+    },
+    {
+      "id": "longitudinal_place_support_requires_primary_context",
+      "match_any_tags": ["longitudinal_place_state", "repeat_viewpoint"],
+      "exclude_slots": ["medium", "genre", "subject", "location"],
+      "requires_primary_any_tags": ["longitudinal_place_state", "place_state", "repeat_viewpoint"]
     }
   ],
   "selection_balance": {
@@ -406,6 +471,7 @@
       },
       {
         "id": "handmade_or_miniature_set",
+        "profile_match": ["general", "portrait_editorial", "product"],
         "facet_match": {"camera_register": ["macro"], "subject_kind": ["object", "plant"]},
         "terms": ["felt", "wool", "handmade", "miniature", "storybook", "fairy", "craft", "펠트", "양모", "수제", "동화", "미니어처"],
         "required_categories": ["environment_binding", "material_trace"],
@@ -428,7 +494,7 @@
       },
       {
         "id": "relational_coordination",
-        "facet_match": {"relation_type": ["cooperative", "caregiving", "instructional", "transactional", "handoff", "team", "crowd"]},
+        "facet_match": {"relation_type": ["cooperative", "caregiving", "instructional", "transactional", "handoff", "team", "crowd", "competitive"]},
         "terms": ["handoff", "team", "shared task", "care", "queue", "briefing", "인계", "협업", "공동 작업", "돌봄", "대기열"],
         "required_categories": ["physical_contact", "event_timing"],
         "principles": ["Make a relationship visible through gaze direction, hand position, spacing, and one shared task or object rather than by merely placing multiple people in frame."],
@@ -439,7 +505,7 @@
       },
       {
         "id": "process_stage_evidence",
-        "facet_match": {"process_stage": ["setup", "calibration", "sampling", "measurement", "inspection", "transfer", "intervention", "monitoring", "cleanup"], "event_phase": ["preparation", "active_process", "handoff", "aftermath", "maintenance"]},
+        "facet_match": {"process_stage": ["setup", "calibration", "sampling", "measurement", "inspection", "transfer", "intervention", "monitoring", "cleanup"], "event_phase": ["preparation", "active_process", "handoff", "aftermath", "maintenance", "dormancy", "reactivation"]},
         "terms": ["calibration", "sampling", "measurement", "inspection", "sorting", "loading", "maintenance", "교정", "샘플링", "측정", "점검", "분류", "정비"],
         "required_categories": ["event_timing", "operational_evidence"],
         "principles": ["Show the process at a specific stage and include the visible reference, contact point, or condition trace that explains what is being done."],
@@ -450,7 +516,7 @@
       },
       {
         "id": "instrument_capture_modality",
-        "facet_match": {"capture_modality": ["macro", "microscopy", "thermal", "ultraviolet", "aerial", "underwater", "surveillance", "machine_vision", "inspection"]},
+        "facet_match": {"capture_modality": ["macro", "microscopy", "thermal", "ultraviolet", "aerial", "underwater", "surveillance", "machine_vision", "inspection", "fluorescence", "dic", "polarized_light", "light_sheet", "photogrammetry"]},
         "terms": ["microscope", "thermal", "ultraviolet", "machine vision", "inspection camera", "sensor capture", "현미경", "열화상", "머신비전", "검사 카메라"],
         "required_categories": ["optical_depth", "operational_evidence"],
         "principles": ["Let the selected capture modality determine scale, depth, noise, field of view, and reference evidence instead of adding a generic technical overlay."],
@@ -473,6 +539,7 @@
       },
       {
         "id": "climate_material_consequence",
+        "profile_match": ["climate_adaptation"],
         "facet_match": {"weather_effect": ["visibility_loss", "surface_wetness", "airborne_particles", "wind_deformation", "heat_distortion", "frost_accumulation", "flooding"]},
         "terms": ["heatwave", "air quality", "flood", "coastal erosion", "storm", "dust haze", "폭염", "대기질", "침수", "해안 침식", "폭풍", "황사"],
         "required_categories": ["environment_binding", "material_trace", "operational_evidence"],
@@ -520,6 +587,122 @@
           "material_trace": ["wear, solder condition, residue, contamination or fraction texture records the material's current state"],
           "operational_evidence": ["a probe contact, rejected contaminant or separation mechanism makes the intervention verifiable"],
           "traceability_evidence": ["the tested component or input stream remains connected to its repair, reject or recovered destination"]
+        }
+      },
+      {
+        "id": "registered_acquisition_structure",
+        "profile_match": ["science_inspection"],
+        "facet_match": {"acquisition_structure": ["fixed_roi", "time_series", "multichannel", "z_stack", "multiview"]},
+        "terms": ["fixed ROI", "time series", "multichannel", "z stack", "multiview", "고정 ROI", "시계열", "다채널", "광학 절편"],
+        "required_categories": ["optical_depth", "operational_evidence", "traceability_evidence"],
+        "principles": ["Keep viewpoint, landmark, focus, exposure, and a physical reference stable across the selected channel, time, depth, or view structure."],
+        "suggested_phrases": {
+          "optical_depth": ["focus, section depth, and field of view follow one registered acquisition geometry"],
+          "operational_evidence": ["a physical reference slide or fixed landmark grounds the acquisition without readable overlays"],
+          "traceability_evidence": ["the same ROI and reference relationship persist across the selected acquisition structure"]
+        }
+      },
+      {
+        "id": "heritage_documentation_continuity",
+        "profile_match": ["heritage_documentation"],
+        "facet_match": {"capture_modality": ["macro", "ultraviolet", "photogrammetry", "inspection"], "process_stage": ["inspection", "measurement", "intervention", "monitoring"]},
+        "terms": ["heritage documentation", "condition assessment", "conservation photography", "photogrammetry", "문화유산 기록", "보존처리 기록", "상태 조사", "포토그래메트리"],
+        "required_categories": ["material_trace", "operational_evidence", "traceability_evidence"],
+        "principles": ["Connect physical condition, a repeatable reference, and the intervention or derived-record stage without inventing readable accession data."],
+        "suggested_phrases": {
+          "material_trace": ["surface wear, lifting, corrosion, or support pressure remains physically legible"],
+          "operational_evidence": ["stable support, raking light, scale reference, or camera orbit explains the documentation method"],
+          "traceability_evidence": ["the collection object, capture event, and treatment stage remain continuous without readable labels"]
+        }
+      },
+      {
+        "id": "health_access_functional_participation",
+        "profile_match": ["health_access"],
+        "facet_match": {"relation_type": ["caregiving", "instructional", "cooperative"], "process_stage": ["setup", "inspection", "intervention", "monitoring"]},
+        "terms": ["rehabilitation", "assistive product", "accessible route", "community health", "재활", "보조기기", "무장애 동선", "지역사회 보건"],
+        "required_categories": ["physical_contact", "operational_evidence", "environment_binding"],
+        "principles": ["Show the adult participant leading a functional task while support products, helpers, and accessible space remain practical, dignified, and non-graphic."],
+        "suggested_phrases": {
+          "physical_contact": ["hands meet the support product or route feature at a clear functional contact point"],
+          "operational_evidence": ["fit, use, follow-up, or clear-route evidence explains the current access task"],
+          "environment_binding": ["eye level, working distance, and usable circulation keep the participant and support environment equally legible"]
+        }
+      },
+      {
+        "id": "sports_phase_contact_response",
+        "profile_match": ["sports_motion"],
+        "facet_match": {"movement_phase": ["readiness", "initiation", "loading_braking", "propulsion_release", "flight_transfer", "impact_absorption", "deceleration_stabilization", "recovery"], "contact_state": ["clearance_no_contact", "surface_or_medium_contact", "equipment_contact", "opponent_contact", "flight_or_separation", "post_contact_release"]},
+        "terms": ["sports biomechanics", "pre-contact", "impact", "recovery", "운동 역학", "접촉 전", "충돌", "회복"],
+        "required_categories": ["event_timing", "physical_contact", "material_trace"],
+        "principles": ["Make one movement phase, its contact state, and any equipment or surface response legible without replacing mechanics with generic sweat or blur."],
+        "suggested_phrases": {
+          "event_timing": ["the frame isolates one readable readiness, loading, release, impact, deceleration, or recovery phase"],
+          "physical_contact": ["the body, ground, opponent, or equipment meet at one physically plausible contact state"],
+          "material_trace": ["compression, rebound, surface shear, droplets, or particles respond to the same force event"]
+        }
+      },
+      {
+        "id": "education_activity_evidence",
+        "profile_match": ["education_training"],
+        "facet_match": {"learning_stage": ["orientation", "demonstration", "guided_practice", "collaborative_problem_solving", "performance_assessment"], "relation_type": ["instructional", "cooperative"]},
+        "terms": ["guided practice", "task demonstration", "competency assessment", "workplace learning", "지도 실습", "작업 시범", "역량 평가", "직무 교육"],
+        "required_categories": ["event_timing", "physical_contact", "operational_evidence"],
+        "principles": ["Show one observable learning stage through mentor-learner attention, tool contact, procedure, and result evidence rather than through classroom symbolism alone."],
+        "suggested_phrases": {
+          "event_timing": ["the frame catches demonstration, supervised practice, joint diagnosis, or assessment at one specific step"],
+          "physical_contact": ["hands, gaze, and the workpiece meet at the same task contact point"],
+          "operational_evidence": ["tool, procedure, practice result, and non-readable assessment reference form one complete activity frame"]
+        }
+      },
+      {
+        "id": "disaster_risk_evidence",
+        "profile_match": ["disaster_risk_operations"],
+        "facet_match": {"event_phase": ["preparation", "aftermath", "recovery"], "process_stage": ["inspection", "measurement", "monitoring", "intervention"]},
+        "terms": ["post-disaster", "building safety", "evacuation flow", "post-flood evidence", "재난 후", "건물 안전", "대피 흐름", "홍수 흔적"],
+        "required_categories": ["material_trace", "operational_evidence", "traceability_evidence"],
+        "principles": ["Prioritize time-sensitive physical evidence, a safe observation boundary, and the next condition decision without turning affected people into spectacle."],
+        "suggested_phrases": {
+          "material_trace": ["water, wind, debris, deformation, or access traces remain specific to the observed hazard"],
+          "operational_evidence": ["a control line, reference marker, or triage contact point explains the safety decision"],
+          "traceability_evidence": ["the observed condition remains connected to its restricted, repaired, or re-opened state"]
+        }
+      },
+      {
+        "id": "natural_process_state_trace",
+        "profile_match": ["natural_process"],
+        "facet_match": {"weather_effect": ["surface_wetness", "frost_accumulation", "erosion_deposition"], "observation_interval": ["repeat_interval", "seasonal_cycle"]},
+        "terms": ["biocrust", "erosion deposition", "condensation boundary", "germination", "freeze thaw", "생물 토양 피각", "침식 퇴적", "결로 경계", "발아", "동결 융해"],
+        "required_categories": ["event_timing", "material_trace", "environment_binding"],
+        "principles": ["Use a state boundary, coexisting stages, layer thickness, partial burial, fixed reference, or directional arrangement that a single photograph can actually support."],
+        "suggested_phrases": {
+          "event_timing": ["coexisting stages or a persistent boundary imply process without claiming an unseen time-lapse"],
+          "material_trace": ["layers, gradients, cracks, residue, or partial burial preserve the physical process trace"],
+          "environment_binding": ["the trace remains tied to its substrate, habitat, moisture, and scale reference"]
+        }
+      },
+      {
+        "id": "longitudinal_place_evidence",
+        "profile_match": ["longitudinal_place_state"],
+        "facet_match": {"observation_interval": ["repeat_interval", "seasonal_cycle"], "event_phase": ["preparation", "active_process", "aftermath", "maintenance", "dormancy", "reactivation"]},
+        "terms": ["repeat photography", "same viewpoint", "temporary closure", "reopening readiness", "seasonal place change", "반복 촬영", "같은 시점", "임시 폐쇄", "재개장", "계절 변화"],
+        "required_categories": ["environment_binding", "operational_evidence", "traceability_evidence"],
+        "principles": ["Keep one stable spatial anchor and one changed physical or operational trace visible from a repeatable viewpoint, without inventing a split-screen comparison."],
+        "suggested_phrases": {
+          "environment_binding": ["the same doorway, edge, fixture, or horizon anchors the place state"],
+          "operational_evidence": ["setup, shutdown, maintenance, closure protection, or recommissioning leaves one observable state cue"],
+          "traceability_evidence": ["viewpoint, scope, and reference relationship remain suitable for later comparison"]
+        }
+      },
+      {
+        "id": "visual_operator_evidence",
+        "profile_match": ["visual_structure"],
+        "terms": ["figure-ground boundary", "occlusion continuity", "repeated rhythm", "contact residue", "material transition", "scale anchor", "broken symmetry", "도형 배경 경계", "가림 연속성", "반복 리듬", "접촉 흔적", "물성 전환", "크기 기준", "대칭 파괴"],
+        "required_categories": ["environment_binding", "material_trace", "optical_depth"],
+        "principles": ["Use one dominant visual order and one physically verifiable cue; reflection, occlusion, scale, and transition must remain consistent with medium, depth, and contact."],
+        "suggested_phrases": {
+          "environment_binding": ["one clear boundary, rhythm, or localized break controls salience while staying physically tied to the surrounding surface or space"],
+          "material_trace": ["residue, compression, displacement, or a continuous state boundary points to a real prior or active process"],
+          "optical_depth": ["occluding edges, reflective curvature, shared shadows, and same-plane scale anchors preserve spatial logic"]
         }
       },
       {
@@ -910,6 +1093,7 @@
           },
           {
             "id": "climate_material_response",
+            "profile_match": ["climate_adaptation"],
             "facet_match": {"weather_effect": ["visibility_loss", "surface_wetness", "airborne_particles", "wind_deformation", "heat_distortion", "frost_accumulation", "flooding"]},
             "principle": "Climate conditions should produce a visible material consequence and one monitoring or adaptation response in the same frame.",
             "guidance": {
@@ -951,7 +1135,7 @@
       {
         "id": "evidence_led",
         "label": "evidence-led craft",
-        "profile_match": ["biodiversity_monitoring", "agriculture_food_systems", "circular_materials"],
+        "profile_match": ["biodiversity_monitoring", "agriculture_food_systems", "circular_materials", "heritage_documentation", "health_access", "sports_motion", "education_training", "disaster_risk_operations", "natural_process", "longitudinal_place_state", "visual_structure"],
         "emphasize": ["shot_intent", "frame_hierarchy", "environment_consequence"]
       }
     ]

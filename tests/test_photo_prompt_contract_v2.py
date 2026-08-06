@@ -21,7 +21,9 @@ GENERALIZATION_PATH = SKILL_DIR / "assets" / "generalization_cases.jsonl"
 HOLDOUT_PATH = SKILL_DIR / "assets" / "generalization_holdout_cases.jsonl"
 DOMAIN_HOLDOUT_V2_PATH = SKILL_DIR / "assets" / "generalization_domain_holdout_v2.jsonl"
 RETRIEVAL_HOLDOUT_V3_PATH = SKILL_DIR / "assets" / "semantic_retrieval_holdout_v3.jsonl"
+RETRIEVAL_HOLDOUT_V4_PATH = SKILL_DIR / "assets" / "semantic_retrieval_holdout_v4.jsonl"
 RESEARCH_EVIDENCE_PATH = SKILL_DIR / "assets" / "research_evidence.jsonl"
+RESEARCH_EXTENSION_PATH = SKILL_DIR / "assets" / "photo_prompt_research_extension.json"
 QUALITY_LAYERS_PATH = SKILL_DIR / "assets" / "photo_prompt_quality_layers.json"
 DOMAIN_VISUAL_REVIEW_PLAN_PATH = SKILL_DIR / "assets" / "visual_review_domain_extension_plan.json"
 DOMAIN_VISUAL_REVIEW_RESULTS_PATH = SKILL_DIR / "assets" / "visual_review_domain_extension_results.json"
@@ -809,7 +811,7 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
         )
         self.assertEqual(completed.returncode, 0, completed.stdout + completed.stderr)
         payload = json.loads(completed.stdout)
-        self.assertEqual(payload["generalization_check"]["case_count"], 60)
+        self.assertEqual(payload["generalization_check"]["case_count"], 79)
         self.assertEqual(payload["generalization_check"]["failed_case_count"], 0)
         self.assertEqual(payload["holdout_check"]["case_count"], 24)
         self.assertEqual(payload["holdout_check"]["failed_case_count"], 0)
@@ -822,20 +824,135 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
         self.assertTrue(all(case["allowed_selected_presets"] for case in retrieval_cases))
         self.assertTrue(all("preset" not in case for case in retrieval_cases))
 
+        retrieval_v4_cases = eval_semantic.load_retrieval_holdout_cases(RETRIEVAL_HOLDOUT_V4_PATH)
+        self.assertEqual(len(retrieval_v4_cases), 22)
+        self.assertEqual(retrieval_v4_cases[:6], retrieval_cases)
+        self.assertTrue(all(case["allowed_selected_presets"] for case in retrieval_v4_cases))
+        self.assertTrue(all("preset" not in case for case in retrieval_v4_cases))
+
         evidence_rows = [
             json.loads(line)
             for line in RESEARCH_EVIDENCE_PATH.read_text(encoding="utf-8").splitlines()
             if line.strip()
         ]
-        self.assertGreaterEqual(len(evidence_rows), 4)
+        self.assertGreaterEqual(len(evidence_rows), 20)
+        self.assertEqual(len({row["id"] for row in evidence_rows}), len(evidence_rows))
+        self.assertGreaterEqual(len({row["domain"] for row in evidence_rows}), 15)
+        merged_tags = prompt_generator.load_json(TAGS_PATH)
+        catalog_ids = {str(preset["id"]) for preset in merged_tags["presets"]}
+        for entries in merged_tags["slots"].values():
+            catalog_ids.update(str(entry["id"]) for entry in entries)
         for row in evidence_rows:
             self.assertEqual(row["schema_version"], "photo-research-evidence/v1")
             self.assertEqual(row["status"], "approved")
             self.assertTrue(str(row["source_url"]).startswith("https://"))
             self.assertTrue(row["abstracted_dimensions"])
             self.assertTrue(row["candidate_ids"])
+            self.assertTrue(set(row["candidate_ids"]) <= catalog_ids, row["id"])
             self.assertIn("no ", row["reuse_note"].lower())
             self.assertIn("copied", row["reuse_note"].lower())
+
+    def test_research_extension_is_additive_and_scopes_automatic_slots(self):
+        raw_tags = json.loads(TAGS_PATH.read_text(encoding="utf-8"))
+        extension = json.loads(RESEARCH_EXTENSION_PATH.read_text(encoding="utf-8"))
+        merged = prompt_generator.merge_research_extension(copy.deepcopy(raw_tags), copy.deepcopy(extension))
+
+        extension_ids = {preset["id"] for preset in extension["presets"]}
+        merged_presets = {preset["id"]: preset for preset in merged["presets"]}
+        self.assertEqual(len(extension_ids), 17)
+        self.assertTrue(extension_ids <= set(merged_presets))
+
+        for preset_id in extension_ids:
+            preset = merged_presets[preset_id]
+            self.assertEqual(preset["auto_optional_policy"], "authored_filters_only")
+            filter_slots = set(preset.get("filters", {}))
+            for spec in prompt_generator.optional_slot_specs(preset, merged):
+                if spec.get("source") == "auto":
+                    self.assertIn(spec["slot"], filter_slots, (preset_id, spec))
+
+        duplicate = {
+            "schema_version": prompt_generator.RESEARCH_EXTENSION_SCHEMA,
+            "presets": [{"id": raw_tags["presets"][0]["id"], "filters": {}}],
+        }
+        with self.assertRaisesRegex(ValueError, "duplicate extension id"):
+            prompt_generator.merge_research_extension(copy.deepcopy(raw_tags), duplicate)
+
+        generic_window = prompt_generator.semantic_preset_score_window(
+            {"semantic_profile": "conservative", "novelty": "low", "intent_constraints": {"domains": []}}
+        )
+        typed_window = prompt_generator.semantic_preset_score_window(
+            {
+                "semantic_profile": "conservative",
+                "novelty": "low",
+                "intent_constraints": {"domains": ["science_inspection"]},
+            }
+        )
+        self.assertLess(typed_window, generic_window)
+
+    def test_research_presets_resist_legacy_bleed_and_misleading_intent(self):
+        data = prompt_generator.load_json(TAGS_PATH)
+        presets = {preset["id"]: preset for preset in data["presets"]}
+
+        sports_wire = presets["sports_action_wire"]
+        self.assertEqual(
+            sports_wire["filters"]["subject"]["ids"],
+            ["athlete_runner"],
+        )
+        self.assertEqual(
+            sports_wire["filters"]["action"]["ids"],
+            ["sprinting_track", "frozen_action"],
+        )
+        for preset_id in (
+            "swimmer_lane_splash",
+            "combat_sport_sweat",
+            "track_sprint_blur",
+            "equestrian_dust",
+        ):
+            preset_text = json.dumps(presets[preset_id], ensure_ascii=False).lower()
+            self.assertNotIn("chalk", preset_text)
+
+        pollinator = presets["pollinator_flower_visit_transect"]
+        picked = {}
+        contract = prompt_generator.make_generation_contract(data, pollinator, picked)
+        subject = prompt_generator.choose_slot(
+            "subject",
+            data,
+            pollinator,
+            __import__("random").Random(7),
+            picked,
+            semantic_context=None,
+            generation_contract=contract,
+        )
+        self.assertEqual(subject["id"], "pollinator_flower_visit_event")
+
+        natural_markers = {
+            "biological_soil_crust_patch": "biocrust",
+            "streambank_erosion_deposition_profile": "geomorphology",
+            "cold_surface_condensation_boundary": "condensation_process",
+            "seed_radicle_emergence_macro": "germination",
+            "freeze_thaw_soil_polygon_patch": "freeze_thaw",
+        }
+        for seed in range(1, 11):
+            pack = self.run_wrapper(
+                "--preset",
+                "natural_process_trace_documentary",
+                "--selection-mode",
+                "rule",
+                "--seed",
+                str(seed),
+                "--emit-candidate-pack",
+            )[0]
+            selected = {
+                slot: next(
+                    candidate
+                    for candidate in payload.get("candidates", [])
+                    if candidate.get("selected_by_sampler")
+                )
+                for slot, payload in pack["slots"].items()
+            }
+            marker = natural_markers[selected["subject"]["entry_id"]]
+            for slot in ("action", "location", "surface_material"):
+                self.assertIn(marker, selected[slot].get("tags", []), (seed, slot, selected[slot]))
 
     def test_compact_quality_gate_summary_keeps_gate_and_check_counts(self):
         summary = {
@@ -844,12 +961,12 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
                 {"mode": "rule", "average_coverage": 1.0, "quality_fail_count": 0, "results": [1, 2]},
             ],
             "generalization_check": {"case_count": 60, "failed_case_count": 0, "results": [1]},
-            "retrieval_holdout_v3_check": {"case_count": 6, "failed_case_count": 0, "results": [1]},
+            "retrieval_holdout_v4_check": {"case_count": 22, "failed_case_count": 0, "results": [1]},
         }
         compact = eval_semantic.compact_quality_gate_summary(summary)
         self.assertEqual(compact["quality_gate"]["passed"], True)
         self.assertEqual(compact["checks"]["generalization_check"]["case_count"], 60)
-        self.assertEqual(compact["checks"]["retrieval_holdout_v3_check"]["failed_case_count"], 0)
+        self.assertEqual(compact["checks"]["retrieval_holdout_v4_check"]["failed_case_count"], 0)
         self.assertNotIn("results", compact["checks"]["generalization_check"])
         with tempfile.TemporaryDirectory() as tmp:
             report_path = Path(tmp) / "quality-report.json"

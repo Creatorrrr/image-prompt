@@ -2244,6 +2244,7 @@ def validate_slot_applicability(data: dict[str, Any], errors: list[str]) -> None
         "deny_subject_categories",
         "allow_domains",
         "deny_domains",
+        "allow_domains_override_subject_categories",
         "require_domain_match",
     }
     for slot, policy in slot_policies.items():
@@ -2264,8 +2265,9 @@ def validate_slot_applicability(data: dict[str, Any], errors: list[str]) -> None
             for domain in normalize_list(policy.get(key)):
                 if domain not in VALID_PRESET_DOMAINS:
                     errors.append(f"slot_applicability.slots.{slot}.{key}: unknown preset domain {domain}")
-        if "require_domain_match" in policy and not isinstance(policy.get("require_domain_match"), bool):
-            errors.append(f"slot_applicability.slots.{slot}.require_domain_match: must be a boolean")
+        for key in ("require_domain_match", "allow_domains_override_subject_categories"):
+            if key in policy and not isinstance(policy.get(key), bool):
+                errors.append(f"slot_applicability.slots.{slot}.{key}: must be a boolean")
 
 
 def validate_skill_doc_literals(path: Path, data: dict[str, Any], errors: list[str]) -> None:

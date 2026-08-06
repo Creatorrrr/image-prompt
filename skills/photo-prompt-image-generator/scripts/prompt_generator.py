@@ -74,6 +74,8 @@ SEMANTIC_TEXT_RECIPE_VERSION = "semantic-text-v2"
 GENERATOR_VERSION = "2026.06.0"
 LIKENESS_MODES = ("off", "inspired")
 QUALITY_LAYERS_FILENAME = "photo_prompt_quality_layers.json"
+RESEARCH_EXTENSION_FILENAME = "photo_prompt_research_extension.json"
+RESEARCH_EXTENSION_SCHEMA = "photo-prompt-research-extension/v1"
 QUALITY_LAYERS_DATA_KEY = "_quality_layers"
 SOFT_ANCHOR_WEIGHT_MULTIPLIER = 24.0
 SOFT_ANCHOR_PROMOTED_WEIGHT_MULTIPLIER = 36.0
@@ -320,7 +322,7 @@ CANDIDATE_PACK_MOTIF_TAXONOMY: Dict[str, tuple[str, ...]] = {
 
 SEMANTIC_PROFILE_CONFIGS: Dict[str, Dict[str, float]] = {
     "conservative": {
-        "preset_window": 0.08,
+        "preset_window": 0.06,
         "preset_candidate_limit": 5,
         "preset_weight_floor": 0.86,
         "preset_overall_weight": 0.35,
@@ -842,9 +844,9 @@ SEMANTIC_SLOT_CAPTION_TEMPLATES: Dict[str, str] = {
 
 DEFAULT_FACET_VOCAB: JsonDict = {
     "subject_kind": ["human", "animal", "object", "food", "environment", "plant", "sign"],
-    "place_type": ["urban", "street", "interior", "nature", "studio", "commercial", "transport", "home"],
+    "place_type": ["urban", "street", "interior", "nature", "studio", "commercial", "transport", "home", "collection_storage", "sports_venue"],
     "time_of_day": ["day", "night", "dawn", "dusk", "indoor_unspecified"],
-    "weather": ["clear", "rain", "snow", "fog", "storm", "heat", "haze", "dust", "wind", "flood", "underwater", "none"],
+    "weather": ["clear", "rain", "snow", "fog", "storm", "heat", "haze", "dust", "wind", "flood", "underwater", "hail", "frost", "none"],
     "lighting_family": ["natural_light", "artificial_light", "colored_light", "flash", "studio_light", "low_light"],
     "mood_family": ["calm", "tense", "romantic", "surreal", "nostalgic", "commercial", "documentary"],
     "camera_register": ["phone", "professional", "surveillance", "vintage", "studio", "macro"],
@@ -854,12 +856,24 @@ DEFAULT_FACET_VOCAB: JsonDict = {
     "camera_angle": ["eye_level", "low", "high", "overhead_top_down", "dutch", "over_shoulder", "pov", "reflection", "hidden_observer"],
     "placement": ["centered", "rule_of_thirds", "negative_space", "frame_filling", "edge_tension", "entering_frame", "exiting_frame", "layered_depth", "foreground_frame", "symmetry"],
     "platform_frame": ["vertical_9_16_safe", "vertical_4_5_safe", "square_1_1_safe", "ui_safe_negative_space", "thumbnail_safe", "face_upper_middle", "center_safe", "blank_lower_third", "carousel_crop_safe"],
-    "relation_type": ["cooperative", "caregiving", "instructional", "transactional", "handoff", "team", "crowd"],
-    "event_phase": ["preparation", "active_process", "pause", "handoff", "aftermath", "maintenance", "recovery"],
+    "relation_type": ["cooperative", "caregiving", "instructional", "transactional", "handoff", "team", "crowd", "competitive"],
+    "event_phase": ["preparation", "active_process", "pause", "handoff", "aftermath", "maintenance", "recovery", "dormancy", "reactivation"],
     "process_stage": ["setup", "calibration", "sampling", "measurement", "inspection", "transfer", "intervention", "monitoring", "cleanup"],
-    "capture_modality": ["visible_light", "macro", "microscopy", "thermal", "ultraviolet", "aerial", "underwater", "surveillance", "machine_vision", "inspection"],
-    "weather_effect": ["visibility_loss", "surface_wetness", "airborne_particles", "wind_deformation", "heat_distortion", "frost_accumulation", "flooding", "none"],
+    "capture_modality": ["visible_light", "macro", "microscopy", "thermal", "ultraviolet", "aerial", "underwater", "surveillance", "machine_vision", "inspection", "fluorescence", "dic", "polarized_light", "light_sheet", "photogrammetry"],
+    "weather_effect": ["visibility_loss", "surface_wetness", "airborne_particles", "wind_deformation", "heat_distortion", "frost_accumulation", "flooding", "hail_impact", "erosion_deposition", "none"],
     "movement_type": ["static", "fine_motor", "locomotion", "impact", "rotation", "fluid_flow", "crowd_flow", "mechanical_cycle", "vehicle_flow"],
+    "acquisition_structure": ["fixed_roi", "time_series", "multichannel", "z_stack", "multiview"],
+    "record_basis": ["human_observation", "machine_observation", "material_sample"],
+    "movement_phase": ["readiness", "initiation", "loading_braking", "propulsion_release", "flight_transfer", "impact_absorption", "deceleration_stabilization", "recovery"],
+    "contact_state": ["clearance_no_contact", "surface_or_medium_contact", "equipment_contact", "opponent_contact", "flight_or_separation", "post_contact_release"],
+    "effort_state": ["controlled", "near_maximal", "fatigued", "recovering"],
+    "material_response": ["compression", "elastic_bend", "rebound", "vibration", "surface_shear", "particle_or_fluid_displacement"],
+    "learning_stage": ["orientation", "demonstration", "guided_practice", "collaborative_problem_solving", "performance_assessment"],
+    "material_lifecycle_stage": ["manufacture", "use", "wear", "failure", "diagnosis", "maintenance", "repair", "reuse", "refurbishment", "remanufacture", "recovery", "disposal"],
+    "material_state_evidence": ["reference_condition", "service_wear", "localized_failure", "diagnostic_contact", "cleaning_boundary", "removed_failed_part", "repaired_interface", "reassembled_state", "functional_test", "separated_fraction", "residual_route", "next_use_handoff"],
+    "atmospheric_class": ["hydrometeor", "lithometeor", "photometeor"],
+    "phenomenon_process": ["suspended_particles", "falling_particles", "wind_raised_particles", "deposited_particles", "optical_interaction"],
+    "observation_interval": ["repeat_interval", "seasonal_cycle"],
 }
 
 VALID_SUBJECT_CATEGORIES = {"human", "animal", "food", "object", "sign", "plant", "environment", "generic"}
@@ -883,6 +897,15 @@ VALID_PRESET_DOMAINS = {
     "biodiversity_monitoring",
     "agriculture_food_systems",
     "circular_materials",
+    "heritage_documentation",
+    "health_access",
+    "sports_motion",
+    "education_training",
+    "disaster_risk_operations",
+    "human_interaction",
+    "natural_process",
+    "longitudinal_place_state",
+    "visual_structure",
     "surreal",
     "adult",
 }
@@ -975,7 +998,7 @@ DEFAULT_SLOT_APPLICABILITY: JsonDict = {
         },
         "capture_context": {
             "subject_categories": ["human", "animal", "food", "object", "plant", "environment"],
-            "allow_domains": ["portrait", "fashion", "beauty", "social", "adult", "science_inspection", "mobility_logistics", "climate_adaptation", "biodiversity_monitoring", "agriculture_food_systems", "circular_materials"],
+            "allow_domains": ["portrait", "fashion", "beauty", "social", "adult", "science_inspection", "mobility_logistics", "climate_adaptation", "biodiversity_monitoring", "agriculture_food_systems", "circular_materials", "heritage_documentation", "health_access", "sports_motion", "education_training", "disaster_risk_operations", "natural_process", "longitudinal_place_state"],
             "deny_domains": ["documentary", "craft", "wildlife", "product", "jewelry", "food", "architecture"],
             "require_domain_match": True,
         },
@@ -1015,12 +1038,136 @@ DEFAULT_SLOT_APPLICABILITY: JsonDict = {
 # Basic helpers
 # -----------------------------------------------------------------------------
 
+def merge_research_extension(data: JsonDict, extension: JsonDict) -> JsonDict:
+    """Merge the optional research taxonomy pack without rewriting the base dictionary.
+
+    The extension is intentionally append-only for ID-bearing collections and
+    additive for facet vocabularies.  Duplicate IDs fail at load time so a
+    research batch cannot silently shadow established behavior.
+    """
+    if extension.get("schema_version") != RESEARCH_EXTENSION_SCHEMA:
+        raise ValueError(
+            f"Unsupported research extension schema: {extension.get('schema_version')!r}"
+        )
+
+    def append_unique_id_entries(target: list[Any], additions: Any, label: str) -> None:
+        incoming = additions if isinstance(additions, list) else []
+        existing_ids = {
+            str(item.get("id"))
+            for item in target
+            if isinstance(item, dict) and str(item.get("id") or "")
+        }
+        for item in incoming:
+            if not isinstance(item, dict) or not str(item.get("id") or ""):
+                raise ValueError(f"{label}: extension entries require a non-empty id")
+            item_id = str(item["id"])
+            if item_id in existing_ids:
+                raise ValueError(f"{label}: duplicate extension id {item_id}")
+            target.append(item)
+            existing_ids.add(item_id)
+
+    facet_vocab = data.setdefault("facet_vocab", {})
+    for facet_key, values in (extension.get("facet_vocab") or {}).items():
+        target_values = facet_vocab.setdefault(str(facet_key), [])
+        for value in normalize_list(values):
+            if value not in target_values:
+                target_values.append(value)
+
+    append_unique_id_entries(data.setdefault("preset_families", []), extension.get("preset_families"), "preset_families")
+    preset_filter_defaults = extension.get("preset_filter_defaults") or {}
+    auto_optional_policy = extension.get("auto_optional_policy")
+    if auto_optional_policy not in {None, "authored_filters_only"}:
+        raise ValueError(
+            f"Unsupported research extension auto_optional_policy: {auto_optional_policy!r}"
+        )
+    extension_presets = extension.get("presets") if isinstance(extension.get("presets"), list) else []
+    for preset in extension_presets:
+        if not isinstance(preset, dict):
+            continue
+        if auto_optional_policy:
+            preset.setdefault("auto_optional_policy", auto_optional_policy)
+        filters = preset.setdefault("filters", {})
+        if not isinstance(filters, dict):
+            raise ValueError(f"presets.{preset.get('id')}: filters must be an object")
+        for slot, default_filter in preset_filter_defaults.items():
+            if slot not in filters:
+                filters[str(slot)] = default_filter
+    append_unique_id_entries(data.setdefault("presets", []), extension_presets, "presets")
+
+    presets_by_id = {
+        str(preset.get("id")): preset
+        for preset in data.get("presets", [])
+        if isinstance(preset, dict) and str(preset.get("id") or "")
+    }
+
+    def existing_preset_filter_updates(mapping: Any, *, replace: bool) -> None:
+        updates = mapping if isinstance(mapping, dict) else {}
+        for preset_id, slot_updates in updates.items():
+            preset = presets_by_id.get(str(preset_id))
+            if preset is None:
+                raise ValueError(f"existing preset filter update references unknown preset {preset_id}")
+            if not isinstance(slot_updates, dict):
+                raise ValueError(f"existing preset filter update for {preset_id} must be an object")
+            filters = preset.setdefault("filters", {})
+            for slot, filter_update in slot_updates.items():
+                if not isinstance(filter_update, dict):
+                    raise ValueError(f"existing preset filter update for {preset_id}.{slot} must be an object")
+                if replace or slot not in filters:
+                    filters[str(slot)] = {
+                        str(key): list(value) if isinstance(value, list) else value
+                        for key, value in filter_update.items()
+                    }
+                    continue
+                target_filter = filters[str(slot)]
+                if not isinstance(target_filter, dict):
+                    raise ValueError(f"existing preset filter target {preset_id}.{slot} must be an object")
+                for key, value in filter_update.items():
+                    if not isinstance(value, list):
+                        if key in target_filter and target_filter[key] != value:
+                            raise ValueError(
+                                f"existing preset filter extension cannot replace scalar {preset_id}.{slot}.{key}"
+                            )
+                        target_filter[str(key)] = value
+                        continue
+                    target_values = target_filter.setdefault(str(key), [])
+                    if not isinstance(target_values, list):
+                        raise ValueError(f"existing preset filter target {preset_id}.{slot}.{key} must be a list")
+                    for item in value:
+                        if item not in target_values:
+                            target_values.append(item)
+
+    existing_preset_filter_updates(extension.get("existing_preset_filter_extensions"), replace=False)
+    existing_preset_filter_updates(extension.get("existing_preset_filter_overrides"), replace=True)
+
+    slots = data.setdefault("slots", {})
+    for slot, entries in (extension.get("slots") or {}).items():
+        append_unique_id_entries(slots.setdefault(str(slot), []), entries, f"slots.{slot}")
+
+    applicability = data.setdefault("slot_applicability", {})
+    extension_applicability = extension.get("slot_applicability") or {}
+    for mapping_key in ("preset_domain_overrides", "subject_category_overrides"):
+        target_mapping = applicability.setdefault(mapping_key, {})
+        for key, value in (extension_applicability.get(mapping_key) or {}).items():
+            if key in target_mapping:
+                raise ValueError(f"slot_applicability.{mapping_key}: duplicate extension key {key}")
+            target_mapping[key] = value
+
+    return data
+
+
 def load_json(path: str | Path) -> JsonDict:
     p = Path(path)
     if not p.exists():
         raise FileNotFoundError(f"Tag JSON not found: {p}")
     with p.open("r", encoding="utf-8") as f:
-        return json.load(f)
+        data = json.load(f)
+    if p.name == "photo_prompt_tags.json":
+        extension_path = p.with_name(RESEARCH_EXTENSION_FILENAME)
+        if extension_path.exists():
+            with extension_path.open("r", encoding="utf-8") as f:
+                extension = json.load(f)
+            data = merge_research_extension(data, extension)
+    return data
 
 
 def default_quality_layers_path(tags_path: str | Path) -> Path:
@@ -1386,6 +1533,15 @@ def infer_preset_domains(preset: JsonDict) -> Set[str]:
         "biodiversity_monitoring": ("biodiversity monitoring", "species monitoring", "camera trap survey", "quadrat survey", "ecological monitoring"),
         "agriculture_food_systems": ("agriculture food systems", "harvest grading record", "fermentation batch monitoring", "post-harvest traceability"),
         "circular_materials": ("circular materials", "repair diagnostic record", "materials recovery sorting", "reuse inspection", "material flow audit"),
+        "heritage_documentation": ("cultural heritage documentation", "conservation photography", "condition assessment record", "museum digitization", "collection storage inspection", "photogrammetry capture"),
+        "health_access": ("person centered rehabilitation", "assistive technology fitting", "accessible route record", "community health access", "home care support"),
+        "sports_motion": ("sports biomechanics", "pre contact anticipation", "impact material response", "post exertion recovery"),
+        "education_training": ("guided skill learning", "supervised practice", "task demonstration", "competency assessment", "workplace learning"),
+        "disaster_risk_operations": ("post disaster safety record", "evacuation flow monitoring", "wildfire mitigation audit", "post flood evidence survey"),
+        "human_interaction": ("shared task interaction", "two people coordinating", "joint gaze shared workpiece", "small group interaction"),
+        "natural_process": ("natural process trace", "germination boundary", "freeze thaw soil", "erosion deposition balance", "biological soil crust"),
+        "longitudinal_place_state": ("longitudinal place state", "repeat photography", "same viewpoint record", "temporary closure record", "reopening readiness"),
+        "visual_structure": ("visual structure study", "figure ground boundary", "occlusion continuity", "repeated rhythm", "material state boundary", "canonical size anchor"),
         "surreal": ("surreal", "fantasy", "impossible", "dream"),
         "adult": ("adult", "boudoir", "fetish", "lingerie"),
     }
@@ -1667,7 +1823,12 @@ def slot_block_reason(
 
     if subject_cat in denied_categories:
         return "subject_category_denied"
-    if allowed_categories and subject_cat not in allowed_categories:
+    subject_category_domain_override = bool(
+        policy.get("allow_domains_override_subject_categories")
+        and allowed_domains
+        and domains & allowed_domains
+    )
+    if allowed_categories and subject_cat not in allowed_categories and not subject_category_domain_override:
         return "subject_category_not_allowed"
     if domains & denied_domains:
         return "preset_domain_denied"
@@ -3485,6 +3646,18 @@ QUALITY_TAG_FACET_SOURCE_SLOTS: Dict[str, Set[str]] = {
     "capture_modality": {"medium", "camera_type", "capture_context"},
     "weather_effect": {"weather", "motion", "location"},
     "movement_type": {"action", "motion"},
+    "acquisition_structure": {"capture_context", "procedure_step", "composition"},
+    "record_basis": {"subject", "capture_context", "procedure_step"},
+    "movement_phase": {"action", "motion", "procedure_step"},
+    "contact_state": {"action", "contact_point", "motion", "prop"},
+    "effort_state": {"action", "body_pose", "motion"},
+    "material_response": {"surface_material", "texture", "motion", "prop"},
+    "learning_stage": {"action", "procedure_step", "relational_action", "capture_context"},
+    "material_lifecycle_stage": {"subject", "action", "procedure_step", "capture_context"},
+    "material_state_evidence": {"subject", "surface_material", "prop", "capture_context"},
+    "atmospheric_class": {"subject", "weather", "capture_context"},
+    "phenomenon_process": {"weather", "action", "procedure_step"},
+    "observation_interval": {"capture_context", "procedure_step", "space_condition"},
     "robot_form": {"subject"},
     "robot_degree": {"subject"},
     "robot_proof_family": {"subject"},
@@ -3498,6 +3671,15 @@ STRICT_TAG_FACET_SOURCE_DOMAINS = {
     "biodiversity_monitoring",
     "agriculture_food_systems",
     "circular_materials",
+    "heritage_documentation",
+    "health_access",
+    "sports_motion",
+    "education_training",
+    "disaster_risk_operations",
+    "human_interaction",
+    "natural_process",
+    "longitudinal_place_state",
+    "visual_structure",
 }
 
 # These packs are deliberately broad in subject matter but operationally
@@ -3508,6 +3690,15 @@ INTENT_SCOPED_PRESET_DOMAINS = {
     "biodiversity_monitoring",
     "agriculture_food_systems",
     "circular_materials",
+    "heritage_documentation",
+    "health_access",
+    "sports_motion",
+    "education_training",
+    "disaster_risk_operations",
+    "human_interaction",
+    "natural_process",
+    "longitudinal_place_state",
+    "visual_structure",
 }
 
 # Slot entries in the new packs already carry one of these authored tags. The
@@ -3518,6 +3709,14 @@ INTENT_SCOPED_ENTRY_DOMAIN_TAGS = {
     "biodiversity": "biodiversity_monitoring",
     "agriculture_food_systems": "agriculture_food_systems",
     "circular_materials": "circular_materials",
+    "heritage_documentation": "heritage_documentation",
+    "health_access": "health_access",
+    "sports_motion": "sports_motion",
+    "education_training": "education_training",
+    "disaster_risk_operations": "disaster_risk_operations",
+    "natural_process": "natural_process",
+    "longitudinal_place_state": "longitudinal_place_state",
+    "visual_structure": "visual_structure",
 }
 
 
@@ -3727,6 +3926,24 @@ def candidate_pack_quality_profile_id(data: JsonDict, preset: JsonDict, facets: 
         return "agriculture_food_systems"
     if "circular_materials" in domains:
         return "circular_materials"
+    if "heritage_documentation" in domains:
+        return "heritage_documentation"
+    if "health_access" in domains:
+        return "health_access"
+    if "sports_motion" in domains:
+        return "sports_motion"
+    if "education_training" in domains:
+        return "education_training"
+    if "disaster_risk_operations" in domains:
+        return "disaster_risk_operations"
+    if "human_interaction" in domains:
+        return "documentary"
+    if "natural_process" in domains:
+        return "natural_process"
+    if "longitudinal_place_state" in domains:
+        return "longitudinal_place_state"
+    if "visual_structure" in domains:
+        return "visual_structure"
     if "food" in subject_kinds or "food" in domains:
         return "food"
     if "architecture" in domains or "real_estate" in domains or any(term in blob for term in ("architecture", "interior", "building")):
@@ -6880,6 +7097,15 @@ def semantic_preset_score_window(context: JsonDict) -> float:
     base = semantic_profile_config(str(context.get("semantic_profile", "balanced")), context)["preset_window"]
     novelty = context.get("novelty", "medium")
     if novelty == "low":
+        requested_typed_domains = (
+            set(normalize_list((context.get("intent_constraints") or {}).get("domains")))
+            & STRICT_TAG_FACET_SOURCE_DOMAINS
+        )
+        if requested_typed_domains:
+            # Evidence-led operational packs prioritize subtype fidelity over
+            # sibling-preset variety at low novelty.  Broader creative modes
+            # keep the normal window.
+            return max(0.02, min(0.04, base * 0.35))
         return max(0.04, base * 0.65)
     if novelty == "high":
         return min(0.32, base * 1.35)
@@ -7771,6 +7997,8 @@ def optional_slot_specs(preset: JsonDict, data: JsonDict) -> List[JsonDict]:
     if not preset.get("disable_auto_optional", False):
         disabled = set(preset.get("skip_auto_slots", []))
         already = set(preset.get("required_slots", [])) | {s["slot"] for s in specs}
+        filters = preset.get("filters", {}) or {}
+        authored_filters_only = preset.get("auto_optional_policy") == "authored_filters_only"
         for opt in settings.get("auto_optional_slots", []):
             spec = normalize(opt, "auto")
             if not spec:
@@ -7778,7 +8006,7 @@ def optional_slot_specs(preset: JsonDict, data: JsonDict) -> List[JsonDict]:
             slot = spec["slot"]
             if slot in disabled or slot in already:
                 continue
-            if spec.get("requires_filter") and slot not in preset.get("filters", {}):
+            if (authored_filters_only or spec.get("requires_filter")) and slot not in filters:
                 continue
             specs.append(spec)
             already.add(slot)
@@ -11251,17 +11479,19 @@ def choose_slot(
             return None
 
     typed_record_filter_contract = bool(
-        preset_domains(preset, data) & INTENT_SCOPED_PRESET_DOMAINS
+        preset_domains(preset, data) & STRICT_TAG_FACET_SOURCE_DOMAINS
     )
-    semantic_hard_filter_contract = bool(
-        semantic_context
-        and not forced
+    authored_hard_filter_contract = bool(
+        not forced
         and (
-            semantic_context.get("filter_strictness") == "hard"
-            or typed_record_filter_contract
+            typed_record_filter_contract
+            or (
+                semantic_context
+                and semantic_context.get("filter_strictness") == "hard"
+            )
         )
     )
-    if semantic_hard_filter_contract:
+    if authored_hard_filter_contract:
         # Semantic steering may prune every authored filter id before this
         # stage. A hard contract must recover from the original domain-scoped
         # pool, and every later fallback must stay inside that recovered set.

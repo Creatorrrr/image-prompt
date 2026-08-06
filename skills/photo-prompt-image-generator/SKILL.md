@@ -24,12 +24,14 @@ Do not load every reference for a simple prompt request.
 - `scripts/prompt_generator.py`: JSON-driven generation engine.
 - `scripts/audit_composed_prompt.py`: fail-closed composed-prompt audit.
 - `assets/photo_prompt_tags.json`: presets, slots, weights, facets, and coherence rules.
+- `assets/photo_prompt_research_extension.json`: append-only evidence-led presets, slots, facets, and typed-domain overrides loaded alongside the base dictionary.
 - `assets/concept_recipes.json`: Korean concepts, identity cores, scene variants, guides, and gates.
 - `assets/photo_prompt_quality_layers.json`: domain quality profiles and photographic decision layers.
 - `assets/photo_prompt_semantic_index.json`: semantic retrieval manifest; vector shards live under `assets/photo_prompt_semantic_index_shards/` and are materialized transparently.
 - `assets/generalization_cases.jsonl`: inspectable public contract and anti-overfitting cases.
 - `assets/generalization_holdout_cases.jsonl` and `assets/generalization_domain_holdout_v2.jsonl`: frozen rule-mode holdouts.
-- `assets/semantic_retrieval_holdout_v3.jsonl`: preset-free semantic retrieval holdout.
+- `assets/semantic_retrieval_holdout_v3.jsonl`: frozen preset-free semantic retrieval baseline.
+- `assets/semantic_retrieval_holdout_v4.jsonl`: active preset-free retrieval holdout spanning the research extension.
 - `assets/research_evidence.jsonl`: abstract source-to-taxonomy evidence ledger; never a raw prompt or image corpus.
 - `assets/visual_review_domain_extension_plan.json`: rendered-image review case plan linked to a separate versioned result; the plan itself is never acceptance evidence.
 
