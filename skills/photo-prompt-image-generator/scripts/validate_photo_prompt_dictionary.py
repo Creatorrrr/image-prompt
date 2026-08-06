@@ -626,6 +626,11 @@ def validate_quality_layer_photographic_craft(
     source = str(craft.get("source") or "").strip()
     if not source:
         errors.append("quality_layers.photographic_craft.source: required")
+    profile_ids = {
+        str(profile_id)
+        for profile_id in (quality.get("quality_profiles") or {})
+        if str(profile_id).strip()
+    }
     for integer_key, minimum, maximum in (
         ("prompt_dimension_limit", 1, 3),
         ("refinement_limit_per_dimension", 0, 4),
@@ -690,6 +695,11 @@ def validate_quality_layer_photographic_craft(
             else:
                 seen_refinement_ids.add(refinement_id)
             validate_quality_layer_facet_match(f"{refinement_label}.facet_match", refinement.get("facet_match"), vocab, errors)
+            if "profile_match" in refinement:
+                validate_string_list(f"{refinement_label}.profile_match", refinement.get("profile_match"), errors)
+                for profile_id in normalize_list(refinement.get("profile_match")):
+                    if profile_id not in profile_ids:
+                        errors.append(f"{refinement_label}.profile_match: unknown quality profile {profile_id}")
             if not str(refinement.get("principle") or "").strip():
                 errors.append(f"{refinement_label}.principle: required")
             for text_key in ("id", "principle"):
@@ -720,6 +730,11 @@ def validate_quality_layer_photographic_craft(
         for text_key in ("id", "label"):
             if text_key in strategy:
                 validate_quality_layer_craft_text(f"{label}.{text_key}", strategy.get(text_key), errors)
+        if "profile_match" in strategy:
+            validate_string_list(f"{label}.profile_match", strategy.get("profile_match"), errors)
+            for profile_id in normalize_list(strategy.get("profile_match")):
+                if profile_id not in profile_ids:
+                    errors.append(f"{label}.profile_match: unknown quality profile {profile_id}")
         emphasize = normalize_list(strategy.get("emphasize"))
         if not emphasize:
             errors.append(f"{label}.emphasize: at least one dimension id is required")
@@ -1000,6 +1015,7 @@ def validate_quality_layers(path: Path, data: dict[str, Any], errors: list[str])
         errors.append("quality_layers.photographic_integration.axes: must be a non-empty list")
         axes = []
     seen_axis_ids: set[str] = set()
+    profile_ids = {str(profile_id) for profile_id in profiles if str(profile_id).strip()}
     for index, axis in enumerate(axes):
         label = f"quality_layers.photographic_integration.axes[{index}]"
         if not isinstance(axis, dict):
@@ -1013,6 +1029,11 @@ def validate_quality_layers(path: Path, data: dict[str, Any], errors: list[str])
         else:
             seen_axis_ids.add(axis_id)
         validate_quality_layer_facet_match(f"{label}.facet_match", axis.get("facet_match"), vocab, errors)
+        if "profile_match" in axis:
+            validate_string_list(f"{label}.profile_match", axis.get("profile_match"), errors)
+            for profile_id in normalize_list(axis.get("profile_match")):
+                if profile_id not in profile_ids:
+                    errors.append(f"{label}.profile_match: unknown quality profile {profile_id}")
         validate_string_list(f"{label}.terms", axis.get("terms"), errors)
         validate_string_list(f"{label}.required_categories", axis.get("required_categories"), errors)
         for category in normalize_list(axis.get("required_categories")):

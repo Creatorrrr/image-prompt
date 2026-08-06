@@ -10,7 +10,10 @@
     "nature": {"prompt_focus": ["habitat context", "natural behavior", "weather and depth"]},
     "science_inspection": {"prompt_focus": ["measurement legibility", "scale and calibration evidence", "controlled material state"]},
     "mobility_logistics": {"prompt_focus": ["flow direction", "handoff and staging evidence", "machine-to-environment scale"]},
-    "climate_adaptation": {"prompt_focus": ["environmental consequence", "intervention evidence", "weather-driven material response"]}
+    "climate_adaptation": {"prompt_focus": ["environmental consequence", "intervention evidence", "weather-driven material response"]},
+    "biodiversity_monitoring": {"prompt_focus": ["habitat legibility", "repeatable observation protocol", "species-to-environment scale"]},
+    "agriculture_food_systems": {"prompt_focus": ["material-state progression", "batch traceability", "farm-to-process continuity"]},
+    "circular_materials": {"prompt_focus": ["component or fraction state", "repair and separation evidence", "material-flow legibility"]}
   },
   "intent_routing": {
     "literal_subject_stop_terms": ["is", "are", "be", "role", "model", "subject", "context", "identity", "through", "only"],
@@ -51,7 +54,10 @@
       {"domain": "street", "aliases": ["street", "거리", "노상"]},
       {"domain": "science_inspection", "aliases": ["scientific inspection", "inspection photography", "laboratory workflow", "field sampling", "scientific monitoring", "technical measurement", "과학 점검", "검사 기록", "실험실 작업", "현장 샘플링", "과학 모니터링", "기술 계측"]},
       {"domain": "mobility_logistics", "aliases": ["mobility logistics", "transit operations", "warehouse logistics", "freight operations", "fleet maintenance", "대중교통 운영", "모빌리티 물류", "창고 물류", "화물 운영", "차량 정비"]},
-      {"domain": "climate_adaptation", "aliases": ["climate adaptation", "environmental monitoring", "flood resilience", "coastal erosion monitoring", "heatwave response", "기후 적응", "환경 모니터링", "침수 대응", "해안 침식 모니터링", "폭염 대응"]}
+      {"domain": "climate_adaptation", "aliases": ["climate adaptation", "environmental monitoring", "flood resilience", "coastal erosion monitoring", "heatwave response", "기후 적응", "환경 모니터링", "침수 대응", "해안 침식 모니터링", "폭염 대응"]},
+      {"domain": "biodiversity_monitoring", "aliases": ["biodiversity", "biodiversity monitoring", "species monitoring", "camera trap survey", "quadrat survey", "ecological quadrat", "benthic survey", "생물다양성", "생물다양성 모니터링", "종 모니터링", "카메라 트랩 조사", "생태 방형구", "저서생물 조사"]},
+      {"domain": "agriculture_food_systems", "aliases": ["agriculture food systems", "harvest grading", "post-harvest traceability", "fermentation batch", "food batch monitoring", "농업 식품 시스템", "수확물 등급 선별", "수확 후 추적성", "발효 배치", "식품 배치 모니터링"]},
+      {"domain": "circular_materials", "aliases": ["circular materials", "repair diagnosis", "electronics repair", "materials recovery", "material sorting", "순환 재료", "수리 진단", "전자제품 수리", "자원 회수", "재료 선별"]}
     ]
   },
   "applicability_guards": [
@@ -109,6 +115,24 @@
       "match_any_tags": ["field"],
       "exclude_slots": ["medium", "genre", "subject", "location"],
       "requires_primary_any_tags": ["field", "nature", "landscape", "botanical", "wildlife", "plant", "garden", "agricultural", "outdoor"]
+    },
+    {
+      "id": "biodiversity_support_requires_primary_context",
+      "match_any_tags": ["biodiversity", "camera_trap", "quadrat"],
+      "exclude_slots": ["medium", "genre", "subject", "location"],
+      "requires_primary_any_tags": ["biodiversity", "ecology", "wildlife", "marine", "camera_trap", "quadrat"]
+    },
+    {
+      "id": "agriculture_food_system_support_requires_primary_context",
+      "match_any_tags": ["agriculture_food_systems", "grading", "fermentation"],
+      "exclude_slots": ["medium", "genre", "subject", "location"],
+      "requires_primary_any_tags": ["agriculture_food_systems", "agriculture", "food", "harvest", "grading", "fermentation"]
+    },
+    {
+      "id": "circular_material_support_requires_primary_context",
+      "match_any_tags": ["circular_materials", "repair", "recovery"],
+      "exclude_slots": ["medium", "genre", "subject", "location"],
+      "requires_primary_any_tags": ["circular_materials", "repair", "electronics", "materials", "sorting", "recovery"]
     }
   ],
   "selection_balance": {
@@ -294,6 +318,25 @@
         "검사 표식",
         "상태 흔적",
         "이송 경로"
+      ],
+      "traceability_evidence": [
+        "incoming batch",
+        "sampling boundary",
+        "reference position",
+        "test point",
+        "condition criterion",
+        "separated fraction",
+        "input stream",
+        "output stream",
+        "repeatable frame",
+        "배치 유입",
+        "표본 경계",
+        "기준 위치",
+        "검사 접점",
+        "상태 기준",
+        "분리 분획",
+        "입력 흐름",
+        "출력 흐름"
       ]
     },
     "axes": [
@@ -438,6 +481,45 @@
           "environment_binding": ["the same weather condition changes foreground, subject, and distance rather than sitting as a background effect"],
           "material_trace": ["water lines, deposited dust, wind-bent material, frost, or heat shimmer leave a physical trace"],
           "operational_evidence": ["a monitoring reference or adaptation structure makes the environmental response legible"]
+        }
+      },
+      {
+        "id": "biodiversity_observation_protocol",
+        "profile_match": ["biodiversity_monitoring"],
+        "facet_match": {"place_type": ["nature"], "process_stage": ["sampling", "measurement", "monitoring"], "capture_modality": ["underwater", "surveillance", "visible_light"]},
+        "terms": ["biodiversity", "species monitoring", "camera trap", "quadrat", "benthic", "생물다양성", "종 모니터링", "카메라 트랩", "방형구", "저서생물"],
+        "required_categories": ["environment_binding", "operational_evidence", "traceability_evidence"],
+        "principles": ["Keep habitat, the repeatable observation boundary, scale reference and detected organism in one legible ecological relationship."],
+        "suggested_phrases": {
+          "environment_binding": ["habitat structure, substrate and water or vegetation conditions remain connected to the observed organism"],
+          "operational_evidence": ["the camera field, quadrat edge or physical marker makes the observation protocol visible"],
+          "traceability_evidence": ["a repeatable frame, sampling boundary or reference position makes later comparison possible"]
+        }
+      },
+      {
+        "id": "agriculture_batch_traceability",
+        "profile_match": ["agriculture_food_systems"],
+        "facet_match": {"place_type": ["agricultural"], "process_stage": ["sampling", "measurement", "inspection", "transfer", "monitoring"]},
+        "terms": ["harvest grading", "post-harvest", "fermentation batch", "food traceability", "수확물 선별", "수확 후", "발효 배치", "식품 추적성"],
+        "required_categories": ["material_trace", "operational_evidence", "traceability_evidence"],
+        "principles": ["Show the material state before, during and after one grading or monitoring decision so the batch remains photographically traceable."],
+        "suggested_phrases": {
+          "material_trace": ["natural bloom, surface activity, handling marks or condition variation reveal the batch state"],
+          "operational_evidence": ["a sample contact, visible grading criterion or physical handoff explains the current process decision"],
+          "traceability_evidence": ["incoming batch, decision point and separated or continuing output remain spatially connected"]
+        }
+      },
+      {
+        "id": "circular_repair_material_flow",
+        "profile_match": ["circular_materials"],
+        "facet_match": {"place_type": ["repair", "waste", "industrial"], "process_stage": ["inspection", "measurement", "transfer", "intervention", "cleanup"]},
+        "terms": ["repair diagnosis", "reuse", "materials recovery", "material sorting", "수리 진단", "재사용", "자원 회수", "재료 선별"],
+        "required_categories": ["material_trace", "operational_evidence", "traceability_evidence"],
+        "principles": ["Make the repair or separation decision visible through condition evidence, a physical test or contamination point, and a legible next destination."],
+        "suggested_phrases": {
+          "material_trace": ["wear, solder condition, residue, contamination or fraction texture records the material's current state"],
+          "operational_evidence": ["a probe contact, rejected contaminant or separation mechanism makes the intervention verifiable"],
+          "traceability_evidence": ["the tested component or input stream remains connected to its repair, reject or recovered destination"]
         }
       },
       {
@@ -605,6 +687,17 @@
               "ko": "스케일, 물리적 기준물, 측정 접점이 프레임의 이유를 설명하게 한다"
             },
             "audit_terms": ["scale", "physical reference", "measurement contact"]
+          },
+          {
+            "id": "field_observation_record",
+            "profile_match": ["biodiversity_monitoring"],
+            "facet_match": {"place_type": ["nature"], "process_stage": ["sampling", "measurement", "monitoring"], "capture_modality": ["underwater", "surveillance", "visible_light"]},
+            "principle": "For field observations, let habitat, a repeatable boundary and scale evidence explain both what was observed and how.",
+            "guidance": {
+              "en": "connect habitat, a repeatable observation boundary, and scale evidence in the same field record",
+              "ko": "서식 환경, 반복 가능한 관찰 경계, 스케일 증거를 한 현장 기록 안에서 연결한다"
+            },
+            "audit_terms": ["habitat", "observation boundary", "scale evidence", "field record"]
           }
         ]
       },
@@ -709,6 +802,17 @@
               "ko": "출발점, 경로, 이송 지점, 도착점이 읽히는 흐름으로 구성한다"
             },
             "audit_terms": ["origin", "route", "transfer point", "destination"]
+          },
+          {
+            "id": "batch_traceability_order",
+            "profile_match": ["agriculture_food_systems", "circular_materials"],
+            "facet_match": {"place_type": ["agricultural", "repair", "waste"], "process_stage": ["sampling", "inspection", "transfer", "intervention", "cleanup"]},
+            "principle": "Traceability frames should order the incoming batch or object, decision point, and continuing destination without relying on readable labels.",
+            "guidance": {
+              "en": "organize input, physical decision evidence, and the next destination into one traceable reading order",
+              "ko": "입력물, 물리적 판단 근거, 다음 목적지가 한 번에 추적되는 순서로 구성한다"
+            },
+            "audit_terms": ["input", "decision evidence", "destination", "traceable order"]
           }
         ]
       },
@@ -813,6 +917,17 @@
               "ko": "날씨가 만든 물성 변화와 모니터링 또는 적응 대응을 한 프레임에 보인다"
             },
             "audit_terms": ["material consequence", "monitoring", "adaptation response"]
+          },
+          {
+            "id": "repair_or_recovery_state_change",
+            "profile_match": ["circular_materials"],
+            "facet_match": {"place_type": ["repair", "waste", "industrial"], "process_stage": ["inspection", "transfer", "intervention", "cleanup"]},
+            "principle": "Repair and recovery scenes should show how diagnosis, contamination removal or separation changes the material's next state.",
+            "guidance": {
+              "en": "show the condition evidence, intervention point, and changed material destination in the same frame",
+              "ko": "상태 증거, 개입 지점, 달라진 재료의 목적지를 같은 프레임에 보인다"
+            },
+            "audit_terms": ["condition evidence", "intervention point", "material destination", "state change"]
           }
         ]
       }
@@ -832,6 +947,12 @@
         "id": "structure_led",
         "label": "structure-led craft",
         "emphasize": ["frame_hierarchy", "shot_intent"]
+      },
+      {
+        "id": "evidence_led",
+        "label": "evidence-led craft",
+        "profile_match": ["biodiversity_monitoring", "agriculture_food_systems", "circular_materials"],
+        "emphasize": ["shot_intent", "frame_hierarchy", "environment_consequence"]
       }
     ]
   },

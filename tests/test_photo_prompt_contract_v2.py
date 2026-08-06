@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import copy
+from contextlib import redirect_stdout
+import io
 import json
 import subprocess
 import sys
@@ -18,8 +20,11 @@ TAGS_PATH = SKILL_DIR / "assets" / "photo_prompt_tags.json"
 GENERALIZATION_PATH = SKILL_DIR / "assets" / "generalization_cases.jsonl"
 HOLDOUT_PATH = SKILL_DIR / "assets" / "generalization_holdout_cases.jsonl"
 DOMAIN_HOLDOUT_V2_PATH = SKILL_DIR / "assets" / "generalization_domain_holdout_v2.jsonl"
+RETRIEVAL_HOLDOUT_V3_PATH = SKILL_DIR / "assets" / "semantic_retrieval_holdout_v3.jsonl"
+RESEARCH_EVIDENCE_PATH = SKILL_DIR / "assets" / "research_evidence.jsonl"
 QUALITY_LAYERS_PATH = SKILL_DIR / "assets" / "photo_prompt_quality_layers.json"
 DOMAIN_VISUAL_REVIEW_PLAN_PATH = SKILL_DIR / "assets" / "visual_review_domain_extension_plan.json"
+DOMAIN_VISUAL_REVIEW_RESULTS_PATH = SKILL_DIR / "assets" / "visual_review_domain_extension_results.json"
 
 if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
@@ -350,19 +355,71 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             {"preset_conflict", "body_emphasis_survived"},
         )
 
-    def test_domain_visual_review_plan_is_pending_and_not_acceptance_evidence(self):
+    def test_domain_visual_review_plan_links_completed_review_but_is_not_acceptance_evidence(self):
         plan = json.loads(DOMAIN_VISUAL_REVIEW_PLAN_PATH.read_text(encoding="utf-8"))
         self.assertEqual(plan["schema_version"], "photo-domain-visual-review-plan/v1")
-        self.assertEqual(plan["status"], "pending_generation_authorization")
+        self.assertEqual(plan["status"], "completed")
         self.assertFalse(plan["acceptance_artifact"])
-        self.assertEqual(len(plan["cases"]), 6)
-        self.assertEqual(len({case["preset"] for case in plan["cases"]}), 6)
+        self.assertEqual(plan["review_artifact"], DOMAIN_VISUAL_REVIEW_RESULTS_PATH.name)
+        self.assertEqual(len(plan["cases"]), 12)
+        self.assertEqual(len({case["preset"] for case in plan["cases"]}), 12)
+
+        summary = eval_semantic.summarize_visual_review(DOMAIN_VISUAL_REVIEW_RESULTS_PATH)["visual_review"]
+        self.assertTrue(summary["passed"])
+        self.assertEqual(summary["case_count"], 12)
+        self.assertEqual(summary["failed_case_count"], 0)
+        self.assertEqual(summary["contract_failure_count"], 0)
+        self.assertEqual(summary["review_focus_result_count"], 36)
+        self.assertEqual(summary["failed_review_focus_result_count"], 0)
+        for field in (
+            "body_drift",
+            "role_anchor",
+            "mixin_anchor",
+            "body_coverage_guard",
+            "body_emphasis_survived",
+        ):
+            self.assertEqual(summary["field_summaries"][field]["counts"]["not_applicable"], 12)
+
+    def test_visual_review_contract_fails_closed_on_declared_review_focus_failure(self):
+        payload = json.loads(DOMAIN_VISUAL_REVIEW_RESULTS_PATH.read_text(encoding="utf-8"))
+        payload["cases"] = [dict(payload["cases"][0])]
+        payload["cases"][0]["review_focus_results"] = [
+            {
+                "focus": "required visual evidence",
+                "outcome": "fail",
+                "evidence": "The required evidence is absent.",
+            }
+        ]
+        with tempfile.TemporaryDirectory() as tmp:
+            review_path = Path(tmp) / "review.json"
+            review_path.write_text(json.dumps(payload), encoding="utf-8")
+            summary = eval_semantic.summarize_visual_review(review_path)["visual_review"]
+
+        self.assertFalse(summary["passed"])
+        self.assertEqual(summary["failed_case_count"], 1)
+        self.assertEqual(summary["failed_review_focus_result_count"], 1)
+        self.assertIn("review_focus", summary["failed_cases"][0]["failures"])
+
+    def test_visual_review_contract_requires_reason_for_not_applicable_fields(self):
+        payload = json.loads(DOMAIN_VISUAL_REVIEW_RESULTS_PATH.read_text(encoding="utf-8"))
+        payload["cases"] = [dict(payload["cases"][0])]
+        payload["cases"][0].pop("not_applicable_reason")
+        with tempfile.TemporaryDirectory() as tmp:
+            review_path = Path(tmp) / "review.json"
+            review_path.write_text(json.dumps(payload), encoding="utf-8")
+            summary = eval_semantic.summarize_visual_review(review_path)["visual_review"]
+
+        self.assertFalse(summary["passed"])
+        self.assertIn(
+            "not_applicable_reason",
+            {failure["check"] for failure in summary["contract_failures"]},
+        )
 
     def test_expanded_dictionary_has_operational_domain_packs_facets_and_primary_guards(self):
         tags = json.loads(TAGS_PATH.read_text(encoding="utf-8"))
         quality = json.loads(QUALITY_LAYERS_PATH.read_text(encoding="utf-8"))
         preset_ids = {preset["id"] for preset in tags["presets"]}
-        self.assertGreaterEqual(len(preset_ids), 549)
+        self.assertGreaterEqual(len(preset_ids), 555)
         self.assertTrue(
             {
                 "wetland_behavior_documentary",
@@ -377,6 +434,12 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
                 "transit_maintenance_record",
                 "coastal_resilience_monitoring",
                 "urban_heat_air_quality_record",
+                "camera_trap_species_monitoring",
+                "coastal_benthic_quadrat_survey",
+                "orchard_harvest_grading_record",
+                "fermentation_batch_monitoring",
+                "electronics_repair_diagnostic_record",
+                "materials_recovery_sorting_record",
             }
             <= preset_ids
         )
@@ -392,6 +455,12 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
                 "rail_switch_actuator",
                 "coastal_erosion_marker_array",
                 "urban_heat_sensor_station",
+                "camera_trap_wildlife_passage",
+                "intertidal_quadrat_biota",
+                "orchard_fruit_grading_line",
+                "fermentation_vessel_batch",
+                "open_electronics_repair_board",
+                "mixed_material_sorting_stream",
             }
             <= subject_ids
         )
@@ -436,7 +505,14 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             }
             <= set(tags["facet_vocab"])
         )
-        operational_domains = {"science_inspection", "mobility_logistics", "climate_adaptation"}
+        operational_domains = {
+            "science_inspection",
+            "mobility_logistics",
+            "climate_adaptation",
+            "biodiversity_monitoring",
+            "agriculture_food_systems",
+            "circular_materials",
+        }
         self.assertTrue(operational_domains <= set(quality["quality_profiles"]))
         self.assertTrue(
             operational_domains
@@ -449,6 +525,9 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
                 "instrument_capture_modality",
                 "mobility_flow",
                 "climate_material_consequence",
+                "biodiversity_observation_protocol",
+                "agriculture_batch_traceability",
+                "circular_repair_material_flow",
             }
             <= {axis["id"] for axis in quality["photographic_integration"]["axes"]}
         )
@@ -459,6 +538,21 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             row["category"] for row in quality["intent_routing"]["subject_categories"]
         }
         self.assertTrue({"animal", "object", "food", "plant", "environment"} <= routing_categories)
+        expected_typed_presets = {
+            "science_inspection": {"laboratory_measurement_record", "field_sensor_survey"},
+            "mobility_logistics": {"warehouse_flow_documentary", "transit_maintenance_record"},
+            "climate_adaptation": {"coastal_resilience_monitoring", "urban_heat_air_quality_record"},
+            "biodiversity_monitoring": {"camera_trap_species_monitoring", "coastal_benthic_quadrat_survey"},
+            "agriculture_food_systems": {"orchard_harvest_grading_record", "fermentation_batch_monitoring"},
+            "circular_materials": {"electronics_repair_diagnostic_record", "materials_recovery_sorting_record"},
+        }
+        for domain, expected_ids in expected_typed_presets.items():
+            actual_ids = {
+                preset["id"]
+                for preset in tags["presets"]
+                if domain in prompt_generator.preset_domains(preset, tags)
+            }
+            self.assertEqual(actual_ids, expected_ids)
 
     def test_quality_facets_do_not_treat_focus_metadata_as_scene_location(self):
         pack = self.run_wrapper(
@@ -474,6 +568,106 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
         )[0]
         self.assertEqual(pack["quality_profile"]["profile_id"], "science_inspection")
         self.assertNotIn("street", pack["quality_profile"]["facets"].get("place_type", []))
+
+    def test_new_typed_domain_packs_are_scoped_without_legacy_pool_pollution(self):
+        tags = json.loads(TAGS_PATH.read_text(encoding="utf-8"))
+        quality = json.loads(QUALITY_LAYERS_PATH.read_text(encoding="utf-8"))
+        tags[prompt_generator.QUALITY_LAYERS_DATA_KEY] = quality
+        presets = {preset["id"]: preset for preset in tags["presets"]}
+
+        typed_presets = {
+            "camera_trap_species_monitoring": "biodiversity_monitoring",
+            "orchard_harvest_grading_record": "agriculture_food_systems",
+            "electronics_repair_diagnostic_record": "circular_materials",
+        }
+        for preset_id, domain in typed_presets.items():
+            preset = presets[preset_id]
+            self.assertFalse(
+                prompt_generator.preset_matches_automatic_intent_scope(preset, tags, None)
+            )
+            self.assertTrue(
+                prompt_generator.preset_matches_automatic_intent_scope(
+                    preset,
+                    tags,
+                    {
+                        "intent_source": "user",
+                        "intent_constraints": {"domains": [domain]},
+                    },
+                )
+            )
+
+        legacy_portrait = presets["maid_cafe_cosplay_portrait"]
+        scoped_entries = [
+            entry
+            for entries in tags["slots"].values()
+            for entry in entries
+            if set(entry.get("tags", []))
+            & set(prompt_generator.INTENT_SCOPED_ENTRY_DOMAIN_TAGS)
+        ]
+        self.assertEqual(len(scoped_entries), 40)
+        self.assertTrue(
+            all(
+                not prompt_generator.entry_matches_preset_domain_scope(entry, legacy_portrait, tags)
+                for entry in scoped_entries
+            )
+        )
+        for preset_id in typed_presets:
+            preset = presets[preset_id]
+            filtered_ids = {
+                entry_id
+                for slot_filter in (preset.get("filters") or {}).values()
+                for entry_id in slot_filter.get("ids", [])
+            }
+            scoped_for_preset = [entry for entry in scoped_entries if entry["id"] in filtered_ids]
+            self.assertTrue(scoped_for_preset)
+            self.assertTrue(
+                all(
+                    prompt_generator.entry_matches_preset_domain_scope(entry, preset, tags)
+                    for entry in scoped_for_preset
+                )
+            )
+
+        axis_profiles = {
+            axis["id"]: axis.get("profile_match")
+            for axis in quality["photographic_integration"]["axes"]
+        }
+        self.assertEqual(axis_profiles["biodiversity_observation_protocol"], ["biodiversity_monitoring"])
+        self.assertEqual(axis_profiles["agriculture_batch_traceability"], ["agriculture_food_systems"])
+        self.assertEqual(axis_profiles["circular_repair_material_flow"], ["circular_materials"])
+
+        shared_facets = {
+            "place_type": ["nature"],
+            "process_stage": ["monitoring"],
+            "capture_modality": ["surveillance"],
+        }
+        typed_craft = prompt_generator.candidate_pack_photographic_craft(
+            tags,
+            {"profile_id": "biodiversity_monitoring", "facets": shared_facets},
+        )
+        legacy_craft = prompt_generator.candidate_pack_photographic_craft(
+            tags,
+            {"profile_id": "nature", "facets": shared_facets},
+        )
+        typed_refinements = {
+            refinement["id"]
+            for dimension in typed_craft["active_dimensions"]
+            for refinement in dimension["active_refinements"]
+        }
+        legacy_refinements = {
+            refinement["id"]
+            for dimension in legacy_craft["active_dimensions"]
+            for refinement in dimension["active_refinements"]
+        }
+        self.assertIn("field_observation_record", typed_refinements)
+        self.assertNotIn("field_observation_record", legacy_refinements)
+        self.assertIn(
+            "evidence_led",
+            {strategy["id"] for strategy in typed_craft["strategy_variants"]},
+        )
+        self.assertNotIn(
+            "evidence_led",
+            {strategy["id"] for strategy in legacy_craft["strategy_variants"]},
+        )
 
     def test_generalization_suite_is_executable_and_green(self):
         completed = subprocess.run(
@@ -499,12 +693,61 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
         )
         self.assertEqual(completed.returncode, 0, completed.stdout + completed.stderr)
         payload = json.loads(completed.stdout)
-        self.assertEqual(payload["generalization_check"]["case_count"], 54)
+        self.assertEqual(payload["generalization_check"]["case_count"], 60)
         self.assertEqual(payload["generalization_check"]["failed_case_count"], 0)
         self.assertEqual(payload["holdout_check"]["case_count"], 24)
         self.assertEqual(payload["holdout_check"]["failed_case_count"], 0)
         self.assertEqual(payload["domain_holdout_v2_check"]["case_count"], 6)
         self.assertEqual(payload["domain_holdout_v2_check"]["failed_case_count"], 0)
+
+    def test_retrieval_holdout_and_research_evidence_contracts_are_versioned(self):
+        retrieval_cases = eval_semantic.load_retrieval_holdout_cases(RETRIEVAL_HOLDOUT_V3_PATH)
+        self.assertEqual(len(retrieval_cases), 6)
+        self.assertTrue(all(case["allowed_selected_presets"] for case in retrieval_cases))
+        self.assertTrue(all("preset" not in case for case in retrieval_cases))
+
+        evidence_rows = [
+            json.loads(line)
+            for line in RESEARCH_EVIDENCE_PATH.read_text(encoding="utf-8").splitlines()
+            if line.strip()
+        ]
+        self.assertGreaterEqual(len(evidence_rows), 4)
+        for row in evidence_rows:
+            self.assertEqual(row["schema_version"], "photo-research-evidence/v1")
+            self.assertEqual(row["status"], "approved")
+            self.assertTrue(str(row["source_url"]).startswith("https://"))
+            self.assertTrue(row["abstracted_dimensions"])
+            self.assertTrue(row["candidate_ids"])
+            self.assertIn("no ", row["reuse_note"].lower())
+            self.assertIn("copied", row["reuse_note"].lower())
+
+    def test_compact_quality_gate_summary_keeps_gate_and_check_counts(self):
+        summary = {
+            "quality_gate": {"passed": True, "legacy_passed": True},
+            "golden_modes": [
+                {"mode": "rule", "average_coverage": 1.0, "quality_fail_count": 0, "results": [1, 2]},
+            ],
+            "generalization_check": {"case_count": 60, "failed_case_count": 0, "results": [1]},
+            "retrieval_holdout_v3_check": {"case_count": 6, "failed_case_count": 0, "results": [1]},
+        }
+        compact = eval_semantic.compact_quality_gate_summary(summary)
+        self.assertEqual(compact["quality_gate"]["passed"], True)
+        self.assertEqual(compact["checks"]["generalization_check"]["case_count"], 60)
+        self.assertEqual(compact["checks"]["retrieval_holdout_v3_check"]["failed_case_count"], 0)
+        self.assertNotIn("results", compact["checks"]["generalization_check"])
+        with tempfile.TemporaryDirectory() as tmp:
+            report_path = Path(tmp) / "quality-report.json"
+            stdout = io.StringIO()
+            with redirect_stdout(stdout):
+                eval_semantic.emit_evaluation_summary(
+                    summary,
+                    summary_only=True,
+                    report_json=report_path,
+                )
+            printed = json.loads(stdout.getvalue())
+            report = json.loads(report_path.read_text(encoding="utf-8"))
+        self.assertNotIn("results", printed["checks"]["generalization_check"])
+        self.assertEqual(report["generalization_check"]["results"], [1])
 
 
 if __name__ == "__main__":

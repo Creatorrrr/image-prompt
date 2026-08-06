@@ -6465,6 +6465,48 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("photographic_craft.dimensions[0].refinements[0].facet_match.subject_kind: unknown value not_a_subject_kind", result.stderr)
 
+    def test_dictionary_validator_rejects_unknown_quality_profile_guards(self):
+        cases = [
+            (
+                lambda quality: quality["photographic_integration"]["axes"][0].update(
+                    {"profile_match": ["not_a_quality_profile"]}
+                ),
+                "photographic_integration.axes[0].profile_match: unknown quality profile not_a_quality_profile",
+            ),
+            (
+                lambda quality: quality["photographic_craft"]["dimensions"][0]["refinements"][0].update(
+                    {"profile_match": ["not_a_quality_profile"]}
+                ),
+                "photographic_craft.dimensions[0].refinements[0].profile_match: unknown quality profile not_a_quality_profile",
+            ),
+            (
+                lambda quality: quality["photographic_craft"]["strategies"][0].update(
+                    {"profile_match": ["not_a_quality_profile"]}
+                ),
+                "photographic_craft.strategies[0].profile_match: unknown quality profile not_a_quality_profile",
+            ),
+        ]
+        for mutate, expected in cases:
+            with self.subTest(expected=expected):
+                quality_layers = json.loads(QUALITY_LAYERS_PATH.read_text(encoding="utf-8"))
+                mutate(quality_layers)
+                with tempfile.TemporaryDirectory() as tmpdir:
+                    quality_layers_path = Path(tmpdir) / "photo_prompt_quality_layers.json"
+                    quality_layers_path.write_text(
+                        json.dumps(quality_layers, ensure_ascii=False),
+                        encoding="utf-8",
+                    )
+                    result = subprocess.run(
+                        [sys.executable, str(VALIDATOR_PATH), "--quality-layers", str(quality_layers_path)],
+                        cwd=ROOT,
+                        text=True,
+                        capture_output=True,
+                        check=False,
+                    )
+
+                self.assertNotEqual(result.returncode, 0)
+                self.assertIn(expected, result.stderr)
+
     def test_artistic_touch_is_profile_specific_instead_of_global(self):
         payload = self.run_wrapper_json(
             "--preset",
@@ -11045,6 +11087,31 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         )
         self.assertNotEqual(second_payload["dictionary_hash"], first_payload["dictionary_hash"])
 
+    def test_semantic_index_shards_round_trip_exact_entry_order_and_values(self):
+        builder = load_index_builder()
+        payload = {
+            "provider": "gemini",
+            "dictionary_hash": "a" * 64,
+            "semantic_text_recipe": self.generator.SEMANTIC_TEXT_RECIPE_VERSION,
+            "embedding_model": "gemini-embedding-2",
+            "embedding_dimensions": 3,
+            "entries": {
+                "preset:first": {"kind": "preset", "slot": None, "id": "first", "text": "first", "vector": [1.0, 0.0, 0.0]},
+                "slot:subject:second": {"kind": "slot", "slot": "subject", "id": "second", "text": "second", "vector": [0.0, 1.0, 0.0]},
+                "slot:location:third": {"kind": "slot", "slot": "location", "id": "third", "text": "third", "vector": [0.0, 0.0, 1.0]},
+            },
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            output = Path(tmp) / "semantic_index.json"
+            manifest = builder.write_sharded_payload(output, payload, shard_count=2)
+            loaded = self.generator.load_semantic_index_payload(output)
+
+        self.assertNotIn("entries", manifest)
+        self.assertEqual(manifest["storage"]["format"], "sharded-json-v1")
+        self.assertEqual(manifest["entry_count"], 3)
+        self.assertEqual(list(loaded["entries"]), list(payload["entries"]))
+        self.assertEqual(loaded["entries"], payload["entries"])
+
     def test_semantic_index_builder_requires_api_key_for_real_build(self):
         builder = load_index_builder()
         with tempfile.TemporaryDirectory() as tmp:
@@ -11128,7 +11195,8 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr)
             self.assertTrue(out_path.exists())
             payload = json.loads(out_path.read_text(encoding="utf-8"))
-            self.assertEqual(payload["entries"], {})
+            self.assertEqual(payload["entry_count"], 0)
+            self.assertEqual(payload["storage"]["format"], "sharded-json-v1")
 
     def test_rule_mode_does_not_import_gemini_dependency(self):
         real_import = __import__

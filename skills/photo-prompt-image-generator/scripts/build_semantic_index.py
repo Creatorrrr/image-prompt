@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import sys
@@ -20,6 +21,8 @@ from prompt_generator import (
     embed_texts_with_gemini,
     iter_semantic_entries,
     load_json,
+    load_semantic_index_payload,
+    SEMANTIC_INDEX_SHARDED_FORMAT,
     semantic_dimensions_value,
     semantic_text_for_entry,
 )
@@ -73,7 +76,7 @@ def metadata_matches(payload: dict, expected: dict, require_dictionary_hash: boo
 def load_payload(path: Path) -> dict | None:
     if not path.exists():
         return None
-    return json.loads(path.read_text(encoding="utf-8"))
+    return load_semantic_index_payload(path)
 
 
 def load_reusable_entries(paths: Sequence[Path], expected: dict) -> dict:
@@ -104,6 +107,60 @@ def write_payload(path: Path, payload: dict) -> None:
     tmp = path.with_name(path.name + ".tmp")
     tmp.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     tmp.replace(path)
+
+
+def write_sharded_payload(path: Path, payload: dict, shard_count: int = 16) -> dict:
+    """Persist vectors in stable hash shards and return the written manifest."""
+    count = int(shard_count)
+    if count < 1:
+        raise ValueError("shard_count must be at least 1")
+    entries = payload.get("entries")
+    if not isinstance(entries, dict):
+        raise ValueError("semantic index payload must contain an entries object")
+
+    buckets: list[dict] = [{} for _ in range(count)]
+    for key, value in entries.items():
+        bucket = int(hashlib.sha256(str(key).encode("utf-8")).hexdigest(), 16) % count
+        buckets[bucket][key] = value
+
+    generation = str(payload.get("dictionary_hash") or "unversioned")[:16]
+    shard_root = path.with_name(f"{path.stem}_shards") / generation
+    width = max(3, len(str(count - 1)))
+    shard_rows = []
+    for index, shard_entries in enumerate(buckets):
+        shard_id = f"{index:0{width}d}"
+        shard_path = shard_root / f"shard-{shard_id}.json"
+        shard_payload = {
+            "schema_version": 1,
+            "shard_id": shard_id,
+            "entries": shard_entries,
+        }
+        write_payload(shard_path, shard_payload)
+        raw = shard_path.read_bytes()
+        shard_rows.append(
+            {
+                "id": shard_id,
+                "path": str(shard_path.relative_to(path.parent)),
+                "entry_count": len(shard_entries),
+                "sha256": hashlib.sha256(raw).hexdigest(),
+            }
+        )
+
+    manifest = {key: value for key, value in payload.items() if key != "entries"}
+    manifest.update(
+        {
+            "storage": {
+                "format": SEMANTIC_INDEX_SHARDED_FORMAT,
+                "hash_algorithm": "sha256",
+                "shard_count": count,
+            },
+            "entry_count": len(entries),
+            "entry_order": list(entries),
+            "shards": shard_rows,
+        }
+    )
+    write_payload(path, manifest)
+    return manifest
 
 
 def build_resumable_index_payload(
@@ -197,6 +254,8 @@ def main() -> int:
     parser.add_argument("--retry-initial-delay", type=float, default=15.0, help="Initial retry sleep in seconds for Gemini 429 responses.")
     parser.add_argument("--checkpoint", default=None, help="Partial index path used for resumable builds. Defaults to OUTPUT.partial.")
     parser.add_argument("--keep-checkpoint", action="store_true", help="Keep the partial checkpoint after a successful final write.")
+    parser.add_argument("--shard-count", type=int, default=16, help="Stable hash-shard count for the final index (default: 16).")
+    parser.add_argument("--monolithic", action="store_true", help="Write a legacy single-file index instead of the default sharded format.")
     parser.add_argument("--no-cache", action="store_true", help="Do not reuse compatible vectors from an existing output index.")
     parser.add_argument("--progress", action="store_true", help="Print embedding progress without vector values.")
     parser.add_argument("--dry-run", action="store_true", help="Print planned index metadata without calling the Gemini API or writing output.")
@@ -214,6 +273,8 @@ def main() -> int:
                     "embedding_model": args.model,
                     "embedding_dimensions": args.dimensions,
                     "entries": entry_count,
+                    "storage_format": "monolithic" if args.monolithic else SEMANTIC_INDEX_SHARDED_FORMAT,
+                    "shard_count": 0 if args.monolithic else args.shard_count,
                     "output": str(args.output),
                 },
                 ensure_ascii=False,
@@ -250,13 +311,18 @@ def main() -> int:
     payload["created_at"] = datetime.now(timezone.utc).isoformat()
 
     out = Path(args.output)
-    write_payload(out, payload)
+    if args.monolithic:
+        write_payload(out, payload)
+        storage_description = "monolithic JSON"
+    else:
+        write_sharded_payload(out, payload, shard_count=args.shard_count)
+        storage_description = f"{args.shard_count} JSON shards"
     checkpoint = checkpoint_path_for(out, args.checkpoint)
     if checkpoint.exists() and not args.keep_checkpoint:
         checkpoint.unlink()
     print(
         f"Wrote {len(payload['entries'])} Gemini semantic entries "
-        f"({payload['embedding_model']}, {payload['embedding_dimensions']}d) to {out}"
+        f"({payload['embedding_model']}, {payload['embedding_dimensions']}d; {storage_description}) to {out}"
     )
     return 0
 

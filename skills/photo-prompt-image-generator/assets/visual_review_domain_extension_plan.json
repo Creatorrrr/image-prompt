@@ -1,12 +1,13 @@
 {
   "schema_version": "photo-domain-visual-review-plan/v1",
-  "status": "pending_generation_authorization",
-  "scope": "science-inspection, mobility-logistics, and climate-adaptation candidate packs",
+  "status": "completed",
+  "scope": "science-inspection, mobility-logistics, climate-adaptation, biodiversity-monitoring, agriculture-food-systems, and circular-materials candidate packs",
   "acceptance_artifact": false,
   "notes": [
     "This file defines review cases only; it is not evidence that images were generated or accepted.",
-    "Image/API generation and the final photo-visual-review/v1 artifact require a separately authorized run."
+    "The separately authorized native-image run is recorded in visual_review_domain_extension_results.json; rendered images and the run ledger remain ignored local artifacts identified by hashes."
   ],
+  "review_artifact": "visual_review_domain_extension_results.json",
   "cases": [
     {
       "id": "science_lab_measurement_visual",
@@ -43,6 +44,42 @@
       "preset": "urban_heat_air_quality_record",
       "seed": 2026080606,
       "review_focus": ["shade and exposed pavement boundary is clear", "thermal or sensor evidence has a physical reference", "heat or airborne particles affect the full scene consistently"]
+    },
+    {
+      "id": "biodiversity_camera_trap_visual",
+      "preset": "camera_trap_species_monitoring",
+      "seed": 2026080607,
+      "review_focus": ["animal passage, detection zone, and habitat remain spatially connected", "fixed-camera exposure reads as field evidence rather than CCTV drama", "reference marker supplies scale without readable text"]
+    },
+    {
+      "id": "biodiversity_quadrat_visual",
+      "preset": "coastal_benthic_quadrat_survey",
+      "seed": 2026080608,
+      "review_focus": ["the complete quadrat boundary remains visible", "organism cover and substrate are distinguishable", "water and optical effects remain consistent with the capture position"]
+    },
+    {
+      "id": "agriculture_harvest_grading_visual",
+      "preset": "orchard_harvest_grading_record",
+      "seed": 2026080609,
+      "review_focus": ["incoming batch, grading criterion, and separated crates read in sequence", "natural fruit condition variation remains visible", "no labels or infographic overlays substitute for physical traceability"]
+    },
+    {
+      "id": "agriculture_fermentation_visual",
+      "preset": "fermentation_batch_monitoring",
+      "seed": 2026080610,
+      "review_focus": ["vessel, sample point, and hydrometer contact form one process", "fermentation activity is material rather than decorative foam", "batch state is legible without readable labels"]
+    },
+    {
+      "id": "circular_repair_visual",
+      "preset": "electronics_repair_diagnostic_record",
+      "seed": 2026080611,
+      "review_focus": ["probe contacts and diagnosed component are unambiguous", "board wear and repair traces remain physically plausible", "the frame reads as repair evidence rather than a generic electronics product shot"]
+    },
+    {
+      "id": "circular_material_sorting_visual",
+      "preset": "materials_recovery_sorting_record",
+      "seed": 2026080612,
+      "review_focus": ["input stream, contamination checkpoint, and output fractions read in order", "material texture distinguishes recovered fractions", "machine-vision cues do not become a sci-fi interface"]
     }
   ]
 }

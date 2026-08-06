@@ -26,10 +26,12 @@ Do not load every reference for a simple prompt request.
 - `assets/photo_prompt_tags.json`: presets, slots, weights, facets, and coherence rules.
 - `assets/concept_recipes.json`: Korean concepts, identity cores, scene variants, guides, and gates.
 - `assets/photo_prompt_quality_layers.json`: domain quality profiles and photographic decision layers.
-- `assets/photo_prompt_semantic_index.json`: semantic retrieval index.
+- `assets/photo_prompt_semantic_index.json`: semantic retrieval manifest; vector shards live under `assets/photo_prompt_semantic_index_shards/` and are materialized transparently.
 - `assets/generalization_cases.jsonl`: inspectable public contract and anti-overfitting cases.
 - `assets/generalization_holdout_cases.jsonl` and `assets/generalization_domain_holdout_v2.jsonl`: frozen rule-mode holdouts.
-- `assets/visual_review_domain_extension_plan.json`: pending rendered-image review cases, not acceptance evidence.
+- `assets/semantic_retrieval_holdout_v3.jsonl`: preset-free semantic retrieval holdout.
+- `assets/research_evidence.jsonl`: abstract source-to-taxonomy evidence ledger; never a raw prompt or image corpus.
+- `assets/visual_review_domain_extension_plan.json`: rendered-image review case plan linked to a separate versioned result; the plan itself is never acceptance evidence.
 
 Prefer `.venv/bin/python` when the project virtual environment exists. Rule mode works without an API key. Semantic mode requires the configured Gemini dependency and `GEMINI_API_KEY` or `GOOGLE_API_KEY`.
 
@@ -121,6 +123,7 @@ See `references/composition-contract.md` for field-level details.
 - Use `--selection-mode rule` for reproducible offline generation or tests.
 - Use `--intent` for free-form semantic requests and `--concept-lock` for literal meaning that must remain dominant.
 - Use `--additional-requirement` only for concrete visible constraints not represented by tags.
+- Biodiversity monitoring, agriculture-food systems, and circular-material records are on-demand typed packs: name the domain in semantic intent or select their preset directly; they do not enter unrelated automatic concept pools.
 - Rule mode gives a uniquely strong explicit request-term match deterministic priority while retaining the other sampler-eligible alternatives in the candidate pack.
 - K-pop/K-beauty/idol and fantasy candidates receive an implicit-theme penalty unless the request names that theme.
 - Concept recipes may define `identity_core` plus weighted `scene_variants`; keep the identity stable while rotating one atomic scene instead of mixing slots from separate exemplars.
