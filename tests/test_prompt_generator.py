@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import gc
 import hashlib
 import importlib.util
 import io
@@ -26,6 +27,7 @@ VALIDATOR_PATH = SKILL_DIR / "scripts" / "validate_photo_prompt_dictionary.py"
 INDEX_BUILDER_PATH = SKILL_DIR / "scripts" / "build_semantic_index.py"
 EVAL_SEMANTIC_PATH = SKILL_DIR / "scripts" / "eval_semantic.py"
 QUALITY_LAYERS_PATH = SKILL_DIR / "assets" / "photo_prompt_quality_layers.json"
+SEMANTIC_INDEX_PATH = SKILL_DIR / "assets" / "photo_prompt_semantic_index.json"
 
 CREATIVE_PRESET_IDS = {
     "cinematic_fantasy_portrait",
@@ -11105,12 +11107,89 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             output = Path(tmp) / "semantic_index.json"
             manifest = builder.write_sharded_payload(output, payload, shard_count=2)
             loaded = self.generator.load_semantic_index_payload(output)
+            shard_bytes = [
+                (output.parent / shard["path"]).read_bytes()
+                for shard in manifest["shards"]
+            ]
 
         self.assertNotIn("entries", manifest)
         self.assertEqual(manifest["storage"]["format"], "sharded-json-v1")
         self.assertEqual(manifest["entry_count"], 3)
         self.assertEqual(list(loaded["entries"]), list(payload["entries"]))
         self.assertEqual(loaded["entries"], payload["entries"])
+        for raw in shard_bytes:
+            self.assertNotIn(b"\n", raw)
+            self.assertEqual(
+                raw,
+                json.dumps(
+                    json.loads(raw),
+                    ensure_ascii=False,
+                    separators=(",", ":"),
+                ).encode("utf-8"),
+            )
+
+    def test_real_compact_semantic_shards_preserve_candidate_pack_bytes(self):
+        builder = load_index_builder()
+        committed_manifest = json.loads(SEMANTIC_INDEX_PATH.read_text(encoding="utf-8"))
+        for shard in committed_manifest["shards"]:
+            shard_path = SEMANTIC_INDEX_PATH.parent / shard["path"]
+            raw = shard_path.read_bytes()
+            self.assertEqual(
+                raw,
+                json.dumps(
+                    json.loads(raw),
+                    ensure_ascii=False,
+                    separators=(",", ":"),
+                ).encode("utf-8"),
+            )
+        source_index = self.generator.load_semantic_index_payload(SEMANTIC_INDEX_PATH)
+
+        def entry_digest(entries):
+            digest = hashlib.sha256()
+            for key, value in entries.items():
+                digest.update(
+                    json.dumps(
+                        [key, value],
+                        ensure_ascii=False,
+                        separators=(",", ":"),
+                    ).encode("utf-8")
+                )
+                digest.update(b"\n")
+            return digest.hexdigest()
+
+        def candidate_pack_bytes(index):
+            with mock.patch.object(
+                self.generator,
+                "embed_texts_with_gemini",
+                side_effect=self.fake_gemini_vectors,
+            ):
+                result = self.generate(
+                    None,
+                    seed=20260806,
+                    intent="rainy neon night street portrait",
+                    selection_mode="hybrid",
+                    novelty="medium",
+                    include_trace=True,
+                    semantic_index=index,
+                    gemini_api_key="test-api-key",
+                )
+            pack = self.generator.build_candidate_pack(result, self.data)
+            return json.dumps(pack, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
+
+        source_digest = entry_digest(source_index["entries"])
+        source_pack = candidate_pack_bytes(source_index)
+        with tempfile.TemporaryDirectory() as tmp:
+            output = Path(tmp) / "semantic_index.json"
+            builder.write_sharded_payload(output, source_index, shard_count=16)
+            del source_index
+            gc.collect()
+
+            compact_index = self.generator.load_semantic_index_payload(output)
+            compact_digest = entry_digest(compact_index["entries"])
+            compact_pack = candidate_pack_bytes(compact_index)
+
+        self.assertEqual(compact_digest, source_digest)
+        self.assertEqual(compact_pack, source_pack)
 
     def test_semantic_index_builder_requires_api_key_for_real_build(self):
         builder = load_index_builder()

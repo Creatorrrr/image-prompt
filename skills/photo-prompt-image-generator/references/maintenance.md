@@ -39,7 +39,7 @@ The public generalization suite has 60 inspectable cases. The original 24-case h
 
 Dictionary-hash fields such as presets, slots, labels, aliases, keywords, embedding text, and facets require a semantic-index refresh. Policy-only and quality-layer-only edits do not.
 
-Rebuild only changed embeddings. The final index defaults to 16 stable JSON shards while preserving the exact logical entry order exposed to retrieval code:
+Rebuild only changed embeddings. The final index defaults to 16 stable compact JSON vector shards plus a human-readable manifest while preserving the exact logical entry order exposed to retrieval code:
 
 ```bash
 GEMINI_API_KEY=... .venv/bin/python \
