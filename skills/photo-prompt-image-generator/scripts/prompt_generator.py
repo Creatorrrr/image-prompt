@@ -79,6 +79,7 @@ RESEARCH_EXTENSION_FILENAME = "photo_prompt_research_extension.json"
 RESEARCH_EXTENSION_FILENAMES = (
     RESEARCH_EXTENSION_FILENAME,
     "photo_prompt_subculture_extension.json",
+    "photo_prompt_worldbuilding_extension.json",
 )
 RESEARCH_EXTENSION_SCHEMA = "photo-prompt-research-extension/v1"
 QUALITY_LAYERS_DATA_KEY = "_quality_layers"
@@ -912,6 +913,7 @@ VALID_PRESET_DOMAINS = {
     "longitudinal_place_state",
     "visual_structure",
     "subculture_practice",
+    "worldbuilding_system",
     "surreal",
     "adult",
 }
@@ -3783,6 +3785,7 @@ STRICT_TAG_FACET_SOURCE_DOMAINS = {
     "longitudinal_place_state",
     "visual_structure",
     "subculture_practice",
+    "worldbuilding_system",
 }
 
 # These packs are deliberately broad in subject matter but operationally
@@ -3803,6 +3806,7 @@ INTENT_SCOPED_PRESET_DOMAINS = {
     "longitudinal_place_state",
     "visual_structure",
     "subculture_practice",
+    "worldbuilding_system",
 }
 
 # Slot entries in the new packs already carry one of these authored tags. The
@@ -3822,6 +3826,7 @@ INTENT_SCOPED_ENTRY_DOMAIN_TAGS = {
     "longitudinal_place_state": "longitudinal_place_state",
     "visual_structure": "visual_structure",
     "subculture_practice": "subculture_practice",
+    "worldbuilding_system": "worldbuilding_system",
 }
 
 
@@ -7727,25 +7732,35 @@ def preset_matches_automatic_intent_scope(
     """
     if preset.get("automatic_discovery") is False:
         return False
+    requested_domains = {
+        str(value)
+        for value in normalize_list(
+            ((semantic_context or {}).get("intent_constraints") or {}).get("domains")
+        )
+    }
+    matched_routes = {
+        str(value)
+        for value in normalize_list(
+            ((semantic_context or {}).get("intent_constraints") or {}).get("scoped_routes")
+        )
+    }
+    if (
+        semantic_context
+        and semantic_context.get("intent_source") == "user"
+        and matched_routes
+        and requested_domains & {"subculture_practice", "worldbuilding_system"}
+    ):
+        # An explicit scoped-route alias is a stronger signal than embedding
+        # similarity. Keep generic presets from competing with the named route
+        # (for example, civic solarpunk versus a generic climate record).
+        return str(preset.get("id") or "") in matched_routes
     scoped_domains = preset_domains(preset, data) & INTENT_SCOPED_PRESET_DOMAINS
     if not scoped_domains:
         return True
     if not semantic_context or semantic_context.get("intent_source") != "user":
         return False
-    requested_domains = {
-        str(value)
-        for value in normalize_list((semantic_context.get("intent_constraints") or {}).get("domains"))
-    }
     if not (scoped_domains & requested_domains):
         return False
-    matched_routes = {
-        str(value)
-        for value in normalize_list(
-            (semantic_context.get("intent_constraints") or {}).get("scoped_routes")
-        )
-    }
-    if matched_routes and "subculture_practice" in scoped_domains:
-        return str(preset.get("id") or "") in matched_routes
     return True
 
 

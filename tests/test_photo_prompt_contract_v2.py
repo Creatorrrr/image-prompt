@@ -23,9 +23,11 @@ DOMAIN_HOLDOUT_V2_PATH = SKILL_DIR / "assets" / "generalization_domain_holdout_v
 RETRIEVAL_HOLDOUT_V3_PATH = SKILL_DIR / "assets" / "semantic_retrieval_holdout_v3.jsonl"
 RETRIEVAL_HOLDOUT_V4_PATH = SKILL_DIR / "assets" / "semantic_retrieval_holdout_v4.jsonl"
 SUBCULTURE_RETRIEVAL_HOLDOUT_V1_PATH = SKILL_DIR / "assets" / "semantic_retrieval_holdout_subculture_v1.jsonl"
+WORLDBUILDING_RETRIEVAL_HOLDOUT_V1_PATH = SKILL_DIR / "assets" / "semantic_retrieval_holdout_worldbuilding_v1.jsonl"
 RESEARCH_EVIDENCE_PATH = SKILL_DIR / "assets" / "research_evidence.jsonl"
 RESEARCH_EXTENSION_PATH = SKILL_DIR / "assets" / "photo_prompt_research_extension.json"
 SUBCULTURE_EXTENSION_PATH = SKILL_DIR / "assets" / "photo_prompt_subculture_extension.json"
+WORLDBUILDING_EXTENSION_PATH = SKILL_DIR / "assets" / "photo_prompt_worldbuilding_extension.json"
 QUALITY_LAYERS_PATH = SKILL_DIR / "assets" / "photo_prompt_quality_layers.json"
 DOMAIN_VISUAL_REVIEW_PLAN_PATH = SKILL_DIR / "assets" / "visual_review_domain_extension_plan.json"
 DOMAIN_VISUAL_REVIEW_RESULTS_PATH = SKILL_DIR / "assets" / "visual_review_domain_extension_results.json"
@@ -1060,7 +1062,11 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             QUALITY_LAYERS_PATH
         )
         routing_policy = prompt_generator.candidate_pack_intent_routing_policy(data)
-        scoped_rules = routing_policy["scoped_routes"]
+        scoped_rules = [
+            rule
+            for rule in routing_policy["scoped_routes"]
+            if rule["domain"] == "subculture_practice"
+        ]
         self.assertEqual(len(scoped_rules), 35)
         self.assertEqual({rule["preset_id"] for rule in scoped_rules}, target_ids)
         for rule in scoped_rules:
@@ -1166,6 +1172,230 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
                 if targets & set(row["candidate_ids"])
             }
             self.assertGreaterEqual(len(independent_sources), 2, (theme, independent_sources))
+
+    def test_worldbuilding_extension_routes_holdout_and_evidence_are_deep_and_scoped(self):
+        data = prompt_generator.load_json(TAGS_PATH)
+        extension = json.loads(WORLDBUILDING_EXTENSION_PATH.read_text(encoding="utf-8"))
+        extension_ids = {preset["id"] for preset in extension["presets"]}
+        presets = {preset["id"]: preset for preset in data["presets"]}
+
+        self.assertEqual(len(extension_ids), 18)
+        self.assertEqual(len(extension["preset_families"]), 6)
+        self.assertEqual(
+            sum(len(entries) for entries in extension["slots"].values()),
+            288,
+        )
+        self.assertEqual(
+            set(extension["slot_applicability"]["preset_domain_overrides"]),
+            extension_ids,
+        )
+        self.assertTrue(extension_ids <= set(presets))
+
+        world_evidence_slots = {
+            "situation_context",
+            "occasion_context",
+            "narrative_core",
+            "capture_context",
+            "procedure_step",
+            "surface_material",
+        }
+        requested_context = {
+            "intent_source": "user",
+            "intent_constraints": {"domains": ["worldbuilding_system"]},
+        }
+        for preset_id in sorted(extension_ids):
+            preset = presets[preset_id]
+            self.assertEqual(
+                prompt_generator.preset_domains(preset, data),
+                {"worldbuilding_system"},
+            )
+            self.assertTrue(
+                {"subject", "action", "location", "prop"} | world_evidence_slots
+                <= set(preset["required_slots"]),
+                preset_id,
+            )
+            self.assertGreaterEqual(len(preset["facets"]["world_mechanism"]), 6)
+            self.assertFalse(
+                prompt_generator.preset_matches_automatic_intent_scope(preset, data, None)
+            )
+            self.assertTrue(
+                prompt_generator.preset_matches_automatic_intent_scope(
+                    preset, data, requested_context
+                )
+            )
+
+            seen_subjects = set()
+            for seed in (1, 2):
+                result = prompt_generator.generate_once(
+                    data,
+                    __import__("random").Random(seed),
+                    preset_id,
+                    ["en"],
+                    False,
+                    0,
+                    True,
+                    detail_level="detailed",
+                    selection_mode="rule",
+                    seed=seed,
+                )
+                choices = result["choices"]
+                self.assertTrue(set(preset["required_slots"]) <= set(choices), preset_id)
+                subject_id = choices["subject"]["id"]
+                seen_subjects.add(subject_id)
+                scene_prefix = subject_id.removesuffix("_subject")
+                for slot in (
+                    "action",
+                    "location",
+                    "prop",
+                    "situation_context",
+                    "occasion_context",
+                ):
+                    self.assertTrue(
+                        choices[slot]["id"].startswith(f"{scene_prefix}_"),
+                        (preset_id, seed, slot, subject_id, choices[slot]["id"]),
+                    )
+
+                pack = prompt_generator.build_candidate_pack(result, data)
+                self.assertEqual(pack["contract_version"], "photo-candidate-pack/v2")
+                self.assertTrue(world_evidence_slots <= set(pack["slots"]), preset_id)
+                self.assertEqual(
+                    pack["quality_profile"]["facets"]["provenance_scope"],
+                    preset["facets"]["provenance_scope"],
+                    preset_id,
+                )
+                self.assertLessEqual(
+                    sum(len(slot["candidates"]) for slot in pack["slots"].values()),
+                    prompt_generator.CANDIDATE_PACK_TOTAL_CANDIDATE_LIMIT,
+                    preset_id,
+                )
+            self.assertEqual(len(seen_subjects), 2, preset_id)
+
+        self.assertEqual(
+            presets["afrofuturist_worldmaking_curated"]["facets"]["provenance_scope"],
+            ["public_culturally_curated"],
+        )
+        self.assertEqual(
+            presets["indigenous_futurisms_curated"]["facets"]["provenance_scope"],
+            ["public_culturally_curated"],
+        )
+        self.assertEqual(
+            presets["fictional_esoteric_archive_world"]["facets"]["provenance_scope"],
+            ["fictional_non_operational"],
+        )
+        self.assertEqual(
+            presets["original_species_art_rpg_world"]["facets"]["provenance_scope"],
+            ["rights_cleared_original"],
+        )
+
+        cases = eval_semantic.load_retrieval_holdout_cases(
+            WORLDBUILDING_RETRIEVAL_HOLDOUT_V1_PATH
+        )
+        self.assertEqual(len(cases), 72)
+        self.assertEqual(len({case["id"] for case in cases}), 72)
+        targets = {
+            preset_id
+            for case in cases
+            for preset_id in case["allowed_selected_presets"]
+        }
+        self.assertEqual(targets, extension_ids)
+        self.assertTrue(all(len(case["allowed_selected_presets"]) == 1 for case in cases))
+
+        data[prompt_generator.QUALITY_LAYERS_DATA_KEY] = prompt_generator.load_quality_layers(
+            QUALITY_LAYERS_PATH
+        )
+        routing_policy = prompt_generator.candidate_pack_intent_routing_policy(data)
+        world_rules = [
+            rule
+            for rule in routing_policy["scoped_routes"]
+            if rule["domain"] == "worldbuilding_system"
+        ]
+        self.assertEqual(len(world_rules), 18)
+        self.assertEqual({rule["preset_id"] for rule in world_rules}, extension_ids)
+        for case in cases:
+            routed = prompt_generator.resolve_request_intent_constraints(
+                data, {"intent": case["intent"]}, {}
+            )
+            self.assertIn("worldbuilding_system", routed["domains"], case["id"])
+            self.assertEqual(
+                set(routed["scoped_routes"]),
+                set(case["allowed_selected_presets"]),
+                case["id"],
+            )
+
+        solarpunk_case = next(case for case in cases if case["id"] == "world_solarpunk_ko_02")
+        solarpunk_constraints = prompt_generator.resolve_request_intent_constraints(
+            data, {"intent": solarpunk_case["intent"]}, {}
+        )
+        solarpunk_context = {
+            "intent_source": "user",
+            "intent_constraints": solarpunk_constraints,
+        }
+        self.assertTrue(
+            prompt_generator.preset_matches_automatic_intent_scope(
+                presets["civic_solarpunk_institutional_world"], data, solarpunk_context
+            )
+        )
+        self.assertFalse(
+            prompt_generator.preset_matches_automatic_intent_scope(
+                presets["urban_heat_air_quality_record"], data, solarpunk_context
+            )
+        )
+
+        for generic_intent in (
+            "a generic studio portrait with neutral clothing and soft light",
+            "a fantasy castle portrait with an unreadable map and cassette player",
+            "documentary photo of city infrastructure maintenance",
+            "solar panels and plants on a modern green roof",
+            "a Black engineer repairing equipment in a future city",
+            "an Indigenous adult using modern technology in a public library",
+            "일반 기록관에서 오래된 종이 자료를 정리하는 성인 기록가",
+            "판타지 성의 지도를 든 코스프레 인물",
+        ):
+            routed = prompt_generator.resolve_request_intent_constraints(
+                data, {"intent": generic_intent}, {}
+            )
+            self.assertNotIn("worldbuilding_system", routed["domains"], generic_intent)
+            self.assertFalse(routed["scoped_routes"], generic_intent)
+
+        evidence_rows = [
+            json.loads(line)
+            for line in RESEARCH_EVIDENCE_PATH.read_text(encoding="utf-8").splitlines()
+            if line.strip() and json.loads(line).get("domain") == "worldbuilding_system"
+        ]
+        self.assertEqual(len(evidence_rows), 54)
+        self.assertEqual(len({row["source_url"] for row in evidence_rows}), 54)
+        self.assertEqual({row["topic_id"] for row in evidence_rows}, extension_ids)
+        catalog_ids = set(presets)
+        for entries in data["slots"].values():
+            catalog_ids.update(entry["id"] for entry in entries)
+        for preset_id in extension_ids:
+            topic_rows = [row for row in evidence_rows if row["topic_id"] == preset_id]
+            self.assertEqual(len(topic_rows), 3, preset_id)
+            matrix_rows = [row for row in topic_rows if "world_mechanisms" in row]
+            self.assertEqual(len(matrix_rows), 1, preset_id)
+            matrix = matrix_rows[0]
+            self.assertGreaterEqual(len(matrix["world_mechanisms"]), 6)
+            self.assertGreaterEqual(len(matrix["photographic_evidence"]), 6)
+            self.assertGreaterEqual(len(matrix["boundaries"]), 3)
+            self.assertTrue(set(matrix["photographic_evidence"]) <= catalog_ids)
+            self.assertTrue(
+                all(set(row["candidate_ids"]) <= catalog_ids for row in topic_rows),
+                preset_id,
+            )
+
+        extension_text = json.dumps(extension, ensure_ascii=False).lower()
+        for protected_reference in (
+            "pokemon",
+            "middle earth",
+            "star wars",
+            "scp foundation",
+            "dungeons & dragons",
+            "mothman",
+            "bigfoot",
+            "hodag",
+            "wakanda",
+        ):
+            self.assertNotIn(protected_reference, extension_text)
 
     def test_subculture_extension_override_contract_rejects_unknown_metadata(self):
         raw_tags = json.loads(TAGS_PATH.read_text(encoding="utf-8"))
