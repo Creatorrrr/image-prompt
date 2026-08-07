@@ -81,6 +81,9 @@ RESEARCH_EXTENSION_FILENAMES = (
     "photo_prompt_subculture_extension.json",
     "photo_prompt_worldbuilding_extension.json",
     "photo_prompt_cjk_worldbuilding_extension.json",
+    "photo_prompt_scene_expression_extension.json",
+    "photo_prompt_scene_expression_worldbuilding.json",
+    "photo_prompt_scene_expression_cjk.json",
 )
 RESEARCH_EXTENSION_SCHEMA = "photo-prompt-research-extension/v1"
 QUALITY_LAYERS_DATA_KEY = "_quality_layers"
@@ -1090,7 +1093,91 @@ def merge_research_extension(data: JsonDict, extension: JsonDict) -> JsonDict:
         raise ValueError(
             f"Unsupported research extension auto_optional_policy: {auto_optional_policy!r}"
         )
+    def render_contract_template_value(value: Any, preset: JsonDict) -> Any:
+        replacements = {
+            "{preset_id}": str(preset.get("id") or ""),
+            "{preset_en}": str(preset.get("en") or preset.get("id") or ""),
+            "{preset_ko}": str(preset.get("ko") or preset.get("id") or ""),
+        }
+        if isinstance(value, str):
+            rendered = value
+            for token, replacement in replacements.items():
+                rendered = rendered.replace(token, replacement)
+            return rendered
+        if isinstance(value, list):
+            return [render_contract_template_value(item, preset) for item in value]
+        if isinstance(value, dict):
+            return {
+                str(key): render_contract_template_value(item, preset)
+                for key, item in value.items()
+            }
+        return copy.deepcopy(value)
+
+    def deep_extend_render_contract(target: JsonDict, updates: JsonDict, label: str) -> None:
+        for key, value in updates.items():
+            key = str(key)
+            if isinstance(value, dict):
+                child = target.setdefault(key, {})
+                if not isinstance(child, dict):
+                    raise ValueError(f"{label}.{key}: cannot merge object into non-object")
+                deep_extend_render_contract(child, value, f"{label}.{key}")
+                continue
+            if isinstance(value, list):
+                child = target.setdefault(key, [])
+                if not isinstance(child, list):
+                    raise ValueError(f"{label}.{key}: cannot append list into non-list")
+                if key == "scene_blueprints":
+                    existing_ids = {
+                        str(item.get("id") or "")
+                        for item in child
+                        if isinstance(item, dict)
+                    }
+                    for item in value:
+                        if not isinstance(item, dict) or not str(item.get("id") or ""):
+                            raise ValueError(f"{label}.{key}: every scene blueprint requires an id")
+                        item_id = str(item.get("id"))
+                        missing_fields = [
+                            field
+                            for field in ("subject", "action", "location", "prop")
+                            if not str(item.get(field) or "").strip()
+                        ]
+                        if missing_fields:
+                            raise ValueError(
+                                f"{label}.{key}.{item_id}: missing scene fields {missing_fields}"
+                            )
+                        functions = normalize_list(item.get("scene_functions"))
+                        if not functions:
+                            raise ValueError(
+                                f"{label}.{key}.{item_id}: scene_functions must be non-empty"
+                            )
+                        visual_provenance = normalize_list(
+                            item.get("diegetic_visual_provenance")
+                        )
+                        if visual_provenance and len(set(visual_provenance)) != 1:
+                            raise ValueError(
+                                f"{label}.{key}.{item_id}: exactly one diegetic visual provenance is allowed"
+                            )
+                        if "operational" in item and not isinstance(item.get("operational"), bool):
+                            raise ValueError(
+                                f"{label}.{key}.{item_id}: operational must be boolean"
+                            )
+                        if item_id in existing_ids:
+                            raise ValueError(f"{label}.{key}: duplicate scene blueprint id {item_id}")
+                        child.append(copy.deepcopy(item))
+                        existing_ids.add(item_id)
+                else:
+                    for item in value:
+                        if item not in child:
+                            child.append(copy.deepcopy(item))
+                continue
+            target[key] = copy.deepcopy(value)
+
     extension_presets = extension.get("presets") if isinstance(extension.get("presets"), list) else []
+    render_contract_defaults = (
+        extension.get("preset_render_contract_defaults")
+        if isinstance(extension.get("preset_render_contract_defaults"), dict)
+        else {}
+    )
     for preset in extension_presets:
         if not isinstance(preset, dict):
             continue
@@ -1102,6 +1189,11 @@ def merge_research_extension(data: JsonDict, extension: JsonDict) -> JsonDict:
         for slot, default_filter in preset_filter_defaults.items():
             if slot not in filters:
                 filters[str(slot)] = default_filter
+        if render_contract_defaults and not isinstance(preset.get("render_contract"), dict):
+            preset["render_contract"] = render_contract_template_value(
+                render_contract_defaults,
+                preset,
+            )
     append_unique_id_entries(data.setdefault("presets", []), extension_presets, "presets")
 
     presets_by_id = {
@@ -1125,6 +1217,7 @@ def merge_research_extension(data: JsonDict, extension: JsonDict) -> JsonDict:
         "required_slots",
         "optional_slots",
         "automatic_discovery",
+        "render_contract",
     }
     for preset_id, updates in metadata_updates.items():
         preset = presets_by_id.get(str(preset_id))
@@ -1139,6 +1232,24 @@ def merge_research_extension(data: JsonDict, extension: JsonDict) -> JsonDict:
             )
         for key, value in updates.items():
             preset[str(key)] = copy.deepcopy(value)
+
+    contract_extensions = extension.get("existing_preset_render_contract_extensions") or {}
+    if not isinstance(contract_extensions, dict):
+        raise ValueError("existing_preset_render_contract_extensions must be an object")
+    for preset_id, updates in contract_extensions.items():
+        preset = presets_by_id.get(str(preset_id))
+        if preset is None:
+            raise ValueError(f"render contract extension references unknown preset {preset_id}")
+        if not isinstance(updates, dict):
+            raise ValueError(f"render contract extension for {preset_id} must be an object")
+        contract = preset.setdefault("render_contract", {})
+        if not isinstance(contract, dict):
+            raise ValueError(f"render contract target for {preset_id} must be an object")
+        deep_extend_render_contract(
+            contract,
+            render_contract_template_value(updates, preset),
+            f"existing_preset_render_contract_extensions.{preset_id}",
+        )
 
     def existing_preset_filter_updates(mapping: Any, *, replace: bool) -> None:
         updates = mapping if isinstance(mapping, dict) else {}
@@ -2150,6 +2261,26 @@ def apply_filter(pool: Sequence[Entry], flt: Optional[JsonDict]) -> List[Entry]:
         exclude_kinds = set(flt["exclude_kinds"])
         out = [x for x in out if not (entry_kinds(x) & exclude_kinds)]
 
+    multipliers = flt.get("weight_multipliers")
+    if isinstance(multipliers, dict):
+        weighted: List[Entry] = []
+        for entry in out:
+            copied = dict(entry)
+            raw_multiplier = multipliers.get(str(entry.get("id") or ""), 1.0)
+            try:
+                multiplier = float(raw_multiplier)
+            except (TypeError, ValueError):
+                multiplier = 1.0
+            if multiplier <= 0:
+                continue
+            try:
+                base_weight = float(entry.get("weight", 1.0))
+            except (TypeError, ValueError):
+                base_weight = 1.0
+            copied["weight"] = base_weight * multiplier
+            weighted.append(copied)
+        out = weighted
+
     return out
 
 
@@ -2315,6 +2446,11 @@ def candidate_pack_summarize_preset_candidate(
         "label_en": localize(preset, "en") or raw_id,
         "label_ko": localize(preset, "ko") or raw_id,
         "family": preset.get("family"),
+        "facets": {
+            str(key): normalize_list(value)[:12]
+            for key, value in (preset.get("facets") or {}).items()
+            if str(key).strip() and normalize_list(value)
+        },
         "probability": probability,
         "weight": candidate_pack_float(row.get("weight")),
         "selected_by_sampler": raw_id == selected_id,
@@ -2344,6 +2480,11 @@ def candidate_pack_summarize_slot_candidate(
         "selected_by_sampler": raw_id == selected_id,
         "tags": normalize_list(entry.get("tags"))[:12],
         "kind": normalize_list(entry.get("kind"))[:8],
+        "facets": {
+            str(key): normalize_list(value)[:12]
+            for key, value in (entry.get("facets") or {}).items()
+            if str(key).strip() and normalize_list(value)
+        },
         "scores": candidate_pack_score_payload(row),
         "applicability": {
             "status": str(row.get("applicability_status") or "eligible"),
@@ -3131,7 +3272,11 @@ def candidate_pack_concept_axes(soft_policy: JsonDict) -> JsonDict:
     }
 
 
-def candidate_pack_scene_contract(soft_policy: JsonDict, slots: JsonDict) -> JsonDict:
+def candidate_pack_scene_contract(
+    soft_policy: JsonDict,
+    slots: JsonDict,
+    selected_blueprint: Optional[JsonDict] = None,
+) -> JsonDict:
     groups: Dict[str, JsonDict] = {}
     for anchor in soft_policy.get("anchors", []) or []:
         if not isinstance(anchor, dict) or str(anchor.get("variant_strategy") or "") != "atomic_scene":
@@ -3157,11 +3302,565 @@ def candidate_pack_scene_contract(soft_policy: JsonDict, slots: JsonDict) -> Jso
             "candidate_entry_ids": candidates,
             "selected_entry_id": selected or None,
         }
+    if selected_blueprint:
+        scene_tag = str(selected_blueprint.get("scene_tag") or "")
+        atomic_scene = (
+            selected_blueprint.get("atomic_scene")
+            if isinstance(selected_blueprint.get("atomic_scene"), dict)
+            else {}
+        )
+        required_slots = [
+            slot
+            for slot in ("subject", "action", "location", "prop")
+            if isinstance(atomic_scene.get(slot), dict)
+            and str(atomic_scene[slot].get("label_en") or "").strip()
+        ]
+        if scene_tag and len(required_slots) == 4:
+            groups[scene_tag] = {
+                "group": scene_tag,
+                "strategy": "atomic_scene",
+                "source": "selected_render_blueprint",
+                "fail_closed": True,
+                "required_slots": required_slots,
+                "scene_functions": normalize_list(selected_blueprint.get("scene_functions")),
+                "diegetic_visual_provenance": normalize_list(
+                    selected_blueprint.get("diegetic_visual_provenance")
+                ),
+                "controlled_candidate_slots": required_slots,
+                "slots": {
+                    slot: {
+                        "label_en": str(atomic_scene[slot].get("label_en") or "").strip(),
+                        "label_ko": str(atomic_scene[slot].get("label_ko") or "").strip(),
+                        "audit_terms": normalize_list(atomic_scene[slot].get("audit_terms")),
+                    }
+                    for slot in required_slots
+                },
+            }
+
+    direct_scene_tags: Dict[str, int] = {}
+    if not selected_blueprint:
+        for slot in ("subject", "action", "location", "prop", "situation_context", "occasion_context"):
+            slot_payload = slots.get(slot) if isinstance(slots.get(slot), dict) else {}
+            selected_id = str(slot_payload.get("selected") or "")
+            for candidate in slot_payload.get("candidates", []) or []:
+                if not isinstance(candidate, dict) or str(candidate.get("id") or "") != selected_id:
+                    continue
+                for tag in normalize_list(candidate.get("tags")):
+                    if tag.endswith("_scene"):
+                        direct_scene_tags[tag] = direct_scene_tags.get(tag, 0) + 1
+    selected_scene_tag = ""
+    if direct_scene_tags:
+        selected_scene_tag = sorted(
+            direct_scene_tags,
+            key=lambda tag: (-direct_scene_tags[tag], tag),
+        )[0]
+    if selected_scene_tag:
+        group = {
+            "group": selected_scene_tag,
+            "strategy": "atomic_scene",
+            "source": "selected_direct_preset_scene_tag",
+            "fail_closed": True,
+            "required_slots": [],
+            "scene_functions": [],
+            "diegetic_visual_provenance": [],
+            "slots": {},
+        }
+        for slot in ("subject", "action", "location", "prop", "situation_context", "occasion_context"):
+            slot_payload = slots.get(slot) if isinstance(slots.get(slot), dict) else {}
+            matching = [
+                candidate
+                for candidate in slot_payload.get("candidates", []) or []
+                if isinstance(candidate, dict) and selected_scene_tag in normalize_list(candidate.get("tags"))
+            ]
+            if not matching:
+                continue
+            allowed = [str(candidate.get("entry_id") or "") for candidate in matching if str(candidate.get("entry_id") or "")]
+            selected = candidate_pack_slot_selected_entry_id(slot_payload)
+            group["slots"][slot] = {
+                "allowed_entry_ids": allowed,
+                "candidate_entry_ids": [
+                    str(candidate.get("entry_id") or "")
+                    for candidate in slot_payload.get("candidates", []) or []
+                    if isinstance(candidate, dict) and str(candidate.get("entry_id") or "")
+                ],
+                "selected_entry_id": selected or None,
+            }
+            if slot in {"subject", "action", "location", "prop"}:
+                group["required_slots"].append(slot)
+            for candidate in matching:
+                facets = candidate.get("facets") if isinstance(candidate.get("facets"), dict) else {}
+                group["scene_functions"].extend(normalize_list(facets.get("scene_function")))
+                group["diegetic_visual_provenance"].extend(
+                    normalize_list(facets.get("diegetic_visual_provenance"))
+                )
+        group["required_slots"] = sorted(set(group["required_slots"]))
+        group["scene_functions"] = sorted(set(group["scene_functions"]))
+        group["diegetic_visual_provenance"] = sorted(set(group["diegetic_visual_provenance"]))
+        groups.setdefault(selected_scene_tag, group)
     return {
         "enabled": bool(groups),
         "strategy": "atomic_scene" if groups else "none",
         "groups": list(groups.values()),
     }
+
+
+def candidate_pack_selected_preset(data: JsonDict, result: JsonDict) -> JsonDict:
+    provenance = result.get("provenance") if isinstance(result.get("provenance"), dict) else {}
+    preset_id = str(provenance.get("preset_id") or result.get("preset_id") or "")
+    return candidate_pack_preset_by_id(data, preset_id) or {}
+
+
+RENDER_CONTRACT_OPERATIONAL_TERMS = {
+    "administer",
+    "audit",
+    "catalog",
+    "check",
+    "checking",
+    "compare",
+    "comparing",
+    "coordinate",
+    "coordinating",
+    "document",
+    "handoff",
+    "inspect",
+    "inspection",
+    "ledger",
+    "monitor",
+    "record",
+    "register",
+    "review",
+    "sorting",
+    "verify",
+    "verifying",
+}
+
+
+def render_contract_filter_ids(preset: JsonDict, slot: str) -> List[str]:
+    filters = preset.get("filters") if isinstance(preset.get("filters"), dict) else {}
+    slot_filter = filters.get(slot) if isinstance(filters.get(slot), dict) else {}
+    return normalize_list(slot_filter.get("ids"))
+
+
+def render_contract_entry_by_id(data: JsonDict, slot: str, entry_id: str) -> JsonDict:
+    return next(
+        (
+            entry
+            for entry in data.get("slots", {}).get(slot, []) or []
+            if isinstance(entry, dict) and str(entry.get("id") or "") == str(entry_id)
+        ),
+        {},
+    )
+
+
+def render_contract_blueprint_scene_tag(preset_id: str, blueprint_id: str) -> str:
+    normalized = re.sub(r"[^a-z0-9_]+", "_", f"{preset_id}_{blueprint_id}".lower()).strip("_")
+    return f"scene_blueprint_{normalized}_scene"
+
+
+def render_contract_action_is_operational(action: str) -> bool:
+    action_tokens = {
+        item
+        for item in re.split(r"[^a-z0-9]+", str(action or "").lower())
+        if item
+    }
+    return bool(action_tokens & RENDER_CONTRACT_OPERATIONAL_TERMS)
+
+
+def render_contract_resolved_scene_blueprints(data: JsonDict, preset: JsonDict) -> List[JsonDict]:
+    contract = preset.get("render_contract") if isinstance(preset.get("render_contract"), dict) else {}
+    if not contract:
+        return []
+    preset_id = str(preset.get("id") or "")
+    provenance = normalize_list(contract.get("diegetic_visual_provenance"))
+    genre_anchors = normalize_list(contract.get("genre_anchors"))
+    blueprints: List[JsonDict] = []
+
+    if contract.get("derive_filtered_scenes") is True:
+        try:
+            derived_limit = max(1, min(6, int(contract.get("derived_scene_limit", 2))))
+        except (TypeError, ValueError):
+            derived_limit = 2
+        cycles = normalize_list(contract.get("scene_function_cycle")) or ["controlled_action"]
+        action_templates = normalize_list(contract.get("scene_action_templates")) or ["{action}"]
+        slot_ids = {
+            slot: render_contract_filter_ids(preset, slot)
+            for slot in ("subject", "action", "location", "prop")
+        }
+        slot_entries = {
+            slot: [render_contract_entry_by_id(data, slot, entry_id) for entry_id in ids]
+            for slot, ids in slot_ids.items()
+        }
+        preset_en = str(preset.get("en") or preset_id).strip()
+        preset_ko = str(preset.get("ko") or preset_id).strip()
+        fallback_en = {
+            "subject": f"the principal participants or material subject of {preset_en}",
+            "action": f"a decisive observable change within {preset_en}",
+            "location": f"a source-grounded setting specific to {preset_en}",
+            "prop": "one unbranded physical clue tied to the event",
+        }
+        fallback_ko = {
+            "subject": f"{preset_ko}의 핵심 참여자 또는 물질 대상",
+            "action": f"{preset_ko}에서 관찰되는 결정적 변화",
+            "location": f"{preset_ko}에 맞는 근거 기반 장소",
+            "prop": "사건에 연결된 비상표 물리 단서 하나",
+        }
+        for index in range(derived_limit):
+            entries: Dict[str, JsonDict] = {}
+            for slot in ("subject", "action", "location", "prop"):
+                available = slot_entries.get(slot) or []
+                entries[slot] = available[index % len(available)] if available else {}
+            action_en = localize(entries["action"], "en") or fallback_en["action"]
+            action_ko = localize(entries["action"], "ko") or fallback_ko["action"]
+            template = action_templates[index % len(action_templates)]
+            rendered_action = (
+                template.replace("{action}", action_en)
+                .replace("{preset_en}", preset_en)
+                .replace("{preset_ko}", preset_ko)
+            )
+            function = cycles[index % len(cycles)]
+            blueprint_id = f"derived_{index + 1}"
+            source_subject = entries["subject"]
+            blueprints.append(
+                {
+                    "id": blueprint_id,
+                    "scene_tag": render_contract_blueprint_scene_tag(preset_id, blueprint_id),
+                    "scene_functions": [function],
+                    "diegetic_visual_provenance": provenance,
+                    "genre_anchors": genre_anchors,
+                    "relationship_stakes": [],
+                    "expression_mode": "derived_research_scene",
+                    "subject": localize(source_subject, "en") or fallback_en["subject"],
+                    "subject_ko": localize(source_subject, "ko") or fallback_ko["subject"],
+                    "subject_kind": normalize_list(source_subject.get("kind")),
+                    "subject_tags": normalize_list(source_subject.get("tags")),
+                    "action": rendered_action,
+                    "action_ko": action_ko,
+                    "location": localize(entries["location"], "en") or fallback_en["location"],
+                    "location_ko": localize(entries["location"], "ko") or fallback_ko["location"],
+                    "prop": localize(entries["prop"], "en") or fallback_en["prop"],
+                    "prop_ko": localize(entries["prop"], "ko") or fallback_ko["prop"],
+                    "operational": function == "operational_documentary"
+                    or render_contract_action_is_operational(rendered_action),
+                    "source": "selected_preset.render_contract.derived_filtered_scene",
+                }
+            )
+
+    for raw in contract.get("scene_blueprints") or []:
+        if not isinstance(raw, dict) or not str(raw.get("id") or ""):
+            continue
+        blueprint_id = str(raw.get("id"))
+        functions = normalize_list(raw.get("scene_functions")) or ["controlled_action"]
+        blueprint = {
+            "id": blueprint_id,
+            "scene_tag": str(raw.get("scene_tag") or render_contract_blueprint_scene_tag(preset_id, blueprint_id)),
+            "scene_functions": functions,
+            "diegetic_visual_provenance": normalize_list(raw.get("diegetic_visual_provenance")) or provenance,
+            "genre_anchors": normalize_list(raw.get("genre_anchors")) or genre_anchors,
+            "relationship_stakes": normalize_list(raw.get("relationship_stakes")),
+            "expression_mode": str(raw.get("expression_mode") or "authored_scene_blueprint"),
+            "subject": str(raw.get("subject") or "").strip(),
+            "subject_ko": str(raw.get("subject_ko") or raw.get("subject") or "").strip(),
+            "subject_kind": normalize_list(raw.get("subject_kind")),
+            "subject_tags": normalize_list(raw.get("subject_tags")),
+            "action": str(raw.get("action") or "").strip(),
+            "action_ko": str(raw.get("action_ko") or raw.get("action") or "").strip(),
+            "location": str(raw.get("location") or "").strip(),
+            "location_ko": str(raw.get("location_ko") or raw.get("location") or "").strip(),
+            "prop": str(raw.get("prop") or "").strip(),
+            "prop_ko": str(raw.get("prop_ko") or raw.get("prop") or "").strip(),
+            "operational": (
+                bool(raw.get("operational"))
+                if "operational" in raw
+                else (
+                    "operational_documentary" in functions
+                    or render_contract_action_is_operational(str(raw.get("action") or ""))
+                )
+            ),
+            "source": "selected_preset.render_contract.scene_blueprints",
+        }
+        if all(blueprint.get(slot) for slot in ("subject", "action", "location", "prop")):
+            blueprints.append(blueprint)
+
+    unique: Dict[str, JsonDict] = {}
+    for blueprint in blueprints:
+        unique.setdefault(str(blueprint.get("id") or ""), blueprint)
+    return list(unique.values())
+
+
+def candidate_pack_scene_blueprint_request_text(result: JsonDict) -> str:
+    provenance = result.get("provenance") if isinstance(result.get("provenance"), dict) else {}
+    values = [
+        *normalize_list(provenance.get("concept_lock")),
+        *normalize_list(provenance.get("user_mandatory_intents")),
+        *normalize_list(provenance.get("additional_requirements")),
+    ]
+    return " ".join(values).lower()
+
+
+def render_scene_blueprint_supports_no_people(blueprint: JsonDict) -> bool:
+    """Return true only when a scene explicitly declares a non-human subject.
+
+    An empty declaration is intentionally not treated as compatible: the
+    render instruction sits outside the ordinary subject sampler, so its
+    people-presence constraint must be independently provable.
+    """
+    declarations = {
+        item.lower()
+        for item in (
+            *normalize_list(blueprint.get("subject_kind")),
+            *normalize_list(blueprint.get("subject_tags")),
+        )
+        if item
+    }
+    return bool(declarations) and not bool(
+        declarations & {"human", "people", "person", "portrait"}
+    )
+
+
+def candidate_pack_select_scene_blueprint(
+    result: JsonDict,
+    preset: JsonDict,
+    blueprints: Sequence[JsonDict],
+) -> JsonDict:
+    if not blueprints:
+        return {}
+    provenance = result.get("provenance") if isinstance(result.get("provenance"), dict) else {}
+    request_text = candidate_pack_scene_blueprint_request_text(result)
+    if intent_explicitly_excludes_people(request_text):
+        no_people_blueprints = [
+            blueprint
+            for blueprint in blueprints
+            if render_scene_blueprint_supports_no_people(blueprint)
+        ]
+        if not no_people_blueprints:
+            preset_id = str(preset.get("id") or "")
+            raise ValueError(
+                f"Preset {preset_id!r} has no explicitly non-human render scene compatible with the no-people request"
+            )
+        blueprints = no_people_blueprints
+    requested_function = str(provenance.get("requested_scene_function") or "").strip()
+    if requested_function:
+        matching = [
+            blueprint
+            for blueprint in blueprints
+            if requested_function in normalize_list(blueprint.get("scene_functions"))
+        ]
+        if not matching:
+            preset_id = str(preset.get("id") or "")
+            raise ValueError(
+                f"Preset {preset_id!r} has no render scene for requested function {requested_function!r}"
+            )
+        authored_matching = [
+            blueprint
+            for blueprint in matching
+            if str(blueprint.get("source") or "").endswith(".scene_blueprints")
+        ]
+        if authored_matching:
+            matching = authored_matching
+        blueprints = matching
+    scored: List[tuple[int, str, JsonDict]] = []
+    for blueprint in blueprints:
+        corpus = " ".join(
+            [
+                str(blueprint.get("id") or ""),
+                str(blueprint.get("subject") or ""),
+                str(blueprint.get("action") or ""),
+                str(blueprint.get("location") or ""),
+                str(blueprint.get("prop") or ""),
+                *normalize_list(blueprint.get("scene_functions")),
+                *normalize_list(blueprint.get("genre_anchors")),
+            ]
+        ).lower()
+        terms = {
+            token
+            for token in re.split(r"[^a-z0-9가-힣]+", corpus)
+            if len(token) >= 4
+        }
+        score = sum(1 for term in terms if term in request_text)
+        scored.append((score, str(blueprint.get("id") or ""), blueprint))
+    scored.sort(key=lambda row: (-row[0], row[1]))
+    if scored[0][0] > 0 and (len(scored) == 1 or scored[0][0] > scored[1][0]):
+        selected = dict(scored[0][2])
+        selected["selection_source"] = "unique_request_relevance"
+        return selected
+    seed = str(provenance.get("seed") or "0")
+    preset_id = str(preset.get("id") or "")
+    preset_digest = hashlib.sha256(f"scene-blueprint-offset|{preset_id}".encode("utf-8")).digest()
+    offset = int.from_bytes(preset_digest[:8], "big") % len(blueprints)
+    try:
+        index = (int(seed) + offset) % len(blueprints)
+        selection_source = (
+            "requested_scene_function"
+            if requested_function
+            else "deterministic_seed_cycle"
+        )
+    except (TypeError, ValueError):
+        digest = hashlib.sha256(f"scene-blueprint|{seed}|{preset_id}".encode("utf-8")).digest()
+        index = int.from_bytes(digest[:8], "big") % len(blueprints)
+        selection_source = (
+            "requested_scene_function"
+            if requested_function
+            else "deterministic_seed_hash"
+        )
+    selected = dict(blueprints[index])
+    selected["selection_source"] = selection_source
+    return selected
+
+
+def candidate_pack_resolve_scene_blueprint(
+    data: JsonDict,
+    result: JsonDict,
+    preset: JsonDict,
+) -> JsonDict:
+    """Resolve one render scene without mutating the sampler candidate pool.
+
+    A scene blueprint is a mandatory render instruction, not an additional
+    taxonomy candidate. Keeping it outside ``slots`` preserves the exact
+    sampler-eligible pool and prevents a resolved scene from masquerading as a
+    semantic/sampler result.
+    """
+    blueprints = render_contract_resolved_scene_blueprints(data, preset)
+    selected = candidate_pack_select_scene_blueprint(result, preset, blueprints)
+    if not selected:
+        return {}
+    selected["atomic_scene"] = {
+        slot: {
+            "label_en": str(selected.get(slot) or "").strip(),
+            "label_ko": str(selected.get(f"{slot}_ko") or selected.get(slot) or "").strip(),
+            "audit_terms": [str(selected.get(slot) or "").strip()],
+        }
+        for slot in ("subject", "action", "location", "prop")
+    }
+    selected["available_blueprint_count"] = len(blueprints)
+    selected["available_blueprint_ids"] = [str(item.get("id") or "") for item in blueprints]
+    return selected
+
+
+def candidate_pack_render_contract(
+    preset: JsonDict,
+    scene_contract: JsonDict,
+    selected_blueprint: Optional[JsonDict] = None,
+) -> JsonDict:
+    raw = preset.get("render_contract") if isinstance(preset.get("render_contract"), dict) else {}
+    if not raw:
+        return {
+            "enabled": False,
+            "source": "none",
+            "topic_intents": [],
+            "evidence_budget": {"enabled": False},
+            "selected_scene": {},
+        }
+    topic_intents: List[JsonDict] = []
+    for item in raw.get("topic_intents", []) or []:
+        if isinstance(item, str):
+            text = item.strip()
+            normalized = {"text": text, "audit_terms": [text] if text else []}
+        elif isinstance(item, dict):
+            text = str(item.get("text") or "").strip()
+            normalized = {
+                "text": text,
+                "audit_terms": normalize_list(item.get("audit_terms")) or ([text] if text else []),
+                "kind": str(item.get("kind") or "topic_identity"),
+            }
+        else:
+            continue
+        if normalized.get("text") and normalized.get("audit_terms"):
+            topic_intents.append(normalized)
+    raw_budget = raw.get("evidence_budget") if isinstance(raw.get("evidence_budget"), dict) else {}
+    world_clue_slots = normalize_list(raw_budget.get("world_clue_slots"))
+    evidence_budget = {
+        "enabled": bool(world_clue_slots),
+        "world_clue_slots": world_clue_slots,
+        "minimum_chosen": max(0, int(raw_budget.get("minimum_chosen", 1))) if world_clue_slots else 0,
+        "maximum_chosen": max(0, int(raw_budget.get("maximum_chosen", 2))) if world_clue_slots else 0,
+        "guidance": str(raw_budget.get("guidance") or "one core event, sparse world clues, one stake, one genre anchor"),
+    }
+    selected_scene: JsonDict = {}
+    direct_groups = [
+        group
+        for group in scene_contract.get("groups", []) or []
+        if isinstance(group, dict) and group.get("source") == "selected_direct_preset_scene_tag"
+    ]
+    if direct_groups:
+        group = direct_groups[0]
+        selected_scene = {
+            "scene_tag": group.get("group"),
+            "scene_functions": normalize_list(group.get("scene_functions")),
+            "diegetic_visual_provenance": normalize_list(group.get("diegetic_visual_provenance")),
+        }
+        scene_metadata = raw.get("scene_metadata") if isinstance(raw.get("scene_metadata"), dict) else {}
+        configured_scene = scene_metadata.get(str(group.get("group") or ""))
+        if isinstance(configured_scene, dict):
+            selected_scene["scene_functions"] = (
+                normalize_list(configured_scene.get("scene_functions"))
+                or selected_scene["scene_functions"]
+            )
+            selected_scene["diegetic_visual_provenance"] = (
+                normalize_list(configured_scene.get("diegetic_visual_provenance"))
+                or selected_scene["diegetic_visual_provenance"]
+            )
+            selected_scene["relationship_stakes"] = normalize_list(
+                configured_scene.get("relationship_stakes")
+            )
+            selected_scene["genre_anchors"] = normalize_list(
+                configured_scene.get("genre_anchors")
+            )
+            selected_scene["expression_mode"] = str(
+                configured_scene.get("expression_mode") or ""
+            )
+    if selected_blueprint:
+        selected_scene = {
+            "scene_tag": selected_blueprint.get("scene_tag"),
+            "blueprint_id": selected_blueprint.get("id"),
+            "scene_functions": normalize_list(selected_blueprint.get("scene_functions")),
+            "diegetic_visual_provenance": normalize_list(
+                selected_blueprint.get("diegetic_visual_provenance")
+            ),
+            "relationship_stakes": normalize_list(selected_blueprint.get("relationship_stakes")),
+            "genre_anchors": normalize_list(selected_blueprint.get("genre_anchors")),
+            "expression_mode": str(selected_blueprint.get("expression_mode") or ""),
+            "operational": bool(selected_blueprint.get("operational")),
+            "selection_source": str(selected_blueprint.get("selection_source") or ""),
+            "available_blueprint_count": int(selected_blueprint.get("available_blueprint_count") or 0),
+            "available_blueprint_ids": normalize_list(selected_blueprint.get("available_blueprint_ids")),
+            "atomic_scene": copy.deepcopy(selected_blueprint.get("atomic_scene") or {}),
+        }
+    return {
+        "enabled": True,
+        "source": "selected_preset.render_contract",
+        "profile": str(raw.get("profile") or "preset_specific"),
+        "evidence_route_id": str(raw.get("evidence_route_id") or preset.get("id") or ""),
+        "topic_intents": topic_intents,
+        "evidence_budget": evidence_budget,
+        "selected_scene": selected_scene,
+    }
+
+
+def candidate_pack_render_mandatory_intents(
+    render_contract: JsonDict,
+    preset_id: str,
+) -> List[JsonDict]:
+    candidate_id = candidate_pack_candidate_id("preset", preset_id) if preset_id else ""
+    rows: List[JsonDict] = []
+    for intent in render_contract.get("topic_intents", []) or []:
+        if not isinstance(intent, dict):
+            continue
+        text = str(intent.get("text") or "").strip()
+        audit_terms = normalize_list(intent.get("audit_terms"))
+        if not text or not audit_terms:
+            continue
+        rows.append(
+            {
+                "text": text,
+                "source": "selected_preset.render_contract",
+                "source_text": text,
+                "kind": str(intent.get("kind") or "topic_identity"),
+                "status": "covered",
+                "covered_by": [candidate_id] if candidate_id else [],
+                "audit_terms": audit_terms,
+            }
+        )
+    return rows
 
 
 def candidate_pack_slot_selected_entry_id(slot_payload: JsonDict) -> str:
@@ -4853,15 +5552,33 @@ def build_candidate_pack(result: JsonDict, data: JsonDict) -> JsonDict:
     candidate_entries: Dict[str, tuple[str, Optional[str], JsonDict]] = {}
     presets = candidate_pack_build_presets(data, trace, result, candidate_entries)
     slots = candidate_pack_build_slots(data, trace, result, candidate_entries)
+    selected_preset = candidate_pack_selected_preset(data, result)
+    selected_blueprint = candidate_pack_resolve_scene_blueprint(
+        data,
+        result,
+        selected_preset,
+    )
     conflicts = candidate_pack_conflicts(data, candidate_entries)
     candidate_pack_apply_conflicts(slots, conflicts)
     candidate_blobs = candidate_pack_candidate_blobs(presets, slots)
     candidate_terms = candidate_pack_candidate_terms(presets, slots)
     mandatory_intents, uncovered_intents = candidate_pack_mandatory_intents(result, trace, candidate_blobs, candidate_terms)
     intent_contract = candidate_pack_intent_contract(data, result, trace, candidate_blobs)
-    quality_profile = candidate_pack_quality_profile(data, result, slots, mandatory_intents)
     contract = trace.get("generation_contract") if isinstance(trace.get("generation_contract"), dict) else {}
     soft_policy = contract.get("soft_anchor_policy") if isinstance(contract.get("soft_anchor_policy"), dict) else {}
+    scene_contract = candidate_pack_scene_contract(soft_policy, slots, selected_blueprint)
+    render_contract = candidate_pack_render_contract(
+        selected_preset,
+        scene_contract,
+        selected_blueprint,
+    )
+    render_intents = candidate_pack_render_mandatory_intents(
+        render_contract,
+        str(selected_preset.get("id") or ""),
+    )
+    mandatory_intents.extend(render_intents)
+    uncovered_intents = [row for row in mandatory_intents if row.get("status") == "uncovered"]
+    quality_profile = candidate_pack_quality_profile(data, result, slots, mandatory_intents)
     masked_buckets = candidate_pack_choose_masked_buckets(result, contract, soft_policy, slots)
     open_slots = candidate_pack_open_slots(result, slots, masked_buckets)
     masked_slot_names = {str(item.get("slot")) for item in open_slots if isinstance(item, dict)}
@@ -4892,7 +5609,9 @@ def build_candidate_pack(result: JsonDict, data: JsonDict) -> JsonDict:
         "slots": slots,
         "quality_profile": quality_profile,
         "concept_axes": candidate_pack_concept_axes(soft_policy),
-        "scene_contract": candidate_pack_scene_contract(soft_policy, slots),
+        "scene_contract": scene_contract,
+        "render_contract": render_contract,
+        "evidence_budget": render_contract.get("evidence_budget", {"enabled": False}),
         "photographic_integration": candidate_pack_photographic_integration(
             data, result, trace, presets, slots, mandatory_intents, quality_profile
         ),
@@ -4952,6 +5671,7 @@ def build_candidate_pack(result: JsonDict, data: JsonDict) -> JsonDict:
             "user_mandatory_intents": provenance.get("user_mandatory_intents", []),
             "concept_gate_results": provenance.get("concept_gate_results", []),
             "concept_scene_variants": provenance.get("concept_scene_variants", []),
+            "requested_scene_function": provenance.get("requested_scene_function"),
             "safety": provenance.get("safety", contract.get("safety", {})),
             "argv": provenance.get("argv", []),
             "sample_prompt_id": provenance.get("prompt_id"),
@@ -14150,6 +14870,11 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     parser.add_argument("--semantic-default", action="store_true", help=argparse.SUPPRESS)
     parser.add_argument("--novelty", choices=NOVELTY_LEVELS, default="medium", help="Semantic sampling diversity level. Used only with semantic or hybrid selection.")
     parser.add_argument("--creativity", type=float, default=None, help="Single 0..1 diversity lever: 0 maps to conservative/low-novelty, 0.5 to balanced/medium, 1 to exploratory/high. Explicit --novelty or --semantic-profile values win over this lever. Coherence controls (semantic weight, filter strictness) are not affected.")
+    parser.add_argument(
+        "--scene-function",
+        default=None,
+        help="Select one supported render scene function for a direct research-backed preset without adding user intent text.",
+    )
     parser.add_argument("--filter-strictness", choices=FILTER_STRICTNESS_MODES, default=None, help="Preset filter behavior for semantic/hybrid selection. Defaults to soft for semantic and hard for hybrid/rule.")
     parser.add_argument("--semantic-weight", type=float, default=None, help="0..1 blend weight for semantic scoring. Defaults by selection mode.")
     parser.add_argument("--semantic-profile", choices=SEMANTIC_PROFILES, default=None, help="Semantic candidate window/profile. Defaults by selection mode.")
@@ -14176,6 +14901,11 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         help="Emit candidate-pack JSON for agent composition instead of final prompt JSON/plain text.",
     )
     parser.add_argument("--json-output", action="store_true", help="Print results as JSON.")
+    parser.add_argument(
+        "--output-file",
+        default=None,
+        help="Write the exact generated output bytes to this file instead of stdout.",
+    )
     parser.add_argument("--list-presets", action="store_true", help="List preset ids and exit.")
     parser.add_argument("--include-virtual", action="store_true", help="Include virtual recipe presets when listing presets.")
     parser.add_argument("--show-slots", action="store_true", help="List slots, tag counts, and priorities then exit.")
@@ -14185,6 +14915,16 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     data = load_json(args.tags)
     quality_layers_path = Path(args.quality_layers) if args.quality_layers else default_quality_layers_path(args.tags)
     data[QUALITY_LAYERS_DATA_KEY] = load_quality_layers(quality_layers_path)
+    available_scene_functions = set(
+        normalize_list((data.get("facet_vocab") or {}).get("scene_function"))
+    )
+    if args.scene_function and args.scene_function not in available_scene_functions:
+        raise ValueError(
+            f"Unknown --scene-function {args.scene_function!r}; available values: "
+            + ", ".join(sorted(available_scene_functions))
+        )
+    if args.scene_function and not args.preset:
+        raise ValueError("--scene-function requires an explicit --preset")
 
     if args.list_presets:
         list_presets(data, args.include_virtual)
@@ -14314,6 +15054,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             creativity=args.creativity,
             novelty_explicit=novelty_explicit,
         )
+        if args.scene_function:
+            result.setdefault("provenance", {})["requested_scene_function"] = args.scene_function
         results.append(result)
         if args.anchor_diversity_ledger:
             update_anchor_diversity_ledger(anchor_diversity_ledger, result)
@@ -14322,10 +15064,20 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 
     if args.emit_candidate_pack:
         packs = [build_candidate_pack(result, data) for result in results]
-        print(json.dumps(packs, ensure_ascii=False, indent=2))
+        output = json.dumps(packs, ensure_ascii=False, indent=2) + "\n"
+        if args.output_file:
+            Path(args.output_file).write_text(output, encoding="utf-8")
+        else:
+            print(output, end="")
     elif args.json_output:
-        print(json.dumps(results, ensure_ascii=False, indent=2))
+        output = json.dumps(results, ensure_ascii=False, indent=2) + "\n"
+        if args.output_file:
+            Path(args.output_file).write_text(output, encoding="utf-8")
+        else:
+            print(output, end="")
     else:
+        if args.output_file:
+            raise ValueError("--output-file requires --json-output or --emit-candidate-pack")
         print_plain(results, langs, args.include_negative, args.include_choices)
 
     return 0

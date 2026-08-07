@@ -30,6 +30,12 @@ RESEARCH_EXTENSION_PATH = SKILL_DIR / "assets" / "photo_prompt_research_extensio
 SUBCULTURE_EXTENSION_PATH = SKILL_DIR / "assets" / "photo_prompt_subculture_extension.json"
 WORLDBUILDING_EXTENSION_PATH = SKILL_DIR / "assets" / "photo_prompt_worldbuilding_extension.json"
 CJK_WORLDBUILDING_EXTENSION_PATH = SKILL_DIR / "assets" / "photo_prompt_cjk_worldbuilding_extension.json"
+SCENE_EXPRESSION_EXTENSION_PATH = SKILL_DIR / "assets" / "photo_prompt_scene_expression_extension.json"
+SCENE_EXPRESSION_WORLDBUILDING_PATH = SKILL_DIR / "assets" / "photo_prompt_scene_expression_worldbuilding.json"
+SCENE_EXPRESSION_CJK_PATH = SKILL_DIR / "assets" / "photo_prompt_scene_expression_cjk.json"
+SCENE_EXPRESSION_BASELINE_PATH = SKILL_DIR / "assets" / "render_scene_expression_baseline_v1.json"
+SCENE_QUALITY_HOLDOUT_PATH = SKILL_DIR / "assets" / "render_scene_quality_holdout_v1.jsonl"
+SCENE_QUALITY_VISUAL_REVIEW_PATH = SKILL_DIR / "assets" / "render_scene_quality_visual_review_v1.json"
 QUALITY_LAYERS_PATH = SKILL_DIR / "assets" / "photo_prompt_quality_layers.json"
 DOMAIN_VISUAL_REVIEW_PLAN_PATH = SKILL_DIR / "assets" / "visual_review_domain_extension_plan.json"
 DOMAIN_VISUAL_REVIEW_RESULTS_PATH = SKILL_DIR / "assets" / "visual_review_domain_extension_results.json"
@@ -38,6 +44,7 @@ if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
 
 import audit_composed_prompt  # noqa: E402
+import audit_scene_expression  # noqa: E402
 import eval_semantic  # noqa: E402
 import generate_photo_prompt  # noqa: E402
 import prompt_generator  # noqa: E402
@@ -172,6 +179,67 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
         self.assertNotIn("human", selected_subject.get("kind", []))
         active_axes = {axis["id"] for axis in pack["photographic_integration"]["active_axes"]}
         self.assertNotIn("person_presence", active_axes)
+
+    def test_research_scene_function_is_a_fail_closed_control_and_preserves_no_people(self):
+        pack = self.run_wrapper(
+            "--preset",
+            "natural_process_trace_documentary",
+            "--scene-function",
+            "revelation",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "42",
+            "--additional-requirement",
+            "사람 없는 frost-to-melt boundary, no people",
+            "--emit-candidate-pack",
+        )[0]
+        selected_scene = pack["render_contract"]["selected_scene"]
+        self.assertEqual(selected_scene["blueprint_id"], "process_front_crossing")
+        self.assertIn("revelation", selected_scene["scene_functions"])
+        self.assertEqual(pack["provenance"]["requested_scene_function"], "revelation")
+        self.assertNotIn("revelation", {item["text"] for item in pack["mandatory_intents"]})
+        self.assertIn("frost-to-melt boundary", selected_scene["atomic_scene"]["subject"]["label_en"])
+
+        human_only = subprocess.run(
+            [
+                sys.executable,
+                str(WRAPPER_PATH),
+                "--preset",
+                "cjk_villainess_otome_aristocratic_world",
+                "--selection-mode",
+                "rule",
+                "--seed",
+                "42",
+                "--additional-requirement",
+                "사람 없는 장면, no people",
+                "--emit-candidate-pack",
+            ],
+            cwd=ROOT,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        self.assertNotEqual(human_only.returncode, 0)
+        self.assertIn("no explicitly non-human render scene", human_only.stderr)
+
+        missing_preset = subprocess.run(
+            [
+                sys.executable,
+                str(WRAPPER_PATH),
+                "--scene-function",
+                "revelation",
+                "--selection-mode",
+                "rule",
+                "--emit-candidate-pack",
+            ],
+            cwd=ROOT,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        self.assertNotEqual(missing_preset.returncode, 0)
+        self.assertIn("requires an explicit --preset", missing_preset.stderr)
 
         person_only_slots = {
             "appearance_type",
@@ -1691,6 +1759,361 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
         ):
             self.assertNotIn(protected_reference, extension_text)
 
+    def test_scene_expression_pilots_are_diverse_sparse_and_fail_closed(self):
+        data = prompt_generator.load_json(TAGS_PATH)
+        data[prompt_generator.QUALITY_LAYERS_DATA_KEY] = prompt_generator.load_quality_layers(
+            QUALITY_LAYERS_PATH
+        )
+        extension = json.loads(SCENE_EXPRESSION_EXTENSION_PATH.read_text(encoding="utf-8"))
+        self.assertEqual(extension["schema_version"], prompt_generator.RESEARCH_EXTENSION_SCHEMA)
+
+        baseline = json.loads(SCENE_EXPRESSION_BASELINE_PATH.read_text(encoding="utf-8"))
+        self.assertEqual(baseline["summary"]["route_count"], 88)
+        self.assertEqual(baseline["summary"]["fail_count"], 88)
+        holdout = [
+            json.loads(line)
+            for line in SCENE_QUALITY_HOLDOUT_PATH.read_text(encoding="utf-8").splitlines()
+            if line.strip()
+        ]
+        self.assertEqual(len(holdout), 12)
+        self.assertEqual(len({case["case_id"] for case in holdout}), 12)
+        self.assertEqual(
+            {source: sum(case["source_extension"] == source for case in holdout) for source in {case["source_extension"] for case in holdout}},
+            {"research": 3, "subculture": 3, "worldbuilding": 3, "cjk_worldbuilding": 3},
+        )
+
+        review = json.loads(SCENE_QUALITY_VISUAL_REVIEW_PATH.read_text(encoding="utf-8"))
+        review_summary = eval_semantic.summarize_visual_review(
+            SCENE_QUALITY_VISUAL_REVIEW_PATH
+        )["visual_review"]
+        self.assertEqual(review["schema_version"], "photo-visual-review/v1")
+        self.assertEqual(review_summary["case_count"], 12)
+        self.assertEqual(review_summary["failed_case_count"], 0)
+        self.assertEqual(review_summary["failed_review_focus_result_count"], 0)
+        self.assertTrue(review_summary["passed"])
+        self.assertEqual(
+            {case["case"] for case in review["cases"]},
+            {case["case_id"] for case in holdout},
+        )
+
+        pilots = {
+            "cjk_ability_academy_lineage_system": "rival_rescue",
+            "cjk_status_system_quest_world": "cost_revelation",
+            "cjk_villainess_otome_aristocratic_world": "betrothal_decision",
+        }
+        presets = {preset["id"]: preset for preset in data["presets"]}
+        for preset_id, expected_non_operational_scene in pilots.items():
+            preset = presets[preset_id]
+            blueprints = prompt_generator.render_contract_resolved_scene_blueprints(data, preset)
+            self.assertEqual(len(blueprints), 4)
+            self.assertIn(expected_non_operational_scene, {item["id"] for item in blueprints})
+            self.assertTrue(preset["render_contract"]["topic_intents"])
+            scene_tags = set()
+            scene_functions = set()
+            operational_hits = 0
+            documentary_medium_hits = 0
+            documentary_genre_hits = 0
+            for seed in range(1, 65):
+                result = prompt_generator.generate_once(
+                    data,
+                    __import__("random").Random(seed),
+                    preset_id,
+                    ["en"],
+                    False,
+                    0,
+                    True,
+                    detail_level="detailed",
+                    selection_mode="rule",
+                    seed=seed,
+                )
+                pack = prompt_generator.build_candidate_pack(result, data)
+                self.assertTrue(pack["scene_contract"]["enabled"])
+                self.assertTrue(pack["render_contract"]["enabled"])
+                self.assertEqual(pack["evidence_budget"]["minimum_chosen"], 1)
+                self.assertEqual(pack["evidence_budget"]["maximum_chosen"], 2)
+                self.assertEqual(len(pack["mandatory_intents"]), 1)
+                group = next(
+                    group
+                    for group in pack["scene_contract"]["groups"]
+                    if group.get("source") == "selected_render_blueprint"
+                )
+                self.assertEqual(set(group["required_slots"]), {"subject", "action", "location", "prop"})
+                scene_tags.add(group["group"])
+                scene_functions.update(pack["render_contract"]["selected_scene"]["scene_functions"])
+                operational_hits += bool(pack["render_contract"]["selected_scene"]["operational"])
+                documentary_medium_hits += result["choices"]["medium"]["id"] == "documentary_photo"
+                documentary_genre_hits += result["choices"]["genre"]["id"] == "documentary"
+            self.assertEqual(len(scene_tags), 4, preset_id)
+            self.assertGreaterEqual(len(scene_functions), 3, preset_id)
+            self.assertLessEqual(operational_hits, 32, preset_id)
+            self.assertLessEqual(documentary_medium_hits, 16, preset_id)
+            self.assertLessEqual(documentary_genre_hits, 16, preset_id)
+
+        result = prompt_generator.generate_once(
+            data,
+            __import__("random").Random(3),
+            "cjk_ability_academy_lineage_system",
+            ["en"],
+            True,
+            12,
+            True,
+            detail_level="detailed",
+            selection_mode="rule",
+            seed=3,
+        )
+        pack = prompt_generator.build_candidate_pack(result, data)
+        group = next(
+            group
+            for group in pack["scene_contract"]["groups"]
+            if group.get("source") == "selected_render_blueprint"
+        )
+        chosen = ["preset:cjk_ability_academy_lineage_system"]
+        prompt = ". ".join(
+            [
+                "Cinematic original adult ability academy practical trial with rivalry, one visible safety consequence, and no readable insignia",
+                *(group["slots"][slot]["label_en"] for slot in group["required_slots"]),
+            ]
+        ) + "."
+        valid = audit_composed_prompt.audit_composed_prompt(
+            pack,
+            {
+                "pack_id": pack["pack_id"],
+                "prompt_en": prompt,
+                "negative_en": pack["negative_en"],
+                "chosen_candidate_ids": chosen,
+                "composer": "agent",
+            },
+        )
+        valid_checks = {failure["check"] for failure in valid["failures"]}
+        self.assertNotIn("mandatory_intent", valid_checks)
+        self.assertNotIn("atomic_scene_contract", valid_checks)
+        self.assertNotIn("evidence_budget", valid_checks)
+
+        over_budget = copy.deepcopy(chosen)
+        for slot in pack["evidence_budget"]["world_clue_slots"]:
+            if slot == "prop":
+                continue
+            selected = pack["slots"].get(slot, {}).get("selected")
+            if selected and selected not in over_budget:
+                over_budget.append(selected)
+        over_budget_audit = audit_composed_prompt.audit_composed_prompt(
+            pack,
+            {
+                "pack_id": pack["pack_id"],
+                "prompt_en": prompt,
+                "negative_en": pack["negative_en"],
+                "chosen_candidate_ids": over_budget,
+                "composer": "agent",
+            },
+        )
+        self.assertIn("evidence_budget", {failure["check"] for failure in over_budget_audit["failures"]})
+
+        cross_scene_subject = pack["slots"]["subject"]["candidates"][0]["id"]
+        cross_scene = list(chosen)
+        cross_scene.append(cross_scene_subject)
+        cross_scene_audit = audit_composed_prompt.audit_composed_prompt(
+            pack,
+            {
+                "pack_id": pack["pack_id"],
+                "prompt_en": prompt,
+                "negative_en": pack["negative_en"],
+                "chosen_candidate_ids": cross_scene,
+                "composer": "agent",
+            },
+        )
+        self.assertIn("atomic_scene_contract", {failure["check"] for failure in cross_scene_audit["failures"]})
+
+    def test_all_research_routes_have_materialized_scene_expression_contracts(self):
+        inventory = audit_scene_expression.build_inventory(
+            "2026-08-07T00:00:00+09:00",
+            current=True,
+        )
+        self.assertEqual(inventory["summary"]["route_count"], 88)
+        self.assertEqual(inventory["summary"]["pass_count"], 88)
+        self.assertEqual(inventory["summary"]["fail_count"], 0)
+
+        data = prompt_generator.load_json(TAGS_PATH)
+        data[prompt_generator.QUALITY_LAYERS_DATA_KEY] = prompt_generator.load_quality_layers(
+            QUALITY_LAYERS_PATH
+        )
+        source_specs = (
+            (RESEARCH_EXTENSION_PATH, "evidence_documentary"),
+            (SUBCULTURE_EXTENSION_PATH, "specialty_practice"),
+            (WORLDBUILDING_EXTENSION_PATH, "narrative_world"),
+            (CJK_WORLDBUILDING_EXTENSION_PATH, "narrative_world"),
+        )
+        preset_ids: list[tuple[str, str]] = []
+        for path, route_type in source_specs:
+            source = json.loads(path.read_text(encoding="utf-8"))
+            preset_ids.extend((preset["id"], route_type) for preset in source["presets"])
+        self.assertEqual(len(preset_ids), 88)
+
+        presets = {preset["id"]: preset for preset in data["presets"]}
+        evidence_rows = [
+            json.loads(line)
+            for line in RESEARCH_EVIDENCE_PATH.read_text(encoding="utf-8").splitlines()
+            if line.strip()
+        ]
+        evidence_route_ids = {
+            str(candidate_id)
+            for row in evidence_rows
+            for candidate_id in [row.get("topic_id"), *(row.get("candidate_ids") or [])]
+            if str(candidate_id or "")
+        }
+        for preset_id, route_type in preset_ids:
+            preset = presets[preset_id]
+            self.assertIn(preset_id, evidence_route_ids)
+            self.assertIsInstance(preset.get("render_contract"), dict, preset_id)
+            self.assertTrue(preset["render_contract"].get("topic_intents"), preset_id)
+            blueprints = prompt_generator.render_contract_resolved_scene_blueprints(data, preset)
+            expected_minimum = 4 if route_type == "narrative_world" else 3
+            self.assertGreaterEqual(len(blueprints), expected_minimum, preset_id)
+            self.assertTrue(
+                all(
+                    len(set(blueprint["diegetic_visual_provenance"])) == 1
+                    for blueprint in blueprints
+                ),
+                preset_id,
+            )
+            selected_ids = {
+                prompt_generator.candidate_pack_select_scene_blueprint(
+                    {"provenance": {"seed": seed}},
+                    preset,
+                    blueprints,
+                )["id"]
+                for seed in range(1, 65)
+            }
+            self.assertEqual(selected_ids, {blueprint["id"] for blueprint in blueprints}, preset_id)
+
+        for scene_path in (
+            SCENE_EXPRESSION_EXTENSION_PATH,
+            SCENE_EXPRESSION_WORLDBUILDING_PATH,
+            SCENE_EXPRESSION_CJK_PATH,
+        ):
+            scene_text = scene_path.read_text(encoding="utf-8").lower()
+            for protected_reference in (
+                "omniscient reader",
+                "전지적 독자",
+                "주신 공간",
+                "主神空间",
+                "轮回者",
+                "pokemon",
+                "yu-gi-oh",
+                "final fantasy",
+                "ultraman",
+                "gundam",
+                "hololive",
+            ):
+                self.assertNotIn(protected_reference, scene_text, scene_path.name)
+
+    def test_every_research_route_candidate_pack_selects_one_fail_closed_scene(self):
+        data = prompt_generator.load_json(TAGS_PATH)
+        data[prompt_generator.QUALITY_LAYERS_DATA_KEY] = prompt_generator.load_quality_layers(
+            QUALITY_LAYERS_PATH
+        )
+        preset_ids = []
+        for path in (
+            RESEARCH_EXTENSION_PATH,
+            SUBCULTURE_EXTENSION_PATH,
+            WORLDBUILDING_EXTENSION_PATH,
+            CJK_WORLDBUILDING_EXTENSION_PATH,
+        ):
+            source = json.loads(path.read_text(encoding="utf-8"))
+            preset_ids.extend(preset["id"] for preset in source["presets"])
+
+        for index, preset_id in enumerate(preset_ids, start=1):
+            result = prompt_generator.generate_once(
+                data,
+                __import__("random").Random(920000 + index),
+                preset_id,
+                ["en"],
+                True,
+                12,
+                True,
+                detail_level="detailed",
+                selection_mode="rule",
+                seed=920000 + index,
+            )
+            pack = prompt_generator.build_candidate_pack(result, data)
+            self.assertTrue(pack["scene_contract"]["enabled"], preset_id)
+            self.assertTrue(pack["render_contract"]["enabled"], preset_id)
+            self.assertTrue(pack["render_contract"]["topic_intents"], preset_id)
+            self.assertEqual(pack["render_contract"]["evidence_route_id"], preset_id)
+            self.assertTrue(pack["evidence_budget"]["enabled"], preset_id)
+            self.assertEqual(
+                len(set(pack["render_contract"]["selected_scene"]["diegetic_visual_provenance"])),
+                1,
+                preset_id,
+            )
+            group = next(
+                group
+                for group in pack["scene_contract"]["groups"]
+                if group.get("source") == "selected_render_blueprint"
+            )
+            self.assertEqual(set(group["required_slots"]), {"subject", "action", "location", "prop"})
+            chosen = [f"preset:{preset_id}"]
+            prompt_parts = [pack["render_contract"]["topic_intents"][0]["audit_terms"][0]]
+            for slot in group["required_slots"]:
+                prompt_parts.append(group["slots"][slot]["label_en"])
+            prompt = ". ".join(prompt_parts) + ". Shared light, foreground occlusion, creased material, caught before the consequence settles."
+            audit = audit_composed_prompt.audit_composed_prompt(
+                pack,
+                {
+                    "pack_id": pack["pack_id"],
+                    "prompt_en": prompt,
+                    "negative_en": pack["negative_en"],
+                    "chosen_candidate_ids": chosen,
+                    "composer": "agent",
+                },
+            )
+            self.assertEqual(audit["status"], "pass", (preset_id, audit))
+            candidate_total = len(pack["presets"]) + sum(
+                len(slot_payload["candidates"])
+                for slot_payload in pack["slots"].values()
+            )
+            self.assertLessEqual(
+                candidate_total,
+                prompt_generator.CANDIDATE_PACK_TOTAL_CANDIDATE_LIMIT,
+                preset_id,
+            )
+            self.assertEqual(pack["pack_id"], audit_composed_prompt.computed_pack_id(pack), preset_id)
+            self.assertEqual(
+                pack["safety"],
+                {
+                    "mode": "automatic",
+                    "evaluation_requested": False,
+                    "status": "pass",
+                    "requires_user_approval": False,
+                    "items": [],
+                },
+                preset_id,
+            )
+
+    def test_candidate_pack_output_file_preserves_canonical_integrity(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            output_path = Path(temp_dir) / "candidate-pack.json"
+            stream = io.StringIO()
+            with redirect_stdout(stream):
+                exit_code = generate_photo_prompt.main(
+                    [
+                        "--preset",
+                        "cjk_status_system_quest_world",
+                        "--selection-mode",
+                        "rule",
+                        "--seed",
+                        "3",
+                        "--emit-candidate-pack",
+                        "--output-file",
+                        str(output_path),
+                    ]
+                )
+            self.assertEqual(exit_code, 0)
+            self.assertEqual(stream.getvalue(), "")
+            raw = output_path.read_bytes()
+            self.assertTrue(raw.endswith(b"\n"))
+            pack = json.loads(raw)[0]
+            self.assertEqual(pack["pack_id"], audit_composed_prompt.computed_pack_id(pack))
+
     def test_subculture_extension_override_contract_rejects_unknown_metadata(self):
         raw_tags = json.loads(TAGS_PATH.read_text(encoding="utf-8"))
         invalid = {
@@ -1758,10 +2181,10 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             selected = {
                 slot: next(
                     candidate
-                    for candidate in payload.get("candidates", [])
+                    for candidate in pack["slots"][slot].get("candidates", [])
                     if candidate.get("selected_by_sampler")
                 )
-                for slot, payload in pack["slots"].items()
+                for slot in ("subject", "action", "location", "surface_material")
             }
             marker = natural_markers[selected["subject"]["entry_id"]]
             for slot in ("action", "location", "surface_material"):

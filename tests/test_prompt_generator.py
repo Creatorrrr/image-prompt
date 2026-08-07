@@ -6161,6 +6161,8 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "quality_profile",
                 "concept_axes",
                 "scene_contract",
+                "render_contract",
+                "evidence_budget",
                 "photographic_integration",
                 "visual_proposition",
                 "photographic_craft",
@@ -6182,6 +6184,8 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             },
             set(pack.keys()),
         )
+        self.assertFalse(pack["render_contract"]["enabled"])
+        self.assertFalse(pack["evidence_budget"]["enabled"])
         intent_texts = {item["text"] for item in pack["mandatory_intents"]}
         self.assertTrue({"카리나", "메이드", "드래곤", "고양이손", "흡혈귀"} <= intent_texts)
         uncovered = {item["text"] for item in pack["uncovered_intents"]}
