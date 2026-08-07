@@ -1,254 +1,201 @@
-# Photo Prompt Subculture Research Expansion Goal
+# Photo Prompt Deep Worldbuilding Subculture Expansion Goal
 
-- 작성: 2026-08-06 KST
+- 작성: 2026-08-07 10:00 KST
 - 상태: complete
 - 대상: `skills/photo-prompt-image-generator`
-- 권위 문서: 이 파일이 이번 장기 목표의 범위, 완료 기준, 재시도 한계, 중단 조건을 정의한다.
+- 기준 ref: `main@b2cb76d`
+- 권위 문서: 이 파일이 이번 장기 목표의 범위, 진척 계약, 완료 기준, 검증 예산과 중단 조건을 정의한다.
+- 선행 완료 목표: `docs/passed-reports/2026-08-07-subculture-taxonomy-on-demand-routing.md`
 
 ## 1. 목표와 실제 산출물
 
-18개 서브컬처 주제를 신뢰할 수 있는 출처로 조사하고, 조사 결과를 사진 프롬프트 생성기의 증거 원장·taxonomy·candidate-pack·semantic retrieval에 실제 반영한다. 사용자가 한국어 또는 영어로 주제를 명시하면 해당 문화의 참여 방식, 제작 과정, 장소, 물성, 사회적 맥락이 응집력 있는 후보로 노출되어야 하며, 명시하지 않은 일반 프롬프트에는 서브컬처 표지가 새어 나오지 않아야 한다.
+18개 세계관 중심 서브컬처를 신뢰할 수 있는 출처로 모두 조사하고, 조사 결과를 사진 프롬프트 생성기의 evidence ledger, 재사용 가능한 taxonomy, candidate pack, bilingual semantic retrieval에 실제 반영한다.
 
-실제 산출물은 다음과 같다.
+완료 후 사용자는 한국어 또는 영어로 해당 주제를 요청해 단순한 대표 의상이나 소품이 아니라, 존재 규칙·역사·제도·자원·의례·언어·기록 중 최소 세 축이 사진 속 물질적 증거로 연결된 오리지널 세계 장면을 생성할 수 있어야 한다. 일반 요청에는 새 세계관 표지가 자동으로 새어 나오지 않아야 한다.
 
-1. 18개 주제를 모두 포함하는 출처 기반 research matrix와 추상화된 `research_evidence.jsonl` 레코드.
-2. 일회성 인물 프리셋의 나열이 아니라 여러 주제가 공유할 수 있는 제작·공연·팬덤·게임·차량 계열의 재사용 가능한 slot/facet/family 데이터.
-3. 각 주제를 명시적으로 호출할 수 있는 gated preset 또는 동등한 on-demand route와 candidate pack.
-4. 한국어·영어 자연어 표현을 고정한 semantic retrieval holdout과 재생성된 semantic index.
-5. 기존 일반·안전·테마 누출 계약을 보존한다는 회귀 증거와 독립 검토 결과.
+주요 제품 산출물은 다음과 같다.
 
-## 2. 범위: 조사할 18개 주제
+1. 18개 주제의 출처·세계 규칙·시각적 증거·문화적 경계가 추적 가능한 `research_evidence.jsonl` 확장.
+2. 기존 138 KB subculture extension과 분리된 세계관 전용 additive taxonomy 파일. 기본안은 `assets/photo_prompt_worldbuilding_extension.json`이며, Stage 1에서 기존 loader 계약으로 표현할 수 없다는 직접 증거가 있을 때만 최소 schema 변경을 허용한다.
+3. 각 주제의 명시적 on-demand route와 candidate pack. 장면에는 `subject/action/location/prop`과 함께 최소 세 개의 세계 작동 증거가 포함된다.
+4. 구현 전에 동결한 한국어·영어 자연어 retrieval holdout과 승인된 공개 taxonomy 문자열로 재생성한 semantic index.
+5. 기존 일반화·안전 기본 통과·theme leakage·golden output 계약을 보존하는 직접 검증 결과.
 
-### A. 팬 창작·출판·가상 창작
+## 2. 조사하고 반영할 18개 주제
 
-1. 코스프레 제작·수선·행사 참여
-2. 동인지·Artist Alley·팬 창작 판매 공간
-3. zine·risograph·DIY 출판
-4. VTuber·virtual creator 제작 환경
-5. 아이돌·애니메이션 팬덤의 물질문화
+1. 디제틱 LARP·몰입형 역할극 문화
+2. Conlang·창작 문자·Conculture
+3. Conworld 지도제작·상상 지리학
+4. Speculative Evolution·외계 생태계 공동창작
+5. 협업형 이상현상 기록물·Unfiction·아카이브 호러
+6. MUD·BBS·텍스트 기반 영속 세계
+7. 시민 시스템 중심 Solarpunk
+8. Demoscene·Sizecoding·절차적 우주
+9. 오리지널 종족·Adoptable·Art RPG 공동체
+10. 현대 오컬트 출판·의례 매체 문화
+11. 디지털 폐허·Net.art·GeoCities 고고학
+12. Retrofuture 인프라·미래 고고학·가상 관료제
+13. More-than-human·다종 공동체 세계관
+14. Cryptid·지역 전설·소도시 민속 생태계
+15. Mail Art·비밀 통신망·가상 우편 국가
+16. Dungeon Synth·Fantasy Synth 마이크로레이블
+17. Afrofuturist 세계 만들기
+18. Indigenous Futurisms
 
-### B. 모형·커스터마이징·메이커 문화
+## 3. 범위와 비목표
 
-6. 플라모델·garage kit·kitbashing
-7. 미니어처·diorama
-8. 인형·plush·toy customization
-9. fursuit·mascot suit fabrication
-10. custom PC·mechanical keyboard·cyberdeck
+### 범위
 
-### C. 패션·공연·음악 현장
+- 박물관·도서관·문화기관·공식 협회·창작자 또는 공동체 운영 자료·학술 원문 등 1차 또는 권위 출처를 우선한다.
+- 각 주제마다 최소 2개의 독립 출처, 최소 3개의 세계 작동 규칙, 최소 4개의 사진 가능한 증거, 최소 2개의 stereotype/IP 과적합 방지 경계를 기록한다.
+- 세계의 깊이는 `ontology / historical layer / institution / faction relation / resource economy / ritual-taboo / language-script / knowledge authority / evidence reliability` 중 선택하고, 프롬프트에는 설명문이 아니라 도구·기록·공간·행동·마모 같은 관찰 가능한 단서로 번역한다.
+- 실제 창작 공동체를 기록하는 `practice documentary`와 그 공동체가 만드는 오리지널 세계 내부의 `diegetic manifestation`을 구분한다. 이번 필수 결과는 각 주제에서 최소 하나의 diegetic 또는 world-system manifestation이 실제 candidate pack으로 도달 가능해야 한다.
+- Afrofuturism과 Indigenous Futurisms는 자동 혼합 스타일이 아니라 출처·문화 범위가 명시된 curated on-demand route로만 둔다. 현대 오컬트는 역사적 자료 또는 명시적 허구를 기본으로 하며 살아 있는 종교의 비공개·신성·제한 지식을 수집하지 않는다.
+- 이전에 승인된 범위에 따라 semantic index 재생성을 위해 공개·추상화된 taxonomy 문자열만 Gemini로 전송할 수 있다. 원문 자료, 개인정보, 비공개 커뮤니티 내용, 이미지, 실행 로그는 전송하지 않는다.
 
-11. Lolita coordinate culture
-12. Decora·Gyaru·Heisei/Y2K street culture
-13. Visual Kei·live-house
-14. Goth·Cybergoth·New Romantic·rave
-15. DIY punk·noise·shoegaze
+### 비목표
 
-### D. 놀이·차량 문화
+- 특정 프랜차이즈, 캐릭터, 실존 인물, 단체 로고 또는 폐쇄형 종족 디자인을 복제하는 데이터 구축.
+- 실제 음모론을 사실로 제시하거나 극단주의 상징·위험한 의례 지침·정신건강 관련 공동체를 자동 프리셋화하기.
+- 18개 영역을 백과사전처럼 완전하게 수집하거나 지역·시대 변형을 모두 대표한다고 주장하기.
+- 이미지 생성·visual A/B, 배포, 커밋, push, PR. 사용자가 별도로 요청할 때만 수행한다.
+- 테스트, 문서, schema, semantic index만 늘어난 상태를 목표 완료로 간주하기.
 
-16. retro gaming·arcade·LAN·speedrun
-17. TRPG·miniature wargaming
-18. lowrider·tuner·itasha
+## 4. 진척 계약
 
-## 3. 설계 원칙과 불변 조건
+- 진척으로 인정: evidence가 runtime candidate ID에 연결됨, 새 worldbuilding taxonomy가 loader에서 사용됨, 주제 route가 실제 candidate pack을 생성함, 고정 자연어가 실제 route를 발견함, 또는 제품 범위를 구속하는 구현 결정이 직접 증거와 함께 확정됨.
+- 진척으로 인정하지 않음: 출처 링크만 모음, 계획·문서·테스트·fixture·검증기만 추가함, 생성 불가능한 고립 vocabulary를 추가함, 기대값을 결과에 맞춰 완화함.
+- Stage 1 이후 각 checkpoint는 실제 데이터/동작 delta 또는 측정된 candidate 결과를 남긴다. 검증-only checkpoint를 두 번 연속 만들지 않는다.
+- 검증-only 작업 상한: 변경 중 focused 검증, Stage 4의 index/retrieval 검증, Stage 6의 닫힌 최종 회귀·감사 한 번. 새 평가 framework는 기존 경로로 필수 기준을 검증할 수 없다는 직접 증거가 있을 때만 허용한다.
+- 실행 지식 작업 상한: 시작·재개 시 metadata 우선으로 관련 보고서 전문 최대 5건, material failure당 통합 보고서 1개, 모든 기준 통과 뒤 closed qualification을 만족하는 성공 보고서 기본 최대 1개. 보고서는 별도 checkpoint나 진척이 아니다.
+- 자동 목표 상향은 비활성이다.
 
-- 출처는 박물관·도서관·협회·행사 운영 주체·제작 도구의 공식 문서·학술 자료 등 1차 또는 권위 자료를 우선한다. 커뮤니티 관행은 복수 출처로 교차 확인한다.
-- 저장하는 것은 출처 URL, 확인 일자, 추상화된 관찰, 설계 결정뿐이다. 원문 프롬프트·원본 이미지·긴 인용문·개인정보·비공개 커뮤니티 자료는 저장하지 않는다.
-- 먼저 기존 slot과 facet을 재사용하고, 여러 주제에서 반복되는 실제 구분을 표현할 수 없을 때만 새 항목을 추가한다.
-- 고유명사, 실제 인물, 상표·로고, 특정 저작권 캐릭터의 재현을 taxonomy 핵심으로 삼지 않는다. 시각 언어는 일반화된 제작법·장소·물성·참여 역할로 기술한다.
-- 모든 신규 서브컬처 route는 명시적 요청 또는 semantic match에서만 활성화한다. 일반 프롬프트의 자동 선택 pool에는 넣지 않는다.
-- 성인·연령 불명 인물은 중립적으로 다루며, 미성년자 성적 대상화, 페티시화, 문화적 조롱을 암시하는 결합은 만들지 않는다.
-- 안전 계약은 현재의 단순 기본 통과 구조를 유지한다. 사용자가 별도 안전 평가를 요청하지 않는 한 새 복잡한 평가 workflow를 만들지 않되, 데이터 자체의 명백한 금지 결합과 누출 회귀는 검증한다.
-- semantic index sharding은 저장 형식이며 retrieval 의미론을 바꾸지 않는다. 재생성 전후에 manifest/hash와 고정 case를 확인한다.
+## 5. 기준선과 적용할 실행 지식
 
-## 4. 현재 기준선과 승인
+### 현재 기준선
 
-- 현재 연구 확장: preset 17개, slot 24개, evidence row 20개.
-- 현재 관련 데이터는 `photo_prompt_research_extension.json`에 additive merge되고, semantic index는 생성 산출물이다.
-- 기존 일반화·frozen·domain·semantic holdout은 기대값을 결과에 맞춰 약화하지 않는다.
-- 과거 자연어 semantic 검증에서 정확한 preset 명칭이 아닌 자유 표현의 라우팅 공백이 관찰되었으므로, 이번에는 주제명 일치만이 아니라 한국어·영어 자연 paraphrase를 먼저 고정한다.
-- 사용자는 현재 대화에서 taxonomy text의 Gemini 외부 전송과 semantic index 재생성을 승인했다. 공개·추상화된 taxonomy 문자열에만 사용하고 원문 자료나 민감정보는 전송하지 않는다.
-- 이미지 API 생성과 원격 publication은 이번 완료 기준에 포함하지 않는다.
+- branch/ref: clean `main@b2cb76d`
+- 기존 subculture extension: preset 33개, 재사용 slot entry 179개, 138,404 bytes
+- evidence ledger: 66행
+- 기존 subculture bilingual holdout: 70행
+- semantic index: 5,697 entry, 16 shard
+- 안전 계약: 사용자가 안전 평가를 별도 요청하지 않는 한 단순 automatic pass
 
-## 5. 실행 단계
+### 적용할 과거 보고서
 
-### Stage 1 — 기준선·research protocol·고정 case 확정 (`completed`)
+- `docs/passed-reports/2026-08-07-subculture-taxonomy-on-demand-routing.md`
+  - 별도 additive extension, typed domain, canonical bilingual scoped route, frozen holdout, generic leakage 0 방식을 재사용한다.
+  - practice 이름의 flat preset 나열보다 shared family/slot과 photographable workflow를 우선한다.
+- `docs/failed-reports/2026-08-07-semantic-index-batch-response.md`
+  - 현재 Gemini `embed_content` 경로는 multi-input cardinality가 검증되지 않았으므로 `--batch-size 1`과 cache/checkpoint를 유지한다.
+- `docs/failed-reports/2026-08-07-subculture-surface-applicability-golden-drift.md`
+  - shared `human` subject category나 global optional pool을 넓히지 않는다. 새 세계관 domain에만 narrow override를 사용해 RNG와 golden output을 보존한다.
 
-- 기존 taxonomy와 18개 주제의 중복/공백을 측정한다.
-- 각 주제에 대해 `participation role / activity / setting / object / material / process state / social context / visual boundary`를 기록하는 공통 research matrix를 고정한다.
-- 구현 결과를 보기 전에 주제별 한국어·영어 자연어 retrieval case와 허용되는 target family를 작성한다.
-- 제품 구속 결정: 기존 extension을 무한히 키우지 않고 별도 subculture extension으로 분리할지, 기존 loader를 재사용할지 저장 크기와 merge 계약을 근거로 확정한다.
+현재 소스와 직접 측정한 증거가 이 보고서보다 우선한다. integration 또는 SDK가 바뀌어 교훈이 무효화되면 해당 lifecycle과 상호 링크를 같은 변경에서 갱신한다.
 
-### Stage 2 — 18개 주제 병렬 조사와 증거 데이터 반영 (`completed`)
+## 6. 실행 단계
 
-- 주제를 6개 연구 묶음으로 나누어 독립적으로 조사하고, 서로 겹치는 표현과 문화별 고유 경계를 교차 검토한다.
-- 각 주제마다 최소 2개의 독립적인 권위 출처를 찾고, 이미지 생성에 유용한 추상 관찰과 피해야 할 과적합 단서를 남긴다.
-- 검증된 관찰을 `research_evidence.jsonl`에 append-only로 반영한다.
-- 제품 delta: 이후 taxonomy 결정이 출처와 주제에 역추적 가능해진다.
+| 단계 | 실제 산출물 또는 동작 변화 | 최소 직접 검증 | 완료 조건 |
+|---|---|---|---|
+| 1. 기준선·world contract·동결 case | 기존 schema로 세계 규칙을 photographable slot/facet으로 노출할 수 있는지 확인하고, 별도 extension/typed-domain 설계를 확정한다. 각 주제당 한국어 2개·영어 2개의 preset-free 자연어 case, 총 72개를 구현 전에 동결한다. | JSONL parse/schema 검사, 각 case의 사전 target route/family가 유일함, 기존 18개 주제와 신규 18개가 ID상 충돌하지 않음 | runtime 구현을 보지 않고 72개 기대가 고정되고 최소 schema 결정이 기록됨 |
+| 2. 18개 병렬 조사와 evidence 반영 | 8개 독립 연구 묶음으로 모든 주제의 권위 출처와 world mechanism을 조사하고, 원문을 복사하지 않은 추상 evidence row를 ledger에 append한다. | 주제별 독립 URL 수, observation/visual boundary/candidate ID 참조 검사 | 18/18 주제가 출처 2개 이상과 필수 research matrix를 충족하며 evidence가 runtime ID로 추적 가능함 |
+| 3. 세계관 taxonomy와 on-demand route 구현 | 별도 worldbuilding extension, shared families/slots/facets, loader merge, 주제별 route를 구현한다. 세계 규칙은 설명 문구가 아니라 최소 세 개의 관찰 가능한 slot 증거로 연결한다. | dictionary validator와 주제별 direct route candidate pack 생성 | 18/18 route가 필수 축을 노출하고 각 주제에서 서로 다른 두 scene manifestation이 고정 seed로 도달 가능함 |
+| 4. bilingual semantic retrieval과 index 반영 | 72개 frozen case를 active retrieval 경로에 연결하고, 승인된 taxonomy text만 사용해 cache 재사용·batch 1로 semantic index를 재생성한다. | manifest/hash/shard/order check와 동일한 72개 real retrieval | 기대값 완화 없이 72/72가 의도 route를 찾고 index 무결성이 통과함 |
+| 5. 과적합·문화 경계·누출 수리 | 주제별 pack을 실제 생성해 세계 규칙 응집성, IP/브랜드 의존, 문화 flattening, generic leakage를 검사하고 데이터/라우팅 원인을 최대 2회 수리한다. | 주제별 2개 fixed seed pack, 기존 generic/K-style/fantasy/cosplay/occupation negative controls, 기존 frozen/public/domain/retrieval focused checks | worldbuilding route는 on-demand로만 작동하고 측정된 generic leakage가 0이며 culturally curated route의 provenance guard가 유지됨 |
+| 6. 닫힌 최종 자격 판정 | validator, index check, contradiction/applicability, 기존 회귀 suite와 전체 unit suite를 닫힌 순서로 한 번 실행하고, 독립 서브에이전트가 기존 완료 기준만 재검토한다. | 명령별 exit/result와 criterion matrix | 아래 8개 완료 기준이 모두 pass이며 독립 감사에 미해결 중대 결함이 없음 |
 
-### Stage 3 — 재사용 가능한 taxonomy와 gated route 구현 (`completed`)
+## 7. 최종 완료 기준
 
-- 공통 제작 단계, 행사/공연 단계, 팬 참여 관계, 매체·재료, 장소, 커스터마이징 상태를 재사용 가능한 slot/facet/family로 구현한다.
-- 18개 주제 각각에 최소 하나의 명시적 on-demand route를 제공하되, 표현력이 같은 기존 preset은 확장하고 근접 중복 preset은 만들지 않는다.
-- subject/action/location/prop/surface가 한 장면으로 결합되도록 required slot과 applicability를 설정한다.
-- 제품 delta: 모든 주제에서 문화적으로 구체적이면서 사진적으로 실행 가능한 candidate pack을 만들 수 있다.
+1. 18개 주제 모두 최소 2개의 독립 권위 출처, 세계 작동 규칙 3개, 사진 가능한 증거 4개, 과적합·문화 경계 2개 이상이 추상 evidence로 연결된다.
+2. 18개 주제 모두 명시적 on-demand route를 가지며 실제 candidate pack에 `subject/action/location/prop`과 최소 세 개의 세계 작동 증거가 포함된다.
+3. 각 주제에서 두 개 이상의 서로 다른 scene manifestation이 도달 가능하고, 결과가 한 개의 상징적 소품이나 분위기 형용사에 의존하지 않는다.
+4. 신규 데이터는 shared family/slot/facet 중심이며 특정 IP·브랜드·실존 인물·실제 폐쇄형 종족에 의존하지 않는다. Afrofuturism·Indigenous Futurisms·현대 오컬트의 curated provenance 경계가 구조적으로 유지된다.
+5. 구현 전 동결한 한국어·영어 72개 자연어 case가 기대 route를 72/72 발견하며 실패 기대값을 사후 삭제·완화하지 않는다.
+6. 신규 route는 명시적 요청에서만 활성화되고 기존 generic/K-style/fantasy/cosplay/occupation negative control의 측정된 theme leakage가 0이다.
+7. dictionary, semantic manifest/hash/shard/order, candidate-pack integrity, contradiction/applicability, 기존 public/frozen/domain/retrieval holdout과 전체 unit suite가 통과한다.
+8. 한 번의 독립 최종 감사가 18개 coverage, 출처 추적성, world-depth 표현, 과적합·문화 경계, 누출·회귀 증거를 재확인하고 미해결 중대 결함을 찾지 않는다.
 
-### Stage 4 — bilingual semantic retrieval과 index 재생성 (`completed`)
+## 8. 검증 수준과 재시도 예산
 
-- Stage 1에서 동결한 한국어·영어 자연어 case를 active holdout에 추가한다.
-- Gemini embedding으로 semantic index를 재생성하고 monolith/manifest/shard 무결성 및 deterministic ordering을 확인한다.
-- 실패 case는 기대값을 바꾸지 않고 aliases, embedding text, family routing, slot coverage 순으로 수정한다.
-- 제품 delta: exact preset ID를 모르는 사용자도 명시한 주제의 올바른 route를 발견할 수 있다.
+- 위험 수준: 중간. 로컬 데이터·라우팅 변경이며 배포나 외부 사용자 상태 변경은 없지만, semantic retrieval·기존 deterministic output·문화적 표현에 회귀 위험이 있다.
+- 반복 중 focused 검증: 변경한 extension/loader/route와 관련된 validator, direct generation, frozen 72개 retrieval만 실행한다.
+- 최종 검증: Stage 6에서 기존 전체 회귀와 독립 감사를 한 번 수행한다. 독립 감사는 새 성공 기준을 추가하거나 제품을 재설계하지 않는다.
+- 동일 근본 원인의 데이터/라우팅 수리는 최대 2회다. 두 번 실패하면 기준을 약화하거나 verifier를 확장하지 않고 material failure를 기록해 blocker와 가장 작은 선택지를 보고한다.
+- 네트워크 또는 Gemini 일시 오류는 한 번 재시도한다. 반복되면 로컬 taxonomy 구현을 보존하고 external retrieval gate만 분리해 보고한다.
+- semantic index는 현재 검증된 `--batch-size 1`을 사용한다. 변경하려면 별도 cardinality probe의 직접 성공 증거가 필요하다.
+- 실제 렌더 품질은 이번 목표에서 주장하지 않는다. 구조적 prompt/candidate 품질과 semantic 접근성까지만 자격을 부여한다.
 
-### Stage 5 — candidate pack 품질·누출·회귀 수리 (`completed`)
+## 9. 중단하고 질문할 조건
 
-- 각 주제의 direct route와 bilingual semantic route에서 candidate pack을 생성해 필수 slot, coherence, conflict, applicability, IP/로고 과적합을 검사한다.
-- 일반 portrait, 기존 cosplay/fantasy/K-style, 직업, 다큐멘터리 고정 case에서 신규 서브컬처 표지 누출이 0인지 확인한다.
-- 발견된 실패는 최대 2회의 원인별 수리 round 안에서 데이터나 라우팅을 고친다.
-- 제품 delta: 주제별 표현력과 기존 일반화 보존을 동시에 만족하는 qualified 데이터가 남는다.
+- API credential이 없거나 이전 승인 범위를 넘어서는 원문·비공개 자료·이미지의 외부 전송이 필요할 때.
+- 기존 frozen 기대를 약화해야만 통과할 수 있거나 generic 기본 선택 의미를 바꿔야 할 때.
+- 특정 문화 공동체의 비공개·성스러운·접근 제한 자료 없이는 구현할 수 없을 때. 해당 주제는 공개 creator/community 자료로 축소할 선택지를 먼저 제시한다.
+- 유료 서비스, 이미지 대량 생성, 파괴적 변경, 배포, commit/push/PR 또는 실질적 범위 확대가 필요할 때.
+- 같은 원인의 수리 2회와 외부 오류 1회 재시도 후에도 필수 기준이 실패할 때.
 
-### Stage 6 — 닫힌 자격 판정과 독립 감사 (`completed`)
+## 10. 실행 지식 계약과 진행 로그
 
-- dictionary validator, focused tests, frozen/generalization/domain/semantic gate, 전체 unit suite를 한 차례 닫힌 순서로 실행한다.
-- 독립 서브에이전트가 출처 추적성, 18개 coverage, 누출 방지, 테스트 증거를 한 번 감사한다. 이 감사는 새로운 완료 기준을 추가하지 않는다.
-- 모든 기준이 직접 증거로 충족된 경우에만 목표를 완료로 표시한다.
+- 시작·재개 시 `docs/failed-reports/`와 `docs/passed-reports/`의 파일명·header metadata를 먼저 검색하고 exact path/module/environment/error/approach match를 우선한다. non-superseded와 최신 항목을 우선하고 전문은 기본 최대 5건만 읽는다. 현재 소스와 직접 증거가 항상 우선한다.
+- 보고서나 로그를 쓰기 전에 시스템 날짜·시간을 얻고 credential, token, secret, 민감 endpoint, 고객·개인정보를 제거한다. 원문 자료를 저장하지 않고 sanitized 결론과 공개 URL만 남긴다.
+- 완료 기준을 무효화하거나 rollback·redesign·blocker를 만드는 material failure는 재시도 전에 기존 matching report를 갱신하거나 `docs/failed-reports/YYYY-MM-DD-<slug>.md`에 통합한다. transient typo는 기록하지 않는다.
+- 모든 완료 기준이 직접 증거로 통과한 뒤에만 성공 보고서를 고려한다. 성공은 `material failure 해결`, `고정 조건에서 기본 접근 실패 후 비자명한 대안`, `현재 코드에서 값싸게 복구할 수 없는 다단계 재현 절차` 중 하나를 명시적으로 충족할 때만 목표당 기본 최대 1개 작성한다. 단순 테스트 통과나 편리한 명령은 성공 보고서가 아니다.
+- failure 해결, 성공 무효화, supersession이 발생하면 양방향 lifecycle 링크를 같은 변경에서 갱신한다. 빈 optional section은 제거한다.
+- 진행 로그 형식: `product delta -> direct evidence -> remaining product gap -> blocker -> execution-knowledge paths`.
 
-## 6. 완료 기준
+### 2026-08-07 / 목표 초기화
 
-1. 18개 주제 각각에 최소 2개의 독립적인 권위 출처와 추상화된 설계 관찰이 연결되고 evidence contract를 통과한다.
-2. 18개 주제 모두 명시적인 direct route를 가지며 candidate pack에 일관된 subject/action/location/prop 또는 동등한 필수 축이 포함된다.
-3. 신규 데이터가 재사용 가능한 공통 family/slot/facet을 중심으로 설계되고, 이름만 다른 근접 중복 preset과 특정 IP·실존 인물·브랜드 의존 항목이 없다.
-4. 구현 전에 동결한 한국어·영어 자연어 case가 기대 family/route를 발견하며, 실패 기대값을 사후 완화하지 않는다.
-5. 신규 route는 on-demand로만 활성화되고 기존 generic/K-style/fantasy/cosplay 및 일반 주제 고정 case의 theme leakage가 0이다.
-6. dictionary validator, semantic index metadata/hash/shard integrity, contradiction/applicability 및 candidate-pack contract가 모두 통과한다.
-7. 기존 public generalization, frozen holdout, domain holdout, 기존 semantic holdout과 전체 unit suite가 회귀 없이 통과한다.
-8. 최종 독립 감사에서 18개 coverage·출처 추적성·과적합 방지·검증 증거에 미해결 중대 결함이 없다.
+- product delta: 완료된 기존 서브컬처 실천 taxonomy 목표를 후속 세계관 심층 목표로 교체하고 18개 필수 주제·world-depth 기준·72개 사전 동결 retrieval 계약을 확정했다.
+- direct evidence: clean `main@b2cb76d`; 기존 extension 33 preset/179 slot entry/138,404 bytes; evidence 66행; semantic index 5,697 entry/16 shard.
+- remaining product gap: 신규 research evidence, 별도 worldbuilding extension, 18개 executable route, bilingual retrieval와 regression qualification이 아직 없다.
+- blocker: 없음. 공개 taxonomy text의 Gemini 전송과 semantic index 재생성은 이전 사용자 승인 범위 안에서 수행한다.
+- execution-knowledge paths: `docs/passed-reports/2026-08-07-subculture-taxonomy-on-demand-routing.md`, `docs/failed-reports/2026-08-07-semantic-index-batch-response.md`, `docs/failed-reports/2026-08-07-subculture-surface-applicability-golden-drift.md`.
 
-## 7. 검증·재시도 계약
+### 2026-08-07 / Stage 1 world contract와 retrieval 기대 동결
 
-- 초기 case와 target family는 index 재생성 전에 저장하고 이후 실패를 이유로 삭제하거나 약화하지 않는다.
-- 변경 영역별 focused test를 먼저 실행하되, 전체 suite는 Stage 6에서 한 번 실행한다.
-- 같은 근본 원인의 구현 재시도는 최대 2회다. 반복되는 material failure는 재시도 전에 `docs/failed-reports/`에 sanitized evidence와 함께 기록한다.
-- 네트워크·외부 embedding의 일시 오류는 한 번 재시도할 수 있다. 반복되면 로컬 데이터 구현을 보존하고 external gate를 명시적 blocker로 보고한다.
-- visual quality는 구조적 prompt/candidate 품질까지만 주장한다. 실제 렌더 품질은 별도의 이미지 생성·visual review 없이는 주장하지 않는다.
+- product delta: `semantic_retrieval_holdout_worldbuilding_v1.jsonl`에 18개 주제별 한국어 2개·영어 2개, 총 72개 preset-free 자연어와 유일한 사전 target route를 동결했다. 신규 runtime domain은 `worldbuilding_system`으로 고정한다.
+- direct evidence: JSONL 72행이 모두 parse되고 ID 72개와 target route 18개가 유일하며, 각 route가 정확히 한국어 2행·영어 2행을 가진다. 기존 extension loader는 임의의 additive slot을 병합하고 preset `required_slots`를 동적으로 선택할 수 있으므로 research-extension v1 schema를 바꿀 필요가 없다.
+- minimum schema decision: 별도 `photo_prompt_worldbuilding_extension.json`을 기존 merge 경로에 추가한다. `subject/action/location/prop`에 더해 기존 `situation_context`(제도·세력·자원), `occasion_context`(역사·의례), `narrative_core`(존재·지식·증거 규칙), `capture_context`(기록 신뢰도), `procedure_step`(작동 절차), `surface_material`(마모·물질 흔적)을 재사용한다. route별로 이 중 최소 세 축을 필수화하고, 새 설명 전용 slot은 만들지 않는다.
+- frozen route IDs: `diegetic_larp_world_system`, `conlang_conculture_world_system`, `conworld_cartography_world_system`, `speculative_evolution_field_archive`, `anomalous_archive_unfiction_world_system`, `text_persistent_mud_world_system`, `civic_solarpunk_institutional_world`, `demoscene_procedural_world_system`, `original_species_art_rpg_world`, `fictional_esoteric_archive_world`, `digital_ruins_net_art_world`, `retrofuture_infrastructure_bureaucracy`, `multispecies_more_than_human_world`, `cryptid_local_folklore_world`, `fictional_postal_state_mail_art`, `dungeon_synth_microcanon_world`, `afrofuturist_worldmaking_curated`, `indigenous_futurisms_curated`.
+- remaining product gap: 18개 research matrix와 evidence ledger, 별도 extension, loader/domain routing, semantic index와 실제 72/72 retrieval은 아직 구현되지 않았다.
+- blocker: 없음. 8개 읽기 전용 연구 묶음이 병렬로 조사 중이다.
+- execution-knowledge paths: 위 세 선행 보고서의 기존 계약을 그대로 적용하며 신규 실패 보고서는 없다.
 
-## 8. 중단 조건과 비목표
+### 2026-08-07 / Stage 2 research matrix와 evidence ledger 반영
 
-다음은 자동 확장하지 않는다.
+- product delta: 8개 병렬 연구 묶음이 18개 주제를 조사했고 `research_evidence.jsonl`에 `worldbuilding_system` evidence 54행을 추가했다. 각 주제는 서로 다른 공개 URL 3개, 최소 6개 world mechanism, 사진 단서 ID 6개, 문화·IP·진실성 경계 3개를 runtime candidate ID와 연결한다.
+- direct evidence: ledger 전체 120행이 parse되며 ID 120개가 유일하다. 신규 54행은 URL 54개가 유일하고 topic 18개에 정확히 3행씩 분포하며, 18개의 요약 row가 `world_mechanisms / photographic_evidence / boundaries`를 가진다. 모든 candidate ID는 별도 extension의 실제 route·slot entry를 참조한다.
+- remaining product gap: semantic routing/index와 frozen 72개 real retrieval, generic leakage, 기존 회귀·독립 감사가 남아 있다.
+- blocker: 없음. 원문·이미지·비공개 자료는 저장하거나 외부 전송하지 않았고 공개 URL과 추상 관찰만 반영했다.
+- execution-knowledge paths: 신규 material failure 없음.
 
-- 유료 이미지 생성 또는 대규모 visual A/B.
-- 실제 브랜드·캐릭터·연예인 식별을 위한 데이터셋 구축.
-- frozen holdout 기대값 약화, 기본 generic selection 의미 변경, ANN/근사 검색 도입.
-- 저장소 밖 배포, 커밋, push, PR 생성. 사용자가 별도로 요청할 때만 수행한다.
+### 2026-08-07 / Stage 3 별도 taxonomy와 원자적 scene route 구현
 
-이번 목표의 비목표:
+- product delta: `photo_prompt_worldbuilding_extension.json`에 18 route, 6 shared family, 288 slot entry를 추가하고 loader·typed domain·entry quarantine·scoped route를 `worldbuilding_system`으로 연결했다. 각 route는 기존 `subject/action/location/prop/situation_context/occasion_context/narrative_core/capture_context/procedure_step/surface_material`을 사용하며, subject의 scene tag가 나머지 장면 축을 원자적으로 제한한다.
+- direct evidence: dictionary validator pass. 18개 direct route가 모든 required slot을 생성했고 seed 1과 2에서 각각 서로 다른 두 scene manifestation에 도달했다. 총 36개 생성에서 subject/action/location/prop/situation/occasion의 scene tag 혼합은 0건이었다.
+- remaining product gap: candidate-pack 구조 테스트를 고정하고 semantic index를 재생성한 뒤 72개 frozen retrieval을 실경로에서 검증해야 한다.
+- blocker: 없음. 새 schema는 만들지 않았고 global human applicability는 넓히지 않았다.
+- execution-knowledge paths: 기존 surface applicability 실패 보고서의 narrow-domain 수리 원칙을 적용했다.
 
-- 모든 지역·시대 변형을 완전하게 백과사전화하기.
-- 커뮤니티 구성원의 정체성을 고정된 외형 stereotype으로 환원하기.
-- 18개 주제별로 이미지를 생성해 렌더 품질을 입증하기.
+### 2026-08-07 / Stage 4 bilingual semantic retrieval과 index 반영
 
-## 9. 실행 지식 계약
+- product delta: 승인된 공개 taxonomy 문자열만 Gemini에 전송해 cache 재사용·batch size 1로 semantic index를 5,697개에서 6,003개 entry로 재생성했다. user-authored intent가 정확한 `subculture_practice` 또는 `worldbuilding_system` scoped route를 찾으면 그 명시 신호가 generic preset의 embedding similarity보다 우선하도록 자동 preset eligibility를 좁혔다.
+- direct evidence: index check가 dictionary hash `8916310a17a9d462db230080df56735086e10c7e360c483e67032f0942b1eb2d`, Gemini `gemini-embedding-2`, 768 dimensions, 6,003 entries, 16 shards에서 통과했다. 최초 real retrieval은 civic solarpunk와 generic climate preset의 경쟁으로 71/72였고, 동결 case를 바꾸지 않은 한 번의 route precedence 수리 뒤 전체 한국어·영어 holdout이 72/72 통과했다. 기존 subculture와 신규 worldbuilding 집중 contract test 2개도 통과했다.
+- remaining product gap: 18개 fixed-seed candidate pack의 과적합·문화 provenance·generic leakage와 기존 focused regressions, 닫힌 전체 suite, 독립 감사가 남아 있다.
+- blocker: 없음. 외부 전송은 taxonomy text와 query text에 한정됐고 source 원문·이미지·비공개 자료·로그는 전송하지 않았다.
+- execution-knowledge paths: `docs/failed-reports/2026-08-07-semantic-index-batch-response.md`, `docs/failed-reports/2026-08-07-worldbuilding-scoped-route-semantic-competition.md`.
 
-- 시작·재개 시 `docs/failed-reports/`와 `docs/passed-reports/`의 파일명과 header metadata를 먼저 검색하고, 전문은 가장 관련된 non-superseded 보고서 최대 5개만 읽는다.
-- 현재 소스와 직접 측정한 증거가 과거 보고서와 기억보다 우선한다.
-- credential, token, secret, 민감 endpoint, 개인정보를 계획·보고서·증거 원장에 저장하지 않는다.
-- passed report는 모든 완료 기준을 통과한 뒤 material failure 해결, 기본 접근 실패 뒤의 비자명한 대안, 또는 값비싼 다단계 재현 중 하나에 해당할 때만 목표당 최대 1개 작성한다.
-- 각 checkpoint는 제품/사용자 관찰 delta, 직접 증거, 구속 결정, 다음 단계, 열린 위험을 기록한다.
+### 2026-08-07 / Stage 5 과적합·문화 경계·generic leakage 집중 검증
 
-## 10. 진행 기록
+- product delta: 모든 세계관 route의 candidate pack에 `provenance_scope`가 quality facet으로 전달되는 계약을 고정했다. Afrofuturist와 Indigenous Futurisms는 `public_culturally_curated`, 현대 오컬트는 `fictional_non_operational`, 오리지널 종족은 `rights_cleared_original`로 유지되며, exact typed route precedence는 일반 intent와 explicit preset 경로를 바꾸지 않는다.
+- direct evidence: 18 route × seed 1·2의 36 pack이 서로 다른 두 scene, 필수 10개 slot, 원자적 scene 결합, 실제 노출 후보 총 64개 이하, provenance 전달을 모두 통과했다. generic studio/K-style/fantasy/cosplay/occupation/일반 도시·기후·Black engineer·일반 Indigenous technology negative control의 `worldbuilding_system` leakage는 0이었다. 기존 subculture/bleed/safety를 포함한 focused unit 6개, public generalization 79/79, frozen holdout 24/24, domain holdout 6/6, 기존 real retrieval v4 22/22가 모두 통과했다.
+- remaining product gap: validator·index·contradiction/applicability와 전체 unit suite를 닫힌 순서로 한 번 실행하고 독립 최종 감사를 받아야 한다.
+- blocker: 없음. 보호 대상 IP·브랜드·실존 인물·실제 cryptid·폐쇄형 종족 이름은 taxonomy에서 검출되지 않았다.
+- execution-knowledge paths: `docs/failed-reports/2026-08-07-worldbuilding-scoped-route-semantic-competition.md`는 72/72 재검증으로 resolved 상태다.
 
-### 2026-08-06 / 목표 초기화
+### 2026-08-07 / Stage 6 닫힌 최종 자격 판정과 독립 감사
 
-- 기존 `GOAL_PLAN.md`의 창의성 목표가 `complete`임을 확인하고 이번 목표로 교체했다.
-- 작업트리는 clean, branch는 `main`, 기준 commit은 `cfd8e92`다.
-- `docs/failed-reports/`와 `docs/passed-reports/`에는 template 외 보고서가 없어 상충하는 실행 지식이 없다.
-- 현재 연구 확장 기준선은 preset 17개, slot 24개, evidence 20행이다.
-- 다음 단계: 고정 bilingual case와 공통 research matrix를 작성하고 18개 주제 병렬 조사를 시작한다.
-
-### 2026-08-06 / Stage 1
-
-- 제품 또는 사용자 관찰 delta: 아직 runtime 동작을 바꾸기 전에 18개 대주제와 그 안의 서로 다른 실천을 구분하는 bilingual semantic case 70개를 `semantic_retrieval_holdout_subculture_v1.jsonl`로 동결했다.
-- 직접 증거:
-  - JSONL 70행이 모두 parse되고 retrieval holdout loader의 schema validation을 통과했다.
-  - Lolita/Decora/Gyaru/Y2K, goth/cybergoth/New Romantic/rave, punk/noise/shoegaze, arcade/LAN/speedrun, TRPG/wargaming, PC/keyboard/cyberdeck, lowrider/tuner/itasha를 서로 다른 target route로 고정했다.
-  - 기존 `lowrider_night_meet`는 자동차·제작·공동체가 아니라 `fashion_model + standing_silence + underground_parking_lot + neon`이어서 새 lowrider route의 기반으로 사용하지 않기로 했다.
-  - 기존 `warehouse_rave_uv`의 잘못된 family와 `punk_basement_show`의 glow-stick/UV 누출은 신규 데이터 추가와 함께 교정할 대상으로 고정했다.
-- 구속 결정:
-  - 기존 112 KB 연구 extension을 계속 비대하게 만들지 않고 같은 additive schema를 쓰는 `photo_prompt_subculture_extension.json`을 별도 로드한다.
-  - 여러 문화를 한 preset의 무작위 cross-product로 섞지 않는다. 공통 slot/facet은 재사용하되 문화적으로 다른 실천은 별도 on-demand preset으로 둔다.
-  - 공통 research matrix 축은 `participant role`, `workflow state`, `authorship/rights relation`, `venue/presentation context`, `material/media basis`, `social relation`, `visual boundary`로 고정한다.
-- 다음 단계: 서브에이전트의 권위 출처 조사를 모두 회수해 evidence row와 reusable taxonomy로 변환한다.
-- 열린 위험: 70개 real-embedding retrieval case는 index 재생성 전에는 의도적으로 실패한다. 기대 route를 결과에 맞춰 변경하지 않는다.
-
-### 2026-08-06 / Stage 2
-
-- 제품 또는 사용자 관찰 delta: 18개 상위 주제를 공식 행사 규칙, 박물관·보존기관 자료, 공식 제작 문서와 학술 자료로 조사하고, 선별한 독립 출처 46개를 기존 원장에 append-only로 연결했다.
-- 직접 증거:
-  - `research_evidence.jsonl`은 총 66행, 고유 ID 66개이며 신규 `subculture_practice` 행은 서로 다른 URL 46개다.
-  - 모든 evidence `candidate_ids`가 병합된 5,607개 preset/slot ID 카탈로그의 부분집합이다.
-  - 고정된 18개 theme-to-route 집합 각각에 서로 다른 출처 URL이 최소 2개 존재한다.
-- 구속 결정:
-  - 원문·이미지·특정 캐릭터 디자인은 저장하지 않고, 역할·공정·물성·권리 관계·행사 단계만 추상화했다.
-  - 출처 수를 늘리는 것보다 서로 다른 세부 실천의 경계를 설명하는 자료를 우선해 46개 행으로 제한했다.
-- 다음 단계: bilingual holdout을 실제 index에 연결한다.
-- 열린 위험: 출처 근거는 taxonomy 설계의 추적성을 입증하지만 실제 렌더 품질을 입증하지 않는다.
-
-### 2026-08-06 / Stage 3
-
-- 제품 또는 사용자 관찰 delta: 별도 `photo_prompt_subculture_extension.json`에 신규 preset 33개와 기존 punk/rave 교정 route 2개, 공통 family 6개, 재사용 slot entry 179개를 구현했다.
-- 직접 증거:
-  - dictionary validator가 병합 사전의 ID·filter·facet 참조를 통과했다.
-  - 35개 direct route를 seed별로 실제 실행해 모든 required slot이 선택되고 선택값이 authored filter에 속함을 확인했다.
-  - `subculture_practice` route는 사용자 intent가 같은 domain으로 라우팅된 경우에만 자동 발견되며, direct preset 호출은 유지된다.
-  - 잘못된 기존 `lowrider_night_meet`는 direct-ID 호환만 남기고 자동 pool과 semantic index 대상에서 제외했다.
-- 구속 결정:
-  - 일반 성인 연령 표지를 성인 콘텐츠와 혼동하지 않도록 `age_context_only`를 도입했다. 안전 기본 통과 계약은 그대로다.
-  - surface/capture applicability와 camera/light/texture authored defaults를 확장 파일에서만 추가해 legacy 세부항목 누출을 막았다.
-- 다음 단계: 승인된 taxonomy 문자열로 semantic index를 재생성하고 70개 고정 retrieval case를 실행한다.
-- 열린 위험: 실제 embedding ranking에서 근접한 패션·음악·팬덤 세부 route가 혼동될 수 있다. 기대 target은 변경하지 않고 데이터 표현을 수정한다.
-
-### 2026-08-07 / Stage 4
-
-- 제품 또는 사용자 관찰 delta: 한국어·영어 70개 자연어 문장이 exact preset ID를 몰라도 35개 세부 실천 route를 각각 발견하며, 별칭이 없는 서브컬처 표현은 기존 semantic fallback을 유지한다.
-- 직접 증거:
-  - 승인된 공개 taxonomy 문자열만 Gemini embedding에 전송해 index를 재생성했다. 최종 index는 `gemini-embedding-2`, 768차원, 5,697개 entry, 16개 shard이며 dictionary hash는 `a9134e078d28ac0da2b34ca01b57db13289d4bab8082c7530a56e09ea3e63346`다.
-  - manifest hash, shard별 hash, entry 합계와 순서를 독립 계산해 monolith와 일치함을 확인했고 `--check-index`가 통과했다.
-  - 초기 real retrieval은 30/70이었다. 기대값은 유지하고 대분류 alias 정규화와 명시적 실천어 기반 `scoped_routes`를 추가한 뒤 기본 seed의 동일 70개 case가 70/70 통과했다.
-  - `scoped_routes` 정책은 35개 route와 정확히 대응하고, 70개 고정 문장 각각을 하나의 기대 route로만 좁힌다는 구조 테스트가 통과했다.
-- 구속 결정:
-  - 세부 장르 간 혼동을 preset weight로 과적합하지 않고, canonical bilingual 실천어가 실제로 일치할 때만 같은 domain의 후보를 제한한다.
-  - generic `cosplay`라는 단어만으로 제작 route를 강제하지 않아 “fashion rather than cosplay” 같은 부정 비교와 기존 cosplay portrait를 오염시키지 않는다.
-- 다음 단계: 기존 semantic holdout, 일반화·frozen·domain gate와 direct candidate pack 누출 검사를 실행한다.
-- 열린 위험: 고정 alias 밖의 매우 간접적인 표현은 semantic fallback 품질에 의존한다. 이번 완료 범위는 동결한 자연어 case와 generic 누출 보존까지다.
-
-### 2026-08-07 / Stage 5
-
-- 제품 또는 사용자 관찰 delta: 35개 세부 route가 응집된 candidate pack을 만들면서 일반 portrait, K-style, fantasy/cosplay, 직업·차량 다큐멘터리 요청에는 신규 서브컬처 domain과 route가 활성화되지 않는다.
-- 직접 증거:
-  - 35개 direct route를 실제 생성해 각 preset의 필수 `subject/action/location/prop` 축과 모든 authored filter 선택을 검증했다.
-  - 신규 extension에는 대표적인 특정 IP·캐릭터·플랫폼·행사 브랜드 이름이 없고, 기존 generic/K-style/fantasy/cosplay/직업 negative control에도 `subculture_practice` 또는 세부 route가 검출되지 않았다.
-  - public generalization 79/79, frozen holdout 24/24, domain holdout v2 6/6, 기존 semantic retrieval v4 22/22가 통과했다.
-  - contradiction gate는 605개 preset을 각 3회, 총 1,815개 생성해 violation 0을 기록했다.
-- 구속 결정:
-  - 명시적 세부 실천어가 없는 경우 35개 신규 route를 자동 pool에서 계속 제외한다. 새로운 전역 가중치나 기존 preset 기대값 변경은 하지 않았다.
-  - 실제 이미지 생성은 승인 범위와 완료 기준 밖이므로 candidate pack의 구조적 사진 실행 가능성까지만 판정한다.
-- 다음 단계: validator·index·전체 test suite를 닫힌 순서로 한 번 실행하고 독립 감사를 받는다.
-- 열린 위험: 렌더 모델별 시각 품질과 고정 case 밖의 희귀 은어 표현은 이번 검증만으로 보장하지 않는다.
-
-### 2026-08-07 / Stage 6
-
-- 제품 또는 사용자 관찰 delta: 18개 서브컬처의 출처 기반 후보가 direct ID와 한국어·영어 자연어로 호출되며, 기존 일반 주제와 결정론적 golden 결과를 보존하는 qualified 데이터 상태가 됐다.
-- 직접 증거:
-  - 최종 dictionary validator와 semantic `--check-index`가 통과했다. index는 5,697 entry, 768차원, 16개 shard, dictionary hash `a9134e078d28ac0da2b34ca01b57db13289d4bab8082c7530a56e09ea3e63346`다.
-  - 첫 전체 suite는 전역 human surface applicability가 기존 golden의 RNG를 바꾼 누출을 발견해 `414 passed, 722 subtests passed, 1 failed`로 닫혔다. fixture는 바꾸지 않고 typed-domain override로 수리했다.
-  - 집중 golden 5/5, subculture focused 3/3, 수리 후 전체 suite `414 passed, 723 subtests passed`가 통과했다.
-  - 독립 read-only 감사가 8개 완료 기준을 모두 PASS로 판정했고 중대 blocker 없이 `QUALIFIED PASS`를 반환했다.
-  - material failure와 수리 절차는 `docs/failed-reports/` 두 건에, 재사용 가능한 성공 절차는 `docs/passed-reports/2026-08-07-subculture-taxonomy-on-demand-routing.md`에 기록했다.
-- 구속 결정:
-  - golden drift를 신규 기능의 의도된 변화로 취급하지 않았다. 일반 human slot pool은 이전 의미를 유지하고 `subculture_practice`에서만 좁은 예외를 허용한다.
-  - source traceability와 구조적 candidate-pack 품질까지만 완료로 판정한다. 이미지 렌더 품질은 별도 이미지 생성·visual review가 없으므로 주장하지 않는다.
-- 다음 단계: 없음. 커밋·push·이미지 생성은 사용자가 별도로 요청할 때만 수행한다.
-- 열린 위험: 매우 간접적인 희귀 은어는 semantic fallback 품질에 의존하며, 모델별 렌더 결과는 검증되지 않았다. 둘 다 이번 목표의 명시적 완료 범위 밖이다.
-
-## Codex 실행 프롬프트
-
-`/goal Treat GOAL_PLAN.md as the authoritative outcome-first execution plan. Resume from its latest checkpoint, scan only relevant report metadata before acting, deliver product deltas before expanding verification, persist material failures before retry, obey the stop conditions, and mark the goal complete only when every completion criterion has direct evidence.`
+- product delta: 구현 대상 working tree를 고정한 상태에서 validator → index → contradiction/applicability → 기존 rule/semantic 회귀 → 신규 world retrieval → 전체 unit suite 순서로 최종 자격 판정을 한 번 수행했다. 이후 추가 제품 변경 없이 독립 읽기 전용 서브에이전트가 기존 8개 완료 기준만 감사했다.
+- direct evidence: dictionary validator pass; index 6,003 entry/768d/16 shard와 dictionary/policy/recipe hash 일치; 623 preset × 3 seed = 1,869 generation의 contradiction violation 0; applicability focused 3개 pass; public 79/79, frozen 24/24, domain 6/6, 기존 retrieval 22/22, 신규 retrieval 72/72; 전체 unit suite 393 tests가 1,316.793초에 pass했다. 독립 감사는 18개 coverage, evidence 추적성, 두 scene, provenance/IP 경계, on-demand leakage, retrieval·회귀 증거를 모두 PASS로 판정했고 미해결 중대 결함을 찾지 않았다.
+- remaining product gap: 없음. 이미지 생성과 visual A/B는 처음부터 명시한 비목표이므로 rendered visual quality는 주장하지 않는다. commit/push/배포도 수행하지 않았다.
+- blocker: 없음. 최종 완료 기준 8개가 모두 직접 증거로 통과했다.
+- execution-knowledge paths: `docs/failed-reports/2026-08-07-worldbuilding-scoped-route-semantic-competition.md`와 `docs/passed-reports/2026-08-07-deep-worldbuilding-taxonomy-scoped-routing.md`를 resolved-material-failure lifecycle로 양방향 연결했다.
