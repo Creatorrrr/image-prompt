@@ -24,10 +24,12 @@ RETRIEVAL_HOLDOUT_V3_PATH = SKILL_DIR / "assets" / "semantic_retrieval_holdout_v
 RETRIEVAL_HOLDOUT_V4_PATH = SKILL_DIR / "assets" / "semantic_retrieval_holdout_v4.jsonl"
 SUBCULTURE_RETRIEVAL_HOLDOUT_V1_PATH = SKILL_DIR / "assets" / "semantic_retrieval_holdout_subculture_v1.jsonl"
 WORLDBUILDING_RETRIEVAL_HOLDOUT_V1_PATH = SKILL_DIR / "assets" / "semantic_retrieval_holdout_worldbuilding_v1.jsonl"
+CJK_WORLDBUILDING_RETRIEVAL_HOLDOUT_V1_PATH = SKILL_DIR / "assets" / "semantic_retrieval_holdout_cjk_worldbuilding_v1.jsonl"
 RESEARCH_EVIDENCE_PATH = SKILL_DIR / "assets" / "research_evidence.jsonl"
 RESEARCH_EXTENSION_PATH = SKILL_DIR / "assets" / "photo_prompt_research_extension.json"
 SUBCULTURE_EXTENSION_PATH = SKILL_DIR / "assets" / "photo_prompt_subculture_extension.json"
 WORLDBUILDING_EXTENSION_PATH = SKILL_DIR / "assets" / "photo_prompt_worldbuilding_extension.json"
+CJK_WORLDBUILDING_EXTENSION_PATH = SKILL_DIR / "assets" / "photo_prompt_cjk_worldbuilding_extension.json"
 QUALITY_LAYERS_PATH = SKILL_DIR / "assets" / "photo_prompt_quality_layers.json"
 DOMAIN_VISUAL_REVIEW_PLAN_PATH = SKILL_DIR / "assets" / "visual_review_domain_extension_plan.json"
 DOMAIN_VISUAL_REVIEW_RESULTS_PATH = SKILL_DIR / "assets" / "visual_review_domain_extension_results.json"
@@ -1178,7 +1180,6 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
         extension = json.loads(WORLDBUILDING_EXTENSION_PATH.read_text(encoding="utf-8"))
         extension_ids = {preset["id"] for preset in extension["presets"]}
         presets = {preset["id"]: preset for preset in data["presets"]}
-
         self.assertEqual(len(extension_ids), 18)
         self.assertEqual(len(extension["preset_families"]), 6)
         self.assertEqual(
@@ -1394,6 +1395,299 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             "bigfoot",
             "hodag",
             "wakanda",
+        ):
+            self.assertNotIn(protected_reference, extension_text)
+
+    def test_cjk_worldbuilding_extension_routes_are_provenance_locked_and_scoped(self):
+        data = prompt_generator.load_json(TAGS_PATH)
+        data[prompt_generator.QUALITY_LAYERS_DATA_KEY] = prompt_generator.load_quality_layers(
+            QUALITY_LAYERS_PATH
+        )
+        extension = json.loads(
+            CJK_WORLDBUILDING_EXTENSION_PATH.read_text(encoding="utf-8")
+        )
+        extension_ids = {preset["id"] for preset in extension["presets"]}
+        presets = {preset["id"]: preset for preset in data["presets"]}
+        entries_by_id = {
+            entry["id"]: entry
+            for entries in data["slots"].values()
+            for entry in entries
+        }
+
+        self.assertEqual(len(extension_ids), 20)
+        self.assertEqual(len(extension["preset_families"]), 6)
+        self.assertEqual(
+            sum(len(entries) for entries in extension["slots"].values()),
+            356,
+        )
+        self.assertEqual(len(extension["slots"]["subject"]), 46)
+        self.assertEqual(
+            set(extension["slot_applicability"]["preset_domain_overrides"]),
+            extension_ids,
+        )
+        self.assertTrue(extension_ids <= set(presets))
+
+        world_evidence_slots = {
+            "situation_context",
+            "occasion_context",
+            "narrative_core",
+            "capture_context",
+            "procedure_step",
+            "surface_material",
+        }
+        requested_context = {
+            "intent_source": "user",
+            "intent_constraints": {"domains": ["cjk_narrative_world"]},
+        }
+        for preset_id in sorted(extension_ids):
+            preset = presets[preset_id]
+            self.assertEqual(
+                prompt_generator.preset_domains(preset, data),
+                {"cjk_narrative_world"},
+            )
+            self.assertTrue(
+                {"subject", "action", "location", "prop"} | world_evidence_slots
+                <= set(preset["required_slots"]),
+                preset_id,
+            )
+            self.assertGreaterEqual(len(preset["facets"]["world_mechanism"]), 6)
+            self.assertFalse(
+                prompt_generator.preset_matches_automatic_intent_scope(
+                    preset, data, None
+                )
+            )
+            self.assertTrue(
+                prompt_generator.preset_matches_automatic_intent_scope(
+                    preset, data, requested_context
+                )
+            )
+
+            seen_subjects = set()
+            for seed in range(1, 4):
+                result = prompt_generator.generate_once(
+                    data,
+                    __import__("random").Random(seed),
+                    preset_id,
+                    ["en"],
+                    False,
+                    0,
+                    True,
+                    detail_level="detailed",
+                    selection_mode="rule",
+                    seed=seed,
+                )
+                choices = result["choices"]
+                subject_id = choices["subject"]["id"]
+                seen_subjects.add(subject_id)
+                scene_prefix = subject_id.removesuffix("_subject")
+                selected_scene_entries = [choices["subject"]]
+                for slot in (
+                    "action",
+                    "location",
+                    "prop",
+                    "situation_context",
+                    "occasion_context",
+                ):
+                    self.assertTrue(
+                        choices[slot]["id"].startswith(f"{scene_prefix}_"),
+                        (preset_id, seed, slot, subject_id, choices[slot]["id"]),
+                    )
+                    selected_scene_entries.append(choices[slot])
+                scene_provenance = {
+                    tuple(
+                        entries_by_id[entry["id"]]["facets"][
+                            "cultural_provenance"
+                        ]
+                    )
+                    for entry in selected_scene_entries
+                }
+                self.assertEqual(len(scene_provenance), 1, (preset_id, seed))
+
+                if seed == 1:
+                    pack = prompt_generator.build_candidate_pack(result, data)
+                    self.assertTrue(world_evidence_slots <= set(pack["slots"]), preset_id)
+                    self.assertEqual(
+                        pack["quality_profile"]["profile_id"],
+                        "cjk_narrative_world",
+                        preset_id,
+                    )
+                    self.assertTrue(
+                        set(preset["facets"]["market_origin"])
+                        <= set(
+                            pack["quality_profile"]["facets"]["market_origin"]
+                        ),
+                        preset_id,
+                    )
+                    self.assertLessEqual(
+                        sum(
+                            len(slot["candidates"])
+                            for slot in pack["slots"].values()
+                        ),
+                        prompt_generator.CANDIDATE_PACK_TOTAL_CANDIDATE_LIMIT,
+                        preset_id,
+                    )
+            self.assertGreaterEqual(len(seen_subjects), 2, preset_id)
+
+        self.assertEqual(
+            len(presets["cjk_spirit_underworld_bureaucracy"]["filters"]["subject"]["ids"]),
+            3,
+        )
+        self.assertEqual(
+            len(presets["cjk_vrmmo_card_liveops_world"]["filters"]["subject"]["ids"]),
+            4,
+        )
+        self.assertEqual(
+            len(
+                presets["jp_mecha_kaiju_tokusatsu_disaster_state"]["filters"]["subject"]["ids"]
+            ),
+            4,
+        )
+        self.assertEqual(
+            len(presets["cjk_magical_idol_virtual_media_world"]["filters"]["subject"]["ids"]),
+            3,
+        )
+
+        cases = eval_semantic.load_retrieval_holdout_cases(
+            CJK_WORLDBUILDING_RETRIEVAL_HOLDOUT_V1_PATH
+        )
+        self.assertEqual(len(cases), 100)
+        self.assertEqual(len({case["id"] for case in cases}), 100)
+        self.assertEqual(
+            {
+                preset_id
+                for case in cases
+                for preset_id in case["allowed_selected_presets"]
+            },
+            extension_ids,
+        )
+        self.assertTrue(all(len(case["allowed_selected_presets"]) == 1 for case in cases))
+        for preset_id in extension_ids:
+            self.assertEqual(
+                sum(
+                    preset_id in case["allowed_selected_presets"]
+                    for case in cases
+                ),
+                5,
+                preset_id,
+            )
+
+        routing_policy = prompt_generator.candidate_pack_intent_routing_policy(data)
+        cjk_rules = [
+            rule
+            for rule in routing_policy["scoped_routes"]
+            if rule["domain"] == "cjk_narrative_world"
+        ]
+        self.assertEqual(len(cjk_rules), 20)
+        self.assertEqual({rule["preset_id"] for rule in cjk_rules}, extension_ids)
+        for case in cases:
+            routed = prompt_generator.resolve_request_intent_constraints(
+                data, {"intent": case["intent"]}, {}
+            )
+            self.assertIn("cjk_narrative_world", routed["domains"], case["id"])
+            self.assertEqual(
+                set(routed["scoped_routes"]),
+                set(case["allowed_selected_presets"]),
+                case["id"],
+            )
+
+        for generic_intent in (
+            "an astronomy photograph of a constellation above a radio tower",
+            "ordinary climbers using the stairs of a modern office tower",
+            "documentary photo of a civilian emergency response team",
+            "a generic fantasy portrait in a castle",
+            "a real Daoist temple conservation record",
+            "a living martial-arts heritage class",
+            "a real disaster shelter documentary",
+            "a streamer speaking to a camera in a bedroom",
+            "an idol portrait under concert lights",
+            "일반 코스프레 인물이 판타지 성 앞에서 포즈를 취하는 장면",
+        ):
+            routed = prompt_generator.resolve_request_intent_constraints(
+                data, {"intent": generic_intent}, {}
+            )
+            self.assertNotIn("cjk_narrative_world", routed["domains"], generic_intent)
+            self.assertFalse(
+                extension_ids & set(routed["scoped_routes"]),
+                generic_intent,
+            )
+
+        evidence_rows = [
+            json.loads(line)
+            for line in RESEARCH_EVIDENCE_PATH.read_text(encoding="utf-8").splitlines()
+            if line.strip()
+            and json.loads(line).get("domain") == "cjk_narrative_world"
+        ]
+        self.assertEqual(len(evidence_rows), 60)
+        self.assertEqual(len({row["source_url"] for row in evidence_rows}), 60)
+        self.assertEqual({row["topic_id"] for row in evidence_rows}, extension_ids)
+        catalog_ids = set(presets)
+        for entries in data["slots"].values():
+            catalog_ids.update(entry["id"] for entry in entries)
+        for preset_id in extension_ids:
+            topic_rows = [
+                row for row in evidence_rows if row["topic_id"] == preset_id
+            ]
+            self.assertEqual(len(topic_rows), 3, preset_id)
+            self.assertTrue(
+                any(
+                    row["source_type"].startswith("official_")
+                    or "primary" in row["source_type"]
+                    for row in topic_rows
+                ),
+                preset_id,
+            )
+            self.assertTrue(
+                all(
+                    row["schema_version"] == "photo-research-evidence/v1"
+                    and row["status"] == "approved"
+                    and row["reviewed_at"] == "2026-08-07"
+                    and row["reuse_note"].strip()
+                    for row in topic_rows
+                ),
+                preset_id,
+            )
+            matrix_rows = [row for row in topic_rows if "world_mechanisms" in row]
+            self.assertEqual(len(matrix_rows), 1, preset_id)
+            matrix = matrix_rows[0]
+            self.assertIn("market_origin", matrix)
+            self.assertIn("term_classifications", matrix)
+            self.assertTrue(matrix["term_classifications"], preset_id)
+            if isinstance(matrix["term_classifications"], dict):
+                self.assertTrue(
+                    all(matrix["term_classifications"].values()),
+                    preset_id,
+                )
+            else:
+                self.assertTrue(
+                    all(
+                        classification.get("term")
+                        and classification.get("term_level")
+                        for classification in matrix["term_classifications"]
+                    ),
+                    preset_id,
+                )
+            self.assertGreaterEqual(len(matrix["world_mechanisms"]), 5)
+            self.assertGreaterEqual(len(matrix["photographic_evidence"]), 6)
+            self.assertGreaterEqual(len(matrix["boundaries"]), 3)
+            self.assertTrue(set(matrix["photographic_evidence"]) <= catalog_ids)
+            self.assertTrue(
+                all(set(row["candidate_ids"]) <= catalog_ids for row in topic_rows),
+                preset_id,
+            )
+
+        extension_text = json.dumps(extension, ensure_ascii=False).lower()
+        for protected_reference in (
+            "omniscient reader",
+            "전지적 독자",
+            "주신 공간",
+            "主神空间",
+            "轮回者",
+            "pokemon",
+            "yu-gi-oh",
+            "final fantasy",
+            "ultraman",
+            "gundam",
+            "hololive",
         ):
             self.assertNotIn(protected_reference, extension_text)
 

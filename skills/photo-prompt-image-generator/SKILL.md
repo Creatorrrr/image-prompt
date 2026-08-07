@@ -26,6 +26,8 @@ Do not load every reference for a simple prompt request.
 - `assets/photo_prompt_tags.json`: presets, slots, weights, facets, and coherence rules.
 - `assets/photo_prompt_research_extension.json`: append-only evidence-led operational and scientific presets, slots, facets, and typed-domain overrides loaded alongside the base dictionary.
 - `assets/photo_prompt_subculture_extension.json`: separately loaded, on-demand subculture practice presets and shared craft/community taxonomy; keep specialty signals out of unrelated automatic pools.
+- `assets/photo_prompt_worldbuilding_extension.json`: separately loaded, on-demand general world-system presets with atomic scene evidence and scoped routing.
+- `assets/photo_prompt_cjk_worldbuilding_extension.json`: separately loaded, source-backed CJK commercial-narrative world systems; keep market terms distinct and lock culture-sensitive scenes to one provenance.
 - `assets/concept_recipes.json`: Korean concepts, identity cores, scene variants, guides, and gates.
 - `assets/photo_prompt_quality_layers.json`: domain quality profiles and photographic decision layers.
 - `assets/photo_prompt_semantic_index.json`: semantic retrieval manifest; vector shards live under `assets/photo_prompt_semantic_index_shards/` and are materialized transparently.
@@ -33,6 +35,7 @@ Do not load every reference for a simple prompt request.
 - `assets/generalization_holdout_cases.jsonl` and `assets/generalization_domain_holdout_v2.jsonl`: frozen rule-mode holdouts.
 - `assets/semantic_retrieval_holdout_v3.jsonl`: frozen preset-free semantic retrieval baseline.
 - `assets/semantic_retrieval_holdout_v4.jsonl`: active preset-free retrieval holdout spanning the research extension.
+- `assets/semantic_retrieval_holdout_subculture_v1.jsonl`, `assets/semantic_retrieval_holdout_worldbuilding_v1.jsonl`, and `assets/semantic_retrieval_holdout_cjk_worldbuilding_v1.jsonl`: frozen on-demand specialty-route holdouts; never weaken expectations to fit an index result.
 - `assets/research_evidence.jsonl`: abstract source-to-taxonomy evidence ledger; never a raw prompt or image corpus.
 - `assets/visual_review_domain_extension_plan.json`: rendered-image review case plan linked to a separate versioned result; the plan itself is never acceptance evidence.
 
