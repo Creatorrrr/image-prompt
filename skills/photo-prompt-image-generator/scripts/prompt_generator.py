@@ -80,6 +80,7 @@ RESEARCH_EXTENSION_FILENAMES = (
     RESEARCH_EXTENSION_FILENAME,
     "photo_prompt_subculture_extension.json",
     "photo_prompt_worldbuilding_extension.json",
+    "photo_prompt_cjk_worldbuilding_extension.json",
 )
 RESEARCH_EXTENSION_SCHEMA = "photo-prompt-research-extension/v1"
 QUALITY_LAYERS_DATA_KEY = "_quality_layers"
@@ -914,6 +915,7 @@ VALID_PRESET_DOMAINS = {
     "visual_structure",
     "subculture_practice",
     "worldbuilding_system",
+    "cjk_narrative_world",
     "surreal",
     "adult",
 }
@@ -3786,6 +3788,7 @@ STRICT_TAG_FACET_SOURCE_DOMAINS = {
     "visual_structure",
     "subculture_practice",
     "worldbuilding_system",
+    "cjk_narrative_world",
 }
 
 # These packs are deliberately broad in subject matter but operationally
@@ -3807,6 +3810,7 @@ INTENT_SCOPED_PRESET_DOMAINS = {
     "visual_structure",
     "subculture_practice",
     "worldbuilding_system",
+    "cjk_narrative_world",
 }
 
 # Slot entries in the new packs already carry one of these authored tags. The
@@ -3827,6 +3831,7 @@ INTENT_SCOPED_ENTRY_DOMAIN_TAGS = {
     "visual_structure": "visual_structure",
     "subculture_practice": "subculture_practice",
     "worldbuilding_system": "worldbuilding_system",
+    "cjk_narrative_world": "cjk_narrative_world",
 }
 
 
@@ -4054,6 +4059,8 @@ def candidate_pack_quality_profile_id(data: JsonDict, preset: JsonDict, facets: 
         return "longitudinal_place_state"
     if "visual_structure" in domains:
         return "visual_structure"
+    if "cjk_narrative_world" in domains:
+        return "cjk_narrative_world"
     if "food" in subject_kinds or "food" in domains:
         return "food"
     if "architecture" in domains or "real_estate" in domains or any(term in blob for term in ("architecture", "interior", "building")):
@@ -7748,7 +7755,8 @@ def preset_matches_automatic_intent_scope(
         semantic_context
         and semantic_context.get("intent_source") == "user"
         and matched_routes
-        and requested_domains & {"subculture_practice", "worldbuilding_system"}
+        and requested_domains
+        & {"subculture_practice", "worldbuilding_system", "cjk_narrative_world"}
     ):
         # An explicit scoped-route alias is a stronger signal than embedding
         # similarity. Keep generic presets from competing with the named route
