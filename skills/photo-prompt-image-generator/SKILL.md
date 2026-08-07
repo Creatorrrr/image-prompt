@@ -23,11 +23,16 @@ Do not load every reference for a simple prompt request.
 - `scripts/generate_photo_prompt.py`: preferred wrapper and concept resolver.
 - `scripts/prompt_generator.py`: JSON-driven generation engine.
 - `scripts/audit_composed_prompt.py`: fail-closed composed-prompt audit.
+- `scripts/audit_scene_expression.py`: frozen-baseline and merged-runtime audit for scene counts, functions, operational dominance, and explicit render contracts.
 - `assets/photo_prompt_tags.json`: presets, slots, weights, facets, and coherence rules.
 - `assets/photo_prompt_research_extension.json`: append-only evidence-led operational and scientific presets, slots, facets, and typed-domain overrides loaded alongside the base dictionary.
 - `assets/photo_prompt_subculture_extension.json`: separately loaded, on-demand subculture practice presets and shared craft/community taxonomy; keep specialty signals out of unrelated automatic pools.
 - `assets/photo_prompt_worldbuilding_extension.json`: separately loaded, on-demand general world-system presets with atomic scene evidence and scoped routing.
 - `assets/photo_prompt_cjk_worldbuilding_extension.json`: separately loaded, source-backed CJK commercial-narrative world systems; keep market terms distinct and lock culture-sensitive scenes to one provenance.
+- `assets/photo_prompt_scene_expression_extension.json`: pilot scene-first data and shared scene-function/provenance vocabulary.
+- `assets/photo_prompt_scene_expression_worldbuilding.json` and `assets/photo_prompt_scene_expression_cjk.json`: compact route-specific non-operational scene blueprints; they extend render expression without duplicating research taxonomy slots.
+- `assets/render_scene_expression_baseline_v1.json` and `assets/render_scene_quality_holdout_v1.jsonl`: implementation-before structural baseline and frozen rendered-image acceptance sample.
+- `assets/render_scene_quality_visual_review_v1.json`: versioned metadata-free pixel review for the frozen 12-case rendered sample; a plan or prompt audit is not a substitute for this result.
 - `assets/concept_recipes.json`: Korean concepts, identity cores, scene variants, guides, and gates.
 - `assets/photo_prompt_quality_layers.json`: domain quality profiles and photographic decision layers.
 - `assets/photo_prompt_semantic_index.json`: semantic retrieval manifest; vector shards live under `assets/photo_prompt_semantic_index_shards/` and are materialized transparently.
@@ -98,6 +103,7 @@ Use the existing creativity lever when the user wants broader exploration rather
 - Explicit `--novelty` or `--semantic-profile` values take precedence over the corresponding derived setting.
 - Add `--selection-mode rule` for offline, reproducible inspection. Rule mode keeps its deterministic sampler; the creativity value is still carried as an explicit candidate-pack exploration request.
 - For a role with `scene_variants`, change `--seed` to explore another atomic scene while keeping `identity_core` stable. Do not mix slots from separate variants.
+- For a direct research-backed preset, `--scene-function <value>` selects a supported scene function without turning that control into visible user intent. It requires `--preset` and fails closed when the route has no compatible scene.
 
 Keep the default workflow when the user did not ask for broader exploration. Do not silently raise creativity for ordinary prompt or image requests.
 
@@ -130,7 +136,9 @@ There is no separate approval flag or policy mode. This project-level automatic 
 
 - Preserve every `mandatory_intent` as visible image content. A candidate label is not proof of coverage.
 - Choose only IDs exposed in the pack whose `applicability.status` is `eligible`; never invent or reconstruct a masked candidate.
-- Treat `intent_contract` as typed request meaning and `scene_contract` as a hard boundary. An `atomic_scene` group may use only IDs allowed by that one selected variant.
+- Treat `intent_contract` as typed request meaning and `scene_contract` as a hard boundary. A selected render blueprint contributes four mandatory literal scene atoms—subject, action, location, and prop—outside the ordinary sampler candidate pool.
+- Copy all four `selected_render_blueprint` labels into the composed prompt. Do not select an ordinary subject/action/location/prop candidate for the same controlled slots, and never reconstruct a sibling from `available_blueprint_ids`.
+- Respect `evidence_budget`: the selected physical prop normally consumes one clue, so add at most one other configured world-evidence slot when `maximum_chosen` is 2.
 - When `creative_exploration` is present, keep the sampler-selected subject, mandatory intents, and scene contract. Replace at most the stated number of slots, and use only listed contrast IDs that remain conflict-free together.
 - Preserve `negative_en` byte-for-byte.
 - Respect hard conflicts, concept gates, enforced role-scene policy, and species-family locks.
@@ -168,12 +176,18 @@ See `references/concept-routing.md` before adding a new preset, concept, or slot
 .venv/bin/python skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py \
   --preset street_documentary --selection-mode rule --seed 42 --emit-candidate-pack
 
+# Reproducible non-default scene function for a research-backed direct preset
+.venv/bin/python skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py \
+  --preset natural_process_trace_documentary --scene-function revelation \
+  --selection-mode rule --seed 42 --emit-candidate-pack
+
 # Explain concept routing without generation
 .venv/bin/python skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py \
   --concept "회사원" --explain-concept
 
 # Local validation
 .venv/bin/python skills/photo-prompt-image-generator/scripts/validate_photo_prompt_dictionary.py
+.venv/bin/python skills/photo-prompt-image-generator/scripts/audit_scene_expression.py --current
 .venv/bin/python skills/photo-prompt-image-generator/scripts/eval_semantic.py --check-index
 .venv/bin/python skills/photo-prompt-image-generator/scripts/eval_semantic.py --contradiction-check
 ```

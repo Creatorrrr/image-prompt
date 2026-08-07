@@ -150,7 +150,9 @@ def candidate_objects_from_pack(pack: dict[str, Any]) -> dict[str, dict[str, Any
 
 def assertion_terms_for_intent(intent: dict[str, Any], composed: dict[str, Any]) -> list[str]:
     text = str(intent.get("text") or "")
-    terms = [text]
+    terms = [str(item) for item in intent.get("audit_terms") or [] if str(item).strip()]
+    if not terms:
+        terms = [text]
     assertions = composed.get("coverage_assertions") or {}
     if isinstance(assertions, dict):
         terms.extend(assertion_values(assertions.get(text)))
@@ -662,6 +664,60 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
     for group in scene_contract.get("groups") or []:
         if not isinstance(group, dict) or str(group.get("strategy") or "") != "atomic_scene":
             continue
+        if str(group.get("source") or "") == "selected_render_blueprint":
+            for slot in group.get("required_slots") or []:
+                slot_contract = (group.get("slots") or {}).get(str(slot))
+                if not isinstance(slot_contract, dict):
+                    failures.append(
+                        {
+                            "check": "atomic_scene_contract",
+                            "reason": "resolved render scene is missing a required atomic slot",
+                            "group": group.get("group"),
+                            "slot": str(slot),
+                        }
+                    )
+                    continue
+                terms = [
+                    str(term)
+                    for term in slot_contract.get("audit_terms") or []
+                    if str(term).strip()
+                ]
+                if not terms or not any(text_contains_term(prompt_en, term) for term in terms):
+                    failures.append(
+                        {
+                            "check": "atomic_scene_contract",
+                            "reason": "mandatory resolved render atom is absent from prompt_en",
+                            "group": group.get("group"),
+                            "slot": str(slot),
+                            "accepted_terms": terms,
+                        }
+                    )
+            controlled_slots = {
+                str(slot)
+                for slot in group.get("controlled_candidate_slots") or []
+                if str(slot)
+            }
+            mixed_slots = sorted(slot for slot in controlled_slots if chosen_slots.get(slot))
+            if mixed_slots:
+                failures.append(
+                    {
+                        "check": "atomic_scene_contract",
+                        "reason": "ordinary sampler candidates cannot override resolved render atoms",
+                        "group": group.get("group"),
+                        "slots": mixed_slots,
+                    }
+                )
+            continue
+        for slot in group.get("required_slots") or []:
+            if not chosen_slots.get(str(slot)):
+                failures.append(
+                    {
+                        "check": "atomic_scene_contract",
+                        "reason": "required atomic-scene slot was not chosen",
+                        "group": group.get("group"),
+                        "slot": str(slot),
+                    }
+                )
         for slot, slot_contract in (group.get("slots") or {}).items():
             if not isinstance(slot_contract, dict):
                 continue
@@ -679,6 +735,47 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
                         "allowed_ids": sorted(allowed_ids),
                     }
                 )
+    evidence_budget = pack.get("evidence_budget") if isinstance(pack.get("evidence_budget"), dict) else {}
+    if evidence_budget.get("enabled"):
+        clue_slots = {str(item) for item in evidence_budget.get("world_clue_slots") or [] if str(item)}
+        render_contract = pack.get("render_contract") if isinstance(pack.get("render_contract"), dict) else {}
+        selected_scene = render_contract.get("selected_scene") if isinstance(render_contract.get("selected_scene"), dict) else {}
+        atomic_scene = selected_scene.get("atomic_scene") if isinstance(selected_scene.get("atomic_scene"), dict) else {}
+        chosen_clue_slots = sorted(
+            slot
+            for slot in clue_slots
+            if chosen_slots.get(slot) or isinstance(atomic_scene.get(slot), dict)
+        )
+        try:
+            minimum_chosen = int(evidence_budget.get("minimum_chosen", 0))
+            maximum_chosen = int(evidence_budget.get("maximum_chosen", len(clue_slots)))
+        except (TypeError, ValueError):
+            minimum_chosen, maximum_chosen = 0, len(clue_slots)
+        if len(chosen_clue_slots) < minimum_chosen or len(chosen_clue_slots) > maximum_chosen:
+            failures.append(
+                {
+                    "check": "evidence_budget",
+                    "reason": "chosen world-clue slots fall outside the sparse evidence budget",
+                    "chosen_slots": chosen_clue_slots,
+                    "minimum_chosen": minimum_chosen,
+                    "maximum_chosen": maximum_chosen,
+                }
+            )
+    render_contract = pack.get("render_contract") if isinstance(pack.get("render_contract"), dict) else {}
+    selected_scene = render_contract.get("selected_scene") if isinstance(render_contract.get("selected_scene"), dict) else {}
+    visual_provenance = [
+        str(item)
+        for item in selected_scene.get("diegetic_visual_provenance") or []
+        if str(item).strip()
+    ]
+    if render_contract.get("enabled") and len(set(visual_provenance)) > 1:
+        failures.append(
+            {
+                "check": "diegetic_visual_provenance",
+                "reason": "selected atomic scene carries multiple visual provenance values",
+                "values": sorted(set(visual_provenance)),
+            }
+        )
     role_scene_policy = pack.get("role_scene_policy") if isinstance(pack.get("role_scene_policy"), dict) else {}
     if role_scene_policy.get("enabled"):
         selected_locations = chosen_slots.get("location", set())

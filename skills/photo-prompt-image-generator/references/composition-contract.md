@@ -6,7 +6,9 @@
 
 The audit rejects a changed pack, a list containing zero or multiple packs, a missing composed field, a non-agent composer, an empty candidate selection, a changed negative prompt, failed concept gates, and a non-pass safety record.
 
-Candidate caps are four presets, four candidates for core slots, two for support slots, and 64 slot candidates in total. Every sampled selection is reserved before alternatives so truncation cannot silently remove it. Each slot alternative is selected from the exact pool recorded after sampler applicability, no-people, compatibility, hard-conflict, and atomic-scene filtering. `applicability.source` must be `sampler_eligible_pool`; a reconstructed or ineligible candidate is a contract failure.
+Candidate caps are four presets, four candidates for core slots, two for support slots, and 64 slot candidates in total. Every sampled selection is reserved before alternatives so truncation cannot silently remove it. Ordinary slot alternatives come from the exact pool recorded after sampler applicability, no-people, compatibility, and hard-conflict filtering, with `applicability.source: sampler_eligible_pool`.
+
+A resolved render blueprint is not a candidate. It lives in `render_contract.selected_scene` and a `scene_contract` group whose source is `selected_render_blueprint`, outside the ordinary `slots` pool. Its subject, action, location, and prop labels are mandatory literal render atoms. The composer copies all four labels into the prompt and does not choose ordinary candidate IDs for those controlled core slots. This preserves exact sampler provenance while preventing cross-scene mixing.
 
 An explicit `--creativity` value from `0.75` through `1.0` may add `creative_exploration`. Its contrast rows never add, remove, or reorder candidates: each `candidate_id` is an already exposed `sampler_eligible_pool` alternative that replaces the selected candidate in the same slot, clears conflicts with selected candidates in other slots, and exceeds the declared feature-distance floor. Keep the selected subject, mandatory intents, and atomic scene; use no more than `composition_guidance.replace_at_most` mutually compatible contrasts. The field is absent below the activation floor, preserving the ordinary pack shape.
 
@@ -30,7 +32,10 @@ If a composed ID names an open slot, the audit fails. Masked details are also re
 ## Meaning and Coherence
 
 - `intent_contract` and `coverage.intent_constraints`: typed subject categories, domains, negative-presence constraints, and their matching evidence. They are routing constraints, not prose suggestions.
-- `scene_contract`: every `atomic_scene` group is fail-closed. For each listed slot, chosen and exposed entry IDs must stay within the selected variant's `allowed_entry_ids`.
+- `scene_contract`: every `atomic_scene` group is fail-closed. Candidate-backed groups constrain IDs to a selected variant. A `selected_render_blueprint` group instead requires all four literal labels and rejects ordinary candidate IDs for its controlled core slots.
+- `render_contract.selected_scene`: one selected scene function set, one diegetic visual provenance, relationship stakes, and genre anchors. `market_origin` is not visual provenance and must not be rendered as a national costume shortcut.
+- `--scene-function` is an optional control for direct research-backed presets. It requires `--preset`, does not add a mandatory intent, and fails closed for an unknown or unavailable function. A no-people request first removes every blueprint that is not explicitly declared non-human; an empty or human-only remainder is an error rather than a silent human render.
+- `evidence_budget`: count chosen slot names, not candidate count. A materialized scene prop may be the first physical clue; when the range is 1–2, choose no more than one additional listed clue slot.
 - `concept_axes.required`: show each meaning axis through behavior, placement, expression, material, light, or framing.
 - `role_scene_policy`: when `enforce` is true, select an allowed location ID; omission is a failure.
 - `species_family`: select every required family slot from the allowed family. Missing IDs and mismatches both fail.

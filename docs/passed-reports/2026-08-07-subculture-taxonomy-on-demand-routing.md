@@ -8,7 +8,7 @@
 - Affected scope: `skills/photo-prompt-image-generator` taxonomy, intent routing, semantic index, evidence ledger, and regression contracts
 - Excluded scope: image rendering, visual A/B quality, publication, commit, push, and exhaustive regional or historical coverage
 - Related paths: `GOAL_PLAN.md`, `skills/photo-prompt-image-generator/assets/photo_prompt_subculture_extension.json`, `skills/photo-prompt-image-generator/assets/semantic_retrieval_holdout_subculture_v1.jsonl`, `skills/photo-prompt-image-generator/assets/research_evidence.jsonl`
-- Related failed reports: `docs/failed-reports/2026-08-07-semantic-index-batch-response.md`, `docs/failed-reports/2026-08-07-subculture-surface-applicability-golden-drift.md`
+- Related failed reports: `docs/failed-reports/2026-08-07-semantic-index-batch-response.md`, `docs/failed-reports/2026-08-07-subculture-surface-applicability-golden-drift.md`, `docs/failed-reports/2026-08-07-worldbuilding-render-scene-convergence.md`
 
 ## Reproduction context
 
@@ -39,6 +39,7 @@
 
 ## Reuse guidance
 
+- Render-quality boundary: This report remains valid for source traceability, on-demand routing, generic leakage, and candidate integrity. It does not qualify actual visual distinctiveness or rendered topic recognition; use the linked render-convergence failure when extending its approach.
 - Prefer: Freeze natural-language retrieval cases first, research practice and workflow boundaries rather than visual stereotypes, add a separate additive extension, and gate specialty entries by typed domain plus optional canonical route aliases.
 - Minimum verification when reused: Dictionary validator, semantic manifest/hash/shard check, direct route generation, generic negative controls, fixed bilingual retrieval, legacy retrieval, contradiction check, full suite, and one independent audit.
 - Applicable when: Expanding a general image taxonomy with several adjacent specialty cultures that share materials, venues, or visual vocabulary.

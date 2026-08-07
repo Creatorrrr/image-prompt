@@ -1,6 +1,17 @@
 {
   "schema_version": "photo-prompt-research-extension/v1",
   "auto_optional_policy": "authored_filters_only",
+  "preset_render_contract_defaults": {
+    "profile": "narrative_world",
+    "derive_filtered_scenes": true,
+    "derived_scene_limit": 2,
+    "scene_function_cycle": ["operational_documentary", "revelation"],
+    "scene_action_templates": ["{action}", "reacting as a hidden world rule, social relation, or material contradiction becomes visible during {action}"],
+    "topic_intents": [{"kind": "world_identity", "text": "recognizable original scene from {preset_en}", "audit_terms": ["{preset_en}", "{preset_ko}"]}],
+    "evidence_budget": {"world_clue_slots": ["prop", "situation_context", "occasion_context", "narrative_core", "capture_context", "procedure_step", "surface_material"], "minimum_chosen": 1, "maximum_chosen": 2, "guidance": "one decisive event, one physical world clue, and at most one additional mechanism clue"},
+    "diegetic_visual_provenance": ["original_speculative_world"],
+    "genre_anchors": ["original_world_rule", "visible_consequence", "material_world_evidence"]
+  },
   "facet_vocab": {
     "world_mechanism": [
       "ontology",

@@ -8,7 +8,7 @@
 - Affected scope: `skills/photo-prompt-image-generator` worldbuilding taxonomy, evidence ledger, intent routing, candidate packs, semantic index, and regression contracts
 - Excluded scope: image rendering, visual A/B quality, deployment, commit, push, PR, private or sacred community material, and exhaustive cultural representation
 - Related paths: `GOAL_PLAN.md`, `skills/photo-prompt-image-generator/assets/photo_prompt_worldbuilding_extension.json`, `skills/photo-prompt-image-generator/assets/semantic_retrieval_holdout_worldbuilding_v1.jsonl`, `skills/photo-prompt-image-generator/assets/research_evidence.jsonl`, `skills/photo-prompt-image-generator/scripts/prompt_generator.py`
-- Related failed reports: `docs/failed-reports/2026-08-07-worldbuilding-scoped-route-semantic-competition.md`, `docs/failed-reports/2026-08-07-semantic-index-batch-response.md`
+- Related failed reports: `docs/failed-reports/2026-08-07-worldbuilding-scoped-route-semantic-competition.md`, `docs/failed-reports/2026-08-07-semantic-index-batch-response.md`, `docs/failed-reports/2026-08-07-worldbuilding-render-scene-convergence.md`
 
 ## Reproduction context
 
@@ -39,6 +39,7 @@
 
 ## Reuse guidance
 
+- Render-quality boundary: This report remains valid for evidence traceability, scoped routing, provenance, leakage, and structural candidate contracts. It does not qualify scene diversity, genre recognizability, or rendered-image quality; the later material failure documents why those claims require a separate product and pixel gate.
 - Prefer: Freeze bilingual route expectations before implementation, research mechanisms and boundaries rather than visual stereotypes, map abstract lore into observable evidence slots, isolate the data in an additive extension, and combine typed-domain quarantine with exact route precedence.
 - Minimum verification when reused: Evidence-to-candidate trace check, two fixed-seed packs per route, candidate cap and provenance propagation, generic negative controls, fixed real retrieval, legacy retrieval, validator/index checks, contradiction/applicability, full suite, and one independent audit.
 - Applicable when: Adding several adjacent fictional-world or participatory-culture routes that overlap semantically with broad documentary, climate, archive, technology, or cultural presets.
