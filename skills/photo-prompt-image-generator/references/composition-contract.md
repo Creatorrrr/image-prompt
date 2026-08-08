@@ -14,6 +14,8 @@ An explicit `--creativity` value from `0.75` through `1.0` may add `creative_exp
 
 The same explicit range adds `creative_direction`, an agent-level creation and selection contract with no topic examples or new candidates. It requires an ordinary-baseline critique, at least four proposals using distinct concept operators, exactly one selection, one rule change, at least two visible consequences, a staged reveal path, and a concrete authorial grammar. Its evidence fields must be literal in `prompt_en`; signatures from unselected proposals are forbidden. See `creative-direction-contract.md`. The field is absent below the activation floor, so ordinary composed prompts retain their existing contract.
 
+`--viewer-experience` adds the separate topic-neutral `photo-viewer-experience/v1` composition contract. High creative-direction runs include it automatically. The contract changes neither presets nor slots; it requires one viewing context, audience-literacy scope, primary viewer need, scalar intended experience, visible first-glance hook, actor/action/target/consequence, attachment and reinspection conditions, and one commercial objective. Only declared visible evidence is literal in `prompt_en`; the intended response remains a hypothesis. See `viewer-experience-contract.md`. Ordinary requests without an explicit audience, affect, attachment, commercial, subculture-response, or creative goal retain the previous pack shape.
+
 ## Required Composition Behavior
 
 - Use every `mandatory_intents[].text` as literal or faithfully translated visible content.
@@ -24,6 +26,7 @@ The same explicit range adds `creative_direction`, an agent-level creation and s
 - Do not choose both sides of a hard conflict.
 - Preserve `negative_en` exactly, including `null`.
 - Set `composer` to `agent`.
+- When `viewer_experience.enabled` is true, add the composed `viewer_experience` object and obey its conditional evidence rules.
 
 ## Masking and Generalization
 

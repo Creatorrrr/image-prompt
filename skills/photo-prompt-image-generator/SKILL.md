@@ -1,6 +1,6 @@
 ---
 name: photo-prompt-image-generator
-description: Generate image-ready photographic prompts and, when requested, images from this project's JSON-managed presets, concepts, and quality profiles. Use for random, intent-led, preset-based, or Korean short-concept photo requests.
+description: Generate image-ready photographic prompts and, when requested, images from this project's JSON-managed presets, concepts, and quality profiles. Use for random, intent-led, preset-based, Korean short-concept, creative or authorial, commercial audience-outcome, and subculture character-response photo requests.
 ---
 
 # Photo Prompt Image Generator
@@ -13,6 +13,7 @@ Canonical skill path: `skills/photo-prompt-image-generator`.
 
 - Candidate-pack composition, audit, safety, and quality fields: `references/composition-contract.md`
 - Viewer-perceived creativity, multi-proposal selection, prompt binding, and authorial grammar: `references/creative-direction-contract.md`
+- Viewer needs, affect causes, attachment, reinspection, commercial objectives, and metadata-free review: `references/viewer-experience-contract.md`
 - Intent, concept, preset, slot, and anti-overfitting routing: `references/concept-routing.md`
 - Native image generation, explicit API use, saving, retries, and ledger records: `references/image-runtime.md`
 - Dictionary edits, validation, semantic index, and evaluation gates: `references/maintenance.md`
@@ -37,6 +38,7 @@ Do not load every reference for a simple prompt request.
 - `assets/render_scene_expression_baseline_v1.json` and `assets/render_scene_quality_holdout_v1.jsonl`: implementation-before structural baseline and frozen rendered-image acceptance sample.
 - `assets/render_scene_quality_visual_review_v1.json`: versioned metadata-free pixel review for the frozen 12-case rendered sample; a plan or prompt audit is not a substitute for this result.
 - `assets/semantic_retrieval_holdout_character_moe_v1.jsonl`, `assets/render_character_moe_quality_holdout_v1.jsonl`, and `assets/render_character_moe_quality_visual_review_v1.json`: frozen multilingual retrieval, eight-family render cases, and their metadata-free pixel qualification for the character-mechanism extension.
+- `assets/render_viewer_experience_holdout_v1.jsonl` and `assets/render_viewer_experience_visual_review_v1.json`: implementation-before commercial, subculture-attachment, and meaningful-image cases plus their metadata-free local pixel qualification.
 - `assets/concept_recipes.json`: Korean concepts, identity cores, scene variants, guides, and gates.
 - `assets/photo_prompt_quality_layers.json`: domain quality profiles and photographic decision layers.
 - `assets/photo_prompt_semantic_index.json`: semantic retrieval manifest; vector shards live under `assets/photo_prompt_semantic_index_shards/` and are materialized transparently.
@@ -83,6 +85,8 @@ Add `coverage_assertions` only when useful. Every asserted phrase must occur lit
 
 When the pack contains `creative_direction.enabled: true`, `creative_brief` is also required. Read `references/creative-direction-contract.md`, develop at least four distinct concept moves, critique them, select exactly one, and bind its visual consequences and authorial grammar literally into `prompt_en`.
 
+When the pack contains `viewer_experience.enabled: true`, `viewer_experience` is also required in the composed object. Read `references/viewer-experience-contract.md`, select one primary viewer need and one intended experience, then bind the visible hook and actor/action/target/consequence evidence into `prompt_en`.
+
 3. Audit before returning the prompt or generating an image:
 
 ```bash
@@ -114,7 +118,25 @@ Automatically use the creative-direction path when the user explicitly asks for 
 - For a role with `scene_variants`, change `--seed` to explore another atomic scene while keeping `identity_core` stable. Do not mix slots from separate variants.
 - For a direct research-backed preset, `--scene-function <value>` selects a supported scene function without turning that control into visible user intent. It requires `--preset` and fails closed when the route has no compatible scene.
 
-Keep the default workflow when the user did not ask for broader exploration. Do not silently raise creativity for ordinary prompt or image requests.
+High creative-direction runs include `viewer_experience` automatically. Keep the default workflow when the user did not ask for broader exploration. Do not silently raise creativity for ordinary prompt or image requests.
+
+## Viewer Experience Workflow
+
+Use `--viewer-experience` without raising creativity when the user explicitly asks about audience response, emotion, empathy, immersion, attachment, revisiting, sharing, purchase behavior, a commercial communication objective, or a subculture character relationship. Korean triggers include `독자`, `관객`, `감동`, `공감`, `몰입`, `애착`, `다시 보고 싶은`, `기억에 남는`, `광고`, and an explicit relation-centered `귀여움`; interpret meaning, not keyword presence.
+
+```bash
+.venv/bin/python skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py \
+  --concept "성인 조사원과 비인간 동료의 관계" \
+  --viewer-experience --emit-candidate-pack --n 1
+```
+
+- Select exactly one `primary_viewer_need`, one scalar `intended_experience`, and one `commercial_objective`; do not stack affects to simulate depth.
+- Treat the block as a response hypothesis, not proof of human emotion, purchase, or long-term attachment.
+- Bind visible causes: first-glance hook plus actor, action, target, and consequence. Do not bind “the viewer feels” outcome claims.
+- `care`, `relatedness`, and `identity` need a non-`none` attachment channel and directed visible relation evidence.
+- `comprehend`, `remember`, and `act` need literal product or subject legibility. A product-detail image may put immediate clarity ahead of a second-reading device.
+- Noncommercial creative-direction work needs one causal reinspection reward. Keep it tied to the same premise rather than adding an Easter egg.
+- Judge generated pixels without prompt metadata at both thumbnail and native size. LLM inspection is local product evidence, not a population study.
 
 ## Safety Contract
 
@@ -150,6 +172,7 @@ There is no separate approval flag or policy mode. This project-level automatic 
 - Respect `evidence_budget`: the selected physical prop normally consumes one clue, so add at most one other configured world-evidence slot when `maximum_chosen` is 2.
 - When `creative_exploration` is present, keep the sampler-selected subject, mandatory intents, and scene contract. Replace at most the stated number of slots, and use only listed contrast IDs that remain conflict-free together.
 - When `creative_direction` is present, follow `references/creative-direction-contract.md`. Select one proposal only; never blend rejected signatures into the final prompt. The concept move may reinterpret relationships inside the selected scene but may not replace mandatory subjects, atomic scene labels, character grammar, safety, or negative bytes.
+- When `viewer_experience` is present, follow `references/viewer-experience-contract.md`. Keep one viewer need and intended experience, make affect causal through visible action, and preserve commercial clarity or typed character evidence. Genre labels, youth morphology, faces, and style adjectives alone are not attachment evidence.
 - Preserve `negative_en` byte-for-byte.
 - Respect hard conflicts, concept gates, enforced role-scene policy, and species-family locks.
 - When `character_grammar.enabled` is true, preserve its primary runtime mechanism and use no more than its two support cues. Treat router IDs, policy IDs, market terms, and audience familiarity as nonvisual guidance; the selected atomic scene is the visible realization.

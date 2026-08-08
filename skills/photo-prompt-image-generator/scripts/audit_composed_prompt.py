@@ -403,6 +403,318 @@ def normalized_unique_count(values: Sequence[str]) -> int:
     return len({str(value).strip().lower() for value in values if str(value).strip()})
 
 
+def audit_viewer_experience(
+    pack: dict[str, Any],
+    composed: dict[str, Any],
+    prompt_en: str,
+) -> list[dict[str, Any]]:
+    contract = pack.get("viewer_experience")
+    if not isinstance(contract, dict) or not contract.get("enabled"):
+        return []
+
+    failures: list[dict[str, Any]] = []
+    experience = composed.get("viewer_experience")
+    if not isinstance(experience, dict):
+        return [
+            {
+                "check": "viewer_experience",
+                "reason": "enabled viewer-experience pack requires a viewer_experience object",
+            }
+        ]
+
+    required_fields = [str(item) for item in contract.get("required_fields") or [] if str(item)]
+    missing_fields = [field for field in required_fields if field not in experience]
+    if missing_fields:
+        failures.append(
+            {
+                "check": "viewer_experience",
+                "reason": "viewer experience is missing required fields",
+                "fields": missing_fields,
+            }
+        )
+
+    scalar_fields = (
+        "viewing_context",
+        "primary_viewer_need",
+        "intended_experience",
+        "viewer_promise",
+        "first_glance_hook",
+        "interpretive_question",
+        "attachment_channel",
+        "commercial_objective",
+    )
+    invalid_scalars = [
+        field
+        for field in scalar_fields
+        if not isinstance(experience.get(field), str) or not str(experience.get(field)).strip()
+    ]
+    if invalid_scalars:
+        failures.append(
+            {
+                "check": "viewer_experience_primary",
+                "reason": "viewer experience must select one scalar value for each primary field",
+                "fields": invalid_scalars,
+            }
+        )
+    if "primary_viewer_needs" in experience or "intended_experiences" in experience:
+        failures.append(
+            {
+                "check": "viewer_experience_affect_stacking",
+                "reason": "use one primary_viewer_need and one scalar intended_experience, not stacked plural fields",
+            }
+        )
+
+    allowed = contract.get("allowed_values") if isinstance(contract.get("allowed_values"), dict) else {}
+    for field, enum_key in (
+        ("viewing_context", "viewing_context"),
+        ("primary_viewer_need", "primary_viewer_need"),
+        ("attachment_channel", "attachment_channel"),
+        ("commercial_objective", "commercial_objective"),
+    ):
+        value = str(experience.get(field) or "")
+        values = {str(item) for item in allowed.get(enum_key) or []}
+        if value and values and value not in values:
+            failures.append(
+                {
+                    "check": "viewer_experience_enum",
+                    "reason": "viewer experience uses a value outside the candidate-pack contract",
+                    "field": field,
+                    "value": value,
+                }
+            )
+
+    audience = experience.get("target_audience")
+    if not isinstance(audience, dict):
+        audience = {}
+    audience_fields = [str(item) for item in contract.get("target_audience_fields") or [] if str(item)]
+    missing_audience = [
+        field
+        for field in audience_fields
+        if not isinstance(audience.get(field), str) or not str(audience.get(field)).strip()
+    ]
+    if missing_audience:
+        failures.append(
+            {
+                "check": "viewer_experience_audience",
+                "reason": "target audience must declare literacy and prior-knowledge scope",
+                "fields": missing_audience,
+            }
+        )
+    literacy = str(audience.get("literacy") or "")
+    allowed_literacy = {str(item) for item in allowed.get("audience_literacy") or []}
+    if literacy and allowed_literacy and literacy not in allowed_literacy:
+        failures.append(
+            {
+                "check": "viewer_experience_audience",
+                "reason": "audience literacy is outside the candidate-pack contract",
+                "value": literacy,
+            }
+        )
+
+    affect = experience.get("affect_evidence")
+    if not isinstance(affect, dict):
+        affect = {}
+    affect_fields = [str(item) for item in contract.get("affect_evidence_fields") or [] if str(item)]
+    missing_affect = [
+        field
+        for field in affect_fields
+        if not isinstance(affect.get(field), str) or not str(affect.get(field)).strip()
+    ]
+    if missing_affect:
+        failures.append(
+            {
+                "check": "viewer_experience_affect_cause",
+                "reason": "affect requires a visible actor, action, target, and consequence",
+                "fields": missing_affect,
+            }
+        )
+
+    reinspection = experience.get("reinspection_reward")
+    if not isinstance(reinspection, dict):
+        reinspection = {}
+    reinspection_mode = str(reinspection.get("mode") or "")
+    reinspection_description = str(reinspection.get("description") or "").strip()
+    allowed_reinspection = {str(item) for item in allowed.get("reinspection_mode") or []}
+    if reinspection_mode not in allowed_reinspection:
+        failures.append(
+            {
+                "check": "viewer_experience_reinspection",
+                "reason": "reinspection reward requires one allowed mode",
+                "value": reinspection_mode or None,
+            }
+        )
+    elif reinspection_mode == "causal_second_reading" and not reinspection_description:
+        failures.append(
+            {
+                "check": "viewer_experience_reinspection",
+                "reason": "causal second reading requires a concrete description",
+            }
+        )
+
+    conditional = contract.get("conditional_rules") if isinstance(contract.get("conditional_rules"), dict) else {}
+    primary_need = str(experience.get("primary_viewer_need") or "")
+    attachment_channel = str(experience.get("attachment_channel") or "")
+    attachment_needs = {str(item) for item in conditional.get("attachment_required_for_needs") or []}
+    if primary_need in attachment_needs and attachment_channel == "none":
+        failures.append(
+            {
+                "check": "viewer_experience_attachment",
+                "reason": "the selected viewer need requires a visible attachment channel",
+                "primary_viewer_need": primary_need,
+            }
+        )
+
+    commercial_objective = str(experience.get("commercial_objective") or "")
+    creative_direction = pack.get("creative_direction")
+    creative_enabled = isinstance(creative_direction, dict) and creative_direction.get("enabled") is True
+    if (
+        creative_enabled
+        and commercial_objective == "none"
+        and conditional.get("creative_noncommercial_reinspection_required") is True
+        and reinspection_mode != "causal_second_reading"
+    ):
+        failures.append(
+            {
+                "check": "viewer_experience_reinspection",
+                "reason": "a noncommercial creative-direction run requires one causal second-reading reward",
+            }
+        )
+    if creative_enabled and commercial_objective == "none" and str(experience.get("interpretive_question") or "").strip().lower() == "none":
+        failures.append(
+            {
+                "check": "viewer_experience_question",
+                "reason": "a noncommercial creative-direction run requires a resolvable interpretive question",
+            }
+        )
+
+    evidence = experience.get("prompt_evidence")
+    if not isinstance(evidence, dict):
+        evidence = {}
+    binding = contract.get("prompt_binding") if isinstance(contract.get("prompt_binding"), dict) else {}
+    required_evidence_fields = [str(item) for item in binding.get("required_evidence_fields") or [] if str(item)]
+    evidence_phrases: list[str] = []
+    missing_evidence = []
+    for field in required_evidence_fields:
+        phrase = str(evidence.get(field) or "").strip()
+        if phrase:
+            evidence_phrases.append(phrase)
+        else:
+            missing_evidence.append(field)
+    if missing_evidence:
+        failures.append(
+            {
+                "check": "viewer_experience_binding",
+                "reason": "viewer experience is missing required visible prompt evidence",
+                "fields": missing_evidence,
+            }
+        )
+
+    conditional_evidence = binding.get("conditional_evidence_fields") if isinstance(binding.get("conditional_evidence_fields"), dict) else {}
+    conditional_required: list[str] = []
+    if attachment_channel and attachment_channel != "none":
+        conditional_required.append(str(conditional_evidence.get("attachment_channel_not_none") or "attachment_phrase"))
+    if reinspection_mode == "causal_second_reading":
+        conditional_required.append(
+            str(conditional_evidence.get("reinspection_mode_causal_second_reading") or "reinspection_reward_phrase")
+        )
+    commercial_legibility_objectives = {
+        str(item) for item in conditional.get("commercial_legibility_required_for_objectives") or []
+    }
+    if commercial_objective in commercial_legibility_objectives:
+        conditional_required.append(
+            str(conditional_evidence.get("commercial_objective_comprehend_remember_act") or "commercial_legibility_phrase")
+        )
+    missing_conditional = []
+    for field in conditional_required:
+        phrase = str(evidence.get(field) or "").strip()
+        if phrase:
+            evidence_phrases.append(phrase)
+        else:
+            missing_conditional.append(field)
+    if missing_conditional:
+        failures.append(
+            {
+                "check": "viewer_experience_binding",
+                "reason": "viewer experience is missing conditional visible evidence",
+                "fields": missing_conditional,
+            }
+        )
+
+    missing_literal = [phrase for phrase in evidence_phrases if not text_contains_term(prompt_en, phrase)]
+    if missing_literal:
+        failures.append(
+            {
+                "check": "viewer_experience_binding",
+                "reason": "declared viewer-experience evidence is not literal in prompt_en",
+                "phrases": list(dict.fromkeys(missing_literal)),
+            }
+        )
+
+    outcome_claim_fragments = (
+        "viewer feels",
+        "audience feels",
+        "makes the viewer feel",
+        "evokes empathy",
+        "creates attachment",
+        "emotionally moving",
+        "immersive experience",
+        "memorable image",
+        "trustworthy product",
+    )
+    weak_evidence_tokens = {
+        "anime",
+        "beautiful",
+        "cinematic",
+        "cute",
+        "dramatic",
+        "emotional",
+        "kawaii",
+        "moe",
+        "photorealistic",
+        "subculture",
+    }
+    invalid_claims = []
+    weak_only = []
+    youth_morphology = []
+    for phrase in evidence_phrases:
+        lower = phrase.lower()
+        if any(fragment in lower for fragment in outcome_claim_fragments):
+            invalid_claims.append(phrase)
+        tokens = {token for token in re.findall(r"[a-z]+", lower) if token}
+        if tokens and tokens <= weak_evidence_tokens:
+            weak_only.append(phrase)
+        if attachment_channel != "none" and any(
+            fragment in lower
+            for fragment in ("baby face", "childlike", "child-like", "youthful proportions", "oversized eyes")
+        ):
+            youth_morphology.append(phrase)
+    if invalid_claims:
+        failures.append(
+            {
+                "check": "viewer_experience_outcome_claim",
+                "reason": "prompt evidence must show a visible cause rather than assert a viewer outcome",
+                "phrases": invalid_claims,
+            }
+        )
+    if weak_only:
+        failures.append(
+            {
+                "check": "viewer_experience_weak_evidence",
+                "reason": "genre labels and style or affect adjectives alone are not viewer-experience evidence",
+                "phrases": weak_only,
+            }
+        )
+    if youth_morphology:
+        failures.append(
+            {
+                "check": "viewer_experience_attachment",
+                "reason": "face or youth morphology cannot serve as attachment evidence",
+                "phrases": youth_morphology,
+            }
+        )
+    return failures
+
+
 def audit_creative_direction(
     pack: dict[str, Any],
     composed: dict[str, Any],
@@ -831,6 +1143,7 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
         failures.append({"check": "negative_en", "reason": "negative_en differs from candidate pack"})
 
     failures.extend(audit_creative_direction(pack, composed, prompt_en))
+    failures.extend(audit_viewer_experience(pack, composed, prompt_en))
 
     safety = pack.get("safety") if isinstance(pack.get("safety"), dict) else {}
     if safety.get("status") != "pass" or safety.get("requires_user_approval") is True:
