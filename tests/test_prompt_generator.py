@@ -6162,6 +6162,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "concept_axes",
                 "scene_contract",
                 "render_contract",
+                "character_grammar",
                 "evidence_budget",
                 "photographic_integration",
                 "visual_proposition",

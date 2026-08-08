@@ -84,8 +84,11 @@ RESEARCH_EXTENSION_FILENAMES = (
     "photo_prompt_scene_expression_extension.json",
     "photo_prompt_scene_expression_worldbuilding.json",
     "photo_prompt_scene_expression_cjk.json",
+    "photo_prompt_character_moe_extension.json",
+    "photo_prompt_scene_expression_character_moe.json",
 )
 RESEARCH_EXTENSION_SCHEMA = "photo-prompt-research-extension/v1"
+CHARACTER_MECHANISM_GRAPH_SCHEMA = "photo-character-mechanism-graph/v1"
 QUALITY_LAYERS_DATA_KEY = "_quality_layers"
 SOFT_ANCHOR_WEIGHT_MULTIPLIER = 24.0
 SOFT_ANCHOR_PROMOTED_WEIGHT_MULTIPLIER = 36.0
@@ -955,6 +958,7 @@ VALID_PRESET_DOMAINS = {
     "subculture_practice",
     "worldbuilding_system",
     "cjk_narrative_world",
+    "character_moe_grammar",
     "surreal",
     "adult",
 }
@@ -1330,6 +1334,27 @@ def merge_research_extension(data: JsonDict, extension: JsonDict) -> JsonDict:
     for slot, entries in (extension.get("slots") or {}).items():
         append_unique_id_entries(slots.setdefault(str(slot), []), entries, f"slots.{slot}")
 
+    extension_coherence = extension.get("coherence_rules") or {}
+    if not isinstance(extension_coherence, dict):
+        raise ValueError("coherence_rules must be an object")
+    coherence = data.setdefault("coherence_rules", {})
+    if not isinstance(coherence, dict):
+        raise ValueError("coherence_rules target must be an object")
+    for collection in ("slot_conflicts", "slot_context_rules"):
+        append_unique_id_entries(
+            coherence.setdefault(collection, []),
+            extension_coherence.get(collection),
+            f"coherence_rules.{collection}",
+        )
+
+    extension_character_graph = extension.get("character_mechanism_graph")
+    if extension_character_graph is not None:
+        if not isinstance(extension_character_graph, dict):
+            raise ValueError("character_mechanism_graph must be an object")
+        if data.get("character_mechanism_graph"):
+            raise ValueError("character_mechanism_graph may be declared by only one extension")
+        data["character_mechanism_graph"] = copy.deepcopy(extension_character_graph)
+
     applicability = data.setdefault("slot_applicability", {})
     extension_applicability = extension.get("slot_applicability") or {}
     for mapping_key in ("preset_domain_overrides", "subject_category_overrides"):
@@ -1366,6 +1391,308 @@ def merge_research_extension(data: JsonDict, extension: JsonDict) -> JsonDict:
     return data
 
 
+def character_runtime_node_topic_ids(node: JsonDict) -> Set[str]:
+    values = normalize_list(node.get("topic_ids"))
+    if not values and str(node.get("topic_id") or ""):
+        values = [str(node.get("topic_id"))]
+    return {str(item) for item in values if str(item)}
+
+
+def character_runtime_node_family_ids(node: JsonDict) -> Set[str]:
+    values = normalize_list(node.get("family_ids"))
+    if not values and str(node.get("family_id") or ""):
+        values = [str(node.get("family_id"))]
+    return {str(item) for item in values if str(item)}
+
+
+def validate_character_mechanism_graph(data: JsonDict) -> None:
+    """Validate the optional character graph and every bound preset scene.
+
+    Character mechanisms stay outside the ordinary sampler pool.  Validation
+    therefore treats scene runtime IDs as a small executable bundle: one
+    primary visual atom plus at most two compatible support atoms.  Router and
+    guard nodes may guide routing, but cannot masquerade as visual evidence.
+    """
+    graph = data.get("character_mechanism_graph")
+    if not graph:
+        return
+    if not isinstance(graph, dict):
+        raise ValueError("character_mechanism_graph must be an object")
+    if graph.get("schema_version") != CHARACTER_MECHANISM_GRAPH_SCHEMA:
+        raise ValueError(
+            f"Unsupported character mechanism graph schema: {graph.get('schema_version')!r}"
+        )
+    domain = str(graph.get("domain") or "")
+    if domain != "character_moe_grammar":
+        raise ValueError(f"Unsupported character mechanism domain: {domain!r}")
+    priority_order = normalize_list(graph.get("priority_order"))
+    expected_priority = [
+        "observable_action",
+        "relationship_stake",
+        "expression_or_gaze",
+        "morphology_or_state",
+        "costume",
+    ]
+    if priority_order != expected_priority:
+        raise ValueError("character_mechanism_graph.priority_order must use the fixed sparse priority")
+    max_support_cues = int(graph.get("max_support_cues", -1))
+    if max_support_cues != 2:
+        raise ValueError("character_mechanism_graph.max_support_cues must be 2")
+
+    def unique_rows(key: str) -> Dict[str, JsonDict]:
+        rows = graph.get(key)
+        if not isinstance(rows, list) or not rows:
+            raise ValueError(f"character_mechanism_graph.{key} must be a non-empty list")
+        indexed: Dict[str, JsonDict] = {}
+        for row in rows:
+            if not isinstance(row, dict) or not str(row.get("id") or ""):
+                raise ValueError(f"character_mechanism_graph.{key} entries require an id")
+            row_id = str(row["id"])
+            if row_id in indexed:
+                raise ValueError(f"character_mechanism_graph.{key}: duplicate id {row_id}")
+            indexed[row_id] = row
+        return indexed
+
+    families = unique_rows("families")
+    nodes = unique_rows("runtime_nodes")
+    policies = unique_rows("policies")
+    edges = unique_rows("compatibility_edges")
+    guards = unique_rows("guard_rules")
+    topic_to_family: Dict[str, str] = {}
+    for family_id, family in families.items():
+        for topic_id in normalize_list(family.get("topic_ids")):
+            if topic_id in topic_to_family:
+                raise ValueError(f"character topic {topic_id} belongs to multiple families")
+            topic_to_family[topic_id] = family_id
+    if not topic_to_family:
+        raise ValueError("character_mechanism_graph families declare no topics")
+
+    valid_roles = {"visual_atom", "router", "guard"}
+    for node_id, node in nodes.items():
+        topic_ids = character_runtime_node_topic_ids(node)
+        family_ids = character_runtime_node_family_ids(node)
+        role = str(node.get("role") or "")
+        if (
+            not topic_ids
+            or any(topic_id not in topic_to_family for topic_id in topic_ids)
+            or family_ids != {topic_to_family[topic_id] for topic_id in topic_ids}
+        ):
+            raise ValueError(f"character runtime node {node_id} has invalid topic/family memberships")
+        if role not in valid_roles:
+            raise ValueError(f"character runtime node {node_id} has invalid role {role!r}")
+        if not str(node.get("definition") or "").strip():
+            raise ValueError(f"character runtime node {node_id} requires a definition")
+        definition_lower = str(node.get("definition") or "").lower()
+        obvious_nonvisual = (
+            node_id.endswith("_guard")
+            or node_id.endswith("_axis")
+            or node_id.endswith("_limitation")
+            or node_id.endswith("_declaration")
+            or node_id.endswith("_evidence_map")
+            or node_id in {"adult_work_or_life_context", "adult_peer_relationship_context"}
+            or (
+                "cjk_term_character_grammar_comparison" in topic_ids
+                and ("term" in node_id or "alias" in node_id or "market_label" in node_id)
+            )
+            or "router" in definition_lower
+            or "nonvisual" in definition_lower
+            or definition_lower.startswith("guard:")
+            or "safeguard" in definition_lower
+        )
+        if role == "visual_atom" and obvious_nonvisual:
+            raise ValueError(f"character runtime node {node_id} misclassifies nonvisual guidance")
+        if role == "visual_atom" and str(node.get("priority_dimension") or "") not in expected_priority:
+            raise ValueError(f"character visual runtime node {node_id} has invalid priority dimension")
+
+    for edge_id, edge in edges.items():
+        topic_id = str(edge.get("topic_id") or "")
+        node_ids = normalize_list(edge.get("node_ids"))
+        if topic_id not in topic_to_family or not node_ids:
+            raise ValueError(f"character compatibility edge {edge_id} has invalid topic or nodes")
+        for node_id in node_ids:
+            node = nodes.get(node_id)
+            if (
+                node is None
+                or topic_id not in character_runtime_node_topic_ids(node)
+                or str(node.get("role") or "") != "visual_atom"
+            ):
+                raise ValueError(f"character compatibility edge {edge_id} references invalid node {node_id}")
+    for guard_id, guard in guards.items():
+        topic_ids = normalize_list(guard.get("topic_ids"))
+        if topic_ids and any(topic_id not in topic_to_family for topic_id in topic_ids):
+            raise ValueError(f"character guard rule {guard_id} references an unknown topic")
+        required_policies = normalize_list(guard.get("required_policy_ids"))
+        if any(policy_id not in policies for policy_id in required_policies):
+            raise ValueError(f"character guard rule {guard_id} references an unknown policy")
+        forbidden_runtime_ids = normalize_list(guard.get("forbidden_runtime_ids"))
+        if any(runtime_id not in nodes for runtime_id in forbidden_runtime_ids):
+            raise ValueError(f"character guard rule {guard_id} references an unknown runtime node")
+        forbidden_combinations = guard.get("forbidden_runtime_combinations") or []
+        if not isinstance(forbidden_combinations, list):
+            raise ValueError(f"character guard rule {guard_id} has invalid forbidden combinations")
+        for combination in forbidden_combinations:
+            combination_ids = normalize_list(combination)
+            if len(set(combination_ids)) < 2 or any(runtime_id not in nodes for runtime_id in combination_ids):
+                raise ValueError(f"character guard rule {guard_id} has an invalid forbidden combination")
+        trigger_runtime_ids = normalize_list(guard.get("trigger_runtime_ids"))
+        requires_runtime_any = normalize_list(guard.get("requires_runtime_any"))
+        if any(runtime_id not in nodes for runtime_id in trigger_runtime_ids + requires_runtime_any):
+            raise ValueError(f"character guard rule {guard_id} references an unknown conditional runtime node")
+        if bool(trigger_runtime_ids) != bool(requires_runtime_any):
+            raise ValueError(f"character guard rule {guard_id} requires both trigger and required runtime IDs")
+        if (
+            not required_policies
+            and not forbidden_runtime_ids
+            and not forbidden_combinations
+            and not trigger_runtime_ids
+        ):
+            raise ValueError(f"character guard rule {guard_id} has no executable condition")
+    for policy_id, policy in policies.items():
+        if not str(policy.get("definition") or "").strip():
+            raise ValueError(f"character policy {policy_id} requires a definition")
+
+    character_presets = [
+        preset
+        for preset in data.get("presets", [])
+        if isinstance(preset, dict) and domain in preset_domains(preset, data)
+    ]
+    preset_topic_ids: Set[str] = set()
+    for preset in character_presets:
+        preset_id = str(preset.get("id") or "")
+        render_contract = preset.get("render_contract")
+        grammar = (
+            render_contract.get("character_grammar")
+            if isinstance(render_contract, dict)
+            and isinstance(render_contract.get("character_grammar"), dict)
+            else {}
+        )
+        topic_id = str(grammar.get("topic_id") or "")
+        family_id = str(grammar.get("family_id") or "")
+        if topic_id not in topic_to_family or topic_to_family[topic_id] != family_id:
+            raise ValueError(f"character preset {preset_id} has invalid topic/family binding")
+        if topic_id in preset_topic_ids:
+            raise ValueError(f"character topic {topic_id} is bound to multiple presets")
+        preset_topic_ids.add(topic_id)
+        policy_ids = normalize_list(grammar.get("policy_ids"))
+        if any(policy_id not in policies for policy_id in policy_ids):
+            raise ValueError(f"character preset {preset_id} references an unknown policy")
+        runtime_anchor_ids = normalize_list(grammar.get("runtime_anchor_ids"))
+        if not runtime_anchor_ids:
+            raise ValueError(f"character preset {preset_id} requires runtime anchor IDs")
+        for runtime_id in runtime_anchor_ids:
+            node = nodes.get(runtime_id)
+            if node is None or topic_id not in character_runtime_node_topic_ids(node):
+                raise ValueError(f"character preset {preset_id} has invalid runtime anchor {runtime_id}")
+        blueprints = (
+            render_contract.get("scene_blueprints")
+            if isinstance(render_contract, dict)
+            and isinstance(render_contract.get("scene_blueprints"), list)
+            else []
+        )
+        if len(blueprints) < 3:
+            raise ValueError(f"character preset {preset_id} requires at least three scene blueprints")
+        scene_functions: Set[str] = set()
+        blueprint_ids: Set[str] = set()
+        static_portrait_count = 0
+        selected_runtime_bundles: Set[tuple[str, ...]] = set()
+        selected_primary_ids: Set[str] = set()
+        selected_runtime_union: Set[str] = set()
+        micro_events: Set[tuple[str, str, str]] = set()
+        required_evidence_types = set(normalize_list(grammar.get("required_evidence_types")))
+        if not required_evidence_types:
+            raise ValueError(f"character preset {preset_id} requires evidence-type bindings")
+        for blueprint in blueprints:
+            if not isinstance(blueprint, dict):
+                raise ValueError(f"character preset {preset_id} has a non-object scene blueprint")
+            blueprint_id = str(blueprint.get("id") or "")
+            if not blueprint_id or blueprint_id in blueprint_ids:
+                raise ValueError(f"character preset {preset_id} has a missing or duplicate blueprint ID")
+            blueprint_ids.add(blueprint_id)
+            micro_event = (
+                str(blueprint.get("action") or "").strip(),
+                str(blueprint.get("location") or "").strip(),
+                str(blueprint.get("prop") or "").strip(),
+            )
+            if not all(micro_event) or micro_event in micro_events:
+                raise ValueError(f"character scene {preset_id}.{blueprint_id} repeats an atomic micro-event")
+            micro_events.add(micro_event)
+            if not isinstance(blueprint.get("static_portrait"), bool):
+                raise ValueError(f"character scene {preset_id}.{blueprint_id} requires static_portrait boolean")
+            static_portrait_count += bool(blueprint.get("static_portrait"))
+            if "adult" not in set(normalize_list(blueprint.get("subject_kind"))):
+                raise ValueError(f"character scene {preset_id}.{blueprint_id} requires explicit adult subject metadata")
+            visual_provenance = normalize_list(blueprint.get("diegetic_visual_provenance"))
+            if len(visual_provenance) != 1 or len(set(visual_provenance)) != 1:
+                raise ValueError(f"character scene {preset_id}.{blueprint_id} requires one visual provenance")
+            if "nonvisual" not in str(blueprint.get("market_origin") or ""):
+                raise ValueError(f"character scene {preset_id}.{blueprint_id} must keep market origin nonvisual")
+            runtime_ids = normalize_list(blueprint.get("runtime_ids"))
+            primary_id = str(blueprint.get("primary_runtime_id") or "")
+            if not 1 <= len(runtime_ids) <= 1 + max_support_cues:
+                raise ValueError(
+                    f"character scene {preset_id}.{blueprint_id} must select one to three runtime IDs"
+                )
+            if len(runtime_ids) != len(set(runtime_ids)) or primary_id not in runtime_ids:
+                raise ValueError(f"character scene {preset_id}.{blueprint_id} has an invalid primary/runtime set")
+            selected_runtime_bundles.add(tuple(runtime_ids))
+            selected_primary_ids.add(primary_id)
+            selected_runtime_union.update(runtime_ids)
+            scene_nodes: Dict[str, JsonDict] = {}
+            for runtime_id in runtime_ids:
+                node = nodes.get(runtime_id)
+                if node is None or topic_id not in character_runtime_node_topic_ids(node):
+                    raise ValueError(f"character scene {preset_id}.{blueprint_id} references invalid runtime ID {runtime_id}")
+                if str(node.get("role") or "") != "visual_atom":
+                    raise ValueError(f"character scene {preset_id}.{blueprint_id} selects nonvisual node {runtime_id}")
+                scene_nodes[runtime_id] = node
+            priority_rank = {value: index for index, value in enumerate(expected_priority)}
+            primary_rank = priority_rank[str(scene_nodes[primary_id].get("priority_dimension"))]
+            if any(
+                priority_rank[str(scene_nodes[runtime_id].get("priority_dimension"))] < primary_rank
+                for runtime_id in runtime_ids
+                if runtime_id != primary_id
+            ):
+                raise ValueError(
+                    f"character scene {preset_id}.{blueprint_id} promotes a lower-priority cue above its support"
+                )
+            if len(runtime_ids) > 1 and not any(
+                str(edge.get("topic_id") or "") == topic_id
+                and set(runtime_ids).issubset(set(normalize_list(edge.get("node_ids"))))
+                for edge in edges.values()
+            ):
+                raise ValueError(f"character scene {preset_id}.{blueprint_id} has no compatibility edge")
+            evidence_types = normalize_list(blueprint.get("character_evidence_types"))
+            if not required_evidence_types.issubset(set(evidence_types)):
+                raise ValueError(
+                    f"character scene {preset_id}.{blueprint_id} does not cover its required evidence types"
+                )
+            scene_functions.update(normalize_list(blueprint.get("scene_functions")))
+        if static_portrait_count / len(blueprints) > 0.5:
+            raise ValueError(f"character preset {preset_id} has a static-portrait majority")
+        available_visual_ids = {
+            node_id
+            for node_id, node in nodes.items()
+            if topic_id in character_runtime_node_topic_ids(node)
+            and str(node.get("role") or "") == "visual_atom"
+        }
+        minimum_primary_or_bundle_diversity = min(2, len(available_visual_ids))
+        minimum_runtime_union = min(4, len(available_visual_ids))
+        if (
+            len(selected_primary_ids) < minimum_primary_or_bundle_diversity
+            or len(selected_runtime_bundles) < minimum_primary_or_bundle_diversity
+            or len(selected_runtime_union) < minimum_runtime_union
+        ):
+            raise ValueError(
+                f"character preset {preset_id} does not rotate enough available runtime evidence"
+            )
+        if len(scene_functions) < 2:
+            raise ValueError(f"character preset {preset_id} requires at least two scene functions")
+    if preset_topic_ids != set(topic_to_family):
+        missing = sorted(set(topic_to_family) - preset_topic_ids)
+        extra = sorted(preset_topic_ids - set(topic_to_family))
+        raise ValueError(f"character preset/topic coverage mismatch missing={missing} extra={extra}")
+
+
 def load_json(path: str | Path) -> JsonDict:
     p = Path(path)
     if not p.exists():
@@ -1380,6 +1707,7 @@ def load_json(path: str | Path) -> JsonDict:
             with extension_path.open("r", encoding="utf-8") as f:
                 extension = json.load(f)
             data = merge_research_extension(data, extension)
+        validate_character_mechanism_graph(data)
     return data
 
 
@@ -3693,6 +4021,15 @@ def render_contract_resolved_scene_blueprints(data: JsonDict, preset: JsonDict) 
             "genre_anchors": normalize_list(raw.get("genre_anchors")) or genre_anchors,
             "relationship_stakes": normalize_list(raw.get("relationship_stakes")),
             "expression_mode": str(raw.get("expression_mode") or "authored_scene_blueprint"),
+            "character_evidence_types": normalize_list(raw.get("character_evidence_types")),
+            "runtime_ids": normalize_list(raw.get("runtime_ids")),
+            "primary_runtime_id": str(raw.get("primary_runtime_id") or ""),
+            "support_runtime_ids": normalize_list(raw.get("support_runtime_ids")),
+            "policy_ids": normalize_list(raw.get("policy_ids")),
+            "relationship_mode": str(raw.get("relationship_mode") or ""),
+            "audience_familiarity": str(raw.get("audience_familiarity") or ""),
+            "market_origin": str(raw.get("market_origin") or ""),
+            "static_portrait": bool(raw.get("static_portrait")),
             "subject": str(raw.get("subject") or "").strip(),
             "subject_ko": str(raw.get("subject_ko") or raw.get("subject") or "").strip(),
             "subject_kind": normalize_list(raw.get("subject_kind")),
@@ -3954,6 +4291,14 @@ def candidate_pack_render_contract(
             "relationship_stakes": normalize_list(selected_blueprint.get("relationship_stakes")),
             "genre_anchors": normalize_list(selected_blueprint.get("genre_anchors")),
             "expression_mode": str(selected_blueprint.get("expression_mode") or ""),
+            "character_evidence_types": normalize_list(
+                selected_blueprint.get("character_evidence_types")
+            ),
+            "runtime_ids": normalize_list(selected_blueprint.get("runtime_ids")),
+            "primary_runtime_id": str(selected_blueprint.get("primary_runtime_id") or ""),
+            "relationship_mode": str(selected_blueprint.get("relationship_mode") or ""),
+            "audience_familiarity": str(selected_blueprint.get("audience_familiarity") or ""),
+            "market_origin": str(selected_blueprint.get("market_origin") or ""),
             "operational": bool(selected_blueprint.get("operational")),
             "selection_source": str(selected_blueprint.get("selection_source") or ""),
             "available_blueprint_count": int(selected_blueprint.get("available_blueprint_count") or 0),
@@ -3968,6 +4313,159 @@ def candidate_pack_render_contract(
         "topic_intents": topic_intents,
         "evidence_budget": evidence_budget,
         "selected_scene": selected_scene,
+    }
+
+
+def candidate_pack_character_grammar(
+    data: JsonDict,
+    preset: JsonDict,
+    selected_blueprint: Optional[JsonDict],
+) -> JsonDict:
+    """Materialize the selected sparse character-mechanism bundle."""
+    graph = data.get("character_mechanism_graph")
+    raw_contract = preset.get("render_contract") if isinstance(preset.get("render_contract"), dict) else {}
+    grammar = (
+        raw_contract.get("character_grammar")
+        if isinstance(raw_contract.get("character_grammar"), dict)
+        else {}
+    )
+    if not isinstance(graph, dict) or not grammar:
+        return {
+            "enabled": False,
+            "domain": "",
+            "runtime_nodes": [],
+            "policy_ids": [],
+            "valid": True,
+        }
+    if not isinstance(selected_blueprint, dict):
+        raise ValueError(f"Character preset {preset.get('id')!r} has no selected scene blueprint")
+
+    node_index = {
+        str(node.get("id")): node
+        for node in graph.get("runtime_nodes", [])
+        if isinstance(node, dict) and str(node.get("id") or "")
+    }
+    policy_index = {
+        str(policy.get("id")): policy
+        for policy in graph.get("policies", [])
+        if isinstance(policy, dict) and str(policy.get("id") or "")
+    }
+    topic_id = str(grammar.get("topic_id") or "")
+    family_id = str(grammar.get("family_id") or "")
+    runtime_anchor_ids = normalize_list(grammar.get("runtime_anchor_ids"))
+    for runtime_id in runtime_anchor_ids:
+        node = node_index.get(runtime_id)
+        if node is None or topic_id not in character_runtime_node_topic_ids(node):
+            raise ValueError(f"Character preset references invalid runtime anchor {runtime_id}")
+    runtime_ids = normalize_list(selected_blueprint.get("runtime_ids"))
+    primary_runtime_id = str(selected_blueprint.get("primary_runtime_id") or "")
+    max_support_cues = int(graph.get("max_support_cues", 2))
+    if not 1 <= len(runtime_ids) <= 1 + max_support_cues:
+        raise ValueError(f"Character scene for {preset.get('id')!r} violates the sparse runtime budget")
+    if len(runtime_ids) != len(set(runtime_ids)) or primary_runtime_id not in runtime_ids:
+        raise ValueError(f"Character scene for {preset.get('id')!r} has an invalid primary/runtime set")
+    selected_nodes: List[JsonDict] = []
+    for runtime_id in runtime_ids:
+        node = node_index.get(runtime_id)
+        if node is None:
+            raise ValueError(f"Character scene references unknown runtime node {runtime_id}")
+        if (
+            topic_id not in character_runtime_node_topic_ids(node)
+            or family_id not in character_runtime_node_family_ids(node)
+        ):
+            raise ValueError(f"Character scene runtime node {runtime_id} crosses its topic/family boundary")
+        if str(node.get("role") or "") != "visual_atom":
+            raise ValueError(f"Character scene cannot select nonvisual runtime node {runtime_id}")
+        selected_nodes.append(
+            {
+                "id": runtime_id,
+                "role": "primary" if runtime_id == primary_runtime_id else "support",
+                "definition": str(node.get("definition") or ""),
+                "priority_dimension": str(node.get("priority_dimension") or "observable_action"),
+            }
+        )
+
+    compatible_edge_ids = [
+        str(edge.get("id"))
+        for edge in graph.get("compatibility_edges", [])
+        if isinstance(edge, dict)
+        and str(edge.get("topic_id") or "") == topic_id
+        and set(runtime_ids).issubset(set(normalize_list(edge.get("node_ids"))))
+    ]
+    if len(runtime_ids) > 1 and not compatible_edge_ids:
+        raise ValueError(f"Character scene for {preset.get('id')!r} has no compatible runtime bundle")
+
+    policy_ids = list(
+        dict.fromkeys(
+            normalize_list(grammar.get("policy_ids"))
+            + normalize_list(selected_blueprint.get("policy_ids"))
+        )
+    )
+    missing_policies = [policy_id for policy_id in policy_ids if policy_id not in policy_index]
+    if missing_policies:
+        raise ValueError(f"Character scene references unknown policies {missing_policies}")
+    applicable_guards: List[JsonDict] = []
+    for guard in graph.get("guard_rules", []) or []:
+        if not isinstance(guard, dict):
+            continue
+        topic_ids = set(normalize_list(guard.get("topic_ids")))
+        if topic_ids and topic_id not in topic_ids:
+            continue
+        required = set(normalize_list(guard.get("required_policy_ids")))
+        if required and not required.issubset(set(policy_ids)):
+            raise ValueError(
+                f"Character scene for {preset.get('id')!r} is missing guard policies {sorted(required - set(policy_ids))}"
+            )
+        forbidden = set(normalize_list(guard.get("forbidden_runtime_ids")))
+        if forbidden & set(runtime_ids):
+            raise ValueError(
+                f"Character scene for {preset.get('id')!r} selects forbidden runtime nodes {sorted(forbidden & set(runtime_ids))}"
+            )
+        for combination in guard.get("forbidden_runtime_combinations") or []:
+            combination_ids = set(normalize_list(combination))
+            if combination_ids and combination_ids.issubset(set(runtime_ids)):
+                raise ValueError(
+                    f"Character scene for {preset.get('id')!r} selects forbidden runtime combination {sorted(combination_ids)}"
+                )
+        trigger_runtime_ids = set(normalize_list(guard.get("trigger_runtime_ids")))
+        requires_runtime_any = set(normalize_list(guard.get("requires_runtime_any")))
+        if trigger_runtime_ids & set(runtime_ids) and not requires_runtime_any & set(runtime_ids):
+            raise ValueError(
+                f"Character scene for {preset.get('id')!r} omits a required runtime companion for {sorted(trigger_runtime_ids & set(runtime_ids))}"
+            )
+        applicable_guards.append(
+            {
+                "id": str(guard.get("id") or ""),
+                "kind": str(guard.get("kind") or "constraint"),
+            }
+        )
+
+    return {
+        "enabled": True,
+        "domain": str(graph.get("domain") or ""),
+        "topic_id": topic_id,
+        "family_id": family_id,
+        "primary_runtime_id": primary_runtime_id,
+        "runtime_anchor_ids": runtime_anchor_ids,
+        "runtime_nodes": selected_nodes,
+        "policy_ids": policy_ids,
+        "policies": [
+            {"id": policy_id, "definition": str(policy_index[policy_id].get("definition") or "")}
+            for policy_id in policy_ids
+        ],
+        "priority_order": normalize_list(graph.get("priority_order")),
+        "max_support_cues": max_support_cues,
+        "compatible_edge_ids": compatible_edge_ids,
+        "applicable_guard_rules": applicable_guards,
+        "required_evidence_types": normalize_list(grammar.get("required_evidence_types")),
+        "character_evidence_types": normalize_list(
+            selected_blueprint.get("character_evidence_types")
+        ),
+        "audience_familiarity": str(
+            selected_blueprint.get("audience_familiarity") or "literal_general"
+        ),
+        "market_origin": str(selected_blueprint.get("market_origin") or "nonvisual_unspecified"),
+        "valid": True,
     }
 
 
@@ -4623,6 +5121,7 @@ STRICT_TAG_FACET_SOURCE_DOMAINS = {
     "subculture_practice",
     "worldbuilding_system",
     "cjk_narrative_world",
+    "character_moe_grammar",
 }
 
 # These packs are deliberately broad in subject matter but operationally
@@ -4645,6 +5144,7 @@ INTENT_SCOPED_PRESET_DOMAINS = {
     "subculture_practice",
     "worldbuilding_system",
     "cjk_narrative_world",
+    "character_moe_grammar",
 }
 
 # Slot entries in the new packs already carry one of these authored tags. The
@@ -4666,6 +5166,7 @@ INTENT_SCOPED_ENTRY_DOMAIN_TAGS = {
     "subculture_practice": "subculture_practice",
     "worldbuilding_system": "worldbuilding_system",
     "cjk_narrative_world": "cjk_narrative_world",
+    "character_moe_grammar": "character_moe_grammar",
 }
 
 
@@ -4895,6 +5396,8 @@ def candidate_pack_quality_profile_id(data: JsonDict, preset: JsonDict, facets: 
         return "visual_structure"
     if "cjk_narrative_world" in domains:
         return "cjk_narrative_world"
+    if "character_moe_grammar" in domains:
+        return "character_moe_grammar"
     if "food" in subject_kinds or "food" in domains:
         return "food"
     if "architecture" in domains or "real_estate" in domains or any(term in blob for term in ("architecture", "interior", "building")):
@@ -5707,6 +6210,11 @@ def build_candidate_pack(result: JsonDict, data: JsonDict) -> JsonDict:
         scene_contract,
         selected_blueprint,
     )
+    character_grammar = candidate_pack_character_grammar(
+        data,
+        selected_preset,
+        selected_blueprint,
+    )
     render_intents = candidate_pack_render_mandatory_intents(
         render_contract,
         str(selected_preset.get("id") or ""),
@@ -5747,6 +6255,7 @@ def build_candidate_pack(result: JsonDict, data: JsonDict) -> JsonDict:
         "concept_axes": candidate_pack_concept_axes(soft_policy),
         "scene_contract": scene_contract,
         "render_contract": render_contract,
+        "character_grammar": character_grammar,
         "evidence_budget": render_contract.get("evidence_budget", {"enabled": False}),
         "photographic_integration": candidate_pack_photographic_integration(
             data, result, trace, presets, slots, mandatory_intents, quality_profile
@@ -8614,7 +9123,7 @@ def preset_matches_automatic_intent_scope(
         and semantic_context.get("intent_source") == "user"
         and matched_routes
         and requested_domains
-        & {"subculture_practice", "worldbuilding_system", "cjk_narrative_world"}
+        & {"subculture_practice", "worldbuilding_system", "cjk_narrative_world", "character_moe_grammar"}
     ):
         # An explicit scoped-route alias is a stronger signal than embedding
         # similarity. Keep generic presets from competing with the named route
@@ -15056,6 +15565,11 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     available_scene_functions = set(
         normalize_list((data.get("facet_vocab") or {}).get("scene_function"))
     )
+    for preset in data.get("presets", []):
+        for blueprint in render_contract_resolved_scene_blueprints(data, preset):
+            available_scene_functions.update(
+                normalize_list(blueprint.get("scene_functions"))
+            )
     if args.scene_function and args.scene_function not in available_scene_functions:
         raise ValueError(
             f"Unknown --scene-function {args.scene_function!r}; available values: "
