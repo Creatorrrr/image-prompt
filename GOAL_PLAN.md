@@ -1,215 +1,213 @@
-# Research-Backed Scene Diversity and Render Quality Goal
+# Viewer-Perceived Creative Direction and Authorial Voice Goal
 
-- 작성: 2026-08-07 18:26 KST
+- 작성: 2026-08-08 16:31 KST
 - 상태: complete
 - 대상: `skills/photo-prompt-image-generator`
-- 기준 ref: clean `main@7daff7a` (`origin/main`보다 4 commit ahead)
+- 기준 ref: `main@b8fe45e` 위의 현재 미커밋 character-moe 자격 상태
 - 권위 문서: 이 파일이 이번 장기 목표의 범위, 완료 기준, 검증 예산과 중단 조건을 정의한다.
-- 선행 완료 목표: CJK commercial narrative worldbuilding expansion
-- 현재 material failure: `docs/failed-reports/2026-08-07-worldbuilding-render-scene-convergence.md`
+- 선행 완료 목표: Research-Backed Moe and Subculture Character Grammar (`docs/passed-reports/2026-08-08-character-moe-grammar-render-quality.md`)
+- 자동 목표 상향: 비활성
 
 ## 1. 목표와 실제 산출물
 
-기존에 공개 근거를 조사해 반영한 `research`, `subculture`, `worldbuilding`, `CJK worldbuilding` 데이터 계층 전체를 감사하고, 주제별 프롬프트와 실제 이미지가 반복적인 직원·심사·기록·창구 장면으로 수렴하지 않도록 개선한다. 완료 후 짧은 주제 요청만으로도 사용자는 특정 작품을 복제하지 않으면서 장르가 픽셀에서 알아볼 수 있고, 하나의 핵심 사건과 인물의 이해관계가 있으며, 같은 주제에서도 서로 다른 장면 기능을 선택할 수 있는 사진형 이미지를 얻어야 한다.
+### 원래 사용자 요청
 
-기존 연구 데이터의 세계 작동 규칙과 출처는 지식 계층으로 보존한다. 렌더 계층은 그 지식을 한 프레임에 모두 나열하지 않고 `핵심 사건 1개 + 세계 증거 1~2개 + 이해관계 또는 결과 1개 + 장르 앵커 1개`로 희소하게 표현한다. 기존 라우팅 정확도, typed-domain 격리, 문화 provenance, IP·살아 있는 관습 경계, candidate cap, deterministic behavior, 안전 자동 통과는 유지한다.
+후보팩에 주제 데이터를 더 넣는 방식이 아니라, 사용자가 창의적·독창적·기발한·작가적인 프롬프트나 이미지를 요청했을 때 관객이 최종 이미지에서 실제로 그 특성을 느끼도록 `photo-prompt-image-generator`의 생성 사고과정, 선택, 비평, 프롬프트 구성과 검증을 개선한다.
 
-주요 제품 산출물은 다음과 같다.
+### 최종 제품/동작
 
-1. 기존 네 확장의 모든 route를 장면 기능·행위자 역할·장소 원형·장르 앵커 관점에서 분류한 동결 기준선과 실패 목록.
-2. 지식 taxonomy와 렌더 장면 표현을 분리하는 최소 additive scene-expression 계약. 기존 필드로 표현할 수 있으면 새 schema를 만들지 않는다.
-3. direct preset에도 적용되는 fail-closed atomic scene contract, 비어 있지 않은 topic/genre intent, 희소 evidence budget, 안정적인 candidate-pack 저장 경로.
-4. 로판·상태창·학원물 파일럿과 감사에서 실패한 기존 연구 route의 실제 scene/data 개선.
-5. 동결 routing holdout과 별도의 렌더·장면 다양성 표본 및 실제 이미지 검토 결과.
-6. 필요한 경우 승인된 공개·추상 taxonomy 문자열만 사용하는 semantic index 재생성.
-
-## 2. 범위와 비목표
+1. 명시적 창의 요청이 별도 추가 지시 없이 `creative-direction` 경로를 자동 활성화한다.
+2. 에이전트는 후보팩을 받은 뒤 곧바로 문장을 조립하지 않고, 평범한 기대 기준선과 서로 다른 concept move 여러 개를 만든 뒤 하나만 선택한다.
+3. 선택된 개념은 친숙한 닻, 단 하나의 규칙 변화, 화면에서 확인 가능한 결과 연쇄, 관객의 발견 순서와 하나의 작가적 시각 문법을 가진다.
+4. 기존 prompt audit은 이 구조가 실제 프롬프트 문구에 반영됐는지 검증하고, 고정 `artistic_final_touch` 문구는 작가성의 증거로 취급하지 않는다.
+5. 세 가지 고정 주제의 구현 전·후 실제 이미지가 metadata-free 비교에서 평범한 기준선보다 독창성·기발함·의도 가독성이 개선되며, 주제 충실도와 사진적 완성도를 잃지 않는다.
 
 ### 범위
 
-- `photo_prompt_research_extension.json` 17 preset / 165 slot entry
-- `photo_prompt_subculture_extension.json` 33 preset / 179 slot entry
-- `photo_prompt_worldbuilding_extension.json` 18 preset / 288 slot entry
-- `photo_prompt_cjk_worldbuilding_extension.json` 20 preset / 356 slot entry
-- 위 확장의 loader, intent routing, candidate-pack composition/audit, quality profile, semantic index와 관련 회귀
-- 먼저 로판·상태창·학원물 세 실패 route를 교정하고, 같은 규칙으로 네 확장 전체를 측정해 실패한 route를 모두 교정한다.
-- 기존 출처를 다시 복제하지 않는다. 새 장면 문법이나 문화적 시각 경계에 근거가 필요한 경우에만 공식 플랫폼, 제작 주체, 공공 문화기관, 학술·업계 1차 자료를 추가 조사한다.
-- `market_origin`과 실제 화면에 드러나는 `diegetic_visual_provenance`를 분리한다. 시장 용어의 기원을 문화 스타일처럼 렌더하지 않는다.
-- 사용자가 안전 평가를 별도로 요청하지 않으면 기존 단순 automatic pass를 유지한다.
+- `SKILL.md`, composition/creative-direction reference, candidate-pack creative contract, composed prompt audit, 관련 focused/unit tests.
+- 기존 `--creativity`의 semantic breadth·novelty 기능과 구분되는 에이전트 수준 creative-direction workflow.
+- 실행 전 동결한 세 주제의 baseline/final candidate pack, composed prompt, 실제 PNG와 기존 형식의 visual-review 결과.
+- 기존 candidate pack, automatic safety, scene contract, typed character grammar, negative byte-preservation과 일반 요청의 보수 기본값 보존.
 
 ### 비목표
 
-- 특정 작품, 캐릭터, UI, 문장, 로고, 실존 인물 또는 살아 있는 의례를 복제하는 것.
-- 장르 인식성을 높인다는 이유로 읽을 수 있는 상태창, 학교 문장, 가문 문장 같은 IP 유사 표지를 강제하는 것.
-- 기존 동결 routing 기대를 이미지 취향에 맞춰 삭제·완화하는 것.
-- 모든 route를 같은 수의 장면이나 같은 서사 문법으로 기계적으로 평준화하는 것.
-- 새 범용 evaluator 서비스, 별도 데이터베이스, 복잡한 안전 승인 흐름을 만드는 것.
-- 문서·테스트·fixture만 늘어난 상태를 완료로 간주하는 것.
-- commit, push, PR 또는 배포. 사용자가 별도로 요청할 때만 수행한다.
+- 후보팩 taxonomy·preset·주제별 장면 데이터를 대량 추가하지 않는다.
+- named artist 스타일 모방, 작가 이름 기반 프롬프트, 역사적으로 완전히 새로운 발상이라는 보장을 만들지 않는다.
+- semantic index 재생성, 새 임베딩 서비스, 배포, commit, push, PR은 포함하지 않는다.
+- 창의성 수치를 하나의 토큰/임베딩 거리나 클리셰 단어 개수로 환원하지 않는다.
+- 사람 패널이나 장기 사용자 연구를 새 필수 서비스로 구축하지 않는다. 이번 목표는 동결된 metadata-free 직접 픽셀 검수까지 자격화하고 더 넓은 관객 연구는 후속 범위로 남긴다.
 
-## 3. 제품 원칙과 구속 결정
+## 2. 진척 계약
 
-1. **지식과 장면을 분리한다.** `world_mechanism`, research evidence, term provenance는 무엇이 세계를 작동시키는지 설명한다. scene expression은 그중 무엇을 한 프레임에 보여 줄지 결정한다.
-2. **운영 다큐멘터리는 하나의 선택지다.** inspection, registration, audit, handoff는 주제에 맞을 때 유지하지만 기본 장면 또는 유일한 장면이 될 수 없다.
-3. **장면 기능을 원자적으로 선택한다.** `confrontation`, `revelation`, `threshold`, `controlled_action`, `aftermath`, `intimate_decision`, `environmental_spectacle`, `operational_documentary` 같은 기능 중 하나를 먼저 고르고 subject/action/location/prop을 같은 scene tag로 묶는다.
-4. **장르 앵커는 읽을 수 있는 UI가 아니다.** 상태창은 관찰되는 규칙 변화와 대가, 학원물은 시험·수업·경쟁의 사건, 로판은 계급·관계·계약의 선택과 결과처럼 화면 사건으로 표현한다.
-5. **희소 evidence budget을 사용한다.** 한 프롬프트에 6~7개 제도를 모두 넣지 않는다. 핵심 사건을 가리는 증거는 후보 팩에 남아 있어도 최종 조합에서 제외한다.
-6. **시장 기원은 시각 provenance가 아니다.** `kr_market`, `jp_market`, `cn_market`은 용어·유통 맥락으로만 쓰고, 실제 장면이 특정 문화적 시대·생활양식을 요구할 때만 근거 있는 시각 provenance를 별도로 선택한다.
-7. **창의성 토글보다 eligible scene pool을 먼저 고친다.** 자동 모드는 주제에 맞는 비운영 장면도 선택할 수 있어야 한다. 사용자가 다큐멘터리·기록·운영을 명시하면 운영 장면을 우선할 수 있다.
-8. **계약 검증과 픽셀 검증을 구분한다.** prompt audit PASS는 이미지 품질 PASS가 아니다. 최종 완료에는 실제 렌더와 주제 인식성 검토가 필수다.
+- 진척으로 인정: creative request의 실제 runtime/composer 동작 변화, audit가 소비하는 binding contract, 감사된 창의 프롬프트, 실제 baseline/final PNG, 실패 원인을 고친 제품 delta.
+- 진척으로 인정하지 않음: 문서·스키마·테스트·fixture·리뷰 양식만 추가, `--creativity` 숫자만 상향, 후보/형용사/초현실 장식만 증가, prompt audit PASS만으로 이미지 품질 주장, 성공한 렌더만 골라내기.
+- setup checkpoint는 Stage 1 한 번뿐이다. 이후 checkpoint는 코드/스킬 동작 변화, 감사된 최종 프롬프트, 실제 이미지 또는 binding 구현 결정을 남겨야 한다.
+- 검증-only 작업 상한: focused 검증은 제품 변경 직후 한 번, 전체 suite와 최종 visual qualification은 마지막 Stage 6에서 한 번만 실행한다.
+- 실행 지식 작업 상한: 관련 보고서 전문 최대 5건, 성공 보고서 기본 최대 1건, 보고서 작업을 별도 checkpoint로 만들지 않는다.
 
-## 4. 진척 계약
+## 3. 기준선과 고정 비교 조건
 
-- 진척으로 인정: 실제 route의 eligible scene이 다양해짐, direct pack에 atomic scene/topic intent가 fail-closed로 적용됨, 행정 장면 편향이 measured pack/render에서 감소함, 주제 인식성이 실제 이미지에서 개선됨, 또는 기존 연구 route의 근거 있는 장면 표현이 추가됨.
-- 진척으로 인정하지 않음: 계획·보고서·테스트만 추가함, validator를 완화함, 이미지 실패를 prompt audit PASS로 덮음, 장르 단어를 capture context에만 추가함, 기존 holdout 기대를 사후 변경함.
-- Stage 1은 유일한 setup checkpoint다. 이후 각 checkpoint는 제품 데이터/동작 delta 또는 실제 생성·렌더 후보를 남긴다.
-- 검증-only checkpoint를 두 번 연속 만들지 않는다. 동일 근본 원인의 수리는 최대 2회이며 실패하면 기준을 낮추지 않고 material failure를 갱신한다.
-- 실행 지식은 metadata 우선으로 검색하고 전문은 최대 5건만 읽는다. 현재 소스와 직접 측정한 증거가 보고서보다 우선한다.
-- 자동 목표 상향은 비활성이다.
+### 현재 기준선
 
-## 5. 기준선과 적용할 실행 지식
+- `SKILL.md`는 창의 요청에 `--creativity`를 높이도록 안내하지만, 높은 값도 기존 sampler-eligible 동일 슬롯 대안을 feature-token 거리로 골라 최대 두 개 교체하는 `creative_exploration`에 머문다.
+- `creativity_settings`는 semantic profile, novelty와 batch diversity를 보간하며 관객 기대, concept move, 의미 회수, 작가적 관점을 별도 모델링하지 않는다.
+- `visual_proposition`과 `artistic_final_touch` 감사는 관련 어휘 또는 고정 다큐멘터리 문구를 찾으며, 최종 픽셀에서 관객이 독창성과 의도를 읽는지는 증명하지 않는다.
+- 이전 목표들은 scene/category/character mechanism의 픽셀 가독성은 자격화했지만, 같은 주제에서 평범한 예상과 비교한 surprise-to-insight 또는 authorial voice는 자격화하지 않았다.
 
-### 확인된 기준선 실패
+### 고정 세 주제
 
-- 로판 최종 이미지는 상속·재정 소품은 보이나 중국 사극 회계 회의로 읽히며, 로맨스판타지의 관계·선택·계급 긴장이 약하다.
-- 상태창 최종 이미지는 게임 규칙이나 능력 변화보다 현대 관공서·서비스 창구로 읽힌다.
-- 학원물 최종 이미지는 능력 교육·시험·경쟁보다 행정 자원 배분 작업실로 읽힌다.
-- 세 candidate pack 모두 `documentary_photo + documentary`, 직원/관리자, 실내 카운터·테이블, 검사·대조·인계 장면으로 수렴했다.
-- CJK action 46개 중 31개가 checking/cross-checking/comparing/coordinating 계열이고, subject 46개 중 43개가 staff/clerk/inspector/administrator 등 운영 역할을 포함한다.
-- 기존 CJK 완료 목표는 최소 세 world axis와 여섯 world-evidence를 최적화했고 실제 렌더 품질은 명시적으로 제외했다. 따라서 기존 routing/evidence 자격은 유효하지만 이미지 품질 자격으로 재사용할 수 없다.
+1. `창의적이고 독창적인 도예가의 사진을 만들어줘.` — 현실 직업/행위
+2. `도시의 고독을 기발하고 작가적인 사진으로 표현해줘.` — 추상 정서/도시 환경
+3. `성인 변신 히로인의 이중 정체성과 회복을 독창적인 사진으로 만들어줘.` — 서브컬처 성인 캐릭터
 
-### 적용할 과거 보고서
+### 비교 조건
 
-- `docs/passed-reports/2026-08-07-deep-worldbuilding-taxonomy-scoped-routing.md`: additive extension, typed domain, provenance, frozen route와 leakage 계약은 보존한다. 여섯 evidence를 최종 렌더에 모두 강제하는 부분은 재사용하지 않는다.
-- `docs/passed-reports/2026-08-07-subculture-taxonomy-on-demand-routing.md`: specialty route 격리와 shared taxonomy는 보존하되, 실제 렌더 품질은 이번 목표에서 새로 검증한다.
-- `docs/failed-reports/2026-08-07-semantic-index-batch-response.md`: index 재생성 시 `--batch-size 1`과 cache/checkpoint를 유지한다.
-- `docs/failed-reports/2026-08-07-subculture-surface-applicability-golden-drift.md`: global applicability를 넓히지 않고 narrow typed override로 legacy RNG를 보존한다.
-- `docs/failed-reports/2026-08-07-worldbuilding-scoped-route-semantic-competition.md`: exact scoped route는 nearby generic semantic preset보다 우선한다.
+- 구현 전 baseline과 구현 후 final은 같은 한국어 요청, 같은 repository image tool, 같은 aspect/quality 기본값을 사용한다.
+- candidate pack은 재현 가능한 rule mode와 고정 seed `890101`, `890102`, `890103`을 사용한다. creative request의 기존 기준선은 `--creativity 1.0`으로 고정한다.
+- 각 baseline/final은 최초 candidate pack 하나, 감사된 composed prompt 하나, 최초 이미지 하나를 사용한다. 성공해 보이는 여러 결과 중 선택하지 않는다.
+- final이 필수 픽셀 기준을 실패하면 구체적인 product cause를 먼저 기록하고 같은 원인의 구현/프롬프트 수리는 최대 2회다. 각 수리 뒤에는 새 pristine pack/prompt/image 한 개만 생성하며 실패 결과를 보존한다.
+- final 판정 항목은 구현 전에 고정한다: 주제 충실도, 평범한 기준선과 다른 핵심 전제, 하나의 규칙 변화, 최소 두 개의 가시적 결과 연쇄, surprise-to-insight, deliberate authorial choice, 무관한 anomaly stacking 부재, 사진적 정합성.
+- 기존 visual-review 형식을 재사용한다. 새 holdout/review 쌍은 기존 scene/character 리뷰로 확인할 수 없는 관객 지각 창의성 비교를 위해서만 한 벌 추가한다.
 
-## 6. 실행 단계
+### 적용한 과거 실행 지식
 
-| 단계 | 실제 산출물 또는 동작 변화 | 최소 직접 검증 | 완료 조건 |
+- `docs/failed-reports/2026-08-07-worldbuilding-render-scene-convergence.md`: routing과 prompt PASS가 실제 흥미·독창성을 증명하지 않는다. 지식과 render expression을 분리하고 pixels를 metadata-free로 판정한다.
+- `docs/passed-reports/2026-08-07-research-scene-expression-render-quality.md`: 하나의 sparse event와 제한된 evidence가 데이터 밀도보다 장면 구별에 효과적이다. resolved scene을 ordinary candidate pool에 합성하지 않는다.
+- `docs/failed-reports/2026-08-08-character-moe-pixel-action-legibility.md`: 프롬프트에 명사가 있어도 방향·동시성·정체성은 픽셀에서 사라질 수 있다. actor/action/result를 구체적으로 묶고 실패 픽셀을 보존한다.
+- `docs/passed-reports/2026-08-08-character-moe-grammar-render-quality.md`: 비시각 router/guard와 sparse visual atom을 분리하고, 한 primary mechanism과 최대 두 support cue를 유지한다.
+- `docs/failed-reports/2026-08-08-character-moe-final-integration-contract-drift.md`: 새 typed contract를 기존 route family의 일반 규칙에 억지로 맞추지 말고 올바른 semantic layer에서 검증한다.
+
+## 4. 실행 단계
+
+| 단계 | 실제 산출물/동작 변화 | 최소 직접 검증 | 완료 조건 |
 |---|---|---|---|
-| 1. 실패 기록·전수 기준선 동결 | 현재 3개 렌더를 material failure로 기록하고 네 확장의 모든 preset을 scene function, role, location, genre anchor, provenance로 분류한 동결 artifact를 만든다. route 유형별 수용 기준과 최종 표본을 구현 전에 고정한다. | JSON/schema, route 88개 누락 0, 현재 이미지의 metadata-free 판정과 구조 통계 | 실패 목록과 변경 대상이 구현을 보지 않은 상태로 고정되고 기존 성공 보고서의 재사용 경계가 상호 링크됨 |
-| 2. scene-expression·candidate contract 구현 | 기존 필드를 우선 재사용해 scene function, topic/genre intent, sparse evidence budget과 diegetic provenance를 pack에 전달한다. direct preset도 선택된 하나의 scene tag로 fail-closed가 되고, official stdout writer가 숫자 spelling을 보존한다. | focused unit, 동일 seed deterministic pack, direct preset의 enabled scene contract, canonical pack hash | 파일럿 route에서 비운영 장면이 실제 eligible 후보이며 누락·혼합 scene은 audit가 실패함 |
-| 3. 로판·상태창·학원물 파일럿 교정 | 각 route를 최소 4 atomic scene / 3 scene function으로 확장하고 최소 2개는 비운영 사건으로 만든다. anti-overfit 문구가 장르 정체성을 지우지 않게 고치고 market/visual provenance를 분리한다. | route별 fixed seed pack, 세 주제 × 서로 다른 scene function 실제 렌더, 최대 2회 원인 수리 | 세 주제 모두 픽셀에서 주제·핵심 사건·이해관계를 알아볼 수 있고 서로 같은 행정 골격으로 수렴하지 않음 |
-| 4. 네 연구 확장 전체 개선 | 동결 감사에서 실패한 모든 route에 비운영/관계/행동/환경 장면과 장르 앵커를 추가한다. 본질적으로 기록적인 route는 예외 이유와 다른 장면 기능을 명시한다. 새 시각 문법 주장에만 출처를 추가한다. | route별 scene-function/role/location 분포, protected-reference scan, fixed-seed pack | narrative-world route는 4 scene / 3 function 이상, 다른 전문 route는 2 function 이상 또는 근거 있는 예외이며 실패 route가 미수정으로 남지 않음 |
-| 5. retrieval·index·실제 표본 검증 | dictionary hash가 바뀌면 승인된 추상 text만 batch 1로 index를 재생성한다. 기존 frozen retrieval을 그대로 통과시키고 네 확장에서 사전 동결한 층화 표본을 실제 렌더한다. | index hash/shard/order, 기존 retrieval/leakage/cap, versioned visual review artifact | routing 회귀 없이 표본이 주제 인식성·독창성·서사적 관심·world evidence·장면 다양성 기준을 통과함 |
-| 6. 닫힌 최종 자격 판정 | focused 결과를 고정한 뒤 full validator/unit/contradiction/applicability/retrieval과 시각 수용 게이트를 한 번 실행한다. 실패 보고서를 resolved로 갱신하고 자격이 있을 때만 성공 보고서 1개를 만든다. | 명령별 결과와 8개 criterion matrix, `git diff --check` | 아래 완료 기준이 모두 pass하고 docs/tests만이 아닌 제품 파일 delta가 존재함 |
+| 1. 기준선 동결 | 세 고정 요청의 현행 pack, composed prompt, 최초 PNG, metadata-free baseline 판정과 한 벌의 holdout/review 계약 | pack/audit 상태와 PNG hash·크기·prompt/negative bytes 확인 | 세 사례 모두 현행 동작과 평범함/장식 누적 한계가 변경 전 증거로 보존되고 성공 기준은 아직 수정되지 않음 |
+| 2. Creative-direction 생성 경로 | 명시적 창의 요청 자동 라우팅, `creative_direction` pack contract, agent runtime `creative_brief`, 서로 다른 concept move 최소 4안과 단일 선택 절차 | 세 fixed 요청에서 contract enabled, 일반 요청에서 disabled/absent, 후보팩 주제 데이터 증설 없음 | 프롬프트 작성 전 기대 기준선→복수 발상→단일 선택이 binding workflow로 작동 |
+| 3. Authorial grammar와 감사 | familiar anchor, one rule break, visible consequence chain, reveal path, hidden aboutness, authorial vantage/time/omission/material rule과 literal prompt evidence를 기존 audit에 연결; 고정 final-touch는 surface craft로 재분류 | 정상 creative composed 1건 PASS, 필수 필드 누락·다중 rule break·선택되지 않은 proposal 혼합·prompt evidence 불일치 각각 fail | 문서만 채운 brief가 아니라 최종 prompt에 선택된 개념과 작가적 결정이 실제 반영됨 |
+| 4. 세 최종 프롬프트 자격 | 세 fixed 요청에 서로 다른 concept operator를 사용한 감사 PASS 프롬프트와 rejected-cliche 기록 생성; 뻔한 안·장식 누적을 bounded repair | baseline 대비 구조적 비교와 focused tests | 세 프롬프트 모두 하나의 개념 전제, 최소 두 결과 연쇄, 관객 발견 순서와 서로 구별되는 작가적 문법을 가짐 |
+| 5. 실제 이미지 비교 | 세 final 최초 PNG와 metadata-free baseline/final 비교; 픽셀 실패 시 제품 원인 수리와 bounded pristine rerender | 기존 visual-review 포맷으로 3 case × 고정 focus 판정, prompt metadata 없이 원본 픽셀 검사 | 3/3 final이 주제·사진 품질을 유지하고 각 baseline보다 독창성·기발함·의도 가독성 중 최소 두 축에서 명확히 개선되며 모든 필수 픽셀 focus PASS |
+| 6. 닫힌 회귀와 완료 | focused 수리 결과, 기존 full unit, dictionary/scene/candidate 계약, `git diff --check`, 최종 visual review와 실행 지식 lifecycle 정리 | full suite 1회와 기존 직접 validator, current artifact hash 확인 | 모든 완료 기준 통과, 미해결 material failure 없음, 실제 제품 코드/스킬·프롬프트·이미지가 존재 |
 
-## 7. 최종 완료 기준
+## 5. 최종 완료 기준
 
-1. 네 연구 확장의 모든 preset이 동결 감사에 포함되고, 새 scene-expression 기준에 실패한 route가 미수정 상태로 남지 않는다.
-2. narrative-world route는 최소 4 atomic scene과 3 scene function을 가지며 최소 2개는 비운영 사건이다. 다른 전문 route는 최소 2 function을 가지거나 본질적 예외가 근거와 함께 기록된다.
-3. direct preset candidate pack은 enabled fail-closed `scene_contract`, 비어 있지 않은 topic/genre intent, 하나의 selected provenance, sparse evidence budget을 갖고 장면 혼합을 audit가 거부한다.
-4. `market_origin`과 `diegetic_visual_provenance`가 분리되고, CJK 복합 route가 시장 라벨을 실제 문화 양식처럼 평면화하지 않는다.
-5. 로판·상태창·학원물 실제 최종 렌더가 각각 주제 인식성, 핵심 사건, 인물의 이해관계, 장면 고유성을 통과하며 행정 창구/감사 테이블 골격으로 수렴하지 않는다.
-6. 네 확장의 사전 동결 층화 렌더 표본이 주제 인식성, 독창성, 서사적 관심, 세계 증거, 장면 다양성 시각 게이트를 통과한다. 실패 시 verifier나 기대를 완화하지 않는다.
-7. 기존 frozen semantic routing, typed-domain 격리, generic leakage 0, candidate cap, deterministic behavior, IP·문화·살아 있는 관습 경계와 기본 safety automatic pass가 유지된다.
-8. dictionary/index/candidate/audit/contradiction/applicability/retrieval/full unit과 `git diff --check`가 통과하고 제품 데이터 또는 runtime 코드가 실제로 변경된다.
+1. 창의적·독창적·기발한·작가적 요청이 자동으로 creative-direction 경로를 활성화하고 일반 요청은 기존 보수 경로를 유지한다.
+2. creative-direction은 후보팩 주제 데이터가 아니라 생성·선택 계약이며, 기존 candidate provenance, scene contract, safety, negative bytes와 호환된다.
+3. 활성 creative run은 최소 네 개의 서로 다른 concept move를 만든 뒤 정확히 하나를 선택하고, 최종 prompt는 familiar anchor, 단 하나의 rule break, 최소 두 visible consequence, reveal path와 authorial grammar의 literal evidence를 포함한다.
+4. 고정 `artistic_final_touch` 문구 또는 스타일 형용사만으로 authorial PASS를 받을 수 없고, named artist 모방 없이 frame/time/vantage/omission/material 선택이 하나의 aboutness를 지지한다.
+5. audit는 missing brief, proposal 부족/중복, 다중 rule break, 선택안 혼합, prompt evidence 불일치를 거부하면서 ordinary composed prompt를 회귀시키지 않는다.
+6. 동결 세 사례의 final 실제 이미지가 3/3 metadata-free 필수 focus를 통과하고 각 baseline보다 독창성·기발함·의도 가독성 중 최소 두 축에서 개선되며 주제 충실도와 사진적 정합성이 후퇴하지 않는다.
+7. 기존 character grammar, scene-expression, candidate-pack, safety, semantic routing/index 상태를 불필요하게 변경하지 않고 focused/full 회귀와 `git diff --check`가 통과한다.
+8. 실제 skill/runtime/audit 변경, 감사된 세 final prompt, 세 final PNG와 versioned visual result가 모두 존재한다. 계획·테스트·fixture·보고서만으로 완료할 수 없다.
 
-## 8. 검증 수준과 재시도 예산
+## 6. 검증 수준과 예산
 
-- 위험 수준: 중간. 로컬 데이터와 생성 경로 변경이지만 semantic retrieval, deterministic selection, 문화 구분, 실제 이미지 품질에 회귀 위험이 있다.
-- Stage 2~4는 변경 route focused tests와 fixed-seed pack만 반복한다. Stage 3 렌더는 주제당 서로 다른 scene function을 사용하고 동일 원인 수리는 최대 2회다.
-- Stage 5에서 semantic index 재생성은 최대 1회, 네트워크 일시 오류는 1회 재시도한다. `--batch-size 1`을 유지한다.
-- Stage 5의 층화 렌더 표본은 구현 전 고정한 12개 route(확장별 3개)를 기본으로 한다. 기준선에서 표본 크기가 부족하다는 직접 증거가 있을 때만 늘리고 이유를 기록한다.
-- Stage 6 full suite와 전체 visual acceptance는 한 번만 실행한다. 실패 후 기대값 삭제·완화나 렌더 성공본만 골라내기는 금지한다.
-- 이미지 생성은 기존 내장 image tool을 사용하고 prompt/negative bytes, seed, pack ID, chosen IDs와 결과 경로를 로컬 artifact에 보존한다.
+- 위험 수준: 중간. 로컬 agent workflow와 candidate/audit 계약 변경이며 외부 배포는 없지만, 일반 요청 회귀와 이미지 모델의 prompt-following 실패 가능성이 있다.
+- 반복 중 검증: 변경 함수와 audit focused tests, 세 fixed rule-mode pack만 실행한다.
+- 이미지 예산: baseline 3개 + final 최초 3개. 같은 product cause의 수리 뒤 pristine rerender는 사례당 최대 2개이며 실패 이미지를 삭제하지 않는다. 임의 이미지 편집이나 다수 생성 후 선별은 하지 않는다.
+- 최종 검증: 기존 validator와 full unit 1회, 세 visual artifact의 hash/contract 검사 1회. 독립 verifier나 새 평가 프로그램을 추가하지 않는다.
+- semantic dictionary text나 index entry가 바뀌면 이번 범위를 벗어난다. 외부 임베딩 전송이나 index rebuild를 시작하지 말고 먼저 질문한다.
+- 검증이 구현 작업보다 커지거나, 세 사례로 주장할 수 없는 일반화 범위를 필수 기준으로 삼아야 할 경우 범위 확장 전에 질문한다.
 
-## 9. 중단하고 질문할 조건
+## 7. 중단 조건
 
-- 기존 승인 범위를 넘어 출처 원문, 이미지, 개인정보, 비공개·성스러운 자료를 외부로 보내야 할 때.
-- 새로운 유료 서비스, 대량 생성 비용, 배포, 파괴적 변경 또는 공개 publication이 필요할 때.
-- 기존 frozen routing 기대를 약화해야만 통과하거나 generic 기본 선택 의미를 바꿔야 할 때.
-- 같은 근본 원인의 수리 2회 뒤에도 필수 product/visual criterion이 실패할 때.
-- 문화 provenance를 공개 권위 자료로 구분할 수 없어 거짓 시각 양식을 만들 위험이 있을 때. 이 경우 market-only route로 축소하는 선택지를 제시한다.
+- 같은 근본 원인의 제품/픽셀 수리 2회 뒤에도 필수 기준이 실패할 때.
+- 통과를 위해 기존 frozen routing, scene, character, safety, IP/culture 기준을 약화해야 할 때.
+- 창의성을 증명하기 위해 대규모 후보 데이터, 새 유료 서비스, 외부 taxonomy/semantic 전송, 사람 모집, 배포 또는 파괴적 변경이 필요할 때.
+- 현재 미커밋 character-moe 작업과 겹치는 변경을 분리할 수 없거나 그 자격 증거를 훼손할 위험이 있을 때.
+- 이미지 모델이 prompt의 핵심 관계를 반복해서 잃어 구현과 model limitation을 구분할 수 없을 때. 이 경우 실패 결과와 확인된 sub-result를 보고하고 목표를 임의로 완화하지 않는다.
 
-## 10. 실행 지식·진행 로그 계약
+## 8. 실행 지식 계약
 
-- 시작·재개 시 `docs/failed-reports/`와 `docs/passed-reports/` metadata를 우선 검색하고 전문은 관련도 순 최대 5건만 읽는다.
-- material failure는 재시도 전에 matching failed report에 통합한다. 실패가 과거 성공 보고서의 재사용을 제한하면 양방향 링크를 같은 변경에 남긴다.
-- 완료 기준을 모두 직접 검증한 뒤에만 기존 material failure를 `resolved`로 바꾸고 `Qualification: resolved-material-failure` 성공 보고서를 목표당 최대 1개 작성한다.
-- 각 checkpoint 로그는 `product delta -> direct evidence -> remaining gap -> blocker -> execution-knowledge paths` 순서로 이 파일에 추가한다.
-- credential, token, secret, 민감 endpoint, 개인 정보와 출처 원문은 보고서·로그에 저장하지 않는다.
-- commit/push는 별도 사용자 요청 전까지 수행하지 않는다.
+- 시작·재개 시 `docs/failed-reports/`와 `docs/passed-reports/`의 filename/header metadata를 관련도 순으로 검색하고, 전문은 기본 최대 5건만 읽는다. 현재 source와 direct evidence가 과거 보고서보다 우선한다.
+- material failure가 가정이나 완료 기준을 깨거나 수리 방향을 바꾸면 재시도 전에 matching failed report를 생성 또는 갱신한다. 같은 원인은 한 보고서에 통합한다.
+- evidence를 저장하기 전에 현재 날짜·시간을 확인하고 credential, token, secret, 민감 endpoint, 개인정보와 출처 원문을 제거한다. 필요한 경우 sanitized 결론과 접근 제한 evidence reference만 남긴다.
+- 실패가 과거 passed report의 적용 범위를 깨면 failed/passed 양쪽 lifecycle을 같은 변경에서 연결한다. 해결 시 failed를 `resolved`, 성공 보고서에 `Resolves`, 기존 결과를 대체할 때 양쪽 `Superseded by`/`Supersedes`를 기록한다.
+- 모든 최종 기준을 직접 통과한 뒤에만 목표당 기본 최대 한 개의 passed report를 작성한다. 자격은 다음 중 하나여야 한다: material failed report 해결, 동일 고정 조건에서 기본/문서화 접근 실패 뒤의 비자명한 대체, 또는 현재 코드만으로 싸게 복구할 수 없는 다단계 재현 절차. 중간 test PASS나 편리한 명령은 성공 보고서가 아니다.
+- 목표가 blocked/partial이면 passed report를 만들지 않고 matching failed report 또는 최종 진행 로그에 검증된 sub-result를 남긴다.
+- 실행 보고는 별도 stage/checkpoint가 아니며 제품 진척을 대신하거나 다음 product delta를 지연시키지 않는다.
 
-## 11. Codex 실행 프롬프트
+## 9. 진행 로그 형식
+
+각 checkpoint는 다음 순서로 이 파일에 추가한다.
+
+`product delta -> direct evidence -> remaining product gap -> blocker -> execution-knowledge paths`
+
+## 10. Codex 실행 프롬프트
 
 ```text
-/goal Treat GOAL_PLAN.md as the authoritative outcome-first execution plan. Continue from the first incomplete stage, preserve frozen routing and safety/IP/cultural contracts, record any material failure before retrying, and do not claim completion from documents, tests, prompt audits, or routing scores without the required product and rendered-image evidence.
+/goal Treat GOAL_PLAN.md as the authoritative outcome-first execution plan. Preserve its scope, progress contract, validation budget, completion criteria, and full execution-knowledge contract. Use metadata-first report search with at most five full reads by default; current evidence wins. Sanitize stored evidence, update stale or resolved reports bidirectionally, record material failures before retry, and create at most one qualified reusable success by default only after all final criteria pass. Reporting is not product progress or a separate checkpoint. After setup, advance through product or measured-result checkpoints, use focused verification during iteration, and run one risk-proportional final verification. Do not add verification programs or external gates unless the plan requires them or a real product defect makes them necessary. Ask before any material scope or validation expansion.
 ```
 
-## 12. 진행 로그
+## 11. 진행 로그
 
-### 2026-08-07 / Stage 1 material failure 및 기준선 시작
+### 2026-08-08 16:31 KST / 목표 생성 및 실행 지식 적용
 
-- product delta: 활성 장기 목표를 기존 CJK taxonomy 구축에서 전 연구 확장의 scene diversity와 실제 render quality 개선으로 전환했다. 88개 preset의 구현 전 구조를 `render_scene_expression_baseline_v1.json`에 동결하고, 네 확장별 3개씩 총 12개 최종 렌더 표본을 `render_scene_quality_holdout_v1.jsonl`에 고정했다.
-- direct evidence: 로판·상태창·학원물 세 최종 이미지를 다시 검사했고 prompt audit 결과와 픽셀 인식 결과가 불일치함을 확인했다. 구조 감사는 research 17, subculture 33, worldbuilding 18, CJK 20 route를 누락 없이 포함했고, 기존 explicit render contract 부재와 narrative scene/function 부족 때문에 기준선 88/88을 개선 대상으로 판정했다. 렌더 holdout은 12행·12 unique case·12 unique preset이며 각 확장에 정확히 3행이다.
-- remaining gap: runtime scene contract 구현, 파일럿과 전수 데이터 교정, 실제 A/B 렌더가 남아 있다.
-- blocker: 없음. semantic index 외부 전송은 이전에 승인된 공개·추상 taxonomy text 범위만 유지한다.
-- execution-knowledge paths: 본 문서 5절의 passed 2건과 failed 3건을 관련도 순으로 적용했고, 새 material failure를 별도 보고서로 통합했다.
-
-### 2026-08-07 / Stage 2 scene-expression contract 구현
-
-- product delta: 선택된 direct preset의 atomic scene tag에서 subject/action/location/prop을 fail-closed로 묶고, `render_contract`, topic intent, `evidence_budget`, `diegetic_visual_provenance`를 candidate pack과 composed-prompt audit에 연결했다. preset-local weight multiplier로 범용 dictionary를 오염시키지 않고 documentary 선택 비중을 낮췄으며, `--output-file`로 JSON 숫자 spelling을 재직렬화 없이 보존한다.
-- direct evidence: 새 scene-expression extension은 dictionary metadata validator와 Python compile을 통과했다. 3개 파일럿 × seed 1..64에서 route당 4 scene, 3개 이상 scene function, documentary subject/medium/genre 각각 16/64 이하를 확인했고, 장면 혼합·필수 core slot 누락·evidence 초과 조합을 감사기가 거부했다. canonical output-file hash 회귀와 기존 CJK/worldbuilding focused tests도 통과했다.
-- remaining gap: 나머지 85 route의 명시적 render contract와 장면 기능 보강, semantic index 재생성, 층화 렌더가 남아 있다.
+- product delta: 이전 완료 GOAL_PLAN의 자격 상태를 passed/failed 보고서에 연결하고, 관객 지각 창의성과 작가적 시각 문법을 실제 skill/runtime/audit/image 결과로 개선하는 새 활성 목표를 작성했다.
+- direct evidence: 관련 보고서 metadata 전체를 스캔하고, exact failure/architecture match 순으로 전문 5건을 읽어 기준선·검증 예산·중단 조건에 반영했다. 현재 `main@b8fe45e` 위 미커밋 character-moe 변경을 보존하며 commit/push와 semantic index 변경을 범위 밖으로 고정했다.
+- remaining product gap: Stage 1의 세 baseline pack/prompt/image 동결부터 모든 제품 구현과 실제 렌더 비교가 남아 있다.
 - blocker: 없음.
-- execution-knowledge paths: `docs/failed-reports/2026-08-07-subculture-surface-applicability-golden-drift.md`의 narrow typed override와 `docs/failed-reports/2026-08-07-worldbuilding-scoped-route-semantic-competition.md`의 exact scoped precedence를 유지했다.
+- execution-knowledge paths: 3절의 failed 3건과 passed 2건.
 
-### 2026-08-07 / Stage 3 로판·상태창·학원물 실제 렌더 교정
+### 2026-08-08 16:41 KST / Stage 1 기준선 동결
 
-- product delta: CJK 파일럿 3 route를 각각 4 atomic scene / 3개 이상 scene function으로 확장하고, 운영 장면 외에 관계 선택·대가 폭로·경쟁자 구조 같은 사건을 추가했다. `market_origin`과 화면 provenance를 분리하고 world clue를 1~2개로 제한했다.
-- direct evidence: fixed seed candidate pack 3개 모두 composed audit `status=pass`, `quality_status=pass`, failures/warnings 0이었다. 내장 image tool 실제 결과에서 로판은 가상 유럽풍 공개 약혼 선택, 상태창은 붕괴 구조와 능력 대가, 학원은 성인 순위 시험 중 경쟁자 구조로 읽혔고 이전의 회계 회의·서비스 창구·행정 워크숍 골격이 재현되지 않았다. pack/prompt/negative/chosen IDs, 원장 run ID, PNG hash·크기와 수동 픽셀 판정은 `generated_images/scene-expression-pilot-v1-20260807_184900/`에 보존했다.
-- remaining gap: 세 파일럿만으로 전 연구 확장 전체를 자격화할 수 없다. 동결 감사의 나머지 route 보강과 12-case holdout 실제 렌더가 남아 있다.
-- blocker: 최초 로판 image-tool 요청이 일시적 network error로 실패했으나 결과물 생성 전 오류였고, 동일 bytes 재전송 1회로 성공했다. 원장에 오류와 retry chain을 모두 남겼으며 지속 blocker는 없다.
-- execution-knowledge paths: `docs/failed-reports/2026-08-07-worldbuilding-render-scene-convergence.md`의 픽셀 실패 원인을 직접 교정했고, 기존 passed 보고서는 routing/evidence 근거로만 사용했다.
-
-### 2026-08-07 / Stage 4 네 연구 확장 전체 scene-expression 보강
-
-- product delta: research 17, subculture 33, worldbuilding 18, CJK 20 route 전체에 preset render-contract 기본값을 연결하고, 기존 subject/action/location/prop에서 resolved atomic scene blueprint를 구성했다. 이 네 장면 atom은 ordinary sampler 후보가 아니라 별도의 mandatory render instruction으로 유지한다. worldbuilding 18 route와 파일럿을 제외한 CJK 17 route에는 각각 두 개의 주제별 비운영 사건을 별도 compact shard로 추가했다. 로판·상태창·학원 파일럿도 중복 semantic slot 없이 같은 blueprint 경로로 통합했다.
-- direct evidence: current 구조 감사에서 88/88 route가 explicit contract를 갖고 통과했으며 narrative route는 4개 scene과 최소 3개 function, specialty route는 최소 2개 function을 충족했다. seed 1..64가 route별 모든 blueprint에 도달하고, 숫자 seed cycle은 4-scene route에서 16회씩 균등하며 3-scene route도 최대 편차 1이다. 각 scene은 subject/action/location/prop 네 core slot, 단일 diegetic provenance와 clue 1~2개를 유지하고 protected-reference scan 및 candidate cap을 통과했다.
-- remaining gap: 실제 semantic retrieval 회귀와 사전 동결 12-case 렌더의 픽셀 수용 판정, 최종 full suite가 남아 있다.
-- blocker: 없음. 새 render metadata는 semantic text entry를 늘리지 않았고, 기존 6,379개 벡터를 모두 재사용할 수 있는 구조다.
-- execution-knowledge paths: 기존 네 extension의 research evidence와 typed-domain route를 삭제하거나 넓히지 않았고, 새 장면 표현만 분리 shard에 추가해 기존 성공 보고서의 routing 자격 경계를 보존했다.
-
-### 2026-08-07 / Stage 4 sampler provenance 회귀 수리
-
-- product delta: 초안에서 resolved scene atom을 ordinary candidate pool에 합성했던 표현을 제거하고, `render_contract.selected_scene.atomic_scene`과 `selected_render_blueprint` fail-closed group으로 분리했다. 장면 atom을 최종 문장에 모두 요구하되 같은 controlled core slot의 일반 candidate ID 선택은 거부한다. `--scene-function`은 direct preset에만 적용되는 optional control로 만들고, no-people 요청은 명시적으로 non-human인 blueprint만 허용하도록 fail-closed 처리했다.
-- direct evidence: 합성 후보 초안은 frozen generalization 79건 중 17건에서 `candidate_pool_not_sampler_exact`를 일으켰고 material failure의 Attempts에 기록했다. 분리 후 generalization 79/79, holdout 24/24, domain holdout v2 6/6, retrieval holdout v4 22/22와 contradiction 643 preset에서 위반 0을 확인했다. 새 no-people/scene-function focused 회귀 2건도 통과했다.
-- remaining gap: 이 수리 이후의 최종 full suite와 수용 게이트를 Stage 6에서 한 번 실행해야 한다.
-- blocker: 없음. frozen 기대나 candidate cap을 완화하지 않았다.
-- execution-knowledge paths: `docs/failed-reports/2026-08-07-worldbuilding-render-scene-convergence.md`에 실패 표현과 다음 안전 수리를 통합했고, sampler exactness는 기존 generalization fixture를 변경하지 않고 복구했다.
-
-### 2026-08-07 / Stage 5 semantic index 재물질화 시작
-
-- product delta: 변경된 dictionary hash에 맞춰 semantic index manifest와 16개 hash shard를 새 generation 경로로 재물질화했다.
-- direct evidence: 빌더가 시작 시점에 `Embedded 6379/6379 entries`를 보고해 모든 semantic text/vector가 기존 index에서 일치 재사용됐고 Gemini 임베딩 요청은 발생하지 않았다. `--check-index`는 dictionary hash `e6ca5dbebce5e2547ee2d6be6227be157f2a5779098d3299684f4ead8570fb48`, 6,379 entries, 768 dimensions, semantic-text-v2를 `status: ok`로 검증했다.
-- remaining gap: 기존 frozen retrieval/leakage/contradiction 회귀와 12개 holdout의 current pack·실제 이미지·수동 픽셀 판정이 남아 있다.
-- blocker: 없음. 승인된 외부 전송 범위였으나 cache hit 100%라 taxonomy text를 외부로 보내지 않았다.
-- execution-knowledge paths: `docs/failed-reports/2026-08-07-semantic-index-batch-response.md`에 따라 batch size 1과 기존 index cache를 유지했다.
-
-### 2026-08-07 / Stage 5 retrieval·12-case 실제 렌더 완료
-
-- product delta: frozen 12-case holdout에 맞춰 research, subculture, worldbuilding, CJK 각 3개 pack을 서로 다른 scene function으로 생성하고 내장 image tool로 실제 렌더했다. 모든 selected scene atom을 ordinary sampler pool 밖에서 조합했고, 12개 composed prompt는 88~120 words, contract/quality audit PASS, failures/warnings 0을 유지했다. solarpunk와 학원물은 최초 픽셀 판정의 구체적 원인을 보존한 뒤 이미지 편집을 각 1회만 수행했다.
-- direct evidence: `render_scene_quality_visual_review_v1.json`의 metadata-free 판정은 12/12 case, 36/36 review focus를 통과했다. 스포츠 선취 동작, 자연 변화 전선, 문화재 상태 선택, 비주얼계 공연, TTRPG 공동 폭로, 로우라이더 전시 문턱, 변칙 기록 침입, 솔라펑크 돌봄 전력 배분, 던전 신스 대피 선택, 로판 약혼 거부, 상태 능력 대가, 성인 능력학원 경쟁자 구조가 서로 다른 픽셀 사건으로 읽혔다. 12개 원 생성과 2개 편집은 canonical prompt ID 검증 후 `runs/image_runs.ndjson`에 기록했다.
-- remaining gap: 최신 source/data 상태에서 validator, full unit, contradiction/applicability/retrieval, index와 visual acceptance를 닫힌 Stage 6 게이트로 한 번 실행해야 한다.
-- blocker: 없음. 상태창은 readable UI 없이 원인-대가로 표현되어 범용 초능력 생존물과 인접하고, 로우라이더 hydraulic 움직임은 mid-lift보다 낮은 차체와 안내 동작으로 암시되는 제한을 visual review에 명시했다.
-- execution-knowledge paths: 첫 index manifest 이후 holdout이 드러낸 route-specific scene function을 보강하면서 manifest를 cache-only로 다시 물질화했다. 12개 렌더 생성 시 hash는 `97259bdbe6660b48163d09e41793fbe57ca14cee4cbed960b8458494d843473e`였다. 최종 sampler-preservation 수리 후 current hash는 `ad0496bbb45e0db76c786cdf5b8d4e88e7c1853686daad63cc978f7e004fd6ff`, 6,379 entries, 16 shards, 768 dimensions이다. 모든 물질화가 6,379/6,379 vector를 재사용해 Gemini 요청과 taxonomy text 외부 전송은 0이었고, 중간의 미참조 untracked shard 세대는 삭제해 current·기존 tracked 세대만 보존했다.
-
-### 2026-08-07 / Stage 6 첫 닫힌 게이트와 material failure
-
-- product delta: 없음. 수용 기준을 바꾸지 않고 current source에 대해 real acceptance, contradiction, full unit을 실행했다.
-- direct evidence: acceptance gate는 실제 Gemini embedding, mock=false에서 generalization 79/79, holdout 24/24, domain v2 6/6, retrieval v4 22/22, visual 12/12와 focus 36/36을 통과했다. contradiction은 643 preset × 3회, 1,929 생성에서 violation 0이었다. full unit은 399개 중 397개만 통과했다. 실패 1은 학원 route의 ordinary subject multiplier가 기존 seed 1..3 subject 다양성을 2개 이상에서 1개로 축소한 제품 회귀이고, 실패 2는 generic pack의 새 disabled render 필드 둘을 exact-key 기대에 반영하지 않은 테스트 계약 누락이다.
-- remaining gap: redundant subject multiplier를 제거해 기존 sampler 다양성을 복구하고, generic pack이 새 필드를 disabled로 제공함을 테스트한 뒤 영향을 받은 focused 회귀와 current 전체 게이트를 다시 닫아야 한다.
-- blocker: 없음. 같은 원인의 첫 최종 수리이며 retry budget 안이다.
-- execution-knowledge paths: 이 두 실패를 `docs/failed-reports/2026-08-07-worldbuilding-render-scene-convergence.md`의 Attempts에 먼저 통합했다. frozen expectation이나 acceptance threshold는 변경하지 않는다.
-
-### 2026-08-07 / Stage 6 수리 후 최종 자격 통과
-
-- product delta: redundant subject multiplier 세 개를 제거해 ordinary CJK sampler의 기존 seed 다양성을 복구하고, generic pack exact-key 회귀가 additive `render_contract`와 `evidence_budget`을 disabled 상태로 요구하도록 갱신했다. current 인덱스는 cache-only로 `ad0496…` generation에 물질화했으며, 실패 보고서를 resolved로 전환하고 성공 보고서 한 건을 작성했다.
-- direct evidence: focused 두 실패 2/2 통과, dictionary validator 통과, current scene audit 88/88, index 6,379 entries/16 shards/768d status OK. 수리 후 contradiction은 643 preset × 3회 = 1,929 생성에서 violation 0, full unit은 399/399를 통과했다. 최종 real acceptance는 mock=false, dictionary `ad0496…`, generalization 79/79, holdout 24/24, domain v2 6/6, retrieval v4 22/22, diversity 3/3, bleed 4/4, candidate 6/6, visual 12/12와 focus 36/36으로 `passed=true`다.
-- remaining gap: 이 목표의 필수 기준은 없다. 선택적 `soft_promotion_ready=false`, status-system의 UI 없는 장르 인접성, lowrider의 암시적 hydraulic motion은 성공 보고서에 제한으로 남긴다. commit/push는 목표 범위 밖이며 별도 사용자 요청 전에는 수행하지 않는다.
+- product delta: 세 고정 요청을 기존 최대 `--creativity 1.0` rule-mode 경로로 각각 한 번만 구성·감사·렌더하고, pack/prompt/PNG/result 및 구현 전에 고정한 비교 gate를 보존했다.
+- direct evidence: pack `8407d0af26c37f14`, `78507b1e8fdc8266`, `8a28b8da1150dd51`는 audit status `pass`였으나 모두 quality `warn`이었다. 최초 PNG 3개는 사진적 정합성 3/3이지만 metadata-free 독창성·기발함·작가적 선택은 0/3이었고, 도시 고독은 익숙한 비 오는 뒷모습, 도예가는 distressed-luxury flatlay, 변신 회복은 평범한 자전거 수리로 수렴했다. 동결 계약은 `assets/render_creative_direction_holdout_v1.jsonl`, 상세 증거는 `generated_images/creative-direction-holdout-v1-20260808_163100/`에 있다.
+- remaining product gap: Stage 2의 creative-direction pack/runtime 계약과 Stage 3의 authorial grammar binding audit 구현이 남아 있다.
 - blocker: 없음.
-- execution-knowledge paths: `docs/failed-reports/2026-08-07-worldbuilding-render-scene-convergence.md`가 resolved되었고, `docs/passed-reports/2026-08-07-research-scene-expression-render-quality.md`가 8개 criterion matrix와 재사용 경계를 보존한다.
+- execution-knowledge paths: 기존 5건을 재사용했고 새 material failure는 발생하지 않았다.
+
+### 2026-08-08 16:48 KST / Stage 2 creative-direction 경로 구현
+
+- product delta: 명시적 창의 요청을 skill layer에서 자동으로 `--creativity 0.85+`에 라우팅하고, 높은 창의성 pack에 주제 데이터와 분리된 `photo-creative-direction/v1` 계약을 추가했다. 기존 `creative_exploration`은 slot breadth로 유지하되, 새 경로는 평범한 기준선 3개, 서로 다른 operator의 완성된 제안 4개 이상과 정확히 한 선택을 요구한다.
+- direct evidence: 일반/0.74 pack에는 `creative_direction`이 없고 0.85 pack에는 결정론적으로 존재한다. 같은 seed의 preset·slot 후보 순서와 선택은 변하지 않았으며 focused candidate contract test가 통과했다.
+- remaining product gap: 실제 composed prompt에서 선택안만 literal binding하고 authorial grammar를 fail-closed 검증하는 Stage 3 통합 자격 및 세 최종 프롬프트가 남아 있다.
+- blocker: 없음.
+- execution-knowledge paths: 새 별도 보고서 없이 기존 world/scene/character 실패 지식을 runtime contract에 적용했다.
+
+### 2026-08-08 16:48 KST / Stage 3 authorial grammar 감사 구현
+
+- product delta: `creative_brief` 감사가 ordinary baseline/rejected cliche, 제안 수·operator 고유성, 단일 scalar rule break, 선택 일치, visible consequence·reveal path, vantage/timing/omission/material rule, literal prompt evidence를 fail-closed 검증한다. 선택되지 않은 signature 혼합, evidence 불일치, 고정 final-touch 문구를 authorial evidence로 사용하는 것도 거부한다.
+- direct evidence: 정상 brief PASS와 missing brief, 제안 부족, operator 중복, stacked rule, unselected signature 혼합, literal binding 불일치, final-touch 차용을 각각 거부하는 focused test가 함께 통과했다 (`2 tests`, `OK`).
+- remaining product gap: 세 frozen request의 실제 pack에서 whole-audit PASS/quality PASS 프롬프트와 픽셀 결과를 만들어 이 계약이 문서·unit 수준을 넘어 작동함을 증명해야 한다.
+- blocker: 없음.
+- execution-knowledge paths: `references/creative-direction-contract.md`에 생성-선택-픽셀 검수 경계를 명시했다.
+
+### 2026-08-08 16:59 KST / Stage 4 세 최종 프롬프트 자격
+
+- product delta: frozen seed·scene 조건을 유지한 새 pack 3개에서 각각 `absence_as_evidence`(도예가), `controlled_impossibility`(도시 고독), `temporal_fold`(성인 변신 회복)를 선택했다. 각 brief는 서로 다른 4안을 완성한 뒤 1안만 선택하며, 선택되지 않은 signature는 prompt에 들어가지 않는다.
+- direct evidence: 최종 prompt는 각각 120/109/120 words, composed audit `status=pass`, failures 0이다. quality warning은 pack이 생성 시 이미 `uncovered`로 표시한 번역 intent 보존 알림만 남고 photographic integration, craft, creative binding 경고는 0이다. negative bytes, scene atoms, character grammar와 safety pass를 보존했다.
+- remaining product gap: 최초 final PNG 3개에서 core premise·두 consequence·surprise-to-insight·authorial choice가 실제로 보이는지 metadata-free 판정해야 한다.
+- blocker: 없음.
+- execution-knowledge paths: 새 material failure 없음; prompt PASS를 pixel PASS로 오인하지 않는 기존 failed report 경계를 유지한다.
+
+### 2026-08-08 17:02 KST / Stage 5 최초 픽셀 판정과 material failure 기록
+
+- product delta: 각 final prompt를 built-in image generator로 정확히 한 번 렌더하고 원본과 첫 attempt를 보존했다. 변신 사례는 8개 focus 전체 PASS했으나 도예가와 도시 고독은 각각 trace 물질화와 기본 인물 반사로 핵심 rule이 유실됐다.
+- direct evidence: `03-transformation/final/attempt-01.png`는 현재 손과 케이스 속 장갑 낀 이전 손이 한 인물의 반복 각도로 읽힌다. `01-potter`의 원형은 금속 받침으로, `02-urban-solitude`의 노면은 정상 인물 반사로 렌더됐다. 해시·크기·고정 focus는 각 `attempt-01-review.json`에 있다.
+- remaining product gap: 같은 실패 원인에 대한 첫 bounded pristine prompt repair와 rerender가 두 사례에 남아 있다.
+- blocker: 없음. repair budget 0/2 사용 상태에서 진행한다.
+- execution-knowledge paths: `docs/failed-reports/2026-08-08-creative-direction-pixel-premise-legibility.md` active.
+
+### 2026-08-08 17:07 KST / Stage 5 첫 bounded repair
+
+- product delta: 실패 픽셀의 관계만 구체화해 byte-identical same-seed pack에서 pristine prompt/image를 한 번씩 다시 만들었다. 도예가는 물리 ring/base를 금지하고 displaced-dust negative space로 변경해 통과했다. 도시 사례는 matte blank를 강화했지만 정상 반사 prior가 반복됐다.
+- direct evidence: `01-potter/final/attempt-02.png`는 bare circle·off-center cup·material-only clue가 8 focus PASS다. `02-urban-solitude/final/attempt-02.png`는 완전한 사람 반사와 평범한 tote로 rule/consequence/insight가 다시 FAIL했다.
+- remaining product gap: 도시 사례에 남은 마지막 repair 1회에서 이미 개발한 `functional_recontextualization` 안을 선택해 더 렌더 가능한 단일 기능 전환을 자격화한다.
+- blocker: 없음. 같은 반사 부재 문구의 반복은 중단했고, urban repair budget 1/2를 사용했다.
+- execution-knowledge paths: active pixel-premise failed report에 Repair 1 결과와 최종 repair 방향을 추가했다.
+
+### 2026-08-08 17:10 KST / Stage 5 최종 metadata-free 픽셀 자격
+
+- product delta: 도시 사례의 마지막 repair에서 이미 개발된 `functional_recontextualization` 안 하나를 선택해 tote를 휴대 가능한 방의 문턱으로 만들었다. 세 사례의 accepted PNG, 실패 attempt, audit/result와 versioned visual review를 모두 저장했다.
+- direct evidence: 도시 final은 투명 tote 속 따뜻한 복도·문과 tote 바닥에서 젖은 노면으로 이어지는 마른 amber corridor를 동시에 보이고, 주변 neon rain reflection은 경계 밖에 머문다. 도예가 final은 displaced-dust empty footprint, 변신 final은 temporally delayed gloved-hand reflection을 보인다. `render_creative_direction_visual_review_v1.json`에서 3/3 × 8 fixed focus PASS, 각 baseline 대비 originality/ingenuity/intentionality 3축 개선, topic/photo no-regression이다.
+- remaining product gap: full unit/validator/diff 검증, image-run ledger, failed/passed report lifecycle와 목표 완료 선언이 남아 있다.
+- blocker: 없음. 도시 repair budget 2/2에서 통과했으며 추가 렌더를 만들지 않는다.
+- execution-knowledge paths: active pixel-premise report는 최종 회귀 후 resolved로 닫고 자격 있는 passed report 한 건에 연결한다.
+
+### 2026-08-08 17:41 KST / Stage 6 닫힌 회귀와 목표 완료
+
+- product delta: creative-direction skill/runtime/audit, 세 감사된 final prompt, accepted PNG와 versioned visual review를 하나의 완료 상태로 닫았다. material pixel failure report를 resolved로 바꾸고 자격 있는 재사용 성공 보고서 한 건에 양방향 연결했다.
+- direct evidence: dictionary validator PASS, merged scene routes 112/112 PASS, final pack/composed 3/3 PASS·negative content 동일·118/120/120 words, PNG hash 일치, visual focus 3/3 × 8 PASS, full suite `Ran 401 tests in 1551.172s — OK`, `git diff --check` PASS다. 일반/0.74 pack에는 creative contract가 없고 0.85 pack에는 결정론적으로 존재하며 기존 후보 선택 순서를 바꾸지 않는다.
+- remaining product gap: 없음. 세 사례는 고정 직접 자격이지 역사적 새로움이나 전체 관객 모집단의 보장은 아니라는 제한을 유지한다.
+- blocker: 없음.
+- execution-knowledge paths: `docs/failed-reports/2026-08-08-creative-direction-pixel-premise-legibility.md` resolved; `docs/passed-reports/2026-08-08-viewer-perceived-creative-direction.md` current and resolves it.

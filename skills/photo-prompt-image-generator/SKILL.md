@@ -12,6 +12,7 @@ Canonical skill path: `skills/photo-prompt-image-generator`.
 ## Read Only What You Need
 
 - Candidate-pack composition, audit, safety, and quality fields: `references/composition-contract.md`
+- Viewer-perceived creativity, multi-proposal selection, prompt binding, and authorial grammar: `references/creative-direction-contract.md`
 - Intent, concept, preset, slot, and anti-overfitting routing: `references/concept-routing.md`
 - Native image generation, explicit API use, saving, retries, and ledger records: `references/image-runtime.md`
 - Dictionary edits, validation, semantic index, and evaluation gates: `references/maintenance.md`
@@ -76,6 +77,8 @@ For a short Korean concept:
 
 Add `coverage_assertions` only when useful. Every asserted phrase must occur literally in `prompt_en`, and every key must be an exact `mandatory_intents[].text` value.
 
+When the pack contains `creative_direction.enabled: true`, `creative_brief` is also required. Read `references/creative-direction-contract.md`, develop at least four distinct concept moves, critique them, select exactly one, and bind its visual consequences and authorial grammar literally into `prompt_en`.
+
 3. Audit before returning the prompt or generating an image:
 
 ```bash
@@ -89,7 +92,7 @@ Fix every failure and rerun. Warnings are a separate quality signal; inspect the
 
 ## Creative Discovery Workflow
 
-Use the existing creativity lever when the user wants broader exploration rather than a single conservative interpretation:
+Automatically use the creative-direction path when the user explicitly asks for a creative, original, ingenious, inventive, surprising, or authorially distinctive result—including Korean requests using `창의적`, `독창적`, `기발한`, `참신한`, `작가적`, or `작가의 터치`. Do not ask for a second creativity instruction. Set `--creativity` to at least `0.85`:
 
 ```bash
 .venv/bin/python skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py \
@@ -98,10 +101,12 @@ Use the existing creativity lever when the user wants broader exploration rather
 
 - `0..0.25`: conservative neighborhood and low novelty.
 - `0.5`: balanced exploration.
-- `0.75..1.0`: exploratory neighborhood and high novelty; candidate packs also mark bounded, relevance-preserving contrast candidates from the already exposed eligible pool. Prefer this range only when the user explicitly asks for creative alternatives.
+- `0.75..1.0`: exploratory neighborhood and high novelty; candidate packs expose both bounded slot contrasts and a binding `creative_direction` concept-development contract. Prefer this range only when the user explicitly asks for a creative result.
 - The lever changes novelty and semantic candidate breadth. It does not relax applicability, conflict, theme, safety, or filter coherence.
 - Explicit `--novelty` or `--semantic-profile` values take precedence over the corresponding derived setting.
 - Add `--selection-mode rule` for offline, reproducible inspection. Rule mode keeps its deterministic sampler; the creativity value is still carried as an explicit candidate-pack exploration request.
+- `creative_exploration` widens eligible slot choices; it is not proof of creativity. `creative_direction` requires an ordinary baseline, at least four different concept moves, exactly one selected premise, a visible consequence chain, a viewer reveal path, and authorial frame/time/omission/material decisions.
+- Do not simulate creativity by adding more surreal objects, stylistic adjectives, or unrelated anomalies. Prefer one changed rule whose consequences the viewer can discover.
 - For a role with `scene_variants`, change `--seed` to explore another atomic scene while keeping `identity_core` stable. Do not mix slots from separate variants.
 - For a direct research-backed preset, `--scene-function <value>` selects a supported scene function without turning that control into visible user intent. It requires `--preset` and fails closed when the route has no compatible scene.
 
@@ -140,11 +145,12 @@ There is no separate approval flag or policy mode. This project-level automatic 
 - Copy all four `selected_render_blueprint` labels into the composed prompt. Do not select an ordinary subject/action/location/prop candidate for the same controlled slots, and never reconstruct a sibling from `available_blueprint_ids`.
 - Respect `evidence_budget`: the selected physical prop normally consumes one clue, so add at most one other configured world-evidence slot when `maximum_chosen` is 2.
 - When `creative_exploration` is present, keep the sampler-selected subject, mandatory intents, and scene contract. Replace at most the stated number of slots, and use only listed contrast IDs that remain conflict-free together.
+- When `creative_direction` is present, follow `references/creative-direction-contract.md`. Select one proposal only; never blend rejected signatures into the final prompt. The concept move may reinterpret relationships inside the selected scene but may not replace mandatory subjects, atomic scene labels, character grammar, safety, or negative bytes.
 - Preserve `negative_en` byte-for-byte.
 - Respect hard conflicts, concept gates, enforced role-scene policy, and species-family locks.
 - `open_slots` expose only slot and bucket names. Invent a compatible detail; do not infer the hidden source choice.
 - Use one or two photographic craft decisions, not every available phrase.
-- `artistic_final_touch` is profile-specific. Use it only when `enabled` is true; equivalent wording is acceptable and need not be a fixed suffix.
+- `artistic_final_touch` is profile-specific surface craft. Use it only when `enabled` is true; equivalent wording is acceptable and need not be a fixed suffix. It never satisfies `creative_direction` authorial grammar by itself.
 - Keep named-person text out of mandatory visual intent. `--likeness-mode inspired` means an original fictional adult inspired by styling or atmosphere, not exact likeness.
 - A request such as `사람 없는`, `인물 없이`, `no people`, or `without people` is a negative-presence constraint; never turn it into a positive human axis.
 - Keep compact English prompts at roughly 50–120 words. Optional craft or final-touch text must not push them over budget.

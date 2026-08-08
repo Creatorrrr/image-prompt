@@ -11,6 +11,12 @@
 
 Do not use `--intent` with rule mode. Rule mode is deterministic weighted selection; semantic mode uses the local semantic index and API-backed query embedding.
 
+## Route Explicit Creative Intent
+
+At the agent layer, explicit requests for a creative, original, ingenious, inventive, surprising, or authorially distinctive result automatically set `--creativity 0.85` or higher. Korean triggers include `창의적`, `독창적`, `기발한`, `참신한`, `작가적`, and `작가의 터치`; interpret clear equivalents by meaning rather than requiring an exact keyword. This activates the generic `creative_direction` composition contract. Do not ask the user to repeat the request or add topic-specific candidates.
+
+Requests for several safe variations or wider candidate exploration without an explicit originality/authorial goal may use a lower creativity value and remain outside creative direction. Ordinary prompt and image requests keep the default path.
+
 ## Preserve Negative Intent
 
 Korean and English absence phrases are constraints, not positive nouns. `사람 없는`, `인물 없이`, `no people`, and `without people` must exclude human subject candidates and the `person_presence` quality axis. Keep the whole phrase as mandatory intent.

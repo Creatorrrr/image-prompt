@@ -106,6 +106,42 @@ CANDIDATE_PACK_TOTAL_CANDIDATE_LIMIT = 64
 CANDIDATE_PACK_CREATIVE_EXPLORATION_FLOOR = 0.75
 CANDIDATE_PACK_CREATIVE_EXPLORATION_MIN_DISTANCE = 0.45
 CANDIDATE_PACK_CREATIVE_EXPLORATION_LIMIT = 6
+CANDIDATE_PACK_CREATIVE_DIRECTION_FLOOR = 0.75
+CANDIDATE_PACK_CREATIVE_DIRECTION_MIN_PROPOSALS = 4
+CANDIDATE_PACK_CREATIVE_DIRECTION_OPERATORS = (
+    (
+        "structural_analogy",
+        "Map the topic's relationship or pressure into a spatial, material, or causal structure rather than adding a decorative symbol.",
+    ),
+    (
+        "expectation_inversion",
+        "Reverse one familiar expectation while preserving the subject and scene so the reversal has readable consequences.",
+    ),
+    (
+        "absence_as_evidence",
+        "Make a missing thing legible through contact marks, behavior, displaced matter, or negative space rather than showing it directly.",
+    ),
+    (
+        "rule_extension",
+        "Extend one ordinary rule into an unexpected part of the scene and show at least two physical consequences of that extension.",
+    ),
+    (
+        "temporal_fold",
+        "Let before and after coexist through one repeated gesture, material state, reflection, or trace without using a diagram or montage.",
+    ),
+    (
+        "relational_reversal",
+        "Let setting, prop, foreground, or background take over one causal role normally assigned to the main subject.",
+    ),
+    (
+        "functional_recontextualization",
+        "Give a familiar object one new scene-consistent function whose use changes multiple visible relationships.",
+    ),
+    (
+        "controlled_impossibility",
+        "Introduce one impossible photographic law and make light, contact, matter, and behavior obey that law consistently.",
+    ),
+)
 CANDIDATE_PACK_CORE_SLOTS = {
     "subject",
     "appearance_type",
@@ -3263,6 +3299,105 @@ def candidate_pack_creative_exploration(
     }
 
 
+def candidate_pack_creative_direction(result: JsonDict) -> Optional[JsonDict]:
+    """Expose an agent-level concept-development contract for explicit high-creativity runs.
+
+    This contract deliberately contains no topic examples or resolved scene atoms. It changes
+    how the agent develops and binds one idea; it does not enlarge or mutate the candidate pool.
+    """
+    provenance = result.get("provenance") if isinstance(result.get("provenance"), dict) else {}
+    creativity = candidate_pack_float(provenance.get("creativity"))
+    if creativity is None or creativity < CANDIDATE_PACK_CREATIVE_DIRECTION_FLOOR:
+        return None
+
+    operators = [
+        {"id": operator_id, "definition": definition}
+        for operator_id, definition in CANDIDATE_PACK_CREATIVE_DIRECTION_OPERATORS
+    ]
+    return {
+        "enabled": True,
+        "contract_version": "photo-creative-direction/v1",
+        "source": "explicit_creativity_control",
+        "creativity": creativity,
+        "activation_floor": CANDIDATE_PACK_CREATIVE_DIRECTION_FLOOR,
+        "purpose": "viewer_perceived_originality_ingenuity_and_authorial_intent",
+        "ordinary_baseline": {
+            "minimum_cliches": 3,
+            "instruction": "Name the likely first-answer visual shortcuts before proposing alternatives.",
+        },
+        "proposal_contract": {
+            "minimum_proposals": CANDIDATE_PACK_CREATIVE_DIRECTION_MIN_PROPOSALS,
+            "select_exactly": 1,
+            "distinct_operator_ids": True,
+            "required_fields": [
+                "id",
+                "operator_id",
+                "premise",
+                "familiar_anchor",
+                "viewer_expectation",
+                "rule_break",
+                "visible_consequences",
+                "aboutness",
+                "signature_phrase",
+            ],
+            "operators": operators,
+        },
+        "selected_concept_contract": {
+            "required_fields": [
+                "proposal_id",
+                "familiar_anchor",
+                "rule_break",
+                "visible_consequences",
+                "reveal_path",
+                "aboutness",
+                "authorial_grammar",
+                "prompt_evidence",
+            ],
+            "rule_break_count": 1,
+            "minimum_visible_consequences": 2,
+            "minimum_reveal_steps": 3,
+            "authorial_grammar_fields": ["vantage", "timing", "omission", "material_rule"],
+        },
+        "prompt_binding": {
+            "literal": True,
+            "selected_signature_required": True,
+            "unselected_signatures_forbidden": True,
+            "required_evidence_fields": [
+                "familiar_anchor_phrase",
+                "rule_break_phrase",
+                "visible_consequence_phrases",
+                "reveal_path_phrases",
+                "authorial_grammar_phrases",
+            ],
+        },
+        "composition_guidance": {
+            "keep": [
+                "sampler_selected_subject",
+                "mandatory_intents",
+                "scene_contract",
+                "character_grammar",
+                "safety_contract",
+                "negative_en_bytes",
+            ],
+            "develop": [
+                "familiar_anchor",
+                "one_rule_break",
+                "visible_consequence_chain",
+                "viewer_reveal_path",
+                "one_aboutness",
+                "authorial_vantage_time_omission_material_rule",
+            ],
+            "reject": [
+                "adjective_only_novelty",
+                "unrelated_anomaly_stacking",
+                "multiple_proposals_blended_into_one_frame",
+                "named_artist_imitation_as_authorial_voice",
+            ],
+        },
+        "artistic_final_touch_role": "surface_craft_only_not_authorial_evidence",
+    }
+
+
 def candidate_pack_concept_axes(soft_policy: JsonDict) -> JsonDict:
     axes = normalize_reference_identity_axes(soft_policy.get("identity_axes"))
     return {
@@ -5599,6 +5734,7 @@ def build_candidate_pack(result: JsonDict, data: JsonDict) -> JsonDict:
             intent_row["status"] = "covered" if covered_by else "uncovered"
         uncovered_intents = [row for row in mandatory_intents if row.get("status") == "uncovered"]
     creative_exploration = candidate_pack_creative_exploration(result, slots, candidate_entries)
+    creative_direction = candidate_pack_creative_direction(result)
     pack: JsonDict = {
         "contract_version": "photo-candidate-pack/v2",
         "pack_id": "",
@@ -5679,6 +5815,8 @@ def build_candidate_pack(result: JsonDict, data: JsonDict) -> JsonDict:
     }
     if creative_exploration is not None:
         pack["creative_exploration"] = creative_exploration
+    if creative_direction is not None:
+        pack["creative_direction"] = creative_direction
     hashable = dict(pack)
     hashable["pack_id"] = None
     pack["pack_id"] = stable_text_id(json.dumps(hashable, ensure_ascii=False, sort_keys=True, separators=(",", ":"))) or ""
@@ -14869,7 +15007,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     parser.add_argument("--default-intent", action="store_true", help=argparse.SUPPRESS)
     parser.add_argument("--semantic-default", action="store_true", help=argparse.SUPPRESS)
     parser.add_argument("--novelty", choices=NOVELTY_LEVELS, default="medium", help="Semantic sampling diversity level. Used only with semantic or hybrid selection.")
-    parser.add_argument("--creativity", type=float, default=None, help="Single 0..1 diversity lever: 0 maps to conservative/low-novelty, 0.5 to balanced/medium, 1 to exploratory/high. Explicit --novelty or --semantic-profile values win over this lever. Coherence controls (semantic weight, filter strictness) are not affected.")
+    parser.add_argument("--creativity", type=float, default=None, help="Single 0..1 creativity control: 0 maps to conservative/low-novelty, 0.5 to balanced exploration, and 0.75..1 adds a creative-direction composition contract alongside exploratory candidate breadth. Explicit --novelty or --semantic-profile values win over the corresponding diversity settings. Coherence controls (semantic weight, filter strictness) are not affected.")
     parser.add_argument(
         "--scene-function",
         default=None,

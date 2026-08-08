@@ -362,10 +362,25 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
 
         self.assertNotIn("creative_exploration", base_pack)
         self.assertNotIn("creative_exploration", low_pack)
+        self.assertNotIn("creative_direction", base_pack)
+        self.assertNotIn("creative_direction", low_pack)
         exploration = creative_pack["creative_exploration"]
         self.assertEqual(exploration, repeated_pack["creative_exploration"])
         self.assertEqual(exploration["source"], "exposed_sampler_eligible_pool")
         self.assertGreater(exploration["contrast_candidate_count"], 0)
+        direction = creative_pack["creative_direction"]
+        self.assertEqual(direction, repeated_pack["creative_direction"])
+        self.assertEqual(direction["contract_version"], "photo-creative-direction/v1")
+        self.assertEqual(direction["source"], "explicit_creativity_control")
+        self.assertEqual(direction["proposal_contract"]["minimum_proposals"], 4)
+        self.assertEqual(direction["proposal_contract"]["select_exactly"], 1)
+        self.assertEqual(direction["selected_concept_contract"]["rule_break_count"], 1)
+        self.assertEqual(direction["selected_concept_contract"]["minimum_visible_consequences"], 2)
+        self.assertEqual(
+            set(direction["selected_concept_contract"]["authorial_grammar_fields"]),
+            {"vantage", "timing", "omission", "material_rule"},
+        )
+        self.assertEqual(direction["artistic_final_touch_role"], "surface_craft_only_not_authorial_evidence")
 
         self.assertEqual(base_pack["presets"], creative_pack["presets"])
         self.assertEqual(set(base_pack["slots"]), set(creative_pack["slots"]))
@@ -398,6 +413,151 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             self.assertFalse(
                 set(candidate["conflicts_with"]) & (selected_ids - {slot_payload["selected"]})
             )
+
+    def test_creative_direction_audit_binds_one_developed_concept_and_rejects_contract_gaming(self):
+        contract = prompt_generator.candidate_pack_creative_direction(
+            {"provenance": {"creativity": 0.85}}
+        )
+        self.assertIsNotNone(contract)
+        pack = {
+            "creative_direction": contract,
+            "artistic_final_touch": {
+                "enabled": True,
+                "final_sentence_en": (
+                    "Let the final frame keep one quiet imperfection, shared light across subject and setting, "
+                    "and a small material trace."
+                ),
+            },
+        }
+        proposals = [
+            {
+                "id": "absence",
+                "operator_id": "absence_as_evidence",
+                "premise": "The missing vessel is reconstructed only by how the living potter responds to its traces.",
+                "familiar_anchor": "An adult potter inspects a finished cup at a dusty worktable.",
+                "viewer_expectation": "The cup will be the completed hero object.",
+                "rule_break": "A removed vessel remains optically present only through contact traces and alignment behavior.",
+                "visible_consequences": [
+                    "A clean clay ring interrupts the dusty table.",
+                    "The potter aligns the small cup with the empty ring instead of presenting it.",
+                ],
+                "aboutness": "Craft is remembered through practiced attention rather than display.",
+                "signature_phrase": "the absent vase remains visible as a clean clay ring",
+            },
+            {
+                "id": "inversion",
+                "operator_id": "expectation_inversion",
+                "premise": "The workshop evaluates the maker through accumulated tool positions.",
+                "familiar_anchor": "An adult potter stands among familiar tools.",
+                "viewer_expectation": "The maker controls every tool.",
+                "rule_break": "The arranged tools point toward the maker as if inspecting them.",
+                "visible_consequences": ["Tool handles converge on the apron.", "The maker pauses under their alignment."],
+                "aboutness": "A lifetime of practice also shapes the practitioner.",
+                "signature_phrase": "tool handles converge like a silent jury",
+            },
+            {
+                "id": "extension",
+                "operator_id": "rule_extension",
+                "premise": "Wet clay transfers touch memory into the workshop architecture.",
+                "familiar_anchor": "An adult potter trims a cup.",
+                "viewer_expectation": "Fingerprints stay on the clay object.",
+                "rule_break": "Every fresh fingerprint also appears on one nearby hard surface.",
+                "visible_consequences": ["A matching ridge crosses the table.", "A matching thumb hollow dents the light."],
+                "aboutness": "Making changes the place that sustains it.",
+                "signature_phrase": "matching fingerprints migrate across the workshop",
+            },
+            {
+                "id": "fold",
+                "operator_id": "temporal_fold",
+                "premise": "One trimming gesture makes the repaired past and active present co-visible.",
+                "familiar_anchor": "An adult potter checks a repaired cup.",
+                "viewer_expectation": "The repair belongs to an earlier moment.",
+                "rule_break": "The current hand movement continues the old repair seam in reflected light.",
+                "visible_consequences": ["The seam aligns with the moving finger.", "Its reflection reaches an unfinished cup."],
+                "aboutness": "Repair is an ongoing practice rather than a finished event.",
+                "signature_phrase": "one repair seam continues through the present gesture",
+            },
+        ]
+        prompt = (
+            "An adult potter inspects a finished cup at a dusty worktable; the absent vase remains visible as a clean clay ring. "
+            "A removed vessel is optically present through contact traces, and a clean ring interrupts the dust. "
+            "The potter aligns the small cup with the empty ring instead of presenting it. "
+            "First read the finished cup, then notice the empty circular trace, then recover a missing larger vessel from the alignment. "
+            "The camera waits at shelf height, caught just before the cup meets the ring; the missing vessel never enters the frame, "
+            "and every clue is made from fired-clay dust and contact rings."
+        )
+        evidence = {
+            "familiar_anchor_phrase": "An adult potter inspects a finished cup at a dusty worktable",
+            "rule_break_phrase": "A removed vessel is optically present through contact traces",
+            "visible_consequence_phrases": [
+                "a clean ring interrupts the dust",
+                "The potter aligns the small cup with the empty ring instead of presenting it",
+            ],
+            "reveal_path_phrases": [
+                "First read the finished cup",
+                "then notice the empty circular trace",
+                "then recover a missing larger vessel from the alignment",
+            ],
+            "authorial_grammar_phrases": {
+                "vantage": "The camera waits at shelf height",
+                "timing": "caught just before the cup meets the ring",
+                "omission": "the missing vessel never enters the frame",
+                "material_rule": "every clue is made from fired-clay dust and contact rings",
+            },
+        }
+        brief = {
+            "ordinary_baseline": ["portrait at a pottery wheel", "hands shaping wet clay", "shelves of finished cups"],
+            "rejected_cliches": ["portrait at a pottery wheel", "hands shaping wet clay", "shelves of finished cups"],
+            "proposals": proposals,
+            "selected_proposal_id": "absence",
+            "selection_rationale": "The trace remains photographically ordinary while making the missing object discoverable.",
+            "selected_concept": {
+                "proposal_id": "absence",
+                "familiar_anchor": proposals[0]["familiar_anchor"],
+                "rule_break": proposals[0]["rule_break"],
+                "visible_consequences": proposals[0]["visible_consequences"],
+                "reveal_path": ["recognize the cup", "notice the empty ring", "infer the absent vessel"],
+                "aboutness": proposals[0]["aboutness"],
+                "authorial_grammar": {
+                    "vantage": "Shelf-height observation makes the alignment readable.",
+                    "timing": "The shutter waits for the cup to nearly meet the trace.",
+                    "omission": "The larger missing vessel is withheld.",
+                    "material_rule": "Clay dust and contact rings carry every clue.",
+                },
+                "prompt_evidence": evidence,
+            },
+        }
+        valid = {"creative_brief": brief}
+        self.assertEqual(audit_composed_prompt.audit_creative_direction(pack, valid, prompt), [])
+
+        cases = []
+        missing_brief = {}
+        cases.append((missing_brief, prompt, "creative_direction"))
+        too_few = copy.deepcopy(valid)
+        too_few["creative_brief"]["proposals"] = proposals[:3]
+        cases.append((too_few, prompt, "creative_direction_proposals"))
+        duplicate_move = copy.deepcopy(valid)
+        duplicate_move["creative_brief"]["proposals"][1]["operator_id"] = "absence_as_evidence"
+        cases.append((duplicate_move, prompt, "creative_direction_operators"))
+        stacked_rule = copy.deepcopy(valid)
+        stacked_rule["creative_brief"]["selected_concept"]["rule_break"] = ["first", "second"]
+        cases.append((stacked_rule, prompt, "creative_direction_rule_break"))
+        mixed = copy.deepcopy(valid)
+        cases.append((mixed, prompt + " Tool handles converge like a silent jury.", "creative_direction_selection"))
+        missing_binding = copy.deepcopy(valid)
+        missing_binding["creative_brief"]["selected_concept"]["prompt_evidence"]["rule_break_phrase"] = "not in the prompt"
+        cases.append((missing_binding, prompt, "creative_direction_binding"))
+        borrowed_touch = copy.deepcopy(valid)
+        borrowed_touch["creative_brief"]["selected_concept"]["prompt_evidence"]["authorial_grammar_phrases"]["vantage"] = "shared light"
+        cases.append((borrowed_touch, prompt + " Shared light.", "creative_direction_authorial_grammar"))
+
+        for composed, case_prompt, expected_check in cases:
+            with self.subTest(expected_check=expected_check):
+                checks = {
+                    failure["check"]
+                    for failure in audit_composed_prompt.audit_creative_direction(pack, composed, case_prompt)
+                }
+                self.assertIn(expected_check, checks)
 
     def test_atomic_scene_candidate_pools_and_audit_are_fail_closed(self):
         pack = self.run_wrapper(
