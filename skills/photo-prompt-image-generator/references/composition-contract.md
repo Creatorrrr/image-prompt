@@ -12,6 +12,8 @@ A resolved render blueprint is not a candidate. It lives in `render_contract.sel
 
 An explicit `--creativity` value from `0.75` through `1.0` may add `creative_exploration`. Its contrast rows never add, remove, or reorder candidates: each `candidate_id` is an already exposed `sampler_eligible_pool` alternative that replaces the selected candidate in the same slot, clears conflicts with selected candidates in other slots, and exceeds the declared feature-distance floor. Keep the selected subject, mandatory intents, and atomic scene; use no more than `composition_guidance.replace_at_most` mutually compatible contrasts. The field is absent below the activation floor, preserving the ordinary pack shape.
 
+The same explicit range adds `creative_direction`, an agent-level creation and selection contract with no topic examples or new candidates. It requires an ordinary-baseline critique, at least four proposals using distinct concept operators, exactly one selection, one rule change, at least two visible consequences, a staged reveal path, and a concrete authorial grammar. Its evidence fields must be literal in `prompt_en`; signatures from unselected proposals are forbidden. See `creative-direction-contract.md`. The field is absent below the activation floor, so ordinary composed prompts retain their existing contract.
+
 ## Required Composition Behavior
 
 - Use every `mandatory_intents[].text` as literal or faithfully translated visible content.
@@ -48,7 +50,7 @@ If a composed ID names an open slot, the audit fails. Masked details are also re
 
 Use `photographic_integration` to bind subject and setting with believable light, contact, material, or optical depth. Use one visible `visual_proposition`, then at most one or two `photographic_craft` decisions. These are quality signals, so the audit reports omissions as warnings.
 
-`artistic_final_touch` is disabled for most profiles. When enabled, use the sentence or equivalent terms; it does not have to be the exact final suffix. Never add the documentary imperfection formula to product, food, architecture, nature, or polished editorial prompts by default.
+`artistic_final_touch` is disabled for most profiles. When enabled, use the sentence or equivalent terms; it does not have to be the exact final suffix. It is surface craft, not evidence of a distinct authorial point of view, and the creative-direction audit rejects using its fixed sentence as authorial grammar evidence. Never add the documentary imperfection formula to product, food, architecture, nature, or polished editorial prompts by default.
 
 ## Safety
 

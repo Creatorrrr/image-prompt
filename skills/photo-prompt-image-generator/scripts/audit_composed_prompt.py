@@ -393,6 +393,408 @@ def audit_artistic_final_touch(pack: dict[str, Any], prompt_en: str) -> dict[str
     }
 
 
+def nonempty_string_list(raw: Any) -> list[str]:
+    if not isinstance(raw, list):
+        return []
+    return [str(item).strip() for item in raw if isinstance(item, str) and str(item).strip()]
+
+
+def normalized_unique_count(values: Sequence[str]) -> int:
+    return len({str(value).strip().lower() for value in values if str(value).strip()})
+
+
+def audit_creative_direction(
+    pack: dict[str, Any],
+    composed: dict[str, Any],
+    prompt_en: str,
+) -> list[dict[str, Any]]:
+    contract = pack.get("creative_direction")
+    if not isinstance(contract, dict) or not contract.get("enabled"):
+        return []
+
+    failures: list[dict[str, Any]] = []
+    brief = composed.get("creative_brief")
+    if not isinstance(brief, dict):
+        return [
+            {
+                "check": "creative_direction",
+                "reason": "enabled creative-direction pack requires a creative_brief object",
+            }
+        ]
+
+    baseline_contract = contract.get("ordinary_baseline") if isinstance(contract.get("ordinary_baseline"), dict) else {}
+    minimum_cliches = int(baseline_contract.get("minimum_cliches", 3) or 3)
+    ordinary_baseline = nonempty_string_list(brief.get("ordinary_baseline"))
+    rejected_cliches = nonempty_string_list(brief.get("rejected_cliches"))
+    if len(ordinary_baseline) < minimum_cliches or normalized_unique_count(ordinary_baseline) < minimum_cliches:
+        failures.append(
+            {
+                "check": "creative_direction_baseline",
+                "reason": "creative brief must name distinct ordinary first-answer cliches before ideation",
+                "minimum": minimum_cliches,
+                "actual": len(ordinary_baseline),
+            }
+        )
+    if len(rejected_cliches) < minimum_cliches or normalized_unique_count(rejected_cliches) < minimum_cliches:
+        failures.append(
+            {
+                "check": "creative_direction_cliche_rejection",
+                "reason": "creative brief must explicitly reject distinct cliches",
+                "minimum": minimum_cliches,
+                "actual": len(rejected_cliches),
+            }
+        )
+
+    proposal_contract = contract.get("proposal_contract") if isinstance(contract.get("proposal_contract"), dict) else {}
+    minimum_proposals = int(proposal_contract.get("minimum_proposals", 4) or 4)
+    required_proposal_fields = [str(item) for item in proposal_contract.get("required_fields") or [] if str(item)]
+    allowed_operator_ids = {
+        str(item.get("id"))
+        for item in proposal_contract.get("operators") or []
+        if isinstance(item, dict) and str(item.get("id") or "")
+    }
+    proposals = brief.get("proposals")
+    if not isinstance(proposals, list):
+        proposals = []
+    if len(proposals) < minimum_proposals:
+        failures.append(
+            {
+                "check": "creative_direction_proposals",
+                "reason": "creative brief has too few concept proposals",
+                "minimum": minimum_proposals,
+                "actual": len(proposals),
+            }
+        )
+
+    proposal_by_id: dict[str, dict[str, Any]] = {}
+    operator_ids: list[str] = []
+    signature_phrases: dict[str, str] = {}
+    for index, proposal in enumerate(proposals):
+        if not isinstance(proposal, dict):
+            failures.append(
+                {
+                    "check": "creative_direction_proposals",
+                    "reason": "every concept proposal must be an object",
+                    "index": index,
+                }
+            )
+            continue
+        missing = []
+        for field in required_proposal_fields:
+            value = proposal.get(field)
+            if field == "visible_consequences":
+                if len(nonempty_string_list(value)) < 2:
+                    missing.append(field)
+            elif not isinstance(value, str) or not value.strip():
+                missing.append(field)
+        if missing:
+            failures.append(
+                {
+                    "check": "creative_direction_proposals",
+                    "reason": "concept proposal is missing required developed fields",
+                    "index": index,
+                    "fields": missing,
+                }
+            )
+        proposal_id = str(proposal.get("id") or "").strip()
+        operator_id = str(proposal.get("operator_id") or "").strip()
+        if proposal_id:
+            if proposal_id in proposal_by_id:
+                failures.append(
+                    {
+                        "check": "creative_direction_proposals",
+                        "reason": "concept proposal ids must be unique",
+                        "id": proposal_id,
+                    }
+                )
+            proposal_by_id[proposal_id] = proposal
+            signature_phrases[proposal_id] = str(proposal.get("signature_phrase") or "").strip()
+        if operator_id:
+            operator_ids.append(operator_id)
+            if allowed_operator_ids and operator_id not in allowed_operator_ids:
+                failures.append(
+                    {
+                        "check": "creative_direction_proposals",
+                        "reason": "concept proposal uses an operator outside the pack contract",
+                        "id": proposal_id or None,
+                        "operator_id": operator_id,
+                    }
+                )
+        if "rule_breaks" in proposal or isinstance(proposal.get("rule_break"), (list, dict)):
+            failures.append(
+                {
+                    "check": "creative_direction_rule_break",
+                    "reason": "each concept proposal must contain one scalar rule_break, not a stack",
+                    "id": proposal_id or None,
+                }
+            )
+
+    if proposal_contract.get("distinct_operator_ids") and normalized_unique_count(operator_ids) < min(
+        minimum_proposals, len(proposals)
+    ):
+        failures.append(
+            {
+                "check": "creative_direction_operators",
+                "reason": "concept proposals must use distinct concept-move operators",
+                "minimum_unique": min(minimum_proposals, len(proposals)),
+                "actual_unique": normalized_unique_count(operator_ids),
+            }
+        )
+    nonempty_signatures = [phrase for phrase in signature_phrases.values() if phrase]
+    if normalized_unique_count(nonempty_signatures) != len(nonempty_signatures):
+        failures.append(
+            {
+                "check": "creative_direction_proposals",
+                "reason": "concept proposal signature phrases must be unique",
+            }
+        )
+
+    selected_proposal_id = str(brief.get("selected_proposal_id") or "").strip()
+    selected_proposal = proposal_by_id.get(selected_proposal_id)
+    if not selected_proposal:
+        failures.append(
+            {
+                "check": "creative_direction_selection",
+                "reason": "selected_proposal_id must identify exactly one developed proposal",
+                "selected_proposal_id": selected_proposal_id or None,
+            }
+        )
+    selected_flags = [
+        str(proposal.get("id") or "")
+        for proposal in proposals
+        if isinstance(proposal, dict) and proposal.get("selected") is True
+    ]
+    if selected_flags and selected_flags != [selected_proposal_id]:
+        failures.append(
+            {
+                "check": "creative_direction_selection",
+                "reason": "proposal selected flags conflict with selected_proposal_id",
+                "selected_flags": selected_flags,
+                "selected_proposal_id": selected_proposal_id or None,
+            }
+        )
+
+    selected_signature = signature_phrases.get(selected_proposal_id, "")
+    if selected_signature and not text_contains_term(prompt_en, selected_signature):
+        failures.append(
+            {
+                "check": "creative_direction_binding",
+                "reason": "selected proposal signature phrase is not literal in prompt_en",
+                "phrase": selected_signature,
+            }
+        )
+    mixed_signatures = [
+        phrase
+        for proposal_id, phrase in signature_phrases.items()
+        if proposal_id != selected_proposal_id and phrase and text_contains_term(prompt_en, phrase)
+    ]
+    if mixed_signatures:
+        failures.append(
+            {
+                "check": "creative_direction_selection",
+                "reason": "prompt_en mixes signature phrases from unselected proposals",
+                "phrases": mixed_signatures,
+            }
+        )
+
+    selected_contract = (
+        contract.get("selected_concept_contract")
+        if isinstance(contract.get("selected_concept_contract"), dict)
+        else {}
+    )
+    selected_concept = brief.get("selected_concept")
+    if not isinstance(selected_concept, dict):
+        failures.append(
+            {
+                "check": "creative_direction_selection",
+                "reason": "creative brief requires a selected_concept object",
+            }
+        )
+        return failures
+    required_selected_fields = [str(item) for item in selected_contract.get("required_fields") or [] if str(item)]
+    missing_selected_fields = [field for field in required_selected_fields if field not in selected_concept]
+    if missing_selected_fields:
+        failures.append(
+            {
+                "check": "creative_direction_selection",
+                "reason": "selected concept is missing required fields",
+                "fields": missing_selected_fields,
+            }
+        )
+    if str(selected_concept.get("proposal_id") or "") != selected_proposal_id:
+        failures.append(
+            {
+                "check": "creative_direction_selection",
+                "reason": "selected concept proposal_id does not match selected_proposal_id",
+            }
+        )
+    if "rule_breaks" in selected_concept or not isinstance(selected_concept.get("rule_break"), str):
+        failures.append(
+            {
+                "check": "creative_direction_rule_break",
+                "reason": "selected concept must contain exactly one scalar rule_break",
+            }
+        )
+    if selected_proposal:
+        for field in ("familiar_anchor", "rule_break", "aboutness"):
+            if str(selected_concept.get(field) or "").strip() != str(selected_proposal.get(field) or "").strip():
+                failures.append(
+                    {
+                        "check": "creative_direction_selection",
+                        "reason": "selected concept diverges from the chosen proposal",
+                        "field": field,
+                    }
+                )
+        if nonempty_string_list(selected_concept.get("visible_consequences")) != nonempty_string_list(
+            selected_proposal.get("visible_consequences")
+        ):
+            failures.append(
+                {
+                    "check": "creative_direction_selection",
+                    "reason": "selected concept consequence chain diverges from the chosen proposal",
+                    "field": "visible_consequences",
+                }
+            )
+
+    minimum_consequences = int(selected_contract.get("minimum_visible_consequences", 2) or 2)
+    consequences = nonempty_string_list(selected_concept.get("visible_consequences"))
+    if len(consequences) < minimum_consequences or normalized_unique_count(consequences) < minimum_consequences:
+        failures.append(
+            {
+                "check": "creative_direction_consequences",
+                "reason": "selected rule break needs distinct visible consequences",
+                "minimum": minimum_consequences,
+                "actual": len(consequences),
+            }
+        )
+    minimum_reveal_steps = int(selected_contract.get("minimum_reveal_steps", 3) or 3)
+    reveal_path = nonempty_string_list(selected_concept.get("reveal_path"))
+    if len(reveal_path) < minimum_reveal_steps or normalized_unique_count(reveal_path) < minimum_reveal_steps:
+        failures.append(
+            {
+                "check": "creative_direction_reveal",
+                "reason": "selected concept needs a staged viewer discovery path",
+                "minimum": minimum_reveal_steps,
+                "actual": len(reveal_path),
+            }
+        )
+
+    grammar_fields = [str(item) for item in selected_contract.get("authorial_grammar_fields") or [] if str(item)]
+    authorial_grammar = selected_concept.get("authorial_grammar")
+    if not isinstance(authorial_grammar, dict):
+        authorial_grammar = {}
+    missing_grammar = [
+        field
+        for field in grammar_fields
+        if not isinstance(authorial_grammar.get(field), str) or not str(authorial_grammar.get(field)).strip()
+    ]
+    if missing_grammar:
+        failures.append(
+            {
+                "check": "creative_direction_authorial_grammar",
+                "reason": "authorial voice must be expressed as concrete frame, time, omission, and material decisions",
+                "fields": missing_grammar,
+            }
+        )
+
+    evidence = selected_concept.get("prompt_evidence")
+    if not isinstance(evidence, dict):
+        failures.append(
+            {
+                "check": "creative_direction_binding",
+                "reason": "selected concept requires literal prompt_evidence",
+            }
+        )
+        return failures
+
+    scalar_evidence_fields = ("familiar_anchor_phrase", "rule_break_phrase")
+    evidence_phrases: list[str] = []
+    for field in scalar_evidence_fields:
+        phrase = str(evidence.get(field) or "").strip()
+        if not phrase:
+            failures.append(
+                {
+                    "check": "creative_direction_binding",
+                    "reason": "prompt evidence field is missing",
+                    "field": field,
+                }
+            )
+        else:
+            evidence_phrases.append(phrase)
+    for field, minimum in (("visible_consequence_phrases", minimum_consequences), ("reveal_path_phrases", minimum_reveal_steps)):
+        phrases = nonempty_string_list(evidence.get(field))
+        if len(phrases) < minimum:
+            failures.append(
+                {
+                    "check": "creative_direction_binding",
+                    "reason": "prompt evidence list is too short",
+                    "field": field,
+                    "minimum": minimum,
+                    "actual": len(phrases),
+                }
+            )
+        evidence_phrases.extend(phrases)
+
+    grammar_evidence = evidence.get("authorial_grammar_phrases")
+    if not isinstance(grammar_evidence, dict):
+        grammar_evidence = {}
+    missing_grammar_evidence = [
+        field
+        for field in grammar_fields
+        if not isinstance(grammar_evidence.get(field), str) or not str(grammar_evidence.get(field)).strip()
+    ]
+    if missing_grammar_evidence:
+        failures.append(
+            {
+                "check": "creative_direction_binding",
+                "reason": "each authorial grammar decision requires literal prompt evidence",
+                "fields": missing_grammar_evidence,
+            }
+        )
+    evidence_phrases.extend(
+        str(grammar_evidence.get(field) or "").strip()
+        for field in grammar_fields
+        if str(grammar_evidence.get(field) or "").strip()
+    )
+
+    missing_literal_phrases = [phrase for phrase in evidence_phrases if not text_contains_term(prompt_en, phrase)]
+    if missing_literal_phrases:
+        failures.append(
+            {
+                "check": "creative_direction_binding",
+                "reason": "declared creative evidence is not literal in prompt_en",
+                "phrases": list(dict.fromkeys(missing_literal_phrases)),
+            }
+        )
+    if normalized_unique_count(evidence_phrases) != len(evidence_phrases):
+        failures.append(
+            {
+                "check": "creative_direction_binding",
+                "reason": "creative evidence fields must point to distinct visible decisions",
+            }
+        )
+
+    touch = pack.get("artistic_final_touch") if isinstance(pack.get("artistic_final_touch"), dict) else {}
+    final_touch = str(touch.get("final_sentence_en") or "").strip().lower()
+    borrowed_touch_phrases = [
+        phrase
+        for phrase in grammar_evidence.values()
+        if isinstance(phrase, str)
+        and phrase.strip()
+        and final_touch
+        and (phrase.strip().lower() in final_touch or final_touch in phrase.strip().lower())
+    ]
+    if borrowed_touch_phrases:
+        failures.append(
+            {
+                "check": "creative_direction_authorial_grammar",
+                "reason": "fixed artistic_final_touch wording is surface craft, not evidence of authorial voice",
+                "phrases": borrowed_touch_phrases,
+            }
+        )
+    return failures
+
+
 def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dict[str, Any]:
     failures: list[dict[str, Any]] = []
     warnings: list[dict[str, Any]] = []
@@ -427,6 +829,8 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
     pack_negative = pack.get("negative_en")
     if negative_en != pack_negative:
         failures.append({"check": "negative_en", "reason": "negative_en differs from candidate pack"})
+
+    failures.extend(audit_creative_direction(pack, composed, prompt_en))
 
     safety = pack.get("safety") if isinstance(pack.get("safety"), dict) else {}
     if safety.get("status") != "pass" or safety.get("requires_user_approval") is True:
