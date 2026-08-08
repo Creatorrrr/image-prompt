@@ -30,10 +30,13 @@ Do not load every reference for a simple prompt request.
 - `assets/photo_prompt_subculture_extension.json`: separately loaded, on-demand subculture practice presets and shared craft/community taxonomy; keep specialty signals out of unrelated automatic pools.
 - `assets/photo_prompt_worldbuilding_extension.json`: separately loaded, on-demand general world-system presets with atomic scene evidence and scoped routing.
 - `assets/photo_prompt_cjk_worldbuilding_extension.json`: separately loaded, source-backed CJK commercial-narrative world systems; keep market terms distinct and lock culture-sensitive scenes to one provenance.
+- `assets/photo_prompt_character_moe_extension.json`: separately loaded, on-demand adult character grammar with 24 source-backed routes, eight shared families, typed runtime nodes, compatibility edges, and fail-closed guards.
 - `assets/photo_prompt_scene_expression_extension.json`: pilot scene-first data and shared scene-function/provenance vocabulary.
 - `assets/photo_prompt_scene_expression_worldbuilding.json` and `assets/photo_prompt_scene_expression_cjk.json`: compact route-specific non-operational scene blueprints; they extend render expression without duplicating research taxonomy slots.
+- `assets/photo_prompt_scene_expression_character_moe.json`: three sparse atomic character scenes per route; each selects one primary visual mechanism and at most two compatible support cues.
 - `assets/render_scene_expression_baseline_v1.json` and `assets/render_scene_quality_holdout_v1.jsonl`: implementation-before structural baseline and frozen rendered-image acceptance sample.
 - `assets/render_scene_quality_visual_review_v1.json`: versioned metadata-free pixel review for the frozen 12-case rendered sample; a plan or prompt audit is not a substitute for this result.
+- `assets/semantic_retrieval_holdout_character_moe_v1.jsonl`, `assets/render_character_moe_quality_holdout_v1.jsonl`, and `assets/render_character_moe_quality_visual_review_v1.json`: frozen multilingual retrieval, eight-family render cases, and their metadata-free pixel qualification for the character-mechanism extension.
 - `assets/concept_recipes.json`: Korean concepts, identity cores, scene variants, guides, and gates.
 - `assets/photo_prompt_quality_layers.json`: domain quality profiles and photographic decision layers.
 - `assets/photo_prompt_semantic_index.json`: semantic retrieval manifest; vector shards live under `assets/photo_prompt_semantic_index_shards/` and are materialized transparently.
@@ -43,6 +46,7 @@ Do not load every reference for a simple prompt request.
 - `assets/semantic_retrieval_holdout_v4.jsonl`: active preset-free retrieval holdout spanning the research extension.
 - `assets/semantic_retrieval_holdout_subculture_v1.jsonl`, `assets/semantic_retrieval_holdout_worldbuilding_v1.jsonl`, and `assets/semantic_retrieval_holdout_cjk_worldbuilding_v1.jsonl`: frozen on-demand specialty-route holdouts; never weaken expectations to fit an index result.
 - `assets/research_evidence.jsonl`: abstract source-to-taxonomy evidence ledger; never a raw prompt or image corpus.
+- `assets/research_evidence_character_moe/`: hash-ordered character-research shards and manifest; keep this ledger separate instead of enlarging the legacy single file.
 - `assets/visual_review_domain_extension_plan.json`: rendered-image review case plan linked to a separate versioned result; the plan itself is never acceptance evidence.
 
 Prefer `.venv/bin/python` when the project virtual environment exists. Rule mode works without an API key. Semantic mode requires the configured Gemini dependency and `GEMINI_API_KEY` or `GOOGLE_API_KEY`.
@@ -148,6 +152,8 @@ There is no separate approval flag or policy mode. This project-level automatic 
 - When `creative_direction` is present, follow `references/creative-direction-contract.md`. Select one proposal only; never blend rejected signatures into the final prompt. The concept move may reinterpret relationships inside the selected scene but may not replace mandatory subjects, atomic scene labels, character grammar, safety, or negative bytes.
 - Preserve `negative_en` byte-for-byte.
 - Respect hard conflicts, concept gates, enforced role-scene policy, and species-family locks.
+- When `character_grammar.enabled` is true, preserve its primary runtime mechanism and use no more than its two support cues. Treat router IDs, policy IDs, market terms, and audience familiarity as nonvisual guidance; the selected atomic scene is the visible realization.
+- Character routes require an explicitly adult original subject. Do not infer adulthood, identity, orientation, or personality from face/body proportions, hair, clothing, disability, ethnicity, or market origin.
 - `open_slots` expose only slot and bucket names. Invent a compatible detail; do not infer the hidden source choice.
 - Use one or two photographic craft decisions, not every available phrase.
 - `artistic_final_touch` is profile-specific surface craft. Use it only when `enabled` is true; equivalent wording is acceptable and need not be a fixed suffix. It never satisfies `creative_direction` authorial grammar by itself.
@@ -164,6 +170,7 @@ See `references/composition-contract.md` for field-level details.
 - Use `--intent` for free-form semantic requests and `--concept-lock` for literal meaning that must remain dominant.
 - Use `--additional-requirement` only for concrete visible constraints not represented by tags.
 - Biodiversity monitoring, agriculture-food systems, and circular-material records are on-demand typed packs: name the domain in semantic intent or select their preset directly; they do not enter unrelated automatic concept pools.
+- Character-moe grammar is also on demand. Route it only from a specific character mechanism or an exact scoped alias; an ordinary cute portrait, animal photograph, real cultural record, or generic streamer request must remain on its existing route.
 - Rule mode gives a uniquely strong explicit request-term match deterministic priority while retaining the other sampler-eligible alternatives in the candidate pack.
 - K-pop/K-beauty/idol and fantasy candidates receive an implicit-theme penalty unless the request names that theme.
 - Concept recipes may define `identity_core` plus weighted `scene_variants`; keep the identity stable while rotating one atomic scene instead of mixing slots from separate exemplars.

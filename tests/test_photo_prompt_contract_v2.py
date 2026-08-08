@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import copy
 from contextlib import redirect_stdout
+import hashlib
 import io
 import json
 import subprocess
@@ -25,17 +26,24 @@ RETRIEVAL_HOLDOUT_V4_PATH = SKILL_DIR / "assets" / "semantic_retrieval_holdout_v
 SUBCULTURE_RETRIEVAL_HOLDOUT_V1_PATH = SKILL_DIR / "assets" / "semantic_retrieval_holdout_subculture_v1.jsonl"
 WORLDBUILDING_RETRIEVAL_HOLDOUT_V1_PATH = SKILL_DIR / "assets" / "semantic_retrieval_holdout_worldbuilding_v1.jsonl"
 CJK_WORLDBUILDING_RETRIEVAL_HOLDOUT_V1_PATH = SKILL_DIR / "assets" / "semantic_retrieval_holdout_cjk_worldbuilding_v1.jsonl"
+CHARACTER_MOE_RETRIEVAL_HOLDOUT_V1_PATH = SKILL_DIR / "assets" / "semantic_retrieval_holdout_character_moe_v1.jsonl"
 RESEARCH_EVIDENCE_PATH = SKILL_DIR / "assets" / "research_evidence.jsonl"
+CHARACTER_MOE_RESEARCH_DIR = SKILL_DIR / "assets" / "research_evidence_character_moe"
+CHARACTER_MOE_CROSSWALK_PATH = SKILL_DIR / "assets" / "character_moe_topic_crosswalk_v1.json"
 RESEARCH_EXTENSION_PATH = SKILL_DIR / "assets" / "photo_prompt_research_extension.json"
 SUBCULTURE_EXTENSION_PATH = SKILL_DIR / "assets" / "photo_prompt_subculture_extension.json"
 WORLDBUILDING_EXTENSION_PATH = SKILL_DIR / "assets" / "photo_prompt_worldbuilding_extension.json"
 CJK_WORLDBUILDING_EXTENSION_PATH = SKILL_DIR / "assets" / "photo_prompt_cjk_worldbuilding_extension.json"
+CHARACTER_MOE_EXTENSION_PATH = SKILL_DIR / "assets" / "photo_prompt_character_moe_extension.json"
 SCENE_EXPRESSION_EXTENSION_PATH = SKILL_DIR / "assets" / "photo_prompt_scene_expression_extension.json"
 SCENE_EXPRESSION_WORLDBUILDING_PATH = SKILL_DIR / "assets" / "photo_prompt_scene_expression_worldbuilding.json"
 SCENE_EXPRESSION_CJK_PATH = SKILL_DIR / "assets" / "photo_prompt_scene_expression_cjk.json"
+SCENE_EXPRESSION_CHARACTER_MOE_PATH = SKILL_DIR / "assets" / "photo_prompt_scene_expression_character_moe.json"
 SCENE_EXPRESSION_BASELINE_PATH = SKILL_DIR / "assets" / "render_scene_expression_baseline_v1.json"
 SCENE_QUALITY_HOLDOUT_PATH = SKILL_DIR / "assets" / "render_scene_quality_holdout_v1.jsonl"
 SCENE_QUALITY_VISUAL_REVIEW_PATH = SKILL_DIR / "assets" / "render_scene_quality_visual_review_v1.json"
+CHARACTER_MOE_QUALITY_HOLDOUT_PATH = SKILL_DIR / "assets" / "render_character_moe_quality_holdout_v1.jsonl"
+CHARACTER_MOE_QUALITY_VISUAL_REVIEW_PATH = SKILL_DIR / "assets" / "render_character_moe_quality_visual_review_v1.json"
 QUALITY_LAYERS_PATH = SKILL_DIR / "assets" / "photo_prompt_quality_layers.json"
 DOMAIN_VISUAL_REVIEW_PLAN_PATH = SKILL_DIR / "assets" / "visual_review_domain_extension_plan.json"
 DOMAIN_VISUAL_REVIEW_RESULTS_PATH = SKILL_DIR / "assets" / "visual_review_domain_extension_results.json"
@@ -1919,6 +1927,331 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
         ):
             self.assertNotIn(protected_reference, extension_text)
 
+    def test_character_moe_research_graph_routes_and_sparse_runtime_contract(self):
+        manifest = json.loads(
+            (CHARACTER_MOE_RESEARCH_DIR / "manifest.json").read_text(encoding="utf-8")
+        )
+        self.assertEqual(manifest["schema_version"], "photo-research-evidence-shards/v1")
+        self.assertEqual(manifest["domain"], "character_moe_grammar")
+        self.assertEqual(manifest["logical_row_count"], 72)
+        self.assertEqual(manifest["topic_count"], 24)
+        self.assertEqual(manifest["rows_per_topic"], 3)
+        self.assertEqual(len(manifest["shards"]), 6)
+
+        rows = []
+        for shard in manifest["shards"]:
+            path = CHARACTER_MOE_RESEARCH_DIR / shard["file"]
+            raw = path.read_bytes()
+            self.assertEqual(hashlib.sha256(raw).hexdigest(), shard["sha256"])
+            shard_rows = [json.loads(line) for line in raw.decode("utf-8").splitlines() if line]
+            self.assertEqual(len(shard_rows), shard["row_count"])
+            self.assertEqual(
+                list(dict.fromkeys(row["topic_id"] for row in shard_rows)),
+                shard["topic_ids"],
+            )
+            rows.extend(shard_rows)
+        self.assertEqual(len(rows), 72)
+        self.assertEqual(len({row["id"] for row in rows}), 72)
+        self.assertEqual(len({row["source_url"] for row in rows}), 72)
+        self.assertTrue(all(row["domain"] == "character_moe_grammar" for row in rows))
+        self.assertTrue(
+            all(row["record_role"] in {"topic_matrix", "independent_source"} for row in rows)
+        )
+
+        rows_by_id = {row["id"]: row for row in rows}
+        topics = sorted({row["topic_id"] for row in rows})
+        self.assertEqual(len(topics), 24)
+        mechanism_count = 0
+        cross_source_count = 0
+        matrix_candidate_memberships = []
+        for topic_id in topics:
+            topic_rows = [row for row in rows if row["topic_id"] == topic_id]
+            self.assertEqual(len(topic_rows), 3, topic_id)
+            matrices = [row for row in topic_rows if row["record_role"] == "topic_matrix"]
+            supports = [row for row in topic_rows if row["record_role"] == "independent_source"]
+            self.assertEqual(len(matrices), 1, topic_id)
+            self.assertEqual(len(supports), 2, topic_id)
+            matrix = matrices[0]
+            self.assertEqual(set(matrix["synthesis_evidence_ids"]), {row["id"] for row in supports})
+            self.assertEqual(set(matrix["candidate_definitions"]), set(matrix["candidate_ids"]))
+            self.assertEqual(
+                set(matrix["photographic_evidence_definitions"]),
+                set(matrix["photographic_evidence"]),
+            )
+            self.assertEqual(
+                [item["mechanism"] for item in matrix["mechanism_provenance"]],
+                matrix["mechanisms"],
+            )
+            candidate_ids = set(matrix["candidate_ids"])
+            matrix_candidate_memberships.extend((candidate_id, topic_id) for candidate_id in candidate_ids)
+            self.assertTrue(
+                all(set(row["candidate_ids"]) <= candidate_ids for row in supports),
+                topic_id,
+            )
+            mechanism_count += len(matrix["mechanisms"])
+            for provenance in matrix["mechanism_provenance"]:
+                evidence_ids = provenance["evidence_ids"]
+                self.assertTrue(evidence_ids, (topic_id, provenance["mechanism"]))
+                self.assertTrue(set(evidence_ids) <= set(rows_by_id), topic_id)
+                self.assertTrue(
+                    all(rows_by_id[evidence_id]["topic_id"] == topic_id for evidence_id in evidence_ids),
+                    topic_id,
+                )
+                if provenance["provenance"] == "cross_source_synthesis":
+                    cross_source_count += 1
+                    self.assertGreaterEqual(len(set(evidence_ids)), 2, topic_id)
+                    self.assertGreaterEqual(
+                        len({rows_by_id[evidence_id]["source_url"] for evidence_id in evidence_ids}),
+                        2,
+                        topic_id,
+                    )
+        self.assertEqual(mechanism_count, 194)
+        self.assertEqual(cross_source_count, 53)
+        self.assertEqual(len(matrix_candidate_memberships), 186)
+        self.assertEqual(len({candidate_id for candidate_id, _topic in matrix_candidate_memberships}), 184)
+
+        crosswalk = json.loads(CHARACTER_MOE_CROSSWALK_PATH.read_text(encoding="utf-8"))
+        self.assertEqual(crosswalk["domain"], "character_moe_grammar")
+        self.assertEqual(len(crosswalk["topics"]), 24)
+        self.assertEqual(len(crosswalk["families"]), 8)
+        self.assertEqual({topic["topic_id"] for topic in crosswalk["topics"]}, set(topics))
+        self.assertEqual(len({topic["route_id"] for topic in crosswalk["topics"]}), 24)
+
+        extension = json.loads(CHARACTER_MOE_EXTENSION_PATH.read_text(encoding="utf-8"))
+        graph = extension["character_mechanism_graph"]
+        self.assertEqual(graph["schema_version"], prompt_generator.CHARACTER_MECHANISM_GRAPH_SCHEMA)
+        self.assertEqual(graph["priority_order"], crosswalk["priority_order"])
+        self.assertEqual(graph["max_support_cues"], 2)
+        self.assertEqual(len(graph["families"]), 8)
+        self.assertEqual(len(graph["runtime_nodes"]), 184)
+        self.assertEqual(len(graph["compatibility_edges"]), 24)
+        self.assertTrue(graph["guard_rules"])
+        self.assertEqual(len(extension["presets"]), 24)
+
+        node_index = {node["id"]: node for node in graph["runtime_nodes"]}
+        self.assertEqual(set(node_index), {candidate_id for candidate_id, _topic in matrix_candidate_memberships})
+        for candidate_id, topic_id in matrix_candidate_memberships:
+            self.assertIn(topic_id, node_index[candidate_id]["topic_ids"])
+        self.assertEqual(
+            {preset["id"] for preset in extension["presets"]},
+            {topic["route_id"] for topic in crosswalk["topics"]},
+        )
+
+        data = prompt_generator.load_json(TAGS_PATH)
+        data[prompt_generator.QUALITY_LAYERS_DATA_KEY] = prompt_generator.load_quality_layers(
+            QUALITY_LAYERS_PATH
+        )
+        presets = {preset["id"]: preset for preset in data["presets"]}
+        routing_policy = prompt_generator.candidate_pack_intent_routing_policy(data)
+        character_routes = [
+            rule
+            for rule in routing_policy["scoped_routes"]
+            if rule["domain"] == "character_moe_grammar"
+        ]
+        self.assertEqual(len(character_routes), 24)
+        self.assertEqual(
+            {rule["preset_id"] for rule in character_routes},
+            {topic["route_id"] for topic in crosswalk["topics"]},
+        )
+
+        for topic in crosswalk["topics"]:
+            preset_id = topic["route_id"]
+            preset = presets[preset_id]
+            self.assertEqual(prompt_generator.preset_domains(preset, data), {"character_moe_grammar"})
+            blueprints = prompt_generator.render_contract_resolved_scene_blueprints(data, preset)
+            self.assertEqual(len(blueprints), 3, preset_id)
+            self.assertGreaterEqual(
+                len({function for blueprint in blueprints for function in blueprint["scene_functions"]}),
+                2,
+                preset_id,
+            )
+            self.assertLessEqual(sum(bool(item["static_portrait"]) for item in blueprints), 1)
+            self.assertEqual(
+                {
+                    prompt_generator.candidate_pack_select_scene_blueprint(
+                        {"provenance": {"seed": seed}}, preset, blueprints
+                    )["id"]
+                    for seed in range(1, 4)
+                },
+                {blueprint["id"] for blueprint in blueprints},
+                preset_id,
+            )
+            result = prompt_generator.generate_once(
+                data,
+                __import__("random").Random(810000 + topic["ordinal"]),
+                preset_id,
+                ["en"],
+                True,
+                12,
+                True,
+                detail_level="detailed",
+                selection_mode="rule",
+                seed=810000 + topic["ordinal"],
+            )
+            pack = prompt_generator.build_candidate_pack(result, data)
+            grammar = pack["character_grammar"]
+            self.assertTrue(grammar["enabled"], preset_id)
+            self.assertTrue(grammar["valid"], preset_id)
+            self.assertEqual(grammar["topic_id"], topic["topic_id"])
+            self.assertEqual(grammar["family_id"], topic["family_id"])
+            self.assertTrue(set(topic["runtime_anchor_ids"]) <= set(grammar["runtime_anchor_ids"]))
+            self.assertGreaterEqual(len(grammar["runtime_nodes"]), 1)
+            self.assertLessEqual(len(grammar["runtime_nodes"]), 3)
+            self.assertEqual(sum(node["role"] == "primary" for node in grammar["runtime_nodes"]), 1)
+            self.assertTrue(set(topic["required_evidence_types"]) <= set(grammar["character_evidence_types"]))
+            self.assertIn("nonvisual", grammar["market_origin"])
+            self.assertEqual(pack["quality_profile"]["profile_id"], "character_moe_grammar")
+            self.assertFalse(pack["evidence_budget"]["enabled"])
+            candidate_total = len(pack["presets"]) + sum(
+                len(slot_payload["candidates"]) for slot_payload in pack["slots"].values()
+            )
+            self.assertLessEqual(candidate_total, prompt_generator.CANDIDATE_PACK_TOTAL_CANDIDATE_LIMIT)
+            self.assertEqual(
+                pack["safety"],
+                {
+                    "mode": "automatic",
+                    "evaluation_requested": False,
+                    "status": "pass",
+                    "requires_user_approval": False,
+                    "items": [],
+                },
+            )
+
+        cases = eval_semantic.load_retrieval_holdout_cases(
+            CHARACTER_MOE_RETRIEVAL_HOLDOUT_V1_PATH
+        )
+        self.assertEqual(len(cases), 96)
+        self.assertEqual(len({case["id"] for case in cases}), 96)
+        self.assertEqual(
+            {preset_id for case in cases for preset_id in case["allowed_selected_presets"]},
+            {topic["route_id"] for topic in crosswalk["topics"]},
+        )
+        for case in cases:
+            routed = prompt_generator.resolve_request_intent_constraints(
+                data, {"intent": case["intent"]}, {}
+            )
+            self.assertIn("character_moe_grammar", routed["domains"], case["id"])
+            self.assertEqual(set(routed["scoped_routes"]), set(case["allowed_selected_presets"]), case["id"])
+
+        for generic_intent in (
+            "an ordinary cute adult portrait in soft window light",
+            "a documentary photograph of an actual cat playing with a toy",
+            "a real cultural festival costume documentation project",
+            "a generic streamer speaking to a camera in a bedroom",
+            "a polished idol concert portrait under stage lights",
+            "부드러운 조명의 평범한 성인 인물 사진",
+        ):
+            routed = prompt_generator.resolve_request_intent_constraints(
+                data, {"intent": generic_intent}, {}
+            )
+            self.assertNotIn("character_moe_grammar", routed["domains"], generic_intent)
+            self.assertFalse(
+                {topic["route_id"] for topic in crosswalk["topics"]}
+                & set(routed["scoped_routes"]),
+                generic_intent,
+            )
+
+        quality_cases = [
+            json.loads(line)
+            for line in CHARACTER_MOE_QUALITY_HOLDOUT_PATH.read_text(encoding="utf-8").splitlines()
+            if line.strip()
+        ]
+        self.assertEqual(len(quality_cases), 8)
+        self.assertEqual(
+            {case["family_id"] for case in quality_cases},
+            {family["id"] for family in crosswalk["families"]},
+        )
+        visual_review = json.loads(
+            CHARACTER_MOE_QUALITY_VISUAL_REVIEW_PATH.read_text(encoding="utf-8")
+        )
+        visual_summary = eval_semantic.summarize_visual_review(
+            CHARACTER_MOE_QUALITY_VISUAL_REVIEW_PATH
+        )["visual_review"]
+        self.assertEqual(visual_review["schema_version"], "photo-visual-review/v1")
+        self.assertEqual(visual_review["cross_case_review"]["outcome"], "pass")
+        self.assertEqual(visual_review["cross_case_review"]["family_count"], 8)
+        self.assertEqual(visual_review["cross_case_review"]["distinct_event_count"], 8)
+        self.assertEqual(
+            visual_review["cross_case_review"]["studio_costume_convergence"],
+            "none",
+        )
+        self.assertEqual(visual_summary["case_count"], 8)
+        self.assertEqual(visual_summary["failed_case_count"], 0)
+        self.assertEqual(visual_summary["contract_failure_count"], 0)
+        self.assertEqual(visual_summary["failed_review_focus_result_count"], 0)
+        self.assertTrue(visual_summary["passed"])
+        self.assertEqual(
+            {case["case"] for case in visual_review["cases"]},
+            {case["case_id"] for case in quality_cases},
+        )
+        expected_quality_scene_ids = {
+            "character_trait_gap_workshop_reveal": "gap_moe_contrast_structure_atomic_01",
+            "character_relationship_reciprocal_rescue": "relationship_chemistry_grammar_atomic_01",
+            "character_expression_confusion_translation": "expression_manga_symbol_translation_atomic_01",
+            "character_prop_repair_bond": "signature_prop_character_bond_atomic_01",
+            "character_hair_state_continuity_after_rain": "hair_silhouette_state_change_atomic_01",
+            "character_creepy_cute_protective_encounter": "creepy_cute_monster_moe_atomic_01",
+            "character_transformation_recovery_threshold": "transformation_heroine_double_life_atomic_01",
+            "character_adult_androgynous_care_competence": "adult_masculine_androgynous_moe_atomic_01",
+        }
+        for case in quality_cases:
+            preset = presets[case["preset_id"]]
+            blueprints = prompt_generator.render_contract_resolved_scene_blueprints(data, preset)
+            matching = [
+                blueprint
+                for blueprint in blueprints
+                if case["target_scene_function"] in blueprint["scene_functions"]
+            ]
+            self.assertEqual(len(matching), 1, case["case_id"])
+            self.assertEqual(matching[0]["id"], expected_quality_scene_ids[case["case_id"]])
+            selected = prompt_generator.candidate_pack_select_scene_blueprint(
+                {
+                    "provenance": {
+                        "seed": case["seed"],
+                        "requested_scene_function": case["target_scene_function"],
+                    }
+                },
+                preset,
+                blueprints,
+            )
+            self.assertEqual(selected["id"], expected_quality_scene_ids[case["case_id"]])
+            self.assertEqual(selected["selection_source"], "requested_scene_function")
+            wrapper_pack = self.run_wrapper(
+                "--preset",
+                case["preset_id"],
+                "--selection-mode",
+                "rule",
+                "--seed",
+                str(case["seed"]),
+                "--scene-function",
+                case["target_scene_function"],
+                "--emit-candidate-pack",
+            )[0]
+            self.assertEqual(
+                wrapper_pack["render_contract"]["selected_scene"]["blueprint_id"],
+                expected_quality_scene_ids[case["case_id"]],
+            )
+            self.assertEqual(
+                wrapper_pack["render_contract"]["selected_scene"]["selection_source"],
+                "requested_scene_function",
+            )
+
+        extension_text = (
+            CHARACTER_MOE_EXTENSION_PATH.read_text(encoding="utf-8")
+            + SCENE_EXPRESSION_CHARACTER_MOE_PATH.read_text(encoding="utf-8")
+        ).lower()
+        for protected_reference in (
+            "pokemon",
+            "hololive",
+            "hatsune miku",
+            "gundam",
+            "sailor moon",
+            "genshin impact",
+            "blue archive",
+            "uma musume",
+        ):
+            self.assertNotIn(protected_reference, extension_text)
+
     def test_scene_expression_pilots_are_diverse_sparse_and_fail_closed(self):
         data = prompt_generator.load_json(TAGS_PATH)
         data[prompt_generator.QUALITY_LAYERS_DATA_KEY] = prompt_generator.load_quality_layers(
@@ -2088,8 +2421,8 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             "2026-08-07T00:00:00+09:00",
             current=True,
         )
-        self.assertEqual(inventory["summary"]["route_count"], 88)
-        self.assertEqual(inventory["summary"]["pass_count"], 88)
+        self.assertEqual(inventory["summary"]["route_count"], 112)
+        self.assertEqual(inventory["summary"]["pass_count"], 112)
         self.assertEqual(inventory["summary"]["fail_count"], 0)
 
         data = prompt_generator.load_json(TAGS_PATH)
@@ -2101,12 +2434,13 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             (SUBCULTURE_EXTENSION_PATH, "specialty_practice"),
             (WORLDBUILDING_EXTENSION_PATH, "narrative_world"),
             (CJK_WORLDBUILDING_EXTENSION_PATH, "narrative_world"),
+            (CHARACTER_MOE_EXTENSION_PATH, "character_grammar"),
         )
         preset_ids: list[tuple[str, str]] = []
         for path, route_type in source_specs:
             source = json.loads(path.read_text(encoding="utf-8"))
             preset_ids.extend((preset["id"], route_type) for preset in source["presets"])
-        self.assertEqual(len(preset_ids), 88)
+        self.assertEqual(len(preset_ids), 112)
 
         presets = {preset["id"]: preset for preset in data["presets"]}
         evidence_rows = [
@@ -2120,11 +2454,28 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             for candidate_id in [row.get("topic_id"), *(row.get("candidate_ids") or [])]
             if str(candidate_id or "")
         }
+        for shard in json.loads(
+            (CHARACTER_MOE_RESEARCH_DIR / "manifest.json").read_text(encoding="utf-8")
+        )["shards"]:
+            for line in (CHARACTER_MOE_RESEARCH_DIR / shard["file"]).read_text(
+                encoding="utf-8"
+            ).splitlines():
+                row = json.loads(line)
+                evidence_route_ids.add(str(row.get("topic_id") or ""))
+                evidence_route_ids.update(str(item) for item in row.get("candidate_ids") or [])
         for preset_id, route_type in preset_ids:
             preset = presets[preset_id]
-            self.assertIn(preset_id, evidence_route_ids)
             self.assertIsInstance(preset.get("render_contract"), dict, preset_id)
-            self.assertTrue(preset["render_contract"].get("topic_intents"), preset_id)
+            if route_type == "character_grammar":
+                grammar = preset["render_contract"].get("character_grammar") or {}
+                self.assertIn(grammar.get("topic_id"), evidence_route_ids)
+                # Character market/taxonomy labels stay nonvisual.  Their
+                # executable contract is the typed topic plus sparse visual
+                # atoms, not a generic topic phrase forced into the prompt.
+                self.assertFalse(preset["render_contract"].get("topic_intents"), preset_id)
+            else:
+                self.assertIn(preset_id, evidence_route_ids)
+                self.assertTrue(preset["render_contract"].get("topic_intents"), preset_id)
             blueprints = prompt_generator.render_contract_resolved_scene_blueprints(data, preset)
             expected_minimum = 4 if route_type == "narrative_world" else 3
             self.assertGreaterEqual(len(blueprints), expected_minimum, preset_id)
@@ -2149,6 +2500,7 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             SCENE_EXPRESSION_EXTENSION_PATH,
             SCENE_EXPRESSION_WORLDBUILDING_PATH,
             SCENE_EXPRESSION_CJK_PATH,
+            SCENE_EXPRESSION_CHARACTER_MOE_PATH,
         ):
             scene_text = scene_path.read_text(encoding="utf-8").lower()
             for protected_reference in (
@@ -2177,6 +2529,7 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             SUBCULTURE_EXTENSION_PATH,
             WORLDBUILDING_EXTENSION_PATH,
             CJK_WORLDBUILDING_EXTENSION_PATH,
+            CHARACTER_MOE_EXTENSION_PATH,
         ):
             source = json.loads(path.read_text(encoding="utf-8"))
             preset_ids.extend(preset["id"] for preset in source["presets"])
@@ -2197,9 +2550,17 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             pack = prompt_generator.build_candidate_pack(result, data)
             self.assertTrue(pack["scene_contract"]["enabled"], preset_id)
             self.assertTrue(pack["render_contract"]["enabled"], preset_id)
-            self.assertTrue(pack["render_contract"]["topic_intents"], preset_id)
             self.assertEqual(pack["render_contract"]["evidence_route_id"], preset_id)
-            self.assertTrue(pack["evidence_budget"]["enabled"], preset_id)
+            is_character_route = pack["character_grammar"]["enabled"]
+            if is_character_route:
+                self.assertFalse(pack["render_contract"]["topic_intents"], preset_id)
+                self.assertFalse(pack["evidence_budget"]["enabled"], preset_id)
+                self.assertTrue(pack["character_grammar"]["valid"], preset_id)
+                self.assertGreaterEqual(len(pack["character_grammar"]["runtime_nodes"]), 1)
+                self.assertLessEqual(len(pack["character_grammar"]["runtime_nodes"]), 3)
+            else:
+                self.assertTrue(pack["render_contract"]["topic_intents"], preset_id)
+                self.assertTrue(pack["evidence_budget"]["enabled"], preset_id)
             self.assertEqual(
                 len(set(pack["render_contract"]["selected_scene"]["diegetic_visual_provenance"])),
                 1,
@@ -2212,7 +2573,11 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             )
             self.assertEqual(set(group["required_slots"]), {"subject", "action", "location", "prop"})
             chosen = [f"preset:{preset_id}"]
-            prompt_parts = [pack["render_contract"]["topic_intents"][0]["audit_terms"][0]]
+            prompt_parts = []
+            if pack["render_contract"]["topic_intents"]:
+                prompt_parts.append(
+                    pack["render_contract"]["topic_intents"][0]["audit_terms"][0]
+                )
             for slot in group["required_slots"]:
                 prompt_parts.append(group["slots"][slot]["label_en"])
             prompt = ". ".join(prompt_parts) + ". Shared light, foreground occlusion, creased material, caught before the consequence settles."

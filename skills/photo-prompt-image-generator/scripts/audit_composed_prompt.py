@@ -1180,6 +1180,82 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
                 "values": sorted(set(visual_provenance)),
             }
         )
+    character_grammar = (
+        pack.get("character_grammar")
+        if isinstance(pack.get("character_grammar"), dict)
+        else {}
+    )
+    if character_grammar.get("enabled"):
+        runtime_nodes = [
+            item
+            for item in character_grammar.get("runtime_nodes") or []
+            if isinstance(item, dict)
+        ]
+        primary_runtime_id = str(character_grammar.get("primary_runtime_id") or "")
+        max_support_cues = int(character_grammar.get("max_support_cues", 2) or 2)
+        primary_nodes = [item for item in runtime_nodes if item.get("role") == "primary"]
+        support_nodes = [item for item in runtime_nodes if item.get("role") == "support"]
+        runtime_ids = {str(item.get("id") or "") for item in runtime_nodes}
+        if (
+            character_grammar.get("valid") is not True
+            or len(primary_nodes) != 1
+            or primary_runtime_id not in runtime_ids
+            or len(support_nodes) > max_support_cues
+            or len(runtime_nodes) != len(runtime_ids)
+        ):
+            failures.append(
+                {
+                    "check": "character_grammar_contract",
+                    "reason": "character runtime bundle violates the one-primary sparse support contract",
+                    "primary_runtime_id": primary_runtime_id,
+                    "runtime_ids": sorted(runtime_ids),
+                    "support_count": len(support_nodes),
+                    "max_support_cues": max_support_cues,
+                }
+            )
+        if len(runtime_nodes) > 1 and not character_grammar.get("compatible_edge_ids"):
+            failures.append(
+                {
+                    "check": "character_grammar_contract",
+                    "reason": "multi-node character runtime bundle has no declared compatibility edge",
+                }
+            )
+        scene_evidence = {
+            str(item)
+            for item in selected_scene.get("character_evidence_types") or []
+            if str(item)
+        }
+        grammar_evidence = {
+            str(item)
+            for item in character_grammar.get("character_evidence_types") or []
+            if str(item)
+        }
+        required_evidence = {
+            str(item)
+            for item in character_grammar.get("required_evidence_types") or []
+            if str(item)
+        }
+        if (
+            not scene_evidence
+            or scene_evidence != grammar_evidence
+            or not required_evidence.issubset(scene_evidence)
+        ):
+            failures.append(
+                {
+                    "check": "character_grammar_contract",
+                    "reason": "selected scene and character grammar evidence types are missing or inconsistent",
+                    "scene_evidence": sorted(scene_evidence),
+                    "grammar_evidence": sorted(grammar_evidence),
+                    "required_evidence": sorted(required_evidence),
+                }
+            )
+        if not character_grammar.get("runtime_anchor_ids"):
+            failures.append(
+                {
+                    "check": "character_grammar_contract",
+                    "reason": "character route has no runtime anchor IDs",
+                }
+            )
     role_scene_policy = pack.get("role_scene_policy") if isinstance(pack.get("role_scene_policy"), dict) else {}
     if role_scene_policy.get("enabled"):
         selected_locations = chosen_slots.get("location", set())

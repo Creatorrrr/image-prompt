@@ -2562,6 +2562,8 @@ RETRIEVAL_HOLDOUT_CASE_KEYS = {
     "forbidden_selected_presets",
     "expected_profile",
     "expected_intent_domains",
+    "expected_character_runtime_ids",
+    "expected_character_policy_ids",
     "no_people",
 }
 
@@ -2588,7 +2590,12 @@ def load_retrieval_holdout_cases(path: Path) -> List[JsonDict]:
             raise ValueError(f"{path}:{line_number}: duplicate case id {case_id}")
         if not isinstance(allowed, list) or not allowed or any(not str(item).strip() for item in allowed):
             raise ValueError(f"{path}:{line_number}: allowed_selected_presets must be a non-empty string list")
-        for key in ("forbidden_selected_presets", "expected_intent_domains"):
+        for key in (
+            "forbidden_selected_presets",
+            "expected_intent_domains",
+            "expected_character_runtime_ids",
+            "expected_character_policy_ids",
+        ):
             value = payload.get(key)
             if value is not None and (
                 not isinstance(value, list) or any(not str(item).strip() for item in value)
@@ -2668,6 +2675,34 @@ def evaluate_retrieval_holdout(
         expected_domains = {str(item) for item in case.get("expected_intent_domains") or []}
         if not expected_domains.issubset(actual_domains):
             failures.append("intent_domains")
+        character_grammar = (
+            pack.get("character_grammar")
+            if isinstance(pack.get("character_grammar"), dict)
+            else {}
+        )
+        actual_character_runtime_ids = {
+            str(item)
+            for item in character_grammar.get("runtime_anchor_ids") or []
+            if str(item)
+        }
+        actual_character_runtime_ids.update(
+            str(item.get("id"))
+            for item in character_grammar.get("runtime_nodes") or []
+            if isinstance(item, dict) and str(item.get("id") or "")
+        )
+        expected_character_runtime_ids = {
+            str(item) for item in case.get("expected_character_runtime_ids") or []
+        }
+        if not expected_character_runtime_ids.issubset(actual_character_runtime_ids):
+            failures.append("character_runtime_ids")
+        actual_character_policy_ids = {
+            str(item) for item in character_grammar.get("policy_ids") or [] if str(item)
+        }
+        expected_character_policy_ids = {
+            str(item) for item in case.get("expected_character_policy_ids") or []
+        }
+        if not expected_character_policy_ids.issubset(actual_character_policy_ids):
+            failures.append("character_policy_ids")
         if case.get("no_people"):
             selected_rows = selected_candidate_rows(pack)
             if any(candidate_reads_as_human(candidate) for candidate in selected_rows):
@@ -2682,6 +2717,8 @@ def evaluate_retrieval_holdout(
                 "allowed_selected_presets": sorted(allowed),
                 "profile_id": profile_id,
                 "intent_domains": sorted(actual_domains),
+                "character_runtime_ids": sorted(actual_character_runtime_ids),
+                "character_policy_ids": sorted(actual_character_policy_ids),
                 "failures": failures,
                 "passed": not failures,
             }

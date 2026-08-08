@@ -36,6 +36,7 @@ If a composed ID names an open slot, the audit fails. Masked details are also re
 - `intent_contract` and `coverage.intent_constraints`: typed subject categories, domains, negative-presence constraints, and their matching evidence. They are routing constraints, not prose suggestions.
 - `scene_contract`: every `atomic_scene` group is fail-closed. Candidate-backed groups constrain IDs to a selected variant. A `selected_render_blueprint` group instead requires all four literal labels and rejects ordinary candidate IDs for its controlled core slots.
 - `render_contract.selected_scene`: one selected scene function set, one diegetic visual provenance, relationship stakes, and genre anchors. `market_origin` is not visual provenance and must not be rendered as a national costume shortcut.
+- `character_grammar`: an on-demand character route exposes nonvisual runtime anchors and policies separately from one to three selected `visual_atom` nodes. Copy the four atomic scene labels, not node definitions. Keep exactly one primary mechanism, at most two support cues, the declared compatibility edge, and all required evidence types. Router/guard IDs, market-origin terms, audience familiarity, identity, orientation, and adulthood policy are never visual costume or morphology instructions.
 - `--scene-function` is an optional control for direct research-backed presets. It requires `--preset`, does not add a mandatory intent, and fails closed for an unknown or unavailable function. A no-people request first removes every blueprint that is not explicitly declared non-human; an empty or human-only remainder is an error rather than a silent human render.
 - `evidence_budget`: count chosen slot names, not candidate count. A materialized scene prop may be the first physical clue; when the range is 1–2, choose no more than one additional listed clue slot.
 - `concept_axes.required`: show each meaning axis through behavior, placement, expression, material, light, or framing.
@@ -46,7 +47,7 @@ If a composed ID names an open slot, the audit fails. Masked details are also re
 
 ## Quality Layers
 
-`quality_profile.profile_id` is one of `general`, `documentary`, `portrait_editorial`, `product`, `food`, `architecture`, `nature`, `science_inspection`, `mobility_logistics`, `climate_adaptation`, `biodiversity_monitoring`, `agriculture_food_systems`, or `circular_materials`.
+`quality_profile.profile_id` comes from the versioned domain profiles in `photo_prompt_quality_layers.json`; character-mechanism routes use `character_moe_grammar`.
 
 Use `photographic_integration` to bind subject and setting with believable light, contact, material, or optical depth. Use one visible `visual_proposition`, then at most one or two `photographic_craft` decisions. These are quality signals, so the audit reports omissions as warnings.
 

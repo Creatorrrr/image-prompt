@@ -25,6 +25,7 @@ EXTENSIONS = (
     ("subculture", ASSET_DIR / "photo_prompt_subculture_extension.json", "specialty_practice"),
     ("worldbuilding", ASSET_DIR / "photo_prompt_worldbuilding_extension.json", "narrative_world"),
     ("cjk_worldbuilding", ASSET_DIR / "photo_prompt_cjk_worldbuilding_extension.json", "narrative_world"),
+    ("character_moe", ASSET_DIR / "photo_prompt_character_moe_extension.json", "character_grammar"),
 )
 
 OPERATIONAL_TERMS = {
@@ -223,6 +224,7 @@ def audit_preset(
                 "operational_term_hits": ["declared_operational"]
                 if blueprint.get("operational")
                 else [],
+                "static_portrait": bool(blueprint.get("static_portrait")),
                 "source": blueprint.get("source"),
             }
             for blueprint in blueprints
@@ -242,6 +244,13 @@ def audit_preset(
     elif route_type == "specialty_practice":
         if len(functions) < 2:
             failures.append("fewer_than_two_scene_functions")
+    elif route_type == "character_grammar":
+        if scene_count < 3:
+            failures.append("fewer_than_three_atomic_scenes")
+        if len(functions) < 2:
+            failures.append("fewer_than_two_scene_functions")
+        if actions and sum(1 for row in actions if row.get("static_portrait")) / len(actions) > 0.5:
+            failures.append("static_portrait_majority")
     else:
         exceptions.append("evidence_focused_documentary_scope")
 
@@ -293,6 +302,15 @@ def build_inventory(recorded_at: str, *, current: bool = False) -> dict[str, Any
     }
     for source, path, route_type in EXTENSIONS:
         source_data = json.loads(path.read_text(encoding="utf-8"))
+        if source == "character_moe" and not current:
+            from prompt_generator import merge_research_extension
+
+            scene_extension = json.loads(
+                (ASSET_DIR / "photo_prompt_scene_expression_character_moe.json").read_text(
+                    encoding="utf-8"
+                )
+            )
+            source_data = merge_research_extension(source_data, scene_extension)
         audit_data = runtime_data or source_data
         for source_preset in source_data.get("presets", []) or []:
             if not isinstance(source_preset, dict):
@@ -319,6 +337,11 @@ def build_inventory(recorded_at: str, *, current: bool = False) -> dict[str, Any
                 "maximum_operational_action_ratio": 0.5,
             },
             "specialty_practice": {"minimum_scene_functions": 2},
+            "character_grammar": {
+                "minimum_atomic_scenes": 3,
+                "minimum_scene_functions": 2,
+                "maximum_static_portrait_ratio": 0.5,
+            },
             "evidence_documentary": {"documented_exception_allowed": True},
             "all": {"explicit_render_contract_required": True},
         },
