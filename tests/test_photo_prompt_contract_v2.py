@@ -44,6 +44,8 @@ SCENE_QUALITY_HOLDOUT_PATH = SKILL_DIR / "assets" / "render_scene_quality_holdou
 SCENE_QUALITY_VISUAL_REVIEW_PATH = SKILL_DIR / "assets" / "render_scene_quality_visual_review_v1.json"
 CHARACTER_MOE_QUALITY_HOLDOUT_PATH = SKILL_DIR / "assets" / "render_character_moe_quality_holdout_v1.jsonl"
 CHARACTER_MOE_QUALITY_VISUAL_REVIEW_PATH = SKILL_DIR / "assets" / "render_character_moe_quality_visual_review_v1.json"
+VIEWER_EXPERIENCE_HOLDOUT_PATH = SKILL_DIR / "assets" / "render_viewer_experience_holdout_v1.jsonl"
+VIEWER_EXPERIENCE_VISUAL_REVIEW_PATH = SKILL_DIR / "assets" / "render_viewer_experience_visual_review_v1.json"
 QUALITY_LAYERS_PATH = SKILL_DIR / "assets" / "photo_prompt_quality_layers.json"
 DOMAIN_VISUAL_REVIEW_PLAN_PATH = SKILL_DIR / "assets" / "visual_review_domain_extension_plan.json"
 DOMAIN_VISUAL_REVIEW_RESULTS_PATH = SKILL_DIR / "assets" / "visual_review_domain_extension_results.json"
@@ -389,6 +391,14 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             {"vantage", "timing", "omission", "material_rule"},
         )
         self.assertEqual(direction["artistic_final_touch_role"], "surface_craft_only_not_authorial_evidence")
+        viewer = creative_pack["viewer_experience"]
+        self.assertEqual(viewer["contract_version"], "photo-viewer-experience/v1")
+        self.assertIn("creative_direction_required", viewer["activation_sources"])
+        self.assertEqual(viewer["conditional_rules"]["attachment_required_for_needs"], ["care", "relatedness", "identity"])
+        self.assertEqual(
+            viewer["conditional_rules"]["commercial_legibility_required_for_objectives"],
+            ["comprehend", "remember", "act"],
+        )
 
         self.assertEqual(base_pack["presets"], creative_pack["presets"])
         self.assertEqual(set(base_pack["slots"]), set(creative_pack["slots"]))
@@ -566,6 +576,170 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
                     for failure in audit_composed_prompt.audit_creative_direction(pack, composed, case_prompt)
                 }
                 self.assertIn(expected_check, checks)
+
+    def test_viewer_experience_control_is_additive_and_high_creativity_enables_it_automatically(self):
+        base_args = (
+            "--concept",
+            "보온병 광고",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "900101",
+            "--emit-candidate-pack",
+        )
+        ordinary = self.run_wrapper(*base_args)[0]
+        requested = self.run_wrapper(*base_args, "--viewer-experience")[0]
+        creative = self.run_wrapper(*base_args, "--creativity", "0.85")[0]
+
+        self.assertNotIn("viewer_experience", ordinary)
+        requested_contract = requested["viewer_experience"]
+        self.assertEqual(requested_contract["contract_version"], "photo-viewer-experience/v1")
+        self.assertEqual(requested_contract["source"], "explicit_viewer_experience_control")
+        self.assertEqual(requested_contract["activation_sources"], ["explicit_viewer_experience_control"])
+        self.assertEqual(
+            creative["viewer_experience"]["activation_sources"],
+            ["creative_direction_required"],
+        )
+        self.assertIn("creative_direction", creative)
+        self.assertEqual(ordinary["presets"], requested["presets"])
+        self.assertEqual(ordinary["slots"], requested["slots"])
+        self.assertEqual(ordinary["negative_en"], requested["negative_en"])
+
+    def test_viewer_experience_audit_binds_visible_causes_and_rejects_response_gaming(self):
+        contract = prompt_generator.candidate_pack_viewer_experience(
+            {"provenance": {"viewer_experience_requested": True}}
+        )
+        self.assertIsNotNone(contract)
+        pack = {"viewer_experience": contract}
+        prompt = (
+            "An adult field surveyor and one small original nonhuman companion kneel over the same cracked weather sensor. "
+            "The companion braces the loose connector while the surveyor aligns it; the adult surveyor turns the alignment collar "
+            "toward the companion, and the companion presses the loose contact into the same cracked weather sensor. "
+            "The connector seats and both hands relax, with their shared grip paused over one repaired seam."
+        )
+        experience = {
+            "target_audience": {
+                "literacy": "subculture_literate",
+                "required_prior_knowledge": "none",
+            },
+            "viewing_context": "full_screen",
+            "primary_viewer_need": "relatedness",
+            "intended_experience": "earned tenderness through reciprocal competence",
+            "viewer_promise": "care becomes legible through two directed repair actions",
+            "first_glance_hook": "an adult and an original nonhuman partner share one damaged device",
+            "interpretive_question": "which partner noticed the fault first",
+            "affect_evidence": {
+                "actor": "the adult surveyor",
+                "action": "turns the alignment collar toward the companion",
+                "target": "the same cracked weather sensor",
+                "consequence": "the connector seats and both hands relax",
+            },
+            "attachment_channel": "reciprocity",
+            "reinspection_reward": {"mode": "none", "description": ""},
+            "commercial_objective": "none",
+            "prompt_evidence": {
+                "first_glance_hook_phrase": "An adult field surveyor and one small original nonhuman companion kneel over the same cracked weather sensor",
+                "affect_actor_phrase": "the adult surveyor",
+                "affect_action_phrase": "turns the alignment collar toward the companion",
+                "affect_target_phrase": "the same cracked weather sensor",
+                "affect_consequence_phrase": "The connector seats and both hands relax",
+                "attachment_phrase": "The companion braces the loose connector while the surveyor aligns it",
+            },
+        }
+        valid = {"viewer_experience": experience}
+        self.assertEqual(audit_composed_prompt.audit_viewer_experience(pack, valid, prompt), [])
+
+        cases = []
+        cases.append(({}, prompt, "viewer_experience"))
+        stacked = copy.deepcopy(valid)
+        stacked["viewer_experience"]["primary_viewer_need"] = ["care", "relatedness"]
+        stacked["viewer_experience"]["primary_viewer_needs"] = ["care", "relatedness"]
+        cases.append((stacked, prompt, "viewer_experience_affect_stacking"))
+        missing_cause = copy.deepcopy(valid)
+        missing_cause["viewer_experience"]["affect_evidence"].pop("consequence")
+        cases.append((missing_cause, prompt, "viewer_experience_affect_cause"))
+        invalid_enum = copy.deepcopy(valid)
+        invalid_enum["viewer_experience"]["viewing_context"] = "algorithmic_feed_magic"
+        cases.append((invalid_enum, prompt, "viewer_experience_enum"))
+        no_attachment = copy.deepcopy(valid)
+        no_attachment["viewer_experience"]["attachment_channel"] = "none"
+        cases.append((no_attachment, prompt, "viewer_experience_attachment"))
+        nonliteral = copy.deepcopy(valid)
+        nonliteral["viewer_experience"]["prompt_evidence"]["affect_action_phrase"] = "not in the prompt"
+        cases.append((nonliteral, prompt, "viewer_experience_binding"))
+        outcome_claim = copy.deepcopy(valid)
+        outcome_claim["viewer_experience"]["prompt_evidence"]["attachment_phrase"] = "creates attachment"
+        cases.append((outcome_claim, prompt + " It creates attachment.", "viewer_experience_outcome_claim"))
+        weak = copy.deepcopy(valid)
+        weak["viewer_experience"]["prompt_evidence"]["attachment_phrase"] = "cute"
+        cases.append((weak, prompt + " Cute.", "viewer_experience_weak_evidence"))
+        youth = copy.deepcopy(valid)
+        youth["viewer_experience"]["prompt_evidence"]["attachment_phrase"] = "childlike face"
+        cases.append((youth, prompt + " Childlike face.", "viewer_experience_attachment"))
+        commercial = copy.deepcopy(valid)
+        commercial["viewer_experience"]["commercial_objective"] = "remember"
+        cases.append((commercial, prompt, "viewer_experience_binding"))
+        creative = copy.deepcopy(valid)
+        creative_pack = {**pack, "creative_direction": {"enabled": True}}
+        cases.append((creative, prompt, "viewer_experience_reinspection", creative_pack))
+
+        for row in cases:
+            if len(row) == 3:
+                composed, case_prompt, expected_check = row
+                case_pack = pack
+            else:
+                composed, case_prompt, expected_check, case_pack = row
+            with self.subTest(expected_check=expected_check):
+                checks = {
+                    failure["check"]
+                    for failure in audit_composed_prompt.audit_viewer_experience(case_pack, composed, case_prompt)
+                }
+                self.assertIn(expected_check, checks)
+
+    def test_viewer_experience_holdout_and_visual_review_are_closed_and_distinct(self):
+        holdout = [
+            json.loads(line)
+            for line in VIEWER_EXPERIENCE_HOLDOUT_PATH.read_text(encoding="utf-8").splitlines()
+            if line.strip()
+        ]
+        self.assertEqual(len(holdout), 3)
+        self.assertEqual(len({case["case_id"] for case in holdout}), 3)
+        self.assertEqual({case["seed"] for case in holdout}, {900101, 900102, 900103})
+        self.assertEqual(
+            {case["expected_contract"]["primary_viewer_need"] for case in holdout},
+            {"trust", "relatedness", "meaning"},
+        )
+
+        review = json.loads(VIEWER_EXPERIENCE_VISUAL_REVIEW_PATH.read_text(encoding="utf-8"))
+        summary = eval_semantic.summarize_visual_review(
+            VIEWER_EXPERIENCE_VISUAL_REVIEW_PATH
+        )["visual_review"]
+        self.assertEqual(review["schema_version"], "photo-visual-review/v1")
+        self.assertEqual(review["cross_case_review"]["outcome"], "pass")
+        self.assertEqual(review["cross_case_review"]["distinct_primary_need_count"], 3)
+        self.assertEqual(review["cross_case_review"]["experience_convergence"], "none")
+        self.assertEqual(summary["case_count"], 3)
+        self.assertEqual(summary["contract_failure_count"], 0)
+        self.assertEqual(summary["failed_case_count"], 0)
+        self.assertEqual(summary["failed_review_focus_result_count"], 0)
+        self.assertEqual(summary["review_focus_result_count"], 18)
+        self.assertTrue(summary["passed"])
+
+        holdout_by_id = {case["case_id"]: case for case in holdout}
+        self.assertEqual(
+            {case["case"] for case in review["cases"]},
+            set(holdout_by_id),
+        )
+        for case in review["cases"]:
+            frozen = holdout_by_id[case["case"]]
+            self.assertEqual(case["initial_render_count"], 1)
+            self.assertEqual(case["pristine_retry_count"], 0)
+            self.assertRegex(case["image_sha256"], r"^[0-9a-f]{64}$")
+            self.assertEqual(
+                {result["focus"] for result in case["review_focus_results"]},
+                set(frozen["acceptance_dimensions"]),
+            )
+            self.assertTrue(all(result["outcome"] == "pass" for result in case["review_focus_results"]))
 
     def test_atomic_scene_candidate_pools_and_audit_are_fail_closed(self):
         pack = self.run_wrapper(

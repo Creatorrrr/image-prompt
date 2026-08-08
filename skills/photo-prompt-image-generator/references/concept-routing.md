@@ -17,6 +17,12 @@ At the agent layer, explicit requests for a creative, original, ingenious, inven
 
 Requests for several safe variations or wider candidate exploration without an explicit originality/authorial goal may use a lower creativity value and remain outside creative direction. Ordinary prompt and image requests keep the default path.
 
+## Route Explicit Viewer Outcomes
+
+At the agent layer, add `--viewer-experience` when the user explicitly asks for an audience reaction, emotion, empathy, immersion, attachment, reinspection, sharing or purchase behavior, a commercial communication objective, or a subculture character relationship. Korean cues include `독자`, `관객`, `감동`, `공감`, `몰입`, `애착`, `다시 보고 싶은`, `기억에 남는`, and `광고`; use semantic intent rather than keyword matching. Do not raise `--creativity` unless the request also asks for creative or authorial work.
+
+Every high creative-direction run receives the viewer contract automatically. A generic product record, ordinary cute portrait, factual documentary, or subculture taxonomy request without an explicit viewer-response goal keeps the ordinary path. The control exposes a composition procedure, not a new preset, candidate, audience stereotype, or predicted performance score.
+
 ## Preserve Negative Intent
 
 Korean and English absence phrases are constraints, not positive nouns. `사람 없는`, `인물 없이`, `no people`, and `without people` must exclude human subject candidates and the `person_presence` quality axis. Keep the whole phrase as mandatory intent.

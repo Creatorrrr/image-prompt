@@ -145,6 +145,48 @@ CANDIDATE_PACK_CREATIVE_DIRECTION_OPERATORS = (
         "Introduce one impossible photographic law and make light, contact, matter, and behavior obey that law consistently.",
     ),
 )
+CANDIDATE_PACK_VIEWER_CONTEXTS = (
+    "feed_thumbnail",
+    "full_screen",
+    "poster",
+    "product_detail",
+)
+CANDIDATE_PACK_VIEWER_AUDIENCE_LITERACY = (
+    "general",
+    "genre_literate",
+    "subculture_literate",
+    "expert",
+)
+CANDIDATE_PACK_VIEWER_NEEDS = (
+    "insight",
+    "care",
+    "relatedness",
+    "identity",
+    "meaning",
+    "recovery",
+    "aspiration",
+    "trust",
+)
+CANDIDATE_PACK_VIEWER_ATTACHMENT_CHANNELS = (
+    "none",
+    "agency",
+    "reciprocity",
+    "continuity",
+    "self_relevance",
+)
+CANDIDATE_PACK_VIEWER_REINSPECTION_MODES = (
+    "none",
+    "causal_second_reading",
+)
+CANDIDATE_PACK_VIEWER_COMMERCIAL_OBJECTIVES = (
+    "none",
+    "stop",
+    "comprehend",
+    "remember",
+    "act",
+    "share",
+    "return",
+)
 CANDIDATE_PACK_CORE_SLOTS = {
     "subject",
     "appearance_type",
@@ -3726,6 +3768,103 @@ def candidate_pack_creative_direction(result: JsonDict) -> Optional[JsonDict]:
     }
 
 
+def candidate_pack_viewer_experience(result: JsonDict) -> Optional[JsonDict]:
+    """Expose a topic-neutral reader-response composition contract when requested.
+
+    High creative-direction runs always receive this layer. Other commercial,
+    subculture, affective, or audience-outcome requests opt in through the agent
+    layer's explicit ``--viewer-experience`` control. The contract contains no
+    topic candidates and does not claim that a composed prompt proves a human
+    response.
+    """
+    provenance = result.get("provenance") if isinstance(result.get("provenance"), dict) else {}
+    creativity = candidate_pack_float(provenance.get("creativity"))
+    explicitly_requested = provenance.get("viewer_experience_requested") is True
+    creative_direction_required = bool(
+        creativity is not None and creativity >= CANDIDATE_PACK_CREATIVE_DIRECTION_FLOOR
+    )
+    if not explicitly_requested and not creative_direction_required:
+        return None
+
+    activation_sources = []
+    if explicitly_requested:
+        activation_sources.append("explicit_viewer_experience_control")
+    if creative_direction_required:
+        activation_sources.append("creative_direction_required")
+    return {
+        "enabled": True,
+        "contract_version": "photo-viewer-experience/v1",
+        "source": activation_sources[0],
+        "activation_sources": activation_sources,
+        "purpose": "viewer_response_hypothesis_with_visible_evidence_not_verified_human_outcome",
+        "required_fields": [
+            "target_audience",
+            "viewing_context",
+            "primary_viewer_need",
+            "intended_experience",
+            "viewer_promise",
+            "first_glance_hook",
+            "interpretive_question",
+            "affect_evidence",
+            "attachment_channel",
+            "reinspection_reward",
+            "commercial_objective",
+            "prompt_evidence",
+        ],
+        "allowed_values": {
+            "viewing_context": list(CANDIDATE_PACK_VIEWER_CONTEXTS),
+            "audience_literacy": list(CANDIDATE_PACK_VIEWER_AUDIENCE_LITERACY),
+            "primary_viewer_need": list(CANDIDATE_PACK_VIEWER_NEEDS),
+            "attachment_channel": list(CANDIDATE_PACK_VIEWER_ATTACHMENT_CHANNELS),
+            "reinspection_mode": list(CANDIDATE_PACK_VIEWER_REINSPECTION_MODES),
+            "commercial_objective": list(CANDIDATE_PACK_VIEWER_COMMERCIAL_OBJECTIVES),
+        },
+        "target_audience_fields": ["literacy", "required_prior_knowledge"],
+        "affect_evidence_fields": ["actor", "action", "target", "consequence"],
+        "prompt_binding": {
+            "literal": True,
+            "required_evidence_fields": [
+                "first_glance_hook_phrase",
+                "affect_actor_phrase",
+                "affect_action_phrase",
+                "affect_target_phrase",
+                "affect_consequence_phrase",
+            ],
+            "conditional_evidence_fields": {
+                "attachment_channel_not_none": "attachment_phrase",
+                "reinspection_mode_causal_second_reading": "reinspection_reward_phrase",
+                "commercial_objective_comprehend_remember_act": "commercial_legibility_phrase",
+            },
+        },
+        "conditional_rules": {
+            "attachment_required_for_needs": ["care", "relatedness", "identity"],
+            "commercial_legibility_required_for_objectives": ["comprehend", "remember", "act"],
+            "creative_noncommercial_reinspection_required": True,
+            "product_clarity_can_override_reinspection": True,
+        },
+        "composition_guidance": {
+            "select_exactly_one": ["primary_viewer_need", "intended_experience", "commercial_objective"],
+            "bind_visible_causes_not_outcome_claims": True,
+            "keep": [
+                "creative_direction",
+                "scene_contract",
+                "character_grammar",
+                "product_or_subject_legibility",
+                "safety_contract",
+                "negative_en_bytes",
+            ],
+            "reject": [
+                "affect_stacking",
+                "viewer_will_feel_outcome_claim",
+                "face_or_youth_morphology_as_attachment_evidence",
+                "genre_term_or_style_adjective_as_experience_evidence",
+                "commercial_attention_at_the_cost_of_product_clarity",
+            ],
+        },
+        "evaluation_boundary": "prompt_binding_is_preflight;_metadata_free_pixels_are_local_product_evidence;human_response_requires_human_evaluation",
+    }
+
+
 def candidate_pack_concept_axes(soft_policy: JsonDict) -> JsonDict:
     axes = normalize_reference_identity_axes(soft_policy.get("identity_axes"))
     return {
@@ -6243,6 +6382,7 @@ def build_candidate_pack(result: JsonDict, data: JsonDict) -> JsonDict:
         uncovered_intents = [row for row in mandatory_intents if row.get("status") == "uncovered"]
     creative_exploration = candidate_pack_creative_exploration(result, slots, candidate_entries)
     creative_direction = candidate_pack_creative_direction(result)
+    viewer_experience = candidate_pack_viewer_experience(result)
     pack: JsonDict = {
         "contract_version": "photo-candidate-pack/v2",
         "pack_id": "",
@@ -6326,6 +6466,8 @@ def build_candidate_pack(result: JsonDict, data: JsonDict) -> JsonDict:
         pack["creative_exploration"] = creative_exploration
     if creative_direction is not None:
         pack["creative_direction"] = creative_direction
+    if viewer_experience is not None:
+        pack["viewer_experience"] = viewer_experience
     hashable = dict(pack)
     hashable["pack_id"] = None
     pack["pack_id"] = stable_text_id(json.dumps(hashable, ensure_ascii=False, sort_keys=True, separators=(",", ":"))) or ""
@@ -14916,6 +15058,7 @@ def generate_once(
     concept_gate_results: Optional[Sequence[JsonDict]] = None,
     concept_scene_variants: Optional[Sequence[str]] = None,
     safety_evaluation_requested: bool = False,
+    viewer_experience_requested: bool = False,
     soft_anchor_spec: Optional[JsonDict] = None,
     source_argv: Optional[Sequence[str]] = None,
     seed: Optional[int] = None,
@@ -15291,6 +15434,7 @@ def generate_once(
         ],
         "concept_scene_variants": normalize_list(concept_scene_variants),
         "safety": generation_contract.get("safety", {}),
+        "viewer_experience_requested": bool(viewer_experience_requested),
         "creativity": creativity if creativity is not None else (semantic_context or {}).get("creativity"),
         "argv": list(source_argv or []),
     }
@@ -15512,6 +15656,11 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         action="store_true",
         help="Explicitly include a safety evaluation report. Normal generation uses a simple automatic-pass safety contract.",
     )
+    parser.add_argument(
+        "--viewer-experience",
+        action="store_true",
+        help="Expose a topic-neutral viewer-experience composition contract for explicit audience, affect, attachment, commercial, or subculture-response goals. High creative-direction runs include it automatically.",
+    )
     parser.add_argument("--selection-mode", choices=SELECTION_MODES, default=DEFAULT_SELECTION_MODE, help="Selection mode. semantic is the default; use rule for the original deterministic weighted path.")
     parser.add_argument("--default-intent", action="store_true", help=argparse.SUPPRESS)
     parser.add_argument("--semantic-default", action="store_true", help=argparse.SUPPRESS)
@@ -15699,6 +15848,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             concept_gate_results=concept_gate_results,
             concept_scene_variants=args.concept_scene_variants,
             safety_evaluation_requested=args.safety_evaluation,
+            viewer_experience_requested=args.viewer_experience,
             soft_anchor_spec=soft_anchor_spec,
             source_argv=raw_args,
             seed=args.seed,
