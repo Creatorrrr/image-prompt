@@ -188,6 +188,7 @@ See `references/composition-contract.md` for field-level details.
 
 ## Selection Defaults
 
+- Route illustration, key visual, cover, card art, vertical webtoon, sticker, SD/chibi merchandise, and campaign-art requests to `$subculture-illustration-image-generator`; do not add camera/lens/photoreal defaults first.
 - The wrapper defaults to semantic selection with a broad photographic intent.
 - Use `--selection-mode rule` for reproducible offline generation or tests.
 - Use `--intent` for free-form semantic requests and `--concept-lock` for literal meaning that must remain dominant.
