@@ -6,7 +6,7 @@
 - Exact research route: `--route <topic_id>`.
 - Exact output variant: `--format <variant_id>`.
 - Reproducible bundle: `--seed`.
-- Explicit creative or authorial request: `--creativity 0.85` or higher.
+- Creative development: defaults to `--creativity 0.85` for every illustration request.
 - Separate safety report: `--safety-evaluation` only when the user requests it.
 
 The runtime is local and deterministic. It uses NFKC-normalized scoped aliases and never sends intent or research text to an embedding provider.
@@ -42,9 +42,9 @@ If equal top-tier rules point to different topics, fail as ambiguous and show ca
 
 ## Route Creative Intent
 
-Explicit creative, original, ingenious, surprising, or authorially distinctive intent activates high creative development. Korean cues include `창의적`, `독창적`, `기발한`, `참신한`, `작가적`, and `작가의 터치`; interpret meaning rather than exact keywords.
+High creative development is the default even when the request contains no creativity keyword. It requires alternative proposals, one selected changed rule, visible consequences, and a repeatable authorial decision system rather than extra decoration.
 
-Ordinary requests still require a concrete focal hierarchy and rendering decisions, but they do not need four proposals or an impossible premise.
+Lower creativity below `0.75` only for an explicit restrained, literal, or utilitarian request. Creative, original, ingenious, surprising, or authorially distinctive intent must keep high development enabled. Korean cues include `창의적`, `독창적`, `기발한`, `참신한`, `작가적`, and `작가의 터치`; interpret meaning rather than exact keywords. High creativity does not require an impossible premise.
 
 ## Preserve Boundaries
 

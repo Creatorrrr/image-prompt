@@ -12,6 +12,7 @@ import tempfile
 from typing import Any
 
 from illustration_runtime import (
+    DEFAULT_CREATIVITY,
     IllustrationRuntimeError,
     InputContractError,
     build_candidate_pack,
@@ -55,8 +56,8 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--creativity",
         type=float,
-        default=0.5,
-        help="creative-development level from 0 through 1 (default: 0.5)",
+        default=DEFAULT_CREATIVITY,
+        help=f"creative-development level from 0 through 1 (default: {DEFAULT_CREATIVITY})",
     )
     parser.add_argument(
         "--safety-evaluation",

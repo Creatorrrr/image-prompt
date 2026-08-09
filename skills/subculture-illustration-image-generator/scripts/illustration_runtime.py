@@ -26,6 +26,7 @@ LEGACY_GENERATOR_VERSION = "subculture-illustration-generator/v1"
 CONTRACT_VERSION = "subculture-illustration-candidate-pack/v2"
 GENERATOR_VERSION = "subculture-illustration-generator/v2"
 SELECTION_MODE = "deterministic_rule_v1"
+DEFAULT_CREATIVITY = 0.85
 
 SECOND_LOOK_CARRIER_KINDS = (
     "surface_state",
@@ -906,7 +907,7 @@ def build_candidate_pack(
     topic: str = "auto",
     format_id: str = "auto",
     seed: int = 0,
-    creativity: float = 0.5,
+    creativity: float = DEFAULT_CREATIVITY,
     safety_evaluation: bool = False,
     contract_version: str = CONTRACT_VERSION,
     assets: RuntimeAssets | None = None,
@@ -1152,6 +1153,7 @@ __all__ = [
     "IllustrationRuntimeError",
     "InputContractError",
     "CONTRACT_VERSION",
+    "DEFAULT_CREATIVITY",
     "GENERATOR_VERSION",
     "LEGACY_CONTRACT_VERSION",
     "LEGACY_GENERATOR_VERSION",
