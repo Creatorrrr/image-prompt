@@ -252,6 +252,39 @@ class SubcultureIllustrationContractV1Tests(unittest.TestCase):
         self.assertEqual(first["pack_id"], second["pack_id"])
         self.assertEqual(canonical_json_bytes(first), canonical_json_bytes(second))
 
+    def test_default_pack_enables_high_creativity_authorial_development(self) -> None:
+        pack = build_candidate_pack(
+            "성인 수선사가 망가진 기상 장치를 복구하는 일러스트를 만들어줘.",
+            topic="single_frame_narrative_compression",
+            format_id="single_illustration",
+            seed=77,
+            assets=self.assets,
+        )
+        contract = pack["authorial_contract"]
+        self.assertEqual(0.85, pack["request_contract"]["creativity"])
+        self.assertTrue(contract["creative_development_required"])
+        self.assertTrue(contract["familiar_anchor_required"])
+        self.assertTrue(contract["one_changed_rule_required"])
+        self.assertTrue(contract["first_second_look_required"])
+        self.assertEqual(4, contract["proposal_count_required"])
+
+    def test_explicit_low_creativity_remains_a_conservative_opt_out(self) -> None:
+        pack = build_candidate_pack(
+            "성인 수선사가 망가진 기상 장치를 복구하는 일러스트를 만들어줘.",
+            topic="single_frame_narrative_compression",
+            format_id="single_illustration",
+            seed=77,
+            creativity=0.5,
+            assets=self.assets,
+        )
+        contract = pack["authorial_contract"]
+        self.assertEqual(0.5, pack["request_contract"]["creativity"])
+        self.assertFalse(contract["creative_development_required"])
+        self.assertFalse(contract["familiar_anchor_required"])
+        self.assertFalse(contract["one_changed_rule_required"])
+        self.assertTrue(contract["first_second_look_required"])
+        self.assertEqual(0, contract["proposal_count_required"])
+
     def test_generic_request_uses_only_family_default(self) -> None:
         for concept in (
             "오리지널 애니메이션 일러스트를 만들어줘",

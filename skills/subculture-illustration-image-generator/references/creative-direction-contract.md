@@ -23,9 +23,9 @@ Every composed prompt needs concrete phrases for:
 
 The phrases must support the same event and topic. Do not add four unrelated flourishes.
 
-## High-Creativity Development
+## Default High-Creativity Development
 
-When `creative_development_required` is true:
+Set `creative_development_required` to true by default. Set it false only when the user explicitly requests a restrained, literal, or utilitarian treatment. When true:
 
 1. State at least three ordinary first answers and reject them.
 2. Develop at least four proposals using distinct operator IDs.

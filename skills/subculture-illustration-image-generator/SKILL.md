@@ -56,7 +56,6 @@ Candidate-pack example:
   --concept "기억을 실로 봉합하는 성인 야간 수선사의 작가적 일러스트" \
   --format single_illustration \
   --seed 910001 \
-  --creativity 0.85 \
   --emit-candidate-pack \
   --output-file /tmp/illustration-pack.json
 ```
@@ -71,8 +70,9 @@ Audit example:
 
 ## Creative and Viewer Defaults
 
-- Explicit `창의적`, `독창적`, `기발한`, `작가적`, or equivalent intent uses creativity `0.85` or higher without asking the user to repeat the request.
-- Every pack requires concrete focal, omission, edge/mark, and repeated material or motif decisions. High creativity additionally requires four distinct proposals, one selected changed rule, a causal first-to-second-look reveal, and two distinct visible consequences bound to the primary and fallback carriers.
+- Use creativity `0.85` by default, including when the user gives only an ordinary illustration brief. Do not require the user to request creativity or authorial touch separately.
+- Every default pack requires concrete focal, omission, edge/mark, and repeated material or motif decisions plus four distinct proposals, one selected changed rule, a causal first-to-second-look reveal, and two distinct visible consequences bound to the primary and fallback carriers.
+- Lower creativity below `0.75` only when the user explicitly asks for a restrained, literal, or utilitarian treatment. Explicit `창의적`, `독창적`, `기발한`, `작가적`, or equivalent intent always keeps high creative development enabled.
 - Treat intended viewer emotion, attachment, memory, or commercial action as a hypothesis. Prompt evidence must be a visible actor, directed action, target, consequence, and focal discovery—not a response claim.
 
 ## Non-Negotiable Boundaries
