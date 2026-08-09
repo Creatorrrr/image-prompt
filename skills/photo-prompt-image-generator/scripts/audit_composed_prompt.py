@@ -129,7 +129,26 @@ def candidate_ids_from_pack(pack: dict[str, Any]) -> set[str]:
             for candidate in proposition.get(key) or []:
                 if isinstance(candidate, dict) and candidate.get("id"):
                     ids.add(str(candidate["id"]))
+    for candidate in hybrid_augmentation_candidates_from_pack(pack):
+        if candidate.get("id"):
+            ids.add(str(candidate["id"]))
     return ids
+
+
+def hybrid_augmentation_candidates_from_pack(pack: dict[str, Any]) -> list[dict[str, Any]]:
+    hybrid = pack.get("hybrid_augmentation") if isinstance(pack.get("hybrid_augmentation"), dict) else {}
+    adult = hybrid.get("adult_appeal") if isinstance(hybrid.get("adult_appeal"), dict) else {}
+    axes = adult.get("axes") if isinstance(adult.get("axes"), dict) else {}
+    candidates: list[dict[str, Any]] = []
+    for axis in axes.values():
+        if not isinstance(axis, dict):
+            continue
+        candidates.extend(
+            candidate
+            for candidate in axis.get("candidate_inventory") or []
+            if isinstance(candidate, dict)
+        )
+    return candidates
 
 
 def candidate_objects_from_pack(pack: dict[str, Any]) -> dict[str, dict[str, Any]]:
@@ -145,6 +164,9 @@ def candidate_objects_from_pack(pack: dict[str, Any]) -> dict[str, dict[str, Any
         for candidate in slot_payload.get("candidates") or []:
             if isinstance(candidate, dict) and candidate.get("id"):
                 candidates[str(candidate["id"])] = candidate
+    for candidate in hybrid_augmentation_candidates_from_pack(pack):
+        if candidate.get("id"):
+            candidates[str(candidate["id"])] = candidate
     return candidates
 
 
@@ -1107,6 +1129,351 @@ def audit_creative_direction(
     return failures
 
 
+def audit_hybrid_augmentation(
+    pack: dict[str, Any],
+    composed: dict[str, Any],
+    prompt_en: str,
+    chosen: set[str],
+    candidate_objects: dict[str, dict[str, Any]],
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    contract = pack.get("hybrid_augmentation")
+    if not isinstance(contract, dict) or not contract.get("enabled"):
+        return [], []
+
+    failures: list[dict[str, Any]] = []
+    warnings: list[dict[str, Any]] = []
+    brief = composed.get("augmentation_brief")
+    if not isinstance(brief, dict):
+        return [
+            {
+                "check": "hybrid_augmentation",
+                "reason": "enabled hybrid candidate pack requires augmentation_brief",
+            }
+        ], []
+
+    if not str(brief.get("concept_core") or "").strip():
+        failures.append(
+            {
+                "check": "hybrid_augmentation_core",
+                "reason": "augmentation_brief requires an agent-authored concept_core",
+            }
+        )
+
+    route_contract = contract.get("route_contract") if isinstance(contract.get("route_contract"), dict) else {}
+    routes = [route for route in route_contract.get("routes") or [] if isinstance(route, dict)]
+    route_map = {str(route.get("id") or ""): route for route in routes if str(route.get("id") or "")}
+    expected_route_ids = set(route_map)
+    considered = [row for row in brief.get("routes_considered") or [] if isinstance(row, dict)]
+    considered_ids = [str(row.get("route_id") or "") for row in considered]
+    if set(considered_ids) != expected_route_ids or len(considered_ids) != len(set(considered_ids)):
+        failures.append(
+            {
+                "check": "hybrid_augmentation_routes",
+                "reason": "routes_considered must cover every exposed route exactly once",
+                "expected": sorted(expected_route_ids),
+                "actual": considered_ids,
+            }
+        )
+    selected_route_id = str(brief.get("selected_route_id") or "")
+    selected_rows = [row for row in considered if str(row.get("decision") or "") == "selected"]
+    invalid_route_decisions = [
+        row
+        for row in considered
+        if str(row.get("decision") or "") not in {"selected", "rejected"}
+        or not str(row.get("reason") or "").strip()
+    ]
+    if invalid_route_decisions:
+        failures.append(
+            {
+                "check": "hybrid_augmentation_routes",
+                "reason": "every route requires selected/rejected plus a non-empty reason",
+            }
+        )
+    if selected_route_id == "none":
+        if selected_rows or not str(brief.get("all_rejected_reason") or "").strip():
+            failures.append(
+                {
+                    "check": "hybrid_augmentation_selection",
+                    "reason": "selecting none requires every route rejected and all_rejected_reason",
+                }
+            )
+    elif selected_route_id not in route_map or len(selected_rows) != 1 or str(selected_rows[0].get("route_id") or "") != selected_route_id:
+        failures.append(
+            {
+                "check": "hybrid_augmentation_selection",
+                "reason": "select exactly one exposed route, or use selected_route_id none",
+                "selected_route_id": selected_route_id or None,
+            }
+        )
+
+    adoption = contract.get("adoption_contract") if isinstance(contract.get("adoption_contract"), dict) else {}
+    allowed_states = {str(item) for item in adoption.get("decision_states") or []}
+    allowed_functions = {str(item) for item in adoption.get("detail_functions") or []}
+    decisions = [row for row in brief.get("decisions") or [] if isinstance(row, dict)]
+    decision_ids = [str(row.get("candidate_id") or "") for row in decisions]
+    if len(decision_ids) != len(set(decision_ids)):
+        failures.append(
+            {
+                "check": "hybrid_augmentation_decisions",
+                "reason": "each route candidate may have only one decision",
+            }
+        )
+    selected_candidate_ids = (
+        {str(item) for item in (route_map.get(selected_route_id) or {}).get("candidate_ids") or []}
+        if selected_route_id in route_map
+        else set()
+    )
+    if selected_route_id in route_map and set(decision_ids) != selected_candidate_ids:
+        failures.append(
+            {
+                "check": "hybrid_augmentation_decisions",
+                "reason": "every selected-route candidate requires an explicit decision",
+                "expected": sorted(selected_candidate_ids),
+                "actual": sorted(set(decision_ids)),
+            }
+        )
+    if selected_route_id == "none" and decisions:
+        failures.append(
+            {
+                "check": "hybrid_augmentation_decisions",
+                "reason": "no candidate decisions are allowed when all routes are rejected",
+            }
+        )
+
+    accepted_ids: set[str] = set()
+    for decision in decisions:
+        candidate_id = str(decision.get("candidate_id") or "")
+        state = str(decision.get("decision") or "")
+        function = str(decision.get("function") or "")
+        if candidate_id not in selected_candidate_ids:
+            failures.append(
+                {
+                    "check": "hybrid_augmentation_decisions",
+                    "reason": "decision references a candidate outside the selected route",
+                    "candidate_id": candidate_id,
+                }
+            )
+            continue
+        if state not in allowed_states:
+            failures.append(
+                {
+                    "check": "hybrid_augmentation_decisions",
+                    "reason": "unknown augmentation decision state",
+                    "candidate_id": candidate_id,
+                    "decision": state,
+                }
+            )
+        if function not in allowed_functions:
+            failures.append(
+                {
+                    "check": "hybrid_augmentation_decisions",
+                    "reason": "unknown augmentation detail function",
+                    "candidate_id": candidate_id,
+                    "function": function,
+                }
+            )
+        if not str(decision.get("rationale") or "").strip() or not str(
+            decision.get("marginal_contribution") or ""
+        ).strip():
+            failures.append(
+                {
+                    "check": "hybrid_augmentation_marginal_value",
+                    "reason": "every decision requires rationale and marginal_contribution",
+                    "candidate_id": candidate_id,
+                }
+            )
+        if state in {"accepted", "modified"}:
+            accepted_ids.add(candidate_id)
+            evidence = str(decision.get("prompt_evidence") or "").strip()
+            if candidate_id not in chosen:
+                failures.append(
+                    {
+                        "check": "hybrid_augmentation_provenance",
+                        "reason": "accepted or modified augmentation candidate is missing from chosen_candidate_ids",
+                        "candidate_id": candidate_id,
+                    }
+                )
+            if not evidence or not text_contains_term(prompt_en, evidence):
+                failures.append(
+                    {
+                        "check": "hybrid_augmentation_binding",
+                        "reason": "accepted or modified detail requires literal prompt_evidence",
+                        "candidate_id": candidate_id,
+                        "prompt_evidence": evidence or None,
+                    }
+                )
+            if state == "modified" and not str(decision.get("modification") or "").strip():
+                failures.append(
+                    {
+                        "check": "hybrid_augmentation_decisions",
+                        "reason": "modified detail requires a modification description",
+                        "candidate_id": candidate_id,
+                    }
+                )
+        elif state == "rejected" and candidate_id in chosen:
+            failures.append(
+                {
+                    "check": "hybrid_augmentation_provenance",
+                    "reason": "rejected augmentation candidate must not be chosen",
+                    "candidate_id": candidate_id,
+                }
+            )
+
+    if selected_route_id in route_map:
+        try:
+            accepted_min = int(adoption.get("minimum_accepted_if_selected", 2) or 2)
+        except (TypeError, ValueError):
+            accepted_min = 2
+        try:
+            accepted_max = int(adoption.get("maximum_accepted", 5) or 5)
+        except (TypeError, ValueError):
+            accepted_max = 5
+        if len(accepted_ids) < accepted_min or len(accepted_ids) > accepted_max:
+            failures.append(
+                {
+                    "check": "hybrid_augmentation_budget",
+                    "reason": "accepted augmentation detail count is outside the declared budget",
+                    "minimum": accepted_min,
+                    "maximum": accepted_max,
+                    "actual": len(accepted_ids),
+                }
+            )
+
+    adult_contract = contract.get("adult_appeal") if isinstance(contract.get("adult_appeal"), dict) else {}
+    if adult_contract.get("enabled"):
+        adult_brief = brief.get("adult_appeal")
+        if not isinstance(adult_brief, dict):
+            failures.append(
+                {
+                    "check": "adult_appeal",
+                    "reason": "active adult-appeal axes require augmentation_brief.adult_appeal",
+                }
+            )
+            return failures, warnings
+        adult_subject_phrase = str(adult_brief.get("adult_subject_phrase") or "").strip()
+        agency_phrase = str(adult_brief.get("agency_phrase") or "").strip()
+        if (
+            not adult_subject_phrase
+            or not text_contains_term(prompt_en, adult_subject_phrase)
+            or not re.search(r"\badult\b", adult_subject_phrase, flags=re.IGNORECASE)
+        ):
+            failures.append(
+                {
+                    "check": "adult_appeal_adult_subject",
+                    "reason": "adult_subject_phrase must be literal in prompt_en and explicitly say adult",
+                }
+            )
+        if not agency_phrase or not text_contains_term(prompt_en, agency_phrase):
+            failures.append(
+                {
+                    "check": "adult_appeal_agency",
+                    "reason": "agency_phrase must be literal in prompt_en",
+                }
+            )
+        expected_axes = adult_contract.get("axes") if isinstance(adult_contract.get("axes"), dict) else {}
+        actual_axes = adult_brief.get("axes") if isinstance(adult_brief.get("axes"), dict) else {}
+        for axis_id, axis_contract in expected_axes.items():
+            if not isinstance(axis_contract, dict):
+                continue
+            expected_intensity = int(axis_contract.get("intensity", 0) or 0)
+            actual_axis = actual_axes.get(axis_id) if isinstance(actual_axes.get(axis_id), dict) else {}
+            try:
+                actual_intensity = int(actual_axis.get("intensity", -1))
+            except (TypeError, ValueError):
+                actual_intensity = -1
+            if actual_intensity != expected_intensity:
+                failures.append(
+                    {
+                        "check": "adult_appeal_axes",
+                        "reason": "composed adult-appeal intensity differs from the explicit candidate-pack axis",
+                        "axis": axis_id,
+                        "expected": expected_intensity,
+                        "actual": actual_intensity,
+                    }
+                )
+            if expected_intensity > 0:
+                inventory_ids = {
+                    str(candidate.get("id") or "")
+                    for candidate in axis_contract.get("candidate_inventory") or []
+                    if isinstance(candidate, dict) and str(candidate.get("id") or "")
+                }
+                if not (accepted_ids & inventory_ids):
+                    failures.append(
+                        {
+                            "check": "adult_appeal_axes",
+                            "reason": "every active adult-appeal axis requires one accepted or modified candidate",
+                            "axis": axis_id,
+                        }
+                    )
+        expected_emphasis = str((adult_contract.get("blend") or {}).get("emphasis") or "")
+        actual_emphasis = str((adult_brief.get("blend") or {}).get("emphasis") or "") if isinstance(adult_brief.get("blend"), dict) else ""
+        if actual_emphasis != expected_emphasis:
+            failures.append(
+                {
+                    "check": "adult_appeal_blend",
+                    "reason": "composed blend emphasis differs from the candidate pack",
+                    "expected": expected_emphasis,
+                    "actual": actual_emphasis or None,
+                }
+            )
+
+        combination = adult_contract.get("combination_policy") if isinstance(adult_contract.get("combination_policy"), dict) else {}
+        youth_hits = [
+            str(term)
+            for term in combination.get("youth_coding_terms") or []
+            if text_contains_term(prompt_en, str(term))
+        ]
+        if youth_hits:
+            failures.append(
+                {
+                    "check": "adult_appeal_adult_subject",
+                    "reason": "adult-appeal composition contains youth-coding terms",
+                    "terms": youth_hits,
+                }
+            )
+        risk_hits: set[str] = set()
+        risk_groups = combination.get("risk_groups") if isinstance(combination.get("risk_groups"), dict) else {}
+        chosen_entry_ids = {
+            str(candidate_objects.get(candidate_id, {}).get("entry_id") or "")
+            for candidate_id in chosen
+        }
+        for group_id, group in risk_groups.items():
+            if not isinstance(group, dict):
+                continue
+            entry_ids = {str(item) for item in group.get("entry_ids") or []}
+            prompt_terms = [str(item) for item in group.get("prompt_terms") or []]
+            if chosen_entry_ids & entry_ids or any(text_contains_term(prompt_en, term) for term in prompt_terms):
+                risk_hits.add(str(group_id))
+        for rule in combination.get("hard_combinations") or []:
+            if not isinstance(rule, dict):
+                continue
+            required = {str(item) for item in rule.get("all_of") or []}
+            if required and required <= risk_hits:
+                failures.append(
+                    {
+                        "check": "adult_appeal_combination_risk",
+                        "reason": str(rule.get("reason") or "high-risk styling and camera combination"),
+                        "rule_id": rule.get("id"),
+                        "risk_groups": sorted(required),
+                    }
+                )
+        for rule in combination.get("warning_combinations") or []:
+            if not isinstance(rule, dict):
+                continue
+            required = {str(item) for item in rule.get("all_of") or []}
+            if required and required <= risk_hits:
+                warnings.append(
+                    {
+                        "check": "adult_appeal_combination_risk",
+                        "reason": str(rule.get("reason") or "stacked adult-fashion emphasis"),
+                        "rule_id": rule.get("id"),
+                        "risk_groups": sorted(required),
+                    }
+                )
+
+    return failures, warnings
+
+
 def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dict[str, Any]:
     failures: list[dict[str, Any]] = []
     warnings: list[dict[str, Any]] = []
@@ -1233,6 +1600,16 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
             }
         )
 
+    hybrid_failures, hybrid_warnings = audit_hybrid_augmentation(
+        pack,
+        composed,
+        prompt_en,
+        chosen,
+        candidate_objects,
+    )
+    failures.extend(hybrid_failures)
+    warnings.extend(hybrid_warnings)
+
     coverage = pack.get("coverage") if isinstance(pack.get("coverage"), dict) else {}
     intent_constraints = coverage.get("intent_constraints") if isinstance(coverage.get("intent_constraints"), dict) else {}
     no_people = bool(intent_constraints.get("no_people")) or any(
@@ -1265,7 +1642,7 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
         violations: list[dict[str, Any]] = []
         for candidate_id in sorted(chosen):
             candidate = candidate_objects.get(candidate_id)
-            if not isinstance(candidate, dict) or not candidate_id.startswith("slot:"):
+            if not isinstance(candidate, dict) or not str(candidate.get("slot") or ""):
                 continue
             slot = str(candidate.get("slot") or "")
             tokens = {

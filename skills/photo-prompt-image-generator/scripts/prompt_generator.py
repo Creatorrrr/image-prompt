@@ -111,6 +111,12 @@ CANDIDATE_PACK_CREATIVE_EXPLORATION_MIN_DISTANCE = 0.45
 CANDIDATE_PACK_CREATIVE_EXPLORATION_LIMIT = 6
 CANDIDATE_PACK_CREATIVE_DIRECTION_FLOOR = 0.75
 CANDIDATE_PACK_CREATIVE_DIRECTION_MIN_PROPOSALS = 4
+CANDIDATE_PACK_HYBRID_CONTRACT_VERSION = "photo-hybrid-augmentation/v1"
+CANDIDATE_PACK_ADULT_APPEAL_CONTRACT_VERSION = "photo-adult-appeal/v1"
+CANDIDATE_PACK_ADULT_APPEAL_AXES = ("sensual_editorial", "fetish_fashion")
+CANDIDATE_PACK_ADULT_APPEAL_EMPHASES = ("sensual_led", "balanced", "fetish_led")
+CANDIDATE_PACK_ADULT_APPEAL_DEFAULT_INTENSITY = 1
+CANDIDATE_PACK_ADULT_APPEAL_DEFAULT_EMPHASIS = "balanced"
 CANDIDATE_PACK_CREATIVE_DIRECTION_OPERATORS = (
     (
         "structural_analogy",
@@ -3189,6 +3195,27 @@ def candidate_pack_apply_conflicts(slots: JsonDict, conflicts: Sequence[JsonDict
                     candidate["conflicts_with"].append(other_id)
 
 
+def candidate_pack_apply_conflicts_to_candidates(
+    candidates: Sequence[JsonDict],
+    conflicts: Sequence[JsonDict],
+) -> None:
+    by_id = {
+        str(candidate.get("id")): candidate
+        for candidate in candidates
+        if isinstance(candidate, dict) and str(candidate.get("id") or "")
+    }
+    for conflict in conflicts:
+        ids = [str(item) for item in conflict.get("candidates", [])]
+        for candidate_id in ids:
+            candidate = by_id.get(candidate_id)
+            if candidate is None:
+                continue
+            candidate.setdefault("conflicts_with", [])
+            for other_id in ids:
+                if other_id != candidate_id and other_id not in candidate["conflicts_with"]:
+                    candidate["conflicts_with"].append(other_id)
+
+
 def candidate_pack_source_texts(result: JsonDict, trace: JsonDict) -> List[tuple[str, str]]:
     texts: List[tuple[str, str]] = []
     seen_texts: Set[str] = set()
@@ -3862,6 +3889,485 @@ def candidate_pack_viewer_experience(result: JsonDict) -> Optional[JsonDict]:
             ],
         },
         "evaluation_boundary": "prompt_binding_is_preflight;_metadata_free_pixels_are_local_product_evidence;human_response_requires_human_evaluation",
+    }
+
+
+def candidate_pack_hybrid_policy(data: JsonDict) -> JsonDict:
+    layers = candidate_pack_quality_layers(data)
+    policy = layers.get("hybrid_augmentation") if isinstance(layers.get("hybrid_augmentation"), dict) else {}
+    return policy if policy.get("enabled", True) else {}
+
+
+def candidate_pack_hybrid_activation_sources(
+    result: JsonDict,
+    adult_appeal: Optional[JsonDict],
+) -> List[str]:
+    provenance = result.get("provenance") if isinstance(result.get("provenance"), dict) else {}
+    sources: List[str] = []
+    if provenance.get("hybrid_augmentation_requested") is True:
+        sources.append("explicit_hybrid_augmentation_control")
+    creativity = candidate_pack_float(provenance.get("creativity"))
+    if creativity is not None and creativity >= CANDIDATE_PACK_CREATIVE_DIRECTION_FLOOR:
+        sources.append("creative_direction_required")
+    if isinstance(adult_appeal, dict) and adult_appeal.get("enabled") is True:
+        if adult_appeal.get("activation_source") == "skill_default":
+            sources.append("configured_default_adult_appeal")
+        else:
+            sources.append("explicit_adult_appeal_control")
+    return sources
+
+
+def candidate_pack_adult_appeal_eligibility(
+    data: JsonDict,
+    result: JsonDict,
+    activation_source: str,
+) -> JsonDict:
+    trace = result.get("semantic_trace") if isinstance(result.get("semantic_trace"), dict) else {}
+    contract = trace.get("generation_contract") if isinstance(trace.get("generation_contract"), dict) else {}
+    constraints = contract.get("intent_constraints") if isinstance(contract.get("intent_constraints"), dict) else {}
+    subject_category_value = str(contract.get("subject_category") or "generic")
+    hybrid_policy = candidate_pack_hybrid_policy(data)
+    adult_policy = hybrid_policy.get("adult_appeal") if isinstance(hybrid_policy.get("adult_appeal"), dict) else {}
+    default_eligibility = (
+        adult_policy.get("default_eligibility")
+        if isinstance(adult_policy.get("default_eligibility"), dict)
+        else {}
+    )
+    source_texts = [text for _, text in candidate_pack_source_texts(result, trace)]
+    youth_terms = [str(term) for term in adult_policy.get("youth_coding_terms") or []]
+    youth_hits = sorted(
+        {
+            term
+            for term in youth_terms
+            if any(intent_alias_matches(text, term) for text in source_texts)
+        }
+    )
+    if bool(default_eligibility.get("block_no_people", True)) and constraints.get("no_people") is True:
+        return {
+            "status": "ineligible",
+            "reason": "explicit_no_people",
+            "subject_category": subject_category_value,
+            "youth_coding_hits": youth_hits,
+        }
+    if bool(default_eligibility.get("block_youth_coding", True)) and youth_hits:
+        return {
+            "status": "ineligible",
+            "reason": "youth_coded_request",
+            "subject_category": subject_category_value,
+            "youth_coding_hits": youth_hits,
+        }
+    allowed_default_categories = {
+        str(item) for item in default_eligibility.get("subject_categories") or ["human"]
+    }
+    if activation_source == "skill_default" and subject_category_value not in allowed_default_categories:
+        return {
+            "status": "ineligible",
+            "reason": "default_requires_eligible_human_subject",
+            "subject_category": subject_category_value,
+            "allowed_subject_categories": sorted(allowed_default_categories),
+            "youth_coding_hits": youth_hits,
+        }
+    return {
+        "status": "eligible",
+        "reason": "eligible_human_default"
+        if activation_source == "skill_default"
+        else "explicit_control",
+        "subject_category": subject_category_value,
+        "youth_coding_hits": youth_hits,
+    }
+
+
+def candidate_pack_adult_appeal_request(data: JsonDict, result: JsonDict) -> JsonDict:
+    provenance = result.get("provenance") if isinstance(result.get("provenance"), dict) else {}
+    raw = provenance.get("adult_appeal") if isinstance(provenance.get("adult_appeal"), dict) else {}
+    axes_raw = raw.get("axes") if isinstance(raw.get("axes"), dict) else {}
+    axes: JsonDict = {}
+    for axis_id in CANDIDATE_PACK_ADULT_APPEAL_AXES:
+        axis = axes_raw.get(axis_id) if isinstance(axes_raw.get(axis_id), dict) else {}
+        try:
+            intensity = int(axis.get("intensity", 0) or 0)
+        except (TypeError, ValueError):
+            intensity = 0
+        axes[axis_id] = {"intensity": max(0, min(3, intensity))}
+    requested_enabled = any(axis["intensity"] > 0 for axis in axes.values())
+    activation_source = str(raw.get("activation_source") or "skill_default")
+    eligibility = candidate_pack_adult_appeal_eligibility(data, result, activation_source)
+    enabled = requested_enabled and eligibility.get("status") == "eligible"
+    emphasis = str((raw.get("blend") or {}).get("emphasis") or "") if isinstance(raw.get("blend"), dict) else ""
+    if emphasis not in CANDIDATE_PACK_ADULT_APPEAL_EMPHASES:
+        sensual = axes["sensual_editorial"]["intensity"]
+        fetish = axes["fetish_fashion"]["intensity"]
+        emphasis = "balanced" if sensual == fetish else ("sensual_led" if sensual > fetish else "fetish_led")
+    return {
+        "enabled": enabled,
+        "requested_enabled": requested_enabled,
+        "activation_source": activation_source if requested_enabled else "explicit_opt_out",
+        "eligibility": eligibility,
+        "axes": axes,
+        "blend": {"emphasis": emphasis},
+    }
+
+
+def candidate_pack_filter_ids(preset: JsonDict, slot: str) -> List[str]:
+    filters = preset.get("filters") if isinstance(preset.get("filters"), dict) else {}
+    raw = filters.get(slot)
+    if isinstance(raw, dict):
+        return [str(item) for item in raw.get("ids") or [] if str(item).strip()]
+    return [str(item) for item in normalize_list(raw) if str(item).strip()]
+
+
+def candidate_pack_adult_risk_groups(entry_id: str, adult_policy: JsonDict) -> List[str]:
+    groups: List[str] = []
+    risk_groups = adult_policy.get("risk_groups") if isinstance(adult_policy.get("risk_groups"), dict) else {}
+    for group_id, group in risk_groups.items():
+        if not isinstance(group, dict):
+            continue
+        if entry_id in {str(item) for item in group.get("entry_ids") or []}:
+            groups.append(str(group_id))
+    return groups
+
+
+def candidate_pack_hybrid_adult_appeal(
+    data: JsonDict,
+    result: JsonDict,
+    candidate_entries: Dict[str, tuple[str, Optional[str], JsonDict]],
+) -> Optional[JsonDict]:
+    hybrid_policy = candidate_pack_hybrid_policy(data)
+    adult_policy = hybrid_policy.get("adult_appeal") if isinstance(hybrid_policy.get("adult_appeal"), dict) else {}
+    request = candidate_pack_adult_appeal_request(data, result)
+    enabled = bool(request.get("enabled"))
+    source_preset_id = str(adult_policy.get("source_preset_id") or "adult_fetish_fashion_editorial")
+    source_preset = candidate_pack_preset_by_id(data, source_preset_id) or {}
+    try:
+        per_axis_limit = max(1, int(adult_policy.get("candidate_limit_per_axis", 12) or 12))
+    except (TypeError, ValueError):
+        per_axis_limit = 12
+    try:
+        per_carrier_limit = max(1, int(adult_policy.get("candidate_limit_per_carrier", 3) or 3))
+    except (TypeError, ValueError):
+        per_carrier_limit = 3
+
+    configured_axes = adult_policy.get("axes") if isinstance(adult_policy.get("axes"), dict) else {}
+    axes: JsonDict = {}
+    for axis_id in CANDIDATE_PACK_ADULT_APPEAL_AXES:
+        intensity = int(((request.get("axes") or {}).get(axis_id) or {}).get("intensity", 0) or 0)
+        axis_policy = configured_axes.get(axis_id) if isinstance(configured_axes.get(axis_id), dict) else {}
+        inventory: List[JsonDict] = []
+        seen_sources: Set[str] = set()
+        if enabled and intensity > 0:
+            for carrier in axis_policy.get("carriers") or []:
+                if not isinstance(carrier, dict) or len(inventory) >= per_axis_limit:
+                    continue
+                carrier_id = str(carrier.get("id") or "detail")
+                required_tags = {str(item).lower() for item in carrier.get("required_tags_any") or []}
+                try:
+                    carrier_limit = max(1, int(carrier.get("candidate_limit", per_carrier_limit) or per_carrier_limit))
+                except (TypeError, ValueError):
+                    carrier_limit = per_carrier_limit
+                carrier_count = 0
+                for slot in [str(item) for item in carrier.get("slots") or [] if str(item).strip()]:
+                    for entry_id in candidate_pack_filter_ids(source_preset, slot):
+                        if carrier_count >= carrier_limit or len(inventory) >= per_axis_limit:
+                            break
+                        source_key = f"{slot}:{entry_id}"
+                        if source_key in seen_sources:
+                            continue
+                        entry = candidate_pack_slot_entry_by_id(data, slot, entry_id)
+                        if not isinstance(entry, dict):
+                            continue
+                        try:
+                            minimum_intensity = int(
+                                (adult_policy.get("entry_min_intensity") or {}).get(entry_id, 1)
+                            )
+                        except (TypeError, ValueError):
+                            minimum_intensity = 1
+                        if intensity < minimum_intensity:
+                            continue
+                        tags = {str(item).lower() for item in entry.get("tags") or []}
+                        if required_tags and not (required_tags & tags):
+                            continue
+                        candidate_id = f"augmentation:adult_appeal:{axis_id}:{slot}:{entry_id}"
+                        candidate = {
+                            "id": candidate_id,
+                            "source_candidate_id": candidate_pack_candidate_id("slot", entry_id, slot),
+                            "slot": slot,
+                            "entry_id": entry_id,
+                            "axis": axis_id,
+                            "carrier": carrier_id,
+                            "minimum_intensity": minimum_intensity,
+                            "label_en": localize(entry, "en") or entry_id,
+                            "label_ko": localize(entry, "ko") or entry_id,
+                            "weight": candidate_pack_float(entry.get("weight")),
+                            "selected_by_sampler": False,
+                            "tags": normalize_list(entry.get("tags"))[:12],
+                            "kind": normalize_list(entry.get("kind"))[:8],
+                            "facets": {
+                                str(key): normalize_list(value)[:12]
+                                for key, value in (entry.get("facets") or {}).items()
+                                if str(key).strip() and normalize_list(value)
+                            },
+                            "risk_groups": candidate_pack_adult_risk_groups(entry_id, adult_policy),
+                            "applicability": {
+                                "status": "eligible",
+                                "source": f"{request.get('activation_source')}_adult_appeal_inventory",
+                                "reason": "axis activated by the configured low-intensity default"
+                                if request.get("activation_source") == "skill_default"
+                                else "axis activated by explicit user control",
+                            },
+                            "conflicts_with": [],
+                        }
+                        inventory.append(candidate)
+                        candidate_entries[candidate_id] = ("slot", slot, entry)
+                        seen_sources.add(source_key)
+                        carrier_count += 1
+        axes[axis_id] = {
+            "intensity": intensity,
+            "active": enabled and intensity > 0,
+            "carrier_ids": [
+                str(carrier.get("id"))
+                for carrier in axis_policy.get("carriers") or []
+                if isinstance(carrier, dict) and str(carrier.get("id") or "")
+            ],
+            "candidate_inventory": inventory,
+        }
+
+    return {
+        "enabled": enabled,
+        "requested_enabled": bool(request.get("requested_enabled")),
+        "contract_version": CANDIDATE_PACK_ADULT_APPEAL_CONTRACT_VERSION,
+        "activation_source": request.get("activation_source"),
+        "eligibility": request.get("eligibility", {}),
+        "defaults": {
+            "sensual_editorial_intensity": int(
+                (adult_policy.get("default_intensities") or {}).get(
+                    "sensual_editorial", CANDIDATE_PACK_ADULT_APPEAL_DEFAULT_INTENSITY
+                )
+            ),
+            "fetish_fashion_intensity": int(
+                (adult_policy.get("default_intensities") or {}).get(
+                    "fetish_fashion", CANDIDATE_PACK_ADULT_APPEAL_DEFAULT_INTENSITY
+                )
+            ),
+            "emphasis": str(
+                adult_policy.get("default_emphasis")
+                or CANDIDATE_PACK_ADULT_APPEAL_DEFAULT_EMPHASIS
+            ),
+        },
+        "source_preset_id": source_preset_id,
+        "axes": axes,
+        "blend": {
+            "emphasis": str((request.get("blend") or {}).get("emphasis") or "balanced"),
+            "simultaneous_activation_allowed": True,
+            "carrier_separation": {
+                "sensual_editorial": ["gaze", "pose", "lighting", "silhouette"],
+                "fetish_fashion": ["material", "garment_layering", "accessories", "footwear"],
+            },
+        },
+        "composition_requirements": {
+            "explicit_adult_original_subject": True,
+            "adult_subject_phrase_required": True,
+            "agency_phrase_required": True,
+            "one_accepted_detail_per_active_axis": True,
+            "configured_low_intensity_default": True,
+            "appearance_or_popularity_inference_forbidden": True,
+        },
+        "combination_policy": {
+            "risk_groups": adult_policy.get("risk_groups", {}),
+            "hard_combinations": adult_policy.get("hard_combinations", []),
+            "warning_combinations": adult_policy.get("warning_combinations", []),
+            "youth_coding_terms": adult_policy.get("youth_coding_terms", []),
+        },
+        "evaluation_boundary": "styling_intent_and_prompt_binding_are_preflight;_popularity_requires_human_or_engagement_evaluation",
+    }
+
+
+def candidate_pack_hybrid_adult_candidates(adult_appeal: Optional[JsonDict]) -> List[JsonDict]:
+    candidates: List[JsonDict] = []
+    if not isinstance(adult_appeal, dict):
+        return candidates
+    for axis in (adult_appeal.get("axes") or {}).values():
+        if not isinstance(axis, dict):
+            continue
+        candidates.extend(
+            candidate for candidate in axis.get("candidate_inventory") or [] if isinstance(candidate, dict)
+        )
+    return candidates
+
+
+def candidate_pack_hybrid_candidates_compatible(candidate: JsonDict, selected: Sequence[JsonDict]) -> bool:
+    candidate_id = str(candidate.get("id") or "")
+    candidate_conflicts = {str(item) for item in candidate.get("conflicts_with") or []}
+    for other in selected:
+        other_id = str(other.get("id") or "")
+        other_conflicts = {str(item) for item in other.get("conflicts_with") or []}
+        if other_id in candidate_conflicts or candidate_id in other_conflicts:
+            return False
+    return True
+
+
+def candidate_pack_hybrid_detail_function(candidate: JsonDict, route: JsonDict, index: int) -> str:
+    axis = str(candidate.get("axis") or "")
+    carrier = str(candidate.get("carrier") or "")
+    if axis == "fetish_fashion":
+        return "material_detail"
+    if axis == "sensual_editorial":
+        return "pose_camera" if carrier in {"gaze_pose", "framing"} else "viewer_hook"
+    functions = [str(item) for item in route.get("functions") or [] if str(item).strip()]
+    return functions[index % len(functions)] if functions else "material_detail"
+
+
+def candidate_pack_hybrid_route_details(
+    route: JsonDict,
+    route_index: int,
+    slots: JsonDict,
+    masked_slot_names: Set[str],
+    adult_appeal: Optional[JsonDict],
+    limit: int,
+) -> List[JsonDict]:
+    selected: List[JsonDict] = []
+    selected_sources: Set[str] = set()
+    selected_slots: Set[str] = set()
+
+    adult_axes = adult_appeal.get("axes") if isinstance(adult_appeal, dict) and isinstance(adult_appeal.get("axes"), dict) else {}
+    for axis_id in CANDIDATE_PACK_ADULT_APPEAL_AXES:
+        axis = adult_axes.get(axis_id) if isinstance(adult_axes.get(axis_id), dict) else {}
+        inventory = [candidate for candidate in axis.get("candidate_inventory") or [] if isinstance(candidate, dict)]
+        if not inventory or len(selected) >= limit:
+            continue
+        rotated = inventory[route_index % len(inventory) :] + inventory[: route_index % len(inventory)]
+        for candidate in rotated:
+            source = str(candidate.get("source_candidate_id") or candidate.get("id") or "")
+            if source in selected_sources or not candidate_pack_hybrid_candidates_compatible(candidate, selected):
+                continue
+            selected.append(candidate)
+            selected_sources.add(source)
+            selected_slots.add(str(candidate.get("slot") or ""))
+            break
+
+    route_slots = [str(item) for item in route.get("slots") or [] if str(item).strip()]
+    for slot_index, slot in enumerate(route_slots):
+        if len(selected) >= limit or slot in masked_slot_names or slot in selected_slots:
+            continue
+        payload = slots.get(slot) if isinstance(slots.get(slot), dict) else {}
+        candidates = [
+            candidate
+            for candidate in payload.get("candidates") or []
+            if isinstance(candidate, dict)
+            and (candidate.get("applicability") or {}).get("status", "eligible") == "eligible"
+        ]
+        alternatives = [candidate for candidate in candidates if not candidate.get("selected_by_sampler")]
+        anchors = [candidate for candidate in candidates if candidate.get("selected_by_sampler")]
+        ordered = alternatives + anchors
+        if ordered:
+            offset = (route_index + slot_index) % len(ordered)
+            ordered = ordered[offset:] + ordered[:offset]
+        for candidate in ordered:
+            source = str(candidate.get("source_candidate_id") or candidate.get("id") or "")
+            if source in selected_sources or not candidate_pack_hybrid_candidates_compatible(candidate, selected):
+                continue
+            selected.append(candidate)
+            selected_sources.add(source)
+            selected_slots.add(slot)
+            break
+
+    details: List[JsonDict] = []
+    for index, candidate in enumerate(selected[:limit]):
+        details.append(
+            {
+                "candidate_id": str(candidate.get("id") or ""),
+                "slot": str(candidate.get("slot") or ""),
+                "function": candidate_pack_hybrid_detail_function(candidate, route, index),
+                "label_en": str(candidate.get("label_en") or candidate.get("entry_id") or ""),
+                "label_ko": str(candidate.get("label_ko") or candidate.get("entry_id") or ""),
+                "source": "adult_appeal_inventory" if candidate.get("axis") else "candidate_pack_slot",
+                "axis": candidate.get("axis"),
+                "carrier": candidate.get("carrier"),
+                "minimum_intensity": candidate.get("minimum_intensity"),
+                "selected_by_sampler": bool(candidate.get("selected_by_sampler")),
+                "marginal_value_question": "Would removing this detail make the image less distinctive or less legible?",
+            }
+        )
+    return details
+
+
+def candidate_pack_hybrid_augmentation(
+    data: JsonDict,
+    result: JsonDict,
+    slots: JsonDict,
+    masked_slot_names: Set[str],
+    adult_appeal: Optional[JsonDict],
+) -> Optional[JsonDict]:
+    policy = candidate_pack_hybrid_policy(data)
+    activation_sources = candidate_pack_hybrid_activation_sources(result, adult_appeal)
+    if not policy or not activation_sources:
+        return None
+    try:
+        route_limit = max(2, int(policy.get("route_candidate_limit", 4) or 4))
+    except (TypeError, ValueError):
+        route_limit = 4
+    routes: List[JsonDict] = []
+    for route_index, route in enumerate(policy.get("routes") or []):
+        if not isinstance(route, dict):
+            continue
+        details = candidate_pack_hybrid_route_details(
+            route,
+            route_index,
+            slots,
+            masked_slot_names,
+            adult_appeal,
+            route_limit,
+        )
+        routes.append(
+            {
+                "id": str(route.get("id") or f"route_{route_index + 1}"),
+                "strategy": str(route.get("id") or f"route_{route_index + 1}"),
+                "label": str(route.get("label") or route.get("id") or "augmentation route"),
+                "candidate_ids": [detail["candidate_id"] for detail in details],
+                "details": details,
+            }
+        )
+    try:
+        accepted_min = max(1, int(policy.get("accepted_detail_min", 2) or 2))
+    except (TypeError, ValueError):
+        accepted_min = 2
+    try:
+        accepted_max = max(accepted_min, int(policy.get("accepted_detail_max", 5) or 5))
+    except (TypeError, ValueError):
+        accepted_max = 5
+    return {
+        "enabled": True,
+        "contract_version": CANDIDATE_PACK_HYBRID_CONTRACT_VERSION,
+        "source": "candidate_pack_bounded_idea_amplifier",
+        "activation_sources": activation_sources,
+        "purpose": "preserve_an_agent_authored_concept_core_while_adding_optional_candidate_sourced_specificity",
+        "core_policy": {
+            "agent_authored_concept_core": True,
+            "candidate_pack_may_expand_but_not_overwrite": True,
+            "unconditional_candidate_acceptance_forbidden": True,
+        },
+        "route_contract": {
+            "route_count": len(routes),
+            "select_exactly": 1,
+            "allow_select_none": True,
+            "all_routes_must_be_considered": True,
+            "routes": routes,
+        },
+        "adoption_contract": {
+            "decision_states": policy.get("decision_states", ["accepted", "modified", "rejected"]),
+            "detail_functions": policy.get(
+                "detail_functions",
+                ["concept_bridge", "material_detail", "pose_camera", "viewer_hook", "second_reading"],
+            ),
+            "minimum_accepted_if_selected": accepted_min,
+            "maximum_accepted": accepted_max,
+            "every_selected_route_candidate_requires_a_decision": True,
+            "accepted_or_modified_candidate_must_be_chosen": True,
+            "rejected_candidate_must_not_be_chosen": True,
+            "accepted_or_modified_prompt_evidence_must_be_literal": True,
+            "marginal_contribution_required": True,
+        },
+        "adult_appeal": adult_appeal or {"enabled": False},
+        "evaluation_boundary": "audit_pass_proves_contract_and_literal_binding_only;_rendered_detail_and_audience_response_require_pixel_and_human_evaluation",
     }
 
 
@@ -6329,6 +6835,7 @@ def build_candidate_pack(result: JsonDict, data: JsonDict) -> JsonDict:
     candidate_entries: Dict[str, tuple[str, Optional[str], JsonDict]] = {}
     presets = candidate_pack_build_presets(data, trace, result, candidate_entries)
     slots = candidate_pack_build_slots(data, trace, result, candidate_entries)
+    adult_appeal = candidate_pack_hybrid_adult_appeal(data, result, candidate_entries)
     selected_preset = candidate_pack_selected_preset(data, result)
     selected_blueprint = candidate_pack_resolve_scene_blueprint(
         data,
@@ -6337,6 +6844,9 @@ def build_candidate_pack(result: JsonDict, data: JsonDict) -> JsonDict:
     )
     conflicts = candidate_pack_conflicts(data, candidate_entries)
     candidate_pack_apply_conflicts(slots, conflicts)
+    candidate_pack_apply_conflicts_to_candidates(
+        candidate_pack_hybrid_adult_candidates(adult_appeal), conflicts
+    )
     candidate_blobs = candidate_pack_candidate_blobs(presets, slots)
     candidate_terms = candidate_pack_candidate_terms(presets, slots)
     mandatory_intents, uncovered_intents = candidate_pack_mandatory_intents(result, trace, candidate_blobs, candidate_terms)
@@ -6383,6 +6893,13 @@ def build_candidate_pack(result: JsonDict, data: JsonDict) -> JsonDict:
     creative_exploration = candidate_pack_creative_exploration(result, slots, candidate_entries)
     creative_direction = candidate_pack_creative_direction(result)
     viewer_experience = candidate_pack_viewer_experience(result)
+    hybrid_augmentation = candidate_pack_hybrid_augmentation(
+        data,
+        result,
+        slots,
+        masked_slot_names,
+        adult_appeal,
+    )
     pack: JsonDict = {
         "contract_version": "photo-candidate-pack/v2",
         "pack_id": "",
@@ -6468,6 +6985,30 @@ def build_candidate_pack(result: JsonDict, data: JsonDict) -> JsonDict:
         pack["creative_direction"] = creative_direction
     if viewer_experience is not None:
         pack["viewer_experience"] = viewer_experience
+    if hybrid_augmentation is not None:
+        pack["provenance"]["hybrid_augmentation_requested"] = bool(
+            provenance.get("hybrid_augmentation_requested")
+        )
+        adult_axes = (
+            adult_appeal.get("axes")
+            if isinstance(adult_appeal, dict) and isinstance(adult_appeal.get("axes"), dict)
+            else {}
+        )
+        pack["provenance"]["adult_appeal"] = {
+            "enabled": bool((adult_appeal or {}).get("enabled")),
+            "requested_enabled": bool((adult_appeal or {}).get("requested_enabled")),
+            "activation_source": (adult_appeal or {}).get("activation_source"),
+            "eligibility": (adult_appeal or {}).get("eligibility", {}),
+            "axes": {
+                axis_id: {
+                    "intensity": int((adult_axes.get(axis_id) or {}).get("intensity", 0) or 0),
+                    "active": bool((adult_axes.get(axis_id) or {}).get("active")),
+                }
+                for axis_id in CANDIDATE_PACK_ADULT_APPEAL_AXES
+            },
+            "blend": {"emphasis": ((adult_appeal or {}).get("blend") or {}).get("emphasis")},
+        }
+        pack["hybrid_augmentation"] = hybrid_augmentation
     hashable = dict(pack)
     hashable["pack_id"] = None
     pack["pack_id"] = stable_text_id(json.dumps(hashable, ensure_ascii=False, sort_keys=True, separators=(",", ":"))) or ""
@@ -15011,6 +15552,8 @@ def soft_render_directive_negative_entries(events: Sequence[JsonDict]) -> List[E
     return entries
 
 
+# Keep the low-level API neutral for internal research and holdout callers.
+# ``main`` injects the user-facing CLI defaults (1/1) into candidate-pack runs.
 def generate_once(
     data: JsonDict,
     rng: random.Random,
@@ -15059,6 +15602,12 @@ def generate_once(
     concept_scene_variants: Optional[Sequence[str]] = None,
     safety_evaluation_requested: bool = False,
     viewer_experience_requested: bool = False,
+    hybrid_augmentation_requested: bool = False,
+    sensual_editorial_intensity: int = 0,
+    fetish_fashion_intensity: int = 0,
+    adult_appeal_emphasis: str = CANDIDATE_PACK_ADULT_APPEAL_DEFAULT_EMPHASIS,
+    adult_appeal_activation_source: str = "none",
+    adult_appeal_candidate_pack_requested: bool = False,
     soft_anchor_spec: Optional[JsonDict] = None,
     source_argv: Optional[Sequence[str]] = None,
     seed: Optional[int] = None,
@@ -15435,6 +15984,25 @@ def generate_once(
         "concept_scene_variants": normalize_list(concept_scene_variants),
         "safety": generation_contract.get("safety", {}),
         "viewer_experience_requested": bool(viewer_experience_requested),
+        "hybrid_augmentation_requested": bool(hybrid_augmentation_requested),
+        "adult_appeal": {
+            "enabled": bool(
+                adult_appeal_candidate_pack_requested
+                and (sensual_editorial_intensity > 0 or fetish_fashion_intensity > 0)
+            ),
+            "configured": bool(
+                sensual_editorial_intensity > 0 or fetish_fashion_intensity > 0
+            ),
+            "application_scope": "candidate_pack_composition",
+            "activation_source": adult_appeal_activation_source
+            if sensual_editorial_intensity > 0 or fetish_fashion_intensity > 0
+            else "explicit_opt_out",
+            "axes": {
+                "sensual_editorial": {"intensity": int(sensual_editorial_intensity)},
+                "fetish_fashion": {"intensity": int(fetish_fashion_intensity)},
+            },
+            "blend": {"emphasis": adult_appeal_emphasis},
+        },
         "creativity": creativity if creativity is not None else (semantic_context or {}).get("creativity"),
         "argv": list(source_argv or []),
     }
@@ -15661,6 +16229,29 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         action="store_true",
         help="Expose a topic-neutral viewer-experience composition contract for explicit audience, affect, attachment, commercial, or subculture-response goals. High creative-direction runs include it automatically.",
     )
+    parser.add_argument(
+        "--hybrid-augmentation",
+        action="store_true",
+        help="Expose three candidate-sourced idea-augmentation routes while preserving an agent-authored concept core. High creative-direction and adult-appeal runs enable it automatically.",
+    )
+    parser.add_argument(
+        "--sensual-editorial-intensity",
+        type=int,
+        default=CANDIDATE_PACK_ADULT_APPEAL_DEFAULT_INTENSITY,
+        help="Adult sensual-editorial styling axis intensity from 0 to 3; defaults to 1 for eligible human candidate packs. Use 0 to disable this axis.",
+    )
+    parser.add_argument(
+        "--fetish-fashion-intensity",
+        type=int,
+        default=CANDIDATE_PACK_ADULT_APPEAL_DEFAULT_INTENSITY,
+        help="Adult fetish-fashion styling axis intensity from 0 to 3; defaults to 1 for eligible human candidate packs. Use 0 to disable this axis.",
+    )
+    parser.add_argument(
+        "--adult-appeal-emphasis",
+        choices=CANDIDATE_PACK_ADULT_APPEAL_EMPHASES,
+        default=None,
+        help="Blend emphasis when one or both adult-appeal axes are active. Equal default intensities resolve to balanced.",
+    )
     parser.add_argument("--selection-mode", choices=SELECTION_MODES, default=DEFAULT_SELECTION_MODE, help="Selection mode. semantic is the default; use rule for the original deterministic weighted path.")
     parser.add_argument("--default-intent", action="store_true", help=argparse.SUPPRESS)
     parser.add_argument("--semantic-default", action="store_true", help=argparse.SUPPRESS)
@@ -15707,6 +16298,50 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     parser.add_argument("--show-slots", action="store_true", help="List slots, tag counts, and priorities then exit.")
     parser.add_argument("--list-tags", metavar="SLOT", help="List tag ids for a slot then exit.")
     args = parser.parse_args(raw_args)
+
+    for option_name, value in (
+        ("--sensual-editorial-intensity", args.sensual_editorial_intensity),
+        ("--fetish-fashion-intensity", args.fetish_fashion_intensity),
+    ):
+        if value < 0 or value > 3:
+            raise ValueError(f"{option_name} must be between 0 and 3")
+    adult_appeal_enabled = bool(
+        args.sensual_editorial_intensity > 0 or args.fetish_fashion_intensity > 0
+    )
+    explicit_adult_control = any(
+        has_cli_option(raw_args, option)
+        for option in (
+            "--sensual-editorial-intensity",
+            "--fetish-fashion-intensity",
+            "--adult-appeal-emphasis",
+        )
+    )
+    if (args.hybrid_augmentation or explicit_adult_control) and not args.emit_candidate_pack:
+        raise ValueError(
+            "--hybrid-augmentation and explicit adult-appeal controls require --emit-candidate-pack"
+        )
+    if args.adult_appeal_emphasis and not adult_appeal_enabled:
+        raise ValueError("--adult-appeal-emphasis requires an active adult-appeal axis")
+    if args.adult_appeal_emphasis:
+        adult_appeal_emphasis = args.adult_appeal_emphasis
+    elif args.sensual_editorial_intensity == args.fetish_fashion_intensity:
+        adult_appeal_emphasis = "balanced"
+    elif args.sensual_editorial_intensity > args.fetish_fashion_intensity:
+        adult_appeal_emphasis = "sensual_led"
+    else:
+        adult_appeal_emphasis = "fetish_led"
+    if adult_appeal_enabled:
+        if adult_appeal_emphasis == "sensual_led" and args.sensual_editorial_intensity == 0:
+            raise ValueError("sensual_led emphasis requires sensual_editorial intensity above 0")
+        if adult_appeal_emphasis == "fetish_led" and args.fetish_fashion_intensity == 0:
+            raise ValueError("fetish_led emphasis requires fetish_fashion intensity above 0")
+        if adult_appeal_emphasis == "balanced" and (
+            args.sensual_editorial_intensity == 0 or args.fetish_fashion_intensity == 0
+        ):
+            raise ValueError("balanced adult appeal requires both axes above 0")
+    adult_appeal_activation_source = (
+        "explicit_user_control" if explicit_adult_control else "skill_default"
+    )
 
     data = load_json(args.tags)
     quality_layers_path = Path(args.quality_layers) if args.quality_layers else default_quality_layers_path(args.tags)
@@ -15849,6 +16484,12 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             concept_scene_variants=args.concept_scene_variants,
             safety_evaluation_requested=args.safety_evaluation,
             viewer_experience_requested=args.viewer_experience,
+            hybrid_augmentation_requested=args.hybrid_augmentation,
+            sensual_editorial_intensity=args.sensual_editorial_intensity,
+            fetish_fashion_intensity=args.fetish_fashion_intensity,
+            adult_appeal_emphasis=adult_appeal_emphasis,
+            adult_appeal_activation_source=adult_appeal_activation_source,
+            adult_appeal_candidate_pack_requested=args.emit_candidate_pack,
             soft_anchor_spec=soft_anchor_spec,
             source_argv=raw_args,
             seed=args.seed,

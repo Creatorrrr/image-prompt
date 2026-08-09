@@ -27,6 +27,6 @@ The script forwards prompt and negative bytes unchanged, saves successful images
 
 For unchanged retries, preserve `prompt_en` and `negative_en` byte-for-byte and keep the same prompt ID. Increment `attempt`; link retries with `retry_of` when available.
 
-Record saved native attempts with `scripts/record_image_run.py` in `runs/image_runs.ndjson`. Include `pack_id`, chosen candidate IDs, `composer: agent`, and audit status when available. Do not write a ledger record for a preview-only native result.
+Record saved native attempts with `scripts/record_image_run.py` in `runs/image_runs.ndjson`. Include `pack_id`, chosen candidate IDs, `composer: agent`, and audit status when available. When the composed prompt contains `augmentation_brief`, preserve that audited object with `--augmentation-brief-json`; do not reconstruct or summarize its decisions. Do not write a ledger record for a preview-only native result.
 
 Report the image tool used and whether a repo-local copy was created.

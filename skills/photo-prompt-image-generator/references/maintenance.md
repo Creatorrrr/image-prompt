@@ -6,6 +6,8 @@ Prefer extending existing entries with aliases, keywords, facets, and embedding 
 
 Every preset needs non-empty `required_slots`. Reusable role recipes should separate `identity_core` from at least two `scene_variants`. Quality rules belong in `photo_prompt_quality_layers.json`, not repeated inside prompt templates.
 
+Hybrid augmentation route definitions, adoption budgets, adult-appeal defaults and eligibility, carrier mappings, and cross-combination risk groups also belong in `photo_prompt_quality_layers.json`. Keep route slots backed by real dictionary slots and adult candidates backed by the declared source preset filters. Add an axis candidate through that data contract; do not hard-code prompt prose in the generator. Preserve `sensual_editorial` and `fetish_fashion` as independent axes rather than a mutually exclusive mode enum; keep their configured defaults synchronized with the CLI constants.
+
 For broad candidate coverage, add coherent subject/action/location/prop/surface clusters rather than isolated nouns. Maintain coverage across non-portrait families including ecology, technical systems, access and learning, sports mechanics, heritage, agriculture and food systems, lifecycle evidence, disasters, place change, natural processes, and reusable visual structure. Compatibility metadata must make each action reachable from its intended subject tags, while narrow motifs use `requires_primary_any_tags` so a supporting slot cannot accidentally unlock them. Evidence-led typed packs are on-demand domains: automatic preset discovery requires an explicit routed domain intent, direct preset selection remains available, their tagged entries cannot leak into legacy presets, and semantic slot selection treats the preset filters as a hard record-coherence contract. Research-extension presets also use `auto_optional_policy: authored_filters_only`, so global narrative or motion options cannot enter unless the preset explicitly filters that slot.
 
 CJK commercial-narrative worldbuilding lives in the separate `cjk_narrative_world` domain. Preserve platform category, required keyword, market term, trope, subtype, industry term, and living-practice boundary as distinct `term_level` values. A compound route may share institutional logic, but its manifestation scenes must be atomic: VRMMO/card/probability, kaiju/mecha, territory/dungeon, and magical-transformation/idol/virtual variants cannot cross-select scene slots. Culture-sensitive spirit and afterlife scenes select exactly one public, abstract KR/CN/JP provenance and never collect or reproduce living ritual instructions, sacred text, or restricted knowledge.
@@ -25,6 +27,9 @@ Put repeated theme boundaries in quality-layer `applicability_guards`. Use `matc
 ```bash
 .venv/bin/python skills/photo-prompt-image-generator/scripts/validate_photo_prompt_dictionary.py
 .venv/bin/python skills/photo-prompt-image-generator/scripts/audit_scene_expression.py --current
+.venv/bin/python -m unittest tests.test_photo_prompt_contract_v2.PhotoPromptContractV2Tests.test_hybrid_augmentation_exposes_real_candidate_routes_and_audits_selective_adoption
+.venv/bin/python -m unittest tests.test_photo_prompt_contract_v2.PhotoPromptContractV2Tests.test_adult_appeal_defaults_to_one_for_eligible_humans_and_is_context_gated
+.venv/bin/python -m unittest tests.test_photo_prompt_contract_v2.PhotoPromptContractV2Tests.test_sensual_editorial_and_fetish_fashion_axes_combine_and_risky_camera_pair_fails
 .venv/bin/python -m unittest discover -s tests
 ```
 

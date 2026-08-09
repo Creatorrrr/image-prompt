@@ -14,6 +14,8 @@ An explicit `--creativity` value from `0.75` through `1.0` may add `creative_exp
 
 The same explicit range adds `creative_direction`, an agent-level creation and selection contract with no topic examples or new candidates. It requires an ordinary-baseline critique, at least four proposals using distinct concept operators, exactly one selection, one rule change, at least two visible consequences, a staged reveal path, and a concrete authorial grammar. Its evidence fields must be literal in `prompt_en`; signatures from unselected proposals are forbidden. See `creative-direction-contract.md`. The field is absent below the activation floor, so ordinary composed prompts retain their existing contract.
 
+`--hybrid-augmentation`, high creative direction, or an active adult-appeal axis adds `hybrid_augmentation`. It exposes three two-to-four-detail routes assembled from actual candidate IDs. The composer preserves an agent-authored concept core, considers every route, selects exactly one or rejects all, and records every selected-route detail as accepted, modified, or rejected. Accepted and modified IDs enter `chosen_candidate_ids` with literal prompt evidence; rejected IDs stay absent. The adult-appeal inventory is a separate configured-or-explicit candidate source rather than a reconstructed sampler pool. See `hybrid-augmentation-contract.md`.
+
 `--viewer-experience` adds the separate topic-neutral `photo-viewer-experience/v1` composition contract. High creative-direction runs include it automatically. The contract changes neither presets nor slots; it requires one viewing context, audience-literacy scope, primary viewer need, scalar intended experience, visible first-glance hook, actor/action/target/consequence, attachment and reinspection conditions, and one commercial objective. Only declared visible evidence is literal in `prompt_en`; the intended response remains a hypothesis. See `viewer-experience-contract.md`. Ordinary requests without an explicit audience, affect, attachment, commercial, subculture-response, or creative goal retain the previous pack shape.
 
 ## Required Composition Behavior
@@ -21,12 +23,13 @@ The same explicit range adds `creative_direction`, an agent-level creation and s
 - Use every `mandatory_intents[].text` as literal or faithfully translated visible content.
 - `audit_terms` and candidate labels are discovery aids, not proof of user-intent coverage.
 - `coverage_assertions` may map an exact mandatory-intent key to one or more phrases. Every phrase must occur literally in `prompt_en`.
-- Choose IDs only from `presets`, `slots`, or proposition candidates included in the pack.
+- Choose IDs only from `presets`, `slots`, proposition candidates, or the adult-appeal candidate inventory included in the pack.
 - Choose only candidates with `applicability.status: eligible`.
 - Do not choose both sides of a hard conflict.
 - Preserve `negative_en` exactly, including `null`.
 - Set `composer` to `agent`.
 - When `viewer_experience.enabled` is true, add the composed `viewer_experience` object and obey its conditional evidence rules.
+- When `hybrid_augmentation.enabled` is true, add `augmentation_brief`, preserve its selective-adoption budget, and bind every accepted or modified detail literally.
 
 ## Masking and Generalization
 
@@ -59,3 +62,5 @@ Use `photographic_integration` to bind subject and setting with believable light
 ## Safety
 
 Default safety is the small automatic-pass object documented in `SKILL.md`, with no approval wait. Run `--safety-evaluation` only when the user explicitly asks for a safety review. It changes only the report mode and lists evaluated recipe transforms; it does not grant extra authority and does not replace platform or image-tool policy.
+
+Adult-appeal axes are composition inputs, not safety transforms. Eligible human packs use the configured `1/1` default; explicit controls may override or disable it. Permit `sensual_editorial` and `fetish_fashion` simultaneously, but require an explicitly adult original subject, visible agency, and combined styling-pose-framing-camera review whenever active. A project audit failure must be fixed before generation; a project pass never overrides platform enforcement.

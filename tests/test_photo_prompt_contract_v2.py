@@ -72,6 +72,84 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
         self.assertEqual(completed.returncode, 0, completed.stderr)
         return json.loads(completed.stdout)
 
+    def composed_from_hybrid_route(
+        self,
+        pack: dict,
+        route_id: str,
+        *,
+        accept_count: int = 2,
+        extra_chosen: tuple[str, ...] = (),
+    ) -> dict:
+        hybrid = pack["hybrid_augmentation"]
+        routes = hybrid["route_contract"]["routes"]
+        route = next(row for row in routes if row["id"] == route_id)
+        candidate_objects = audit_composed_prompt.candidate_objects_from_pack(pack)
+        accepted = set(route["candidate_ids"][:accept_count])
+        evidence = [
+            str(candidate_objects[candidate_id]["label_en"])
+            for candidate_id in route["candidate_ids"]
+            if candidate_id in accepted
+        ]
+        adult_contract = hybrid.get("adult_appeal", {})
+        prompt_parts = []
+        adult_brief = None
+        if adult_contract.get("enabled"):
+            prompt_parts.extend(
+                [
+                    "An adult original fashion model",
+                    "holds a self-directed editorial pose",
+                ]
+            )
+            adult_brief = {
+                "adult_subject_phrase": "An adult original fashion model",
+                "agency_phrase": "self-directed editorial pose",
+                "axes": {
+                    axis_id: {"intensity": axis["intensity"]}
+                    for axis_id, axis in adult_contract["axes"].items()
+                },
+                "blend": {"emphasis": adult_contract["blend"]["emphasis"]},
+            }
+        prompt_parts.extend(evidence)
+        decisions = []
+        detail_by_id = {detail["candidate_id"]: detail for detail in route["details"]}
+        for candidate_id in route["candidate_ids"]:
+            state = "accepted" if candidate_id in accepted else "rejected"
+            decision = {
+                "candidate_id": candidate_id,
+                "decision": state,
+                "function": detail_by_id[candidate_id]["function"],
+                "rationale": "It supports the selected route without replacing the concept core.",
+                "marginal_contribution": "Removing it would reduce visible specificity.",
+            }
+            if state == "accepted":
+                decision["prompt_evidence"] = str(candidate_objects[candidate_id]["label_en"])
+            decisions.append(decision)
+        brief = {
+            "concept_core": "A coherent modern photographic subject remains the governing idea.",
+            "routes_considered": [
+                {
+                    "route_id": row["id"],
+                    "decision": "selected" if row["id"] == route_id else "rejected",
+                    "reason": "This route adds the clearest marginal detail."
+                    if row["id"] == route_id
+                    else "Another route fits the concept more economically.",
+                }
+                for row in routes
+            ],
+            "selected_route_id": route_id,
+            "decisions": decisions,
+        }
+        if adult_brief is not None:
+            brief["adult_appeal"] = adult_brief
+        return {
+            "pack_id": pack["pack_id"],
+            "prompt_en": "; ".join(prompt_parts) + ".",
+            "negative_en": pack.get("negative_en"),
+            "chosen_candidate_ids": [*sorted(accepted), *extra_chosen],
+            "composer": "agent",
+            "augmentation_brief": brief,
+        }
+
     def test_safety_contract_defaults_to_pass_and_evaluates_only_on_request(self):
         base_args = (
             "--concept",
@@ -431,6 +509,227 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             self.assertFalse(
                 set(candidate["conflicts_with"]) & (selected_ids - {slot_payload["selected"]})
             )
+
+    def test_hybrid_augmentation_exposes_real_candidate_routes_and_audits_selective_adoption(self):
+        base_args = (
+            "--preset",
+            "candid_iphone_portrait",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "20260809",
+            "--emit-candidate-pack",
+        )
+        ordinary = self.run_wrapper(
+            *base_args,
+            "--sensual-editorial-intensity",
+            "0",
+            "--fetish-fashion-intensity",
+            "0",
+        )[0]
+        hybrid_pack = self.run_wrapper(*base_args, "--hybrid-augmentation")[0]
+        repeated = self.run_wrapper(*base_args, "--hybrid-augmentation")[0]
+
+        self.assertNotIn("hybrid_augmentation", ordinary)
+        hybrid = hybrid_pack["hybrid_augmentation"]
+        self.assertEqual(hybrid, repeated["hybrid_augmentation"])
+        self.assertEqual(hybrid["contract_version"], "photo-hybrid-augmentation/v1")
+        self.assertEqual(hybrid["route_contract"]["route_count"], 3)
+        self.assertTrue(hybrid["route_contract"]["allow_select_none"])
+        exposed_ids = audit_composed_prompt.candidate_ids_from_pack(hybrid_pack)
+        for route in hybrid["route_contract"]["routes"]:
+            self.assertGreaterEqual(len(route["candidate_ids"]), 2)
+            self.assertLessEqual(len(route["candidate_ids"]), 4)
+            self.assertTrue(set(route["candidate_ids"]) <= exposed_ids)
+            self.assertEqual(
+                route["candidate_ids"],
+                [detail["candidate_id"] for detail in route["details"]],
+            )
+
+        selected_route = hybrid["route_contract"]["routes"][0]["id"]
+        composed = self.composed_from_hybrid_route(hybrid_pack, selected_route)
+        passed = audit_composed_prompt.audit_composed_prompt(hybrid_pack, composed)
+        self.assertEqual(passed["status"], "pass", passed)
+
+        missing = copy.deepcopy(composed)
+        missing.pop("augmentation_brief")
+        missing_result = audit_composed_prompt.audit_composed_prompt(hybrid_pack, missing)
+        self.assertIn("hybrid_augmentation", {row["check"] for row in missing_result["failures"]})
+
+        rejected_but_chosen = copy.deepcopy(composed)
+        rejected_id = next(
+            row["candidate_id"]
+            for row in rejected_but_chosen["augmentation_brief"]["decisions"]
+            if row["decision"] == "rejected"
+        )
+        rejected_but_chosen["chosen_candidate_ids"].append(rejected_id)
+        rejected_result = audit_composed_prompt.audit_composed_prompt(
+            hybrid_pack, rejected_but_chosen
+        )
+        self.assertIn(
+            "hybrid_augmentation_provenance",
+            {row["check"] for row in rejected_result["failures"]},
+        )
+
+    def test_adult_appeal_defaults_to_one_for_eligible_humans_and_is_context_gated(self):
+        common = (
+            "--selection-mode",
+            "rule",
+            "--emit-candidate-pack",
+        )
+        human = self.run_wrapper(
+            "--preset",
+            "candid_iphone_portrait",
+            "--seed",
+            "20260809",
+            *common,
+        )[0]
+        adult = human["hybrid_augmentation"]["adult_appeal"]
+        self.assertTrue(adult["enabled"])
+        self.assertEqual(adult["activation_source"], "skill_default")
+        self.assertEqual(adult["eligibility"]["status"], "eligible")
+        self.assertEqual(adult["defaults"]["sensual_editorial_intensity"], 1)
+        self.assertEqual(adult["defaults"]["fetish_fashion_intensity"], 1)
+        self.assertEqual(adult["defaults"]["emphasis"], "balanced")
+        self.assertEqual(adult["axes"]["sensual_editorial"]["intensity"], 1)
+        self.assertEqual(adult["axes"]["fetish_fashion"]["intensity"], 1)
+        default_fetish_inventory = adult["axes"]["fetish_fashion"]["candidate_inventory"]
+        default_fetish_ids = {candidate["entry_id"] for candidate in default_fetish_inventory}
+        self.assertTrue(
+            {
+                "black_leather_harness_style",
+                "choker_gloves_high_heels",
+                "corset_bustier_layered",
+            }
+            <= default_fetish_ids
+        )
+        self.assertTrue(
+            default_fetish_ids.isdisjoint(
+                {
+                    "glossy_latex_look",
+                    "lace_satin_lingerie_inspired",
+                    "fishnet_thigh_high_boots",
+                    "mesh_sheer_layering",
+                    "wet_look_bodycon",
+                }
+            )
+        )
+        self.assertTrue(
+            all(candidate["minimum_intensity"] == 1 for candidate in default_fetish_inventory)
+        )
+
+        opted_out = self.run_wrapper(
+            "--preset",
+            "candid_iphone_portrait",
+            "--seed",
+            "20260809",
+            *common,
+            "--sensual-editorial-intensity",
+            "0",
+            "--fetish-fashion-intensity",
+            "0",
+        )[0]
+        self.assertNotIn("hybrid_augmentation", opted_out)
+
+        nonhuman = self.run_wrapper(
+            "--preset",
+            "street_documentary",
+            "--seed",
+            "910000",
+            *common,
+        )[0]
+        self.assertEqual(nonhuman["slots"]["subject"]["selected"], "slot:subject:sleeping_dog")
+        self.assertNotIn("hybrid_augmentation", nonhuman)
+
+        youth_coded = self.run_wrapper(
+            "--preset",
+            "candid_iphone_portrait",
+            "--seed",
+            "20260809",
+            "--concept-lock",
+            "teen portrait",
+            "--hybrid-augmentation",
+            *common,
+        )[0]
+        blocked = youth_coded["hybrid_augmentation"]["adult_appeal"]
+        self.assertFalse(blocked["enabled"])
+        self.assertEqual(blocked["eligibility"]["reason"], "youth_coded_request")
+        self.assertEqual(blocked["eligibility"]["youth_coding_hits"], ["teen"])
+        for axis in blocked["axes"].values():
+            self.assertFalse(axis["active"])
+            self.assertEqual(axis["candidate_inventory"], [])
+
+        adult_idol = self.run_wrapper(
+            "--preset",
+            "candid_iphone_portrait",
+            "--seed",
+            "20260809",
+            "--concept-lock",
+            "성인 아이돌 portrait",
+            *common,
+        )[0]
+        idol_adult = adult_idol["hybrid_augmentation"]["adult_appeal"]
+        self.assertTrue(idol_adult["enabled"])
+        self.assertEqual(idol_adult["eligibility"]["youth_coding_hits"], [])
+
+        direct_prompt = self.run_wrapper(
+            "--preset",
+            "candid_iphone_portrait",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "20260809",
+        )[0]
+        direct_adult = direct_prompt["provenance"]["adult_appeal"]
+        self.assertTrue(direct_adult["configured"])
+        self.assertFalse(direct_adult["enabled"])
+        self.assertEqual(direct_adult["application_scope"], "candidate_pack_composition")
+
+    def test_sensual_editorial_and_fetish_fashion_axes_combine_and_risky_camera_pair_fails(self):
+        pack = self.run_wrapper(
+            "--preset",
+            "adult_fetish_fashion_editorial",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "20260809",
+            "--emit-candidate-pack",
+            "--hybrid-augmentation",
+            "--sensual-editorial-intensity",
+            "2",
+            "--fetish-fashion-intensity",
+            "2",
+            "--adult-appeal-emphasis",
+            "balanced",
+        )[0]
+        adult = pack["hybrid_augmentation"]["adult_appeal"]
+        self.assertTrue(adult["enabled"])
+        self.assertTrue(adult["blend"]["simultaneous_activation_allowed"])
+        self.assertEqual(adult["axes"]["sensual_editorial"]["intensity"], 2)
+        self.assertEqual(adult["axes"]["fetish_fashion"]["intensity"], 2)
+        self.assertGreater(len(adult["axes"]["sensual_editorial"]["candidate_inventory"]), 0)
+        self.assertGreaterEqual(len(adult["axes"]["fetish_fashion"]["candidate_inventory"]), 8)
+        for route in pack["hybrid_augmentation"]["route_contract"]["routes"]:
+            self.assertEqual(
+                {detail["axis"] for detail in route["details"] if detail.get("axis")},
+                {"sensual_editorial", "fetish_fashion"},
+            )
+
+        safe = self.composed_from_hybrid_route(pack, "light_second_reading")
+        safe_result = audit_composed_prompt.audit_composed_prompt(pack, safe)
+        self.assertEqual(safe_result["status"], "pass", safe_result)
+
+        risky = self.composed_from_hybrid_route(
+            pack,
+            "light_second_reading",
+            extra_chosen=("slot:camera_direction:low_ground_angle",),
+        )
+        risky["prompt_en"] += " Ground-level low angle."
+        risky_result = audit_composed_prompt.audit_composed_prompt(pack, risky)
+        self.assertIn(
+            "adult_appeal_combination_risk",
+            {row["check"] for row in risky_result["failures"]},
+        )
 
     def test_creative_direction_audit_binds_one_developed_concept_and_rejects_contract_gaming(self):
         contract = prompt_generator.candidate_pack_creative_direction(

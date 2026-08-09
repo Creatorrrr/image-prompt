@@ -1,17 +1,18 @@
 ---
 name: photo-prompt-image-generator
-description: Generate image-ready photographic prompts and, when requested, images from this project's JSON-managed presets, concepts, and quality profiles. Use for random, intent-led, preset-based, Korean short-concept, creative or authorial, commercial audience-outcome, and subculture character-response photo requests.
+description: Generate image-ready photographic prompts and, when requested, images from this project's JSON-managed presets, concepts, hybrid candidate augmentation, adult fashion-appeal axes, and quality profiles. Use for random, intent-led, preset-based, Korean short-concept, creative or authorial, detail-rich, sensual-editorial, fetish-fashion, commercial audience-outcome, and subculture character-response photo requests.
 ---
 
 # Photo Prompt Image Generator
 
-Use the project-local generator to produce a compact candidate pack, compose one final English prompt as the agent, audit it, and only then generate an image when the user asked for one.
+Use the project-local generator to produce a compact candidate pack, preserve an agent-authored concept core, selectively enrich it from candidate-sourced routes, compose one final English prompt, audit it, and only then generate an image when the user asked for one.
 
 Canonical skill path: `skills/photo-prompt-image-generator`.
 
 ## Read Only What You Need
 
 - Candidate-pack composition, audit, safety, and quality fields: `references/composition-contract.md`
+- Candidate-sourced idea routes, selective adoption, and composable adult-appeal axes: `references/hybrid-augmentation-contract.md`
 - Viewer-perceived creativity, multi-proposal selection, prompt binding, and authorial grammar: `references/creative-direction-contract.md`
 - Viewer needs, affect causes, attachment, reinspection, commercial objectives, and metadata-free review: `references/viewer-experience-contract.md`
 - Intent, concept, preset, slot, and anti-overfitting routing: `references/concept-routing.md`
@@ -59,14 +60,14 @@ Prefer `.venv/bin/python` when the project virtual environment exists. Rule mode
 
 ```bash
 .venv/bin/python skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py \
-  --emit-candidate-pack --n 1
+  --hybrid-augmentation --emit-candidate-pack --n 1
 ```
 
 For a short Korean concept:
 
 ```bash
 .venv/bin/python skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py \
-  --concept "제빵사" --emit-candidate-pack --n 1
+  --concept "제빵사" --hybrid-augmentation --emit-candidate-pack --n 1
 ```
 
 2. Compose one JSON object from the pack. Required fields are:
@@ -82,6 +83,10 @@ For a short Korean concept:
 ```
 
 Add `coverage_assertions` only when useful. Every asserted phrase must occur literally in `prompt_en`, and every key must be an exact `mandatory_intents[].text` value.
+
+When the pack contains `hybrid_augmentation.enabled: true`, `augmentation_brief` is required. Read `references/hybrid-augmentation-contract.md`, consider all three actual-candidate routes, select exactly one or reject all, and record every selected-route detail as accepted, modified, or rejected. Bind only accepted or modified details into `prompt_en` and `chosen_candidate_ids`; never accept candidates merely because the pack exposed them.
+
+For an eligible human candidate pack, both adult fashion-appeal axes default to intensity `1` with `balanced` emphasis. This low-intensity default is blocked for no-people, non-human, and youth-coded requests. Pass both intensities as `0` to opt out.
 
 When the pack contains `creative_direction.enabled: true`, `creative_brief` is also required. Read `references/creative-direction-contract.md`, develop at least four distinct concept moves, critique them, select exactly one, and bind its visual consequences and authorial grammar literally into `prompt_en`.
 
@@ -104,7 +109,7 @@ Automatically use the creative-direction path when the user explicitly asks for 
 
 ```bash
 .venv/bin/python skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py \
-  --concept "도예가" --creativity 0.85 --emit-candidate-pack --n 1
+  --concept "도예가" --creativity 0.85 --hybrid-augmentation --emit-candidate-pack --n 1
 ```
 
 - `0..0.25`: conservative neighborhood and low novelty.
@@ -119,6 +124,29 @@ Automatically use the creative-direction path when the user explicitly asks for 
 - For a direct research-backed preset, `--scene-function <value>` selects a supported scene function without turning that control into visible user intent. It requires `--preset` and fails closed when the route has no compatible scene.
 
 High creative-direction runs include `viewer_experience` automatically. Keep the default workflow when the user did not ask for broader exploration. Do not silently raise creativity for ordinary prompt or image requests.
+
+## Adult Fashion-Appeal Workflow
+
+Eligible human candidate packs use a low-intensity adult fashion default: `sensual_editorial=1`, `fetish_fashion=1`, and `balanced`. This is a configured composition policy, not an inference from a face, body, clothing, demographic, market term, or presumed popularity. Increase, reduce, rebalance, or disable it from explicit user intent. Both axes may be active together:
+
+```bash
+.venv/bin/python skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py \
+  --concept "현대적이고 신화적인 성인 타천사" \
+  --hybrid-augmentation \
+  --sensual-editorial-intensity 2 \
+  --fetish-fashion-intensity 2 \
+  --adult-appeal-emphasis balanced \
+  --emit-candidate-pack --n 1
+```
+
+- Use intensity `0..3` independently for each axis. Both default to `1`; both zero means off.
+- Apply the configured default only when the resolved subject category is human. Block it for explicit no-people, non-human, and youth-coded requests.
+- Intensity `1` keeps the fetish-fashion inventory to the lower tier; higher intensities widen the eligible material and garment pool.
+- Let `sensual_editorial` supply gaze, pose, light, framing, or silhouette decisions.
+- Let `fetish_fashion` supply material, garment layering, accessory, or footwear decisions.
+- Accept at least one candidate from every active axis; keep the total augmentation budget at two to five details.
+- State an explicitly adult original subject and visible self-directed agency in the prompt. Keep styling subordinate to the concept core.
+- Audit garment, pose, body framing, and camera together. Fix every hard combination failure before generation; inspect warnings intentionally.
 
 ## Viewer Experience Workflow
 
@@ -171,6 +199,8 @@ There is no separate approval flag or policy mode. This project-level automatic 
 - Copy all four `selected_render_blueprint` labels into the composed prompt. Do not select an ordinary subject/action/location/prop candidate for the same controlled slots, and never reconstruct a sibling from `available_blueprint_ids`.
 - Respect `evidence_budget`: the selected physical prop normally consumes one clue, so add at most one other configured world-evidence slot when `maximum_chosen` is 2.
 - When `creative_exploration` is present, keep the sampler-selected subject, mandatory intents, and scene contract. Replace at most the stated number of slots, and use only listed contrast IDs that remain conflict-free together.
+- When `hybrid_augmentation` is present, keep the agent-authored concept core, consider all three candidate routes, select one or reject all, and record every selected-route candidate decision. Accepted and modified candidates require literal prompt evidence and provenance; rejected candidates must remain absent.
+- When adult-appeal axes are active, preserve their independent intensities and blend emphasis. Require one accepted detail per active axis, explicit adult-original-subject evidence, visible agency, and the cross-check of styling with pose, framing, and camera.
 - When `creative_direction` is present, follow `references/creative-direction-contract.md`. Select one proposal only; never blend rejected signatures into the final prompt. The concept move may reinterpret relationships inside the selected scene but may not replace mandatory subjects, atomic scene labels, character grammar, safety, or negative bytes.
 - When `viewer_experience` is present, follow `references/viewer-experience-contract.md`. Keep one viewer need and intended experience, make affect causal through visible action, and preserve commercial clarity or typed character evidence. Genre labels, youth morphology, faces, and style adjectives alone are not attachment evidence.
 - Preserve `negative_en` byte-for-byte.
