@@ -1,0 +1,37 @@
+{
+  "schema": "subculture-illustration-generation-retry-policy/v1",
+  "retry_budget_scope": "per_generation_phase",
+  "phases": [
+    "primary_generation",
+    "fallback_repair_generation"
+  ],
+  "initial_calls_per_phase": 1,
+  "max_unchanged_retries_after_initial": 3,
+  "max_calls_per_phase": 4,
+  "retryable_no_image_outcomes": [
+    "tool_error",
+    "transport_error",
+    "server_error",
+    "rate_limit",
+    "timeout",
+    "empty_result",
+    "inaccessible_result",
+    "safety_refusal",
+    "policy_refusal",
+    "other_refusal"
+  ],
+  "preserve_exact_fields": [
+    "prompt_en",
+    "negative_en",
+    "pack_id",
+    "chosen_candidate_ids",
+    "seed",
+    "generation_parameters"
+  ],
+  "stop_on_first_concrete_image": true,
+  "retry_does_not_consume_pixel_repair_slot": true,
+  "no_prompt_rewrite_between_retries": true,
+  "no_policy_evasion": true,
+  "higher_priority_platform_stop_applies": true,
+  "exhausted_status": "generation_failed_retries_exhausted"
+}

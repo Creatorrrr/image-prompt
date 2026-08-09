@@ -29,6 +29,28 @@ from illustration_audit import audit_composed_prompt
 RESEARCH_ROLE_VALUES = {"topic_matrix", "independent_source"}
 PROVENANCE_VALUES = {"source_supported", "cross_source_synthesis", "design_inference"}
 CANDIDATE_ROLE_VALUES = {"visual_atom", "router", "guard"}
+GENERATION_RETRY_POLICY_SCHEMA = "subculture-illustration-generation-retry-policy/v1"
+GENERATION_RETRY_PHASES = ["primary_generation", "fallback_repair_generation"]
+GENERATION_RETRY_OUTCOMES = {
+    "tool_error",
+    "transport_error",
+    "server_error",
+    "rate_limit",
+    "timeout",
+    "empty_result",
+    "inaccessible_result",
+    "safety_refusal",
+    "policy_refusal",
+    "other_refusal",
+}
+GENERATION_RETRY_PRESERVED_FIELDS = {
+    "prompt_en",
+    "negative_en",
+    "pack_id",
+    "chosen_candidate_ids",
+    "seed",
+    "generation_parameters",
+}
 LEGACY_PROMPT_QUALIFICATION_RUNTIME_SHA256 = (
     "0b44e7ea63517a963d26e1b897d1561c724013eb4ce7b5d9f31a1b9310994e57"
 )
@@ -147,6 +169,61 @@ def _strings(value: Any, label: str, *, minimum: int = 0) -> list[str]:
     _require(all(isinstance(item, str) and item.strip() for item in value), f"{label} must contain strings")
     _require(len(value) >= minimum, f"{label} must contain at least {minimum} values")
     return list(value)
+
+
+def validate_generation_retry_policy(asset_dir: Path) -> dict[str, Any]:
+    policy = _load_json(asset_dir / "image_generation_retry_policy_v1.json")
+    _require(isinstance(policy, dict), "generation retry policy must be an object")
+    _require(
+        policy.get("schema") == GENERATION_RETRY_POLICY_SCHEMA,
+        "generation retry policy schema mismatch",
+    )
+    _require(
+        policy.get("retry_budget_scope") == "per_generation_phase",
+        "generation retry budget must be per phase",
+    )
+    _require(policy.get("phases") == GENERATION_RETRY_PHASES, "generation retry phases mismatch")
+    _require(policy.get("initial_calls_per_phase") == 1, "generation phase must start with one call")
+    _require(
+        policy.get("max_unchanged_retries_after_initial") == 3,
+        "generation phase must allow exactly three unchanged retries",
+    )
+    _require(policy.get("max_calls_per_phase") == 4, "generation phase must allow four total calls")
+    outcomes = _strings(
+        policy.get("retryable_no_image_outcomes"),
+        "generation retry outcomes",
+        minimum=1,
+    )
+    _require(set(outcomes) == GENERATION_RETRY_OUTCOMES, "generation retry outcomes mismatch")
+    preserved = _strings(
+        policy.get("preserve_exact_fields"),
+        "generation retry preserved fields",
+        minimum=1,
+    )
+    _require(
+        set(preserved) == GENERATION_RETRY_PRESERVED_FIELDS,
+        "generation retry preserved fields mismatch",
+    )
+    for field in (
+        "stop_on_first_concrete_image",
+        "retry_does_not_consume_pixel_repair_slot",
+        "no_prompt_rewrite_between_retries",
+        "no_policy_evasion",
+        "higher_priority_platform_stop_applies",
+    ):
+        _require(policy.get(field) is True, f"generation retry policy requires {field}=true")
+    _require(
+        policy.get("exhausted_status") == "generation_failed_retries_exhausted",
+        "generation retry exhausted status mismatch",
+    )
+    return {
+        "schema": policy["schema"],
+        "max_unchanged_retries_after_initial": policy["max_unchanged_retries_after_initial"],
+        "max_calls_per_phase": policy["max_calls_per_phase"],
+        "includes_safety_refusal": "safety_refusal" in outcomes,
+        "includes_policy_refusal": "policy_refusal" in outcomes,
+        "status": "pass",
+    }
 
 
 def validate_research(asset_dir: Path) -> dict[str, Any]:
@@ -1607,6 +1684,7 @@ def validate_all(
         assets,
         verify_local_images=verify_local_images,
     )
+    generation_retry_policy = validate_generation_retry_policy(root)
     research.pop("candidate_ids")
     research.pop("candidate_specs")
     research.pop("matrix_ids")
@@ -1616,6 +1694,7 @@ def validate_all(
         "product_qualification_status": render_v3_qualification["qualification_status"],
         "research": research,
         "runtime": runtime,
+        "generation_retry_policy": generation_retry_policy,
         "holdouts": holdouts,
         "legacy_prompt_qualification": legacy_prompt_qualification,
         "prompt_qualification": prompt_qualification,
