@@ -76,4 +76,4 @@ A standalone mixin may use only a role-free generic bundle. If every bundle is a
 - Scene: `location`, `space_condition`, `crowd_density`, `situation_context`, `occasion_context`.
 - Still life: `prop`, `surface_material`, `texture`, `light_shape`, `composition`, `aesthetic_trend`.
 
-Do not force posters, UI, typography, webtoons, stickers, or other non-photographic output through this skill.
+Do not force posters, UI, typography, webtoons, stickers, covers, card art, key visuals, or other non-photographic output through this skill. Route subculture illustration and artwork requests to `$subculture-illustration-image-generator` before adding photographic defaults.

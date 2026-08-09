@@ -1,0 +1,143 @@
+{
+  "schema_version": "subculture-illustration-render-successor-review/v2",
+  "recorded_at": "2026-08-09T11:08:24+09:00",
+  "case_id": "illustration_render_01_single_narrative",
+  "relationship_to_v1": "continues_the_preserved_v1_failure_with_a_distinct_v2_contract",
+  "source_v1_review": "render_illustration_quality_visual_review_v1.json",
+  "preflight": {
+    "directory": "render_case01_v2_preflight",
+    "pack_id": "db15b9138a402405",
+    "prompt_sha256": "e0af5c7c9e239b1361b501631454d3e44c32253ced62ae2f2c436ccdece4351e",
+    "second_look_plan_sha256": "b1482fef3ddc0c22c1009cfde79a02329559656df5f5bfe8abcb29f099279325"
+  },
+  "result_path": "generated_images/subculture-illustration-case01-v2-qualification-20260809_105207/01-single-narrative/result.json",
+  "result_sha256": "6a656804b48d6c3cdb70fbd7f40881537e8be0b9dcad79c97ca1d21351cf5089",
+  "qualification_status": "fail_repair_exhausted",
+  "attempt_count": 2,
+  "repair_count": 1,
+  "initial_image": {
+    "path": "generated_images/subculture-illustration-case01-v2-qualification-20260809_105207/01-single-narrative/initial.png",
+    "sha256": "5ff90d9ad61c6772d5147dc3f0f4a6f6553401291b116b76c80540cf758cc4e1",
+    "dimensions": "1149x1369",
+    "attempted_role": "primary_carrier",
+    "pixel_status": "fail"
+  },
+  "repair_image": {
+    "path": "generated_images/subculture-illustration-case01-v2-qualification-20260809_105207/01-single-narrative/edit_candidate.png",
+    "sha256": "3d58ae585c7e6e9269b56e03f3767f11cd4deeef854a571c3c3092df8ced0b29",
+    "dimensions": "1149x1368",
+    "attempted_role": "fallback_carrier",
+    "pixel_status": "fail"
+  },
+  "final_image": null,
+  "review_focus_results": [
+    {
+      "focus": "same_adult_actor_and_one_decisive_handoff",
+      "outcome": "pass"
+    },
+    {
+      "focus": "thread_motif_changes_state_across_subject_prop_environment",
+      "outcome": "pass"
+    },
+    {
+      "focus": "wear_and_repair_share_one_history",
+      "outcome": "pass"
+    },
+    {
+      "focus": "edge_finish_hierarchy_is_visible",
+      "outcome": "pass"
+    },
+    {
+      "focus": "next_event_is_withheld_but_recoverable",
+      "outcome": "pass"
+    },
+    {
+      "focus": "second_look_primary_carrier",
+      "outcome": "fail",
+      "evidence": "The native threshold mark is a thin red-white edge trace, not the declared broad pale material seam."
+    },
+    {
+      "focus": "second_look_fallback_carrier",
+      "outcome": "fail",
+      "evidence": "The lighter mat center follows regular woven borders and lacks a visible terminating moisture front, so it reads as rug coloration."
+    }
+  ],
+  "thumbnail_results": [
+    {
+      "focus": "primary_handoff_reads_at_320px",
+      "outcome": "pass"
+    },
+    {
+      "focus": "thread_route_remains_traceable",
+      "outcome": "pass"
+    }
+  ],
+  "forbidden_convergence_results": [
+    {
+      "focus": "static_beauty_portrait",
+      "outcome": "absent"
+    },
+    {
+      "focus": "uniform_finish_everywhere",
+      "outcome": "absent"
+    },
+    {
+      "focus": "symbol_soup",
+      "outcome": "absent"
+    },
+    {
+      "focus": "readable_exposition_text",
+      "outcome": "absent"
+    }
+  ],
+  "second_look_pixel_review": {
+    "plan_sha256": "b1482fef3ddc0c22c1009cfde79a02329559656df5f5bfe8abcb29f099279325",
+    "declared_review_scale_ids": [
+      "native"
+    ],
+    "attempts": [
+      {
+        "attempted_role": "primary_carrier",
+        "scale_results": [
+          {
+            "scale_id": "native",
+            "status": "fail",
+            "evidence": "Thin red-white threshold trace, not a broad pale material seam."
+          }
+        ]
+      },
+      {
+        "attempted_role": "fallback_carrier",
+        "scale_results": [
+          {
+            "scale_id": "native",
+            "status": "fail",
+            "evidence": "Regular woven rug center, without a legible terminating wet/dry boundary."
+          }
+        ]
+      }
+    ],
+    "qualified_role": null,
+    "qualification_status": "fail_repair_exhausted"
+  },
+  "aggregate_with_preserved_v1_passes": {
+    "case_count": 6,
+    "passed_case_count": 5,
+    "failed_case_count": 1,
+    "failure_case_ids": [
+      "illustration_render_01_single_narrative"
+    ],
+    "outcome": "partial"
+  },
+  "post_render_full_suite": {
+    "authorized": true,
+    "condition": "pixel_qualification_passes",
+    "condition_met": false,
+    "executed": false
+  },
+  "limits": [
+    "Prompt and audit qualification do not prove rendered second-look salience.",
+    "Both authorized image attempts are preserved, no final image is exposed, and the product remains partial at five of six cases.",
+    "The authorized full-suite rerun was conditional on pixel qualification and therefore was not executed."
+  ]
+}
