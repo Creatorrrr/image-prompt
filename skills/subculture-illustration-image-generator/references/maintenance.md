@@ -15,7 +15,7 @@ Run:
 .venv/bin/python skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py
 ```
 
-The validator must cover research references, typed node roles, compatibility, route/format coverage, frozen holdouts, protected-name boundaries, current v2 prompt qualification, the generation-free case-01 v2 preflight and approval boundary, and explicit legacy replay of immutable v1 prompt/render evidence. It is not a pixel evaluator.
+The validator must cover research references, typed node roles, compatibility, route/format coverage, the typed image-generation retry policy, frozen holdouts, protected-name boundaries, current v2 prompt qualification, the generation-free case-01 v2 preflight and approval boundary, and explicit legacy replay of immutable v1 prompt/render evidence. It is not a pixel evaluator.
 
 Read top-level `status` as validator execution/integrity only. Read `product_qualification_status` for the actual aggregate qualification; it remains `partial` while any required render case lacks a qualified final image.
 

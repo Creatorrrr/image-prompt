@@ -30,6 +30,7 @@ Do not load all references for a simple prompt request.
 - `assets/illustration_mechanism_graph_v1.json`: visual/router/guard nodes and compatible bundles.
 - `assets/illustration_format_profiles_v1.json`: six format families and typed variants.
 - `assets/illustration_topic_crosswalk_v1.json`: 24 topic routes and local aliases.
+- `assets/image_generation_retry_policy_v1.json`: typed initial-call plus three unchanged-retry contract for every generation phase.
 - `assets/research_evidence_illustration/`: source-traceable research shards; do not copy source prose into prompts.
 - `assets/prompt_qualification_v2/`: current 24-case prompt qualification with typed primary/fallback second-look plans; regression evidence, not reusable prompt templates.
 - `assets/prompt_qualification_v1/`: immutable historical v1 evidence. Validate it only through the explicit legacy contract; never rewrite or relabel it as v2.
@@ -47,7 +48,8 @@ Do not load all references for a simple prompt request.
 4. Compose one English prompt as `composer: agent`. Preserve the user's visible subject and event; bind only observable evidence.
 5. Compose the v2 object with a `second_look_plan`, then run the composed-prompt audit. Fix the prompt or composition object until both structural and literal gates pass.
 6. Give the second look a named primary carrier, a different protected locus and consequence for a safe fallback carrier, and the exact inspection scales where it must remain legible. Declare compound anatomy, subscale-symbol, and overlapping multi-limb projection risks honestly. A risky primary is allowed only with a different, risk-free fallback.
-7. If an image was requested, generate exactly one initial image against the primary plan, preserve it, and inspect the declared scales plus the format-required views. Use at most one cause-specific repair when a required relation fails; the repair must switch to the declared fallback instead of asking the failed fragile carrier to become more emphatic.
+7. If an image was requested, make one primary generation call. When no concrete image is returned because of an error, timeout, empty or inaccessible result, or any refusal including safety or policy refusal, retry the same phase up to three additional times with prompt, negative prompt, pack, seed, and generation parameters unchanged. Stop on the first concrete image or after four total calls.
+8. Preserve and inspect the first concrete image at the declared scales plus the format-required views. Use at most one cause-specific repair when a required relation fails; the repair must switch to the declared fallback instead of asking the failed fragile carrier to become more emphatic. Apply the same unchanged retry budget to a fallback generation call that returns no image.
 
 Candidate-pack example:
 
@@ -83,4 +85,5 @@ Audit example:
 - Do not replace cover, crop, card, vertical-scroll, or adaptation behavior with an aspect-ratio suffix.
 - Do not infer age from face, body, clothing, hair, or makeup. Require an explicit adult declaration when sexualization, romance, sensual styling, or body-focused presentation is requested; never sexualize youth.
 - Default safety metadata passes automatically. Perform a separate safety evaluation only when the user explicitly requests it; platform safety still applies.
+- Retrying a safety or policy refusal never authorizes prompt rewriting, euphemistic substitution, model downgrade, or policy evasion. A higher-priority platform instruction to stop overrides the remaining retry budget.
 - An audit pass proves prompt binding, not rendered salience, originality across history, audience emotion, virality, or sales. Inspect actual pixels for image claims.

@@ -42,6 +42,7 @@ from illustration_runtime import (  # noqa: E402
 from validate_illustration_assets import (  # noqa: E402
     ValidationFailure,
     validate_all,
+    validate_generation_retry_policy,
     validate_legacy_prompt_qualification,
     validate_prompt_qualification,
     validate_render_qualification,
@@ -200,6 +201,33 @@ class SubcultureIllustrationContractV1Tests(unittest.TestCase):
             {"guard": 27, "router": 28, "visual_atom": 209},
             result["role_counts"],
         )
+
+    def test_generation_retry_policy_includes_three_unchanged_refusal_retries(self) -> None:
+        result = validate_generation_retry_policy(ASSET_ROOT)
+        self.assertEqual("pass", result["status"])
+        self.assertEqual(3, result["max_unchanged_retries_after_initial"])
+        self.assertEqual(4, result["max_calls_per_phase"])
+        self.assertTrue(result["includes_safety_refusal"])
+        self.assertTrue(result["includes_policy_refusal"])
+
+    def test_generation_retry_policy_mutations_fail_closed(self) -> None:
+        source = ASSET_ROOT / "image_generation_retry_policy_v1.json"
+        policy = json.loads(source.read_text(encoding="utf-8"))
+        mutations = (
+            ("retry count", "exactly three", "max_unchanged_retries_after_initial", 2),
+            ("policy refusal", "outcomes mismatch", "retryable_no_image_outcomes", [
+                value for value in policy["retryable_no_image_outcomes"] if value != "policy_refusal"
+            ]),
+            ("prompt rewrite", "no_prompt_rewrite", "no_prompt_rewrite_between_retries", False),
+        )
+        for label, expected, field, value in mutations:
+            with self.subTest(case=label), tempfile.TemporaryDirectory() as temp_dir:
+                copied = copy.deepcopy(policy)
+                copied[field] = value
+                target = Path(temp_dir) / source.name
+                target.write_text(json.dumps(copied), encoding="utf-8")
+                with self.assertRaisesRegex(ValidationFailure, expected):
+                    validate_generation_retry_policy(target.parent)
 
     def test_audit_binding_uses_the_skill_specific_core(self) -> None:
         self.assertEqual(

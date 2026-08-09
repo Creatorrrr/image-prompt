@@ -5,13 +5,23 @@ Use the built-in image-generation tool after the candidate pack and composed pro
 ## Generation
 
 1. Save pristine `candidate_pack.json`, `composed_prompt.json`, and `audit.json` in a dedicated output directory.
-2. Generate exactly one initial image from `prompt_en`. Preserve exact `negative_en` in local metadata even when the native tool has no separate negative field.
+2. Make one initial generation call from `prompt_en`. Preserve exact `negative_en` in local metadata even when the native tool has no separate negative field.
 3. Save the native image without re-encoding when possible. Record dimensions, SHA-256, tool, prompt, negative, chosen IDs, pack ID, and attempt count in `result.json`.
 4. Inspect the image without reading prompt metadata first.
 
 Before the tool call, verify the audited `second_look_plan`: primary and fallback phrases are literal, their loci and consequences are distinct, and every `review_scale_id` comes from the format profile. Treat the initial generation as `attempted_role=primary_carrier`. Tiny glyphs, compound hand anatomy, and overlapping multi-limb projections require their declared risk flags and a risk-free fallback.
 
 A saved preflight is still generation-free evidence. Keep `approval_required_before_generation=true`, `authorization_recorded_for_generation=false`, and all image-action flags false until the separately required authority is actually received; do not infer approval from prompt-audit PASS.
+
+## Unchanged Retry Contract
+
+Load `assets/image_generation_retry_policy_v1.json`. For each generation phase, make one initial call and then at most three retries, for at most four calls in that phase. Retry only when the call returns no concrete accessible image because of a tool, transport, server, rate-limit, or timeout error; an empty or inaccessible result; or any refusal, explicitly including safety and policy refusals.
+
+Keep `prompt_en`, `negative_en`, `pack_id`, chosen candidate IDs, seed, and every generation parameter unchanged byte-for-byte across the phase. Do not add disclaimers, remove terms, substitute euphemisms, change models, or otherwise rewrite the request to evade a refusal. Platform safety applies to every call, and a higher-priority platform instruction to stop ends the loop immediately.
+
+Stop retrying on the first concrete accessible image and proceed to pixel review. If all four calls return no image, record `generation_failed_retries_exhausted` and stop that phase. Record every call in `result.json` with phase, call index `1..4`, outcome category, error or refusal information, and the exact prompt and parameter hashes.
+
+No-image retries do not consume the one pixel-repair slot. If a successful primary image later fails pixel review and the declared fallback repair is used, that fallback generation is a new phase with its own one initial call plus at most three unchanged retries. Pixel-quality failure after an image exists is not a reason to repeat the primary prompt.
 
 ## Pixel Review
 
