@@ -25,6 +25,114 @@
     "cjk_narrative_world": {"prompt_focus": ["coherent fictional institutions", "observable world-system evidence", "market and cultural provenance boundaries", "original non-franchise design"]},
     "character_moe_grammar": {"prompt_focus": ["one observable character action", "legible relationship or state evidence", "sparse primary and support cues", "explicit adult original-character continuity"]}
   },
+  "hybrid_augmentation": {
+    "schema_version": 1,
+    "enabled": true,
+    "route_count": 3,
+    "route_candidate_limit": 4,
+    "accepted_detail_min": 2,
+    "accepted_detail_max": 5,
+    "decision_states": ["accepted", "modified", "rejected"],
+    "detail_functions": ["concept_bridge", "material_detail", "pose_camera", "viewer_hook", "second_reading"],
+    "routes": [
+      {
+        "id": "material_world",
+        "label": "material and world specificity",
+        "slots": ["surface_material", "wardrobe_style", "costume_style", "fetish_styling", "garment_detail", "texture", "color", "prop"],
+        "functions": ["concept_bridge", "material_detail"]
+      },
+      {
+        "id": "action_camera",
+        "label": "action and camera consequence",
+        "slots": ["action", "body_pose", "hand_pose", "gaze_engagement", "body_framing", "camera_direction", "composition", "shot_scale", "lens"],
+        "functions": ["pose_camera", "viewer_hook"]
+      },
+      {
+        "id": "light_second_reading",
+        "label": "light and second-reading evidence",
+        "slots": ["lighting", "light_type", "light_direction", "light_shape", "focus", "mood", "aftermath_trace", "ambient_particle", "prop"],
+        "functions": ["viewer_hook", "second_reading"]
+      }
+    ],
+    "adult_appeal": {
+      "source_preset_id": "adult_fetish_fashion_editorial",
+      "intensity_min": 0,
+      "intensity_max": 3,
+      "default_intensities": {
+        "sensual_editorial": 1,
+        "fetish_fashion": 1
+      },
+      "default_emphasis": "balanced",
+      "default_eligibility": {
+        "subject_categories": ["human"],
+        "block_no_people": true,
+        "block_youth_coding": true
+      },
+      "entry_min_intensity": {
+        "black_leather_harness_style": 1,
+        "choker_gloves_high_heels": 1,
+        "corset_bustier_layered": 1,
+        "glossy_latex_look": 2,
+        "lace_satin_lingerie_inspired": 2,
+        "fishnet_thigh_high_boots": 2,
+        "mesh_sheer_layering": 2,
+        "wet_look_bodycon": 2
+      },
+      "emphases": ["sensual_led", "balanced", "fetish_led"],
+      "candidate_limit_per_axis": 12,
+      "candidate_limit_per_carrier": 3,
+      "axes": {
+        "sensual_editorial": {
+          "carriers": [
+            {"id": "gaze_pose", "slots": ["action"], "required_tags_any": ["portrait", "suggestive", "pose", "motion"]},
+            {"id": "framing", "slots": ["body_framing"]},
+            {"id": "lighting_optics", "slots": ["lighting", "light_direction", "light_type", "focus"]},
+            {"id": "mood_palette", "slots": ["mood", "color"]}
+          ]
+        },
+        "fetish_fashion": {
+          "carriers": [
+            {"id": "material_layering", "slots": ["fetish_styling"], "candidate_limit": 8},
+            {"id": "accessory_gesture", "slots": ["action"], "required_tags_any": ["fetish"]},
+            {"id": "accessory_prop", "slots": ["prop"], "required_tags_any": ["adult", "fashion"]}
+          ]
+        }
+      },
+      "risk_groups": {
+        "sheer_or_lingerie": {
+          "entry_ids": ["ethereal_sheer_layering", "mesh_sheer_layering", "lace_satin_lingerie_inspired"],
+          "prompt_terms": ["sheer layering", "sheer layers", "lingerie-inspired"]
+        },
+        "extreme_low_angle": {
+          "entry_ids": ["extreme_low_hero_angle", "low_ground_angle"],
+          "prompt_terms": ["extreme low angle", "ground-level low angle"]
+        },
+        "low_angle": {
+          "entry_ids": ["extreme_low_hero_angle", "low_ground_angle", "low_angle"],
+          "prompt_terms": ["extreme low angle", "ground-level low angle", "low-angle framing"]
+        },
+        "body_emphasis": {
+          "entry_ids": ["clothed_bodyline_emphasis", "legs_heels_framing", "collarbone_lips_focus", "over_shoulder_hip_line", "wet_look_bodycon"],
+          "prompt_terms": ["bodyline emphasis", "hip-line emphasis", "legs and heels emphasized", "collarbone and lips emphasized"]
+        }
+      },
+      "hard_combinations": [
+        {
+          "id": "sheer_extreme_low_angle",
+          "all_of": ["sheer_or_lingerie", "extreme_low_angle"],
+          "reason": "Sheer or lingerie-coded styling combined with an extreme low angle can overwhelm the intended editorial concept; modify the camera or styling before generation."
+        }
+      ],
+      "warning_combinations": [
+        {
+          "id": "stacked_body_emphasis",
+          "all_of": ["body_emphasis", "low_angle"],
+          "reason": "Body-emphasis framing and a low angle are stacked; confirm that this is intentional and subordinate to the concept core."
+        }
+      ],
+      "youth_coding_terms": ["minor", "underage", "child", "kid", "teen", "teenager", "adolescent", "schoolgirl", "schoolboy", "teenage", "childlike", "baby-faced", "young-looking", "미성년", "아동", "어린이", "어린 아이", "십대"]
+    }
+  },
   "intent_routing": {
     "literal_subject_stop_terms": ["is", "are", "be", "role", "model", "subject", "context", "identity", "through", "only"],
     "subject_categories": [

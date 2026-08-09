@@ -23,6 +23,14 @@ At the agent layer, add `--viewer-experience` when the user explicitly asks for 
 
 Every high creative-direction run receives the viewer contract automatically. A generic product record, ordinary cute portrait, factual documentary, or subculture taxonomy request without an explicit viewer-response goal keeps the ordinary path. The control exposes a composition procedure, not a new preset, candidate, audience stereotype, or predicted performance score.
 
+## Route Hybrid Detail and Adult Fashion Appeal
+
+The default skill workflow uses `--hybrid-augmentation` so the candidate pack can strengthen an agent-authored core instead of acting only as a validator. Direct CLI callers may opt in explicitly; high creative direction activates it automatically. Treat exposed routes as proposals, not instructions: select one or reject all, and use the marginal-value test before accepting a detail.
+
+Eligible human candidate packs default `--sensual-editorial-intensity` and `--fetish-fashion-intensity` to `1` with balanced emphasis. The axes remain independent; raise or rebalance them for explicit adult styling intent, or pass both as `0` to disable them. Suppress the configured default for no-people, non-human, and youth-coded requests. Do not map either axis from inferred gender, body, ethnicity, occupation, market, or predicted popularity.
+
+Adult-appeal controls require candidate-pack composition. They expose a curated adult-fashion inventory derived from the adult editorial preset while keeping ordinary sampler provenance distinct. Preserve the user's larger concept as the governing idea; use sensual editorial for gaze, pose, lighting, framing, or silhouette, and fetish fashion for material, garment layering, accessories, or footwear.
+
 ## Preserve Negative Intent
 
 Korean and English absence phrases are constraints, not positive nouns. `사람 없는`, `인물 없이`, `no people`, and `without people` must exclude human subject candidates and the `person_presence` quality axis. Keep the whole phrase as mandatory intent.

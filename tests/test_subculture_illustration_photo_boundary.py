@@ -16,6 +16,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 ILLUSTRATION_ROOT = REPO_ROOT / "skills" / "subculture-illustration-image-generator"
 BASELINE_PATH = ILLUSTRATION_ROOT / "assets" / "photo_regression_baseline_v1.json"
 BASELINE_REF = "f86abef678c99ee8aad7a98a5ea44a685197d371"
+ILLUSTRATION_INTRODUCTION_REF = "66e0cbabe55d33575d9e3384176815af515c76ac"
 
 
 def _canonical_photo_pack_id(pack: dict[str, object]) -> str:
@@ -115,16 +116,17 @@ class SubcultureIllustrationPhotoBoundaryTests(unittest.TestCase):
                 self.assertNotIn("photo-prompt-image-generator", source)
                 self.assertNotIn("generate_photo_prompt", source)
 
-    def test_photo_runtime_and_semantic_assets_match_baseline_ref(self) -> None:
-        object_check = subprocess.run(
-            ["git", "cat-file", "-e", f"{BASELINE_REF}^{{commit}}"],
-            cwd=REPO_ROOT,
-            check=False,
-            capture_output=True,
-            text=True,
-        )
-        if object_check.returncode != 0:
-            self.skipTest(f"baseline git object is unavailable: {BASELINE_REF}")
+    def test_illustration_introduction_did_not_modify_photo_runtime(self) -> None:
+        for ref in (BASELINE_REF, ILLUSTRATION_INTRODUCTION_REF):
+            object_check = subprocess.run(
+                ["git", "cat-file", "-e", f"{ref}^{{commit}}"],
+                cwd=REPO_ROOT,
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+            if object_check.returncode != 0:
+                self.skipTest(f"boundary git object is unavailable: {ref}")
 
         protected_paths = [
             "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json",
@@ -134,7 +136,15 @@ class SubcultureIllustrationPhotoBoundaryTests(unittest.TestCase):
             "skills/photo-prompt-image-generator/assets/photo_prompt_quality_layers.json",
         ]
         diff = subprocess.run(
-            ["git", "diff", "--exit-code", BASELINE_REF, "--", *protected_paths],
+            [
+                "git",
+                "diff",
+                "--exit-code",
+                BASELINE_REF,
+                ILLUSTRATION_INTRODUCTION_REF,
+                "--",
+                *protected_paths,
+            ],
             cwd=REPO_ROOT,
             check=False,
             capture_output=True,

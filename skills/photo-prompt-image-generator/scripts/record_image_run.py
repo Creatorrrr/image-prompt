@@ -53,6 +53,15 @@ def parse_chosen_candidate_ids(raw: str | None) -> object | None:
     raise ValueError("--chosen-candidate-ids-json must be a JSON string array or object")
 
 
+def parse_augmentation_brief(raw: str | None) -> object | None:
+    if not raw:
+        return None
+    value = json.loads(raw)
+    if not isinstance(value, dict):
+        raise ValueError("--augmentation-brief-json must be a JSON object")
+    return value
+
+
 def build_entry(args: argparse.Namespace) -> dict[str, object]:
     computed_prompt_id = stable_text_id(args.prompt_en)
     if args.prompt_id and args.prompt_id != computed_prompt_id:
@@ -95,6 +104,9 @@ def build_entry(args: argparse.Namespace) -> dict[str, object]:
         entry["composer"] = args.composer
     if args.audit_status:
         entry["audit_status"] = args.audit_status
+    augmentation_brief = parse_augmentation_brief(args.augmentation_brief_json)
+    if augmentation_brief is not None:
+        entry["augmentation_brief"] = augmentation_brief
     return entry
 
 
@@ -123,6 +135,7 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--chosen-candidate-ids-json", default=None, help="JSON array or slot map of candidate ids chosen by the composer.")
     parser.add_argument("--composer", choices=sorted(VALID_COMPOSERS), default=None, help="Prompt composer type.")
     parser.add_argument("--audit-status", choices=sorted(VALID_AUDIT_STATUSES), default=None, help="Composed prompt audit status.")
+    parser.add_argument("--augmentation-brief-json", default=None, help="Audited hybrid augmentation_brief as an inline JSON object.")
     parser.add_argument("--ledger", type=Path, default=DEFAULT_LEDGER, help=f"NDJSON ledger path. Defaults to {DEFAULT_LEDGER}.")
     return parser.parse_args(argv)
 

@@ -6168,6 +6168,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "visual_proposition",
                 "photographic_craft",
                 "artistic_final_touch",
+                "hybrid_augmentation",
                 "motif_budget",
                 "preset_reference",
                 "masked_buckets",
@@ -6219,6 +6220,11 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertFalse(final_touch["enabled"])
         self.assertEqual(final_touch["profile_id"], "portrait_editorial")
         self.assertEqual(pack["contract_version"], "photo-candidate-pack/v2")
+        adult = pack["hybrid_augmentation"]["adult_appeal"]
+        self.assertTrue(adult["enabled"])
+        self.assertEqual(adult["activation_source"], "skill_default")
+        self.assertEqual(adult["axes"]["sensual_editorial"]["intensity"], 1)
+        self.assertEqual(adult["axes"]["fetish_fashion"]["intensity"], 1)
         self.assertEqual(pack["safety"]["status"], "pass")
         self.assertFalse(pack["safety"]["requires_user_approval"])
         self.assertLessEqual(len(pack["presets"]), 4)
@@ -7274,6 +7280,18 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                     "agent",
                     "--audit-status",
                     "pass",
+                    "--augmentation-brief-json",
+                    json.dumps(
+                        {
+                            "selected_route_id": "material_world",
+                            "decisions": [
+                                {
+                                    "candidate_id": "slot:subject:dragon",
+                                    "decision": "modified",
+                                }
+                            ],
+                        }
+                    ),
                     "--ledger",
                     str(ledger),
                 ],
@@ -7290,6 +7308,8 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             self.assertEqual(row["chosen_candidate_ids"]["preset"], "preset:p1")
             self.assertEqual(row["composer"], "agent")
             self.assertEqual(row["audit_status"], "pass")
+            self.assertEqual(row["augmentation_brief"]["selected_route_id"], "material_world")
+            self.assertEqual(row["augmentation_brief"]["decisions"][0]["decision"], "modified")
 
     def test_record_image_run_default_ledger_is_worktree_local_runs_file(self):
         spec = importlib.util.spec_from_file_location("record_image_run", RECORD_RUN_PATH)
