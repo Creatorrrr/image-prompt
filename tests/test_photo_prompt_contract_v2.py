@@ -571,7 +571,7 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             {row["check"] for row in rejected_result["failures"]},
         )
 
-    def test_adult_appeal_defaults_to_one_for_eligible_humans_and_is_context_gated(self):
+    def test_adult_appeal_defaults_to_sensual_only_for_eligible_humans(self):
         common = (
             "--selection-mode",
             "rule",
@@ -588,34 +588,22 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
         self.assertTrue(adult["enabled"])
         self.assertEqual(adult["activation_source"], "skill_default")
         self.assertEqual(adult["eligibility"]["status"], "eligible")
+        self.assertEqual(adult["contract_version"], "photo-adult-appeal/v2")
         self.assertEqual(adult["defaults"]["sensual_editorial_intensity"], 1)
-        self.assertEqual(adult["defaults"]["fetish_fashion_intensity"], 1)
-        self.assertEqual(adult["defaults"]["emphasis"], "balanced")
+        self.assertEqual(adult["defaults"]["fetish_fashion_intensity"], 0)
+        self.assertEqual(adult["defaults"]["emphasis"], "sensual_led")
         self.assertEqual(adult["axes"]["sensual_editorial"]["intensity"], 1)
-        self.assertEqual(adult["axes"]["fetish_fashion"]["intensity"], 1)
-        default_fetish_inventory = adult["axes"]["fetish_fashion"]["candidate_inventory"]
-        default_fetish_ids = {candidate["entry_id"] for candidate in default_fetish_inventory}
-        self.assertTrue(
-            {
-                "black_leather_harness_style",
-                "choker_gloves_high_heels",
-                "corset_bustier_layered",
-            }
-            <= default_fetish_ids
+        self.assertEqual(adult["axes"]["fetish_fashion"]["intensity"], 0)
+        self.assertFalse(adult["axes"]["fetish_fashion"]["active"])
+        self.assertEqual(adult["axes"]["fetish_fashion"]["candidate_inventory"], [])
+        self.assertEqual(adult["blend"]["emphasis"], "sensual_led")
+        self.assertEqual(
+            set(adult["eligibility"]),
+            {"status", "reason", "subject_category"},
         )
-        self.assertTrue(
-            default_fetish_ids.isdisjoint(
-                {
-                    "glossy_latex_look",
-                    "lace_satin_lingerie_inspired",
-                    "fishnet_thigh_high_boots",
-                    "mesh_sheer_layering",
-                    "wet_look_bodycon",
-                }
-            )
-        )
-        self.assertTrue(
-            all(candidate["minimum_intensity"] == 1 for candidate in default_fetish_inventory)
+        self.assertEqual(
+            set(adult["combination_policy"]),
+            {"risk_groups", "hard_combinations", "warning_combinations"},
         )
 
         opted_out = self.run_wrapper(
@@ -640,37 +628,6 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
         )[0]
         self.assertEqual(nonhuman["slots"]["subject"]["selected"], "slot:subject:sleeping_dog")
         self.assertNotIn("hybrid_augmentation", nonhuman)
-
-        youth_coded = self.run_wrapper(
-            "--preset",
-            "candid_iphone_portrait",
-            "--seed",
-            "20260809",
-            "--concept-lock",
-            "teen portrait",
-            "--hybrid-augmentation",
-            *common,
-        )[0]
-        blocked = youth_coded["hybrid_augmentation"]["adult_appeal"]
-        self.assertFalse(blocked["enabled"])
-        self.assertEqual(blocked["eligibility"]["reason"], "youth_coded_request")
-        self.assertEqual(blocked["eligibility"]["youth_coding_hits"], ["teen"])
-        for axis in blocked["axes"].values():
-            self.assertFalse(axis["active"])
-            self.assertEqual(axis["candidate_inventory"], [])
-
-        adult_idol = self.run_wrapper(
-            "--preset",
-            "candid_iphone_portrait",
-            "--seed",
-            "20260809",
-            "--concept-lock",
-            "성인 아이돌 portrait",
-            *common,
-        )[0]
-        idol_adult = adult_idol["hybrid_augmentation"]["adult_appeal"]
-        self.assertTrue(idol_adult["enabled"])
-        self.assertEqual(idol_adult["eligibility"]["youth_coding_hits"], [])
 
         direct_prompt = self.run_wrapper(
             "--preset",

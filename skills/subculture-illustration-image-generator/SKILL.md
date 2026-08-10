@@ -72,9 +72,9 @@ Audit example:
 
 ## Creative and Viewer Defaults
 
-- Use creativity `0.85` by default, including when the user gives only an ordinary illustration brief. Do not require the user to request creativity or authorial touch separately.
-- Every default pack requires concrete focal, omission, edge/mark, and repeated material or motif decisions plus four distinct proposals, one selected changed rule, a causal first-to-second-look reveal, and two distinct visible consequences bound to the primary and fallback carriers.
-- Lower creativity below `0.75` only when the user explicitly asks for a restrained, literal, or utilitarian treatment. Explicit `창의적`, `독창적`, `기발한`, `작가적`, or equivalent intent always keeps high creative development enabled.
+- Use balanced creativity `0.5` by default when the user gives an ordinary illustration brief.
+- Every default pack still requires concrete focal, omission, edge/mark, and repeated material or motif decisions, a causal first-to-second-look reveal, and two distinct visible consequences bound to the primary and fallback carriers. At `0.5`, it does not require four alternative proposals or one selected changed rule.
+- Raise creativity to `0.85` or higher when the user explicitly asks for a creative, original, ingenious, surprising, or authorially distinctive treatment. Korean cues include `창의적`, `독창적`, `기발한`, `참신한`, `작가적`, and `작가의 터치`; equivalent intent always keeps high creative development enabled.
 - Treat intended viewer emotion, attachment, memory, or commercial action as a hypothesis. Prompt evidence must be a visible actor, directed action, target, consequence, and focal discovery—not a response claim.
 
 ## Non-Negotiable Boundaries

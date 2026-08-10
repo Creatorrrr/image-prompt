@@ -27,7 +27,6 @@ CONCEPT_MODES = {"legacy", "soft"}
 SAFETY_EVALUATION_FLAG = "--safety-evaluation"
 SAFETY_TRANSFORM_TEXT_TOKENS = (
     "adult",
-    "minor",
     "sexual",
     "fetish",
     "lingerie",

@@ -26,7 +26,7 @@ LEGACY_GENERATOR_VERSION = "subculture-illustration-generator/v1"
 CONTRACT_VERSION = "subculture-illustration-candidate-pack/v2"
 GENERATOR_VERSION = "subculture-illustration-generator/v2"
 SELECTION_MODE = "deterministic_rule_v1"
-DEFAULT_CREATIVITY = 0.85
+DEFAULT_CREATIVITY = 0.5
 
 SECOND_LOOK_CARRIER_KINDS = (
     "surface_state",
