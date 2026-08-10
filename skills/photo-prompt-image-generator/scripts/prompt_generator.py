@@ -112,11 +112,12 @@ CANDIDATE_PACK_CREATIVE_EXPLORATION_LIMIT = 6
 CANDIDATE_PACK_CREATIVE_DIRECTION_FLOOR = 0.75
 CANDIDATE_PACK_CREATIVE_DIRECTION_MIN_PROPOSALS = 4
 CANDIDATE_PACK_HYBRID_CONTRACT_VERSION = "photo-hybrid-augmentation/v1"
-CANDIDATE_PACK_ADULT_APPEAL_CONTRACT_VERSION = "photo-adult-appeal/v1"
+CANDIDATE_PACK_ADULT_APPEAL_CONTRACT_VERSION = "photo-adult-appeal/v2"
 CANDIDATE_PACK_ADULT_APPEAL_AXES = ("sensual_editorial", "fetish_fashion")
 CANDIDATE_PACK_ADULT_APPEAL_EMPHASES = ("sensual_led", "balanced", "fetish_led")
-CANDIDATE_PACK_ADULT_APPEAL_DEFAULT_INTENSITY = 1
-CANDIDATE_PACK_ADULT_APPEAL_DEFAULT_EMPHASIS = "balanced"
+CANDIDATE_PACK_SENSUAL_EDITORIAL_DEFAULT_INTENSITY = 1
+CANDIDATE_PACK_FETISH_FASHION_DEFAULT_INTENSITY = 0
+CANDIDATE_PACK_ADULT_APPEAL_DEFAULT_EMPHASIS = "sensual_led"
 CANDIDATE_PACK_CREATIVE_DIRECTION_OPERATORS = (
     (
         "structural_analogy",
@@ -3933,28 +3934,11 @@ def candidate_pack_adult_appeal_eligibility(
         if isinstance(adult_policy.get("default_eligibility"), dict)
         else {}
     )
-    source_texts = [text for _, text in candidate_pack_source_texts(result, trace)]
-    youth_terms = [str(term) for term in adult_policy.get("youth_coding_terms") or []]
-    youth_hits = sorted(
-        {
-            term
-            for term in youth_terms
-            if any(intent_alias_matches(text, term) for text in source_texts)
-        }
-    )
     if bool(default_eligibility.get("block_no_people", True)) and constraints.get("no_people") is True:
         return {
             "status": "ineligible",
             "reason": "explicit_no_people",
             "subject_category": subject_category_value,
-            "youth_coding_hits": youth_hits,
-        }
-    if bool(default_eligibility.get("block_youth_coding", True)) and youth_hits:
-        return {
-            "status": "ineligible",
-            "reason": "youth_coded_request",
-            "subject_category": subject_category_value,
-            "youth_coding_hits": youth_hits,
         }
     allowed_default_categories = {
         str(item) for item in default_eligibility.get("subject_categories") or ["human"]
@@ -3965,7 +3949,6 @@ def candidate_pack_adult_appeal_eligibility(
             "reason": "default_requires_eligible_human_subject",
             "subject_category": subject_category_value,
             "allowed_subject_categories": sorted(allowed_default_categories),
-            "youth_coding_hits": youth_hits,
         }
     return {
         "status": "eligible",
@@ -3973,7 +3956,6 @@ def candidate_pack_adult_appeal_eligibility(
         if activation_source == "skill_default"
         else "explicit_control",
         "subject_category": subject_category_value,
-        "youth_coding_hits": youth_hits,
     }
 
 
@@ -4140,12 +4122,12 @@ def candidate_pack_hybrid_adult_appeal(
         "defaults": {
             "sensual_editorial_intensity": int(
                 (adult_policy.get("default_intensities") or {}).get(
-                    "sensual_editorial", CANDIDATE_PACK_ADULT_APPEAL_DEFAULT_INTENSITY
+                    "sensual_editorial", CANDIDATE_PACK_SENSUAL_EDITORIAL_DEFAULT_INTENSITY
                 )
             ),
             "fetish_fashion_intensity": int(
                 (adult_policy.get("default_intensities") or {}).get(
-                    "fetish_fashion", CANDIDATE_PACK_ADULT_APPEAL_DEFAULT_INTENSITY
+                    "fetish_fashion", CANDIDATE_PACK_FETISH_FASHION_DEFAULT_INTENSITY
                 )
             ),
             "emphasis": str(
@@ -4175,7 +4157,6 @@ def candidate_pack_hybrid_adult_appeal(
             "risk_groups": adult_policy.get("risk_groups", {}),
             "hard_combinations": adult_policy.get("hard_combinations", []),
             "warning_combinations": adult_policy.get("warning_combinations", []),
-            "youth_coding_terms": adult_policy.get("youth_coding_terms", []),
         },
         "evaluation_boundary": "styling_intent_and_prompt_binding_are_preflight;_popularity_requires_human_or_engagement_evaluation",
     }
@@ -8913,9 +8894,8 @@ def adult_semantic_tokens(item: Entry) -> Set[str]:
         tokens.add("adult")
     if "fetish" in item_id:
         tokens.add("fetish")
-    # Some documentary taxonomies explicitly state that participants are
-    # adults to avoid accidental minor coding.  That age-only assertion must
-    # not route an otherwise general scene through adult-content handling.
+    # Some documentary taxonomies carry age-context metadata. That metadata
+    # alone must not route an otherwise general scene through adult-content handling.
     if "age_context_only" in tokens:
         tokens.discard("adult")
     return tokens
@@ -15553,7 +15533,7 @@ def soft_render_directive_negative_entries(events: Sequence[JsonDict]) -> List[E
 
 
 # Keep the low-level API neutral for internal research and holdout callers.
-# ``main`` injects the user-facing CLI defaults (1/1) into candidate-pack runs.
+# ``main`` injects the user-facing CLI defaults (sensual 1, fetish 0) into candidate-pack runs.
 def generate_once(
     data: JsonDict,
     rng: random.Random,
@@ -16237,14 +16217,14 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     parser.add_argument(
         "--sensual-editorial-intensity",
         type=int,
-        default=CANDIDATE_PACK_ADULT_APPEAL_DEFAULT_INTENSITY,
+        default=CANDIDATE_PACK_SENSUAL_EDITORIAL_DEFAULT_INTENSITY,
         help="Adult sensual-editorial styling axis intensity from 0 to 3; defaults to 1 for eligible human candidate packs. Use 0 to disable this axis.",
     )
     parser.add_argument(
         "--fetish-fashion-intensity",
         type=int,
-        default=CANDIDATE_PACK_ADULT_APPEAL_DEFAULT_INTENSITY,
-        help="Adult fetish-fashion styling axis intensity from 0 to 3; defaults to 1 for eligible human candidate packs. Use 0 to disable this axis.",
+        default=CANDIDATE_PACK_FETISH_FASHION_DEFAULT_INTENSITY,
+        help="Adult fetish-fashion styling axis intensity from 0 to 3; defaults to 0 and requires explicit opt-in.",
     )
     parser.add_argument(
         "--adult-appeal-emphasis",

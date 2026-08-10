@@ -4,7 +4,7 @@ Use this contract when the candidate pack contains `hybrid_augmentation.enabled:
 
 ## Activation
 
-The contract is present when `--hybrid-augmentation` is explicit, when high creative direction requires it, or when an eligible adult-appeal axis is active. The default skill workflow passes `--hybrid-augmentation`. Eligible human candidate packs also activate the configured `1/1` adult-fashion default; no-people, non-human, and youth-coded packs do not activate it.
+The contract is present when `--hybrid-augmentation` is explicit, when high creative direction requires it, or when an eligible adult-appeal axis is active. The default skill workflow passes `--hybrid-augmentation`. Eligible human candidate packs also activate the configured `sensual_editorial=1`, `fetish_fashion=0` adult-fashion default; no-people and non-human packs do not activate it.
 
 ## Candidate Routes
 
@@ -49,18 +49,18 @@ To reject all routes, set `selected_route_id` to `none`, mark every route reject
 
 ## Adult Appeal Axes
 
-The axes are independent and may run together. For eligible human candidate packs, both default to intensity `1` with balanced emphasis:
+The axes are independent and may run together. For eligible human candidate packs, `sensual_editorial` defaults to intensity `1`, `fetish_fashion` defaults to `0`, and the default emphasis is `sensual_led`:
 
 - `sensual_editorial` controls gaze, pose, lighting, framing, and silhouette;
 - `fetish_fashion` controls material, garment layering, accessories, and footwear.
 
-Use `--sensual-editorial-intensity 0..3` and `--fetish-fashion-intensity 0..3`. Omitted controls resolve to `1` and `1`; equal intensities resolve to `balanced`. When both are active, `--adult-appeal-emphasis sensual_led|balanced|fetish_led` can override the emphasis. The global off state is both intensities at zero; there is no mutually exclusive mode enum.
+Use `--sensual-editorial-intensity 0..3` and `--fetish-fashion-intensity 0..3`. Omitted controls resolve to `1` and `0`; fetish fashion therefore requires an explicit positive intensity. Equal positive intensities resolve to `balanced`. When both are active, `--adult-appeal-emphasis sensual_led|balanced|fetish_led` can override the emphasis. The global off state is both intensities at zero; there is no mutually exclusive mode enum.
 
 These defaults operate in candidate-pack composition. A direct final-prompt CLI call records the configuration but does not claim that the adult-appeal candidates were applied.
 
-The configured default activates only when the resolved subject category is human. Explicit no-people, non-human, or youth-coded requests suppress it. This default is policy configuration, never a demographic or popularity inference from the reference image. Explicit controls may increase, reduce, rebalance, or disable the axes; no-people and youth-coded requests remain ineligible.
+The configured default activates only when the resolved subject category is human. Explicit no-people and non-human requests suppress it. This default is policy configuration, never a demographic or popularity inference from the reference image. Explicit controls may increase, reduce, rebalance, or disable the axes; no-people requests remain ineligible.
 
-Candidate entries may declare a minimum intensity. At intensity `1`, the fetish-fashion default keeps only its lower tier; intensities `2` and `3` widen the eligible material and garment inventory. Never reconstruct an entry hidden by the intensity threshold.
+Candidate entries may declare a minimum intensity. When fetish fashion is explicitly enabled at intensity `1`, only its lower tier is eligible; intensities `2` and `3` widen the material and garment inventory. Never reconstruct an entry hidden by the intensity threshold.
 
 Every active axis contributes at least one accepted or modified candidate. Add this block inside `augmentation_brief`:
 

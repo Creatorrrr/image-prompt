@@ -6,7 +6,7 @@
 - Exact research route: `--route <topic_id>`.
 - Exact output variant: `--format <variant_id>`.
 - Reproducible bundle: `--seed`.
-- Creative development: defaults to `--creativity 0.85` for every illustration request.
+- Creative development: defaults to balanced `--creativity 0.5` for ordinary illustration requests.
 - Separate safety report: `--safety-evaluation` only when the user requests it.
 
 The runtime is local and deterministic. It uses NFKC-normalized scoped aliases and never sends intent or research text to an embedding provider.
@@ -42,9 +42,9 @@ If equal top-tier rules point to different topics, fail as ambiguous and show ca
 
 ## Route Creative Intent
 
-High creative development is the default even when the request contains no creativity keyword. It requires alternative proposals, one selected changed rule, visible consequences, and a repeatable authorial decision system rather than extra decoration.
+Balanced creativity `0.5` is the default when the request contains no creativity intent. It keeps the typed authorial and viewer evidence requirements but does not require alternative proposals or one selected changed rule.
 
-Lower creativity below `0.75` only for an explicit restrained, literal, or utilitarian request. Creative, original, ingenious, surprising, or authorially distinctive intent must keep high development enabled. Korean cues include `창의적`, `독창적`, `기발한`, `참신한`, `작가적`, and `작가의 터치`; interpret meaning rather than exact keywords. High creativity does not require an impossible premise.
+Raise creativity to `0.85` or higher for creative, original, ingenious, surprising, or authorially distinctive intent. Korean cues include `창의적`, `독창적`, `기발한`, `참신한`, `작가적`, and `작가의 터치`; interpret meaning rather than exact keywords. These cues keep high development enabled even if the numeric control was omitted. High creativity requires alternative proposals, one selected changed rule, visible consequences, and a repeatable authorial decision system rather than extra decoration; it does not require an impossible premise.
 
 ## Preserve Boundaries
 

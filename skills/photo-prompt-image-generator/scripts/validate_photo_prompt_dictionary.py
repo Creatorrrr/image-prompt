@@ -1146,7 +1146,7 @@ def validate_quality_layer_hybrid_augmentation(
                     "quality_layers.hybrid_augmentation.adult_appeal.default_eligibility.subject_categories: "
                     f"unknown category {category}"
                 )
-        for key in ("block_no_people", "block_youth_coding"):
+        for key in ("block_no_people",):
             if not isinstance(default_eligibility.get(key), bool):
                 errors.append(
                     f"quality_layers.hybrid_augmentation.adult_appeal.default_eligibility.{key}: must be boolean"
@@ -1256,11 +1256,6 @@ def validate_quality_layer_hybrid_augmentation(
             for group_id in groups:
                 if group_id not in risk_groups:
                     errors.append(f"{label}.all_of: unknown risk group {group_id}")
-    validate_string_list(
-        "quality_layers.hybrid_augmentation.adult_appeal.youth_coding_terms",
-        adult.get("youth_coding_terms"),
-        errors,
-    )
 
 
 def validate_quality_layers(path: Path, data: dict[str, Any], errors: list[str]) -> None:

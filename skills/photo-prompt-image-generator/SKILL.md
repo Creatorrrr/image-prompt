@@ -86,7 +86,7 @@ Add `coverage_assertions` only when useful. Every asserted phrase must occur lit
 
 When the pack contains `hybrid_augmentation.enabled: true`, `augmentation_brief` is required. Read `references/hybrid-augmentation-contract.md`, consider all three actual-candidate routes, select exactly one or reject all, and record every selected-route detail as accepted, modified, or rejected. Bind only accepted or modified details into `prompt_en` and `chosen_candidate_ids`; never accept candidates merely because the pack exposed them.
 
-For an eligible human candidate pack, both adult fashion-appeal axes default to intensity `1` with `balanced` emphasis. This low-intensity default is blocked for no-people, non-human, and youth-coded requests. Pass both intensities as `0` to opt out.
+For an eligible human candidate pack, `sensual_editorial` defaults to intensity `1` while `fetish_fashion` defaults to `0`, producing `sensual_led` emphasis. Fetish-fashion augmentation is opt-in. Pass `--sensual-editorial-intensity 0` to disable the remaining default.
 
 When the pack contains `creative_direction.enabled: true`, `creative_brief` is also required. Read `references/creative-direction-contract.md`, develop at least four distinct concept moves, critique them, select exactly one, and bind its visual consequences and authorial grammar literally into `prompt_en`.
 
@@ -127,7 +127,7 @@ High creative-direction runs include `viewer_experience` automatically. Keep the
 
 ## Adult Fashion-Appeal Workflow
 
-Eligible human candidate packs use a low-intensity adult fashion default: `sensual_editorial=1`, `fetish_fashion=1`, and `balanced`. This is a configured composition policy, not an inference from a face, body, clothing, demographic, market term, or presumed popularity. Increase, reduce, rebalance, or disable it from explicit user intent. Both axes may be active together:
+Eligible human candidate packs use a low-intensity adult fashion default: `sensual_editorial=1`, `fetish_fashion=0`, and `sensual_led`. Fetish-fashion augmentation is opt-in. This is a configured composition policy, not an inference from a face, body, clothing, demographic, market term, or presumed popularity. Increase, reduce, rebalance, or disable it from explicit user intent. Both axes may still be activated together explicitly:
 
 ```bash
 .venv/bin/python skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py \
@@ -139,8 +139,8 @@ Eligible human candidate packs use a low-intensity adult fashion default: `sensu
   --emit-candidate-pack --n 1
 ```
 
-- Use intensity `0..3` independently for each axis. Both default to `1`; both zero means off.
-- Apply the configured default only when the resolved subject category is human. Block it for explicit no-people, non-human, and youth-coded requests.
+- Use intensity `0..3` independently for each axis. The defaults are `1` for `sensual_editorial` and `0` for `fetish_fashion`; both zero means off.
+- Apply the configured default only when the resolved subject category is human. Block it for explicit no-people and non-human requests.
 - Intensity `1` keeps the fetish-fashion inventory to the lower tier; higher intensities widen the eligible material and garment pool.
 - Let `sensual_editorial` supply gaze, pose, light, framing, or silhouette decisions.
 - Let `fetish_fashion` supply material, garment layering, accessory, or footwear decisions.

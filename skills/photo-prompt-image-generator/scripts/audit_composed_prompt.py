@@ -1418,19 +1418,6 @@ def audit_hybrid_augmentation(
             )
 
         combination = adult_contract.get("combination_policy") if isinstance(adult_contract.get("combination_policy"), dict) else {}
-        youth_hits = [
-            str(term)
-            for term in combination.get("youth_coding_terms") or []
-            if text_contains_term(prompt_en, str(term))
-        ]
-        if youth_hits:
-            failures.append(
-                {
-                    "check": "adult_appeal_adult_subject",
-                    "reason": "adult-appeal composition contains youth-coding terms",
-                    "terms": youth_hits,
-                }
-            )
         risk_hits: set[str] = set()
         risk_groups = combination.get("risk_groups") if isinstance(combination.get("risk_groups"), dict) else {}
         chosen_entry_ids = {

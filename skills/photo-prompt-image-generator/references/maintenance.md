@@ -28,7 +28,7 @@ Put repeated theme boundaries in quality-layer `applicability_guards`. Use `matc
 .venv/bin/python skills/photo-prompt-image-generator/scripts/validate_photo_prompt_dictionary.py
 .venv/bin/python skills/photo-prompt-image-generator/scripts/audit_scene_expression.py --current
 .venv/bin/python -m unittest tests.test_photo_prompt_contract_v2.PhotoPromptContractV2Tests.test_hybrid_augmentation_exposes_real_candidate_routes_and_audits_selective_adoption
-.venv/bin/python -m unittest tests.test_photo_prompt_contract_v2.PhotoPromptContractV2Tests.test_adult_appeal_defaults_to_one_for_eligible_humans_and_is_context_gated
+.venv/bin/python -m unittest tests.test_photo_prompt_contract_v2.PhotoPromptContractV2Tests.test_adult_appeal_defaults_to_sensual_only_for_eligible_humans
 .venv/bin/python -m unittest tests.test_photo_prompt_contract_v2.PhotoPromptContractV2Tests.test_sensual_editorial_and_fetish_fashion_axes_combine_and_risky_camera_pair_fails
 .venv/bin/python -m unittest discover -s tests
 ```
