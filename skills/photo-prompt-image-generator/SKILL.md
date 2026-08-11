@@ -193,7 +193,7 @@ There is no separate approval flag or policy mode. This project-level automatic 
 
 ## Composition Rules
 
-- Preserve every `mandatory_intent` as visible image content. A candidate label is not proof of coverage.
+- Preserve every `mandatory_intent` as visible image content. This list contains required positive user meaning only; advisory role/soft guidance and excluded constraints remain typed in `intent_contract`. A candidate label is not proof of coverage.
 - Choose only IDs exposed in the pack whose `applicability.status` is `eligible`; never invent or reconstruct a masked candidate.
 - Treat `intent_contract` as typed request meaning and `scene_contract` as a hard boundary. A selected render blueprint contributes four mandatory literal scene atoms—subject, action, location, and prop—outside the ordinary sampler candidate pool.
 - Copy all four `selected_render_blueprint` labels into the composed prompt. Do not select an ordinary subject/action/location/prop candidate for the same controlled slots, and never reconstruct a sibling from `available_blueprint_ids`.
@@ -211,7 +211,7 @@ There is no separate approval flag or policy mode. This project-level automatic 
 - Use one or two photographic craft decisions, not every available phrase.
 - `artistic_final_touch` is profile-specific surface craft. Use it only when `enabled` is true; equivalent wording is acceptable and need not be a fixed suffix. It never satisfies `creative_direction` authorial grammar by itself.
 - Keep named-person text out of mandatory visual intent. `--likeness-mode inspired` means an original fictional adult inspired by styling or atmosphere, not exact likeness.
-- A request such as `사람 없는`, `인물 없이`, `no people`, or `without people` is a negative-presence constraint; never turn it into a positive human axis.
+- A request such as `사람 없는`, `인물 없이`, `no people`, or `without people` is a negative-presence constraint. Keep it in `intent_contract.constraints`, exclude its absence phrase from positive `mandatory_intents`, and never turn it into a positive human axis.
 - Keep compact English prompts at roughly 50–120 words. Optional craft or final-touch text must not push them over budget.
 
 See `references/composition-contract.md` for field-level details.

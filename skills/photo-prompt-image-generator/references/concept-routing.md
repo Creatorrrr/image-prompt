@@ -33,7 +33,7 @@ Adult-appeal controls require candidate-pack composition. They expose a curated 
 
 ## Preserve Negative Intent
 
-Korean and English absence phrases are constraints, not positive nouns. `사람 없는`, `인물 없이`, `no people`, and `without people` must exclude human subject candidates and the `person_presence` quality axis. Keep the whole phrase as mandatory intent.
+Korean and English absence phrases are constraints, not positive nouns. `사람 없는`, `인물 없이`, `no people`, and `without people` must exclude human subject candidates and the `person_presence` quality axis. Preserve the full request in the mixed/excluded `intent_contract` row, but do not copy the absence phrase into positive `mandatory_intents`.
 
 Named-person references are provenance for likeness handling, not visual content to force into the prompt. Public/idol routes use an original fictional adult with `--likeness-mode inspired`.
 
@@ -41,9 +41,11 @@ Named-person references are provenance for likeness handling, not visual content
 
 Subject intent is resolved to `human`, `animal`, `food`, `object`, `plant`, or `environment`; domain intent is resolved independently. Keep aliases in `photo_prompt_quality_layers.json` so Korean and English routes share one data contract. Negated aliases such as `not a portrait` must not activate the human category.
 
+When a small curated `subject_routes` entry matches an explicit literal subject such as `cat` or `고양이`, narrow the rule-mode subject pool to that entry before category steering. Do not infer exact entries from role, soft, or negative recipe guidance, and remove human routes when `no_people` is active.
+
 Literal secondary-subject inference uses entry IDs and labels but ignores the configured `literal_subject_stop_terms`. This prevents generated phrases such as `role`, `subject`, or `context` from turning a human request into an unrelated food or object scene.
 
-In rule mode, an entry with a uniquely stronger explicit request-term match may win deterministically. This affects the sampled choice but does not narrow the candidate pack: the remaining alternatives must still come from the exact eligible sampler pool.
+Outside an exact curated subject route, an entry with a uniquely stronger explicit request-term match may win deterministically in rule mode without narrowing the candidate pack. The remaining alternatives must still come from the exact eligible sampler pool.
 
 ## Avoid Theme Overfitting
 

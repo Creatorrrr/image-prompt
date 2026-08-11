@@ -258,7 +258,15 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             "--emit-candidate-pack",
         )[0]
         mandatory = {item["text"] for item in pack["mandatory_intents"]}
-        self.assertTrue({"사람 없는", "no people"} <= mandatory)
+        self.assertNotIn("사람 없는", mandatory)
+        self.assertNotIn("no people", mandatory)
+        excluded = [
+            row
+            for row in pack["intent_contract"]
+            if "no_people" in row.get("constraints", [])
+        ]
+        self.assertTrue(excluded)
+        self.assertTrue(all(row["polarity"] in {"excluded", "mixed"} for row in excluded))
         selected_subject = next(
             candidate
             for candidate in pack["slots"]["subject"]["candidates"]
@@ -267,6 +275,131 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
         self.assertNotIn("human", selected_subject.get("kind", []))
         active_axes = {axis["id"] for axis in pack["photographic_integration"]["active_axes"]}
         self.assertNotIn("person_presence", active_axes)
+
+    def test_internal_recipe_guidance_keeps_typed_polarity_and_compact_budget(self):
+        pack = self.run_wrapper(
+            "--concept",
+            "회사원",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "42",
+            "--hybrid-augmentation",
+            "--emit-candidate-pack",
+        )[0]
+
+        mandatory = {str(row.get("text") or "") for row in pack["mandatory_intents"]}
+        forbidden_positive_intents = {
+            "Avoid",
+            "glamour",
+            "pin-up",
+            "fetish",
+            "minors-coding",
+            "Soft",
+            "visual",
+            "guidance",
+            "should",
+            "through",
+            "rather",
+        }
+        self.assertFalse(mandatory & forbidden_positive_intents, mandatory)
+
+        by_source: dict[str, list[dict]] = {}
+        for row in pack["intent_contract"]:
+            by_source.setdefault(str(row.get("source") or ""), []).append(row)
+        self.assertTrue(by_source["role_requirement"])
+        self.assertTrue(all(row["polarity"] == "advisory" for row in by_source["role_requirement"]))
+        self.assertTrue(by_source["negative_requirement"])
+        self.assertTrue(all(row["polarity"] == "excluded" for row in by_source["negative_requirement"]))
+        self.assertTrue(by_source["soft_guidance"])
+        self.assertTrue(all(row["polarity"] == "advisory" for row in by_source["soft_guidance"]))
+
+        minified_bytes = len(
+            json.dumps(pack, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
+        )
+        self.assertLessEqual(minified_bytes, 120_000)
+
+        direct = self.run_wrapper(
+            "--concept",
+            "회사원",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "42",
+            "--detail-level",
+            "compact",
+        )[0]
+        prompt = str(direct["prompt_en"])
+        self.assertLessEqual(len(prompt.split()), 120, prompt)
+        self.assertIn("office worker", prompt.lower())
+        self.assertTrue("lanyard" in prompt.lower() or "access card" in prompt.lower())
+        self.assertNotIn("Additional requirements:", prompt)
+
+    def test_user_additional_requirement_remains_one_hard_visible_intent(self):
+        requirement = "a red umbrella held above the product"
+        pack = self.run_wrapper(
+            "--preset",
+            "product_hero_on_riser",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "42",
+            "--additional-requirement",
+            requirement,
+            "--emit-candidate-pack",
+        )[0]
+
+        self.assertIn(requirement, {row["text"] for row in pack["mandatory_intents"]})
+        row = next(
+            row
+            for row in pack["intent_contract"]
+            if row.get("source") == "user_requirement" and row.get("text") == requirement
+        )
+        self.assertEqual(row["polarity"], "required")
+        self.assertEqual(row["priority"], "critical")
+
+    def test_explicit_cat_and_no_people_product_route_subject_facets_consistently(self):
+        cat_pack = self.run_wrapper(
+            "--concept",
+            "고양이",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "42",
+            "--hybrid-augmentation",
+            "--emit-candidate-pack",
+        )[0]
+        cat_subject = next(
+            candidate
+            for candidate in cat_pack["slots"]["subject"]["candidates"]
+            if candidate.get("selected_by_sampler")
+        )
+        self.assertEqual(cat_subject["entry_id"], "stray_cat")
+        cat_intent = next(
+            row for row in cat_pack["intent_contract"] if row.get("text") == "고양이"
+        )
+        self.assertIn("subject_entry:stray_cat", cat_intent["axis_hints"])
+        self.assertIn("animal", cat_pack["quality_profile"]["facets"]["subject_kind"])
+        self.assertNotIn("human", cat_pack["quality_profile"]["facets"]["subject_kind"])
+        self.assertFalse(cat_pack["hybrid_augmentation"]["adult_appeal"]["enabled"])
+
+        product_pack = self.run_wrapper(
+            "--concept",
+            "사람 없는 화장품 제품 사진",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "42",
+            "--hybrid-augmentation",
+            "--emit-candidate-pack",
+        )[0]
+        subject_kinds = set(product_pack["quality_profile"]["facets"].get("subject_kind", []))
+        self.assertNotIn("human", subject_kinds)
+        self.assertNotIn(
+            "photographer_role_model",
+            product_pack["quality_profile"]["matched_literal_subject_entries"],
+        )
+        self.assertFalse(product_pack["hybrid_augmentation"]["adult_appeal"]["enabled"])
 
     def test_research_scene_function_is_a_fail_closed_control_and_preserves_no_people(self):
         pack = self.run_wrapper(

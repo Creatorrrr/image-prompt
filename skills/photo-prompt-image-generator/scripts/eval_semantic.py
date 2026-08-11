@@ -2190,6 +2190,7 @@ GENERALIZATION_CASE_KEYS = {
     "forbidden_candidate_terms",
     "minimum_multi_candidate_slots",
     "expected_mandatory_intents",
+    "forbidden_mandatory_intents",
     "no_people",
     "expected_scene_variant",
     "expected_subject_categories",
@@ -2216,6 +2217,7 @@ def validate_generalization_case(path: Path, line_number: int, payload: JsonDict
         "forbidden_selected_terms",
         "forbidden_candidate_terms",
         "expected_mandatory_intents",
+        "forbidden_mandatory_intents",
         "expected_subject_categories",
         "expected_intent_subject_categories",
         "expected_intent_domains",
@@ -2427,6 +2429,9 @@ def evaluate_generalization_check(
         for expected in case.get("expected_mandatory_intents") or []:
             if str(expected) not in mandatory:
                 failures.append(f"missing_mandatory_intent:{expected}")
+        for forbidden in case.get("forbidden_mandatory_intents") or []:
+            if str(forbidden) in mandatory:
+                failures.append(f"forbidden_mandatory_intent:{forbidden}")
 
         selected = selected_candidate_rows(pack)
         selected_by_slot = selected_entry_ids_by_slot(pack)

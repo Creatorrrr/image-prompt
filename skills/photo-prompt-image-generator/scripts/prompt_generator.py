@@ -21,6 +21,7 @@ from __future__ import annotations
 
 import argparse
 import copy
+import functools
 import hashlib
 import json
 import math
@@ -2161,6 +2162,9 @@ def make_generation_contract(
     surreal_enabled: bool = False,
     concept_locks: Optional[Sequence[str]] = None,
     additional_requirements: Optional[Sequence[str]] = None,
+    role_requirements: Optional[Sequence[str]] = None,
+    negative_requirements: Optional[Sequence[str]] = None,
+    soft_requirements: Optional[Sequence[str]] = None,
     likeness_mode: str = "off",
     likeness_references: Optional[Sequence[str]] = None,
     user_mandatory_intents: Optional[Sequence[str]] = None,
@@ -2208,6 +2212,13 @@ def make_generation_contract(
         "soft_anchor_policy": soft_anchor_policy,
         "soft_anchor_repair": {"status": "not_evaluated", "repair_attempts": []},
     }
+    for key, values in (
+        ("role_requirements", role_requirements),
+        ("negative_requirements", negative_requirements),
+        ("soft_requirements", soft_requirements),
+    ):
+        if values is not None:
+            contract[key] = normalize_additional_requirements(values)
     semantic_intent = str(contract.get("semantic_intent") or "").strip()
     contract["intent_constraints"] = resolve_request_intent_constraints(
         data,
@@ -2226,6 +2237,9 @@ def refresh_generation_contract(
     surreal_enabled: Optional[bool] = None,
     concept_locks: Optional[Sequence[str]] = None,
     additional_requirements: Optional[Sequence[str]] = None,
+    role_requirements: Optional[Sequence[str]] = None,
+    negative_requirements: Optional[Sequence[str]] = None,
+    soft_requirements: Optional[Sequence[str]] = None,
     likeness_mode: Optional[str] = None,
     likeness_references: Optional[Sequence[str]] = None,
     user_mandatory_intents: Optional[Sequence[str]] = None,
@@ -2243,6 +2257,9 @@ def refresh_generation_contract(
             surreal_enabled=bool(surreal_enabled),
             concept_locks=concept_locks,
             additional_requirements=additional_requirements,
+            role_requirements=role_requirements,
+            negative_requirements=negative_requirements,
+            soft_requirements=soft_requirements,
             likeness_mode=likeness_mode or "off",
             likeness_references=likeness_references,
             user_mandatory_intents=user_mandatory_intents,
@@ -2262,6 +2279,13 @@ def refresh_generation_contract(
         contract["additional_requirements"] = normalize_additional_requirements(additional_requirements)
     else:
         contract.setdefault("additional_requirements", [])
+    for key, values in (
+        ("role_requirements", role_requirements),
+        ("negative_requirements", negative_requirements),
+        ("soft_requirements", soft_requirements),
+    ):
+        if values is not None:
+            contract[key] = normalize_additional_requirements(values)
     if likeness_mode is not None:
         contract["likeness_mode"] = likeness_mode
     else:
@@ -3217,25 +3241,95 @@ def candidate_pack_apply_conflicts_to_candidates(
                     candidate["conflicts_with"].append(other_id)
 
 
-def candidate_pack_source_texts(result: JsonDict, trace: JsonDict) -> List[tuple[str, str]]:
-    texts: List[tuple[str, str]] = []
+def candidate_pack_source_texts(result: JsonDict, trace: JsonDict) -> List[JsonDict]:
+    texts: List[JsonDict] = []
     seen_texts: Set[str] = set()
     provenance = result.get("provenance") if isinstance(result.get("provenance"), dict) else {}
+
+    def add_source(
+        source: str,
+        text: str,
+        *,
+        polarity: str,
+        priority: str,
+        mandatory: bool,
+    ) -> None:
+        normalized = clean_spaces(text)
+        key = normalized.lower()
+        if not normalized or key in seen_texts:
+            return
+        seen_texts.add(key)
+        texts.append(
+            {
+                "source": source,
+                "text": normalized,
+                "polarity": polarity,
+                "priority": priority,
+                "mandatory": mandatory,
+            }
+        )
+
     for concept in normalize_list(provenance.get("concept_lock")):
-        if concept.strip() and concept.strip().lower() not in seen_texts:
-            texts.append(("concept_lock", concept.strip()))
-            seen_texts.add(concept.strip().lower())
+        no_people = intent_explicitly_excludes_people(concept)
+        add_source(
+            "concept_lock",
+            concept,
+            polarity="mixed" if no_people else "required",
+            priority="critical",
+            mandatory=True,
+        )
     for requirement in normalize_list(provenance.get("user_mandatory_intents")):
-        if requirement.strip() and requirement.strip().lower() not in seen_texts:
-            texts.append(("user_requirement", requirement.strip()))
-            seen_texts.add(requirement.strip().lower())
+        no_people = intent_explicitly_excludes_people(requirement)
+        add_source(
+            "user_requirement",
+            requirement,
+            polarity="mixed" if no_people else "required",
+            priority="critical",
+            mandatory=True,
+        )
     for requirement in normalize_list(provenance.get("additional_requirements")):
-        if requirement.strip() and requirement.strip().lower() not in seen_texts:
-            texts.append(("additional_requirement", requirement.strip()))
-            seen_texts.add(requirement.strip().lower())
+        no_people = intent_explicitly_excludes_people(requirement)
+        add_source(
+            "additional_requirement",
+            requirement,
+            polarity="mixed" if no_people else "required",
+            priority="critical",
+            mandatory=True,
+        )
+    for requirement in normalize_list(provenance.get("negative_requirements")):
+        add_source(
+            "negative_requirement",
+            requirement,
+            polarity="excluded",
+            priority="critical",
+            mandatory=False,
+        )
+    for requirement in normalize_list(provenance.get("role_requirements")):
+        add_source(
+            "role_requirement",
+            requirement,
+            polarity="advisory",
+            priority="support",
+            mandatory=False,
+        )
+    for requirement in normalize_list(provenance.get("soft_requirements")):
+        add_source(
+            "soft_guidance",
+            requirement,
+            polarity="advisory",
+            priority="support",
+            mandatory=False,
+        )
     intent = str(trace.get("intent") or "").strip()
-    if intent and trace.get("intent_source") == "user" and intent.lower() not in seen_texts:
-        texts.append(("intent", intent))
+    if intent and trace.get("intent_source") == "user":
+        no_people = intent_explicitly_excludes_people(intent)
+        add_source(
+            "intent",
+            intent,
+            polarity="mixed" if no_people else "required",
+            priority="critical",
+            mandatory=True,
+        )
     return texts
 
 
@@ -3292,6 +3386,7 @@ def candidate_pack_intent_routing_policy(data: JsonDict) -> JsonDict:
     return policy
 
 
+@functools.lru_cache(maxsize=65_536)
 def intent_alias_matches(text: str, alias: str) -> bool:
     normalized_text = clean_spaces(
         re.sub(r"[-\u2013\u2014/]+", " ", str(text or "").lower().replace("_", " "))
@@ -3342,8 +3437,34 @@ def resolve_request_intent_constraints(
             seen_texts.add(dedupe_key)
     policy = candidate_pack_intent_routing_policy(data)
     categories: Set[str] = set()
+    subject_entry_ids: Set[str] = set()
+    subject_entry_categories: Dict[str, str] = {}
     domains: Set[str] = set()
     matched: List[JsonDict] = []
+    catalog_subject_ids = {
+        str(entry.get("id"))
+        for entry in ((data.get("slots") or {}).get("subject") or [])
+        if isinstance(entry, dict) and str(entry.get("id") or "")
+    }
+    for rule in policy.get("subject_routes") or []:
+        if not isinstance(rule, dict):
+            continue
+        entry_id = str(rule.get("entry_id") or "")
+        category = str(rule.get("category") or "")
+        aliases = normalize_list(rule.get("aliases"))
+        hits = sorted({alias for text in texts for alias in aliases if intent_alias_matches(text, alias)})
+        if entry_id in catalog_subject_ids and category in VALID_SUBJECT_CATEGORIES and hits:
+            subject_entry_ids.add(entry_id)
+            subject_entry_categories[entry_id] = category
+            categories.add(category)
+            matched.append(
+                {
+                    "axis": "subject_entry",
+                    "value": entry_id,
+                    "category": category,
+                    "aliases": hits[:8],
+                }
+            )
     for rule in policy.get("subject_categories") or []:
         if not isinstance(rule, dict):
             continue
@@ -3390,13 +3511,26 @@ def resolve_request_intent_constraints(
     no_people = any(intent_explicitly_excludes_people(text) for text in texts)
     if no_people:
         categories.discard("human")
+        subject_entry_ids = {
+            entry_id
+            for entry_id in subject_entry_ids
+            if subject_entry_categories.get(entry_id) != "human"
+        }
         matched = [
             row
             for row in matched
-            if not (row.get("axis") == "subject_category" and row.get("value") == "human")
+            if not (
+                (row.get("axis") == "subject_category" and row.get("value") == "human")
+                or (row.get("axis") == "subject_entry" and row.get("category") == "human")
+            )
         ]
     return {
         "no_people": no_people,
+        **(
+            {"subject_entry_ids": sorted(subject_entry_ids)}
+            if subject_entry_ids
+            else {}
+        ),
         "subject_categories": sorted(categories),
         "domains": sorted(domains),
         "scoped_routes": sorted(scoped_routes),
@@ -3414,13 +3548,27 @@ def candidate_pack_intent_contract(
     rows: List[JsonDict] = []
     seen: Set[tuple[str, str]] = set()
     policy = candidate_pack_intent_routing_policy(data)
-    for source, source_text in candidate_pack_source_texts(result, trace):
+    for source_row in candidate_pack_source_texts(result, trace):
+        source = str(source_row.get("source") or "")
+        source_text = str(source_row.get("text") or "")
         key = (source, source_text.lower())
         if key in seen:
             continue
         seen.add(key)
         no_people = intent_explicitly_excludes_people(source_text)
         facets: List[str] = []
+        for rule in policy.get("subject_routes") or []:
+            if not isinstance(rule, dict):
+                continue
+            entry_id = str(rule.get("entry_id") or "")
+            category = str(rule.get("category") or "")
+            if no_people and category == "human":
+                continue
+            if entry_id and any(
+                intent_alias_matches(source_text, alias)
+                for alias in normalize_list(rule.get("aliases"))
+            ):
+                facets.append(f"subject_entry:{entry_id}")
         for axis, name_key, value_key in (
             ("subject_category", "subject_categories", "category"),
             ("domain", "domains", "domain"),
@@ -3444,8 +3592,8 @@ def candidate_pack_intent_contract(
                 "id": f"intent:{stable_text_id(f'{source}|{source_text}', 12)}",
                 "text": source_text,
                 "source": source,
-                "polarity": "excluded" if no_people else "required",
-                "priority": "critical",
+                "polarity": source_row.get("polarity") or ("excluded" if no_people else "required"),
+                "priority": source_row.get("priority") or "critical",
                 "axis_hints": sorted(set(facets)),
                 "constraints": ["no_people"] if no_people else [],
                 "coverage_mode": "literal_or_asserted_translation",
@@ -3488,44 +3636,27 @@ def candidate_pack_candidate_blobs(presets: Sequence[JsonDict], slots: JsonDict)
     return blobs
 
 
-def candidate_pack_candidate_terms(presets: Sequence[JsonDict], slots: JsonDict) -> Dict[str, List[str]]:
-    terms: Dict[str, List[str]] = {}
-    for preset in presets:
-        candidate_id = str(preset.get("id"))
-        terms[candidate_id] = [
-            str(preset.get("preset_id") or ""),
-            str(preset.get("label_en") or ""),
-            str(preset.get("label_ko") or ""),
-            str(preset.get("family") or ""),
-        ]
-    for slot_payload in slots.values():
-        if not isinstance(slot_payload, dict):
-            continue
-        for candidate in slot_payload.get("candidates") or []:
-            if not isinstance(candidate, dict):
-                continue
-            candidate_id = str(candidate.get("id"))
-            terms[candidate_id] = [
-                str(candidate.get("entry_id") or ""),
-                str(candidate.get("label_en") or ""),
-                str(candidate.get("label_ko") or ""),
-            ]
-    return {
-        candidate_id: list(dict.fromkeys(term for term in values if term.strip()))[:12]
-        for candidate_id, values in terms.items()
-    }
-
-
 def candidate_pack_mandatory_intents(
     result: JsonDict,
     trace: JsonDict,
     candidate_blobs: Dict[str, str],
-    candidate_terms: Dict[str, List[str]],
 ) -> tuple[List[JsonDict], List[JsonDict]]:
     intents: List[JsonDict] = []
     seen: Set[tuple[str, str]] = set()
-    for source, source_text in candidate_pack_source_texts(result, trace):
-        for token in candidate_pack_tokenize_intent_text(source_text):
+    for source_row in candidate_pack_source_texts(result, trace):
+        if source_row.get("mandatory") is not True:
+            continue
+        source = str(source_row.get("source") or "")
+        source_text = str(source_row.get("text") or "")
+        if source in {"concept_lock", "intent"} or intent_explicitly_excludes_people(source_text):
+            intent_terms = [
+                term
+                for term in candidate_pack_tokenize_intent_text(source_text)
+                if not intent_explicitly_excludes_people(term)
+            ]
+        else:
+            intent_terms = [source_text]
+        for token in intent_terms:
             dedupe_key = (source, token.lower())
             if dedupe_key in seen:
                 continue
@@ -5936,6 +6067,8 @@ def candidate_pack_quality_add_literal_subject_entity_facets(
     vocab: Dict[str, Set[str]],
     data: JsonDict,
     mandatory_intents: Sequence[JsonDict],
+    *,
+    exclude_people: bool = False,
 ) -> List[str]:
     """Infer secondary visible subject kinds only from literal subject labels.
 
@@ -5957,6 +6090,8 @@ def candidate_pack_quality_add_literal_subject_entity_facets(
             continue
         for entry in subject_entries:
             if not isinstance(entry, dict):
+                continue
+            if exclude_people and "human" in (entry_kinds(entry) | entry_tags(entry)):
                 continue
             values: List[str] = []
             for key in ("id", "en", "ko", "aliases"):
@@ -6098,11 +6233,27 @@ def candidate_pack_quality_profile(
 
     matched_facets = candidate_pack_quality_add_intent_facets(facets, vocab, data, mandatory_intents)
     profile_id = candidate_pack_quality_profile_id(data, preset or {}, facets)
+    trace = result.get("semantic_trace") if isinstance(result.get("semantic_trace"), dict) else {}
+    generation_contract = (
+        trace.get("generation_contract")
+        if isinstance(trace.get("generation_contract"), dict)
+        else {}
+    )
+    no_people = bool(
+        ((generation_contract.get("intent_constraints") or {}).get("no_people"))
+    ) or generation_explicitly_excludes_people(None, generation_contract)
+    provenance = result.get("provenance") if isinstance(result.get("provenance"), dict) else {}
+    no_people = no_people or any(
+        intent_explicitly_excludes_people(value)
+        for key in ("concept_lock", "user_mandatory_intents", "additional_requirements")
+        for value in normalize_list(provenance.get(key))
+    )
     matched_subject_entries = candidate_pack_quality_add_literal_subject_entity_facets(
         facets,
         vocab,
         data,
         mandatory_intents,
+        exclude_people=no_people,
     )
     return {
         "profile_id": profile_id,
@@ -6829,8 +6980,11 @@ def build_candidate_pack(result: JsonDict, data: JsonDict) -> JsonDict:
         candidate_pack_hybrid_adult_candidates(adult_appeal), conflicts
     )
     candidate_blobs = candidate_pack_candidate_blobs(presets, slots)
-    candidate_terms = candidate_pack_candidate_terms(presets, slots)
-    mandatory_intents, uncovered_intents = candidate_pack_mandatory_intents(result, trace, candidate_blobs, candidate_terms)
+    mandatory_intents, uncovered_intents = candidate_pack_mandatory_intents(
+        result,
+        trace,
+        candidate_blobs,
+    )
     intent_contract = candidate_pack_intent_contract(data, result, trace, candidate_blobs)
     contract = trace.get("generation_contract") if isinstance(trace.get("generation_contract"), dict) else {}
     soft_policy = contract.get("soft_anchor_policy") if isinstance(contract.get("soft_anchor_policy"), dict) else {}
@@ -8814,7 +8968,13 @@ def make_semantic_context(
     request_constraints = (
         resolve_request_intent_constraints(data, {"intent": intent}, {})
         if intent_source == "user"
-        else {"no_people": False, "subject_categories": [], "domains": [], "matched": [], "source_text_count": 0}
+        else {
+            "no_people": False,
+            "subject_categories": [],
+            "domains": [],
+            "matched": [],
+            "source_text_count": 0,
+        }
     )
     return {
         "selection_mode": selection_mode,
@@ -13584,6 +13744,27 @@ def choose_slot(
                     "typed_intent_events",
                     {"slot": "subject", "reason": "explicit_no_people", "remaining": len(pool)},
                 )
+        requested_subject_ids = {
+            str(item)
+            for item in ((generation_contract or {}).get("intent_constraints", {}) or {}).get(
+                "subject_entry_ids", []
+            )
+            if str(item)
+        }
+        if requested_subject_ids:
+            steered = [item for item in pool if str(item.get("id") or "") in requested_subject_ids]
+            if steered:
+                pool = steered
+                record_generation_contract_event(
+                    generation_contract,
+                    "typed_intent_events",
+                    {
+                        "slot": "subject",
+                        "reason": "explicit_subject_route",
+                        "entry_ids": sorted(requested_subject_ids),
+                        "remaining": len(pool),
+                    },
+                )
         required_kinds = forced_required_subject_kinds(data, forced_choices or {})
         if required_kinds and not generation_explicitly_excludes_people(semantic_context, generation_contract):
             steered = [x for x in pool if entry_kinds(x) & required_kinds]
@@ -15532,6 +15713,52 @@ def soft_render_directive_negative_entries(events: Sequence[JsonDict]) -> List[E
     return entries
 
 
+def resolve_soft_render_directives(
+    generation_contract: JsonDict,
+    picked: Dict[str, Entry],
+    additional_requirements: Optional[Sequence[str]],
+    render_requirements: Optional[Sequence[str]] = None,
+) -> tuple[List[JsonDict], List[str]]:
+    events = soft_render_directive_events(
+        generation_contract.get("soft_anchor_policy"),
+        picked,
+    )
+    user_requirements = normalize_additional_requirements(additional_requirements)
+    effective_requirements = normalize_additional_requirements(
+        render_requirements if render_requirements is not None else user_requirements
+    )
+    directive_requirements: List[str] = []
+    if events:
+        for event in events:
+            record_generation_contract_event(
+                generation_contract,
+                "soft_render_directive_events",
+                {
+                    "id": event.get("id"),
+                    "cue_matched": True,
+                    "matched_terms": event.get("matched_terms", []),
+                    "render_as": event.get("render_as", ""),
+                    "positive_clause_injected": True,
+                    "suppress_terms_injected": bool(event.get("suppress_terms")),
+                },
+            )
+            clause = str(event.get("positive_clause") or "").strip()
+            if clause and clause not in effective_requirements:
+                effective_requirements.append(clause)
+                directive_requirements.append(clause)
+        generation_contract["soft_render_directive_suppress_terms"] = [
+            term
+            for event in events
+            for term in normalize_list(event.get("suppress_terms"))
+        ]
+    generation_contract["additional_requirements"] = user_requirements
+    if "soft_requirements" in generation_contract or directive_requirements:
+        generation_contract["soft_requirements"] = normalize_additional_requirements(
+            [*normalize_list(generation_contract.get("soft_requirements")), *directive_requirements]
+        )
+    return events, effective_requirements
+
+
 # Keep the low-level API neutral for internal research and holdout callers.
 # ``main`` injects the user-facing CLI defaults (sensual 1, fetish 0) into candidate-pack runs.
 def generate_once(
@@ -15575,6 +15802,9 @@ def generate_once(
     batch_context: Optional[JsonDict] = None,
     batch_index: int = 0,
     additional_requirements: Optional[Sequence[str]] = None,
+    role_requirements: Optional[Sequence[str]] = None,
+    negative_requirements: Optional[Sequence[str]] = None,
+    soft_requirements: Optional[Sequence[str]] = None,
     likeness_mode: str = "off",
     likeness_references: Optional[Sequence[str]] = None,
     user_mandatory_intents: Optional[Sequence[str]] = None,
@@ -15641,6 +15871,9 @@ def generate_once(
         forced_choices,
         concept_locks=concept_locks,
         additional_requirements=additional_requirements,
+        role_requirements=role_requirements,
+        negative_requirements=negative_requirements,
+        soft_requirements=soft_requirements,
         likeness_mode=likeness_mode,
         likeness_references=likeness_references,
         user_mandatory_intents=user_mandatory_intents,
@@ -15718,6 +15951,9 @@ def generate_once(
                 picked,
                 forced_choices,
                 additional_requirements=additional_requirements,
+                role_requirements=role_requirements,
+                negative_requirements=negative_requirements,
+                soft_requirements=soft_requirements,
                 likeness_mode=likeness_mode,
                 likeness_references=likeness_references,
                 user_mandatory_intents=user_mandatory_intents,
@@ -15738,6 +15974,9 @@ def generate_once(
         picked,
         forced_choices,
         additional_requirements=additional_requirements,
+        role_requirements=role_requirements,
+        negative_requirements=negative_requirements,
+        soft_requirements=soft_requirements,
         likeness_mode=likeness_mode,
         likeness_references=likeness_references,
         user_mandatory_intents=user_mandatory_intents,
@@ -15764,6 +16003,9 @@ def generate_once(
         forced_choices,
         surreal_enabled=surreal_active,
         additional_requirements=additional_requirements,
+        role_requirements=role_requirements,
+        negative_requirements=negative_requirements,
+        soft_requirements=soft_requirements,
         likeness_mode=likeness_mode,
         likeness_references=likeness_references,
         user_mandatory_intents=user_mandatory_intents,
@@ -15782,32 +16024,26 @@ def generate_once(
         reinforce_detail_slots(data, preset, rng, picked, forced_choices, semantic_context, generation_contract)
         sync_generation_contract_axis_coverage(generation_contract, semantic_context)
 
+    direct_render_requirements = normalize_additional_requirements(additional_requirements)
+    if detail_level != "compact":
+        direct_render_requirements = normalize_additional_requirements(
+            [
+                *direct_render_requirements,
+                *normalize_additional_requirements(role_requirements),
+                *normalize_additional_requirements(negative_requirements),
+                *(
+                    f"Soft visual guidance: {requirement}"
+                    for requirement in normalize_additional_requirements(soft_requirements)
+                ),
+            ]
+        )
     render_picked = render_guarded_picked(data, preset, picked, generation_contract)
-    directive_events = soft_render_directive_events(generation_contract.get("soft_anchor_policy"), render_picked)
-    effective_additional_requirements = normalize_additional_requirements(additional_requirements)
-    if directive_events:
-        for event in directive_events:
-            record_generation_contract_event(
-                generation_contract,
-                "soft_render_directive_events",
-                {
-                    "id": event.get("id"),
-                    "cue_matched": True,
-                    "matched_terms": event.get("matched_terms", []),
-                    "render_as": event.get("render_as", ""),
-                    "positive_clause_injected": True,
-                    "suppress_terms_injected": bool(event.get("suppress_terms")),
-                },
-            )
-            clause = str(event.get("positive_clause") or "").strip()
-            if clause and clause not in effective_additional_requirements:
-                effective_additional_requirements.append(clause)
-        generation_contract["soft_render_directive_suppress_terms"] = [
-            term
-            for event in directive_events
-            for term in normalize_list(event.get("suppress_terms"))
-        ]
-    generation_contract["additional_requirements"] = effective_additional_requirements
+    directive_events, effective_additional_requirements = resolve_soft_render_directives(
+        generation_contract,
+        render_picked,
+        additional_requirements,
+        direct_render_requirements,
+    )
 
     result: JsonDict = {
         "preset_id": preset.get("id"),
@@ -15847,6 +16083,9 @@ def generate_once(
             forced_choices,
             surreal_enabled=surreal_active,
             additional_requirements=additional_requirements,
+            role_requirements=role_requirements,
+            negative_requirements=negative_requirements,
+            soft_requirements=soft_requirements,
             likeness_mode=likeness_mode,
             likeness_references=likeness_references,
             user_mandatory_intents=user_mandatory_intents,
@@ -15856,31 +16095,12 @@ def generate_once(
         )
         sync_generation_contract_axis_coverage(generation_contract, semantic_context)
         render_picked = render_guarded_picked(data, preset, picked, generation_contract)
-        directive_events = soft_render_directive_events(generation_contract.get("soft_anchor_policy"), render_picked)
-        effective_additional_requirements = normalize_additional_requirements(additional_requirements)
-        if directive_events:
-            for event in directive_events:
-                record_generation_contract_event(
-                    generation_contract,
-                    "soft_render_directive_events",
-                    {
-                        "id": event.get("id"),
-                        "cue_matched": True,
-                        "matched_terms": event.get("matched_terms", []),
-                        "render_as": event.get("render_as", ""),
-                        "positive_clause_injected": True,
-                        "suppress_terms_injected": bool(event.get("suppress_terms")),
-                    },
-                )
-                clause = str(event.get("positive_clause") or "").strip()
-                if clause and clause not in effective_additional_requirements:
-                    effective_additional_requirements.append(clause)
-            generation_contract["soft_render_directive_suppress_terms"] = [
-                term
-                for event in directive_events
-                for term in normalize_list(event.get("suppress_terms"))
-            ]
-        generation_contract["additional_requirements"] = effective_additional_requirements
+        directive_events, effective_additional_requirements = resolve_soft_render_directives(
+            generation_contract,
+            render_picked,
+            additional_requirements,
+            direct_render_requirements,
+        )
         for lang in langs:
             result[f"prompt_{lang}"] = render_prompt(
                 data,
@@ -15954,7 +16174,26 @@ def generate_once(
         "requested_selection_mode": requested_selection_mode,
         "tags_hash": (semantic_context or {}).get("dictionary_hash"),
         "concept_lock": normalize_concept_locks(concept_locks),
-        "additional_requirements": effective_additional_requirements,
+        "additional_requirements": normalize_additional_requirements(additional_requirements),
+        **(
+            {"role_requirements": normalize_additional_requirements(role_requirements)}
+            if role_requirements is not None
+            else {}
+        ),
+        **(
+            {"negative_requirements": normalize_additional_requirements(negative_requirements)}
+            if negative_requirements is not None
+            else {}
+        ),
+        **(
+            {
+                "soft_requirements": normalize_additional_requirements(
+                    generation_contract.get("soft_requirements")
+                )
+            }
+            if "soft_requirements" in generation_contract
+            else {}
+        ),
         "likeness_mode": likeness_mode,
         "likeness_references": normalize_list(likeness_references),
         "user_mandatory_intents": normalize_list(user_mandatory_intents),
@@ -16190,6 +16429,20 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         help="Concrete requirement not represented by tags. Repeatable; rendered into the final prompt before prompt_id is computed.",
     )
     parser.add_argument(
+        "--role-requirement",
+        dest="role_requirements",
+        action="append",
+        default=[],
+        help=argparse.SUPPRESS,
+    )
+    parser.add_argument(
+        "--negative-requirement",
+        dest="negative_requirements",
+        action="append",
+        default=[],
+        help=argparse.SUPPRESS,
+    )
+    parser.add_argument(
         "--likeness-mode",
         choices=LIKENESS_MODES,
         default="off",
@@ -16360,12 +16613,19 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     )
     soft_anchor_spec = parse_soft_anchor_specs(args.soft_anchor_specs)
     concept_gate_results = parse_json_object_list(args.concept_gate_payloads, "--concept-gates-json")
-    effective_additional_requirements = list(args.additional_requirements)
-    effective_additional_requirements.extend(
-        f"Soft visual guidance: {requirement}"
-        for requirement in args.soft_requirements
-        if str(requirement).strip()
+    typed_requirement_routing = bool(
+        args.emit_candidate_pack
+        or args.detail_level == "compact"
+        or args.role_requirements
+        or args.negative_requirements
     )
+    effective_additional_requirements = list(args.additional_requirements)
+    if not typed_requirement_routing:
+        effective_additional_requirements.extend(
+            f"Soft visual guidance: {requirement}"
+            for requirement in args.soft_requirements
+            if str(requirement).strip()
+        )
 
     if args.n < 1:
         raise ValueError("--n must be at least 1")
@@ -16457,6 +16717,9 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             semantic_model=args.semantic_model,
             semantic_dimensions=args.semantic_dimensions,
             additional_requirements=effective_additional_requirements,
+            role_requirements=(args.role_requirements or None) if typed_requirement_routing else None,
+            negative_requirements=(args.negative_requirements or None) if typed_requirement_routing else None,
+            soft_requirements=(args.soft_requirements or None) if typed_requirement_routing else None,
             likeness_mode=args.likeness_mode,
             likeness_references=args.likeness_references,
             user_mandatory_intents=args.user_mandatory_intents,
