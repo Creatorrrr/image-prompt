@@ -795,6 +795,7 @@ def validate_quality_layer_intent_routing(
         return
     for key in routing:
         if key not in {
+            "subject_routes",
             "subject_categories",
             "domains",
             "scoped_routes",
@@ -807,6 +808,36 @@ def validate_quality_layer_intent_routing(
             routing.get("literal_subject_stop_terms"),
             errors,
         )
+
+    subject_entries = {
+        str(entry.get("id")): entry
+        for entry in ((data.get("slots") or {}).get("subject") or [])
+        if isinstance(entry, dict) and str(entry.get("id") or "")
+    }
+    configured_subject_routes: set[str] = set()
+    subject_routes = routing.get("subject_routes", [])
+    if not isinstance(subject_routes, list):
+        errors.append("quality_layers.intent_routing.subject_routes: must be a list")
+        subject_routes = []
+    for index, row in enumerate(subject_routes):
+        label = f"quality_layers.intent_routing.subject_routes[{index}]"
+        if not isinstance(row, dict):
+            errors.append(f"{label}: must be an object")
+            continue
+        for key in row:
+            if key not in {"entry_id", "category", "aliases"}:
+                errors.append(f"{label}: unknown key {key}")
+        entry_id = str(row.get("entry_id") or "").strip()
+        category = str(row.get("category") or "").strip()
+        if entry_id not in subject_entries:
+            errors.append(f"{label}.entry_id: unknown subject entry id {entry_id!r}")
+        elif entry_id in configured_subject_routes:
+            errors.append(f"{label}.entry_id: duplicate subject route {entry_id}")
+        else:
+            configured_subject_routes.add(entry_id)
+        if category not in VALID_SUBJECT_CATEGORIES:
+            errors.append(f"{label}.category: unknown subject category {category!r}")
+        validate_string_list(f"{label}.aliases", row.get("aliases"), errors)
 
     configured_categories: set[str] = set()
     categories = routing.get("subject_categories")

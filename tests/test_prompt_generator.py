@@ -2767,6 +2767,11 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertIn("flat dark shadow cast onto a nearby wall", item["prompt_en"])
         self.assertIn("physical wings", item["negative_en"])
         self.assertIn("wing prop", item["negative_en"])
+        self.assertEqual(item["provenance"]["additional_requirements"], [])
+        self.assertIn(
+            "the bat-wing motif appears only as a flat dark shadow cast onto a nearby wall",
+            item["provenance"]["soft_requirements"],
+        )
         directive_check = next(check for check in item["quality"]["checks"] if check["id"] == "soft_render_directives")
         self.assertEqual(directive_check["render_directive_count"], 1)
 

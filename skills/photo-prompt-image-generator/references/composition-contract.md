@@ -21,6 +21,7 @@ The same explicit range adds `creative_direction`, an agent-level creation and s
 ## Required Composition Behavior
 
 - Use every `mandatory_intents[].text` as literal or faithfully translated visible content.
+- `mandatory_intents` contains required positive user meaning. Read `intent_contract` for the complete typed request: `user_requirement` and `additional_requirement` are required, `role_requirement` and `soft_guidance` are advisory, and `negative_requirement` is excluded.
 - `audit_terms` and candidate labels are discovery aids, not proof of user-intent coverage.
 - `coverage_assertions` may map an exact mandatory-intent key to one or more phrases. Every phrase must occur literally in `prompt_en`.
 - Choose IDs only from `presets`, `slots`, proposition candidates, or the adult-appeal candidate inventory included in the pack.
@@ -39,7 +40,7 @@ If a composed ID names an open slot, the audit fails. Masked details are also re
 
 ## Meaning and Coherence
 
-- `intent_contract` and `coverage.intent_constraints`: typed subject categories, domains, negative-presence constraints, and their matching evidence. They are routing constraints, not prose suggestions.
+- `intent_contract` and `coverage.intent_constraints`: typed source, polarity, subject category or exact curated subject route, domain, negative-presence constraint, and matching evidence. Excluded and advisory rows constrain or guide composition but are not positive mandatory prose.
 - `scene_contract`: every `atomic_scene` group is fail-closed. Candidate-backed groups constrain IDs to a selected variant. A `selected_render_blueprint` group instead requires all four literal labels and rejects ordinary candidate IDs for its controlled core slots.
 - `render_contract.selected_scene`: one selected scene function set, one diegetic visual provenance, relationship stakes, and genre anchors. `market_origin` is not visual provenance and must not be rendered as a national costume shortcut.
 - `character_grammar`: an on-demand character route exposes nonvisual runtime anchors and policies separately from one to three selected `visual_atom` nodes. Copy the four atomic scene labels, not node definitions. Keep exactly one primary mechanism, at most two support cues, the declared compatibility edge, and all required evidence types. Router/guard IDs, market-origin terms, audience familiarity, identity, orientation, and adulthood policy are never visual costume or morphology instructions.

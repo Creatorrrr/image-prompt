@@ -1784,6 +1784,28 @@ def add_option(args: list[str], name: str, value: str) -> None:
         args.extend([name, value])
 
 
+def recipe_requirement_is_negative(requirement: str) -> bool:
+    normalized = re.sub(r"\s+", " ", str(requirement or "").strip().lower())
+    return normalized.startswith(
+        (
+            "avoid ",
+            "exclude ",
+            "do not ",
+            "don't ",
+            "never ",
+            "금지 ",
+            "제외 ",
+            "피해야 ",
+        )
+    )
+
+
+def add_recipe_requirement_options(args: list[str], requirements: Sequence[str]) -> None:
+    for requirement in dict.fromkeys(str(item).strip() for item in requirements if str(item).strip()):
+        option = "--negative-requirement" if recipe_requirement_is_negative(requirement) else "--role-requirement"
+        add_option(args, option, requirement)
+
+
 def resolve_concepts(
     args: Sequence[str],
     concepts: Sequence[str],
@@ -1806,6 +1828,10 @@ def resolve_concepts(
     explanations: list[dict[str, Any]] = []
     has_preset_value = has_option(resolved_args, "--preset")
     has_likeness_value = has_option(resolved_args, "--likeness-mode")
+    typed_requirement_routing = bool(
+        has_option(resolved_args, "--emit-candidate-pack")
+        or option_value(resolved_args, "--detail-level") == "compact"
+    )
 
     for concept in concepts:
         concept = concept.strip()
@@ -2105,8 +2131,11 @@ def resolve_concepts(
                         "--soft-anchor-spec",
                         json.dumps(soft_anchor_spec, ensure_ascii=False, separators=(",", ":")),
                     )
-            for requirement in additional_requirements:
-                add_option(resolved_args, "--additional-requirement", requirement)
+            if typed_requirement_routing:
+                add_recipe_requirement_options(resolved_args, additional_requirements)
+            else:
+                for requirement in additional_requirements:
+                    add_option(resolved_args, "--additional-requirement", requirement)
         elif soft_anchor_specs:
             soft_anchor_spec = apply_reference_scaffold_fields(
                 build_soft_anchor_spec(
@@ -2128,10 +2157,15 @@ def resolve_concepts(
                 # Role/mixin/bundle descriptive guidance is identity-bearing
                 # (e.g. Joseon-court styling); soft mode keeps it alongside the
                 # safety floor instead of dropping it with the forced slots.
-                effective_requirements = list(additional_requirements)
-                effective_requirements.extend(soft_safety_requirements)
-                for requirement in dict.fromkeys(effective_requirements):
-                    add_option(resolved_args, "--additional-requirement", requirement)
+                if typed_requirement_routing:
+                    add_recipe_requirement_options(resolved_args, additional_requirements)
+                    for requirement in dict.fromkeys(soft_safety_requirements):
+                        add_option(resolved_args, "--negative-requirement", requirement)
+                else:
+                    effective_requirements = list(additional_requirements)
+                    effective_requirements.extend(soft_safety_requirements)
+                    for requirement in dict.fromkeys(effective_requirements):
+                        add_option(resolved_args, "--additional-requirement", requirement)
                 defaults = recipes.get("soft_anchor_defaults", {}) if isinstance(recipes, dict) else {}
                 max_salience = normalize_int(defaults.get("max_salience_cues") if isinstance(defaults, dict) else None, 2)
                 if soft_mixin_cue_budgets:

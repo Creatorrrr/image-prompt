@@ -1,0 +1,21 @@
+status: pass
+pack_id: 66908034582b6f30
+chosen_candidate_count: 2
+failures: []
+quality_status: warn
+
+Warnings inspected:
+- uncovered_intent: `explicitly` preserved by literal coverage assertion
+- uncovered_intent: `nekomimi` preserved by literal coverage assertion
+- uncovered_intent: `tsundere` preserved by literal coverage assertion
+- uncovered_intent: `maid` preserved by literal coverage assertion
+- uncovered_intent: face-reference appearance requirement preserved by literal coverage assertions
+- uncovered_intent: feline-ear requirement preserved by literal coverage assertions
+- uncovered_intent: covered nonsexual maid-uniform requirement preserved by literal coverage assertions
+- photographic_integration: optional quality-layer vocabulary is underused because the 118-word prompt prioritizes the four fail-closed atomic scene labels and user-visible character mechanisms
+- photographic_craft: optional frame-hierarchy and shot-intent vocabulary is underused for the same 50-120-word constraint
+
+Audit command:
+.venv/bin/python skills/photo-prompt-image-generator/scripts/audit_composed_prompt.py --pack output/skill-ab-test/skill-arm/candidate_pack.json --composed output/skill-ab-test/skill-arm/composed_prompt.json
+
+Result boundary: PASS proves candidate provenance, prompt binding, safety contract, atomic scene labels, character grammar, hybrid decisions, adult-original agency, viewer-evidence binding, and exact negative preservation. It does not by itself prove rendered pixel quality or audience response.

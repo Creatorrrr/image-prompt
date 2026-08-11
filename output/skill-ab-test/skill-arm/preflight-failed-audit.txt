@@ -1,0 +1,15 @@
+status: fail
+pack_id: 7c6c35da6a5a88c6
+chosen_candidate_count: 6
+quality_status: warn
+failure:
+  check: concept_gates
+  gate_id: contradiction_in_frame
+  gate_status: manual
+  reason: candidate pack contains a failed concept gate
+diagnosis: The legacy `츤데레 메이드` route emitted a non-machine-checkable concept gate with status `manual`. The fail-closed auditor accepts only `pass`, so this immutable pack cannot reach audit PASS even though the composed prompt visibly binds the denial cue and caring object in the same crop.
+recovery: Preserve this failed pack and composition as diagnostic evidence, then reroute once through the direct character preset path before any image generation.
+warnings:
+  - uncovered `츤데레` intent preserved by coverage assertion
+  - uncovered face-reference appearance intent preserved by coverage assertions
+  - uncovered feline-ear intent preserved by coverage assertions
