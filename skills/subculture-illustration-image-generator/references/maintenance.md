@@ -3,6 +3,7 @@
 ## Keep Research and Runtime Separate
 
 - Store citations, limitations, and provenance in `assets/research_evidence_illustration/`.
+- Preserve `illustration_moe_elements_v1.json` as the exact 34-article/29-ID replay inventory. Store claim-level research in the five `assets/research_evidence_moe_elements/dossiers_v2/` shards, paired intent fixtures in `intent_corpus_v2.json`, sparse policy in `illustration_moe_compatibility_v2.json`, and compile the executable `illustration_moe_grammar_v2.json` with `compile_moe_grammar_v2.py`. Never hand-edit the compiled grammar or scan ordinary concept prose to activate an element.
 - Store the 20-topic universal-scene corpus and immutable shard hashes in `assets/research_evidence_universal_scene/`. Topic matrices are synthesis records, never independent sources.
 - Store only abstract visual/router/guard/metric nodes and evidence IDs in the runtime graph.
 - Keep `illustration_universal_scene_candidates_v1.json` route-independent. Research topic IDs are provenance only and cannot participate in selection. Keep fixed/closed/open, resource, distance, bridge, and sparse-exception policy in `illustration_universal_compatibility_graph_v1.json`; never add an all-pairs compatibility matrix.
@@ -16,7 +17,11 @@ Run:
 
 ```bash
 .venv/bin/python skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py
+.venv/bin/python -m unittest tests.test_subculture_illustration_moe_elements
+.venv/bin/python skills/subculture-illustration-image-generator/scripts/compile_moe_grammar_v2.py
 ```
+
+For a moe-only change, the focused unittest plus a deterministic compiler object comparison is the required product check. Do not expand it into universal 24x417 or hidden generalization qualification unless the universal assets/runtime changed. The focused suite must cover all 29 neutral requests, all 29 paired preference requests, the 6 representative multi-element bundles, creative-cue numeric preservation, v1 replay, and retry/photo hash stability.
 
 The validator must cover both research corpora, typed node roles, compatibility, route/format coverage, the typed image-generation retry policy, the current source-only universal oracle and full canonical embedded scene contracts with ordered participant bindings, exact unique ordered prior-exposure inputs, exact identity/slot/context/fixed-role projections, authenticated fact/slot/role/atom/bridge/resource composition carriers, asserted-presence/asserted-absence/forbidden identity polarity, complete fixed-slot composition evidence, literal-realization selection/eligibility quantifiers and owner-joined claims/pixels, canonical universal-scene selector replay, frozen universal render expectations, any versioned v3 prompt qualification included in the release, protected-name boundaries, and explicit byte-preserving replay of immutable v1/v2 prompt and render evidence. It is not a pixel evaluator.
 
@@ -36,6 +41,7 @@ The illustration skill must not import photo generator modules, load photo tags 
 - Validate `composition_carriers` as selector-authenticated data: exact six-section coverage, exact identifiers and semantic values, unique normalized lexeme groups, at least two substantive anchors where available, and closed identity polarity. Mutation tests must fail when a group is removed or weakened, an asserted fact is relabeled forbidden, or a forbidden-fact evidence phrase lacks same-clause scoped negation.
 - Prefer a shared mechanism family and typed compatibility over flat presets.
 - Keep one primary plus at most two supports.
+- Apply that primary/support budget globally across all explicitly selected moe elements. Never allocate a separate three-node bundle per element or append independent element clauses after a completed prompt.
 - Keep one universal event spine, invariant candidate-count and hard-gate budgets across creativity, and at most one optional remote premise. Catalog growth must not change canonical selection order or create quadratic pair data.
 - Add a node only when it produces observable evidence that an existing node cannot express.
 - Record material research, routing, audit, or pixel failures before retrying. Do not lower a gate to accept a failed image.

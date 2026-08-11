@@ -1,0 +1,975 @@
+{
+  "schema": "moe_fantasy_claim_dossiers.v2",
+  "generated_on": "2026-08-11",
+  "dossier_count": 2,
+  "source_claim_count": 15,
+  "dossiers": [
+    {
+      "id": "moe_sensory_deprivation_magic",
+      "label_ko": "감각차단 마법",
+      "label_en": "sensory-suppression magic",
+      "aliases": [
+        "감각 차단 마법",
+        "감각차단 함정",
+        "感覚遮断魔法",
+        "感覚遮断落とし穴",
+        "sensory-blocking magic"
+      ],
+      "research_questions": [
+        "Which channel is suppressed: pain experience, touch or pressure, proprioception, sight, hearing, smell or taste, or a declared multimodal combination?",
+        "Who causes the suppression: the subject, another caster, an environmental trap, or an artifact?",
+        "Is the intended phase activation, maintained information asymmetry, release, or delayed recognition?",
+        "What visible evidence distinguishes an awake subject attending elsewhere from hypnosis, sleep, paralysis, or stopped time?",
+        "Can one composition establish the subject, suppression boundary, simultaneous hidden event, and consequence, or is a sequence required?",
+        "Which claims are request metadata because a still image cannot establish subjective sensation or awareness?"
+      ],
+      "intent_boundaries": {
+        "core_intent": "An awake subject continues a visible activity while one or more explicitly selected sensory channels are fictionally suppressed, creating a contrast between the subject's displayed attention and a simultaneous event outside the available information channel.",
+        "included": [
+          "channel-selective suppression with an explicit affected body region",
+          "self-cast, other-cast, trap-triggered, and artifact-mediated variants",
+          "single-frame split-level or cutaway staging of simultaneous information",
+          "two- or three-phase activation, hidden event, and release or recognition sequences",
+          "calm, distracted, suspicious, or post-release visible reactions as presentation choices"
+        ],
+        "distinct_concepts": [
+          "Blindfolds and ear protection physically occlude channels but do not by themselves establish magic or loss of all sensation.",
+          "Analgesia or absence of reported pain is not equivalent to loss of touch, proprioception, sight, or hearing.",
+          "Hypnosis changes attention or response under a different fictional mechanism; time stop removes simultaneity for the stopped subject; sleep removes the awake-state contrast.",
+          "A calm face shows a displayed expression, not the subject's internal awareness, pain state, or knowledge.",
+          "The phrase is attested in contemporary creator titles and fan discussion, but the available sources do not establish a stable, standardized genre taxonomy."
+        ],
+        "term_limits": [
+          "The origin record uses broad language equivalent to all senses while also showing continued visual interaction; implementation must therefore ask for or infer a narrower channel scope from explicit cues instead of treating all senses as one default.",
+          "Pain, nociception, somatic touch, and proprioception are separate fields and must not be collapsed into a single factual sensory switch.",
+          "The historical-popularity claim in the origin blog is not independently verified and must not control candidate selection."
+        ]
+      },
+      "typed_candidates": [
+        {
+          "id": "sdm_channel_phase_router",
+          "role": "router",
+          "facet": "mechanism_and_phase",
+          "realization": "Selects channel scope, affected region, source of the effect, and activation, maintained, or release phase from explicit request cues.",
+          "prompt_operation_en": "Interpret the requested sensory suppression as {channel_scope} affecting {affected_scope} during {narrative_phase}, caused by {effect_source}, and keep every visible task compatible with the channels that remain available.",
+          "novelty": 0,
+          "required_evidence": [
+            "declared or strongly cued channel scope",
+            "declared affected region or whole-body scope",
+            "declared or visible effect source when mechanism matters"
+          ],
+          "evidence_phrases_en": [
+            "one explicitly selected sensory channel",
+            "a clearly bounded affected body region",
+            "a visible spell source, trap trigger, or artifact when required"
+          ],
+          "bridge_types": [],
+          "selection_conditions": [
+            "Activate only when sensory suppression or 感覚遮断 is requested.",
+            "Route an active visual or auditory task to a somatic or pain-channel variant unless the request explicitly defines a contradictory fantasy rule."
+          ],
+          "claim_boundary": "The router preserves requested fictional state; it does not infer subjective sensory loss from pixels."
+        },
+        {
+          "id": "sdm_suppression_field_boundary",
+          "role": "visual_atom",
+          "facet": "effect_boundary",
+          "realization": "A source-linked magic field, ring, or channel-specific glyph system visibly encloses the selected body region and has a clear onset boundary.",
+          "prompt_operation_en": "Show a source-linked magical field boundary enclosing {affected_scope}, with a distinct viewer-readable symbol for {channel_scope} and a visible onset edge instead of an undifferentiated aura.",
+          "novelty": 1,
+          "required_evidence": [
+            "effect source or trigger",
+            "spatially bounded affected region",
+            "channel-specific visual coding rather than an unexplained generic aura"
+          ],
+          "evidence_phrases_en": [
+            "a spell path or trap trigger connected to the field",
+            "a closed luminous boundary around the selected body region",
+            "a distinct eye, ear, touch, or body-position channel glyph"
+          ],
+          "bridge_types": [
+            "mechanics",
+            "state_change"
+          ],
+          "selection_conditions": [
+            "Use local boundaries for lower-body or limb suppression.",
+            "Use multiple distinct channel marks only when multimodal suppression is explicitly selected."
+          ],
+          "claim_boundary": "Glyphs externalize a fantasy rule for the viewer; they are not scientific evidence of sensation loss."
+        },
+        {
+          "id": "sdm_attending_elsewhere_upper_state",
+          "role": "visual_atom",
+          "facet": "visible_attention",
+          "realization": "The awake subject visibly attends to a safe task or object while the suppressed region remains outside that task's feedback loop.",
+          "prompt_operation_en": "Keep the subject visibly awake and absorbed in {safe_visible_task}, with gaze and hands committed to that task while no pose or gaze vector responds to the simultaneous hidden event.",
+          "novelty": 0,
+          "required_evidence": [
+            "open or otherwise awake eyes",
+            "gaze and hands committed to a visible task",
+            "no visible response vector toward the simultaneous hidden event"
+          ],
+          "evidence_phrases_en": [
+            "awake eyes and an alert upright head",
+            "gaze and both working hands anchored to one safe task",
+            "no gaze, recoil, or reach toward the hidden event"
+          ],
+          "bridge_types": [
+            "motivation",
+            "consequence"
+          ],
+          "selection_conditions": [
+            "Pair with a separately visible simultaneous event.",
+            "Choose a task compatible with the channels that remain available."
+          ],
+          "claim_boundary": "The atom establishes displayed attention and non-response in the depicted instant, not internal unawareness or absence of pain."
+        },
+        {
+          "id": "sdm_parallel_hidden_event_cutaway",
+          "role": "visual_atom",
+          "facet": "single_frame_relation",
+          "realization": "A split-level, cutaway, or transparent architectural view aligns the calm visible subject with a simultaneous event beyond an occluding floor, pit rim, wall, or field boundary.",
+          "prompt_operation_en": "Compose one split-level cutaway: place the awake task-focused subject above the occluding plane, align the affected body region through that plane, and reveal the simultaneous hidden event below within the same continuous space.",
+          "novelty": 2,
+          "required_evidence": [
+            "one continuous spatial anchor across visible and hidden regions",
+            "clear occluding plane or cutaway convention",
+            "subject, event, and affected body region legible in one composition",
+            "lighting or action cues consistent with simultaneity"
+          ],
+          "evidence_phrases_en": [
+            "one continuous body or architectural axis across both levels",
+            "a crisp floor, pit-rim, wall, or field cross-section",
+            "the subject, affected region, and hidden event visible at once",
+            "matching light direction and synchronized action traces across both levels"
+          ],
+          "bridge_types": [
+            "mechanics",
+            "consequence",
+            "state_change"
+          ],
+          "selection_conditions": [
+            "Prefer when the user asks for one image or an above-versus-below contrast.",
+            "Reserve adequate frame area for both the visible task and hidden event."
+          ],
+          "claim_boundary": "The cutaway is a viewer-facing narrative convention, not a literal transparent-world claim unless requested."
+        },
+        {
+          "id": "sdm_release_recognition_sequence",
+          "role": "visual_atom",
+          "facet": "narrative_phase",
+          "realization": "A two- or three-panel sequence shows suppression active, a simultaneous event or accumulated trace, then field release and a visible change in attention or response.",
+          "prompt_operation_en": "Build a three-phase sequence with the same subject and setting: field activation, maintained suppression with a simultaneous event trace, then field release followed by a visible redirection of attention or response.",
+          "novelty": 2,
+          "required_evidence": [
+            "stable subject identity across panels",
+            "field-on and field-off distinction",
+            "event trace preserved into the release panel",
+            "visible response after release"
+          ],
+          "evidence_phrases_en": [
+            "the same face, costume anchors, and body marks in every panel",
+            "a luminous field-on state followed by an unlit field-off state",
+            "one unchanged consequence trace carried into the final panel",
+            "a final gaze turn, stopped hand, recoil, or reach toward the revealed event"
+          ],
+          "bridge_types": [
+            "state_change",
+            "consequence",
+            "identity_contrast"
+          ],
+          "selection_conditions": [
+            "Use when duration, delayed discovery, or a before-and-after contrast is requested.",
+            "Keep panel order explicit through framing and phase cues."
+          ],
+          "claim_boundary": "The sequence supports a depicted state transition; the precise subjective experience remains request-authored."
+        }
+      ],
+      "preference_axes": [
+        {
+          "id": "channel_scope",
+          "values": [
+            "pain_experience_only",
+            "touch_pressure",
+            "proprioception",
+            "sight",
+            "hearing",
+            "smell_taste",
+            "declared_multimodal"
+          ],
+          "cues": [
+            "통각 or pain only",
+            "촉각 or touch",
+            "몸 위치 감각 or proprioception",
+            "시각 or 청각",
+            "모든 감각, which requires an explicit fantasy rule"
+          ],
+          "effect": "Changes the effect symbols, compatible visible task, body-control presentation, and whether a single frame can remain coherent."
+        },
+        {
+          "id": "effect_source",
+          "values": [
+            "self_cast",
+            "other_caster",
+            "environmental_trap",
+            "artifact_mediated"
+          ],
+          "cues": [
+            "스스로 걸었다",
+            "시전자",
+            "함정 or pitfall",
+            "저주받은 장치 or artifact"
+          ],
+          "effect": "Determines actor, instrument, trigger, and mechanics bridge."
+        },
+        {
+          "id": "affected_scope",
+          "values": [
+            "single_limb",
+            "lower_body",
+            "local_zone",
+            "whole_body"
+          ],
+          "cues": [
+            "팔 or 다리만",
+            "하반신",
+            "접촉 부위",
+            "전신"
+          ],
+          "effect": "Controls field boundary, crop, and continuity requirements."
+        },
+        {
+          "id": "narrative_phase",
+          "values": [
+            "activation",
+            "maintained_parallel_contrast",
+            "suspicion",
+            "release_recognition"
+          ],
+          "cues": [
+            "막 발동",
+            "모르는 동안",
+            "뭔가 이상함을 느끼는",
+            "해제된 순간 or 뒤늦게"
+          ],
+          "effect": "Selects still-image event timing or a sequential candidate."
+        },
+        {
+          "id": "reveal_format",
+          "values": [
+            "single_cutaway",
+            "single_split_level",
+            "two_panel_parallel",
+            "three_phase_sequence"
+          ],
+          "cues": [
+            "한 컷",
+            "위아래 동시에",
+            "병렬 패널",
+            "전개 or 변화 과정"
+          ],
+          "effect": "Allocates frame area and determines how simultaneity or change is communicated."
+        }
+      ],
+      "observable_evidence": {
+        "single_frame": [
+          "an awake subject with a visible attention target",
+          "a spatially explicit suppression boundary tied to the selected body region",
+          "a channel-specific viewer-facing effect code",
+          "an occluding plane or cutaway connecting the visible and hidden regions",
+          "a simultaneous event with a clear actor, target, and local consequence",
+          "lack of a visible response vector toward that event in the depicted instant"
+        ],
+        "narrative_or_multiframe": [
+          "activation and release of the effect",
+          "duration or repeated failure to notice",
+          "accumulation of consequences",
+          "delayed recognition after sensory access returns",
+          "comparison with hypnosis, stopped time, or ordinary physical occlusion"
+        ],
+        "not_established_by_one_frame": [
+          "subjective absence of pain or sensation",
+          "complete unawareness or knowledge state",
+          "voluntary versus involuntary casting unless the trigger is shown",
+          "duration, reversibility, or later memory",
+          "loss of all senses from a blindfold, calm face, or generic aura alone"
+        ]
+      },
+      "frame_camera_implications": {
+        "single_frame": [
+          "Use a horizontal split-level or architectural cutaway when above-versus-below simultaneity is the primary appeal.",
+          "Align the same body or spatial anchor across the occluding plane so the hidden event cannot be misread as a separate scene.",
+          "Use shallow three-quarter or near-orthographic staging to keep the field boundary and hidden event legible."
+        ],
+        "multi_frame": [
+          "Use activation, maintained contrast, and release or recognition as the default three-phase order.",
+          "Preserve identity, field geometry, event residue, and environment across panels.",
+          "A two-panel parallel layout may show two simultaneous facets; a sequential layout should use an explicit phase change."
+        ],
+        "camera": [
+          "A medium-wide view is needed to include the attention task, body-region boundary, and hidden event.",
+          "A low pit-rim camera favors the subject but hides the simultaneous event; a cross-section favors causal legibility.",
+          "Close-ups are suitable only as supporting panels for glyph activation or post-release response."
+        ],
+        "crop_and_occlusion": [
+          "Keep the affected region's entry into the occluding plane visible.",
+          "Reserve separate silhouette space for the subject's hands, attention target, and effect source.",
+          "Treat the floor, rim, or wall as an intentional information boundary rather than an accidental crop."
+        ]
+      },
+      "compatibility": {
+        "compatible_with": [
+          "single_frame_narrative_compression",
+          "causal transformation or state-change staging",
+          "pitfall and dungeon-trap scenes",
+          "attention hierarchy and perceived-affect cue clusters",
+          "environmental cutaway or cross-section composition"
+        ],
+        "conditional_combinations": [
+          "Quicksand or sinking can share an occluding surface, but an active bracing struggle conflicts with a subject who lacks proprioceptive feedback unless the remaining-channel rule is explicit.",
+          "A phone, book, or instrument can anchor calm attention only when the selected suppression leaves the required sight, hearing, and motor feedback available.",
+          "Other-caster scenes require enough frame area for caster, target, effect path, and hidden event; otherwise the caster may remain request metadata."
+        ],
+        "semantic_conflicts": [
+          "all-senses suppression combined with ordinary visual gameplay or precise unsupported movement",
+          "time stop when the intended appeal depends on simultaneous ongoing action",
+          "sleep or unconsciousness when the intended contrast requires an awake subject",
+          "blindfold-only staging when a magical or channel-selective mechanism is required"
+        ]
+      },
+      "source_claims": [
+        {
+          "id": "sdm_claim_01",
+          "source_kind": "origin_record",
+          "title": "감각차단 마법편",
+          "url": "https://megatonjang.tistory.com/1169",
+          "claim": "The origin record presents the motif as an awake subject whose sensation is suppressed while a simultaneous event occurs outside the subject's available information, with an above-versus-below contrast shown in one composition.",
+          "confidence": "high",
+          "supports": [
+            "core_intent",
+            "sdm_parallel_hidden_event_cutaway",
+            "maintained_parallel_contrast"
+          ],
+          "limitation": "This is a fan commentary and origin record, not an authoritative taxonomy or preference study."
+        },
+        {
+          "id": "sdm_claim_02",
+          "source_kind": "origin_record",
+          "title": "감각차단 마법편",
+          "url": "https://megatonjang.tistory.com/1169",
+          "claim": "The record distinguishes its motif from hypnosis and stopped time by retaining an awake subject and an ongoing external world.",
+          "confidence": "medium",
+          "supports": [
+            "distinct_concepts",
+            "awake_state_contrast"
+          ],
+          "limitation": "The distinction is the author's account of a niche convention and is not independently standardized."
+        },
+        {
+          "id": "sdm_claim_03",
+          "source_kind": "origin_record",
+          "title": "감각차단 마법편",
+          "url": "https://megatonjang.tistory.com/1169",
+          "claim": "The record attributes a popularity increase to a particular recent work, but supplies insufficient bibliographic or comparative evidence to establish that history.",
+          "confidence": "low",
+          "supports": [
+            "term_limits"
+          ],
+          "limitation": "Retain only as an unverified history lead; do not use it as a runtime default."
+        },
+        {
+          "id": "sdm_claim_04",
+          "source_kind": "official_platform_editorial",
+          "title": "2026年2月版 pixiv投稿オリジナル読切マンガ月間ランキング",
+          "url": "https://www.pixivision.net/en/a/11529",
+          "claim": "pixivision's March 5, 2026 ranking lists an original manga titled 感覚遮断落とし穴, confirming current creator-facing occurrence of the phrase.",
+          "confidence": "high",
+          "supports": [
+            "aliases",
+            "contemporary_term_occurrence"
+          ],
+          "limitation": "A work title establishes occurrence, not a fixed genre definition or general popularity beyond that ranking."
+        },
+        {
+          "id": "sdm_claim_05",
+          "source_kind": "peer_reviewed_experiment",
+          "title": "Touching a Rubber Hand: Feeling of Body Ownership Is Associated with Activity in Multisensory Brain Areas",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC1395356/",
+          "claim": "In blindfolded participants, synchronized tactile and proprioceptive signals produced a somatic rubber-hand illusion, supporting that body ownership can depend on congruent multisensory integration rather than vision alone.",
+          "confidence": "high",
+          "supports": [
+            "factual_multisensory_baseline",
+            "channel_scope"
+          ],
+          "limitation": "The experiment does not establish magic, total sensory loss, or unawareness of unrelated events."
+        },
+        {
+          "id": "sdm_claim_06",
+          "source_kind": "peer_reviewed_clinical_experiment",
+          "title": "Visual proprioception in the timing of movements: evidence from deafferentation",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/16543823/",
+          "claim": "Two participants with severe somatosensory deafferentation relied strongly on visual feedback for movement timing; performance worsened when visual access to the movement was reduced.",
+          "confidence": "high",
+          "supports": [
+            "movement_compatibility_boundary",
+            "channel_scope"
+          ],
+          "limitation": "The sample is two rare clinical cases and supports a mechanistic boundary, not a universal pose rule."
+        },
+        {
+          "id": "sdm_claim_07",
+          "source_kind": "professional_terminology_authority",
+          "title": "IASP Terminology",
+          "url": "https://www.iasp-pain.org/resources/terminology/",
+          "claim": "IASP defines pain as a personal sensory and emotional experience and nociception as neural encoding of noxious stimuli, explicitly stating that pain and nociception are different phenomena.",
+          "confidence": "high",
+          "supports": [
+            "pain_nociception_boundary",
+            "channel_scope"
+          ],
+          "limitation": "The terminology separates factual concepts; it does not prescribe a fictional magic system."
+        },
+        {
+          "id": "sdm_claim_08",
+          "source_kind": "peer_reviewed_visual_narrative_research",
+          "title": "Visual Narrative Structure",
+          "url": "https://onlinelibrary.wiley.com/doi/10.1111/cogs.12016",
+          "claim": "Panels can window selected conceptual information, and separate images can depict facets of a broader environment at the same time; sequential structure also supports event and consequence inference.",
+          "confidence": "high",
+          "supports": [
+            "reveal_format",
+            "frame_camera_implications",
+            "sdm_release_recognition_sequence"
+          ],
+          "limitation": "The paper supports visual-narrative organization, not the specific cutaway design or sensory-suppression trope."
+        }
+      ],
+      "factual_vs_fantasy_departure": {
+        "factual_baseline": [
+          {
+            "claim": "Body ownership and movement feedback are multisensory and channel-dependent.",
+            "source_claim_ids": [
+              "sdm_claim_05",
+              "sdm_claim_06"
+            ]
+          },
+          {
+            "claim": "Pain and nociception are not interchangeable with touch, proprioception, or every other sensory modality.",
+            "source_claim_ids": [
+              "sdm_claim_07"
+            ]
+          },
+          {
+            "claim": "Visual layouts can present simultaneous facets or ordered phases while omitting information from a panel.",
+            "source_claim_ids": [
+              "sdm_claim_08"
+            ]
+          }
+        ],
+        "fantasy_departures": [
+          "A magic field can switch a selected subjective channel on or off instantly and visibly.",
+          "The subject may retain alertness and precise motor control despite declared broad sensory loss.",
+          "The viewer may see a hidden simultaneous event through a literalized cutaway unavailable to the character.",
+          "Field release can produce immediate, author-defined recognition without a factual physiological model."
+        ],
+        "design_inferences": [
+          "Use channel-specific glyphs or field geometry to make the requested fictional rule legible; this is a visual convention inferred from the design problem.",
+          "Treat a visible safe task plus a separate event and non-response as evidence of attention contrast, not proof of subjective unawareness.",
+          "Prefer a local somatic or pain-channel variant when the scene also requires ordinary seeing, hearing, or precise task performance.",
+          "Use a sequence when release, duration, accumulation, or delayed recognition is material to the request."
+        ]
+      }
+    },
+    {
+      "id": "moe_quicksand_sinking",
+      "label_ko": "퀵샌드·유사에 빠짐",
+      "label_en": "quicksand entrapment and sinking peril",
+      "aliases": [
+        "퀵샌드",
+        "유사에 빠짐",
+        "늪에 빠짐",
+        "수렁",
+        "quicksand sinking",
+        "sinking peril"
+      ],
+      "research_questions": [
+        "Is the requested material saturated sand, living quicksand with a fragile crust, a creek-bed deposit, generic mud, or a declared fantasy bog?",
+        "Which stage matters: initial crust failure, partial penetration, immobilized entrapment, self-extraction effort, assisted extraction, or aftermath?",
+        "Which surface and grain cues distinguish quicksand from opaque water, ordinary mud, or dry dune sand?",
+        "How deep is the visible interface, and is that depth factualized or intentionally cinematic?",
+        "Does one frame need only establish current entrapment, or must a sequence establish progressive sinking or rescue outcome?",
+        "Which pose, camera, and prop relations make the material response and action chain legible?"
+      ],
+      "intent_boundaries": {
+        "core_intent": "A subject is partially entrapped in a saturated or otherwise explicitly fictional granular medium whose disturbed surface, collapsed structure, and resistance are visible through the body-material interaction.",
+        "included": [
+          "initial crust break and local collapse",
+          "knee-, thigh-, or waist-level partial entrapment",
+          "braced self-extraction effort",
+          "helper, rope, branch, or firm-edge assisted tension chains",
+          "single-frame peril, comic mishap, adventure tension, or explanatory cutaway",
+          "multi-frame onset, worsening stage, rescue contact, or aftermath"
+        ],
+        "distinct_concepts": [
+          "Quicksand is not synonymous with every swamp, bog, mud pool, or body of water.",
+          "The fragile cyanobacteria-cemented crust described for living quicksand is a specific natural subtype, not a universal quicksand surface.",
+          "Swimming and treading-water poses describe a fluid body, while quicksand entrapment requires a granular interface and resisted limbs.",
+          "One still can establish current depth and struggle but cannot prove continued descent, inevitability, duration, or rescue success.",
+          "Complete cinematic engulfment is a fantasy departure from the cited salt-lake quicksand experiment for a human-density body."
+        ],
+        "term_limits": [
+          "The Korean origin record groups 유사, 늪, and 수렁 as a broad peril motif; the physical material subtype must remain a separate implementation field.",
+          "A cracked surface is selected only for living-crust or explicitly brittle-surface variants.",
+          "A high-submersion fantasy variant must be labeled as a cinematic material rule rather than presented as the measured behavior of salt-lake quicksand."
+        ]
+      },
+      "typed_candidates": [
+        {
+          "id": "qs_material_stage_router",
+          "role": "router",
+          "facet": "material_and_phase",
+          "realization": "Selects material subtype, current depth, action phase, environmental anchor, and factualized or cinematic behavior from request cues.",
+          "prompt_operation_en": "Interpret the requested sinking scene as {material_subtype} at {entrapment_stage}, choose {action_mode} and {viewpoint}, and apply either the factualized partial-entrapment rule or an explicitly cinematic fantasy material rule.",
+          "novelty": 0,
+          "required_evidence": [
+            "material subtype or an explicit generic-fantasy choice",
+            "current entrapment stage",
+            "current action or stillness"
+          ],
+          "evidence_phrases_en": [
+            "one declared saturated-sand, living-crust, creek-bed, mud, or fantasy material",
+            "one explicit knee, thigh, waist, high-submersion, or aftermath stage",
+            "one visible stillness, bracing, reaching, assisted pull, or recovery action"
+          ],
+          "bridge_types": [],
+          "selection_conditions": [
+            "Route salt-lake, living-crust, creek-bed, mud, and fantasy-bog variants separately.",
+            "Keep progression and outcome unset when the request specifies only a current still."
+          ],
+          "claim_boundary": "The router preserves the chosen fictional material model; it does not infer future sinking from a current interface."
+        },
+        {
+          "id": "qs_living_crust_failure_collapse",
+          "role": "visual_atom",
+          "facet": "material_mechanics",
+          "realization": "A thin irregular crust breaks around the load, releases wetter material, and produces a local depression with radially displaced fine grains.",
+          "prompt_operation_en": "Show the subject's load breaking a thin irregular living-quicksand crust, with intact crust beyond the footprint, a collapsed wet center, and fine grains displaced radially from the entry point.",
+          "novelty": 1,
+          "required_evidence": [
+            "intact crust beyond the disturbed zone",
+            "cracked or collapsed rim",
+            "wet fine-grain suspension beneath the crust",
+            "load-centered displacement pattern"
+          ],
+          "evidence_phrases_en": [
+            "an unbroken pale crust outside the load zone",
+            "jagged cracks and a sagging collapsed rim",
+            "darker wet fine-grain suspension exposed beneath the crust",
+            "radial grain ridges and released water centered on the subject's load"
+          ],
+          "bridge_types": [
+            "mechanics",
+            "state_change",
+            "consequence"
+          ],
+          "selection_conditions": [
+            "Use only for living-crust or explicitly brittle-surface quicksand.",
+            "Prefer the onset or immediate aftermath phase."
+          ],
+          "claim_boundary": "The crust mechanism comes from one documented natural subtype and is not a generic property of all quicksand."
+        },
+        {
+          "id": "qs_partial_entrapment_interface",
+          "role": "visual_atom",
+          "facet": "body_material_state",
+          "realization": "The subject is partly submerged at a clearly deformed granular interface with clinging slurry, displaced grains, and continuous anatomy above the surface.",
+          "prompt_operation_en": "Show the subject partially entrapped to {entrapment_stage} in opaque saturated fine grains, with a depressed interface, clinging slurry at the contact line, and continuous torso alignment above the hidden lower body.",
+          "novelty": 0,
+          "required_evidence": [
+            "visible knee-, thigh-, or waist-level interface",
+            "fine-grain or slurry texture",
+            "surface depression or displacement around the body",
+            "material adhesion and body continuity"
+          ],
+          "evidence_phrases_en": [
+            "a clearly visible knee-, thigh-, or waist-level material line",
+            "opaque wet fine grains with a dense slurry sheen",
+            "a bowl-shaped depression and displaced surface around the torso or leg",
+            "clinging grit at the interface with aligned clothing seams and torso anatomy"
+          ],
+          "bridge_types": [
+            "state_change",
+            "consequence",
+            "mechanics"
+          ],
+          "selection_conditions": [
+            "Use as the primary candidate for a single-frame entrapment request.",
+            "Match interface depth to the selected factualized or cinematic behavior."
+          ],
+          "claim_boundary": "The atom establishes partial entrapment at one instant, not continuing descent or inability to escape."
+        },
+        {
+          "id": "qs_braced_extraction_action",
+          "role": "visual_atom",
+          "facet": "self_directed_action",
+          "realization": "Hands or forearms spread against the surface or a firm edge while the torso leans and the trapped limb creates a visible resisted pull through the granular medium.",
+          "prompt_operation_en": "Stage an active extraction attempt with palms or forearms spread on the surface or a firm edge, shoulders and torso forming one load path, and the granular interface deforming opposite the subject's pull direction.",
+          "novelty": 0,
+          "required_evidence": [
+            "actual palm, forearm, or firm-edge contact",
+            "load path from shoulders through braced arms",
+            "disturbed material around the trapped region",
+            "directionally consistent torso and gaze"
+          ],
+          "evidence_phrases_en": [
+            "both palms or forearms visibly pressing into the surface or firm edge",
+            "straightened or loaded arms connected through the shoulders and torso",
+            "compressed slurry and dragged grain furrows around the trapped region",
+            "torso lean and gaze aligned with the extraction direction"
+          ],
+          "bridge_types": [
+            "affordance",
+            "motivation",
+            "mechanics",
+            "consequence"
+          ],
+          "selection_conditions": [
+            "Use for active self-extraction or desperate-effort cues.",
+            "Allocate both hands and enough surface area for contact evidence."
+          ],
+          "claim_boundary": "The pose depicts an extraction attempt and visible resistance; it does not establish eventual success."
+        },
+        {
+          "id": "qs_assisted_extraction_tension_chain",
+          "role": "visual_atom",
+          "facet": "ensemble_relation",
+          "realization": "A helper or firm anchor connects to the trapped subject through a taut rope, branch, wrist grip, or tool while both bodies and the medium show one coherent tension direction.",
+          "prompt_operation_en": "Connect the trapped subject to a helper or firm anchor through one taut rope, branch, wrist grip, or tool, align both load-bearing poses on the same tension axis, and show the quicksand interface resisting that pull.",
+          "novelty": 1,
+          "required_evidence": [
+            "helper or firm environmental anchor",
+            "continuous contact or taut connector",
+            "opposed load-bearing poses",
+            "material response at the trapped subject"
+          ],
+          "evidence_phrases_en": [
+            "a helper planted on visibly firm ground or a fixed environmental anchor",
+            "one continuous taut rope, branch, wrist grip, or extraction tool",
+            "opposed leaning poses aligned on a single tension axis",
+            "a stretched interface, displaced grains, and clinging slurry at the trapped subject"
+          ],
+          "bridge_types": [
+            "affordance",
+            "mechanics",
+            "consequence"
+          ],
+          "selection_conditions": [
+            "Use only when assistance, rescue contact, or teamwork is requested.",
+            "Keep the helper on visibly firm ground or another declared anchor."
+          ],
+          "claim_boundary": "The candidate establishes an assisted action chain, not a completed rescue or a universal extraction method."
+        }
+      ],
+      "preference_axes": [
+        {
+          "id": "material_subtype",
+          "values": [
+            "salt_lake_quicksand",
+            "living_crust_quicksand",
+            "creek_bed_saturated_sand",
+            "generic_mud_or_bog",
+            "cinematic_fantasy_medium"
+          ],
+          "cues": [
+            "염호 or salt lake",
+            "얇은 껍질 or cracked crust",
+            "계곡 or creek bed",
+            "늪 or 진흙",
+            "판타지식 완전 침몰"
+          ],
+          "effect": "Changes surface texture, crust evidence, environmental anchor, and factual-departure status."
+        },
+        {
+          "id": "entrapment_stage",
+          "values": [
+            "first_break",
+            "knee_deep",
+            "thigh_deep",
+            "waist_deep",
+            "high_submersion_fantasy",
+            "post_extraction"
+          ],
+          "cues": [
+            "막 밟은 순간",
+            "무릎까지",
+            "허벅지까지",
+            "허리까지",
+            "목까지 or 점점 잠기는",
+            "빠져나온 뒤"
+          ],
+          "effect": "Controls crop, pose, material interface, and whether sequential evidence or fantasy departure is required."
+        },
+        {
+          "id": "action_mode",
+          "values": [
+            "stunned_stillness",
+            "braced_self_extraction",
+            "reach_for_anchor",
+            "assisted_tension_chain",
+            "aftermath_recovery"
+          ],
+          "cues": [
+            "얼어붙은 순간",
+            "허우적 or 버티기",
+            "나뭇가지에 손 뻗기",
+            "구조 or 동료",
+            "진흙투성이로 나온 뒤"
+          ],
+          "effect": "Selects hand allocation, relation roles, action vector, and phase."
+        },
+        {
+          "id": "tone",
+          "values": [
+            "adventure_suspense",
+            "comic_mishap",
+            "isolated_peril",
+            "scientific_cutaway",
+            "cinematic_fantasy"
+          ],
+          "cues": [
+            "모험",
+            "코믹",
+            "고립 or 절망",
+            "물리 설명",
+            "영화처럼"
+          ],
+          "effect": "Changes expression intensity, environment scale, framing, and factualized-versus-stylized material behavior."
+        },
+        {
+          "id": "viewpoint",
+          "values": [
+            "surface_level_three_quarter",
+            "high_three_quarter",
+            "profile_interface",
+            "explanatory_cross_section",
+            "sequential_progression"
+          ],
+          "cues": [
+            "수면 높이",
+            "위에서",
+            "옆모습",
+            "단면도",
+            "점점 or 과정"
+          ],
+          "effect": "Determines whether surface deformation, depth, action contact, or progression receives priority."
+        }
+      ],
+      "observable_evidence": {
+        "single_frame": [
+          "fine saturated grains or opaque slurry rather than transparent open water",
+          "a local depression, collapsed rim, or visibly displaced surface around the load",
+          "a clear body-material interface at the selected depth",
+          "wet grains or slurry adhering to exposed clothing and skin near the interface",
+          "braced limbs, a reach vector, or an assisted tension chain when action is selected",
+          "continuous anatomy above the opaque surface and consistent contact shadows"
+        ],
+        "narrative_or_multiframe": [
+          "initial stable surface followed by collapse",
+          "continued depth change or worsening entrapment",
+          "repeated effort, fatigue, or duration",
+          "arrival of help and completed extraction",
+          "material settling or environmental changes after the event"
+        ],
+        "not_established_by_one_frame": [
+          "continued sinking direction or speed",
+          "inevitable complete engulfment",
+          "inability to escape without assistance",
+          "how long the subject has been trapped",
+          "rescue success, failure, or later condition"
+        ]
+      },
+      "frame_camera_implications": {
+        "single_frame": [
+          "Use surface-level three-quarter framing to emphasize the body-material interface and braced contact.",
+          "Use high three-quarter framing to show the collapsed depression, radial displacement, and nearby anchor options.",
+          "Use a profile or explanatory cutaway only when depth or subsurface mechanism is more important than immediate drama."
+        ],
+        "multi_frame": [
+          "A physically legible sequence is stable or crusted surface, local collapse, then partial entrapment or assisted action.",
+          "Preserve clothing, residue, surface damage, and depth continuity across stages.",
+          "Use adjacent panels when actual progression or completed extraction is part of the claim."
+        ],
+        "camera": [
+          "A medium-wide frame should retain the interface, both hands, the immediate surface, and an environmental anchor.",
+          "A close face crop can support affect but cannot carry the exact quicksand claim without a wider material panel.",
+          "A high camera clarifies surface mechanics; a low camera increases isolation but reduces evidence of radial collapse."
+        ],
+        "crop_and_occlusion": [
+          "Opaque material intentionally hides the submerged anatomy, so continuity is carried by torso alignment, clothing entry, and surface deformation.",
+          "Keep the complete hand-surface or hand-anchor contact inside the frame when action is primary.",
+          "A full-body crop is incompatible with current partial submersion unless an explanatory cutaway or before-and-after panel is used."
+        ]
+      },
+      "compatibility": {
+        "compatible_with": [
+          "wet-clothing and material-residue continuity",
+          "ensemble rescue or shared-task staging",
+          "adventure, ruin, creek-bed, tidal-flat, salt-lake, and fantasy-bog environments",
+          "single-frame consequence traces",
+          "multi-panel state progression"
+        ],
+        "conditional_combinations": [
+          "Sensory-suppression magic can share the surface as an information boundary, but active struggle requires a channel configuration compatible with body control.",
+          "A living-crust fracture combines with first-break or immediate-collapse phases, not every established entrapment scene.",
+          "High submersion can be used for an explicitly cinematic fantasy medium while remaining marked as a departure from the salt-lake experiment.",
+          "Assisted scenes require a firm helper platform and one coherent tension direction."
+        ],
+        "semantic_conflicts": [
+          "clear-water swimming poses when granular entrapment is the intended mechanism",
+          "dry dune sand when the selected material is saturated quicksand",
+          "an unbroken pristine surface when a current collapse event is requested",
+          "complete disappearance presented as measured human behavior in salt-lake quicksand",
+          "simultaneous full-body standing or balance poses without a cutaway convention"
+        ]
+      },
+      "source_claims": [
+        {
+          "id": "qs_claim_01",
+          "source_kind": "origin_record",
+          "title": "외국인이 모에리뷰 요청하길래 해보는 리뷰",
+          "url": "https://megatonjang.tistory.com/526",
+          "claim": "The origin record groups quicksand, swamp, and mire imagery around partial submersion, desperate struggle, isolation, and an apparently worsening predicament.",
+          "confidence": "high",
+          "supports": [
+            "core_intent",
+            "preference_axes",
+            "isolated_peril"
+          ],
+          "limitation": "This supports the requested fan motif, not the physical equivalence of quicksand, swamp, mud, and mire."
+        },
+        {
+          "id": "qs_claim_02",
+          "source_kind": "origin_record",
+          "title": "외국인이 모에리뷰 요청하길래 해보는 리뷰",
+          "url": "https://megatonjang.tistory.com/526",
+          "claim": "The author explicitly says the motif was newly encountered and the account is tentative, so its taxonomic and popularity claims are weak evidence.",
+          "confidence": "high",
+          "supports": [
+            "term_limits",
+            "source_quality_boundary"
+          ],
+          "limitation": "The high confidence concerns what the page says about its own uncertainty, not confidence in its genre generalizations."
+        },
+        {
+          "id": "qs_claim_03",
+          "source_kind": "peer_reviewed_experiment",
+          "title": "Liquefaction of quicksand under stress",
+          "url": "https://www.nature.com/articles/437635a",
+          "claim": "Laboratory salt-lake quicksand became unstable under forced movement, first liquefying and then collapsing, which explains why a disturbed local surface and collapse trace are stronger cues than a flat mud plane.",
+          "confidence": "high",
+          "supports": [
+            "qs_partial_entrapment_interface",
+            "material_mechanics",
+            "state_change"
+          ],
+          "limitation": "The measured material and test conditions do not define every natural or fictional quicksand."
+        },
+        {
+          "id": "qs_claim_04",
+          "source_kind": "peer_reviewed_experiment",
+          "title": "Liquefaction of quicksand under stress",
+          "url": "https://www.nature.com/articles/437635a",
+          "claim": "The sinking test found that a human-density body could not be drawn completely into the tested salt-lake quicksand, establishing partial entrapment as the factualized default for that material.",
+          "confidence": "high",
+          "supports": [
+            "factual_depth_boundary",
+            "partial_entrapment_default"
+          ],
+          "limitation": "This does not rule on every natural basin, other hazards, or deliberately cinematic fantasy media."
+        },
+        {
+          "id": "qs_claim_05",
+          "source_kind": "peer_reviewed_field_study",
+          "title": "Living quicksand",
+          "url": "https://doi.org/10.1007/s10035-008-0117-z",
+          "claim": "A field study in Lençóis Maranhenses found a specific living-quicksand condition where cyanobacteria cemented an impermeable crust over a grain suspension and critical pressure caused crust failure and water release.",
+          "confidence": "high",
+          "supports": [
+            "living_crust_subtype",
+            "qs_living_crust_failure_collapse"
+          ],
+          "limitation": "This crust is a subtype-specific mechanism and must not be generalized to all quicksand."
+        },
+        {
+          "id": "qs_claim_06",
+          "source_kind": "peer_reviewed_field_study",
+          "title": "Living quicksand",
+          "url": "https://doi.org/10.1007/s10035-008-0117-z",
+          "claim": "After collapse, sedimentation and a rapid increase of shear strength could trap an intruder, and the studied condition did not restore itself once collapsed.",
+          "confidence": "high",
+          "supports": [
+            "entrapment_mechanics",
+            "persistent_collapse_trace"
+          ],
+          "limitation": "The result applies to the studied living-quicksand system rather than every saturated granular medium."
+        },
+        {
+          "id": "qs_claim_07",
+          "source_kind": "official_incident_record",
+          "title": "Quicksand Two Day Rescue during Winter Storms at Zion National Park",
+          "url": "https://www.nps.gov/zion/learn/news/quicksand-two-day-rescue-during-winter-storms-at-zion-national-park.htm",
+          "claim": "A documented 2019 incident involved one leg trapped to the knee in creek-bed quicksand and an unsuccessful self-release before a prolonged assisted extraction, showing that shallow-looking partial entrapment can still be substantial.",
+          "confidence": "high",
+          "supports": [
+            "knee_deep_variant",
+            "assisted_extraction_variant",
+            "partial_entrapment"
+          ],
+          "limitation": "A single incident validates possibility, not a universal depth, pose, or extraction sequence."
+        }
+      ],
+      "factual_vs_fantasy_departure": {
+        "factual_baseline": [
+          {
+            "claim": "Disturbed saturated granular material can liquefy and collapse locally, then resist extraction as it settles.",
+            "source_claim_ids": [
+              "qs_claim_03",
+              "qs_claim_06"
+            ]
+          },
+          {
+            "claim": "Partial rather than complete submersion is the supported human-density outcome in the cited salt-lake experiment.",
+            "source_claim_ids": [
+              "qs_claim_04"
+            ]
+          },
+          {
+            "claim": "A fragile biologically cemented crust is documented for a specific living-quicksand subtype.",
+            "source_claim_ids": [
+              "qs_claim_05"
+            ]
+          },
+          {
+            "claim": "Real partial leg entrapment requiring assisted extraction has been officially documented.",
+            "source_claim_ids": [
+              "qs_claim_07"
+            ]
+          }
+        ],
+        "fantasy_departures": [
+          "A human-density subject continues descending until fully engulfed in a cinematic medium.",
+          "Generic swamp mud, magical mire, and salt-lake quicksand share one invented material law.",
+          "The subsurface is shown through a transparent cutaway unavailable to an in-world camera.",
+          "Depth, suction, settling speed, and release can be authored independently of measured granular rheology."
+        ],
+        "design_inferences": [
+          "Use the collapsed depression, displaced wet grains, adhesion, and a clear interface as the minimum material-readable cluster.",
+          "Use a cracked thin crust only when the living-crust subtype or brittle-surface cue is selected.",
+          "Use knee-, thigh-, or waist-level partial entrapment for a factualized still; mark higher engulfment as cinematic fantasy.",
+          "Use a sequence when progressive sinking, repeated effort, or completed extraction is part of the requested claim.",
+          "Bind any helper or prop to a visible tension chain and material consequence instead of relying on proximity alone."
+        ]
+      }
+    }
+  ]
+}
