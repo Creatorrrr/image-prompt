@@ -28,10 +28,10 @@ from illustration_audit import (  # noqa: E402
     computed_pack_id,
 )
 from illustration_runtime import (  # noqa: E402
-    CONTRACT_VERSION,
     LEGACY_CONTRACT_VERSION,
     SECOND_LOOK_CARRIER_KINDS,
     SECOND_LOOK_RISK_FLAGS,
+    V2_CONTRACT_VERSION,
     ResolutionError,
     build_candidate_pack,
     canonical_json_bytes,
@@ -54,7 +54,11 @@ from validate_illustration_assets import (  # noqa: E402
 
 
 def _jsonl(path: Path) -> list[dict[str, object]]:
-    return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+    return [
+        json.loads(line)
+        for line in path.read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    ]
 
 
 def _evidence_phrase(field: str, prefix: str) -> str:
@@ -122,7 +126,7 @@ def _valid_composed(pack: dict[str, object]) -> dict[str, object]:
             "protected_ip_references": [],
         },
     }
-    if pack.get("contract_version") == CONTRACT_VERSION:
+    if pack.get("contract_version") == V2_CONTRACT_VERSION:
         primary = {
             "carrier_kind": "object_relation",
             "carrier_phrase": "one broad cracked-wrench silhouette",
@@ -172,6 +176,7 @@ class SubcultureIllustrationContractV1Tests(unittest.TestCase):
             format_id="ensemble_key_art",
             seed=42,
             creativity=0.0,
+            contract_version=V2_CONTRACT_VERSION,
             assets=cls.assets,
         )
         cls.valid_composed = _valid_composed(cls.audit_pack)
@@ -186,7 +191,9 @@ class SubcultureIllustrationContractV1Tests(unittest.TestCase):
         result = audit_composed_prompt(pack or self.audit_pack, composed)
         self.assertEqual("fail", result["status"], result)
         self.assertEqual([], result["integrity_errors"], result)
-        self.assertIn(expected_check, {item["check"] for item in result["failures"]}, result)
+        self.assertIn(
+            expected_check, {item["check"] for item in result["failures"]}, result
+        )
         return result
 
     def test_asset_validator_passes_with_frozen_counts(self) -> None:
@@ -202,7 +209,9 @@ class SubcultureIllustrationContractV1Tests(unittest.TestCase):
             result["role_counts"],
         )
 
-    def test_generation_retry_policy_includes_three_unchanged_refusal_retries(self) -> None:
+    def test_generation_retry_policy_includes_three_unchanged_refusal_retries(
+        self,
+    ) -> None:
         result = validate_generation_retry_policy(ASSET_ROOT)
         self.assertEqual("pass", result["status"])
         self.assertEqual(3, result["max_unchanged_retries_after_initial"])
@@ -215,10 +224,22 @@ class SubcultureIllustrationContractV1Tests(unittest.TestCase):
         policy = json.loads(source.read_text(encoding="utf-8"))
         mutations = (
             ("retry count", "exactly three", "max_unchanged_retries_after_initial", 2),
-            ("policy refusal", "outcomes mismatch", "retryable_no_image_outcomes", [
-                value for value in policy["retryable_no_image_outcomes"] if value != "policy_refusal"
-            ]),
-            ("prompt rewrite", "no_prompt_rewrite", "no_prompt_rewrite_between_retries", False),
+            (
+                "policy refusal",
+                "outcomes mismatch",
+                "retryable_no_image_outcomes",
+                [
+                    value
+                    for value in policy["retryable_no_image_outcomes"]
+                    if value != "policy_refusal"
+                ],
+            ),
+            (
+                "prompt rewrite",
+                "no_prompt_rewrite",
+                "no_prompt_rewrite_between_retries",
+                False,
+            ),
         )
         for label, expected, field, value in mutations:
             with self.subTest(case=label), tempfile.TemporaryDirectory() as temp_dir:
@@ -235,7 +256,9 @@ class SubcultureIllustrationContractV1Tests(unittest.TestCase):
             Path(illustration_audit_module.__file__).resolve(),
         )
 
-    def test_all_24_frozen_requests_resolve_exact_route_variant_and_sparse_edge(self) -> None:
+    def test_all_24_frozen_requests_resolve_exact_route_variant_and_sparse_edge(
+        self,
+    ) -> None:
         self.assertEqual(24, len(self.holdout))
         seen_topics: set[str] = set()
         for case in self.holdout:
@@ -243,6 +266,7 @@ class SubcultureIllustrationContractV1Tests(unittest.TestCase):
                 pack = build_candidate_pack(
                     str(case["request_ko"]),
                     seed=int(case["seed"]),
+                    contract_version=V2_CONTRACT_VERSION,
                     assets=self.assets,
                 )
                 request = pack["request_contract"]
@@ -254,18 +278,27 @@ class SubcultureIllustrationContractV1Tests(unittest.TestCase):
 
                 nodes = grammar["runtime_nodes"]
                 primary = [node for node in nodes if node["selected_role"] == "primary"]
-                supports = [node for node in nodes if node["selected_role"] == "support"]
+                supports = [
+                    node for node in nodes if node["selected_role"] == "support"
+                ]
                 self.assertEqual(1, len(primary))
                 self.assertLessEqual(len(supports), 2)
-                self.assertTrue(all(node["node_type"] == "visual_atom" for node in nodes))
                 self.assertTrue(
-                    all(profile["family_id"] in node["format_family_ids"] for node in nodes)
+                    all(node["node_type"] == "visual_atom" for node in nodes)
+                )
+                self.assertTrue(
+                    all(
+                        profile["family_id"] in node["format_family_ids"]
+                        for node in nodes
+                    )
                 )
 
                 edge = grammar["selected_edge"]
                 self.assertIn(edge["id"], grammar["compatible_edge_ids"])
                 self.assertEqual(grammar["primary_runtime_id"], edge["primary_node_id"])
-                self.assertCountEqual(grammar["support_runtime_ids"], edge["support_node_ids"])
+                self.assertCountEqual(
+                    grammar["support_runtime_ids"], edge["support_node_ids"]
+                )
                 self.assertIn(profile["family_id"], edge["format_family_ids"])
         self.assertEqual(set(self.assets.routes_by_id), seen_topics)
 
@@ -273,6 +306,7 @@ class SubcultureIllustrationContractV1Tests(unittest.TestCase):
         case = self.holdout[4]
         kwargs = {
             "seed": int(case["seed"]),
+            "contract_version": V2_CONTRACT_VERSION,
             "assets": self.assets,
         }
         first = build_candidate_pack(str(case["request_ko"]), **kwargs)
@@ -280,12 +314,15 @@ class SubcultureIllustrationContractV1Tests(unittest.TestCase):
         self.assertEqual(first["pack_id"], second["pack_id"])
         self.assertEqual(canonical_json_bytes(first), canonical_json_bytes(second))
 
-    def test_default_pack_uses_balanced_creativity_without_high_creative_development(self) -> None:
+    def test_default_pack_uses_balanced_creativity_without_high_creative_development(
+        self,
+    ) -> None:
         pack = build_candidate_pack(
             "성인 수선사가 망가진 기상 장치를 복구하는 일러스트를 만들어줘.",
             topic="single_frame_narrative_compression",
             format_id="single_illustration",
             seed=77,
+            contract_version=V2_CONTRACT_VERSION,
             assets=self.assets,
         )
         contract = pack["authorial_contract"]
@@ -303,6 +340,7 @@ class SubcultureIllustrationContractV1Tests(unittest.TestCase):
             format_id="single_illustration",
             seed=77,
             creativity=0.5,
+            contract_version=V2_CONTRACT_VERSION,
             assets=self.assets,
         )
         contract = pack["authorial_contract"]
@@ -323,7 +361,9 @@ class SubcultureIllustrationContractV1Tests(unittest.TestCase):
                 resolved = resolve_request(concept, assets=self.assets)
                 self.assertEqual("format_default", resolved.route_source)
                 self.assertEqual("fallback", resolved.format_source)
-                self.assertEqual("single_frame_narrative_compression", resolved.route["route_id"])
+                self.assertEqual(
+                    "single_frame_narrative_compression", resolved.route["route_id"]
+                )
                 self.assertEqual("single_illustration", resolved.variant["id"])
                 self.assertEqual((), resolved.matched_rule_ids)
 
@@ -354,7 +394,7 @@ class SubcultureIllustrationContractV1Tests(unittest.TestCase):
         self.assertEqual([], result["failures"])
 
     def test_v2_pack_exposes_closed_second_look_contract(self) -> None:
-        self.assertEqual(CONTRACT_VERSION, self.audit_pack["contract_version"])
+        self.assertEqual(V2_CONTRACT_VERSION, self.audit_pack["contract_version"])
         composition = self.audit_pack["composition_contract"]
         self.assertEqual(
             "subculture-illustration-composed-prompt/v2",
@@ -399,8 +439,12 @@ class SubcultureIllustrationContractV1Tests(unittest.TestCase):
     def test_v1_and_v2_prompt_qualification_are_separate_and_valid(self) -> None:
         legacy = validate_legacy_prompt_qualification(ASSET_ROOT, self.assets)
         current = validate_prompt_qualification(ASSET_ROOT, self.assets)
-        self.assertEqual("subculture-illustration-prompt-qualification/v1", legacy["schema"])
-        self.assertEqual("subculture-illustration-prompt-qualification/v2", current["schema"])
+        self.assertEqual(
+            "subculture-illustration-prompt-qualification/v1", legacy["schema"]
+        )
+        self.assertEqual(
+            "subculture-illustration-prompt-qualification/v2", current["schema"]
+        )
         self.assertEqual(24, legacy["case_count"])
         self.assertEqual(24, current["case_count"])
 
@@ -454,13 +498,21 @@ class SubcultureIllustrationContractV1Tests(unittest.TestCase):
                 with self.assertRaisesRegex(ValidationFailure, expected):
                     validate_render_v2_preflight(copied_assets, self.assets)
 
-    def test_aggregate_validator_does_not_hide_partial_pixel_qualification(self) -> None:
+    def test_aggregate_validator_does_not_hide_partial_pixel_qualification(
+        self,
+    ) -> None:
         summary = validate_all(ASSET_ROOT)
         self.assertEqual("pass", summary["status"])
         self.assertEqual("pass", summary["product_qualification_status"])
-        self.assertEqual("partial", summary["render_qualification"]["qualification_status"])
-        self.assertEqual("partial", summary["render_v2_qualification"]["qualification_status"])
-        self.assertEqual("pass", summary["render_v3_qualification"]["qualification_status"])
+        self.assertEqual(
+            "partial", summary["render_qualification"]["qualification_status"]
+        )
+        self.assertEqual(
+            "partial", summary["render_v2_qualification"]["qualification_status"]
+        )
+        self.assertEqual(
+            "pass", summary["render_v3_qualification"]["qualification_status"]
+        )
 
     def test_case01_v2_successor_preserves_both_failed_roles(self) -> None:
         summary = validate_render_v2_qualification(ASSET_ROOT, self.assets)
@@ -582,7 +634,9 @@ class SubcultureIllustrationContractV1Tests(unittest.TestCase):
         fallback = composed["second_look_plan"]["fallback_carrier"]
         primary["carrier_kind"] = "projected_form"
         primary["carrier_phrase"] = "two overlapping hand shadows"
-        primary["consequence_phrase"] = "Two overlapping hand shadows merge above the tool"
+        primary["consequence_phrase"] = (
+            "Two overlapping hand shadows merge above the tool"
+        )
         primary["risk_flags"] = [
             "compound_anatomy",
             "overlapping_multi_limb_projection",
@@ -601,7 +655,9 @@ class SubcultureIllustrationContractV1Tests(unittest.TestCase):
         underdeclared = copy.deepcopy(self.valid_composed)
         primary = underdeclared["second_look_plan"]["primary_carrier"]
         primary["carrier_phrase"] = "two overlapping hand shadows"
-        primary["consequence_phrase"] = "Two overlapping hand shadows merge above the tool"
+        primary["consequence_phrase"] = (
+            "Two overlapping hand shadows merge above the tool"
+        )
         underdeclared["prompt_en"] += (
             " two overlapping hand shadows."
             " Two overlapping hand shadows merge above the tool."
@@ -616,15 +672,15 @@ class SubcultureIllustrationContractV1Tests(unittest.TestCase):
         self.assertEqual("pass", result["status"], result)
 
     def test_high_creativity_plan_binds_selected_proposal_exactly(self) -> None:
-        record = _jsonl(
-            ASSET_ROOT / "prompt_qualification_v2" / "cases_01_04.jsonl"
-        )[0]
+        record = _jsonl(ASSET_ROOT / "prompt_qualification_v2" / "cases_01_04.jsonl")[0]
         pack = record["candidate_pack"]
         valid = record["composed"]
         self.assertEqual("pass", audit_composed_prompt(pack, valid)["status"])
 
         wrong_proposal = copy.deepcopy(valid)
-        wrong_proposal["second_look_plan"]["selected_proposal_id"] = "proposal_01_rejected"
+        wrong_proposal["second_look_plan"]["selected_proposal_id"] = (
+            "proposal_01_rejected"
+        )
         self.assert_composed_failure(
             wrong_proposal,
             "second_look_proposal_binding",
@@ -632,7 +688,9 @@ class SubcultureIllustrationContractV1Tests(unittest.TestCase):
         )
 
         invented_consequence = copy.deepcopy(valid)
-        replacement = "An invented consequence appears only to test exact proposal binding"
+        replacement = (
+            "An invented consequence appears only to test exact proposal binding"
+        )
         invented_consequence["second_look_plan"]["fallback_carrier"][
             "consequence_phrase"
         ] = replacement
@@ -644,7 +702,10 @@ class SubcultureIllustrationContractV1Tests(unittest.TestCase):
         )
 
         self.assertTrue(
-            any("cannot prove rendered pixel salience" in item for item in record["audit"]["limits"])
+            any(
+                "cannot prove rendered pixel salience" in item
+                for item in record["audit"]["limits"]
+            )
         )
 
     def test_post_render_pixel_review_is_not_a_pre_render_format_phrase(self) -> None:
@@ -654,7 +715,9 @@ class SubcultureIllustrationContractV1Tests(unittest.TestCase):
             "rendered_pixel_review",
             profile["required_format_evidence_fields"],
         )
-        self.assertNotIn("rendered_pixel_review", self.valid_composed["format_evidence"])
+        self.assertNotIn(
+            "rendered_pixel_review", self.valid_composed["format_evidence"]
+        )
         result = audit_composed_prompt(self.audit_pack, self.valid_composed)
         self.assertEqual("pass", result["status"], result)
 
@@ -669,19 +732,31 @@ class SubcultureIllustrationContractV1Tests(unittest.TestCase):
         result = audit_composed_prompt(mutated_pack, composed)
         self.assertEqual("error", result["status"], result)
         format_errors = [
-            item for item in result["integrity_errors"] if item["check"] == "format_contract"
+            item
+            for item in result["integrity_errors"]
+            if item["check"] == "format_contract"
         ]
         self.assertTrue(
-            any("rendered_pixel_review" in item.get("fields", []) for item in format_errors),
+            any(
+                "rendered_pixel_review" in item.get("fields", [])
+                for item in format_errors
+            ),
             result,
         )
 
-    def test_named_style_guard_distinguishes_subject_from_creator_reference(self) -> None:
+    def test_named_style_guard_distinguishes_subject_from_creator_reference(
+        self,
+    ) -> None:
         generic_subject = copy.deepcopy(self.valid_composed)
-        generic_subject["prompt_en"] += " Original illustration of an adult artifact restorer."
+        generic_subject["prompt_en"] += (
+            " Original illustration of an adult artifact restorer."
+        )
         generic_result = audit_composed_prompt(self.audit_pack, generic_subject)
         self.assertFalse(
-            any(item["check"] == "named_style_reference" for item in generic_result["failures"]),
+            any(
+                item["check"] == "named_style_reference"
+                for item in generic_result["failures"]
+            ),
             generic_result,
         )
 
@@ -689,7 +764,9 @@ class SubcultureIllustrationContractV1Tests(unittest.TestCase):
         named_creator["prompt_en"] += " Borrow the art of Hayao Miyazaki."
         self.assert_composed_failure(named_creator, "named_style_reference")
 
-    def test_render_review_closes_frozen_views_without_hiding_the_failed_case(self) -> None:
+    def test_render_review_closes_frozen_views_without_hiding_the_failed_case(
+        self,
+    ) -> None:
         summary = validate_render_qualification(ASSET_ROOT, self.assets)
         self.assertEqual("partial", summary["qualification_status"])
         self.assertEqual(6, summary["case_count"])
@@ -698,11 +775,15 @@ class SubcultureIllustrationContractV1Tests(unittest.TestCase):
         self.assertFalse(summary["local_artifacts_verified"])
 
         review = json.loads(
-            (ASSET_ROOT / "render_illustration_quality_visual_review_v1.json").read_text(
-                encoding="utf-8"
-            )
+            (
+                ASSET_ROOT / "render_illustration_quality_visual_review_v1.json"
+            ).read_text(encoding="utf-8")
         )
-        failed = [case for case in review["cases"] if case["qualification_status"] == "fail_repair_exhausted"]
+        failed = [
+            case
+            for case in review["cases"]
+            if case["qualification_status"] == "fail_repair_exhausted"
+        ]
         self.assertEqual(1, len(failed))
         self.assertIsNone(failed[0]["final_image"])
         self.assertEqual(2, failed[0]["attempt_count"])
@@ -716,7 +797,9 @@ class SubcultureIllustrationContractV1Tests(unittest.TestCase):
             ],
         )
 
-    def test_composed_contract_mutations_fail_without_pack_integrity_errors(self) -> None:
+    def test_composed_contract_mutations_fail_without_pack_integrity_errors(
+        self,
+    ) -> None:
         mutations: list[tuple[str, str, object]] = []
 
         composer = copy.deepcopy(self.valid_composed)
@@ -732,7 +815,9 @@ class SubcultureIllustrationContractV1Tests(unittest.TestCase):
         }
         route = self.assets.routes_by_id["ensemble_relationship_staging"]
         unexposed_id = next(
-            node_id for node_id in route["visual_candidate_ids"] if node_id not in selected_visuals
+            node_id
+            for node_id in route["visual_candidate_ids"]
+            if node_id not in selected_visuals
         )
         unexposed = copy.deepcopy(self.valid_composed)
         unexposed["chosen_candidate_ids"].append(f"visual:{unexposed_id}")
@@ -745,7 +830,9 @@ class SubcultureIllustrationContractV1Tests(unittest.TestCase):
 
         nonliteral = copy.deepcopy(self.valid_composed)
         evidence_key = next(iter(nonliteral["visual_evidence"]))
-        nonliteral["visual_evidence"][evidence_key] = "This evidence exists only in metadata"
+        nonliteral["visual_evidence"][evidence_key] = (
+            "This evidence exists only in metadata"
+        )
         mutations.append(("nonliteral evidence", "literal_evidence", nonliteral))
 
         named_style = copy.deepcopy(self.valid_composed)
@@ -766,11 +853,15 @@ class SubcultureIllustrationContractV1Tests(unittest.TestCase):
         lifecycle_phrase = "A future pixel review remains pending"
         lifecycle_field["format_evidence"]["rendered_pixel_review"] = lifecycle_phrase
         lifecycle_field["prompt_en"] += f" {lifecycle_phrase}."
-        mutations.append(("post-render evidence field", "phase_boundary", lifecycle_field))
+        mutations.append(
+            ("post-render evidence field", "phase_boundary", lifecycle_field)
+        )
 
         completed_review_claim = copy.deepcopy(self.valid_composed)
         completed_review_claim["prompt_en"] += " The final image passed pixel review."
-        mutations.append(("completed pixel-review claim", "phase_boundary", completed_review_claim))
+        mutations.append(
+            ("completed pixel-review claim", "phase_boundary", completed_review_claim)
+        )
 
         motif_soup = copy.deepcopy(self.valid_composed)
         motif_soup["prompt_en"] += (
@@ -790,7 +881,9 @@ class SubcultureIllustrationContractV1Tests(unittest.TestCase):
         composed["pack_id"] = mutated_pack["pack_id"]
         result = audit_composed_prompt(mutated_pack, composed)
         self.assertEqual("error", result["status"], result)
-        self.assertIn("format_contract", {item["check"] for item in result["integrity_errors"]})
+        self.assertIn(
+            "format_contract", {item["check"] for item in result["integrity_errors"]}
+        )
 
     def test_support_budget_overflow_is_a_pack_contract_error(self) -> None:
         mutated_pack = copy.deepcopy(self.audit_pack)
@@ -837,12 +930,16 @@ class SubcultureIllustrationContractV1Tests(unittest.TestCase):
         checks = {item["check"] for item in result["integrity_errors"]}
         self.assertIn("sparse_visual_bundle", checks, result)
 
-    def test_canonical_pack_id_tamper_is_distinguished_from_composed_failure(self) -> None:
+    def test_canonical_pack_id_tamper_is_distinguished_from_composed_failure(
+        self,
+    ) -> None:
         mutated_pack = copy.deepcopy(self.audit_pack)
         mutated_pack["request_contract"]["request_text"] += " tampered"
         result = audit_composed_prompt(mutated_pack, self.valid_composed)
         self.assertEqual("error", result["status"], result)
-        self.assertIn("pack_integrity", {item["check"] for item in result["integrity_errors"]})
+        self.assertIn(
+            "pack_integrity", {item["check"] for item in result["integrity_errors"]}
+        )
         self.assertEqual([], result["failures"], result)
 
 

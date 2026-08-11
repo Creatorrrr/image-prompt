@@ -21,10 +21,25 @@ from typing import Any, Iterable, Mapping, Sequence
 import unicodedata
 
 
-LEGACY_CONTRACT_VERSION = "subculture-illustration-candidate-pack/v1"
-LEGACY_GENERATOR_VERSION = "subculture-illustration-generator/v1"
-CONTRACT_VERSION = "subculture-illustration-candidate-pack/v2"
-GENERATOR_VERSION = "subculture-illustration-generator/v2"
+V1_CONTRACT_VERSION = "subculture-illustration-candidate-pack/v1"
+V1_GENERATOR_VERSION = "subculture-illustration-generator/v1"
+V2_CONTRACT_VERSION = "subculture-illustration-candidate-pack/v2"
+V2_GENERATOR_VERSION = "subculture-illustration-generator/v2"
+CONTRACT_VERSION = "subculture-illustration-candidate-pack/v3"
+GENERATOR_VERSION = "subculture-illustration-generator/v3"
+
+# Historical public names remain aliases for callers that explicitly replay v1.
+LEGACY_CONTRACT_VERSION = V1_CONTRACT_VERSION
+LEGACY_GENERATOR_VERSION = V1_GENERATOR_VERSION
+
+CONTRACT_VERSION_ALIASES = {
+    "v1": V1_CONTRACT_VERSION,
+    "v2": V2_CONTRACT_VERSION,
+    "v3": CONTRACT_VERSION,
+    V1_CONTRACT_VERSION: V1_CONTRACT_VERSION,
+    V2_CONTRACT_VERSION: V2_CONTRACT_VERSION,
+    CONTRACT_VERSION: CONTRACT_VERSION,
+}
 SELECTION_MODE = "deterministic_rule_v1"
 DEFAULT_CREATIVITY = 0.5
 
@@ -901,7 +916,7 @@ def _negative_prompt(variant_id: str) -> str:
     return ", ".join(dict.fromkeys(terms))
 
 
-def build_candidate_pack(
+def _build_legacy_candidate_pack(
     concept: str,
     *,
     topic: str = "auto",
@@ -909,7 +924,7 @@ def build_candidate_pack(
     seed: int = 0,
     creativity: float = DEFAULT_CREATIVITY,
     safety_evaluation: bool = False,
-    contract_version: str = CONTRACT_VERSION,
+    contract_version: str = V2_CONTRACT_VERSION,
     assets: RuntimeAssets | None = None,
 ) -> dict[str, Any]:
     """Build one deterministic, sparse, composition-ready candidate pack."""
@@ -921,10 +936,10 @@ def build_candidate_pack(
     creativity_value = float(creativity)
     if not 0.0 <= creativity_value <= 1.0:
         raise InputContractError("creativity must be from 0 through 1")
-    if contract_version not in {LEGACY_CONTRACT_VERSION, CONTRACT_VERSION}:
+    if contract_version not in {V1_CONTRACT_VERSION, V2_CONTRACT_VERSION}:
         raise InputContractError(
             f"unsupported contract_version {contract_version!r}; expected "
-            f"{LEGACY_CONTRACT_VERSION!r} or {CONTRACT_VERSION!r}"
+            f"{V1_CONTRACT_VERSION!r} or {V2_CONTRACT_VERSION!r}"
         )
 
     runtime_assets = assets or load_runtime_assets()
@@ -1023,7 +1038,7 @@ def build_candidate_pack(
         "evidence_values_must_be_literal_prompt_substrings": True,
         "final_prompt_composition_deferred": True,
     }
-    if contract_version == CONTRACT_VERSION:
+    if contract_version == V2_CONTRACT_VERSION:
         viewer_contract["second_look_plan_contract"] = {
             "schema": "illustration-second-look-plan/v1",
             "required": True,
@@ -1109,9 +1124,9 @@ def build_candidate_pack(
         },
         "provenance": {
             "generator_version": (
-                GENERATOR_VERSION
-                if contract_version == CONTRACT_VERSION
-                else LEGACY_GENERATOR_VERSION
+                V2_GENERATOR_VERSION
+                if contract_version == V2_CONTRACT_VERSION
+                else V1_GENERATOR_VERSION
             ),
             "selection_mode": SELECTION_MODE,
             "seed": seed,
@@ -1120,6 +1135,173 @@ def build_candidate_pack(
     }
     pack["pack_id"] = canonical_pack_id(pack)
     return pack
+
+
+def resolve_contract_version(value: str) -> str:
+    """Resolve a short or full contract version without touching any assets."""
+
+    if not isinstance(value, str) or value not in CONTRACT_VERSION_ALIASES:
+        raise InputContractError(
+            f"unsupported contract_version {value!r}; expected 'v1', 'v2', or 'v3'"
+        )
+    return CONTRACT_VERSION_ALIASES[value]
+
+
+def build_candidate_pack(
+    concept: str,
+    *,
+    topic: str = "auto",
+    format_id: str = "auto",
+    seed: int = 0,
+    creativity: float = DEFAULT_CREATIVITY,
+    safety_evaluation: bool = False,
+    contract_version: str = CONTRACT_VERSION,
+    scene_contract: Mapping[str, Any] | None = None,
+    prior_exposure_ids: Sequence[str] = (),
+    assets: RuntimeAssets | None = None,
+) -> dict[str, Any]:
+    """Build a deterministic candidate pack with explicit legacy dispatch.
+
+    V1 and v2 return through the historical builder before the universal module
+    is imported or any universal asset/scene-contract validation can occur.
+    V3 is additive over a byte-equivalent v2 base pack.
+    """
+
+    resolved_version = resolve_contract_version(contract_version)
+    if resolved_version in {V1_CONTRACT_VERSION, V2_CONTRACT_VERSION}:
+        if scene_contract is not None:
+            raise InputContractError("scene_contract is accepted only for contract_version v3")
+        if prior_exposure_ids:
+            raise InputContractError("prior_exposure_ids is accepted only for contract_version v3")
+        return _build_legacy_candidate_pack(
+            concept,
+            topic=topic,
+            format_id=format_id,
+            seed=seed,
+            creativity=creativity,
+            safety_evaluation=safety_evaluation,
+            contract_version=resolved_version,
+            assets=assets,
+        )
+
+    if scene_contract is None:
+        raise InputContractError("scene_contract is required for contract_version v3")
+    if not isinstance(scene_contract, Mapping):
+        raise InputContractError("scene_contract must be a JSON object")
+    if isinstance(prior_exposure_ids, (str, bytes, bytearray)) or not isinstance(
+        prior_exposure_ids, Sequence
+    ):
+        raise InputContractError("prior_exposure_ids must be an array of unique strings")
+    exact_prior_exposure_ids = list(prior_exposure_ids)
+    if any(not isinstance(item, str) or not item for item in exact_prior_exposure_ids):
+        raise InputContractError("prior_exposure_ids must be an array of unique strings")
+    if len(exact_prior_exposure_ids) != len(set(exact_prior_exposure_ids)):
+        raise InputContractError("prior_exposure_ids must not contain duplicates")
+
+    # Deliberately lazy: explicit v1/v2 replay never imports this module and
+    # never observes universal files, validation rules, or exception classes.
+    from universal_scene_runtime import (
+        SCENE_CONTRACT_SCHEMA as UNIVERSAL_SCENE_CONTRACT_SCHEMA,
+        AssetValidationError as UniversalAssetValidationError,
+        InputContractError as UniversalInputContractError,
+        SelectionError as UniversalSelectionError,
+        UniversalSceneRuntimeError,
+        build_universal_scene_selection,
+        load_universal_scene_assets,
+    )
+
+    runtime_assets = assets or load_runtime_assets()
+    base_pack = _build_legacy_candidate_pack(
+        concept,
+        topic=topic,
+        format_id=format_id,
+        seed=seed,
+        creativity=creativity,
+        safety_evaluation=safety_evaluation,
+        contract_version=V2_CONTRACT_VERSION,
+        assets=runtime_assets,
+    )
+    try:
+        universal_assets = load_universal_scene_assets(runtime_assets.asset_dir)
+        universal_scene = build_universal_scene_selection(
+            concept=concept,
+            scene_contract=scene_contract,
+            topic_id=base_pack["request_contract"]["topic_id"],
+            format_id=base_pack["format_profile"]["variant_id"],
+            creativity=base_pack["request_contract"]["creativity"],
+            seed=seed,
+            assets=universal_assets,
+            prior_exposure_ids=exact_prior_exposure_ids,
+        )
+    except UniversalInputContractError as exc:
+        raise InputContractError(str(exc)) from exc
+    except UniversalAssetValidationError as exc:
+        raise AssetValidationError(str(exc)) from exc
+    except UniversalSelectionError as exc:
+        raise ResolutionError(str(exc)) from exc
+    except UniversalSceneRuntimeError as exc:
+        raise IllustrationRuntimeError(str(exc)) from exc
+
+    if universal_scene.get("schema") != "illustration-universal-scene-selection/v1":
+        raise AssetValidationError("universal selection has an invalid schema")
+    embedded_scene_contract = universal_scene.get("scene_contract")
+    if not isinstance(embedded_scene_contract, Mapping):
+        raise AssetValidationError("universal selection is missing its canonical scene_contract")
+    if embedded_scene_contract.get("schema") != UNIVERSAL_SCENE_CONTRACT_SCHEMA:
+        raise AssetValidationError("universal selection has an invalid scene_contract schema")
+    selection_context = universal_scene.get("context_profile")
+    if not isinstance(selection_context, Mapping):
+        raise AssetValidationError("universal selection is missing context_profile")
+    if canonical_json_bytes(selection_context) != canonical_json_bytes(
+        scene_contract.get("context_profile")
+    ):
+        raise AssetValidationError("universal selection context_profile does not match scene contract")
+    selection_trace = universal_scene.get("selection_trace")
+    if not isinstance(selection_trace, Mapping):
+        raise AssetValidationError("universal selection is missing selection_trace")
+    scene_contract_sha256 = selection_trace.get("scene_contract_sha256")
+    if not isinstance(scene_contract_sha256, str) or not re.fullmatch(
+        r"[0-9a-f]{64}", scene_contract_sha256
+    ):
+        raise AssetValidationError("universal selection has an invalid scene-contract hash")
+    embedded_contract_bytes = canonical_json_bytes(embedded_scene_contract)
+    if hashlib.sha256(embedded_contract_bytes).hexdigest() != scene_contract_sha256:
+        raise AssetValidationError("embedded scene_contract does not match its canonical hash")
+    if embedded_contract_bytes != canonical_json_bytes(scene_contract):
+        raise AssetValidationError("embedded scene_contract does not match caller input")
+
+    universal_evidence_ids: list[str] = []
+    atoms = universal_scene.get("atoms")
+    bridges = universal_scene.get("bridges")
+    if not isinstance(atoms, list) or not isinstance(bridges, list):
+        raise AssetValidationError("universal selection atoms and bridges must be arrays")
+    for index, atom in enumerate(atoms):
+        if not isinstance(atom, Mapping) or not isinstance(atom.get("instance_id"), str):
+            raise AssetValidationError(f"universal selection atom {index} has no instance_id")
+        universal_evidence_ids.append(f"universal:{atom['instance_id']}")
+    for index, bridge in enumerate(bridges):
+        if not isinstance(bridge, Mapping) or not isinstance(bridge.get("bridge_id"), str):
+            raise AssetValidationError(f"universal selection bridge {index} has no bridge_id")
+        universal_evidence_ids.append(f"universal:{bridge['bridge_id']}")
+    if len(universal_evidence_ids) != len(set(universal_evidence_ids)):
+        raise AssetValidationError("universal selection exposes duplicate composition evidence IDs")
+
+    base_pack["contract_version"] = CONTRACT_VERSION
+    base_pack["request_contract"]["scene_contract_schema"] = UNIVERSAL_SCENE_CONTRACT_SCHEMA
+    base_pack["request_contract"]["scene_contract_sha256"] = scene_contract_sha256
+    base_pack["request_contract"]["prior_exposure_ids"] = exact_prior_exposure_ids
+    base_pack["composition_contract"]["composed_schema"] = (
+        "subculture-illustration-composed-prompt/v3"
+    )
+    base_pack["composition_contract"]["required_chosen_candidate_ids"].extend(
+        universal_evidence_ids
+    )
+    base_pack["universal_scene"] = universal_scene
+    base_pack["asset_hashes"].update(dict(universal_assets.asset_hashes))
+    base_pack["provenance"]["generator_version"] = GENERATOR_VERSION
+    base_pack["pack_id"] = None
+    base_pack["pack_id"] = canonical_pack_id(base_pack)
+    return base_pack
 
 
 def list_topics(assets: RuntimeAssets | None = None) -> list[dict[str, Any]]:
@@ -1153,10 +1335,15 @@ __all__ = [
     "IllustrationRuntimeError",
     "InputContractError",
     "CONTRACT_VERSION",
+    "CONTRACT_VERSION_ALIASES",
     "DEFAULT_CREATIVITY",
     "GENERATOR_VERSION",
     "LEGACY_CONTRACT_VERSION",
     "LEGACY_GENERATOR_VERSION",
+    "V1_CONTRACT_VERSION",
+    "V1_GENERATOR_VERSION",
+    "V2_CONTRACT_VERSION",
+    "V2_GENERATOR_VERSION",
     "SECOND_LOOK_CARRIER_KINDS",
     "SECOND_LOOK_RISK_FLAGS",
     "ResolutionError",
@@ -1170,6 +1357,7 @@ __all__ = [
     "list_topics",
     "load_runtime_assets",
     "normalize_text",
+    "resolve_contract_version",
     "resolve_request",
     "validate_assets",
 ]

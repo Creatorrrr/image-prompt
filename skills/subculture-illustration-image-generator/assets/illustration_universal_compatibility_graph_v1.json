@@ -1,0 +1,636 @@
+{
+ "schema": "subculture-illustration-universal-compatibility/v1",
+ "reviewed_at": "2026-08-10",
+ "candidate_asset_sha256": "72e59d2e59384ae1719b89a6bbf1f4ab7f0a803c4525c6bfa619498d9225cb01",
+ "predicate_contract": {
+  "shape": [
+   "kind",
+   "subject",
+   "value"
+  ],
+  "negation_location": "forbids_any_only",
+  "arbitrary_expression_evaluation": "forbidden"
+ },
+ "predicate_kind_ids": [
+  "slot",
+  "event_role",
+  "capability",
+  "resource_available",
+  "context",
+  "candidate",
+  "candidate_tag",
+  "guard_contract",
+  "facet_evidence",
+  "normalized_prop_concept",
+  "policy",
+  "cardinality",
+  "bridge",
+  "visible_evidence",
+  "rule",
+  "axis_max",
+  "axis_sum"
+ ],
+ "resource_kind_ids": [
+  "manipulator",
+  "attention_channel",
+  "head_orientation",
+  "facial_display",
+  "support_contact",
+  "mouth",
+  "appendage",
+  "wing_appendage",
+  "locomotor_contact",
+  "body_orientation",
+  "body_contour_display",
+  "surface_signal",
+  "light_emission",
+  "internal_luminance_display",
+  "mobile_ear_pair",
+  "wing_axis_pair",
+  "tail_axis",
+  "mechanical_state_displacement",
+  "external_anchor",
+  "focal_primary",
+  "focal_secondary",
+  "foreground_salience",
+  "event_peak",
+  "prop_slot"
+ ],
+ "slot_ids": [
+  "expression",
+  "perceived_affect",
+  "attention",
+  "pose",
+  "gesture",
+  "action",
+  "phase",
+  "contact",
+  "relation",
+  "prop",
+  "prop_state",
+  "environment",
+  "consequence"
+ ],
+ "slot_state_contract": {
+  "enum": [
+   "fixed",
+   "closed",
+   "open"
+  ],
+  "fixed": "literal-bound user value; preserve exactly",
+  "closed": "literal-bound negative constraint; select nothing",
+  "open": "eligible for bounded solver completion; never promoted to a user fact",
+  "precedence": [
+   "fixed",
+   "closed",
+   "open"
+  ]
+ },
+ "facet_resolution_order": [
+  "action",
+  "phase",
+  "relation",
+  "contact",
+  "pose",
+  "attention",
+  "expression",
+  "perceived_affect",
+  "gesture",
+  "prop",
+  "prop_state",
+  "environment",
+  "consequence",
+  "bridge",
+  "salience"
+ ],
+ "event_spine_contract": {
+  "root_count": 1,
+  "required_role_ids": [
+   "actor",
+   "action"
+  ],
+  "optional_role_ids": [
+   "target",
+   "instrument",
+   "recipient",
+   "result",
+   "location"
+  ],
+  "phase_count": 1,
+  "second_independent_premise": "block",
+  "orphan_atom": "block"
+ },
+ "event_spine_templates": [
+  {
+   "id": "event_actor_action_target_result",
+   "required_roles": [
+    "actor",
+    "action",
+    "target",
+    "result"
+   ],
+   "optional_roles": [
+    "location"
+   ],
+   "forbidden_roles": []
+  },
+  {
+   "id": "event_instrumented_action",
+   "required_roles": [
+    "actor",
+    "action",
+    "target",
+    "instrument",
+    "result"
+   ],
+   "optional_roles": [
+    "recipient",
+    "location"
+   ],
+   "forbidden_roles": []
+  },
+  {
+   "id": "event_transfer",
+   "required_roles": [
+    "actor",
+    "action",
+    "target",
+    "recipient",
+    "result"
+   ],
+   "optional_roles": [
+    "instrument",
+    "location"
+   ],
+   "forbidden_roles": []
+  },
+  {
+   "id": "event_no_prop_body_environment",
+   "required_roles": [
+    "actor",
+    "action",
+    "target",
+    "result"
+   ],
+   "optional_roles": [
+    "recipient",
+    "location"
+   ],
+   "forbidden_roles": [
+    "instrument"
+   ]
+  }
+ ],
+ "solver": {
+  "selection_mode": "predicate_beam_v1",
+  "beam_width": 8,
+  "max_candidates_per_facet_before_beam": 3,
+  "catalog_order": "candidate_id_ascending",
+  "ranking_order": [
+   "hard_gate_pass",
+   "fixed_slot_fidelity",
+   "resource_feasibility",
+   "event_connectivity",
+   "bridge_coverage",
+   "distance_band_weight",
+   "salience_budget",
+   "candidate_id",
+   "seed_digest"
+  ],
+  "seed_is_final_tiebreak_only": true
+ },
+ "budgets": {
+  "event_spines": 1,
+  "primary_actions": 1,
+  "phases": 1,
+  "pose_support_solutions": 1,
+  "display_bundles": 1,
+  "display_primitives_per_bundle": 2,
+  "perceived_affect_hypotheses": 1,
+  "gestures": 1,
+  "optional_props": 1,
+  "relation_topologies": 1,
+  "primary_environment_roles": 1,
+  "remote_or_high_load_optional_premises": 1,
+  "second_independent_premises": 0,
+  "orphan_atoms": 0
+ },
+ "resource_policy": {
+  "scope": "entity_or_scene",
+  "capacity_check": "sum_exclusive_claims_lte_capacity",
+  "same_phase_double_booking": "block",
+  "shared_attention_exception": "only_same_visible_target",
+  "repair_order": [
+   "release_phase",
+   "environment_support",
+   "mount_or_sling",
+   "alternate_capable_effector",
+   "drop_optional_candidate"
+  ]
+ },
+ "distance_policy": {
+  "axis_ids": [
+   "theme",
+   "era_technology",
+   "tone",
+   "violence",
+   "social",
+   "scale",
+   "salience_displacement"
+  ],
+  "value_type": "ordinal_0_3",
+  "band_rules": [
+   {
+    "band": "far",
+    "when_any": [
+     [
+      "axis_max",
+      "distance",
+      "3"
+     ],
+     [
+      "axis_sum",
+      "distance",
+      "gte_10"
+     ]
+    ]
+   },
+   {
+    "band": "middle",
+    "when_any": [
+     [
+      "axis_max",
+      "distance",
+      "2"
+     ],
+     [
+      "axis_sum",
+      "distance",
+      "gte_4"
+     ]
+    ]
+   },
+   {
+    "band": "near",
+    "when_all": [
+     [
+      "axis_max",
+      "distance",
+      "lte_1"
+     ],
+     [
+      "axis_sum",
+      "distance",
+      "lte_3"
+     ]
+    ]
+   }
+  ],
+  "creativity_bands": [
+   {
+    "id": "low",
+    "lower": 0.0,
+    "lower_inclusive": true,
+    "upper": 0.25,
+    "upper_inclusive": false,
+    "target_band": "near",
+    "eligible_distance_weights": {
+     "near": 3,
+     "middle": 2,
+     "far": 1
+    }
+   },
+   {
+    "id": "middle",
+    "lower": 0.25,
+    "lower_inclusive": true,
+    "upper": 0.75,
+    "upper_inclusive": false,
+    "target_band": "middle",
+    "eligible_distance_weights": {
+     "near": 2,
+     "middle": 3,
+     "far": 1
+    }
+   },
+   {
+    "id": "high",
+    "lower": 0.75,
+    "lower_inclusive": true,
+    "upper": 1.0,
+    "upper_inclusive": true,
+    "target_band": "far",
+    "eligible_distance_weights": {
+     "near": 1,
+     "middle": 2,
+     "far": 3
+    }
+   }
+  ],
+  "creativity_changes": [
+   "eligible_distance_band_weight"
+  ],
+  "creativity_never_changes": [
+   "identity",
+   "fixed_or_closed_slots",
+   "feasibility",
+   "resource_capacity",
+   "policy",
+   "culture_scope",
+   "candidate_count",
+   "event_spine_count"
+  ]
+ },
+ "bridge_policy": {
+  "bridge_type_ids": [
+   "affordance",
+   "motivation",
+   "mechanics",
+   "ownership",
+   "state_change",
+   "consequence",
+   "identity_contrast"
+  ],
+  "category_members": {
+   "entry": [
+    "affordance",
+    "motivation",
+    "identity_contrast"
+   ],
+   "mediation": [
+    "mechanics",
+    "ownership"
+   ],
+   "exit": [
+    "state_change",
+    "consequence"
+   ]
+  },
+  "near_minimum": 1,
+  "near_direct_event_edge_required": true,
+  "middle_minimum": 2,
+  "middle_required_categories": [
+   "entry",
+   "exit"
+  ],
+  "far_minimum": 3,
+  "far_required_categories": [
+   "entry",
+   "mediation",
+   "exit"
+  ],
+  "far_visible_core_identity_anchor_required": true,
+  "bridge_requires_pixel_evidence": true,
+  "explanation_only_bridge": "block"
+ },
+ "decision_outcomes": {
+  "allow": "all hard predicates pass and required bridges already exist",
+  "allow_with_bridge": "candidate is feasible but its distance band requires additional visible causal binding",
+  "repair": "one bounded realization change can satisfy contact, phase, crop, or resource evidence without changing fixed prompt facts",
+  "block": "identity, closed slot, capability, physical, policy, culture, resource, event-count, or remote-budget gate fails",
+  "order": [
+   "block",
+   "repair",
+   "allow_with_bridge",
+   "allow"
+  ]
+ },
+ "decision_reason_code_ids": [
+  "all_guard_predicates_passed",
+  "capability_unsatisfied",
+  "cardinality_feasible",
+  "cardinality_limit",
+  "closed_facet",
+  "closed_prop_slot",
+  "closed_role_conflict",
+  "event_spine_cardinality",
+  "fixed_facet_conflict",
+  "fixed_role_conflict",
+  "forbidden_predicate_satisfied",
+  "guard_not_applicable",
+  "guard_predicate_failed",
+  "identity_overwrite",
+  "policy_active_violence",
+  "policy_explicit_only",
+  "policy_not_applicable",
+  "policy_pass",
+  "policy_platform_blocked",
+  "precondition_unsatisfied",
+  "proposal_path_not_open",
+  "remote_budget_exceeded",
+  "requires_all_unsatisfied",
+  "resource_capacity",
+  "resource_feasible",
+  "rule_satisfied",
+  "slot_state_ineligible",
+  "trigger_unsatisfied",
+  "visible_bridge_required"
+ ],
+ "universal_rules": [
+  {
+   "id": "rule_fixed_identity_precedence",
+   "when_all": [
+    [
+     "slot",
+     "identity_core",
+     "fixed"
+    ],
+    [
+     "candidate_tag",
+     "selected",
+     "identity_overwrite"
+    ]
+   ],
+   "outcome": "block",
+   "reason_code": "identity_overwrite",
+   "candidate_scope": "all"
+  },
+  {
+   "id": "rule_closed_prop",
+   "when_all": [
+    [
+     "slot",
+     "prop",
+     "closed"
+    ]
+   ],
+   "outcome": "block",
+   "reason_code": "closed_prop_slot",
+   "candidate_scope": "facet:prop_or_prop_state"
+  },
+  {
+   "id": "rule_exactly_one_event",
+   "when_all": [
+    [
+     "candidate",
+     "event_root_count",
+     "not_1"
+   ]
+   ],
+   "outcome": "block",
+   "reason_code": "event_spine_cardinality",
+   "candidate_scope": "bundle"
+  },
+  {
+   "id": "rule_resource_capacity",
+   "when_all": [
+    [
+     "resource_available",
+     "selected_bundle",
+     "false"
+    ]
+   ],
+   "outcome": "repair",
+   "reason_code": "resource_capacity",
+   "candidate_scope": "bundle"
+  },
+  {
+   "id": "rule_visible_middle_far_bridge",
+   "when_all": [
+    [
+     "context",
+     "distance_band",
+     "middle_or_far"
+    ],
+    [
+     "visible_evidence",
+     "required_bridge",
+     "absent"
+    ]
+   ],
+   "outcome": "allow_with_bridge",
+   "reason_code": "visible_bridge_required",
+   "candidate_scope": "bundle"
+  },
+  {
+   "id": "rule_remote_budget",
+   "when_all": [
+    [
+     "candidate",
+     "remote_or_high_load_count",
+     "gt_1"
+   ]
+   ],
+   "outcome": "block",
+   "reason_code": "remote_budget_exceeded",
+   "candidate_scope": "bundle"
+  },
+  {
+   "id": "rule_policy_independent_of_creativity",
+   "when_all": [
+    [
+     "policy",
+     "platform",
+     "not_pass"
+   ]
+   ],
+   "outcome": "block",
+   "reason_code": "policy_platform_blocked",
+   "candidate_scope": "all"
+  }
+ ],
+ "guard_candidate_ids": [
+  "action_temporal_phases_single_phase_guard",
+  "atomic_general_actions_static_ambiguity_guard",
+  "dpa_cultural_universality_guard",
+  "dpa_inner_state_nonclaim_guard",
+  "event_role_frames_role_assignment_guard",
+  "gha_intention_nonclaim_guard",
+  "nxc_context_binding_guard",
+  "nxc_emotion_truth_guard",
+  "ofm_inner_state_inference_guard",
+  "uao_weapon_event_guard",
+  "ubp_embodiment_capability_guard",
+  "uer_narrative_inference_guard",
+  "uer_weapon_role_target_guard",
+  "ugf_context_binding_guard",
+  "ugf_cultural_emblem_guard",
+  "usc_cbg_orphan_novelty_guard",
+  "usc_cbg_pixel_grounded_bridge_guard",
+  "usc_contact_contact_readability_gate",
+  "usc_contact_reachable_contact_guard",
+  "usc_ecs_crop_safe_evidence_guard",
+  "usc_ecs_event_edge_guard",
+  "usc_lexical_sense_ambiguity_guard",
+  "usc_relation_relation_truth_guard",
+  "usc_sdc_hard_gate_invariance_guard",
+  "usc_sdc_remote_single_premise_guard",
+  "usc_sdc_visible_bridge_requirement_guard",
+  "usc_sptg_capability_resource_gate",
+  "usc_sptg_explicit_identity_core_guard",
+  "usc_sptg_physical_relation_gate",
+  "ush_history_inference_guard",
+  "usl_policy_separation_guard",
+  "usl_theme_hijack_guard"
+ ],
+ "router_candidate_ids": [
+  "action_temporal_phases_router",
+  "event_role_frames_router",
+  "nxc_channel_capability_router",
+  "nxc_channel_substitution_router",
+  "uao_affordance_profile",
+  "uer_event_participant_frame",
+  "uer_instrument_role",
+  "uer_recipient_role",
+  "uer_trigger_evidence_role",
+  "usc_cbg_event_frame_router",
+  "usc_ecs_environment_role_router",
+  "usc_lexical_canonical_concept_id",
+  "usc_lexical_part_whole_links",
+  "usc_lexical_synonym_alias_set",
+  "usc_sdc_creativity_distribution_router",
+  "usc_sdc_distance_band_router",
+  "usc_sptg_object_relation_scene_graph_router",
+  "usc_sptg_scene_context_soft_prior",
+  "ush_observable_prop_state",
+  "ush_state_transition_pair",
+  "usl_remote_prop_budget"
+ ],
+ "metric_candidate_ids": [
+  "usc_contact_hand_occupancy_claim",
+  "usc_contact_object_load_claim",
+  "usc_ecs_salience_load_metric",
+  "usc_sdc_typed_distance_vector_metric",
+  "usl_hand_occupancy_load",
+  "usl_physical_burden_load",
+  "usl_theme_displacement_load",
+  "usl_violence_context_load",
+  "usl_visual_salience_load"
+ ],
+ "exception_rules": [
+  {
+   "id": "exception_nonhuman_functional_effector_substitution",
+   "candidate_ids": [
+    "uao_task_conditioned_grasp",
+    "usc_contact_observable_hand_part_contact"
+   ],
+   "when_all": [
+    [
+     "capability",
+     "actor",
+     "nonhand_functional_effector"
+    ],
+    [
+     "capability",
+     "actor",
+     "manipulator_or_equivalent"
+    ]
+   ],
+   "outcome": "repair",
+   "reason": "Use an explicitly available mouth, tail, tentacle, mount, body contact, or other effector; never fabricate a human hand.",
+   "provenance_record_ids": [
+    "nxc_nonhuman_expression_channels_matrix_v1",
+    "uao_matrix_v1",
+    "usc_contact_matrix_v1"
+   ]
+  }
+ ],
+ "counts": {
+  "guard_candidates": 32,
+  "router_candidates": 21,
+  "metric_candidates": 9,
+  "exception_rules": 1,
+  "pairwise_candidate_edges": 0
+ },
+ "semantic_bindings_asset_sha256": "301f4bd0edec6ea578bc5b34518bae5762733cc98786db83b132b8378b095621"
+}

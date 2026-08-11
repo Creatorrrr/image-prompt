@@ -41,6 +41,19 @@ For an object-relation carrier, prefer several independent physical relations th
 
 Reusable operators include structural analogy, expectation inversion, absence as evidence, rule extension, temporal fold, relational reversal, functional recontextualization, and controlled impossibility.
 
+## Universal Distance Is Not Authorial Quality
+
+The v3 universal scene layer and the authorial-development layer solve different problems. Authorial development chooses a repeatable visual rule and second-look carrier. Universal semantic distance chooses how near or remote an expression, pose, action, relation, prop, or environment candidate is from the fixed identity and event.
+
+- Use creativity `0.5` for an ordinary brief; it targets the middle distance band while retaining the default authorial decision system above.
+- Pass `0.85` or higher when the user explicitly asks for creative, original, ingenious, surprising, or authorially distinctive work; this makes a far-distance universal bundle eligible.
+- Creativity never changes fixed/closed facts, capability or resource gates, platform boundaries, selected-candidate count budgets, exactly-one-event policy, or the maximum of one optional remote premise.
+- Creativity also cannot relax fixed-value polarity anchors, participant ownership, mandatory literal-realization quantifiers, or owner-joined resource and pixel obligations. Those are semantic-preservation gates, not authorial options.
+- Far is not automatically more creative or better. It must have a visible core identity anchor and a complete entry, mediation, and consequence bridge. If that proof is unavailable, record the nearest coherent lower-band fallback.
+- Do not repair a commonplace result by stacking unrelated props, symbols, gestures, effects, or vignettes. Change one causal relation inside the same event and make its visible consequences legible.
+
+Every middle/far bridge and every claimed contact or state change must be written as literal prompt evidence and later inspected in the pixels. Explanation, lore, and metadata do not count as a bridge.
+
 ## Motif Discipline
 
 Use at most one motif family as a meaning-bearing system. It must appear in at least two states or placements tied to the same event. Repeated decoration without a state change, several unrelated symbols, or written explanation is not visual metaphor.

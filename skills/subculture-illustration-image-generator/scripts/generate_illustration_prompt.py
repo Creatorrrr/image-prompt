@@ -12,6 +12,7 @@ import tempfile
 from typing import Any
 
 from illustration_runtime import (
+    CONTRACT_VERSION_ALIASES,
     DEFAULT_CREATIVITY,
     IllustrationRuntimeError,
     InputContractError,
@@ -65,6 +66,16 @@ def _parser() -> argparse.ArgumentParser:
         help="record the explicitly requested local contract evaluation instead of the automatic-pass default",
     )
     parser.add_argument(
+        "--contract-version",
+        choices=("v1", "v2", "v3"),
+        default="v3",
+        help="candidate-pack contract version (default: v3)",
+    )
+    parser.add_argument(
+        "--scene-contract",
+        help="v3 scene-contract JSON file path or inline JSON object; rejected by v1/v2",
+    )
+    parser.add_argument(
         "--emit-candidate-pack",
         action="store_true",
         help="emit the full candidate pack on stdout (accepted for skill-contract clarity)",
@@ -115,6 +126,44 @@ def _print_json(payload: Any) -> None:
     sys.stdout.buffer.write(canonical_json_bytes(payload) + b"\n")
 
 
+def _load_scene_contract(value: str) -> dict[str, Any]:
+    stripped = value.strip()
+    candidate_path = Path(value).expanduser()
+    try:
+        existing_file = candidate_path.is_file()
+    except OSError:
+        existing_file = False
+    if existing_file:
+        path = candidate_path.resolve()
+        source = str(path)
+        try:
+            raw = path.read_text(encoding="utf-8")
+        except OSError as exc:
+            raise OSError(f"cannot read scene contract {path}: {exc}") from exc
+        try:
+            payload = json.loads(raw)
+        except json.JSONDecodeError as exc:
+            raise InputContractError(f"invalid JSON in {source}: {exc}") from exc
+        if not isinstance(payload, dict):
+            raise InputContractError(f"{source} must contain one JSON object")
+        return payload
+
+    try:
+        inline_payload = json.loads(stripped)
+    except json.JSONDecodeError as exc:
+        if stripped[:1] in set('"-[{0123456789') or stripped.startswith(
+            ("null", "true", "false")
+        ):
+            raise InputContractError(f"invalid JSON in inline scene contract: {exc}") from exc
+    else:
+        if not isinstance(inline_payload, dict):
+            raise InputContractError("inline scene contract must contain one JSON object")
+        return inline_payload
+
+    path = candidate_path.absolute()
+    raise OSError(f"cannot read scene contract {path}: path is not an existing file")
+
+
 def _print_topic_list(items: list[dict[str, Any]]) -> None:
     for item in items:
         variants = ",".join(item["allowed_variant_ids"])
@@ -150,8 +199,14 @@ def main(argv: list[str] | None = None) -> int:
     if args.list_topics or args.list_formats:
         if args.concept is not None:
             parser.error("--concept cannot be combined with a list mode")
+        if args.scene_contract is not None:
+            parser.error("--scene-contract cannot be combined with a list mode")
     elif not isinstance(args.concept, str) or not args.concept.strip():
         parser.error("--concept is required unless --list-topics or --list-formats is used")
+    elif args.contract_version == "v3" and args.scene_contract is None:
+        parser.error("--scene-contract is required for --contract-version v3")
+    elif args.contract_version in {"v1", "v2"} and args.scene_contract is not None:
+        parser.error("--scene-contract is accepted only for --contract-version v3")
 
     try:
         assets = load_runtime_assets(args.asset_dir)
@@ -166,6 +221,11 @@ def main(argv: list[str] | None = None) -> int:
                 "formats": list_formats(assets),
             }
         else:
+            scene_contract = (
+                _load_scene_contract(args.scene_contract)
+                if args.scene_contract is not None
+                else None
+            )
             payload = build_candidate_pack(
                 args.concept,
                 topic=args.topic,
@@ -173,6 +233,8 @@ def main(argv: list[str] | None = None) -> int:
                 seed=args.seed,
                 creativity=args.creativity,
                 safety_evaluation=args.safety_evaluation,
+                contract_version=CONTRACT_VERSION_ALIASES[args.contract_version],
+                scene_contract=scene_contract,
                 assets=assets,
             )
 
