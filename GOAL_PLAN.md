@@ -1,113 +1,123 @@
-# Photo Prompt Intent-Preserving Optimization Goal
+# Research-Backed Moe Grammar and Candidate-Pack Integration Goal
 
-- 작성: 2026-08-11 12:42 KST
-- 상태: completed
-- 완료: 2026-08-11 14:33 KST
-- 대상: `skills/photo-prompt-image-generator`
-- 기준 ref: `main@4e992a97278e73bb58f2c656f45836ef1ba1e4e6`
-- 권위 문서: 이 파일이 이번 장기 목표의 범위, 완료 기준, 검증 예산과 중단 조건을 정의한다.
-- 이전 완료 목표: `docs/passed-reports/2026-08-11-universal-scene-public-boundary-integration.md`
+- 작성: 2026-08-11 17:54 KST
+- 상태: complete
+- 대상: `skills/subculture-illustration-image-generator`
+- 기준 ref: `main@c10becc`
+- 권위 입력: ChatGPT conversation `6a7acde9-4414-83ee-927b-1432db7c99dc`, 원 블로그의 34개 글, 독립 자료, 현재 저장소 계약
 - 자동 목표 상향: 비활성
 
 ## 목표와 실제 산출물
 
-- 원래 사용자 요청: 개선이 누적된 photo-prompt-image-generator를 모든 기능을 유지하면서 무리하지 않는 범위에서 프롬프트와 로직 중심으로 리팩터링한다.
-- 최종 제품/결과:
-  1. 사용자 필수 시각 요구, 역할 positive anchor, soft guidance, negative constraint가 서로 다른 타입과 극성으로 처리된다.
-  2. 후보 팩의 `mandatory_intents`에는 positive visible intent만 들어가며 내부 메타 문장과 금지어가 positive prompt 의무로 승격되지 않는다.
-  3. rule mode에서 명시적인 피사체와 `no_people`가 sampler, 품질 facet, adult-appeal eligibility 전체에 일관되게 적용된다.
-  4. compact 직접 프롬프트와 candidate pack이 내부 정책 중복을 줄이면서 사용자 요구, 역할 정체성, negative bytes, creative/viewer/hybrid 계약을 보존한다.
-  5. 반복 intent/rule 계산을 제거하여 고정 조건 성능을 개선하되 성능-only 경로의 결정적 출력은 byte-identical하게 유지한다.
-- 범위: wrapper와 generator의 요구사항 전달·계약·렌더링, intent routing, candidate-pack intent/quality 구성, composed audit, 필요한 quality-layer 정책, focused regression, 최소 문서 정합성.
-- 비목표: semantic index 저장 형식·지연 로딩, 새 embedding 또는 index 재생성, candidate-pack 전면 v3 재설계, 대규모 파일 분할, API ledger adapter, 이미지 생성·픽셀 A/B, 배포, commit, push, PR.
+- 원래 사용자 요청: 29개 모든 모에요소마다 조사할 주제를 도출하고 실제로 조사한 뒤, 그 지식을 후보팩 또는 스킬에 반영해 사용자의 의도와 세부 취향을 더 정확히 이해하고 더 창의적이며 취향에 맞는 프롬프트를 만든다.
+- 최종 제품/결과: 고정 문장 supplement가 아니라, 요소·세부 유형·매력 메커니즘·취향 축을 해석해 실제 후보를 선택하는 research-backed moe grammar와 이를 포함하는 additive candidate-pack v4 및 composer/audit 경로.
+- 범위: 29개 연구 dossier, typed 후보 그래프, 자연어 요소·세부 취향 해석, creativity 기반 후보 다양화, 후보팩/composer/audit 통합, focused prompt qualification.
+- 비목표: 기존 안전 제약·필터·refusal·negative prompt·retry 변경, v1~v3 역사 자산 변경, universal-scene 전체 재자격, hidden 1,152-run, 배포·push·PR, 보편적 독자 선호나 실제 이미지 품질 주장.
 
 ## 진척 계약
 
-- 진척으로 인정: 실제 generator/auditor/routing 동작 변화, 고정 입력에서 잘못된 intent·subject·facet가 교정된 결과, 보존 조건을 만족하는 측정된 성능 개선.
-- 진척으로 인정하지 않음: 테스트·계획·보고서·schema·benchmark 도구만 증가한 상태, golden을 새 오동작에 맞춰 갱신, 검증기를 확장해 제품 결함을 우회, 파일 분할만 한 상태.
-- Stage 1 이후 모든 checkpoint는 product delta 또는 고정 조건의 측정된 최종 후보를 포함한다.
-- 검증-only 작업 상한: 반복 중에는 변경 경로 focused 검증만 수행하고 전체 unit discovery·semantic integrity·contradiction 검사는 최종 후보에서 각 한 번만 수행한다. 검증-only checkpoint를 연속으로 두지 않는다.
-- 실행 지식 작업 상한: 관련 보고서 전문 최대 5건, 성공 보고서 기본 최대 1건, 별도 checkpoint 금지.
+- 진척으로 인정: 완료된 요소별 dossier, 실행 가능한 후보/번들 추가, 후보팩에 노출되는 선택 결과, 실제 composed prompt 변화, 사용자 취향을 반영한 서로 다른 후보 선택, 결함을 닫는 제품 수정.
+- 진척으로 인정하지 않음: URL 수집만 완료, 요소당 고정 문장 하나, 테스트·manifest·validator만 추가, 별도 supplement만 통과, prompt literal 자기검증, 검증 체계 확대.
+- 검증-only 작업 상한: 제품 단계마다 focused check 1회, 최종 affected regression 1회. 두 번 연속 verification-only checkpoint 금지.
+- 실행 지식 작업 상한: 관련 보고서 전문 최대 5건, 새 실패 보고서는 distinct material failure에만, 성공 보고서 기본 최대 1건, 별도 checkpoint 금지.
+- 진행 로그: `product delta -> direct evidence -> remaining product gap -> blocker` 순서로만 기록한다.
 
-## 기준선과 고정 비교 조건
+## 기준선과 적용 교훈
 
-### 현재 기준선
+- 현재 기준선: 34개 원문을 29개 요소로 정리했고 63개 source row와 요소별 alias/limitation/frame mode가 있다. 그러나 각 요소는 한 개 `prompt_clause_en`으로 축약되고 runtime은 이를 이어 붙이며, 기존 candidate pack·composer·selection graph는 변경되지 않았다.
+- 보존할 자산: 34→29 inventory, source URLs, source/design-inference 구분, 불확실성, frame honesty, safety/photo/retry 불변 경계.
+- 교체할 자산: single-clause element model, supplement-local pseudo candidate IDs, literal-only self-audit, 세부 유형·취향·창의성 없는 resolver.
+- 고정 비교 조건: ordinary creativity 기본값은 0.5이며 creative cue는 high-development 계약을 활성화하되 저장 숫자를 임의로 바꾸지 않는다. 요소 자체는 사용자 요청에 나타날 때만 활성화하고 주변 문맥은 세부 유형·관점·강도를 선택하는 데 사용한다.
+- 적용 보고서:
+  - `docs/failed-reports/2026-08-11-moe-element-supplement-underintegration.md`: 이번 재설계의 직접 원인.
+  - `docs/failed-reports/2026-08-08-character-moe-research-provenance-overclaim.md`: claim별 provenance와 router/visual atom 분리.
+  - `docs/failed-reports/2026-08-08-character-moe-final-integration-contract-drift.md`: 다른 route family를 generic 필드에 억지로 맞추지 않고 typed field로 통합.
+  - `docs/passed-reports/2026-08-08-character-moe-grammar-render-quality.md`: one primary + 최대 two supports의 sparse executable grammar.
+  - `docs/passed-reports/2026-08-09-subculture-illustration-authorial-grammar.md`: familiar anchor, one changed rule, first/second-look와 format-native composition.
 
-- 작업 트리는 clean이고 `main`과 `origin/main`은 `4e992a97278e73bb58f2c656f45836ef1ba1e4e6`으로 동일하다.
-- `회사원`, rule, seed 42, hybrid candidate pack은 pretty 222,881 bytes, minified 151,732 bytes, mandatory 93개, uncovered 60개다. `Avoid`, `glamour`, `pin-up`, `fetish`, `minors-coding`, `Soft`, `visual`, `guidance`가 positive mandatory intent에 포함된다.
-- 같은 `회사원` 직접 prompt는 compact 191 words, standard 236 words, detailed 349 words다. compact 120-word 예산 이후 내부 additional requirements가 붙는다.
-- `고양이`, rule, seed 42는 `young_actor`를 선택하고 human adult-appeal 기본값을 활성화한다.
-- `사람 없는 화장품 제품 사진`, rule, seed 42는 adult appeal은 차단하지만 `사진`이 `photographer_role_model`과 매칭되어 human quality facet을 추가한다.
-- 고정 `회사원` candidate-pack 프로파일의 변경 전 wall time은 7.211초와 7.308초이며 기준 중앙값은 7.260초다. 탐색적 순수 alias cache는 출력 SHA를 유지한 채 약 2.97초였으나 제품 코드에는 반영되지 않았다.
-- skill validator, dictionary validator, 112/112 scene-expression audit, 6,513-entry semantic-index integrity, 2,001 contradiction generation/0 violations는 통과했다.
-- 전체 502 unit discovery는 photo 영역 밖 universal-scene에서 11 failures/1 error가 있어 baseline부터 green이 아니다. 최종 결과는 이 실패 집합을 늘리지 않고 photo 관련 실패 0을 요구한다.
+## 29개 연구 계약
 
-### 고정 입력과 비교 규칙
+모든 dossier는 `definition_and_history`, `semantic_subtypes`, `appeal_mechanisms`, `observable_or_narrative_evidence`, `preference_axes`, `candidate_realizations`, `compatibility_and_conflicts`, `format_implications`, `source_supported_claims`, `cross_source_synthesis`, `design_inference`, `limitations`를 갖는다. 사실 주장은 exact source IDs에 연결하며, 출처가 약하면 미확정으로 남긴다.
 
-- 핵심 교정 입력: `회사원`, `제빵사`, `고양이`, `사람 없는 화장품 제품 사진`; 모두 rule mode, seed 42, candidate pack과 direct compact 경로를 사용한다.
-- hard user intent 보존 입력: 명시적 `--additional-requirement` 한 건을 넣고 문구가 mandatory/audit/render 경로에서 유지되는지 확인한다.
-- 호환성 입력: 기존 ordinary preset, eligible human adult default, explicit 0/0 adult opt-out, hybrid augmentation, creative direction, viewer experience의 대표 기존 테스트를 재사용한다.
-- 성능 비교: 같은 checkout·Python·command·seed에서 warm run 3회의 중앙값을 사용한다. 성능-only 변경은 canonical JSON SHA가 같아야 한다.
-- intentional correctness delta는 새 회귀 계약으로 고정하고, 무관한 golden·RNG 순서·negative bytes는 변경하지 않는다.
-
-### 적용한 과거 실행 지식
-
-- `docs/failed-reports/2026-08-07-worldbuilding-scoped-route-semantic-competition.md`: 명시적 typed route는 generic semantic 경쟁보다 우선하며 negative control을 함께 유지한다.
-- `docs/failed-reports/2026-08-07-subculture-surface-applicability-golden-drift.md`: 좁은 예외를 위해 global eligibility를 넓혀 RNG와 무관한 golden을 흔들지 않는다.
-- `docs/passed-reports/2026-08-07-deep-worldbuilding-taxonomy-scoped-routing.md`: exact user-authored route precedence와 domain quarantine을 재사용하고 generic 요청 동작은 보존한다.
-- `docs/passed-reports/2026-08-08-viewer-perceived-creative-direction.md`: creative contract, one-rule authorial grammar, 120-word composed prompt와 negative-byte 경계를 보존한다.
-- `docs/passed-reports/2026-08-08-reader-centered-viewer-experience.md`: viewer need와 actor/action/target/consequence audit를 유지하고 prompt audit를 실제 관객 반응 증거로 확대 해석하지 않는다.
+| 요소 | 필수 연구 주제 |
+|---|---|
+| 흑화·타락 | 원인·주체성·가역성, 동일 인물 표식, 전후 가치·외형 대비 |
+| NTR·네토라레 | NTR/네토리/네토라세/BSS 관점, 기존 관계·인지·동의·상실 시점 |
+| 메스가키 | 위계 역전, 대상화된 도발, 말·표정·거리, 자신감과 역당황의 갭 |
+| 마망·돌봄 | 돌봄 행동, 안정기지 감정, 생활·회복·정서 수용 장면, 역할 역전 |
+| 풍기위원 | 실제 직무와 창작 관습, 역할 표식·규칙 소품, 통제와 감정 붕괴의 대비 |
+| TS·TSF | 변환 원인·단계·영구성, identity continuity, 당사자·주변인 관점 |
+| 얀데레 | 애정과 집착의 대비, 통제·감시·위협 단계, 대상·경쟁자·결과 |
+| 매도·경멸 | 직접 발화와 비언어 경멸, 강도·코미디성, 카메라 권력각도와 대상 반응 |
+| 동정을 죽이는 옷·스웨터 | 2015 blouse/skirt와 2017 backless knit 계보, 구조·시점·기대 반전 |
+| 역바니걸 | classic bunny 불변 표식, coverage inversion, 중심·사지 분포와 앞·뒤 시점 |
+| 돌핀 팬츠 | 실제 복식명·구조, curved hem·piping·slit, 소재·fit·동작 실루엣 |
+| 히트텍 바디수트 | 상표와 generic bodysuit 분리, 이너웨어·단독 연출, 소재·연속 구조 |
+| 스타킹 | stockings/hold-ups/garter/pantyhose/tights 구분, 지지 방식·길이·투명도·패턴 |
+| 바니걸 | 역사적 uniform과 현대 trope, 핵심 부속품·소재·silhouette·view variants |
+| I자 밸런스 | biomechanics, 지지 방식, 관절 연속성, 세로 silhouette와 camera |
+| Thigh gap | anatomy·stance·lens 영향, negative space와 의상, 자연·과장 변형 |
+| 겨드랑이 | shoulder/scapula/arm mechanics, pose·lighting·garment interaction |
+| 손가락 빨기 | hand-mouth contact anatomy, gesture intent, gaze·crop, 유사 제스처 구분 |
+| 안경 | frame·fit·optics, eye visibility, adjusting/removing gestures, impression variants |
+| 포니테일 | tie point·tension·hair mass, high/low/side variants, gravity·motion lag |
+| 배·복부 | torso anatomy, twist·compression·breathing, garment framing·surface light |
+| 전연령 암시 연출 | occlusion·T-junction·Kuleshov·reaction, contextual suggestion와 보이지 않는 사실 경계 |
+| 화면 흔들기 착시 | perceptual mechanism, contrast/phase/spatial-frequency substrate, 실제 interaction 조건 |
+| 아헤가오 | eyes·pupils·mouth·tongue·fluid·asymmetry 구성, intensity와 stylistic variants |
+| 파자마 챌린지 | oversized before/gathered after 구조, rear grip·tension folds, 일반 잠옷 장면과 구분 |
+| 버블티 챌린지 | torso-cup support geometry, hands-free proof, straw/contact/camera와 코미디 변형 |
+| 전략적 가림 셀카 | mirror·phone·direct/reflected hand geometry, handedness·T-junction·crop |
+| 감각차단 마법 | 차단 감각, 시전자·대상·동시 사건, 외재화 cue와 인지 비대칭 |
+| 퀵샌드 | 실제 물성·fiction exaggeration, entrapment stage, struggle/rescue pose와 tone |
 
 ## 실행 단계
 
 | 단계 | 실제 산출물/동작 변화 | 최소 직접 검증 | 완료 조건 |
 |---|---|---|---|
-| 1. 기준선과 회귀 계약 동결 | 기존 테스트 경로에 polarity, explicit subject, no-people, compact budget, user-hard-intent 사례를 추가하고 material failure를 실행 지식에 기록한다. | 새 테스트가 현재 오동작을 정확히 재현하고 기존 통과 사례는 유지되는지 확인 | 실패 원인과 의도된 출력 변화가 구현 전에 고정됨 |
-| 2. typed requirement와 prompt 조립 | user visible, role positive, soft, negative를 분리하고 phrase-level mandatory intent와 final-budget-aware compact 조립을 구현한다. | `회사원`/`제빵사` focused pack·audit·direct replay | meta/negative mandatory 0, user hard intent 보존, negative bytes 동일, 회사원 compact 50–120 words, minified pack 120,000 bytes 이하 |
-| 3. 명시적 피사체와 no-people 라우팅 | 좁은 curated subject route와 request-level exclusion을 sampler·facet·adult eligibility에 전달한다. | `고양이`와 no-people product positive/negative control | 고양이는 animal/non-human subject이고 adult default off; no-people pack에는 human facet/subject/adult activation이 없음; generic human 경로는 동일 |
-| 4. 결정적 성능 개선과 bounded cleanup | alias match, intent constraint, rule context의 반복 계산을 제거하고 unused candidate-term 계산과 중복 render-directive 블록만 정리한다. 필요한 SKILL/reference 정합성을 최소 갱신한다. | 고정 3-run 성능, canonical SHA, focused photo suites, validator/index/contradiction, 전체 discovery와 `git diff --check` 각 최종 1회 | 중앙값 5.082초 이하 또는 기준 대비 30% 이상 단축, 성능-only 출력 byte parity, photo 실패 0, baseline 외 새 전체-suite 실패 0 |
+| 1. 목표·기준선 정상화 | 기존 supplement 성공을 scoped prototype로 재분류하고 새 outcome-first plan, 29 neutral + 29 preference-bearing request corpus를 고정한다. | 현재 asset/runtime diff와 58 request coverage 직접 검토 | 완료 판정이 실제 candidate-pack 통합 없이는 불가능함 |
+| 2. 전 주제 research dossier | 다섯 research stream으로 29 dossier를 작성하고 main agent가 하나의 schema/provenance 언어로 정규화한다. | 모든 factual claim의 source refs와 모든 element의 required fields 확인 | 29/29 dossier complete, single-clause-only element 0 |
+| 3. typed moe grammar | `illustration_moe_grammar_v2`에 routers, visual/narrative atoms, primary/support candidates, preference axes, bundles, compatibility/conflicts를 구현한다. | 29 neutral requests와 variant probes가 실제 후보를 선택 | 자료상 복수 유형은 서로 다른 candidate IDs로 실행됨 |
+| 4. candidate-pack v4 통합 | `moe_intent`, `moe_grammar`, selection reasons, alternatives와 실제 moe candidate IDs를 pack/composer/audit에 연결한다. v1~v3 dispatch는 유지한다. | request -> pack -> composed prompt end-to-end 29/29 | 최종 prompt가 supplement append가 아니라 기존 scene/format/authorial grammar와 합성됨 |
+| 5. 취향·창의성 반영 | preference cues가 subtype·viewpoint·intensity·camera·material 후보를 바꾸고, creativity/seed는 같은 intent 안에서 호환 가능한 다양한 선택을 만든다. | 29 preference cases + 6 cross-element combinations + fixed seed comparison | explicit preference 우선, unrequested element 0, adjective-only variation 0 |
+| 6. 집중 최종 자격 | 12 representative baseline-vs-v4 prompts를 intent fidelity, research specificity, coherent event, authorial choice, no label soup로 검토하고 affected regressions를 한 번 실행한다. | focused tests, v1~v3 byte replay, photo/retry hashes, one final independent review | 모든 최종 기준 충족 후에만 goal complete와 success report 작성 |
 
 ## 최종 완료 기준
 
-1. 기존 public CLI 옵션, low-level neutral `generate_once`, semantic/rule/hybrid, adult defaults/opt-out, creative/viewer/hybrid, safety, negative, composed-audit 기능이 유지된다.
-2. 내부 soft/meta/negative 문장은 positive mandatory intent가 아니며 user-authored hard visible requirement와 역할 정체성의 positive evidence는 계속 감사 가능하다.
-3. 고정 `고양이`와 no-people product가 올바른 subject/facet/adult 결과를 만들고 generic human/animal/product negative controls를 회귀시키지 않는다.
-4. `회사원` compact direct prompt는 50–120 words이고 minified candidate pack은 120,000 bytes 이하이며, 길이가 긴 명시적 사용자 요구는 조용히 삭제·절단하지 않고 별도 hard constraint로 보존한다.
-5. 고정 성능 중앙값은 5.082초 이하 또는 기준 대비 30% 이상 개선되고, 성능-only 변경 전후 canonical output SHA가 동일하다.
-6. focused photo tests, dictionary validator, semantic-index integrity, contradiction check가 통과하고 전체 discovery의 photo 실패는 0이며 알려진 unrelated baseline 실패 집합을 늘리지 않는다.
-7. 실제 코드/정책/프롬프트 동작 변경 없이 테스트·문서·보고서만 존재하는 상태로는 완료할 수 없다. 이미지 품질, 보편적 관객 반응, semantic-index 메모리 개선은 완료 주장에 포함하지 않는다.
-
-## 완료 증거
-
-- typed role/negative/soft requirement와 source/polarity/priority/mandatory intent 계약을 구현했다. public additional-requirement와 ordinary direct/golden/frozen 경계는 유지했다.
-- exact `고양이` subject route와 request-level no-people 전파를 적용해 non-human/no-people subject, facet, adult-appeal 결과를 교정했다.
-- 고정 `회사원` pack은 151,732에서 95,146 minified bytes로 줄었고 mandatory/uncovered는 93/60에서 1/1로 줄었다. compact direct prompt는 191에서 105 words로 줄면서 역할 evidence를 유지했다.
-- 고정 3회 성능은 2.813/2.047/2.125초, 중앙값 2.125초로 기준 7.260초 대비 약 70.7% 단축됐다. 세 출력 SHA와 캐시 on/off stdout/stderr가 byte-identical하다.
-- focused photo 309 tests, dictionary, 112/112 scene-expression, 6,513-entry semantic-index integrity, 2,001 contradiction generation/0 violations, golden/frozen replay, `git diff --check`가 통과했다.
-- 전체 discovery는 505 tests, 11 failures/1 error로 기존 unrelated universal-scene 기준선과 동일하며 photo 신규 실패는 0이다.
-- 이미지 생성·픽셀 검토는 수행하지 않았고 이미지 품질이나 관객 반응은 완료 주장에 포함하지 않는다.
-- 실행 지식: `docs/failed-reports/2026-08-11-photo-mandatory-intent-polarity-contamination.md`를 resolved로 갱신하고 `docs/passed-reports/2026-08-11-photo-intent-preserving-optimization.md`와 양방향 연결했다.
+1. 29개 모든 요소에 완전한 research dossier와 실행 가능한 후보가 있다.
+2. 복수 계보·관점·세부 유형이 있는 요소가 하나의 고정 문장으로 축소되지 않는다.
+3. 사용자의 요소명과 주변 취향 단서가 typed interpretation과 selection reason에 남는다.
+4. 실제 selected moe candidate IDs가 candidate pack과 composed prompt evidence에 결속된다.
+5. 최종 프롬프트는 선택된 요소들을 기존 장면·형식·authorial grammar와 하나의 사건으로 합성한다.
+6. 기본 creativity 0.5와 creative-cue 계약을 보존하면서, 창의성은 후보·changed rule 선택을 실제로 바꾼다.
+7. v1~v3, photo routing, retry, negative prompt, 기존 안전·필터 동작은 변경되지 않는다.
+8. 검증·문서만으로 완료할 수 없으며, 29 direct + 29 preference + 6 combination + 12 representative prompt outputs가 직접 제품 동작을 입증한다.
 
 ## 검증 수준과 예산
 
-- 위험 수준: 중간. 로컬 prompt/routing/runtime 변경이며 외부 상태 변경은 없지만 deterministic output, negative polarity, adult eligibility와 기존 composition contract가 중요하다.
-- 반복 중 focused 검증: 변경한 함수와 네 개 고정 입력, 관련 기존 photo contract test만 실행한다.
-- 최종 검증: fixed performance 3-run 한 번, focused photo suites 한 번, dictionary/index/contradiction 한 번, full discovery 한 번, `git diff --check` 한 번.
-- 구현 iteration: 동일 root cause별 최대 2회. 두 번째 실패 뒤에는 기준 완화, golden 덮어쓰기, verifier 확대를 하지 않고 failure report를 갱신하고 안전한 후속 결정을 요청한다.
-- 검증 확장 전 질문 조건: semantic index 재생성, 새 embedding/API/유료 서비스, 이미지 생성, pack schema 전면 버전업, public CLI/JSON 필드 제거, 대규모 모듈 이동이 필요할 때.
+- 위험 수준: ordinary offline implementation. 외부 상태 변경 없음.
+- 반복 중: 해당 dossier/grammar/runtime focused checks만 실행한다.
+- 최종: affected test modules, v1~v3 replay, photo/retry boundary, 독립 검토 1회.
+- 명시적 제외: universal 24x417, hidden 1,152-run, 전체 이미지 생성, 29x29 exhaustive combinations, 새 qualifier framework.
+- 실제 이미지 A/B는 core goal 완료 후 사용자가 원할 때 별도 목표로만 진행한다.
+- 검증 확장 전 질문 조건: 기존 경로로 필수 기준을 직접 확인할 수 없거나 검증 작업이 구현 작업보다 커질 때.
 
 ## 중단 조건과 진행 로그
 
-- 중단하고 질문할 조건: 사용자 요구를 보존하면서 120-word/pack-size 목표를 동시에 만족할 수 없음, 기존 public contract 제거 필요, unrelated dirty work 발견, credential·외부 비용·배포·파괴적 변경 또는 실질적 범위 확대 필요.
-- 실패 iteration 한도: 고정 조건에서 같은 원인의 product repair 최대 2회.
-- 로그 형식: `product delta -> direct evidence -> remaining product gap -> blocker`.
-- 자동 stretch나 P3 semantic-index 최적화로 넘어가지 않는다.
+- 같은 설계가 동일 원인으로 두 번 실패하면 세 번째 verifier/runner를 만들지 않고 원인을 failed report에 기록한 뒤 설계를 바꾸거나 사용자에게 질문한다.
+- 원 출처가 세부 변형을 지지하지 않으면 근거 없는 candidate 수를 채우지 않고, 확인된 한계와 대안을 기록한다.
+- 후보팩 v4가 기존 v1~v3 byte replay를 깨면 v1~v3를 수정하지 않고 additive dispatch 경계를 고친다.
+- 안전·필터 변경이 필요해 보이는 경우 이 목표에서는 진행하지 않고 별도 작업으로 남긴다.
+- 외부 유료 API, 이미지 생성, 배포, push, PR이 필요하면 먼저 사용자 승인을 받는다.
+- 실행 지식 보고서: `docs/failed-reports/2026-08-11-moe-element-supplement-underintegration.md`; 완료 시 조건을 만족할 경우 새 passed report 최대 1건.
 
-## 실행 지식 계약
+## 완료 증거
 
-- 시작·재개 때 `docs/failed-reports/`와 `docs/passed-reports/`의 파일명·헤더 메타데이터를 범위, 경로, 환경, 오류, 접근법, lifecycle, 최신순으로 평가한다. 기본 전문 읽기는 최대 5건이며 현재 소스와 직접 증거가 과거 보고서보다 우선한다.
-- material failure가 가정·완료 기준을 깨거나 rollback/redesign을 요구하거나 재발 가능하면 재시도 전에 기존 matching report를 갱신하거나 `docs/failed-reports/YYYY-MM-DD-<slug>.md` 하나로 통합한다. transient typo나 즉시 교정된 명령 오류는 기록하지 않는다.
-- 모든 저장 증거는 현재 시스템 날짜·시간을 사용하고 credential, token, secret, 민감 endpoint, 고객·개인정보를 제거한다. 원문을 저장할 수 없으면 sanitized conclusion과 접근 제한 증거 참조만 남긴다.
-- 최종 기준이 모두 통과한 뒤 성공 보고서는 목표당 기본 최대 1건만 허용한다. `material failed report 해결`, `같은 고정 조건에서 기본/문서 접근 실패 뒤 발견한 비자명한 대안`, `현재 코드·문서에서 싸게 복원할 수 없는 다단계 재현 절차` 중 하나를 명시적으로 만족해야 한다.
-- 실패/성공 lifecycle 링크는 같은 변경에서 양방향으로 갱신한다. 해결된 failure는 `resolved`와 `Related passed reports`를, 성공은 대응 failed report를 기록한다. 기존 성공이 무효화되면 이를 `superseded`로 갱신한다.
-- 보고서 작성은 checkpoint나 product progress가 아니며 구현을 지연시키지 않는다. 최종 요약에 적용·생성·갱신한 실행 지식 경로를 모두 기록한다.
+- 29/29 source-bound dossier가 다섯 raw shard에 존재하며 compiler가 exact hash를 검증한다.
+- `illustration_moe_grammar_v2.json`: 29 elements, 233 candidates, 198 sources, SHA-256 `4d77fc2c9d8cf7d94af0742c4bd577e19b8193629dcf9df1c5c6dc2e33383a9b`.
+- 29/29 neutral request는 canonical candidate key를, 29/29 preference request는 서로 다른 기대 subtype/key를 선택한다.
+- 6/6 cross-element request는 정확히 one global primary plus at most two supports를 사용하고, 12/12 prompt-evidence comparison은 current grammar 및 v4 audit에 결속되어 pass한다.
+- creative cue는 base `creative_development_required`와 moe novelty 2를 활성화하지만 stored creativity `0.5`를 바꾸지 않는다.
+- v1 fixed-clause replay, base safety/negative equality, retry/photo baseline hashes, mutation rejection을 focused suite에서 함께 확인했다.
+- 성공 보고서: `docs/passed-reports/2026-08-11-research-backed-moe-grammar-v2.md`.
+- 미주장: 실제 이미지 픽셀 품질, 보편적 독자 선호, hidden generalization, exhaustive pairwise compatibility.

@@ -1,0 +1,898 @@
+{
+  "schema": "subculture-illustration-moe-compatibility/v2",
+  "version": "2026-08-11",
+  "reviewed_at": "2026-08-11T18:10:30+09:00",
+  "source_hashes": {
+    "illustration_moe_elements_v1_sha256": "29247cafc226055961ae6c7e70ea26f43c1cc3399ebd151ecb5b087758923b9b",
+    "illustration_mechanism_graph_v1_sha256": "83f73d28e53a12c6e8d015643fea44c3029fed6f299fd177a46efbaf6a76cb0d",
+    "illustration_universal_compatibility_graph_v1_sha256": "ee214cfd28a1ec9611f9d799b7142e6bff18b07a89e4d5accae28b66f49ab3f5",
+    "illustration_runtime_py_sha256": "e0b08cbc6369854c2fc775bc7ac8b38c1777e08a7931dc17df3981460e53116c",
+    "universal_scene_runtime_py_sha256": "f5cea9d505b666d9cc6661ace6d2031854562d6d55ff45512a00db3a5e2a76cf"
+  },
+  "design_contract": {
+    "pairwise_materialization": "forbidden",
+    "maximum_selected_elements": 3,
+    "governing_visual_primary_count": 1,
+    "maximum_support_visuals": 2,
+    "event_spine_count": 1,
+    "phase_count": 1,
+    "optional_prop_capacity": 1,
+    "resource_capacity_formula": "sum_exclusive_plus_max_shared_lte_declared_capacity",
+    "same_phase_double_booking": "block",
+    "shared_attention_exception": "only_same_visible_target",
+    "camera_policy": "one_governing_camera_profile_per_frame; support elements must remain observable inside it or move to a compatible additional frame",
+    "frame_policy": "temporal proof requirements govern; optical interaction may carry only single-frame support elements",
+    "resolution_order": [
+      "preserve_user_fixed_and_closed_slots",
+      "resolve_frame_requirement",
+      "apply_hard_incompatibility_rules",
+      "apply_synergy_rules_without_adding_claims",
+      "check_resource_capacity",
+      "check_camera_observability",
+      "apply_bounded_fallback",
+      "block_if_any_mandatory_evidence_is_unobservable"
+    ]
+  },
+  "enums": {
+    "frame_mode_ids": [
+      "single_frame",
+      "paired_frame",
+      "sequence",
+      "optical_interaction"
+    ],
+    "frame_requirement_ids": [
+      "single_frame",
+      "paired_or_sequence",
+      "sequence",
+      "optical_interaction"
+    ],
+    "resource_kind_ids": [
+      "manipulator",
+      "attention_channel",
+      "head_orientation",
+      "facial_display",
+      "support_contact",
+      "mouth",
+      "appendage",
+      "wing_appendage",
+      "locomotor_contact",
+      "body_orientation",
+      "body_contour_display",
+      "surface_signal",
+      "light_emission",
+      "internal_luminance_display",
+      "mobile_ear_pair",
+      "wing_axis_pair",
+      "tail_axis",
+      "mechanical_state_displacement",
+      "external_anchor",
+      "focal_primary",
+      "focal_secondary",
+      "foreground_salience",
+      "event_peak",
+      "prop_slot"
+    ],
+    "owner_scope_ids": [
+      "actor",
+      "action",
+      "target",
+      "instrument",
+      "recipient",
+      "result",
+      "location",
+      "phase",
+      "scene"
+    ],
+    "resource_mode_ids": [
+      "exclusive",
+      "shared"
+    ],
+    "decision_ids": [
+      "allow",
+      "allow_with_bridge",
+      "repair",
+      "block"
+    ],
+    "camera_detail_scale_ids": [
+      "micro",
+      "medium",
+      "full_body",
+      "environment",
+      "interactive"
+    ]
+  },
+  "frame_requirement_profiles": [
+    {
+      "id": "single_frame",
+      "governing_frame_modes": ["single_frame", "paired_frame", "sequence"],
+      "support_frame_modes": ["single_frame", "paired_frame", "sequence", "optical_interaction"],
+      "minimum_distinct_frames": 1,
+      "temporal_proof": "not_required"
+    },
+    {
+      "id": "paired_or_sequence",
+      "governing_frame_modes": ["paired_frame", "sequence"],
+      "support_frame_modes": ["paired_frame", "sequence"],
+      "minimum_distinct_frames": 2,
+      "temporal_proof": "matched_state_or_context_consequence_required"
+    },
+    {
+      "id": "sequence",
+      "governing_frame_modes": ["sequence"],
+      "support_frame_modes": ["sequence"],
+      "minimum_distinct_frames": 3,
+      "temporal_proof": "ordered_before_transition_after_required"
+    },
+    {
+      "id": "optical_interaction",
+      "governing_frame_modes": ["optical_interaction"],
+      "support_frame_modes": ["optical_interaction"],
+      "minimum_distinct_frames": 1,
+      "temporal_proof": "external_viewer_interaction_required"
+    }
+  ],
+  "camera_profiles": [
+    {
+      "id": "camera_matched_state",
+      "detail_scale": "medium",
+      "required_region_ids": ["identity_anchor", "state_delta", "consequence"],
+      "compatible_frame_modes": ["paired_frame", "sequence"],
+      "hard_rule": "lock viewpoint scale and identity anchor across compared states"
+    },
+    {
+      "id": "camera_relationship_sequence",
+      "detail_scale": "medium",
+      "required_region_ids": ["actor", "target", "third_party_or_control_device", "reaction_consequence"],
+      "compatible_frame_modes": ["paired_frame", "sequence"],
+      "hard_rule": "each relationship role and the changed relation must be spatially owned"
+    },
+    {
+      "id": "camera_split_plane",
+      "detail_scale": "environment",
+      "required_region_ids": ["conscious_subject", "occluding_plane", "hidden_event", "state_marker"],
+      "compatible_frame_modes": ["single_frame", "paired_frame", "sequence"],
+      "hard_rule": "the visible and hidden regions must remain simultaneously legible"
+    },
+    {
+      "id": "camera_full_body_vertical",
+      "detail_scale": "full_body",
+      "required_region_ids": ["head", "torso", "pelvis", "both_legs", "both_feet", "floor_contact"],
+      "compatible_frame_modes": ["single_frame", "paired_frame", "sequence"],
+      "hard_rule": "no crop may remove a required support or the full pose chain"
+    },
+    {
+      "id": "camera_full_body_three_quarter",
+      "detail_scale": "full_body",
+      "required_region_ids": ["head", "torso_construction", "pelvis", "legwear", "rear_or_side_identity_marker"],
+      "compatible_frame_modes": ["single_frame", "paired_frame", "sequence"],
+      "hard_rule": "garment construction must read without a second contradictory outfit layer"
+    },
+    {
+      "id": "camera_relational_medium",
+      "detail_scale": "medium",
+      "required_region_ids": ["face", "directed_gesture", "visible_target", "target_response"],
+      "compatible_frame_modes": ["single_frame", "paired_frame", "sequence"],
+      "hard_rule": "a facial or role claim without its target is incomplete"
+    },
+    {
+      "id": "camera_occlusion_sequence",
+      "detail_scale": "medium",
+      "required_region_ids": ["establishing_context", "occluder_t_junction", "gaze_axis", "reaction_or_consequence"],
+      "compatible_frame_modes": ["paired_frame", "sequence"],
+      "hard_rule": "occlusion may suggest but may not assert the hidden action"
+    },
+    {
+      "id": "camera_lower_body_front",
+      "detail_scale": "full_body",
+      "required_region_ids": ["pelvis", "both_thighs", "both_knees", "both_lower_legs", "both_feet", "background_gap"],
+      "compatible_frame_modes": ["single_frame", "paired_frame", "sequence"],
+      "hard_rule": "leg continuity and floor relation must survive the crop"
+    },
+    {
+      "id": "camera_torso_three_quarter",
+      "detail_scale": "medium",
+      "required_region_ids": ["shoulder_chain", "upper_torso", "waist", "required_hand_contact"],
+      "compatible_frame_modes": ["single_frame", "paired_frame", "sequence", "optical_interaction"],
+      "hard_rule": "the selected body or garment boundary must be unobscured"
+    },
+    {
+      "id": "camera_legwear_full_length",
+      "detail_scale": "full_body",
+      "required_region_ids": ["garment_top_boundary", "both_legs", "both_covered_feet"],
+      "compatible_frame_modes": ["single_frame", "paired_frame", "sequence"],
+      "hard_rule": "do not infer a stocking construction if its top or foot boundary is cropped"
+    },
+    {
+      "id": "camera_environment_entrapment",
+      "detail_scale": "environment",
+      "required_region_ids": ["subject_face", "braced_limbs", "submersion_line", "material_depression", "displaced_material"],
+      "compatible_frame_modes": ["single_frame", "paired_frame", "sequence"],
+      "hard_rule": "environment response and partial entrapment must share one physical contact field"
+    },
+    {
+      "id": "camera_hand_mouth_close",
+      "detail_scale": "micro",
+      "required_region_ids": ["mouth", "finger_contact", "wrist_hand_chain", "face"],
+      "compatible_frame_modes": ["single_frame", "paired_frame", "sequence"],
+      "hard_rule": "micro contact must not be replaced by a generic face or off-frame hand"
+    },
+    {
+      "id": "camera_face_close",
+      "detail_scale": "micro",
+      "required_region_ids": ["face", "both_eyes", "mouth", "selected_accessory_or_display"],
+      "compatible_frame_modes": ["single_frame", "paired_frame", "sequence"],
+      "hard_rule": "eye mouth and accessory geometry must remain independently readable"
+    },
+    {
+      "id": "camera_head_back_three_quarter",
+      "detail_scale": "medium",
+      "required_region_ids": ["scalp_convergence", "tie_point", "hair_bundle", "upper_back"],
+      "compatible_frame_modes": ["single_frame", "paired_frame", "sequence"],
+      "hard_rule": "the bundle must visibly begin at the tie point"
+    },
+    {
+      "id": "camera_mirror_projection",
+      "detail_scale": "medium",
+      "required_region_ids": ["mirror_boundary", "phone_reflection", "direct_hand", "reflected_hand", "occlusion_t_junctions"],
+      "compatible_frame_modes": ["single_frame", "paired_frame", "sequence"],
+      "hard_rule": "left-right projection and direct versus reflected ownership must agree"
+    },
+    {
+      "id": "camera_interactive_overlay",
+      "detail_scale": "interactive",
+      "required_region_ids": ["isolated_target", "alternating_contrast_grid", "stable_surrounding_contour", "external_motion_instruction"],
+      "compatible_frame_modes": ["optical_interaction"],
+      "hard_rule": "static pixels alone do not satisfy the interaction"
+    }
+  ],
+  "element_profiles": [
+    {
+      "element_id": "moe_darkening_corruption",
+      "frame_requirement_id": "paired_or_sequence",
+      "camera_profile_id": "camera_matched_state",
+      "mechanism_node_ids": ["causal_state_change", "transformation_identity_invariant", "consequence_trace"],
+      "resource_claims": [["focal_primary", "scene", 1, "exclusive"], ["event_peak", "scene", 1, "shared"]],
+      "capability_requirements": [],
+      "rule_tags": ["narrative_state_delta", "temporal_proof_required", "primary_composition_owner"],
+      "fallback_rule_ids": ["fallback_matched_sequence", "fallback_demote_support"]
+    },
+    {
+      "element_id": "moe_ntr_relationship_displacement",
+      "frame_requirement_id": "sequence",
+      "camera_profile_id": "camera_relationship_sequence",
+      "mechanism_node_ids": ["cover_character_relation_hierarchy", "ensemble_reaction_consequence", "webtoon_scroll_beat_sequence"],
+      "resource_claims": [["focal_primary", "scene", 1, "exclusive"], ["focal_secondary", "scene", 1, "shared"], ["attention_channel", "actor", 1, "shared"]],
+      "capability_requirements": ["attention_channel"],
+      "rule_tags": ["relationship_multi_actor", "temporal_proof_required", "primary_composition_owner"],
+      "fallback_rule_ids": ["fallback_matched_sequence", "fallback_drop_optional"]
+    },
+    {
+      "element_id": "moe_sensory_deprivation_magic",
+      "frame_requirement_id": "single_frame",
+      "camera_profile_id": "camera_split_plane",
+      "mechanism_node_ids": ["bridging_gap_cue", "secondary_discovery_node", "negative_space_window"],
+      "resource_claims": [["focal_primary", "scene", 1, "exclusive"], ["foreground_salience", "scene", 1, "exclusive"]],
+      "capability_requirements": [],
+      "rule_tags": ["split_plane", "simultaneous_information_contrast", "primary_composition_owner"],
+      "fallback_rule_ids": ["fallback_demote_support", "fallback_drop_optional"]
+    },
+    {
+      "element_id": "moe_virgin_killer_clothing",
+      "frame_requirement_id": "single_frame",
+      "camera_profile_id": "camera_full_body_three_quarter",
+      "mechanism_node_ids": ["internal_part_boundary", "garment_action_deformation"],
+      "resource_claims": [["focal_secondary", "scene", 1, "shared"]],
+      "capability_requirements": [],
+      "rule_tags": ["wardrobe_support", "rear_garment_construction", "single_outfit_layer"],
+      "fallback_rule_ids": ["fallback_camera_widen", "fallback_demote_support"]
+    },
+    {
+      "element_id": "moe_mesugaki_provocation",
+      "frame_requirement_id": "single_frame",
+      "camera_profile_id": "camera_relational_medium",
+      "mechanism_node_ids": ["ensemble_directed_action_vector", "ensemble_reaction_consequence"],
+      "resource_claims": [["facial_display", "actor", 1, "exclusive"], ["attention_channel", "actor", 1, "shared"], ["manipulator", "actor", 1, "exclusive"]],
+      "capability_requirements": ["facial_display", "attention_channel", "manipulator"],
+      "rule_tags": ["targeted_display", "directed_gesture", "character_archetype"],
+      "fallback_rule_ids": ["fallback_same_target_attention", "fallback_release_manipulator"]
+    },
+    {
+      "element_id": "moe_i_balance_pose",
+      "frame_requirement_id": "single_frame",
+      "camera_profile_id": "camera_full_body_vertical",
+      "mechanism_node_ids": ["thumbnail_outer_contour", "negative_space_window", "ev_visible_anchor_point"],
+      "resource_claims": [["support_contact", "actor", 1, "exclusive"], ["manipulator", "actor", 1, "exclusive"], ["focal_primary", "scene", 1, "shared"]],
+      "capability_requirements": ["support_contact", "manipulator"],
+      "rule_tags": ["pose_vertical_free_leg", "pose_single_support_foot", "camera_full_body_lock"],
+      "fallback_rule_ids": ["fallback_camera_widen", "fallback_drop_optional"]
+    },
+    {
+      "element_id": "moe_pajama_challenge",
+      "frame_requirement_id": "paired_or_sequence",
+      "camera_profile_id": "camera_matched_state",
+      "mechanism_node_ids": ["garment_action_deformation", "causal_state_change", "state_ledger_before_after"],
+      "resource_claims": [["manipulator", "actor", 1, "exclusive"], ["focal_primary", "scene", 1, "shared"]],
+      "capability_requirements": ["manipulator"],
+      "rule_tags": ["silhouette_reveal", "temporal_proof_required", "same_garment_state_delta"],
+      "fallback_rule_ids": ["fallback_matched_sequence", "fallback_release_manipulator"]
+    },
+    {
+      "element_id": "moe_reverse_bunny_costume",
+      "frame_requirement_id": "single_frame",
+      "camera_profile_id": "camera_full_body_three_quarter",
+      "mechanism_node_ids": ["internal_part_boundary", "system_negative_space_rhythm"],
+      "resource_claims": [["focal_secondary", "scene", 1, "shared"]],
+      "capability_requirements": [],
+      "rule_tags": ["wardrobe_support", "bunny_grammar", "classic_torso_suit_absent"],
+      "fallback_rule_ids": ["fallback_camera_widen", "fallback_drop_optional"]
+    },
+    {
+      "element_id": "moe_implied_all_ages_staging",
+      "frame_requirement_id": "paired_or_sequence",
+      "camera_profile_id": "camera_occlusion_sequence",
+      "mechanism_node_ids": ["bridging_gap_cue", "cjk_subjective_viewpoint_context", "secondary_discovery_node"],
+      "resource_claims": [["focal_primary", "scene", 1, "exclusive"], ["foreground_salience", "scene", 1, "exclusive"], ["attention_channel", "actor", 1, "shared"]],
+      "capability_requirements": ["attention_channel"],
+      "rule_tags": ["occlusion_context", "temporal_proof_required", "primary_composition_owner"],
+      "fallback_rule_ids": ["fallback_matched_sequence", "fallback_demote_support"]
+    },
+    {
+      "element_id": "moe_dolphin_shorts",
+      "frame_requirement_id": "single_frame",
+      "camera_profile_id": "camera_full_body_three_quarter",
+      "mechanism_node_ids": ["garment_action_deformation", "material_specific_response"],
+      "resource_claims": [["focal_secondary", "scene", 1, "shared"]],
+      "capability_requirements": [],
+      "rule_tags": ["wardrobe_support", "athletic_garment", "leg_motion_clearance"],
+      "fallback_rule_ids": ["fallback_camera_widen", "fallback_demote_support"]
+    },
+    {
+      "element_id": "moe_thermal_bodysuit",
+      "frame_requirement_id": "single_frame",
+      "camera_profile_id": "camera_full_body_three_quarter",
+      "mechanism_node_ids": ["internal_part_boundary", "material_specific_response"],
+      "resource_claims": [["focal_secondary", "scene", 1, "shared"]],
+      "capability_requirements": [],
+      "rule_tags": ["wardrobe_support", "one_piece_construction", "leg_opening_visibility"],
+      "fallback_rule_ids": ["fallback_camera_widen", "fallback_demote_support"]
+    },
+    {
+      "element_id": "moe_maternal_care",
+      "frame_requirement_id": "single_frame",
+      "camera_profile_id": "camera_relational_medium",
+      "mechanism_node_ids": ["asymmetric_help_with_response", "negotiated_object_exchange", "consequence_trace"],
+      "resource_claims": [["manipulator", "actor", 2, "exclusive"], ["prop_slot", "scene", 1, "exclusive"], ["attention_channel", "actor", 1, "shared"], ["focal_secondary", "scene", 1, "shared"]],
+      "capability_requirements": ["manipulator", "attention_channel"],
+      "rule_tags": ["care_dyad", "single_prop_required", "two_hand_action"],
+      "fallback_rule_ids": ["fallback_environment_support", "fallback_release_manipulator", "fallback_drop_optional"]
+    },
+    {
+      "element_id": "moe_screen_shake_illusion",
+      "frame_requirement_id": "optical_interaction",
+      "camera_profile_id": "camera_interactive_overlay",
+      "mechanism_node_ids": ["ev_early_anomaly", "secondary_discovery_node", "contrast_isolation"],
+      "resource_claims": [["focal_primary", "scene", 1, "exclusive"], ["foreground_salience", "scene", 1, "exclusive"]],
+      "capability_requirements": [],
+      "rule_tags": ["optical_governor", "interactive_frame_exclusive", "isolated_target_region"],
+      "fallback_rule_ids": ["fallback_demote_support", "fallback_drop_optional"]
+    },
+    {
+      "element_id": "moe_bubble_tea_challenge",
+      "frame_requirement_id": "single_frame",
+      "camera_profile_id": "camera_torso_three_quarter",
+      "mechanism_node_ids": ["actor_action_target_triangle", "ev_visible_anchor_point", "consequence_trace"],
+      "resource_claims": [["prop_slot", "scene", 1, "exclusive"], ["focal_primary", "scene", 1, "shared"]],
+      "capability_requirements": [],
+      "rule_tags": ["single_prop_required", "cup_contact", "both_hands_must_be_free"],
+      "fallback_rule_ids": ["fallback_environment_support", "fallback_drop_optional"]
+    },
+    {
+      "element_id": "moe_thigh_gap",
+      "frame_requirement_id": "single_frame",
+      "camera_profile_id": "camera_lower_body_front",
+      "mechanism_node_ids": ["negative_space_window", "thumbnail_outer_contour"],
+      "resource_claims": [["support_contact", "actor", 2, "shared"], ["focal_primary", "scene", 1, "shared"]],
+      "capability_requirements": ["support_contact"],
+      "rule_tags": ["pose_feet_together", "lower_body_geometry", "background_gap_required"],
+      "fallback_rule_ids": ["fallback_camera_widen", "fallback_drop_optional"]
+    },
+    {
+      "element_id": "moe_quicksand_sinking",
+      "frame_requirement_id": "single_frame",
+      "camera_profile_id": "camera_environment_entrapment",
+      "mechanism_node_ids": ["ev_deformation_falloff", "environment_event_trace", "consequence_trace"],
+      "resource_claims": [["support_contact", "actor", 2, "exclusive"], ["focal_primary", "scene", 1, "exclusive"], ["event_peak", "scene", 1, "shared"]],
+      "capability_requirements": ["support_contact"],
+      "rule_tags": ["environment_hazard", "partial_submersion", "primary_composition_owner"],
+      "fallback_rule_ids": ["fallback_environment_support", "fallback_drop_optional"]
+    },
+    {
+      "element_id": "moe_axilla",
+      "frame_requirement_id": "single_frame",
+      "camera_profile_id": "camera_torso_three_quarter",
+      "mechanism_node_ids": ["concavity_landmark", "internal_part_boundary"],
+      "resource_claims": [["focal_secondary", "scene", 1, "shared"]],
+      "capability_requirements": [],
+      "rule_tags": ["raised_arm", "torso_anatomy_support", "region_unobscured"],
+      "fallback_rule_ids": ["fallback_camera_widen", "fallback_demote_support"]
+    },
+    {
+      "element_id": "moe_stockings",
+      "frame_requirement_id": "single_frame",
+      "camera_profile_id": "camera_legwear_full_length",
+      "mechanism_node_ids": ["material_specific_response", "internal_part_boundary"],
+      "resource_claims": [["focal_secondary", "scene", 1, "shared"]],
+      "capability_requirements": [],
+      "rule_tags": ["wardrobe_support", "footed_legwear", "garment_top_boundary"],
+      "fallback_rule_ids": ["fallback_camera_widen", "fallback_demote_support"]
+    },
+    {
+      "element_id": "moe_morals_committee",
+      "frame_requirement_id": "single_frame",
+      "camera_profile_id": "camera_relational_medium",
+      "mechanism_node_ids": ["actor_action_target_triangle", "negotiated_object_exchange", "setting_time_anchor"],
+      "resource_claims": [["manipulator", "actor", 1, "exclusive"], ["prop_slot", "scene", 1, "exclusive"], ["attention_channel", "actor", 1, "shared"]],
+      "capability_requirements": ["manipulator", "attention_channel"],
+      "rule_tags": ["service_role", "single_prop_required", "directed_task"],
+      "fallback_rule_ids": ["fallback_release_manipulator", "fallback_environment_support"]
+    },
+    {
+      "element_id": "moe_adult_finger_sucking",
+      "frame_requirement_id": "single_frame",
+      "camera_profile_id": "camera_hand_mouth_close",
+      "mechanism_node_ids": ["actor_action_target_triangle", "concavity_landmark", "first_fixation_contrast"],
+      "resource_claims": [["manipulator", "actor", 1, "exclusive"], ["focal_primary", "scene", 1, "shared"]],
+      "capability_requirements": ["manipulator"],
+      "rule_tags": ["micro_contact", "camera_micro_lock", "hand_mouth_chain"],
+      "fallback_rule_ids": ["fallback_demote_support", "fallback_drop_optional"]
+    },
+    {
+      "element_id": "moe_classic_bunny_costume",
+      "frame_requirement_id": "single_frame",
+      "camera_profile_id": "camera_full_body_three_quarter",
+      "mechanism_node_ids": ["thumbnail_outer_contour", "internal_part_boundary"],
+      "resource_claims": [["focal_secondary", "scene", 1, "shared"]],
+      "capability_requirements": [],
+      "rule_tags": ["wardrobe_support", "bunny_grammar", "classic_torso_suit_present"],
+      "fallback_rule_ids": ["fallback_camera_widen", "fallback_demote_support"]
+    },
+    {
+      "element_id": "moe_tsf_transformation",
+      "frame_requirement_id": "sequence",
+      "camera_profile_id": "camera_matched_state",
+      "mechanism_node_ids": ["transformation_trigger_contact", "transformation_phase_boundary", "transformation_identity_invariant", "transformation_aftermath_residue"],
+      "resource_claims": [["focal_primary", "scene", 1, "exclusive"], ["event_peak", "scene", 1, "exclusive"]],
+      "capability_requirements": [],
+      "rule_tags": ["narrative_state_delta", "temporal_proof_required", "primary_composition_owner"],
+      "fallback_rule_ids": ["fallback_unify_state_delta", "fallback_matched_sequence"]
+    },
+    {
+      "element_id": "moe_yandere_obsession",
+      "frame_requirement_id": "paired_or_sequence",
+      "camera_profile_id": "camera_relationship_sequence",
+      "mechanism_node_ids": ["cover_character_relation_hierarchy", "ensemble_reaction_consequence", "consequence_trace"],
+      "resource_claims": [["focal_primary", "scene", 1, "exclusive"], ["prop_slot", "scene", 1, "exclusive"], ["attention_channel", "actor", 1, "shared"]],
+      "capability_requirements": ["attention_channel"],
+      "rule_tags": ["relationship_control", "temporal_proof_required", "single_prop_required"],
+      "fallback_rule_ids": ["fallback_matched_sequence", "fallback_drop_optional"]
+    },
+    {
+      "element_id": "moe_glasses",
+      "frame_requirement_id": "single_frame",
+      "camera_profile_id": "camera_face_close",
+      "mechanism_node_ids": ["identity_face_feature_anchor", "internal_part_boundary"],
+      "resource_claims": [["focal_secondary", "scene", 1, "shared"]],
+      "capability_requirements": [],
+      "rule_tags": ["face_accessory", "micro_detail_support", "reflection_control"],
+      "fallback_rule_ids": ["fallback_camera_widen", "fallback_demote_support"]
+    },
+    {
+      "element_id": "moe_ponytail",
+      "frame_requirement_id": "single_frame",
+      "camera_profile_id": "camera_head_back_three_quarter",
+      "mechanism_node_ids": ["ev_material_lag_order", "pose_invariant_landmarks", "ev_visible_anchor_point"],
+      "resource_claims": [["focal_secondary", "scene", 1, "shared"]],
+      "capability_requirements": [],
+      "rule_tags": ["hair_tie_anchor", "motion_lag_support", "upper_back_visibility"],
+      "fallback_rule_ids": ["fallback_camera_widen", "fallback_demote_support"]
+    },
+    {
+      "element_id": "moe_contempt_derision",
+      "frame_requirement_id": "single_frame",
+      "camera_profile_id": "camera_relational_medium",
+      "mechanism_node_ids": ["ensemble_directed_action_vector", "ensemble_reaction_consequence", "first_fixation_contrast"],
+      "resource_claims": [["facial_display", "actor", 1, "exclusive"], ["attention_channel", "actor", 1, "shared"], ["manipulator", "actor", 1, "exclusive"]],
+      "capability_requirements": ["facial_display", "attention_channel", "manipulator"],
+      "rule_tags": ["targeted_display", "directed_gesture", "social_response"],
+      "fallback_rule_ids": ["fallback_same_target_attention", "fallback_release_manipulator"]
+    },
+    {
+      "element_id": "moe_abdomen",
+      "frame_requirement_id": "single_frame",
+      "camera_profile_id": "camera_torso_three_quarter",
+      "mechanism_node_ids": ["ev_deformation_falloff", "internal_part_boundary"],
+      "resource_claims": [["focal_secondary", "scene", 1, "shared"]],
+      "capability_requirements": [],
+      "rule_tags": ["torso_anatomy_support", "pose_responsive_surface", "isolated_target_region"],
+      "fallback_rule_ids": ["fallback_camera_widen", "fallback_demote_support"]
+    },
+    {
+      "element_id": "moe_strategic_occlusion_selfie",
+      "frame_requirement_id": "single_frame",
+      "camera_profile_id": "camera_mirror_projection",
+      "mechanism_node_ids": ["cjk_subjective_viewpoint_context", "negative_space_window", "ev_literal_scene_anchor"],
+      "resource_claims": [["manipulator", "actor", 2, "exclusive"], ["prop_slot", "scene", 1, "exclusive"], ["focal_primary", "scene", 1, "exclusive"], ["foreground_salience", "scene", 1, "shared"]],
+      "capability_requirements": ["manipulator"],
+      "rule_tags": ["mirror_projection", "single_prop_required", "two_hand_action", "primary_composition_owner"],
+      "fallback_rule_ids": ["fallback_drop_optional"]
+    },
+    {
+      "element_id": "moe_ahegao_expression",
+      "frame_requirement_id": "single_frame",
+      "camera_profile_id": "camera_face_close",
+      "mechanism_node_ids": ["first_fixation_contrast", "edge_sharpness_gradient", "identity_expression_range_sheet"],
+      "resource_claims": [["facial_display", "actor", 1, "exclusive"], ["focal_primary", "scene", 1, "shared"]],
+      "capability_requirements": ["facial_display"],
+      "rule_tags": ["facial_display_required", "camera_micro_lock", "expression_code"],
+      "fallback_rule_ids": ["fallback_demote_support", "fallback_drop_optional"]
+    }
+  ],
+  "incompatibility_rules": [
+    {
+      "id": "incompatibility_frame_requirement",
+      "scope": "selection",
+      "when_all_tags": [],
+      "when_any_tags": ["temporal_proof_required", "interactive_frame_exclusive"],
+      "predicate": "no_governing_frame_mode_can_satisfy_all_selected_requirements",
+      "outcome": "block",
+      "reason_code": "frame_mode_empty_intersection",
+      "repair_rule_ids": []
+    },
+    {
+      "id": "incompatibility_pose_geometry",
+      "scope": "same_actor_same_phase",
+      "when_all_tags": ["pose_vertical_free_leg", "pose_feet_together"],
+      "when_any_tags": [],
+      "predicate": "both_pose_geometries_are_mandatory",
+      "outcome": "block",
+      "reason_code": "mutually_exclusive_pose_geometry",
+      "repair_rule_ids": []
+    },
+    {
+      "id": "incompatibility_bunny_coverage",
+      "scope": "same_actor_same_outfit_layer",
+      "when_all_tags": ["classic_torso_suit_present", "classic_torso_suit_absent"],
+      "when_any_tags": [],
+      "predicate": "same_classic_torso_layer_is_required_present_and_absent",
+      "outcome": "block",
+      "reason_code": "contradictory_garment_construction",
+      "repair_rule_ids": []
+    },
+    {
+      "id": "incompatibility_full_body_micro_pose",
+      "scope": "same_actor_same_frame",
+      "when_all_tags": ["camera_full_body_lock", "camera_micro_lock"],
+      "when_any_tags": [],
+      "predicate": "both_camera_scales_are_mandatory_for_element_identity",
+      "outcome": "block",
+      "reason_code": "hard_camera_scale_conflict",
+      "repair_rule_ids": []
+    },
+    {
+      "id": "incompatibility_optical_sequence",
+      "scope": "selection",
+      "when_all_tags": ["interactive_frame_exclusive", "temporal_proof_required"],
+      "when_any_tags": [],
+      "predicate": "optical_governor_cannot_carry_temporal_proof",
+      "outcome": "block",
+      "reason_code": "interactive_temporal_mode_conflict",
+      "repair_rule_ids": []
+    },
+    {
+      "id": "incompatibility_resource_capacity",
+      "scope": "entity_or_scene_same_phase",
+      "when_all_tags": [],
+      "when_any_tags": [],
+      "predicate": "sum_exclusive_plus_max_shared_exceeds_declared_capacity",
+      "outcome": "repair",
+      "reason_code": "resource_capacity",
+      "repair_rule_ids": ["fallback_release_manipulator", "fallback_environment_support", "fallback_mount_or_sling", "fallback_alternate_effector", "fallback_drop_optional"]
+    },
+    {
+      "id": "incompatibility_event_spine",
+      "scope": "selection",
+      "when_all_tags": [],
+      "when_any_tags": ["narrative_state_delta", "relationship_multi_actor", "relationship_control", "environment_hazard"],
+      "predicate": "selected_elements_require_more_than_one_independent_event_root",
+      "outcome": "repair",
+      "reason_code": "event_spine_cardinality",
+      "repair_rule_ids": ["fallback_unify_state_delta", "fallback_demote_support", "fallback_drop_optional"]
+    },
+    {
+      "id": "incompatibility_camera_observability",
+      "scope": "frame",
+      "when_all_tags": [],
+      "when_any_tags": [],
+      "predicate": "governing_camera_omits_any_mandatory_required_region",
+      "outcome": "repair",
+      "reason_code": "mandatory_region_outside_frame",
+      "repair_rule_ids": ["fallback_camera_widen", "fallback_separate_frame", "fallback_demote_support"]
+    }
+  ],
+  "synergy_rules": [
+    {
+      "id": "synergy_wardrobe_pose",
+      "when_all_tags": ["wardrobe_support"],
+      "when_any_tags": ["pose_vertical_free_leg", "raised_arm", "pose_responsive_surface"],
+      "requires_same_subject": true,
+      "result": "reuse the governing pose force in garment_action_deformation without adding an event or resource claim",
+      "mechanism_node_ids": ["garment_action_deformation"]
+    },
+    {
+      "id": "synergy_classic_bunny_stockings",
+      "when_all_tags": ["classic_torso_suit_present", "footed_legwear"],
+      "when_any_tags": [],
+      "requires_same_subject": true,
+      "result": "treat the stocking boundaries as the classic costume's legwear construction rather than a second outfit",
+      "mechanism_node_ids": ["internal_part_boundary", "material_specific_response"]
+    },
+    {
+      "id": "synergy_athletic_i_balance",
+      "when_all_tags": ["athletic_garment", "pose_vertical_free_leg"],
+      "when_any_tags": [],
+      "requires_same_subject": true,
+      "result": "let the rounded side notch and piping follow the vertical split while the full support chain stays visible",
+      "mechanism_node_ids": ["garment_action_deformation", "ev_dominant_force_arrow"]
+    },
+    {
+      "id": "synergy_role_glasses",
+      "when_all_tags": ["service_role", "face_accessory"],
+      "when_any_tags": [],
+      "requires_same_subject": true,
+      "result": "retain the armband and service action as role proof while glasses remain only a facial construction anchor",
+      "mechanism_node_ids": ["identity_face_feature_anchor", "actor_action_target_triangle"]
+    },
+    {
+      "id": "synergy_ponytail_axilla",
+      "when_all_tags": ["hair_tie_anchor", "raised_arm"],
+      "when_any_tags": [],
+      "requires_same_subject": true,
+      "result": "use one three-quarter upper-back view to expose the tie point and unobscured shoulder chain",
+      "mechanism_node_ids": ["pose_invariant_landmarks", "concavity_landmark"]
+    },
+    {
+      "id": "synergy_optical_isolated_region",
+      "when_all_tags": ["optical_governor", "isolated_target_region"],
+      "when_any_tags": [],
+      "requires_same_subject": true,
+      "result": "place the alternating grid only over the existing isolated region and keep all surrounding contours stable",
+      "mechanism_node_ids": ["contrast_isolation", "secondary_discovery_node"]
+    },
+    {
+      "id": "synergy_pajama_abdomen",
+      "when_all_tags": ["silhouette_reveal", "pose_responsive_surface"],
+      "when_any_tags": [],
+      "requires_same_subject": true,
+      "result": "the matched shirt-tension delta may reveal the same torso surface without creating a second action",
+      "mechanism_node_ids": ["garment_action_deformation", "causal_state_change"]
+    },
+    {
+      "id": "synergy_archetype_face_accessory",
+      "when_all_tags": ["character_archetype", "face_accessory"],
+      "when_any_tags": [],
+      "requires_same_subject": true,
+      "result": "preserve eye visibility through low lens reflection while the archetype remains proven by target-directed action",
+      "mechanism_node_ids": ["identity_face_feature_anchor", "ensemble_directed_action_vector"]
+    }
+  ],
+  "fallback_rules": [
+    {
+      "id": "fallback_preserve_fixed_slots",
+      "priority": 1,
+      "trigger": "candidate_conflicts_with_user_fixed_or_closed_slot",
+      "action": "drop_candidate",
+      "may_change_element_identity": false,
+      "terminal_if_unsatisfied": true
+    },
+    {
+      "id": "fallback_matched_sequence",
+      "priority": 2,
+      "trigger": "temporal_evidence_is_mandatory",
+      "action": "allocate_locked_identity_matched_frames",
+      "may_change_element_identity": false,
+      "terminal_if_unsatisfied": true
+    },
+    {
+      "id": "fallback_unify_state_delta",
+      "priority": 3,
+      "trigger": "multiple_state_delta_elements_share_one_actor",
+      "action": "bind_all_deltas_to_one_explicit_catalyst_and_one_event_spine_or_block",
+      "may_change_element_identity": false,
+      "terminal_if_unsatisfied": true
+    },
+    {
+      "id": "fallback_camera_widen",
+      "priority": 4,
+      "trigger": "all_required_regions_fit_one_wider_camera_and_micro_evidence_remains_readable",
+      "action": "select_smallest_common_camera_superset",
+      "may_change_element_identity": false,
+      "terminal_if_unsatisfied": false
+    },
+    {
+      "id": "fallback_separate_frame",
+      "priority": 5,
+      "trigger": "camera_profiles_conflict_but_all_frame_requirements_allow_an_additional_frame",
+      "action": "allocate_one_locked_identity_frame_per_incompatible_camera_profile",
+      "may_change_element_identity": false,
+      "terminal_if_unsatisfied": false
+    },
+    {
+      "id": "fallback_same_target_attention",
+      "priority": 6,
+      "trigger": "multiple_shared_attention_claims_reference_the_same_visible_target",
+      "action": "consume_maximum_shared_attention_claim_once",
+      "may_change_element_identity": false,
+      "terminal_if_unsatisfied": false
+    },
+    {
+      "id": "fallback_release_manipulator",
+      "priority": 7,
+      "trigger": "manipulator_capacity_exceeded_and_release_phase_preserves_evidence",
+      "action": "move_optional_hand_action_to_release_or_recovery_state",
+      "may_change_element_identity": false,
+      "terminal_if_unsatisfied": false
+    },
+    {
+      "id": "fallback_environment_support",
+      "priority": 8,
+      "trigger": "support_or_prop_can_be_grounded_by_a_visible_surface_without_changing_the_relation",
+      "action": "transfer_optional_support_load_to_environment",
+      "may_change_element_identity": false,
+      "terminal_if_unsatisfied": false
+    },
+    {
+      "id": "fallback_mount_or_sling",
+      "priority": 9,
+      "trigger": "an_optional_carried_object_blocks_a_mandatory_manipulator",
+      "action": "mount_or_sling_optional_object_with_visible_attachment",
+      "may_change_element_identity": false,
+      "terminal_if_unsatisfied": false
+    },
+    {
+      "id": "fallback_alternate_effector",
+      "priority": 10,
+      "trigger": "declared_embodiment_has_an_equivalent_available_effector",
+      "action": "move_optional_contact_to_that_declared_effector",
+      "may_change_element_identity": false,
+      "terminal_if_unsatisfied": false
+    },
+    {
+      "id": "fallback_demote_support",
+      "priority": 11,
+      "trigger": "two_elements_claim_primary_composition_but_one_remains_fully_observable_as_support",
+      "action": "keep_user_ordered_governing_element_and_demote_the_other_to_one_support_cue",
+      "may_change_element_identity": false,
+      "terminal_if_unsatisfied": false
+    },
+    {
+      "id": "fallback_drop_optional",
+      "priority": 12,
+      "trigger": "optional_candidate_or_detail_causes_the_last_remaining_conflict",
+      "action": "drop_only_the_optional_candidate_or_detail",
+      "may_change_element_identity": false,
+      "terminal_if_unsatisfied": true
+    }
+  ],
+  "representative_combinations": [
+    {
+      "id": "combo_classic_bunny_stockings",
+      "element_ids": ["moe_classic_bunny_costume", "moe_stockings"],
+      "resolved_frame_mode": "single_frame",
+      "resolved_camera_profile_id": "camera_full_body_three_quarter",
+      "decision": "allow",
+      "applied_rule_ids": ["synergy_classic_bunny_stockings"],
+      "reason": "the legwear is one construction layer of the classic costume and shared focal-secondary claims consume one unit"
+    },
+    {
+      "id": "combo_dolphin_shorts_i_balance",
+      "element_ids": ["moe_dolphin_shorts", "moe_i_balance_pose"],
+      "resolved_frame_mode": "single_frame",
+      "resolved_camera_profile_id": "camera_full_body_vertical",
+      "decision": "allow",
+      "applied_rule_ids": ["synergy_wardrobe_pose", "synergy_athletic_i_balance"],
+      "reason": "the full-body pose governs and the shorts remain an observable deformation-aware support"
+    },
+    {
+      "id": "combo_glasses_morals_committee",
+      "element_ids": ["moe_glasses", "moe_morals_committee"],
+      "resolved_frame_mode": "single_frame",
+      "resolved_camera_profile_id": "camera_relational_medium",
+      "decision": "allow",
+      "applied_rule_ids": ["synergy_role_glasses"],
+      "reason": "the service action proves the role while the glasses consume only shared secondary salience"
+    },
+    {
+      "id": "combo_ponytail_axilla",
+      "element_ids": ["moe_ponytail", "moe_axilla"],
+      "resolved_frame_mode": "single_frame",
+      "resolved_camera_profile_id": "camera_torso_three_quarter",
+      "decision": "allow",
+      "applied_rule_ids": ["synergy_ponytail_axilla"],
+      "reason": "one raised-arm three-quarter view can retain the tie point and unobscured shoulder chain"
+    },
+    {
+      "id": "combo_screen_shake_abdomen",
+      "element_ids": ["moe_screen_shake_illusion", "moe_abdomen"],
+      "resolved_frame_mode": "optical_interaction",
+      "resolved_camera_profile_id": "camera_interactive_overlay",
+      "decision": "allow_with_bridge",
+      "applied_rule_ids": ["synergy_optical_isolated_region"],
+      "reason": "the abdomen is a single-frame support region while the optical element exclusively governs the output interaction"
+    },
+    {
+      "id": "combo_pajama_abdomen",
+      "element_ids": ["moe_pajama_challenge", "moe_abdomen"],
+      "resolved_frame_mode": "paired_frame",
+      "resolved_camera_profile_id": "camera_matched_state",
+      "decision": "allow",
+      "applied_rule_ids": ["synergy_pajama_abdomen", "fallback_matched_sequence"],
+      "reason": "the same garment tension delta reveals the torso surface inside one matched before-after proof"
+    },
+    {
+      "id": "combo_mesugaki_glasses",
+      "element_ids": ["moe_mesugaki_provocation", "moe_glasses"],
+      "resolved_frame_mode": "single_frame",
+      "resolved_camera_profile_id": "camera_relational_medium",
+      "decision": "allow",
+      "applied_rule_ids": ["synergy_archetype_face_accessory"],
+      "reason": "the directed provocation remains governing and weak lens reflection preserves the eye display"
+    },
+    {
+      "id": "combo_i_balance_thigh_gap",
+      "element_ids": ["moe_i_balance_pose", "moe_thigh_gap"],
+      "resolved_frame_mode": null,
+      "resolved_camera_profile_id": null,
+      "decision": "block",
+      "applied_rule_ids": ["incompatibility_pose_geometry"],
+      "reason": "one actor cannot simultaneously keep both feet together and hold one leg vertically in the same required pose"
+    },
+    {
+      "id": "combo_classic_reverse_bunny",
+      "element_ids": ["moe_classic_bunny_costume", "moe_reverse_bunny_costume"],
+      "resolved_frame_mode": null,
+      "resolved_camera_profile_id": null,
+      "decision": "block",
+      "applied_rule_ids": ["incompatibility_bunny_coverage"],
+      "reason": "the same torso layer cannot be structurally present and absent"
+    },
+    {
+      "id": "combo_selfie_bubble_tea",
+      "element_ids": ["moe_strategic_occlusion_selfie", "moe_bubble_tea_challenge"],
+      "resolved_frame_mode": null,
+      "resolved_camera_profile_id": null,
+      "decision": "block",
+      "applied_rule_ids": ["incompatibility_resource_capacity", "incompatibility_camera_observability"],
+      "reason": "two distinct mandatory props exceed the one prop slot and the selfie requires both manipulators while the cup relation needs both hands visibly free"
+    },
+    {
+      "id": "combo_darkening_tsf",
+      "element_ids": ["moe_darkening_corruption", "moe_tsf_transformation"],
+      "resolved_frame_mode": "sequence",
+      "resolved_camera_profile_id": "camera_matched_state",
+      "decision": "repair",
+      "applied_rule_ids": ["incompatibility_event_spine", "fallback_unify_state_delta", "fallback_matched_sequence"],
+      "reason": "allow only if one explicit catalyst causes both visible deltas inside one before-during-after event; otherwise block"
+    }
+  ],
+  "counts": {
+    "element_profiles": 29,
+    "frame_requirement_profiles": 4,
+    "camera_profiles": 16,
+    "resource_claims": 60,
+    "incompatibility_rules": 8,
+    "synergy_rules": 8,
+    "fallback_rules": 12,
+    "representative_combinations": 11,
+    "pairwise_materialized_edges": 0
+  }
+}
