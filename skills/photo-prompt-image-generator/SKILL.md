@@ -53,6 +53,8 @@ Prefer `.venv/bin/python` when the project virtual environment exists. Rule mode
   --hybrid-augmentation --emit-candidate-pack --n 1
 ```
 
+This emits `photo-candidate-pack/v3`. Use `--candidate-pack-version v2` only to replay a legacy pack consumer or historical contract; normal composition must use the clean v3 projection.
+
 For a short Korean concept:
 
 ```bash
@@ -195,7 +197,7 @@ There is no separate approval flag or policy mode. This project-level automatic 
 - When `viewer_experience` is present, follow `references/viewer-experience-contract.md`. Keep one viewer need and intended experience, make affect causal through visible action, and preserve commercial clarity or typed character evidence. Genre labels, youth morphology, faces, and style adjectives alone are not attachment evidence.
 - Preserve `negative_en` byte-for-byte.
 - Respect hard conflicts, concept gates, enforced role-scene policy, and species-family locks.
-- When `character_grammar.enabled` is true, preserve the one node marked `primary` and use no more than its two support nodes. The public pack exposes only selected visual atoms, visual evidence types, and generic composition constraints; router anchors, policy/guard records, market terms, and audience familiarity are validated internally and are not composition evidence. The selected atomic scene is the visible realization.
+- When `character_grammar.enabled` is true, preserve the one node marked `primary` and use no more than its two support nodes. The v3 pack exposes only selected visual atoms, visual evidence types, and generic composition constraints; router anchors and policy/guard records remain private, while market/audience research classifications are not stored in runtime scene data. The selected atomic scene is the visible realization.
 - Character routes require an explicitly adult original subject. Do not infer adulthood, identity, orientation, or personality from face/body proportions, hair, clothing, disability, ethnicity, or market origin.
 - `open_slots` expose only slot and bucket names. Invent a compatible detail; do not infer the hidden source choice.
 - Use one or two photographic craft decisions, not every available phrase.

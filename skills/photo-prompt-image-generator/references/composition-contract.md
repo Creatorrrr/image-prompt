@@ -1,8 +1,10 @@
 # Composition Contract
 
-## Candidate Pack v2
+## Candidate Pack v3
 
-`--emit-candidate-pack` returns a JSON array. Generate and audit one pack at a time. Each generated pack carries `contract_version: photo-candidate-pack/v2`; `pack_id` is the first 16 hexadecimal characters of SHA-256 over canonical JSON with `pack_id` replaced by `null`.
+`--emit-candidate-pack` returns a JSON array. Generate and audit one pack at a time. The default pack carries `contract_version: photo-candidate-pack/v3`; `pack_id` is the first 16 hexadecimal characters of SHA-256 over canonical JSON with `pack_id` replaced by `null`.
+
+v3 removes nonfunctional quality/craft source traces, private character domain/topic/family IDs, and adult inventory bookkeeping. It exposes `character_scene_grammar` as the neutral character quality profile and neutralizes compatibility-only selection handles. Use `--candidate-pack-version v2` only for a legacy consumer: the adapter restores the prior public fields, profile name, and IDs without changing sampler selection or prompt bytes. Both contracts remain auditable.
 
 The audit rejects a changed pack, a list containing zero or multiple packs, a missing composed field, a non-agent composer, an empty candidate selection, a changed negative prompt, failed concept gates, and a non-pass safety record.
 
@@ -42,8 +44,8 @@ If a composed ID names an open slot, the audit fails. Masked details are also re
 
 - `intent_contract` and `coverage.intent_constraints`: typed source, polarity, subject category or exact curated subject route, domain, negative-presence constraint, and matching evidence. Excluded and advisory rows constrain or guide composition but are not positive mandatory prose.
 - `scene_contract`: every `atomic_scene` group is fail-closed. Candidate-backed groups constrain IDs to a selected variant. A `selected_render_blueprint` group instead requires all four literal labels and rejects ordinary candidate IDs for its controlled core slots.
-- `render_contract.selected_scene`: one selected scene function set, one diegetic visual provenance, relationship stakes, genre anchors, and visual evidence types. Selection bookkeeping, available-blueprint inventories, market origin, and audience scope remain internal.
-- `character_grammar`: an on-demand character route exposes one to three selected `visual_atom` nodes, one marked primary, plus visual evidence types and generic composition constraints. Copy the four atomic scene labels, not node definitions. Keep exactly one primary mechanism and at most two support cues. Runtime router anchors, compatibility-edge IDs, policy/guard records, market-origin terms, audience familiarity, identity, orientation, and adulthood policy are validated before the public projection and are never visual costume or morphology instructions.
+- `render_contract.selected_scene`: one selected scene function set, one diegetic visual provenance, relationship stakes, genre anchors, and visual evidence types. Selection bookkeeping and available-blueprint inventories remain internal; retired market/audience classifications are not stored in runtime scenes.
+- `character_grammar`: an on-demand character route exposes one to three selected `visual_atom` nodes, one marked primary, plus visual evidence types and generic composition constraints. Copy the four atomic scene labels, not node definitions. Keep exactly one primary mechanism and at most two support cues. Runtime router anchors, compatibility-edge IDs, policy/guard records, identity, orientation, and adulthood policy are validated before the public projection and are never visual costume or morphology instructions. v3 omits domain/topic/family IDs; v2 restores them only for compatibility.
 - `--scene-function` is an optional control for direct taxonomy presets. It requires `--preset`, does not add a mandatory intent, and fails closed for an unknown or unavailable function. A no-people request first removes every blueprint that is not explicitly declared non-human; an empty or human-only remainder is an error rather than a silent human render.
 - `evidence_budget`: count chosen slot names, not candidate count. A materialized scene prop may be the first physical clue; when the range is 1–2, choose no more than one additional listed clue slot.
 - `concept_axes.required`: show each meaning axis through behavior, placement, expression, material, light, or framing.
@@ -54,7 +56,7 @@ If a composed ID names an open slot, the audit fails. Masked details are also re
 
 ## Quality Layers
 
-`quality_profile.profile_id` comes from the versioned domain profiles in `photo_prompt_quality_layers.json`; character-mechanism routes use `character_moe_grammar`.
+`quality_profile.profile_id` comes from the versioned domain profiles in `photo_prompt_quality_layers.json`; v3 exposes character-mechanism routes as `character_scene_grammar`. The v2 compatibility projection retains `character_moe_grammar`.
 
 Use `photographic_integration` to bind subject and setting with believable light, contact, material, or optical depth. Use one visible `visual_proposition`, then at most one or two `photographic_craft` decisions. These are quality signals, so the audit reports omissions as warnings.
 

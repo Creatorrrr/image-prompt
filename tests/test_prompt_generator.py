@@ -6214,7 +6214,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertTrue(proposition["tension_candidates"])
         craft = pack["photographic_craft"]
         self.assertTrue(craft["enabled"])
-        self.assertEqual(craft["source"], "facet_only_photographer_decision_layer")
+        self.assertNotIn("source", craft)
         self.assertEqual(craft["selection_mode"], "facet_only")
         self.assertEqual(craft["quality_profile"], pack["quality_profile"])
         self.assertIn("top_strategy", craft)
@@ -6226,7 +6226,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         final_touch = pack["artistic_final_touch"]
         self.assertFalse(final_touch["enabled"])
         self.assertEqual(final_touch["profile_id"], "portrait_editorial")
-        self.assertEqual(pack["contract_version"], "photo-candidate-pack/v2")
+        self.assertEqual(pack["contract_version"], "photo-candidate-pack/v3")
         adult = pack["hybrid_augmentation"]["adult_appeal"]
         self.assertTrue(adult["enabled"])
         self.assertEqual(adult["activation_source"], "skill_default")
@@ -6465,6 +6465,66 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
 
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("photographic_craft.dimensions[0].terms: not allowed", result.stderr)
+
+    def test_dictionary_validator_rejects_retired_runtime_metadata(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            asset_dir = TAGS_PATH.parent
+            temporary_assets = Path(tmpdir)
+            filenames = [
+                TAGS_PATH.name,
+                *self.generator.RESEARCH_EXTENSION_FILENAMES,
+            ]
+            for filename in filenames:
+                source = asset_dir / filename
+                if source.exists():
+                    (temporary_assets / filename).write_bytes(source.read_bytes())
+            extension_path = temporary_assets / "photo_prompt_subculture_extension.json"
+            extension = json.loads(extension_path.read_text(encoding="utf-8"))
+            extension["authorship_basis"] = ["retired_test_value"]
+            extension_path.write_text(
+                json.dumps(extension, ensure_ascii=False),
+                encoding="utf-8",
+            )
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(VALIDATOR_PATH),
+                    "--tags",
+                    str(temporary_assets / TAGS_PATH.name),
+                ],
+                cwd=ROOT,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn(
+            "authorship_basis: retired runtime metadata key is not allowed",
+            result.stderr,
+        )
+
+    def test_dictionary_validator_rejects_retired_quality_source_traces(self):
+        quality_layers = json.loads(QUALITY_LAYERS_PATH.read_text(encoding="utf-8"))
+        quality_layers["photographic_craft"]["source"] = "legacy_trace"
+        quality_layers["artistic_final_touch"]["source"] = "legacy_trace"
+        with tempfile.TemporaryDirectory() as tmpdir:
+            quality_layers_path = Path(tmpdir) / "photo_prompt_quality_layers.json"
+            quality_layers_path.write_text(
+                json.dumps(quality_layers, ensure_ascii=False),
+                encoding="utf-8",
+            )
+            result = subprocess.run(
+                [sys.executable, str(VALIDATOR_PATH), "--quality-layers", str(quality_layers_path)],
+                cwd=ROOT,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("photographic_craft.source: retired nonfunctional trace", result.stderr)
+        self.assertIn("artistic_final_touch.source: retired nonfunctional trace", result.stderr)
 
     def test_dictionary_validator_rejects_unknown_photographic_craft_facet_match(self):
         quality_layers = json.loads(QUALITY_LAYERS_PATH.read_text(encoding="utf-8"))

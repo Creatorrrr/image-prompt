@@ -2395,7 +2395,7 @@ def evaluate_generalization_check(
             failures.append("default_safety_contract")
         if "approval_required_safety_transforms" in pack:
             failures.append("legacy_safety_contract_exposed")
-        if pack.get("contract_version") != "photo-candidate-pack/v2":
+        if pack.get("contract_version") != "photo-candidate-pack/v3":
             failures.append("candidate_pack_version")
 
         presets = pack.get("presets", []) or []

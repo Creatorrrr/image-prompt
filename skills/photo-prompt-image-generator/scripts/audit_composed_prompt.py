@@ -12,6 +12,12 @@ from pathlib import Path
 from typing import Any, Sequence
 
 
+SUPPORTED_CANDIDATE_PACK_VERSIONS = {
+    "photo-candidate-pack/v2",
+    "photo-candidate-pack/v3",
+}
+
+
 def load_json_arg(raw: str) -> Any:
     raw = raw.strip()
     if raw.startswith("{") or raw.startswith("["):
@@ -1467,6 +1473,17 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
     prompt_en = str(composed.get("prompt_en") or "")
     search_text = composed_search_text(composed)
     negative_en = composed.get("negative_en")
+
+    contract_version = str(pack.get("contract_version") or "")
+    if contract_version not in SUPPORTED_CANDIDATE_PACK_VERSIONS:
+        failures.append(
+            {
+                "check": "contract_version",
+                "reason": "unsupported candidate-pack contract",
+                "expected": sorted(SUPPORTED_CANDIDATE_PACK_VERSIONS),
+                "actual": contract_version or None,
+            }
+        )
 
     required_fields = ("pack_id", "prompt_en", "negative_en", "chosen_candidate_ids", "composer")
     missing_fields = [field for field in required_fields if field not in composed]
