@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Inventory scene-expression diversity in the research-backed extensions.
+"""Inventory scene-expression diversity in the taxonomy extensions.
 
 This is deliberately a structural audit. It does not claim that a rendered
 image is good. Baseline mode freezes each source extension in isolation;

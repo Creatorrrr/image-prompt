@@ -52,13 +52,14 @@ JsonDict = Dict[str, Any]
 DEFAULT_TAGS = Path(__file__).resolve().parents[1] / "assets" / "photo_prompt_tags.json"
 DEFAULT_INDEX = Path(__file__).resolve().parents[1] / "assets" / "photo_prompt_semantic_index.json"
 DEFAULT_CONCEPT_RECIPES = Path(__file__).resolve().parents[1] / "assets" / "concept_recipes.json"
-DEFAULT_GENERALIZATION_CASES = Path(__file__).resolve().parents[1] / "assets" / "generalization_cases.jsonl"
-DEFAULT_GENERALIZATION_HOLDOUT_CASES = Path(__file__).resolve().parents[1] / "assets" / "generalization_holdout_cases.jsonl"
-DEFAULT_DOMAIN_HOLDOUT_V2_CASES = Path(__file__).resolve().parents[1] / "assets" / "generalization_domain_holdout_v2.jsonl"
-DEFAULT_RETRIEVAL_HOLDOUT_V3_CASES = Path(__file__).resolve().parents[1] / "assets" / "semantic_retrieval_holdout_v3.jsonl"
-DEFAULT_RETRIEVAL_HOLDOUT_V4_CASES = Path(__file__).resolve().parents[1] / "assets" / "semantic_retrieval_holdout_v4.jsonl"
 WRAPPER_PATH = Path(__file__).resolve().with_name("generate_photo_prompt.py")
 PROJECT_ROOT = Path(__file__).resolve().parents[1].parents[1]
+DEFAULT_FIXTURE_DIR = PROJECT_ROOT / "tests" / "fixtures" / "photo_prompt"
+DEFAULT_GENERALIZATION_CASES = DEFAULT_FIXTURE_DIR / "generalization_cases.jsonl"
+DEFAULT_GENERALIZATION_HOLDOUT_CASES = DEFAULT_FIXTURE_DIR / "generalization_holdout_cases.jsonl"
+DEFAULT_DOMAIN_HOLDOUT_V2_CASES = DEFAULT_FIXTURE_DIR / "generalization_domain_holdout_v2.jsonl"
+DEFAULT_RETRIEVAL_HOLDOUT_V3_CASES = DEFAULT_FIXTURE_DIR / "semantic_retrieval_holdout_v3.jsonl"
+DEFAULT_RETRIEVAL_HOLDOUT_V4_CASES = DEFAULT_FIXTURE_DIR / "semantic_retrieval_holdout_v4.jsonl"
 
 PERSON_ONLY_CANDIDATE_SLOTS = {
     "appearance_type",

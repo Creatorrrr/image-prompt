@@ -12,6 +12,7 @@ from typing import Any
 
 from prompt_generator import (
     DEFAULT_FACET_VOCAB,
+    RESEARCH_EXTENSION_FILENAMES as TAXONOMY_EXTENSION_FILENAMES,
     VALID_PRESET_DOMAINS,
     VALID_SUBJECT_CATEGORIES,
     load_json,
@@ -80,6 +81,140 @@ PHOTOGRAPHIC_CRAFT_ENTITY_BLOCKLIST = {
     "펠트",
     "프리스트",
 }
+
+FORBIDDEN_RUNTIME_PROCESS_MARKERS = {
+    "named_moe_review_source": re.compile(r"moe[-_ ]review|모에\s*리뷰|萌えレビュー", re.IGNORECASE),
+    "source_grounded": re.compile(r"source[-_ ]grounded", re.IGNORECASE),
+    "market_researched": re.compile(
+        r"(?:public|cjk)[-_ ]market[-_ ]researched|market[-_ ]researched",
+        re.IGNORECASE,
+    ),
+    "research_backed": re.compile(r"research[-_ ](?:backed|based)", re.IGNORECASE),
+    "research_router": re.compile(r"research(?:[-_ ]family)?[-_ ]router", re.IGNORECASE),
+    "cited_study": re.compile(r"cited(?:[-_ ]interview)?[-_ ]study", re.IGNORECASE),
+    "reposted_source": re.compile(r"reposted[-_ ]industry[-_ ]news[-_ ]source", re.IGNORECASE),
+    "fan_discourse_provenance": re.compile(r"fan[-_ ]discourse[-_ ]provenance", re.IGNORECASE),
+    "nonvisual_provenance": re.compile(r"nonvisual[-_ ]provenance", re.IGNORECASE),
+    "derived_research_scene": re.compile(r"derived[-_ ]research[-_ ]scene", re.IGNORECASE),
+    "provenance_scope_key": re.compile(r"^provenance_scope$", re.IGNORECASE),
+}
+FORBIDDEN_VISUAL_ATOM_CONTROL_MARKERS = {
+    "provenance_language": re.compile(r"\bprovenance\b", re.IGNORECASE),
+    "market_control_language": re.compile(r"\bmarket[-_ ](?:term|label)\b", re.IGNORECASE),
+    "nonvisual_instruction": re.compile(r"\bnon[-_ ]?visual\b", re.IGNORECASE),
+}
+FORBIDDEN_PUBLIC_VISUAL_CONTROL_MARKERS = {
+    "provenance_language": re.compile(r"\bprovenance\b", re.IGNORECASE),
+    "market_control_language": re.compile(r"\bmarket[-_ ](?:term|label)\b", re.IGNORECASE),
+    "term_routing_language": re.compile(r"\bterm[-_ ]routing\b", re.IGNORECASE),
+    "nonvisual_instruction": re.compile(r"\bnon[-_ ]?visual\b", re.IGNORECASE),
+    "national_style_shorthand": re.compile(r"\bnational[-_ ]style shorthand\b", re.IGNORECASE),
+}
+PUBLIC_VISUAL_TEXT_FIELDS = (
+    "en",
+    "ko",
+    "embedding_text",
+    "aliases",
+    "keywords",
+    "terms",
+    "label",
+    "prompt_focus",
+    "intent_axis",
+    "additional",
+)
+SCENE_BLUEPRINT_VISUAL_FIELDS = (
+    "subject",
+    "subject_ko",
+    "action",
+    "action_ko",
+    "location",
+    "location_ko",
+    "prop",
+    "prop_ko",
+)
+
+
+def iter_json_text(value: Any, path: str = "$"):
+    if isinstance(value, dict):
+        for key, child in value.items():
+            key_text = str(key)
+            yield f"{path}.<key>", key_text
+            yield from iter_json_text(child, f"{path}.{key_text}")
+    elif isinstance(value, list):
+        for index, child in enumerate(value):
+            yield from iter_json_text(child, f"{path}[{index}]")
+    elif isinstance(value, str):
+        yield path, value
+
+
+def iter_scene_blueprint_visual_text(value: Any, path: str = "$"):
+    if isinstance(value, dict):
+        blueprints = value.get("scene_blueprints")
+        if isinstance(blueprints, list):
+            for index, blueprint in enumerate(blueprints):
+                if not isinstance(blueprint, dict):
+                    continue
+                for field in SCENE_BLUEPRINT_VISUAL_FIELDS:
+                    text = blueprint.get(field)
+                    if isinstance(text, str) and text.strip():
+                        yield f"{path}.scene_blueprints[{index}].{field}", text
+        for key, child in value.items():
+            yield from iter_scene_blueprint_visual_text(child, f"{path}.{key}")
+    elif isinstance(value, list):
+        for index, child in enumerate(value):
+            yield from iter_scene_blueprint_visual_text(child, f"{path}[{index}]")
+
+
+def iter_public_visual_text(value: Any, path: str = "$"):
+    if isinstance(value, dict):
+        for field in PUBLIC_VISUAL_TEXT_FIELDS:
+            text = value.get(field)
+            if isinstance(text, str) and text.strip():
+                yield f"{path}.{field}", text
+            elif isinstance(text, list):
+                for index, item in enumerate(text):
+                    if isinstance(item, str) and item.strip():
+                        yield f"{path}.{field}[{index}]", item
+        for key, child in value.items():
+            yield from iter_public_visual_text(child, f"{path}.{key}")
+    elif isinstance(value, list):
+        for index, child in enumerate(value):
+            yield from iter_public_visual_text(child, f"{path}[{index}]")
+
+
+def validate_runtime_process_metadata(paths: list[Path], errors: list[str]) -> None:
+    """Reject research/process labels from runtime taxonomy assets.
+
+    Source ledgers and evaluation fixtures live outside the runtime skill. The
+    runtime JSON may contain the resulting visual taxonomy, but not source
+    names or development-process labels that can steer retrieval/composition.
+    """
+    for path in paths:
+        if not path.exists():
+            continue
+        try:
+            payload = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError) as exc:
+            errors.append(f"runtime metadata boundary: cannot read {path.name}: {exc}")
+            continue
+        for json_path, text in iter_json_text(payload):
+            for marker, pattern in FORBIDDEN_RUNTIME_PROCESS_MARKERS.items():
+                if pattern.search(text):
+                    errors.append(
+                        f"runtime metadata boundary: {path.name}:{json_path} contains {marker}"
+                    )
+        for json_path, text in iter_scene_blueprint_visual_text(payload):
+            for marker, pattern in FORBIDDEN_VISUAL_ATOM_CONTROL_MARKERS.items():
+                if pattern.search(text):
+                    errors.append(
+                        f"runtime visual atom boundary: {path.name}:{json_path} contains {marker}"
+                    )
+        for json_path, text in iter_public_visual_text(payload):
+            for marker, pattern in FORBIDDEN_PUBLIC_VISUAL_CONTROL_MARKERS.items():
+                if pattern.search(text):
+                    errors.append(
+                        f"runtime public visual text boundary: {path.name}:{json_path} contains {marker}"
+                    )
 
 
 def merged_facet_vocab(data: dict[str, Any]) -> dict[str, set[str]]:
@@ -872,7 +1007,7 @@ def validate_quality_layer_intent_routing(
             errors.append(f"{label}: must be an object")
             continue
         for key in row:
-            if key not in {"domain", "aliases"}:
+            if key not in {"domain", "aliases", "standalone_aliases"}:
                 errors.append(f"{label}: unknown key {key}")
         domain = str(row.get("domain") or "").strip()
         if domain not in VALID_PRESET_DOMAINS:
@@ -882,6 +1017,10 @@ def validate_quality_layer_intent_routing(
         else:
             configured_domains.add(domain)
         validate_string_list(f"{label}.aliases", row.get("aliases"), errors)
+        if "standalone_aliases" in row:
+            validate_string_list(
+                f"{label}.standalone_aliases", row.get("standalone_aliases"), errors
+            )
 
     scoped_routes = routing.get("scoped_routes", [])
     if not isinstance(scoped_routes, list):
@@ -899,7 +1038,7 @@ def validate_quality_layer_intent_routing(
             errors.append(f"{label}: must be an object")
             continue
         for key in row:
-            if key not in {"domain", "preset_id", "aliases"}:
+            if key not in {"domain", "preset_id", "aliases", "requires_any_context_aliases"}:
                 errors.append(f"{label}: unknown key {key}")
         domain = str(row.get("domain") or "").strip()
         preset_id = str(row.get("preset_id") or "").strip()
@@ -913,6 +1052,12 @@ def validate_quality_layer_intent_routing(
         else:
             configured_routes.add(route_key)
         validate_string_list(f"{label}.aliases", row.get("aliases"), errors)
+        if "requires_any_context_aliases" in row:
+            validate_string_list(
+                f"{label}.requires_any_context_aliases",
+                row.get("requires_any_context_aliases"),
+                errors,
+            )
 
 
 def validate_quality_layer_selection_balance(quality: dict[str, Any], errors: list[str]) -> None:
@@ -2645,6 +2790,13 @@ def main() -> int:
     data = load_json(args.tags)
     errors: list[str] = []
     vocab = merged_facet_vocab(data)
+
+    tags_path = Path(args.tags)
+    validate_runtime_process_metadata(
+        [tags_path]
+        + [tags_path.with_name(filename) for filename in TAXONOMY_EXTENSION_FILENAMES],
+        errors,
+    )
 
     validate_filter_ids(data, errors)
     validate_selection_contracts(data, errors)

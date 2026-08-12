@@ -10872,6 +10872,87 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             result.stderr,
         )
 
+    def test_dictionary_validator_rejects_runtime_process_metadata(self):
+        data = json.loads(TAGS_PATH.read_text(encoding="utf-8"))
+        data["presets"][0]["embedding_text"] = (
+            "source-grounded visual taxonomy copied from a cited interview study"
+        )
+
+        with tempfile.TemporaryDirectory() as tmp:
+            invalid_path = Path(tmp) / "invalid_tags.json"
+            invalid_path.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
+            result = subprocess.run(
+                [sys.executable, str(VALIDATOR_PATH), "--tags", str(invalid_path)],
+                cwd=ROOT,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("runtime metadata boundary", result.stderr)
+        self.assertIn("source_grounded", result.stderr)
+        self.assertIn("cited_study", result.stderr)
+
+    def test_dictionary_validator_rejects_control_language_in_visual_scene_atoms(self):
+        data = json.loads(TAGS_PATH.read_text(encoding="utf-8"))
+        extension = {
+            "existing_preset_render_contract_extensions": {
+                "portrait_editorial": {
+                    "scene_blueprints": [
+                        {
+                            "id": "invalid_control_instruction",
+                            "subject": "two adults",
+                            "action": "keeping the market term nonvisual",
+                            "location": "a blank studio",
+                            "prop": "one plain object",
+                        }
+                    ]
+                }
+            }
+        }
+
+        with tempfile.TemporaryDirectory() as tmp:
+            tags_path = Path(tmp) / "invalid_tags.json"
+            extension_path = Path(tmp) / "photo_prompt_scene_expression_character_moe.json"
+            tags_path.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
+            extension_path.write_text(json.dumps(extension, ensure_ascii=False), encoding="utf-8")
+            result = subprocess.run(
+                [sys.executable, str(VALIDATOR_PATH), "--tags", str(tags_path)],
+                cwd=ROOT,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("runtime visual atom boundary", result.stderr)
+        self.assertIn("market_control_language", result.stderr)
+        self.assertIn("nonvisual_instruction", result.stderr)
+
+    def test_dictionary_validator_rejects_control_language_in_public_visual_text(self):
+        data = json.loads(TAGS_PATH.read_text(encoding="utf-8"))
+        data["presets"][0]["embedding_text"] = (
+            "route a market label through nonvisual provenance metadata"
+        )
+
+        with tempfile.TemporaryDirectory() as tmp:
+            invalid_path = Path(tmp) / "invalid_tags.json"
+            invalid_path.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
+            result = subprocess.run(
+                [sys.executable, str(VALIDATOR_PATH), "--tags", str(invalid_path)],
+                cwd=ROOT,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("runtime public visual text boundary", result.stderr)
+        self.assertIn("provenance_language", result.stderr)
+        self.assertIn("market_control_language", result.stderr)
+        self.assertIn("nonvisual_instruction", result.stderr)
+
     def test_dictionary_validator_rejects_invalid_semantic_policy_match_rule(self):
         data = json.loads(TAGS_PATH.read_text(encoding="utf-8"))
         data["semantic_policy"]["families"]["human"]["signal_lexicon"]["strong"].append(
@@ -10952,6 +11033,53 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             result.stderr,
         )
 
+    def test_semantic_text_uses_only_public_visual_language(self):
+        entry = {
+            "id": "internal_source_document_id",
+            "en": "visible ceramic cup",
+            "ko": "보이는 세라믹 컵",
+            "embedding_text": "a handmade ceramic cup with a chipped blue glaze",
+            "aliases": ["blue glazed cup"],
+            "keywords": ["ceramic vessel"],
+            "terms": ["small handle"],
+            "tags": ["cited_study_marker"],
+            "kind": ["market_researched_marker"],
+            "facets": {"content_basis": ["source_grounded_marker"]},
+        }
+
+        text = self.generator.semantic_text_for_entry(entry, "subject")
+
+        self.assertIn("handmade ceramic cup", text)
+        self.assertIn("visible ceramic cup", text)
+        self.assertIn("보이는 세라믹 컵", text)
+        self.assertIn("blue glazed cup", text)
+        self.assertIn("ceramic vessel", text)
+        self.assertIn("small handle", text)
+        self.assertNotIn("internal_source_document_id", text)
+        self.assertNotIn("cited_study_marker", text)
+        self.assertNotIn("market_researched_marker", text)
+        self.assertNotIn("source_grounded_marker", text)
+        self.assertNotIn("content_basis", text)
+
+    def test_all_semantic_inputs_exclude_control_and_process_metadata(self):
+        forbidden = re.compile(
+            r"stable id:|facet |tags:|kind:|source[-_ ]grounded|"
+            r"(?:public|cjk)[-_ ]market[-_ ]researched|research[-_ ](?:backed|based|router)|"
+            r"cited(?:[-_ ]interview)?[-_ ]study|nonvisual[-_ ]provenance|"
+            r"provenance_scope|\bprovenance\b|moe[-_ ]review|모에\s*리뷰|萌えレビュー",
+            re.IGNORECASE,
+        )
+        failures = []
+        rows = self.generator.iter_semantic_entries(self.generator.load_json(TAGS_PATH))
+        for key, _kind, entry, slot in rows:
+            text = self.generator.semantic_text_for_entry(entry, slot)
+            match = forbidden.search(text)
+            if match:
+                failures.append((key, match.group(0), text[:240]))
+
+        self.assertEqual(len(rows), 6513)
+        self.assertEqual(failures, [])
+
     def test_semantic_index_builder_records_gemini_metadata_and_entries(self):
         original_embedder = self.generator.embed_texts_with_gemini
         self.generator.embed_texts_with_gemini = self.fake_gemini_vectors
@@ -11002,7 +11130,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertFalse(out_path.exists())
         self.assertIn("gemini-embedding-2", result.stdout)
         self.assertIn("768", result.stdout)
-        self.assertIn("semantic-text-v2", result.stdout)
+        self.assertIn("semantic-text-v3", result.stdout)
 
     def test_semantic_index_builder_loads_project_env_file(self):
         builder = load_index_builder()
@@ -11111,7 +11239,8 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
 
         self.assertEqual(len(embed_calls), 1)
         self.assertEqual(len(embed_calls[0]), 1)
-        self.assertIn("new_actor", embed_calls[0][0])
+        self.assertIn("new actor", embed_calls[0][0])
+        self.assertNotIn("new_actor", embed_calls[0][0])
         self.assertEqual(len(second_payload["entries"]), 3)
         self.assertEqual(
             second_payload["entries"]["preset:base_portrait"]["vector"],
@@ -11157,6 +11286,40 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                     separators=(",", ":"),
                 ).encode("utf-8"),
             )
+
+    def test_semantic_index_shards_prune_only_prior_generation_directories(self):
+        builder = load_index_builder()
+        payload = {
+            "provider": "gemini",
+            "dictionary_hash": "a" * 64,
+            "semantic_text_recipe": self.generator.SEMANTIC_TEXT_RECIPE_VERSION,
+            "embedding_model": "gemini-embedding-2",
+            "embedding_dimensions": 3,
+            "entries": {
+                "preset:first": {
+                    "kind": "preset",
+                    "slot": None,
+                    "id": "first",
+                    "text": "first",
+                    "vector": [1.0, 0.0, 0.0],
+                },
+            },
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            output = Path(tmp) / "semantic_index.json"
+            builder.write_sharded_payload(output, payload, shard_count=2)
+            shard_parent = output.with_name("semantic_index_shards")
+            first_generation = shard_parent / ("a" * 16)
+            marker = shard_parent / "README.keep"
+            marker.write_text("not a generation directory", encoding="utf-8")
+
+            updated_payload = json.loads(json.dumps(payload))
+            updated_payload["dictionary_hash"] = "b" * 64
+            builder.write_sharded_payload(output, updated_payload, shard_count=2)
+
+            self.assertFalse(first_generation.exists())
+            self.assertTrue((shard_parent / ("b" * 16)).is_dir())
+            self.assertEqual(marker.read_text(encoding="utf-8"), "not a generation directory")
 
     def test_real_compact_semantic_shards_preserve_candidate_pack_bytes(self):
         builder = load_index_builder()
