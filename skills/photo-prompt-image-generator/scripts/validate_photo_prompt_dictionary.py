@@ -20,6 +20,17 @@ from prompt_generator import (
 )
 
 
+RETIRED_RUNTIME_METADATA_KEYS = {
+    "authorship_basis",
+    "audience_scope",
+    "audience_familiarity",
+    "character_family",
+    "character_topic",
+    "content_basis",
+    "cultural_provenance",
+    "market_origin",
+    "term_level",
+}
 VALID_AXIS_SIGNAL_SUFFIXES = {"strong", "ambient"}
 VALID_AXIS_SIGNAL_ALIASES = {"human_portrait"}
 VALID_MATCH_RULE_KEYS = {
@@ -226,6 +237,31 @@ def validate_runtime_process_metadata(paths: list[Path], errors: list[str]) -> N
                     errors.append(
                         f"runtime public visual text boundary: {path.name}:{json_path} contains {marker}"
                     )
+
+
+def validate_retired_runtime_metadata(paths: list[Path], errors: list[str]) -> None:
+    """Reject retired control/source classifications from runtime assets."""
+
+    def walk(value: Any, label: str) -> None:
+        if isinstance(value, dict):
+            for key, item in value.items():
+                child = f"{label}.{key}" if label else str(key)
+                if str(key) in RETIRED_RUNTIME_METADATA_KEYS:
+                    errors.append(f"{child}: retired runtime metadata key is not allowed")
+                walk(item, child)
+        elif isinstance(value, list):
+            for index, item in enumerate(value):
+                walk(item, f"{label}[{index}]")
+
+    for path in paths:
+        if not path.exists():
+            continue
+        try:
+            payload = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError) as exc:
+            errors.append(f"{path.name}: cannot inspect retired runtime metadata: {exc}")
+            continue
+        walk(payload, path.name)
 
 
 def merged_facet_vocab(data: dict[str, Any]) -> dict[str, set[str]]:
@@ -769,9 +805,8 @@ def validate_quality_layer_photographic_craft(
         return
     if "enabled" in craft and not isinstance(craft.get("enabled"), bool):
         errors.append("quality_layers.photographic_craft.enabled: must be a boolean")
-    source = str(craft.get("source") or "").strip()
-    if not source:
-        errors.append("quality_layers.photographic_craft.source: required")
+    if "source" in craft:
+        errors.append("quality_layers.photographic_craft.source: retired nonfunctional trace")
     profile_ids = {
         str(profile_id)
         for profile_id in (quality.get("quality_profiles") or {})
@@ -907,9 +942,8 @@ def validate_quality_layer_artistic_final_touch(quality: dict[str, Any], errors:
     for profile_id in normalize_list(touch.get("enabled_profiles")):
         if profile_id not in profiles:
             errors.append(f"quality_layers.artistic_final_touch.enabled_profiles: unknown profile {profile_id}")
-    source = str(touch.get("source") or "").strip()
-    if not source:
-        errors.append("quality_layers.artistic_final_touch.source: required")
+    if "source" in touch:
+        errors.append("quality_layers.artistic_final_touch.source: retired nonfunctional trace")
     sentences = touch.get("sentences")
     if not isinstance(sentences, dict):
         errors.append("quality_layers.artistic_final_touch.sentences: must be an object")
@@ -1259,7 +1293,12 @@ def validate_quality_layer_hybrid_augmentation(
     if not isinstance(adult, dict):
         errors.append("quality_layers.hybrid_augmentation.adult_appeal: must be an object")
         return
-    preset_id = str(adult.get("source_preset_id") or "")
+    if "source_preset_id" in adult:
+        errors.append(
+            "quality_layers.hybrid_augmentation.adult_appeal.source_preset_id: "
+            "retired; use inventory_preset_id"
+        )
+    preset_id = str(adult.get("inventory_preset_id") or "")
     source_preset = next(
         (
             preset
@@ -1270,7 +1309,7 @@ def validate_quality_layer_hybrid_augmentation(
     )
     if source_preset is None:
         errors.append(
-            f"quality_layers.hybrid_augmentation.adult_appeal.source_preset_id: unknown preset {preset_id!r}"
+            f"quality_layers.hybrid_augmentation.adult_appeal.inventory_preset_id: unknown preset {preset_id!r}"
         )
         source_filters: dict[str, Any] = {}
     else:
@@ -2803,11 +2842,11 @@ def main() -> int:
     vocab = merged_facet_vocab(data)
 
     tags_path = Path(args.tags)
-    validate_runtime_process_metadata(
-        [tags_path]
-        + [tags_path.with_name(filename) for filename in TAXONOMY_EXTENSION_FILENAMES],
-        errors,
-    )
+    runtime_asset_paths = [tags_path] + [
+        tags_path.with_name(filename) for filename in TAXONOMY_EXTENSION_FILENAMES
+    ]
+    validate_runtime_process_metadata(runtime_asset_paths, errors)
+    validate_retired_runtime_metadata(runtime_asset_paths, errors)
 
     validate_filter_ids(data, errors)
     validate_selection_contracts(data, errors)

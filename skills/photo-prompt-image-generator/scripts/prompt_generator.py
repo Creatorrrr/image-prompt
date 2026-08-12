@@ -107,6 +107,16 @@ CANDIDATE_PACK_PRESET_LIMIT = 4
 CANDIDATE_PACK_CORE_SLOT_LIMIT = 4
 CANDIDATE_PACK_SUPPORT_SLOT_LIMIT = 2
 CANDIDATE_PACK_TOTAL_CANDIDATE_LIMIT = 64
+CANDIDATE_PACK_CONTRACT_V2 = "photo-candidate-pack/v2"
+CANDIDATE_PACK_CONTRACT_V3 = "photo-candidate-pack/v3"
+CANDIDATE_PACK_VERSIONS = ("v2", "v3")
+DEFAULT_CANDIDATE_PACK_VERSION = "v3"
+CANDIDATE_PACK_V3_PROFILE_ALIASES = {
+    "character_moe_grammar": "character_scene_grammar",
+}
+CANDIDATE_PACK_V3_ID_ALIASES = {
+    "aligning_rights_cleared_original_vehicle_wrap": "aligning_original_graphics_vehicle_wrap",
+}
 CANDIDATE_PACK_CREATIVE_EXPLORATION_FLOOR = 0.75
 CANDIDATE_PACK_CREATIVE_EXPLORATION_MIN_DISTANCE = 0.45
 CANDIDATE_PACK_CREATIVE_EXPLORATION_LIMIT = 6
@@ -281,20 +291,11 @@ CANDIDATE_PACK_INTENT_STOPWORDS = {
     "of",
     "in",
 }
-# These facets remain available to internal applicability and compatibility
-# guards. They are research/market/control classifications rather than visible
-# image evidence, so they must not affect soft semantic similarity or appear in
-# the composing model's candidate pack.
+# Safety tier remains an internal hard-guard facet. Retired research, market,
+# audience, and authorship classifications are no longer distributed in the
+# authoring assets, so they do not need a runtime exclusion list.
 CONTROL_ONLY_FACET_KEYS = {
-    "authorship_basis",
-    "audience_scope",
-    "character_family",
-    "character_topic",
-    "content_basis",
-    "cultural_provenance",
-    "market_origin",
     "safety_tier",
-    "term_level",
 }
 CANDIDATE_PACK_ALWAYS_PRIVATE_TAGS = {
     "adult_compatible",
@@ -1702,8 +1703,6 @@ def validate_character_mechanism_graph(data: JsonDict) -> None:
             visual_provenance = normalize_list(blueprint.get("diegetic_visual_provenance"))
             if len(visual_provenance) != 1 or len(set(visual_provenance)) != 1:
                 raise ValueError(f"character scene {preset_id}.{blueprint_id} requires one visual provenance")
-            if "nonvisual" not in str(blueprint.get("market_origin") or ""):
-                raise ValueError(f"character scene {preset_id}.{blueprint_id} must keep market origin nonvisual")
             runtime_ids = normalize_list(blueprint.get("runtime_ids"))
             primary_id = str(blueprint.get("primary_runtime_id") or "")
             if not 1 <= len(runtime_ids) <= 1 + max_support_cues:
@@ -4256,8 +4255,12 @@ def candidate_pack_hybrid_adult_appeal(
     adult_policy = hybrid_policy.get("adult_appeal") if isinstance(hybrid_policy.get("adult_appeal"), dict) else {}
     request = candidate_pack_adult_appeal_request(data, result)
     enabled = bool(request.get("enabled"))
-    source_preset_id = str(adult_policy.get("source_preset_id") or "adult_fetish_fashion_editorial")
-    source_preset = candidate_pack_preset_by_id(data, source_preset_id) or {}
+    inventory_preset_id = str(
+        adult_policy.get("inventory_preset_id")
+        or adult_policy.get("source_preset_id")
+        or "adult_fetish_fashion_editorial"
+    )
+    source_preset = candidate_pack_preset_by_id(data, inventory_preset_id) or {}
     try:
         per_axis_limit = max(1, int(adult_policy.get("candidate_limit_per_axis", 12) or 12))
     except (TypeError, ValueError):
@@ -4369,7 +4372,7 @@ def candidate_pack_hybrid_adult_appeal(
                 or CANDIDATE_PACK_ADULT_APPEAL_DEFAULT_EMPHASIS
             ),
         },
-        "source_preset_id": source_preset_id,
+        "inventory_preset_id": inventory_preset_id,
         "axes": axes,
         "blend": {
             "emphasis": str((request.get("blend") or {}).get("emphasis") or "balanced"),
@@ -4887,8 +4890,6 @@ def render_contract_resolved_scene_blueprints(data: JsonDict, preset: JsonDict) 
             "support_runtime_ids": normalize_list(raw.get("support_runtime_ids")),
             "policy_ids": normalize_list(raw.get("policy_ids")),
             "relationship_mode": str(raw.get("relationship_mode") or ""),
-            "audience_familiarity": str(raw.get("audience_familiarity") or ""),
-            "market_origin": str(raw.get("market_origin") or ""),
             "static_portrait": bool(raw.get("static_portrait")),
             "subject": str(raw.get("subject") or "").strip(),
             "subject_ko": str(raw.get("subject_ko") or raw.get("subject") or "").strip(),
@@ -5856,7 +5857,9 @@ def candidate_pack_artistic_final_touch(data: JsonDict, quality_profile: JsonDic
     return {
         "enabled": True,
         "profile_id": profile_id,
-        "source": str(policy.get("source") or "quality_layers_artistic_final_touch"),
+        # Retain the v2 compatibility value in the internal pack. The v3
+        # projection removes this nonfunctional trace entirely.
+        "source": str(policy.get("source") or "agent_final_photo_art_touch"),
         "final_sentence_en": final_sentence,
         "audit_terms": normalize_list(policy.get("audit_terms"))[:12],
     }
@@ -7010,7 +7013,94 @@ def candidate_pack_visual_proposition(
     }
 
 
-def build_candidate_pack(result: JsonDict, data: JsonDict) -> JsonDict:
+def candidate_pack_contract_version(version: str) -> str:
+    normalized = str(version or DEFAULT_CANDIDATE_PACK_VERSION).strip().lower()
+    aliases = {
+        "v2": CANDIDATE_PACK_CONTRACT_V2,
+        CANDIDATE_PACK_CONTRACT_V2: CANDIDATE_PACK_CONTRACT_V2,
+        "v3": CANDIDATE_PACK_CONTRACT_V3,
+        CANDIDATE_PACK_CONTRACT_V3: CANDIDATE_PACK_CONTRACT_V3,
+    }
+    if normalized not in aliases:
+        raise ValueError(
+            f"Unsupported candidate-pack version {version!r}; expected one of {CANDIDATE_PACK_VERSIONS}"
+        )
+    return aliases[normalized]
+
+
+def candidate_pack_recompute_id(pack: JsonDict) -> JsonDict:
+    hashable = dict(pack)
+    hashable["pack_id"] = None
+    pack["pack_id"] = stable_text_id(
+        json.dumps(hashable, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+    ) or ""
+    return pack
+
+
+def candidate_pack_v3_alias_value(value: Any) -> Any:
+    if isinstance(value, dict):
+        return {
+            str(key): candidate_pack_v3_alias_value(item)
+            for key, item in value.items()
+        }
+    if isinstance(value, list):
+        return [candidate_pack_v3_alias_value(item) for item in value]
+    if not isinstance(value, str):
+        return value
+    aliased = CANDIDATE_PACK_V3_PROFILE_ALIASES.get(value, value)
+    for old_id, new_id in CANDIDATE_PACK_V3_ID_ALIASES.items():
+        aliased = aliased.replace(old_id, new_id)
+    return aliased
+
+
+def candidate_pack_remove_quality_profile_sources(value: Any) -> None:
+    if isinstance(value, dict):
+        if "profile_id" in value and "facets" in value:
+            value.pop("source", None)
+        for item in value.values():
+            candidate_pack_remove_quality_profile_sources(item)
+    elif isinstance(value, list):
+        for item in value:
+            candidate_pack_remove_quality_profile_sources(item)
+
+
+def candidate_pack_project(pack: JsonDict, version: str) -> JsonDict:
+    contract_version = candidate_pack_contract_version(version)
+    projected = copy.deepcopy(pack)
+    projected["contract_version"] = contract_version
+    adult = (
+        ((projected.get("hybrid_augmentation") or {}).get("adult_appeal"))
+        if isinstance(projected.get("hybrid_augmentation"), dict)
+        else None
+    )
+    if contract_version == CANDIDATE_PACK_CONTRACT_V2:
+        if isinstance(adult, dict) and "inventory_preset_id" in adult:
+            adult["source_preset_id"] = adult.pop("inventory_preset_id")
+        return candidate_pack_recompute_id(projected)
+
+    grammar = projected.get("character_grammar")
+    if isinstance(grammar, dict):
+        for key in ("domain", "topic_id", "family_id"):
+            grammar.pop(key, None)
+    candidate_pack_remove_quality_profile_sources(projected)
+    craft = projected.get("photographic_craft")
+    if isinstance(craft, dict):
+        craft.pop("source", None)
+    final_touch = projected.get("artistic_final_touch")
+    if isinstance(final_touch, dict):
+        final_touch.pop("source", None)
+    if isinstance(adult, dict):
+        adult.pop("inventory_preset_id", None)
+        adult.pop("source_preset_id", None)
+    projected = candidate_pack_v3_alias_value(projected)
+    return candidate_pack_recompute_id(projected)
+
+
+def build_candidate_pack(
+    result: JsonDict,
+    data: JsonDict,
+    candidate_pack_version: str = DEFAULT_CANDIDATE_PACK_VERSION,
+) -> JsonDict:
     trace = result.get("semantic_trace") if isinstance(result.get("semantic_trace"), dict) else {}
     provenance = result.get("provenance") if isinstance(result.get("provenance"), dict) else {}
     candidate_entries: Dict[str, tuple[str, Optional[str], JsonDict]] = {}
@@ -7085,7 +7175,7 @@ def build_candidate_pack(result: JsonDict, data: JsonDict) -> JsonDict:
         adult_appeal,
     )
     pack: JsonDict = {
-        "contract_version": "photo-candidate-pack/v2",
+        "contract_version": CANDIDATE_PACK_CONTRACT_V2,
         "pack_id": "",
         "intent_contract": intent_contract,
         "mandatory_intents": mandatory_intents,
@@ -7193,10 +7283,8 @@ def build_candidate_pack(result: JsonDict, data: JsonDict) -> JsonDict:
             "blend": {"emphasis": ((adult_appeal or {}).get("blend") or {}).get("emphasis")},
         }
         pack["hybrid_augmentation"] = hybrid_augmentation
-    hashable = dict(pack)
-    hashable["pack_id"] = None
-    pack["pack_id"] = stable_text_id(json.dumps(hashable, ensure_ascii=False, sort_keys=True, separators=(",", ":"))) or ""
-    return pack
+    candidate_pack_recompute_id(pack)
+    return candidate_pack_project(pack, candidate_pack_version)
 
 
 def semantic_description_for_entry(entry: Entry) -> str:
@@ -16545,6 +16633,12 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         action="store_true",
         help="Emit candidate-pack JSON for agent composition instead of final prompt JSON/plain text.",
     )
+    parser.add_argument(
+        "--candidate-pack-version",
+        choices=CANDIDATE_PACK_VERSIONS,
+        default=DEFAULT_CANDIDATE_PACK_VERSION,
+        help="Candidate-pack contract to emit. v3 is the clean default; v2 preserves the prior public shape.",
+    )
     parser.add_argument("--json-output", action="store_true", help="Print results as JSON.")
     parser.add_argument(
         "--output-file",
@@ -16774,7 +16868,10 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         save_anchor_diversity_ledger(args.anchor_diversity_ledger, anchor_diversity_ledger)
 
     if args.emit_candidate_pack:
-        packs = [build_candidate_pack(result, data) for result in results]
+        packs = [
+            build_candidate_pack(result, data, args.candidate_pack_version)
+            for result in results
+        ]
         output = json.dumps(packs, ensure_ascii=False, indent=2) + "\n"
         if args.output_file:
             Path(args.output_file).write_text(output, encoding="utf-8")

@@ -1,7 +1,7 @@
 # Photo runtime research-metadata contamination
 
 - Recorded: 2026-08-11 19:39 KST
-- Status: resolved — residual public/control projection completed on 2026-08-12
+- Status: resolved — public projection and versioned raw-asset closure completed on 2026-08-12
 - Goal/checkpoint: Photo Prompt Runtime Metadata Boundary Refactor / Stage 1
 - Affected scope: `skills/photo-prompt-image-generator` semantic text, intent routing, candidate-pack relevance, render contracts, final prompt text, and distributable assets
 - Search terms: source-grounded, provenance_scope, market_researched, cited interview study, character_moe_grammar, semantic text, candidate-pack metadata
@@ -48,6 +48,14 @@
 - Retrieval: The separately approved 22-case payload remained 71 ordered requests / 68 unique texts / 6,381 bytes / SHA-256 `5702e85ca1e2d2d14a5a921438a89cd9dd19ab667dd4b2b87be497e730398040` and passed 22/22. A changed-preset probe used 3 cases / 12 ordered requests / 812 bytes / SHA-256 `95d0c71bd372ce816342b1b7423f8818cc033117c5290606bc0e80e86d47d413`; itasha, animation-fandom exchange, and original-species art-RPG each selected the expected route. A second CJK dungeon-stream probe used 5 cases / 17 ordered and unique requests / 1,430 bytes / SHA-256 `31ac2034764ae6abf68fe4aef6db1a954c24311c2af3a4665718eff1aa756c1a` and selected the expected route 5/5.
 - Qualification: 319 affected photo tests plus 597 subtests passed. After the last redundant public-primary-ID removal, 45 candidate-pack/audit contract tests and a 667-preset, 663,094-public-string projection sweep passed with zero private/control/source/process findings. Dictionary, index, scene-expression 112/112, contradiction 667/667, generalization 79/79, holdout 24/24, and domain holdout v2 6/6 passed. The remaining repository tests reproduced only the previously recorded universal-scene baseline in its separate module; no photo failure was added.
 - Deferred raw-asset boundary: Eight non-safety control-facet families and character-scene audience/market fields remain in authoring JSON for schema/raw-consumer compatibility even though static usage finds no live guard consumer and the runtime projection drops them. Their versioned removal, together with public character topic/family/domain IDs and nonessential quality-layer source traces, is the next conservative v3 cleanup rather than an unversioned v2 deletion.
+
+## Versioned raw-asset closure (2026-08-12)
+
+- The deferred boundary was completed as candidate-pack v3 rather than changing the v2 contract in place. The eight unused non-safety control-facet families plus character-scene audience/market fields were removed from primary authoring assets, and the validator now rejects those keys. `safety_tier` remains because its hard guard is live.
+- Default v3 removes character topic/family/domain IDs, nonfunctional quality/craft/final-touch source traces, and adult-inventory bookkeeping. It exposes neutral profile and selection handles. Explicit v2 reconstructs the prior fields, values, and IDs.
+- A fixed-seed cross-commit replay over all 667 direct presets produced zero normalized v2 pack, selection, or prompt/negative mismatches against `c2b3600`; the v3 sweep produced zero retired-key or old public-name findings.
+- The semantic transition reused all 6,513 vectors without a provider request. Ordered key/text SHA-256 remains `f8dc5e9c5f2a3c355db77222c4b1b6648c34617692f8c552af26ebcdb8e93300`; text and vector diff counts are both zero and all 16 shard SHA values match the prior generation.
+- The previously deferred raw-authoring and public-v3 items are therefore closed. Historical evidence terminology and deliberate internal/v2 compatibility paths remain by design and are not runtime composition evidence.
 
 ## Reuse guidance
 
