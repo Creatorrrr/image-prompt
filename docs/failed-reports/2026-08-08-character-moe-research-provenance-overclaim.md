@@ -5,7 +5,7 @@
 - Goal/checkpoint: Research-Backed Moe and Subculture Character Grammar / Stage 2
 - Affected scope: six 24-topic research packets before ledger ingestion and runtime taxonomy implementation
 - Search terms: character moe evidence provenance, CJK term overclaim, adult morphology inference, composite candidate IDs
-- Related paths: `skills/photo-prompt-image-generator/assets/research_evidence.jsonl`, `skills/photo-prompt-image-generator/assets/character_moe_topic_crosswalk_v1.json`, planned character-mechanism extension
+- Related paths: `docs/research-evidence/photo-prompt/research_evidence.jsonl`, `docs/research-evidence/photo-prompt/character_moe_topic_crosswalk_v1.json`, planned character-mechanism extension
 
 ## Failure
 

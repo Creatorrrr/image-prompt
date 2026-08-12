@@ -6284,23 +6284,39 @@ def _selected_photo_ids(pack: Mapping[str, Any]) -> list[str]:
 
 
 def validate_photo_regression_baseline(asset_dir: Path) -> dict[str, Any]:
-    """Regenerate the sibling photo pack without allowing illustration-side drift."""
+    """Validate immutable photo history plus the current sibling boundary."""
 
-    baseline_path = asset_dir / "photo_regression_baseline_v1.json"
+    historical_path = asset_dir / "photo_regression_baseline_v1.json"
+    baseline_path = asset_dir / "photo_regression_baseline_v2.json"
     universal_baseline = _load_json(asset_dir / "universal_scene_baseline_v1.json")
     photo_boundary = universal_baseline.get("photo_boundary")
     _require(
         isinstance(photo_boundary, dict), "universal baseline photo boundary missing"
     )
     _require(
-        photo_boundary.get("baseline_asset") == baseline_path.name
-        and photo_boundary.get("baseline_asset_sha256") == _sha256(baseline_path),
-        "photo baseline asset hash drift",
+        photo_boundary.get("baseline_asset") == historical_path.name
+        and photo_boundary.get("baseline_asset_sha256") == _sha256(historical_path),
+        "historical photo baseline asset hash drift",
+    )
+    historical = _load_json(historical_path)
+    _require(
+        historical.get("schema") == "photo_regression_baseline/v1"
+        and historical.get("sha256")
+        == photo_boundary.get("expected_candidate_pack_sha256")
+        and historical.get("pack_id") == photo_boundary.get("expected_pack_id"),
+        "historical photo baseline contract drift",
     )
     baseline = _load_json(baseline_path)
     _require(
-        baseline.get("schema") == "photo_regression_baseline/v1",
-        "photo baseline schema mismatch",
+        baseline.get("schema") == "photo_regression_baseline/v2"
+        and baseline.get("status") == "current"
+        and baseline.get("historical_baseline")
+        == {
+            "path": historical_path.name,
+            "schema": "photo_regression_baseline/v1",
+            "sha256": _sha256(historical_path),
+        },
+        "current photo baseline lineage mismatch",
     )
     command = baseline.get("command")
     _require(
@@ -6356,16 +6372,12 @@ def validate_photo_regression_baseline(asset_dir: Path) -> dict[str, Any]:
     ).encode("utf-8")
     digest = hashlib.sha256(normalized_bytes).hexdigest()
     _require(
-        digest
-        == baseline.get("sha256")
-        == photo_boundary.get("expected_candidate_pack_sha256"),
-        "photo baseline candidate-pack bytes drift",
+        digest == baseline.get("sha256"),
+        "current photo baseline candidate-pack bytes drift",
     )
     _require(
-        pack.get("pack_id")
-        == baseline.get("pack_id")
-        == photo_boundary.get("expected_pack_id"),
-        "photo baseline pack ID drift",
+        pack.get("pack_id") == baseline.get("pack_id"),
+        "current photo baseline pack ID drift",
     )
     _require(
         provenance.get("sample_prompt_id") == baseline.get("sample_prompt_id"),
@@ -6379,7 +6391,13 @@ def validate_photo_regression_baseline(asset_dir: Path) -> dict[str, Any]:
         pack.get("negative_en") == baseline.get("negative_en"),
         "photo baseline negative prompt drift",
     )
-    return {"status": "pass", "sha256": digest, "pack_id": pack["pack_id"]}
+    return {
+        "status": "pass",
+        "schema": baseline["schema"],
+        "historical_sha256": _sha256(historical_path),
+        "sha256": digest,
+        "pack_id": pack["pack_id"],
+    }
 
 
 def _predicate_groups(

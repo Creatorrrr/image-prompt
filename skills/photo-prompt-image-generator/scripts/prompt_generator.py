@@ -72,7 +72,7 @@ LLM_POLISH_MODES = ("off", "strict")
 SEMANTIC_PROVIDER = "gemini"
 DEFAULT_SEMANTIC_DIMENSIONS = 768
 SEMANTIC_MODEL_ID = "gemini-embedding-2"
-SEMANTIC_TEXT_RECIPE_VERSION = "semantic-text-v2"
+SEMANTIC_TEXT_RECIPE_VERSION = "semantic-text-v3"
 GENERATOR_VERSION = "2026.06.0"
 LIKENESS_MODES = ("off", "inspired")
 QUALITY_LAYERS_FILENAME = "photo_prompt_quality_layers.json"
@@ -281,6 +281,10 @@ CANDIDATE_PACK_INTENT_STOPWORDS = {
     "of",
     "in",
 }
+# Internal classification facets may affect guards or profile selection, but
+# they are not visual instructions and must not be exposed to the composing
+# model as candidate-pack evidence.
+CANDIDATE_PACK_PRIVATE_FACET_KEYS = {"content_basis"}
 CANDIDATE_PACK_SEMANTIC_DROPOUT_BUCKETS: Dict[str, tuple[str, ...]] = {
     "environment": (
         "location",
@@ -2811,20 +2815,16 @@ def candidate_pack_score_payload(row: JsonDict) -> JsonDict:
 
 
 def candidate_pack_entry_blob(entry: JsonDict, extra: Sequence[str] = ()) -> str:
+    """Return user-visible relevance text without private control metadata."""
     values: List[str] = [str(item) for item in extra if str(item).strip()]
     for key in (
-        "id",
         "en",
         "ko",
-        "family",
-        "category",
-        "description",
-        "embedding_text",
+        "label_en",
+        "label_ko",
         "aliases",
         "keywords",
-        "tags",
-        "kind",
-        "facets",
+        "terms",
     ):
         raw = entry.get(key)
         if isinstance(raw, list):
@@ -2858,7 +2858,7 @@ def candidate_pack_rule_context_score(entry: JsonDict, request_text: str, contex
     normalized_context = {str(token).lower() for token in context_tokens if str(token).strip()}
     context_hits = len(entry_tokens & normalized_context)
 
-    blob = candidate_pack_entry_blob(entry, sorted(compatibility_tokens))
+    blob = candidate_pack_entry_blob(entry)
     request_hits = 0
     for term in candidate_pack_tokenize_intent_text(request_text):
         normalized = str(term).lower().strip()
@@ -2886,7 +2886,9 @@ def candidate_pack_summarize_preset_candidate(
         "facets": {
             str(key): normalize_list(value)[:12]
             for key, value in (preset.get("facets") or {}).items()
-            if str(key).strip() and normalize_list(value)
+            if str(key).strip()
+            and str(key) not in CANDIDATE_PACK_PRIVATE_FACET_KEYS
+            and normalize_list(value)
         },
         "probability": probability,
         "weight": candidate_pack_float(row.get("weight")),
@@ -2920,7 +2922,9 @@ def candidate_pack_summarize_slot_candidate(
         "facets": {
             str(key): normalize_list(value)[:12]
             for key, value in (entry.get("facets") or {}).items()
-            if str(key).strip() and normalize_list(value)
+            if str(key).strip()
+            and str(key) not in CANDIDATE_PACK_PRIVATE_FACET_KEYS
+            and normalize_list(value)
         },
         "scores": candidate_pack_score_payload(row),
         "applicability": {
@@ -3499,15 +3503,53 @@ def resolve_request_intent_constraints(
         aliases = normalize_list(rule.get("aliases"))
         hits = sorted({alias for text in texts for alias in aliases if intent_alias_matches(text, alias)})
         if hits:
-            scoped_routes.add(preset_id)
-            matched.append(
+            required_context_aliases = normalize_list(rule.get("requires_any_context_aliases"))
+            context_hits = sorted(
                 {
-                    "axis": "scoped_route",
-                    "value": preset_id,
-                    "domain": domain,
-                    "aliases": hits[:8],
+                    alias
+                    for text in texts
+                    for alias in required_context_aliases
+                    if intent_alias_matches(text, alias)
                 }
             )
+            if required_context_aliases and not context_hits:
+                continue
+            scoped_routes.add(preset_id)
+            match = {
+                "axis": "scoped_route",
+                "value": preset_id,
+                "domain": domain,
+                "aliases": hits[:8],
+            }
+            if context_hits:
+                match["context_aliases"] = context_hits[:8]
+            matched.append(match)
+    for rule in policy.get("domains") or []:
+        if not isinstance(rule, dict):
+            continue
+        domain = str(rule.get("domain") or "")
+        standalone_aliases = normalize_list(rule.get("standalone_aliases"))
+        if domain not in domains or not standalone_aliases:
+            continue
+        domain_has_scoped_route = any(
+            str(route.get("domain") or "") == domain
+            and str(route.get("preset_id") or "") in scoped_routes
+            for route in policy.get("scoped_routes") or []
+            if isinstance(route, dict)
+        )
+        standalone_hits = {
+            alias
+            for text in texts
+            for alias in standalone_aliases
+            if intent_alias_matches(text, alias)
+        }
+        if not domain_has_scoped_route and not standalone_hits:
+            domains.discard(domain)
+            matched = [
+                row
+                for row in matched
+                if not (row.get("axis") == "domain" and row.get("value") == domain)
+            ]
     no_people = any(intent_explicitly_excludes_people(text) for text in texts)
     if no_people:
         categories.discard("human")
@@ -3611,10 +3653,8 @@ def candidate_pack_candidate_blobs(presets: Sequence[JsonDict], slots: JsonDict)
         blobs[candidate_id] = candidate_pack_entry_blob(
             preset,
             [
-                str(preset.get("preset_id") or ""),
                 str(preset.get("label_en") or ""),
                 str(preset.get("label_ko") or ""),
-                str(preset.get("family") or ""),
             ],
         )
     for slot_payload in slots.values():
@@ -3627,8 +3667,6 @@ def candidate_pack_candidate_blobs(presets: Sequence[JsonDict], slots: JsonDict)
             blobs[candidate_id] = candidate_pack_entry_blob(
                 candidate,
                 [
-                    str(candidate.get("entry_id") or ""),
-                    str(candidate.get("slot") or ""),
                     str(candidate.get("label_en") or ""),
                     str(candidate.get("label_ko") or ""),
                 ],
@@ -4715,7 +4753,7 @@ def render_contract_resolved_scene_blueprints(data: JsonDict, preset: JsonDict) 
         fallback_en = {
             "subject": f"the principal participants or material subject of {preset_en}",
             "action": f"a decisive observable change within {preset_en}",
-            "location": f"a source-grounded setting specific to {preset_en}",
+            "location": f"a setting specific to {preset_en}",
             "prop": "one unbranded physical clue tied to the event",
         }
         fallback_ko = {
@@ -4748,7 +4786,7 @@ def render_contract_resolved_scene_blueprints(data: JsonDict, preset: JsonDict) 
                     "diegetic_visual_provenance": provenance,
                     "genre_anchors": genre_anchors,
                     "relationship_stakes": [],
-                    "expression_mode": "derived_research_scene",
+                    "expression_mode": "derived_filtered_scene",
                     "subject": localize(source_subject, "en") or fallback_en["subject"],
                     "subject_ko": localize(source_subject, "ko") or fallback_ko["subject"],
                     "subject_kind": normalize_list(source_subject.get("kind")),
@@ -5489,8 +5527,6 @@ def candidate_pack_integration_corpus(
 ) -> str:
     provenance = result.get("provenance") if isinstance(result.get("provenance"), dict) else {}
     values: List[str] = [
-        str(result.get("preset_id") or ""),
-        str(provenance.get("preset_id") or ""),
         str(trace.get("intent") or ""),
     ]
     values.extend(normalize_list(provenance.get("concept_lock")))
@@ -5498,35 +5534,25 @@ def candidate_pack_integration_corpus(
     for intent in mandatory_intents:
         if isinstance(intent, dict):
             values.append(str(intent.get("text") or ""))
-            values.append(str(intent.get("source_text") or ""))
     for preset in presets:
         if not isinstance(preset, dict):
             continue
         values.extend(
             [
-                str(preset.get("preset_id") or ""),
                 str(preset.get("label_en") or ""),
                 str(preset.get("label_ko") or ""),
-                str(preset.get("family") or ""),
             ]
         )
     for slot_payload in slots.values():
         if not isinstance(slot_payload, dict):
             continue
-        selected = str(slot_payload.get("selected") or "")
-        if selected:
-            values.append(selected)
         for candidate in slot_payload.get("candidates") or []:
             if not isinstance(candidate, dict):
                 continue
             values.extend(
                 [
-                    str(candidate.get("id") or ""),
-                    str(candidate.get("entry_id") or ""),
                     str(candidate.get("label_en") or ""),
                     str(candidate.get("label_ko") or ""),
-                    " ".join(normalize_list(candidate.get("tags"))),
-                    " ".join(normalize_list(candidate.get("kind"))),
                 ]
             )
     return " ".join(value for value in values if value.strip())
@@ -5538,18 +5564,15 @@ def candidate_pack_integration_source_corpus(
     mandatory_intents: Sequence[JsonDict],
 ) -> str:
     provenance = result.get("provenance") if isinstance(result.get("provenance"), dict) else {}
-    values: List[str] = [
-        str(result.get("preset_id") or ""),
-        str(provenance.get("preset_id") or ""),
-        str(trace.get("intent") or ""),
-    ]
+    values: List[str] = [str(trace.get("intent") or "")]
     values.extend(normalize_list(provenance.get("concept_lock")))
     values.extend(normalize_list(provenance.get("additional_requirements")))
+    values.extend(normalize_list(provenance.get("user_mandatory_intents")))
     for intent in mandatory_intents:
         if not isinstance(intent, dict):
             continue
-        values.append(str(intent.get("text") or ""))
-        values.append(str(intent.get("source_text") or ""))
+        if str(intent.get("source") or "") in {"user_requirement", "additional_requirement"}:
+            values.append(str(intent.get("text") or ""))
     return " ".join(value for value in values if value.strip())
 
 
@@ -5578,10 +5601,11 @@ def selection_balance_multiplier(data: JsonDict, entry: JsonDict, request_text: 
         implicit_multiplier = 0.35
     implicit_multiplier = min(max(implicit_multiplier, 0.0), 1.0)
     blob = candidate_pack_entry_blob(entry)
+    control_tokens = {str(token).lower() for token in entry_context_tokens(entry)}
     matched: List[str] = []
     for theme, raw_terms in (policy.get("themes") or {}).items():
         terms = [str(term).lower() for term in normalize_list(raw_terms) if str(term).strip()]
-        if not terms or not any(term in blob for term in terms):
+        if not terms or not any(term in blob or term in control_tokens for term in terms):
             continue
         if any(term in request_text for term in terms):
             continue
@@ -5605,14 +5629,7 @@ def candidate_pack_intent_term_is_negated(text: str, term: str) -> bool:
 
 
 def request_relevance_match_terms(entry: JsonDict, request_text: str, minimum_length: int) -> List[str]:
-    blob = candidate_pack_entry_blob(
-        entry,
-        [
-            *normalize_list(entry.get("for_any")),
-            *normalize_list(entry.get("requires_any_tags")),
-            *normalize_list(entry.get("requires_primary_any_tags")),
-        ],
-    )
+    blob = candidate_pack_entry_blob(entry)
     matched: List[str] = []
     for term in candidate_pack_tokenize_intent_text(request_text):
         normalized = str(term).lower().strip()
@@ -6258,7 +6275,11 @@ def candidate_pack_quality_profile(
     return {
         "profile_id": profile_id,
         "source": "selected_preset_slots_and_literal_uncovered_intent_facets",
-        "facets": {key: sorted(values) for key, values in sorted(facets.items()) if values},
+        "facets": {
+            key: sorted(values)
+            for key, values in sorted(facets.items())
+            if values and key not in CANDIDATE_PACK_PRIVATE_FACET_KEYS
+        },
         "matched_uncovered_intent_facets": matched_facets,
         "matched_literal_subject_entries": matched_subject_entries,
     }
@@ -6316,7 +6337,11 @@ def candidate_pack_quality_profile_from_selected(
     return {
         "profile_id": candidate_pack_quality_profile_id(data, preset, facets),
         "source": "selected_preset_slots",
-        "facets": {key: sorted(values) for key, values in sorted(facets.items()) if values},
+        "facets": {
+            key: sorted(values)
+            for key, values in sorted(facets.items())
+            if values and key not in CANDIDATE_PACK_PRIVATE_FACET_KEYS
+        },
         "matched_uncovered_intent_facets": [],
         "matched_literal_subject_entries": [],
     }
@@ -7157,7 +7182,7 @@ def semantic_description_for_entry(entry: Entry) -> str:
         return str(entry["en"])
     if entry.get("ko"):
         return str(entry["ko"])
-    return str(entry.get("id", ""))
+    return "photo prompt concept"
 
 
 def semantic_caption_for_entry(entry: Entry, slot: Optional[str] = None) -> str:
@@ -7280,24 +7305,22 @@ def semantic_axis_routed_families_for_slot(source: Optional[JsonDict], slot: str
 
 
 def semantic_text_for_entry(entry: Entry, slot: Optional[str] = None) -> str:
+    """Build embedding input from public visual-language fields only.
+
+    Stable IDs, tags, kinds, facets, routing metadata, and validation notes are
+    control-plane data. Including them makes retrieval learn how an entry was
+    developed instead of what should be visible in the photograph.
+    """
     parts: List[str] = [semantic_caption_for_entry(entry, slot)]
     for key in ("en", "ko"):
         if entry.get(key):
             parts.append(f"{key} label: {entry[key]}.")
-    for key in ("aliases", "keywords", "tags", "kind"):
+    for key in ("aliases", "keywords", "terms"):
         values = normalize_list(entry.get(key))
         if values:
             parts.append(f"{key}: {', '.join(values)}.")
     if slot:
         parts.append(f"slot: {slot}.")
-    if entry.get("id"):
-        parts.append(f"stable id: {entry['id']}.")
-    facets = entry.get("facets", {}) or {}
-    if isinstance(facets, dict):
-        for key, values in facets.items():
-            normalized = normalize_list(values)
-            if normalized:
-                parts.append(f"facet {key}: {', '.join(normalized)}.")
     return " ".join(parts)
 
 
@@ -7329,6 +7352,14 @@ def get_gemini_api_key(api_key: Optional[str] = None) -> str:
             "GEMINI_API_KEY or GOOGLE_API_KEY is required for Gemini semantic embeddings."
         )
     return key
+
+
+@functools.lru_cache(maxsize=4)
+def cached_gemini_client(api_key: str) -> Any:
+    """Reuse the SDK transport while keeping each embedding request isolated."""
+    from google import genai
+
+    return genai.Client(api_key=api_key)
 
 
 def extract_embedding_values(response: Any) -> List[List[float]]:
@@ -7374,7 +7405,6 @@ def embed_texts_with_gemini(
     key = get_gemini_api_key(api_key)
 
     try:
-        from google import genai
         from google.genai import types
     except ImportError as exc:
         raise RuntimeError(
@@ -7382,7 +7412,7 @@ def embed_texts_with_gemini(
             "Install it with `python3 -m pip install -r requirements.txt`."
         ) from exc
 
-    client = genai.Client(api_key=key)
+    client = cached_gemini_client(key)
     config = types.EmbedContentConfig(
         output_dimensionality=dims,
         task_type="SEMANTIC_SIMILARITY",
@@ -16493,7 +16523,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     parser.add_argument(
         "--scene-function",
         default=None,
-        help="Select one supported render scene function for a direct research-backed preset without adding user intent text.",
+        help="Select one supported render scene function for a direct taxonomy preset without adding user intent text.",
     )
     parser.add_argument("--filter-strictness", choices=FILTER_STRICTNESS_MODES, default=None, help="Preset filter behavior for semantic/hybrid selection. Defaults to soft for semantic and hard for hybrid/rule.")
     parser.add_argument("--semantic-weight", type=float, default=None, help="0..1 blend weight for semantic scoring. Defaults by selection mode.")

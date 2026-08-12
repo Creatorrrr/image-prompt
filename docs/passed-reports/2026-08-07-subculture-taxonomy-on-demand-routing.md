@@ -7,7 +7,7 @@
 - Search terms: subculture taxonomy, bilingual scoped routes, additive extension, semantic holdout, generic leakage
 - Affected scope: `skills/photo-prompt-image-generator` taxonomy, intent routing, semantic index, evidence ledger, and regression contracts
 - Excluded scope: image rendering, visual A/B quality, publication, commit, push, and exhaustive regional or historical coverage
-- Related paths: `GOAL_PLAN.md`, `skills/photo-prompt-image-generator/assets/photo_prompt_subculture_extension.json`, `skills/photo-prompt-image-generator/assets/semantic_retrieval_holdout_subculture_v1.jsonl`, `skills/photo-prompt-image-generator/assets/research_evidence.jsonl`
+- Related paths: `GOAL_PLAN.md`, `skills/photo-prompt-image-generator/assets/photo_prompt_subculture_extension.json`, `tests/fixtures/photo_prompt/semantic_retrieval_holdout_subculture_v1.jsonl`, `docs/research-evidence/photo-prompt/research_evidence.jsonl`
 - Related failed reports: `docs/failed-reports/2026-08-07-semantic-index-batch-response.md`, `docs/failed-reports/2026-08-07-subculture-surface-applicability-golden-drift.md`, `docs/failed-reports/2026-08-07-worldbuilding-render-scene-convergence.md`
 
 ## Reproduction context

@@ -16,7 +16,9 @@ Adult character-mechanism research lives in the separate `character_moe_grammar`
 
 Research extensions may declare `preset_render_contract_defaults` to derive compact scene blueprints from their existing filtered subject/action/location/prop entries. Put only route-specific new events in the scene-expression shard files; do not duplicate the research taxonomy's original slot entries. Resolved blueprint atoms remain outside the ordinary sampler candidates so dictionary provenance and candidate-cap semantics stay exact. Narrative-world routes need at least four resolved blueprints, three scene functions, and no operational majority. Evidence and specialty routes need at least two functions or an explicit evidence-documentary exception. Every authored blueprint needs four concrete image fields, a non-empty function set, a boolean operational classification, and exactly one diegetic visual provenance. Declare `subject_kind` or `subject_tags` explicitly for any blueprint intended to satisfy a no-people request; an undeclared subject is not presumed non-human. Market origin is never a substitute for visual provenance.
 
-Record external taxonomy research as abstract evidence in `assets/research_evidence.jsonl`. Large additive domains may use a manifest plus immutable JSONL shards, as `assets/research_evidence_character_moe/` does; validate manifest order, row count, and SHA-256 without concatenating the legacy ledger. Store the official source URL, the dimensions derived from it, affected candidate IDs, and a reuse note. Do not copy raw prompts, source prose, images, or bulk vocabulary dumps into runtime data.
+Keep external taxonomy research outside the distributable skill under `docs/research-evidence/photo-prompt/`. The legacy ledger is `research_evidence.jsonl`; large additive domains may use a manifest plus immutable JSONL shards, as `character_moe/` does. Validate manifest order, row count, and SHA-256 without concatenating the legacy ledger. Store official source URLs, derived dimensions, affected candidate IDs, and reuse notes only in that evidence area. Do not copy source titles, URLs, research-process labels, raw prompts, source prose, images, or bulk vocabulary dumps into runtime data, semantic text, candidate relevance text, mandatory intent, or final prompts.
+
+Treat `tests/fixtures/photo_prompt/semantic_retrieval_contract_character_moe_v1.jsonl` as a literal multilingual routing contract, not an independent holdout: its short spans are intentionally shared with production aliases. Keep independent generalization claims limited to cases frozen without implementation-derived phrases.
 
 Treat explicit entry `facets` as the authority. Typed operational domains limit implicit tag-to-facet inference to semantically owning slots; for example, a `street` token in a focus entry must not become the scene's `place_type`. Legacy domains retain their historical inference until they are deliberately facet-migrated and their golden outputs reviewed. Use specific taxonomy such as `field_survey` when a generic legacy tag such as `field` would activate an unrelated applicability guard.
 
@@ -33,7 +35,7 @@ Put repeated theme boundaries in quality-layer `applicability_guards`. Use `matc
 .venv/bin/python -m unittest discover -s tests
 ```
 
-Run focused contract and generalization tests before the full suite. Review golden changes; update snapshots only when output changes are intentional.
+Run focused contract and generalization tests before the full suite. Review golden changes; update snapshots only when output changes are intentional. Evaluation cases, holdouts, baselines, plans, and visual-review fixtures live under `tests/fixtures/photo_prompt/`; they are not runtime skill assets.
 
 ## Semantic Checks
 

@@ -7,6 +7,7 @@ import argparse
 import hashlib
 import json
 import os
+import shutil
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -114,7 +115,28 @@ def write_payload(path: Path, payload: dict, *, compact: bool = False) -> None:
     tmp.replace(path)
 
 
-def write_sharded_payload(path: Path, payload: dict, shard_count: int = 16) -> dict:
+def prune_stale_shard_generations(path: Path, keep_generation: str) -> list[str]:
+    """Remove prior generated shard directories after a new manifest is durable."""
+    shard_parent = path.with_name(f"{path.stem}_shards")
+    if not shard_parent.is_dir():
+        return []
+
+    removed = []
+    for candidate in shard_parent.iterdir():
+        if candidate.name == keep_generation or candidate.is_symlink() or not candidate.is_dir():
+            continue
+        shutil.rmtree(candidate)
+        removed.append(candidate.name)
+    return sorted(removed)
+
+
+def write_sharded_payload(
+    path: Path,
+    payload: dict,
+    shard_count: int = 16,
+    *,
+    keep_stale_generations: bool = False,
+) -> dict:
     """Persist vectors in stable hash shards and return the written manifest."""
     count = int(shard_count)
     if count < 1:
@@ -165,6 +187,8 @@ def write_sharded_payload(path: Path, payload: dict, shard_count: int = 16) -> d
         }
     )
     write_payload(path, manifest)
+    if not keep_stale_generations:
+        prune_stale_shard_generations(path, generation)
     return manifest
 
 
@@ -261,6 +285,11 @@ def main() -> int:
     parser.add_argument("--keep-checkpoint", action="store_true", help="Keep the partial checkpoint after a successful final write.")
     parser.add_argument("--shard-count", type=int, default=16, help="Stable hash-shard count for the final index (default: 16).")
     parser.add_argument("--monolithic", action="store_true", help="Write a legacy single-file index instead of the default sharded format.")
+    parser.add_argument(
+        "--keep-stale-generations",
+        action="store_true",
+        help="Keep older shard generations after the new manifest is written.",
+    )
     parser.add_argument("--no-cache", action="store_true", help="Do not reuse compatible vectors from an existing output index.")
     parser.add_argument("--progress", action="store_true", help="Print embedding progress without vector values.")
     parser.add_argument("--dry-run", action="store_true", help="Print planned index metadata without calling the Gemini API or writing output.")
@@ -320,7 +349,12 @@ def main() -> int:
         write_payload(out, payload)
         storage_description = "monolithic JSON"
     else:
-        write_sharded_payload(out, payload, shard_count=args.shard_count)
+        write_sharded_payload(
+            out,
+            payload,
+            shard_count=args.shard_count,
+            keep_stale_generations=args.keep_stale_generations,
+        )
         storage_description = f"{args.shard_count} JSON shards"
     checkpoint = checkpoint_path_for(out, args.checkpoint)
     if checkpoint.exists() and not args.keep_checkpoint:

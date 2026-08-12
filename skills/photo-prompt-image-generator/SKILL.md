@@ -28,29 +28,19 @@ Do not load every reference for a simple prompt request.
 - `scripts/audit_composed_prompt.py`: fail-closed composed-prompt audit.
 - `scripts/audit_scene_expression.py`: frozen-baseline and merged-runtime audit for scene counts, functions, operational dominance, and explicit render contracts.
 - `assets/photo_prompt_tags.json`: presets, slots, weights, facets, and coherence rules.
-- `assets/photo_prompt_research_extension.json`: append-only evidence-led operational and scientific presets, slots, facets, and typed-domain overrides loaded alongside the base dictionary.
-- `assets/photo_prompt_subculture_extension.json`: separately loaded, on-demand subculture practice presets and shared craft/community taxonomy; keep specialty signals out of unrelated automatic pools.
-- `assets/photo_prompt_worldbuilding_extension.json`: separately loaded, on-demand general world-system presets with atomic scene evidence and scoped routing.
-- `assets/photo_prompt_cjk_worldbuilding_extension.json`: separately loaded, source-backed CJK commercial-narrative world systems; keep market terms distinct and lock culture-sensitive scenes to one provenance.
-- `assets/photo_prompt_character_moe_extension.json`: separately loaded, on-demand adult character grammar with 24 source-backed routes, eight shared families, typed runtime nodes, compatibility edges, and fail-closed guards.
+- `assets/photo_prompt_research_extension.json`: operational and scientific presets, slots, facets, and typed-domain overrides loaded alongside the base dictionary.
+- `assets/photo_prompt_subculture_extension.json`: selection-gated subculture practice presets and shared craft/community taxonomy.
+- `assets/photo_prompt_worldbuilding_extension.json`: selection-gated general world-system presets with atomic scene evidence and scoped routing.
+- `assets/photo_prompt_cjk_worldbuilding_extension.json`: selection-gated CJK commercial-narrative world systems with distinct market terms and culture-sensitive scene boundaries.
+- `assets/photo_prompt_character_moe_extension.json`: selection-gated adult character behavior routes, shared families, typed runtime nodes, compatibility edges, and fail-closed guards.
 - `assets/photo_prompt_scene_expression_extension.json`: pilot scene-first data and shared scene-function/provenance vocabulary.
 - `assets/photo_prompt_scene_expression_worldbuilding.json` and `assets/photo_prompt_scene_expression_cjk.json`: compact route-specific non-operational scene blueprints; they extend render expression without duplicating research taxonomy slots.
 - `assets/photo_prompt_scene_expression_character_moe.json`: three sparse atomic character scenes per route; each selects one primary visual mechanism and at most two compatible support cues.
-- `assets/render_scene_expression_baseline_v1.json` and `assets/render_scene_quality_holdout_v1.jsonl`: implementation-before structural baseline and frozen rendered-image acceptance sample.
-- `assets/render_scene_quality_visual_review_v1.json`: versioned metadata-free pixel review for the frozen 12-case rendered sample; a plan or prompt audit is not a substitute for this result.
-- `assets/semantic_retrieval_holdout_character_moe_v1.jsonl`, `assets/render_character_moe_quality_holdout_v1.jsonl`, and `assets/render_character_moe_quality_visual_review_v1.json`: frozen multilingual retrieval, eight-family render cases, and their metadata-free pixel qualification for the character-mechanism extension.
-- `assets/render_viewer_experience_holdout_v1.jsonl` and `assets/render_viewer_experience_visual_review_v1.json`: implementation-before commercial, subculture-attachment, and meaningful-image cases plus their metadata-free local pixel qualification.
 - `assets/concept_recipes.json`: Korean concepts, identity cores, scene variants, guides, and gates.
 - `assets/photo_prompt_quality_layers.json`: domain quality profiles and photographic decision layers.
 - `assets/photo_prompt_semantic_index.json`: semantic retrieval manifest; vector shards live under `assets/photo_prompt_semantic_index_shards/` and are materialized transparently.
-- `assets/generalization_cases.jsonl`: inspectable public contract and anti-overfitting cases.
-- `assets/generalization_holdout_cases.jsonl` and `assets/generalization_domain_holdout_v2.jsonl`: frozen rule-mode holdouts.
-- `assets/semantic_retrieval_holdout_v3.jsonl`: frozen preset-free semantic retrieval baseline.
-- `assets/semantic_retrieval_holdout_v4.jsonl`: active preset-free retrieval holdout spanning the research extension.
-- `assets/semantic_retrieval_holdout_subculture_v1.jsonl`, `assets/semantic_retrieval_holdout_worldbuilding_v1.jsonl`, and `assets/semantic_retrieval_holdout_cjk_worldbuilding_v1.jsonl`: frozen on-demand specialty-route holdouts; never weaken expectations to fit an index result.
-- `assets/research_evidence.jsonl`: abstract source-to-taxonomy evidence ledger; never a raw prompt or image corpus.
-- `assets/research_evidence_character_moe/`: hash-ordered character-research shards and manifest; keep this ledger separate instead of enlarging the legacy single file.
-- `assets/visual_review_domain_extension_plan.json`: rendered-image review case plan linked to a separate versioned result; the plan itself is never acceptance evidence.
+
+Validation fixtures, research evidence, semantic-index maintenance, and promotion gates are maintenance-only resources. Load their locations and procedures from `references/maintenance.md` only when editing or evaluating the dictionary.
 
 Prefer `.venv/bin/python` when the project virtual environment exists. Rule mode works without an API key. Semantic mode requires the configured Gemini dependency and `GEMINI_API_KEY` or `GOOGLE_API_KEY`.
 
@@ -121,7 +111,7 @@ Automatically use the creative-direction path when the user explicitly asks for 
 - `creative_exploration` widens eligible slot choices; it is not proof of creativity. `creative_direction` requires an ordinary baseline, at least four different concept moves, exactly one selected premise, a visible consequence chain, a viewer reveal path, and authorial frame/time/omission/material decisions.
 - Do not simulate creativity by adding more surreal objects, stylistic adjectives, or unrelated anomalies. Prefer one changed rule whose consequences the viewer can discover.
 - For a role with `scene_variants`, change `--seed` to explore another atomic scene while keeping `identity_core` stable. Do not mix slots from separate variants.
-- For a direct research-backed preset, `--scene-function <value>` selects a supported scene function without turning that control into visible user intent. It requires `--preset` and fails closed when the route has no compatible scene.
+- For a direct taxonomy preset, `--scene-function <value>` selects a supported scene function without turning that control into visible user intent. It requires `--preset` and fails closed when the route has no compatible scene.
 
 High creative-direction runs include `viewer_experience` automatically. Keep the default workflow when the user did not ask for broader exploration. Do not silently raise creativity for ordinary prompt or image requests.
 
@@ -243,7 +233,7 @@ See `references/concept-routing.md` before adding a new preset, concept, or slot
 .venv/bin/python skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py \
   --preset street_documentary --selection-mode rule --seed 42 --emit-candidate-pack
 
-# Reproducible non-default scene function for a research-backed direct preset
+# Reproducible non-default scene function for a direct taxonomy preset
 .venv/bin/python skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py \
   --preset natural_process_trace_documentary --scene-function revelation \
   --selection-mode rule --seed 42 --emit-candidate-pack

@@ -5,7 +5,7 @@
 - Goal/checkpoint: Research-Backed Moe and Subculture Character Grammar / Stage 3
 - Affected scope: `character_moe_grammar` intent routing for the frozen 96-case KO/EN/JA/ZH holdout
 - Search terms: character moe scoped alias drift, domain-first routing, multilingual exact route
-- Related paths: `skills/photo-prompt-image-generator/assets/photo_prompt_quality_layers.json`, `skills/photo-prompt-image-generator/assets/photo_prompt_character_moe_extension.json`, `skills/photo-prompt-image-generator/assets/semantic_retrieval_holdout_character_moe_v1.jsonl`
+- Related paths: `skills/photo-prompt-image-generator/assets/photo_prompt_quality_layers.json`, `skills/photo-prompt-image-generator/assets/photo_prompt_character_moe_extension.json`, `tests/fixtures/photo_prompt/semantic_retrieval_contract_character_moe_v1.jsonl`
 
 ## Failure
 

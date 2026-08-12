@@ -7,7 +7,7 @@
 - Search terms: character moe grammar, sparse visual atoms, nonvisual market labels, multilingual scoped route, atomic character scene, pixel action legibility
 - Affected scope: `skills/photo-prompt-image-generator` character research shards, typed graph, scoped routing, atomic scene selection, candidate-pack/audit contracts, semantic index, retrieval holdouts, and rendered-image qualification
 - Excluded scope: push, PR, deployment, protected-character recreation, universal CJK lexical equivalence, youth sexualization, automatic promotion of optional soft concept readiness, and exhaustive image-model quality
-- Related paths: `skills/photo-prompt-image-generator/assets/research_evidence_character_moe/`, `skills/photo-prompt-image-generator/assets/photo_prompt_character_moe_extension.json`, `skills/photo-prompt-image-generator/assets/photo_prompt_scene_expression_character_moe.json`, `skills/photo-prompt-image-generator/assets/render_character_moe_quality_visual_review_v1.json`
+- Related paths: `docs/research-evidence/photo-prompt/character_moe/`, `skills/photo-prompt-image-generator/assets/photo_prompt_character_moe_extension.json`, `skills/photo-prompt-image-generator/assets/photo_prompt_scene_expression_character_moe.json`, `tests/fixtures/photo_prompt/render_character_moe_quality_visual_review_v1.json`
 - Related failed reports: `docs/failed-reports/2026-08-08-character-moe-research-provenance-overclaim.md`, `docs/failed-reports/2026-08-08-character-moe-scoped-alias-drift.md`, `docs/failed-reports/2026-08-08-character-moe-pixel-action-legibility.md`, `docs/failed-reports/2026-08-08-character-moe-final-integration-contract-drift.md`
 
 ## Reproduction context
@@ -67,7 +67,7 @@
 .venv/bin/python -m unittest discover -s tests
 .venv/bin/python skills/photo-prompt-image-generator/scripts/eval_semantic.py \
   --acceptance-gate --quality-runs 2 \
-  --visual-review skills/photo-prompt-image-generator/assets/render_character_moe_quality_visual_review_v1.json \
+  --visual-review tests/fixtures/photo_prompt/render_character_moe_quality_visual_review_v1.json \
   --summary-only
 git diff --check
 ```

@@ -5,7 +5,7 @@
 - Goal/checkpoint: Research-Backed Moe and Subculture Character Grammar / Stage 5
 - Affected scope: frozen eight-family render holdout, direct `--scene-function` selection, transformation dual identity, adult competence-with-care
 - Search terms: character moe pixel action legibility, transformation gear ambiguity, simultaneous care action, scene function CLI
-- Related paths: `skills/photo-prompt-image-generator/assets/render_character_moe_quality_holdout_v1.jsonl`, `skills/photo-prompt-image-generator/assets/photo_prompt_scene_expression_character_moe.json`, `skills/photo-prompt-image-generator/scripts/prompt_generator.py`, `generated_images/character-moe-8-family-validation-20260808_030639`
+- Related paths: `tests/fixtures/photo_prompt/render_character_moe_quality_holdout_v1.jsonl`, `skills/photo-prompt-image-generator/assets/photo_prompt_scene_expression_character_moe.json`, `skills/photo-prompt-image-generator/scripts/prompt_generator.py`, `generated_images/character-moe-8-family-validation-20260808_030639`
 
 ## Failure
 

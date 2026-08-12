@@ -7,7 +7,7 @@
 - Search terms: deep worldbuilding taxonomy, diegetic world system, bilingual scoped routes, cultural provenance, semantic holdout
 - Affected scope: `skills/photo-prompt-image-generator` worldbuilding taxonomy, evidence ledger, intent routing, candidate packs, semantic index, and regression contracts
 - Excluded scope: image rendering, visual A/B quality, deployment, commit, push, PR, private or sacred community material, and exhaustive cultural representation
-- Related paths: `GOAL_PLAN.md`, `skills/photo-prompt-image-generator/assets/photo_prompt_worldbuilding_extension.json`, `skills/photo-prompt-image-generator/assets/semantic_retrieval_holdout_worldbuilding_v1.jsonl`, `skills/photo-prompt-image-generator/assets/research_evidence.jsonl`, `skills/photo-prompt-image-generator/scripts/prompt_generator.py`
+- Related paths: `GOAL_PLAN.md`, `skills/photo-prompt-image-generator/assets/photo_prompt_worldbuilding_extension.json`, `tests/fixtures/photo_prompt/semantic_retrieval_holdout_worldbuilding_v1.jsonl`, `docs/research-evidence/photo-prompt/research_evidence.jsonl`, `skills/photo-prompt-image-generator/scripts/prompt_generator.py`
 - Related failed reports: `docs/failed-reports/2026-08-07-worldbuilding-scoped-route-semantic-competition.md`, `docs/failed-reports/2026-08-07-semantic-index-batch-response.md`, `docs/failed-reports/2026-08-07-worldbuilding-render-scene-convergence.md`
 
 ## Reproduction context

@@ -14,7 +14,8 @@ import unittest
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 ILLUSTRATION_ROOT = REPO_ROOT / "skills" / "subculture-illustration-image-generator"
-BASELINE_PATH = ILLUSTRATION_ROOT / "assets" / "photo_regression_baseline_v1.json"
+HISTORICAL_BASELINE_PATH = ILLUSTRATION_ROOT / "assets" / "photo_regression_baseline_v1.json"
+BASELINE_PATH = ILLUSTRATION_ROOT / "assets" / "photo_regression_baseline_v2.json"
 BASELINE_REF = "f86abef678c99ee8aad7a98a5ea44a685197d371"
 ILLUSTRATION_INTRODUCTION_REF = "66e0cbabe55d33575d9e3384176815af515c76ac"
 
@@ -44,6 +45,12 @@ def _selected_photo_ids(pack: dict[str, object]) -> list[str]:
 class SubcultureIllustrationPhotoBoundaryTests(unittest.TestCase):
     def setUp(self) -> None:
         self.baseline = json.loads(BASELINE_PATH.read_text(encoding="utf-8"))
+        historical = self.baseline["historical_baseline"]
+        self.assertEqual(HISTORICAL_BASELINE_PATH.name, historical["path"])
+        self.assertEqual(
+            historical["sha256"],
+            hashlib.sha256(HISTORICAL_BASELINE_PATH.read_bytes()).hexdigest(),
+        )
 
     def test_frozen_photo_command_matches_byte_and_pack_contract(self) -> None:
         frozen_command = list(self.baseline["command"])

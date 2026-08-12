@@ -15,21 +15,23 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SKILL_DIR = ROOT / "skills" / "photo-prompt-image-generator"
 SCRIPT_DIR = SKILL_DIR / "scripts"
+PHOTO_RESEARCH_DIR = ROOT / "docs" / "research-evidence" / "photo-prompt"
+PHOTO_FIXTURE_DIR = ROOT / "tests" / "fixtures" / "photo_prompt"
 WRAPPER_PATH = SCRIPT_DIR / "generate_photo_prompt.py"
 EVAL_PATH = SCRIPT_DIR / "eval_semantic.py"
 TAGS_PATH = SKILL_DIR / "assets" / "photo_prompt_tags.json"
-GENERALIZATION_PATH = SKILL_DIR / "assets" / "generalization_cases.jsonl"
-HOLDOUT_PATH = SKILL_DIR / "assets" / "generalization_holdout_cases.jsonl"
-DOMAIN_HOLDOUT_V2_PATH = SKILL_DIR / "assets" / "generalization_domain_holdout_v2.jsonl"
-RETRIEVAL_HOLDOUT_V3_PATH = SKILL_DIR / "assets" / "semantic_retrieval_holdout_v3.jsonl"
-RETRIEVAL_HOLDOUT_V4_PATH = SKILL_DIR / "assets" / "semantic_retrieval_holdout_v4.jsonl"
-SUBCULTURE_RETRIEVAL_HOLDOUT_V1_PATH = SKILL_DIR / "assets" / "semantic_retrieval_holdout_subculture_v1.jsonl"
-WORLDBUILDING_RETRIEVAL_HOLDOUT_V1_PATH = SKILL_DIR / "assets" / "semantic_retrieval_holdout_worldbuilding_v1.jsonl"
-CJK_WORLDBUILDING_RETRIEVAL_HOLDOUT_V1_PATH = SKILL_DIR / "assets" / "semantic_retrieval_holdout_cjk_worldbuilding_v1.jsonl"
-CHARACTER_MOE_RETRIEVAL_HOLDOUT_V1_PATH = SKILL_DIR / "assets" / "semantic_retrieval_holdout_character_moe_v1.jsonl"
-RESEARCH_EVIDENCE_PATH = SKILL_DIR / "assets" / "research_evidence.jsonl"
-CHARACTER_MOE_RESEARCH_DIR = SKILL_DIR / "assets" / "research_evidence_character_moe"
-CHARACTER_MOE_CROSSWALK_PATH = SKILL_DIR / "assets" / "character_moe_topic_crosswalk_v1.json"
+GENERALIZATION_PATH = PHOTO_FIXTURE_DIR / "generalization_cases.jsonl"
+HOLDOUT_PATH = PHOTO_FIXTURE_DIR / "generalization_holdout_cases.jsonl"
+DOMAIN_HOLDOUT_V2_PATH = PHOTO_FIXTURE_DIR / "generalization_domain_holdout_v2.jsonl"
+RETRIEVAL_HOLDOUT_V3_PATH = PHOTO_FIXTURE_DIR / "semantic_retrieval_holdout_v3.jsonl"
+RETRIEVAL_HOLDOUT_V4_PATH = PHOTO_FIXTURE_DIR / "semantic_retrieval_holdout_v4.jsonl"
+SUBCULTURE_RETRIEVAL_HOLDOUT_V1_PATH = PHOTO_FIXTURE_DIR / "semantic_retrieval_holdout_subculture_v1.jsonl"
+WORLDBUILDING_RETRIEVAL_HOLDOUT_V1_PATH = PHOTO_FIXTURE_DIR / "semantic_retrieval_holdout_worldbuilding_v1.jsonl"
+CJK_WORLDBUILDING_RETRIEVAL_HOLDOUT_V1_PATH = PHOTO_FIXTURE_DIR / "semantic_retrieval_holdout_cjk_worldbuilding_v1.jsonl"
+CHARACTER_MOE_RETRIEVAL_CONTRACT_V1_PATH = PHOTO_FIXTURE_DIR / "semantic_retrieval_contract_character_moe_v1.jsonl"
+RESEARCH_EVIDENCE_PATH = PHOTO_RESEARCH_DIR / "research_evidence.jsonl"
+CHARACTER_MOE_RESEARCH_DIR = PHOTO_RESEARCH_DIR / "character_moe"
+CHARACTER_MOE_CROSSWALK_PATH = PHOTO_RESEARCH_DIR / "character_moe_topic_crosswalk_v1.json"
 RESEARCH_EXTENSION_PATH = SKILL_DIR / "assets" / "photo_prompt_research_extension.json"
 SUBCULTURE_EXTENSION_PATH = SKILL_DIR / "assets" / "photo_prompt_subculture_extension.json"
 WORLDBUILDING_EXTENSION_PATH = SKILL_DIR / "assets" / "photo_prompt_worldbuilding_extension.json"
@@ -39,16 +41,16 @@ SCENE_EXPRESSION_EXTENSION_PATH = SKILL_DIR / "assets" / "photo_prompt_scene_exp
 SCENE_EXPRESSION_WORLDBUILDING_PATH = SKILL_DIR / "assets" / "photo_prompt_scene_expression_worldbuilding.json"
 SCENE_EXPRESSION_CJK_PATH = SKILL_DIR / "assets" / "photo_prompt_scene_expression_cjk.json"
 SCENE_EXPRESSION_CHARACTER_MOE_PATH = SKILL_DIR / "assets" / "photo_prompt_scene_expression_character_moe.json"
-SCENE_EXPRESSION_BASELINE_PATH = SKILL_DIR / "assets" / "render_scene_expression_baseline_v1.json"
-SCENE_QUALITY_HOLDOUT_PATH = SKILL_DIR / "assets" / "render_scene_quality_holdout_v1.jsonl"
-SCENE_QUALITY_VISUAL_REVIEW_PATH = SKILL_DIR / "assets" / "render_scene_quality_visual_review_v1.json"
-CHARACTER_MOE_QUALITY_HOLDOUT_PATH = SKILL_DIR / "assets" / "render_character_moe_quality_holdout_v1.jsonl"
-CHARACTER_MOE_QUALITY_VISUAL_REVIEW_PATH = SKILL_DIR / "assets" / "render_character_moe_quality_visual_review_v1.json"
-VIEWER_EXPERIENCE_HOLDOUT_PATH = SKILL_DIR / "assets" / "render_viewer_experience_holdout_v1.jsonl"
-VIEWER_EXPERIENCE_VISUAL_REVIEW_PATH = SKILL_DIR / "assets" / "render_viewer_experience_visual_review_v1.json"
+SCENE_EXPRESSION_BASELINE_PATH = PHOTO_FIXTURE_DIR / "render_scene_expression_baseline_v1.json"
+SCENE_QUALITY_HOLDOUT_PATH = PHOTO_FIXTURE_DIR / "render_scene_quality_holdout_v1.jsonl"
+SCENE_QUALITY_VISUAL_REVIEW_PATH = PHOTO_FIXTURE_DIR / "render_scene_quality_visual_review_v1.json"
+CHARACTER_MOE_QUALITY_HOLDOUT_PATH = PHOTO_FIXTURE_DIR / "render_character_moe_quality_holdout_v1.jsonl"
+CHARACTER_MOE_QUALITY_VISUAL_REVIEW_PATH = PHOTO_FIXTURE_DIR / "render_character_moe_quality_visual_review_v1.json"
+VIEWER_EXPERIENCE_HOLDOUT_PATH = PHOTO_FIXTURE_DIR / "render_viewer_experience_holdout_v1.jsonl"
+VIEWER_EXPERIENCE_VISUAL_REVIEW_PATH = PHOTO_FIXTURE_DIR / "render_viewer_experience_visual_review_v1.json"
 QUALITY_LAYERS_PATH = SKILL_DIR / "assets" / "photo_prompt_quality_layers.json"
-DOMAIN_VISUAL_REVIEW_PLAN_PATH = SKILL_DIR / "assets" / "visual_review_domain_extension_plan.json"
-DOMAIN_VISUAL_REVIEW_RESULTS_PATH = SKILL_DIR / "assets" / "visual_review_domain_extension_results.json"
+DOMAIN_VISUAL_REVIEW_PLAN_PATH = PHOTO_FIXTURE_DIR / "visual_review_domain_extension_plan.json"
+DOMAIN_VISUAL_REVIEW_RESULTS_PATH = PHOTO_FIXTURE_DIR / "visual_review_domain_extension_results.json"
 
 if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
@@ -244,6 +246,100 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             audit_composed_prompt.first_pack([])
         with self.assertRaisesRegex(ValueError, "exactly one pack"):
             audit_composed_prompt.first_pack([pack, pack])
+
+    def test_candidate_relevance_uses_public_visual_text_only(self):
+        entry = {
+            "id": "internal_source_grounded_candidate",
+            "en": "an adult craftsperson repairing a lamp",
+            "ko": "램프를 수리하는 성인 공예가",
+            "aliases": ["lamp repair"],
+            "keywords": ["repair"],
+            "embedding_text": "cited study market_researched",
+            "tags": ["character_moe_grammar", "source_grounded"],
+            "kind": ["private_router"],
+            "facets": {"content_basis": ["original_character_design"]},
+        }
+        blob = prompt_generator.candidate_pack_entry_blob(entry)
+        self.assertIn("adult craftsperson", blob)
+        self.assertIn("lamp repair", blob)
+        for private_marker in (
+            "internal_source_grounded_candidate",
+            "cited study",
+            "market_researched",
+            "character_moe_grammar",
+            "source_grounded",
+            "private_router",
+            "content_basis",
+        ):
+            self.assertNotIn(private_marker, blob)
+
+        result = {
+            "preset_id": "internal_source_grounded_preset",
+            "provenance": {
+                "preset_id": "internal_source_grounded_preset",
+                "concept_lock": ["visible brass lamp"],
+                "additional_requirements": ["warm window light"],
+                "user_mandatory_intents": ["visible repair action"],
+            },
+        }
+        trace = {"intent": "document an adult lamp repairer"}
+        presets = [
+            {
+                "id": "preset:internal_source_grounded_preset",
+                "preset_id": "internal_source_grounded_preset",
+                "label_en": "adult lamp-repair workshop",
+                "label_ko": "성인 램프 수리 작업실",
+                "family": "market_researched_family",
+            }
+        ]
+        slots = {
+            "subject": {
+                "selected": "source_grounded_subject",
+                "candidates": [
+                    {
+                        "id": "slot:subject:source_grounded_subject",
+                        "entry_id": "source_grounded_subject",
+                        "label_en": "an adult repairer",
+                        "label_ko": "성인 수리공",
+                        "tags": ["character_moe_grammar"],
+                        "kind": ["source_grounded"],
+                    }
+                ],
+            }
+        }
+        mandatory = [
+            {
+                "text": "source-grounded adult practice",
+                "source": "selected_preset.render_contract",
+                "source_text": "from a cited study",
+            },
+            {
+                "text": "holding a red notebook",
+                "source": "user_requirement",
+                "source_text": "holding a red notebook",
+            },
+        ]
+        corpus = prompt_generator.candidate_pack_integration_corpus(
+            result, trace, presets, slots, mandatory
+        )
+        self.assertIn("adult lamp-repair workshop", corpus)
+        self.assertIn("holding a red notebook", corpus)
+        for private_marker in (
+            "internal_source_grounded_preset",
+            "market_researched_family",
+            "slot:subject",
+            "character_moe_grammar",
+            "from a cited study",
+        ):
+            self.assertNotIn(private_marker, corpus)
+
+        source_corpus = prompt_generator.candidate_pack_integration_source_corpus(
+            result, trace, mandatory
+        )
+        self.assertIn("document an adult lamp repairer", source_corpus)
+        self.assertIn("holding a red notebook", source_corpus)
+        self.assertNotIn("source-grounded adult practice", source_corpus)
+        self.assertNotIn("from a cited study", source_corpus)
 
     def test_korean_no_people_intent_never_inverts_to_a_human_subject(self):
         pack = self.run_wrapper(
@@ -2058,9 +2154,25 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
                 pack = prompt_generator.build_candidate_pack(result, data)
                 self.assertEqual(pack["contract_version"], "photo-candidate-pack/v2")
                 self.assertTrue(world_evidence_slots <= set(pack["slots"]), preset_id)
-                self.assertEqual(
-                    pack["quality_profile"]["facets"]["provenance_scope"],
-                    preset["facets"]["provenance_scope"],
+                self.assertIn("content_basis", preset["facets"], preset_id)
+                self.assertNotIn(
+                    "content_basis",
+                    pack["quality_profile"]["facets"],
+                    preset_id,
+                )
+                self.assertTrue(
+                    all(
+                        "content_basis" not in candidate.get("facets", {})
+                        for candidate in pack["presets"]
+                    ),
+                    preset_id,
+                )
+                self.assertTrue(
+                    all(
+                        "content_basis" not in candidate.get("facets", {})
+                        for slot in pack["slots"].values()
+                        for candidate in slot.get("candidates", [])
+                    ),
                     preset_id,
                 )
                 self.assertLessEqual(
@@ -2071,19 +2183,19 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             self.assertEqual(len(seen_subjects), 2, preset_id)
 
         self.assertEqual(
-            presets["afrofuturist_worldmaking_curated"]["facets"]["provenance_scope"],
-            ["public_culturally_curated"],
+            presets["afrofuturist_worldmaking_curated"]["facets"]["content_basis"],
+            ["culturally_specific_public_context"],
         )
         self.assertEqual(
-            presets["indigenous_futurisms_curated"]["facets"]["provenance_scope"],
-            ["public_culturally_curated"],
+            presets["indigenous_futurisms_curated"]["facets"]["content_basis"],
+            ["culturally_specific_public_context"],
         )
         self.assertEqual(
-            presets["fictional_esoteric_archive_world"]["facets"]["provenance_scope"],
+            presets["fictional_esoteric_archive_world"]["facets"]["content_basis"],
             ["fictional_non_operational"],
         )
         self.assertEqual(
-            presets["original_species_art_rpg_world"]["facets"]["provenance_scope"],
+            presets["original_species_art_rpg_world"]["facets"]["content_basis"],
             ["rights_cleared_original"],
         )
 
@@ -2623,6 +2735,13 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             self.assertEqual(prompt_generator.preset_domains(preset, data), {"character_moe_grammar"})
             blueprints = prompt_generator.render_contract_resolved_scene_blueprints(data, preset)
             self.assertEqual(len(blueprints), 3, preset_id)
+            for blueprint in blueprints:
+                visual_atoms = " ".join(
+                    str(blueprint.get(field) or "")
+                    for field in ("subject", "subject_ko", "action", "action_ko", "location", "location_ko", "prop", "prop_ko")
+                ).lower()
+                for control_phrase in ("provenance", "market term", "market label", "nonvisual"):
+                    self.assertNotIn(control_phrase, visual_atoms, (preset_id, blueprint["id"]))
             self.assertGreaterEqual(
                 len({function for blueprint in blueprints for function in blueprint["scene_functions"]}),
                 2,
@@ -2651,6 +2770,16 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
                 selection_mode="rule",
                 seed=810000 + topic["ordinal"],
             )
+            rendered_prompt = prompt_generator.rendered_prompt_blob(result)
+            for control_phrase in (
+                "market term",
+                "market label",
+                "term routing",
+                "nonvisual",
+                "national-style shorthand",
+                "provenance",
+            ):
+                self.assertNotIn(control_phrase, rendered_prompt, preset_id)
             pack = prompt_generator.build_candidate_pack(result, data)
             grammar = pack["character_grammar"]
             self.assertTrue(grammar["enabled"], preset_id)
@@ -2681,7 +2810,7 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             )
 
         cases = eval_semantic.load_retrieval_holdout_cases(
-            CHARACTER_MOE_RETRIEVAL_HOLDOUT_V1_PATH
+            CHARACTER_MOE_RETRIEVAL_CONTRACT_V1_PATH
         )
         self.assertEqual(len(cases), 96)
         self.assertEqual(len({case["id"] for case in cases}), 96)
@@ -2703,6 +2832,10 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             "a generic streamer speaking to a camera in a bedroom",
             "a polished idol concert portrait under stage lights",
             "부드러운 조명의 평범한 성인 인물 사진",
+            "relationship chemistry between two adult coworkers",
+            "pose and proxemics in an editorial office portrait",
+            "hair silhouette and state change after rain",
+            "signature object bond shown through use and care",
         ):
             routed = prompt_generator.resolve_request_intent_constraints(
                 data, {"intent": generic_intent}, {}

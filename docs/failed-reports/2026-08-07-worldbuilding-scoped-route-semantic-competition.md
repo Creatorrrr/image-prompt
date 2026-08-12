@@ -5,7 +5,7 @@
 - Goal/checkpoint: 18-topic worldbuilding taxonomy, Stage 4 real semantic retrieval qualification
 - Affected scope: explicit `worldbuilding_system` scoped-route selection in semantic mode
 - Search terms: worldbuilding_system, scoped_routes, civic_solarpunk_institutional_world, urban_heat_air_quality_record
-- Related paths: `skills/photo-prompt-image-generator/scripts/prompt_generator.py`, `skills/photo-prompt-image-generator/assets/semantic_retrieval_holdout_worldbuilding_v1.jsonl`, `tests/test_photo_prompt_contract_v2.py`
+- Related paths: `skills/photo-prompt-image-generator/scripts/prompt_generator.py`, `tests/fixtures/photo_prompt/semantic_retrieval_holdout_worldbuilding_v1.jsonl`, `tests/test_photo_prompt_contract_v2.py`
 - Related passed reports: `docs/passed-reports/2026-08-07-subculture-taxonomy-on-demand-routing.md`, `docs/passed-reports/2026-08-07-deep-worldbuilding-taxonomy-scoped-routing.md`
 
 ## Failure
@@ -17,7 +17,7 @@
 
 ## Evidence
 
-- Sanitized command, test, log, trace, artifact, or access-controlled reference: `.venv/bin/python skills/photo-prompt-image-generator/scripts/eval_semantic.py --retrieval-holdout-check --retrieval-holdout-cases skills/photo-prompt-image-generator/assets/semantic_retrieval_holdout_worldbuilding_v1.jsonl`
+- Sanitized command, test, log, trace, artifact, or access-controlled reference: `.venv/bin/python skills/photo-prompt-image-generator/scripts/eval_semantic.py --retrieval-holdout-check --retrieval-holdout-cases tests/fixtures/photo_prompt/semantic_retrieval_holdout_worldbuilding_v1.jsonl`
 - Result: Exit 12, 72 cases, 1 failure, `selected_preset_not_allowed` for `world_solarpunk_ko_02`.
 
 ## Cause assessment

@@ -7,7 +7,7 @@
 - Search terms: scene expression, administrative convergence, atomic render blueprint, sparse evidence budget, metadata-free visual review, worldbuilding render quality
 - Affected scope: `skills/photo-prompt-image-generator` research-backed extensions, scene selection, candidate-pack composition/audit, semantic index, frozen routing, and rendered-image qualification
 - Excluded scope: commit, push, PR, deployment, exact protected-world reproduction, living ritual instructions, exhaustive image-model quality, and automatic promotion of optional soft concept readiness
-- Related paths: `GOAL_PLAN.md`, `skills/photo-prompt-image-generator/assets/render_scene_expression_baseline_v1.json`, `skills/photo-prompt-image-generator/assets/render_scene_quality_holdout_v1.jsonl`, `skills/photo-prompt-image-generator/assets/render_scene_quality_visual_review_v1.json`, `skills/photo-prompt-image-generator/scripts/audit_scene_expression.py`
+- Related paths: `GOAL_PLAN.md`, `tests/fixtures/photo_prompt/render_scene_expression_baseline_v1.json`, `tests/fixtures/photo_prompt/render_scene_quality_holdout_v1.jsonl`, `tests/fixtures/photo_prompt/render_scene_quality_visual_review_v1.json`, `skills/photo-prompt-image-generator/scripts/audit_scene_expression.py`
 - Related failed report: `docs/failed-reports/2026-08-07-worldbuilding-render-scene-convergence.md`
 
 ## Reproduction context
@@ -64,7 +64,7 @@
 .venv/bin/python -m unittest discover -s tests
 .venv/bin/python skills/photo-prompt-image-generator/scripts/eval_semantic.py \
   --acceptance-gate --quality-runs 2 \
-  --visual-review skills/photo-prompt-image-generator/assets/render_scene_quality_visual_review_v1.json \
+  --visual-review tests/fixtures/photo_prompt/render_scene_quality_visual_review_v1.json \
   --summary-only
 git diff --check
 ```

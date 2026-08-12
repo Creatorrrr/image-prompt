@@ -1,123 +1,91 @@
-# Research-Backed Moe Grammar and Candidate-Pack Integration Goal
+# Photo Prompt Runtime Metadata Boundary Refactor Goal
 
-- 작성: 2026-08-11 17:54 KST
-- 상태: complete
-- 대상: `skills/subculture-illustration-image-generator`
-- 기준 ref: `main@c10becc`
-- 권위 입력: ChatGPT conversation `6a7acde9-4414-83ee-927b-1432db7c99dc`, 원 블로그의 34개 글, 독립 자료, 현재 저장소 계약
+- 작성: 2026-08-11 KST
+- 상태: complete — stages 1–5 qualified
+- 대상: `skills/photo-prompt-image-generator`
+- 기준 ref: `main@a53b1ec`
 - 자동 목표 상향: 비활성
 
 ## 목표와 실제 산출물
 
-- 원래 사용자 요청: 29개 모든 모에요소마다 조사할 주제를 도출하고 실제로 조사한 뒤, 그 지식을 후보팩 또는 스킬에 반영해 사용자의 의도와 세부 취향을 더 정확히 이해하고 더 창의적이며 취향에 맞는 프롬프트를 만든다.
-- 최종 제품/결과: 고정 문장 supplement가 아니라, 요소·세부 유형·매력 메커니즘·취향 축을 해석해 실제 후보를 선택하는 research-backed moe grammar와 이를 포함하는 additive candidate-pack v4 및 composer/audit 경로.
-- 범위: 29개 연구 dossier, typed 후보 그래프, 자연어 요소·세부 취향 해석, creativity 기반 후보 다양화, 후보팩/composer/audit 통합, focused prompt qualification.
-- 비목표: 기존 안전 제약·필터·refusal·negative prompt·retry 변경, v1~v3 역사 자산 변경, universal-scene 전체 재자격, hidden 1,152-run, 배포·push·PR, 보편적 독자 선호나 실제 이미지 품질 주장.
+- 원래 사용자 요청: 사진 프롬프트 스킬의 모든 기능을 유지하면서, 출처명·연구 과정·평가용 표현처럼 실질 기능과 무관하거나 분석을 편향할 수 있는 데이터가 런타임에 섞이지 않도록 최소한으로 리팩터링한다.
+- 최종 제품/결과: 사용자 의미와 시각적 장면 정보만 검색·후보 선택·mandatory intent·최종 프롬프트에 참여하고, 내부 ID·태그·provenance·연구/검증 메타데이터는 typed control 또는 저장소 외부 증거로만 남는 실행 경계. 현재 manifest가 참조하는 시맨틱 shard 세대만 스킬에 포함한다.
+- 범위: 의미 텍스트 화이트리스트, 후보팩 관련도 말뭉치, 비시각 mandatory/prompt 문구, character-domain 문맥 게이트, literal routing fixture의 정직한 재분류, 연구/검증 자산의 스킬 밖 이동, stale shard 정리, SKILL/maintenance 설명 정합성, 필요한 시맨틱 인덱스 재생성.
+- 비목표: 공개 candidate-pack schema 전면 교체, 기존 stable ID 일괄 rename, 새 연구·출처 수집, 기준 완화, 이미지 생성·픽셀 품질 주장, 배포·commit·push·PR, 별도 evaluator나 로컬 embedding 모델 도입.
 
 ## 진척 계약
 
-- 진척으로 인정: 완료된 요소별 dossier, 실행 가능한 후보/번들 추가, 후보팩에 노출되는 선택 결과, 실제 composed prompt 변화, 사용자 취향을 반영한 서로 다른 후보 선택, 결함을 닫는 제품 수정.
-- 진척으로 인정하지 않음: URL 수집만 완료, 요소당 고정 문장 하나, 테스트·manifest·validator만 추가, 별도 supplement만 통과, prompt literal 자기검증, 검증 체계 확대.
-- 검증-only 작업 상한: 제품 단계마다 focused check 1회, 최종 affected regression 1회. 두 번 연속 verification-only checkpoint 금지.
-- 실행 지식 작업 상한: 관련 보고서 전문 최대 5건, 새 실패 보고서는 distinct material failure에만, 성공 보고서 기본 최대 1건, 별도 checkpoint 금지.
-- 진행 로그: `product delta -> direct evidence -> remaining product gap -> blocker` 순서로만 기록한다.
+- 진척으로 인정: 런타임 출력 또는 선택 경계의 실제 수정, 일반 요청 오탐 감소, 연구 자산의 배포 스킬 밖 이동, stale vector 제거, 정제된 인덱스와 측정된 결과.
+- 진척으로 인정하지 않음: 문서·테스트만 추가, 기존 메타 문자열을 다른 이름으로만 감춤, source ledger만 옮기고 오염된 벡터를 유지, 실패한 holdout 기대치를 구현에 맞춰 완화.
+- 검증-only 작업 상한: 각 제품 단계마다 focused 검증 1회, 최종 affected regression 1회. 새 verifier/schema/artifact family는 만들지 않는다.
+- 실행 지식 작업 상한: 관련 보고서 전문 최대 5건, distinct material failure 보고서 1건, 성공 보고서 기본 최대 1건, 별도 checkpoint 금지.
+- 진행 로그: `product delta -> direct evidence -> remaining product gap -> blocker`.
 
 ## 기준선과 적용 교훈
 
-- 현재 기준선: 34개 원문을 29개 요소로 정리했고 63개 source row와 요소별 alias/limitation/frame mode가 있다. 그러나 각 요소는 한 개 `prompt_clause_en`으로 축약되고 runtime은 이를 이어 붙이며, 기존 candidate pack·composer·selection graph는 변경되지 않았다.
-- 보존할 자산: 34→29 inventory, source URLs, source/design-inference 구분, 불확실성, frame honesty, safety/photo/retry 불변 경계.
-- 교체할 자산: single-clause element model, supplement-local pseudo candidate IDs, literal-only self-audit, 세부 유형·취향·창의성 없는 resolver.
-- 고정 비교 조건: ordinary creativity 기본값은 0.5이며 creative cue는 high-development 계약을 활성화하되 저장 숫자를 임의로 바꾸지 않는다. 요소 자체는 사용자 요청에 나타날 때만 활성화하고 주변 문맥은 세부 유형·관점·강도를 선택하는 데 사용한다.
+- 수정 전 기준선: semantic manifest는 6,513개 entry와 `semantic-text-v2`, 16개 current shard를 가리켰다. 스킬에는 current 외 4개 tracked generation 약 183MB가 남아 있었다.
+- 오염 경로: semantic text가 stable ID·tags·kind·모든 facet을 포함하며, 현재 index text에는 `character_moe` 134, `source_grounded` 136, market-researched 표식 376, `provenance_scope` 816 entry가 있다. 후보팩 관련도 말뭉치도 ID·tags·kind를 사용한다.
+- 직접 제품 결함: CJK character preset의 compact prompt에 `nonvisual provenance`가 출력되고, subculture/worldbuilding render contract는 `source-grounded`를 positive mandatory intent로 노출한다.
+- 검증 결합: character route 96개 alias가 domain gate와 96-case 파일에 정확히 공유된다. 이 파일은 독립 holdout이 아니라 literal routing contract fixture로 취급해야 한다.
+- 외부 조건: 프로젝트 `.env`에 Gemini credential이 구성되어 있음만 확인했으며 값은 읽거나 출력하지 않았다. 기존 index는 새 manifest가 완성될 때까지 보존한다. 첫 승인 뒤 순방향 검사에서 공개 시각 텍스트 누수가 추가로 발견되어 payload가 바뀌었으므로, 최신 고정 payload에 대한 재승인 후에만 외부 임베딩을 재개한다.
 - 적용 보고서:
-  - `docs/failed-reports/2026-08-11-moe-element-supplement-underintegration.md`: 이번 재설계의 직접 원인.
-  - `docs/failed-reports/2026-08-08-character-moe-research-provenance-overclaim.md`: claim별 provenance와 router/visual atom 분리.
-  - `docs/failed-reports/2026-08-08-character-moe-final-integration-contract-drift.md`: 다른 route family를 generic 필드에 억지로 맞추지 않고 typed field로 통합.
-  - `docs/passed-reports/2026-08-08-character-moe-grammar-render-quality.md`: one primary + 최대 two supports의 sparse executable grammar.
-  - `docs/passed-reports/2026-08-09-subculture-illustration-authorial-grammar.md`: familiar anchor, one changed rule, first/second-look와 format-native composition.
-
-## 29개 연구 계약
-
-모든 dossier는 `definition_and_history`, `semantic_subtypes`, `appeal_mechanisms`, `observable_or_narrative_evidence`, `preference_axes`, `candidate_realizations`, `compatibility_and_conflicts`, `format_implications`, `source_supported_claims`, `cross_source_synthesis`, `design_inference`, `limitations`를 갖는다. 사실 주장은 exact source IDs에 연결하며, 출처가 약하면 미확정으로 남긴다.
-
-| 요소 | 필수 연구 주제 |
-|---|---|
-| 흑화·타락 | 원인·주체성·가역성, 동일 인물 표식, 전후 가치·외형 대비 |
-| NTR·네토라레 | NTR/네토리/네토라세/BSS 관점, 기존 관계·인지·동의·상실 시점 |
-| 메스가키 | 위계 역전, 대상화된 도발, 말·표정·거리, 자신감과 역당황의 갭 |
-| 마망·돌봄 | 돌봄 행동, 안정기지 감정, 생활·회복·정서 수용 장면, 역할 역전 |
-| 풍기위원 | 실제 직무와 창작 관습, 역할 표식·규칙 소품, 통제와 감정 붕괴의 대비 |
-| TS·TSF | 변환 원인·단계·영구성, identity continuity, 당사자·주변인 관점 |
-| 얀데레 | 애정과 집착의 대비, 통제·감시·위협 단계, 대상·경쟁자·결과 |
-| 매도·경멸 | 직접 발화와 비언어 경멸, 강도·코미디성, 카메라 권력각도와 대상 반응 |
-| 동정을 죽이는 옷·스웨터 | 2015 blouse/skirt와 2017 backless knit 계보, 구조·시점·기대 반전 |
-| 역바니걸 | classic bunny 불변 표식, coverage inversion, 중심·사지 분포와 앞·뒤 시점 |
-| 돌핀 팬츠 | 실제 복식명·구조, curved hem·piping·slit, 소재·fit·동작 실루엣 |
-| 히트텍 바디수트 | 상표와 generic bodysuit 분리, 이너웨어·단독 연출, 소재·연속 구조 |
-| 스타킹 | stockings/hold-ups/garter/pantyhose/tights 구분, 지지 방식·길이·투명도·패턴 |
-| 바니걸 | 역사적 uniform과 현대 trope, 핵심 부속품·소재·silhouette·view variants |
-| I자 밸런스 | biomechanics, 지지 방식, 관절 연속성, 세로 silhouette와 camera |
-| Thigh gap | anatomy·stance·lens 영향, negative space와 의상, 자연·과장 변형 |
-| 겨드랑이 | shoulder/scapula/arm mechanics, pose·lighting·garment interaction |
-| 손가락 빨기 | hand-mouth contact anatomy, gesture intent, gaze·crop, 유사 제스처 구분 |
-| 안경 | frame·fit·optics, eye visibility, adjusting/removing gestures, impression variants |
-| 포니테일 | tie point·tension·hair mass, high/low/side variants, gravity·motion lag |
-| 배·복부 | torso anatomy, twist·compression·breathing, garment framing·surface light |
-| 전연령 암시 연출 | occlusion·T-junction·Kuleshov·reaction, contextual suggestion와 보이지 않는 사실 경계 |
-| 화면 흔들기 착시 | perceptual mechanism, contrast/phase/spatial-frequency substrate, 실제 interaction 조건 |
-| 아헤가오 | eyes·pupils·mouth·tongue·fluid·asymmetry 구성, intensity와 stylistic variants |
-| 파자마 챌린지 | oversized before/gathered after 구조, rear grip·tension folds, 일반 잠옷 장면과 구분 |
-| 버블티 챌린지 | torso-cup support geometry, hands-free proof, straw/contact/camera와 코미디 변형 |
-| 전략적 가림 셀카 | mirror·phone·direct/reflected hand geometry, handedness·T-junction·crop |
-| 감각차단 마법 | 차단 감각, 시전자·대상·동시 사건, 외재화 cue와 인지 비대칭 |
-| 퀵샌드 | 실제 물성·fiction exaggeration, entrapment stage, struggle/rescue pose와 tone |
+  - `docs/failed-reports/2026-08-11-photo-mandatory-intent-polarity-contamination.md`: positive intent에는 사용자 가시 의미만 허용한다.
+  - `docs/passed-reports/2026-08-11-photo-intent-preserving-optimization.md`: typed source/polarity, exact subject route, no-people 및 기존 byte 경계를 보존한다.
+  - `docs/failed-reports/2026-08-08-character-moe-scoped-alias-drift.md`: literal alias fixture와 실제 일반화 근거를 혼동하지 않는다.
+  - `docs/passed-reports/2026-08-07-subculture-taxonomy-on-demand-routing.md`: typed-domain selection gating과 generic leakage 방지를 보존한다.
+  - `docs/failed-reports/2026-08-07-semantic-index-batch-response.md`: Gemini rebuild는 검증된 batch size 1과 cache/checkpoint 경로만 사용한다.
 
 ## 실행 단계
 
 | 단계 | 실제 산출물/동작 변화 | 최소 직접 검증 | 완료 조건 |
 |---|---|---|---|
-| 1. 목표·기준선 정상화 | 기존 supplement 성공을 scoped prototype로 재분류하고 새 outcome-first plan, 29 neutral + 29 preference-bearing request corpus를 고정한다. | 현재 asset/runtime diff와 58 request coverage 직접 검토 | 완료 판정이 실제 candidate-pack 통합 없이는 불가능함 |
-| 2. 전 주제 research dossier | 다섯 research stream으로 29 dossier를 작성하고 main agent가 하나의 schema/provenance 언어로 정규화한다. | 모든 factual claim의 source refs와 모든 element의 required fields 확인 | 29/29 dossier complete, single-clause-only element 0 |
-| 3. typed moe grammar | `illustration_moe_grammar_v2`에 routers, visual/narrative atoms, primary/support candidates, preference axes, bundles, compatibility/conflicts를 구현한다. | 29 neutral requests와 variant probes가 실제 후보를 선택 | 자료상 복수 유형은 서로 다른 candidate IDs로 실행됨 |
-| 4. candidate-pack v4 통합 | `moe_intent`, `moe_grammar`, selection reasons, alternatives와 실제 moe candidate IDs를 pack/composer/audit에 연결한다. v1~v3 dispatch는 유지한다. | request -> pack -> composed prompt end-to-end 29/29 | 최종 prompt가 supplement append가 아니라 기존 scene/format/authorial grammar와 합성됨 |
-| 5. 취향·창의성 반영 | preference cues가 subtype·viewpoint·intensity·camera·material 후보를 바꾸고, creativity/seed는 같은 intent 안에서 호환 가능한 다양한 선택을 만든다. | 29 preference cases + 6 cross-element combinations + fixed seed comparison | explicit preference 우선, unrequested element 0, adjective-only variation 0 |
-| 6. 집중 최종 자격 | 12 representative baseline-vs-v4 prompts를 intent fidelity, research specificity, coherent event, authorial choice, no label soup로 검토하고 affected regressions를 한 번 실행한다. | focused tests, v1~v3 byte replay, photo/retry hashes, one final independent review | 모든 최종 기준 충족 후에만 goal complete와 success report 작성 |
+| 1. 실패 경계와 기준선 고정 | 메타데이터 오염 failure report, 현재 출력·routing·index·asset 기준선 | 기존 명령으로 CJK prompt, specialty pack, generic route, index marker 수 재현 | 수정 대상과 의도적 비변경 경계가 고정됨 |
+| 2. 오프라인 런타임 경계 | candidate relevance corpus에서 private ID/tag/facet 제거, character generic phrase에 문맥 게이트 적용, literal 96-case를 contract fixture로 재분류 | 일반 사진 negative controls와 96 literal contracts를 함께 실행 | generic 오탐 0, explicit 96 routes 유지, 일반 rule pack 회귀 없음 |
+| 3. 패키지 경계 정리 | source ledger/crosswalk 및 검증 fixture를 runtime skill 밖으로 이동하고 참조 수정, SKILL을 실행 자원 중심으로 축약, current 외 shard 제거 | repository reference scan, manifest shard integrity, skill quick validation | 런타임 스킬에 source title/URL ledger 및 stale shard가 없음 |
+| 4. 시각 데이터와 의미 텍스트 정제 | `source-grounded`, `researched`, `cited study`, `nonvisual provenance`를 visual/embedding/mandatory 필드에서 제거하고 명시적 semantic whitelist/recipe를 적용 | 전 preset prompt/pack forbidden-marker scan과 dictionary validation | 내부 메타가 positive output 또는 새 semantic text에 0건 |
+| 5. 시맨틱 재생성 및 최종 자격 | 승인된 Gemini batch-size 1 경로로 changed embeddings와 manifest를 재생성하고 current generation만 유지 | check-index, focused photo suites, retrieval contracts, generic negatives, contradiction check, diff check | 모든 최종 기준이 통과하고 기존 unrelated full-suite baseline을 악화시키지 않음 |
+
+## 현재 진행 상태
+
+- 1단계 완료: 오염 경로와 현재 6,513-entry index, generic character-route 오탐, stale shard 기준선을 failure report에 고정했다.
+- 2단계 완료: candidate relevance와 integration/source corpus는 공개 시각 텍스트 및 사용자 작성 intent만 사용한다. 96개 literal character routing contract는 유지하면서 4개 일반 사진 문구의 character-domain 오탐을 차단했다.
+- 3단계 완료: raw research ledger/crosswalk는 `docs/research-evidence/photo-prompt/`, routing/generalization/holdout/baseline/visual-review fixture는 `tests/fixtures/photo_prompt/`로 이동했다. 런타임 skill asset에는 현재 semantic generation만 남기고, 빌더가 새 manifest 기록 후 이전 generation만 제거하도록 했다.
+- 4단계 완료: semantic-text-v3는 `en`/`ko`/aliases/keywords/terms와 기능별 공개 caption만 임베딩하며 stable ID, tags, kind, facet을 제외한다. 공개 positive text와 장면 원자에서 연구 과정, 출처명, `provenance`, market-control 문구를 제거했고 재유입을 막는 기존 dictionary validator 회귀 기준을 추가했다.
+- 직접 검증: 공개 관련도·typed polarity·hybrid augmentation·routing, 이동 fixture, shard round-trip/prune, 6,513개 semantic input 경계가 통과했다. `test_photo_prompt_contract_v2` 44/44, `test_prompt_generator` 272/272, rule generalization 79/79, holdout 24/24, domain holdout v2 6/6, current-scene audit 112/112, 667-preset contradiction check 667/667이 통과했다. 667개 모든 직접 preset을 한국어·영어 detailed rule mode로 생성한 결과 금지 marker와 생성 오류가 각각 0건이며, 독립 순방향 검사에서 발견한 CJK character 누수도 재현 후 해결했다. 전체 suite는 526개에서 기존 기준선과 정확히 같은 unrelated universal-scene 11 failures/1 error만 남았다. 의도적으로 달라진 rule candidate 출력은 10개 current golden과 versioned photo regression baseline v2로 갱신했고 v1 역사 hash는 보존했다.
+- 시맨틱 재생성 완료: 승인된 SHA-256 `3ec1b84dbd98772c71a5daa5ebd3b4afc64a162c971a741da50aea35dbe98a57`의 6,513개 목록에서 checkpoint 973개를 재사용하고 5,540개를 `gemini-embedding-2`로 전송했다. 새 manifest는 dictionary hash `2c3f9d34a64d233eb6b2c1301c52a0087eb45a85870717da64d7fbc04b1fde3e`, `semantic-text-v3`, 768d, 6,513 entries와 16개 유효 shard를 가리킨다. entry order/hash/count 검증이 통과했고 generation 디렉터리는 `2c3f9d34a64d233e` 하나뿐이며 partial checkpoint는 제거됐다.
+- 5단계 완료: 별도 승인을 받은 순서 고정 retrieval payload(22 cases, 71 requests, 고유 68 texts, UTF-8 6,381 bytes, SHA-256 `5702e85ca1e2d2d14a5a921438a89cd9dd19ab667dd4b2b87be497e730398040`)만 `gemini-embedding-2`에 전송했다. real semantic retrieval holdout은 22/22를 통과했다. 최종 `--check-index`, dictionary validator, skill quick validation, `git diff --check`, runtime order/hash/count, 단일 generation, 금지 marker 및 옛 asset 경로 검사도 모두 통과했다.
 
 ## 최종 완료 기준
 
-1. 29개 모든 요소에 완전한 research dossier와 실행 가능한 후보가 있다.
-2. 복수 계보·관점·세부 유형이 있는 요소가 하나의 고정 문장으로 축소되지 않는다.
-3. 사용자의 요소명과 주변 취향 단서가 typed interpretation과 selection reason에 남는다.
-4. 실제 selected moe candidate IDs가 candidate pack과 composed prompt evidence에 결속된다.
-5. 최종 프롬프트는 선택된 요소들을 기존 장면·형식·authorial grammar와 하나의 사건으로 합성한다.
-6. 기본 creativity 0.5와 creative-cue 계약을 보존하면서, 창의성은 후보·changed rule 선택을 실제로 바꾼다.
-7. v1~v3, photo routing, retry, negative prompt, 기존 안전·필터 동작은 변경되지 않는다.
-8. 검증·문서만으로 완료할 수 없으며, 29 direct + 29 preference + 6 combination + 12 representative prompt outputs가 직접 제품 동작을 입증한다.
+1. 공개 positive prompt, mandatory intent, visual atom label에 연구 출처·개발 과정·검증 표식이 0건이다.
+2. semantic text 생성은 명시적 사용자/시각 필드만 사용하며 stable ID, tags, kind, facet/provenance를 임베딩하지 않는다.
+3. 명시적 character route 96개 contract는 유지되고 일반적인 관계·포즈·헤어·소품 사진 negative control은 character 전용 도메인으로 라우팅되지 않는다.
+4. raw research title/URL ledger와 crosswalk는 런타임 skill package 밖에 있고 테스트·maintenance 참조가 유효하다.
+5. semantic manifest가 가리키는 한 세대의 16개 shard만 추적되며 hash/count/order 검증이 통과한다.
+6. 기존 public wrapper, rule/semantic 선택, candidate-pack v2, safety, negative prompt, no-people, adult-appeal 및 direct preset 기능이 유지된다.
+7. focused photo tests와 dictionary/index/scene/contradiction 검증이 통과하며 unrelated full-suite 기준선보다 악화되지 않는다.
 
 ## 검증 수준과 예산
 
-- 위험 수준: ordinary offline implementation. 외부 상태 변경 없음.
-- 반복 중: 해당 dossier/grammar/runtime focused checks만 실행한다.
-- 최종: affected test modules, v1~v3 replay, photo/retry boundary, 독립 검토 1회.
-- 명시적 제외: universal 24x417, hidden 1,152-run, 전체 이미지 생성, 29x29 exhaustive combinations, 새 qualifier framework.
-- 실제 이미지 A/B는 core goal 완료 후 사용자가 원할 때 별도 목표로만 진행한다.
-- 검증 확장 전 질문 조건: 기존 경로로 필수 기준을 직접 확인할 수 없거나 검증 작업이 구현 작업보다 커질 때.
+- 위험 수준: ordinary offline refactor + 외부 embedding rebuild 한 번. 외부 데이터는 정제된 공개 taxonomy text로 제한한다.
+- 반복 중 focused 검증: routing unit tests, 대표 rule packs, direct polluted presets, reference scan, dictionary validator.
+- 최종 검증: affected photo tests, semantic index integrity/retrieval, contradiction check, skill quick validation, `git diff --check`를 한 번 수행한다.
+- 이미지 생성·pixel review는 텍스트/라우팅/패키지 경계 목표에 필요하지 않아 제외한다.
+- 외부 API 호출 조건: corpus와 retrieval 평가 각각의 exact payload hash에 대한 사용자 명시 승인과 credential 구성을 확인했다. 승인된 두 payload 외 텍스트는 전송하지 않았다.
 
-## 중단 조건과 진행 로그
+## 중단 조건과 실행 지식
 
-- 같은 설계가 동일 원인으로 두 번 실패하면 세 번째 verifier/runner를 만들지 않고 원인을 failed report에 기록한 뒤 설계를 바꾸거나 사용자에게 질문한다.
-- 원 출처가 세부 변형을 지지하지 않으면 근거 없는 candidate 수를 채우지 않고, 확인된 한계와 대안을 기록한다.
-- 후보팩 v4가 기존 v1~v3 byte replay를 깨면 v1~v3를 수정하지 않고 additive dispatch 경계를 고친다.
-- 안전·필터 변경이 필요해 보이는 경우 이 목표에서는 진행하지 않고 별도 작업으로 남긴다.
-- 외부 유료 API, 이미지 생성, 배포, push, PR이 필요하면 먼저 사용자 승인을 받는다.
-- 실행 지식 보고서: `docs/failed-reports/2026-08-11-moe-element-supplement-underintegration.md`; 완료 시 조건을 만족할 경우 새 passed report 최대 1건.
+- 향후 semantic text나 평가 fixture가 바뀌면 기존 승인을 재사용하지 않고 새 exact payload hash를 고정해 별도 승인을 받는다.
+- 기존 공개 ID를 바꿔야만 해결되는 경우 compatibility map 또는 schema version 선택을 사용자에게 묻고 임의 변경하지 않는다.
+- 같은 원인으로 두 번 실패하면 세 번째 verifier를 만들지 않고 failure report를 갱신한 뒤 설계를 바꾸거나 질문한다.
+- 삭제 대상 shard는 current manifest와 Git 추적 상태를 다시 확인한 뒤에만 제거하며 Git으로 복구 가능하게 유지한다.
+- 비밀·credential·민감 데이터는 보고서나 로그에 기록하지 않는다.
+- material failure는 재시도 전에 기존 matching report를 갱신하거나 하나로 통합한다. 성공 보고서는 모든 기준 통과 후 실패 해결, 기본안 실패 뒤 비자명한 대안, 또는 비싸게 재구성되는 필수 절차 중 하나일 때만 최대 1건 작성한다.
+- 보고서는 진척이나 별도 checkpoint가 아니며 현재 코드와 직접 증거가 과거 보고서보다 우선한다. lifecycle 변경 시 양방향 링크를 같은 변경에 반영한다.
+- 실행 지식 보고서: 새 `docs/failed-reports/2026-08-11-photo-runtime-metadata-contamination.md`; 완료 시 자격을 충족하면 새 passed report 최대 1건.
 
-## 완료 증거
+## Codex 실행 계약
 
-- 29/29 source-bound dossier가 다섯 raw shard에 존재하며 compiler가 exact hash를 검증한다.
-- `illustration_moe_grammar_v2.json`: 29 elements, 233 candidates, 198 sources, SHA-256 `4d77fc2c9d8cf7d94af0742c4bd577e19b8193629dcf9df1c5c6dc2e33383a9b`.
-- 29/29 neutral request는 canonical candidate key를, 29/29 preference request는 서로 다른 기대 subtype/key를 선택한다.
-- 6/6 cross-element request는 정확히 one global primary plus at most two supports를 사용하고, 12/12 prompt-evidence comparison은 current grammar 및 v4 audit에 결속되어 pass한다.
-- creative cue는 base `creative_development_required`와 moe novelty 2를 활성화하지만 stored creativity `0.5`를 바꾸지 않는다.
-- v1 fixed-clause replay, base safety/negative equality, retry/photo baseline hashes, mutation rejection을 focused suite에서 함께 확인했다.
-- 성공 보고서: `docs/passed-reports/2026-08-11-research-backed-moe-grammar-v2.md`.
-- 미주장: 실제 이미지 픽셀 품질, 보편적 독자 선호, hidden generalization, exhaustive pairwise compatibility.
+- 반복 중에는 focused 검증을 사용하고, 위험에 비례한 최종 검증을 한 번 수행한다.
+- 최종 보고에는 실제 산출물, 변경 파일, 핵심 검증 결과, 완료 기준별 pass/fail, 실행 지식 경로와 남은 위험을 포함한다.
+- 범위·검증 예산·완료 기준을 자동으로 확대하지 않는다.
