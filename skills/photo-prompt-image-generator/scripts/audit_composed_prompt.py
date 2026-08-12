@@ -1868,15 +1868,19 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
             for item in character_grammar.get("runtime_nodes") or []
             if isinstance(item, dict)
         ]
-        primary_runtime_id = str(character_grammar.get("primary_runtime_id") or "")
         max_support_cues = int(character_grammar.get("max_support_cues", 2) or 2)
         primary_nodes = [item for item in runtime_nodes if item.get("role") == "primary"]
         support_nodes = [item for item in runtime_nodes if item.get("role") == "support"]
         runtime_ids = {str(item.get("id") or "") for item in runtime_nodes}
+        primary_runtime_id = (
+            str(primary_nodes[0].get("id") or "")
+            if len(primary_nodes) == 1
+            else ""
+        )
         if (
             character_grammar.get("valid") is not True
             or len(primary_nodes) != 1
-            or primary_runtime_id not in runtime_ids
+            or not primary_runtime_id
             or len(support_nodes) > max_support_cues
             or len(runtime_nodes) != len(runtime_ids)
         ):
@@ -1890,26 +1894,26 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
                     "max_support_cues": max_support_cues,
                 }
             )
-        if len(runtime_nodes) > 1 and not character_grammar.get("compatible_edge_ids"):
+        if len(runtime_nodes) > 1 and character_grammar.get("compatible_bundle") is not True:
             failures.append(
                 {
                     "check": "character_grammar_contract",
-                    "reason": "multi-node character runtime bundle has no declared compatibility edge",
+                    "reason": "multi-node character runtime bundle is not declared compatible",
                 }
             )
         scene_evidence = {
             str(item)
-            for item in selected_scene.get("character_evidence_types") or []
+            for item in selected_scene.get("visual_evidence_types") or []
             if str(item)
         }
         grammar_evidence = {
             str(item)
-            for item in character_grammar.get("character_evidence_types") or []
+            for item in character_grammar.get("visual_evidence_types") or []
             if str(item)
         }
         required_evidence = {
             str(item)
-            for item in character_grammar.get("required_evidence_types") or []
+            for item in character_grammar.get("required_visual_evidence_types") or []
             if str(item)
         }
         if (
@@ -1920,17 +1924,27 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
             failures.append(
                 {
                     "check": "character_grammar_contract",
-                    "reason": "selected scene and character grammar evidence types are missing or inconsistent",
+                    "reason": "selected scene and character grammar visual evidence types are missing or inconsistent",
                     "scene_evidence": sorted(scene_evidence),
                     "grammar_evidence": sorted(grammar_evidence),
                     "required_evidence": sorted(required_evidence),
                 }
             )
-        if not character_grammar.get("runtime_anchor_ids"):
+        constraints = (
+            character_grammar.get("composition_constraints")
+            if isinstance(character_grammar.get("composition_constraints"), dict)
+            else {}
+        )
+        if (
+            constraints.get("explicit_adult_original_subject") != "required"
+            or constraints.get("observable_evidence") != "required"
+            or constraints.get("appearance_inference_from_route") != "forbidden"
+            or constraints.get("protected_identity_replication") != "forbidden"
+        ):
             failures.append(
                 {
                     "check": "character_grammar_contract",
-                    "reason": "character route has no runtime anchor IDs",
+                    "reason": "character route is missing generic composition constraints",
                 }
             )
     role_scene_policy = pack.get("role_scene_policy") if isinstance(pack.get("role_scene_policy"), dict) else {}

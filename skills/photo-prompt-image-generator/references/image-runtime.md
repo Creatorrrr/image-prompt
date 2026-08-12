@@ -21,12 +21,14 @@ After cost confirmation, use:
   --prompt-json <audited-prompt.json> --concept "<concept>"
 ```
 
-The script forwards prompt and negative bytes unchanged, saves successful images, and records `tool: openai_images_api` attempts.
+The script forwards prompt and negative bytes unchanged, saves successful images, and records every `tool: openai_images_api` attempt. It forwards available `pack_id`, chosen candidate IDs, composer, audit status, augmentation brief, and source argv; retry rows link to the immediately preceding attempt. A recorder failure makes the run fail instead of silently leaving an untraceable success.
 
 ## Retries and Ledger
 
 For unchanged retries, preserve `prompt_en` and `negative_en` byte-for-byte and keep the same prompt ID. Increment `attempt`; link retries with `retry_of` when available.
 
 Record saved native attempts with `scripts/record_image_run.py` in `runs/image_runs.ndjson`. Include `pack_id`, chosen candidate IDs, `composer: agent`, and audit status when available. When the composed prompt contains `augmentation_brief`, preserve that audited object with `--augmentation-brief-json`; do not reconstruct or summarize its decisions. Do not write a ledger record for a preview-only native result.
+
+`assets/run_ledger.schema.json` is the public record contract. Keep its required keys, optional provenance fields, and enums synchronized with `record_image_run.py`; focused tests compare recorder output against that schema.
 
 Report the image tool used and whether a repo-local copy was created.

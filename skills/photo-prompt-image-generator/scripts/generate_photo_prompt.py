@@ -1611,10 +1611,6 @@ def merge_forced_set_groups(set_groups: Sequence[tuple[Sequence[str], set[str]]]
     return [f"{slot}={','.join(ids)}" for slot, ids in by_slot.items()]
 
 
-def merge_recipe_sets(recipes: Sequence[dict[str, Any]]) -> list[str]:
-    return merge_forced_set_groups([(set_values_to_forced(recipe.get("set")), set()) for recipe in recipes])
-
-
 def forced_sets_to_mapping(forced_sets: Sequence[str]) -> dict[str, list[str]]:
     mapping: dict[str, list[str]] = {}
     for forced in forced_sets:

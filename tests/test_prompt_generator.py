@@ -22,12 +22,14 @@ TAGS_PATH = SKILL_DIR / "assets" / "photo_prompt_tags.json"
 GENERATOR_PATH = SKILL_DIR / "scripts" / "prompt_generator.py"
 WRAPPER_PATH = SKILL_DIR / "scripts" / "generate_photo_prompt.py"
 RECORD_RUN_PATH = SKILL_DIR / "scripts" / "record_image_run.py"
+GENERATE_IMAGES_VIA_API_PATH = SKILL_DIR / "scripts" / "generate_images_via_api.py"
 AUDIT_COMPOSED_PATH = SKILL_DIR / "scripts" / "audit_composed_prompt.py"
 VALIDATOR_PATH = SKILL_DIR / "scripts" / "validate_photo_prompt_dictionary.py"
 INDEX_BUILDER_PATH = SKILL_DIR / "scripts" / "build_semantic_index.py"
 EVAL_SEMANTIC_PATH = SKILL_DIR / "scripts" / "eval_semantic.py"
 QUALITY_LAYERS_PATH = SKILL_DIR / "assets" / "photo_prompt_quality_layers.json"
 SEMANTIC_INDEX_PATH = SKILL_DIR / "assets" / "photo_prompt_semantic_index.json"
+RUN_LEDGER_SCHEMA_PATH = SKILL_DIR / "assets" / "run_ledger.schema.json"
 
 CREATIVE_PRESET_IDS = {
     "cinematic_fantasy_portrait",
@@ -7316,6 +7318,141 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             self.assertEqual(row["augmentation_brief"]["selected_route_id"], "material_world")
             self.assertEqual(row["augmentation_brief"]["decisions"][0]["decision"], "modified")
 
+    def test_generate_images_via_api_forwards_audited_provenance_and_retry_chain(self):
+        spec = importlib.util.spec_from_file_location(
+            "generate_images_via_api", GENERATE_IMAGES_VIA_API_PATH
+        )
+        self.assertIsNotNone(spec)
+        self.assertIsNotNone(spec.loader)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+
+        prompt = "Exact audited prompt text"
+        negative = "watermark, readable text"
+        prompt_id = hashlib.sha256(prompt.encode("utf-8")).hexdigest()[:16]
+        source_argv = ["--intent", "adult repair handoff", "--seed", "42"]
+        chosen = {"preset": "preset:p1", "subject": ["slot:subject:s1"]}
+        brief = {
+            "selected_route_id": "material_world",
+            "decisions": [{"candidate_id": "slot:subject:s1", "decision": "accepted"}],
+        }
+        api_prompts = []
+        ledger_calls = []
+
+        def fake_call_api(_key, _model, full_prompt, _size):
+            api_prompts.append(full_prompt)
+            if len(api_prompts) == 1:
+                raise RuntimeError("temporary network failure")
+            return b"image-bytes"
+
+        def fake_record(args):
+            ledger_calls.append(list(args))
+            attempt = int(args[args.index("--attempt") + 1])
+            return {"run_id": f"{attempt:016x}"}
+
+        def flag_value(args, flag):
+            return args[args.index(flag) + 1]
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp = Path(tmpdir)
+            prompt_file = tmp / "audited.prompt.json"
+            prompt_file.write_text(
+                json.dumps(
+                    {
+                        "prompt_en": prompt,
+                        "negative_en": negative,
+                        "pack_id": "a" * 16,
+                        "chosen_candidate_ids": chosen,
+                        "composer": "agent",
+                        "audit_status": "pass",
+                        "augmentation_brief": brief,
+                        "provenance": {
+                            "seed": 42,
+                            "argv": source_argv,
+                            "concept_lock": ["adult repair handoff"],
+                        },
+                    },
+                    ensure_ascii=False,
+                ),
+                encoding="utf-8",
+            )
+            with mock.patch.object(module, "call_api", side_effect=fake_call_api), mock.patch.object(
+                module, "record", side_effect=fake_record
+            ):
+                ok = module.generate_for_file(
+                    prompt_file,
+                    key="test-key",
+                    model="gpt-image-2",
+                    size="1024x1536",
+                    attempts=2,
+                    concept=None,
+                    slug=None,
+                    out_base=tmp / "outside-worktree-output",
+                    timestamp="20260812_120000",
+                )
+
+            self.assertTrue(ok)
+            self.assertEqual(
+                api_prompts,
+                [prompt + "\n\nAvoid: " + negative] * 2,
+            )
+            self.assertEqual(len(ledger_calls), 2)
+            first, second = ledger_calls
+            self.assertEqual(flag_value(first, "--status"), "error")
+            self.assertEqual(flag_value(second, "--status"), "success")
+            self.assertNotIn("--retry-of", first)
+            self.assertEqual(flag_value(second, "--retry-of"), "0000000000000001")
+            self.assertEqual(flag_value(second, "--prompt-id"), prompt_id)
+            self.assertEqual(flag_value(second, "--negative-en"), negative)
+            self.assertEqual(flag_value(second, "--pack-id"), "a" * 16)
+            self.assertEqual(json.loads(flag_value(second, "--chosen-candidate-ids-json")), chosen)
+            self.assertEqual(flag_value(second, "--composer"), "agent")
+            self.assertEqual(flag_value(second, "--audit-status"), "pass")
+            self.assertEqual(json.loads(flag_value(second, "--augmentation-brief-json")), brief)
+            self.assertEqual(json.loads(flag_value(second, "--argv-json")), source_argv)
+            image_path = Path(flag_value(second, "--image-path"))
+            self.assertTrue(image_path.is_absolute())
+            self.assertEqual(image_path.read_bytes(), b"image-bytes")
+
+    def test_run_ledger_schema_covers_recorder_output_contract(self):
+        spec = importlib.util.spec_from_file_location("record_image_run", RECORD_RUN_PATH)
+        self.assertIsNotNone(spec)
+        self.assertIsNotNone(spec.loader)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+
+        args = module.parse_args(
+            [
+                "--ts",
+                "2026-08-12T12:00:00+09:00",
+                "--prompt-en",
+                "Audited prompt",
+                "--attempt",
+                "1",
+                "--status",
+                "success",
+                "--pack-id",
+                "a" * 16,
+                "--chosen-candidate-ids-json",
+                json.dumps({"preset": "preset:p1"}),
+                "--composer",
+                "agent",
+                "--audit-status",
+                "pass",
+            ]
+        )
+        entry = module.build_entry(args)
+        schema = json.loads(RUN_LEDGER_SCHEMA_PATH.read_text(encoding="utf-8"))
+
+        self.assertFalse(set(entry) - set(schema["properties"]))
+        self.assertTrue(set(schema["required"]) <= set(entry))
+        self.assertEqual(set(schema["properties"]["status"]["enum"]), module.VALID_STATUSES)
+        self.assertEqual(set(schema["properties"]["composer"]["enum"]), module.VALID_COMPOSERS)
+        self.assertEqual(
+            set(schema["properties"]["audit_status"]["enum"]),
+            module.VALID_AUDIT_STATUSES,
+        )
+
     def test_record_image_run_default_ledger_is_worktree_local_runs_file(self):
         spec = importlib.util.spec_from_file_location("record_image_run", RECORD_RUN_PATH)
         self.assertIsNotNone(spec)
@@ -10933,7 +11070,9 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
     def test_dictionary_validator_rejects_control_language_in_public_visual_text(self):
         data = json.loads(TAGS_PATH.read_text(encoding="utf-8"))
         data["presets"][0]["embedding_text"] = (
-            "route a market label through nonvisual provenance metadata"
+            "route a market label through nonvisual provenance metadata using "
+            "rights-cleared and copyrighted status language; prefer a Japanese-market variant "
+            "for audience interest"
         )
 
         with tempfile.TemporaryDirectory() as tmp:
@@ -10952,6 +11091,10 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertIn("provenance_language", result.stderr)
         self.assertIn("market_control_language", result.stderr)
         self.assertIn("nonvisual_instruction", result.stderr)
+        self.assertIn("rights_status_language", result.stderr)
+        self.assertIn("copyright_status_language", result.stderr)
+        self.assertIn("market_comparison_language", result.stderr)
+        self.assertIn("audience_priority_language", result.stderr)
 
     def test_dictionary_validator_rejects_invalid_semantic_policy_match_rule(self):
         data = json.loads(TAGS_PATH.read_text(encoding="utf-8"))
@@ -11066,7 +11209,11 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             r"stable id:|facet |tags:|kind:|source[-_ ]grounded|"
             r"(?:public|cjk)[-_ ]market[-_ ]researched|research[-_ ](?:backed|based|router)|"
             r"cited(?:[-_ ]interview)?[-_ ]study|nonvisual[-_ ]provenance|"
-            r"provenance_scope|\bprovenance\b|moe[-_ ]review|모에\s*리뷰|萌えレビュー",
+            r"provenance_scope|\bprovenance\b|moe[-_ ]review|모에\s*리뷰|萌えレビュー|"
+            r"rights[-_ ]cleared|\bcopyrighted\b|권리\s*(?:확인|정리)|"
+            r"(?:japanese|korean|chinese|cjk)[-_ ]market[-_ ](?:variant|comparison)|"
+            r"audience[-_ ](?:interest|preference|appeal|priority)|"
+            r"(?:시청자|관객)\s*(?:흥미|선호|관심)",
             re.IGNORECASE,
         )
         failures = []

@@ -58,7 +58,6 @@ DEFAULT_FIXTURE_DIR = PROJECT_ROOT / "tests" / "fixtures" / "photo_prompt"
 DEFAULT_GENERALIZATION_CASES = DEFAULT_FIXTURE_DIR / "generalization_cases.jsonl"
 DEFAULT_GENERALIZATION_HOLDOUT_CASES = DEFAULT_FIXTURE_DIR / "generalization_holdout_cases.jsonl"
 DEFAULT_DOMAIN_HOLDOUT_V2_CASES = DEFAULT_FIXTURE_DIR / "generalization_domain_holdout_v2.jsonl"
-DEFAULT_RETRIEVAL_HOLDOUT_V3_CASES = DEFAULT_FIXTURE_DIR / "semantic_retrieval_holdout_v3.jsonl"
 DEFAULT_RETRIEVAL_HOLDOUT_V4_CASES = DEFAULT_FIXTURE_DIR / "semantic_retrieval_holdout_v4.jsonl"
 
 PERSON_ONLY_CANDIDATE_SLOTS = {
@@ -2626,6 +2625,12 @@ def evaluate_retrieval_holdout(
     cases = load_retrieval_holdout_cases(cases_path)
     if limit:
         cases = cases[:limit]
+    data = load_json(tags_path)
+    presets_by_id = {
+        str(preset.get("id")): preset
+        for preset in data.get("presets", []) or []
+        if isinstance(preset, dict) and str(preset.get("id") or "")
+    }
     rows: List[JsonDict] = []
     for index, case in enumerate(cases):
         cmd = [
@@ -2686,9 +2691,20 @@ def evaluate_retrieval_holdout(
             if isinstance(pack.get("character_grammar"), dict)
             else {}
         )
+        selected_preset_data = presets_by_id.get(selected_preset) or {}
+        raw_render_contract = (
+            selected_preset_data.get("render_contract")
+            if isinstance(selected_preset_data.get("render_contract"), dict)
+            else {}
+        )
+        raw_character_grammar = (
+            raw_render_contract.get("character_grammar")
+            if isinstance(raw_render_contract.get("character_grammar"), dict)
+            else {}
+        )
         actual_character_runtime_ids = {
             str(item)
-            for item in character_grammar.get("runtime_anchor_ids") or []
+            for item in raw_character_grammar.get("runtime_anchor_ids") or []
             if str(item)
         }
         actual_character_runtime_ids.update(
@@ -2702,7 +2718,7 @@ def evaluate_retrieval_holdout(
         if not expected_character_runtime_ids.issubset(actual_character_runtime_ids):
             failures.append("character_runtime_ids")
         actual_character_policy_ids = {
-            str(item) for item in character_grammar.get("policy_ids") or [] if str(item)
+            str(item) for item in raw_character_grammar.get("policy_ids") or [] if str(item)
         }
         expected_character_policy_ids = {
             str(item) for item in case.get("expected_character_policy_ids") or []
