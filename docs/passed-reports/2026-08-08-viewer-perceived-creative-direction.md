@@ -23,7 +23,7 @@ The implementation-before baseline and final comparison use three frozen request
 | Urban solitude | familiar rainy back-view outside a convenience store | `functional_recontextualization` | transparent tote contains a warm room and extends a dry amber corridor through cold wet pavement |
 | Adult transformation/recovery | ordinary bicycle-light repair | `temporal_fold` | current bare-hand repair and previous-duty gloved hands coexist in the closed case reflection |
 
-`assets/render_creative_direction_visual_review_v1.json` records 3/3 cases passing all eight frozen focus items. Every case improves originality, ingenuity, and intentionality over its baseline without topic-fidelity or photographic-coherence regression. Failed first/repair attempts remain under `generated_images/creative-direction-holdout-v1-20260808_163100/`; acceptance did not select from a batch.
+`tests/fixtures/photo_prompt/render_creative_direction_visual_review_v1.json` records 3/3 cases passing all eight frozen focus items. Every case improves originality, ingenuity, and intentionality over its baseline without topic-fidelity or photographic-coherence regression. Failed first/repair attempts remain under `generated_images/creative-direction-holdout-v1-20260808_163100/`; acceptance did not select from a batch.
 
 ## Material Failure and Recovery
 

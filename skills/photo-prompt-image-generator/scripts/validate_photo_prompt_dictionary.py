@@ -109,6 +109,17 @@ FORBIDDEN_PUBLIC_VISUAL_CONTROL_MARKERS = {
     "term_routing_language": re.compile(r"\bterm[-_ ]routing\b", re.IGNORECASE),
     "nonvisual_instruction": re.compile(r"\bnon[-_ ]?visual\b", re.IGNORECASE),
     "national_style_shorthand": re.compile(r"\bnational[-_ ]style shorthand\b", re.IGNORECASE),
+    "rights_status_language": re.compile(r"\brights[-_ ]cleared\b", re.IGNORECASE),
+    "copyright_status_language": re.compile(r"\bcopyrighted\b", re.IGNORECASE),
+    "market_comparison_language": re.compile(
+        r"\b(?:japanese|korean|chinese|cjk)[-_ ]market[-_ ](?:variant|comparison)\b",
+        re.IGNORECASE,
+    ),
+    "audience_priority_language": re.compile(
+        r"\baudience[-_ ](?:interest|preference|appeal|priority)\b|"
+        r"(?:시청자|관객)\s*(?:흥미|선호|관심)",
+        re.IGNORECASE,
+    ),
 }
 PUBLIC_VISUAL_TEXT_FIELDS = (
     "en",

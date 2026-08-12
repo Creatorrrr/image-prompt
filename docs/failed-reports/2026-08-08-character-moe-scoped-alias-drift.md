@@ -23,7 +23,7 @@
 
 - Confirmed cause or current hypothesis: Existing scoped routing is domain-first. The new domain aliases initially contained only generic grammar labels, and many route aliases were paraphrases rather than literal short spans present in the implementation-before holdout intents.
 - Confidence: confirmed
-- Remaining unknowns: Real semantic-index competition remains to be checked after the dictionary hash changes and the approved index rebuild runs.
+- Remaining unknowns: The rebuilt index passed its global real retrieval suite, but the 96 character cases remain a literal multilingual routing contract because their short spans are shared with production aliases. No independent character-specific semantic holdout is claimed.
 
 ## Attempts
 
@@ -37,7 +37,7 @@
 
 - Resolution/workaround: Kept exactly four route-specific KO/EN/JA/ZH aliases per preset, each a short discriminative phrase contained in its frozen request. The domain gate reuses those 96 phrases plus six explicit grammar labels. Broad terms such as `cute`, `character`, `idol`, `streamer`, Korean `모에`, or Chinese `萌` alone were not added.
 - Verification: The focused contract test passed, including 96 unique cases, exact one-route equality, 24-route coverage, six generic negative controls, direct pack materialization, default automatic safety pass, and candidate caps.
-- Next safe step if unresolved: Rebuild the approved semantic index once and run the same holdout through real semantic retrieval; do not weaken exact-route expectations if embedding competition appears.
+- Next safe step if unresolved: If independent character semantic evidence is needed, freeze new paraphrases before implementation and evaluate them separately; do not relabel the current alias contract as an independent holdout.
 
 ## Reuse guidance
 

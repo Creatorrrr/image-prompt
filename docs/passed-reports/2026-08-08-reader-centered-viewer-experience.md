@@ -23,7 +23,7 @@ Three implementation-before requests used fixed rule-mode seeds `900101`–`9001
 | Adult worker and nonhuman companion | `full_screen`, `relatedness`, `reciprocity` | The companion points at a sparking fault while holding a brush; the adult looks to the signal and extends pliers across their shared used repair kit. |
 | Final morning in a long-lived home | `full_screen`, `meaning`, `self_relevance`, causal second reading | The adult removes the last key beside an open door; pale furniture absences and a worn floor route turn apparent emptiness into accumulated domestic contact on reinspection. |
 
-`assets/render_viewer_experience_visual_review_v1.json` records 3/3 cases and all 18 frozen focus dimensions as PASS. The images and exact candidate/composed/audit/result files are under `generated_images/viewer-experience-holdout-v1-20260808_220600/`. The PNG SHA-256 values are `25c1c1c48c5980c2b4561016626fb9fa973ab232dfc647b61a1c76aea9ce0b2b`, `ec0b6fa6dab542904b5d423bdb4f6bf35819f82cebf162612504ffbac1acf1d9`, and `92a88152fdde6efbae5cdfc17eb611d4bd8b3eb7b9f0aa74625c9e0a1dfe9b58`.
+`tests/fixtures/photo_prompt/render_viewer_experience_visual_review_v1.json` records 3/3 cases and all 18 frozen focus dimensions as PASS. The images and exact candidate/composed/audit/result files are under `generated_images/viewer-experience-holdout-v1-20260808_220600/`. The PNG SHA-256 values are `25c1c1c48c5980c2b4561016626fb9fa973ab232dfc647b61a1c76aea9ce0b2b`, `ec0b6fa6dab542904b5d423bdb4f6bf35819f82cebf162612504ffbac1acf1d9`, and `92a88152fdde6efbae5cdfc17eb611d4bd8b3eb7b9f0aa74625c9e0a1dfe9b58`.
 
 ## Verification
 

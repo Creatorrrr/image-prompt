@@ -17,6 +17,7 @@ from __future__ import annotations
 import argparse
 import base64
 import datetime
+import hashlib
 import json
 import re
 import subprocess
@@ -63,12 +64,35 @@ def slug_for(path: Path, override: str | None) -> str:
     return re.sub(r"[^A-Za-z0-9가-힣-]+", "-", stem).strip("-") or "prompt"
 
 
-def record(args_list: list[str]) -> None:
+def stable_text_id(text: str, length: int = 16) -> str:
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()[:length]
+
+
+def repo_ledger_path(path: Path) -> str:
+    try:
+        return str(path.resolve().relative_to(PROJECT_ROOT.resolve()))
+    except ValueError:
+        return str(path.resolve())
+
+
+def compact_json(value: object) -> str:
+    return json.dumps(value, ensure_ascii=False, separators=(",", ":"), sort_keys=True)
+
+
+def record(args_list: list[str]) -> dict[str, str]:
     completed = subprocess.run(
         [sys.executable, str(RECORD), *args_list], capture_output=True, text=True
     )
     if completed.returncode != 0:
-        print(f"  ledger record failed: {completed.stderr[-200:]}", file=sys.stderr)
+        detail = completed.stderr.strip()[-400:] or "recorder returned no error detail"
+        raise RuntimeError(f"ledger record failed: {detail}")
+    try:
+        payload = json.loads(completed.stdout)
+    except json.JSONDecodeError as exc:
+        raise RuntimeError("ledger recorder returned invalid JSON") from exc
+    if not isinstance(payload, dict) or not str(payload.get("run_id") or ""):
+        raise RuntimeError("ledger recorder returned no run_id")
+    return {str(key): str(value) for key, value in payload.items()}
 
 
 def generate_for_file(
@@ -89,24 +113,33 @@ def generate_for_file(
     if not prompt_en:
         print(f"[{prompt_file.name}] prompt_en missing; skipped", file=sys.stderr)
         return False
-    negative_en = str(result.get("negative_en") or "")
-    provenance = result.get("provenance") or {}
-    prompt_id = str(provenance.get("prompt_id") or "")
+    negative_raw = result.get("negative_en")
+    negative_en = None if negative_raw is None else str(negative_raw)
+    provenance = result.get("provenance") if isinstance(result.get("provenance"), dict) else {}
+    prompt_id = str(provenance.get("prompt_id") or stable_text_id(prompt_en))
     seed = provenance.get("seed")
     full_prompt = prompt_en + (f"\n\nAvoid: {negative_en}" if negative_en else "")
+    pack_id = str(result.get("pack_id") or provenance.get("pack_id") or "")
+    chosen_candidate_ids = result.get("chosen_candidate_ids")
+    composer = str(result.get("composer") or "")
+    audit = result.get("audit") if isinstance(result.get("audit"), dict) else {}
+    audit_status = str(result.get("audit_status") or audit.get("status") or "")
+    augmentation_brief = result.get("augmentation_brief")
+    source_argv = provenance.get("argv")
     resolved_slug = slug_for(prompt_file, slug)
     resolved_concept = concept or str((provenance.get("concept_lock") or [""])[0] or resolved_slug)
     out_dir = out_base / f"{resolved_slug}-{timestamp}"
 
+    previous_run_id: str | None = None
     for attempt in range(1, max(1, attempts) + 1):
         status, failure, dest = None, None, None
         try:
             image = call_api(key, model, full_prompt, size)
             out_dir.mkdir(parents=True, exist_ok=True)
-            dest = out_dir / f"{prompt_id or 'noid'}-seed{seed}-attempt{attempt}.png"
+            dest = out_dir / f"{prompt_id}-seed{seed}-attempt{attempt}.png"
             dest.write_bytes(image)
             status = "success"
-            print(f"[{resolved_slug}] attempt {attempt} OK → {dest.relative_to(PROJECT_ROOT)}")
+            print(f"[{resolved_slug}] attempt {attempt} OK → {repo_ledger_path(dest)}")
         except urllib.error.HTTPError as error:
             body = error.read().decode()[:300]
             lowered = body.lower()
@@ -129,17 +162,35 @@ def generate_for_file(
             "--status", status,
             "--tool", "openai_images_api",
         ]
-        if prompt_id:
-            ledger_args += ["--prompt-id", prompt_id]
+        ledger_args += ["--prompt-id", prompt_id]
         if seed is not None:
             ledger_args += ["--seed", str(seed)]
-        if negative_en:
+        if negative_en is not None:
             ledger_args += ["--negative-en", negative_en]
         if dest is not None and status == "success":
-            ledger_args += ["--image-path", str(dest.relative_to(PROJECT_ROOT))]
+            ledger_args += ["--image-path", repo_ledger_path(dest)]
         if failure:
             ledger_args += ["--failure-reason", failure]
-        record(ledger_args)
+        if pack_id:
+            ledger_args += ["--pack-id", pack_id]
+        if chosen_candidate_ids is not None:
+            ledger_args += ["--chosen-candidate-ids-json", compact_json(chosen_candidate_ids)]
+        if composer:
+            ledger_args += ["--composer", composer]
+        if audit_status:
+            ledger_args += ["--audit-status", audit_status]
+        if isinstance(augmentation_brief, dict):
+            ledger_args += ["--augmentation-brief-json", compact_json(augmentation_brief)]
+        if isinstance(source_argv, list):
+            ledger_args += ["--argv-json", compact_json(source_argv)]
+        if previous_run_id:
+            ledger_args += ["--retry-of", previous_run_id]
+        try:
+            ledger_result = record(ledger_args)
+        except RuntimeError as error:
+            print(f"[{resolved_slug}] {error}", file=sys.stderr)
+            return False
+        previous_run_id = ledger_result["run_id"]
         if status == "success":
             return True
     return False

@@ -341,6 +341,92 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
         self.assertNotIn("source-grounded adult practice", source_corpus)
         self.assertNotIn("from a cited study", source_corpus)
 
+    def test_control_only_facets_remain_guardable_but_do_not_score_or_leak(self):
+        preset = {
+            "facets": {
+                "content_basis": ["rights_cleared_original"],
+                "character_topic": ["internal_topic_router"],
+                "safety_tier": ["adult_compatible"],
+            }
+        }
+        item = {
+            "facets": {
+                "content_basis": ["rights_cleared_original"],
+                "character_topic": ["internal_topic_router"],
+                "safety_tier": ["adult_compatible"],
+            }
+        }
+
+        self.assertIn(
+            "content_basis:rights_cleared_original",
+            prompt_generator.facet_tokens(item),
+        )
+        self.assertIn(
+            "safety_tier:adult_compatible",
+            prompt_generator.facet_tokens(item),
+        )
+        self.assertEqual(
+            prompt_generator.semantic_facet_match_score(item, preset, {}),
+            0.0,
+        )
+        self.assertEqual(prompt_generator.candidate_pack_public_facets(item), {})
+        guarded_item = {
+            "hard_guards": {
+                "requires_facets": ["safety_tier:adult_compatible"],
+            }
+        }
+        self.assertTrue(
+            prompt_generator.compatible_with_facet_guards(guarded_item, preset, {})
+        )
+        self.assertFalse(
+            prompt_generator.compatible_with_facet_guards(guarded_item, {}, {})
+        )
+
+        item["facets"]["manifestation_mode"] = ["diegetic_world_system"]
+        preset["facets"]["manifestation_mode"] = ["diegetic_world_system"]
+        self.assertEqual(
+            prompt_generator.semantic_facet_match_score(item, preset, {}),
+            1.0,
+        )
+
+        data = prompt_generator.load_json(TAGS_PATH)
+        private_topic = data["character_mechanism_graph"]["families"][0]["topic_ids"][0]
+        public_tags = prompt_generator.candidate_pack_public_tags(
+            data,
+            {
+                "tags": [
+                    "human",
+                    "adult",
+                    "adult_compatible",
+                    "age_context_only",
+                    "market_label_nonvisual",
+                    "character_moe_grammar",
+                    "character_quiet_care_daily_scene_atomic_scene",
+                    private_topic,
+                ]
+            },
+        )
+        self.assertEqual(public_tags, ["human", "adult"])
+
+        ordinary_result = prompt_generator.generate_once(
+            data,
+            __import__("random").Random(17),
+            "product_hero_on_riser",
+            ["en"],
+            False,
+            0,
+            True,
+            detail_level="detailed",
+            selection_mode="rule",
+            seed=17,
+        )
+        ordinary_pack = prompt_generator.build_candidate_pack(ordinary_result, data)
+        self.assertFalse(ordinary_pack["character_grammar"]["enabled"])
+        self.assertNotIn("policy_ids", ordinary_pack["character_grammar"])
+        self.assertTrue(
+            all("family" not in candidate for candidate in ordinary_pack["presets"])
+        )
+
     def test_korean_no_people_intent_never_inverts_to_a_human_subject(self):
         pack = self.run_wrapper(
             "--preset",
@@ -2155,21 +2241,27 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
                 self.assertEqual(pack["contract_version"], "photo-candidate-pack/v2")
                 self.assertTrue(world_evidence_slots <= set(pack["slots"]), preset_id)
                 self.assertIn("content_basis", preset["facets"], preset_id)
-                self.assertNotIn(
-                    "content_basis",
-                    pack["quality_profile"]["facets"],
+                self.assertFalse(
+                    prompt_generator.CONTROL_ONLY_FACET_KEYS
+                    & set(pack["quality_profile"]["facets"]),
                     preset_id,
                 )
                 self.assertTrue(
                     all(
-                        "content_basis" not in candidate.get("facets", {})
+                        not (
+                            prompt_generator.CONTROL_ONLY_FACET_KEYS
+                            & set(candidate.get("facets", {}))
+                        )
                         for candidate in pack["presets"]
                     ),
                     preset_id,
                 )
                 self.assertTrue(
                     all(
-                        "content_basis" not in candidate.get("facets", {})
+                        not (
+                            prompt_generator.CONTROL_ONLY_FACET_KEYS
+                            & set(candidate.get("facets", {}))
+                        )
                         for slot in pack["slots"].values()
                         for candidate in slot.get("candidates", [])
                     ),
@@ -2422,11 +2514,11 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
                         "cjk_narrative_world",
                         preset_id,
                     )
-                    self.assertTrue(
-                        set(preset["facets"]["market_origin"])
-                        <= set(
-                            pack["quality_profile"]["facets"]["market_origin"]
-                        ),
+                    self.assertIn("market_origin", preset["facets"], preset_id)
+                    self.assertIn("cultural_provenance", preset["facets"], preset_id)
+                    self.assertFalse(
+                        prompt_generator.CONTROL_ONLY_FACET_KEYS
+                        & set(pack["quality_profile"]["facets"]),
                         preset_id,
                     )
                     self.assertLessEqual(
@@ -2786,12 +2878,65 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             self.assertTrue(grammar["valid"], preset_id)
             self.assertEqual(grammar["topic_id"], topic["topic_id"])
             self.assertEqual(grammar["family_id"], topic["family_id"])
-            self.assertTrue(set(topic["runtime_anchor_ids"]) <= set(grammar["runtime_anchor_ids"]))
+            for private_key in (
+                "runtime_anchor_ids",
+                "primary_runtime_id",
+                "policy_ids",
+                "policies",
+                "applicable_guard_rules",
+                "audience_familiarity",
+                "market_origin",
+                "compatible_edge_ids",
+                "character_evidence_types",
+            ):
+                self.assertNotIn(private_key, grammar, (preset_id, private_key))
             self.assertGreaterEqual(len(grammar["runtime_nodes"]), 1)
             self.assertLessEqual(len(grammar["runtime_nodes"]), 3)
             self.assertEqual(sum(node["role"] == "primary" for node in grammar["runtime_nodes"]), 1)
-            self.assertTrue(set(topic["required_evidence_types"]) <= set(grammar["character_evidence_types"]))
-            self.assertIn("nonvisual", grammar["market_origin"])
+            expected_visual_evidence = (
+                set(topic["required_evidence_types"])
+                - prompt_generator.PRIVATE_CHARACTER_EVIDENCE_TYPES
+            )
+            self.assertTrue(
+                expected_visual_evidence
+                <= set(grammar["required_visual_evidence_types"])
+            )
+            self.assertTrue(
+                set(grammar["required_visual_evidence_types"])
+                <= set(grammar["visual_evidence_types"])
+            )
+            self.assertEqual(
+                grammar["composition_constraints"],
+                {
+                    "explicit_adult_original_subject": "required",
+                    "observable_evidence": "required",
+                    "appearance_inference_from_route": "forbidden",
+                    "protected_identity_replication": "forbidden",
+                },
+            )
+            selected_scene = pack["render_contract"]["selected_scene"]
+            self.assertEqual(
+                set(selected_scene["visual_evidence_types"]),
+                set(grammar["visual_evidence_types"]),
+            )
+            for private_key in (
+                "runtime_ids",
+                "primary_runtime_id",
+                "audience_familiarity",
+                "market_origin",
+                "selection_source",
+                "available_blueprint_count",
+                "available_blueprint_ids",
+            ):
+                self.assertNotIn(private_key, selected_scene, (preset_id, private_key))
+            self.assertFalse(
+                prompt_generator.CONTROL_ONLY_FACET_KEYS
+                & set(pack["quality_profile"]["facets"]),
+                preset_id,
+            )
+            serialized_pack = json.dumps(pack, ensure_ascii=False).lower()
+            self.assertNotIn("market_label_nonvisual", serialized_pack, preset_id)
+            self.assertNotIn("moe_review", serialized_pack, preset_id)
             self.assertEqual(pack["quality_profile"]["profile_id"], "character_moe_grammar")
             self.assertFalse(pack["evidence_budget"]["enabled"])
             candidate_total = len(pack["presets"]) + sum(
@@ -2927,9 +3072,9 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
                 wrapper_pack["render_contract"]["selected_scene"]["blueprint_id"],
                 expected_quality_scene_ids[case["case_id"]],
             )
-            self.assertEqual(
-                wrapper_pack["render_contract"]["selected_scene"]["selection_source"],
-                "requested_scene_function",
+            self.assertNotIn(
+                "selection_source",
+                wrapper_pack["render_contract"]["selected_scene"],
             )
 
         extension_text = (

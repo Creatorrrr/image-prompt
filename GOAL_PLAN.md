@@ -1,91 +1,95 @@
-# Photo Prompt Runtime Metadata Boundary Refactor Goal
+# Photo Prompt Residual Runtime Boundary and Legacy Cleanup Goal
 
-- 작성: 2026-08-11 KST
-- 상태: complete — stages 1–5 qualified
+- 작성: 2026-08-12 KST
+- 상태: complete
 - 대상: `skills/photo-prompt-image-generator`
-- 기준 ref: `main@a53b1ec`
+- 기준 ref: `main@4acba60c4424532ce957da345ad333ef02297f4c`
 - 자동 목표 상향: 비활성
 
 ## 목표와 실제 산출물
 
-- 원래 사용자 요청: 사진 프롬프트 스킬의 모든 기능을 유지하면서, 출처명·연구 과정·평가용 표현처럼 실질 기능과 무관하거나 분석을 편향할 수 있는 데이터가 런타임에 섞이지 않도록 최소한으로 리팩터링한다.
-- 최종 제품/결과: 사용자 의미와 시각적 장면 정보만 검색·후보 선택·mandatory intent·최종 프롬프트에 참여하고, 내부 ID·태그·provenance·연구/검증 메타데이터는 typed control 또는 저장소 외부 증거로만 남는 실행 경계. 현재 manifest가 참조하는 시맨틱 shard 세대만 스킬에 포함한다.
-- 범위: 의미 텍스트 화이트리스트, 후보팩 관련도 말뭉치, 비시각 mandatory/prompt 문구, character-domain 문맥 게이트, literal routing fixture의 정직한 재분류, 연구/검증 자산의 스킬 밖 이동, stale shard 정리, SKILL/maintenance 설명 정합성, 필요한 시맨틱 인덱스 재생성.
-- 비목표: 공개 candidate-pack schema 전면 교체, 기존 stable ID 일괄 rename, 새 연구·출처 수집, 기준 완화, 이미지 생성·픽셀 품질 주장, 배포·commit·push·PR, 별도 evaluator나 로컬 embedding 모델 도입.
+- 원래 사용자 요청: 현재 구현의 모든 기능을 유지하면서, 이번 메타데이터 경계 개편 뒤 남은 비시각적·출처 지향 데이터와 쓰이지 않는 레거시를 다시 확인해 무리하지 않는 범위에서 정리한다.
+- 최종 제품/결과: candidate-pack의 공개 composition evidence, soft semantic scoring, 장면 원자, 최종 프롬프트에는 사용자 의도와 관찰 가능한 시각 정보만 참여하고, 비시각적 연구·시장·프로세스 제어는 명시적 private/control 경계에만 존재한다. audit·재현에 필요한 typed contract/provenance는 렌더링 evidence와 분리하고, audited composed JSON의 provenance는 API 이미지 실행 ledger까지 손실 없이 전달한다. 확인된 dead code와 stale 문서/캐시는 제거된다.
+- 범위: candidate-pack 공개 투영과 semantic facet scoring의 제어 facet 분리, `market term nonvisual` 및 권리/연구 과정형 시각 텍스트 정제, API ledger 전달 누락과 retry 연결, 확인된 무참조 코드·상수·schema/caches 점검, stale 보고서 경로와 lifecycle 갱신, 필요한 semantic index 증분 재생성.
+- 비목표: candidate-pack v3 전면 재설계, stable ID 일괄 rename, 외부 consumer가 사용할 수 있는 호환 분기 제거, 새 연구 수집, holdout 기준 완화, 이미지 생성·픽셀 품질 주장, 배포·push·PR, 별도 evaluator/artifact family 도입.
 
 ## 진척 계약
 
-- 진척으로 인정: 런타임 출력 또는 선택 경계의 실제 수정, 일반 요청 오탐 감소, 연구 자산의 배포 스킬 밖 이동, stale vector 제거, 정제된 인덱스와 측정된 결과.
-- 진척으로 인정하지 않음: 문서·테스트만 추가, 기존 메타 문자열을 다른 이름으로만 감춤, source ledger만 옮기고 오염된 벡터를 유지, 실패한 holdout 기대치를 구현에 맞춰 완화.
-- 검증-only 작업 상한: 각 제품 단계마다 focused 검증 1회, 최종 affected regression 1회. 새 verifier/schema/artifact family는 만들지 않는다.
-- 실행 지식 작업 상한: 관련 보고서 전문 최대 5건, distinct material failure 보고서 1건, 성공 보고서 기본 최대 1건, 별도 checkpoint 금지.
+- 진척으로 인정: 실제 후보팩/선택/최종 프롬프트/API ledger 동작의 변경, 사용되지 않는 런타임 코드·데이터의 안전한 제거, 변경된 semantic text에 한정한 유효 index 갱신.
+- 진척으로 인정하지 않음: 문서·테스트만 추가, 내부 문자열을 다른 출처명으로 치환, private 키를 계속 semantic score에 사용, API 호출 없이 ledger 계약만 설명, 사용 여부를 증명하지 않은 호환 코드 삭제.
+- 검증-only 작업 상한: 제품 단계마다 focused 검증 1회, 최종 affected regression과 기존 검증 경로 1회. 기존 경로로 확인할 수 있으면 새 verifier/schema/artifact family를 만들지 않는다.
+- 실행 지식 작업 상한: 관련 보고서 전문 최대 5건, matching failure report 우선 갱신, 성공 보고서 기본 최대 1건, 별도 checkpoint 금지.
 - 진행 로그: `product delta -> direct evidence -> remaining product gap -> blocker`.
 
-## 기준선과 적용 교훈
+## 기준선과 미지수
 
-- 수정 전 기준선: semantic manifest는 6,513개 entry와 `semantic-text-v2`, 16개 current shard를 가리켰다. 스킬에는 current 외 4개 tracked generation 약 183MB가 남아 있었다.
-- 오염 경로: semantic text가 stable ID·tags·kind·모든 facet을 포함하며, 현재 index text에는 `character_moe` 134, `source_grounded` 136, market-researched 표식 376, `provenance_scope` 816 entry가 있다. 후보팩 관련도 말뭉치도 ID·tags·kind를 사용한다.
-- 직접 제품 결함: CJK character preset의 compact prompt에 `nonvisual provenance`가 출력되고, subculture/worldbuilding render contract는 `source-grounded`를 positive mandatory intent로 노출한다.
-- 검증 결합: character route 96개 alias가 domain gate와 96-case 파일에 정확히 공유된다. 이 파일은 독립 holdout이 아니라 literal routing contract fixture로 취급해야 한다.
-- 외부 조건: 프로젝트 `.env`에 Gemini credential이 구성되어 있음만 확인했으며 값은 읽거나 출력하지 않았다. 기존 index는 새 manifest가 완성될 때까지 보존한다. 첫 승인 뒤 순방향 검사에서 공개 시각 텍스트 누수가 추가로 발견되어 payload가 바뀌었으므로, 최신 고정 payload에 대한 재승인 후에만 외부 임베딩을 재개한다.
+- 현재 기준선: `4acba60`은 6,513-entry `semantic-text-v3`, 16개 current shard, candidate relevance 화이트리스트, 연구/fixture 패키지 분리를 포함하며 focused photo 316/316, scene 112/112, contradiction 667/667을 통과했다. 전체 526개에는 unrelated universal-scene 11 failures/1 error가 남아 있다.
+- 재현된 잔여 결함: 기준선의 CJK character scene action은 이미 관찰 가능한 caring handoff와 reciprocal gaze로 정제되어 최종 프롬프트 literal 누출은 해소됐다. 그러나 같은 current pack의 candidate tag와 character grammar에는 `market_label_nonvisual`, `market_label_nonvisual_guard`, raw market/audience control metadata가 남아 있다. 일부 candidate facets에는 `content_basis`, `authorship_basis`, `market_origin`, `term_level`, `audience_scope`, `manifestation_mode`, `character_moe_grammar` 같은 control 정보가 남아 있다.
+- 구조적 잔여: `content_basis`는 pack에서 숨겨졌지만 generic facet score에는 참여한다. `rights-cleared`/`copyrighted` 같은 법적·과정형 문구가 일부 semantic/public visual text에 남아 있다.
+- 실행 경로 잔여: `generate_images_via_api.py`가 audited composed JSON의 `pack_id`, chosen IDs, composer, audit status, augmentation brief와 retry link를 ledger recorder에 전달하지 않는다. 무참조 함수 9개와 상수 1개, 무참조 ledger schema 및 생성 cache는 현재 사용 여부를 재확인한다.
+- 고정 호환 경계: candidate-pack v2 shape와 stable IDs, `concept_mode=legacy`, custom/partial checkpoint loader, legacy score trace/fallback, slot fallback은 외부 호환 가능성이 있어 직접 사용 증거 없이 제거하지 않는다.
+- 외부 전송 가정: 사용자는 새 payload hash와 Gemini 전송을 사전 승인했다. 전송 전 ordered payload의 count, UTF-8 byte size, SHA-256을 고정하고 기록한다. text-hash cache로 unchanged vectors를 재사용하며, 증분 방식이 index order/dimension/품질을 보장하지 못할 때만 전수를 전송한다.
 - 적용 보고서:
-  - `docs/failed-reports/2026-08-11-photo-mandatory-intent-polarity-contamination.md`: positive intent에는 사용자 가시 의미만 허용한다.
-  - `docs/passed-reports/2026-08-11-photo-intent-preserving-optimization.md`: typed source/polarity, exact subject route, no-people 및 기존 byte 경계를 보존한다.
-  - `docs/failed-reports/2026-08-08-character-moe-scoped-alias-drift.md`: literal alias fixture와 실제 일반화 근거를 혼동하지 않는다.
-  - `docs/passed-reports/2026-08-07-subculture-taxonomy-on-demand-routing.md`: typed-domain selection gating과 generic leakage 방지를 보존한다.
-  - `docs/failed-reports/2026-08-07-semantic-index-batch-response.md`: Gemini rebuild는 검증된 batch size 1과 cache/checkpoint 경로만 사용한다.
+  - `docs/failed-reports/2026-08-11-photo-runtime-metadata-contamination.md`: 현재 forward 재현이 기존 resolved 범위를 반박하므로 같은 failure lifecycle을 갱신하고 public/control 경계를 확장한다.
+  - `docs/failed-reports/2026-08-07-semantic-index-batch-response.md`: Gemini는 검증된 batch size 1과 cache/checkpoint 경로만 사용한다.
+  - `docs/passed-reports/2026-08-11-photo-intent-preserving-optimization.md`: typed polarity, no-people, exact subject, negative bytes와 기존 공개 기능을 보존한다.
+  - `docs/failed-reports/2026-08-08-character-moe-scoped-alias-drift.md`: literal routing contract와 실제 semantic retrieval 근거를 분리하고 stale unknown/lifecycle을 갱신한다.
+  - `docs/failed-reports/2026-08-08-character-moe-research-provenance-overclaim.md`: 연구 출처의 이름이 아니라 관찰 가능한 결과와 typed control만 runtime에 반영한다.
 
 ## 실행 단계
 
 | 단계 | 실제 산출물/동작 변화 | 최소 직접 검증 | 완료 조건 |
 |---|---|---|---|
-| 1. 실패 경계와 기준선 고정 | 메타데이터 오염 failure report, 현재 출력·routing·index·asset 기준선 | 기존 명령으로 CJK prompt, specialty pack, generic route, index marker 수 재현 | 수정 대상과 의도적 비변경 경계가 고정됨 |
-| 2. 오프라인 런타임 경계 | candidate relevance corpus에서 private ID/tag/facet 제거, character generic phrase에 문맥 게이트 적용, literal 96-case를 contract fixture로 재분류 | 일반 사진 negative controls와 96 literal contracts를 함께 실행 | generic 오탐 0, explicit 96 routes 유지, 일반 rule pack 회귀 없음 |
-| 3. 패키지 경계 정리 | source ledger/crosswalk 및 검증 fixture를 runtime skill 밖으로 이동하고 참조 수정, SKILL을 실행 자원 중심으로 축약, current 외 shard 제거 | repository reference scan, manifest shard integrity, skill quick validation | 런타임 스킬에 source title/URL ledger 및 stale shard가 없음 |
-| 4. 시각 데이터와 의미 텍스트 정제 | `source-grounded`, `researched`, `cited study`, `nonvisual provenance`를 visual/embedding/mandatory 필드에서 제거하고 명시적 semantic whitelist/recipe를 적용 | 전 preset prompt/pack forbidden-marker scan과 dictionary validation | 내부 메타가 positive output 또는 새 semantic text에 0건 |
-| 5. 시맨틱 재생성 및 최종 자격 | 승인된 Gemini batch-size 1 경로로 changed embeddings와 manifest를 재생성하고 current generation만 유지 | check-index, focused photo suites, retrieval contracts, generic negatives, contradiction check, diff check | 모든 최종 기준이 통과하고 기존 unrelated full-suite baseline을 악화시키지 않음 |
-
-## 현재 진행 상태
-
-- 1단계 완료: 오염 경로와 현재 6,513-entry index, generic character-route 오탐, stale shard 기준선을 failure report에 고정했다.
-- 2단계 완료: candidate relevance와 integration/source corpus는 공개 시각 텍스트 및 사용자 작성 intent만 사용한다. 96개 literal character routing contract는 유지하면서 4개 일반 사진 문구의 character-domain 오탐을 차단했다.
-- 3단계 완료: raw research ledger/crosswalk는 `docs/research-evidence/photo-prompt/`, routing/generalization/holdout/baseline/visual-review fixture는 `tests/fixtures/photo_prompt/`로 이동했다. 런타임 skill asset에는 현재 semantic generation만 남기고, 빌더가 새 manifest 기록 후 이전 generation만 제거하도록 했다.
-- 4단계 완료: semantic-text-v3는 `en`/`ko`/aliases/keywords/terms와 기능별 공개 caption만 임베딩하며 stable ID, tags, kind, facet을 제외한다. 공개 positive text와 장면 원자에서 연구 과정, 출처명, `provenance`, market-control 문구를 제거했고 재유입을 막는 기존 dictionary validator 회귀 기준을 추가했다.
-- 직접 검증: 공개 관련도·typed polarity·hybrid augmentation·routing, 이동 fixture, shard round-trip/prune, 6,513개 semantic input 경계가 통과했다. `test_photo_prompt_contract_v2` 44/44, `test_prompt_generator` 272/272, rule generalization 79/79, holdout 24/24, domain holdout v2 6/6, current-scene audit 112/112, 667-preset contradiction check 667/667이 통과했다. 667개 모든 직접 preset을 한국어·영어 detailed rule mode로 생성한 결과 금지 marker와 생성 오류가 각각 0건이며, 독립 순방향 검사에서 발견한 CJK character 누수도 재현 후 해결했다. 전체 suite는 526개에서 기존 기준선과 정확히 같은 unrelated universal-scene 11 failures/1 error만 남았다. 의도적으로 달라진 rule candidate 출력은 10개 current golden과 versioned photo regression baseline v2로 갱신했고 v1 역사 hash는 보존했다.
-- 시맨틱 재생성 완료: 승인된 SHA-256 `3ec1b84dbd98772c71a5daa5ebd3b4afc64a162c971a741da50aea35dbe98a57`의 6,513개 목록에서 checkpoint 973개를 재사용하고 5,540개를 `gemini-embedding-2`로 전송했다. 새 manifest는 dictionary hash `2c3f9d34a64d233eb6b2c1301c52a0087eb45a85870717da64d7fbc04b1fde3e`, `semantic-text-v3`, 768d, 6,513 entries와 16개 유효 shard를 가리킨다. entry order/hash/count 검증이 통과했고 generation 디렉터리는 `2c3f9d34a64d233e` 하나뿐이며 partial checkpoint는 제거됐다.
-- 5단계 완료: 별도 승인을 받은 순서 고정 retrieval payload(22 cases, 71 requests, 고유 68 texts, UTF-8 6,381 bytes, SHA-256 `5702e85ca1e2d2d14a5a921438a89cd9dd19ab667dd4b2b87be497e730398040`)만 `gemini-embedding-2`에 전송했다. real semantic retrieval holdout은 22/22를 통과했다. 최종 `--check-index`, dictionary validator, skill quick validation, `git diff --check`, runtime order/hash/count, 단일 generation, 금지 marker 및 옛 asset 경로 검사도 모두 통과했다.
+| 1. 잔여 경계 고정 | matching failure report를 reopened 상태로 갱신하고, 대표 pack·score·prompt·API ledger·dead-ref 기준선을 고정한다 | 고정 seed CJK forward 재현, facet score probe, fake API/recorder probe, AST reference scan | 이미 해결된 final-prompt 누출과 남은 pack/score 누출을 구분하고 제거/보존/비공개 항목과 외부 호환 경계가 코드 증거로 확정됨 |
+| 2. 공개 시각 경계 수리 | control-only facets/tags를 agent-visible pack과 semantic facet score에서 제외하고, scene atom의 비시각적 시장/정책 문구를 관찰 가능한 행동으로 바꾼다 | 대표 일반/CJK packs와 audit, control facet 가감 score parity, forbidden public-text scan | audit PASS prompt와 public pack에 비시각 control 문구 0건, 명시 route/scene 기능 유지 |
+| 3. API 실행 계약 수리 | audited composed JSON의 pack provenance, chosen IDs, composer, audit status, augmentation brief와 retry link를 ledger recorder에 전달한다; 무참조 schema는 실제 검증에 연결하거나 안전하게 제거한다 | network-free fake image/recorder unit test와 exact prompt/negative byte assertion | 성공·실패·retry ledger가 문서 계약대로 기록되고 기존 CLI 사용법 유지 |
+| 4. dead legacy와 문서 정리 | 정적·동적 무참조가 확인된 함수/상수와 생성 cache를 제거하고 stale fixture 경로/lifecycle을 갱신한다 | AST/load scan, `rg` reference scan, focused import/CLI tests | 기능 호환 분기는 유지되고 확인된 dead path와 stale path가 남지 않음 |
+| 5. 증분 semantic 갱신과 최종 자격 | 변경 semantic text만 batch size 1로 임베딩하고 unchanged vector를 재사용해 새 manifest/shards를 원자적으로 기록한다 | payload count/bytes/hash, reuse/sent counts, check-index, retrieval/generalization/holdout, affected photo tests, scene/contradiction/diff checks | 모든 최종 기준 통과, current generation 하나, unrelated full-suite 기준선보다 악화 없음 |
 
 ## 최종 완료 기준
 
-1. 공개 positive prompt, mandatory intent, visual atom label에 연구 출처·개발 과정·검증 표식이 0건이다.
-2. semantic text 생성은 명시적 사용자/시각 필드만 사용하며 stable ID, tags, kind, facet/provenance를 임베딩하지 않는다.
-3. 명시적 character route 96개 contract는 유지되고 일반적인 관계·포즈·헤어·소품 사진 negative control은 character 전용 도메인으로 라우팅되지 않는다.
-4. raw research title/URL ledger와 crosswalk는 런타임 skill package 밖에 있고 테스트·maintenance 참조가 유효하다.
-5. semantic manifest가 가리키는 한 세대의 16개 shard만 추적되며 hash/count/order 검증이 통과한다.
-6. 기존 public wrapper, rule/semantic 선택, candidate-pack v2, safety, negative prompt, no-people, adult-appeal 및 direct preset 기능이 유지된다.
-7. focused photo tests와 dictionary/index/scene/contradiction 검증이 통과하며 unrelated full-suite 기준선보다 악화되지 않는다.
+1. public candidate-pack의 시각 label/facet/tag/evidence, semantic relevance/score, mandatory visual atom, 최종 prompt에 연구 출처명·시장 라우터·법적/개발 과정형 비시각 문구가 0건이다. v2 호환을 위해 유지한 stable selection ID와 internal hard-guard 값은 이 조건에서 제외하되, label·semantic text·soft score·최종 prompt에는 참여하지 않는다.
+2. control-only facet을 추가·제거해도 semantic score와 선택 결과가 바뀌지 않으며, 공개 visual facet과 명시적 route 기능은 유지된다.
+3. 고정 CJK forward 사례가 같은 character route/atomic scene 기능을 유지하면서 audit PASS하고 `market term nonvisual` 또는 동등한 내부 제어문을 렌더링하지 않는다.
+4. explicit API path가 prompt/negative bytes를 보존하고 pack provenance, chosen IDs, composer, audit status, augmentation brief, attempt/retry 관계를 ledger에 전달한다.
+5. 정적·동적 무참조가 확인된 코드/상수/asset만 제거되고 deliberate legacy/custom compatibility 경로는 regression coverage와 함께 유지된다.
+6. 새 semantic index는 exact logical order, 768 dimensions, manifest/shard hash/count를 통과하며 unchanged vectors를 재사용한다. 전송 payload의 count/bytes/SHA-256과 실제 sent/reused 수가 일치한다.
+7. focused photo suites, dictionary, index, scene-expression, contradiction, generalization/holdout/retrieval 검증이 통과하고 unrelated full-suite 기준선보다 악화되지 않는다.
+8. matching failed report와 stale execution-knowledge 경로/lifecycle이 현재 증거와 일치하며, 이미지 품질이나 외부 consumer 호환을 검증하지 않은 범위는 정직하게 남긴다.
+
+## 완료 결과
+
+- 공개/제어 경계: `authorship_basis`, `audience_scope`, `character_family`, `character_topic`, `content_basis`, `cultural_provenance`, `market_origin`, `safety_tier`, `term_level`은 내부 control/schema에 유지하고 public facet 및 soft semantic facet score에서는 제외했다. generic hard-guard matcher는 이 값을 읽을 수 있지만 현행 in-repo guard 소비자는 `safety_tier`뿐이다. preset-family routing ID, adult-eligibility/structural character-scene tag와 비시각 graph tag, router/policy/guard/edge 정보도 public composition evidence에서 제거했다.
+- 시각 데이터: semantic/public text의 `rights-cleared`, `copyrighted`, 권리·개발 상태 표현 11건과 CJK 시장 비교·audience 우선순위 표현 2건, direct-only 호환 preset의 `legacy ... retained` 설명 1건을 관찰 가능한 오리지널 그래픽·제작 행위·조명·장면 표현으로 바꿨다. named source, 국가 시장 비교, audience 우선순위 marker는 validator와 semantic-input 검증으로 차단한다.
+- 실행 계약: explicit Images API helper가 exact prompt/negative bytes, pack ID, chosen IDs, composer, audit status, augmentation brief, 원래 argv를 ledger에 전달하고 반환된 run ID로 다음 시도를 연결한다. recorder 실패는 성공으로 가장하지 않고 fail closed한다.
+- dead legacy: 정의·호출 및 repository reference가 모두 0인 함수 9개와 상수 1개를 제거했다. 마지막 재검사에서 비활성 character grammar의 빈 `policy_ids`, 공개 preset candidate의 내부 `family`, `runtime_nodes[].role`과 중복되던 공개 `primary_runtime_id`도 제거했다. stable IDs, `concept_mode=legacy`, monolithic/custom/partial index loader, score trace/fallback, direct preset 호환은 사용 증거 또는 외부 호환 가능성이 있어 유지했다.
+- Gemini 증분 갱신: 1차는 11 ordered texts / 6,273 UTF-8 compact-JSON bytes / SHA-256 `cb58ebd6d01cdfd1f726f7397bb2e233345f2df3733a2f538f2c8d8e8ee25f96`, 2차는 CJK 변경분 2 ordered texts / 1,832 bytes / SHA-256 `700534e3a600587f4a1dbfcfe55fa7f581ef9c5c3ad0f6f7ae1161ecdcbe1d30`만 각각 batch size 1로 전송했다. 2차 직전 index의 6,511개를 재사용했고, 기준선 대비 누적 logical delta는 13 texts / 8,104 bytes / SHA-256 `0a7c856660c899448851606258cf7dc20887e98695358e970fbd851bbd29450c`다. 최종 대조에서 6,500 baseline vectors가 byte-identical, 13개만 변경됐으며 추가·삭제는 0건이다.
+- 최종 index: dictionary SHA-256 `76b4f712fb5bdd8aaf868853a0d59552aa815085da66e64ce5e6530cc9c196ca`, generation `76b4f712fb5bdd8a`, `semantic-text-v3`, `gemini-embedding-2`, 768 dimensions, 6,513 entries, 16 hash-valid shards, current generation 1개, partial checkpoint 0개다.
+- 검색 자격: global real retrieval 22/22는 71 ordered requests / 68 unique texts / 6,381 bytes / SHA-256 `5702e85ca1e2d2d14a5a921438a89cd9dd19ab667dd4b2b87be497e730398040`을 사용했다. 1차 변경 경로 probe 3/3은 12 ordered requests / 812 bytes / SHA-256 `95d0c71bd372ce816342b1b7423f8818cc033117c5290606bc0e80e86d47d413`, 2차 CJK 던전 방송 probe 5/5는 중복 없는 17 ordered requests / 1,430 bytes / SHA-256 `31ac2034764ae6abf68fe4aef6db1a954c24311c2af3a4665718eff1aa756c1a`을 사용했다.
+- 로컬 검증: affected photo full suite 319 tests + 597 subtests가 통과했다. 마지막 중복 `primary_runtime_id` 공개 제거 뒤에는 최종 candidate-pack/audit 계약 45 tests와 667 preset 공개 projection 전수 스캔을 다시 통과했다. dictionary/index, scene-expression 112/112, contradiction 667/667 및 violation 0, generalization 79/79, frozen holdout 24/24, domain holdout v2 6/6도 통과했다. 나머지 repository tests는 앞선 동일 범위 실행에서 206 tests + 1,134 subtests가 통과했고 12개 non-pass는 기존 universal-scene 기준선과 같은 범위여서 photo 회귀는 없다.
+- 정직한 한계: 이미지를 새로 렌더링하지 않아 pixel 품질을 주장하지 않는다. repository 밖 candidate-pack/raw-asset consumer는 확인하지 못했다. character multilingual 96-case는 literal routing contract이며 독립 semantic holdout은 아니다. `aligning_rights_cleared_original_vehicle_wrap`, `rights_cleared_original` 같은 stable ID/control 값은 v2 호환을 위해 내부 선택 핸들로 남는다. `applicability.source`, selected-blueprint `source`, typed intent source처럼 audit 분기에 실제 사용되는 비리서치 provenance 필드도 visual evidence와 분리된 채 유지한다. raw authoring asset의 `market_origin`·`cultural_provenance`·`term_level` 등 8개 비-safety control facet과 character-scene `audience_familiarity`/`market_origin`은 공개/semantic/hard-guard 경로에는 참여하지 않지만 schema와 외부 raw-asset 호환성 때문에 남긴 v3 제거 후보이다. in-repo auditor가 직접 읽지 않는 quality-layer `source` trace와 public character topic/family/domain IDs도 외부 v2 consumer 증거가 없어 이번에 삭제하지 않은 차기 versioned-cleanup 후보다.
 
 ## 검증 수준과 예산
 
-- 위험 수준: ordinary offline refactor + 외부 embedding rebuild 한 번. 외부 데이터는 정제된 공개 taxonomy text로 제한한다.
-- 반복 중 focused 검증: routing unit tests, 대표 rule packs, direct polluted presets, reference scan, dictionary validator.
-- 최종 검증: affected photo tests, semantic index integrity/retrieval, contradiction check, skill quick validation, `git diff --check`를 한 번 수행한다.
-- 이미지 생성·pixel review는 텍스트/라우팅/패키지 경계 목표에 필요하지 않아 제외한다.
-- 외부 API 호출 조건: corpus와 retrieval 평가 각각의 exact payload hash에 대한 사용자 명시 승인과 credential 구성을 확인했다. 승인된 두 payload 외 텍스트는 전송하지 않았다.
+- 위험 수준: ordinary offline refactor + 승인된 bounded external embedding refresh.
+- 반복 중 focused 검증: 수정 경로별 unit/contract test, 대표 fixed-seed pack/audit, dictionary validator.
+- 최종 검증: affected photo tests, index integrity와 실제 retrieval, generalization/holdout, scene/contradiction, reference/forbidden scan, `git diff --check`를 각 한 번 수행한다.
+- 외부 전송: 변경된 semantic text exact payload만 우선 사용한다. SDK cardinality가 보장된 batch size 1을 유지하고 API key는 출력·커밋하지 않는다. 증분 cache의 dimension/model/order parity가 깨질 때만 승인 범위 내 전수 재생성한다.
+- 이미지 생성·pixel review: 이번 text/control/API-ledger 경계 목표의 필수 증거가 아니므로 수행하지 않는다.
+- 검증 확장 전 질문 조건: stable ID 또는 candidate-pack major version 변경, 새로운 유료 서비스, 외부 consumer migration, 별도 평가 캠페인이 필요해질 때만 중단하고 질문한다.
 
 ## 중단 조건과 실행 지식
 
-- 향후 semantic text나 평가 fixture가 바뀌면 기존 승인을 재사용하지 않고 새 exact payload hash를 고정해 별도 승인을 받는다.
-- 기존 공개 ID를 바꿔야만 해결되는 경우 compatibility map 또는 schema version 선택을 사용자에게 묻고 임의 변경하지 않는다.
-- 같은 원인으로 두 번 실패하면 세 번째 verifier를 만들지 않고 failure report를 갱신한 뒤 설계를 바꾸거나 질문한다.
-- 삭제 대상 shard는 current manifest와 Git 추적 상태를 다시 확인한 뒤에만 제거하며 Git으로 복구 가능하게 유지한다.
-- 비밀·credential·민감 데이터는 보고서나 로그에 기록하지 않는다.
-- material failure는 재시도 전에 기존 matching report를 갱신하거나 하나로 통합한다. 성공 보고서는 모든 기준 통과 후 실패 해결, 기본안 실패 뒤 비자명한 대안, 또는 비싸게 재구성되는 필수 절차 중 하나일 때만 최대 1건 작성한다.
-- 보고서는 진척이나 별도 checkpoint가 아니며 현재 코드와 직접 증거가 과거 보고서보다 우선한다. lifecycle 변경 시 양방향 링크를 같은 변경에 반영한다.
-- 실행 지식 보고서: 새 `docs/failed-reports/2026-08-11-photo-runtime-metadata-contamination.md`; 완료 시 자격을 충족하면 새 passed report 최대 1건.
+- 같은 원인의 제품 실패가 두 번 반복되면 세 번째 verifier를 만들지 않고 matching failure report를 갱신한 뒤 설계를 바꾸거나 사용자에게 질문한다.
+- 기존 public ID/field 삭제가 불가피하거나 호환 동작과 오염 방지가 충돌하면 임의로 major schema를 올리지 않는다.
+- semantic payload가 고정 후 다시 바뀌면 새 count/bytes/hash를 계산해 기록하고 최신 payload만 전송한다. partial checkpoint와 이전 current manifest는 새 manifest가 durable하기 전 삭제하지 않는다.
+- 보고서에는 credential, token, raw vector, 민감 endpoint를 저장하지 않는다. exact payload는 semantic text 목록의 hash/count/bytes와 sanitised category만 기록한다.
+- material failure는 재시도 전에 기존 matching report를 우선 갱신한다. 성공 보고서는 모든 기준 통과 후 기존 material failure 해결, 실패한 기본안의 비자명한 대안, 또는 비싸게 재구성되는 필수 절차 중 하나일 때만 최대 1건 작성한다.
+- lifecycle 링크는 양방향으로 같은 변경에서 갱신하고, 보고서는 진척이나 별도 checkpoint가 아니다. 현재 소스와 직접 증거가 과거 보고서보다 우선한다.
+- 실행 지식 보고서: 갱신 대상 `docs/failed-reports/2026-08-11-photo-runtime-metadata-contamination.md`, `docs/failed-reports/2026-08-08-character-moe-scoped-alias-drift.md`; 완료 시 기존 passed report 갱신 또는 자격을 충족하는 새 passed report 최대 1건.
 
 ## Codex 실행 계약
 
-- 반복 중에는 focused 검증을 사용하고, 위험에 비례한 최종 검증을 한 번 수행한다.
-- 최종 보고에는 실제 산출물, 변경 파일, 핵심 검증 결과, 완료 기준별 pass/fail, 실행 지식 경로와 남은 위험을 포함한다.
-- 범위·검증 예산·완료 기준을 자동으로 확대하지 않는다.
+- 각 checkpoint는 setup 이후 실제 product delta를 남긴다. 테스트·문서·schema만으로 목표를 완료하지 않는다.
+- 최종 보고에는 기준선 commit, 실제 변경, exact Gemini payload와 reuse/sent 수, 완료 기준별 pass/fail, 실행 지식 경로, 남은 검증 한계를 포함한다.
+- 범위·완료 기준·검증 예산을 자동으로 확대하지 않는다.

@@ -31,7 +31,7 @@ import re
 import sys
 import time
 from pathlib import Path
-from typing import Any, Callable, Dict, Iterator, List, Optional, Sequence, Set
+from typing import Any, Callable, Dict, List, Optional, Sequence, Set
 
 JsonDict = Dict[str, Any]
 Entry = Dict[str, Any]
@@ -281,10 +281,34 @@ CANDIDATE_PACK_INTENT_STOPWORDS = {
     "of",
     "in",
 }
-# Internal classification facets may affect guards or profile selection, but
-# they are not visual instructions and must not be exposed to the composing
-# model as candidate-pack evidence.
-CANDIDATE_PACK_PRIVATE_FACET_KEYS = {"content_basis"}
+# These facets remain available to internal applicability and compatibility
+# guards. They are research/market/control classifications rather than visible
+# image evidence, so they must not affect soft semantic similarity or appear in
+# the composing model's candidate pack.
+CONTROL_ONLY_FACET_KEYS = {
+    "authorship_basis",
+    "audience_scope",
+    "character_family",
+    "character_topic",
+    "content_basis",
+    "cultural_provenance",
+    "market_origin",
+    "safety_tier",
+    "term_level",
+}
+CANDIDATE_PACK_ALWAYS_PRIVATE_TAGS = {
+    "adult_compatible",
+    "adult_only",
+    "age_context_only",
+    "market_label_nonvisual",
+    "no_national_style",
+    "source_grounded",
+    "market_researched",
+}
+PRIVATE_CHARACTER_EVIDENCE_TYPES = {
+    "abstract_mechanism",
+    "market_label_context",
+}
 CANDIDATE_PACK_SEMANTIC_DROPOUT_BUCKETS: Dict[str, tuple[str, ...]] = {
     "environment": (
         "location",
@@ -2869,6 +2893,64 @@ def candidate_pack_rule_context_score(entry: JsonDict, request_text: str, contex
     return context_hits * 3 + request_hits
 
 
+def candidate_pack_public_facets(entry: JsonDict) -> JsonDict:
+    return {
+        str(key): normalize_list(value)[:12]
+        for key, value in (entry.get("facets") or {}).items()
+        if str(key).strip()
+        and str(key) not in CONTROL_ONLY_FACET_KEYS
+        and normalize_list(value)
+    }
+
+
+def candidate_pack_control_only_tags(data: JsonDict) -> Set[str]:
+    private = set(CANDIDATE_PACK_ALWAYS_PRIVATE_TAGS)
+    graph = data.get("character_mechanism_graph")
+    if not isinstance(graph, dict):
+        return private
+    domain = str(graph.get("domain") or "")
+    if domain:
+        private.add(domain)
+    for family in graph.get("families", []) or []:
+        if not isinstance(family, dict):
+            continue
+        private.add(str(family.get("id") or ""))
+        private.update(normalize_list(family.get("topic_ids")))
+    for node in graph.get("runtime_nodes", []) or []:
+        if not isinstance(node, dict) or str(node.get("role") or "") == "visual_atom":
+            continue
+        private.add(str(node.get("id") or ""))
+    for collection in ("policies", "compatibility_edges", "guard_rules"):
+        for item in graph.get(collection, []) or []:
+            if isinstance(item, dict):
+                private.add(str(item.get("id") or ""))
+    return {tag for tag in private if tag}
+
+
+def candidate_pack_public_tags(data: JsonDict, entry: JsonDict) -> List[str]:
+    private = candidate_pack_control_only_tags(data)
+    public: List[str] = []
+    for raw_tag in normalize_list(entry.get("tags")):
+        tag = str(raw_tag).strip()
+        lowered = tag.lower()
+        if not tag or tag in private:
+            continue
+        if any(marker in lowered for marker in ("provenance_scope", "moe_review")):
+            continue
+        if lowered.startswith("character_") and lowered.endswith("_scene_atomic_scene"):
+            continue
+        public.append(tag)
+    return public[:12]
+
+
+def candidate_pack_public_character_evidence_types(raw: Any) -> List[str]:
+    return [
+        value
+        for value in normalize_list(raw)
+        if value not in PRIVATE_CHARACTER_EVIDENCE_TYPES
+    ]
+
+
 def candidate_pack_summarize_preset_candidate(
     data: JsonDict,
     row: JsonDict,
@@ -2882,14 +2964,7 @@ def candidate_pack_summarize_preset_candidate(
         "preset_id": raw_id,
         "label_en": localize(preset, "en") or raw_id,
         "label_ko": localize(preset, "ko") or raw_id,
-        "family": preset.get("family"),
-        "facets": {
-            str(key): normalize_list(value)[:12]
-            for key, value in (preset.get("facets") or {}).items()
-            if str(key).strip()
-            and str(key) not in CANDIDATE_PACK_PRIVATE_FACET_KEYS
-            and normalize_list(value)
-        },
+        "facets": candidate_pack_public_facets(preset),
         "probability": probability,
         "weight": candidate_pack_float(row.get("weight")),
         "selected_by_sampler": raw_id == selected_id,
@@ -2917,15 +2992,9 @@ def candidate_pack_summarize_slot_candidate(
         "probability": probability,
         "weight": candidate_pack_float(row.get("weight")),
         "selected_by_sampler": raw_id == selected_id,
-        "tags": normalize_list(entry.get("tags"))[:12],
+        "tags": candidate_pack_public_tags(data, entry),
         "kind": normalize_list(entry.get("kind"))[:8],
-        "facets": {
-            str(key): normalize_list(value)[:12]
-            for key, value in (entry.get("facets") or {}).items()
-            if str(key).strip()
-            and str(key) not in CANDIDATE_PACK_PRIVATE_FACET_KEYS
-            and normalize_list(value)
-        },
+        "facets": candidate_pack_public_facets(entry),
         "scores": candidate_pack_score_payload(row),
         "applicability": {
             "status": str(row.get("applicability_status") or "eligible"),
@@ -4250,13 +4319,9 @@ def candidate_pack_hybrid_adult_appeal(
                             "label_ko": localize(entry, "ko") or entry_id,
                             "weight": candidate_pack_float(entry.get("weight")),
                             "selected_by_sampler": False,
-                            "tags": normalize_list(entry.get("tags"))[:12],
+                            "tags": candidate_pack_public_tags(data, entry),
                             "kind": normalize_list(entry.get("kind"))[:8],
-                            "facets": {
-                                str(key): normalize_list(value)[:12]
-                                for key, value in (entry.get("facets") or {}).items()
-                                if str(key).strip() and normalize_list(value)
-                            },
+                            "facets": candidate_pack_public_facets(entry),
                             "risk_groups": candidate_pack_adult_risk_groups(entry_id, adult_policy),
                             "applicability": {
                                 "status": "eligible",
@@ -5086,18 +5151,11 @@ def candidate_pack_render_contract(
             "relationship_stakes": normalize_list(selected_blueprint.get("relationship_stakes")),
             "genre_anchors": normalize_list(selected_blueprint.get("genre_anchors")),
             "expression_mode": str(selected_blueprint.get("expression_mode") or ""),
-            "character_evidence_types": normalize_list(
+            "visual_evidence_types": candidate_pack_public_character_evidence_types(
                 selected_blueprint.get("character_evidence_types")
             ),
-            "runtime_ids": normalize_list(selected_blueprint.get("runtime_ids")),
-            "primary_runtime_id": str(selected_blueprint.get("primary_runtime_id") or ""),
             "relationship_mode": str(selected_blueprint.get("relationship_mode") or ""),
-            "audience_familiarity": str(selected_blueprint.get("audience_familiarity") or ""),
-            "market_origin": str(selected_blueprint.get("market_origin") or ""),
             "operational": bool(selected_blueprint.get("operational")),
-            "selection_source": str(selected_blueprint.get("selection_source") or ""),
-            "available_blueprint_count": int(selected_blueprint.get("available_blueprint_count") or 0),
-            "available_blueprint_ids": normalize_list(selected_blueprint.get("available_blueprint_ids")),
             "atomic_scene": copy.deepcopy(selected_blueprint.get("atomic_scene") or {}),
         }
     return {
@@ -5129,7 +5187,6 @@ def candidate_pack_character_grammar(
             "enabled": False,
             "domain": "",
             "runtime_nodes": [],
-            "policy_ids": [],
             "valid": True,
         }
     if not isinstance(selected_blueprint, dict):
@@ -5199,7 +5256,6 @@ def candidate_pack_character_grammar(
     missing_policies = [policy_id for policy_id in policy_ids if policy_id not in policy_index]
     if missing_policies:
         raise ValueError(f"Character scene references unknown policies {missing_policies}")
-    applicable_guards: List[JsonDict] = []
     for guard in graph.get("guard_rules", []) or []:
         if not isinstance(guard, dict):
             continue
@@ -5228,38 +5284,29 @@ def candidate_pack_character_grammar(
             raise ValueError(
                 f"Character scene for {preset.get('id')!r} omits a required runtime companion for {sorted(trigger_runtime_ids & set(runtime_ids))}"
             )
-        applicable_guards.append(
-            {
-                "id": str(guard.get("id") or ""),
-                "kind": str(guard.get("kind") or "constraint"),
-            }
-        )
-
+    required_visual_evidence = candidate_pack_public_character_evidence_types(
+        grammar.get("required_evidence_types")
+    )
+    visual_evidence = candidate_pack_public_character_evidence_types(
+        selected_blueprint.get("character_evidence_types")
+    )
     return {
         "enabled": True,
         "domain": str(graph.get("domain") or ""),
         "topic_id": topic_id,
         "family_id": family_id,
-        "primary_runtime_id": primary_runtime_id,
-        "runtime_anchor_ids": runtime_anchor_ids,
         "runtime_nodes": selected_nodes,
-        "policy_ids": policy_ids,
-        "policies": [
-            {"id": policy_id, "definition": str(policy_index[policy_id].get("definition") or "")}
-            for policy_id in policy_ids
-        ],
         "priority_order": normalize_list(graph.get("priority_order")),
         "max_support_cues": max_support_cues,
-        "compatible_edge_ids": compatible_edge_ids,
-        "applicable_guard_rules": applicable_guards,
-        "required_evidence_types": normalize_list(grammar.get("required_evidence_types")),
-        "character_evidence_types": normalize_list(
-            selected_blueprint.get("character_evidence_types")
-        ),
-        "audience_familiarity": str(
-            selected_blueprint.get("audience_familiarity") or "literal_general"
-        ),
-        "market_origin": str(selected_blueprint.get("market_origin") or "nonvisual_unspecified"),
+        "compatible_bundle": len(runtime_ids) == 1 or bool(compatible_edge_ids),
+        "required_visual_evidence_types": required_visual_evidence,
+        "visual_evidence_types": visual_evidence,
+        "composition_constraints": {
+            "explicit_adult_original_subject": "required",
+            "observable_evidence": "required",
+            "appearance_inference_from_route": "forbidden",
+            "protected_identity_replication": "forbidden",
+        },
         "valid": True,
     }
 
@@ -5305,18 +5352,6 @@ def candidate_pack_selected_choice_entry(result: JsonDict, slot: str, entry_id: 
     if isinstance(choice, dict) and str(choice.get("id") or "") == entry_id:
         return choice
     return {"id": entry_id}
-
-
-def candidate_pack_entry_terms(entry: JsonDict, candidate: Optional[JsonDict] = None) -> List[str]:
-    terms: List[str] = []
-    for source in (entry, candidate or {}):
-        for key in ("id", "en", "ko", "label_en", "label_ko", "description", "embedding_text", "tags", "kind"):
-            raw = source.get(key)
-            if isinstance(raw, list):
-                terms.extend(str(item) for item in raw if str(item).strip())
-            elif raw is not None and str(raw).strip():
-                terms.append(str(raw))
-    return list(dict.fromkeys(terms))[:16]
 
 
 def candidate_pack_motif_budget(result: JsonDict, trace: JsonDict, soft_policy: JsonDict) -> JsonDict:
@@ -6000,17 +6035,6 @@ def candidate_pack_quality_entry_match_blob(entry: JsonDict) -> str:
     return " ".join(values).lower()
 
 
-def candidate_pack_quality_dictionary_entries(data: JsonDict) -> Iterator[JsonDict]:
-    for preset in data.get("presets", []) or []:
-        if isinstance(preset, dict):
-            yield preset
-    slots = data.get("slots") if isinstance(data.get("slots"), dict) else {}
-    for entries in slots.values():
-        for entry in entries or []:
-            if isinstance(entry, dict):
-                yield entry
-
-
 def candidate_pack_quality_add_intent_facets(
     facets: Dict[str, Set[str]],
     vocab: Dict[str, Set[str]],
@@ -6278,7 +6302,7 @@ def candidate_pack_quality_profile(
         "facets": {
             key: sorted(values)
             for key, values in sorted(facets.items())
-            if values and key not in CANDIDATE_PACK_PRIVATE_FACET_KEYS
+            if values and key not in CONTROL_ONLY_FACET_KEYS
         },
         "matched_uncovered_intent_facets": matched_facets,
         "matched_literal_subject_entries": matched_subject_entries,
@@ -6340,7 +6364,7 @@ def candidate_pack_quality_profile_from_selected(
         "facets": {
             key: sorted(values)
             for key, values in sorted(facets.items())
-            if values and key not in CANDIDATE_PACK_PRIVATE_FACET_KEYS
+            if values and key not in CONTROL_ONLY_FACET_KEYS
         },
         "matched_uncovered_intent_facets": [],
         "matched_literal_subject_entries": [],
@@ -7656,12 +7680,14 @@ def load_semantic_index(
     return payload
 
 
-def facet_tokens(entry: Entry) -> Set[str]:
+def facet_tokens(entry: Entry, *, include_control: bool = True) -> Set[str]:
     tokens: Set[str] = set()
     facets = entry.get("facets", {}) or {}
     if not isinstance(facets, dict):
         return tokens
     for key, values in facets.items():
+        if not include_control and str(key) in CONTROL_ONLY_FACET_KEYS:
+            continue
         for value in normalize_list(values):
             tokens.add(f"{key}:{value}")
     return tokens
@@ -9110,12 +9136,12 @@ def compatible_with_semantic_hard_guards(
 
 
 def semantic_facet_match_score(item: Entry, preset: JsonDict, picked: Dict[str, Entry]) -> float:
-    item_facets = facet_tokens(item)
+    item_facets = facet_tokens(item, include_control=False)
     if not item_facets:
         return 0.0
-    context = facet_tokens(preset)
+    context = facet_tokens(preset, include_control=False)
     for entry in picked.values():
-        context |= facet_tokens(entry)
+        context |= facet_tokens(entry, include_control=False)
     if not context:
         return 0.0
     return len(item_facets & context) / max(len(item_facets), 1)
@@ -11782,16 +11808,6 @@ def soft_anchor_slots(policy: Optional[JsonDict]) -> List[str]:
     return slots
 
 
-def soft_anchor_ids_for_slot(policy: Optional[JsonDict], slot: str) -> Set[str]:
-    if not policy or not policy.get("enabled"):
-        return set()
-    ids: Set[str] = set()
-    for anchor in policy.get("anchors", []):
-        if anchor.get("slot") == slot:
-            ids.update(normalize_list(anchor.get("ids")))
-    return ids
-
-
 def soft_anchor_weight_multipliers(source: Optional[JsonDict]) -> tuple[float, float, float, float]:
     """(base, promoted, critical, primary) multipliers; overridable via semantic_policy.soft_anchor_weights."""
     base = semantic_policy_float(source, ("soft_anchor_weights", "base"), SOFT_ANCHOR_WEIGHT_MULTIPLIER)
@@ -12691,10 +12707,6 @@ def preset_has_family_policy_signal(preset: Entry, context: Optional[JsonDict], 
     return False
 
 
-def preset_has_homebody_room_signal(preset: Entry, context: Optional[JsonDict] = None) -> bool:
-    return preset_has_family_policy_signal(preset, context, "homebody_room")
-
-
 def family_slot_signal_config(context: Optional[JsonDict], family: str, slot: str) -> JsonDict:
     signals = semantic_policy_family_config(context, family).get("slot_signals", {}) or {}
     if not isinstance(signals, dict):
@@ -12763,10 +12775,6 @@ def homebody_room_signal_tier(entry: Entry, slot: str, context: Optional[JsonDic
     return tier
 
 
-def entry_has_homebody_room_signal(entry: Entry, slot: str, context: Optional[JsonDict] = None) -> bool:
-    return homebody_room_signal_tier(entry, slot, context) is not None
-
-
 def homebody_concept_lock_blob(context: Optional[JsonDict]) -> str:
     contract = (context or {}).get("generation_contract", {}) or {}
     locks = contract.get("concept_locks", []) or []
@@ -12792,10 +12800,6 @@ def family_concept_lock_promoted_ids(context: Optional[JsonDict], family: str, s
         if any(term.lower() in blob for term in terms):
             promoted.update(ids)
     return promoted
-
-
-def homebody_concept_lock_promoted_ids(context: Optional[JsonDict], slot: str) -> Set[str]:
-    return family_concept_lock_promoted_ids(context, "homebody_room", slot)
 
 
 def family_redundancy_rules(context: Optional[JsonDict], family: str) -> List[JsonDict]:
@@ -12981,11 +12985,6 @@ def steering_signal_tier_summary(
     if strength == "ambient":
         return "support", summary
     return None, None
-
-
-def steering_signal_tier(entry: Entry, family: str, slot: str, context: JsonDict) -> Optional[str]:
-    tier, _summary = steering_signal_tier_summary(entry, family, slot, context)
-    return tier
 
 
 def family_steering_reason_code(family: str, slot: str, concept_lock: bool = False) -> str:
@@ -14779,10 +14778,6 @@ def build_fields(picked: Dict[str, Entry], lang: str, data: Optional[JsonDict] =
     return fields
 
 
-def join_parts(parts: Sequence[str], fallback: str = "") -> str:
-    return ", ".join(part for part in parts if part) or fallback
-
-
 def render_surreal_layer_detail(picked: Dict[str, Entry], lang: str) -> str:
     if not has_surreal_layer(picked):
         return ""
@@ -16262,7 +16257,7 @@ def generate_once(
                 "id": entry.get("id"),
                 "ko": localize(entry, "ko"),
                 "en": localize(entry, "en"),
-                "tags": entry.get("tags", []),
+                "tags": candidate_pack_public_tags(data, entry),
                 "kind": entry.get("kind", []),
             }
             for slot, entry in picked.items()
