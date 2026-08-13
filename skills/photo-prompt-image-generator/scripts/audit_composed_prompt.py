@@ -3566,6 +3566,237 @@ def audit_authorial_open_slots(
     return failures
 
 
+def audit_authorial_request(
+    pack: dict[str, Any],
+    composed: dict[str, Any],
+    prompt_en: str,
+) -> list[dict[str, Any]]:
+    request = (
+        pack.get("authorial_request")
+        if isinstance(pack.get("authorial_request"), dict)
+        else None
+    )
+    if not isinstance(request, dict):
+        return []
+    failures: list[dict[str, Any]] = []
+    canonical_fields = (
+        "contract_version",
+        "provenance",
+        "subject",
+        "setting",
+        "event",
+        "style_domain",
+        "style_family",
+        "style_evidence",
+        "variation_key",
+    )
+    canonical = {key: request.get(key) for key in canonical_fields}
+    expected_sha = hashlib.sha256(
+        json.dumps(
+            canonical,
+            ensure_ascii=False,
+            sort_keys=True,
+            separators=(",", ":"),
+        ).encode("utf-8")
+    ).hexdigest()
+    actual_sha = str(request.get("canonical_sha256") or "")
+    if (
+        request.get("contract_version") != "authorial-request/v1"
+        or request.get("provenance") != "agent_prepack"
+        or actual_sha != expected_sha
+        or str(request.get("request_id") or "") != expected_sha[:16]
+    ):
+        failures.append(
+            {
+                "check": "authorial_request_integrity",
+                "reason": "pre-pack authorial request schema, provenance or canonical hash is invalid",
+            }
+        )
+    authored_scene = (
+        composed.get("authored_scene")
+        if isinstance(composed.get("authored_scene"), dict)
+        else {}
+    )
+    if str(authored_scene.get("source_authorial_request_sha256") or "") != actual_sha:
+        failures.append(
+            {
+                "check": "authorial_request_provenance",
+                "reason": "authored_scene is not bound to the frozen pre-pack authorial request hash",
+            }
+        )
+    atoms = authored_scene.get("atoms") if isinstance(authored_scene.get("atoms"), dict) else {}
+    field_atoms = {
+        "subject": "subject",
+        "setting": "location",
+        "event": "action",
+    }
+    for request_field, atom_field in field_atoms.items():
+        source_tokens = authorial_evidence_tokens(str(request.get(request_field) or ""))
+        atom_tokens = authorial_evidence_tokens(str(atoms.get(atom_field) or ""))
+        prompt_tokens = authorial_evidence_tokens(prompt_en)
+        minimum_overlap = min(3, len(source_tokens))
+        if minimum_overlap < 2 or len(source_tokens & atom_tokens) < minimum_overlap:
+            failures.append(
+                {
+                    "check": "authorial_request_binding",
+                    "reason": "authored scene atom does not preserve the pre-pack request meaning",
+                    "request_field": request_field,
+                    "atom_field": atom_field,
+                }
+            )
+        if minimum_overlap >= 2 and len(source_tokens & prompt_tokens) < minimum_overlap:
+            failures.append(
+                {
+                    "check": "authorial_request_binding",
+                    "reason": "prompt_en does not preserve the pre-pack request meaning",
+                    "request_field": request_field,
+                }
+            )
+    style_contract = (
+        pack.get("japanese_subculture_photo")
+        if isinstance(pack.get("japanese_subculture_photo"), dict)
+        else {}
+    )
+    if (
+        str(style_contract.get("source_authorial_request_sha256") or "") != actual_sha
+        or str(style_contract.get("style_family_id") or "")
+        != str(request.get("style_family") or "")
+    ):
+        failures.append(
+            {
+                "check": "authorial_request_style_binding",
+                "reason": "typed Japanese-subculture style is not bound to the pre-pack request",
+            }
+        )
+    return failures
+
+
+def audit_japanese_subculture_photo(
+    pack: dict[str, Any],
+    prompt_en: str,
+) -> list[dict[str, Any]]:
+    contract = (
+        pack.get("japanese_subculture_photo")
+        if isinstance(pack.get("japanese_subculture_photo"), dict)
+        else None
+    )
+    if not isinstance(contract, dict) or contract.get("requested") is not True:
+        return []
+    failures: list[dict[str, Any]] = []
+    if (
+        contract.get("contract_version") != "japanese-subculture-photo/v1"
+        or not str(contract.get("style_family_id") or "")
+        or not str(contract.get("style_family_label") or "")
+    ):
+        failures.append(
+            {
+                "check": "japanese_subculture_style_contract",
+                "reason": "typed Japanese-subculture photo contract is incomplete",
+            }
+        )
+    cues = [
+        cue
+        for cue in contract.get("visible_cues") or []
+        if isinstance(cue, dict)
+        and str(cue.get("cue_id") or "")
+        and str(cue.get("prompt_phrase") or "")
+    ]
+    try:
+        minimum = max(2, int(contract.get("minimum_visible_cues") or 2))
+    except (TypeError, ValueError):
+        minimum = 2
+        failures.append(
+            {
+                "check": "japanese_subculture_style_contract",
+                "reason": "minimum_visible_cues must be an integer",
+            }
+        )
+    if len(cues) < minimum:
+        failures.append(
+            {
+                "check": "japanese_subculture_style_contract",
+                "reason": "style contract exposes fewer than two concrete visible cues",
+                "visible_cue_count": len(cues),
+            }
+        )
+    literal_cues = [
+        str(cue["prompt_phrase"])
+        for cue in cues
+        if text_contains_term(prompt_en, str(cue["prompt_phrase"]))
+    ]
+    if len(literal_cues) < minimum:
+        failures.append(
+            {
+                "check": "japanese_subculture_style_evidence",
+                "reason": "style label is not backed by enough literal visible cues",
+                "minimum": minimum,
+                "literal_cue_count": len(literal_cues),
+                "accepted_cues": [str(cue["prompt_phrase"]) for cue in cues],
+            }
+        )
+
+    identity_policy = (
+        contract.get("identity_policy")
+        if isinstance(contract.get("identity_policy"), dict)
+        else {}
+    )
+    if identity_policy.get("infer_ethnicity_or_nationality") is not False:
+        failures.append(
+            {
+                "check": "japanese_subculture_style_contract",
+                "reason": "style contract must forbid ethnicity or nationality inference",
+            }
+        )
+    inference_patterns = (
+        r"\bjapanese\s+(?:woman|man|person|girl|boy|ethnicity|nationality|facial\s+features?)\b",
+        r"\b(?:ethnically|racially)\s+japanese\b",
+        r"일본인\s*(?:여성|남성|인물|얼굴|외모|혈통)",
+        r"日本人(?:の)?(?:女性|男性|人物|顔|容姿|血統)",
+    )
+    if any(re.search(pattern, prompt_en, flags=re.IGNORECASE) for pattern in inference_patterns):
+        failures.append(
+            {
+                "check": "japanese_subculture_ethnicity_inference",
+                "reason": "subculture style was converted into an unrequested ethnicity or nationality claim",
+            }
+        )
+
+    guard = (
+        contract.get("candidate_guard")
+        if isinstance(contract.get("candidate_guard"), dict)
+        else {}
+    )
+    blocked = {
+        str(item)
+        for item in guard.get("blocked_unrequested_entry_ids") or []
+        if str(item)
+    }
+    preserved = {
+        str(item)
+        for item in guard.get("explicitly_preserved_entry_ids") or []
+        if str(item)
+    }
+    leaked: list[dict[str, str]] = []
+    for slot, payload in (pack.get("slots") or {}).items():
+        if not isinstance(payload, dict):
+            continue
+        for candidate in payload.get("candidates") or []:
+            if not isinstance(candidate, dict):
+                continue
+            entry_id = str(candidate.get("entry_id") or "")
+            if entry_id in blocked and entry_id not in preserved:
+                leaked.append({"slot": str(slot), "entry_id": entry_id})
+    if leaked:
+        failures.append(
+            {
+                "check": "japanese_subculture_candidate_relevance",
+                "reason": "unrequested strong-theme candidates remain exposed",
+                "candidates": leaked,
+            }
+        )
+    return failures
+
+
 def audit_candidate_interpretations(
     pack: dict[str, Any],
     composed: dict[str, Any],
@@ -3894,6 +4125,8 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
     )
     failures.extend(audit_authorial_scene(pack, composed, prompt_en))
     failures.extend(audit_authorial_open_slots(pack, composed, prompt_en))
+    failures.extend(audit_authorial_request(pack, composed, prompt_en))
+    failures.extend(audit_japanese_subculture_photo(pack, prompt_en))
 
     coverage = pack.get("coverage") if isinstance(pack.get("coverage"), dict) else {}
     intent_constraints = coverage.get("intent_constraints") if isinstance(coverage.get("intent_constraints"), dict) else {}

@@ -2358,6 +2358,8 @@ def evaluate_generalization_check(
             # use the explicit replay projection as a diagnostic view.
             "--candidate-pack-version",
             "v3",
+            "--legacy-replay-reason",
+            "semantic-generalization-diagnostic-selected-row-audit",
         ]
         if case.get("preset"):
             cmd.extend(["--preset", str(case["preset"])])

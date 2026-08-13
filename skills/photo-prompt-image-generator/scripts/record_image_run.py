@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 import sys
 from pathlib import Path
 from typing import Sequence
@@ -17,6 +18,8 @@ DEFAULT_LEDGER = PROJECT_ROOT / "runs" / "image_runs.ndjson"
 VALID_STATUSES = {"success", "safety_block", "error"}
 VALID_COMPOSERS = {"agent", "auto"}
 VALID_AUDIT_STATUSES = {"pass", "warn", "fail", "not_run"}
+VALID_CANDIDATE_PACK_VERSIONS = {"v2", "v3", "v4"}
+INDEPENDENT_RUN_MANIFEST_VERSION = "photo-independent-run-manifest/v1"
 
 
 def stable_text_id(text: str | None, length: int = 16) -> str | None:
@@ -107,7 +110,84 @@ def build_entry(args: argparse.Namespace) -> dict[str, object]:
     augmentation_brief = parse_augmentation_brief(args.augmentation_brief_json)
     if augmentation_brief is not None:
         entry["augmentation_brief"] = augmentation_brief
+    for field in ("skill_sha256", "authorial_request_sha256"):
+        value = str(getattr(args, field) or "")
+        if value and not re.fullmatch(r"[0-9a-f]{64}", value):
+            raise ValueError(f"--{field.replace('_', '-')} must be a 64-character SHA-256")
+    for value in args.reference_sha256 or []:
+        if not re.fullmatch(r"[0-9a-f]{64}", str(value)):
+            raise ValueError("--reference-sha256 must be a 64-character SHA-256")
+    if args.image_call_count is not None and args.image_call_count < 1:
+        raise ValueError("--image-call-count must be at least 1")
+    optional_provenance = {
+        "arm_id": args.arm_id,
+        "worktree_id": args.worktree_id,
+        "skill_sha256": args.skill_sha256,
+        "source_ref": args.source_ref,
+        "candidate_pack_version": args.candidate_pack_version,
+        "authorial_request_sha256": args.authorial_request_sha256,
+        "reference_sha256": list(args.reference_sha256 or []),
+        "image_call_count": args.image_call_count,
+    }
+    for key, value in optional_provenance.items():
+        if value not in (None, "", []):
+            entry[key] = value
+    if args.independent_no_cross_arm_inputs:
+        entry["cross_arm_inputs_used"] = False
     return entry
+
+
+def build_independent_manifest(
+    entry: dict[str, object],
+    args: argparse.Namespace,
+) -> dict[str, object]:
+    required_values = {
+        "arm_id": args.arm_id,
+        "worktree_id": args.worktree_id,
+        "skill_sha256": args.skill_sha256,
+        "source_ref": args.source_ref,
+        "candidate_pack_version": args.candidate_pack_version,
+        "authorial_request_sha256": args.authorial_request_sha256,
+        "reference_sha256": list(args.reference_sha256 or []),
+        "image_call_count": args.image_call_count,
+    }
+    missing = [
+        key
+        for key, value in required_values.items()
+        if value in (None, "", [])
+    ]
+    if missing:
+        raise ValueError(
+            "--manifest requires independent-run provenance fields: "
+            + ", ".join(missing)
+        )
+    if not args.independent_no_cross_arm_inputs:
+        raise ValueError(
+            "--manifest requires --independent-no-cross-arm-inputs"
+        )
+    image_hashes: list[dict[str, str]] = []
+    for raw_path in entry.get("image_paths") or []:
+        image_path = Path(str(raw_path))
+        if not image_path.exists() or not image_path.is_file():
+            continue
+        image_hashes.append(
+            {
+                "path": str(image_path),
+                "sha256": hashlib.sha256(image_path.read_bytes()).hexdigest(),
+            }
+        )
+    return {
+        "contract_version": INDEPENDENT_RUN_MANIFEST_VERSION,
+        **required_values,
+        "cross_arm_inputs_used": False,
+        "ledger_run_id": entry["run_id"],
+        "pack_id": entry.get("pack_id"),
+        "prompt_id": entry["prompt_id"],
+        "status": entry["status"],
+        "tool": entry.get("tool"),
+        "image_paths": list(entry.get("image_paths") or []),
+        "image_hashes": image_hashes,
+    }
 
 
 def append_entry(ledger: Path, entry: dict[str, object]) -> None:
@@ -136,6 +216,16 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--composer", choices=sorted(VALID_COMPOSERS), default=None, help="Prompt composer type.")
     parser.add_argument("--audit-status", choices=sorted(VALID_AUDIT_STATUSES), default=None, help="Composed prompt audit status.")
     parser.add_argument("--augmentation-brief-json", default=None, help="Audited hybrid augmentation_brief as an inline JSON object.")
+    parser.add_argument("--arm-id", default=None, help="Independent generation arm identifier.")
+    parser.add_argument("--worktree-id", default=None, help="Isolated worktree or environment identifier.")
+    parser.add_argument("--skill-sha256", default=None, help="SHA-256 of the frozen skill snapshot used by the arm.")
+    parser.add_argument("--source-ref", default=None, help="Commit or source-snapshot identity used by the arm.")
+    parser.add_argument("--candidate-pack-version", choices=sorted(VALID_CANDIDATE_PACK_VERSIONS), default=None, help="Candidate-pack version used by the arm.")
+    parser.add_argument("--authorial-request-sha256", default=None, help="Canonical pre-pack authorial request SHA-256.")
+    parser.add_argument("--reference-sha256", action="append", default=[], help="SHA-256 for an attached reference input. Repeatable.")
+    parser.add_argument("--image-call-count", type=int, default=None, help="Total image-tool calls consumed by this arm.")
+    parser.add_argument("--independent-no-cross-arm-inputs", action="store_true", help="Assert that no other arm output was used as input.")
+    parser.add_argument("--manifest", type=Path, default=None, help="Write a validated independent-run manifest JSON alongside the ledger entry.")
     parser.add_argument("--ledger", type=Path, default=DEFAULT_LEDGER, help=f"NDJSON ledger path. Defaults to {DEFAULT_LEDGER}.")
     return parser.parse_args(argv)
 
@@ -144,7 +234,15 @@ def main(argv: Sequence[str] | None = None) -> int:
     try:
         args = parse_args(argv)
         entry = build_entry(args)
+        manifest = build_independent_manifest(entry, args) if args.manifest else None
         append_entry(args.ledger, entry)
+        if args.manifest and manifest is not None:
+            args.manifest.parent.mkdir(parents=True, exist_ok=True)
+            args.manifest.write_text(
+                json.dumps(manifest, ensure_ascii=False, indent=2, sort_keys=True)
+                + "\n",
+                encoding="utf-8",
+            )
     except Exception as exc:
         print(f"Error: {exc}", file=sys.stderr)
         return 2

@@ -68,8 +68,19 @@ import prompt_generator  # noqa: E402
 
 class PhotoPromptContractV2Tests(unittest.TestCase):
     def run_wrapper(self, *args: str):
+        forwarded = list(args)
+        if "--candidate-pack-version" in forwarded:
+            version_index = forwarded.index("--candidate-pack-version") + 1
+            if (
+                version_index < len(forwarded)
+                and forwarded[version_index] in {"v2", "v3"}
+                and "--legacy-replay-reason" not in forwarded
+            ):
+                forwarded.extend(
+                    ["--legacy-replay-reason", "test fixture compatibility replay"]
+                )
         completed = subprocess.run(
-            [sys.executable, str(WRAPPER_PATH), *args],
+            [sys.executable, str(WRAPPER_PATH), *forwarded],
             cwd=ROOT,
             text=True,
             capture_output=True,
@@ -458,6 +469,281 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
         self.assertIn("aligning_original_graphics_vehicle_wrap", prior_blob)
         self.assertNotIn("aligning_rights_cleared_original_vehicle_wrap", prior_blob)
         self.assertIn("aligning_rights_cleared_original_vehicle_wrap", legacy_blob)
+
+    def test_legacy_candidate_pack_requires_explicit_replay_reason(self):
+        base = [
+            sys.executable,
+            str(WRAPPER_PATH),
+            "--preset",
+            "character_attribute_composition_scene",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "42",
+            "--emit-candidate-pack",
+            "--candidate-pack-version",
+            "v3",
+        ]
+        missing = subprocess.run(
+            base,
+            cwd=ROOT,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        self.assertNotEqual(missing.returncode, 0)
+        self.assertIn("--legacy-replay-reason", missing.stderr)
+
+        pack = self.run_wrapper(
+            *base[2:],
+            "--legacy-replay-reason",
+            "historical contract compatibility fixture",
+        )[0]
+        self.assertEqual(pack["contract_version"], "photo-candidate-pack/v3")
+        self.assertEqual(
+            pack["provenance"]["legacy_replay_reason"],
+            "historical contract compatibility fixture",
+        )
+
+    def test_scene_blueprint_relevance_uses_explicit_boundary_cues(self):
+        data = prompt_generator.load_json(TAGS_PATH)
+        data[prompt_generator.QUALITY_LAYERS_DATA_KEY] = prompt_generator.load_quality_layers(
+            QUALITY_LAYERS_PATH
+        )
+        preset = next(
+            row
+            for row in data["presets"]
+            if row["id"] == "character_attribute_composition_scene"
+        )
+        blueprints = prompt_generator.render_contract_resolved_scene_blueprints(data, preset)
+
+        def natural_result(concept: str, seed: int) -> dict:
+            return {
+                "provenance": {
+                    "seed": seed,
+                    "concept_lock": [concept],
+                },
+                "semantic_trace": {
+                    "generation_contract": {
+                        "natural_moe_route_preset": [
+                            {
+                                "preset_id": preset["id"],
+                                "source": "pre_sample_natural_language_moe_route",
+                            }
+                        ]
+                    }
+                },
+            }
+
+        generic = (
+            "Photorealistic Japanese-subculture-style, explicitly nonsexual, behavior-led "
+            "moe scene of the same unmistakably adult woman, mid-twenties or older, "
+            "preserving fixed reference identity, with pretty-and-cute bishoujo-inspired "
+            "appeal through expression, grooming, role styling, pose, light, and one "
+            "concrete character-revealing event."
+        )
+        selected_ids = {
+            prompt_generator.candidate_pack_select_scene_blueprint(
+                natural_result(generic, seed),
+                preset,
+                blueprints,
+            )["id"]
+            for seed in (1301, 2603, 3907, 5209, 6503)
+        }
+        self.assertNotIn("moe_attribute_composition_graph_natural_03", selected_ids)
+
+        routing_trace: dict = {}
+        explicit = prompt_generator.candidate_pack_select_scene_blueprint(
+            natural_result(
+                "An explicitly adult woman watering a small houseplant with a plant mister",
+                1301,
+            ),
+            preset,
+            blueprints,
+            routing_trace=routing_trace,
+        )
+        self.assertEqual(explicit["id"], "moe_attribute_composition_graph_natural_03")
+        self.assertEqual(explicit["selection_source"], "explicit_selection_cue")
+        self.assertIn("houseplant", routing_trace["matched_selection_cues"])
+        self.assertNotIn("mist", routing_trace["matched_selection_cues"])
+
+    def test_japanese_subculture_photo_contract_materializes_visible_style_evidence(self):
+        common = (
+            "--selection-mode",
+            "rule",
+            "--emit-candidate-pack",
+            "--candidate-pack-version",
+            "v4",
+            "--seed",
+            "1301",
+        )
+        generic = self.run_wrapper(
+            *common,
+            "--concept-lock",
+            "Photorealistic Japanese-subculture-style adult behavior-led moe portrait",
+        )[0]
+        style = generic["japanese_subculture_photo"]
+        self.assertEqual(style["contract_version"], "japanese-subculture-photo/v1")
+        self.assertTrue(style["requested"])
+        self.assertGreaterEqual(len(style["visible_cues"]), 2)
+        self.assertEqual(style["minimum_visible_cues"], 2)
+        self.assertFalse(style["identity_policy"]["infer_ethnicity_or_nationality"])
+
+        pack_blob = json.dumps(generic, ensure_ascii=False)
+        for entry_id in style["candidate_guard"]["blocked_unrequested_entry_ids"]:
+            self.assertNotIn(f'"entry_id": "{entry_id}"', pack_blob)
+
+        expected_families = {
+            "adult Lolita fashion": "lolita_coordinate_culture",
+            "adult Decora fashion": "decora_diy_maximalism",
+            "adult Gyaru styling": "gyaru_shibuya_glam",
+        }
+        for phrase, expected_family in expected_families.items():
+            pack = self.run_wrapper(
+                *common,
+                "--concept-lock",
+                f"Photorealistic Japanese subculture moe portrait with {phrase}",
+            )[0]
+            self.assertEqual(
+                pack["japanese_subculture_photo"]["style_family_id"],
+                expected_family,
+            )
+
+        label_only_failures = audit_composed_prompt.audit_japanese_subculture_photo(
+            generic,
+            f"Japanese-subculture style {style['style_family_label']} adult moe portrait.",
+        )
+        self.assertIn(
+            "japanese_subculture_style_evidence",
+            {row["check"] for row in label_only_failures},
+        )
+
+        cue_prompt = "Japanese-subculture style adult moe portrait. " + " ".join(
+            cue["prompt_phrase"] for cue in style["visible_cues"][:2]
+        )
+        self.assertEqual(
+            audit_composed_prompt.audit_japanese_subculture_photo(generic, cue_prompt),
+            [],
+        )
+        ethnicity_failures = audit_composed_prompt.audit_japanese_subculture_photo(
+            generic,
+            cue_prompt + " A Japanese woman with Japanese facial features.",
+        )
+        self.assertIn(
+            "japanese_subculture_ethnicity_inference",
+            {row["check"] for row in ethnicity_failures},
+        )
+
+    def test_authorial_request_is_frozen_before_candidate_pack_and_bound_to_composition(self):
+        data = prompt_generator.load_json(TAGS_PATH)
+        request = {
+            "contract_version": "authorial-request/v1",
+            "provenance": "agent_prepack",
+            "subject": (
+                "the same explicitly adult woman as a confident Decora street-fashion participant"
+            ),
+            "setting": "a bright pedestrian fashion arcade with unbranded storefront shapes",
+            "event": (
+                "she catches one slipping handmade hair clip and laughs before it reaches the pavement"
+            ),
+            "style_domain": "japanese_subculture_photo",
+            "style_family": "decora_diy_maximalism",
+            "style_evidence": [
+                "layered handmade beads and colorful hair clips across both sides of her hairstyle",
+                "bright mixed garments with hand-sewn patches and an unbranded charm bag",
+            ],
+            "variation_key": "independent-arm-1",
+        }
+        pack = self.run_wrapper(
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "1301",
+            "--emit-candidate-pack",
+            "--candidate-pack-version",
+            "v4",
+            "--concept-lock",
+            "Photorealistic Japanese-subculture-style adult behavior-led moe portrait",
+            "--authorial-request-json",
+            json.dumps(request, ensure_ascii=False),
+        )[0]
+        frozen = pack["authorial_request"]
+        self.assertEqual(frozen["contract_version"], "authorial-request/v1")
+        self.assertEqual(frozen["provenance"], "agent_prepack")
+        self.assertEqual(len(frozen["canonical_sha256"]), 64)
+        self.assertEqual(
+            pack["japanese_subculture_photo"]["style_family_id"],
+            "decora_diy_maximalism",
+        )
+        self.assertEqual(
+            [cue["prompt_phrase"] for cue in pack["japanese_subculture_photo"]["visible_cues"]],
+            request["style_evidence"],
+        )
+        selected_scene = pack["render_contract"]["selected_scene"]
+        self.assertEqual(
+            selected_scene["authorial_scene"]["governing_request_sha256"],
+            frozen["canonical_sha256"],
+        )
+        self.assertEqual(
+            next(
+                group
+                for group in pack["scene_contract"]["groups"]
+                if group.get("strategy") == "authorial_scene"
+            )["source"],
+            "prepack_authorial_request",
+        )
+
+        atoms = {
+            "subject": request["subject"],
+            "action": request["event"],
+            "location": request["setting"],
+            "prop": "one loose handmade clip held just above the pavement",
+        }
+        prompt = ". ".join(
+            [
+                request["subject"],
+                request["event"],
+                request["setting"],
+                *request["style_evidence"],
+            ]
+        )
+        composed = {
+            "authored_scene": {
+                "source_authorial_request_sha256": frozen["canonical_sha256"],
+                "atoms": atoms,
+            }
+        }
+        self.assertEqual(
+            audit_composed_prompt.audit_authorial_request(pack, composed, prompt),
+            [],
+        )
+        tampered = copy.deepcopy(composed)
+        tampered["authored_scene"]["source_authorial_request_sha256"] = "0" * 64
+        self.assertIn(
+            "authorial_request_provenance",
+            {
+                row["check"]
+                for row in audit_composed_prompt.audit_authorial_request(
+                    pack,
+                    tampered,
+                    prompt,
+                )
+            },
+        )
+
+        hashes = {
+            prompt_generator.normalize_authorial_request(
+                {**request, "variation_key": f"independent-arm-{index}"},
+                data,
+            )["canonical_sha256"]
+            for index in range(1, 6)
+        }
+        self.assertEqual(len(hashes), 5)
+        with self.assertRaisesRegex(ValueError, "pack-derived"):
+            prompt_generator.normalize_authorial_request(
+                {**request, "pack_id": "post-pack-answer"},
+                data,
+            )
 
     def test_candidate_relevance_uses_public_visual_text_only(self):
         entry = {

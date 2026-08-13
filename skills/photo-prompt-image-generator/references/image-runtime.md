@@ -37,6 +37,8 @@ For unchanged retries, preserve `prompt_en` and `negative_en` byte-for-byte and 
 
 Record saved native attempts with `scripts/record_image_run.py` in `runs/image_runs.ndjson`. Include `pack_id`, chosen candidate IDs, `composer: agent`, and audit status when available. When the composed prompt contains `augmentation_brief`, preserve that audited object with `--augmentation-brief-json`; do not reconstruct or summarize its decisions. Do not write a ledger record for a preview-only native result.
 
+For an independent multi-arm qualification, keep one ledger and one `run_manifest.json` inside each arm. Call the recorder with `--arm-id`, `--worktree-id`, the frozen skill SHA-256, source snapshot identity, `--candidate-pack-version v4`, canonical authorial-request SHA-256, every reference SHA-256, the actual image-call count, `--independent-no-cross-arm-inputs`, and `--manifest <path>`. The manifest is `photo-independent-run-manifest/v1`; it records the exact pack/prompt/run IDs, image paths and hashes, tool, source, and the fact that no other arm output was used. Never claim independence from visual diversity alone, and never pass another arm's prompt, pack, message, or image into the current arm.
+
 `assets/run_ledger.schema.json` is the public record contract. Keep its required keys, optional provenance fields, and enums synchronized with `record_image_run.py`; focused tests compare recorder output against that schema.
 
 Report the image tool used and whether a repo-local copy was created.

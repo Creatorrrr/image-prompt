@@ -49,6 +49,26 @@ Prefer `.venv/bin/python` when the project virtual environment exists. Rule mode
 
 ## Default Prompt Workflow
 
+For an independent multi-arm run, a broad aesthetic request, or a Japanese-subculture-style request, freeze the agent's own concept before generating a candidate pack. Do this independently inside each arm's worktree, before reading any pack or another arm's output:
+
+```json
+{
+  "contract_version": "authorial-request/v1",
+  "provenance": "agent_prepack",
+  "subject": "<concrete adult subject and role>",
+  "setting": "<concrete photographic setting>",
+  "event": "<one visible unfinished character-revealing event>",
+  "style_domain": "japanese_subculture_photo",
+  "style_family": "<supported family id>",
+  "style_evidence": ["<visible cue one>", "<visible cue two>"],
+  "variation_key": "<arm-local key>"
+}
+```
+
+Pass that object with `--authorial-request-json <path-or-inline-json>`. It is valid only for v4 candidate packs. The generator canonicalizes it, records `canonical_sha256` and `agent_prepack` provenance, and makes it govern the public authorial scene. A pack ID, selected blueprint, candidate ID, or other pack-derived field in this input fails closed. Do not inspect a pack first and then write a concept that rationalizes its private route.
+
+For a Japanese-subculture photo contract, use one concrete fashion/community/venue family and at least two visible clothing, grooming, prop, venue, or participation cues. `Japanese subculture` is a style-domain request, not permission to infer Japanese nationality, ethnicity, or facial features from the reference. The attached portrait remains identity and adult-age evidence only.
+
 1. Generate exactly one candidate pack:
 
 ```bash
@@ -56,7 +76,9 @@ Prefer `.venv/bin/python` when the project virtual environment exists. Rule mode
   --hybrid-augmentation --emit-candidate-pack --n 1
 ```
 
-This emits `photo-candidate-pack/v4`. It exposes candidates as unordered inspiration terms in a seed-shuffled, non-preferential order, gives the agent a seed-varying abstract authorial lens, and withholds reusable render-blueprint prose. It does not expose a sampler-selected candidate, scene entry, probability, weight, score, slot-level answer, intent-coverage candidate answer key, singleton routing preset, sampled motif, private preset ID, or expanded generator argv. Sampler-derived scene groups, quality axes, and craft winners are projected as optional unordered pools instead. Use `--candidate-pack-version v3` or `v2` only to replay a legacy consumer or historical contract; normal composition must use the authorial v4 projection.
+This emits `photo-candidate-pack/v4`. It exposes candidates as unordered inspiration terms in a seed-shuffled, non-preferential order, gives the agent a seed-varying abstract authorial lens, and withholds reusable render-blueprint prose. It does not expose a sampler-selected candidate, scene entry, probability, weight, score, slot-level answer, intent-coverage candidate answer key, singleton routing preset, sampled motif, private preset ID, or expanded generator argv. Sampler-derived scene groups, quality axes, and craft winners are projected as optional unordered pools instead. Use `--candidate-pack-version v3` or `v2` only to replay a legacy consumer or historical contract, and always pass a non-empty `--legacy-replay-reason`; normal composition must use the authorial v4 projection.
+
+`--explain-scene-routing` is an opt-in private diagnostic. It exposes blueprint IDs and cue scores under `private_scene_routing`, marks the result `diagnostic_only`, and must never be used as the composition pack. Ordinary v4 output keeps that routing private.
 
 For a short Korean concept:
 
@@ -89,7 +111,9 @@ Add `coverage_assertions` only when useful. Every asserted phrase must occur lit
 
 When the v4 pack contains `hybrid_augmentation.enabled: true`, `augmentation_brief` is required. Read `references/hybrid-augmentation-contract.md`, consider all three actual-candidate routes, select exactly one or reject all, and record every selected-route detail as `transformed` or `rejected`. Candidate `concept_terms` are unordered inspiration only. For each transformed detail, invent the relationship and prompt prose, record the artistic interpretation and transformation dimensions, and bind the newly authored evidence into `prompt_en` and `chosen_candidate_ids`. Joining or lightly inflecting the exposed terms is not authorship and fails audit. v3/v2 replay packs retain their legacy states.
 
-When `authorial_composition.authored_scene_required` is true, add `authored_scene` with `governing_premise`, `artistic_rationale`, newly written `atoms` for subject/action/location/prop, and at least two distinct `interpretive_choices` containing dimension, decision, and reason. Use only the abstract scene functions, stakes, genre anchors, evidence types, and authorial lens as constraints. The source blueprint sentence, ID, hash, and sibling inventory are intentionally unavailable; do not try to reconstruct them.
+When `authorial_composition.authored_scene_required` is true, add `authored_scene` with `governing_premise`, `artistic_rationale`, newly written `atoms` for subject/action/location/prop, and at least two distinct `interpretive_choices` containing dimension, decision, and reason. If the pack has `authorial_request`, also set `authored_scene.source_authorial_request_sha256` to its exact `canonical_sha256` and preserve the request's subject, setting, event, style family, and style evidence. That pre-pack request governs the scene; private blueprint abstractions cannot replace it. Without a pre-pack request, use only the abstract scene functions, stakes, genre anchors, evidence types, and authorial lens as constraints. The source blueprint sentence, ID, hash, and sibling inventory are intentionally unavailable; do not try to reconstruct them.
+
+When `japanese_subculture_photo.requested` is true, bind at least `minimum_visible_cues` of its `visible_cues[].prompt_phrase` literally into `prompt_en`. A family label alone fails. Keep the family original, fictional, and unbranded, and do not turn a style-domain label into nationality, ethnicity, or facial morphology.
 
 When `authorial_open_slots` is present, the generator intentionally withheld a singleton subject/action/location/prop candidate that would otherwise anchor every prompt. Add `authored_slots.<slot>` with newly written `prompt_evidence` and an `artistic_rationale`. Bind the evidence literally. If the slot declares a `scene_family`, include that value in `constraint_acknowledgments` and author a compatible location; the family name itself is not prompt text.
 
@@ -225,6 +249,8 @@ There is no separate approval flag or policy mode. This project-level automatic 
 - Preserve every `mandatory_intent` as visible image content. This list contains required positive user meaning only; advisory role/soft guidance and excluded constraints remain typed in `intent_contract`. A candidate label is not proof of coverage.
 - Choose only IDs exposed in the pack whose `applicability.status` is `eligible`; never invent or reconstruct a masked candidate.
 - Treat `intent_contract` as typed request meaning. In v4, `optional_inspiration_group` scene candidates are rejectable and reveal no sampler winner; a private selected blueprint contributes only abstract functions, stakes, genre anchors, evidence types, and provenance, while the agent authors the concrete subject, action, location, and prop. v3/v2 retain fail-closed selected atomic entries and literal atoms only for replay.
+- When `authorial_request` is present, treat its canonical hash and `agent_prepack` provenance as the governing concept source. Preserve subject, setting, event, style family, and at least two style-evidence phrases in the authored scene and final prompt; never backfill it from pack candidates.
+- When `japanese_subculture_photo` is present, preserve its typed family and literal visible-cue floor. Do not infer nationality, ethnicity, or facial traits, and do not reintroduce candidates listed by its unrequested strong-theme guard.
 - When v4 requests `authored_scene`, write all four atoms yourself and bind them literally. Make at least two explicit interpretive choices; do not reconstruct a source scene from private data.
 - When v4 exposes `authorial_open_slots`, fill each opening through artistic judgment rather than recreating the removed singleton. Preserve listed hard constraints and bind every authored phrase literally.
 - Treat every v4 candidate, photographic category, craft dimension, visual proposition, and motif family as rejectable inspiration. For every ordinary chosen ID, record one `candidate_interpretations` decision and create prompt evidence that materially transforms the source concepts. Do not infer a preferred choice from array order, routing metadata, or profile data; v4 intentionally withholds those answers.
@@ -283,6 +309,11 @@ See `references/concept-routing.md` before adding a new preset, concept, or slot
 # Explain concept routing without generation
 .venv/bin/python skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py \
   --concept "회사원" --explain-concept
+
+# Private selector diagnosis only; never compose from this diagnostic pack
+.venv/bin/python skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py \
+  --concept-lock "adult woman watering a houseplant" --selection-mode rule --seed 42 \
+  --emit-candidate-pack --explain-scene-routing
 
 # Local validation
 .venv/bin/python skills/photo-prompt-image-generator/scripts/validate_photo_prompt_dictionary.py
