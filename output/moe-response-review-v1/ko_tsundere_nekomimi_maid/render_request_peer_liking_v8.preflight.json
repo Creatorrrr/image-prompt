@@ -1,0 +1,53 @@
+{
+  "schema_version": "photo-image-render-request/v1",
+  "case_id": "ko_tsundere_nekomimi_maid",
+  "qualification": "peer_liking_v8_fixed_identity_single_render",
+  "generated_at": "2026-08-13",
+  "generator": "image_gen",
+  "render_once": true,
+  "reference_transport": "referenced_image_paths",
+  "references": [
+    {
+      "index": 1,
+      "path": "../reference_identity/fictional_adult_reference.jpeg",
+      "sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+      "role": "sole_facial_identity_and_adult_age_reference"
+    },
+    {
+      "index": 2,
+      "path": "render_identity_control.png",
+      "sha256": "3218dca9f7230615cb8929af9089aa752de814bdeb2f5bc801e2680c805af4ee",
+      "role": "scene_costume_pose_hands_bandage_camera_and_low_sensual_tone_reference_only"
+    }
+  ],
+  "frozen_inputs": {
+    "candidate_pack": {
+      "path": "candidate_pack_peer_liking_v8.json",
+      "sha256": "b987bdbdf601c4089456c79d2a158f1c9c8444bd18dd40e2039af1c200070047",
+      "pack_id": "96e0c368be262947"
+    },
+    "composed_prompt": {
+      "path": "composed_prompt_peer_liking_v8.json",
+      "sha256": "362d4c441f02d43138250d796f7275e92b2cff14b29bab6e8a35207bd059f360",
+      "prompt_word_count": 120
+    },
+    "audit": {
+      "path": "composed_prompt_peer_liking_v8.audit.json",
+      "sha256": "1a573c46a2531c2694cc215c2331897a901802fbb2d15c7fe330767480a6f1e9",
+      "status": "pass",
+      "quality_status": "warn"
+    }
+  },
+  "runtime_prompt_policy": {
+    "mode": "two_reference_role_binding",
+    "audited_semantic_contract_preserved": true,
+    "role_prefix_and_image_index_substitutions_only": true,
+    "positive_word_count": 120,
+    "negative_en_appended_verbatim": true
+  },
+  "retry_policy": {
+    "maximum_retries": 0,
+    "reason": "This is the one bounded v8 qualification render after the preserved v6 direction failed."
+  },
+  "evaluation_boundary": "One result will be preserved without candidate selection. Agent pixel review may reject visible defects; only the user can positively accept it as genuinely moe and better."
+}

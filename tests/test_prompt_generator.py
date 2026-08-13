@@ -6175,11 +6175,13 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "visual_proposition",
                 "photographic_craft",
                 "artistic_final_touch",
+                "authorial_composition",
                 "hybrid_augmentation",
                 "motif_budget",
                 "preset_reference",
                 "masked_buckets",
                 "open_slots",
+                "authorial_open_slots",
                 "template_echo_risk",
                 "role_scene_policy",
                 "species_family",
@@ -6202,31 +6204,40 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertIn("고양이손", uncovered)
         integration = pack["photographic_integration"]
         self.assertTrue(integration["enabled"])
-        self.assertIn("environment_binding", integration["required_categories"])
-        self.assertGreaterEqual(integration["minimum_category_hits"], 1)
+        self.assertEqual(
+            integration["selection_mode"],
+            "agent_authored_non_preferential",
+        )
+        self.assertTrue(integration["category_candidates"])
+        self.assertNotIn("active_axes", integration)
+        self.assertNotIn("required_categories", integration)
         self.assertIn("facets", pack["quality_profile"])
-        self.assertEqual(integration["quality_profile"], pack["quality_profile"])
+        self.assertEqual(pack["quality_profile"]["profile_id"], "authorial")
+        self.assertNotIn("quality_profile", integration)
         proposition = pack["visual_proposition"]
         self.assertTrue(proposition["enabled"])
-        self.assertEqual(proposition["quality_profile"], pack["quality_profile"])
-        self.assertIn(proposition["register"], {"observational", "understated", "charged"})
+        self.assertNotIn("quality_profile", proposition)
+        self.assertNotIn("register", proposition)
         self.assertTrue(proposition["core_candidates"])
         self.assertTrue(proposition["tension_candidates"])
         craft = pack["photographic_craft"]
         self.assertTrue(craft["enabled"])
         self.assertNotIn("source", craft)
-        self.assertEqual(craft["selection_mode"], "facet_only")
-        self.assertEqual(craft["quality_profile"], pack["quality_profile"])
-        self.assertIn("top_strategy", craft)
-        self.assertTrue(craft["prompt_guidance_en"])
+        self.assertEqual(craft["selection_mode"], "agent_authored_optional")
+        self.assertNotIn("quality_profile", craft)
+        self.assertNotIn("top_strategy", craft)
+        self.assertTrue(craft["dimension_candidates"])
         self.assertEqual(
             {"shot_intent", "light_provenance", "frame_hierarchy", "decisive_moment", "environment_consequence"},
-            {dimension["id"] for dimension in craft["active_dimensions"]},
+            {dimension["dimension"] for dimension in craft["dimension_candidates"]},
         )
         final_touch = pack["artistic_final_touch"]
         self.assertFalse(final_touch["enabled"])
-        self.assertEqual(final_touch["profile_id"], "portrait_editorial")
-        self.assertEqual(pack["contract_version"], "photo-candidate-pack/v3")
+        self.assertNotIn("profile_id", final_touch)
+        self.assertEqual(pack["contract_version"], "photo-candidate-pack/v4")
+        self.assertNotIn("argv", pack["provenance"])
+        self.assertNotIn("preset_id", pack["provenance"])
+        self.assertNotIn("selected_motifs", pack["motif_budget"])
         adult = pack["hybrid_augmentation"]["adult_appeal"]
         self.assertTrue(adult["enabled"])
         self.assertEqual(adult["activation_source"], "skill_default")
@@ -6241,7 +6252,13 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             total_slot_candidates += len(candidates)
             expected_limit = 4 if slot_payload["role"] == "core" else 2
             self.assertLessEqual(len(candidates), expected_limit)
-            self.assertAlmostEqual(sum(candidate["probability"] for candidate in candidates), 1.0, places=5)
+            self.assertEqual(slot_payload["candidate_order"], "seed_shuffled_non_preferential")
+            self.assertNotIn("selected", slot_payload)
+            for candidate in candidates:
+                self.assertFalse(
+                    {"selected_by_sampler", "probability", "weight", "score", "scores"}
+                    & set(candidate)
+                )
         self.assertLessEqual(total_slot_candidates, 64)
 
     def test_candidate_pack_profiles_photographic_integration_for_cathedral(self):
@@ -6253,6 +6270,8 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             "--seed",
             "701",
             "--emit-candidate-pack",
+            "--candidate-pack-version",
+            "v3",
         )
 
         pack = payload[0]
@@ -6295,7 +6314,16 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         ]
         axis_sets = []
         for args, expected_axes in cases:
-            payload = self.run_wrapper_json(*args, "--selection-mode", "rule", "--seed", "715", "--emit-candidate-pack")
+            payload = self.run_wrapper_json(
+                *args,
+                "--selection-mode",
+                "rule",
+                "--seed",
+                "715",
+                "--emit-candidate-pack",
+                "--candidate-pack-version",
+                "v3",
+            )
             pack = payload[0]
             integration = pack["photographic_integration"]
             active_axes = {axis["id"] for axis in integration["active_axes"]}
@@ -6358,7 +6386,16 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         strategies = []
         matched_facet_sets = []
         for args in cases:
-            payload = self.run_wrapper_json(*args, "--selection-mode", "rule", "--seed", "731", "--emit-candidate-pack")
+            payload = self.run_wrapper_json(
+                *args,
+                "--selection-mode",
+                "rule",
+                "--seed",
+                "731",
+                "--emit-candidate-pack",
+                "--candidate-pack-version",
+                "v3",
+            )
             craft = payload[0]["photographic_craft"]
             strategies.append(craft["top_strategy"]["id"])
             matched_facet_sets.append(tuple(craft["matched_facets"]))
@@ -6385,6 +6422,8 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             "--seed",
             "715",
             "--emit-candidate-pack",
+            "--candidate-pack-version",
+            "v3",
         )
 
         pack = payload[0]
@@ -6413,6 +6452,8 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             "--seed",
             "715",
             "--emit-candidate-pack",
+            "--candidate-pack-version",
+            "v3",
         )
 
         pack = payload[0]
@@ -6616,6 +6657,8 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             "--seed",
             "31",
             "--emit-candidate-pack",
+            "--candidate-pack-version",
+            "v3",
         )[0]
         self.assertEqual(documentary_pack["quality_profile"]["profile_id"], "documentary")
         self.assertTrue(documentary_pack["artistic_final_touch"]["enabled"])
@@ -6707,7 +6750,10 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertIn("red_thread", pack["motif_budget"]["quotas"])
         self.assertIn("photo_wall", pack["motif_budget"]["quotas"])
         self.assertIn("phone_selfie_mirror", pack["motif_budget"]["quotas"])
-        self.assertEqual(pack["preset_reference"]["role"], "reference_scaffold")
+        self.assertEqual(pack["preset_reference"]["role"], "private_routing_scaffold")
+        self.assertFalse(pack["preset_reference"]["source_preset_exposed"])
+        self.assertFalse(pack["preset_reference"]["source_prompt_exposed"])
+        self.assertNotIn("preset_id", pack["preset_reference"])
         self.assertTrue(pack["preset_reference"]["used_sections"])
         self.assertTrue(pack["preset_reference"]["dropped_sections"])
         self.assertTrue(pack["masked_buckets"])

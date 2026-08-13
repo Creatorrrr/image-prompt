@@ -28,6 +28,7 @@ import math
 import os
 import random
 import re
+import secrets
 import sys
 import time
 from pathlib import Path
@@ -109,8 +110,9 @@ CANDIDATE_PACK_SUPPORT_SLOT_LIMIT = 2
 CANDIDATE_PACK_TOTAL_CANDIDATE_LIMIT = 64
 CANDIDATE_PACK_CONTRACT_V2 = "photo-candidate-pack/v2"
 CANDIDATE_PACK_CONTRACT_V3 = "photo-candidate-pack/v3"
-CANDIDATE_PACK_VERSIONS = ("v2", "v3")
-DEFAULT_CANDIDATE_PACK_VERSION = "v3"
+CANDIDATE_PACK_CONTRACT_V4 = "photo-candidate-pack/v4"
+CANDIDATE_PACK_VERSIONS = ("v2", "v3", "v4")
+DEFAULT_CANDIDATE_PACK_VERSION = "v4"
 CANDIDATE_PACK_V3_PROFILE_ALIASES = {
     "character_moe_grammar": "character_scene_grammar",
 }
@@ -123,6 +125,23 @@ CANDIDATE_PACK_CREATIVE_EXPLORATION_LIMIT = 6
 CANDIDATE_PACK_CREATIVE_DIRECTION_FLOOR = 0.75
 CANDIDATE_PACK_CREATIVE_DIRECTION_MIN_PROPOSALS = 4
 CANDIDATE_PACK_HYBRID_CONTRACT_VERSION = "photo-hybrid-augmentation/v1"
+CANDIDATE_PACK_HYBRID_AUTHORIAL_CONTRACT_VERSION = "photo-hybrid-augmentation/v2"
+CANDIDATE_PACK_AUTHORIAL_COMPOSITION_VERSION = "photo-authorial-composition/v1"
+CANDIDATE_PACK_AUTHORIAL_SCENE_VERSION = "photo-authorial-scene/v1"
+CANDIDATE_PACK_AUTHORIAL_LENSES = (
+    "gesture_and_interruption",
+    "material_and_contact",
+    "spatial_relationship",
+    "light_and_visibility",
+    "aftermath_and_trace",
+    "framing_and_withheld_information",
+)
+CANDIDATE_PACK_V4_AUTHORIAL_SCENE_SLOTS = (
+    "subject",
+    "action",
+    "location",
+    "prop",
+)
 CANDIDATE_PACK_ADULT_APPEAL_CONTRACT_VERSION = "photo-adult-appeal/v2"
 CANDIDATE_PACK_ADULT_APPEAL_AXES = ("sensual_editorial", "fetish_fashion")
 CANDIDATE_PACK_ADULT_APPEAL_EMPHASES = ("sensual_led", "balanced", "fetish_led")
@@ -204,6 +223,53 @@ CANDIDATE_PACK_VIEWER_COMMERCIAL_OBJECTIVES = (
     "act",
     "share",
     "return",
+)
+MOE_RESPONSE_CONTRACT_VERSION = "moe_response_contract/v10"
+MOE_RESPONSE_PROMPT_MIN_WORDS = 50
+MOE_RESPONSE_PROMPT_MAX_WORDS = 120
+MOE_RESPONSE_DOMAIN = "character_moe_grammar"
+MOE_RESPONSE_DEFAULT_ROUTE = "character_attribute_composition_scene"
+MOE_RESPONSE_GAP_ROUTE = "character_gap_contrast_scene"
+MOE_RESPONSE_NONHUMAN_ROUTE = "character_nonhuman_expression_scene"
+MOE_RESPONSE_EFFORT_ROUTE = "character_competence_vulnerability_scene"
+MOE_RESPONSE_CARE_ROUTE = "character_quiet_care_daily_scene"
+MOE_AESTHETIC_BISHOUJO = "adult_bishoujo"
+MOE_AESTHETIC_BISHONEN = "adult_bishonen"
+MOE_AESTHETIC_ANDROGYNOUS = "adult_beautiful_cute_character"
+MOE_TEXT_REQUEST_PATTERNS = (
+    r"문구|글자|글씨|텍스트|간판|메뉴판|칠판",
+    r"文字|テキスト|看板|メニュー|黒板|書かれ",
+    r"(?<![a-z0-9])(?:readable\s+text|written\s+text|caption|signage|sign|menu\s+board|chalkboard\s+writing|lettering|typography)(?![a-z0-9])",
+)
+
+# These expressions are request controls, not positive objects to render.
+# Keep them centralized so routing, mandatory-intent extraction, and adult-tone
+# policy all interpret Korean, Japanese, and English wording identically.
+MOE_NONSEXUAL_PATTERNS = (
+    r"야하지\s*않(?:은|게|으면서도|으면서|고|도록|다)?",
+    r"성적이지\s*않(?:은|게|고|도록|다)?",
+    r"선정적이지\s*않(?:은|게|고|도록|다)?",
+    r"비\s*성적(?:인|으로|인\s*방식)?",
+    r"(?:성적|선정적|에로틱한)\s*(?:톤|느낌|연출)?\s*없이",
+    r"노출\s*없이",
+    r"non[-\s]?sexual(?:ized|ised)?",
+    r"not\s+(?:sexy|sexual(?:ized|ised)?|erotic|sensual|suggestive)",
+    r"without\s+(?:sexuali[sz]ation|eroticism|sensuality|sensual\s+framing|suggestive\s+framing|body\s+emphasis)",
+    r"no\s+(?:sexuali[sz]ation|eroticism|sensuality|sensual\s+framing|suggestive\s+framing|body\s+emphasis)",
+    r"性的(?:では|じゃ)?ない",
+    r"性的でなく",
+    r"非性的(?:な|に)?",
+    r"セクシー(?:では|じゃ)?ない",
+    r"エロくない",
+    r"性的な演出(?:は|が)?(?:ない|なし)",
+    r"露出(?:は|が)?(?:ない|なし)",
+)
+MOE_GOAL_PATTERNS = (
+    r"갭\s*모에",
+    r"모에(?:한|하게|함|함을|스러운|스럽게|감|로|를|가|의)?",
+    r"ギャップ\s*萌え",
+    r"萌え(?:る|な|に|感|を|の)?",
+    r"(?<![a-z0-9])moe(?![a-z0-9])",
 )
 CANDIDATE_PACK_CORE_SLOTS = {
     "subject",
@@ -3045,6 +3111,7 @@ def candidate_pack_build_slots(
     choices = result.get("choices") if isinstance(result.get("choices"), dict) else {}
     contract = trace.get("generation_contract") if isinstance(trace.get("generation_contract"), dict) else {}
     pool_trace = contract.get("candidate_pool_trace") if isinstance(contract.get("candidate_pool_trace"), dict) else {}
+    soft_policy = contract.get("soft_anchor_policy") if isinstance(contract.get("soft_anchor_policy"), dict) else {}
     total = 0
     score_rows = [row for row in trace.get("slot_scores") or [] if isinstance(row, dict)]
     for score_index, score_row in enumerate(score_rows):
@@ -3066,6 +3133,19 @@ def candidate_pack_build_slots(
         )
         eligible_record = pool_trace.get(slot) if isinstance(pool_trace.get(slot), dict) else {}
         eligible_ids = [str(item) for item in eligible_record.get("eligible_ids") or [] if str(item).strip()]
+        atomic_allowed_ids = soft_anchor_atomic_pool_for_slot(soft_policy, slot)
+        if atomic_allowed_ids:
+            # A late optional repair can refresh candidate_pool_trace after the
+            # role scene has already selected a valid atomic member.  Public
+            # alternatives must remain inside that scene, even if the trace's
+            # last writer considered a broader free-slot pool.
+            eligible_ids = [item_id for item_id in eligible_ids if item_id in atomic_allowed_ids]
+            if not eligible_ids:
+                eligible_ids = [
+                    item_id
+                    for item_id in [selected_id, *sorted(atomic_allowed_ids)]
+                    if item_id and item_id in atomic_allowed_ids
+                ]
         eligible_weights = eligible_record.get("weights") if isinstance(eligible_record.get("weights"), dict) else {}
         if eligible_ids:
             eligible_set = set(eligible_ids)
@@ -3146,6 +3226,15 @@ def candidate_pack_build_slots(
             continue
         eligible_record = pool_trace.get(str(slot)) if isinstance(pool_trace.get(str(slot)), dict) else {}
         eligible_ids = [str(item) for item in eligible_record.get("eligible_ids") or [] if str(item).strip()]
+        atomic_allowed_ids = soft_anchor_atomic_pool_for_slot(soft_policy, str(slot))
+        if atomic_allowed_ids:
+            eligible_ids = [item_id for item_id in eligible_ids if item_id in atomic_allowed_ids]
+            if not eligible_ids:
+                eligible_ids = [
+                    item_id
+                    for item_id in [raw_id, *sorted(atomic_allowed_ids)]
+                    if item_id and item_id in atomic_allowed_ids
+                ]
         eligible_weights = eligible_record.get("weights") if isinstance(eligible_record.get("weights"), dict) else {}
         if eligible_ids:
             by_id = {
@@ -3343,28 +3432,31 @@ def candidate_pack_source_texts(result: JsonDict, trace: JsonDict) -> List[JsonD
 
     for concept in normalize_list(provenance.get("concept_lock")):
         no_people = intent_explicitly_excludes_people(concept)
+        has_tone_constraint = text_explicitly_requests_nonsexual_moe(concept)
         add_source(
             "concept_lock",
             concept,
-            polarity="mixed" if no_people else "required",
+            polarity="mixed" if no_people or has_tone_constraint else "required",
             priority="critical",
             mandatory=True,
         )
     for requirement in normalize_list(provenance.get("user_mandatory_intents")):
         no_people = intent_explicitly_excludes_people(requirement)
+        has_tone_constraint = text_explicitly_requests_nonsexual_moe(requirement)
         add_source(
             "user_requirement",
             requirement,
-            polarity="mixed" if no_people else "required",
+            polarity="mixed" if no_people or has_tone_constraint else "required",
             priority="critical",
             mandatory=True,
         )
     for requirement in normalize_list(provenance.get("additional_requirements")):
         no_people = intent_explicitly_excludes_people(requirement)
+        has_tone_constraint = text_explicitly_requests_nonsexual_moe(requirement)
         add_source(
             "additional_requirement",
             requirement,
-            polarity="mixed" if no_people else "required",
+            polarity="mixed" if no_people or has_tone_constraint else "required",
             priority="critical",
             mandatory=True,
         )
@@ -3395,14 +3487,276 @@ def candidate_pack_source_texts(result: JsonDict, trace: JsonDict) -> List[JsonD
     intent = str(trace.get("intent") or "").strip()
     if intent and trace.get("intent_source") == "user":
         no_people = intent_explicitly_excludes_people(intent)
+        has_tone_constraint = text_explicitly_requests_nonsexual_moe(intent)
         add_source(
             "intent",
             intent,
-            polarity="mixed" if no_people else "required",
+            polarity="mixed" if no_people or has_tone_constraint else "required",
             priority="critical",
             mandatory=True,
         )
     return texts
+
+
+def text_matches_any_pattern(text: str, patterns: Sequence[str]) -> bool:
+    return any(re.search(pattern, str(text or ""), flags=re.IGNORECASE) for pattern in patterns)
+
+
+def moe_text_is_metadata_reference(text: str) -> bool:
+    """Return true when ``moe`` is a name, label, or term being documented.
+
+    The ordinary image route must not turn a dictionary page, shop sign, named
+    person, or research record into a character-response request merely because
+    the bytes ``moe``/``모에``/``萌え`` occur in it.
+    """
+    value = clean_spaces(str(text or ""))
+    if not value:
+        return False
+    patterns = (
+        r"(?<![a-z0-9])(?:named|called)\s+[\"']?moe(?![a-z0-9])",
+        r"(?<![a-z0-9])moe(?![a-z0-9])\s+(?:as\s+)?(?:a\s+)?(?:name|word|term|definition|entry|label|sign|restaurant|shop)",
+        r"(?:dictionary|glossary|definition|etymology|meaning|research\s+(?:book|record)|term|word)\b[^.]{0,80}(?<![a-z0-9])moe(?![a-z0-9])",
+        r"모에(?:라는|란|이라고\s*하는)\s*(?:단어|용어|이름|상호|표기)",
+        r"(?:단어|용어|이름|상호|표기|사전|정의|뜻|어원|연구서|간판|식당)[^。.!?]{0,40}모에",
+        r"[「『\"']?萌え[」』\"']?\s*(?:という|と呼ばれる)?\s*(?:用語|言葉|名前|定義|表記)",
+        r"(?:辞書|用語|言葉|定義|意味|語源|研究書|看板|店名)[^。.!?]{0,40}萌え",
+    )
+    return text_matches_any_pattern(value, patterns)
+
+
+def text_explicitly_requests_nonsexual_moe(text: str) -> bool:
+    return text_matches_any_pattern(text, MOE_NONSEXUAL_PATTERNS)
+
+
+def mask_patterns(text: str, patterns: Sequence[str]) -> str:
+    masked = str(text or "")
+    for pattern in patterns:
+        masked = re.sub(pattern, " ", masked, flags=re.IGNORECASE)
+    return clean_spaces(masked)
+
+
+def strip_moe_request_controls(text: str) -> str:
+    """Remove response/tone controls while keeping renderable identity words."""
+    return mask_patterns(mask_patterns(text, MOE_NONSEXUAL_PATTERNS), MOE_GOAL_PATTERNS)
+
+
+def text_explicitly_requests_sensual_tone(text: str) -> bool:
+    # Mask negative scopes first so ``nonsexual`` never fires the positive
+    # ``sexual`` token and ``not sensual`` never becomes a sensual override.
+    value = mask_patterns(text, MOE_NONSEXUAL_PATTERNS)
+    return text_matches_any_pattern(
+        value,
+        (
+            r"야하(?:게|고|면서|다|ㄴ)?",
+            r"섹시|관능|에로틱|선정적|페티시",
+            r"(?<![a-z0-9])(?:sensual|sexy|sexualized|sexualised|erotic|seductive|fetish)(?![a-z0-9])",
+            r"セクシー|官能的|エロ(?:い|ティック)?|艶っぽ|フェティッシュ",
+        ),
+    )
+
+
+def resolve_moe_aesthetic_baseline(texts: Sequence[str]) -> JsonDict:
+    """Choose the adult beauty/cuteness entry condition for explicit moe.
+
+    ``bishoujo`` and ``bishonen`` are used here as adult character-design
+    categories, never as literal age claims.  A gender-unspecified moe request
+    defaults to adult bishoujo because that is the user's requested mainstream
+    convention; explicit masculine or androgynous presentation always wins.
+    """
+    combined = " ".join(clean_spaces(text) for text in texts if clean_spaces(text))
+    androgynous_requested = text_matches_any_pattern(
+        combined,
+        (
+            r"논\s*바이너리|논바이너리|비이분법적|중성적|무성별",
+            r"ノンバイナリー|中性的|無性別",
+            r"(?<![a-z0-9])(?:non[-\s]?binary|androgynous|gender[-\s]?neutral)(?![a-z0-9])",
+        ),
+    )
+    masculine_requested = text_matches_any_pattern(
+        combined,
+        (
+            r"미소년|남성|남자|남캐",
+            r"美少年|男性|男(?:性|性キャラ|キャラ|のキャラクター)",
+            r"(?<![a-z0-9])(?:adult\s+)?(?:man|men|male|masculine|bishonen)(?![a-z0-9])",
+        ),
+    )
+    feminine_requested = text_matches_any_pattern(
+        combined,
+        (
+            r"미소녀|여성|여자|여캐",
+            r"美少女|女性|女(?:性|性キャラ|キャラ|のキャラクター)",
+            r"(?<![a-z0-9])(?:adult\s+)?(?:woman|women|female|feminine|bishoujo)(?![a-z0-9])",
+        ),
+    )
+
+    if androgynous_requested:
+        baseline = MOE_AESTHETIC_ANDROGYNOUS
+        presentation_source = "explicit_androgynous"
+    elif masculine_requested and not feminine_requested:
+        baseline = MOE_AESTHETIC_BISHONEN
+        presentation_source = "explicit_masculine"
+    elif feminine_requested and not masculine_requested:
+        baseline = MOE_AESTHETIC_BISHOUJO
+        presentation_source = "explicit_feminine"
+    else:
+        baseline = MOE_AESTHETIC_BISHOUJO
+        presentation_source = "default_bishoujo"
+    return {
+        "aesthetic_baseline": baseline,
+        "aesthetic_presentation_source": presentation_source,
+        "aesthetic_required": True,
+    }
+
+
+def resolve_moe_response_intent(texts: Sequence[str]) -> JsonDict:
+    """Resolve a natural-language moe request into one visible response route.
+
+    Moe requires both an adult beautiful/cute character-design entry condition
+    and a character-specific response hypothesis.  Neither layer substitutes
+    for the other.
+    """
+    active_texts = [clean_spaces(text) for text in texts if clean_spaces(text)]
+    request_texts = [
+        text
+        for text in active_texts
+        if text_matches_any_pattern(text, MOE_GOAL_PATTERNS)
+        and not moe_text_is_metadata_reference(text)
+    ]
+    if not request_texts:
+        return {
+            "requested": False,
+            "eligible": False,
+            "contract_version": MOE_RESPONSE_CONTRACT_VERSION,
+        }
+
+    combined = " ".join(request_texts)
+    gap_requested = text_matches_any_pattern(
+        combined,
+        (
+            r"갭\s*모에",
+            r"ギャップ\s*萌え",
+            r"(?<![a-z0-9])gap\s+moe(?![a-z0-9])",
+        ),
+    )
+    tsundere_requested = text_matches_any_pattern(
+        combined,
+        (
+            r"츤데레",
+            r"ツンデレ",
+            r"(?<![a-z0-9])tsundere(?![a-z0-9])",
+        ),
+    )
+    nonhuman_requested = text_matches_any_pattern(
+        combined,
+        (
+            r"네코\s*미미|고양이\s*귀|동물\s*귀|케모노미미|수인",
+            r"猫耳|ケモノミミ|獣耳",
+            r"(?<![a-z0-9])(?:cat[-\s]?(?:earred|eared|ears)|kemonomimi|beastkin)(?![a-z0-9])",
+        ),
+    )
+    effort_requested = text_matches_any_pattern(
+        combined,
+        (
+            r"서툴|실수|허둥|열심|애쓰|노력",
+            r"不器用|失敗|一生懸命|頑張",
+            r"(?<![a-z0-9])(?:clumsy|mistake|earnest|trying\s+hard|tries\s+hard)(?![a-z0-9])",
+        ),
+    )
+    nurturant_requested = text_matches_any_pattern(
+        combined,
+        (
+            r"마망|모성적|어머니\s*같|엄마\s*같|인자한\s*(?:어머니|엄마)",
+            r"ママみ|母性的|母親\s*らし|お母さん\s*らし",
+            r"(?<![a-z0-9])(?:mamang|mommy|motherly|maternal|nurturant)(?![a-z0-9])",
+        ),
+    )
+    care_requested = nurturant_requested or text_matches_any_pattern(
+        combined,
+        (
+            r"챙겨|돌봐|배려|다정|보살핌|치유계",
+            r"世話|気遣|優し|癒やし|癒し",
+            r"(?<![a-z0-9])(?:care|caring|kindness|looks?\s+after|iyashikei|helping\s+(?:a|the|their)\s+(?:friend|housemate|partner))(?![a-z0-9])",
+        ),
+    )
+
+    relationship_register = (
+        "peer_liking_under_denial"
+        if tsundere_requested
+        else (
+            "nurturant_benevolence"
+            if nurturant_requested
+            else (
+                "directed_care_without_role_inference"
+                if care_requested
+                else "character_specific_reveal"
+            )
+        )
+    )
+    support_mechanisms: List[str] = []
+    if tsundere_requested:
+        route_id = MOE_RESPONSE_GAP_ROUTE
+        primary_mechanism = "denial_care_leak"
+        if nonhuman_requested:
+            support_mechanisms.append("nonhuman_reflex_leak")
+    elif gap_requested:
+        route_id = MOE_RESPONSE_GAP_ROUTE
+        primary_mechanism = "baseline_break_reveal"
+        if effort_requested:
+            support_mechanisms.append("earnest_effort_recovery")
+        if nonhuman_requested:
+            support_mechanisms.append("nonhuman_reflex_leak")
+    elif care_requested:
+        route_id = MOE_RESPONSE_CARE_ROUTE
+        primary_mechanism = "quiet_care_trace"
+        if nonhuman_requested:
+            support_mechanisms.append("nonhuman_reflex_leak")
+        if effort_requested:
+            support_mechanisms.append("earnest_effort_recovery")
+    elif nonhuman_requested:
+        route_id = MOE_RESPONSE_NONHUMAN_ROUTE
+        primary_mechanism = "nonhuman_reflex_leak"
+    elif effort_requested:
+        route_id = MOE_RESPONSE_EFFORT_ROUTE
+        primary_mechanism = "earnest_effort_recovery"
+    else:
+        route_id = MOE_RESPONSE_DEFAULT_ROUTE
+        primary_mechanism = "character_specific_reveal"
+
+    explicit_nonsexual = any(
+        text_explicitly_requests_nonsexual_moe(text) for text in request_texts
+    )
+    explicit_sensual = any(
+        text_explicitly_requests_sensual_tone(text) for text in request_texts
+    )
+    # Moe and sexual appeal are separate axes.  A plain adult-moe request may
+    # use the skill's low-intensity sensual-editorial default as supporting
+    # appeal; only explicit nonsexual wording suppresses it.  Explicit
+    # positive sensual wording remains a stronger user-controlled branch.
+    sexual_tone = (
+        "nonsexual"
+        if explicit_nonsexual
+        else ("sensual" if explicit_sensual else "sensual_optional")
+    )
+    aesthetic = resolve_moe_aesthetic_baseline(request_texts)
+    text_requested = text_matches_any_pattern(combined, MOE_TEXT_REQUEST_PATTERNS)
+    return {
+        "requested": True,
+        "eligible": True,
+        "contract_version": MOE_RESPONSE_CONTRACT_VERSION,
+        "activation_source": "explicit_natural_language_moe_request",
+        "response_goal": "character_specific_moe",
+        "route_id": route_id,
+        "primary_mechanism": primary_mechanism,
+        "relationship_register": relationship_register,
+        "support_mechanisms": support_mechanisms,
+        **aesthetic,
+        "sexual_tone": sexual_tone,
+        "defaulted_nonsexual": False,
+        "defaulted_sensual_optional": sexual_tone == "sensual_optional",
+        "explicit_nonsexual": explicit_nonsexual,
+        "explicit_sensual": explicit_sensual,
+        "explicit_text_requested": text_requested,
+    }
 
 
 def candidate_pack_tokenize_intent_text(text: str) -> List[str]:
@@ -3417,9 +3771,8 @@ def candidate_pack_tokenize_intent_text(text: str) -> List[str]:
     masked = text
     for phrase in negative_phrases:
         masked = masked.replace(phrase, " ")
-    tokens = re.findall(r"[A-Za-z0-9][A-Za-z0-9_+-]*|[가-힣]+", text)
-    if negative_phrases:
-        tokens = re.findall(r"[A-Za-z0-9][A-Za-z0-9_+-]*|[가-힣]+", masked)
+    masked = mask_patterns(masked, MOE_NONSEXUAL_PATTERNS)
+    tokens = re.findall(r"[A-Za-z0-9][A-Za-z0-9_+-]*|[가-힣]+", masked)
     normalized: List[str] = [clean_spaces(phrase) for phrase in negative_phrases]
     for token in tokens:
         key = token.lower()
@@ -3429,6 +3782,106 @@ def candidate_pack_tokenize_intent_text(text: str) -> List[str]:
             continue
         normalized.append(token)
     return normalized or ([text.strip()] if text.strip() else [])
+
+
+def candidate_pack_moe_identity_terms(text: str) -> List[str]:
+    """Keep identity/appearance constraints out of natural moe request prose.
+
+    The response contract owns baseline, trigger, reaction, and consequence.
+    Mandatory-intent audit should therefore preserve renderable identity words,
+    not particles or boilerplate such as ``photo``, ``moment``, or ``hiding a
+    small mistake``.
+    """
+    positive = strip_moe_request_controls(text)
+    terms: List[str] = []
+
+    # Japanese does not use whitespace, so extract the few identity markers
+    # that survive alias canonicalization instead of treating the whole clause
+    # as one literal audit token.
+    for marker in (
+        "成人",
+        "美少女",
+        "美少年",
+        "女性",
+        "男性",
+        "中性的",
+        "ノンバイナリー",
+        "猫耳",
+        "ケモノミミ",
+        "獣耳",
+        "ツンデレ",
+        "メイド",
+        "バリスタ",
+        "警備員",
+        "ボディーガード",
+    ):
+        if marker in positive and marker not in terms:
+            terms.append(marker)
+
+    request_stopwords = {
+        "평소",
+        "냉정한",
+        "작은",
+        "실수",
+        "사진",
+        "순간",
+        "모습",
+        "장면",
+        "요청",
+        "캐릭터",
+        "계열",
+        "오리지널",
+        "창작",
+        "photo",
+        "photograph",
+        "portrait",
+        "picture",
+        "moment",
+        "scene",
+        "original",
+        "fictional",
+        "character",
+    }
+    response_stems = ("감추", "숨기", "trying", "hiding", "hide")
+    korean_particles = (
+        "에게서",
+        "에게",
+        "께서",
+        "에서",
+        "으로",
+        "처럼",
+        "은",
+        "는",
+        "이",
+        "가",
+        "을",
+        "를",
+        "의",
+        "와",
+        "과",
+        "로",
+        "도",
+        "만",
+    )
+    particle_ending_identity_words = {"고양이"}
+    raw_tokens = re.findall(r"[A-Za-z0-9][A-Za-z0-9_+-]*|[가-힣]+", positive)
+    for raw_token in raw_tokens:
+        token = raw_token
+        if re.fullmatch(r"[가-힣]+", token) and token not in particle_ending_identity_words:
+            for particle in korean_particles:
+                if token.endswith(particle) and len(token) - len(particle) >= 2:
+                    token = token[: -len(particle)]
+                    break
+        lowered = token.lower()
+        if lowered in CANDIDATE_PACK_INTENT_STOPWORDS or lowered in request_stopwords:
+            continue
+        if any(lowered.startswith(stem) for stem in response_stems):
+            continue
+        if len(token) <= 1 and not token.isascii():
+            continue
+        if token not in terms:
+            terms.append(token)
+    return terms
 
 
 def intent_explicitly_excludes_people(text: str) -> bool:
@@ -3619,6 +4072,48 @@ def resolve_request_intent_constraints(
                 if not (row.get("axis") == "domain" and row.get("value") == domain)
             ]
     no_people = any(intent_explicitly_excludes_people(text) for text in texts)
+    character_response = resolve_moe_response_intent(texts)
+    if character_response.get("requested") is True:
+        if no_people:
+            character_response = {
+                **character_response,
+                "eligible": False,
+                "blocked_reason": "character_response_requires_a_visible_character",
+            }
+        else:
+            character_route_ids = {
+                str(preset.get("id") or "")
+                for preset in data.get("presets", [])
+                if isinstance(preset, dict)
+                and MOE_RESPONSE_DOMAIN in preset_domains(preset, data)
+            }
+            existing_character_routes = sorted(scoped_routes & character_route_ids)
+            if len(existing_character_routes) == 1:
+                # Exact research/scoped aliases remain authoritative. Natural
+                # response routing only fills the gap when no narrower route
+                # has already matched.
+                character_response = {
+                    **character_response,
+                    "route_id": existing_character_routes[0],
+                }
+            route_id = str(character_response.get("route_id") or "")
+            domains.add(MOE_RESPONSE_DOMAIN)
+            if route_id in catalog_presets:
+                scoped_routes.add(route_id)
+            if not any(
+                row.get("axis") == "character_response"
+                and row.get("value") == route_id
+                for row in matched
+            ):
+                matched.append(
+                    {
+                        "axis": "character_response",
+                        "value": route_id,
+                        "domain": MOE_RESPONSE_DOMAIN,
+                        "mechanism": character_response.get("primary_mechanism"),
+                        "sexual_tone": character_response.get("sexual_tone"),
+                    }
+                )
     if no_people:
         categories.discard("human")
         subject_entry_ids = {
@@ -3644,6 +4139,7 @@ def resolve_request_intent_constraints(
         "subject_categories": sorted(categories),
         "domains": sorted(domains),
         "scoped_routes": sorted(scoped_routes),
+        "character_response": character_response,
         "matched": matched,
         "source_text_count": len(texts),
     }
@@ -3691,12 +4187,32 @@ def candidate_pack_intent_contract(
                     continue
                 if value and any(intent_alias_matches(source_text, alias) for alias in normalize_list(rule.get("aliases"))):
                     facets.append(f"{axis}:{value}")
+        character_response = resolve_moe_response_intent([source_text])
+        if character_response.get("requested") is True:
+            facets.extend(
+                [
+                    f"domain:{MOE_RESPONSE_DOMAIN}",
+                    f"character_response:{character_response.get('route_id')}",
+                ]
+            )
         meaningful_terms = candidate_pack_tokenize_intent_text(source_text)
         covered_by = [
             candidate_id
             for candidate_id, blob in candidate_blobs.items()
             if any(str(term).lower() in blob for term in meaningful_terms)
         ][:12]
+        constraints = ["no_people"] if no_people else []
+        if text_explicitly_requests_nonsexual_moe(source_text):
+            constraints.append("sexual_tone:nonsexual")
+        if character_response.get("requested") is True:
+            constraints.extend(
+                [
+                    "moe_response_goal",
+                    f"moe_aesthetic:{character_response.get('aesthetic_baseline')}",
+                    f"moe_mechanism:{character_response.get('primary_mechanism')}",
+                    f"sexual_tone:{character_response.get('sexual_tone')}",
+                ]
+            )
         rows.append(
             {
                 "id": f"intent:{stable_text_id(f'{source}|{source_text}', 12)}",
@@ -3705,7 +4221,7 @@ def candidate_pack_intent_contract(
                 "polarity": source_row.get("polarity") or ("excluded" if no_people else "required"),
                 "priority": source_row.get("priority") or "critical",
                 "axis_hints": sorted(set(facets)),
-                "constraints": ["no_people"] if no_people else [],
+                "constraints": constraints,
                 "coverage_mode": "literal_or_asserted_translation",
                 "status": "covered" if covered_by else "uncovered",
                 "covered_by": covered_by,
@@ -3754,14 +4270,22 @@ def candidate_pack_mandatory_intents(
             continue
         source = str(source_row.get("source") or "")
         source_text = str(source_row.get("text") or "")
-        if source in {"concept_lock", "intent"} or intent_explicitly_excludes_people(source_text):
+        character_response = resolve_moe_response_intent([source_text])
+        positive_source_text = (
+            strip_moe_request_controls(source_text)
+            if character_response.get("requested") is True
+            else source_text
+        )
+        if character_response.get("requested") is True:
+            intent_terms = candidate_pack_moe_identity_terms(source_text)
+        elif source in {"concept_lock", "intent"} or intent_explicitly_excludes_people(source_text):
             intent_terms = [
                 term
-                for term in candidate_pack_tokenize_intent_text(source_text)
+                for term in candidate_pack_tokenize_intent_text(positive_source_text)
                 if not intent_explicitly_excludes_people(term)
             ]
         else:
-            intent_terms = [source_text]
+            intent_terms = [positive_source_text] if positive_source_text else []
         for token in intent_terms:
             dedupe_key = (source, token.lower())
             if dedupe_key in seen:
@@ -4033,6 +4557,550 @@ def candidate_pack_creative_direction(result: JsonDict) -> Optional[JsonDict]:
     }
 
 
+def candidate_pack_moe_response(result: JsonDict) -> Optional[JsonDict]:
+    """Expose a character-response composition contract for explicit moe intent."""
+    provenance = result.get("provenance") if isinstance(result.get("provenance"), dict) else {}
+    response = (
+        provenance.get("character_response")
+        if isinstance(provenance.get("character_response"), dict)
+        else {}
+    )
+    if response.get("requested") is not True or response.get("eligible") is not True:
+        return None
+
+    mechanism = str(response.get("primary_mechanism") or "character_specific_reveal")
+    relationship_register = str(
+        response.get("relationship_register") or "character_specific_reveal"
+    )
+    identity_controlled = str(provenance.get("reference_edit_mode") or "off") == "identity"
+    mechanism_instructions = {
+        "character_specific_reveal": (
+            "Choose one trait-specific intention, interrupt it with one concrete trigger, "
+            "and show the involuntary face, hand, gaze, or posture response plus its immediate consequence."
+        ),
+        "denial_care_leak": (
+            "Show a mild active denial or guarded front contradicted by a directed helpful action. "
+            "The prompt must bind one separate active_denial_phrase: a visible mouth or posture protest "
+            "such as pursed lips caught mid-protest, a small chin lift, a half-turned shoulder, or a brisk "
+            "hand that keeps helping. Guardedness, a label, or averted gaze alone does not qualify. "
+            "Bind care_action_anchor_phrase to the recipient's visible hand, wound, or carried object at a named lower "
+            "screen position so the helpful action has a concrete endpoint. Separately bind relationship_gaze_anchor_phrase "
+            "to one small blurred partial face landmark from the same adult recipient at a named upper frame edge: an outer "
+            "eye with a temple or profile sliver, never a second full face or an imagined off-frame eye line. Then bind "
+            "concealed_affection_phrase as an oblique gaze geometry: name a three-quarter head turn toward the side opposite "
+            "that landmark, keep the nose axis off the lens, and let only the irises make a small return toward the relationship "
+            "anchor—not the hand, wound, object, or camera lens. A barely visible flash of private personal liking must "
+            "soften the lower lids and start one mouth corner lifting before she suppresses it. Generic warmth aimed only at the care task reads as "
+            "nurturance or mamang, not tsundere. An off-frame or fully shown second face does not qualify. "
+            "Direct frontal eye contact, a centered face, or a selfie-like viewer gaze is too overt and does not qualify. "
+            "The face must also leak one warm or pleased micro-response—softened eyes, an almost-smile, "
+            "relieved mouth corner, or similarly specific positive cue—so irritation never becomes the "
+            "dominant emotion. The caring target and both sides of the contradiction must be legible in the same crop."
+        ),
+        "baseline_break_reveal": (
+            "Establish one recognizable habitual baseline, break it with one concrete trigger, and show "
+            "the brief involuntary face, hand, gaze, or posture change plus the character's recovery attempt."
+        ),
+        "nonhuman_reflex_leak": (
+            "Tie one involuntary ear, tail, pupil, or posture reflex to a visible trigger while the "
+            "adult character's face and hands show how they try to manage that reflex. For ears, "
+            "make the trigger-side response asymmetric: one ear turns toward the cause while the "
+            "other retains its baseline angle."
+        ),
+        "earnest_effort_recovery": (
+            "Show competent or earnest action interrupted by a small recoverable mistake, followed by "
+            "a visible attempt to correct it without humiliation or helplessness."
+        ),
+        "quiet_care_trace": (
+            "Show a specific caring action directed at a visible recipient or used object, with a small "
+            "state change that proves the care rather than a generic kind expression. For a mamang or maternal "
+            "request, make mature benevolence visible through a relaxed brow, patient soft eyes, a reassuring mouth, "
+            "and protective attention; do not add active denial or a romantic eye-line contradiction."
+        ),
+    }
+    relationship_register_instructions = {
+        "peer_liking_under_denial": (
+            "The concealed positive cue is peer-level personal or romantic liking, not general kindness or caregiving. "
+            "Keep one small blurred partial recipient eye-and-temple landmark at a named upper frame edge. Turn the head "
+            "three-quarter toward the opposite side, return only the irises obliquely to that landmark, soften the lower lids, "
+            "and flatten one mouth corner that starts to lift; reject direct frontal eye contact or a second full face."
+        ),
+        "nurturant_benevolence": (
+            "Use mature, benevolent protective warmth: relaxed brow, patient soft eyes, reassuring mouth, and calm "
+            "attention toward the cared-for person or object. Do not force tsundere denial or romantic gaze leakage."
+        ),
+        "directed_care_without_role_inference": (
+            "Show the requested specific act of care and a mild warm response without inferring motherhood, romance, "
+            "dependency, or a hierarchy that the request did not establish."
+        ),
+        "character_specific_reveal": (
+            "Keep the relationship reading subordinate to the routed character-specific reveal; do not invent a "
+            "romantic, maternal, or dependent relationship without request evidence."
+        ),
+    }
+    sexual_tone = str(response.get("sexual_tone") or "sensual_optional")
+    aesthetic_baseline = str(
+        response.get("aesthetic_baseline") or MOE_AESTHETIC_BISHOUJO
+    )
+    aesthetic_instructions = {
+        MOE_AESTHETIC_BISHOUJO: (
+            "Cast one unmistakably adult original woman, mid-twenties or older, with a polished "
+            "bishoujo-inspired character-design read: harmonious delicate adult facial features, "
+            "clear lively eyes at realistic adult scale, a softly expressive mouth, well-kept glossy "
+            "hair, and cohesive styling. She must read as both pretty and cute at first glance, "
+            "without childlike morphology. Any adult sexual appeal must remain subordinate to "
+            "her face, expression, agency, and character-specific response."
+        ),
+        MOE_AESTHETIC_BISHONEN: (
+            "Cast one unmistakably adult original man, mid-twenties or older, with a polished "
+            "bishonen-inspired character-design read: refined harmonious adult facial features, "
+            "clear lively eyes at realistic adult scale, a softly expressive mouth, well-kept glossy "
+            "hair, and cohesive styling. He must read as both beautiful and cute at first glance, "
+            "without childlike morphology. Any adult sexual appeal must remain subordinate to "
+            "his face, expression, agency, and character-specific response."
+        ),
+        MOE_AESTHETIC_ANDROGYNOUS: (
+            "Cast one unmistakably adult original character, mid-twenties or older, preserving the "
+            "requested androgynous or nonbinary presentation. Use harmonious refined adult facial "
+            "features, clear lively eyes at realistic adult scale, a softly expressive mouth, well-kept "
+            "glossy hair, and cohesive styling. The character must read as both beautiful and cute at "
+            "first glance, without childlike morphology. Any adult sexual appeal must remain subordinate "
+            "to the face, expression, agency, and character-specific response."
+        ),
+    }
+    if identity_controlled:
+        identity_aesthetic_instructions = {
+            MOE_AESTHETIC_BISHOUJO: (
+                "Use the uploaded portrait as the sole identity reference for the same unmistakably adult woman. "
+                "Preserve her facial geometry, eye aperture, eye shape and spacing, brows, nose, lips, face length, "
+                "lower-face and jaw width, cheekbones, skin tone, natural asymmetry, hairline, and adult age. Do not "
+                "substitute, average, beautify by reshaping, enlarge or round the eyes, shorten the face, narrow the "
+                "jaw, or de-age her. Make the preserved identity read as both pretty and cute through "
+                "adult micro-expression, grooming, cohesive styling, pose, and light; any adult sexual appeal must "
+                "remain subordinate to her face, agency, and character-specific response."
+            ),
+            MOE_AESTHETIC_BISHONEN: (
+                "Use the uploaded portrait as the sole identity reference for the same unmistakably adult man. "
+                "Preserve his facial geometry, eye aperture, eye shape and spacing, brows, nose, lips, face length, "
+                "lower-face and jaw width, cheekbones, skin tone, natural asymmetry, hairline, and adult age. Do not "
+                "substitute, average, beautify by reshaping, enlarge or round the eyes, shorten the face, narrow the "
+                "jaw, or de-age him. Make the preserved identity read as both beautiful and cute through "
+                "adult micro-expression, grooming, cohesive styling, pose, and light; any adult sexual appeal must "
+                "remain subordinate to his face, agency, and character-specific response."
+            ),
+            MOE_AESTHETIC_ANDROGYNOUS: (
+                "Use the uploaded portrait as the sole identity reference for the same unmistakably adult character. "
+                "Preserve facial geometry, eye aperture, eye shape and spacing, brows, nose, lips, face length, lower-face "
+                "and jaw width, cheekbones, skin tone, natural asymmetry, hairline, adult age, and the requested androgynous "
+                "presentation. Do not substitute, average, beautify by reshaping, enlarge or round the eyes, shorten the "
+                "face, narrow the jaw, or de-age it. Make the preserved identity read as both beautiful "
+                "and cute through adult micro-expression, grooming, cohesive styling, pose, and light; any adult sexual "
+                "appeal must remain subordinate to the face, agency, and character-specific response."
+            ),
+        }
+        aesthetic_instructions = identity_aesthetic_instructions
+    if aesthetic_baseline not in aesthetic_instructions:
+        aesthetic_baseline = MOE_AESTHETIC_BISHOUJO
+    sexual_tone_instructions = {
+        "nonsexual": (
+            "Use explicitly nonsexual framing and suppress sensual-editorial and fetish-fashion styling. "
+            "Warmth, closeness, embarrassment, and tactile care may remain without body-display emphasis."
+        ),
+        "sensual_optional": (
+            "Subtle adult sensual appeal may support gaze, pose, silhouette, styling, or light at low intensity, "
+            "but it must not replace the pretty-and-cute first read, visible agency, or character-specific event."
+        ),
+        "sensual": (
+            "Honor the explicit adult sensual direction with self-directed agency; keep it integrated with the "
+            "pretty-and-cute character design and the character-specific event rather than making a generic pin-up."
+        ),
+    }
+    explicit_text_requested = response.get("explicit_text_requested") is True
+    required_evidence_fields = [
+        "actor_phrase",
+        "aesthetic_baseline_phrase",
+        "affective_leak_phrase",
+        "baseline_phrase",
+        "event_phase_phrase",
+        "trigger_phrase",
+        "target_phrase",
+        "visible_response_phrase",
+        "immediate_consequence_phrase",
+        "continuity_phrase",
+        "focal_plane_phrase",
+    ]
+    if not explicit_text_requested:
+        required_evidence_fields.insert(3, "background_control_phrase")
+    if identity_controlled:
+        required_evidence_fields.append("reference_identity_phrase")
+    if mechanism == "denial_care_leak":
+        required_evidence_fields.insert(
+            required_evidence_fields.index("affective_leak_phrase"),
+            "active_denial_phrase",
+        )
+        required_evidence_fields.insert(
+            required_evidence_fields.index("affective_leak_phrase"),
+            "concealed_affection_phrase",
+        )
+        required_evidence_fields.insert(
+            required_evidence_fields.index("concealed_affection_phrase"),
+            "relationship_gaze_anchor_phrase",
+        )
+        required_evidence_fields.insert(
+            required_evidence_fields.index("relationship_gaze_anchor_phrase"),
+            "care_action_anchor_phrase",
+        )
+    if relationship_register == "nurturant_benevolence":
+        required_evidence_fields.insert(
+            required_evidence_fields.index("affective_leak_phrase"),
+            "benevolent_affect_phrase",
+        )
+    general_render_gates = [
+        "adult_role_identity",
+        "pretty_and_cute_entry",
+        "causal_event_legibility",
+        "requested_sexual_tone",
+        "background_and_shortcut_integrity",
+    ]
+    if relationship_register == "peer_liking_under_denial":
+        mechanism_render_gates = [
+            "active_denial",
+            "separate_care_action_anchor",
+            "same_adult_recipient_face_level_anchor",
+            "visible_partial_recipient_face_landmark",
+            "head_turn_opposes_recipient_anchor",
+            "three_quarter_head_away",
+            "nose_axis_off_lens",
+            "small_oblique_iris_return_to_recipient",
+            "softened_lower_lids",
+            "suppressed_starting_mouth_corner_lift",
+            "no_direct_frontal_eye_contact",
+            "denial_care_affection_contradiction",
+        ]
+    elif relationship_register == "nurturant_benevolence":
+        mechanism_render_gates = [
+            "relaxed_brow",
+            "patient_soft_eyes",
+            "reassuring_mouth",
+            "calm_protective_attention",
+        ]
+    else:
+        mechanism_render_gates = ["primary_mechanism_legibility"]
+    support_render_gates = []
+    if (
+        mechanism == "nonhuman_reflex_leak"
+        or "nonhuman_reflex_leak" in normalize_list(response.get("support_mechanisms"))
+    ):
+        support_render_gates = [
+            "nonhuman_trait_anatomy",
+            "nonhuman_reflex_trigger_direction",
+            "nonhuman_trait_scale_and_asymmetry",
+        ]
+    identity_render_gates = (
+        [
+            "adult_age_continuity",
+            "same_person_identity",
+            "eye_aperture_shape_and_spacing_continuity",
+            "face_length_lower_face_and_jaw_width_continuity",
+            "no_de_aging_or_dollification",
+        ]
+        if identity_controlled
+        else []
+    )
+    required_render_gates = list(
+        dict.fromkeys(
+            general_render_gates
+            + mechanism_render_gates
+            + support_render_gates
+            + identity_render_gates
+        )
+    )
+    contract = {
+        "enabled": True,
+        "contract_version": MOE_RESPONSE_CONTRACT_VERSION,
+        "source": str(response.get("activation_source") or "explicit_natural_language_moe_request"),
+        "purpose": "character_specific_moe_response_hypothesis_with_visible_causal_evidence",
+        "response_goal": str(response.get("response_goal") or "character_specific_moe"),
+        "route_id": str(response.get("route_id") or MOE_RESPONSE_DEFAULT_ROUTE),
+        "primary_mechanism": mechanism,
+        "relationship_register": relationship_register,
+        "relationship_register_instruction": relationship_register_instructions.get(
+            relationship_register,
+            relationship_register_instructions["character_specific_reveal"],
+        ),
+        "support_mechanisms": normalize_list(response.get("support_mechanisms"))[:2],
+        "aesthetic_baseline": aesthetic_baseline,
+        "aesthetic_presentation_source": str(
+            response.get("aesthetic_presentation_source") or "default_bishoujo"
+        ),
+        "aesthetic_instruction": aesthetic_instructions[aesthetic_baseline],
+        "sexual_tone": sexual_tone,
+        "explicit_nonsexual": response.get("explicit_nonsexual") is True,
+        "explicit_sensual": response.get("explicit_sensual") is True,
+        "explicit_text_requested": explicit_text_requested,
+        "defaulted_sensual_optional": response.get("defaulted_sensual_optional") is True,
+        "sexual_tone_instruction": sexual_tone_instructions.get(
+            sexual_tone,
+            sexual_tone_instructions["sensual_optional"],
+        ),
+        "mechanism_instruction": mechanism_instructions.get(
+            mechanism,
+            mechanism_instructions["character_specific_reveal"],
+        ),
+        "required_fields": [
+            "aesthetic_baseline",
+            "mechanism",
+            "relationship_register",
+            "baseline",
+            "event_phase",
+            "trigger",
+            "target",
+            "visible_response",
+            "immediate_consequence",
+            "continuity",
+            "support_mechanisms",
+            "prompt_evidence",
+        ],
+        "prompt_binding": {
+            "literal": True,
+            "required_evidence_fields": required_evidence_fields,
+        },
+        "composition_guidance": {
+            "prompt_budget": {
+                "language": "en",
+                "minimum_words": MOE_RESPONSE_PROMPT_MIN_WORDS,
+                "maximum_words": MOE_RESPONSE_PROMPT_MAX_WORDS,
+                "counting_rule": "ascii_words_with_internal_hyphens_or_apostrophes",
+                "rule": (
+                    "Keep prompt_en between 50 and 120 English words. Reuse short literal phrases across "
+                    "moe, viewer, identity, and augmentation evidence instead of stacking explanations."
+                ),
+            },
+            "aesthetic_entry_condition": {
+                "required": True,
+                "rule": (
+                    "The character must first read as an attractive adult bishoujo, bishonen, or "
+                    "explicitly requested androgynous equivalent. Pretty and cute are both required; "
+                    "this entry condition cannot replace the causal character event."
+                ),
+                "thumbnail_priority": "face_hair_grooming_and_cohesive_character_styling",
+            },
+            "affective_balance": {
+                "required": True,
+                "rule": (
+                    "The face must show one specific warm, pleased, relieved, fond, or playfully embarrassed "
+                    "micro-response in addition to any guarded, annoyed, or flustered cue. Negative affect may "
+                    "frame the contradiction but must not dominate the first facial read."
+                ),
+                "positive_cue_count": 1,
+                "maximum_negative_cue_count": 2,
+                "reject": [
+                    "pure_annoyance_or_sadness",
+                    "blank_bored_or_listless_face",
+                    "scowl_without_warm_leak",
+                    "pout_plus_averted_gaze_without_positive_countercue",
+                ],
+            },
+            "mechanism_specific_evidence": {
+                "denial_care_leak": {
+                    "active_denial_phrase_required": mechanism == "denial_care_leak",
+                    "care_action_anchor_phrase_required": mechanism == "denial_care_leak",
+                    "relationship_gaze_anchor_phrase_required": mechanism == "denial_care_leak",
+                    "partial_recipient_landmark_required": mechanism == "denial_care_leak",
+                    "concealed_affection_phrase_required": mechanism == "denial_care_leak",
+                    "off_axis_gaze_geometry_required": mechanism == "denial_care_leak",
+                    "opposed_head_iris_vector_required": mechanism == "denial_care_leak",
+                    "dual_positive_microcue_required": mechanism == "denial_care_leak",
+                    "rule": (
+                        "Bind a separate visible mouth, chin, shoulder, or helping-hand protest; "
+                        "guardedness, the tsundere label, or averted gaze alone is not active denial. "
+                        "Place the care target—hand, wound, or carried object—in-frame at an explicit lower screen "
+                        "position. Separately establish one small blurred partial landmark from the same adult recipient—"
+                        "an outer eye plus temple or profile sliver—at a named upper frame edge above that task anchor. "
+                        "Turn the head and nose three-quarter toward the opposite side while only the irises make a small "
+                        "oblique return toward the landmark. Pair softened lower lids with one mouth corner that starts to lift and is "
+                        "suppressed. Looking only at the task, direct frontal eye contact, a centered face, or a selfie-like "
+                        "viewer gaze does not read as peer liking under denial; neither does a second full recipient face."
+                    ),
+                },
+                "nurturant_benevolence": {
+                    "benevolent_affect_phrase_required": (
+                        relationship_register == "nurturant_benevolence"
+                    ),
+                    "rule": (
+                        "For an explicit mamang, maternal, or motherly request, bind one literal benevolent-affect "
+                        "phrase that combines a relaxed brow, patient soft eyes, a reassuring mouth, and calm protective "
+                        "attention. Do not substitute tsundere denial, romantic gaze leakage, or generic kindness."
+                    ),
+                },
+            },
+            "causal_chain": [
+                "adult_beautiful_and_cute_character_entry_condition",
+                "character_behavioral_baseline",
+                "one_primary_mechanism",
+                "concrete_trigger_and_target",
+                "involuntary_visible_response",
+                "immediate_state_change",
+                "identity_continuity",
+            ],
+            "focal_priority": [
+                "face_or_gaze_response",
+                "hands_or_posture_action",
+                "trigger_target_or_changed_object",
+                "role_costume_and_species_markers_as_support",
+            ],
+            "same_focal_plane": ["face_or_gaze", "hands_or_posture", "trigger_target"],
+            "render_legibility": {
+                "unfinished_state": (
+                    "Name one physical separation that cannot be mistaken for the settled endpoint, "
+                    "such as an open gap, a partway contact boundary, an object outside its destination, "
+                    "or an off-center trace."
+                ),
+                "directional_reflex": (
+                    "For a nonhuman reflex, keep the visible trigger and responding body part in-frame; "
+                    "an ear response must be asymmetric and aimed toward that trigger. For nekomimi, each ear "
+                    "must remain compact—no taller than the visible human ear from base to tip—and the two ear tips "
+                    "must occupy clearly different angles."
+                ),
+                "split_care_and_relationship_vectors": (
+                    "For denial_care_leak, keep the visible care-action target low in-frame, but direct the concealed "
+                    "affection toward one small blurred partial eye-and-temple landmark from the same adult recipient "
+                    "at a named upper frame edge. Keep the head angled toward the opposite side in a named three-quarter "
+                    "orientation, keep the nose axis off the lens, return only the irises in a small oblique movement "
+                    "toward that landmark, and suppress the lower-lid softness "
+                    "plus one starting mouth-corner lift. Direct frontal eye contact is too overt."
+                ),
+                "intermediate_prop_scale": (
+                    "Keep an intermediate sleeve, tool, vessel, or other prop at ordinary real-world "
+                    "scale so it does not hide the hands or contact state that carry the event."
+                ),
+                **(
+                    {
+                        "text_free_background": (
+                            "Use a plain material background or unlettered decor: no menu board, chalkboard "
+                            "writing, signage, captions, pseudo-writing, or decorative heart/sparkle symbols."
+                        )
+                    }
+                    if not explicit_text_requested
+                    else {
+                        "requested_text_boundary": (
+                            "Preserve only the explicitly requested readable text; do not add decorative, "
+                            "pseudo-written, or unrelated background lettering."
+                        )
+                    }
+                ),
+            },
+            "keep": [
+                "explicitly_adult_original_character",
+                "routed_adult_bishoujo_bishonen_or_androgynous_aesthetic_baseline",
+                "user_requested_role",
+                "user_requested_species_or_nonhuman_traits",
+                "one_primary_mechanism",
+                "negative_en_bytes",
+                "selected_scene_and_safety_contracts",
+            ],
+            "reject": [
+                "ordinary_or_generic_casting_without_both_pretty_and_cute_first_read",
+                "aesthetic_only_without_character_specific_event",
+                "cute_or_moe_label_as_evidence",
+                "blush_only",
+                "oversized_eyes_or_youth_morphology",
+                "animal_ears_or_costume_only",
+                "generic_shy_smile_or_pretty_pose_only",
+                "unrelated_prosocial_task_or_technical_activity",
+                "full_body_costume_display",
+                "body_emphasis_or_sultry_gaze_when_nonsexual",
+                "multiple_unrelated_moe_mechanisms",
+                "unrequested_heart_sparkle_or_cartoon_reaction_shorthand",
+                "unrequested_background_text_or_pseudo_writing",
+                "negative_facial_affect_without_one_warm_countercue",
+                "off_frame_recipient_or_unverifiable_affection_gaze_vector",
+                "imagined_recipient_eye_line_without_visible_partial_face_landmark",
+                "second_full_recipient_face_competing_with_primary_subject",
+                "head_and_irises_turning_together_toward_the_same_side",
+                "care_target_and_relationship_gaze_collapsed_into_one_anchor",
+                "task_warmth_or_maternal_benevolence_substituted_for_peer_liking",
+                "direct_frontal_eye_contact_or_centered_selfie_gaze_used_as_concealed_liking",
+                "nekomimi_ears_larger_than_visible_human_ear",
+                "symmetric_nonhuman_traits_without_trigger_direction",
+                "oversized_intermediate_prop_that_hides_contact_state",
+                "deliberate_placement_substituted_for_a_catch",
+            ],
+        },
+        "evaluation_boundary": (
+            "prompt_binding_is_preflight; metadata_free_thumbnail_and_native_pixels_are_local_product_evidence; "
+            "whether_the_result_feels_moe_requires_direct_human_judgment"
+        ),
+        "render_qualification": {
+            "required": True,
+            "review_schema_version": "moe-render-review/v1",
+            "general_hard_gates": general_render_gates,
+            "mechanism_hard_gates": mechanism_render_gates,
+            "support_hard_gates": support_render_gates,
+            "identity_hard_gates": identity_render_gates,
+            "required_hard_gates": required_render_gates,
+            "promotion_policy": (
+                "all_technical_hard_gates_pass_and_requesting_user_accepts_genuine_moe"
+                "_and_when_available_improvement_over_baseline"
+            ),
+            "user_judgment_fields": [
+                "baseline_available",
+                "genuinely_moe",
+                "better_than_baseline",
+                "source",
+                "evidence",
+            ],
+            "failure_action": (
+                "preserve_render_review_and_ledger_as_failed_evidence_without_representative_promotion"
+            ),
+        },
+    }
+    if identity_controlled:
+        contract["reference_identity_control"] = {
+            "enabled": True,
+            "mode": "identity",
+            "source": "uploaded_portrait",
+            "preserve": [
+                "facial_geometry",
+                "eye_aperture",
+                "eye_shape_and_spacing",
+                "eyebrows",
+                "nose",
+                "lips",
+                "face_length",
+                "lower_face_and_jaw_width",
+                "jawline_and_cheekbones",
+                "skin_tone_and_natural_asymmetry",
+                "hairline",
+                "adult_age",
+            ],
+            "editable": ["micro_expression", "pose", "outfit", "lighting", "setting"],
+            "forbidden": [
+                "face_substitution",
+                "identity_averaging",
+                "facial_geometry_beautification",
+                "eye_enlargement_or_rounding",
+                "face_shortening",
+                "jaw_narrowing",
+                "de_aging",
+                "youth_morphology",
+            ],
+            "render_qualification": {
+                "required": True,
+                "promotion_policy": "all_hard_gates_pass_before_representative_candidate",
+                "hard_gates": identity_render_gates,
+                "comparison_order": [
+                    "source_portrait",
+                    "current_user_preferred_baseline_when_available",
+                    "new_result",
+                ],
+                "failure_action": "preserve_as_failed_evidence_do_not_promote_or_claim_moe_improvement",
+            },
+            "evaluation_role": "hold_identity_constant_while_testing_moe_direction",
+        }
+    return contract
+
+
 def candidate_pack_viewer_experience(result: JsonDict) -> Optional[JsonDict]:
     """Expose a topic-neutral reader-response composition contract when requested.
 
@@ -4048,7 +5116,15 @@ def candidate_pack_viewer_experience(result: JsonDict) -> Optional[JsonDict]:
     creative_direction_required = bool(
         creativity is not None and creativity >= CANDIDATE_PACK_CREATIVE_DIRECTION_FLOOR
     )
-    if not explicitly_requested and not creative_direction_required:
+    response = (
+        provenance.get("character_response")
+        if isinstance(provenance.get("character_response"), dict)
+        else {}
+    )
+    moe_response_required = bool(
+        response.get("requested") is True and response.get("eligible") is True
+    )
+    if not explicitly_requested and not creative_direction_required and not moe_response_required:
         return None
 
     activation_sources = []
@@ -4056,6 +5132,8 @@ def candidate_pack_viewer_experience(result: JsonDict) -> Optional[JsonDict]:
         activation_sources.append("explicit_viewer_experience_control")
     if creative_direction_required:
         activation_sources.append("creative_direction_required")
+    if moe_response_required:
+        activation_sources.append("moe_response_required")
     return {
         "enabled": True,
         "contract_version": "photo-viewer-experience/v1",
@@ -4112,6 +5190,7 @@ def candidate_pack_viewer_experience(result: JsonDict) -> Optional[JsonDict]:
             "bind_visible_causes_not_outcome_claims": True,
             "keep": [
                 "creative_direction",
+                "moe_response",
                 "scene_contract",
                 "character_grammar",
                 "product_or_subject_legibility",
@@ -4171,6 +5250,12 @@ def candidate_pack_adult_appeal_eligibility(
         if isinstance(adult_policy.get("default_eligibility"), dict)
         else {}
     )
+    if activation_source == "explicit_nonsexual_moe":
+        return {
+            "status": "ineligible",
+            "reason": "explicit_nonsexual_moe_request_suppresses_configured_default",
+            "subject_category": subject_category_value,
+        }
     if bool(default_eligibility.get("block_no_people", True)) and constraints.get("no_people") is True:
         return {
             "status": "ineligible",
@@ -4220,7 +5305,11 @@ def candidate_pack_adult_appeal_request(data: JsonDict, result: JsonDict) -> Jso
     return {
         "enabled": enabled,
         "requested_enabled": requested_enabled,
-        "activation_source": activation_source if requested_enabled else "explicit_opt_out",
+        "activation_source": (
+            activation_source
+            if requested_enabled or activation_source == "explicit_nonsexual_moe"
+            else "explicit_opt_out"
+        ),
         "eligibility": eligibility,
         "axes": axes,
         "blend": {"emphasis": emphasis},
@@ -4441,6 +5530,7 @@ def candidate_pack_hybrid_route_details(
     masked_slot_names: Set[str],
     adult_appeal: Optional[JsonDict],
     limit: int,
+    variation_offset: int = 0,
 ) -> List[JsonDict]:
     selected: List[JsonDict] = []
     selected_sources: Set[str] = set()
@@ -4452,7 +5542,8 @@ def candidate_pack_hybrid_route_details(
         inventory = [candidate for candidate in axis.get("candidate_inventory") or [] if isinstance(candidate, dict)]
         if not inventory or len(selected) >= limit:
             continue
-        rotated = inventory[route_index % len(inventory) :] + inventory[: route_index % len(inventory)]
+        offset = (route_index + variation_offset) % len(inventory)
+        rotated = inventory[offset:] + inventory[:offset]
         for candidate in rotated:
             source = str(candidate.get("source_candidate_id") or candidate.get("id") or "")
             if source in selected_sources or not candidate_pack_hybrid_candidates_compatible(candidate, selected):
@@ -4477,7 +5568,7 @@ def candidate_pack_hybrid_route_details(
         anchors = [candidate for candidate in candidates if candidate.get("selected_by_sampler")]
         ordered = alternatives + anchors
         if ordered:
-            offset = (route_index + slot_index) % len(ordered)
+            offset = (route_index + slot_index + variation_offset) % len(ordered)
             ordered = ordered[offset:] + ordered[:offset]
         for candidate in ordered:
             source = str(candidate.get("source_candidate_id") or candidate.get("id") or "")
@@ -4514,6 +5605,7 @@ def candidate_pack_hybrid_augmentation(
     slots: JsonDict,
     masked_slot_names: Set[str],
     adult_appeal: Optional[JsonDict],
+    variation_seed: Optional[str] = None,
 ) -> Optional[JsonDict]:
     policy = candidate_pack_hybrid_policy(data)
     activation_sources = candidate_pack_hybrid_activation_sources(result, adult_appeal)
@@ -4527,6 +5619,13 @@ def candidate_pack_hybrid_augmentation(
     for route_index, route in enumerate(policy.get("routes") or []):
         if not isinstance(route, dict):
             continue
+        route_id = str(route.get("id") or f"route_{route_index + 1}")
+        variation_offset = 0
+        if variation_seed is not None:
+            digest = hashlib.sha256(
+                f"hybrid-authorial-rotation|{variation_seed}".encode("utf-8")
+            ).digest()
+            variation_offset = int.from_bytes(digest[:8], "big")
         details = candidate_pack_hybrid_route_details(
             route,
             route_index,
@@ -4534,11 +5633,12 @@ def candidate_pack_hybrid_augmentation(
             masked_slot_names,
             adult_appeal,
             route_limit,
+            variation_offset,
         )
         routes.append(
             {
-                "id": str(route.get("id") or f"route_{route_index + 1}"),
-                "strategy": str(route.get("id") or f"route_{route_index + 1}"),
+                "id": route_id,
+                "strategy": route_id,
                 "label": str(route.get("label") or route.get("id") or "augmentation route"),
                 "candidate_ids": [detail["candidate_id"] for detail in details],
                 "details": details,
@@ -4891,6 +5991,16 @@ def render_contract_resolved_scene_blueprints(data: JsonDict, preset: JsonDict) 
             "policy_ids": normalize_list(raw.get("policy_ids")),
             "relationship_mode": str(raw.get("relationship_mode") or ""),
             "static_portrait": bool(raw.get("static_portrait")),
+            # Generic natural-language moe requests need a small everyday
+            # scene pool that is independent from the strongly authored
+            # profession/relationship exemplars of the research preset.
+            # These flags stay internal to selection and are intentionally
+            # omitted from the public render contract projection.
+            "natural_moe_default": bool(raw.get("natural_moe_default")),
+            "natural_moe_default_only": bool(raw.get("natural_moe_default_only")),
+            "natural_moe_relationship_registers": normalize_list(
+                raw.get("natural_moe_relationship_registers")
+            ),
             "subject": str(raw.get("subject") or "").strip(),
             "subject_ko": str(raw.get("subject_ko") or raw.get("subject") or "").strip(),
             "subject_kind": normalize_list(raw.get("subject_kind")),
@@ -4930,6 +6040,28 @@ def candidate_pack_scene_blueprint_request_text(result: JsonDict) -> str:
     return " ".join(values).lower()
 
 
+def candidate_pack_uses_natural_moe_route_preset(
+    result: JsonDict,
+    preset: JsonDict,
+) -> bool:
+    """Return true only for the wrapper's pre-sample natural-moe route.
+
+    A direct research-preset request must retain its frozen authored scene
+    cycle.  The internal generation-contract event lets a broad natural
+    request use a separate everyday scene pool without changing that public
+    preset or relying on a favorable seed.
+    """
+    trace = result.get("semantic_trace") if isinstance(result.get("semantic_trace"), dict) else {}
+    contract = trace.get("generation_contract") if isinstance(trace.get("generation_contract"), dict) else {}
+    preset_id = str(preset.get("id") or "")
+    return any(
+        isinstance(event, dict)
+        and str(event.get("preset_id") or "") == preset_id
+        and str(event.get("source") or "") == "pre_sample_natural_language_moe_route"
+        for event in contract.get("natural_moe_route_preset") or []
+    )
+
+
 def render_scene_blueprint_supports_no_people(blueprint: JsonDict) -> bool:
     """Return true only when a scene explicitly declares a non-human subject.
 
@@ -4959,6 +6091,64 @@ def candidate_pack_select_scene_blueprint(
         return {}
     provenance = result.get("provenance") if isinstance(result.get("provenance"), dict) else {}
     request_text = candidate_pack_scene_blueprint_request_text(result)
+    if candidate_pack_uses_natural_moe_route_preset(result, preset):
+        character_response = (
+            provenance.get("character_response")
+            if isinstance(provenance.get("character_response"), dict)
+            else {}
+        )
+        relationship_register = str(
+            character_response.get("relationship_register") or ""
+        )
+        natural_defaults = [
+            blueprint
+            for blueprint in blueprints
+            if blueprint.get("natural_moe_default") is True
+        ]
+        relationship_defaults = [
+            blueprint
+            for blueprint in natural_defaults
+            if relationship_register
+            in normalize_list(blueprint.get("natural_moe_relationship_registers"))
+        ]
+        unscoped_defaults = [
+            blueprint
+            for blueprint in natural_defaults
+            if not normalize_list(blueprint.get("natural_moe_relationship_registers"))
+        ]
+        if relationship_defaults:
+            natural_defaults = relationship_defaults
+        elif unscoped_defaults:
+            natural_defaults = unscoped_defaults
+        if (
+            not natural_defaults
+            and relationship_register
+            in {"nurturant_benevolence", "directed_care_without_role_inference"}
+        ):
+            # A natural-language care request already routes to the authored
+            # quiet-care preset. Its own bounded adult care scenes are the
+            # intended route, not generic natural-moe fallback scenes. The
+            # relationship register separately decides whether the affect is
+            # explicitly mamang/maternal or merely directed care.
+            natural_defaults = [
+                blueprint
+                for blueprint in blueprints
+                if blueprint.get("natural_moe_default_only") is not True
+            ]
+        if not natural_defaults:
+            preset_id = str(preset.get("id") or "")
+            raise ValueError(
+                f"Preset {preset_id!r} has no everyday render scene for its natural moe route"
+            )
+        blueprints = natural_defaults
+    else:
+        # Additive default-only scenes must not perturb direct preset replay,
+        # semantic research fixtures, or earlier frozen render packs.
+        blueprints = [
+            blueprint
+            for blueprint in blueprints
+            if blueprint.get("natural_moe_default_only") is not True
+        ]
     if intent_explicitly_excludes_people(request_text):
         no_people_blueprints = [
             blueprint
@@ -7020,6 +8210,8 @@ def candidate_pack_contract_version(version: str) -> str:
         CANDIDATE_PACK_CONTRACT_V2: CANDIDATE_PACK_CONTRACT_V2,
         "v3": CANDIDATE_PACK_CONTRACT_V3,
         CANDIDATE_PACK_CONTRACT_V3: CANDIDATE_PACK_CONTRACT_V3,
+        "v4": CANDIDATE_PACK_CONTRACT_V4,
+        CANDIDATE_PACK_CONTRACT_V4: CANDIDATE_PACK_CONTRACT_V4,
     }
     if normalized not in aliases:
         raise ValueError(
@@ -7064,6 +8256,1026 @@ def candidate_pack_remove_quality_profile_sources(value: Any) -> None:
             candidate_pack_remove_quality_profile_sources(item)
 
 
+CANDIDATE_PACK_V4_CONCEPT_STOPWORDS = {
+    "a",
+    "an",
+    "and",
+    "as",
+    "at",
+    "by",
+    "for",
+    "from",
+    "in",
+    "into",
+    "is",
+    "of",
+    "on",
+    "or",
+    "the",
+    "to",
+    "with",
+    "without",
+    "augmentation",
+    "candidate",
+    "entry",
+    "label",
+    "preset",
+    "sampler",
+    "score",
+    "selected",
+    "slot",
+    "source",
+    "terms",
+}
+
+
+def candidate_pack_v4_concept_terms(
+    values: Sequence[Any],
+    *,
+    salt: str,
+    limit: int = 20,
+) -> List[str]:
+    """Reduce copyable candidate prose to an unordered vocabulary.
+
+    v4 deliberately does not expose a source sentence that can be pasted into
+    a prompt.  Technical terms and semantic cues remain available, but their
+    source order is destroyed so the composer must decide how they relate.
+    """
+
+    tokens: List[str] = []
+
+    def visit(value: Any) -> None:
+        if isinstance(value, str):
+            tokens.extend(
+                re.findall(
+                    r"[A-Za-z0-9]+(?:[./'’\-][A-Za-z0-9]+)*|[가-힣]+|[ぁ-んァ-ヶ一-龠々]+",
+                    value,
+                )
+            )
+        elif isinstance(value, (list, tuple, set)):
+            for item in value:
+                visit(item)
+
+    for value in values:
+        visit(value)
+    unique: Dict[str, str] = {}
+    for token in tokens:
+        normalized = token.strip().lower()
+        if not normalized or normalized in CANDIDATE_PACK_V4_CONCEPT_STOPWORDS:
+            continue
+        unique.setdefault(normalized, normalized if token.isascii() else token.strip())
+    ordered = sorted(
+        unique.values(),
+        key=lambda token: hashlib.sha256(
+            f"authorial-concept-term|{salt}|{token.lower()}".encode("utf-8")
+        ).hexdigest(),
+    )
+    return ordered[: max(1, limit)]
+
+
+def candidate_pack_v4_project_candidate(candidate: JsonDict, *, salt: str) -> None:
+    values: List[Any] = [
+        candidate.pop("label_en", None),
+        candidate.pop("label_ko", None),
+        candidate.pop("terms", None),
+        candidate.get("entry_id"),
+        candidate.get("preset_id"),
+        candidate.get("candidate_id"),
+        candidate.get("tags"),
+    ]
+    concept_terms = candidate_pack_v4_concept_terms(values, salt=salt)
+    if concept_terms:
+        candidate["concept_terms"] = concept_terms
+    candidate["content_form"] = "unordered_inspiration_terms"
+    for key in ("selected_by_sampler", "probability", "weight", "score", "scores"):
+        candidate.pop(key, None)
+
+
+def candidate_pack_v4_project_candidate_surfaces(projected: JsonDict) -> None:
+    for candidate in projected.get("presets") or []:
+        if isinstance(candidate, dict):
+            candidate_pack_v4_project_candidate(
+                candidate,
+                salt=str(candidate.get("id") or "preset"),
+            )
+    slots = projected.get("slots") if isinstance(projected.get("slots"), dict) else {}
+    for slot_payload in slots.values():
+        if not isinstance(slot_payload, dict):
+            continue
+        for key in ("selected", "weight_floor", "score_window", "selected_filter"):
+            slot_payload.pop(key, None)
+        slot_payload["candidate_order"] = "seed_shuffled_non_preferential"
+        for candidate in slot_payload.get("candidates") or []:
+            if isinstance(candidate, dict):
+                candidate_pack_v4_project_candidate(
+                    candidate,
+                    salt=str(candidate.get("id") or slot_payload.get("slot") or "slot"),
+                )
+    proposition = (
+        projected.get("visual_proposition")
+        if isinstance(projected.get("visual_proposition"), dict)
+        else {}
+    )
+    for key in ("core_candidates", "tension_candidates"):
+        for candidate in proposition.get(key) or []:
+            if isinstance(candidate, dict):
+                candidate_pack_v4_project_candidate(
+                    candidate,
+                    salt=str(candidate.get("id") or key),
+                )
+    hybrid = (
+        projected.get("hybrid_augmentation")
+        if isinstance(projected.get("hybrid_augmentation"), dict)
+        else {}
+    )
+    adult = hybrid.get("adult_appeal") if isinstance(hybrid.get("adult_appeal"), dict) else {}
+    axes = adult.get("axes") if isinstance(adult.get("axes"), dict) else {}
+    for axis in axes.values():
+        if not isinstance(axis, dict):
+            continue
+        for candidate in axis.get("candidate_inventory") or []:
+            if isinstance(candidate, dict):
+                candidate_pack_v4_project_candidate(
+                    candidate,
+                    salt=str(candidate.get("id") or "adult-axis"),
+                )
+    route_contract = (
+        hybrid.get("route_contract")
+        if isinstance(hybrid.get("route_contract"), dict)
+        else {}
+    )
+    for route in route_contract.get("routes") or []:
+        if not isinstance(route, dict):
+            continue
+        for detail in route.get("details") or []:
+            if isinstance(detail, dict):
+                candidate_pack_v4_project_candidate(
+                    detail,
+                    salt=str(detail.get("candidate_id") or route.get("id") or "route"),
+                )
+
+    exploration = (
+        projected.get("creative_exploration")
+        if isinstance(projected.get("creative_exploration"), dict)
+        else {}
+    )
+    for contrast in exploration.get("contrast_candidates") or []:
+        if not isinstance(contrast, dict):
+            continue
+        contrast.pop("replaces_candidate_id", None)
+        contrast.pop("relevance_rank", None)
+    if exploration:
+        previous_guidance = (
+            exploration.get("composition_guidance")
+            if isinstance(exploration.get("composition_guidance"), dict)
+            else {}
+        )
+        exploration["composition_guidance"] = {
+            "candidate_use": "optional_authorial_inspiration",
+            "use_at_most": int(previous_guidance.get("replace_at_most", 2) or 2),
+            "require_no_conflicts": True,
+            "no_sampler_default_is_exposed": True,
+        }
+
+
+def candidate_pack_v4_project_quality_surfaces(projected: JsonDict) -> None:
+    """Turn sampler-derived quality choices into optional authorial pools.
+
+    The private generator may use a sampled prompt to discover relevant craft
+    material.  v4 must not reveal which axes, strategy, or refinement won that
+    internal ranking, because those fields become a second prompt template.
+    """
+
+    integration = (
+        projected.get("photographic_integration")
+        if isinstance(projected.get("photographic_integration"), dict)
+        else {}
+    )
+    suggested = integration.pop("suggested_phrases", None)
+    if isinstance(suggested, dict):
+        integration["suggested_concepts"] = {
+            str(category): candidate_pack_v4_concept_terms(
+                phrases if isinstance(phrases, list) else [phrases],
+                salt=f"integration:{category}",
+            )
+            for category, phrases in suggested.items()
+        }
+    category_terms = (
+        integration.get("category_terms")
+        if isinstance(integration.get("category_terms"), dict)
+        else {}
+    )
+    category_ids = sorted(
+        {
+            *[str(item) for item in integration.get("required_categories") or [] if str(item)],
+            *[str(item) for item in category_terms if str(item)],
+        }
+    )
+    integration["category_candidates"] = [
+        {
+            "id": f"integration:{category}",
+            "category": category,
+            "concept_terms": candidate_pack_v4_concept_terms(
+                [category, category_terms.get(category)],
+                salt=f"integration-category:{category}",
+                limit=40,
+            ),
+            "content_form": "unordered_inspiration_terms",
+        }
+        for category in category_ids
+    ]
+    for key in (
+        "active_axes",
+        "quality_profile",
+        "matched_facets",
+        "matched_terms",
+        "required_categories",
+        "minimum_category_hits",
+        "profile_id",
+        "principles",
+        "suggested_concepts",
+        "source",
+    ):
+        integration.pop(key, None)
+    integration.update(
+        {
+            "selection_mode": "agent_authored_non_preferential",
+            "candidate_order": "seed_shuffled_non_preferential",
+            "minimum_selected_categories": min(2, len(category_ids)),
+            "maximum_selected_categories": min(3, len(category_ids)),
+            "sampler_axis_selection_exposed": False,
+        }
+    )
+
+    proposition = (
+        projected.get("visual_proposition")
+        if isinstance(projected.get("visual_proposition"), dict)
+        else {}
+    )
+    category_terms = (
+        proposition.get("category_terms")
+        if isinstance(proposition.get("category_terms"), dict)
+        else {}
+    )
+    proposition["category_terms"] = {
+        str(category): candidate_pack_v4_concept_terms(
+            terms if isinstance(terms, list) else [terms],
+            salt=f"proposition:{category}",
+            limit=40,
+        )
+        for category, terms in category_terms.items()
+    }
+    for key in (
+        "quality_profile",
+        "subject_class",
+        "subject_classes",
+        "register",
+        "minimum_hits",
+        "principles",
+        "source",
+    ):
+        proposition.pop(key, None)
+    proposition.update(
+        {
+            "selection_mode": "agent_authored_non_preferential",
+            "candidate_order": "seed_shuffled_non_preferential",
+            "sampler_proposition_selection_exposed": False,
+        }
+    )
+
+    craft = (
+        projected.get("photographic_craft")
+        if isinstance(projected.get("photographic_craft"), dict)
+        else {}
+    )
+    dimension_candidates: List[JsonDict] = []
+    for dimension in craft.get("active_dimensions") or []:
+        if not isinstance(dimension, dict):
+            continue
+        dimension_id = str(dimension.get("id") or "").strip()
+        if not dimension_id:
+            continue
+        dimension_candidates.append(
+            {
+                "id": f"craft:{dimension_id}",
+                "dimension": dimension_id,
+                "concept_terms": candidate_pack_v4_concept_terms(
+                    [
+                        dimension_id,
+                        dimension.get("label"),
+                        dimension.get("baseline_principle"),
+                        dimension.get("guidance_en"),
+                        dimension.get("guidance_ko"),
+                        dimension.get("audit_terms"),
+                    ],
+                    salt=f"craft-dimension:{dimension_id}",
+                    limit=40,
+                ),
+                "content_form": "unordered_inspiration_terms",
+            }
+        )
+    guidance_values = [
+        craft.pop("prompt_guidance_en", None),
+        craft.pop("prompt_guidance_ko", None),
+    ]
+    # The popped prompt guidance came from the private top-ranked strategy.
+    # Its concepts are already represented inside the unordered dimension
+    # candidates; publishing a separate summary would reveal the winner again.
+    for key in (
+        "active_dimensions",
+        "quality_profile",
+        "matched_facets",
+        "top_strategy",
+        "strategy_variants",
+        "prompt_dimension_ids",
+        "audit_terms",
+        "selection_mode",
+        "source",
+    ):
+        craft.pop(key, None)
+    craft.update(
+        {
+            "dimension_candidates": dimension_candidates,
+            "selection_mode": "agent_authored_optional",
+            "candidate_order": "seed_shuffled_non_preferential",
+            "minimum_selected_dimensions": 0,
+            "maximum_selected_dimensions": min(2, len(dimension_candidates)),
+            "sampler_strategy_selection_exposed": False,
+        }
+    )
+
+    final_touch = (
+        projected.get("artistic_final_touch")
+        if isinstance(projected.get("artistic_final_touch"), dict)
+        else {}
+    )
+    final_sentence = final_touch.pop("final_sentence_en", None)
+    final_touch_terms = candidate_pack_v4_concept_terms(
+        [final_sentence, final_touch.get("audit_terms")],
+        salt="artistic-final-touch",
+    )
+    if final_touch_terms:
+        final_touch["concept_terms"] = final_touch_terms
+    for key in ("audit_terms", "profile_id", "source"):
+        final_touch.pop(key, None)
+    if final_touch.get("enabled"):
+        final_touch.update(
+            {
+                "optional": True,
+                "selection_mode": "agent_decides",
+                "sampler_surface_sentence_exposed": False,
+            }
+        )
+
+
+def candidate_pack_v4_project_scene(projected: JsonDict) -> bool:
+    scene_contract = (
+        projected.get("scene_contract")
+        if isinstance(projected.get("scene_contract"), dict)
+        else {}
+    )
+    render_contract = (
+        projected.get("render_contract")
+        if isinstance(projected.get("render_contract"), dict)
+        else {}
+    )
+    selected_scene = (
+        render_contract.get("selected_scene")
+        if isinstance(render_contract.get("selected_scene"), dict)
+        else {}
+    )
+    authored_scene_enabled = False
+    optional_group_count = 0
+    slots = projected.get("slots") if isinstance(projected.get("slots"), dict) else {}
+    for group_index, group in enumerate(scene_contract.get("groups") or []):
+        if not isinstance(group, dict):
+            continue
+        if group.get("source") != "selected_render_blueprint":
+            if str(group.get("strategy") or "") != "atomic_scene":
+                continue
+            optional_slots: JsonDict = {}
+            for slot, slot_contract in (group.get("slots") or {}).items():
+                if not isinstance(slot_contract, dict):
+                    continue
+                slot_payload = slots.get(str(slot)) if isinstance(slots.get(str(slot)), dict) else {}
+                exposed_ids = {
+                    str(candidate.get("entry_id") or ""): str(candidate.get("id") or "")
+                    for candidate in slot_payload.get("candidates") or []
+                    if isinstance(candidate, dict)
+                    and str(candidate.get("entry_id") or "")
+                    and str(candidate.get("id") or "")
+                }
+                allowed_entries = {
+                    str(item)
+                    for item in slot_contract.get("allowed_entry_ids") or []
+                    if str(item)
+                }
+                allowed_candidate_ids = [
+                    candidate_id
+                    for entry_id, candidate_id in exposed_ids.items()
+                    if not allowed_entries or entry_id in allowed_entries
+                ]
+                if not allowed_candidate_ids:
+                    continue
+                optional_slots[str(slot)] = {
+                    "allowed_candidate_ids": allowed_candidate_ids,
+                    "adoption": "optional",
+                    "candidate_order": "seed_shuffled_non_preferential",
+                }
+            group.clear()
+            group.update(
+                {
+                    "group": f"candidate_inspiration:{group_index + 1}",
+                    "strategy": "optional_inspiration_group",
+                    "source": "private_scene_group_projection",
+                    "fail_closed": False,
+                    "source_group_exposed": False,
+                    "sampler_selection_exposed": False,
+                    "all_candidates_may_be_rejected": True,
+                    "slots": optional_slots,
+                }
+            )
+            optional_group_count += 1
+            continue
+        authored_scene_enabled = True
+        required_slots = [str(slot) for slot in group.get("required_slots") or [] if str(slot)]
+        group.clear()
+        group.update(
+            {
+                "group": "authorial_scene",
+                "strategy": "authorial_scene",
+                "source": "selected_render_blueprint_abstraction",
+                "fail_closed": True,
+                "contract_version": CANDIDATE_PACK_AUTHORIAL_SCENE_VERSION,
+                "required_authored_slots": required_slots,
+                "scene_functions": normalize_list(selected_scene.get("scene_functions")),
+                "diegetic_visual_provenance": normalize_list(
+                    selected_scene.get("diegetic_visual_provenance")
+                ),
+                "relationship_stakes": normalize_list(selected_scene.get("relationship_stakes")),
+                "genre_anchors": normalize_list(selected_scene.get("genre_anchors")),
+                "visual_evidence_types": normalize_list(selected_scene.get("visual_evidence_types")),
+                "composition_policy": {
+                    "invent_scene_atoms_instead_of_copying_a_source_scene": True,
+                    "source_sentence_reuse_forbidden": True,
+                    "minimum_interpretive_choices": 2,
+                    "interpretive_dimensions": [
+                        "subject",
+                        "action",
+                        "location",
+                        "prop",
+                        "framing",
+                        "light",
+                        "time",
+                        "material",
+                        "relationship",
+                    ],
+                    "prompt_evidence_must_be_literal": True,
+                },
+            }
+        )
+    if authored_scene_enabled:
+        selected_scene.pop("blueprint_id", None)
+        selected_scene.pop("scene_tag", None)
+        selected_scene.pop("atomic_scene", None)
+        selected_scene["authorial_scene"] = {
+            "enabled": True,
+            "contract_version": CANDIDATE_PACK_AUTHORIAL_SCENE_VERSION,
+            "required_authored_slots": ["subject", "action", "location", "prop"],
+            "instruction": "Invent one coherent scene from the abstract functions and stakes; do not reconstruct or imitate a source blueprint.",
+        }
+    if authored_scene_enabled and optional_group_count:
+        scene_contract["strategy"] = "authorial_scene_with_optional_inspiration"
+    elif authored_scene_enabled:
+        scene_contract["strategy"] = "authorial_scene"
+    elif optional_group_count:
+        scene_contract["strategy"] = "optional_inspiration_groups"
+    return authored_scene_enabled
+
+
+def candidate_pack_v4_project_hybrid(projected: JsonDict) -> None:
+    hybrid = (
+        projected.get("hybrid_augmentation")
+        if isinstance(projected.get("hybrid_augmentation"), dict)
+        else None
+    )
+    if not isinstance(hybrid, dict):
+        return
+    hybrid["contract_version"] = CANDIDATE_PACK_HYBRID_AUTHORIAL_CONTRACT_VERSION
+    hybrid["source"] = "candidate_pack_authorial_inspiration_pool"
+    hybrid["purpose"] = "offer_optional_concept_vocabulary_that_the_agent_may_reject_or_artistically_transform"
+    hybrid["core_policy"] = {
+        "agent_authored_concept_core": True,
+        "candidate_pack_may_inspire_but_not_prescribe": True,
+        "candidate_source_phrases_are_not_exposed": True,
+        "verbatim_candidate_adoption_forbidden": True,
+        "agent_may_reject_every_route": True,
+    }
+    adoption = hybrid.get("adoption_contract") if isinstance(hybrid.get("adoption_contract"), dict) else {}
+    hybrid["adoption_contract"] = {
+        "decision_states": ["transformed", "rejected"],
+        "detail_functions": adoption.get(
+            "detail_functions",
+            ["concept_bridge", "material_detail", "pose_camera", "viewer_hook", "second_reading"],
+        ),
+        "minimum_transformed_if_selected": 1,
+        "maximum_transformed": 3,
+        "every_selected_route_candidate_requires_a_decision": True,
+        "transformed_candidate_must_be_chosen": True,
+        "rejected_candidate_must_not_be_chosen": True,
+        "artistic_interpretation_required": True,
+        "transformation_description_required": True,
+        "transformation_dimensions": [
+            "context",
+            "causality",
+            "gesture",
+            "material",
+            "framing",
+            "light",
+            "mood",
+            "timing",
+        ],
+        "prompt_evidence_must_be_literal_and_newly_authored": True,
+        "source_term_only_evidence_forbidden": True,
+        "marginal_contribution_required": True,
+    }
+    adult = hybrid.get("adult_appeal") if isinstance(hybrid.get("adult_appeal"), dict) else {}
+    requirements = (
+        adult.get("composition_requirements")
+        if isinstance(adult.get("composition_requirements"), dict)
+        else {}
+    )
+    if requirements:
+        requirements.pop("one_accepted_detail_per_active_axis", None)
+        requirements["authorial_axis_interpretation_per_active_axis"] = True
+        requirements["candidate_adoption_per_active_axis"] = "optional"
+    hybrid["evaluation_boundary"] = (
+        "audit_pass_proves_authorial_decisions_provenance_and_literal_binding_only;_"
+        "rendered_detail_taste_and_audience_response_require_pixel_and_human_evaluation"
+    )
+
+
+def candidate_pack_v4_project_authorial_open_slots(
+    projected: JsonDict,
+    *,
+    authored_scene_enabled: bool,
+) -> Set[str]:
+    slots = projected.get("slots") if isinstance(projected.get("slots"), dict) else {}
+    role_policy = (
+        projected.get("role_scene_policy")
+        if isinstance(projected.get("role_scene_policy"), dict)
+        else {}
+    )
+    opened: List[JsonDict] = []
+    removed_candidate_ids: Set[str] = set()
+    for slot in CANDIDATE_PACK_V4_AUTHORIAL_SCENE_SLOTS:
+        payload = slots.get(slot) if isinstance(slots.get(slot), dict) else None
+        candidates = payload.get("candidates") if isinstance(payload, dict) else None
+        should_open = bool(
+            isinstance(candidates, list)
+            and candidates
+            and (authored_scene_enabled or len(candidates) == 1)
+        )
+        if not should_open:
+            continue
+        removed_candidate_ids.update(
+            str(candidate.get("id") or "")
+            for candidate in candidates
+            if isinstance(candidate, dict) and str(candidate.get("id") or "")
+        )
+        if not authored_scene_enabled:
+            constraints: JsonDict = {
+                "preserve_user_intent_and_hard_contracts": True,
+            }
+            intent_constraints = (
+                ((projected.get("coverage") or {}).get("intent_constraints") or {})
+                if isinstance(projected.get("coverage"), dict)
+                else {}
+            )
+            if slot == "subject" and isinstance(intent_constraints, dict) and intent_constraints.get("no_people"):
+                constraints["no_people"] = True
+            if slot == "location" and role_policy.get("enabled"):
+                constraints.update(
+                    {
+                        "scene_family": str(role_policy.get("scene_family") or ""),
+                        "forbidden_concepts": normalize_list(
+                            role_policy.get("forbidden_locations")
+                        )
+                        + normalize_list(role_policy.get("discouraged_generic_locations")),
+                    }
+                )
+            opened.append(
+                {
+                    "slot": slot,
+                    "status": "authorial_opening",
+                    "reason": "singleton_scene_candidate_would_create_fixed_prompt_influence",
+                    "source_candidate_count": len(candidates),
+                    "constraints": constraints,
+                    "required_composed_fields": ["prompt_evidence", "artistic_rationale"],
+                }
+            )
+        slots.pop(slot, None)
+
+    if opened:
+        projected["authorial_open_slots"] = opened
+
+    if role_policy.get("enabled") and any(row.get("slot") == "location" for row in opened):
+        projected["role_scene_policy"] = {
+            "enabled": True,
+            "enforce": bool(role_policy.get("enforce")),
+            "scene_family": str(role_policy.get("scene_family") or ""),
+            "selection_mode": "agent_authored_location",
+            "required_acknowledgment": str(role_policy.get("scene_family") or ""),
+            "forbidden_concepts": normalize_list(role_policy.get("forbidden_locations"))
+            + normalize_list(role_policy.get("discouraged_generic_locations")),
+            "reason": str(role_policy.get("reason") or "role-compatible authored location"),
+        }
+
+    if not removed_candidate_ids:
+        return removed_candidate_ids
+    hybrid = (
+        projected.get("hybrid_augmentation")
+        if isinstance(projected.get("hybrid_augmentation"), dict)
+        else {}
+    )
+    route_contract = (
+        hybrid.get("route_contract")
+        if isinstance(hybrid.get("route_contract"), dict)
+        else {}
+    )
+    for route in route_contract.get("routes") or []:
+        if not isinstance(route, dict):
+            continue
+        route["details"] = [
+            detail
+            for detail in route.get("details") or []
+            if isinstance(detail, dict)
+            and str(detail.get("candidate_id") or "") not in removed_candidate_ids
+        ]
+        route["candidate_ids"] = [
+            str(detail.get("candidate_id") or "")
+            for detail in route["details"]
+            if str(detail.get("candidate_id") or "")
+        ]
+    projected["conflicts"] = [
+        conflict
+        for conflict in projected.get("conflicts") or []
+        if isinstance(conflict, dict)
+        and not any(
+            str(candidate_id) in removed_candidate_ids
+            for candidate_id in conflict.get("candidates") or []
+        )
+    ]
+    return removed_candidate_ids
+
+
+def candidate_pack_v4_prune_removed_candidate_references(
+    projected: JsonDict,
+    removed_candidate_ids: Set[str],
+) -> None:
+    """Remove indirect handles to scene candidates withheld from v4."""
+
+    if not removed_candidate_ids:
+        return
+    removed_entry_ids = {
+        candidate_id.rsplit(":", 1)[-1]
+        for candidate_id in removed_candidate_ids
+        if ":" in candidate_id
+    }
+    drop = object()
+
+    def prune(value: Any) -> Any:
+        if isinstance(value, dict):
+            if any(
+                str(value.get(key) or "") in removed_candidate_ids
+                for key in ("id", "candidate_id")
+            ) or str(value.get("entry_id") or "") in removed_entry_ids:
+                return drop
+            cleaned: JsonDict = {}
+            for key, item in value.items():
+                if isinstance(item, str) and (
+                    item in removed_candidate_ids or item in removed_entry_ids
+                ):
+                    continue
+                projected_item = prune(item)
+                if projected_item is not drop:
+                    cleaned[str(key)] = projected_item
+            return cleaned
+        if isinstance(value, list):
+            cleaned_list: List[Any] = []
+            for item in value:
+                if isinstance(item, str) and (
+                    item in removed_candidate_ids or item in removed_entry_ids
+                ):
+                    continue
+                projected_item = prune(item)
+                if projected_item is not drop:
+                    cleaned_list.append(projected_item)
+            return cleaned_list
+        return value
+
+    cleaned = prune(projected)
+    if isinstance(cleaned, dict):
+        projected.clear()
+        projected.update(cleaned)
+    scene_contract = (
+        projected.get("scene_contract")
+        if isinstance(projected.get("scene_contract"), dict)
+        else {}
+    )
+    retained_groups: List[JsonDict] = []
+    for group in scene_contract.get("groups") or []:
+        if not isinstance(group, dict):
+            continue
+        if group.get("strategy") == "optional_inspiration_group":
+            group["slots"] = {
+                str(slot): slot_contract
+                for slot, slot_contract in (group.get("slots") or {}).items()
+                if isinstance(slot_contract, dict)
+                and slot_contract.get("allowed_candidate_ids")
+            }
+            if not group["slots"]:
+                continue
+        retained_groups.append(group)
+    scene_contract["groups"] = retained_groups
+    if not retained_groups:
+        scene_contract.update({"enabled": False, "strategy": "none"})
+    elif all(group.get("strategy") == "optional_inspiration_group" for group in retained_groups):
+        scene_contract["strategy"] = "optional_inspiration_groups"
+
+
+def candidate_pack_v4_project_private_routing(projected: JsonDict) -> None:
+    """Keep replay metadata without publishing the private sampled recipe."""
+
+    presets = projected.get("presets") if isinstance(projected.get("presets"), list) else []
+    if len(presets) <= 1:
+        projected["presets"] = []
+
+    preset_reference = (
+        projected.get("preset_reference")
+        if isinstance(projected.get("preset_reference"), dict)
+        else {}
+    )
+    preset_reference.pop("preset_id", None)
+    preset_reference.update(
+        {
+            "role": "private_routing_scaffold",
+            "source_preset_exposed": False,
+            "source_prompt_exposed": False,
+        }
+    )
+
+    motif_budget = (
+        projected.get("motif_budget")
+        if isinstance(projected.get("motif_budget"), dict)
+        else {}
+    )
+    motif_budget.pop("selected_motifs", None)
+    motif_budget.update(
+        {
+            "selection_mode": "agent_authored_optional",
+            "sampler_motif_selection_exposed": False,
+            "taxonomy_content_form": "unordered_inspiration_terms",
+        }
+    )
+
+    provenance = (
+        projected.get("provenance")
+        if isinstance(projected.get("provenance"), dict)
+        else {}
+    )
+    allowed_fields = (
+        "generator_version",
+        "seed",
+        "batch_index",
+        "selection_mode",
+        "requested_selection_mode",
+        "tags_hash",
+        "concept_lock",
+        "additional_requirements",
+        "reference_edit_mode",
+        "likeness_mode",
+        "likeness_references",
+        "user_mandatory_intents",
+        "requested_scene_function",
+        "safety",
+    )
+    projected["provenance"] = {
+        **{
+            key: copy.deepcopy(provenance.get(key))
+            for key in allowed_fields
+            if key in provenance
+        },
+        "private_routing_exposed": False,
+        "omitted_private_fields": [
+            "argv",
+            "preset_id",
+            "sample_prompt_id",
+            "concept_gate_results",
+            "concept_scene_variants",
+            "character_response",
+            "adult_appeal",
+        ],
+    }
+
+
+def candidate_pack_v4_project_quality_profile(projected: JsonDict) -> None:
+    """Expose only request-critical subject kind, not a sampled style profile."""
+
+    profile = (
+        projected.get("quality_profile")
+        if isinstance(projected.get("quality_profile"), dict)
+        else {}
+    )
+    facets = profile.get("facets") if isinstance(profile.get("facets"), dict) else {}
+    projected["quality_profile"] = {
+        "profile_id": "authorial",
+        "facets": {
+            "subject_kind": normalize_list(facets.get("subject_kind")),
+        },
+        "selection_mode": "agent_authored",
+        "source_profile_exposed": False,
+    }
+
+
+def candidate_pack_v4_shuffle(items: List[Any], *, seed: str, scope: str) -> None:
+    items.sort(
+        key=lambda item: hashlib.sha256(
+            f"authorial-order|{seed}|{scope}|{json.dumps(item, ensure_ascii=False, sort_keys=True, separators=(',', ':'))}".encode(
+                "utf-8"
+            )
+        ).hexdigest()
+    )
+
+
+def candidate_pack_v4_remove_selection_answer_keys(value: Any) -> None:
+    if isinstance(value, dict):
+        value.pop("covered_by", None)
+        for item in value.values():
+            candidate_pack_v4_remove_selection_answer_keys(item)
+    elif isinstance(value, list):
+        for item in value:
+            candidate_pack_v4_remove_selection_answer_keys(item)
+
+
+def candidate_pack_v4_shuffle_candidate_surfaces(projected: JsonDict, *, seed: str) -> None:
+    presets = projected.get("presets") if isinstance(projected.get("presets"), list) else []
+    candidate_pack_v4_shuffle(presets, seed=seed, scope="presets")
+    slots = projected.get("slots") if isinstance(projected.get("slots"), dict) else {}
+    for slot, payload in slots.items():
+        if not isinstance(payload, dict) or not isinstance(payload.get("candidates"), list):
+            continue
+        candidate_pack_v4_shuffle(payload["candidates"], seed=seed, scope=f"slot:{slot}")
+    proposition = (
+        projected.get("visual_proposition")
+        if isinstance(projected.get("visual_proposition"), dict)
+        else {}
+    )
+    for key in ("core_candidates", "tension_candidates"):
+        if isinstance(proposition.get(key), list):
+            candidate_pack_v4_shuffle(proposition[key], seed=seed, scope=f"proposition:{key}")
+    integration = (
+        projected.get("photographic_integration")
+        if isinstance(projected.get("photographic_integration"), dict)
+        else {}
+    )
+    if isinstance(integration.get("category_candidates"), list):
+        candidate_pack_v4_shuffle(
+            integration["category_candidates"],
+            seed=seed,
+            scope="photographic-integration",
+        )
+    craft = (
+        projected.get("photographic_craft")
+        if isinstance(projected.get("photographic_craft"), dict)
+        else {}
+    )
+    if isinstance(craft.get("dimension_candidates"), list):
+        candidate_pack_v4_shuffle(
+            craft["dimension_candidates"],
+            seed=seed,
+            scope="photographic-craft",
+        )
+    motif_budget = (
+        projected.get("motif_budget")
+        if isinstance(projected.get("motif_budget"), dict)
+        else {}
+    )
+    motif_taxonomy = (
+        motif_budget.get("motif_taxonomy")
+        if isinstance(motif_budget.get("motif_taxonomy"), dict)
+        else {}
+    )
+    for motif, terms in motif_taxonomy.items():
+        if isinstance(terms, list):
+            candidate_pack_v4_shuffle(
+                terms,
+                seed=seed,
+                scope=f"motif:{motif}",
+            )
+    hybrid = (
+        projected.get("hybrid_augmentation")
+        if isinstance(projected.get("hybrid_augmentation"), dict)
+        else {}
+    )
+    adult = hybrid.get("adult_appeal") if isinstance(hybrid.get("adult_appeal"), dict) else {}
+    axes = adult.get("axes") if isinstance(adult.get("axes"), dict) else {}
+    for axis_id, axis in axes.items():
+        if isinstance(axis, dict) and isinstance(axis.get("candidate_inventory"), list):
+            candidate_pack_v4_shuffle(
+                axis["candidate_inventory"],
+                seed=seed,
+                scope=f"adult-axis:{axis_id}",
+            )
+    route_contract = (
+        hybrid.get("route_contract")
+        if isinstance(hybrid.get("route_contract"), dict)
+        else {}
+    )
+    routes = route_contract.get("routes") if isinstance(route_contract.get("routes"), list) else []
+    for route in routes:
+        if not isinstance(route, dict) or not isinstance(route.get("details"), list):
+            continue
+        candidate_pack_v4_shuffle(
+            route["details"],
+            seed=seed,
+            scope=f"hybrid-route:{route.get('id') or ''}",
+        )
+        route["candidate_ids"] = [
+            str(detail.get("candidate_id") or "")
+            for detail in route["details"]
+            if str(detail.get("candidate_id") or "")
+        ]
+    candidate_pack_v4_shuffle(routes, seed=seed, scope="hybrid-routes")
+
+
+def candidate_pack_project_v4(projected: JsonDict) -> JsonDict:
+    candidate_pack_v4_project_candidate_surfaces(projected)
+    candidate_pack_v4_project_quality_surfaces(projected)
+    authored_scene_enabled = candidate_pack_v4_project_scene(projected)
+    candidate_pack_v4_project_hybrid(projected)
+    removed_candidate_ids = candidate_pack_v4_project_authorial_open_slots(
+        projected,
+        authored_scene_enabled=authored_scene_enabled,
+    )
+    candidate_pack_v4_prune_removed_candidate_references(
+        projected,
+        removed_candidate_ids,
+    )
+    provenance = projected.get("provenance") if isinstance(projected.get("provenance"), dict) else {}
+    variation_material = "|".join(
+        [
+            str(provenance.get("seed") or ""),
+            str(provenance.get("preset_id") or ""),
+            str(provenance.get("batch_index") or 0),
+        ]
+    )
+    variation_digest = hashlib.sha256(
+        f"authorial-variation|{variation_material}".encode("utf-8")
+    ).digest()
+    variation_index = int.from_bytes(variation_digest[:8], "big") % len(
+        CANDIDATE_PACK_AUTHORIAL_LENSES
+    )
+    candidate_pack_v4_remove_selection_answer_keys(projected)
+    candidate_pack_v4_project_private_routing(projected)
+    candidate_pack_v4_project_quality_profile(projected)
+    candidate_pack_v4_shuffle_candidate_surfaces(projected, seed=variation_material)
+    projected["authorial_composition"] = {
+        "enabled": True,
+        "contract_version": CANDIDATE_PACK_AUTHORIAL_COMPOSITION_VERSION,
+        "candidate_content_form": "unordered_inspiration_terms",
+        "candidate_order": "seed_shuffled_non_preferential",
+        "variation_lens": CANDIDATE_PACK_AUTHORIAL_LENSES[variation_index],
+        "policy": {
+            "agent_is_final_author": True,
+            "select_reinterpret_or_reject_by_artistic_judgment": True,
+            "candidate_sentence_copying_forbidden": True,
+            "technical_or_identity_terms_may_be_used_selectively": True,
+            "candidate_pack_must_not_supply_final_prompt_prose": True,
+            "all_advisory_candidates_may_be_rejected": True,
+            "hard_identity_and_safety_constraints_remain_required": True,
+            "chosen_candidate_interpretations_required": True,
+        },
+        "candidate_interpretation_contract": {
+            "composed_field": "candidate_interpretations",
+            "required_for_every_non_augmentation_chosen_candidate": True,
+            "required_fields": [
+                "candidate_id",
+                "artistic_interpretation",
+                "transformation",
+                "prompt_evidence",
+            ],
+            "prompt_evidence_must_be_literal_and_newly_authored": True,
+            "minimum_prompt_evidence_content_words": 4,
+            "minimum_new_content_words_beyond_source_terms": 2,
+            "source_term_only_evidence_forbidden": True,
+            "augmentation_candidates_use_augmentation_brief": True,
+        },
+        "authored_scene_required": authored_scene_enabled,
+    }
+    return projected
+
+
 def candidate_pack_project(pack: JsonDict, version: str) -> JsonDict:
     contract_version = candidate_pack_contract_version(version)
     projected = copy.deepcopy(pack)
@@ -7093,7 +9305,76 @@ def candidate_pack_project(pack: JsonDict, version: str) -> JsonDict:
         adult.pop("inventory_preset_id", None)
         adult.pop("source_preset_id", None)
     projected = candidate_pack_v3_alias_value(projected)
+    if contract_version == CANDIDATE_PACK_CONTRACT_V4:
+        projected = candidate_pack_project_v4(projected)
     return candidate_pack_recompute_id(projected)
+
+
+def candidate_pack_ensure_species_policy_candidates(
+    data: JsonDict,
+    slots: JsonDict,
+    candidate_entries: Dict[str, tuple[str, Optional[str], JsonDict]],
+    species_policy: JsonDict,
+) -> None:
+    """Expose every fail-closed species-family choice to the composer.
+
+    A preset filter can remove a required texture before rule-mode candidate
+    summarization. Keeping the requirement only in ``species_family.allowed``
+    creates an impossible pack: audit demands an ID the composer cannot choose.
+    """
+    if not species_policy.get("enabled") or species_policy.get("hybrid_allowed"):
+        return
+    allowed = species_policy.get("allowed") if isinstance(species_policy.get("allowed"), dict) else {}
+    for slot, raw_ids in allowed.items():
+        required_ids = [str(item) for item in raw_ids or [] if str(item).strip()]
+        if not required_ids:
+            continue
+        payload = slots.setdefault(
+            str(slot),
+            {
+                "slot": str(slot),
+                "role": "core" if str(slot) in CANDIDATE_PACK_CORE_SLOTS else "support",
+                "selected": None,
+                "candidates": [],
+                "candidate_count": 0,
+                "candidate_limit": candidate_pack_slot_limit(str(slot)),
+                "weight_floor": None,
+                "score_window": None,
+                "selected_filter": "species_family_required_policy",
+            },
+        )
+        candidates = payload.setdefault("candidates", [])
+        existing_ids = {
+            str(candidate.get("entry_id") or "")
+            for candidate in candidates
+            if isinstance(candidate, dict)
+        }
+        selected_id = str(payload.get("selected") or "").split(":", 2)[-1]
+        for entry_id in required_ids:
+            if entry_id in existing_ids:
+                continue
+            entry = candidate_pack_slot_entry_by_id(data, str(slot), entry_id)
+            if entry is None:
+                raise ValueError(
+                    f"species-family policy references unknown slot entry {slot}:{entry_id}"
+                )
+            candidate, source_entry = candidate_pack_summarize_slot_candidate(
+                data,
+                str(slot),
+                {
+                    "id": entry_id,
+                    "weight": entry.get("weight", 1.0),
+                    "applicability_status": "eligible",
+                    "applicability_source": "species_family_required_policy",
+                    "applicability_reason": "required_by_fail_closed_species_family_contract",
+                },
+                0.0,
+                selected_id,
+            )
+            candidates.append(candidate)
+            candidate_entries[candidate["id"]] = ("slot", str(slot), source_entry)
+            existing_ids.add(entry_id)
+        payload["candidate_count"] = max(int(payload.get("candidate_count") or 0), len(candidates))
 
 
 def build_candidate_pack(
@@ -7101,11 +9382,20 @@ def build_candidate_pack(
     data: JsonDict,
     candidate_pack_version: str = DEFAULT_CANDIDATE_PACK_VERSION,
 ) -> JsonDict:
+    requested_contract_version = candidate_pack_contract_version(candidate_pack_version)
     trace = result.get("semantic_trace") if isinstance(result.get("semantic_trace"), dict) else {}
     provenance = result.get("provenance") if isinstance(result.get("provenance"), dict) else {}
+    contract = trace.get("generation_contract") if isinstance(trace.get("generation_contract"), dict) else {}
+    soft_policy = contract.get("soft_anchor_policy") if isinstance(contract.get("soft_anchor_policy"), dict) else {}
     candidate_entries: Dict[str, tuple[str, Optional[str], JsonDict]] = {}
     presets = candidate_pack_build_presets(data, trace, result, candidate_entries)
     slots = candidate_pack_build_slots(data, trace, result, candidate_entries)
+    candidate_pack_ensure_species_policy_candidates(
+        data,
+        slots,
+        candidate_entries,
+        soft_policy.get("species_family_policy", {"enabled": False, "allowed": {}}),
+    )
     adult_appeal = candidate_pack_hybrid_adult_appeal(data, result, candidate_entries)
     selected_preset = candidate_pack_selected_preset(data, result)
     selected_blueprint = candidate_pack_resolve_scene_blueprint(
@@ -7125,8 +9415,6 @@ def build_candidate_pack(
         candidate_blobs,
     )
     intent_contract = candidate_pack_intent_contract(data, result, trace, candidate_blobs)
-    contract = trace.get("generation_contract") if isinstance(trace.get("generation_contract"), dict) else {}
-    soft_policy = contract.get("soft_anchor_policy") if isinstance(contract.get("soft_anchor_policy"), dict) else {}
     scene_contract = candidate_pack_scene_contract(soft_policy, slots, selected_blueprint)
     render_contract = candidate_pack_render_contract(
         selected_preset,
@@ -7166,13 +9454,28 @@ def build_candidate_pack(
         uncovered_intents = [row for row in mandatory_intents if row.get("status") == "uncovered"]
     creative_exploration = candidate_pack_creative_exploration(result, slots, candidate_entries)
     creative_direction = candidate_pack_creative_direction(result)
+    moe_response = candidate_pack_moe_response(result)
     viewer_experience = candidate_pack_viewer_experience(result)
+    intent_constraints = copy.deepcopy(contract.get("intent_constraints", {}))
+    if isinstance(intent_constraints, dict):
+        response_constraint = intent_constraints.get("character_response")
+        if not (
+            isinstance(response_constraint, dict)
+            and response_constraint.get("requested") is True
+        ):
+            # Keep the internal fail-closed routing result available to tests
+            # and later generation stages without changing ordinary public
+            # candidate-pack bytes.
+            intent_constraints.pop("character_response", None)
     hybrid_augmentation = candidate_pack_hybrid_augmentation(
         data,
         result,
         slots,
         masked_slot_names,
         adult_appeal,
+        str(provenance.get("seed"))
+        if requested_contract_version == CANDIDATE_PACK_CONTRACT_V4
+        else None,
     )
     pack: JsonDict = {
         "contract_version": CANDIDATE_PACK_CONTRACT_V2,
@@ -7216,7 +9519,7 @@ def build_candidate_pack(
             "mandatory_intent_count": len(mandatory_intents),
             "covered_mandatory_intent_count": len(mandatory_intents) - len(uncovered_intents),
             "uncovered_intent_count": len(uncovered_intents),
-            "intent_constraints": contract.get("intent_constraints", {}),
+            "intent_constraints": intent_constraints,
             "axis_coverage": trace.get("axis_coverage", {}),
             "contract": {
                 "must_cover_axes": contract.get("must_cover_axes", []),
@@ -7242,6 +9545,7 @@ def build_candidate_pack(
             "tags_hash": provenance.get("tags_hash") or trace.get("dictionary_hash"),
             "concept_lock": provenance.get("concept_lock", []),
             "additional_requirements": provenance.get("additional_requirements", []),
+            "reference_edit_mode": provenance.get("reference_edit_mode", "off"),
             "likeness_mode": provenance.get("likeness_mode"),
             "likeness_references": provenance.get("likeness_references", []),
             "user_mandatory_intents": provenance.get("user_mandatory_intents", []),
@@ -7257,6 +9561,11 @@ def build_candidate_pack(
         pack["creative_exploration"] = creative_exploration
     if creative_direction is not None:
         pack["creative_direction"] = creative_direction
+    if moe_response is not None:
+        pack["moe_response"] = moe_response
+        character_response = provenance.get("character_response")
+        if isinstance(character_response, dict) and character_response.get("requested") is True:
+            pack["provenance"]["character_response"] = character_response
     if viewer_experience is not None:
         pack["viewer_experience"] = viewer_experience
     if hybrid_augmentation is not None:
@@ -10365,6 +12674,30 @@ def choose_preset(
             "hard_rejected_by_reason": rejected_by_reason,
         }
         return selected
+
+    soft_policy = normalize_soft_anchor_spec(soft_anchor_spec)
+    preferred_ids = set(
+        normalize_list((soft_policy.get("preset_affinity") or {}).get("preferred_presets"))
+    )
+    affine_presets = [
+        preset
+        for preset in presets
+        if str(preset.get("id") or "") in preferred_ids
+        and not preset_denied_anchor_slot(preset, soft_policy, data)
+    ]
+    if affine_presets:
+        weighted_affine: List[JsonDict] = []
+        for preset in affine_presets:
+            copied = dict(preset)
+            try:
+                weight = max(float(preset.get("weight", 1) or 0), 0.0)
+            except (TypeError, ValueError):
+                weight = 1.0
+            affinity_factor, _ = soft_preset_affinity_factor(preset, soft_policy, data)
+            role_factor, _ = role_scene_policy_factor(preset, soft_policy)
+            copied["weight"] = weight * affinity_factor * role_factor
+            weighted_affine.append(copied)
+        return weighted_choice(weighted_affine, rng)
 
     balanced_presets = apply_selection_balance_bias(presets, data, None, None)
     return weighted_choice(balanced_presets, rng)
@@ -14983,7 +17316,8 @@ def render_reference_edit_detail(mode: str, lang: str) -> str:
         details = {
             "identity": (
                 "레퍼런스 편집 지시: 업로드된 인물 사진이 있다면 얼굴의 눈 모양과 간격, 눈썹, 코, 입술, 턱선, "
-                "광대, 피부톤, 자연스러운 비대칭, 헤어라인을 유지하고, 조명과 배경만 새 장면에 맞게 바꾼다."
+                "광대, 피부톤, 자연스러운 비대칭, 헤어라인과 성인 연령을 유지한다. 요청된 표정, 자세, 의상, 조명, "
+                "배경만 바꾸며 얼굴 대체, 평균화, 미화 목적의 구조 변경, 어려 보이게 만들기를 금지한다."
             ),
             "younger_self": (
                 "레퍼런스 편집 지시: 현재 모습과 어린 시절 사진 두 장이 있다면 두 인물을 같은 공간 안에 배치하고, "
@@ -14998,7 +17332,8 @@ def render_reference_edit_detail(mode: str, lang: str) -> str:
         details = {
             "identity": (
                 "Reference-edit instruction: if an uploaded portrait is provided, preserve eye shape and spacing, eyebrows, nose, "
-                "lips, jawline, cheekbones, skin tone, natural asymmetry, and hairline while changing only lighting, outfit, and setting."
+                "lips, jawline, cheekbones, skin tone, natural asymmetry, hairline, and adult age. Change only the requested expression, "
+                "pose, outfit, lighting, and setting; do not substitute, average, structurally beautify, or de-age the face."
             ),
             "younger_self": (
                 "Reference-edit instruction: if current and childhood photos are provided, place both versions in one shared space, "
@@ -15767,6 +18102,88 @@ def soft_render_suppress_negative_entries(policy: Optional[JsonDict]) -> List[En
     return entries
 
 
+def moe_response_default_negative_entries(
+    character_response: Optional[JsonDict],
+    generation_contract: Optional[JsonDict],
+    reference_edit_mode: str = "off",
+) -> List[Entry]:
+    """Suppress generic cute shorthand that competes with causal moe evidence."""
+    if not isinstance(character_response, dict) or character_response.get("requested") is not True:
+        return []
+    contract = generation_contract if isinstance(generation_contract, dict) else {}
+    source_text = " ".join(
+        [
+            *normalize_list(contract.get("concept_locks")),
+            *normalize_list(contract.get("user_mandatory_intents")),
+            *normalize_list(contract.get("additional_requirements")),
+        ]
+    )
+    heart_requested = text_matches_any_pattern(
+        source_text,
+        (r"하트", r"ハート|♡|♥", r"(?<![a-z0-9])hearts?(?![a-z0-9])"),
+    )
+    graphic_requested = text_matches_any_pattern(
+        source_text,
+        (r"만화|망가|코믹", r"漫画|マンガ", r"(?<![a-z0-9])(?:manga|comic)(?![a-z0-9])"),
+    )
+    text_requested = text_matches_any_pattern(source_text, MOE_TEXT_REQUEST_PATTERNS)
+    terms = [
+        "generic sparkle overlays",
+        "decorative blush circles",
+        "childlike facial morphology",
+        "minor appearance",
+        "school-age coding",
+        "oversized anime eyes",
+        "blank bored expression",
+        "listless expression",
+        "pure scowl without a warm micro-expression",
+    ]
+    if str(reference_edit_mode or "off") == "identity":
+        terms.extend(
+            [
+                "enlarged or rounder eyes than the identity reference",
+                "shortened face compared with the identity reference",
+                "narrowed jaw compared with the identity reference",
+                "dollified facial proportions",
+                "de-aged identity",
+            ]
+        )
+    if not heart_requested:
+        terms.extend(
+            [
+                "unrequested heart symbols",
+                "heart-shaped pupils",
+                "heart-shaped latte art",
+            ]
+        )
+    if not graphic_requested:
+        terms.extend(
+            [
+                "cartoon motion lines",
+                "manga reaction marks",
+                "comic emphasis marks",
+            ]
+        )
+    if not text_requested:
+        terms.extend(
+            [
+                "readable background text",
+                "pseudo-writing",
+                "menu board lettering",
+                "chalkboard writing",
+                "signage behind the subject",
+            ]
+        )
+    return [
+        {
+            "id": f"moe_response_default_suppress_{stable_text_id(term)}",
+            "en": term,
+            "ko": term,
+        }
+        for term in terms
+    ]
+
+
 def render_directive_match_blob(picked: Dict[str, Entry], policy: Optional[JsonDict]) -> str:
     parts: List[str] = []
     for slot, entry in picked.items():
@@ -15975,7 +18392,50 @@ def generate_once(
             print(f"Warning: semantic default fell back to rule mode: {fallback_reason}", file=sys.stderr)
         else:
             raise
-    preset = choose_preset(data, rng, preset_id, semantic_context, soft_anchor_spec=soft_anchor_spec)
+    # Natural-language moe routing must constrain the preset before rule-mode
+    # sampling.  Previously the response contract was resolved only after a
+    # generic preset and subject had already been sampled, so an explicit
+    # adult-bishonen request could inherit an elderly commuter.  Keep an
+    # explicit preset or a narrower role/mixin recipe authoritative; only fill
+    # the otherwise-unconstrained natural-language gap here.
+    routed_preset_id = preset_id
+    natural_moe_route_preset_id: Optional[str] = None
+    if not routed_preset_id:
+        pre_route_texts = [
+            *normalize_list(concept_locks),
+            *normalize_list(additional_requirements),
+            *normalize_list(role_requirements),
+            *normalize_list(user_mandatory_intents),
+            *([str(intent)] if intent else []),
+        ]
+        pre_route_response = resolve_moe_response_intent(pre_route_texts)
+        pre_route_policy = normalize_soft_anchor_spec(soft_anchor_spec)
+        preferred_presets = set(
+            normalize_list((pre_route_policy.get("preset_affinity") or {}).get("preferred_presets"))
+        )
+        no_people_pre_route = any(
+            intent_explicitly_excludes_people(text) for text in pre_route_texts
+        )
+        route_id = str(pre_route_response.get("route_id") or "")
+        route_exists = bool(route_id) and (
+            any(str(item.get("id") or "") == route_id for item in data.get("presets", []))
+            or materialize_virtual_preset(data, route_id) is not None
+        )
+        if (
+            pre_route_response.get("requested") is True
+            and not no_people_pre_route
+            and not preferred_presets
+            and route_exists
+        ):
+            routed_preset_id = route_id
+            natural_moe_route_preset_id = route_id
+    preset = choose_preset(
+        data,
+        rng,
+        routed_preset_id,
+        semantic_context,
+        soft_anchor_spec=soft_anchor_spec,
+    )
     picked: Dict[str, Entry] = {}
     generation_contract = make_generation_contract(
         data,
@@ -15995,6 +18455,16 @@ def generate_once(
         safety_evaluation_requested=safety_evaluation_requested,
         soft_anchor_spec=soft_anchor_spec,
     )
+    if natural_moe_route_preset_id:
+        record_generation_contract_event(
+            generation_contract,
+            "natural_moe_route_preset",
+            {
+                "preset_id": natural_moe_route_preset_id,
+                "source": "pre_sample_natural_language_moe_route",
+                "narrower_recipe_preserved": False,
+            },
+        )
     if semantic_context is not None and intent_source == "user":
         generation_contract["semantic_intent"] = str(semantic_context.get("intent") or "")
         generation_contract["intent_constraints"] = resolve_request_intent_constraints(
@@ -16002,6 +18472,25 @@ def generate_once(
             semantic_context,
             generation_contract,
         )
+    character_response_intent = (
+        generation_contract.get("intent_constraints", {}).get("character_response", {})
+        if isinstance(generation_contract.get("intent_constraints"), dict)
+        else {}
+    )
+    if (
+        isinstance(character_response_intent, dict)
+        and character_response_intent.get("requested") is True
+        and character_response_intent.get("eligible") is True
+        and character_response_intent.get("explicit_nonsexual") is True
+        and adult_appeal_activation_source == "skill_default"
+    ):
+        # Only an explicit nonsexual request neutralizes the configured adult
+        # appeal default. Plain adult moe retains low-intensity sensual support;
+        # explicit CLI controls still win either way.
+        sensual_editorial_intensity = 0
+        fetish_fashion_intensity = 0
+        adult_appeal_emphasis = "balanced"
+        adult_appeal_activation_source = "explicit_nonsexual_moe"
     expand_soft_anchor_pools(generation_contract, semantic_context, data)
     affinity_status = soft_preset_affinity_status(
         preset,
@@ -16260,8 +18749,42 @@ def generate_once(
             has_surreal_layer(render_picked),
             render_picked,
         )
+        if (
+            isinstance(character_response_intent, dict)
+            and character_response_intent.get("relationship_register")
+            == "peer_liking_under_denial"
+        ):
+            # V10 requires one deliberately visible, blurred recipient eye-and-temple
+            # edge landmark. The generic single-subject safeguard otherwise suppresses
+            # that relationship endpoint even though a second full face is still banned.
+            negative_entries = [
+                entry
+                for entry in negative_entries
+                if localize(entry, "en").strip().lower() != "duplicate faces"
+            ]
+            negative_entries.extend(
+                [
+                    {
+                        "id": "moe_peer_liking_duplicate_primary_subject",
+                        "en": "duplicate primary subject",
+                        "ko": "duplicate primary subject",
+                    },
+                    {
+                        "id": "moe_peer_liking_second_full_recipient_face",
+                        "en": "second full recipient face",
+                        "ko": "second full recipient face",
+                    },
+                ]
+            )
         soft_suppress_entries = soft_render_suppress_negative_entries(generation_contract.get("soft_anchor_policy"))
         soft_suppress_entries.extend(soft_render_directive_negative_entries(directive_events))
+        soft_suppress_entries.extend(
+            moe_response_default_negative_entries(
+                character_response_intent,
+                generation_contract,
+                reference_edit_mode,
+            )
+        )
         if soft_suppress_entries:
             existing = {localize(entry, "en").lower() for entry in negative_entries}
             for entry in soft_suppress_entries:
@@ -16308,6 +18831,7 @@ def generate_once(
             else {}
         ),
         "likeness_mode": likeness_mode,
+        "reference_edit_mode": reference_edit_mode,
         "likeness_references": normalize_list(likeness_references),
         "user_mandatory_intents": normalize_list(user_mandatory_intents),
         "concept_gate_results": [
@@ -16315,6 +18839,9 @@ def generate_once(
         ],
         "concept_scene_variants": normalize_list(concept_scene_variants),
         "safety": generation_contract.get("safety", {}),
+        "character_response": dict(character_response_intent)
+        if isinstance(character_response_intent, dict)
+        else {},
         "viewer_experience_requested": bool(viewer_experience_requested),
         "hybrid_augmentation_requested": bool(hybrid_augmentation_requested),
         "adult_appeal": {
@@ -16327,7 +18854,11 @@ def generate_once(
             ),
             "application_scope": "candidate_pack_composition",
             "activation_source": adult_appeal_activation_source
-            if sensual_editorial_intensity > 0 or fetish_fashion_intensity > 0
+            if (
+                sensual_editorial_intensity > 0
+                or fetish_fashion_intensity > 0
+                or adult_appeal_activation_source == "explicit_nonsexual_moe"
+            )
             else "explicit_opt_out",
             "axes": {
                 "sensual_editorial": {"intensity": int(sensual_editorial_intensity)},
@@ -16637,7 +19168,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         "--candidate-pack-version",
         choices=CANDIDATE_PACK_VERSIONS,
         default=DEFAULT_CANDIDATE_PACK_VERSION,
-        help="Candidate-pack contract to emit. v3 is the clean default; v2 preserves the prior public shape.",
+        help="Candidate-pack contract to emit. v4 is the authorial default; v3 and v2 preserve prior public shapes.",
     )
     parser.add_argument("--json-output", action="store_true", help="Print results as JSON.")
     parser.add_argument(
@@ -16724,6 +19255,11 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         list_tags(data, args.list_tags)
         return 0
 
+    if args.seed is None:
+        # An omitted seed means "new variation", not "reuse blueprint zero".
+        # The effective value is recorded in provenance so every run remains
+        # reproducible once emitted.
+        args.seed = secrets.randbits(63)
     rng = random.Random(args.seed)
     langs = parse_langs(args.lang)
     forced_choices = merge_forced_choices(

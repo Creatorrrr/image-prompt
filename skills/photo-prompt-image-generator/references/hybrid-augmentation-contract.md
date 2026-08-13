@@ -1,6 +1,6 @@
 # Hybrid Augmentation Contract
 
-Use this contract when the candidate pack contains `hybrid_augmentation.enabled: true`. Treat the pack as a bounded idea amplifier: keep the agent-authored concept core, inspect all three candidate-sourced routes, and selectively accept, modify, or reject their details. Validation and provenance protect this creative step; they do not replace it.
+Use this contract when the candidate pack contains `hybrid_augmentation.enabled: true`. In the default `photo-hybrid-augmentation/v2` contract, treat the pack as optional source vocabulary: keep the agent-authored concept core, inspect all three candidate-sourced routes, and artistically transform or reject their details. The pack never supplies final prompt prose. Validation and provenance protect this creative step; they do not replace the agent's authorship.
 
 ## Activation
 
@@ -14,9 +14,11 @@ The pack exposes three routes assembled from actual eligible candidate IDs:
 - `action_camera`: action, pose, gaze, framing, camera, and composition consequences;
 - `light_second_reading`: light, focus, mood, traces, particles, and reinspection evidence.
 
-Each route contains two to four details. A detail declares its candidate ID, slot, intended function, label, and source. Candidate labels are ideas, not mandatory text. Do not merge routes. Consider every route, then select exactly one or reject all three with a concrete reason.
+Each route contains two to four details. A detail declares its candidate ID, slot, intended function, source, and unordered `concept_terms`. These are semantic ingredients, not a phrase template and not a checklist that must all appear. Do not restore their source order, join them into pseudo-prose, or merge routes. Consider every route, then select exactly one or reject all three with a concrete reason.
 
-When a route is selected, decide every detail as `accepted`, `modified`, or `rejected`. Accept or modify two to five details. Include accepted and modified IDs in `chosen_candidate_ids`, bind one literal visible phrase for each, and record the marginal contribution. Keep rejected IDs out of `chosen_candidate_ids`. A modified detail retains its source candidate ID and records what changed.
+When a route is selected, decide every detail as `transformed` or `rejected`. Transform one to three details. Include transformed IDs in `chosen_candidate_ids`; for each, state the artistic interpretation, what changed, which context/causality/gesture/material/framing/light/mood/timing dimension changed, and what marginal value it adds. Bind a newly authored literal phrase that gives the cue a concrete relation or consequence beyond its source terms. Keep rejected IDs out of `chosen_candidate_ids`.
+
+These transformed rows already satisfy the v4 authorship requirement, so do not duplicate them in top-level `candidate_interpretations`. That top-level field covers ordinary chosen candidates outside `augmentation_brief`.
 
 Use this composed shape beside the ordinary fields:
 
@@ -33,12 +35,14 @@ Use this composed shape beside the ordinary fields:
     "decisions": [
       {
         "candidate_id": "slot:texture:example",
-        "decision": "modified",
+        "decision": "transformed",
         "function": "material_detail",
         "rationale": "Why it supports the core.",
         "marginal_contribution": "What becomes less distinctive if removed.",
-        "modification": "How it was adapted.",
-        "prompt_evidence": "literal visible prompt phrase"
+        "artistic_interpretation": "What the ingredient means in this authored scene.",
+        "transformation": "How its context or relationship was changed.",
+        "transformation_dimensions": ["material", "causality"],
+        "prompt_evidence": "newly authored literal visible prompt phrase with a relation or consequence"
       }
     ]
   }
@@ -62,7 +66,7 @@ The configured default activates only when the resolved subject category is huma
 
 Candidate entries may declare a minimum intensity. When fetish fashion is explicitly enabled at intensity `1`, only its lower tier is eligible; intensities `2` and `3` widen the material and garment inventory. Never reconstruct an entry hidden by the intensity threshold.
 
-Every active axis contributes at least one accepted or modified candidate. Add this block inside `augmentation_brief`:
+Candidate adoption is optional even when an axis is active. The agent must instead author one scene-specific interpretation for every active axis, keeping the abstract intensity and blend while avoiding a fixed inventory phrase. Add this block inside `augmentation_brief`:
 
 ```json
 {
@@ -70,8 +74,16 @@ Every active axis contributes at least one accepted or modified candidate. Add t
     "adult_subject_phrase": "literal phrase explicitly identifying an adult original subject",
     "agency_phrase": "literal phrase showing self-directed agency",
     "axes": {
-      "sensual_editorial": {"intensity": 2},
-      "fetish_fashion": {"intensity": 2}
+      "sensual_editorial": {
+        "intensity": 2,
+        "artistic_interpretation": "How this axis serves the concept rather than replacing it.",
+        "prompt_evidence": "newly authored literal scene phrase"
+      },
+      "fetish_fashion": {
+        "intensity": 2,
+        "artistic_interpretation": "A separate material-led interpretation.",
+        "prompt_evidence": "newly authored literal material phrase"
+      }
     },
     "blend": {"emphasis": "balanced"}
   }
@@ -84,4 +96,8 @@ Keep the subject unambiguously adult and original. Do not infer adulthood from f
 
 Audit styling, pose, framing, and camera together. The current hard rule rejects sheer or lingerie-coded styling combined with an extreme ground-level angle. Stacked body emphasis plus a lower angle is a quality warning requiring intentional review. These project checks do not override platform policy or image-tool enforcement.
 
-Audit PASS proves candidate provenance, selective decisions, budgets, and literal prompt binding. It does not prove rendered detail, tasteful balance, safety-tool acceptance, popularity, or audience response. Review generated pixels without prompt metadata; validate audience appeal through separate human or engagement evaluation.
+Audit PASS proves candidate provenance, explicit artistic decisions, transformation budgets, newly authored context, and literal prompt binding. It does not prove rendered detail, tasteful balance, safety-tool acceptance, popularity, or audience response. Review generated pixels without prompt metadata; validate audience appeal through separate human or engagement evaluation.
+
+## Legacy Replay
+
+`photo-hybrid-augmentation/v1` appears only in `--candidate-pack-version v3|v2` replay packs. It retains the older `accepted|modified|rejected` states, two-to-five adoption budget, literal candidate labels, and one adopted inventory candidate per active axis. Do not use that contract for new composition; it exists so historical packs and consumers remain auditable.

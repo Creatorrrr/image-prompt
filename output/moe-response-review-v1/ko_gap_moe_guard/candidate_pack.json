@@ -1,0 +1,3065 @@
+[
+  {
+    "contract_version": "photo-candidate-pack/v3",
+    "pack_id": "5ea94e2a884e73ff",
+    "intent_contract": [
+      {
+        "id": "intent:54059609440a",
+        "text": "평소 냉정한 성인 보안요원이 작은 실수를 감추려는 갭모에 사진",
+        "source": "concept_lock",
+        "polarity": "required",
+        "priority": "critical",
+        "axis_hints": [
+          "character_response:character_gap_contrast_scene",
+          "domain:character_moe_grammar"
+        ],
+        "constraints": [
+          "moe_response_goal",
+          "moe_mechanism:baseline_break_reveal",
+          "sexual_tone:nonsexual"
+        ],
+        "coverage_mode": "literal_or_asserted_translation",
+        "status": "covered",
+        "covered_by": [
+          "slot:medium:documentary_photo",
+          "slot:medium:film_still",
+          "slot:genre:portrait",
+          "slot:genre:reportage_noir",
+          "slot:prop:flip_phone",
+          "slot:prop:instant_photo_stack",
+          "slot:prop:blank_token_box_prop",
+          "slot:focus:zone_focus_street",
+          "slot:subject:security_guard_role_model"
+        ]
+      },
+      {
+        "id": "intent:9e75c3f1b0a6",
+        "text": "adult subject only; professional guard uniform and non-graphic surveillance setting",
+        "source": "negative_requirement",
+        "polarity": "excluded",
+        "priority": "critical",
+        "axis_hints": [],
+        "constraints": [],
+        "coverage_mode": "literal_or_asserted_translation",
+        "status": "covered",
+        "covered_by": [
+          "preset:security_guard_watch_portrait",
+          "slot:mood:professional_detachment",
+          "slot:subject:security_guard_role_model"
+        ]
+      },
+      {
+        "id": "intent:f523dffcc391",
+        "text": "adult security-guard identity reads as surveillance work and controlled access authority, not generic dark-suit fashion",
+        "source": "role_requirement",
+        "polarity": "advisory",
+        "priority": "support",
+        "axis_hints": [],
+        "constraints": [],
+        "coverage_mode": "literal_or_asserted_translation",
+        "status": "covered",
+        "covered_by": [
+          "slot:light_intensity:soft_low_contrast",
+          "slot:composition:medium_close",
+          "slot:motion:slow_sync_shutter_drag",
+          "slot:quality:photoreal",
+          "slot:subject:security_guard_role_model",
+          "slot:texture:aged_skin_vs_baby_skin"
+        ]
+      },
+      {
+        "id": "intent:3854ca9686f4",
+        "text": "security monitors, badge language, and guard uniform keep the role readable",
+        "source": "soft_guidance",
+        "polarity": "advisory",
+        "priority": "support",
+        "axis_hints": [],
+        "constraints": [],
+        "coverage_mode": "literal_or_asserted_translation",
+        "status": "covered",
+        "covered_by": [
+          "preset:security_guard_watch_portrait",
+          "slot:action:checking_security_monitors",
+          "slot:prop:blank_token_box_prop",
+          "slot:location:security_control_room",
+          "slot:composition:security_cam_ultrawide",
+          "slot:subject:security_guard_role_model"
+        ]
+      }
+    ],
+    "mandatory_intents": [
+      {
+        "text": "성인",
+        "source": "concept_lock",
+        "source_text": "평소 냉정한 성인 보안요원이 작은 실수를 감추려는 갭모에 사진",
+        "status": "covered",
+        "covered_by": [
+          "slot:subject:security_guard_role_model"
+        ],
+        "audit_terms": [
+          "성인"
+        ]
+      },
+      {
+        "text": "보안요원",
+        "source": "concept_lock",
+        "source_text": "평소 냉정한 성인 보안요원이 작은 실수를 감추려는 갭모에 사진",
+        "status": "covered",
+        "covered_by": [
+          "preset:security_guard_watch_portrait",
+          "slot:subject:security_guard_role_model"
+        ],
+        "audit_terms": [
+          "보안요원"
+        ]
+      }
+    ],
+    "uncovered_intents": [],
+    "presets": [
+      {
+        "id": "preset:security_guard_watch_portrait",
+        "preset_id": "security_guard_watch_portrait",
+        "label_en": "security guard watch portrait",
+        "label_ko": "보안요원 감시 포트레이트",
+        "facets": {},
+        "probability": 1.0,
+        "weight": 0.0,
+        "selected_by_sampler": true,
+        "scores": {
+          "weight": 0.0,
+          "selected_fallback": true
+        },
+        "conflicts_with": []
+      }
+    ],
+    "slots": {
+      "medium": {
+        "slot": "medium",
+        "role": "support",
+        "selected": "slot:medium:documentary_photo",
+        "candidates": [
+          {
+            "id": "slot:medium:documentary_photo",
+            "slot": "medium",
+            "entry_id": "documentary_photo",
+            "label_en": "documentary photograph",
+            "label_ko": "다큐멘터리 사진",
+            "probability": 0.666667,
+            "weight": 3.0,
+            "selected_by_sampler": true,
+            "tags": [
+              "documentary"
+            ],
+            "kind": [],
+            "facets": {},
+            "scores": {
+              "weight": 3.0,
+              "rule_selected": true,
+              "rule_context_score": 1,
+              "applicability_status": "eligible",
+              "applicability_source": "sampler_eligible_pool"
+            },
+            "applicability": {
+              "status": "eligible",
+              "source": "sampler_eligible_pool",
+              "reason": null
+            },
+            "conflicts_with": []
+          },
+          {
+            "id": "slot:medium:film_still",
+            "slot": "medium",
+            "entry_id": "film_still",
+            "label_en": "cinematic film still photograph",
+            "label_ko": "영화 스틸컷 같은 사진",
+            "probability": 0.333333,
+            "weight": 1.5,
+            "selected_by_sampler": false,
+            "tags": [
+              "cinematic"
+            ],
+            "kind": [],
+            "facets": {},
+            "scores": {
+              "weight": 1.5,
+              "rule_selected": false,
+              "rule_context_score": 1,
+              "applicability_status": "eligible",
+              "applicability_source": "sampler_eligible_pool"
+            },
+            "applicability": {
+              "status": "eligible",
+              "source": "sampler_eligible_pool",
+              "reason": null
+            },
+            "conflicts_with": []
+          }
+        ],
+        "candidate_count": 3,
+        "candidate_limit": 2,
+        "weight_floor": null,
+        "score_window": null,
+        "selected_filter": "rule"
+      },
+      "genre": {
+        "slot": "genre",
+        "role": "support",
+        "selected": "slot:genre:portrait",
+        "candidates": [
+          {
+            "id": "slot:genre:portrait",
+            "slot": "genre",
+            "entry_id": "portrait",
+            "label_en": "environmental portrait photography",
+            "label_ko": "환경 인물 사진",
+            "probability": 0.837209,
+            "weight": 1.8,
+            "selected_by_sampler": true,
+            "tags": [
+              "portrait",
+              "human"
+            ],
+            "kind": [],
+            "facets": {},
+            "scores": {
+              "weight": 1.8,
+              "rule_selected": true,
+              "rule_context_score": 4,
+              "applicability_status": "eligible",
+              "applicability_source": "sampler_eligible_pool"
+            },
+            "applicability": {
+              "status": "eligible",
+              "source": "sampler_eligible_pool",
+              "reason": null
+            },
+            "conflicts_with": []
+          },
+          {
+            "id": "slot:genre:reportage_noir",
+            "slot": "genre",
+            "entry_id": "reportage_noir",
+            "label_en": "noir reportage photography",
+            "label_ko": "누아르 보도사진",
+            "probability": 0.162791,
+            "weight": 0.35,
+            "selected_by_sampler": false,
+            "tags": [
+              "reportage",
+              "noir",
+              "documentary",
+              "urban"
+            ],
+            "kind": [],
+            "facets": {},
+            "scores": {
+              "weight": 0.35,
+              "rule_selected": false,
+              "rule_context_score": 4,
+              "applicability_status": "eligible",
+              "applicability_source": "sampler_eligible_pool"
+            },
+            "applicability": {
+              "status": "eligible",
+              "source": "sampler_eligible_pool",
+              "reason": null
+            },
+            "conflicts_with": []
+          }
+        ],
+        "candidate_count": 3,
+        "candidate_limit": 2,
+        "weight_floor": null,
+        "score_window": null,
+        "selected_filter": "rule"
+      },
+      "action": {
+        "slot": "action",
+        "role": "core",
+        "selected": "slot:action:checking_security_monitors",
+        "candidates": [
+          {
+            "id": "slot:action:checking_security_monitors",
+            "slot": "action",
+            "entry_id": "checking_security_monitors",
+            "label_en": "checking security monitors",
+            "label_ko": "보안 모니터를 확인하는",
+            "probability": 1.0,
+            "weight": 19.2,
+            "selected_by_sampler": true,
+            "tags": [
+              "human",
+              "security",
+              "surveillance"
+            ],
+            "kind": [],
+            "facets": {},
+            "scores": {
+              "weight": 19.2,
+              "rule_selected": true,
+              "rule_context_score": 9,
+              "applicability_status": "eligible",
+              "applicability_source": "sampler_eligible_pool"
+            },
+            "applicability": {
+              "status": "eligible",
+              "source": "sampler_eligible_pool",
+              "reason": null
+            },
+            "conflicts_with": []
+          }
+        ],
+        "candidate_count": 1,
+        "candidate_limit": 4,
+        "weight_floor": null,
+        "score_window": null,
+        "selected_filter": "rule"
+      },
+      "prop": {
+        "slot": "prop",
+        "role": "core",
+        "selected": "slot:prop:exposed_wiring_harness_prop",
+        "candidates": [
+          {
+            "id": "slot:prop:exposed_wiring_harness_prop",
+            "slot": "prop",
+            "entry_id": "exposed_wiring_harness_prop",
+            "label_en": "exposed wiring harness",
+            "label_ko": "노출 배선 하네스",
+            "probability": 0.229167,
+            "weight": 0.66,
+            "selected_by_sampler": true,
+            "tags": [],
+            "kind": [],
+            "facets": {
+              "robot_proof_family": [
+                "deep_structural",
+                "fabrication_origin"
+              ]
+            },
+            "scores": {
+              "weight": 0.66,
+              "rule_selected": true,
+              "rule_context_score": 0,
+              "applicability_status": "eligible",
+              "applicability_source": "sampler_eligible_pool"
+            },
+            "applicability": {
+              "status": "eligible",
+              "source": "sampler_eligible_pool",
+              "reason": null
+            },
+            "conflicts_with": []
+          },
+          {
+            "id": "slot:prop:flip_phone",
+            "slot": "prop",
+            "entry_id": "flip_phone",
+            "label_en": "a small flip phone",
+            "label_ko": "작은 폴더폰",
+            "probability": 0.260417,
+            "weight": 0.75,
+            "selected_by_sampler": false,
+            "tags": [
+              "human",
+              "prop",
+              "phone",
+              "retro"
+            ],
+            "kind": [],
+            "facets": {},
+            "scores": {
+              "weight": 0.75,
+              "rule_selected": false,
+              "rule_context_score": 4,
+              "applicability_status": "eligible",
+              "applicability_source": "sampler_eligible_pool"
+            },
+            "applicability": {
+              "status": "eligible",
+              "source": "sampler_eligible_pool",
+              "reason": null
+            },
+            "conflicts_with": []
+          },
+          {
+            "id": "slot:prop:instant_photo_stack",
+            "slot": "prop",
+            "entry_id": "instant_photo_stack",
+            "label_en": "a stack of instant photos",
+            "label_ko": "즉석사진 더미",
+            "probability": 0.260417,
+            "weight": 0.75,
+            "selected_by_sampler": false,
+            "tags": [
+              "human",
+              "prop",
+              "photo",
+              "retro"
+            ],
+            "kind": [],
+            "facets": {},
+            "scores": {
+              "weight": 0.75,
+              "rule_selected": false,
+              "rule_context_score": 4,
+              "applicability_status": "eligible",
+              "applicability_source": "sampler_eligible_pool"
+            },
+            "applicability": {
+              "status": "eligible",
+              "source": "sampler_eligible_pool",
+              "reason": null
+            },
+            "conflicts_with": []
+          },
+          {
+            "id": "slot:prop:blank_token_box_prop",
+            "slot": "prop",
+            "entry_id": "blank_token_box_prop",
+            "label_en": "a small token box with no readable lettering",
+            "label_ko": "글자 없는 작은 토큰 상자",
+            "probability": 0.25,
+            "weight": 0.72,
+            "selected_by_sampler": false,
+            "tags": [
+              "human",
+              "token",
+              "textless",
+              "contract"
+            ],
+            "kind": [],
+            "facets": {},
+            "scores": {
+              "weight": 0.72,
+              "rule_selected": false,
+              "rule_context_score": 4,
+              "applicability_status": "eligible",
+              "applicability_source": "sampler_eligible_pool"
+            },
+            "applicability": {
+              "status": "eligible",
+              "source": "sampler_eligible_pool",
+              "reason": null
+            },
+            "conflicts_with": []
+          }
+        ],
+        "candidate_count": 70,
+        "candidate_limit": 4,
+        "weight_floor": null,
+        "score_window": null,
+        "selected_filter": "rule"
+      },
+      "location": {
+        "slot": "location",
+        "role": "core",
+        "selected": "slot:location:security_control_room",
+        "candidates": [
+          {
+            "id": "slot:location:security_control_room",
+            "slot": "location",
+            "entry_id": "security_control_room",
+            "label_en": "a security control room",
+            "label_ko": "보안 관제실",
+            "probability": 1.0,
+            "weight": 2.07,
+            "selected_by_sampler": true,
+            "tags": [
+              "interior",
+              "surveillance",
+              "security"
+            ],
+            "kind": [],
+            "facets": {},
+            "scores": {
+              "weight": 2.07,
+              "rule_selected": true,
+              "rule_context_score": 6,
+              "applicability_status": "eligible",
+              "applicability_source": "sampler_eligible_pool"
+            },
+            "applicability": {
+              "status": "eligible",
+              "source": "sampler_eligible_pool",
+              "reason": null
+            },
+            "conflicts_with": []
+          }
+        ],
+        "candidate_count": 1,
+        "candidate_limit": 4,
+        "weight_floor": null,
+        "score_window": null,
+        "selected_filter": "rule"
+      },
+      "lighting": {
+        "slot": "lighting",
+        "role": "core",
+        "selected": "slot:lighting:fluorescent",
+        "candidates": [
+          {
+            "id": "slot:lighting:fluorescent",
+            "slot": "lighting",
+            "entry_id": "fluorescent",
+            "label_en": "cold fluorescent lighting",
+            "label_ko": "차가운 형광등",
+            "probability": 0.367647,
+            "weight": 1.0,
+            "selected_by_sampler": true,
+            "tags": [
+              "interior",
+              "science"
+            ],
+            "kind": [],
+            "facets": {},
+            "scores": {
+              "weight": 1.0,
+              "rule_selected": true,
+              "rule_context_score": 3,
+              "applicability_status": "eligible",
+              "applicability_source": "sampler_eligible_pool"
+            },
+            "applicability": {
+              "status": "eligible",
+              "source": "sampler_eligible_pool",
+              "reason": null
+            },
+            "conflicts_with": []
+          },
+          {
+            "id": "slot:lighting:monitor_flicker_pattern",
+            "slot": "lighting",
+            "entry_id": "monitor_flicker_pattern",
+            "label_en": "monitor-flicker lighting pattern",
+            "label_ko": "모니터 깜박임 조명",
+            "probability": 0.301471,
+            "weight": 0.82,
+            "selected_by_sampler": false,
+            "tags": [
+              "interior",
+              "digital",
+              "glitch"
+            ],
+            "kind": [],
+            "facets": {},
+            "scores": {
+              "weight": 0.82,
+              "rule_selected": false,
+              "rule_context_score": 3,
+              "applicability_status": "eligible",
+              "applicability_source": "sampler_eligible_pool"
+            },
+            "applicability": {
+              "status": "eligible",
+              "source": "sampler_eligible_pool",
+              "reason": null
+            },
+            "conflicts_with": []
+          },
+          {
+            "id": "slot:lighting:low_key",
+            "slot": "lighting",
+            "entry_id": "low_key",
+            "label_en": "low-key lighting",
+            "label_ko": "로우키 조명",
+            "probability": 0.330882,
+            "weight": 0.9,
+            "selected_by_sampler": false,
+            "tags": [
+              "dark",
+              "dramatic",
+              "moody"
+            ],
+            "kind": [],
+            "facets": {},
+            "scores": {
+              "weight": 0.9,
+              "rule_selected": false,
+              "rule_context_score": 0,
+              "applicability_status": "eligible",
+              "applicability_source": "sampler_eligible_pool"
+            },
+            "applicability": {
+              "status": "eligible",
+              "source": "sampler_eligible_pool",
+              "reason": null
+            },
+            "conflicts_with": []
+          }
+        ],
+        "candidate_count": 3,
+        "candidate_limit": 4,
+        "weight_floor": null,
+        "score_window": null,
+        "selected_filter": "rule"
+      },
+      "light_intensity": {
+        "slot": "light_intensity",
+        "role": "support",
+        "selected": "slot:light_intensity:deep_shadow_low_key_natural",
+        "candidates": [
+          {
+            "id": "slot:light_intensity:deep_shadow_low_key_natural",
+            "slot": "light_intensity",
+            "entry_id": "deep_shadow_low_key_natural",
+            "label_en": "natural low-key deep shadows",
+            "label_ko": "자연스러운 로우키 깊은 그림자",
+            "probability": 0.354839,
+            "weight": 0.55,
+            "selected_by_sampler": true,
+            "tags": [
+              "low_key",
+              "shadow",
+              "natural"
+            ],
+            "kind": [],
+            "facets": {},
+            "scores": {
+              "weight": 0.55,
+              "rule_selected": true,
+              "rule_context_score": 0,
+              "applicability_status": "eligible",
+              "applicability_source": "sampler_eligible_pool"
+            },
+            "applicability": {
+              "status": "eligible",
+              "source": "sampler_eligible_pool",
+              "reason": null
+            },
+            "conflicts_with": []
+          },
+          {
+            "id": "slot:light_intensity:soft_low_contrast",
+            "slot": "light_intensity",
+            "entry_id": "soft_low_contrast",
+            "label_en": "soft low-contrast illumination",
+            "label_ko": "부드럽고 대비가 낮은 조도",
+            "probability": 0.645161,
+            "weight": 1.0,
+            "selected_by_sampler": false,
+            "tags": [
+              "portrait",
+              "lifestyle"
+            ],
+            "kind": [],
+            "facets": {},
+            "scores": {
+              "weight": 1.0,
+              "rule_selected": false,
+              "rule_context_score": 3,
+              "applicability_status": "eligible",
+              "applicability_source": "sampler_eligible_pool"
+            },
+            "applicability": {
+              "status": "eligible",
+              "source": "sampler_eligible_pool",
+              "reason": null
+            },
+            "conflicts_with": []
+          }
+        ],
+        "candidate_count": 16,
+        "candidate_limit": 2,
+        "weight_floor": null,
+        "score_window": null,
+        "selected_filter": "rule"
+      },
+      "camera_type": {
+        "slot": "camera_type",
+        "role": "support",
+        "selected": "slot:camera_type:compact_digital_camera",
+        "candidates": [
+          {
+            "id": "slot:camera_type:compact_digital_camera",
+            "slot": "camera_type",
+            "entry_id": "compact_digital_camera",
+            "label_en": "a 2000s compact digital camera",
+            "label_ko": "2000년대 콤팩트 디지털카메라",
+            "probability": 0.636364,
+            "weight": 0.7,
+            "selected_by_sampler": true,
+            "tags": [
+              "retro",
+              "social",
+              "flash"
+            ],
+            "kind": [],
+            "facets": {},
+            "scores": {
+              "weight": 0.7,
+              "rule_selected": true,
+              "rule_context_score": 0,
+              "applicability_status": "eligible",
+              "applicability_source": "sampler_eligible_pool"
+            },
+            "applicability": {
+              "status": "eligible",
+              "source": "sampler_eligible_pool",
+              "reason": null
+            },
+            "conflicts_with": []
+          },
+          {
+            "id": "slot:camera_type:bodycam_camera",
+            "slot": "camera_type",
+            "entry_id": "bodycam_camera",
+            "label_en": "a chest-mounted bodycam",
+            "label_ko": "가슴에 부착된 바디캠",
+            "probability": 0.363636,
+            "weight": 0.4,
+            "selected_by_sampler": false,
+            "tags": [
+              "surveillance",
+              "handheld",
+              "documentary"
+            ],
+            "kind": [],
+            "facets": {},
+            "scores": {
+              "weight": 0.4,
+              "rule_selected": false,
+              "rule_context_score": 6,
+              "applicability_status": "eligible",
+              "applicability_source": "sampler_eligible_pool"
+            },
+            "applicability": {
+              "status": "eligible",
+              "source": "sampler_eligible_pool",
+              "reason": null
+            },
+            "conflicts_with": []
+          }
+        ],
+        "candidate_count": 25,
+        "candidate_limit": 2,
+        "weight_floor": null,
+        "score_window": null,
+        "selected_filter": "rule"
+      },
+      "camera_direction": {
+        "slot": "camera_direction",
+        "role": "core",
+        "selected": "slot:camera_direction:eye_level_three_quarter",
+        "candidates": [
+          {
+            "id": "slot:camera_direction:eye_level_three_quarter",
+            "slot": "camera_direction",
+            "entry_id": "eye_level_three_quarter",
+            "label_en": "eye-level three-quarter view",
+            "label_ko": "눈높이 3/4 측면 시점",
+            "probability": 0.714286,
+            "weight": 1.0,
+            "selected_by_sampler": true,
+            "tags": [
+              "portrait",
+              "fashion"
+            ],
+            "kind": [],
+            "facets": {
+              "camera_angle": [
+                "eye_level"
+              ]
+            },
+            "scores": {
+              "weight": 1.0,
+              "rule_selected": true,
+              "rule_context_score": 3,
+              "applicability_status": "eligible",
+              "applicability_source": "sampler_eligible_pool"
+            },
+            "applicability": {
+              "status": "eligible",
+              "source": "sampler_eligible_pool",
+              "reason": null
+            },
+            "conflicts_with": []
+          },
+          {
+            "id": "slot:camera_direction:cctv_corner_direction",
+            "slot": "camera_direction",
+            "entry_id": "cctv_corner_direction",
+            "label_en": "ceiling-corner CCTV viewpoint",
+            "label_ko": "천장 구석에서 내려다보는 CCTV 시점",
+            "probability": 0.285714,
+            "weight": 0.4,
+            "selected_by_sampler": false,
+            "tags": [
+              "surveillance",
+              "fixed"
+            ],
+            "kind": [],
+            "facets": {},
+            "scores": {
+              "weight": 0.4,
+              "rule_selected": false,
+              "rule_context_score": 3,
+              "applicability_status": "eligible",
+              "applicability_source": "sampler_eligible_pool"
+            },
+            "applicability": {
+              "status": "eligible",
+              "source": "sampler_eligible_pool",
+              "reason": null
+            },
+            "conflicts_with": []
+          }
+        ],
+        "candidate_count": 2,
+        "candidate_limit": 4,
+        "weight_floor": null,
+        "score_window": null,
+        "selected_filter": "rule"
+      },
+      "composition": {
+        "slot": "composition",
+        "role": "core",
+        "selected": "slot:composition:one_way_mirror_frame",
+        "candidates": [
+          {
+            "id": "slot:composition:one_way_mirror_frame",
+            "slot": "composition",
+            "entry_id": "one_way_mirror_frame",
+            "label_en": "one-way mirror observation frame",
+            "label_ko": "원웨이 미러 관찰 프레임",
+            "probability": 0.278912,
+            "weight": 0.82,
+            "selected_by_sampler": true,
+            "tags": [
+              "interior",
+              "surveillance",
+              "reflection"
+            ],
+            "kind": [],
+            "facets": {},
+            "scores": {
+              "weight": 0.82,
+              "rule_selected": true,
+              "rule_context_score": 6,
+              "applicability_status": "eligible",
+              "applicability_source": "sampler_eligible_pool"
+            },
+            "applicability": {
+              "status": "eligible",
+              "source": "sampler_eligible_pool",
+              "reason": null
+            },
+            "conflicts_with": []
+          },
+          {
+            "id": "slot:composition:security_cam_ultrawide",
+            "slot": "composition",
+            "entry_id": "security_cam_ultrawide",
+            "label_en": "security-camera ultrawide framing",
+            "label_ko": "보안 카메라 초광각 구도",
+            "probability": 0.278912,
+            "weight": 0.82,
+            "selected_by_sampler": false,
+            "tags": [
+              "surveillance",
+              "wide",
+              "security"
+            ],
+            "kind": [],
+            "facets": {},
+            "scores": {
+              "weight": 0.82,
+              "rule_selected": false,
+              "rule_context_score": 6,
+              "applicability_status": "eligible",
+              "applicability_source": "sampler_eligible_pool"
+            },
+            "applicability": {
+              "status": "eligible",
+              "source": "sampler_eligible_pool",
+              "reason": null
+            },
+            "conflicts_with": []
+          },
+          {
+            "id": "slot:composition:medium_close",
+            "slot": "composition",
+            "entry_id": "medium_close",
+            "label_en": "medium close-up emphasizing expression",
+            "label_ko": "인물의 표정을 살린 미디엄 클로즈업",
+            "probability": 0.442177,
+            "weight": 1.3,
+            "selected_by_sampler": false,
+            "tags": [
+              "portrait"
+            ],
+            "kind": [],
+            "facets": {
+              "shot_scale": [
+                "medium_close"
+              ]
+            },
+            "scores": {
+              "weight": 1.3,
+              "rule_selected": false,
+              "rule_context_score": 3,
+              "applicability_status": "eligible",
+              "applicability_source": "sampler_eligible_pool"
+            },
+            "applicability": {
+              "status": "eligible",
+              "source": "sampler_eligible_pool",
+              "reason": null
+            },
+            "conflicts_with": []
+          }
+        ],
+        "candidate_count": 3,
+        "candidate_limit": 4,
+        "weight_floor": null,
+        "score_window": null,
+        "selected_filter": "rule"
+      },
+      "lens": {
+        "slot": "lens",
+        "role": "support",
+        "selected": "slot:lens:35mm",
+        "candidates": [
+          {
+            "id": "slot:lens:35mm",
+            "slot": "lens",
+            "entry_id": "35mm",
+            "label_en": "a 35mm documentary lens",
+            "label_ko": "35mm 다큐멘터리 렌즈",
+            "probability": 0.6,
+            "weight": 1.8,
+            "selected_by_sampler": true,
+            "tags": [
+              "street",
+              "documentary"
+            ],
+            "kind": [],
+            "facets": {},
+            "scores": {
+              "weight": 1.8,
+              "rule_selected": true,
+              "rule_context_score": 3,
+              "applicability_status": "eligible",
+              "applicability_source": "sampler_eligible_pool"
+            },
+            "applicability": {
+              "status": "eligible",
+              "source": "sampler_eligible_pool",
+              "reason": null
+            },
+            "conflicts_with": []
+          },
+          {
+            "id": "slot:lens:wide_24mm",
+            "slot": "lens",
+            "entry_id": "wide_24mm",
+            "label_en": "a 24mm wide-angle lens",
+            "label_ko": "24mm 광각 렌즈",
+            "probability": 0.4,
+            "weight": 1.2,
+            "selected_by_sampler": false,
+            "tags": [
+              "wide"
+            ],
+            "kind": [],
+            "facets": {},
+            "scores": {
+              "weight": 1.2,
+              "rule_selected": false,
+              "rule_context_score": 0,
+              "applicability_status": "eligible",
+              "applicability_source": "sampler_eligible_pool"
+            },
+            "applicability": {
+              "status": "eligible",
+              "source": "sampler_eligible_pool",
+              "reason": null
+            },
+            "conflicts_with": []
+          }
+        ],
+        "candidate_count": 2,
+        "candidate_limit": 2,
+        "weight_floor": null,
+        "score_window": null,
+        "selected_filter": "rule"
+      },
+      "focus": {
+        "slot": "focus",
+        "role": "support",
+        "selected": "slot:focus:zone_focus_street",
+        "candidates": [
+          {
+            "id": "slot:focus:zone_focus_street",
+            "slot": "focus",
+            "entry_id": "zone_focus_street",
+            "label_en": "street-photography zone focus",
+            "label_ko": "거리 사진식 존 포커스",
+            "probability": 0.388889,
+            "weight": 0.7,
+            "selected_by_sampler": true,
+            "tags": [
+              "street",
+              "documentary"
+            ],
+            "kind": [],
+            "facets": {},
+            "scores": {
+              "weight": 0.7,
+              "rule_selected": true,
+              "rule_context_score": 4,
+              "applicability_status": "eligible",
+              "applicability_source": "sampler_eligible_pool"
+            },
+            "applicability": {
+              "status": "eligible",
+              "source": "sampler_eligible_pool",
+              "reason": null
+            },
+            "conflicts_with": []
+          },
+          {
+            "id": "slot:focus:shallow_depth",
+            "slot": "focus",
+            "entry_id": "shallow_depth",
+            "label_en": "shallow depth of field with strong background blur",
+            "label_ko": "배경이 크게 흐려지는 얕은 심도",
+            "probability": 0.611111,
+            "weight": 1.1,
+            "selected_by_sampler": false,
+            "tags": [
+              "portrait",
+              "product"
+            ],
+            "kind": [],
+            "facets": {},
+            "scores": {
+              "weight": 1.1,
+              "rule_selected": false,
+              "rule_context_score": 3,
+              "applicability_status": "eligible",
+              "applicability_source": "sampler_eligible_pool"
+            },
+            "applicability": {
+              "status": "eligible",
+              "source": "sampler_eligible_pool",
+              "reason": null
+            },
+            "conflicts_with": []
+          }
+        ],
+        "candidate_count": 18,
+        "candidate_limit": 2,
+        "weight_floor": null,
+        "score_window": null,
+        "selected_filter": "rule"
+      },
+      "motion": {
+        "slot": "motion",
+        "role": "support",
+        "selected": "slot:motion:slow_sync_shutter_drag",
+        "candidates": [
+          {
+            "id": "slot:motion:slow_sync_shutter_drag",
+            "slot": "motion",
+            "entry_id": "slow_sync_shutter_drag",
+            "label_en": "slow-sync shutter drag with flash",
+            "label_ko": "플래시와 함께 끌리는 슬로우 싱크 셔터",
+            "probability": 0.411765,
+            "weight": 0.7,
+            "selected_by_sampler": true,
+            "tags": [
+              "flash",
+              "motion",
+              "nightlife"
+            ],
+            "kind": [],
+            "facets": {},
+            "scores": {
+              "weight": 0.7,
+              "rule_selected": true,
+              "rule_context_score": 0,
+              "applicability_status": "eligible",
+              "applicability_source": "sampler_eligible_pool"
+            },
+            "applicability": {
+              "status": "eligible",
+              "source": "sampler_eligible_pool",
+              "reason": null
+            },
+            "conflicts_with": []
+          },
+          {
+            "id": "slot:motion:handheld_microshake",
+            "slot": "motion",
+            "entry_id": "handheld_microshake",
+            "label_en": "handheld snapshot with slight micro-shake",
+            "label_ko": "약한 손떨림이 남은 핸드헬드 스냅",
+            "probability": 0.588235,
+            "weight": 1.0,
+            "selected_by_sampler": false,
+            "tags": [
+              "documentary",
+              "social",
+              "street"
+            ],
+            "kind": [],
+            "facets": {},
+            "scores": {
+              "weight": 1.0,
+              "rule_selected": false,
+              "rule_context_score": 3,
+              "applicability_status": "eligible",
+              "applicability_source": "sampler_eligible_pool"
+            },
+            "applicability": {
+              "status": "eligible",
+              "source": "sampler_eligible_pool",
+              "reason": null
+            },
+            "conflicts_with": []
+          }
+        ],
+        "candidate_count": 42,
+        "candidate_limit": 2,
+        "weight_floor": null,
+        "score_window": null,
+        "selected_filter": "rule"
+      },
+      "mood": {
+        "slot": "mood",
+        "role": "core",
+        "selected": "slot:mood:digital_dislocation",
+        "candidates": [
+          {
+            "id": "slot:mood:digital_dislocation",
+            "slot": "mood",
+            "entry_id": "digital_dislocation",
+            "label_en": "digital dislocation",
+            "label_ko": "디지털 이탈감",
+            "probability": 0.275862,
+            "weight": 0.84,
+            "selected_by_sampler": true,
+            "tags": [
+              "digital",
+              "glitch",
+              "uncanny"
+            ],
+            "kind": [],
+            "facets": {},
+            "scores": {
+              "weight": 0.84,
+              "rule_selected": true,
+              "rule_context_score": 0,
+              "applicability_status": "eligible",
+              "applicability_source": "sampler_eligible_pool"
+            },
+            "applicability": {
+              "status": "eligible",
+              "source": "sampler_eligible_pool",
+              "reason": null
+            },
+            "conflicts_with": []
+          },
+          {
+            "id": "slot:mood:professional_detachment",
+            "slot": "mood",
+            "entry_id": "professional_detachment",
+            "label_en": "professional detachment",
+            "label_ko": "전문가적 무심함",
+            "probability": 0.428571,
+            "weight": 1.305,
+            "selected_by_sampler": false,
+            "tags": [
+              "tense",
+              "noir"
+            ],
+            "kind": [],
+            "facets": {},
+            "scores": {
+              "weight": 1.305,
+              "rule_selected": false,
+              "rule_context_score": 0,
+              "applicability_status": "eligible",
+              "applicability_source": "sampler_eligible_pool"
+            },
+            "applicability": {
+              "status": "eligible",
+              "source": "sampler_eligible_pool",
+              "reason": null
+            },
+            "conflicts_with": []
+          },
+          {
+            "id": "slot:mood:public_place_paranoia",
+            "slot": "mood",
+            "entry_id": "public_place_paranoia",
+            "label_en": "public-place paranoia",
+            "label_ko": "공공장소의 편집증적 긴장",
+            "probability": 0.295567,
+            "weight": 0.9,
+            "selected_by_sampler": false,
+            "tags": [
+              "tense",
+              "crowd"
+            ],
+            "kind": [],
+            "facets": {},
+            "scores": {
+              "weight": 0.9,
+              "rule_selected": false,
+              "rule_context_score": 0,
+              "applicability_status": "eligible",
+              "applicability_source": "sampler_eligible_pool"
+            },
+            "applicability": {
+              "status": "eligible",
+              "source": "sampler_eligible_pool",
+              "reason": null
+            },
+            "conflicts_with": []
+          }
+        ],
+        "candidate_count": 3,
+        "candidate_limit": 4,
+        "weight_floor": null,
+        "score_window": null,
+        "selected_filter": "rule"
+      },
+      "quality": {
+        "slot": "quality",
+        "role": "support",
+        "selected": "slot:quality:high_detail",
+        "candidates": [
+          {
+            "id": "slot:quality:high_detail",
+            "slot": "quality",
+            "entry_id": "high_detail",
+            "label_en": "high detail and accurate texture",
+            "label_ko": "높은 디테일과 정확한 질감",
+            "probability": 0.375,
+            "weight": 1.2,
+            "selected_by_sampler": true,
+            "tags": [
+              "general"
+            ],
+            "kind": [],
+            "facets": {},
+            "scores": {
+              "weight": 1.2,
+              "rule_selected": true,
+              "rule_context_score": 0,
+              "applicability_status": "eligible",
+              "applicability_source": "sampler_eligible_pool"
+            },
+            "applicability": {
+              "status": "eligible",
+              "source": "sampler_eligible_pool",
+              "reason": null
+            },
+            "conflicts_with": []
+          },
+          {
+            "id": "slot:quality:photoreal",
+            "slot": "quality",
+            "entry_id": "photoreal",
+            "label_en": "photorealistic and natural as if truly photographed",
+            "label_ko": "포토리얼하고 실제 촬영처럼 자연스러운 결과",
+            "probability": 0.625,
+            "weight": 2.0,
+            "selected_by_sampler": false,
+            "tags": [
+              "realistic"
+            ],
+            "kind": [],
+            "facets": {},
+            "scores": {
+              "weight": 2.0,
+              "rule_selected": false,
+              "rule_context_score": 0,
+              "applicability_status": "eligible",
+              "applicability_source": "sampler_eligible_pool"
+            },
+            "applicability": {
+              "status": "eligible",
+              "source": "sampler_eligible_pool",
+              "reason": null
+            },
+            "conflicts_with": []
+          }
+        ],
+        "candidate_count": 2,
+        "candidate_limit": 2,
+        "weight_floor": null,
+        "score_window": null,
+        "selected_filter": "rule"
+      },
+      "subject": {
+        "slot": "subject",
+        "role": "core",
+        "selected": "slot:subject:security_guard_role_model",
+        "candidates": [
+          {
+            "id": "slot:subject:security_guard_role_model",
+            "slot": "subject",
+            "entry_id": "security_guard_role_model",
+            "label_en": "an adult security guard role model",
+            "label_ko": "보안요원 역할의 성인 인물",
+            "probability": 1.0,
+            "weight": 22.08,
+            "selected_by_sampler": true,
+            "tags": [
+              "human",
+              "occupation",
+              "security",
+              "surveillance"
+            ],
+            "kind": [
+              "human"
+            ],
+            "facets": {},
+            "scores": {
+              "weight": 22.08,
+              "rule_selected": true,
+              "rule_context_score": 10,
+              "applicability_status": "eligible",
+              "applicability_source": "sampler_eligible_pool"
+            },
+            "applicability": {
+              "status": "eligible",
+              "source": "sampler_eligible_pool",
+              "reason": null
+            },
+            "conflicts_with": []
+          }
+        ],
+        "candidate_count": 1,
+        "candidate_limit": 4,
+        "weight_floor": null,
+        "score_window": null,
+        "selected_filter": "rule"
+      },
+      "light_direction": {
+        "slot": "light_direction",
+        "role": "support",
+        "selected": "slot:light_direction:side_light_left",
+        "candidates": [
+          {
+            "id": "slot:light_direction:side_light_left",
+            "slot": "light_direction",
+            "entry_id": "side_light_left",
+            "label_en": "side light from camera left",
+            "label_ko": "왼쪽에서 들어오는 측면광",
+            "probability": 0.52381,
+            "weight": 1.1,
+            "selected_by_sampler": true,
+            "tags": [
+              "portrait",
+              "documentary"
+            ],
+            "kind": [],
+            "facets": {},
+            "scores": {
+              "weight": 1.1,
+              "rule_selected": true,
+              "rule_context_score": 6,
+              "applicability_status": "eligible",
+              "applicability_source": "sampler_eligible_pool"
+            },
+            "applicability": {
+              "status": "eligible",
+              "source": "sampler_eligible_pool",
+              "reason": null
+            },
+            "conflicts_with": []
+          },
+          {
+            "id": "slot:light_direction:side_light_right",
+            "slot": "light_direction",
+            "entry_id": "side_light_right",
+            "label_en": "side light from camera right",
+            "label_ko": "오른쪽에서 들어오는 측면광",
+            "probability": 0.47619,
+            "weight": 1.0,
+            "selected_by_sampler": false,
+            "tags": [
+              "portrait",
+              "documentary"
+            ],
+            "kind": [],
+            "facets": {},
+            "scores": {
+              "weight": 1.0,
+              "rule_selected": false,
+              "rule_context_score": 6,
+              "applicability_status": "eligible",
+              "applicability_source": "sampler_eligible_pool"
+            },
+            "applicability": {
+              "status": "eligible",
+              "source": "sampler_eligible_pool",
+              "reason": null
+            },
+            "conflicts_with": []
+          }
+        ],
+        "candidate_count": 14,
+        "candidate_limit": 2,
+        "weight_floor": null,
+        "score_window": null,
+        "selected_filter": "rule"
+      },
+      "texture": {
+        "slot": "texture",
+        "role": "support",
+        "selected": "slot:texture:water_droplet_freeze",
+        "candidates": [
+          {
+            "id": "slot:texture:water_droplet_freeze",
+            "slot": "texture",
+            "entry_id": "water_droplet_freeze",
+            "label_en": "frozen water droplet texture",
+            "label_ko": "frozen water droplet texture",
+            "probability": 0.5,
+            "weight": 1.0,
+            "selected_by_sampler": true,
+            "tags": [
+              "texture",
+              "water",
+              "sports"
+            ],
+            "kind": [],
+            "facets": {},
+            "scores": {
+              "weight": 1.0,
+              "rule_selected": true,
+              "rule_context_score": 0,
+              "applicability_status": "eligible",
+              "applicability_source": "sampler_eligible_pool"
+            },
+            "applicability": {
+              "status": "eligible",
+              "source": "sampler_eligible_pool",
+              "reason": null
+            },
+            "conflicts_with": []
+          },
+          {
+            "id": "slot:texture:aged_skin_vs_baby_skin",
+            "slot": "texture",
+            "entry_id": "aged_skin_vs_baby_skin",
+            "label_en": "aged skin contrasted with young skin texture",
+            "label_ko": "aged skin contrasted with young skin texture",
+            "probability": 0.5,
+            "weight": 1.0,
+            "selected_by_sampler": false,
+            "tags": [
+              "texture",
+              "family",
+              "documentary"
+            ],
+            "kind": [],
+            "facets": {},
+            "scores": {
+              "weight": 1.0,
+              "rule_selected": false,
+              "rule_context_score": 3,
+              "applicability_status": "eligible",
+              "applicability_source": "sampler_eligible_pool"
+            },
+            "applicability": {
+              "status": "eligible",
+              "source": "sampler_eligible_pool",
+              "reason": null
+            },
+            "conflicts_with": []
+          }
+        ],
+        "candidate_count": 91,
+        "candidate_limit": 2,
+        "weight_floor": null,
+        "score_window": null,
+        "selected_filter": "rule"
+      }
+    },
+    "quality_profile": {
+      "profile_id": "portrait_editorial",
+      "facets": {
+        "camera_angle": [
+          "eye_level",
+          "reflection"
+        ],
+        "camera_register": [
+          "surveillance"
+        ],
+        "capture_modality": [
+          "surveillance"
+        ],
+        "lighting_family": [
+          "flash"
+        ],
+        "mood_family": [
+          "documentary",
+          "uncanny"
+        ],
+        "place_type": [
+          "interior",
+          "street"
+        ],
+        "robot_proof_family": [
+          "deep_structural",
+          "fabrication_origin",
+          "uncanny"
+        ],
+        "subject_kind": [
+          "human"
+        ]
+      },
+      "matched_uncovered_intent_facets": [],
+      "matched_literal_subject_entries": []
+    },
+    "concept_axes": {
+      "required": [],
+      "required_count": 0,
+      "source": "none"
+    },
+    "scene_contract": {
+      "enabled": false,
+      "strategy": "none",
+      "groups": []
+    },
+    "render_contract": {
+      "enabled": false,
+      "source": "none",
+      "topic_intents": [],
+      "evidence_budget": {
+        "enabled": false
+      },
+      "selected_scene": {}
+    },
+    "character_grammar": {
+      "enabled": false,
+      "runtime_nodes": [],
+      "valid": true
+    },
+    "evidence_budget": {
+      "enabled": false
+    },
+    "photographic_integration": {
+      "enabled": true,
+      "profile_id": "axis_composite_photo_integration",
+      "source": "quality_layers_axis_composite",
+      "active_axes": [
+        {
+          "id": "person_presence",
+          "score": 14,
+          "matched_facets": [
+            "subject_kind:human"
+          ],
+          "matched_terms": [
+            "adult",
+            "portrait",
+            "model",
+            "인물"
+          ],
+          "required_categories": [
+            "human_trace"
+          ]
+        },
+        {
+          "id": "interior_environment",
+          "score": 12,
+          "matched_facets": [
+            "place_type:interior"
+          ],
+          "matched_terms": [
+            "room",
+            "집"
+          ],
+          "required_categories": [
+            "environment_binding"
+          ]
+        },
+        {
+          "id": "instrument_capture_modality",
+          "score": 10,
+          "matched_facets": [
+            "capture_modality:surveillance"
+          ],
+          "matched_terms": [],
+          "required_categories": [
+            "optical_depth",
+            "operational_evidence"
+          ]
+        },
+        {
+          "id": "close_camera_depth",
+          "score": 5,
+          "matched_facets": [],
+          "matched_terms": [
+            "close-up",
+            "medium close",
+            "35mm",
+            "shallow depth",
+            "클로즈업"
+          ],
+          "required_categories": [
+            "optical_depth"
+          ]
+        }
+      ],
+      "quality_profile": {
+        "profile_id": "portrait_editorial",
+        "facets": {
+          "camera_angle": [
+            "eye_level",
+            "reflection"
+          ],
+          "camera_register": [
+            "surveillance"
+          ],
+          "capture_modality": [
+            "surveillance"
+          ],
+          "lighting_family": [
+            "flash"
+          ],
+          "mood_family": [
+            "documentary",
+            "uncanny"
+          ],
+          "place_type": [
+            "interior",
+            "street"
+          ],
+          "robot_proof_family": [
+            "deep_structural",
+            "fabrication_origin",
+            "uncanny"
+          ],
+          "subject_kind": [
+            "human"
+          ]
+        },
+        "matched_uncovered_intent_facets": [],
+        "matched_literal_subject_entries": []
+      },
+      "matched_facets": [
+        "subject_kind:human",
+        "place_type:interior",
+        "capture_modality:surveillance"
+      ],
+      "matched_terms": [
+        "adult",
+        "portrait",
+        "model",
+        "인물",
+        "room",
+        "집",
+        "close-up",
+        "medium close",
+        "35mm",
+        "shallow depth",
+        "클로즈업"
+      ],
+      "required_categories": [
+        "environment_binding",
+        "optical_depth",
+        "human_trace",
+        "operational_evidence"
+      ],
+      "minimum_category_hits": 2,
+      "principles": [
+        "Bind the subject and setting with shared light, reflected color, contact shadow, moisture, haze, or material behavior.",
+        "Use a photographic point of view with foreground depth, asymmetry, focus falloff, grain, or lens artifacts instead of a clean pasted-on portrait.",
+        "Keep one small human, animal, object, or material imperfection so the image reads as a captured moment rather than a beauty composite.",
+        "Let one small bodily or behavioral trace interrupt pure polish: loose hair, breath, fabric creasing, sweat, handling, or an unguarded expression.",
+        "Use window light, practical lamps, room color bounce, dust, and foreground domestic objects to make the subject belong to the room.",
+        "Let the selected capture modality determine scale, depth, noise, field of view, and reference evidence instead of adding a generic technical overlay.",
+        "Close camera positions need visible focus falloff, foreground occlusion, lens perspective, or grain so the image does not flatten into a composite."
+      ],
+      "suggested_phrases": {
+        "environment_binding": [
+          "ambient light spills across the subject, nearby surfaces, and props",
+          "reflected color catches on the main subject and the surrounding materials",
+          "room light and color bounce touch the subject, nearby surfaces, and small foreground objects"
+        ],
+        "optical_depth": [
+          "off-axis composition with foreground occlusion and gentle focus falloff",
+          "subtle lens grain and imperfect depth cues from a real camera position",
+          "scale, field of view, focus falloff, and sensor noise follow the selected capture modality"
+        ],
+        "human_trace": [
+          "a small unguarded expression, loose hair, creased fabric, handling mark, or material imperfection breaks the polished pose",
+          "loose hair, creased fabric, breath, or an unguarded expression keeps the subject photographic"
+        ],
+        "operational_evidence": [
+          "a physical reference surface or calibration target grounds the instrument view without relying on readable UI"
+        ]
+      },
+      "category_terms": {
+        "environment_binding": [
+          "binds",
+          "bounce",
+          "bounced",
+          "cast",
+          "catchlight",
+          "color spill",
+          "contaminate",
+          "contaminated",
+          "contact shadow",
+          "dust",
+          "fiber",
+          "grazes",
+          "haze",
+          "reflection",
+          "reflected",
+          "rim light",
+          "shadow",
+          "spill",
+          "wraps",
+          "shared light",
+          "same light",
+          "공유된 빛",
+          "반사광",
+          "그림자",
+          "색 번짐",
+          "먼지",
+          "안개"
+        ],
+        "optical_depth": [
+          "asymmetrical",
+          "falloff",
+          "foreground",
+          "grain",
+          "high ISO",
+          "lens",
+          "macro",
+          "motion blur",
+          "off-axis",
+          "occlusion",
+          "shallow depth",
+          "soft blur",
+          "telephoto",
+          "foreground blur",
+          "초점 이탈",
+          "전경",
+          "렌즈",
+          "입자감",
+          "모션 블러"
+        ],
+        "physical_contact": [
+          "contact shadow",
+          "compress",
+          "compressed",
+          "weight",
+          "pressure",
+          "pressed",
+          "touches",
+          "rests on",
+          "leans into",
+          "손 압력",
+          "눌림",
+          "무게",
+          "접촉 그림자"
+        ],
+        "material_trace": [
+          "creased",
+          "damp",
+          "dust",
+          "fiber",
+          "fingerprint",
+          "fur",
+          "handling mark",
+          "moisture",
+          "rain",
+          "scratch",
+          "steam",
+          "sweat",
+          "wet hair",
+          "worn edge",
+          "구겨진",
+          "젖은",
+          "습기",
+          "땀",
+          "털",
+          "섬유",
+          "흠집"
+        ],
+        "human_trace": [
+          "breathless",
+          "creased",
+          "flushed",
+          "half-smile",
+          "loose hair",
+          "loose strand",
+          "slouched",
+          "stray hair",
+          "sweat",
+          "unguarded",
+          "손",
+          "시선",
+          "흐트러진 머리",
+          "구겨진 옷",
+          "땀",
+          "무방비한 표정"
+        ],
+        "event_timing": [
+          "after",
+          "before",
+          "mid-gesture",
+          "mid-motion",
+          "just stepped",
+          "caught",
+          "breathless",
+          "unguarded",
+          "찰나",
+          "방금",
+          "움직임",
+          "순간"
+        ],
+        "operational_evidence": [
+          "calibration target",
+          "measurement scale",
+          "sample contact",
+          "inspection marker",
+          "condition trace",
+          "flow path",
+          "handoff point",
+          "reference surface",
+          "교정 표적",
+          "측정 눈금",
+          "검사 표식",
+          "상태 흔적",
+          "이송 경로"
+        ],
+        "traceability_evidence": [
+          "incoming batch",
+          "sampling boundary",
+          "reference position",
+          "test point",
+          "condition criterion",
+          "separated fraction",
+          "input stream",
+          "output stream",
+          "repeatable frame",
+          "배치 유입",
+          "표본 경계",
+          "기준 위치",
+          "검사 접점",
+          "상태 기준",
+          "분리 분획",
+          "입력 흐름",
+          "출력 흐름"
+        ]
+      },
+      "anti_patterns": [
+        "centered beauty headshot pasted over a scenic background",
+        "separate studio face light that ignores the location's light direction",
+        "props listed as labels without contact shadow, reflection, weight, or physical interaction"
+      ]
+    },
+    "visual_proposition": {
+      "enabled": true,
+      "source": "quality_layers_narrative_core_and_concept_tension_slots",
+      "quality_profile": {
+        "profile_id": "portrait_editorial",
+        "facets": {
+          "camera_angle": [
+            "eye_level",
+            "reflection"
+          ],
+          "camera_register": [
+            "surveillance"
+          ],
+          "capture_modality": [
+            "surveillance"
+          ],
+          "lighting_family": [
+            "flash"
+          ],
+          "mood_family": [
+            "documentary",
+            "uncanny"
+          ],
+          "place_type": [
+            "interior",
+            "street"
+          ],
+          "robot_proof_family": [
+            "deep_structural",
+            "fabrication_origin",
+            "uncanny"
+          ],
+          "subject_kind": [
+            "human"
+          ]
+        },
+        "matched_uncovered_intent_facets": [],
+        "matched_literal_subject_entries": []
+      },
+      "subject_class": "person",
+      "subject_classes": [
+        {
+          "id": "person",
+          "score": 15,
+          "matched_facets": [
+            "subject_kind:human"
+          ],
+          "core_policy": "allow"
+        },
+        {
+          "id": "object_scene",
+          "score": 1,
+          "matched_facets": [],
+          "core_policy": "contextual"
+        }
+      ],
+      "register": "charged",
+      "minimum_hits": 1,
+      "core_candidates": [
+        {
+          "id": "slot:narrative_core:digital_privacy_core",
+          "slot": "narrative_core",
+          "entry_id": "digital_privacy_core",
+          "label_en": "digital privacy anxiety narrative core with blurred non-readable screens",
+          "label_ko": "디지털 프라이버시 불안의 서사 코어",
+          "terms": [
+            "digital_privacy_core",
+            "digital privacy anxiety narrative core with blurred non-readable screens",
+            "디지털 프라이버시 불안의 서사 코어",
+            "digital privacy",
+            "privacy anxiety",
+            "blurred screen glow",
+            "hypervisibility",
+            "narrative",
+            "privacy",
+            "digital",
+            "screen",
+            "no_text_required",
+            "no_text",
+            "digital privacy anxiety narrative core, hypervisibility, phone-lit face, blurred non-readable screens, abstract feed glow, no readable text"
+          ],
+          "score": 1,
+          "selected_by_sampler": false
+        },
+        {
+          "id": "slot:narrative_core:community_ritual_core",
+          "slot": "narrative_core",
+          "entry_id": "community_ritual_core",
+          "label_en": "community ritual narrative core",
+          "label_ko": "공동체 의식의 서사 코어",
+          "terms": [
+            "community_ritual_core",
+            "community ritual narrative core",
+            "공동체 의식의 서사 코어",
+            "community ritual",
+            "local pride",
+            "shared table",
+            "mutual aid",
+            "narrative",
+            "community",
+            "local",
+            "documentary",
+            "community ritual narrative core, local pride, shared table, mutual aid, ordinary community documentary atmosphere"
+          ],
+          "score": 1,
+          "selected_by_sampler": false
+        },
+        {
+          "id": "slot:narrative_core:urban_solitude_core",
+          "slot": "narrative_core",
+          "entry_id": "urban_solitude_core",
+          "label_en": "urban solitude narrative core",
+          "label_ko": "도시적 고독의 서사 코어",
+          "terms": [
+            "urban_solitude_core",
+            "urban solitude narrative core",
+            "도시적 고독의 서사 코어",
+            "urban solitude",
+            "anonymous commuter",
+            "late-night errand",
+            "public solitude",
+            "narrative",
+            "urban",
+            "solitude",
+            "street",
+            "urban solitude narrative core, anonymous commuter, late-night errand, public solitude in city light"
+          ],
+          "score": 1,
+          "selected_by_sampler": false
+        }
+      ],
+      "tension_candidates": [
+        {
+          "id": "slot:concept_tension:public_vs_private_tension",
+          "slot": "concept_tension",
+          "entry_id": "public_vs_private_tension",
+          "label_en": "public versus private concept tension",
+          "label_ko": "공적 공간과 사적 감정의 대립",
+          "terms": [
+            "public_vs_private_tension",
+            "public versus private concept tension",
+            "공적 공간과 사적 감정의 대립",
+            "public versus private",
+            "private emotion public space",
+            "public vs private",
+            "public persona private self",
+            "tension",
+            "public",
+            "private",
+            "identity",
+            "public versus private concept tension, private emotion held inside public space, identity contrast without readable captions"
+          ],
+          "score": 1,
+          "selected_by_sampler": false
+        },
+        {
+          "id": "slot:concept_tension:polished_vs_imperfect_tension",
+          "slot": "concept_tension",
+          "entry_id": "polished_vs_imperfect_tension",
+          "label_en": "polished versus imperfect concept tension",
+          "label_ko": "광택과 불완전함의 대립",
+          "terms": [
+            "polished_vs_imperfect_tension",
+            "polished versus imperfect concept tension",
+            "광택과 불완전함의 대립",
+            "polished imperfect",
+            "glossy damaged",
+            "refined flaw",
+            "polished vs imperfect",
+            "gloss versus flaw",
+            "tension",
+            "polished",
+            "imperfect",
+            "texture",
+            "polished versus imperfect concept tension, glossy clean surfaces beside scratches, dust, grain, or lived-in flaws"
+          ],
+          "score": 1,
+          "selected_by_sampler": false
+        },
+        {
+          "id": "slot:concept_tension:documentary_vs_staged_tension",
+          "slot": "concept_tension",
+          "entry_id": "documentary_vs_staged_tension",
+          "label_en": "documentary versus staged concept tension",
+          "label_ko": "다큐멘터리와 연출성의 대립",
+          "terms": [
+            "documentary_vs_staged_tension",
+            "documentary versus staged concept tension",
+            "다큐멘터리와 연출성의 대립",
+            "documentary versus staged",
+            "staged candid",
+            "tableau realism",
+            "documentary vs staged",
+            "candid tableau",
+            "tension",
+            "documentary",
+            "staged",
+            "editorial",
+            "documentary versus staged concept tension, candid realism arranged with subtle tableau-like visual order"
+          ],
+          "score": 1,
+          "selected_by_sampler": false
+        }
+      ],
+      "principles": [
+        "Let one clear visual argument organize the image, but keep it grounded in the requested scene instead of turning it into generic melodrama.",
+        "Use tension, threshold, or public/private pressure as composition logic rather than caption-like explanation."
+      ],
+      "anti_patterns": [
+        "beautiful subject in a detailed environment with no stake, contradiction, or visual relationship",
+        "manufactured sadness, rain-window melancholy, or generic longing used as a substitute for a specific visual proposition",
+        "symbolic props listed as labels without changing behavior, light, framing, or object relationships",
+        "metacritical labels such as visual argument or unresolved tension used instead of visible action, placement, light, or material evidence"
+      ],
+      "audit_categories": [
+        "narrative_core",
+        "concept_tension",
+        "evidence"
+      ],
+      "category_terms": {
+        "narrative_core": [
+          "digital_privacy_core",
+          "digital privacy anxiety narrative core with blurred non-readable screens",
+          "디지털 프라이버시 불안의 서사 코어",
+          "digital privacy",
+          "privacy anxiety",
+          "blurred screen glow",
+          "hypervisibility",
+          "narrative",
+          "privacy",
+          "digital",
+          "screen",
+          "no_text_required",
+          "no_text",
+          "digital privacy anxiety narrative core, hypervisibility, phone-lit face, blurred non-readable screens, abstract feed glow, no readable text",
+          "community_ritual_core",
+          "community ritual narrative core",
+          "공동체 의식의 서사 코어",
+          "community ritual",
+          "local pride",
+          "shared table",
+          "mutual aid",
+          "community",
+          "local",
+          "documentary",
+          "community ritual narrative core, local pride, shared table, mutual aid, ordinary community documentary atmosphere",
+          "urban_solitude_core",
+          "urban solitude narrative core",
+          "도시적 고독의 서사 코어",
+          "urban solitude",
+          "anonymous commuter",
+          "late-night errand",
+          "public solitude",
+          "urban",
+          "solitude",
+          "street",
+          "urban solitude narrative core, anonymous commuter, late-night errand, public solitude in city light"
+        ],
+        "concept_tension": [
+          "public_vs_private_tension",
+          "public versus private concept tension",
+          "공적 공간과 사적 감정의 대립",
+          "public versus private",
+          "private emotion public space",
+          "public vs private",
+          "public persona private self",
+          "tension",
+          "public",
+          "private",
+          "identity",
+          "public versus private concept tension, private emotion held inside public space, identity contrast without readable captions",
+          "polished_vs_imperfect_tension",
+          "polished versus imperfect concept tension",
+          "광택과 불완전함의 대립",
+          "polished imperfect",
+          "glossy damaged",
+          "refined flaw",
+          "polished vs imperfect",
+          "gloss versus flaw",
+          "polished",
+          "imperfect",
+          "texture",
+          "polished versus imperfect concept tension, glossy clean surfaces beside scratches, dust, grain, or lived-in flaws",
+          "documentary_vs_staged_tension",
+          "documentary versus staged concept tension",
+          "다큐멘터리와 연출성의 대립",
+          "documentary versus staged",
+          "staged candid",
+          "tableau realism",
+          "documentary vs staged",
+          "candid tableau",
+          "documentary",
+          "staged",
+          "editorial",
+          "documentary versus staged concept tension, candid realism arranged with subtle tableau-like visual order"
+        ],
+        "evidence": [
+          "gesture",
+          "hand",
+          "placement",
+          "contact",
+          "pressure",
+          "threshold",
+          "reflection",
+          "shared light",
+          "contrast",
+          "contradiction",
+          "routine",
+          "trace",
+          "caught",
+          "mid-gesture",
+          "배치",
+          "손",
+          "접촉",
+          "압력",
+          "반사",
+          "대비",
+          "흔적",
+          "찰나"
+        ]
+      }
+    },
+    "photographic_craft": {
+      "enabled": true,
+      "quality_profile": {
+        "profile_id": "portrait_editorial",
+        "facets": {
+          "camera_angle": [
+            "eye_level",
+            "reflection"
+          ],
+          "camera_register": [
+            "surveillance"
+          ],
+          "capture_modality": [
+            "surveillance"
+          ],
+          "lighting_family": [
+            "flash"
+          ],
+          "mood_family": [
+            "documentary",
+            "uncanny"
+          ],
+          "place_type": [
+            "interior",
+            "street"
+          ],
+          "robot_proof_family": [
+            "deep_structural",
+            "fabrication_origin",
+            "uncanny"
+          ],
+          "subject_kind": [
+            "human"
+          ]
+        },
+        "matched_uncovered_intent_facets": [],
+        "matched_literal_subject_entries": []
+      },
+      "selection_mode": "facet_only",
+      "active_dimensions": [
+        {
+          "id": "shot_intent",
+          "label": "shot intent",
+          "score": 2,
+          "matched_facets": [
+            "subject_kind:human",
+            "mood_family:documentary"
+          ],
+          "baseline_principle": "Decide what the frame is about before adding surface style, so the image has a visible reason for its distance, angle, and timing.",
+          "selected_principle": "For close or intimate subjects, make the chosen distance feel observed rather than displayed.",
+          "guidance_en": "make the frame's photographic intent legible before surface styling",
+          "guidance_ko": "표면적인 스타일보다 먼저 프레임의 촬영 의도가 읽히게 한다",
+          "selected_guidance_en": "let the close distance feel observed rather than displayed",
+          "selected_guidance_ko": "가까운 거리가 과시가 아니라 관찰처럼 느껴지게 한다",
+          "audit_terms": [
+            "photographic intent",
+            "frame intent",
+            "visible reason",
+            "deliberate distance"
+          ],
+          "active_refinements": [
+            {
+              "id": "intimate_observation",
+              "score": 2,
+              "matched_facets": [
+                "subject_kind:human",
+                "mood_family:documentary"
+              ],
+              "principle": "For close or intimate subjects, make the chosen distance feel observed rather than displayed.",
+              "guidance_en": "let the close distance feel observed rather than displayed",
+              "guidance_ko": "가까운 거리가 과시가 아니라 관찰처럼 느껴지게 한다",
+              "audit_terms": [
+                "observed",
+                "close distance",
+                "intimate distance"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "light_provenance",
+          "label": "light-source continuity",
+          "score": 1,
+          "matched_facets": [
+            "lighting_family:flash"
+          ],
+          "baseline_principle": "Light should appear to come from a believable source, with direction, falloff, bounce, and exposure behavior affecting both subject and setting.",
+          "selected_principle": "Artificial light should leave consistent color, shadow, specular edge, or exposure evidence across the frame.",
+          "guidance_en": "give the light a believable source with direction, falloff, and bounce",
+          "guidance_ko": "빛이 방향, 감쇠, 반사광을 가진 설득력 있는 출처에서 오게 한다",
+          "selected_guidance_en": "let artificial light leave consistent color, shadow, specular edges, or exposure evidence",
+          "selected_guidance_ko": "인공광이 색, 그림자, 반짝이는 경계, 노출 흔적을 일관되게 남기게 한다",
+          "audit_terms": [
+            "light source",
+            "direction",
+            "falloff",
+            "bounce"
+          ],
+          "active_refinements": [
+            {
+              "id": "artificial_light_logic",
+              "score": 1,
+              "matched_facets": [
+                "lighting_family:flash"
+              ],
+              "principle": "Artificial light should leave consistent color, shadow, specular edge, or exposure evidence across the frame.",
+              "guidance_en": "let artificial light leave consistent color, shadow, specular edges, or exposure evidence",
+              "guidance_ko": "인공광이 색, 그림자, 반짝이는 경계, 노출 흔적을 일관되게 남기게 한다",
+              "audit_terms": [
+                "artificial light",
+                "color",
+                "shadow",
+                "specular",
+                "exposure"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "frame_hierarchy",
+          "label": "frame hierarchy",
+          "score": 0,
+          "matched_facets": [],
+          "baseline_principle": "Organize the viewer's reading order across foreground, subject plane, and background instead of letting every detail compete equally.",
+          "selected_principle": "Organize the viewer's reading order across foreground, subject plane, and background instead of letting every detail compete equally.",
+          "guidance_en": "organize foreground, subject plane, and background into a clear reading order",
+          "guidance_ko": "전경, 피사체면, 배경이 분명한 읽는 순서로 정리되게 한다",
+          "selected_guidance_en": "organize foreground, subject plane, and background into a clear reading order",
+          "selected_guidance_ko": "전경, 피사체면, 배경이 분명한 읽는 순서로 정리되게 한다",
+          "audit_terms": [
+            "foreground",
+            "subject plane",
+            "background",
+            "reading order"
+          ],
+          "active_refinements": []
+        },
+        {
+          "id": "decisive_moment",
+          "label": "decisive moment",
+          "score": 3,
+          "matched_facets": [
+            "camera_angle:reflection",
+            "camera_register:surveillance",
+            "subject_kind:human"
+          ],
+          "baseline_principle": "Give the frame a captured instant: a transition, hesitation, aftermath, or micro-event that could only exist at this moment.",
+          "selected_principle": "Observer-like camera positions should imply timing: the photographer arrived just before, during, or just after something small happened.",
+          "guidance_en": "give the frame a captured instant rather than a finished pose",
+          "guidance_ko": "완성된 포즈보다 포착된 찰나가 프레임에 남게 한다",
+          "selected_guidance_en": "make the camera feel timed to just before, during, or just after a small event",
+          "selected_guidance_ko": "카메라가 작은 사건의 직전, 도중, 직후에 맞춰진 것처럼 보이게 한다",
+          "audit_terms": [
+            "captured instant",
+            "transition",
+            "hesitation",
+            "aftermath",
+            "micro-event"
+          ],
+          "active_refinements": [
+            {
+              "id": "observer_timing",
+              "score": 2,
+              "matched_facets": [
+                "camera_angle:reflection",
+                "camera_register:surveillance"
+              ],
+              "principle": "Observer-like camera positions should imply timing: the photographer arrived just before, during, or just after something small happened.",
+              "guidance_en": "make the camera feel timed to just before, during, or just after a small event",
+              "guidance_ko": "카메라가 작은 사건의 직전, 도중, 직후에 맞춰진 것처럼 보이게 한다",
+              "audit_terms": [
+                "just before",
+                "during",
+                "just after",
+                "small event"
+              ]
+            },
+            {
+              "id": "human_or_animal_transition",
+              "score": 1,
+              "matched_facets": [
+                "subject_kind:human"
+              ],
+              "principle": "Living subjects should feel caught in a transition rather than frozen at a perfect endpoint.",
+              "guidance_en": "catch a transition before it settles into a perfect endpoint",
+              "guidance_ko": "동작이 완벽한 끝점으로 굳기 전의 전환을 포착한다",
+              "audit_terms": [
+                "transition",
+                "caught",
+                "before it settles"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "environment_consequence",
+          "label": "environment consequence",
+          "score": 3,
+          "matched_facets": [
+            "place_type:street",
+            "mood_family:documentary",
+            "subject_kind:human"
+          ],
+          "baseline_principle": "Let the setting affect the subject or let the subject disturb the setting, so place is a photographic cause rather than a decorative backdrop.",
+          "selected_principle": "Shared spaces should affect spacing, paths, interruptions, or posture instead of acting as neutral scenery.",
+          "guidance_en": "let the setting affect the subject or the subject disturb the setting",
+          "guidance_ko": "장소가 피사체에 영향을 주거나 피사체가 장소를 흐트러뜨리게 한다",
+          "selected_guidance_en": "let shared space affect spacing, paths, interruptions, or posture",
+          "selected_guidance_ko": "공유된 공간이 거리감, 동선, 가림, 자세에 영향을 주게 한다",
+          "audit_terms": [
+            "setting affects",
+            "disturb the setting",
+            "consequence",
+            "place"
+          ],
+          "active_refinements": [
+            {
+              "id": "public_space_pressure",
+              "score": 2,
+              "matched_facets": [
+                "place_type:street",
+                "mood_family:documentary"
+              ],
+              "principle": "Shared spaces should affect spacing, paths, interruptions, or posture instead of acting as neutral scenery.",
+              "guidance_en": "let shared space affect spacing, paths, interruptions, or posture",
+              "guidance_ko": "공유된 공간이 거리감, 동선, 가림, 자세에 영향을 주게 한다",
+              "audit_terms": [
+                "spacing",
+                "paths",
+                "interruptions",
+                "posture"
+              ]
+            },
+            {
+              "id": "contact_with_place",
+              "score": 1,
+              "matched_facets": [
+                "subject_kind:human"
+              ],
+              "principle": "Contact with place should create pressure, occlusion, reflection, dust, surface change, or spatial interruption.",
+              "guidance_en": "show contact with place through pressure, occlusion, reflection, dust, or surface change",
+              "guidance_ko": "압력, 가림, 반사, 먼지, 표면 변화로 장소와의 접촉을 보인다",
+              "audit_terms": [
+                "pressure",
+                "occlusion",
+                "reflection",
+                "dust",
+                "surface change"
+              ]
+            }
+          ]
+        }
+      ],
+      "matched_facets": [
+        "subject_kind:human",
+        "mood_family:documentary",
+        "lighting_family:flash",
+        "camera_angle:reflection",
+        "camera_register:surveillance",
+        "place_type:street"
+      ],
+      "top_strategy": {
+        "id": "moment_led",
+        "label": "moment-led craft",
+        "score": 5,
+        "emphasize": [
+          "decisive_moment",
+          "shot_intent"
+        ],
+        "matched_facets": [
+          "camera_angle:reflection",
+          "camera_register:surveillance",
+          "subject_kind:human",
+          "mood_family:documentary"
+        ]
+      },
+      "strategy_variants": [
+        {
+          "id": "moment_led",
+          "label": "moment-led craft",
+          "score": 5,
+          "emphasize": [
+            "decisive_moment",
+            "shot_intent"
+          ],
+          "matched_facets": [
+            "camera_angle:reflection",
+            "camera_register:surveillance",
+            "subject_kind:human",
+            "mood_family:documentary"
+          ]
+        },
+        {
+          "id": "light_led",
+          "label": "light-led craft",
+          "score": 4,
+          "emphasize": [
+            "light_provenance",
+            "environment_consequence"
+          ],
+          "matched_facets": [
+            "lighting_family:flash",
+            "place_type:street",
+            "mood_family:documentary",
+            "subject_kind:human"
+          ]
+        },
+        {
+          "id": "structure_led",
+          "label": "structure-led craft",
+          "score": 2,
+          "emphasize": [
+            "frame_hierarchy",
+            "shot_intent"
+          ],
+          "matched_facets": [
+            "subject_kind:human",
+            "mood_family:documentary"
+          ]
+        }
+      ],
+      "prompt_dimension_ids": [
+        "decisive_moment",
+        "shot_intent"
+      ],
+      "prompt_guidance_en": [
+        "make the camera feel timed to just before, during, or just after a small event",
+        "let the close distance feel observed rather than displayed"
+      ],
+      "prompt_guidance_ko": [
+        "카메라가 작은 사건의 직전, 도중, 직후에 맞춰진 것처럼 보이게 한다",
+        "가까운 거리가 과시가 아니라 관찰처럼 느껴지게 한다"
+      ],
+      "audit_terms": [
+        "photographic intent",
+        "frame intent",
+        "visible reason",
+        "deliberate distance",
+        "observed",
+        "close distance",
+        "intimate distance",
+        "light source",
+        "direction",
+        "falloff",
+        "bounce",
+        "artificial light",
+        "color",
+        "shadow",
+        "specular",
+        "exposure",
+        "foreground",
+        "subject plane",
+        "background",
+        "reading order",
+        "captured instant",
+        "transition",
+        "hesitation",
+        "aftermath",
+        "micro-event",
+        "just before",
+        "during",
+        "just after",
+        "small event",
+        "caught",
+        "before it settles",
+        "setting affects",
+        "disturb the setting",
+        "consequence",
+        "place",
+        "spacing",
+        "paths",
+        "interruptions",
+        "posture",
+        "pressure"
+      ]
+    },
+    "artistic_final_touch": {
+      "enabled": false,
+      "profile_id": "portrait_editorial"
+    },
+    "motif_budget": {
+      "quotas": {},
+      "motif_taxonomy": {
+        "phone_selfie_mirror": [
+          "clear_case_smartphone",
+          "phone",
+          "selfie",
+          "mirror selfie",
+          "mirror_selfie",
+          "over_shoulder_phone_screen",
+          "phone_arm_length_selfie",
+          "checking_phone",
+          "bedroom_mirror",
+          "repeated-message phone"
+        ],
+        "red_thread": [
+          "red thread",
+          "red string",
+          "red-string",
+          "red ribbon",
+          "붉은 실"
+        ],
+        "photo_wall": [
+          "instant_photo_stack",
+          "obsession_photo_wall_prop",
+          "photo wall",
+          "same-person photos",
+          "repeated photos",
+          "photo shrine",
+          "scrapbook_photo_cutout_layout"
+        ],
+        "surveillance_evidence": [
+          "surveillance evidence",
+          "cctv",
+          "cctv_corner_frame",
+          "cctv_monitor_stack_prop",
+          "contact sheet",
+          "case-file",
+          "one-way mirror"
+        ],
+        "sealed_keepsake": [
+          "sealed_mission_envelope_prop",
+          "sealed decree",
+          "sealed letter",
+          "sealed keepsake",
+          "portrait keepsake",
+          "wilted flower"
+        ],
+        "digital_fixation": [
+          "clear_case_smartphone",
+          "unread message",
+          "notification",
+          "phone-screen evidence",
+          "repeated-message phone",
+          "digital fixation"
+        ],
+        "threshold_watch": [
+          "doorframe_shadow_watch",
+          "doorway",
+          "threshold",
+          "frame_within_frame",
+          "watching from the doorway"
+        ],
+        "record_board": [
+          "logo_board_prop",
+          "clinical_chart_clipboard_prop",
+          "care_record_board_prop",
+          "appointment_ledger_prop",
+          "chart_records_board_prop",
+          "records board",
+          "care record",
+          "appointment ledger",
+          "route board"
+        ]
+      },
+      "selected_motifs": [],
+      "discouraged_now": [],
+      "ledger": {
+        "enabled": false,
+        "counts": {}
+      }
+    },
+    "preset_reference": {
+      "role": "reference_scaffold",
+      "preset_id": "security_guard_watch_portrait",
+      "used_sections": [],
+      "dropped_sections": [],
+      "masked_slots": [],
+      "exemplar_role": "none"
+    },
+    "masked_buckets": [],
+    "open_slots": [],
+    "template_echo_risk": {
+      "score": 0.0,
+      "max_allowed_score": 0.2,
+      "masked_slot_count": 0,
+      "basis": "pre_composition_scaffold"
+    },
+    "role_scene_policy": {
+      "enabled": false
+    },
+    "species_family": {
+      "enabled": false,
+      "allowed": {},
+      "enforce": true,
+      "hybrid_allowed": false
+    },
+    "safety": {
+      "mode": "automatic",
+      "evaluation_requested": false,
+      "status": "pass",
+      "requires_user_approval": false,
+      "items": []
+    },
+    "concept_gates": [],
+    "diversity_state": {
+      "enabled": false,
+      "tracked_scopes": [
+        "preset",
+        "subject",
+        "subject_group",
+        "location",
+        "location_tone",
+        "lighting",
+        "light_type",
+        "light_shape",
+        "genre",
+        "action",
+        "prop",
+        "style",
+        "color",
+        "texture",
+        "species_marker",
+        "anatomical_connection",
+        "lens",
+        "film_emulation",
+        "weather",
+        "camera_type",
+        "mood",
+        "surreal_concept"
+      ],
+      "novelty": "medium",
+      "history": {
+        "enabled": false,
+        "counts": {},
+        "selected_count": 0
+      },
+      "anchor_ledger": {
+        "enabled": false,
+        "counts": {}
+      },
+      "recent_penalties": []
+    },
+    "coverage": {
+      "mandatory_intent_count": 2,
+      "covered_mandatory_intent_count": 2,
+      "uncovered_intent_count": 0,
+      "intent_constraints": {
+        "no_people": false,
+        "subject_categories": [],
+        "domains": [
+          "character_scene_grammar"
+        ],
+        "scoped_routes": [
+          "character_gap_contrast_scene"
+        ],
+        "character_response": {
+          "requested": true,
+          "eligible": true,
+          "contract_version": "moe_response_contract/v1",
+          "activation_source": "explicit_natural_language_moe_request",
+          "response_goal": "character_specific_moe",
+          "route_id": "character_gap_contrast_scene",
+          "primary_mechanism": "baseline_break_reveal",
+          "support_mechanisms": [
+            "earnest_effort_recovery"
+          ],
+          "sexual_tone": "nonsexual",
+          "defaulted_nonsexual": true,
+          "explicit_nonsexual": false
+        },
+        "matched": [
+          {
+            "axis": "character_response",
+            "value": "character_gap_contrast_scene",
+            "domain": "character_scene_grammar",
+            "mechanism": "baseline_break_reveal",
+            "sexual_tone": "nonsexual"
+          }
+        ],
+        "source_text_count": 1
+      },
+      "axis_coverage": {
+        "target": 0.0,
+        "items": []
+      },
+      "contract": {
+        "must_cover_axes": [],
+        "covered_axes": [],
+        "coverage_gaps": []
+      },
+      "candidate_limits": {
+        "preset_top": 4,
+        "core_slot_top": 4,
+        "support_slot_top": 2,
+        "total": 64
+      }
+    },
+    "conflicts": [],
+    "negative_en": "3D render look, duplicate faces, low resolution, broken facial features, awkward expression, over-processed retouching, cropped-off head, excessive HDR, plastic-looking skin, unrealistic hands, illustration look, body distortion, diagram layout, infographic, flowchart, dashboard layout, presentation slide deck, floating UI panels, callout labels, chart axes and legend, wireframe mockup, icon grid, blueprint sheet as the main subject, screen-only frontal close-up, readable long screen text, HUD overlay, monitor graphics as the main subject, generic sparkle overlays, decorative blush circles, unrequested heart symbols, heart-shaped pupils, heart-shaped latte art, cartoon motion lines, manga reaction marks, comic emphasis marks",
+    "provenance": {
+      "generator_version": "2026.06.0",
+      "seed": 20260813,
+      "batch_index": 0,
+      "preset_id": "security_guard_watch_portrait",
+      "selection_mode": "rule",
+      "requested_selection_mode": "rule",
+      "tags_hash": null,
+      "concept_lock": [
+        "평소 냉정한 성인 보안요원이 작은 실수를 감추려는 갭모에 사진"
+      ],
+      "additional_requirements": [],
+      "likeness_mode": "off",
+      "likeness_references": [],
+      "user_mandatory_intents": [],
+      "concept_gate_results": [],
+      "concept_scene_variants": [],
+      "requested_scene_function": null,
+      "safety": {
+        "mode": "automatic",
+        "evaluation_requested": false,
+        "status": "pass",
+        "requires_user_approval": false,
+        "items": []
+      },
+      "character_response": {
+        "requested": true,
+        "eligible": true,
+        "contract_version": "moe_response_contract/v1",
+        "activation_source": "explicit_natural_language_moe_request",
+        "response_goal": "character_specific_moe",
+        "route_id": "character_gap_contrast_scene",
+        "primary_mechanism": "baseline_break_reveal",
+        "support_mechanisms": [
+          "earnest_effort_recovery"
+        ],
+        "sexual_tone": "nonsexual",
+        "defaulted_nonsexual": true,
+        "explicit_nonsexual": false
+      },
+      "argv": [
+        "--tags",
+        "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/assets/photo_prompt_tags.json",
+        "--selection-mode",
+        "rule",
+        "--candidate-pack-version",
+        "v3",
+        "--emit-candidate-pack",
+        "--seed",
+        "20260813",
+        "--output-file",
+        "output/moe-response-review-v1/ko_gap_moe_guard/candidate_pack.json",
+        "--concept-lock",
+        "평소 냉정한 성인 보안요원이 작은 실수를 감추려는 갭모에 사진",
+        "--soft-anchor-spec",
+        "{\"mode\":\"soft\",\"concept\":\"평소 냉정한 성인 보안요원이 작은 실수를 감추려는 갭모에 사진\",\"anchor_expansion\":{\"enabled\":false,\"top_k\":3,\"min_similarity\":0.78,\"weight_ratio\":0.5},\"min_anchors\":1,\"source_floors\":{\"role\":1},\"group_floors\":{},\"salience_floor\":0,\"visual_guards\":[],\"render_priority_terms\":[],\"free_slot_constraints\":{},\"render_suppress_terms\":[],\"render_directives\":[],\"dual_read_requirement\":{},\"preset_affinity\":{\"preferred_presets\":[\"security_guard_watch_portrait\"]},\"role_scene_policy\":{},\"species_family_policy\":{},\"soft_repair_policy\":{},\"safety_negative_floor\":[],\"mixin_cue_budget\":2,\"anchors\":[{\"slot\":\"action\",\"ids\":[\"checking_security_monitors\"],\"pool\":[\"checking_security_monitors\"],\"pool_weights\":{},\"terms\":[\"checking security monitors\"],\"source\":\"role\",\"required\":true,\"critical\":false,\"groups\":[\"role_primary\"],\"primary\":false,\"variant_group\":\"\",\"variant_strategy\":\"\"},{\"slot\":\"costume_style\",\"ids\":[\"security_guard_uniform_costume\"],\"pool\":[\"security_guard_uniform_costume\"],\"pool_weights\":{},\"terms\":[\"security guard uniform\"],\"source\":\"role\",\"required\":true,\"critical\":false,\"groups\":[\"role_primary\"],\"primary\":false,\"variant_group\":\"\",\"variant_strategy\":\"\"},{\"slot\":\"location\",\"ids\":[\"security_control_room\"],\"pool\":[\"security_control_room\"],\"pool_weights\":{},\"terms\":[\"security control room\"],\"source\":\"role\",\"required\":true,\"critical\":false,\"groups\":[\"role_primary\"],\"primary\":false,\"variant_group\":\"\",\"variant_strategy\":\"\"},{\"slot\":\"subject\",\"ids\":[\"security_guard_role_model\"],\"pool\":[\"security_guard_role_model\"],\"pool_weights\":{},\"terms\":[\"subject\",\"security\",\"guard\",\"role\",\"model\"],\"source\":\"role\",\"required\":true,\"critical\":false,\"groups\":[\"role_primary\"],\"primary\":false,\"variant_group\":\"\",\"variant_strategy\":\"\"}],\"safety_evaluation\":{\"mode\":\"automatic\",\"evaluation_requested\":false,\"status\":\"pass\",\"requires_user_approval\":false,\"items\":[]}}",
+        "--role-requirement",
+        "adult security-guard identity reads as surveillance work and controlled access authority, not generic dark-suit fashion",
+        "--negative-requirement",
+        "adult subject only; professional guard uniform and non-graphic surveillance setting",
+        "--soft-requirement",
+        "security monitors, badge language, and guard uniform keep the role readable",
+        "--intent-axis",
+        "adult security guard portrait, control room, surveillance monitors, controlled watchfulness",
+        "--concept-gates-json",
+        "[]",
+        "--n",
+        "1",
+        "--lang",
+        "both",
+        "--detail-level",
+        "detailed",
+        "--json-output",
+        "--include-negative"
+      ],
+      "sample_prompt_id": "7748e7d78601962f"
+    },
+    "moe_response": {
+      "enabled": true,
+      "contract_version": "moe_response_contract/v1",
+      "source": "explicit_natural_language_moe_request",
+      "purpose": "character_specific_moe_response_hypothesis_with_visible_causal_evidence",
+      "response_goal": "character_specific_moe",
+      "route_id": "character_gap_contrast_scene",
+      "primary_mechanism": "baseline_break_reveal",
+      "support_mechanisms": [
+        "earnest_effort_recovery"
+      ],
+      "sexual_tone": "nonsexual",
+      "mechanism_instruction": "Establish one recognizable habitual baseline, break it with one concrete trigger, and show the brief involuntary face, hand, gaze, or posture change plus the character's recovery attempt.",
+      "required_fields": [
+        "mechanism",
+        "baseline",
+        "event_phase",
+        "trigger",
+        "target",
+        "visible_response",
+        "immediate_consequence",
+        "continuity",
+        "support_mechanisms",
+        "prompt_evidence"
+      ],
+      "prompt_binding": {
+        "literal": true,
+        "required_evidence_fields": [
+          "actor_phrase",
+          "baseline_phrase",
+          "event_phase_phrase",
+          "trigger_phrase",
+          "target_phrase",
+          "visible_response_phrase",
+          "immediate_consequence_phrase",
+          "continuity_phrase",
+          "focal_plane_phrase"
+        ]
+      },
+      "composition_guidance": {
+        "causal_chain": [
+          "adult_character_baseline",
+          "one_primary_mechanism",
+          "concrete_trigger_and_target",
+          "involuntary_visible_response",
+          "immediate_state_change",
+          "identity_continuity"
+        ],
+        "focal_priority": [
+          "face_or_gaze_response",
+          "hands_or_posture_action",
+          "trigger_target_or_changed_object",
+          "role_costume_and_species_markers_as_support"
+        ],
+        "same_focal_plane": [
+          "face_or_gaze",
+          "hands_or_posture",
+          "trigger_target"
+        ],
+        "keep": [
+          "explicitly_adult_original_character",
+          "user_requested_role",
+          "user_requested_species_or_nonhuman_traits",
+          "one_primary_mechanism",
+          "negative_en_bytes",
+          "selected_scene_and_safety_contracts"
+        ],
+        "reject": [
+          "cute_or_moe_label_as_evidence",
+          "blush_only",
+          "oversized_eyes_or_youth_morphology",
+          "animal_ears_or_costume_only",
+          "generic_shy_smile_or_pretty_pose_only",
+          "unrelated_prosocial_task_or_technical_activity",
+          "full_body_costume_display",
+          "body_emphasis_or_sultry_gaze_when_nonsexual",
+          "multiple_unrelated_moe_mechanisms",
+          "unrequested_heart_sparkle_or_cartoon_reaction_shorthand"
+        ]
+      },
+      "evaluation_boundary": "prompt_binding_is_preflight; metadata_free_thumbnail_and_native_pixels_are_local_product_evidence; whether_the_result_feels_moe_requires_direct_human_judgment"
+    },
+    "viewer_experience": {
+      "enabled": true,
+      "contract_version": "photo-viewer-experience/v1",
+      "source": "moe_response_required",
+      "activation_sources": [
+        "moe_response_required"
+      ],
+      "purpose": "viewer_response_hypothesis_with_visible_evidence_not_verified_human_outcome",
+      "required_fields": [
+        "target_audience",
+        "viewing_context",
+        "primary_viewer_need",
+        "intended_experience",
+        "viewer_promise",
+        "first_glance_hook",
+        "interpretive_question",
+        "affect_evidence",
+        "attachment_channel",
+        "reinspection_reward",
+        "commercial_objective",
+        "prompt_evidence"
+      ],
+      "allowed_values": {
+        "viewing_context": [
+          "feed_thumbnail",
+          "full_screen",
+          "poster",
+          "product_detail"
+        ],
+        "audience_literacy": [
+          "general",
+          "genre_literate",
+          "subculture_literate",
+          "expert"
+        ],
+        "primary_viewer_need": [
+          "insight",
+          "care",
+          "relatedness",
+          "identity",
+          "meaning",
+          "recovery",
+          "aspiration",
+          "trust"
+        ],
+        "attachment_channel": [
+          "none",
+          "agency",
+          "reciprocity",
+          "continuity",
+          "self_relevance"
+        ],
+        "reinspection_mode": [
+          "none",
+          "causal_second_reading"
+        ],
+        "commercial_objective": [
+          "none",
+          "stop",
+          "comprehend",
+          "remember",
+          "act",
+          "share",
+          "return"
+        ]
+      },
+      "target_audience_fields": [
+        "literacy",
+        "required_prior_knowledge"
+      ],
+      "affect_evidence_fields": [
+        "actor",
+        "action",
+        "target",
+        "consequence"
+      ],
+      "prompt_binding": {
+        "literal": true,
+        "required_evidence_fields": [
+          "first_glance_hook_phrase",
+          "affect_actor_phrase",
+          "affect_action_phrase",
+          "affect_target_phrase",
+          "affect_consequence_phrase"
+        ],
+        "conditional_evidence_fields": {
+          "attachment_channel_not_none": "attachment_phrase",
+          "reinspection_mode_causal_second_reading": "reinspection_reward_phrase",
+          "commercial_objective_comprehend_remember_act": "commercial_legibility_phrase"
+        }
+      },
+      "conditional_rules": {
+        "attachment_required_for_needs": [
+          "care",
+          "relatedness",
+          "identity"
+        ],
+        "commercial_legibility_required_for_objectives": [
+          "comprehend",
+          "remember",
+          "act"
+        ],
+        "creative_noncommercial_reinspection_required": true,
+        "product_clarity_can_override_reinspection": true
+      },
+      "composition_guidance": {
+        "select_exactly_one": [
+          "primary_viewer_need",
+          "intended_experience",
+          "commercial_objective"
+        ],
+        "bind_visible_causes_not_outcome_claims": true,
+        "keep": [
+          "creative_direction",
+          "moe_response",
+          "scene_contract",
+          "character_grammar",
+          "product_or_subject_legibility",
+          "safety_contract",
+          "negative_en_bytes"
+        ],
+        "reject": [
+          "affect_stacking",
+          "viewer_will_feel_outcome_claim",
+          "face_or_youth_morphology_as_attachment_evidence",
+          "genre_term_or_style_adjective_as_experience_evidence",
+          "commercial_attention_at_the_cost_of_product_clarity"
+        ]
+      },
+      "evaluation_boundary": "prompt_binding_is_preflight;_metadata_free_pixels_are_local_product_evidence;human_response_requires_human_evaluation"
+    }
+  }
+]

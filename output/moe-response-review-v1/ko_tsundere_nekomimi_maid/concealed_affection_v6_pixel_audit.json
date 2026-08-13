@@ -1,0 +1,80 @@
+{
+  "schema_version": "moe-fixed-identity-pixel-review/v2",
+  "case_id": "ko_tsundere_nekomimi_maid",
+  "reviewer": "agent_native_pixel_review",
+  "reviewed_at": "2026-08-13T02:10:00+09:00",
+  "source_edit_target": "render_identity_control.png",
+  "reference_image": "../reference_identity/fictional_adult_reference.jpeg",
+  "result_image": "render_concealed_affection_v6.png",
+  "comparison_image": "../concealed_affection_v6_comparison.png",
+  "qualification": "technical_partial_concealed_affection_failed_not_better_than_v3",
+  "runtime_variant": "v6_single_expression_edit",
+  "render_count": 1,
+  "provenance": {
+    "candidate_pack": "candidate_pack_active_denial_v6.json",
+    "pack_id": "9f88d9c473fcbc7b",
+    "composed_preflight": "composed_prompt_concealed_affection_v6.json",
+    "composed_preflight_audit": "composed_prompt_concealed_affection_v6.audit.json",
+    "composed_preflight_status": "pass",
+    "runtime_run_id": "889664caca5842d8",
+    "runtime_prompt_id": "5871b6cd9cc63b92",
+    "runtime_prompt_audit_status": "not_run",
+    "boundary": "The full 120-word v6 composition passed preflight, but the native edit used the separately preserved expression-edit prompt in the run ledger. Preflight PASS is not attributed to that runtime prompt."
+  },
+  "hashes": {
+    "source_edit_target_sha256": "3218dca9f7230615cb8929af9089aa752de814bdeb2f5bc801e2680c805af4ee",
+    "result_sha256": "ef6c375ebb7a36c10e13772f19d968fac09167cadac594615209781ef4b27c36",
+    "comparison_sha256": "694d7f465c88ca5aa9deca25f533e11c1fe4fc7b5e1e5d0a344fa71683e47ecc"
+  },
+  "gates": {
+    "adult_identity": {
+      "status": "pass",
+      "evidence": "The result remains unmistakably adult with no de-aging or school-age morphology."
+    },
+    "reference_identity_continuity": {
+      "status": "pass",
+      "evidence": "Relative to the v3 edit target, eye spacing, brows, nose, lips, jaw, skin tone, hairline, and long dark wavy hair remain stable; the edit does not replace the supplied fictional identity."
+    },
+    "pretty_and_cute_moe_entry": {
+      "status": "preserved_but_weaker_warmth_than_v3",
+      "evidence": "The same polished adult face and costume are preserved, but the stronger wary pout weakens the warm, cute first read relative to v3."
+    },
+    "role_scene_and_event_continuity": {
+      "status": "pass",
+      "evidence": "The black-and-ivory maid costume, warm cafe, hands, customer's scraped knuckle, and half-applied beige bandage remain visually stable against v3."
+    },
+    "sexual_tone_continuity": {
+      "status": "pass_visually_stable_against_user_approved_baseline",
+      "evidence": "Framing, fitted costume, collarbone exposure, and body pose are essentially unchanged, so the low-intensity adult sensual appeal the user approved in v3 was neither removed nor increased."
+    },
+    "active_tsundere_denial": {
+      "status": "pass_stronger_than_v3",
+      "evidence": "The right cheek is more visibly puffed and the lips form a clearer mid-protest pout than in v3. The face remains angled away."
+    },
+    "recipient_directed_concealed_affection": {
+      "status": "fail",
+      "evidence": "The eyes shift farther sideways and read as wary or guarded rather than briefly returning toward the customer's eyes. The lower-lid softening and suppressed almost-smile are not legible at native scale."
+    },
+    "denial_care_contradiction": {
+      "status": "partial",
+      "evidence": "Protest plus continued bandaging remains readable, but without affection escaping toward the recipient the second reading is annoyance-with-care rather than clearly concealed liking."
+    },
+    "nekomimi_contract": {
+      "status": "existing_defect_preserved",
+      "evidence": "The edit intentionally preserved the current ears; they remain oversized and near-symmetrical rather than meeting the compact unequal-angle v6 preflight description."
+    },
+    "shortcut_and_background_integrity": {
+      "status": "existing_defect_preserved",
+      "evidence": "The edit did not add new decorations, but v3's decorative hearts and pseudo-writing remain because the scene was held constant for the expression comparison."
+    },
+    "hand_and_bandage_continuity": {
+      "status": "pass_with_existing_minor_ambiguity",
+      "evidence": "Hands and bandage placement match v3 without obvious new anatomical defects; the exact lifted-versus-adhered edge remains mildly ambiguous."
+    }
+  },
+  "agent_comparison_verdict": "The right-side v6 edit strengthens the cheek-and-lip protest, but its eyes read as wary side-monitoring rather than a return toward the adult recipient. It has less leaked warmth than v3, no legible softened lower lids or suppressed almost-smile, and therefore is not a tsundere-moe improvement over v3.",
+  "user_moe_judgment": "not_requested_for_v6_before_agent_verdict",
+  "user_better_than_fixed_identity_v3_judgment": "not_requested_for_v6_before_agent_verdict",
+  "user_concealed_affection_legibility_judgment": "not_requested_for_v6_before_agent_verdict",
+  "acceptance_boundary": "The user asked the agent to judge the right-side result. The agent can reject it for failed visible cue legibility and lack of improvement; only the user may positively accept a future candidate as genuinely moe."
+}

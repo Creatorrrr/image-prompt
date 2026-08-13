@@ -29,6 +29,8 @@ SUBCULTURE_RETRIEVAL_HOLDOUT_V1_PATH = PHOTO_FIXTURE_DIR / "semantic_retrieval_h
 WORLDBUILDING_RETRIEVAL_HOLDOUT_V1_PATH = PHOTO_FIXTURE_DIR / "semantic_retrieval_holdout_worldbuilding_v1.jsonl"
 CJK_WORLDBUILDING_RETRIEVAL_HOLDOUT_V1_PATH = PHOTO_FIXTURE_DIR / "semantic_retrieval_holdout_cjk_worldbuilding_v1.jsonl"
 CHARACTER_MOE_RETRIEVAL_CONTRACT_V1_PATH = PHOTO_FIXTURE_DIR / "semantic_retrieval_contract_character_moe_v1.jsonl"
+NATURAL_MOE_RESPONSE_CONTRACT_V1_PATH = PHOTO_FIXTURE_DIR / "natural_moe_response_contract_v1.jsonl"
+NATURAL_MOE_RENDER_REVIEW_V1_PATH = PHOTO_FIXTURE_DIR / "render_natural_moe_user_review_v1.jsonl"
 RESEARCH_EVIDENCE_PATH = PHOTO_RESEARCH_DIR / "research_evidence.jsonl"
 CHARACTER_MOE_RESEARCH_DIR = PHOTO_RESEARCH_DIR / "character_moe"
 CHARACTER_MOE_CROSSWALK_PATH = PHOTO_RESEARCH_DIR / "character_moe_topic_crosswalk_v1.json"
@@ -56,6 +58,8 @@ if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
 
 import audit_composed_prompt  # noqa: E402
+import audit_image_render_request  # noqa: E402
+import audit_moe_render_review  # noqa: E402
 import audit_scene_expression  # noqa: E402
 import eval_semantic  # noqa: E402
 import generate_photo_prompt  # noqa: E402
@@ -83,15 +87,26 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
         extra_chosen: tuple[str, ...] = (),
     ) -> dict:
         hybrid = pack["hybrid_augmentation"]
+        authorial_mode = hybrid["contract_version"] == "photo-hybrid-augmentation/v2"
         routes = hybrid["route_contract"]["routes"]
         route = next(row for row in routes if row["id"] == route_id)
         candidate_objects = audit_composed_prompt.candidate_objects_from_pack(pack)
         accepted = set(route["candidate_ids"][:accept_count])
-        evidence = [
-            str(candidate_objects[candidate_id]["label_en"])
-            for candidate_id in route["candidate_ids"]
-            if candidate_id in accepted
-        ]
+        if authorial_mode:
+            evidence = []
+            for index, candidate_id in enumerate(route["candidate_ids"]):
+                if candidate_id not in accepted:
+                    continue
+                source_terms = candidate_objects[candidate_id].get("concept_terms") or ["source cue"]
+                evidence.append(
+                    f"{source_terms[0]} becomes visible through an authored gesture at unfinished beat {index + 1}"
+                )
+        else:
+            evidence = [
+                str(candidate_objects[candidate_id]["label_en"])
+                for candidate_id in route["candidate_ids"]
+                if candidate_id in accepted
+            ]
         adult_contract = hybrid.get("adult_appeal", {})
         prompt_parts = []
         adult_brief = None
@@ -106,16 +121,33 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
                 "adult_subject_phrase": "An adult original fashion model",
                 "agency_phrase": "self-directed editorial pose",
                 "axes": {
-                    axis_id: {"intensity": axis["intensity"]}
+                    axis_id: {
+                        "intensity": axis["intensity"],
+                        **(
+                            {
+                                "artistic_interpretation": "Keep the axis subordinate to the scene's agency.",
+                                "prompt_evidence": f"an authored {axis_id.replace('_', ' ')} accent follows her deliberate gesture",
+                            }
+                            if authorial_mode and axis["intensity"] > 0
+                            else {}
+                        ),
+                    }
                     for axis_id, axis in adult_contract["axes"].items()
                 },
                 "blend": {"emphasis": adult_contract["blend"]["emphasis"]},
             }
+            if authorial_mode:
+                prompt_parts.extend(
+                    axis["prompt_evidence"]
+                    for axis in adult_brief["axes"].values()
+                    if axis.get("prompt_evidence")
+                )
         prompt_parts.extend(evidence)
         decisions = []
         detail_by_id = {detail["candidate_id"]: detail for detail in route["details"]}
+        evidence_by_id = dict(zip([candidate_id for candidate_id in route["candidate_ids"] if candidate_id in accepted], evidence))
         for candidate_id in route["candidate_ids"]:
-            state = "accepted" if candidate_id in accepted else "rejected"
+            state = ("transformed" if authorial_mode else "accepted") if candidate_id in accepted else "rejected"
             decision = {
                 "candidate_id": candidate_id,
                 "decision": state,
@@ -123,8 +155,16 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
                 "rationale": "It supports the selected route without replacing the concept core.",
                 "marginal_contribution": "Removing it would reduce visible specificity.",
             }
-            if state == "accepted":
-                decision["prompt_evidence"] = str(candidate_objects[candidate_id]["label_en"])
+            if candidate_id in accepted:
+                decision["prompt_evidence"] = evidence_by_id[candidate_id]
+                if authorial_mode:
+                    decision.update(
+                        {
+                            "artistic_interpretation": "Use the cue as a relational prompt, not as supplied prose.",
+                            "transformation": "Placed the cue inside an unfinished character action.",
+                            "transformation_dimensions": ["causality", "gesture"],
+                        }
+                    )
             decisions.append(decision)
         brief = {
             "concept_core": "A coherent modern photographic subject remains the governing idea.",
@@ -192,27 +232,59 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             "17",
             "--emit-candidate-pack",
         )[0]
-        chosen_id = next(
-            candidate["id"]
-            for candidate in pack["presets"]
-            if candidate.get("selected_by_sampler")
+        chosen_candidate = next(
+            candidate
+            for slot_payload in pack["slots"].values()
+            for candidate in slot_payload["candidates"]
         )
+        chosen_id = chosen_candidate["id"]
+        chosen_evidence = "an angled glass bottle catches a narrow amber rim"
         composed = {
             "pack_id": pack["pack_id"],
-            "prompt_en": "A restrained product still life with believable contact shadow, no text or watermark.",
+            "prompt_en": (
+                "A restrained product still life with believable contact shadow, no text or watermark; "
+                f"{chosen_evidence}."
+            ),
             "negative_en": pack.get("negative_en"),
             "chosen_candidate_ids": [chosen_id],
             "composer": "agent",
+            "candidate_interpretations": [
+                {
+                    "candidate_id": chosen_id,
+                    "artistic_interpretation": "Use the cue as quiet product tension.",
+                    "transformation": "Translate it into asymmetric material light.",
+                    "prompt_evidence": chosen_evidence,
+                }
+            ],
         }
         passed = audit_composed_prompt.audit_composed_prompt(pack, composed)
         self.assertEqual(passed["status"], "pass", passed)
+
+        missing_interpretation = copy.deepcopy(composed)
+        missing_interpretation.pop("candidate_interpretations")
+        missing_result = audit_composed_prompt.audit_composed_prompt(
+            pack, missing_interpretation
+        )
+        self.assertIn(
+            "candidate_interpretations",
+            {failure["check"] for failure in missing_result["failures"]},
+        )
+
+        copied_terms = copy.deepcopy(composed)
+        source_only = " ".join(chosen_candidate["concept_terms"][:4])
+        copied_terms["candidate_interpretations"][0]["prompt_evidence"] = source_only
+        copied_terms["prompt_en"] += f" {source_only}."
+        copied_result = audit_composed_prompt.audit_composed_prompt(pack, copied_terms)
+        self.assertIn(
+            "candidate_interpretation_authorship",
+            {failure["check"] for failure in copied_result["failures"]},
+        )
 
         applicability_pack = copy.deepcopy(pack)
         chosen_slot = next(
             candidate
             for slot_payload in applicability_pack["slots"].values()
             for candidate in slot_payload["candidates"]
-            if candidate.get("selected_by_sampler")
         )
         chosen_slot["applicability"] = {
             "status": "blocked",
@@ -224,6 +296,14 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             **composed,
             "pack_id": applicability_pack["pack_id"],
             "chosen_candidate_ids": [chosen_slot["id"]],
+            "candidate_interpretations": [
+                {
+                    "candidate_id": chosen_slot["id"],
+                    "artistic_interpretation": "Use the cue as quiet product tension.",
+                    "transformation": "Translate it into asymmetric material light.",
+                    "prompt_evidence": chosen_evidence,
+                }
+            ],
         }
         applicability_result = audit_composed_prompt.audit_composed_prompt(
             applicability_pack, applicability_composed
@@ -243,7 +323,7 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
         self.assertIn("coverage_assertions", {failure["check"] for failure in spoofed_result["failures"]})
 
         unsupported = copy.deepcopy(pack)
-        unsupported["contract_version"] = "photo-candidate-pack/v4"
+        unsupported["contract_version"] = "photo-candidate-pack/v5"
         unsupported_result = audit_composed_prompt.audit_composed_prompt(
             unsupported,
             composed,
@@ -258,7 +338,7 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "exactly one pack"):
             audit_composed_prompt.first_pack([pack, pack])
 
-    def test_candidate_pack_v3_default_and_v2_compatibility_projection(self):
+    def test_candidate_pack_v4_default_and_v3_v2_compatibility_projection(self):
         common = (
             "--preset",
             "character_attribute_composition_scene",
@@ -269,15 +349,26 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             "--emit-candidate-pack",
         )
         current = self.run_wrapper(*common)[0]
+        prior = self.run_wrapper(*common, "--candidate-pack-version", "v3")[0]
         legacy = self.run_wrapper(*common, "--candidate-pack-version", "v2")[0]
 
-        self.assertEqual(current["contract_version"], "photo-candidate-pack/v3")
+        self.assertEqual(current["contract_version"], "photo-candidate-pack/v4")
+        self.assertEqual(prior["contract_version"], "photo-candidate-pack/v3")
         self.assertEqual(legacy["contract_version"], "photo-candidate-pack/v2")
-        self.assertEqual(current["quality_profile"]["profile_id"], "character_scene_grammar")
+        self.assertEqual(current["quality_profile"]["profile_id"], "authorial")
+        self.assertEqual(prior["quality_profile"]["profile_id"], "character_scene_grammar")
         self.assertEqual(legacy["quality_profile"]["profile_id"], "character_moe_grammar")
         self.assertNotIn("source", current["quality_profile"])
         self.assertNotIn("source", current["photographic_craft"])
         self.assertNotIn("source", current["artistic_final_touch"])
+        self.assertNotIn("argv", current["provenance"])
+        self.assertNotIn("preset_id", current["provenance"])
+        self.assertFalse(current["preset_reference"]["source_preset_exposed"])
+        self.assertTrue(
+            current["authorial_composition"]["policy"][
+                "chosen_candidate_interpretations_required"
+            ]
+        )
         self.assertIn("source", legacy["quality_profile"])
         self.assertIn("source", legacy["photographic_craft"])
         for key in ("domain", "topic_id", "family_id"):
@@ -287,9 +378,56 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             "inventory_preset_id",
             current["hybrid_augmentation"]["adult_appeal"],
         )
+        self.assertEqual(
+            current["hybrid_augmentation"]["contract_version"],
+            "photo-hybrid-augmentation/v2",
+        )
+        self.assertEqual(
+            prior["hybrid_augmentation"]["contract_version"],
+            "photo-hybrid-augmentation/v1",
+        )
+        self.assertTrue(current["authorial_composition"]["policy"]["agent_is_final_author"])
+        self.assertNotIn(
+            "label_en",
+            next(iter(current["slots"].values()))["candidates"][0],
+        )
+        self.assertNotIn("selected", next(iter(current["slots"].values())))
+        self.assertNotIn(
+            "selected_by_sampler",
+            next(iter(current["slots"].values()))["candidates"][0],
+        )
+        self.assertIn(
+            "label_en",
+            next(iter(prior["slots"].values()))["candidates"][0],
+        )
         self.assertIn(
             "source_preset_id",
             legacy["hybrid_augmentation"]["adult_appeal"],
+        )
+
+        leaked_routing = copy.deepcopy(current)
+        leaked_routing["provenance"]["argv"] = ["--preset", "private-answer"]
+        self.assertIn(
+            "authorial_private_routing",
+            {
+                row["check"]
+                for row in audit_composed_prompt.audit_v4_authorial_pack(
+                    leaked_routing
+                )
+            },
+        )
+        leaked_quality = copy.deepcopy(current)
+        leaked_quality["photographic_craft"]["top_strategy"] = {
+            "id": "private-winner"
+        }
+        self.assertIn(
+            "authorial_quality_routing",
+            {
+                row["check"]
+                for row in audit_composed_prompt.audit_v4_authorial_pack(
+                    leaked_quality
+                )
+            },
         )
 
         itasha_common = (
@@ -302,15 +440,23 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             "--emit-candidate-pack",
         )
         current_itasha = self.run_wrapper(*itasha_common)[0]
+        prior_itasha = self.run_wrapper(
+            *itasha_common,
+            "--candidate-pack-version",
+            "v3",
+        )[0]
         legacy_itasha = self.run_wrapper(
             *itasha_common,
             "--candidate-pack-version",
             "v2",
         )[0]
         current_blob = json.dumps(current_itasha, ensure_ascii=False)
+        prior_blob = json.dumps(prior_itasha, ensure_ascii=False)
         legacy_blob = json.dumps(legacy_itasha, ensure_ascii=False)
-        self.assertIn("aligning_original_graphics_vehicle_wrap", current_blob)
+        self.assertNotIn("aligning_original_graphics_vehicle_wrap", current_blob)
         self.assertNotIn("aligning_rights_cleared_original_vehicle_wrap", current_blob)
+        self.assertIn("aligning_original_graphics_vehicle_wrap", prior_blob)
+        self.assertNotIn("aligning_rights_cleared_original_vehicle_wrap", prior_blob)
         self.assertIn("aligning_rights_cleared_original_vehicle_wrap", legacy_blob)
 
     def test_candidate_relevance_uses_public_visual_text_only(self):
@@ -507,14 +653,18 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
         ]
         self.assertTrue(excluded)
         self.assertTrue(all(row["polarity"] in {"excluded", "mixed"} for row in excluded))
-        selected_subject = next(
-            candidate
-            for candidate in pack["slots"]["subject"]["candidates"]
-            if candidate.get("selected_by_sampler")
+        self.assertTrue(pack["slots"]["subject"]["candidates"])
+        self.assertTrue(
+            all(
+                "human" not in candidate.get("kind", [])
+                for candidate in pack["slots"]["subject"]["candidates"]
+            )
         )
-        self.assertNotIn("human", selected_subject.get("kind", []))
-        active_axes = {axis["id"] for axis in pack["photographic_integration"]["active_axes"]}
-        self.assertNotIn("person_presence", active_axes)
+        self.assertNotIn("active_axes", pack["photographic_integration"])
+        self.assertNotIn(
+            "human",
+            pack["quality_profile"]["facets"]["subject_kind"],
+        )
 
     def test_internal_recipe_guidance_keeps_typed_polarity_and_compact_budget(self):
         pack = self.run_wrapper(
@@ -609,12 +759,11 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             "--hybrid-augmentation",
             "--emit-candidate-pack",
         )[0]
-        cat_subject = next(
-            candidate
-            for candidate in cat_pack["slots"]["subject"]["candidates"]
-            if candidate.get("selected_by_sampler")
+        self.assertNotIn("subject", cat_pack["slots"])
+        self.assertIn(
+            "subject",
+            {row["slot"] for row in cat_pack["authorial_open_slots"]},
         )
-        self.assertEqual(cat_subject["entry_id"], "stray_cat")
         cat_intent = next(
             row for row in cat_pack["intent_contract"] if row.get("text") == "고양이"
         )
@@ -635,10 +784,7 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
         )[0]
         subject_kinds = set(product_pack["quality_profile"]["facets"].get("subject_kind", []))
         self.assertNotIn("human", subject_kinds)
-        self.assertNotIn(
-            "photographer_role_model",
-            product_pack["quality_profile"]["matched_literal_subject_entries"],
-        )
+        self.assertNotIn("matched_literal_subject_entries", product_pack["quality_profile"])
         self.assertFalse(product_pack["hybrid_augmentation"]["adult_appeal"]["enabled"])
 
     def test_research_scene_function_is_a_fail_closed_control_and_preserves_no_people(self):
@@ -654,6 +800,8 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             "--additional-requirement",
             "사람 없는 frost-to-melt boundary, no people",
             "--emit-candidate-pack",
+            "--candidate-pack-version",
+            "v3",
         )[0]
         selected_scene = pack["render_contract"]["selected_scene"]
         self.assertEqual(selected_scene["blueprint_id"], "process_front_crossing")
@@ -856,32 +1004,30 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
         for slot in base_pack["slots"]:
             base_slot = base_pack["slots"][slot]
             creative_slot = creative_pack["slots"][slot]
-            self.assertEqual(base_slot["selected"], creative_slot["selected"])
+            self.assertNotIn("selected", base_slot)
+            self.assertNotIn("selected", creative_slot)
             self.assertEqual(
                 [candidate["id"] for candidate in base_slot["candidates"]],
                 [candidate["id"] for candidate in creative_slot["candidates"]],
             )
 
-        selected_ids = {
-            slot_payload["selected"]
-            for slot_payload in creative_pack["slots"].values()
-            if slot_payload.get("selected")
-        }
         for contrast in exploration["contrast_candidates"]:
             slot_payload = creative_pack["slots"][contrast["slot"]]
             candidates = {candidate["id"]: candidate for candidate in slot_payload["candidates"]}
             candidate = candidates[contrast["candidate_id"]]
-            self.assertEqual(contrast["replaces_candidate_id"], slot_payload["selected"])
-            self.assertFalse(candidate["selected_by_sampler"])
+            self.assertNotIn("replaces_candidate_id", contrast)
+            self.assertNotIn("relevance_rank", contrast)
+            self.assertNotIn("selected_by_sampler", candidate)
             self.assertEqual(candidate["applicability"]["status"], "eligible")
             self.assertEqual(candidate["applicability"]["source"], "sampler_eligible_pool")
             self.assertGreaterEqual(
                 contrast["feature_distance"],
                 exploration["minimum_feature_distance"],
             )
-            self.assertFalse(
-                set(candidate["conflicts_with"]) & (selected_ids - {slot_payload["selected"]})
-            )
+        self.assertEqual(
+            exploration["composition_guidance"]["candidate_use"],
+            "optional_authorial_inspiration",
+        )
 
     def test_hybrid_augmentation_exposes_real_candidate_routes_and_audits_selective_adoption(self):
         base_args = (
@@ -906,7 +1052,7 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
         self.assertNotIn("hybrid_augmentation", ordinary)
         hybrid = hybrid_pack["hybrid_augmentation"]
         self.assertEqual(hybrid, repeated["hybrid_augmentation"])
-        self.assertEqual(hybrid["contract_version"], "photo-hybrid-augmentation/v1")
+        self.assertEqual(hybrid["contract_version"], "photo-hybrid-augmentation/v2")
         self.assertEqual(hybrid["route_contract"]["route_count"], 3)
         self.assertTrue(hybrid["route_contract"]["allow_select_none"])
         exposed_ids = audit_composed_prompt.candidate_ids_from_pack(hybrid_pack)
@@ -942,6 +1088,266 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
         self.assertIn(
             "hybrid_augmentation_provenance",
             {row["check"] for row in rejected_result["failures"]},
+        )
+
+    def test_v4_hybrid_requires_new_authorial_context_and_varies_candidate_routes(self):
+        packs = [
+            self.run_wrapper(
+                "--concept",
+                "모에한 간호사",
+                "--selection-mode",
+                "rule",
+                "--seed",
+                str(seed),
+                "--emit-candidate-pack",
+            )[0]
+            for seed in range(1, 9)
+        ]
+        signatures = {
+            tuple(
+                tuple(route["candidate_ids"])
+                for route in pack["hybrid_augmentation"]["route_contract"]["routes"]
+            )
+            for pack in packs
+        }
+        lenses = {pack["authorial_composition"]["variation_lens"] for pack in packs}
+        self.assertGreater(len(signatures), 1)
+        self.assertGreater(len(lenses), 1)
+        for candidate_pack in packs:
+            self.assertEqual(
+                {row["slot"] for row in candidate_pack["authorial_open_slots"]},
+                {"subject", "action", "location", "prop"},
+            )
+            self.assertTrue(
+                {"subject", "action", "location", "prop"}.isdisjoint(candidate_pack["slots"])
+            )
+
+        pack = self.run_wrapper(
+            "--preset",
+            "candid_iphone_portrait",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "1",
+            "--emit-candidate-pack",
+        )[0]
+        hybrid = pack["hybrid_augmentation"]
+        route = hybrid["route_contract"]["routes"][0]
+        for detail in route["details"]:
+            self.assertNotIn("label_en", detail)
+            self.assertNotIn("label_ko", detail)
+            self.assertEqual(detail["content_form"], "unordered_inspiration_terms")
+            self.assertTrue(detail["concept_terms"])
+
+        composed = self.composed_from_hybrid_route(pack, route["id"])
+        self.assertEqual(
+            audit_composed_prompt.audit_composed_prompt(pack, composed)["status"],
+            "pass",
+        )
+        copied_terms = copy.deepcopy(composed)
+        transformed = next(
+            row
+            for row in copied_terms["augmentation_brief"]["decisions"]
+            if row["decision"] == "transformed"
+        )
+        source = audit_composed_prompt.candidate_objects_from_pack(pack)[
+            transformed["candidate_id"]
+        ]
+        source_only = " ".join(source["concept_terms"][:3])
+        transformed["prompt_evidence"] = source_only
+        copied_terms["prompt_en"] += f" {source_only}."
+        copied_result = audit_composed_prompt.audit_composed_prompt(pack, copied_terms)
+        self.assertIn(
+            "hybrid_augmentation_authorial_transform",
+            {row["check"] for row in copied_result["failures"]},
+        )
+
+        axis_phrase = "an authored sensual editorial accent follows her deliberate gesture"
+        reject_all = {
+            "pack_id": pack["pack_id"],
+            "prompt_en": (
+                "An adult original portrait subject holds a self-directed editorial pose; "
+                f"{axis_phrase}."
+            ),
+            "negative_en": pack["negative_en"],
+            "chosen_candidate_ids": [],
+            "composer": "agent",
+            "augmentation_brief": {
+                "concept_core": "A private observational portrait governed by the subject's agency.",
+                "routes_considered": [
+                    {
+                        "route_id": row["id"],
+                        "decision": "rejected",
+                        "reason": "Its vocabulary would narrow the authored portrait.",
+                    }
+                    for row in hybrid["route_contract"]["routes"]
+                ],
+                "selected_route_id": "none",
+                "all_rejected_reason": "None of the candidate vocabularies improves the governing idea.",
+                "decisions": [],
+                "adult_appeal": {
+                    "adult_subject_phrase": "An adult original portrait subject",
+                    "agency_phrase": "self-directed editorial pose",
+                    "axes": {
+                        axis_id: {
+                            "intensity": axis["intensity"],
+                            **(
+                                {
+                                    "artistic_interpretation": "Keep the axis as quiet self-possession.",
+                                    "prompt_evidence": axis_phrase,
+                                }
+                                if axis["intensity"] > 0
+                                else {}
+                            ),
+                        }
+                        for axis_id, axis in hybrid["adult_appeal"]["axes"].items()
+                    },
+                    "blend": {"emphasis": hybrid["adult_appeal"]["blend"]["emphasis"]},
+                },
+            },
+        }
+        self.assertEqual(
+            audit_composed_prompt.audit_composed_prompt(pack, reject_all)["status"],
+            "pass",
+        )
+
+    def test_v4_scene_exposes_only_abstraction_and_audits_newly_authored_atoms(self):
+        common = (
+            "--preset",
+            "natural_process_trace_documentary",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "42",
+            "--emit-candidate-pack",
+        )
+        pack = self.run_wrapper(*common)[0]
+        prior = self.run_wrapper(*common, "--candidate-pack-version", "v3")[0]
+        prior_atoms = prior["render_contract"]["selected_scene"]["atomic_scene"]
+        projected_blob = json.dumps(pack, ensure_ascii=False)
+        for slot in ("subject", "action", "location", "prop"):
+            self.assertNotIn(prior_atoms[slot]["label_en"], projected_blob)
+
+        selected_scene = pack["render_contract"]["selected_scene"]
+        self.assertNotIn("blueprint_id", selected_scene)
+        self.assertNotIn("source_blueprint_hash", selected_scene)
+        self.assertNotIn("atomic_scene", selected_scene)
+        self.assertEqual(
+            selected_scene["authorial_scene"]["contract_version"],
+            "photo-authorial-scene/v1",
+        )
+        group = next(
+            row
+            for row in pack["scene_contract"]["groups"]
+            if row.get("strategy") == "authorial_scene"
+        )
+        self.assertNotIn("slots", group)
+        self.assertEqual(
+            set(group["required_authored_slots"]),
+            {"subject", "action", "location", "prop"},
+        )
+
+        atoms = {
+            "subject": "A thaw line advances through a hand-sized patch of moss",
+            "action": "Meltwater loosens one ice crystal while the boundary is still moving",
+            "location": "A shaded forest floor at the first hour of morning thaw",
+            "prop": "A bent copper field marker catches one suspended droplet",
+        }
+        composed = {
+            "pack_id": pack["pack_id"],
+            "prompt_en": (
+                "Natural-process trace documentary. "
+                + ". ".join(atoms.values())
+                + ". Shared side light links the marker and moss, with foreground blur from a real camera position."
+            ),
+            "negative_en": pack["negative_en"],
+            "chosen_candidate_ids": [],
+            "composer": "agent",
+            "authored_scene": {
+                "governing_premise": "Thaw becomes legible as an unfinished material crossing.",
+                "artistic_rationale": "The marker turns time into a measurable but intimate trace.",
+                "atoms": atoms,
+                "interpretive_choices": [
+                    {
+                        "dimension": "action",
+                        "decision": "Freeze the boundary mid-release.",
+                        "reason": "An unfinished transition carries more tension than a completed melt.",
+                    },
+                    {
+                        "dimension": "material",
+                        "decision": "Use copper against ice and moss.",
+                        "reason": "Contrasting thermal surfaces make the process visible.",
+                    },
+                ],
+            },
+        }
+        passed = audit_composed_prompt.audit_composed_prompt(pack, composed)
+        self.assertEqual(passed["status"], "pass", passed)
+        missing = copy.deepcopy(composed)
+        missing.pop("authored_scene")
+        failed = audit_composed_prompt.audit_composed_prompt(pack, missing)
+        self.assertIn("authorial_scene", {row["check"] for row in failed["failures"]})
+
+    def test_v4_opens_singleton_role_scene_slots_for_agent_authorship(self):
+        pack = self.run_wrapper(
+            "--concept",
+            "간호사",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "1",
+            "--emit-candidate-pack",
+        )[0]
+        open_contracts = {
+            row["slot"]: row for row in pack["authorial_open_slots"]
+        }
+        self.assertEqual(set(open_contracts), {"subject", "action", "location", "prop"})
+        for slot in open_contracts:
+            self.assertNotIn(slot, pack["slots"])
+        self.assertEqual(
+            pack["role_scene_policy"]["selection_mode"],
+            "agent_authored_location",
+        )
+        self.assertNotIn("allowed_locations", pack["role_scene_policy"])
+        self.assertNotIn("preferred_locations", pack["role_scene_policy"])
+
+        route_id = pack["hybrid_augmentation"]["route_contract"]["routes"][0]["id"]
+        composed = self.composed_from_hybrid_route(pack, route_id, accept_count=1)
+        authored_slots = {
+            "subject": {
+                "prompt_evidence": "an adult nurse with an alert but gentle expression",
+                "artistic_rationale": "Professional identity stays clear without copying a role label.",
+            },
+            "action": {
+                "prompt_evidence": "she pauses while warming a cold stethoscope between both palms",
+                "artistic_rationale": "A considerate gesture replaces the routine handover scene.",
+            },
+            "location": {
+                "prompt_evidence": "inside a quiet overnight pediatric preparation bay",
+                "artistic_rationale": "The care setting supports anticipation rather than crisis.",
+                "constraint_acknowledgments": ["clinical_care_space"],
+            },
+            "prop": {
+                "prompt_evidence": "a paper crane left beside the unopened examination kit",
+                "artistic_rationale": "The prop implies a prior patient relationship without a chart.",
+            },
+        }
+        composed["authored_slots"] = authored_slots
+        composed["prompt_en"] += "; " + "; ".join(
+            row["prompt_evidence"] for row in authored_slots.values()
+        ) + "."
+        composed["coverage_assertions"] = {"간호사": "adult nurse"}
+        passed = audit_composed_prompt.audit_composed_prompt(pack, composed)
+        self.assertEqual(passed["status"], "pass", passed)
+
+        incompatible = copy.deepcopy(composed)
+        incompatible_phrase = "on a highland pasture beside grazing animals"
+        incompatible["authored_slots"]["location"]["prompt_evidence"] = incompatible_phrase
+        incompatible["prompt_en"] += f" {incompatible_phrase}."
+        failed = audit_composed_prompt.audit_composed_prompt(pack, incompatible)
+        self.assertIn(
+            "authorial_open_slot_constraints",
+            {row["check"] for row in failed["failures"]},
         )
 
     def test_adult_appeal_defaults_to_sensual_only_for_eligible_humans(self):
@@ -999,7 +1405,10 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             "910000",
             *common,
         )[0]
-        self.assertEqual(nonhuman["slots"]["subject"]["selected"], "slot:subject:sleeping_dog")
+        self.assertIn(
+            "sleeping_dog",
+            {candidate["entry_id"] for candidate in nonhuman["slots"]["subject"]["candidates"]},
+        )
         self.assertNotIn("hybrid_augmentation", nonhuman)
 
         direct_prompt = self.run_wrapper(
@@ -1014,6 +1423,1976 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
         self.assertTrue(direct_adult["configured"])
         self.assertFalse(direct_adult["enabled"])
         self.assertEqual(direct_adult["application_scope"], "candidate_pack_composition")
+
+    def test_natural_moe_response_contract_routes_multilingual_requests_and_hard_negatives(self):
+        data = prompt_generator.load_json(TAGS_PATH)
+        data[prompt_generator.QUALITY_LAYERS_DATA_KEY] = prompt_generator.load_quality_layers(
+            QUALITY_LAYERS_PATH
+        )
+        cases = [
+            json.loads(line)
+            for line in NATURAL_MOE_RESPONSE_CONTRACT_V1_PATH.read_text(encoding="utf-8").splitlines()
+            if line.strip()
+        ]
+        self.assertEqual(len(cases), 32)
+        self.assertEqual(len({case["id"] for case in cases}), 32)
+        for case in cases:
+            expected = case["expected"]
+            response = prompt_generator.resolve_moe_response_intent([case["text"]])
+            for key, value in expected.items():
+                self.assertEqual(response.get(key), value, (case["id"], key, response))
+            routed = prompt_generator.resolve_request_intent_constraints(
+                data,
+                {"intent": case["text"]},
+                {},
+            )
+            if expected["requested"]:
+                self.assertIn("character_moe_grammar", routed["domains"], case["id"])
+                self.assertIn(expected["route_id"], routed["scoped_routes"], case["id"])
+                self.assertEqual(
+                    routed["character_response"]["sexual_tone"],
+                    expected["sexual_tone"],
+                    case["id"],
+                )
+                self.assertEqual(
+                    routed["character_response"]["aesthetic_baseline"],
+                    expected["aesthetic_baseline"],
+                    case["id"],
+                )
+                if expected.get("relationship_register"):
+                    self.assertEqual(
+                        routed["character_response"]["relationship_register"],
+                        expected["relationship_register"],
+                        case["id"],
+                    )
+            else:
+                self.assertNotIn("character_moe_grammar", routed["domains"], case["id"])
+                self.assertFalse(routed["character_response"]["requested"], case["id"])
+
+    def test_natural_moe_response_contract_materializes_through_public_wrapper(self):
+        cases = [
+            json.loads(line)
+            for line in NATURAL_MOE_RESPONSE_CONTRACT_V1_PATH.read_text(encoding="utf-8").splitlines()
+            if line.strip()
+        ]
+        role_contracts = {
+            "ko_tsundere_nekomimi_maid": {
+                "preset_id": "maid_cafe_cosplay_portrait",
+                "subject_id": "slot:subject:maid_cafe_performer",
+                "costume_id": "slot:costume_style:frill_apron_maid_costume",
+            },
+            "ja_tsundere_nekomimi_maid": {
+                "preset_id": "maid_cafe_cosplay_portrait",
+                "subject_id": "slot:subject:maid_cafe_performer",
+                "costume_id": "slot:costume_style:frill_apron_maid_costume",
+            },
+            "en_tsundere_cat_ear_maid": {
+                "preset_id": "maid_cafe_cosplay_portrait",
+                "subject_id": "slot:subject:maid_cafe_performer",
+                "costume_id": "slot:costume_style:frill_apron_maid_costume",
+            },
+            "ko_mamang_nekomimi_maid": {
+                "preset_id": "maid_cafe_cosplay_portrait",
+                "subject_id": "slot:subject:maid_cafe_performer",
+                "costume_id": "slot:costume_style:frill_apron_maid_costume",
+            },
+            "ja_maternal_nekomimi_maid": {
+                "preset_id": "maid_cafe_cosplay_portrait",
+                "subject_id": "slot:subject:maid_cafe_performer",
+                "costume_id": "slot:costume_style:frill_apron_maid_costume",
+            },
+            "en_motherly_cat_eared_maid": {
+                "preset_id": "maid_cafe_cosplay_portrait",
+                "subject_id": "slot:subject:maid_cafe_performer",
+                "costume_id": "slot:costume_style:frill_apron_maid_costume",
+            },
+            "ko_gap_moe_guard": {
+                "preset_id": "security_guard_watch_portrait",
+                "subject_id": "slot:subject:security_guard_role_model",
+            },
+            "ko_nekomimi_barista": {
+                "preset_id": "tray_handoff_counter",
+                "subject_id": "slot:subject:young_barista",
+            },
+            "en_moe_explicit_readable_sign": {
+                "preset_id": "tray_handoff_counter",
+                "subject_id": "slot:subject:young_barista",
+            },
+        }
+        feline_case_ids = {
+            "ko_tsundere_nekomimi_maid",
+            "ja_tsundere_nekomimi_maid",
+            "en_tsundere_cat_ear_maid",
+            "ko_nekomimi_barista",
+            "ko_mamang_nekomimi_maid",
+            "ja_maternal_nekomimi_maid",
+            "en_motherly_cat_eared_maid",
+        }
+
+        self.assertEqual(len(cases), 32)
+        for index, case in enumerate(cases):
+            expected = case["expected"]
+            pack = self.run_wrapper(
+                "--concept",
+                case["text"],
+                "--selection-mode",
+                "rule",
+                "--hybrid-augmentation",
+                "--emit-candidate-pack",
+                "--seed",
+                str(20260840 + index),
+                "--candidate-pack-version",
+                "v3",
+            )[0]
+
+            if not expected["requested"]:
+                self.assertNotIn("moe_response", pack, case["id"])
+                self.assertFalse(
+                    (pack.get("provenance", {}).get("character_response") or {}).get(
+                        "requested", False
+                    ),
+                    case["id"],
+                )
+                continue
+
+            response = pack["moe_response"]
+            for key in (
+                "route_id",
+                "primary_mechanism",
+                "support_mechanisms",
+                "aesthetic_baseline",
+                "aesthetic_presentation_source",
+                "sexual_tone",
+            ):
+                self.assertEqual(response.get(key), expected[key], (case["id"], key))
+            if expected.get("relationship_register"):
+                self.assertEqual(
+                    response["relationship_register"],
+                    expected["relationship_register"],
+                    case["id"],
+                )
+            self.assertEqual(
+                response["explicit_text_requested"],
+                expected.get("explicit_text_requested", False),
+                case["id"],
+            )
+
+            adult = pack["hybrid_augmentation"]["adult_appeal"]
+            expected_axes = (
+                {"sensual_editorial": 0, "fetish_fashion": 0}
+                if expected["sexual_tone"] == "nonsexual"
+                else {"sensual_editorial": 1, "fetish_fashion": 0}
+            )
+            self.assertEqual(
+                {axis_id: axis["intensity"] for axis_id, axis in adult["axes"].items()},
+                expected_axes,
+                case["id"],
+            )
+            self.assertEqual(
+                adult["enabled"],
+                expected["sexual_tone"] != "nonsexual",
+                case["id"],
+            )
+
+            role_contract = role_contracts.get(case["id"])
+            if role_contract:
+                self.assertEqual(
+                    pack["provenance"]["preset_id"],
+                    role_contract["preset_id"],
+                    case["id"],
+                )
+                self.assertEqual(
+                    pack["slots"]["subject"]["selected"],
+                    role_contract["subject_id"],
+                    case["id"],
+                )
+                self.assertTrue(pack["slots"]["action"]["selected"], case["id"])
+                self.assertTrue(pack["slots"]["location"]["selected"], case["id"])
+                if role_contract.get("costume_id"):
+                    self.assertEqual(
+                        pack["slots"]["costume_style"]["selected"],
+                        role_contract["costume_id"],
+                        case["id"],
+                    )
+            else:
+                selected_scene = pack["render_contract"]["selected_scene"]
+                self.assertTrue(selected_scene["blueprint_id"], case["id"])
+                self.assertEqual(
+                    set(selected_scene["atomic_scene"]),
+                    {"subject", "action", "location", "prop"},
+                    case["id"],
+                )
+
+            if case["id"] in feline_case_ids:
+                self.assertEqual(pack["species_family"]["family"], "feline", case["id"])
+                self.assertTrue(pack["species_family"]["enforce"], case["id"])
+                self.assertEqual(
+                    pack["species_family"]["allowed"],
+                    {
+                        "species_marker": ["feline_reflective_eye_whisker_shadow"],
+                        "anatomical_connection": ["ear_root_in_hairline"],
+                    },
+                    case["id"],
+                )
+
+    def test_natural_moe_paraphrases_materialize_routed_scenes_without_internal_presets(self):
+        cases = [
+            {
+                "id": "ko_tsundere_care_paraphrase",
+                "text": (
+                    "노출이나 선정적 연출 없이 성인 여성 츤데레 캐릭터가 괜히 퉁명스럽게 "
+                    "다친 친구를 챙기는 모습이 정말 모에하게 보여야 해"
+                ),
+                "preset_id": "character_gap_contrast_scene",
+                "mechanism": "denial_care_leak",
+                "relationship_register": "peer_liking_under_denial",
+                "blueprint_id": "gap_moe_contrast_structure_natural_tsundere_01",
+                "aesthetic_baseline": "adult_bishoujo",
+                "sexual_tone": "nonsexual",
+            },
+            {
+                "id": "ja_gap_bishonen_paraphrase",
+                "text": (
+                    "露出なしで、大人の男性キャラクターが失敗を隠そうとして不器用に立て直す"
+                    "ギャップ萌えの写真"
+                ),
+                "preset_id": "character_gap_contrast_scene",
+                "mechanism": "baseline_break_reveal",
+                "relationship_register": "character_specific_reveal",
+                "blueprint_id": "gap_moe_contrast_structure_atomic_04",
+                "aesthetic_baseline": "adult_bishonen",
+                "sexual_tone": "nonsexual",
+            },
+            {
+                "id": "en_androgynous_nekomimi_paraphrase",
+                "text": (
+                    "Make an adult androgynous cat-eared character feel genuinely moe through a tiny "
+                    "involuntary ear reaction, without sensual framing"
+                ),
+                "preset_id": "character_nonhuman_expression_scene",
+                "mechanism": "nonhuman_reflex_leak",
+                "relationship_register": "character_specific_reveal",
+                "blueprint_id": "kemonomimi_nonhuman_anthropomorphism_atomic_04",
+                "aesthetic_baseline": "adult_beautiful_cute_character",
+                "sexual_tone": "nonsexual",
+            },
+            {
+                "id": "ko_nekomimi_sensual_optional_paraphrase",
+                "text": (
+                    "예쁘고 귀여운 성인 여성 네코미미 캐릭터가 무심코 귀를 움직이는 모에 사진"
+                ),
+                "preset_id": "character_nonhuman_expression_scene",
+                "mechanism": "nonhuman_reflex_leak",
+                "relationship_register": "character_specific_reveal",
+                "blueprint_id": "kemonomimi_nonhuman_anthropomorphism_atomic_04",
+                "aesthetic_baseline": "adult_bishoujo",
+                "sexual_tone": "sensual_optional",
+            },
+        ]
+        for index, case in enumerate(cases):
+            pack = self.run_wrapper(
+                "--concept",
+                case["text"],
+                "--selection-mode",
+                "rule",
+                "--emit-candidate-pack",
+                "--seed",
+                str(20260830 + index),
+                "--candidate-pack-version",
+                "v3",
+            )[0]
+            self.assertEqual(pack["provenance"]["preset_id"], case["preset_id"], case["id"])
+            self.assertEqual(pack["moe_response"]["primary_mechanism"], case["mechanism"], case["id"])
+            self.assertEqual(
+                pack["moe_response"]["relationship_register"],
+                case["relationship_register"],
+                case["id"],
+            )
+            self.assertEqual(
+                pack["moe_response"]["aesthetic_baseline"],
+                case["aesthetic_baseline"],
+                case["id"],
+            )
+            self.assertEqual(pack["moe_response"]["sexual_tone"], case["sexual_tone"], case["id"])
+            self.assertEqual(
+                pack["render_contract"]["selected_scene"]["blueprint_id"],
+                case["blueprint_id"],
+                case["id"],
+            )
+            scene_blob = " ".join(
+                pack["render_contract"]["selected_scene"]["atomic_scene"][slot]["label_en"]
+                for slot in ("subject", "action", "location", "prop")
+            ).lower()
+            for leakage in ("technician", "repair", "coworker", "maintenance", "shift"):
+                self.assertNotIn(leakage, scene_blob, (case["id"], leakage, scene_blob))
+
+    def test_nonsexual_moe_concept_preserves_role_species_and_disables_sensual_default(self):
+        pack = self.run_wrapper(
+            "--concept",
+            "야하지 않은 모에한 성인 네코미미 츤데레 메이드",
+            "--selection-mode",
+            "rule",
+            "--hybrid-augmentation",
+            "--emit-candidate-pack",
+            "--seed",
+            "20260812",
+            "--candidate-pack-version",
+            "v3",
+        )[0]
+        self.assertEqual(pack["provenance"]["preset_id"], "maid_cafe_cosplay_portrait")
+        self.assertEqual(pack["slots"]["subject"]["selected"], "slot:subject:maid_cafe_performer")
+        self.assertEqual(pack["slots"]["location"]["selected"], "slot:location:maid_cafe_interior")
+        self.assertEqual(pack["provenance"]["likeness_mode"], "off")
+        self.assertEqual(pack["provenance"]["likeness_references"], [])
+        self.assertEqual(pack["species_family"]["family"], "feline")
+        self.assertTrue(pack["species_family"]["enforce"])
+
+        response = pack["moe_response"]
+        self.assertEqual(response["contract_version"], "moe_response_contract/v10")
+        self.assertEqual(
+            response["composition_guidance"]["prompt_budget"],
+            {
+                "language": "en",
+                "minimum_words": 50,
+                "maximum_words": 120,
+                "counting_rule": "ascii_words_with_internal_hyphens_or_apostrophes",
+                "rule": (
+                    "Keep prompt_en between 50 and 120 English words. Reuse short literal phrases across "
+                    "moe, viewer, identity, and augmentation evidence instead of stacking explanations."
+                ),
+            },
+        )
+        self.assertEqual(response["aesthetic_baseline"], "adult_bishoujo")
+        self.assertEqual(response["aesthetic_presentation_source"], "default_bishoujo")
+        self.assertEqual(response["primary_mechanism"], "denial_care_leak")
+        self.assertIn(
+            "active_denial_phrase",
+            response["prompt_binding"]["required_evidence_fields"],
+        )
+        self.assertIn(
+            "concealed_affection_phrase",
+            response["prompt_binding"]["required_evidence_fields"],
+        )
+        self.assertIn(
+            "care_action_anchor_phrase",
+            response["prompt_binding"]["required_evidence_fields"],
+        )
+        self.assertIn(
+            "relationship_gaze_anchor_phrase",
+            response["prompt_binding"]["required_evidence_fields"],
+        )
+        self.assertTrue(
+            response["composition_guidance"]["mechanism_specific_evidence"]
+            ["denial_care_leak"]["active_denial_phrase_required"]
+        )
+        self.assertTrue(
+            response["composition_guidance"]["mechanism_specific_evidence"]
+            ["denial_care_leak"]["concealed_affection_phrase_required"]
+        )
+        self.assertTrue(
+            response["composition_guidance"]["mechanism_specific_evidence"]
+            ["denial_care_leak"]["care_action_anchor_phrase_required"]
+        )
+        self.assertTrue(
+            response["composition_guidance"]["mechanism_specific_evidence"]
+            ["denial_care_leak"]["relationship_gaze_anchor_phrase_required"]
+        )
+        self.assertTrue(
+            response["composition_guidance"]["mechanism_specific_evidence"]
+            ["denial_care_leak"]["partial_recipient_landmark_required"]
+        )
+        self.assertTrue(
+            response["composition_guidance"]["mechanism_specific_evidence"]
+            ["denial_care_leak"]["opposed_head_iris_vector_required"]
+        )
+        self.assertTrue(
+            response["composition_guidance"]["mechanism_specific_evidence"]
+            ["denial_care_leak"]["off_axis_gaze_geometry_required"]
+        )
+        self.assertTrue(
+            response["composition_guidance"]["mechanism_specific_evidence"]
+            ["denial_care_leak"]["dual_positive_microcue_required"]
+        )
+        self.assertEqual(response["relationship_register"], "peer_liking_under_denial")
+        self.assertEqual(response["support_mechanisms"], ["nonhuman_reflex_leak"])
+        self.assertEqual(response["sexual_tone"], "nonsexual")
+        self.assertEqual(pack["viewer_experience"]["activation_sources"], ["moe_response_required"])
+
+        mamang = self.run_wrapper(
+            "--concept",
+            "인자한 마망 느낌의 예쁘고 귀여운 성인 캐릭터를 모에하게",
+            "--selection-mode",
+            "rule",
+            "--emit-candidate-pack",
+            "--seed",
+            "20260818",
+            "--candidate-pack-version",
+            "v3",
+        )[0]
+        self.assertEqual(mamang["moe_response"]["primary_mechanism"], "quiet_care_trace")
+        self.assertEqual(
+            mamang["moe_response"]["relationship_register"],
+            "nurturant_benevolence",
+        )
+        self.assertIn(
+            "relaxed brow",
+            mamang["moe_response"]["relationship_register_instruction"],
+        )
+        self.assertIn(
+            "reassuring mouth",
+            mamang["moe_response"]["relationship_register_instruction"],
+        )
+        self.assertNotIn(
+            "active_denial_phrase",
+            mamang["moe_response"]["prompt_binding"]["required_evidence_fields"],
+        )
+        self.assertNotIn(
+            "relationship_gaze_anchor_phrase",
+            mamang["moe_response"]["prompt_binding"]["required_evidence_fields"],
+        )
+        self.assertIn(
+            "benevolent_affect_phrase",
+            mamang["moe_response"]["prompt_binding"]["required_evidence_fields"],
+        )
+        self.assertTrue(
+            mamang["moe_response"]["composition_guidance"]
+            ["mechanism_specific_evidence"]["nurturant_benevolence"]
+            ["benevolent_affect_phrase_required"]
+        )
+
+        ordinary_care = self.run_wrapper(
+            "--concept",
+            "친구를 다정하게 챙겨주는 예쁘고 귀여운 성인 캐릭터를 모에하게",
+            "--selection-mode",
+            "rule",
+            "--emit-candidate-pack",
+            "--seed",
+            "20260818",
+            "--candidate-pack-version",
+            "v3",
+        )[0]
+        self.assertEqual(
+            ordinary_care["moe_response"]["primary_mechanism"],
+            "quiet_care_trace",
+        )
+        self.assertEqual(
+            ordinary_care["moe_response"]["relationship_register"],
+            "directed_care_without_role_inference",
+        )
+        self.assertIn(
+            "without inferring motherhood",
+            ordinary_care["moe_response"]["relationship_register_instruction"],
+        )
+        self.assertNotIn(
+            "benevolent_affect_phrase",
+            ordinary_care["moe_response"]["prompt_binding"]["required_evidence_fields"],
+        )
+
+        mamang_nekomimi = self.run_wrapper(
+            "--concept",
+            "인자한 마망 느낌의 예쁘고 귀여운 성인 네코미미 메이드 캐릭터를 모에하게",
+            "--selection-mode",
+            "rule",
+            "--emit-candidate-pack",
+            "--seed",
+            "20260818",
+        )[0]
+        self.assertEqual(
+            mamang_nekomimi["moe_response"]["primary_mechanism"],
+            "quiet_care_trace",
+        )
+        self.assertEqual(
+            mamang_nekomimi["moe_response"]["relationship_register"],
+            "nurturant_benevolence",
+        )
+        self.assertEqual(
+            mamang_nekomimi["moe_response"]["support_mechanisms"],
+            ["nonhuman_reflex_leak"],
+        )
+        self.assertIn(
+            "benevolent_affect_phrase",
+            mamang_nekomimi["moe_response"]["prompt_binding"]["required_evidence_fields"],
+        )
+
+        japanese_mamang_nekomimi = self.run_wrapper(
+            "--concept",
+            "母性的で優しいママみのある、美しくてかわいい成人猫耳メイドの萌える写真",
+            "--selection-mode",
+            "rule",
+            "--emit-candidate-pack",
+            "--seed",
+            "20260818",
+            "--candidate-pack-version",
+            "v3",
+        )[0]
+        self.assertEqual(
+            japanese_mamang_nekomimi["moe_response"]["primary_mechanism"],
+            "quiet_care_trace",
+        )
+        self.assertEqual(
+            japanese_mamang_nekomimi["moe_response"]["relationship_register"],
+            "nurturant_benevolence",
+        )
+        self.assertEqual(
+            japanese_mamang_nekomimi["moe_response"]["support_mechanisms"],
+            ["nonhuman_reflex_leak"],
+        )
+        self.assertEqual(
+            japanese_mamang_nekomimi["provenance"]["preset_id"],
+            "maid_cafe_cosplay_portrait",
+        )
+        self.assertEqual(
+            japanese_mamang_nekomimi["slots"]["subject"]["selected"],
+            "slot:subject:maid_cafe_performer",
+        )
+        self.assertEqual(
+            japanese_mamang_nekomimi["slots"]["costume_style"]["selected"],
+            "slot:costume_style:frill_apron_maid_costume",
+        )
+        self.assertEqual(japanese_mamang_nekomimi["species_family"]["family"], "feline")
+        self.assertEqual(
+            japanese_mamang_nekomimi["species_family"]["allowed"],
+            {
+                "species_marker": ["feline_reflective_eye_whisker_shadow"],
+                "anatomical_connection": ["ear_root_in_hairline"],
+            },
+        )
+
+        japanese_tsundere_nekomimi = self.run_wrapper(
+            "--concept",
+            "性的ではない猫耳の成人ツンデレメイドが、世話を焼いたことを隠す萌える瞬間",
+            "--selection-mode",
+            "rule",
+            "--emit-candidate-pack",
+            "--seed",
+            "20260818",
+            "--candidate-pack-version",
+            "v3",
+        )[0]
+        self.assertEqual(
+            japanese_tsundere_nekomimi["provenance"]["preset_id"],
+            "maid_cafe_cosplay_portrait",
+        )
+        self.assertEqual(
+            japanese_tsundere_nekomimi["slots"]["subject"]["selected"],
+            "slot:subject:maid_cafe_performer",
+        )
+        self.assertEqual(
+            japanese_tsundere_nekomimi["moe_response"]["primary_mechanism"],
+            "denial_care_leak",
+        )
+        self.assertEqual(
+            japanese_tsundere_nekomimi["moe_response"]["support_mechanisms"],
+            ["nonhuman_reflex_leak"],
+        )
+        self.assertEqual(japanese_tsundere_nekomimi["species_family"]["family"], "feline")
+
+        english_mamang_nekomimi = self.run_wrapper(
+            "--concept",
+            "a pretty and cute adult cat-eared maid with a benevolent motherly moe presence",
+            "--selection-mode",
+            "rule",
+            "--emit-candidate-pack",
+            "--seed",
+            "20260818",
+        )[0]
+        self.assertEqual(
+            english_mamang_nekomimi["moe_response"]["primary_mechanism"],
+            "quiet_care_trace",
+        )
+        self.assertEqual(
+            english_mamang_nekomimi["moe_response"]["relationship_register"],
+            "nurturant_benevolence",
+        )
+        self.assertEqual(
+            english_mamang_nekomimi["moe_response"]["support_mechanisms"],
+            ["nonhuman_reflex_leak"],
+        )
+
+        adult = pack["hybrid_augmentation"]["adult_appeal"]
+        self.assertFalse(adult["enabled"])
+        self.assertEqual(adult["activation_source"], "explicit_nonsexual_moe")
+        self.assertEqual(
+            adult["eligibility"]["reason"],
+            "explicit_nonsexual_moe_request_suppresses_configured_default",
+        )
+        self.assertEqual(adult["axes"]["sensual_editorial"]["intensity"], 0)
+        self.assertEqual(adult["axes"]["fetish_fashion"]["intensity"], 0)
+        mandatory = {row["text"] for row in pack["mandatory_intents"]}
+        self.assertTrue({"성인", "네코미미", "츤데레", "메이드"} <= mandatory)
+        self.assertFalse({"고양이", "수인"} & mandatory)
+        self.assertEqual(
+            set(pack["species_family"]["allowed"]),
+            {"species_marker", "anatomical_connection"},
+        )
+        self.assertNotIn("texture", pack["species_family"]["allowed"])
+        self.assertFalse({"야하지", "않은", "모에한"} & mandatory)
+
+        generic = self.run_wrapper(
+            "--concept",
+            "성인 네코미미 바리스타의 모에한 순간",
+            "--selection-mode",
+            "rule",
+            "--emit-candidate-pack",
+            "--seed",
+            "20260814",
+        )[0]
+        self.assertEqual(generic["moe_response"]["sexual_tone"], "sensual_optional")
+        self.assertTrue(generic["moe_response"]["defaulted_sensual_optional"])
+        generic_adult = generic["hybrid_augmentation"]["adult_appeal"]
+        self.assertTrue(generic_adult["enabled"])
+        self.assertEqual(generic_adult["activation_source"], "skill_default")
+        self.assertEqual(generic_adult["axes"]["sensual_editorial"]["intensity"], 1)
+        self.assertEqual(generic_adult["axes"]["fetish_fashion"]["intensity"], 0)
+
+        text_pack = self.run_wrapper(
+            "--concept",
+            "a pretty and cute adult moe barista beside a readable cafe sign",
+            "--selection-mode",
+            "rule",
+            "--emit-candidate-pack",
+            "--seed",
+            "20260816",
+            "--candidate-pack-version",
+            "v3",
+        )[0]
+        self.assertTrue(text_pack["moe_response"]["explicit_text_requested"])
+        self.assertNotIn(
+            "background_control_phrase",
+            text_pack["moe_response"]["prompt_binding"]["required_evidence_fields"],
+        )
+        self.assertIn(
+            "requested_text_boundary",
+            text_pack["moe_response"]["composition_guidance"]["render_legibility"],
+        )
+        self.assertNotIn("readable background text", text_pack["negative_en"])
+        self.assertNotIn("signage behind the subject", text_pack["negative_en"])
+
+    def test_identity_controlled_moe_pack_holds_reference_face_constant_and_fails_closed(self):
+        pack = self.run_wrapper(
+            "--concept",
+            "모에한 성인 네코미미 츤데레 메이드",
+            "--selection-mode",
+            "rule",
+            "--reference-edit-mode",
+            "identity",
+            "--emit-candidate-pack",
+            "--seed",
+            "20260812",
+        )[0]
+        self.assertEqual(pack["provenance"]["reference_edit_mode"], "identity")
+        response_contract = pack["moe_response"]
+        self.assertEqual(response_contract["contract_version"], "moe_response_contract/v10")
+        self.assertEqual(
+            response_contract["relationship_register"], "peer_liking_under_denial"
+        )
+        self.assertEqual(response_contract["sexual_tone"], "sensual_optional")
+        self.assertIn(
+            "reference_identity_phrase",
+            response_contract["prompt_binding"]["required_evidence_fields"],
+        )
+        identity = response_contract["reference_identity_control"]
+        self.assertTrue(identity["enabled"])
+        self.assertEqual(identity["mode"], "identity")
+        self.assertTrue(
+            {
+                "facial_geometry",
+                "eye_aperture",
+                "eye_shape_and_spacing",
+                "face_length",
+                "lower_face_and_jaw_width",
+                "adult_age",
+            }
+            <= set(identity["preserve"])
+        )
+        self.assertTrue(
+            {
+                "face_substitution",
+                "facial_geometry_beautification",
+                "eye_enlargement_or_rounding",
+                "face_shortening",
+                "jaw_narrowing",
+                "de_aging",
+            }
+            <= set(identity["forbidden"])
+        )
+        self.assertEqual(
+            identity["render_qualification"]["failure_action"],
+            "preserve_as_failed_evidence_do_not_promote_or_claim_moe_improvement",
+        )
+        render_qualification = response_contract["render_qualification"]
+        self.assertEqual(
+            render_qualification["review_schema_version"],
+            "moe-render-review/v1",
+        )
+        self.assertEqual(
+            render_qualification["user_judgment_fields"],
+            [
+                "baseline_available",
+                "genuinely_moe",
+                "better_than_baseline",
+                "source",
+                "evidence",
+            ],
+        )
+        self.assertTrue(
+            {
+                "three_quarter_head_away",
+                "visible_partial_recipient_face_landmark",
+                "head_turn_opposes_recipient_anchor",
+                "nose_axis_off_lens",
+                "small_oblique_iris_return_to_recipient",
+                "softened_lower_lids",
+                "suppressed_starting_mouth_corner_lift",
+                "no_direct_frontal_eye_contact",
+            }
+            <= set(render_qualification["mechanism_hard_gates"])
+        )
+        self.assertEqual(
+            set(render_qualification["identity_hard_gates"]),
+            set(identity["render_qualification"]["hard_gates"]),
+        )
+        for term in (
+            "enlarged or rounder eyes than the identity reference",
+            "shortened face compared with the identity reference",
+            "narrowed jaw compared with the identity reference",
+            "dollified facial proportions",
+            "de-aged identity",
+        ):
+            self.assertIn(term, pack["negative_en"])
+        self.assertNotIn("duplicate faces", pack["negative_en"])
+        self.assertIn("duplicate primary subject", pack["negative_en"])
+        self.assertIn("second full recipient face", pack["negative_en"])
+        adult = pack["hybrid_augmentation"]["adult_appeal"]
+        self.assertTrue(adult["enabled"])
+        self.assertEqual(adult["axes"]["sensual_editorial"]["intensity"], 1)
+        self.assertEqual(adult["axes"]["fetish_fashion"]["intensity"], 0)
+
+        prompt = (
+            "Adult woman, pretty and cute: refined face, lively eyes, glossy hair. Preserve uploaded portrait: eye "
+            "aperture/shape/spacing; nose, lips; face length, lower-face/jaw width; hairline, adult age. No enlarging, "
+            "rounding, shortening, narrowing. Customer's bandaged hand fills lower foreground; same adult customer's blurred "
+            "partial outer eye and temple sliver stay upper-left at frame edge. Cheek puffed, lips pursed mid-protest. "
+            "Three-quarter head turns right; nose points right; only the irises return slightly upper-left. Private liking barely shows: lower "
+            "lids soften; one mouth corner starts to lift, then flattens. Mid-bandaging, she holds scraped knuckle; one "
+            "wing open. Human-ear-scale near ear turns toward hand; far ear keeps different angle. Pad covers scrape; "
+            "wing unfastened. Face, hands, bandage share one focal plane. Unlettered bokeh."
+        )
+        phrases = {
+            "actor_phrase": "Adult woman",
+            "aesthetic_baseline_phrase": "Adult woman, pretty and cute: refined face, lively eyes, glossy hair",
+            "active_denial_phrase": "Cheek puffed, lips pursed mid-protest",
+            "care_action_anchor_phrase": "Customer's bandaged hand fills lower foreground",
+            "relationship_gaze_anchor_phrase": "same adult customer's blurred partial outer eye and temple sliver stay upper-left at frame edge",
+            "concealed_affection_phrase": "Three-quarter head turns right; nose points right; only the irises return slightly upper-left. Private liking barely shows: lower lids soften; one mouth corner starts to lift, then flattens",
+            "affective_leak_phrase": "Private liking barely shows: lower lids soften; one mouth corner starts to lift, then flattens",
+            "background_control_phrase": "Unlettered bokeh",
+            "baseline_phrase": "Cheek puffed",
+            "event_phase_phrase": "Mid-bandaging",
+            "trigger_phrase": "Bandaged hand",
+            "target_phrase": "one wing open",
+            "visible_response_phrase": "Human-ear-scale near ear turns toward hand; far ear keeps different angle",
+            "immediate_consequence_phrase": "Pad covers scrape; wing unfastened",
+            "continuity_phrase": "Face, hands, bandage",
+            "focal_plane_phrase": "Face, hands, bandage share one focal plane",
+            "reference_identity_phrase": "Preserve uploaded portrait: eye aperture/shape/spacing; nose, lips; face length, lower-face/jaw width; hairline, adult age. No enlarging, rounding, shortening, narrowing",
+        }
+        self.assertEqual(audit_composed_prompt.english_prompt_word_count(prompt), 120)
+        response = {
+            "aesthetic_baseline": "adult_bishoujo",
+            "mechanism": "denial_care_leak",
+            "relationship_register": "peer_liking_under_denial",
+            "baseline": "brisk guarded service",
+            "event_phase": "mid-bandaging before the wing fastens",
+            "trigger": "the bandaged hand reaches",
+            "target": "the open bandage wing",
+            "visible_response": "huffed mouth and asymmetric ear turn",
+            "immediate_consequence": "the pad covers the scrape while one wing remains open",
+            "continuity": "the same adult nekomimi maid",
+            "support_mechanisms": ["nonhuman_reflex_leak"],
+            "prompt_evidence": phrases,
+        }
+        self.assertEqual(
+            audit_composed_prompt.audit_moe_response(
+                {"moe_response": response_contract},
+                {"moe_response": response},
+                prompt,
+            ),
+            [],
+        )
+        missing_identity = copy.deepcopy(response)
+        missing_identity["prompt_evidence"].pop("reference_identity_phrase")
+        self.assertIn(
+            "moe_response_binding",
+            {
+                row["check"]
+                for row in audit_composed_prompt.audit_moe_response(
+                    {"moe_response": response_contract},
+                    {"moe_response": missing_identity},
+                    prompt,
+                )
+            },
+        )
+        weak_identity = copy.deepcopy(response)
+        weak_phrase = "Use the uploaded portrait and make her prettier"
+        weak_identity["prompt_evidence"]["reference_identity_phrase"] = weak_phrase
+        weak_prompt = prompt.replace(phrases["reference_identity_phrase"], weak_phrase)
+        self.assertIn(
+            "moe_response_reference_identity",
+            {
+                row["check"]
+                for row in audit_composed_prompt.audit_moe_response(
+                    {"moe_response": response_contract},
+                    {"moe_response": weak_identity},
+                    weak_prompt,
+                )
+            },
+        )
+
+        partial_identity = copy.deepcopy(response)
+        partial_identity_phrase = (
+            "Preserve uploaded portrait identity: eyes, nose, lips, jaw, skin, hairline, adult age; no de-aging"
+        )
+        partial_identity["prompt_evidence"]["reference_identity_phrase"] = (
+            partial_identity_phrase
+        )
+        partial_identity_prompt = prompt.replace(
+            phrases["reference_identity_phrase"], partial_identity_phrase
+        )
+        self.assertIn(
+            "moe_response_reference_identity",
+            {
+                row["check"]
+                for row in audit_composed_prompt.audit_moe_response(
+                    {"moe_response": response_contract},
+                    {"moe_response": partial_identity},
+                    partial_identity_prompt,
+                )
+            },
+        )
+
+    def test_mamang_benevolent_affect_requires_concrete_expression_without_tsundere_leak(self):
+        contract = prompt_generator.candidate_pack_moe_response(
+            {
+                "provenance": {
+                    "character_response": {
+                        "requested": True,
+                        "eligible": True,
+                        "activation_source": "explicit_natural_language_moe_request",
+                        "response_goal": "character_specific_moe",
+                        "route_id": "character_quiet_care_daily_scene",
+                        "primary_mechanism": "quiet_care_trace",
+                        "relationship_register": "nurturant_benevolence",
+                        "support_mechanisms": [],
+                        "aesthetic_baseline": "adult_bishoujo",
+                        "aesthetic_presentation_source": "default_bishoujo",
+                        "sexual_tone": "sensual_optional",
+                    }
+                }
+            }
+        )
+        self.assertIsNotNone(contract)
+        self.assertIn(
+            "benevolent_affect_phrase",
+            contract["prompt_binding"]["required_evidence_fields"],
+        )
+        prompt = (
+            "Adult woman, pretty and cute, with a refined face, lively eyes, glossy hair. "
+            "Her relaxed brow, patient soft eyes, reassuring mouth, and calm protective attention stay on her "
+            "adult housemate. Caught mid-care, she draws a blanket over tired shoulders while one corner remains "
+            "below the shoulder. Her soft eyes and reassuring mouth show warm concern. The housemate's visible "
+            "shoulder triggers the adjustment; the blanket edge is still rising. Her adult face, hands, housemate, "
+            "and blanket share one focal plane. Plain unlettered living-room bokeh."
+        )
+        phrases = {
+            "actor_phrase": "Adult woman",
+            "aesthetic_baseline_phrase": (
+                "Adult woman, pretty and cute, with a refined face, lively eyes, glossy hair"
+            ),
+            "benevolent_affect_phrase": (
+                "Her relaxed brow, patient soft eyes, reassuring mouth, and calm protective attention stay on her adult housemate"
+            ),
+            "affective_leak_phrase": "Her soft eyes and reassuring mouth show warm concern",
+            "background_control_phrase": "Plain unlettered living-room bokeh",
+            "baseline_phrase": "calm protective attention",
+            "event_phase_phrase": "Caught mid-care",
+            "trigger_phrase": "The housemate's visible shoulder",
+            "target_phrase": "one corner remains below the shoulder",
+            "visible_response_phrase": "she draws a blanket over tired shoulders",
+            "immediate_consequence_phrase": "the blanket edge is still rising",
+            "continuity_phrase": "Her adult face, hands, housemate, and blanket",
+            "focal_plane_phrase": "Her adult face, hands, housemate, and blanket share one focal plane",
+        }
+        response = {
+            "aesthetic_baseline": "adult_bishoujo",
+            "mechanism": "quiet_care_trace",
+            "relationship_register": "nurturant_benevolence",
+            "baseline": "calm mature attention",
+            "event_phase": "mid-care before the blanket settles",
+            "trigger": "the housemate's tired shoulders",
+            "target": "the rising blanket edge",
+            "visible_response": "soft eyes and a reassuring mouth while both hands adjust the blanket",
+            "immediate_consequence": "one corner remains below the shoulder",
+            "continuity": "the adult woman and housemate stay in one domestic scene",
+            "support_mechanisms": [],
+            "prompt_evidence": phrases,
+        }
+        self.assertEqual(
+            audit_composed_prompt.audit_moe_response(
+                {"moe_response": contract},
+                {"moe_response": response},
+                prompt,
+            ),
+            [],
+        )
+
+        generic_kindness = copy.deepcopy(response)
+        generic_kindness_phrase = "She looks kind while helping her adult housemate"
+        generic_kindness["prompt_evidence"]["benevolent_affect_phrase"] = (
+            generic_kindness_phrase
+        )
+        generic_kindness_prompt = prompt.replace(
+            phrases["benevolent_affect_phrase"],
+            generic_kindness_phrase,
+        )
+        self.assertIn(
+            "moe_response_benevolent_affect",
+            {
+                row["check"]
+                for row in audit_composed_prompt.audit_moe_response(
+                    {"moe_response": contract},
+                    {"moe_response": generic_kindness},
+                    generic_kindness_prompt,
+                )
+            },
+        )
+
+        tsundere_leak = copy.deepcopy(response)
+        tsundere_leak_phrase = (
+            "Her relaxed brow, patient soft eyes, reassuring mouth, and calm protective attention hold as "
+            "her irises return with private liking"
+        )
+        tsundere_leak["prompt_evidence"]["benevolent_affect_phrase"] = tsundere_leak_phrase
+        tsundere_leak_prompt = prompt.replace(
+            phrases["benevolent_affect_phrase"],
+            tsundere_leak_phrase,
+        )
+        self.assertIn(
+            "moe_response_benevolent_affect",
+            {
+                row["check"]
+                for row in audit_composed_prompt.audit_moe_response(
+                    {"moe_response": contract},
+                    {"moe_response": tsundere_leak},
+                    tsundere_leak_prompt,
+                )
+            },
+        )
+
+    def test_generic_moe_aesthetic_route_constrains_preset_before_subject_sampling(self):
+        male = self.run_wrapper(
+            "--concept",
+            "야하지 않은 성인 남자 캐릭터를 미소년 계열로 모에하게",
+            "--selection-mode",
+            "rule",
+            "--emit-candidate-pack",
+            "--seed",
+            "20260816",
+            "--candidate-pack-version",
+            "v3",
+        )[0]
+        self.assertEqual(male["moe_response"]["aesthetic_baseline"], "adult_bishonen")
+        self.assertEqual(male["provenance"]["preset_id"], "character_attribute_composition_scene")
+        self.assertTrue(
+            male["render_contract"]["selected_scene"]["blueprint_id"].startswith(
+                "moe_attribute_composition_graph_"
+            )
+        )
+        male_scene = " ".join(
+            male["render_contract"]["selected_scene"]["atomic_scene"][slot]["label_en"]
+            for slot in ("subject", "action", "location", "prop")
+        ).lower()
+        for leakage in ("repair", "maintenance", "coworker", "shift", "tool strap"):
+            self.assertNotIn(leakage, male_scene)
+        self.assertEqual(
+            male["slots"]["subject"]["selected"],
+            "slot:subject:character_attribute_composition_scene_subject",
+        )
+        self.assertNotIn(
+            "elderly_commuter",
+            {candidate["entry_id"] for candidate in male["slots"]["subject"]["candidates"]},
+        )
+
+        generic = self.run_wrapper(
+            "--concept",
+            "야하지 않으면서도 모에한 성인 캐릭터의 사진",
+            "--selection-mode",
+            "rule",
+            "--emit-candidate-pack",
+            "--seed",
+            "20260817",
+            "--candidate-pack-version",
+            "v3",
+        )[0]
+        self.assertEqual(generic["moe_response"]["aesthetic_baseline"], "adult_bishoujo")
+        self.assertEqual(generic["provenance"]["preset_id"], "character_attribute_composition_scene")
+        generic_scene = " ".join(
+            generic["render_contract"]["selected_scene"]["atomic_scene"][slot]["label_en"]
+            for slot in ("subject", "action", "location", "prop")
+        ).lower()
+        for leakage in ("repair", "maintenance", "coworker", "shift", "tool strap"):
+            self.assertNotIn(leakage, generic_scene)
+
+        direct = self.run_wrapper(
+            "--preset",
+            "character_attribute_composition_scene",
+            "--selection-mode",
+            "rule",
+            "--emit-candidate-pack",
+            "--seed",
+            "20260816",
+            "--candidate-pack-version",
+            "v3",
+        )[0]
+        self.assertEqual(
+            direct["render_contract"]["selected_scene"]["blueprint_id"],
+            "moe_attribute_composition_graph_atomic_01",
+        )
+        direct_scene = " ".join(
+            direct["render_contract"]["selected_scene"]["atomic_scene"][slot]["label_en"]
+            for slot in ("subject", "action", "location", "prop")
+        ).lower()
+        self.assertIn("repair", direct_scene)
+
+        ordinary = self.run_wrapper(
+            "--preset",
+            "commute_transit_candid",
+            "--selection-mode",
+            "rule",
+            "--emit-candidate-pack",
+            "--seed",
+            "20260816",
+            "--candidate-pack-version",
+            "v3",
+        )[0]
+        self.assertEqual(ordinary["provenance"]["preset_id"], "commute_transit_candid")
+        self.assertNotIn("moe_response", ordinary)
+
+    def test_frozen_natural_moe_render_cases_preserve_identity_and_response_contract(self):
+        cases = [
+            json.loads(line)
+            for line in NATURAL_MOE_RENDER_REVIEW_V1_PATH.read_text(encoding="utf-8").splitlines()
+            if line.strip()
+        ]
+        self.assertEqual(len(cases), 4)
+        self.assertEqual(len({case["id"] for case in cases}), 4)
+        for case in cases:
+            args = [
+                "--concept",
+                case["request"],
+                "--selection-mode",
+                case["cli"]["selection_mode"],
+                "--candidate-pack-version",
+                case["cli"]["candidate_pack_version"],
+                "--emit-candidate-pack",
+                "--seed",
+                str(case["seed"]),
+            ]
+            if case["cli"].get("preset"):
+                args.extend(["--preset", case["cli"]["preset"]])
+            pack = self.run_wrapper(*args)[0]
+            expected = case["expected"]
+            self.assertEqual(pack["provenance"]["preset_id"], expected["preset_id"], case["id"])
+            self.assertEqual(pack["provenance"]["likeness_mode"], expected["likeness_mode"], case["id"])
+            self.assertEqual(pack["provenance"]["likeness_references"], [], case["id"])
+            self.assertEqual(
+                pack["moe_response"]["primary_mechanism"],
+                expected["primary_mechanism"],
+                case["id"],
+            )
+            self.assertEqual(
+                pack["moe_response"]["support_mechanisms"],
+                expected["support_mechanisms"],
+                case["id"],
+            )
+            self.assertEqual(pack["moe_response"]["sexual_tone"], expected["sexual_tone"], case["id"])
+            self.assertEqual(
+                pack["moe_response"]["aesthetic_baseline"],
+                expected["aesthetic_baseline"],
+                case["id"],
+            )
+            if expected.get("role"):
+                self.assertIn(expected["role"], " ".join(pack["provenance"]["concept_lock"]), case["id"])
+            if expected.get("species_family"):
+                self.assertEqual(pack["species_family"]["family"], expected["species_family"], case["id"])
+                self.assertTrue(pack["species_family"]["enforce"], case["id"])
+                for slot, allowed_ids in pack["species_family"]["allowed"].items():
+                    exposed_ids = {
+                        candidate["entry_id"] for candidate in pack["slots"][slot]["candidates"]
+                    }
+                    self.assertTrue(set(allowed_ids) <= exposed_ids, (case["id"], slot, exposed_ids))
+            if expected.get("blueprint_id"):
+                self.assertEqual(
+                    pack["render_contract"]["selected_scene"]["blueprint_id"],
+                    expected["blueprint_id"],
+                    case["id"],
+                )
+
+    def test_moe_response_audit_requires_causal_visible_evidence_and_rejects_shortcuts(self):
+        contract = prompt_generator.candidate_pack_moe_response(
+            {
+                "provenance": {
+                    "character_response": {
+                        "requested": True,
+                        "eligible": True,
+                        "activation_source": "explicit_natural_language_moe_request",
+                        "response_goal": "character_specific_moe",
+                        "route_id": "character_gap_contrast_scene",
+                        "primary_mechanism": "denial_care_leak",
+                        "relationship_register": "peer_liking_under_denial",
+                        "support_mechanisms": ["nonhuman_reflex_leak"],
+                        "aesthetic_baseline": "adult_bishoujo",
+                        "aesthetic_presentation_source": "default_bishoujo",
+                        "sexual_tone": "nonsexual",
+                    }
+                }
+            }
+        )
+        self.assertIsNotNone(contract)
+        pack = {"moe_response": contract}
+        prompt = (
+            "An adult cat-eared maid is a pretty and cute woman: refined face, lively eyes, expressive lips, glossy "
+            "hair. Customer's hand fills lower foreground; same adult customer's blurred partial outer eye and temple sliver "
+            "stay upper-left at frame edge. Cheek puffed, lips pursed mid-protest. Three-quarter head turns right; nose points right; only "
+            "irises make a small oblique return upper-left toward that outer eye. Private liking barely shows: "
+            "lower lids soften; one mouth corner starts to lift, then flattens. Mid-handoff, she slides a pastry partway "
+            "across an open gap. Compact near ear, no taller than her human ear, turns toward hand; other ear keeps a "
+            "different angle. Pastry halfway. Adult face, hands, apron, ears, pastry share one focal plane. Plain "
+            "unlettered bokeh."
+        )
+        phrases = {
+            "actor_phrase": "An adult cat-eared maid",
+            "aesthetic_baseline_phrase": "An adult cat-eared maid is a pretty and cute woman: refined face, lively eyes, expressive lips, glossy hair",
+            "active_denial_phrase": "Cheek puffed, lips pursed mid-protest",
+            "care_action_anchor_phrase": "Customer's hand fills lower foreground",
+            "relationship_gaze_anchor_phrase": "same adult customer's blurred partial outer eye and temple sliver stay upper-left at frame edge",
+            "concealed_affection_phrase": "Three-quarter head turns right; nose points right; only irises make a small oblique return upper-left toward that outer eye. Private liking barely shows: lower lids soften; one mouth corner starts to lift, then flattens",
+            "affective_leak_phrase": "Private liking barely shows: lower lids soften; one mouth corner starts to lift, then flattens",
+            "background_control_phrase": "Plain unlettered bokeh",
+            "baseline_phrase": "Cheek puffed",
+            "event_phase_phrase": "Mid-handoff",
+            "trigger_phrase": "Customer's hand",
+            "target_phrase": "a pastry partway across an open gap",
+            "visible_response_phrase": "Compact near ear, no taller than her human ear, turns toward hand; other ear keeps a different angle",
+            "immediate_consequence_phrase": "Pastry halfway",
+            "continuity_phrase": "Adult face, hands, apron, ears, pastry",
+            "focal_plane_phrase": "Adult face, hands, apron, ears, pastry share one focal plane",
+        }
+        self.assertEqual(audit_composed_prompt.english_prompt_word_count(prompt), 120)
+        response = {
+            "aesthetic_baseline": "adult_bishoujo",
+            "mechanism": "denial_care_leak",
+            "relationship_register": "peer_liking_under_denial",
+            "baseline": "a brisk and guarded service front",
+            "event_phase": "mid-handoff before the helpful action is complete",
+            "trigger": "the customer reaches for the plain dessert",
+            "target": "the extra wrapped pastry",
+            "visible_response": "a huffed mouth, one trigger-side ear turned toward the customer, and tightening tray fingers",
+            "immediate_consequence": "the extra pastry remains partway across the counter",
+            "continuity": "adult feline maid identity stays readable",
+            "support_mechanisms": ["nonhuman_reflex_leak"],
+            "prompt_evidence": phrases,
+        }
+        self.assertEqual(
+            audit_composed_prompt.audit_moe_response(pack, {"moe_response": response}, prompt),
+            [],
+        )
+
+        missing = copy.deepcopy(response)
+        missing["prompt_evidence"].pop("immediate_consequence_phrase")
+        self.assertIn(
+            "moe_response_binding",
+            {
+                row["check"]
+                for row in audit_composed_prompt.audit_moe_response(
+                    pack, {"moe_response": missing}, prompt
+                )
+            },
+        )
+        shortcut = copy.deepcopy(response)
+        shortcut["prompt_evidence"]["visible_response_phrase"] = "cute blush"
+        shortcut_prompt = prompt + " Cute blush."
+        shortcut_checks = {
+            row["check"]
+            for row in audit_composed_prompt.audit_moe_response(
+                pack, {"moe_response": shortcut}, shortcut_prompt
+            )
+        }
+        self.assertIn("moe_response_visible_response", shortcut_checks)
+        self.assertIn("moe_response_shortcut", shortcut_checks)
+
+        passive_denial = copy.deepcopy(response)
+        passive_denial_phrase = "Her guarded averted gaze"
+        passive_denial["prompt_evidence"]["active_denial_phrase"] = passive_denial_phrase
+        passive_denial_prompt = prompt.replace("Her tiny huff", passive_denial_phrase)
+        self.assertIn(
+            "moe_response_active_denial",
+            {
+                row["check"]
+                for row in audit_composed_prompt.audit_moe_response(
+                    pack,
+                    {"moe_response": passive_denial},
+                    passive_denial_prompt,
+                )
+            },
+        )
+
+        task_warmth = copy.deepcopy(response)
+        task_warmth_phrase = "Her head stays aside; irises return toward the pastry with gentle maternal warmth and softened lower lids"
+        task_warmth["prompt_evidence"]["concealed_affection_phrase"] = task_warmth_phrase
+        task_warmth_prompt = prompt.replace(
+            phrases["concealed_affection_phrase"],
+            task_warmth_phrase,
+        )
+        self.assertIn(
+            "moe_response_concealed_affection",
+            {
+                row["check"]
+                for row in audit_composed_prompt.audit_moe_response(
+                    pack,
+                    {"moe_response": task_warmth},
+                    task_warmth_prompt,
+                )
+            },
+        )
+
+        off_frame_recipient = copy.deepcopy(response)
+        off_frame_anchor_phrase = "The customer's visible hand stays off-frame at lower left"
+        off_frame_recipient["prompt_evidence"]["care_action_anchor_phrase"] = (
+            off_frame_anchor_phrase
+        )
+        off_frame_recipient_prompt = prompt.replace(
+            phrases["care_action_anchor_phrase"],
+            off_frame_anchor_phrase,
+        )
+        self.assertIn(
+            "moe_response_care_action_anchor",
+            {
+                row["check"]
+                for row in audit_composed_prompt.audit_moe_response(
+                    pack,
+                    {"moe_response": off_frame_recipient},
+                    off_frame_recipient_prompt,
+                )
+            },
+        )
+
+        collapsed_relationship = copy.deepcopy(response)
+        collapsed_phrase = "The same adult customer's hand stays visible in the lower foreground"
+        collapsed_relationship["prompt_evidence"]["relationship_gaze_anchor_phrase"] = (
+            collapsed_phrase
+        )
+        collapsed_prompt = prompt.replace(
+            phrases["relationship_gaze_anchor_phrase"],
+            collapsed_phrase,
+        )
+        self.assertIn(
+            "moe_response_relationship_gaze_anchor",
+            {
+                row["check"]
+                for row in audit_composed_prompt.audit_moe_response(
+                    pack,
+                    {"moe_response": collapsed_relationship},
+                    collapsed_prompt,
+                )
+            },
+        )
+
+        imagined_eye_line = copy.deepcopy(response)
+        imagined_anchor_phrase = (
+            "same adult customer's off-axis face-level eye line stays upper-left"
+        )
+        imagined_eye_line["prompt_evidence"]["relationship_gaze_anchor_phrase"] = (
+            imagined_anchor_phrase
+        )
+        imagined_prompt = prompt.replace(
+            phrases["relationship_gaze_anchor_phrase"],
+            imagined_anchor_phrase,
+        )
+        self.assertIn(
+            "moe_response_partial_recipient_landmark",
+            {
+                row["check"]
+                for row in audit_composed_prompt.audit_moe_response(
+                    pack,
+                    {"moe_response": imagined_eye_line},
+                    imagined_prompt,
+                )
+            },
+        )
+
+        same_side_turn = copy.deepcopy(response)
+        same_side_phrase = (
+            "Three-quarter head turns left; nose points left; only irises make a small oblique return upper-left "
+            "toward that outer eye. Private liking barely shows: lower lids soften; one mouth corner starts to lift, "
+            "then flattens"
+        )
+        same_side_turn["prompt_evidence"]["concealed_affection_phrase"] = (
+            same_side_phrase
+        )
+        same_side_prompt = prompt.replace(
+            phrases["concealed_affection_phrase"],
+            same_side_phrase,
+        )
+        same_side_checks = {
+            row["check"]
+            for row in audit_composed_prompt.audit_moe_response(
+                pack,
+                {"moe_response": same_side_turn},
+                same_side_prompt,
+            )
+        }
+        self.assertIn("moe_response_opposed_head_iris_vector", same_side_checks)
+        self.assertIn("moe_response_concealed_affection", same_side_checks)
+
+        side_eye_only = copy.deepcopy(response)
+        side_eye_phrase = (
+            "A brief side-eye betrays private liking toward the customer before she suppresses an almost-smile"
+        )
+        side_eye_only["prompt_evidence"]["concealed_affection_phrase"] = side_eye_phrase
+        side_eye_prompt = prompt.replace(
+            phrases["concealed_affection_phrase"],
+            side_eye_phrase,
+        )
+        self.assertIn(
+            "moe_response_concealed_affection",
+            {
+                row["check"]
+                for row in audit_composed_prompt.audit_moe_response(
+                    pack,
+                    {"moe_response": side_eye_only},
+                    side_eye_prompt,
+                )
+            },
+        )
+
+        frontal_liking = copy.deepcopy(response)
+        frontal_liking_phrase = (
+            "Three-quarter head turns right; nose points right; only irises make a small oblique return upper-left "
+            "toward that face-level eye line with direct frontal eye contact. Private liking barely shows: lower "
+            "lids soften; one mouth corner starts to lift, then flattens"
+        )
+        frontal_liking["prompt_evidence"]["concealed_affection_phrase"] = (
+            frontal_liking_phrase
+        )
+        frontal_liking_prompt = prompt.replace(
+            phrases["concealed_affection_phrase"], frontal_liking_phrase
+        )
+        self.assertIn(
+            "moe_response_concealed_affection",
+            {
+                row["check"]
+                for row in audit_composed_prompt.audit_moe_response(
+                    pack,
+                    {"moe_response": frontal_liking},
+                    frontal_liking_prompt,
+                )
+            },
+        )
+
+        no_mouth_leak = copy.deepcopy(response)
+        no_mouth_leak_phrase = (
+            "Three-quarter head turns right; nose points right; only irises make a small oblique return upper-left "
+            "toward that face-level eye line. Private liking barely shows as lower lids soften, then she suppresses it"
+        )
+        no_mouth_leak["prompt_evidence"]["concealed_affection_phrase"] = (
+            no_mouth_leak_phrase
+        )
+        no_mouth_leak_prompt = prompt.replace(
+            phrases["concealed_affection_phrase"], no_mouth_leak_phrase
+        )
+        self.assertIn(
+            "moe_response_concealed_affection",
+            {
+                row["check"]
+                for row in audit_composed_prompt.audit_moe_response(
+                    pack,
+                    {"moe_response": no_mouth_leak},
+                    no_mouth_leak_prompt,
+                )
+            },
+        )
+
+        no_lower_lid_leak = copy.deepcopy(response)
+        no_lower_lid_leak_phrase = (
+            "Three-quarter head turns right; nose points right; only irises make a small oblique return upper-left "
+            "toward that face-level eye line. Private liking barely shows as one mouth corner starts to lift, then flattens"
+        )
+        no_lower_lid_leak["prompt_evidence"]["concealed_affection_phrase"] = (
+            no_lower_lid_leak_phrase
+        )
+        no_lower_lid_leak_prompt = prompt.replace(
+            phrases["concealed_affection_phrase"], no_lower_lid_leak_phrase
+        )
+        self.assertIn(
+            "moe_response_concealed_affection",
+            {
+                row["check"]
+                for row in audit_composed_prompt.audit_moe_response(
+                    pack,
+                    {"moe_response": no_lower_lid_leak},
+                    no_lower_lid_leak_prompt,
+                )
+            },
+        )
+
+        cold_only = copy.deepcopy(response)
+        cold_only["prompt_evidence"]["affective_leak_phrase"] = (
+            "Her annoyed frown, averted gaze, skeptical pout, and cold stare dominate her face"
+        )
+        cold_prompt = prompt.replace(
+            phrases["affective_leak_phrase"],
+            cold_only["prompt_evidence"]["affective_leak_phrase"],
+        )
+        self.assertIn(
+            "moe_response_affective_balance",
+            {
+                row["check"]
+                for row in audit_composed_prompt.audit_moe_response(
+                    pack, {"moe_response": cold_only}, cold_prompt
+                )
+            },
+        )
+
+        split_cold = copy.deepcopy(response)
+        split_cold["prompt_evidence"]["baseline_phrase"] = (
+            "She maintains an annoyed, skeptical, and listless service front"
+        )
+        split_cold_prompt = prompt.replace(
+            phrases["baseline_phrase"],
+            split_cold["prompt_evidence"]["baseline_phrase"],
+        )
+        self.assertIn(
+            "moe_response_affective_balance",
+            {
+                row["check"]
+                for row in audit_composed_prompt.audit_moe_response(
+                    pack, {"moe_response": split_cold}, split_cold_prompt
+                )
+            },
+        )
+
+        lettered_background = copy.deepcopy(response)
+        lettered_background["prompt_evidence"]["background_control_phrase"] = (
+            "A chalkboard menu with decorative lettering fills the cafe background"
+        )
+        lettered_prompt = prompt.replace(
+            phrases["background_control_phrase"],
+            lettered_background["prompt_evidence"]["background_control_phrase"],
+        )
+        self.assertIn(
+            "moe_response_background_control",
+            {
+                row["check"]
+                for row in audit_composed_prompt.audit_moe_response(
+                    pack, {"moe_response": lettered_background}, lettered_prompt
+                )
+            },
+        )
+
+        sexualized_checks = {
+            row["check"]
+            for row in audit_composed_prompt.audit_moe_response(
+                pack,
+                {"moe_response": response},
+                prompt + " A sultry gaze and cleavage-emphasis pose.",
+            )
+        }
+        self.assertIn("moe_response_nonsexual_tone", sexualized_checks)
+
+        generic_casting = copy.deepcopy(response)
+        generic_casting["prompt_evidence"]["aesthetic_baseline_phrase"] = (
+            "An adult woman stands behind the counter"
+        )
+        generic_casting_prompt = prompt.replace(
+            phrases["aesthetic_baseline_phrase"],
+            generic_casting["prompt_evidence"]["aesthetic_baseline_phrase"],
+        )
+        self.assertIn(
+            "moe_response_aesthetic_evidence",
+            {
+                row["check"]
+                for row in audit_composed_prompt.audit_moe_response(
+                    pack,
+                    {"moe_response": generic_casting},
+                    generic_casting_prompt,
+                )
+            },
+        )
+
+        wrong_presentation = copy.deepcopy(response)
+        wrong_presentation["aesthetic_baseline"] = "adult_bishonen"
+        self.assertIn(
+            "moe_response_aesthetic_baseline",
+            {
+                row["check"]
+                for row in audit_composed_prompt.audit_moe_response(
+                    pack,
+                    {"moe_response": wrong_presentation},
+                    prompt,
+                )
+            },
+        )
+
+        undirected_reflex = copy.deepcopy(response)
+        undirected_reflex["prompt_evidence"]["visible_response_phrase"] = (
+            "her pursed mouth holds a tiny huff while both ears stand symmetrically upright and her fingers tighten on the tray"
+        )
+        undirected_prompt = prompt.replace(
+            phrases["visible_response_phrase"],
+            undirected_reflex["prompt_evidence"]["visible_response_phrase"],
+        )
+        self.assertIn(
+            "moe_response_reflex_direction",
+            {
+                row["check"]
+                for row in audit_composed_prompt.audit_moe_response(
+                    pack,
+                    {"moe_response": undirected_reflex},
+                    undirected_prompt,
+                )
+            },
+        )
+
+        oversized_reflex = copy.deepcopy(response)
+        oversized_reflex["prompt_evidence"]["visible_response_phrase"] = (
+            "her pursed mouth holds a tiny huff while one enormous trigger-side ear turns toward the customer, the other ear keeps its baseline angle, and her fingers tighten on the tray"
+        )
+        oversized_prompt = prompt.replace(
+            phrases["visible_response_phrase"],
+            oversized_reflex["prompt_evidence"]["visible_response_phrase"],
+        )
+        self.assertIn(
+            "moe_response_nekomimi_scale_direction",
+            {
+                row["check"]
+                for row in audit_composed_prompt.audit_moe_response(
+                    pack, {"moe_response": oversized_reflex}, oversized_prompt
+                )
+            },
+        )
+
+        no_state_geometry = copy.deepcopy(response)
+        no_state_geometry["prompt_evidence"]["event_phase_phrase"] = (
+            "caught during the handoff before her tray hand settles"
+        )
+        no_state_geometry["prompt_evidence"]["immediate_consequence_phrase"] = (
+            "she slides the extra wrapped pastry across the counter anyway"
+        )
+        no_state_geometry["prompt_evidence"]["target_phrase"] = "the extra pastry"
+        no_geometry_prompt = prompt.replace(
+            phrases["event_phase_phrase"],
+            no_state_geometry["prompt_evidence"]["event_phase_phrase"],
+        ).replace(
+            phrases["target_phrase"],
+            no_state_geometry["prompt_evidence"]["target_phrase"],
+        ).replace(
+            phrases["immediate_consequence_phrase"],
+            no_state_geometry["prompt_evidence"]["immediate_consequence_phrase"],
+        )
+        self.assertIn(
+            "moe_response_state_geometry",
+            {
+                row["check"]
+                for row in audit_composed_prompt.audit_moe_response(
+                    pack,
+                    {"moe_response": no_state_geometry},
+                    no_geometry_prompt,
+                )
+            },
+        )
+
+        settled_endpoint = copy.deepcopy(response)
+        settled_endpoint["prompt_evidence"]["event_phase_phrase"] = (
+            "the completed handoff after her hands have settled"
+        )
+        settled_prompt = prompt.replace(
+            phrases["event_phase_phrase"],
+            settled_endpoint["prompt_evidence"]["event_phase_phrase"],
+        )
+        self.assertIn(
+            "moe_response_event_phase",
+            {
+                row["check"]
+                for row in audit_composed_prompt.audit_moe_response(
+                    pack,
+                    {"moe_response": settled_endpoint},
+                    settled_prompt,
+                )
+            },
+        )
+
+        compact_prompt = prompt
+        compact_response = response
+        self.assertEqual(
+            audit_composed_prompt.english_prompt_word_count(compact_prompt),
+            120,
+        )
+        self.assertEqual(
+            audit_composed_prompt.audit_moe_response(
+                pack,
+                {"moe_response": compact_response},
+                compact_prompt,
+            ),
+            [],
+        )
+
+        over_budget_prompt = compact_prompt + " " + " ".join(["extra"] * 81)
+        over_budget_checks = {
+            row["check"]
+            for row in audit_composed_prompt.audit_moe_response(
+                pack,
+                {"moe_response": compact_response},
+                over_budget_prompt,
+            )
+        }
+        self.assertIn("moe_response_prompt_budget", over_budget_checks)
+
+    def test_moe_render_review_blocks_failed_pixels_and_keeps_user_as_terminal_judge(self):
+        pack = self.run_wrapper(
+            "--concept",
+            "모에한 성인 네코미미 츤데레 메이드",
+            "--selection-mode",
+            "rule",
+            "--reference-edit-mode",
+            "identity",
+            "--emit-candidate-pack",
+            "--seed",
+            "20260812",
+        )[0]
+        contract = pack["moe_response"]
+        required_gates = contract["render_qualification"]["required_hard_gates"]
+        passing_gates = {
+            gate: {
+                "status": "pass",
+                "evidence": f"Native pixel review confirms {gate.replace('_', ' ')} in the result.",
+            }
+            for gate in required_gates
+        }
+        with tempfile.TemporaryDirectory() as temp_dir:
+            result_path = Path(temp_dir) / "render.png"
+            result_path.write_bytes(b"fixed-render-bytes")
+            result_sha256 = hashlib.sha256(result_path.read_bytes()).hexdigest()
+            review = {
+                "schema_version": "moe-render-review/v1",
+                "pack_id": pack["pack_id"],
+                "contract_version": contract["contract_version"],
+                "reviewer": "agent_native_pixel_review",
+                "result_image": str(result_path),
+                "result_sha256": result_sha256,
+                "hard_gates": passing_gates,
+                "user_judgment": {
+                    "baseline_available": True,
+                    "genuinely_moe": "pending",
+                    "better_than_baseline": "pending",
+                    "source": "not_yet_received",
+                    "evidence": "",
+                },
+            }
+            pending = audit_moe_render_review.audit_moe_render_review(
+                pack, review, review_path=Path(temp_dir) / "review.json"
+            )
+            self.assertTrue(pending["technical_qualified"])
+            self.assertFalse(pending["representative_eligible"])
+            self.assertEqual(
+                pending["qualification_status"],
+                "pending_requesting_user_judgment",
+            )
+
+            accepted_review = copy.deepcopy(review)
+            accepted_review["user_judgment"]["genuinely_moe"] = "accepted"
+            accepted_review["user_judgment"]["better_than_baseline"] = "accepted"
+            accepted_review["user_judgment"]["source"] = "requesting_user"
+            accepted_review["user_judgment"]["evidence"] = (
+                "The user judged the result genuinely moe and better than the baseline."
+            )
+            accepted = audit_moe_render_review.audit_moe_render_review(
+                pack, accepted_review, review_path=Path(temp_dir) / "review.json"
+            )
+            self.assertTrue(accepted["representative_eligible"])
+            self.assertEqual(accepted["qualification_status"], "representative_eligible")
+
+            forged_acceptance = copy.deepcopy(accepted_review)
+            forged_acceptance["user_judgment"]["source"] = "not_yet_received"
+            forged_acceptance["user_judgment"]["evidence"] = ""
+            forged = audit_moe_render_review.audit_moe_render_review(
+                pack, forged_acceptance, review_path=Path(temp_dir) / "review.json"
+            )
+            self.assertFalse(forged["technical_qualified"])
+            self.assertFalse(forged["representative_eligible"])
+            self.assertIn(
+                "user_judgment.source",
+                {row["check"] for row in forged["schema_failures"]},
+            )
+
+            failed_review = copy.deepcopy(accepted_review)
+            failed_review["hard_gates"]["no_direct_frontal_eye_contact"] = {
+                "status": "fail",
+                "evidence": "The nose and both eyes face the lens in direct frontal contact.",
+            }
+            failed_review["hard_gates"]["same_person_identity"] = {
+                "status": "fail",
+                "evidence": "Larger rounder eyes and a narrowed jaw materially change the person.",
+            }
+            failed = audit_moe_render_review.audit_moe_render_review(
+                pack, failed_review, review_path=Path(temp_dir) / "review.json"
+            )
+            self.assertFalse(failed["technical_qualified"])
+            self.assertFalse(failed["representative_eligible"])
+            self.assertEqual(failed["qualification_status"], "failed_technical_hard_gates")
+            self.assertEqual(
+                {row["gate"] for row in failed["failed_hard_gates"]},
+                {"no_direct_frontal_eye_contact", "same_person_identity"},
+            )
+
+            partial_review = copy.deepcopy(review)
+            partial_review["hard_gates"]["small_oblique_iris_return_to_recipient"][
+                "status"
+            ] = "partial"
+            partial = audit_moe_render_review.audit_moe_render_review(
+                pack, partial_review, review_path=Path(temp_dir) / "review.json"
+            )
+            self.assertFalse(partial["technical_qualified"])
+            self.assertTrue(partial["schema_failures"])
+
+    def test_render_request_audit_preserves_exact_negative_and_reference_bytes(self):
+        pack = self.run_wrapper(
+            "--concept",
+            "모에한 성인 네코미미 츤데레 메이드",
+            "--selection-mode",
+            "rule",
+            "--reference-edit-mode",
+            "identity",
+            "--emit-candidate-pack",
+            "--seed",
+            "20260812",
+        )[0]
+        composed = {
+            "pack_id": pack["pack_id"],
+            "prompt_en": "Adult woman preserves her identity while one tiny private-liking cue appears.",
+            "negative_en": pack["negative_en"],
+        }
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_path = Path(temp_dir)
+            identity_path = temp_path / "identity.png"
+            scene_path = temp_path / "scene.png"
+            identity_path.write_bytes(b"identity-reference-bytes")
+            scene_path.write_bytes(b"scene-reference-bytes")
+            request_path = temp_path / "request.json"
+            request = {
+                "schema_version": "photo-image-render-request/v2",
+                "pack_id": pack["pack_id"],
+                "runtime_prompt_en": (
+                    "Image 1 is the sole identity reference.\n\n"
+                    + composed["prompt_en"]
+                    + "\n\nAvoid: "
+                    + pack["negative_en"]
+                ),
+                "runtime_negative_en": pack["negative_en"],
+                "references": [
+                    {
+                        "path": identity_path.name,
+                        "sha256": hashlib.sha256(identity_path.read_bytes()).hexdigest(),
+                        "role": "sole_identity_and_adult_age_reference",
+                    },
+                    {
+                        "path": scene_path.name,
+                        "sha256": hashlib.sha256(scene_path.read_bytes()).hexdigest(),
+                        "role": "scene_costume_pose_and_action_reference_only",
+                    },
+                ],
+                "audit_boundary": {
+                    "composed_prompt_audit_status": "pass",
+                    "runtime_prompt_audit_status": "not_run",
+                    "inherits_composed_prompt_pass": False,
+                },
+            }
+            passed = audit_image_render_request.audit_image_render_request(
+                pack, composed, request, request_path=request_path
+            )
+            self.assertEqual(passed["status"], "pass")
+            self.assertTrue(passed["negative_matches_pack"])
+            self.assertEqual(passed["failures"], [])
+
+            changed_negative = copy.deepcopy(request)
+            changed_negative["runtime_negative_en"] = "a shorter hand-written avoid list"
+            changed = audit_image_render_request.audit_image_render_request(
+                pack, composed, changed_negative, request_path=request_path
+            )
+            self.assertEqual(changed["status"], "fail")
+            self.assertIn(
+                "runtime_negative_en",
+                {row["check"] for row in changed["failures"]},
+            )
+
+            unbound_negative = copy.deepcopy(request)
+            unbound_negative["runtime_prompt_en"] = (
+                "Image 1 is the sole identity reference.\n\n" + composed["prompt_en"]
+            )
+            unbound = audit_image_render_request.audit_image_render_request(
+                pack, composed, unbound_negative, request_path=request_path
+            )
+            self.assertIn(
+                "runtime_negative_binding",
+                {row["check"] for row in unbound["failures"]},
+            )
+
+            missing_prompt = copy.deepcopy(request)
+            missing_prompt["runtime_prompt_en"] = "A rewritten runtime prompt without the audited core."
+            missing = audit_image_render_request.audit_image_render_request(
+                pack, composed, missing_prompt, request_path=request_path
+            )
+            self.assertIn(
+                "composed_prompt_binding",
+                {row["check"] for row in missing["failures"]},
+            )
+
+            inherited = copy.deepcopy(request)
+            inherited["audit_boundary"]["runtime_prompt_audit_status"] = "pass"
+            inherited["audit_boundary"]["inherits_composed_prompt_pass"] = True
+            inherited_result = audit_image_render_request.audit_image_render_request(
+                pack, composed, inherited, request_path=request_path
+            )
+            self.assertTrue(
+                {"runtime_prompt_audit_status", "audit_inheritance"}
+                <= {row["check"] for row in inherited_result["failures"]}
+            )
+
+            wrong_hash = copy.deepcopy(request)
+            wrong_hash["references"][0]["sha256"] = "0" * 64
+            wrong_hash_result = audit_image_render_request.audit_image_render_request(
+                pack, composed, wrong_hash, request_path=request_path
+            )
+            self.assertIn(
+                "references[0].sha256",
+                {row["check"] for row in wrong_hash_result["failures"]},
+            )
+
+            ambiguous_identity = copy.deepcopy(request)
+            ambiguous_identity["references"][1]["role"] = (
+                "sole_identity_and_adult_age_reference"
+            )
+            ambiguous = audit_image_render_request.audit_image_render_request(
+                pack, composed, ambiguous_identity, request_path=request_path
+            )
+            self.assertIn(
+                "identity_reference_role",
+                {row["check"] for row in ambiguous["failures"]},
+            )
+
+    def test_manual_concept_gate_requires_literal_prompt_evidence_and_remains_pending_pixel_review(self):
+        pack = {
+            "contract_version": "photo-candidate-pack/v3",
+            "pack_id": "",
+            "negative_en": "",
+            "safety": {
+                "status": "pass",
+                "requires_user_approval": False,
+            },
+            "concept_gates": [
+                {
+                    "id": "costume_swap_test",
+                    "status": "manual",
+                    "check": "two body-rooted cues must survive a costume swap",
+                }
+            ],
+            "slots": {
+                "composition": {
+                    "candidates": [
+                        {
+                            "id": "slot:composition:medium_close",
+                            "applicability": {"status": "eligible"},
+                        }
+                    ]
+                }
+            },
+        }
+        pack["pack_id"] = audit_composed_prompt.computed_pack_id(pack)
+        composed = {
+            "pack_id": pack["pack_id"],
+            "prompt_en": "Organic ear roots and a skin-to-fur wrist boundary remain visible.",
+            "negative_en": "",
+            "chosen_candidate_ids": ["slot:composition:medium_close"],
+            "composer": "agent",
+        }
+        missing = audit_composed_prompt.audit_composed_prompt(pack, composed)
+        self.assertEqual(missing["status"], "fail")
+        self.assertIn("concept_gates", {row["check"] for row in missing["failures"]})
+
+        composed["manual_gate_evidence"] = {
+            "costume_swap_test": {
+                "review_stage": "pixel_review_required",
+                "evidence_phrases": [
+                    "Organic ear roots",
+                    "skin-to-fur wrist boundary",
+                ],
+            }
+        }
+        passed = audit_composed_prompt.audit_composed_prompt(pack, composed)
+        self.assertEqual(passed["status"], "pass")
+        self.assertIn("manual_concept_gate", {row["check"] for row in passed["warnings"]})
+
+    def test_character_moe_scene_corpus_rebalances_work_repair_and_relationship_shortcuts(self):
+        payload = json.loads(SCENE_EXPRESSION_CHARACTER_MOE_PATH.read_text(encoding="utf-8"))
+        extensions = payload["existing_preset_render_contract_extensions"]
+        scenes = [
+            scene
+            for extension in extensions.values()
+            for scene in extension["scene_blueprints"]
+        ]
+        self.assertGreaterEqual(len(scenes), 96)
+
+        def scene_blob(scene: dict) -> str:
+            return " ".join(
+                str(scene.get(field) or "")
+                for field in ("subject", "action", "location", "prop")
+            ).lower()
+
+        blobs = [scene_blob(scene) for scene in scenes]
+        category_terms = {
+            "workplace": (
+                "coworker",
+                "colleague",
+                "technician",
+                "repairer",
+                "workroom",
+                "workshop",
+                "shift",
+                "maintenance",
+                "studio",
+                "café",
+                "cafe",
+            ),
+            "repair": ("repair", "mend", "patch", "fix", "adjust"),
+            "coworker": ("coworker", "colleague", "work partner", "work crew"),
+        }
+        counts = {
+            category: sum(any(term in blob for term in terms) for blob in blobs)
+            for category, terms in category_terms.items()
+        }
+        for category, count in counts.items():
+            self.assertLess(count, len(scenes) / 2, (category, count, len(scenes)))
+
+        evidence_counts: dict[str, int] = {}
+        for scene in scenes:
+            for evidence_type in scene.get("character_evidence_types") or []:
+                evidence_counts[str(evidence_type)] = evidence_counts.get(str(evidence_type), 0) + 1
+        self.assertGreaterEqual(evidence_counts.get("solo_response", 0), 12)
+        self.assertGreaterEqual(evidence_counts.get("expression_led", 0), 6)
+        self.assertGreaterEqual(evidence_counts.get("pose_led", 0), 3)
+        self.assertGreaterEqual(evidence_counts.get("private_joy", 0), 3)
+        self.assertGreaterEqual(evidence_counts.get("earnest_effort", 0), 3)
+        self.assertGreaterEqual(sum(scene.get("static_portrait") is True for scene in scenes), 4)
 
     def test_sensual_editorial_and_fetish_fashion_axes_combine_and_risky_camera_pair_fails(self):
         pack = self.run_wrapper(
@@ -1045,13 +3424,13 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
                 {"sensual_editorial", "fetish_fashion"},
             )
 
-        safe = self.composed_from_hybrid_route(pack, "light_second_reading")
+        safe = self.composed_from_hybrid_route(pack, "material_world")
         safe_result = audit_composed_prompt.audit_composed_prompt(pack, safe)
         self.assertEqual(safe_result["status"], "pass", safe_result)
 
         risky = self.composed_from_hybrid_route(
             pack,
-            "light_second_reading",
+            "material_world",
             extra_chosen=("slot:camera_direction:low_ground_angle",),
         )
         risky["prompt_en"] += " Ground-level low angle."
@@ -1370,8 +3749,8 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             )
             self.assertTrue(all(result["outcome"] == "pass" for result in case["review_focus_results"]))
 
-    def test_atomic_scene_candidate_pools_and_audit_are_fail_closed(self):
-        pack = self.run_wrapper(
+    def test_v4_scene_candidate_groups_hide_sampler_answers_and_v3_stays_fail_closed(self):
+        common = (
             "--concept",
             "회사원",
             "--selection-mode",
@@ -1379,20 +3758,41 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             "--seed",
             "9",
             "--emit-candidate-pack",
-        )[0]
+        )
+        pack = self.run_wrapper(*common)[0]
         groups = pack["scene_contract"]["groups"]
         self.assertTrue(groups)
         for group in groups:
-            self.assertEqual(group["strategy"], "atomic_scene")
+            self.assertEqual(group["strategy"], "optional_inspiration_group")
+            self.assertFalse(group["sampler_selection_exposed"])
+            self.assertTrue(group["all_candidates_may_be_rejected"])
+            self.assertNotIn("selected_entry_id", json.dumps(group))
             for slot, slot_contract in group["slots"].items():
-                allowed = set(slot_contract["allowed_entry_ids"])
+                allowed = set(slot_contract["allowed_candidate_ids"])
                 candidates = {
-                    candidate["entry_id"]
+                    candidate["id"]
                     for candidate in pack["slots"].get(slot, {}).get("candidates", [])
                 }
                 self.assertTrue(candidates <= allowed)
 
-        tampered = copy.deepcopy(pack)
+        leaked = copy.deepcopy(pack)
+        leaked["scene_contract"]["groups"][0]["slots"]["action"][
+            "selected_entry_id"
+        ] = "holding_coffee_phone"
+        self.assertIn(
+            "authorial_scene_selection",
+            {row["check"] for row in audit_composed_prompt.audit_v4_authorial_pack(leaked)},
+        )
+
+        prior = self.run_wrapper(*common, "--candidate-pack-version", "v3")[0]
+        self.assertTrue(prior["scene_contract"]["groups"])
+        self.assertTrue(
+            all(
+                group["strategy"] == "atomic_scene"
+                for group in prior["scene_contract"]["groups"]
+            )
+        )
+        tampered = copy.deepcopy(prior)
         target_group = tampered["scene_contract"]["groups"][0]
         target_slot, target_contract = next(
             (slot, contract)
@@ -1434,6 +3834,8 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             "--additional-requirement",
             "bridge architecture and flood-control infrastructure as the primary subject",
             "--emit-candidate-pack",
+            "--candidate-pack-version",
+            "v3",
         )[0]
         self.assertIn("environment", architecture["coverage"]["intent_constraints"]["subject_categories"])
         selected_subject = next(
@@ -1728,6 +4130,8 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             "--set",
             "focus=zone_focus_street",
             "--emit-candidate-pack",
+            "--candidate-pack-version",
+            "v3",
         )[0]
         self.assertEqual(pack["quality_profile"]["profile_id"], "science_inspection")
         self.assertNotIn("street", pack["quality_profile"]["facets"].get("place_type", []))
@@ -2296,7 +4700,7 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
                     )
 
                 pack = prompt_generator.build_candidate_pack(result, data)
-                self.assertEqual(pack["contract_version"], "photo-candidate-pack/v3")
+                self.assertEqual(pack["contract_version"], "photo-candidate-pack/v4")
                 self.assertTrue(world_evidence_slots <= set(pack["slots"]), preset_id)
                 self.assertNotIn("content_basis", preset["facets"], preset_id)
                 self.assertFalse(
@@ -2549,7 +4953,10 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
                 )
 
                 if seed == 1:
-                    pack = prompt_generator.build_candidate_pack(result, data)
+                    # This assertion inspects the private routing profile. v4
+                    # intentionally projects that winner away, so use the v3
+                    # diagnostic projection for this internal data check.
+                    pack = prompt_generator.build_candidate_pack(result, data, "v3")
                     self.assertTrue(world_evidence_slots <= set(pack["slots"]), preset_id)
                     self.assertEqual(
                         pack["quality_profile"]["profile_id"],
@@ -2868,7 +5275,18 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             preset = presets[preset_id]
             self.assertEqual(prompt_generator.preset_domains(preset, data), {"character_moe_grammar"})
             blueprints = prompt_generator.render_contract_resolved_scene_blueprints(data, preset)
-            self.assertEqual(len(blueprints), 3, preset_id)
+            expected_blueprint_count = {
+                "character_attribute_composition_scene": 7,
+                # Four frozen research scenes plus one natural-language-only
+                # peer-liking scene. Direct preset replay still cycles over
+                # only the four frozen research scenes below.
+                "character_gap_contrast_scene": 5,
+            }.get(preset_id, 4)
+            self.assertEqual(
+                len(blueprints),
+                expected_blueprint_count,
+                preset_id,
+            )
             for blueprint in blueprints:
                 visual_atoms = " ".join(
                     str(blueprint.get(field) or "")
@@ -2882,14 +5300,19 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
                 preset_id,
             )
             self.assertLessEqual(sum(bool(item["static_portrait"]) for item in blueprints), 1)
+            direct_blueprints = [
+                blueprint
+                for blueprint in blueprints
+                if blueprint.get("natural_moe_default_only") is not True
+            ]
             self.assertEqual(
                 {
                     prompt_generator.candidate_pack_select_scene_blueprint(
                         {"provenance": {"seed": seed}}, preset, blueprints
                     )["id"]
-                    for seed in range(1, 4)
+                    for seed in range(1, 5)
                 },
-                {blueprint["id"] for blueprint in blueprints},
+                {blueprint["id"] for blueprint in direct_blueprints},
                 preset_id,
             )
             result = prompt_generator.generate_once(
@@ -2918,7 +5341,7 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             grammar = pack["character_grammar"]
             self.assertTrue(grammar["enabled"], preset_id)
             self.assertTrue(grammar["valid"], preset_id)
-            self.assertEqual(pack["contract_version"], "photo-candidate-pack/v3")
+            self.assertEqual(pack["contract_version"], "photo-candidate-pack/v4")
             self.assertNotIn("domain", grammar)
             self.assertNotIn("topic_id", grammar)
             self.assertNotIn("family_id", grammar)
@@ -2981,7 +5404,8 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             serialized_pack = json.dumps(pack, ensure_ascii=False).lower()
             self.assertNotIn("market_label_nonvisual", serialized_pack, preset_id)
             self.assertNotIn("moe_review", serialized_pack, preset_id)
-            self.assertEqual(pack["quality_profile"]["profile_id"], "character_scene_grammar")
+            self.assertEqual(pack["quality_profile"]["profile_id"], "authorial")
+            self.assertFalse(pack["quality_profile"]["source_profile_exposed"])
             self.assertNotIn("character_moe_grammar", serialized_pack)
             legacy_pack = prompt_generator.build_candidate_pack(result, data, "v2")
             self.assertEqual(legacy_pack["contract_version"], "photo-candidate-pack/v2")
@@ -3120,6 +5544,8 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
                 "--scene-function",
                 case["target_scene_function"],
                 "--emit-candidate-pack",
+                "--candidate-pack-version",
+                "v3",
             )[0]
             self.assertEqual(
                 wrapper_pack["render_contract"]["selected_scene"]["blueprint_id"],
@@ -3213,7 +5639,7 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
                     selection_mode="rule",
                     seed=seed,
                 )
-                pack = prompt_generator.build_candidate_pack(result, data)
+                pack = prompt_generator.build_candidate_pack(result, data, "v3")
                 self.assertTrue(pack["scene_contract"]["enabled"])
                 self.assertTrue(pack["render_contract"]["enabled"])
                 self.assertEqual(pack["evidence_budget"]["minimum_chosen"], 1)
@@ -3248,7 +5674,7 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             selection_mode="rule",
             seed=3,
         )
-        pack = prompt_generator.build_candidate_pack(result, data)
+        pack = prompt_generator.build_candidate_pack(result, data, "v3")
         group = next(
             group
             for group in pack["scene_contract"]["groups"]
@@ -3380,6 +5806,11 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
                 ),
                 preset_id,
             )
+            direct_blueprints = [
+                blueprint
+                for blueprint in blueprints
+                if blueprint.get("natural_moe_default_only") is not True
+            ]
             selected_ids = {
                 prompt_generator.candidate_pack_select_scene_blueprint(
                     {"provenance": {"seed": seed}},
@@ -3388,7 +5819,11 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
                 )["id"]
                 for seed in range(1, 65)
             }
-            self.assertEqual(selected_ids, {blueprint["id"] for blueprint in blueprints}, preset_id)
+            self.assertEqual(
+                selected_ids,
+                {blueprint["id"] for blueprint in direct_blueprints},
+                preset_id,
+            )
 
         for scene_path in (
             SCENE_EXPRESSION_EXTENSION_PATH,
@@ -3441,7 +5876,7 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
                 selection_mode="rule",
                 seed=920000 + index,
             )
-            pack = prompt_generator.build_candidate_pack(result, data)
+            pack = prompt_generator.build_candidate_pack(result, data, "v3")
             self.assertTrue(pack["scene_contract"]["enabled"], preset_id)
             self.assertTrue(pack["render_contract"]["enabled"], preset_id)
             self.assertEqual(pack["render_contract"]["evidence_route_id"], preset_id)
@@ -3596,6 +6031,8 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
                 "--seed",
                 str(seed),
                 "--emit-candidate-pack",
+                "--candidate-pack-version",
+                "v3",
             )[0]
             selected = {
                 slot: next(

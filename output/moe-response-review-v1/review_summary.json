@@ -1,0 +1,573 @@
+{
+  "schema_version": "moe-user-review-pack/v2",
+  "generated_at": "2026-08-13",
+  "contact_sheet": "contact_sheet.png",
+  "identity_control_comparison": {
+    "contact_sheet": "identity_control_comparison.png",
+    "panel_order": [
+      "reference_identity/fictional_adult_reference.jpeg",
+      "ko_tsundere_nekomimi_maid/render_aesthetic_contract.png",
+      "ko_tsundere_nekomimi_maid/render_identity_control.png"
+    ],
+    "panel_labels": [
+      "USER-SUPPLIED FICTIONAL ADULT REFERENCE",
+      "PRIOR TSUNDERE CARE",
+      "FIXED-IDENTITY TSUNDERE CARE"
+    ],
+    "candidate_pack": "ko_tsundere_nekomimi_maid/candidate_pack_identity_control.json",
+    "composed_prompt": "ko_tsundere_nekomimi_maid/composed_prompt_identity_control.json",
+    "pixel_audit": "ko_tsundere_nekomimi_maid/identity_control_pixel_audit.json",
+    "agent_pixel_qualification": "technical_partial_with_defects_user_direction_accepted_not_full_moe",
+    "sexual_tone": "sensual_optional_low_intensity_support",
+    "known_pixel_defects": [
+      "unrequested decorative hearts",
+      "unreadable background writing",
+      "cold or melancholy dominant facial read without a clear warm affective leak",
+      "exact bandage contact boundary slightly ambiguous",
+      "ear direction asymmetry too weak",
+      "ears larger than requested"
+    ],
+    "user_moe_judgment": "slightly_close_to_moe_but_needs_subtle_concealed_liking_in_the_expression",
+    "user_better_than_prior_tsundere_care_judgment": "better",
+    "user_sexual_appeal_contribution_judgment": "appropriate_for_this_costume_at_the_current_low_intensity",
+    "user_direction_to_preserve": [
+      "the current gaze direction and tsundere tension",
+      "the current low-intensity adult sexual appeal",
+      "the same supplied fictional adult identity"
+    ],
+    "user_requested_delta": "Let restrained liking leak through the expression and gaze without becoming overt."
+  },
+  "identity_v4_comparison": {
+    "contact_sheet": "identity_v4_comparison.png",
+    "panel_order": [
+      "reference_identity/fictional_adult_reference.jpeg",
+      "ko_tsundere_nekomimi_maid/render_identity_control.png",
+      "ko_tsundere_nekomimi_maid/render_post_pixel_contract_nonsexual_retry.png"
+    ],
+    "panel_labels": [
+      "REFERENCE IDENTITY",
+      "PRIOR FIXED-IDENTITY V3",
+      "V4 NONSEXUAL RUNTIME RETRY"
+    ],
+    "candidate_pack": "ko_tsundere_nekomimi_maid/candidate_pack_post_pixel_contract_nonsexual_retry.json",
+    "composed_prompt": "ko_tsundere_nekomimi_maid/composed_prompt_post_pixel_contract_nonsexual_retry.json",
+    "pixel_audit": "ko_tsundere_nekomimi_maid/post_pixel_contract_nonsexual_retry_pixel_audit.json",
+    "agent_pixel_qualification": "technical_partial_user_classified_as_mamang_not_tsundere",
+    "runtime_tone": "nonsexual_retry_after_output_stage_sexual_moderation_block",
+    "resolved_previous_defects": [
+      "unrequested decorative hearts",
+      "unreadable background writing",
+      "cold or melancholy dominant facial read",
+      "ambiguous unfinished bandage state"
+    ],
+    "remaining_pixel_defects": [
+      "ears remain larger than the human-ear-scale contract",
+      "ear angles remain near-symmetrical rather than trigger-directed",
+      "active tsundere denial is weak and may read as ordinary quiet kindness",
+      "the rendered historical v4 prompt was 211 words; the unrendered v5 preflight now enforces and passes a 119-word replacement"
+    ],
+    "user_moe_judgment": "tsundere_regression_but_acceptable_mamang",
+    "user_better_than_prior_fixed_identity_v3_judgment": "worse_as_tsundere",
+    "user_sexual_appeal_contribution_judgment": "not_tested_in_successful_retry_due_moderation_block",
+    "user_mamang_judgment": "already_reasonable_as_mamang; a more benevolent expression would improve that separate route"
+  },
+  "post_pixel_contract": {
+    "candidate_pack": "ko_tsundere_nekomimi_maid/candidate_pack_post_pixel_contract.json",
+    "pack_id": "739ac872fdaef91b",
+    "contract_version": "moe_response_contract/v4",
+    "rendered": true,
+    "reason": "The audited sensual-optional attempt was output-moderation blocked. One bounded nonsexual runtime retry returned a native result and was preserved without candidate selection.",
+    "runtime_attempts": {
+      "sensual_optional": {
+        "status": "output_moderation_blocked",
+        "request_id": "fd828001-2def-4b7c-8702-151c1c0614ac",
+        "pixels_returned": false
+      },
+      "nonsexual_retry": {
+        "status": "success",
+        "candidate_pack": "ko_tsundere_nekomimi_maid/candidate_pack_post_pixel_contract_nonsexual_retry.json",
+        "pack_id": "a950e6f24e5e35b6",
+        "image": "ko_tsundere_nekomimi_maid/render_post_pixel_contract_nonsexual_retry.png",
+        "pixels_returned": true
+      }
+    },
+    "new_preflight_requirements": [
+      "one literal warm or pleased affective leak",
+      "no more than two negative facial-affect cues",
+      "plain or unlettered background control",
+      "nekomimi ears no taller than the visible human ear",
+      "clearly different ear-tip angles",
+      "negative suppression for pseudo-writing, menu/chalkboard lettering, signage, and decorative hearts"
+    ],
+    "explicit_text_exception": "When readable text is explicitly requested, only that requested text remains allowed; decorative and unrelated pseudo-writing stays outside the moe evidence contract."
+  },
+  "previous_v5_preflight_contract": {
+    "candidate_pack": "ko_tsundere_nekomimi_maid/candidate_pack_post_pixel_contract_v5.json",
+    "pack_id": "6ff8946f91f5e4a4",
+    "contract_version": "moe_response_contract/v5",
+    "composed_prompt": "ko_tsundere_nekomimi_maid/composed_prompt_post_pixel_contract_v5.json",
+    "audit": "ko_tsundere_nekomimi_maid/composed_prompt_post_pixel_contract_v5.audit.json",
+    "prompt_word_count": 119,
+    "prompt_budget": {
+      "minimum_words": 50,
+      "maximum_words": 120,
+      "enforced": true
+    },
+    "audit_status": "pass",
+    "quality_status": "warn",
+    "affected_regression": {
+      "tests": 330,
+      "passed": 330,
+      "elapsed_seconds": 594.877
+    },
+    "rendered": false,
+    "reason": "The v5 audit closes the compactness gap revealed by the preserved 211-word v4 render. No extra candidate was generated before direct user judgment."
+  },
+  "concealed_affection_v6_comparison": {
+    "contact_sheet": "concealed_affection_v6_comparison.png",
+    "panel_order": [
+      "ko_tsundere_nekomimi_maid/render_identity_control.png",
+      "ko_tsundere_nekomimi_maid/render_concealed_affection_v6.png"
+    ],
+    "panel_labels": [
+      "USER-PREFERRED TSUNDERE DIRECTION: FIXED-IDENTITY V3",
+      "V6 SINGLE EXPRESSION EDIT"
+    ],
+    "candidate_pack": "ko_tsundere_nekomimi_maid/candidate_pack_active_denial_v6.json",
+    "pack_id": "9f88d9c473fcbc7b",
+    "contract_version": "moe_response_contract/v6",
+    "composed_preflight": "ko_tsundere_nekomimi_maid/composed_prompt_concealed_affection_v6.json",
+    "composed_preflight_audit": "ko_tsundere_nekomimi_maid/composed_prompt_concealed_affection_v6.audit.json",
+    "composed_preflight_word_count": 120,
+    "composed_preflight_status": "pass",
+    "composed_preflight_quality_status": "warn",
+    "affected_regression": {
+      "tests": 330,
+      "passed": 330,
+      "elapsed_seconds": 596.992
+    },
+    "dictionary_validation": "pass",
+    "semantic_index_check": {
+      "status": "ok",
+      "dictionary_hash": "8da2e290167ab69ca1e87b0323796bef7380c93b606bfec5fbbe8822e3a850e4",
+      "entry_count": 6513,
+      "embedding_dimensions": 768
+    },
+    "scene_expression_audit": {
+      "routes": 112,
+      "passed": 112,
+      "failed": 0
+    },
+    "runtime_prompt_boundary": "The actual identity-preserving expression-edit prompt is recorded separately in image_runs.ndjson with audit_status=not_run; the full v6 preflight PASS is not attributed to the runtime prompt.",
+    "runtime_run_id": "889664caca5842d8",
+    "runtime_prompt_id": "5871b6cd9cc63b92",
+    "render_count": 1,
+    "result_image": "ko_tsundere_nekomimi_maid/render_concealed_affection_v6.png",
+    "pixel_audit": "ko_tsundere_nekomimi_maid/concealed_affection_v6_pixel_audit.json",
+    "agent_pixel_qualification": "technical_partial_concealed_affection_failed_not_better_than_v3",
+    "preserved": [
+      "the supplied fictional adult identity",
+      "the v3 maid costume, scene, pose, hands, and bandage state",
+      "the v3 low-intensity adult sensual appeal"
+    ],
+    "changed": [
+      "the cheek puff and pursed-lip protest became stronger",
+      "the eyes shifted farther sideways"
+    ],
+    "agent_remaining_defects": [
+      "the gaze reads wary or guarded rather than returning toward the customer",
+      "softened lower lids and a suppressed almost-smile are not legible",
+      "recipient-directed concealed liking therefore fails at pixel level",
+      "the v3 oversized ears, decorative hearts, and pseudo-writing remain as controlled historical defects"
+    ],
+    "user_moe_judgment": "not_requested_for_v6_before_agent_verdict",
+    "user_better_than_fixed_identity_v3_judgment": "not_requested_for_v6_before_agent_verdict",
+    "user_concealed_affection_legibility_judgment": "not_requested_for_v6_before_agent_verdict"
+  },
+  "recipient_vector_v7_preflight": {
+    "candidate_pack": "ko_tsundere_nekomimi_maid/candidate_pack_recipient_vector_v7.json",
+    "pack_id": "ae0a72d33f2f4dd7",
+    "contract_version": "moe_response_contract/v7",
+    "composed_prompt": "ko_tsundere_nekomimi_maid/composed_prompt_recipient_vector_v7.json",
+    "audit": "ko_tsundere_nekomimi_maid/composed_prompt_recipient_vector_v7.audit.json",
+    "prompt_word_count": 120,
+    "audit_status": "pass",
+    "quality_status": "warn",
+    "affected_regression": {
+      "tests": 330,
+      "passed": 330,
+      "elapsed_seconds": 596.059
+    },
+    "dictionary_validation": "pass",
+    "semantic_index_check": {
+      "status": "ok",
+      "dictionary_hash": "8da2e290167ab69ca1e87b0323796bef7380c93b606bfec5fbbe8822e3a850e4",
+      "entry_count": 6513,
+      "embedding_dimensions": 768
+    },
+    "scene_expression_audit": {
+      "routes": 112,
+      "passed": 112,
+      "failed": 0
+    },
+    "product_delta": [
+      "requires an in-frame recipient body anchor at a named screen position or near-lens POV",
+      "requires the head to remain angled away while irises return toward that same anchor",
+      "requires softened lower lids or a suppressed mouth-corner lift on the same vector",
+      "rejects off-frame recipients, generic side-eye, and task-only warmth as tsundere evidence"
+    ],
+    "rendered": false,
+    "reason": "This closes the composition defect exposed by the v6 pixels without spending another render before the user's direct v3-versus-v6 judgment."
+  },
+  "peer_liking_v8_preflight": {
+    "candidate_pack": "ko_tsundere_nekomimi_maid/candidate_pack_peer_liking_v8.json",
+    "pack_id": "96e0c368be262947",
+    "contract_version": "moe_response_contract/v8",
+    "relationship_register": "peer_liking_under_denial",
+    "composed_prompt": "ko_tsundere_nekomimi_maid/composed_prompt_peer_liking_v8.json",
+    "audit": "ko_tsundere_nekomimi_maid/composed_prompt_peer_liking_v8.audit.json",
+    "mutation_audit": "ko_tsundere_nekomimi_maid/peer_liking_v8_mutation_audit.json",
+    "prompt_word_count": 120,
+    "audit_status": "pass",
+    "quality_status": "warn",
+    "product_delta": [
+      "keeps the customer's hand or wound as a lower care-action anchor",
+      "adds the same adult recipient's separate face-level relationship eye line above the care target",
+      "requires head-away and iris-return geometry with a barely visible suppressed flash of private personal liking",
+      "rejects care-target gaze, maternal benevolence, generic side-eye, off-frame faces, and collapsed anchors as tsundere affection",
+      "routes explicit mamang or maternal requests to concrete nurturant benevolence while ordinary friendly care does not infer motherhood"
+    ],
+    "mutation_results": {
+      "expected_failures": 5,
+      "observed_failures": 5
+    },
+    "focused_regression": {
+      "tests": 5,
+      "passed": 5,
+      "elapsed_seconds": 20.521
+    },
+    "affected_regression": {
+      "tests": 331,
+      "passed": 331,
+      "elapsed_seconds": 599.202
+    },
+    "dictionary_validation": "pass",
+    "semantic_index_check": {
+      "status": "ok",
+      "dictionary_hash": "8da2e290167ab69ca1e87b0323796bef7380c93b606bfec5fbbe8822e3a850e4",
+      "entry_count": 6513,
+      "embedding_dimensions": 768
+    },
+    "scene_expression_audit": {
+      "routes": 112,
+      "passed": 112,
+      "failed": 0
+    },
+    "rendered": true,
+    "reason": "After the requested agent verdict rejected v6, exactly one bounded v8 render tested the separated care-action and face-level relationship vectors. The sole native result was preserved without retry or favorable candidate selection.",
+    "render_request_preflight": "ko_tsundere_nekomimi_maid/render_request_peer_liking_v8.preflight.json",
+    "render_request": "ko_tsundere_nekomimi_maid/render_request_peer_liking_v8.json",
+    "runtime_run_id": "a00261551ffb9579",
+    "runtime_prompt_id": "030ba88f98631f30",
+    "runtime_prompt_audit_status": "not_run",
+    "render_count": 1,
+    "retry_count": 0,
+    "result_image": "ko_tsundere_nekomimi_maid/render_peer_liking_v8.png",
+    "result_sha256": "e85d2502bd693a7f5b976765277355a067c0752cdb0ded6f54c09f773f74ed55",
+    "pixel_audit": "ko_tsundere_nekomimi_maid/peer_liking_v8_pixel_audit.json",
+    "comparison": "peer_liking_v8_comparison.png",
+    "face_comparison": "peer_liking_v8_face_comparison.png",
+    "agent_pixel_qualification": "technical_partial_warmer_and_cuter_but_identity_and_subtlety_failed_user_judgment_pending",
+    "agent_improvements": [
+      "immediate pretty-and-cute bishoujo appeal is stronger than v3 and v6",
+      "v6's wary side-monitoring is replaced by warm recipient-directed eye contact",
+      "pout, ongoing care action, and personal warmth coexist in one frame",
+      "hearts and pseudo-writing no longer provide affection shortcuts",
+      "the user's accepted low-intensity adult sensual support remains appropriate and subordinate"
+    ],
+    "agent_remaining_defects": [
+      "the direct frontal gaze is more overt than a barely leaked private liking",
+      "head-away and iris-return geometry is weak, and the suppressed almost-smile is absent",
+      "eye shape and size, jaw, and cheek proportions materially drift from the supplied adult identity and read younger",
+      "cat ears remain substantially larger than the compact scale contract"
+    ],
+    "user_moe_judgment": "pending",
+    "user_better_than_fixed_identity_v3_judgment": "pending",
+    "user_concealed_affection_legibility_judgment": "pending",
+    "acceptance_boundary": "The agent can qualify or reject visible defects but cannot claim genuine moe or goal completion without the user's positive judgment."
+  },
+  "peer_liking_v9_preflight_and_promotion_gate": {
+    "candidate_pack": "ko_tsundere_nekomimi_maid/candidate_pack_peer_liking_v9.json",
+    "pack_id": "4e0494bace97848c",
+    "contract_version": "moe_response_contract/v9",
+    "relationship_register": "peer_liking_under_denial",
+    "composed_prompt": "ko_tsundere_nekomimi_maid/composed_prompt_peer_liking_v9.json",
+    "audit": "ko_tsundere_nekomimi_maid/composed_prompt_peer_liking_v9.audit.json",
+    "mutation_audit": "ko_tsundere_nekomimi_maid/peer_liking_v9_mutation_audit.json",
+    "prompt_word_count": 120,
+    "audit_status": "pass",
+    "product_delta": [
+      "requires a named three-quarter head-away pose with the nose axis visibly off lens",
+      "requires only the irises to make a small oblique return to the same adult recipient's face-level anchor",
+      "requires both softened lower lids and one starting mouth-corner lift that is immediately suppressed",
+      "preserves identity-relative eye aperture, face length, lower-face and jaw width while rejecting de-aging and dollification",
+      "exposes general, relationship-mechanism, species, and identity pixel gates before representative promotion"
+    ],
+    "mutation_results": {
+      "expected_failures": 6,
+      "observed_failures": 6,
+      "cases": [
+        "direct frontal eye contact",
+        "generic head-aside without three-quarter geometry",
+        "lower-lid-only affection cue",
+        "mouth-corner-only affection cue",
+        "weak identity anchors",
+        "collapsed relationship anchor"
+      ]
+    },
+    "affected_regression": {
+      "tests": 332,
+      "passed": 332,
+      "photo_prompt_contract_tests": 56,
+      "photo_prompt_contract_elapsed_seconds": 270.352,
+      "prompt_generator_tests": 276,
+      "prompt_generator_elapsed_seconds": 341.456
+    },
+    "dictionary_validation": "pass",
+    "semantic_index_check": {
+      "status": "ok",
+      "dictionary_hash": "8da2e290167ab69ca1e87b0323796bef7380c93b606bfec5fbbe8822e3a850e4",
+      "entry_count": 6513,
+      "embedding_dimensions": 768
+    },
+    "scene_expression_audit": {
+      "routes": 112,
+      "passed": 112,
+      "failed": 0
+    },
+    "rendered": false,
+    "reason": "This is a product-contract and promotion-audit response to C's known pixel defects; no new image is generated before the user's C judgment.",
+    "retrospective_c_review": "ko_tsundere_nekomimi_maid/peer_liking_v8_render_review_v9.json",
+    "retrospective_c_audit": "ko_tsundere_nekomimi_maid/peer_liking_v8_render_qualification_v9.audit.json",
+    "retrospective_c_status": "failed_technical_hard_gates",
+    "retrospective_c_required_hard_gates": 23,
+    "retrospective_c_failed_hard_gates": 12,
+    "retrospective_c_schema_failures": 0,
+    "user_moe_judgment": "pending",
+    "user_better_than_fixed_identity_v3_judgment": "pending",
+    "acceptance_boundary": "A technical pass would still remain pending until the requesting user directly accepts genuine moe and baseline improvement."
+  },
+  "peer_liking_v9_render_and_v10_preflight": {
+    "v9_result_image": "ko_tsundere_nekomimi_maid/render_peer_liking_v9.png",
+    "v9_runtime_request": "ko_tsundere_nekomimi_maid/render_request_peer_liking_v9.json",
+    "v9_runtime_request_audit": "ko_tsundere_nekomimi_maid/render_request_peer_liking_v9.audit.json",
+    "v9_pixel_review": "ko_tsundere_nekomimi_maid/peer_liking_v9_pixel_review.json",
+    "v9_pixel_review_audit": "ko_tsundere_nekomimi_maid/peer_liking_v9_pixel_review.audit.json",
+    "v9_render_count": 1,
+    "v9_agent_qualification": "failed_technical_hard_gates_and_runtime_negative_contract",
+    "v9_required_hard_gates": 23,
+    "v9_failed_hard_gates": 8,
+    "v9_positive_delta": [
+      "the supplied adult identity is much closer than C",
+      "direct frontal eye contact is avoided",
+      "maid costume, bandaging action, framing, and accepted low sensual tone remain recognizable"
+    ],
+    "v9_failure": [
+      "head and irises turn toward the same side, so no head-away versus iris-return contradiction is visible",
+      "the recipient face endpoint, softened lower lids, and suppressed starting mouth-corner lift are absent",
+      "ear scale and trigger direction remain insufficient",
+      "runtime negative_en differs from the candidate pack and invalidates formal qualification"
+    ],
+    "comparison": "peer_liking_v9_comparison.png",
+    "face_comparison": "peer_liking_v9_face_comparison.png",
+    "v10_candidate_pack": "ko_tsundere_nekomimi_maid/candidate_pack_peer_liking_v10.json",
+    "v10_pack_id": "0256f9b41cebb3a8",
+    "v10_contract_version": "moe_response_contract/v10",
+    "v10_composed_prompt": "ko_tsundere_nekomimi_maid/composed_prompt_peer_liking_v10.json",
+    "v10_composed_audit": "ko_tsundere_nekomimi_maid/composed_prompt_peer_liking_v10.audit.json",
+    "v10_mutation_audit": "ko_tsundere_nekomimi_maid/peer_liking_v10_mutation_audit.json",
+    "v10_prompt_word_count": 120,
+    "v10_runtime_request": "ko_tsundere_nekomimi_maid/render_request_peer_liking_v10.json",
+    "v10_runtime_request_audit": "ko_tsundere_nekomimi_maid/render_request_peer_liking_v10.audit.json",
+    "v10_runtime_prompt_id": "4e410822e79a8deb",
+    "v10_runtime_negative_matches_pack": true,
+    "v10_reference_count": 2,
+    "v10_required_hard_gates": 25,
+    "v10_product_delta": [
+      "requires one blurred partial outer-eye-plus-temple/profile landmark from the same adult recipient at upper-left",
+      "requires the primary head and nose to turn right while only the irises return left",
+      "rejects an imagined off-frame eye line, a second full face, same-direction head and irises, and an iris return that misses the visible landmark",
+      "replaces duplicate-faces suppression with duplicate-primary-subject and second-full-recipient-face suppression",
+      "separately audits exact runtime positive, negative, and reference bytes before generation"
+    ],
+    "v10_mutation_results": {
+      "expected_failures": 4,
+      "observed_failures": 4
+    },
+    "v10_affected_regression": {
+      "tests": 335,
+      "passed": 335,
+      "test_photo_prompt_contract_v2": {
+        "tests": 59,
+        "passed": 59,
+        "elapsed_seconds": 345.805
+      },
+      "test_prompt_generator": {
+        "tests": 276,
+        "passed": 276,
+        "elapsed_seconds": 245.583
+      }
+    },
+    "v10_dictionary_validation": "pass",
+    "v10_scene_expression_audit": {
+      "routes": 112,
+      "passed": 112,
+      "failed": 0
+    },
+    "v10_semantic_index_check": {
+      "status": "ok",
+      "dictionary_hash": "d693b97c31dc93ba6ba7cc0f2c9e67422fdcacab20f0d38281cf072bc36fbad0",
+      "entry_count": 6513,
+      "embedding_dimensions": 768
+    },
+    "v10_source_validation": "pass_json_python_and_git_diff_check",
+    "v10_completion_generalization": {
+      "no_preset_natural_moe_paraphrases": 4,
+      "passed": 4,
+      "frozen_natural_moe_public_wrapper": {
+        "cases": 32,
+        "passed": 32,
+        "positive_contracts": "25/25",
+        "hard_negative_exclusions": "7/7",
+        "adjacent_japanese_aliases": "pass"
+      },
+      "contradiction_generated": 2001,
+      "contradiction_violations": 0,
+      "generalization": "79/79",
+      "holdout": "24/24",
+      "domain_holdout_v2": "6/6",
+      "retrieval_holdout_v4": "22/22"
+    },
+    "v10_rendered": false,
+    "v10_reason": "The next single attempt is technically prepared but was not rendered because the existing bounded same-cause iteration limit is not silently expanded.",
+    "user_moe_judgment": "not_applicable_no_v10_pixels",
+    "user_better_than_fixed_identity_v3_judgment": "not_applicable_no_v10_pixels"
+  },
+  "mamang_benevolence_v8_preflight": {
+    "candidate_pack": "ko_tsundere_nekomimi_maid/candidate_pack_mamang_benevolence_v8.json",
+    "pack_id": "9ac4204b61eb436e",
+    "contract_version": "moe_response_contract/v8",
+    "route_id": "character_quiet_care_daily_scene",
+    "primary_mechanism": "quiet_care_trace",
+    "relationship_register": "nurturant_benevolence",
+    "support_mechanisms": [
+      "nonhuman_reflex_leak"
+    ],
+    "sexual_tone": "sensual_optional_low_intensity_support",
+    "reference_identity": "reference_identity/fictional_adult_reference.jpeg",
+    "composed_prompt": "ko_tsundere_nekomimi_maid/composed_prompt_mamang_benevolence_v8.json",
+    "audit": "ko_tsundere_nekomimi_maid/composed_prompt_mamang_benevolence_v8.audit.json",
+    "mutation_audit": "ko_tsundere_nekomimi_maid/mamang_benevolence_v8_mutation_audit.json",
+    "prompt_word_count": 118,
+    "audit_status": "pass",
+    "quality_status": "warn",
+    "product_delta": [
+      "relationship semantics now outrank a compatible species reflex, so mamang-nekomimi remains a quiet-care route",
+      "requires relaxed brow, patient soft eyes, reassuring mouth, and calm protective attention in one literal expression",
+      "rejects generic kindness, any missing benevolent component, and tsundere or romantic gaze leakage",
+      "keeps the user's accepted low-intensity adult sensual support subordinate to face, agency, and care"
+    ],
+    "mutation_results": {
+      "expected_failures": 6,
+      "observed_failures": 6
+    },
+    "focused_regression": {
+      "tests": 6,
+      "passed": 6,
+      "elapsed_seconds": 39.982
+    },
+    "affected_regression": {
+      "tests": 331,
+      "passed": 331,
+      "elapsed_seconds": 613.925
+    },
+    "dictionary_validation": "pass",
+    "semantic_index_check": {
+      "status": "ok",
+      "dictionary_hash": "8da2e290167ab69ca1e87b0323796bef7380c93b606bfec5fbbe8822e3a850e4",
+      "entry_count": 6513,
+      "embedding_dimensions": 768
+    },
+    "scene_expression_audit": {
+      "routes": 112,
+      "passed": 112,
+      "failed": 0
+    },
+    "rendered": false,
+    "reason": "This preserves the user's acceptable mamang direction as a distinct fixed-identity preflight. No new pixels were generated, so a more benevolent rendered expression remains unverified."
+  },
+  "comparison_baselines": [
+    {
+      "label": "OLD BASELINE",
+      "image": "../skill-ab-test/baseline-arm/final.png",
+      "known_user_judgment": "not_moe"
+    },
+    {
+      "label": "PRIOR SKILL",
+      "image": "../skill-ab-test/skill-arm/final.png",
+      "known_user_judgment": "not_moe"
+    }
+  ],
+  "candidates": [
+    {
+      "label": "NEW: TSUNDERE CARE",
+      "case_id": "ko_tsundere_nekomimi_maid",
+      "selected_attempt": "aesthetic_contract",
+      "image": "ko_tsundere_nekomimi_maid/render_aesthetic_contract.png",
+      "agent_pixel_qualification": "pass_with_defect",
+      "user_sexual_tone_observation": "nonsexual_not_an_acceptance_requirement",
+      "user_moe_judgment": "closer_than_other_new_candidates_but_not_accepted",
+      "user_better_than_prior_judgment": "not_better"
+    },
+    {
+      "label": "NEW: GAP GUARD",
+      "case_id": "ko_gap_moe_guard",
+      "selected_attempt": "aesthetic_contract",
+      "image": "ko_gap_moe_guard/render_aesthetic_contract.png",
+      "agent_pixel_qualification": "pass",
+      "user_sexual_tone_observation": "nonsexual_not_an_acceptance_requirement",
+      "user_moe_judgment": "not_accepted",
+      "user_better_than_prior_judgment": "not_better"
+    },
+    {
+      "label": "NEW: NEKOMIMI REFLEX",
+      "case_id": "ko_nekomimi_barista",
+      "selected_attempt": "aesthetic_contract",
+      "image": "ko_nekomimi_barista/render_aesthetic_contract.png",
+      "agent_pixel_qualification": "partial",
+      "user_sexual_tone_observation": "nonsexual_not_an_acceptance_requirement",
+      "user_moe_judgment": "not_accepted",
+      "user_better_than_prior_judgment": "not_better"
+    },
+    {
+      "label": "NEW: PRIVATE JOY",
+      "case_id": "ja_generic_private_joy",
+      "selected_attempt": "aesthetic_contract",
+      "image": "ja_generic_private_joy/render_aesthetic_contract.png",
+      "agent_pixel_qualification": "pass_with_defect",
+      "user_sexual_tone_observation": "nonsexual_not_an_acceptance_requirement",
+      "user_moe_judgment": "not_accepted",
+      "user_better_than_prior_judgment": "not_better"
+    }
+  ],
+  "user_review": {
+    "recorded_at": "2026-08-12T22:40:00+09:00",
+    "round_disposition": "failed_user_acceptance",
+    "sexual_tone_observation": "all_new_candidates_were_nonsexual_but_nonsexuality_is_not_a_general_acceptance_requirement",
+    "better_than_prior": "fail_all_new_candidates",
+    "relative_signal": "TSUNDERE CARE was closer to moe than the other NEW candidates, but was not accepted as an improvement.",
+    "tone_correction": "Moe can be nonsexual, while subtle adult sexual appeal may support it. Suppress sensuality only when explicitly requested.",
+    "next_control": "Use render_identity_control.png as the tsundere baseline because the user judged it better than TSUNDERE CARE and its low-intensity sexual appeal appropriate for the costume. Preserve its gaze and tension while adding only a subtle recipient-directed leak of concealed liking. Treat the v4 nonsexual retry as a separate acceptable-mamang signal, not a tsundere improvement."
+  },
+  "acceptance_boundary": "Agent review covers readability, requested sexual tone, identity and role continuity, event timing, shortcut intrusion, and anatomy. Only the user may decide whether each candidate actually feels moe, whether sensual appeal helps, and whether it is better than the prior outputs."
+}

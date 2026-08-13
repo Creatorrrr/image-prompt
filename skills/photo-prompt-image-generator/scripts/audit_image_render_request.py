@@ -1,0 +1,277 @@
+#!/usr/bin/env python3
+"""Audit exact runtime inputs before a native or API image-generation call.
+
+The composed-prompt audit proves the candidate composition only.  This auditor
+separately verifies that a concrete render request embeds that audited prompt,
+preserves negative_en byte-for-byte, and binds real reference files without
+silently inheriting the composed preflight result.
+"""
+
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+from pathlib import Path
+from typing import Any
+
+
+SCHEMA_VERSION = "photo-image-render-request/v2"
+
+
+def load_json_arg(raw: str) -> Any:
+    raw = raw.strip()
+    if raw.startswith("{") or raw.startswith("["):
+        return json.loads(raw)
+    return json.loads(Path(raw).read_text(encoding="utf-8"))
+
+
+def one_object(payload: Any, label: str) -> dict[str, Any]:
+    if isinstance(payload, list):
+        if len(payload) != 1:
+            raise ValueError(f"{label} list must contain exactly one object")
+        payload = payload[0]
+    if not isinstance(payload, dict):
+        raise ValueError(f"{label} must be a JSON object or one-item list")
+    return payload
+
+
+def sha256_path(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def resolve_path(raw: str, request_path: Path | None) -> Path:
+    path = Path(raw).expanduser()
+    if not path.is_absolute() and request_path is not None:
+        path = request_path.parent / path
+    return path.resolve()
+
+
+def audit_image_render_request(
+    pack: dict[str, Any],
+    composed: dict[str, Any],
+    request: dict[str, Any],
+    *,
+    request_path: Path | None = None,
+) -> dict[str, Any]:
+    failures: list[dict[str, Any]] = []
+
+    if request.get("schema_version") != SCHEMA_VERSION:
+        failures.append(
+            {
+                "check": "schema_version",
+                "reason": f"render request must use {SCHEMA_VERSION}",
+            }
+        )
+
+    pack_id = str(pack.get("pack_id") or "")
+    composed_pack_id = str(composed.get("pack_id") or "")
+    request_pack_id = str(request.get("pack_id") or "")
+    if not pack_id or composed_pack_id != pack_id or request_pack_id != pack_id:
+        failures.append(
+            {
+                "check": "pack_id",
+                "reason": "pack, composed prompt, and render request must share one exact pack_id",
+                "pack": pack_id,
+                "composed": composed_pack_id,
+                "request": request_pack_id,
+            }
+        )
+
+    runtime_prompt = request.get("runtime_prompt_en")
+    if not isinstance(runtime_prompt, str) or not runtime_prompt.strip():
+        failures.append(
+            {
+                "check": "runtime_prompt_en",
+                "reason": "render request requires the exact runtime prompt string",
+            }
+        )
+        runtime_prompt = ""
+    composed_prompt = str(composed.get("prompt_en") or "")
+    if not composed_prompt or composed_prompt not in runtime_prompt:
+        failures.append(
+            {
+                "check": "composed_prompt_binding",
+                "reason": "exact audited prompt_en must occur contiguously in runtime_prompt_en",
+            }
+        )
+
+    pack_negative = pack.get("negative_en")
+    composed_negative = composed.get("negative_en")
+    runtime_negative = request.get("runtime_negative_en")
+    if composed_negative != pack_negative:
+        failures.append(
+            {
+                "check": "composed_negative_en",
+                "reason": "composed negative_en differs from candidate pack",
+            }
+        )
+    if runtime_negative != pack_negative:
+        failures.append(
+            {
+                "check": "runtime_negative_en",
+                "reason": "runtime negative_en must equal candidate-pack negative_en byte-for-byte",
+                "expected_sha256": (
+                    hashlib.sha256(str(pack_negative).encode("utf-8")).hexdigest()
+                    if pack_negative is not None
+                    else None
+                ),
+                "actual_sha256": (
+                    hashlib.sha256(str(runtime_negative).encode("utf-8")).hexdigest()
+                    if runtime_negative is not None
+                    else None
+                ),
+            }
+        )
+    if pack_negative is not None and f"Avoid: {pack_negative}" not in runtime_prompt:
+        failures.append(
+            {
+                "check": "runtime_negative_binding",
+                "reason": "runtime_prompt_en must contain the exact candidate-pack negative after an Avoid: prefix",
+            }
+        )
+
+    boundary = request.get("audit_boundary")
+    if not isinstance(boundary, dict):
+        failures.append(
+            {
+                "check": "audit_boundary",
+                "reason": "render request requires an explicit audit_boundary object",
+            }
+        )
+        boundary = {}
+    if boundary.get("composed_prompt_audit_status") not in {"pass", "warn"}:
+        failures.append(
+            {
+                "check": "composed_prompt_audit_status",
+                "reason": "render request requires a passing or warning composed preflight",
+            }
+        )
+    if boundary.get("runtime_prompt_audit_status") != "not_run":
+        failures.append(
+            {
+                "check": "runtime_prompt_audit_status",
+                "reason": "runtime string must remain not_run until this exact-input audit succeeds",
+            }
+        )
+    if boundary.get("inherits_composed_prompt_pass") is not False:
+        failures.append(
+            {
+                "check": "audit_inheritance",
+                "reason": "runtime request must explicitly refuse inheritance of composed preflight PASS",
+            }
+        )
+
+    reference_control = (
+        pack.get("moe_response", {}).get("reference_identity_control")
+        if isinstance(pack.get("moe_response"), dict)
+        else None
+    )
+    references = request.get("references")
+    if not isinstance(references, list):
+        failures.append(
+            {"check": "references", "reason": "render request references must be a list"}
+        )
+        references = []
+    if isinstance(reference_control, dict) and reference_control.get("enabled") is True:
+        identity_rows = [
+            row
+            for row in references
+            if isinstance(row, dict) and row.get("role") == "sole_identity_and_adult_age_reference"
+        ]
+        if len(identity_rows) != 1:
+            failures.append(
+                {
+                    "check": "identity_reference_role",
+                    "reason": "identity-controlled render requires exactly one sole identity and adult-age reference",
+                    "actual": len(identity_rows),
+                }
+            )
+    for index, row in enumerate(references):
+        if not isinstance(row, dict):
+            failures.append(
+                {"check": f"references[{index}]", "reason": "reference row must be an object"}
+            )
+            continue
+        raw_path = str(row.get("path") or "").strip()
+        expected_sha = str(row.get("sha256") or "").strip().lower()
+        if not raw_path:
+            failures.append(
+                {"check": f"references[{index}].path", "reason": "reference path is required"}
+            )
+            continue
+        resolved = resolve_path(raw_path, request_path)
+        if not resolved.is_file():
+            failures.append(
+                {
+                    "check": f"references[{index}].path",
+                    "reason": "reference file does not exist",
+                    "path": str(resolved),
+                }
+            )
+            continue
+        actual_sha = sha256_path(resolved)
+        if expected_sha != actual_sha:
+            failures.append(
+                {
+                    "check": f"references[{index}].sha256",
+                    "reason": "reference bytes differ from the recorded digest",
+                    "expected": expected_sha,
+                    "actual": actual_sha,
+                }
+            )
+
+    return {
+        "schema_version": "photo-image-render-request-audit/v1",
+        "pack_id": pack_id,
+        "status": "pass" if not failures else "fail",
+        "runtime_prompt_id": hashlib.sha256(runtime_prompt.encode("utf-8")).hexdigest()[:16],
+        "negative_matches_pack": runtime_negative == pack_negative,
+        "reference_count": len(references),
+        "failures": failures,
+        "boundary": (
+            "This audit verifies exact text and reference bytes before generation. It does not inspect "
+            "rendered pixels or establish user-perceived quality."
+        ),
+    }
+
+
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--pack", required=True)
+    parser.add_argument("--composed", required=True)
+    parser.add_argument("--request", required=True)
+    parser.add_argument("--output")
+    return parser.parse_args(argv)
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = parse_args(argv)
+    try:
+        pack = one_object(load_json_arg(args.pack), "candidate pack")
+        composed = one_object(load_json_arg(args.composed), "composed prompt")
+        request = one_object(load_json_arg(args.request), "render request")
+        request_path = None
+        raw_request_path = Path(args.request).expanduser()
+        if not args.request.strip().startswith(("{", "[")) and raw_request_path.is_file():
+            request_path = raw_request_path.resolve()
+        result = audit_image_render_request(
+            pack, composed, request, request_path=request_path
+        )
+    except (OSError, ValueError, json.JSONDecodeError) as exc:
+        print(json.dumps({"status": "error", "reason": str(exc)}, ensure_ascii=False, indent=2))
+        return 2
+
+    rendered = json.dumps(result, ensure_ascii=False, indent=2) + "\n"
+    if args.output:
+        Path(args.output).write_text(rendered, encoding="utf-8")
+    print(rendered, end="")
+    return 0 if result["status"] == "pass" else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

@@ -2,6 +2,10 @@
 
 Use this contract only when the candidate pack contains `viewer_experience.enabled: true`. It is a composition and local image-review procedure, not a score predicting human emotion, purchase, virality, or long-term attachment.
 
+An explicit routed moe request enables this contract automatically. In that case, compose it together with `moe_response` and read `moe-response-contract.md`: the viewer promise and affect evidence must refer to the same baseline, unfinished event, visible response, and consequence rather than adding a second emotional scene.
+
+For a routed moe request, the first-glance hook must also preserve the aesthetic entry condition: an unmistakably adult character who reads as both pretty/beautiful and cute/charming under the routed bishoujo, bishonen, or androgynous presentation. This face/hair/style read does not count as affect evidence by itself; the actor/action/target/consequence chain is still separately required.
+
 ## Compose One Viewer Promise
 
 1. Declare the viewing context and the target audience's required literacy. Use `required_prior_knowledge: none` when the frame must work without insider knowledge.
@@ -59,6 +63,8 @@ Use this contract only when the candidate pack contains `viewer_experience.enabl
 - `causal_second_reading` requires a concrete description and `reinspection_reward_phrase` tied to the same event. Noncommercial creative-direction runs require it.
 - `comprehend`, `remember`, and `act` require `commercial_legibility_phrase`. Keep product identity and function immediately readable; do not hide them behind a puzzle.
 - A face, gaze, or expression may support affect but cannot replace action, target, and consequence.
+- When a tsundere moe response relies on concealed affection, separate the lower care-action anchor from one blurred partial outer-eye-plus-temple/profile landmark belonging to the same adult recipient at a named upper frame edge. The primary character's head and nose turn three-quarter toward the opposite side while only the irises return toward that visible landmark with a suppressed cue of private liking. Looking only at the hand, wound, object, or task is care evidence, not peer-liking evidence; an imagined off-frame eye line, a competing second full face, or head and irises turning together is not visible concealed-affect evidence. Explicit mamang/maternal requests use the separate `nurturant_benevolence` register and must bind relaxed brow, patient soft eyes, reassuring mouth, and calm protective attention instead of this gaze contradiction. Ordinary kindness uses `directed_care_without_role_inference`, so the viewer promise must not invent motherhood.
+- For a moe-response pack, a settled endpoint is insufficient even when the action and consequence are recognizable. Preserve the unfinished `event_phase` so the involuntary leak or attempted recovery remains visible.
 - Do not use baby face, childlike proportions, oversized eyes, or other youth morphology as attachment evidence. Adult character routes retain explicit-adult and non-inference guards.
 - Do not use `cute`, `moe`, `anime`, `cinematic`, `emotional`, or similar labels alone as evidence. Show what the character or object does.
 - Do not write `the viewer feels`, `evokes empathy`, `creates attachment`, `memorable image`, or other response declarations as evidence.
@@ -80,5 +86,6 @@ Prompt audit is preflight only. Inspect generated pixels without prompt or resul
 - the selected attachment channel or commercial objective to remain intact;
 - any reinspection reward to support the same causal meaning;
 - topic, adult/IP/cultural boundaries, and photographic coherence to remain intact.
+- for identity-controlled edits, the same supplied adult face and age to remain intact before interpreting preference differences.
 
 Record this as local product qualification. Human audience response still requires a separate human evaluation and must not be inferred from audit or image-review PASS.
