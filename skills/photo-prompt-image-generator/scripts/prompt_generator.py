@@ -128,6 +128,58 @@ CANDIDATE_PACK_HYBRID_CONTRACT_VERSION = "photo-hybrid-augmentation/v1"
 CANDIDATE_PACK_HYBRID_AUTHORIAL_CONTRACT_VERSION = "photo-hybrid-augmentation/v2"
 CANDIDATE_PACK_AUTHORIAL_COMPOSITION_VERSION = "photo-authorial-composition/v1"
 CANDIDATE_PACK_AUTHORIAL_SCENE_VERSION = "photo-authorial-scene/v1"
+AUTHORIAL_REQUEST_CONTRACT_VERSION = "authorial-request/v1"
+JAPANESE_SUBCULTURE_PHOTO_CONTRACT_VERSION = "japanese-subculture-photo/v1"
+JAPANESE_SUBCULTURE_PHOTO_STYLE_PRESET_IDS = (
+    "lolita_coordinate_culture",
+    "decora_diy_maximalism",
+    "gyaru_shibuya_glam",
+    "heisei_y2k_revival",
+    "visual_kei_live_house",
+    "artist_alley_fan_publishing_exchange",
+    "retro_arcade_community_practice",
+    "idol_fandom_material_culture",
+)
+JAPANESE_SUBCULTURE_PHOTO_STYLE_FAMILY_CUES = {
+    "lolita_coordinate_culture": ("lolita", "로리타", "ロリータ"),
+    "decora_diy_maximalism": ("decora", "데코라", "デコラ"),
+    "gyaru_shibuya_glam": ("gyaru", "갸루", "ギャル"),
+    "heisei_y2k_revival": ("heisei", "y2k", "헤이세이", "平成"),
+    "visual_kei_live_house": ("visual kei", "비주얼계", "ヴィジュアル系"),
+    "artist_alley_fan_publishing_exchange": (
+        "artist alley",
+        "doujinshi",
+        "동인지",
+        "同人誌",
+    ),
+    "retro_arcade_community_practice": (
+        "retro arcade",
+        "레트로 아케이드",
+        "レトロゲームセンター",
+    ),
+    "idol_fandom_material_culture": (
+        "idol fandom",
+        "아이돌 팬덤",
+        "アイドルファンダム",
+    ),
+}
+JAPANESE_SUBCULTURE_PHOTO_STYLE_EVIDENCE_SLOTS = (
+    "wardrobe_style",
+    "costume_style",
+    "makeup_style",
+    "hair_style",
+    "prop",
+    "location",
+    "action",
+)
+JAPANESE_SUBCULTURE_UNSCOPED_STRONG_THEME_ENTRY_IDS = {
+    "aged_skin_vs_baby_skin",
+    "bioluminescence",
+    "cracked_concrete_grit_texture",
+    "drone_camera_type",
+    "scale_skin_macro",
+    "underworld_red_underlight",
+}
 CANDIDATE_PACK_AUTHORIAL_LENSES = (
     "gesture_and_interruption",
     "material_and_contact",
@@ -6001,6 +6053,13 @@ def render_contract_resolved_scene_blueprints(data: JsonDict, preset: JsonDict) 
             "natural_moe_relationship_registers": normalize_list(
                 raw.get("natural_moe_relationship_registers")
             ),
+            # Scene relevance is opt-in control-plane metadata.  Long scene
+            # prose contains generic words such as ``adult`` and ``scene``;
+            # deriving relevance terms from that prose made control language
+            # look like a user-requested event.  These cues remain private and
+            # are never projected as v4 authoring answers.
+            "selection_cues": normalize_list(raw.get("selection_cues")),
+            "requires_selection_cue": bool(raw.get("requires_selection_cue")),
             "subject": str(raw.get("subject") or "").strip(),
             "subject_ko": str(raw.get("subject_ko") or raw.get("subject") or "").strip(),
             "subject_kind": normalize_list(raw.get("subject_kind")),
@@ -6037,7 +6096,430 @@ def candidate_pack_scene_blueprint_request_text(result: JsonDict) -> str:
         *normalize_list(provenance.get("user_mandatory_intents")),
         *normalize_list(provenance.get("additional_requirements")),
     ]
+    authorial_request = (
+        provenance.get("authorial_request")
+        if isinstance(provenance.get("authorial_request"), dict)
+        else {}
+    )
+    values.extend(
+        str(authorial_request.get(key) or "")
+        for key in ("subject", "setting", "event", "style_family")
+    )
+    values.extend(normalize_list(authorial_request.get("style_evidence")))
     return " ".join(values).lower()
+
+
+def candidate_pack_scene_blueprint_request_channels(result: JsonDict) -> List[JsonDict]:
+    """Describe request provenance without treating every word as scene evidence.
+
+    Concept, mandatory-intent, and additional-requirement text can all contain
+    scene cues, but they also carry age, identity, tone, and safety controls.
+    The selector therefore searches only blueprint-authored ``selection_cues``
+    inside these channels; it never derives relevance vocabulary from full
+    scene prose or scores generic control words.
+    """
+    provenance = result.get("provenance") if isinstance(result.get("provenance"), dict) else {}
+    channel_specs = (
+        ("concept_lock", "mixed_scene_style_and_control"),
+        ("user_mandatory_intents", "mixed_scene_constraint_and_control"),
+        ("additional_requirements", "mixed_scene_constraint_and_control"),
+    )
+    return [
+        {
+            "channel": key,
+            "role": role,
+            "values": normalize_list(provenance.get(key)),
+        }
+        for key, role in channel_specs
+        if normalize_list(provenance.get(key))
+    ] + (
+        [
+            {
+                "channel": "authorial_request",
+                "role": "agent_prepack_scene_and_style",
+                "values": [
+                    str(authorial_request.get(key) or "")
+                    for key in ("subject", "setting", "event", "style_family")
+                    if str(authorial_request.get(key) or "").strip()
+                ]
+                + normalize_list(authorial_request.get("style_evidence")),
+            }
+        ]
+        if isinstance(
+            (authorial_request := provenance.get("authorial_request")),
+            dict,
+        )
+        else []
+    )
+
+
+def candidate_pack_scene_blueprint_cue_matches(
+    request_text: str,
+    blueprint: JsonDict,
+) -> List[str]:
+    """Return explicit, boundary-aware scene cues matched by the request."""
+    return [
+        cue
+        for cue in normalize_list(blueprint.get("selection_cues"))
+        if intent_alias_matches(request_text, cue)
+    ]
+
+
+def candidate_pack_japanese_subculture_photo_requested(text: str) -> bool:
+    return bool(
+        re.search(
+            r"(?<![a-z0-9])japanese[-\s]+subculture(?:[-\s]+style)?(?![a-z0-9])|"
+            r"일본\s*서브\s*컬처|日本(?:の)?(?:サブカル|サブカルチャー)",
+            str(text or ""),
+            flags=re.IGNORECASE,
+        )
+    )
+
+
+def candidate_pack_japanese_subculture_explicit_family(
+    data: JsonDict,
+    request_text: str,
+) -> Optional[JsonDict]:
+    for preset_id in JAPANESE_SUBCULTURE_PHOTO_STYLE_PRESET_IDS:
+        preset = candidate_pack_preset_by_id(data, preset_id)
+        if not isinstance(preset, dict):
+            continue
+        aliases = [
+            *JAPANESE_SUBCULTURE_PHOTO_STYLE_FAMILY_CUES.get(preset_id, ()),
+            str(preset.get("id") or "").replace("_", " "),
+            str(preset.get("en") or ""),
+            str(preset.get("ko") or ""),
+            *normalize_list(preset.get("aliases")),
+            *normalize_list(preset.get("keywords")),
+        ]
+        if any(alias and intent_alias_matches(request_text, alias) for alias in aliases):
+            return preset
+    return None
+
+
+def candidate_pack_japanese_subculture_visible_cues(
+    data: JsonDict,
+    preset: JsonDict,
+) -> List[JsonDict]:
+    filters = preset.get("filters") if isinstance(preset.get("filters"), dict) else {}
+    cues: List[JsonDict] = []
+    seen_ids: Set[str] = set()
+    for slot in JAPANESE_SUBCULTURE_PHOTO_STYLE_EVIDENCE_SLOTS:
+        slot_filter = filters.get(slot) if isinstance(filters.get(slot), dict) else {}
+        for entry_id in normalize_list(slot_filter.get("ids")):
+            if entry_id in seen_ids:
+                continue
+            entry = candidate_pack_slot_entry_by_id(data, slot, entry_id)
+            phrase = localize(entry or {}, "en") if isinstance(entry, dict) else ""
+            if not phrase:
+                continue
+            cues.append(
+                {
+                    "cue_id": entry_id,
+                    "source_slot": slot,
+                    "prompt_phrase": phrase,
+                }
+            )
+            seen_ids.add(entry_id)
+            if len(cues) >= 3:
+                return cues
+    return cues
+
+
+def candidate_pack_japanese_subculture_photo(
+    data: JsonDict,
+    result: JsonDict,
+) -> Optional[JsonDict]:
+    provenance = result.get("provenance") if isinstance(result.get("provenance"), dict) else {}
+    authorial_request = (
+        provenance.get("authorial_request")
+        if isinstance(provenance.get("authorial_request"), dict)
+        else None
+    )
+    request_text = candidate_pack_scene_blueprint_request_text(result)
+    if (
+        isinstance(authorial_request, dict)
+        and authorial_request.get("style_domain") == "japanese_subculture_photo"
+    ):
+        explicit_family = candidate_pack_preset_by_id(
+            data,
+            str(authorial_request.get("style_family") or ""),
+        )
+    else:
+        explicit_family = candidate_pack_japanese_subculture_explicit_family(
+            data,
+            request_text,
+        )
+    if explicit_family is None and not candidate_pack_japanese_subculture_photo_requested(
+        request_text
+    ):
+        return None
+    available = [
+        preset
+        for preset_id in JAPANESE_SUBCULTURE_PHOTO_STYLE_PRESET_IDS
+        for preset in [candidate_pack_preset_by_id(data, preset_id)]
+        if isinstance(preset, dict)
+    ]
+    if not available:
+        raise ValueError("Japanese-subculture photo style presets are unavailable")
+    if explicit_family is not None:
+        selected = explicit_family
+        selection_source = (
+            "agent_prepack_authorial_request"
+            if isinstance(authorial_request, dict)
+            else "explicit_style_family"
+        )
+    else:
+        provenance = result.get("provenance") if isinstance(result.get("provenance"), dict) else {}
+        seed = str(provenance.get("seed") or "0")
+        digest = hashlib.sha256(
+            f"japanese-subculture-photo-style|{seed}".encode("utf-8")
+        ).digest()
+        selected = available[int.from_bytes(digest[:8], "big") % len(available)]
+        selection_source = "deterministic_generic_family"
+    if isinstance(authorial_request, dict):
+        visible_cues = [
+            {
+                "cue_id": f"authorial_style_evidence_{index + 1}",
+                "source_slot": "authorial_request",
+                "prompt_phrase": phrase,
+            }
+            for index, phrase in enumerate(
+                normalize_list(authorial_request.get("style_evidence"))
+            )
+        ]
+    else:
+        visible_cues = candidate_pack_japanese_subculture_visible_cues(data, selected)
+    if len(visible_cues) < 2:
+        raise ValueError(
+            f"Japanese-subculture style {selected.get('id')!r} has fewer than two visible cues"
+        )
+    return {
+        "enabled": True,
+        "requested": True,
+        "contract_version": JAPANESE_SUBCULTURE_PHOTO_CONTRACT_VERSION,
+        "style_family_id": str(selected.get("id") or ""),
+        "style_family_label": str(selected.get("en") or selected.get("id") or ""),
+        "selection_source": selection_source,
+        **(
+            {
+                "source_authorial_request_sha256": str(
+                    authorial_request.get("canonical_sha256") or ""
+                )
+            }
+            if isinstance(authorial_request, dict)
+            else {}
+        ),
+        "visible_cues": visible_cues,
+        "minimum_visible_cues": 2,
+        "identity_policy": {
+            "reference_role": "identity_and_adult_age_only",
+            "infer_ethnicity_or_nationality": False,
+            "style_is_clothing_grooming_prop_venue_and_community_evidence": True,
+        },
+        "composition_requirements": {
+            "style_label_alone_is_insufficient": True,
+            "minimum_literal_visible_cues": 2,
+            "preserve_original_fictional_and_unbranded_design": True,
+        },
+        "candidate_guard": {
+            "blocked_unrequested_entry_ids": sorted(
+                JAPANESE_SUBCULTURE_UNSCOPED_STRONG_THEME_ENTRY_IDS
+            ),
+            "explicitly_preserved_entry_ids": [],
+            "removed_candidate_ids": [],
+        },
+        "evaluation_boundary": (
+            "prompt_audit_checks_literal_style_evidence_only;_native_pixels_must_be_reviewed_separately"
+        ),
+    }
+
+
+def candidate_pack_request_explicitly_names_entry(
+    data: JsonDict,
+    request_text: str,
+    slot: str,
+    entry_id: str,
+) -> bool:
+    entry = candidate_pack_slot_entry_by_id(data, slot, entry_id) or {}
+    aliases = [
+        entry_id.replace("_", " "),
+        *normalize_list(entry.get("aliases")),
+        *normalize_list(entry.get("keywords")),
+    ]
+    return any(alias and intent_alias_matches(request_text, alias) for alias in aliases)
+
+
+def candidate_pack_apply_japanese_subculture_candidate_guard(
+    data: JsonDict,
+    result: JsonDict,
+    slots: JsonDict,
+    candidate_entries: Dict[str, tuple[str, Optional[str], JsonDict]],
+    contract: Optional[JsonDict],
+) -> None:
+    if not isinstance(contract, dict) or contract.get("requested") is not True:
+        return
+    request_text = candidate_pack_scene_blueprint_request_text(result)
+    removed_candidate_ids: List[str] = []
+    explicitly_preserved_entry_ids: List[str] = []
+    for slot, payload in slots.items():
+        if not isinstance(payload, dict):
+            continue
+        retained: List[JsonDict] = []
+        for candidate in payload.get("candidates") or []:
+            if not isinstance(candidate, dict):
+                continue
+            entry_id = str(candidate.get("entry_id") or "")
+            candidate_id = str(candidate.get("id") or "")
+            if entry_id not in JAPANESE_SUBCULTURE_UNSCOPED_STRONG_THEME_ENTRY_IDS:
+                retained.append(candidate)
+                continue
+            if candidate_pack_request_explicitly_names_entry(
+                data,
+                request_text,
+                str(slot),
+                entry_id,
+            ):
+                retained.append(candidate)
+                explicitly_preserved_entry_ids.append(entry_id)
+                continue
+            removed_candidate_ids.append(candidate_id)
+            candidate_entries.pop(candidate_id, None)
+        payload["candidates"] = retained
+        payload["candidate_count"] = len(retained)
+        if str(payload.get("selected") or "") in removed_candidate_ids:
+            if retained:
+                payload["selected"] = str(retained[0].get("id") or "")
+            else:
+                payload.pop("selected", None)
+    guard = contract.get("candidate_guard") if isinstance(contract.get("candidate_guard"), dict) else {}
+    guard["removed_candidate_ids"] = sorted(set(removed_candidate_ids))
+    guard["explicitly_preserved_entry_ids"] = sorted(
+        set(explicitly_preserved_entry_ids)
+    )
+    contract["candidate_guard"] = guard
+
+
+def authorial_request_content_words(text: str) -> List[str]:
+    stopwords = {
+        "a",
+        "an",
+        "and",
+        "as",
+        "at",
+        "by",
+        "for",
+        "from",
+        "in",
+        "into",
+        "of",
+        "on",
+        "or",
+        "the",
+        "to",
+        "with",
+    }
+    return [
+        token.lower()
+        for token in re.findall(r"[A-Za-z0-9][A-Za-z0-9_-]*|[가-힣]{2,}|[ぁ-んァ-ン一-龯]{2,}", str(text or ""))
+        if token.lower() not in stopwords
+    ]
+
+
+def normalize_authorial_request(payload: Any, data: JsonDict) -> JsonDict:
+    if not isinstance(payload, dict):
+        raise ValueError("--authorial-request-json must contain one JSON object")
+    allowed_fields = {
+        "contract_version",
+        "provenance",
+        "subject",
+        "setting",
+        "event",
+        "style_domain",
+        "style_family",
+        "style_evidence",
+        "variation_key",
+    }
+    unknown_fields = sorted(set(payload) - allowed_fields)
+    if unknown_fields:
+        raise ValueError(
+            "authorial request contains pack-derived or unsupported fields: "
+            + ", ".join(unknown_fields)
+        )
+    normalized: JsonDict = {
+        "contract_version": str(payload.get("contract_version") or ""),
+        "provenance": str(payload.get("provenance") or ""),
+        "subject": clean_spaces(str(payload.get("subject") or "")),
+        "setting": clean_spaces(str(payload.get("setting") or "")),
+        "event": clean_spaces(str(payload.get("event") or "")),
+        "style_domain": str(payload.get("style_domain") or "").strip(),
+        "style_family": str(payload.get("style_family") or "").strip(),
+        "style_evidence": [
+            clean_spaces(item)
+            for item in normalize_list(payload.get("style_evidence"))
+            if clean_spaces(item)
+        ],
+        "variation_key": str(payload.get("variation_key") or "").strip(),
+    }
+    if normalized["contract_version"] != AUTHORIAL_REQUEST_CONTRACT_VERSION:
+        raise ValueError(
+            f"authorial request contract_version must be {AUTHORIAL_REQUEST_CONTRACT_VERSION!r}"
+        )
+    if normalized["provenance"] != "agent_prepack":
+        raise ValueError("authorial request provenance must be 'agent_prepack'")
+    if normalized["style_domain"] != "japanese_subculture_photo":
+        raise ValueError(
+            "authorial request style_domain must be 'japanese_subculture_photo'"
+        )
+    if normalized["style_family"] not in JAPANESE_SUBCULTURE_PHOTO_STYLE_PRESET_IDS:
+        raise ValueError("authorial request style_family is not a supported typed family")
+    if candidate_pack_preset_by_id(data, normalized["style_family"]) is None:
+        raise ValueError("authorial request style_family is unavailable in the current dictionary")
+    minimum_words = {"subject": 4, "setting": 4, "event": 5}
+    for field, minimum in minimum_words.items():
+        if len(authorial_request_content_words(normalized[field])) < minimum:
+            raise ValueError(
+                f"authorial request {field} needs at least {minimum} concrete content words"
+            )
+    if len(normalized["style_evidence"]) < 2:
+        raise ValueError("authorial request requires at least two style_evidence phrases")
+    if len({item.lower() for item in normalized["style_evidence"]}) != len(
+        normalized["style_evidence"]
+    ):
+        raise ValueError("authorial request style_evidence phrases must be distinct")
+    for phrase in normalized["style_evidence"]:
+        if len(authorial_request_content_words(phrase)) < 4:
+            raise ValueError(
+                "each authorial request style_evidence phrase needs at least four concrete content words"
+            )
+    if not normalized["variation_key"]:
+        raise ValueError("authorial request variation_key must be non-empty")
+    canonical_bytes = json.dumps(
+        normalized,
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+    ).encode("utf-8")
+    normalized["canonical_sha256"] = hashlib.sha256(canonical_bytes).hexdigest()
+    normalized["request_id"] = normalized["canonical_sha256"][:16]
+    return normalized
+
+
+def load_authorial_request_arg(raw: Optional[str], data: JsonDict) -> Optional[JsonDict]:
+    if not raw:
+        return None
+    payload: Any
+    try:
+        candidate = Path(raw)
+        is_file = candidate.exists()
+    except OSError:
+        is_file = False
+        candidate = Path(".")
+    if is_file:
+        payload = json.loads(candidate.read_text(encoding="utf-8"))
+    else:
+        payload = json.loads(raw)
+    return normalize_authorial_request(payload, data)
 
 
 def candidate_pack_uses_natural_moe_route_preset(
@@ -6086,6 +6568,8 @@ def candidate_pack_select_scene_blueprint(
     result: JsonDict,
     preset: JsonDict,
     blueprints: Sequence[JsonDict],
+    *,
+    routing_trace: Optional[JsonDict] = None,
 ) -> JsonDict:
     if not blueprints:
         return {}
@@ -6181,52 +6665,107 @@ def candidate_pack_select_scene_blueprint(
         if authored_matching:
             matching = authored_matching
         blueprints = matching
-    scored: List[tuple[int, str, JsonDict]] = []
+    scored: List[tuple[int, str, JsonDict, List[str]]] = []
     for blueprint in blueprints:
-        corpus = " ".join(
-            [
+        matched_cues = candidate_pack_scene_blueprint_cue_matches(
+            request_text,
+            blueprint,
+        )
+        scored.append(
+            (
+                len(matched_cues),
                 str(blueprint.get("id") or ""),
-                str(blueprint.get("subject") or ""),
-                str(blueprint.get("action") or ""),
-                str(blueprint.get("location") or ""),
-                str(blueprint.get("prop") or ""),
-                *normalize_list(blueprint.get("scene_functions")),
-                *normalize_list(blueprint.get("genre_anchors")),
-            ]
-        ).lower()
-        terms = {
-            token
-            for token in re.split(r"[^a-z0-9가-힣]+", corpus)
-            if len(token) >= 4
-        }
-        score = sum(1 for term in terms if term in request_text)
-        scored.append((score, str(blueprint.get("id") or ""), blueprint))
+                blueprint,
+                matched_cues,
+            )
+        )
     scored.sort(key=lambda row: (-row[0], row[1]))
+    if routing_trace is not None:
+        routing_trace.clear()
+        routing_trace.update(
+            {
+                "contract_version": "photo-scene-routing-explanation/v1",
+                "diagnostic_only": True,
+                "request_channels": [
+                    {
+                        "channel": row["channel"],
+                        "role": row["role"],
+                        "value_count": len(row["values"]),
+                    }
+                    for row in candidate_pack_scene_blueprint_request_channels(result)
+                ],
+                "candidate_scores": [
+                    {
+                        "blueprint_id": blueprint_id,
+                        "score": score,
+                        "matched_selection_cues": list(matched_cues),
+                        "requires_selection_cue": bool(
+                            blueprint.get("requires_selection_cue")
+                        ),
+                    }
+                    for score, blueprint_id, blueprint, matched_cues in scored
+                ],
+            }
+        )
     if scored[0][0] > 0 and (len(scored) == 1 or scored[0][0] > scored[1][0]):
         selected = dict(scored[0][2])
-        selected["selection_source"] = "unique_request_relevance"
+        selected["selection_source"] = "explicit_selection_cue"
+        if routing_trace is not None:
+            routing_trace.update(
+                {
+                    "selection_source": selected["selection_source"],
+                    "selected_blueprint_id": str(selected.get("id") or ""),
+                    "matched_selection_cues": list(scored[0][3]),
+                }
+            )
         return selected
+    if scored[0][0] > 0:
+        highest_score = scored[0][0]
+        scored = [row for row in scored if row[0] == highest_score]
+        blueprints = [row[2] for row in scored]
+        cue_matches_by_id = {row[1]: list(row[3]) for row in scored}
+        cue_tie = True
+    else:
+        blueprints = [
+            row[2]
+            for row in scored
+            if not bool(row[2].get("requires_selection_cue"))
+        ]
+        cue_matches_by_id = {}
+        cue_tie = False
+        if not blueprints:
+            preset_id = str(preset.get("id") or "")
+            raise ValueError(
+                f"Preset {preset_id!r} has no scene eligible without an explicit selection cue"
+            )
     seed = str(provenance.get("seed") or "0")
     preset_id = str(preset.get("id") or "")
     preset_digest = hashlib.sha256(f"scene-blueprint-offset|{preset_id}".encode("utf-8")).digest()
     offset = int.from_bytes(preset_digest[:8], "big") % len(blueprints)
     try:
         index = (int(seed) + offset) % len(blueprints)
-        selection_source = (
-            "requested_scene_function"
-            if requested_function
-            else "deterministic_seed_cycle"
+        selection_source = "requested_scene_function" if requested_function else (
+            "explicit_selection_cue_tie" if cue_tie else "deterministic_seed_cycle"
         )
     except (TypeError, ValueError):
         digest = hashlib.sha256(f"scene-blueprint|{seed}|{preset_id}".encode("utf-8")).digest()
         index = int.from_bytes(digest[:8], "big") % len(blueprints)
-        selection_source = (
-            "requested_scene_function"
-            if requested_function
-            else "deterministic_seed_hash"
+        selection_source = "requested_scene_function" if requested_function else (
+            "explicit_selection_cue_tie" if cue_tie else "deterministic_seed_hash"
         )
     selected = dict(blueprints[index])
     selected["selection_source"] = selection_source
+    if routing_trace is not None:
+        routing_trace.update(
+            {
+                "selection_source": selection_source,
+                "selected_blueprint_id": str(selected.get("id") or ""),
+                "matched_selection_cues": cue_matches_by_id.get(
+                    str(selected.get("id") or ""),
+                    [],
+                ),
+            }
+        )
     return selected
 
 
@@ -6234,6 +6773,8 @@ def candidate_pack_resolve_scene_blueprint(
     data: JsonDict,
     result: JsonDict,
     preset: JsonDict,
+    *,
+    routing_trace: Optional[JsonDict] = None,
 ) -> JsonDict:
     """Resolve one render scene without mutating the sampler candidate pool.
 
@@ -6243,7 +6784,12 @@ def candidate_pack_resolve_scene_blueprint(
     semantic/sampler result.
     """
     blueprints = render_contract_resolved_scene_blueprints(data, preset)
-    selected = candidate_pack_select_scene_blueprint(result, preset, blueprints)
+    selected = candidate_pack_select_scene_blueprint(
+        result,
+        preset,
+        blueprints,
+        routing_trace=routing_trace,
+    )
     if not selected:
         return {}
     selected["atomic_scene"] = {
@@ -8629,6 +9175,16 @@ def candidate_pack_v4_project_quality_surfaces(projected: JsonDict) -> None:
 
 
 def candidate_pack_v4_project_scene(projected: JsonDict) -> bool:
+    prepack_authorial_request = (
+        projected.get("authorial_request")
+        if isinstance(projected.get("authorial_request"), dict)
+        else None
+    )
+    governing_request_sha256 = (
+        str(prepack_authorial_request.get("canonical_sha256") or "")
+        if isinstance(prepack_authorial_request, dict)
+        else ""
+    )
     scene_contract = (
         projected.get("scene_contract")
         if isinstance(projected.get("scene_contract"), dict)
@@ -8704,17 +9260,55 @@ def candidate_pack_v4_project_scene(projected: JsonDict) -> bool:
             {
                 "group": "authorial_scene",
                 "strategy": "authorial_scene",
-                "source": "selected_render_blueprint_abstraction",
+                "source": (
+                    "prepack_authorial_request"
+                    if governing_request_sha256
+                    else "selected_render_blueprint_abstraction"
+                ),
                 "fail_closed": True,
                 "contract_version": CANDIDATE_PACK_AUTHORIAL_SCENE_VERSION,
                 "required_authored_slots": required_slots,
-                "scene_functions": normalize_list(selected_scene.get("scene_functions")),
-                "diegetic_visual_provenance": normalize_list(
-                    selected_scene.get("diegetic_visual_provenance")
+                "scene_functions": (
+                    ["agent_authored_event"]
+                    if governing_request_sha256
+                    else normalize_list(selected_scene.get("scene_functions"))
                 ),
-                "relationship_stakes": normalize_list(selected_scene.get("relationship_stakes")),
-                "genre_anchors": normalize_list(selected_scene.get("genre_anchors")),
-                "visual_evidence_types": normalize_list(selected_scene.get("visual_evidence_types")),
+                "diegetic_visual_provenance": (
+                    ["agent_prepack_authorial_request"]
+                    if governing_request_sha256
+                    else normalize_list(selected_scene.get("diegetic_visual_provenance"))
+                ),
+                "relationship_stakes": (
+                    []
+                    if governing_request_sha256
+                    else normalize_list(selected_scene.get("relationship_stakes"))
+                ),
+                "genre_anchors": (
+                    ["photographic_scene", "agent_prepack_authored_concept"]
+                    if governing_request_sha256
+                    else normalize_list(selected_scene.get("genre_anchors"))
+                ),
+                "visual_evidence_types": (
+                    ["subject", "event", "setting", "style_evidence"]
+                    if governing_request_sha256
+                    else normalize_list(selected_scene.get("visual_evidence_types"))
+                ),
+                **(
+                    {
+                        "governing_request_sha256": governing_request_sha256,
+                        "governing_request_fields": [
+                            "subject",
+                            "setting",
+                            "event",
+                            "style_domain",
+                            "style_family",
+                            "style_evidence",
+                            "variation_key",
+                        ],
+                    }
+                    if governing_request_sha256
+                    else {}
+                ),
                 "composition_policy": {
                     "invent_scene_atoms_instead_of_copying_a_source_scene": True,
                     "source_sentence_reuse_forbidden": True,
@@ -8731,6 +9325,9 @@ def candidate_pack_v4_project_scene(projected: JsonDict) -> bool:
                         "relationship",
                     ],
                     "prompt_evidence_must_be_literal": True,
+                    "prepack_authorial_request_is_governing": bool(
+                        governing_request_sha256
+                    ),
                 },
             }
         )
@@ -8742,7 +9339,18 @@ def candidate_pack_v4_project_scene(projected: JsonDict) -> bool:
             "enabled": True,
             "contract_version": CANDIDATE_PACK_AUTHORIAL_SCENE_VERSION,
             "required_authored_slots": ["subject", "action", "location", "prop"],
-            "instruction": "Invent one coherent scene from the abstract functions and stakes; do not reconstruct or imitate a source blueprint.",
+            **(
+                {
+                    "governing_request_sha256": governing_request_sha256,
+                    "instruction": (
+                        "Realize the frozen pre-pack authorial request as one coherent scene; preserve its subject, event, setting and style evidence without reconstructing a private source blueprint."
+                    ),
+                }
+                if governing_request_sha256
+                else {
+                    "instruction": "Invent one coherent scene from the abstract functions and stakes; do not reconstruct or imitate a source blueprint."
+                }
+            ),
         }
     if authored_scene_enabled and optional_group_count:
         scene_contract["strategy"] = "authorial_scene_with_optional_inspiration"
@@ -9272,6 +9880,18 @@ def candidate_pack_project_v4(projected: JsonDict) -> JsonDict:
             "augmentation_candidates_use_augmentation_brief": True,
         },
         "authored_scene_required": authored_scene_enabled,
+        "prepack_authorial_request_bound": bool(
+            isinstance(projected.get("authorial_request"), dict)
+        ),
+        **(
+            {
+                "governing_request_sha256": str(
+                    projected["authorial_request"].get("canonical_sha256") or ""
+                )
+            }
+            if isinstance(projected.get("authorial_request"), dict)
+            else {}
+        ),
     }
     return projected
 
@@ -9381,6 +10001,8 @@ def build_candidate_pack(
     result: JsonDict,
     data: JsonDict,
     candidate_pack_version: str = DEFAULT_CANDIDATE_PACK_VERSION,
+    *,
+    explain_scene_routing: bool = False,
 ) -> JsonDict:
     requested_contract_version = candidate_pack_contract_version(candidate_pack_version)
     trace = result.get("semantic_trace") if isinstance(result.get("semantic_trace"), dict) else {}
@@ -9396,12 +10018,22 @@ def build_candidate_pack(
         candidate_entries,
         soft_policy.get("species_family_policy", {"enabled": False, "allowed": {}}),
     )
+    japanese_subculture_photo = candidate_pack_japanese_subculture_photo(data, result)
+    candidate_pack_apply_japanese_subculture_candidate_guard(
+        data,
+        result,
+        slots,
+        candidate_entries,
+        japanese_subculture_photo,
+    )
     adult_appeal = candidate_pack_hybrid_adult_appeal(data, result, candidate_entries)
     selected_preset = candidate_pack_selected_preset(data, result)
+    private_scene_routing: Optional[JsonDict] = {} if explain_scene_routing else None
     selected_blueprint = candidate_pack_resolve_scene_blueprint(
         data,
         result,
         selected_preset,
+        routing_trace=private_scene_routing,
     )
     conflicts = candidate_pack_conflicts(data, candidate_entries)
     candidate_pack_apply_conflicts(slots, conflicts)
@@ -9552,6 +10184,7 @@ def build_candidate_pack(
             "concept_gate_results": provenance.get("concept_gate_results", []),
             "concept_scene_variants": provenance.get("concept_scene_variants", []),
             "requested_scene_function": provenance.get("requested_scene_function"),
+            "legacy_replay_reason": provenance.get("legacy_replay_reason"),
             "safety": provenance.get("safety", contract.get("safety", {})),
             "argv": provenance.get("argv", []),
             "sample_prompt_id": provenance.get("prompt_id"),
@@ -9559,6 +10192,13 @@ def build_candidate_pack(
     }
     if creative_exploration is not None:
         pack["creative_exploration"] = creative_exploration
+    authorial_request = (
+        provenance.get("authorial_request")
+        if isinstance(provenance.get("authorial_request"), dict)
+        else None
+    )
+    if authorial_request is not None:
+        pack["authorial_request"] = copy.deepcopy(authorial_request)
     if creative_direction is not None:
         pack["creative_direction"] = creative_direction
     if moe_response is not None:
@@ -9568,6 +10208,8 @@ def build_candidate_pack(
             pack["provenance"]["character_response"] = character_response
     if viewer_experience is not None:
         pack["viewer_experience"] = viewer_experience
+    if japanese_subculture_photo is not None:
+        pack["japanese_subculture_photo"] = japanese_subculture_photo
     if hybrid_augmentation is not None:
         pack["provenance"]["hybrid_augmentation_requested"] = bool(
             provenance.get("hybrid_augmentation_requested")
@@ -9592,6 +10234,8 @@ def build_candidate_pack(
             "blend": {"emphasis": ((adult_appeal or {}).get("blend") or {}).get("emphasis")},
         }
         pack["hybrid_augmentation"] = hybrid_augmentation
+    if private_scene_routing is not None:
+        pack["private_scene_routing"] = private_scene_routing
     candidate_pack_recompute_id(pack)
     return candidate_pack_project(pack, candidate_pack_version)
 
@@ -19073,6 +19717,11 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         help="Concrete requirement not represented by tags. Repeatable; rendered into the final prompt before prompt_id is computed.",
     )
     parser.add_argument(
+        "--authorial-request-json",
+        default=None,
+        help="Inline JSON or path for an agent-authored pre-pack subject, setting, event and Japanese-subculture style contract. Requires v4 candidate-pack output.",
+    )
+    parser.add_argument(
         "--role-requirement",
         dest="role_requirements",
         action="append",
@@ -19170,6 +19819,16 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         default=DEFAULT_CANDIDATE_PACK_VERSION,
         help="Candidate-pack contract to emit. v4 is the authorial default; v3 and v2 preserve prior public shapes.",
     )
+    parser.add_argument(
+        "--legacy-replay-reason",
+        default=None,
+        help="Required reason when explicitly replaying a v3 or v2 candidate-pack contract.",
+    )
+    parser.add_argument(
+        "--explain-scene-routing",
+        action="store_true",
+        help="Include private diagnostic scene-cue scores in a candidate pack. The result is diagnostic-only and must not be used as a composition pack.",
+    )
     parser.add_argument("--json-output", action="store_true", help="Print results as JSON.")
     parser.add_argument(
         "--output-file",
@@ -19203,6 +19862,19 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         raise ValueError(
             "--hybrid-augmentation and explicit adult-appeal controls require --emit-candidate-pack"
         )
+    if args.explain_scene_routing and not args.emit_candidate_pack:
+        raise ValueError("--explain-scene-routing requires --emit-candidate-pack")
+    if args.authorial_request_json and not args.emit_candidate_pack:
+        raise ValueError("--authorial-request-json requires --emit-candidate-pack")
+    if args.authorial_request_json and args.candidate_pack_version != "v4":
+        raise ValueError("--authorial-request-json requires --candidate-pack-version v4")
+    if args.candidate_pack_version in {"v2", "v3"}:
+        if not str(args.legacy_replay_reason or "").strip():
+            raise ValueError(
+                "--candidate-pack-version v2/v3 requires --legacy-replay-reason"
+            )
+    elif args.legacy_replay_reason:
+        raise ValueError("--legacy-replay-reason is valid only with v2 or v3")
     if args.adult_appeal_emphasis and not adult_appeal_enabled:
         raise ValueError("--adult-appeal-emphasis requires an active adult-appeal axis")
     if args.adult_appeal_emphasis:
@@ -19227,6 +19899,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     )
 
     data = load_json(args.tags)
+    authorial_request = load_authorial_request_arg(args.authorial_request_json, data)
     quality_layers_path = Path(args.quality_layers) if args.quality_layers else default_quality_layers_path(args.tags)
     data[QUALITY_LAYERS_DATA_KEY] = load_quality_layers(quality_layers_path)
     available_scene_functions = set(
@@ -19397,6 +20070,14 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         )
         if args.scene_function:
             result.setdefault("provenance", {})["requested_scene_function"] = args.scene_function
+        if authorial_request is not None:
+            result.setdefault("provenance", {})["authorial_request"] = copy.deepcopy(
+                authorial_request
+            )
+        if args.legacy_replay_reason:
+            result.setdefault("provenance", {})["legacy_replay_reason"] = clean_spaces(
+                str(args.legacy_replay_reason)
+            )
         results.append(result)
         if args.anchor_diversity_ledger:
             update_anchor_diversity_ledger(anchor_diversity_ledger, result)
@@ -19405,7 +20086,12 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 
     if args.emit_candidate_pack:
         packs = [
-            build_candidate_pack(result, data, args.candidate_pack_version)
+            build_candidate_pack(
+                result,
+                data,
+                args.candidate_pack_version,
+                explain_scene_routing=args.explain_scene_routing,
+            )
             for result in results
         ]
         output = json.dumps(packs, ensure_ascii=False, indent=2) + "\n"

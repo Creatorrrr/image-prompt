@@ -982,8 +982,19 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             self.generator.embed_texts_with_gemini = original_embedder
 
     def run_wrapper_json(self, *args: str):
+        forwarded = list(args)
+        if "--candidate-pack-version" in forwarded:
+            version_index = forwarded.index("--candidate-pack-version") + 1
+            if (
+                version_index < len(forwarded)
+                and forwarded[version_index] in {"v2", "v3"}
+                and "--legacy-replay-reason" not in forwarded
+            ):
+                forwarded.extend(
+                    ["--legacy-replay-reason", "test fixture compatibility replay"]
+                )
         result = subprocess.run(
-            [sys.executable, str(WRAPPER_PATH), *args],
+            [sys.executable, str(WRAPPER_PATH), *forwarded],
             cwd=ROOT,
             text=True,
             capture_output=True,
@@ -7423,6 +7434,81 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             self.assertEqual(row["audit_status"], "pass")
             self.assertEqual(row["augmentation_brief"]["selected_route_id"], "material_world")
             self.assertEqual(row["augmentation_brief"]["decisions"][0]["decision"], "modified")
+
+    def test_record_image_run_writes_independent_arm_manifest(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            ledger = root / "runs.ndjson"
+            manifest = root / "run_manifest.json"
+            image_path = root / "image.png"
+            image_path.write_bytes(b"native-pixels")
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(RECORD_RUN_PATH),
+                    "--ts",
+                    "2026-08-13T15:00:00+09:00",
+                    "--prompt-en",
+                    "Audited independent Japanese-subculture moe prompt",
+                    "--attempt",
+                    "1",
+                    "--status",
+                    "success",
+                    "--image-path",
+                    str(image_path),
+                    "--tool",
+                    "built_in_image_gen_edit",
+                    "--pack-id",
+                    "a" * 16,
+                    "--composer",
+                    "agent",
+                    "--audit-status",
+                    "pass",
+                    "--arm-id",
+                    "arm-1",
+                    "--worktree-id",
+                    "detached-worktree-arm-1",
+                    "--skill-sha256",
+                    "b" * 64,
+                    "--source-ref",
+                    "c" * 40,
+                    "--candidate-pack-version",
+                    "v4",
+                    "--authorial-request-sha256",
+                    "d" * 64,
+                    "--reference-sha256",
+                    "e" * 64,
+                    "--image-call-count",
+                    "1",
+                    "--independent-no-cross-arm-inputs",
+                    "--manifest",
+                    str(manifest),
+                    "--ledger",
+                    str(ledger),
+                ],
+                cwd=ROOT,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+
+            self.assertEqual(result.returncode, 0, result.stderr)
+            row = json.loads(ledger.read_text(encoding="utf-8").splitlines()[0])
+            self.assertEqual(row["candidate_pack_version"], "v4")
+            self.assertEqual(row["authorial_request_sha256"], "d" * 64)
+            self.assertEqual(row["reference_sha256"], ["e" * 64])
+            self.assertEqual(row["image_call_count"], 1)
+            payload = json.loads(manifest.read_text(encoding="utf-8"))
+            self.assertEqual(
+                payload["contract_version"],
+                "photo-independent-run-manifest/v1",
+            )
+            self.assertEqual(payload["arm_id"], "arm-1")
+            self.assertFalse(payload["cross_arm_inputs_used"])
+            self.assertEqual(payload["skill_sha256"], "b" * 64)
+            self.assertEqual(payload["source_ref"], "c" * 40)
+            self.assertEqual(payload["image_call_count"], 1)
+            self.assertEqual(payload["image_paths"], [str(image_path)])
 
     def test_generate_images_via_api_forwards_audited_provenance_and_retry_chain(self):
         spec = importlib.util.spec_from_file_location(

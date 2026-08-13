@@ -140,6 +140,44 @@
     "augmentation_brief": {
       "type": "object",
       "description": "Audited hybrid candidate-route decisions and optional adult-appeal axis record"
+    },
+    "arm_id": {
+      "type": "string"
+    },
+    "worktree_id": {
+      "type": "string"
+    },
+    "skill_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "source_ref": {
+      "type": "string"
+    },
+    "candidate_pack_version": {
+      "enum": [
+        "v2",
+        "v3",
+        "v4"
+      ]
+    },
+    "authorial_request_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "reference_sha256": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{64}$"
+      }
+    },
+    "image_call_count": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "cross_arm_inputs_used": {
+      "type": "boolean"
     }
   }
 }
