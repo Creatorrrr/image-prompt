@@ -23,11 +23,23 @@ At the agent layer, add `--viewer-experience` when the user explicitly asks for 
 
 Every high creative-direction run receives the viewer contract automatically. A generic product record, ordinary cute portrait, factual documentary, or subculture taxonomy request without an explicit viewer-response goal keeps the ordinary path. The control exposes a composition procedure, not a new preset, candidate, audience stereotype, or predicted performance score.
 
+## Route Natural Character-Moe Requests
+
+Natural KO/JA/EN phrases that explicitly request `모에`, `萌え`, `moe`, `갭모에`, `ギャップ萌え`, or a supported character-specific mechanism route to `character_moe_grammar` when the request describes an adult or otherwise valid character/photo context. They do not require a research alias or implementation phrase. The route adds both `moe_response` and `viewer_experience` because the requested outcome is a character response hypothesis.
+
+Keep routing scoped. A merely cute portrait, animal photo, dictionary discussion such as “what does moe mean,” negated phrase such as “not moe,” unrelated word fragment, or generic streamer request must not activate the route. Parse multiword negative tone phrases such as `야하지 않은`, `性的ではない`, and `not sexual` as constraints; do not split their control words into positive `mandatory_intents`.
+
+Treat adult age and sexual tone independently. Explicit nonsexual wording routes to `sexual_tone: nonsexual` and suppresses configured sensual/fetish defaults. A plain adult-moe request routes to `sexual_tone: sensual_optional` and keeps the eligible-human low-intensity `sensual_editorial=1`, `fetish_fashion=0` default as supporting appeal. Explicit adult sensual wording routes to `sexual_tone: sensual`. Sexual appeal may support adult moe, but it never substitutes for the pretty-and-cute character-design gate or the character-specific response.
+
+Treat a pretty-and-cute adult character-design read as a required moe entry condition, not an optional embellishment. Explicit feminine presentation routes to adult bishoujo, explicit masculine presentation routes to adult bishonen, and explicit androgynous/nonbinary presentation is preserved as a beautiful-and-cute adult equivalent. Gender-unspecified explicit moe defaults locally to adult bishoujo; this default must not affect ordinary non-moe requests. Resolve this route before generic rule-mode preset and subject sampling, while preserving an explicit preset or a narrower role/mixin recipe. `Bishoujo` and `bishonen` name adult design categories here, never literal minor age.
+
+Preserve requested roles and species layers. `네코미미`, `猫耳`, and `cat-eared` mean an otherwise human adult with compact living ears and ordinary human limbs. Explicit `수인`, `獣人`, `beastkin`, or broader kemonomimi wording may route to the full species-family contract. Do not let natural descriptive text become a named-person likeness reference.
+
 ## Route Hybrid Detail and Adult Fashion Appeal
 
 The default skill workflow uses `--hybrid-augmentation` so the candidate pack can strengthen an agent-authored core instead of acting only as a validator. Direct CLI callers may opt in explicitly; high creative direction activates it automatically. Treat exposed routes as proposals, not instructions: select one or reject all, and use the marginal-value test before accepting a detail.
 
-Eligible human candidate packs default `--sensual-editorial-intensity` to `1` and `--fetish-fashion-intensity` to `0`, with sensual-led emphasis. The axes remain independent; fetish fashion requires an explicit positive intensity, and passing `--sensual-editorial-intensity 0` disables the remaining default. Suppress the configured default for no-people and non-human requests. Do not map either axis from inferred gender, body, ethnicity, occupation, market, or predicted popularity.
+Eligible human candidate packs normally default `--sensual-editorial-intensity` to `1` and `--fetish-fashion-intensity` to `0`, with sensual-led emphasis. The axes remain independent; fetish fashion requires an explicit positive intensity, and passing `--sensual-editorial-intensity 0` disables the remaining default. Suppress the configured defaults for explicit nonsexual moe, no-people, and non-human requests. Do not map either axis from inferred gender, body, ethnicity, occupation, market, or predicted popularity.
 
 Adult-appeal controls require candidate-pack composition. They expose a curated adult-fashion inventory derived from the adult editorial preset while keeping ordinary sampler provenance distinct. Preserve the user's larger concept as the governing idea; use sensual editorial for gaze, pose, lighting, framing, or silhouette, and fetish fashion for material, garment layering, accessories, or footwear.
 

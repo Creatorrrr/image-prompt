@@ -2353,6 +2353,11 @@ def evaluate_generalization_check(
             "--seed",
             str(seed + index),
             "--emit-candidate-pack",
+            # This evaluator measures the sampler's selected rows.  The v4
+            # authorial projection intentionally removes that answer key, so
+            # use the explicit replay projection as a diagnostic view.
+            "--candidate-pack-version",
+            "v3",
         ]
         if case.get("preset"):
             cmd.extend(["--preset", str(case["preset"])])

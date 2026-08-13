@@ -2,7 +2,7 @@
 
 - Recorded: 2026-08-11 12:42 KST
 - Status: resolved
-- Resolved: 2026-08-11 14:33 KST
+- Resolved: 2026-08-13 07:00 KST
 - Goal/checkpoint: Photo Prompt Intent-Preserving Optimization / Stage 1
 - Affected scope: `skills/photo-prompt-image-generator` wrapper requirement routing, candidate-pack mandatory intents, quality facets, composed audit, compact prompt rendering
 - Search terms: mandatory_intents, additional_requirements, soft visual guidance, negative polarity, candidate pack bloat, no_people facet
@@ -15,6 +15,13 @@
 - Expected: Only positive visible user intent and deliberate positive role anchors become mandatory prompt content; soft guidance remains optional and negative constraints remain negative. Explicit subject and no-people meaning must govern subject, facet, and adult eligibility.
 - Observed: `회사원` produces 93 mandatory intents including meta tokens and negative vocabulary such as `Avoid`, `pin-up`, `fetish`, and `minors-coding`; 60 are uncovered. `제빵사` token `handling` activates a cleanroom robot subject facet. `고양이` selects `young_actor` and enables human adult appeal. The no-people product request blocks adult appeal but still gains a human facet from `사진` matching `photographer_role_model`.
 - Impact on the goal: Candidate composition can be forced to repeat negative or nonvisual policy vocabulary in the positive prompt, packs are unnecessarily large, explicit subject fidelity can fail, and eligibility/facet evidence can contradict the request.
+
+### Regression found during v10 completion audit (2026-08-13)
+
+- Conditions or trigger: Route the natural English request `Make an adult androgynous cat-eared character feel genuinely moe through a tiny involuntary ear reaction, without sensual framing`.
+- Expected: `without sensual framing` is a negative tone control, producing `sexual_tone=nonsexual` and adult-appeal 0/0.
+- Observed: The nonsexual matcher does not include this phrase, while the positive matcher sees `sensual`; the request is inverted to `sexual_tone=sensual`.
+- Impact on the goal: A valid English nonsexual moe paraphrase receives the opposite sexual-tone policy.
 
 ## Evidence
 
@@ -33,12 +40,13 @@
 |---|---|---|
 | Prior structural audit only | Identified pack size and uncovered-intent risk but did not change product behavior | It did not trace polarity loss and explicit subject routing through the current August runtime |
 | Exploratory pure alias-match cache | Preserved output SHA and reduced fixed-input runtime to about 2.97 seconds | It proves a performance opportunity but does not repair polarity, routing, or prompt size |
+| Existing English nonsexual phrases | Handles `without sensuality` and `without suggestive framing` | Does not cover the compositional paraphrase `without sensual framing`, so positive `sensual` still leaks through |
 
 ## Resolution or next safe step
 
-- Resolution/workaround: Internal recipe guidance now uses typed role, negative, and soft channels while the public additional-requirement contract remains unchanged. Candidate intent construction preserves polarity and provenance, exact curated subject routes precede generic competition, and no-people exclusions propagate through subject, facet, and adult-appeal selection. Compact typed rendering omits duplicated internal policy prose. A bounded alias-match cache and removal of dead repeated work reduce deterministic runtime without changing output bytes.
-- Verification: The fixed `회사원` pack is 95,146 minified bytes with 1 mandatory / 1 uncovered intent; its compact direct prompt is 105 words and retains the office-worker role evidence without an appended requirements block. Fixed three-run median is 2.125 seconds versus the 7.260-second baseline, and cached/uncached stdout and stderr are byte-identical. Focused photo suites, dictionary validation, semantic-index integrity, 2,001 contradiction generations, golden/frozen replays, and diff checks pass. Full discovery remains at the unrelated baseline of 505 tests with 11 failures / 1 error and adds no photo failure.
-- Next safe step if unresolved: Resolved for the scoped text/runtime contract. Reopen only if requirement-source fields, compact rendering, subject routing, or candidate-pack audit semantics change.
+- Resolution/workaround: The original typed requirement-channel repair remains valid. `without sensual framing` and `no sensual framing` are now shared nonsexual controls alongside `without sensuality` and `without suggestive framing`; the same phrase mask governs routing and prevents the embedded positive word `sensual` from overriding the negation.
+- Verification: The end-to-end English androgynous cat-eared paraphrase now resolves to `sexual_tone=nonsexual`, the nonhuman-reflex route, and the expected everyday nonhuman scene. A later 32-case public-wrapper sweep also verifies all nonsexual cases at adult-appeal 0/0 and generic or explicit sensual adult-moe cases at the configured 1/0 support. The complete affected suites pass 335/335 (`test_photo_prompt_contract_v2` 59/59 and `test_prompt_generator` 276/276). Dictionary metadata, semantic-index integrity at 6,513 entries, contradiction 2,001/0, generalization 79/79, holdout 24/24, domain holdout 6/6, retrieval holdout 22/22, scene-expression 112/112, and diff checks pass.
+- Next safe step if unresolved: Resolved for the scoped text/runtime contract. Reopen only if requirement-source fields, compact rendering, subject routing, candidate-pack audit semantics, or sexual-tone phrase controls change.
 
 ## Reuse guidance
 

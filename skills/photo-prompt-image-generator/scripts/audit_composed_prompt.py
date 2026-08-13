@@ -15,7 +15,10 @@ from typing import Any, Sequence
 SUPPORTED_CANDIDATE_PACK_VERSIONS = {
     "photo-candidate-pack/v2",
     "photo-candidate-pack/v3",
+    "photo-candidate-pack/v4",
 }
+MOE_PROMPT_DEFAULT_MIN_WORDS = 50
+MOE_PROMPT_DEFAULT_MAX_WORDS = 120
 
 
 def load_json_arg(raw: str) -> Any:
@@ -51,6 +54,41 @@ def text_contains_term(text: str, term: str) -> bool:
         pattern = r"(?<![A-Za-z0-9])" + re.escape(term_lower) + r"(?![A-Za-z0-9])"
         return re.search(pattern, lowered) is not None
     return term_lower in lowered
+
+
+def english_prompt_word_count(text: str) -> int:
+    """Count image-prompt words consistently across the contract and audit."""
+    return len(re.findall(r"[A-Za-z0-9]+(?:['’\-][A-Za-z0-9]+)*", str(text or "")))
+
+
+AUTHORIAL_EVIDENCE_STOPWORDS = {
+    "a",
+    "an",
+    "and",
+    "as",
+    "at",
+    "by",
+    "for",
+    "from",
+    "in",
+    "into",
+    "is",
+    "of",
+    "on",
+    "or",
+    "the",
+    "to",
+    "with",
+    "without",
+}
+
+
+def authorial_evidence_tokens(text: str) -> set[str]:
+    return {
+        token.lower()
+        for token in re.findall(r"[A-Za-z0-9]+(?:[./'’\-][A-Za-z0-9]+)*", str(text or ""))
+        if token.lower() not in AUTHORIAL_EVIDENCE_STOPWORDS
+    }
 
 
 def normalize_chosen_candidate_ids(raw: Any) -> set[str]:
@@ -135,6 +173,16 @@ def candidate_ids_from_pack(pack: dict[str, Any]) -> set[str]:
             for candidate in proposition.get(key) or []:
                 if isinstance(candidate, dict) and candidate.get("id"):
                     ids.add(str(candidate["id"]))
+    integration = pack.get("photographic_integration")
+    if isinstance(integration, dict):
+        for candidate in integration.get("category_candidates") or []:
+            if isinstance(candidate, dict) and candidate.get("id"):
+                ids.add(str(candidate["id"]))
+    craft = pack.get("photographic_craft")
+    if isinstance(craft, dict):
+        for candidate in craft.get("dimension_candidates") or []:
+            if isinstance(candidate, dict) and candidate.get("id"):
+                ids.add(str(candidate["id"]))
     for candidate in hybrid_augmentation_candidates_from_pack(pack):
         if candidate.get("id"):
             ids.add(str(candidate["id"]))
@@ -170,10 +218,296 @@ def candidate_objects_from_pack(pack: dict[str, Any]) -> dict[str, dict[str, Any
         for candidate in slot_payload.get("candidates") or []:
             if isinstance(candidate, dict) and candidate.get("id"):
                 candidates[str(candidate["id"])] = candidate
+    proposition = pack.get("visual_proposition")
+    if isinstance(proposition, dict):
+        for key in ("core_candidates", "tension_candidates"):
+            for candidate in proposition.get(key) or []:
+                if isinstance(candidate, dict) and candidate.get("id"):
+                    candidates[str(candidate["id"])] = candidate
+    integration = pack.get("photographic_integration")
+    if isinstance(integration, dict):
+        for candidate in integration.get("category_candidates") or []:
+            if isinstance(candidate, dict) and candidate.get("id"):
+                candidates[str(candidate["id"])] = candidate
+    craft = pack.get("photographic_craft")
+    if isinstance(craft, dict):
+        for candidate in craft.get("dimension_candidates") or []:
+            if isinstance(candidate, dict) and candidate.get("id"):
+                candidates[str(candidate["id"])] = candidate
     for candidate in hybrid_augmentation_candidates_from_pack(pack):
         if candidate.get("id"):
             candidates[str(candidate["id"])] = candidate
     return candidates
+
+
+def audit_v4_authorial_pack(pack: dict[str, Any]) -> list[dict[str, Any]]:
+    if str(pack.get("contract_version") or "") != "photo-candidate-pack/v4":
+        return []
+    failures: list[dict[str, Any]] = []
+    contract = (
+        pack.get("authorial_composition")
+        if isinstance(pack.get("authorial_composition"), dict)
+        else {}
+    )
+    policy = contract.get("policy") if isinstance(contract.get("policy"), dict) else {}
+    if (
+        not contract.get("enabled")
+        or contract.get("candidate_content_form") != "unordered_inspiration_terms"
+        or contract.get("candidate_order") != "seed_shuffled_non_preferential"
+        or policy.get("agent_is_final_author") is not True
+        or policy.get("candidate_sentence_copying_forbidden") is not True
+        or policy.get("all_advisory_candidates_may_be_rejected") is not True
+        or policy.get("hard_identity_and_safety_constraints_remain_required") is not True
+        or policy.get("chosen_candidate_interpretations_required") is not True
+    ):
+        failures.append(
+            {
+                "check": "authorial_pack_contract",
+                "reason": "v4 pack is missing its fail-closed authorial composition policy",
+            }
+        )
+
+    def contains_key(value: Any, key: str) -> bool:
+        if isinstance(value, dict):
+            return key in value or any(contains_key(item, key) for item in value.values())
+        if isinstance(value, list):
+            return any(contains_key(item, key) for item in value)
+        return False
+
+    if contains_key(pack, "covered_by"):
+        failures.append(
+            {
+                "check": "authorial_coverage_answer_key",
+                "reason": "v4 must not expose candidate IDs as precomputed intent-coverage answers",
+            }
+        )
+
+    provenance = pack.get("provenance") if isinstance(pack.get("provenance"), dict) else {}
+    private_provenance_keys = sorted(
+        {
+            "argv",
+            "preset_id",
+            "sample_prompt_id",
+            "concept_gate_results",
+            "concept_scene_variants",
+            "character_response",
+            "adult_appeal",
+        }
+        & set(provenance)
+    )
+    preset_reference = (
+        pack.get("preset_reference")
+        if isinstance(pack.get("preset_reference"), dict)
+        else {}
+    )
+    motif_budget = pack.get("motif_budget") if isinstance(pack.get("motif_budget"), dict) else {}
+    if (
+        private_provenance_keys
+        or "preset_id" in preset_reference
+        or len(pack.get("presets") or []) == 1
+        or "selected_motifs" in motif_budget
+    ):
+        failures.append(
+            {
+                "check": "authorial_private_routing",
+                "reason": "v4 exposes a private sampled route, singleton preset, or sampled motif answer",
+                "provenance_keys": private_provenance_keys,
+            }
+        )
+
+    quality_profile = (
+        pack.get("quality_profile")
+        if isinstance(pack.get("quality_profile"), dict)
+        else {}
+    )
+    integration = (
+        pack.get("photographic_integration")
+        if isinstance(pack.get("photographic_integration"), dict)
+        else {}
+    )
+    craft = (
+        pack.get("photographic_craft")
+        if isinstance(pack.get("photographic_craft"), dict)
+        else {}
+    )
+    proposition = (
+        pack.get("visual_proposition")
+        if isinstance(pack.get("visual_proposition"), dict)
+        else {}
+    )
+    leaked_quality_keys = {
+        "quality_profile": sorted(
+            set(quality_profile) & {"source", "matched_facets", "matched_terms"}
+        ),
+        "photographic_integration": sorted(
+            set(integration)
+            & {
+                "active_axes",
+                "quality_profile",
+                "matched_facets",
+                "matched_terms",
+                "principles",
+                "required_categories",
+                "suggested_concepts",
+            }
+        ),
+        "photographic_craft": sorted(
+            set(craft)
+            & {
+                "active_dimensions",
+                "quality_profile",
+                "matched_facets",
+                "top_strategy",
+                "strategy_variants",
+                "prompt_dimension_ids",
+            }
+        ),
+        "visual_proposition": sorted(
+            set(proposition)
+            & {
+                "quality_profile",
+                "subject_class",
+                "subject_classes",
+                "register",
+                "principles",
+            }
+        ),
+    }
+    if quality_profile.get("profile_id") != "authorial" or any(leaked_quality_keys.values()):
+        failures.append(
+            {
+                "check": "authorial_quality_routing",
+                "reason": "v4 exposes a sampler-selected quality profile, axis, strategy, or proposition",
+                "leaked_keys": leaked_quality_keys,
+            }
+        )
+
+    scene_contract = pack.get("scene_contract") if isinstance(pack.get("scene_contract"), dict) else {}
+    leaked_scene_groups = [
+        str(group.get("group") or "unknown")
+        for group in scene_contract.get("groups") or []
+        if isinstance(group, dict)
+        and (
+            group.get("strategy") == "atomic_scene"
+            or contains_key(group, "selected_entry_id")
+            or contains_key(group, "candidate_entry_ids")
+            or contains_key(group, "allowed_entry_ids")
+            or (
+                group.get("strategy") == "optional_inspiration_group"
+                and group.get("sampler_selection_exposed") is not False
+            )
+        )
+    ]
+    if leaked_scene_groups:
+        failures.append(
+            {
+                "check": "authorial_scene_selection",
+                "reason": "v4 scene groups expose an internal selected entry or semantic answer key",
+                "groups": leaked_scene_groups,
+            }
+        )
+
+    candidate_surfaces = list(candidate_objects_from_pack(pack).values())
+    proposition = pack.get("visual_proposition") if isinstance(pack.get("visual_proposition"), dict) else {}
+    for key in ("core_candidates", "tension_candidates"):
+        candidate_surfaces.extend(
+            candidate
+            for candidate in proposition.get(key) or []
+            if isinstance(candidate, dict)
+        )
+    hybrid = pack.get("hybrid_augmentation") if isinstance(pack.get("hybrid_augmentation"), dict) else {}
+    route_contract = hybrid.get("route_contract") if isinstance(hybrid.get("route_contract"), dict) else {}
+    for route in route_contract.get("routes") or []:
+        if isinstance(route, dict):
+            candidate_surfaces.extend(
+                detail
+                for detail in route.get("details") or []
+                if isinstance(detail, dict)
+            )
+    copyable = [
+        str(candidate.get("id") or candidate.get("candidate_id") or "unknown")
+        for candidate in candidate_surfaces
+        if any(key in candidate for key in ("label_en", "label_ko", "terms"))
+        or candidate.get("content_form") != "unordered_inspiration_terms"
+        or not isinstance(candidate.get("concept_terms"), list)
+        or not candidate.get("concept_terms")
+    ]
+    if copyable:
+        failures.append(
+            {
+                "check": "authorial_candidate_surface",
+                "reason": "v4 candidate surfaces must expose only non-empty unordered concept terms",
+                "candidate_ids": sorted(set(copyable)),
+            }
+        )
+
+    slots = pack.get("slots") if isinstance(pack.get("slots"), dict) else {}
+    ranked_slots = [
+        str(slot)
+        for slot, payload in slots.items()
+        if isinstance(payload, dict)
+        and (
+            any(key in payload for key in ("selected", "weight_floor", "score_window", "selected_filter"))
+            or payload.get("candidate_order") != "seed_shuffled_non_preferential"
+        )
+    ]
+    if ranked_slots or any(
+        any(key in candidate for key in ("selected_by_sampler", "probability", "weight", "score", "scores"))
+        for candidate in candidate_surfaces
+    ):
+        failures.append(
+            {
+                "check": "authorial_candidate_ranking",
+                "reason": "v4 must not expose sampler defaults, probabilities, weights, or ranking handles",
+                "slots": sorted(ranked_slots),
+            }
+        )
+
+    exploration = (
+        pack.get("creative_exploration")
+        if isinstance(pack.get("creative_exploration"), dict)
+        else {}
+    )
+    leaked_replacements = [
+        str(row.get("candidate_id") or "unknown")
+        for row in exploration.get("contrast_candidates") or []
+        if isinstance(row, dict)
+        and ("replaces_candidate_id" in row or "relevance_rank" in row)
+    ]
+    if leaked_replacements:
+        failures.append(
+            {
+                "check": "authorial_exploration_ranking",
+                "reason": "v4 creative exploration must not expose a sampler replacement answer key",
+                "candidate_ids": leaked_replacements,
+            }
+        )
+
+    render_contract = pack.get("render_contract") if isinstance(pack.get("render_contract"), dict) else {}
+    selected_scene = render_contract.get("selected_scene") if isinstance(render_contract.get("selected_scene"), dict) else {}
+    scene_contract = pack.get("scene_contract") if isinstance(pack.get("scene_contract"), dict) else {}
+    authorial_groups = [
+        group
+        for group in scene_contract.get("groups") or []
+        if isinstance(group, dict) and group.get("strategy") == "authorial_scene"
+    ]
+    if authorial_groups and any(
+        key in selected_scene for key in ("blueprint_id", "source_blueprint_hash", "atomic_scene")
+    ):
+        failures.append(
+            {
+                "check": "authorial_scene_privacy",
+                "reason": "v4 authorial scene leaks a source handle or reusable atomic prose",
+            }
+        )
+    if hybrid and hybrid.get("contract_version") != "photo-hybrid-augmentation/v2":
+        failures.append(
+            {
+                "check": "authorial_hybrid_contract",
+                "reason": "v4 hybrid augmentation must use the transform-only v2 contract",
+            }
+        )
+    return failures
 
 
 def assertion_terms_for_intent(intent: dict[str, Any], composed: dict[str, Any]) -> list[str]:
@@ -226,6 +560,14 @@ def photographic_integration_category_terms(integration: dict[str, Any], categor
     for phrase in suggested.get(category) or []:
         if isinstance(phrase, str) and phrase.strip():
             terms.append(phrase)
+    for candidate in integration.get("category_candidates") or []:
+        if not isinstance(candidate, dict) or str(candidate.get("category") or "") != category:
+            continue
+        terms.extend(
+            str(term)
+            for term in candidate.get("concept_terms") or []
+            if str(term).strip()
+        )
     return list(dict.fromkeys(terms))
 
 
@@ -234,15 +576,32 @@ def audit_photographic_integration(pack: dict[str, Any], search_text: str) -> di
     if not isinstance(integration, dict) or not integration.get("enabled", True):
         return None
 
-    required_categories = [
-        str(category)
-        for category in integration.get("required_categories") or []
-        if str(category).strip()
+    authorial_candidates = [
+        row
+        for row in integration.get("category_candidates") or []
+        if isinstance(row, dict) and str(row.get("category") or "").strip()
     ]
+    required_categories = (
+        [str(row.get("category")) for row in authorial_candidates]
+        if authorial_candidates
+        else [
+            str(category)
+            for category in integration.get("required_categories") or []
+            if str(category).strip()
+        ]
+    )
     if not required_categories:
         required_categories = ["environment_binding", "optical_depth"]
     try:
-        minimum_hits = int(integration.get("minimum_category_hits", 2) or 2)
+        minimum_hits = int(
+            integration.get(
+                "minimum_selected_categories"
+                if authorial_candidates
+                else "minimum_category_hits",
+                2,
+            )
+            or 2
+        )
     except (TypeError, ValueError):
         minimum_hits = 2
     minimum_hits = max(1, min(minimum_hits, len(required_categories)))
@@ -283,7 +642,7 @@ def visual_proposition_category_terms(proposition: dict[str, Any], category: str
     for candidate in proposition.get(candidate_keys.get(category, ""), []) or []:
         if not isinstance(candidate, dict):
             continue
-        for term in candidate.get("terms") or []:
+        for term in (candidate.get("concept_terms") or candidate.get("terms") or []):
             if isinstance(term, str) and term.strip():
                 terms.append(term)
     return list(dict.fromkeys(terms))
@@ -311,6 +670,14 @@ def photographic_craft_dimension_terms(craft: dict[str, Any], dimension_id: str)
             for term in refinement.get("audit_terms") or []:
                 if isinstance(term, str) and term.strip():
                     terms.append(term)
+    for candidate in craft.get("dimension_candidates") or []:
+        if not isinstance(candidate, dict) or str(candidate.get("dimension") or "") != dimension_id:
+            continue
+        terms.extend(
+            str(term)
+            for term in candidate.get("concept_terms") or []
+            if str(term).strip()
+        )
     return list(dict.fromkeys(terms))
 
 
@@ -330,6 +697,12 @@ def audit_photographic_craft(pack: dict[str, Any], search_text: str) -> dict[str
             for dimension in craft.get("active_dimensions") or []
             if isinstance(dimension, dict) and str(dimension.get("id") or "").strip()
         ][:2]
+    if not dimensions:
+        dimensions = [
+            str(candidate.get("dimension"))
+            for candidate in craft.get("dimension_candidates") or []
+            if isinstance(candidate, dict) and str(candidate.get("dimension") or "").strip()
+        ]
     if not dimensions:
         return None
 
@@ -429,6 +802,1379 @@ def nonempty_string_list(raw: Any) -> list[str]:
 
 def normalized_unique_count(values: Sequence[str]) -> int:
     return len({str(value).strip().lower() for value in values if str(value).strip()})
+
+
+def audit_moe_response(
+    pack: dict[str, Any],
+    composed: dict[str, Any],
+    prompt_en: str,
+) -> list[dict[str, Any]]:
+    contract = pack.get("moe_response")
+    if not isinstance(contract, dict) or not contract.get("enabled"):
+        return []
+
+    response = composed.get("moe_response")
+    if not isinstance(response, dict):
+        return [
+            {
+                "check": "moe_response",
+                "reason": "enabled moe-response pack requires a moe_response object",
+            }
+        ]
+
+    failures: list[dict[str, Any]] = []
+    composition_guidance = (
+        contract.get("composition_guidance")
+        if isinstance(contract.get("composition_guidance"), dict)
+        else {}
+    )
+    prompt_budget = (
+        composition_guidance.get("prompt_budget")
+        if isinstance(composition_guidance.get("prompt_budget"), dict)
+        else {}
+    )
+    if prompt_budget:
+        try:
+            minimum_prompt_words = int(
+                prompt_budget.get("minimum_words", MOE_PROMPT_DEFAULT_MIN_WORDS)
+            )
+        except (TypeError, ValueError):
+            minimum_prompt_words = MOE_PROMPT_DEFAULT_MIN_WORDS
+        try:
+            maximum_prompt_words = int(
+                prompt_budget.get("maximum_words", MOE_PROMPT_DEFAULT_MAX_WORDS)
+            )
+        except (TypeError, ValueError):
+            maximum_prompt_words = MOE_PROMPT_DEFAULT_MAX_WORDS
+        prompt_word_count = english_prompt_word_count(prompt_en)
+        if not minimum_prompt_words <= prompt_word_count <= maximum_prompt_words:
+            failures.append(
+                {
+                    "check": "moe_response_prompt_budget",
+                    "reason": (
+                        "moe prompt_en must stay within the compact word budget so identity, event, "
+                        "expression, and styling instructions do not compete for one still frame"
+                    ),
+                    "minimum_words": minimum_prompt_words,
+                    "maximum_words": maximum_prompt_words,
+                    "actual_words": prompt_word_count,
+                }
+            )
+    required_fields = [str(item) for item in contract.get("required_fields") or [] if str(item)]
+    missing_fields = [field for field in required_fields if field not in response]
+    if missing_fields:
+        failures.append(
+            {
+                "check": "moe_response",
+                "reason": "moe response is missing required fields",
+                "fields": missing_fields,
+            }
+        )
+
+    scalar_fields = (
+        "aesthetic_baseline",
+        "mechanism",
+        "relationship_register",
+        "baseline",
+        "event_phase",
+        "trigger",
+        "target",
+        "visible_response",
+        "immediate_consequence",
+        "continuity",
+    )
+    invalid_scalars = [
+        field
+        for field in scalar_fields
+        if not isinstance(response.get(field), str) or not str(response.get(field)).strip()
+    ]
+    if invalid_scalars:
+        failures.append(
+            {
+                "check": "moe_response_causal_chain",
+                "reason": "moe response requires one concrete scalar value for every causal field",
+                "fields": invalid_scalars,
+            }
+        )
+
+    aesthetic_baseline = str(response.get("aesthetic_baseline") or "")
+    required_aesthetic = str(contract.get("aesthetic_baseline") or "")
+    if aesthetic_baseline and required_aesthetic and aesthetic_baseline != required_aesthetic:
+        failures.append(
+            {
+                "check": "moe_response_aesthetic_baseline",
+                "reason": "composed response changed the routed adult character aesthetic baseline",
+                "expected": required_aesthetic,
+                "actual": aesthetic_baseline,
+            }
+        )
+
+    mechanism = str(response.get("mechanism") or "")
+    required_mechanism = str(contract.get("primary_mechanism") or "")
+    if mechanism and required_mechanism and mechanism != required_mechanism:
+        failures.append(
+            {
+                "check": "moe_response_mechanism",
+                "reason": "composed response changed the routed primary mechanism",
+                "expected": required_mechanism,
+                "actual": mechanism,
+            }
+        )
+
+    relationship_register = str(response.get("relationship_register") or "")
+    required_relationship_register = str(contract.get("relationship_register") or "")
+    if (
+        relationship_register
+        and required_relationship_register
+        and relationship_register != required_relationship_register
+    ):
+        failures.append(
+            {
+                "check": "moe_response_relationship_register",
+                "reason": "composed response changed the routed relationship register",
+                "expected": required_relationship_register,
+                "actual": relationship_register,
+            }
+        )
+
+    support = response.get("support_mechanisms")
+    if not isinstance(support, list) or any(not isinstance(item, str) for item in support):
+        failures.append(
+            {
+                "check": "moe_response_support",
+                "reason": "support_mechanisms must be a list of strings",
+            }
+        )
+        support_values: list[str] = []
+    else:
+        support_values = [str(item) for item in support if str(item).strip()]
+    allowed_support = {str(item) for item in contract.get("support_mechanisms") or []}
+    unknown_support = sorted(set(support_values) - allowed_support)
+    if unknown_support or len(set(support_values)) > 2 or mechanism in support_values:
+        failures.append(
+            {
+                "check": "moe_response_support",
+                "reason": "use only the routed support mechanisms, at most two, without repeating the primary",
+                "unknown": unknown_support,
+            }
+        )
+
+    causal_values = [
+        str(response.get(field) or "")
+        for field in ("baseline", "trigger", "target", "visible_response", "immediate_consequence")
+    ]
+    if all(causal_values) and normalized_unique_count(causal_values) < 5:
+        failures.append(
+            {
+                "check": "moe_response_causal_chain",
+                "reason": "baseline, trigger, target, visible response, and consequence must be distinct evidence",
+            }
+        )
+
+    evidence = response.get("prompt_evidence")
+    if not isinstance(evidence, dict):
+        evidence = {}
+    binding = contract.get("prompt_binding") if isinstance(contract.get("prompt_binding"), dict) else {}
+    evidence_fields = [str(item) for item in binding.get("required_evidence_fields") or [] if str(item)]
+    evidence_phrases: list[str] = []
+    missing_evidence = []
+    for field in evidence_fields:
+        phrase = str(evidence.get(field) or "").strip()
+        if phrase:
+            evidence_phrases.append(phrase)
+        else:
+            missing_evidence.append(field)
+    if missing_evidence:
+        failures.append(
+            {
+                "check": "moe_response_binding",
+                "reason": "moe response is missing literal prompt evidence",
+                "fields": missing_evidence,
+            }
+        )
+    missing_literal = [phrase for phrase in evidence_phrases if not text_contains_term(prompt_en, phrase)]
+    if missing_literal:
+        failures.append(
+            {
+                "check": "moe_response_binding",
+                "reason": "declared moe-response evidence is not literal in prompt_en",
+                "phrases": list(dict.fromkeys(missing_literal)),
+            }
+        )
+
+    aesthetic_phrase = str(evidence.get("aesthetic_baseline_phrase") or "").lower()
+    adult_cues = (
+        "adult",
+        "mid-twenties",
+        "mid twenties",
+        "twenty-five",
+        "twenty five",
+        "late twenties",
+        "thirties",
+    )
+    pretty_cues = (
+        "beautiful",
+        "bishoujo",
+        "bishonen",
+        "handsome",
+        "pretty",
+    )
+    cute_cues = (
+        "adorable",
+        "charming",
+        "cute",
+        "endearing",
+        "kawaii",
+    )
+    design_detail_groups = (
+        ("facial feature", "face", "features"),
+        ("eyes", "eye"),
+        ("mouth", "lips"),
+        ("hair", "grooming"),
+        ("cohesive styling", "cohesive character styling"),
+    )
+    expected_presentation_cues = {
+        "adult_bishoujo": ("woman", "female", "feminine", "bishoujo", "she", "her"),
+        "adult_bishonen": ("man", "male", "masculine", "bishonen", "he", "his"),
+        "adult_beautiful_cute_character": (
+            "androgynous",
+            "nonbinary",
+            "non-binary",
+            "gender-neutral",
+            "character",
+        ),
+    }
+    if aesthetic_phrase:
+        aesthetic_missing = []
+        if not any(cue in aesthetic_phrase for cue in adult_cues):
+            aesthetic_missing.append("explicit_adult_age")
+        if not any(cue in aesthetic_phrase for cue in pretty_cues):
+            aesthetic_missing.append("pretty_or_beautiful_read")
+        if not any(cue in aesthetic_phrase for cue in cute_cues):
+            aesthetic_missing.append("cute_or_charming_read")
+        if sum(
+            1 for group in design_detail_groups if any(cue in aesthetic_phrase for cue in group)
+        ) < 2:
+            aesthetic_missing.append("at_least_two_concrete_character_design_details")
+        presentation_cues = expected_presentation_cues.get(required_aesthetic, ())
+        if presentation_cues and not any(cue in aesthetic_phrase for cue in presentation_cues):
+            aesthetic_missing.append("routed_presentation")
+        if aesthetic_missing:
+            failures.append(
+                {
+                    "check": "moe_response_aesthetic_evidence",
+                    "reason": (
+                        "moe requires a literal adult character-design entry condition that reads "
+                        "as both pretty/beautiful and cute/charming before the causal event"
+                    ),
+                    "missing": aesthetic_missing,
+                    "phrase": evidence.get("aesthetic_baseline_phrase"),
+                }
+            )
+
+    identity_control = (
+        contract.get("reference_identity_control")
+        if isinstance(contract.get("reference_identity_control"), dict)
+        else {}
+    )
+    if identity_control.get("enabled") is True:
+        identity_phrase = str(evidence.get("reference_identity_phrase") or "").lower()
+        identity_action_cues = (
+            "preserve",
+            "same identity",
+            "sole identity reference",
+            "identity unchanged",
+        )
+        identity_source_cues = (
+            "attached portrait",
+            "reference portrait",
+            "source portrait",
+            "uploaded portrait",
+        )
+        identity_detail_groups = (
+            ("eye aperture", "eye shape", "eye spacing"),
+            ("nose",),
+            ("lip", "mouth"),
+            ("face length",),
+            ("lower-face", "lower face"),
+            ("jaw width",),
+            ("cheekbone", "facial geometry"),
+            ("skin tone", "natural asymmetry"),
+            ("hairline",),
+        )
+        anti_reshape_groups = (
+            (
+                "no enlarging",
+                "not enlarge",
+                "do not enlarge",
+                "no eye enlargement",
+                "preserve eye aperture",
+            ),
+            (
+                "no rounding",
+                "not round",
+                "do not round",
+                "no eye rounding",
+                "preserve eye shape",
+            ),
+            (
+                "no shortening",
+                "not shorten",
+                "do not shorten",
+                "preserve face length",
+            ),
+            (
+                "no narrowing",
+                "not narrow",
+                "do not narrow",
+                "preserve jaw width",
+                "preserve lower-face",
+                "preserve lower face",
+            ),
+        )
+        compact_no_reshape_clause = all(
+            cue in identity_phrase
+            for cue in ("no enlarging", "rounding", "shortening", "narrowing")
+        )
+        missing_identity = []
+        if not any(cue in identity_phrase for cue in identity_action_cues):
+            missing_identity.append("preservation_instruction")
+        if not any(cue in identity_phrase for cue in identity_source_cues):
+            missing_identity.append("reference_source")
+        if sum(
+            1
+            for group in identity_detail_groups
+            if any(cue in identity_phrase for cue in group)
+        ) < 6:
+            missing_identity.append("at_least_six_identity_anchors_including_face_proportions")
+        if not compact_no_reshape_clause and any(
+            not any(cue in identity_phrase for cue in group) for group in anti_reshape_groups
+        ):
+            missing_identity.append("explicit_anti_reshape_constraints")
+        if not any(cue in identity_phrase for cue in ("adult age", "do not de-age", "no de-aging")):
+            missing_identity.append("adult_age_preservation")
+        if missing_identity:
+            failures.append(
+                {
+                    "check": "moe_response_reference_identity",
+                    "reason": (
+                        "identity-controlled moe evaluation must hold eye aperture, face length, lower-face and jaw "
+                        "proportions, and adult age constant instead of changing facial appeal and scene direction together"
+                    ),
+                    "missing": missing_identity,
+                    "phrase": evidence.get("reference_identity_phrase"),
+                }
+            )
+
+    affective_phrase = str(evidence.get("affective_leak_phrase") or "").lower()
+    warm_affect_groups = (
+        ("softened eye", "soft eyes", "eyes soften", "gentle eye", "warm eye"),
+        ("lower lids soften", "softened lower lids", "lower eyelids soften", "softened lower eyelids"),
+        ("almost-smile", "almost smile", "near-smile", "near smile", "smile threatens", "smile starts"),
+        ("mouth corner lifts", "lifted mouth corner", "pleased mouth corner", "relieved mouth corner"),
+        ("mouth corner starts to lift", "mouth corner begins to lift"),
+        ("fond", "fondness", "pleased", "relieved", "tender", "warmth"),
+        ("playful embarrassment", "playfully embarrassed", "bashful delight", "private delight"),
+    )
+    negative_affect_cues = (
+        "annoyed",
+        "angry",
+        "averted gaze",
+        "bored",
+        "cold stare",
+        "frown",
+        "irritated",
+        "listless",
+        "pout",
+        "pursed",
+        "sad",
+        "scowl",
+        "skeptical",
+        "sullen",
+    )
+    affective_missing = []
+    if affective_phrase:
+        if not any(any(cue in affective_phrase for cue in group) for group in warm_affect_groups):
+            affective_missing.append("specific_warm_or_pleased_micro_response")
+        if sum(cue in affective_phrase for cue in negative_affect_cues) > 2:
+            affective_missing.append("negative_affect_exceeds_two_cues")
+    if affective_missing:
+        failures.append(
+            {
+                "check": "moe_response_affective_balance",
+                "reason": (
+                    "the face needs one specific warm or pleased micro-response and may use at most "
+                    "two negative-affect cues so guardedness does not collapse into annoyance, sadness, or boredom"
+                ),
+                "missing": affective_missing,
+                "phrase": evidence.get("affective_leak_phrase"),
+            }
+        )
+
+    affective_prompt = prompt_en.lower()
+    affective_contract = (
+        contract.get("composition_guidance", {}).get("affective_balance")
+        if isinstance(contract.get("composition_guidance"), dict)
+        else {}
+    )
+    if isinstance(affective_contract, dict) and affective_contract.get("required") is True:
+        whole_prompt_negative_hits = [
+            cue for cue in negative_affect_cues if cue in affective_prompt
+        ]
+        whole_prompt_warm = any(
+            any(cue in affective_prompt for cue in group) for group in warm_affect_groups
+        )
+        if not whole_prompt_warm or len(whole_prompt_negative_hits) > 2:
+            failures.append(
+                {
+                    "check": "moe_response_affective_balance",
+                    "reason": (
+                        "the full prompt must retain a warm facial countercue and may contain at most "
+                        "two negative-affect cues; splitting extra cold cues across other fields does not pass"
+                    ),
+                    "negative_terms": whole_prompt_negative_hits,
+                    "warm_countercue_present": whole_prompt_warm,
+                }
+            )
+
+    mechanism_guidance = (
+        contract.get("composition_guidance", {}).get("mechanism_specific_evidence", {})
+        if isinstance(contract.get("composition_guidance"), dict)
+        else {}
+    )
+    nurturant_guidance = (
+        mechanism_guidance.get("nurturant_benevolence", {})
+        if isinstance(mechanism_guidance, dict)
+        else {}
+    )
+    if (
+        relationship_register == "nurturant_benevolence"
+        and isinstance(nurturant_guidance, dict)
+        and nurturant_guidance.get("benevolent_affect_phrase_required") is True
+    ):
+        benevolent_affect_phrase = str(
+            evidence.get("benevolent_affect_phrase") or ""
+        ).lower()
+        benevolent_cue_groups = (
+            ("relaxed brow", "relaxed eyebrows", "unfurrowed brow"),
+            ("patient soft eyes", "patient eyes", "soft patient eyes"),
+            ("reassuring mouth", "reassuring smile", "reassuring lips"),
+            (
+                "calm protective attention",
+                "protective attention",
+                "protective focus",
+                "protective gaze",
+            ),
+        )
+        benevolent_missing = [
+            index
+            for index, group in enumerate(benevolent_cue_groups, start=1)
+            if not any(cue in benevolent_affect_phrase for cue in group)
+        ]
+        contradictory_cues = (
+            "mid-protest",
+            "pursed",
+            "huff",
+            "head stays aside",
+            "head stays angled away",
+            "irises return",
+            "private liking",
+            "romantic interest",
+        )
+        if (
+            not benevolent_affect_phrase
+            or not text_contains_term(
+                prompt_en,
+                str(evidence.get("benevolent_affect_phrase") or ""),
+            )
+            or benevolent_missing
+            or any(cue in benevolent_affect_phrase for cue in contradictory_cues)
+        ):
+            failures.append(
+                {
+                    "check": "moe_response_benevolent_affect",
+                    "reason": (
+                        "nurturant_benevolence needs one literal mature expression combining a relaxed brow, "
+                        "patient soft eyes, a reassuring mouth, and calm protective attention without tsundere "
+                        "denial or romantic gaze leakage"
+                    ),
+                    "missing_groups": benevolent_missing,
+                    "phrase": evidence.get("benevolent_affect_phrase"),
+                }
+            )
+    denial_guidance = (
+        mechanism_guidance.get("denial_care_leak", {})
+        if isinstance(mechanism_guidance, dict)
+        else {}
+    )
+    if (
+        mechanism == "denial_care_leak"
+        and isinstance(denial_guidance, dict)
+        and denial_guidance.get("active_denial_phrase_required") is True
+    ):
+        active_denial_phrase = str(evidence.get("active_denial_phrase") or "").lower()
+        active_denial_groups = (
+            ("pursed lip", "pursed mouth", "mouth protest", "mid-protest", "tiny huff", "small huff"),
+            ("chin lift", "lifted chin", "raised chin"),
+            ("half-turned shoulder", "turned shoulder", "shoulder turns away"),
+            ("brisk hand", "briskly", "dismissive hand", "offhand", "small thunk"),
+        )
+        active_denial_present = any(
+            any(cue in active_denial_phrase for cue in group)
+            for group in active_denial_groups
+        )
+        if (
+            not active_denial_phrase
+            or not text_contains_term(prompt_en, str(evidence.get("active_denial_phrase") or ""))
+            or not active_denial_present
+        ):
+            failures.append(
+                {
+                    "check": "moe_response_active_denial",
+                    "reason": (
+                        "denial_care_leak needs a separate visible mouth, chin, shoulder, or "
+                        "helping-hand protest; guardedness, a label, or averted gaze alone can "
+                        "collapse into ordinary quiet kindness"
+                    ),
+                    "phrase": evidence.get("active_denial_phrase"),
+                }
+            )
+
+        concealed_affection_phrase = str(
+            evidence.get("concealed_affection_phrase") or ""
+        ).lower()
+        care_action_anchor_phrase = str(
+            evidence.get("care_action_anchor_phrase") or ""
+        ).lower()
+        relationship_gaze_anchor_phrase = str(
+            evidence.get("relationship_gaze_anchor_phrase") or ""
+        ).lower()
+        affection_cues = (
+            "affection",
+            "fond",
+            "fondness",
+            "likes",
+            "liking",
+            "personal liking",
+            "private liking",
+            "romantic interest",
+            "soften",
+            "softened",
+            "tender",
+            "warmth",
+        )
+        personal_liking_cues = (
+            "personal liking",
+            "private liking",
+            "romantic interest",
+            "personally fond",
+            "special to her",
+            "special to him",
+            "special to them",
+            "likes him",
+            "likes her",
+            "likes them",
+            "attraction",
+        )
+        concealment_cues = (
+            "almost-smile",
+            "almost smile",
+            "barely",
+            "betray",
+            "brief",
+            "conceal",
+            "hidden",
+            "hiding",
+            "nearly",
+            "restrained",
+            "returning",
+            "stolen",
+            "stops it",
+            "suppressed",
+        )
+        recipient_cues = (
+            "customer",
+            "partner",
+            "recipient",
+            "toward her",
+            "toward him",
+            "toward the viewer",
+            "toward their",
+            "their eyes",
+            "viewer",
+        )
+        directional_face_cues = (
+            "eye",
+            "eyes",
+            "gaze",
+            "glance",
+            "lid",
+            "look",
+            "mouth corner",
+            "peek",
+            "smile",
+        )
+        in_frame_cues = (
+            "in frame",
+            "in-frame",
+            "foreground",
+            "frame edge",
+            "near-lens",
+            "near lens",
+            "visible",
+        )
+        care_screen_position_cues = (
+            "left",
+            "right",
+            "lower",
+            "bottom",
+            "foreground",
+            "frame edge",
+        )
+        care_target_cues = (
+            "hand",
+            "arm",
+            "sleeve",
+            "wound",
+            "scrape",
+            "bandage",
+            "knuckle",
+            "pastry",
+            "cup",
+            "gift",
+            "lunchbox",
+            "note",
+            "umbrella",
+            "token",
+            "object",
+            "prop",
+        )
+        relationship_target_cues = (
+            "face-level",
+            "face level",
+            "eye line",
+            "eyeline",
+            "outer eye",
+            "one eye",
+            "eyes",
+            "profile",
+            "face",
+        )
+        relationship_position_cues = (
+            "above",
+            "higher",
+            "upper",
+            "face-level",
+            "face level",
+            "near-lens",
+            "near lens",
+            "frame edge",
+            "in frame",
+            "in-frame",
+            "visible",
+        )
+        partial_landmark_cues = (
+            "partial",
+            "sliver",
+            "outer eye",
+            "one eye",
+        )
+        partial_face_companion_cues = (
+            "temple",
+            "profile",
+            "cheek edge",
+            "brow edge",
+        )
+        blur_cues = (
+            "blurred",
+            "soft-focus",
+            "soft focus",
+            "out-of-focus",
+            "out of focus",
+        )
+        relationship_frame_side_cues = (
+            "upper-left",
+            "upper left",
+            "upper-right",
+            "upper right",
+            "left frame",
+            "right frame",
+            "left edge",
+            "right edge",
+        )
+        full_recipient_face_cues = (
+            "full recipient face",
+            "recipient's full face",
+            "customer's full face",
+            "partner's full face",
+            "second full face",
+            "fully shown face",
+        )
+        off_frame_cues = (
+            "off-frame",
+            "off frame",
+            "out of frame",
+            "outside frame",
+            "outside the frame",
+        )
+        care_action_anchor_present = (
+            any(cue in care_action_anchor_phrase for cue in recipient_cues)
+            and any(cue in care_action_anchor_phrase for cue in care_target_cues)
+            and any(cue in care_action_anchor_phrase for cue in in_frame_cues)
+            and any(cue in care_action_anchor_phrase for cue in care_screen_position_cues)
+            and not any(cue in care_action_anchor_phrase for cue in off_frame_cues)
+        )
+        if (
+            denial_guidance.get("care_action_anchor_phrase_required") is True
+            and (
+                not care_action_anchor_phrase
+                or not text_contains_term(
+                    prompt_en,
+                    str(evidence.get("care_action_anchor_phrase") or ""),
+                )
+                or not care_action_anchor_present
+            )
+        ):
+            failures.append(
+                {
+                    "check": "moe_response_care_action_anchor",
+                    "reason": (
+                        "denial_care_leak needs a visible hand, wound, or carried object at an explicit "
+                        "lower screen position so the helpful action has a concrete endpoint"
+                    ),
+                    "phrase": evidence.get("care_action_anchor_phrase"),
+                }
+            )
+        relationship_gaze_anchor_present = (
+            any(cue in relationship_gaze_anchor_phrase for cue in recipient_cues)
+            and "adult" in relationship_gaze_anchor_phrase
+            and any(cue in relationship_gaze_anchor_phrase for cue in relationship_target_cues)
+            and any(cue in relationship_gaze_anchor_phrase for cue in relationship_position_cues)
+            and not any(cue in relationship_gaze_anchor_phrase for cue in off_frame_cues)
+            and " ".join(relationship_gaze_anchor_phrase.split())
+            != " ".join(care_action_anchor_phrase.split())
+        )
+        partial_recipient_landmark_present = (
+            any(cue in relationship_gaze_anchor_phrase for cue in partial_landmark_cues)
+            and any(
+                cue in relationship_gaze_anchor_phrase
+                for cue in partial_face_companion_cues
+            )
+            and any(cue in relationship_gaze_anchor_phrase for cue in blur_cues)
+            and any(
+                cue in relationship_gaze_anchor_phrase
+                for cue in relationship_frame_side_cues
+            )
+            and not any(
+                cue in relationship_gaze_anchor_phrase
+                for cue in full_recipient_face_cues
+            )
+        )
+        if (
+            denial_guidance.get("relationship_gaze_anchor_phrase_required") is True
+            and (
+                not relationship_gaze_anchor_phrase
+                or not text_contains_term(
+                    prompt_en,
+                    str(evidence.get("relationship_gaze_anchor_phrase") or ""),
+                )
+                or not relationship_gaze_anchor_present
+            )
+        ):
+            failures.append(
+                {
+                    "check": "moe_response_relationship_gaze_anchor",
+                    "reason": (
+                        "denial_care_leak needs a separate face-level eye line for the same adult recipient, "
+                        "spatially distinct from the lower care target; the task anchor alone reads as nurturance"
+                    ),
+                    "phrase": evidence.get("relationship_gaze_anchor_phrase"),
+                }
+            )
+        if (
+            denial_guidance.get("partial_recipient_landmark_required") is True
+            and not partial_recipient_landmark_present
+        ):
+            failures.append(
+                {
+                    "check": "moe_response_partial_recipient_landmark",
+                    "reason": (
+                        "denial_care_leak needs one visible but subordinate landmark from the same adult "
+                        "recipient: a blurred partial outer eye plus temple or profile sliver at a named "
+                        "upper frame edge. An imagined eye line, off-frame person, or second full face "
+                        "does not make the affection endpoint verifiable"
+                    ),
+                    "phrase": evidence.get("relationship_gaze_anchor_phrase"),
+                }
+            )
+        head_away_cues = (
+            "head stays aside",
+            "head stays angled away",
+            "head remains aside",
+            "head remains angled away",
+            "face stays aside",
+            "face stays angled away",
+            "face remains aside",
+            "face remains angled away",
+            "three-quarter head",
+            "three quarter head",
+            "three-quarter face",
+            "three quarter face",
+        )
+        three_quarter_cues = (
+            "three-quarter head",
+            "three quarter head",
+            "three-quarter face",
+            "three quarter face",
+            "three-quarter view",
+            "three quarter view",
+        )
+        nose_off_lens_cues = (
+            "nose axis off the lens",
+            "nose points away from the lens",
+            "nose stays off-axis",
+            "nose remains off-axis",
+            "nose points left",
+            "nose points right",
+        )
+        iris_return_cues = (
+            "iris",
+            "irises",
+            "pupils",
+            "eyes return",
+            "gaze returns",
+            "glance returns",
+            "returning glance",
+            "stolen glance",
+        )
+        lower_lid_cues = (
+            "lower lids soften",
+            "softened lower lids",
+            "lower eyelids soften",
+            "softened lower eyelids",
+        )
+        suppressed_mouth_cues = (
+            "almost-smile",
+            "almost smile",
+            "mouth corner nearly lifts",
+            "mouth corner almost lifts",
+            "mouth corner starts to lift",
+            "mouth corner begins to lift",
+            "one mouth corner starts",
+            "one mouth corner begins",
+            "suppressed smile",
+            "suppresses a smile",
+            "then flattens",
+            "before flattening",
+        )
+        oblique_return_cues = (
+            "small oblique return",
+            "small sideways return",
+            "slight oblique return",
+            "brief oblique return",
+            "only the irises",
+            "irises alone",
+            "pupils alone",
+        )
+        frame_side_cues = (
+            "upper-left",
+            "upper left",
+            "upper-right",
+            "upper right",
+            "left of lens",
+            "right of lens",
+            "left frame",
+            "right frame",
+        )
+        overt_frontal_cues = (
+            "direct eye contact",
+            "direct frontal",
+            "directly at the camera",
+            "directly into the camera",
+            "faces the camera",
+            "facing the camera",
+            "front-facing",
+            "frontal face",
+            "centered face",
+            "selfie gaze",
+            "viewer-facing gaze",
+        )
+        relationship_geometry_terms = (
+            "face-level",
+            "face level",
+            "eye line",
+            "eyeline",
+            "profile",
+            "face",
+            "eyes",
+            "near-lens",
+            "near lens",
+        )
+        care_target_gaze_cues = (
+            "toward the hand",
+            "to the hand",
+            "at the hand",
+            "toward the wound",
+            "toward the scrape",
+            "toward the bandage",
+            "toward the knuckle",
+            "toward the pastry",
+            "toward the cup",
+            "toward the object",
+            "toward the task",
+        )
+        nurturant_affect_cues = (
+            "benevolent",
+            "maternal",
+            "motherly",
+            "mamang",
+            "mommy",
+            "nurturant",
+            "nurturing",
+            "protective concern",
+        )
+        head_left = any(
+            cue in concealed_affection_phrase
+            for cue in (
+                "head turns left",
+                "head turned left",
+                "head angles left",
+                "face turns left",
+                "face angled left",
+            )
+        )
+        head_right = any(
+            cue in concealed_affection_phrase
+            for cue in (
+                "head turns right",
+                "head turned right",
+                "head angles right",
+                "face turns right",
+                "face angled right",
+            )
+        )
+        nose_left = any(
+            cue in concealed_affection_phrase
+            for cue in ("nose points left", "nose axis points left")
+        )
+        nose_right = any(
+            cue in concealed_affection_phrase
+            for cue in ("nose points right", "nose axis points right")
+        )
+        anchor_left = any(
+            cue in relationship_gaze_anchor_phrase
+            for cue in ("upper-left", "upper left", "left frame", "left edge")
+        )
+        anchor_right = any(
+            cue in relationship_gaze_anchor_phrase
+            for cue in ("upper-right", "upper right", "right frame", "right edge")
+        )
+        iris_left = bool(
+            re.search(
+                r"(?:iris|irises|pupil|pupils).{0,80}(?:upper-left|upper left|left frame|left edge)",
+                concealed_affection_phrase,
+            )
+        )
+        iris_right = bool(
+            re.search(
+                r"(?:iris|irises|pupil|pupils).{0,80}(?:upper-right|upper right|right frame|right edge)",
+                concealed_affection_phrase,
+            )
+        )
+        opposed_head_iris_vector_present = (
+            (
+                head_right
+                and nose_right
+                and anchor_left
+                and iris_left
+                and not (head_left or nose_left or anchor_right or iris_right)
+            )
+            or (
+                head_left
+                and nose_left
+                and anchor_right
+                and iris_right
+                and not (head_right or nose_right or anchor_left or iris_left)
+            )
+        )
+        if (
+            denial_guidance.get("opposed_head_iris_vector_required") is True
+            and not opposed_head_iris_vector_present
+        ):
+            failures.append(
+                {
+                    "check": "moe_response_opposed_head_iris_vector",
+                    "reason": (
+                        "the head and nose must name one side while the partial recipient landmark and "
+                        "iris return name the opposite side. Turning head and irises together creates a "
+                        "generic side-look rather than concealed liking"
+                    ),
+                    "anchor_phrase": evidence.get("relationship_gaze_anchor_phrase"),
+                    "concealed_affection_phrase": evidence.get("concealed_affection_phrase"),
+                }
+            )
+        affection_vector_present = (
+            any(cue in concealed_affection_phrase for cue in head_away_cues)
+            and any(cue in concealed_affection_phrase for cue in three_quarter_cues)
+            and any(cue in concealed_affection_phrase for cue in nose_off_lens_cues)
+            and any(cue in concealed_affection_phrase for cue in iris_return_cues)
+            and any(cue in concealed_affection_phrase for cue in oblique_return_cues)
+            and any(cue in concealed_affection_phrase for cue in lower_lid_cues)
+            and any(cue in concealed_affection_phrase for cue in suppressed_mouth_cues)
+            and any(cue in concealed_affection_phrase for cue in frame_side_cues)
+            and (
+                any(
+                    cue in concealed_affection_phrase and cue in relationship_gaze_anchor_phrase
+                    for cue in relationship_geometry_terms
+                )
+                or any(
+                    cue in concealed_affection_phrase and cue in relationship_gaze_anchor_phrase
+                    for cue in frame_side_cues
+                )
+            )
+            and not any(cue in concealed_affection_phrase for cue in care_target_gaze_cues)
+            and not any(cue in concealed_affection_phrase for cue in overt_frontal_cues)
+            and (
+                denial_guidance.get("opposed_head_iris_vector_required") is not True
+                or opposed_head_iris_vector_present
+            )
+        )
+        concealed_affection_present = (
+            any(cue in concealed_affection_phrase for cue in affection_cues)
+            and any(cue in concealed_affection_phrase for cue in personal_liking_cues)
+            and any(cue in concealed_affection_phrase for cue in concealment_cues)
+            and any(cue in concealed_affection_phrase for cue in directional_face_cues)
+            and not any(cue in concealed_affection_phrase for cue in nurturant_affect_cues)
+            and affection_vector_present
+        )
+        if (
+            denial_guidance.get("concealed_affection_phrase_required") is True
+            and (
+                not concealed_affection_phrase
+                or not text_contains_term(
+                    prompt_en,
+                    str(evidence.get("concealed_affection_phrase") or ""),
+                )
+                or not concealed_affection_present
+            )
+        ):
+            failures.append(
+                {
+                    "check": "moe_response_concealed_affection",
+                    "reason": (
+                        "denial_care_leak needs a named three-quarter head turn with the nose axis off the lens, "
+                        "toward the side opposite a visible partial recipient landmark, with only the irises making a "
+                        "small oblique return toward that landmark, softened lower lids, and one mouth corner beginning "
+                        "to lift before suppression. Direct "
+                        "frontal eye contact, care-target gaze, or maternal benevolence is not concealed peer liking"
+                    ),
+                    "phrase": evidence.get("concealed_affection_phrase"),
+                }
+            )
+
+    response_phrase = str(evidence.get("visible_response_phrase") or "").lower()
+    response_action_cues = (
+        "gaze",
+        "look",
+        "blink",
+        "mouth",
+        "lip",
+        "huff",
+        "hand",
+        "finger",
+        "grip",
+        "shoulder",
+        "posture",
+        "turn",
+        "pause",
+        "recoil",
+        "twitch",
+        "flatten",
+        "tilt",
+        "pupil",
+        "tail",
+        "composure",
+    )
+    if response_phrase and not any(cue in response_phrase for cue in response_action_cues):
+        failures.append(
+            {
+                "check": "moe_response_visible_response",
+                "reason": "visible response must show face, gaze, hand, posture, or involuntary reflex evidence",
+                "phrase": evidence.get("visible_response_phrase"),
+            }
+        )
+
+    focal_phrase = str(evidence.get("focal_plane_phrase") or "").lower()
+    if focal_phrase and (
+        "focal" not in focal_phrase
+        or not any(term in focal_phrase for term in ("face", "gaze", "eyes", "mouth"))
+        or not any(term in focal_phrase for term in ("hand", "finger", "posture", "target", "object", "prop"))
+    ):
+        failures.append(
+            {
+                "check": "moe_response_focal_plane",
+                "reason": "focal-plane evidence must bind the facial response with hands/posture and the target",
+                "phrase": evidence.get("focal_plane_phrase"),
+            }
+        )
+
+    event_phase_phrase = str(evidence.get("event_phase_phrase") or "").lower()
+    event_phase_cues = (
+        "as ",
+        "before",
+        "caught",
+        "during",
+        "in the act",
+        "just as",
+        "mid-",
+        "while",
+    )
+    if event_phase_phrase and not any(cue in event_phase_phrase for cue in event_phase_cues):
+        failures.append(
+            {
+                "check": "moe_response_event_phase",
+                "reason": "event-phase evidence must bind the frame to an unfinished transition, not a settled endpoint",
+                "phrase": evidence.get("event_phase_phrase"),
+            }
+        )
+
+    state_geometry_blob = " ".join(
+        str(evidence.get(field) or "").lower()
+        for field in (
+            "event_phase_phrase",
+            "target_phrase",
+            "immediate_consequence_phrase",
+        )
+    )
+    state_geometry_cues = (
+        "above",
+        "below",
+        "broken",
+        "crooked",
+        "gap",
+        "half-",
+        "halfway",
+        "inverted",
+        "kink",
+        "off-center",
+        "open ",
+        "outside",
+        "partway",
+        "slipping",
+        "tilted",
+        "unseated",
+    )
+    if state_geometry_blob and not any(cue in state_geometry_blob for cue in state_geometry_cues):
+        failures.append(
+            {
+                "check": "moe_response_state_geometry",
+                "reason": (
+                    "event, target, and consequence evidence must name a visible physical separation "
+                    "that distinguishes the unfinished state from its settled endpoint"
+                ),
+            }
+        )
+
+    if "nonhuman_reflex_leak" in {mechanism, *support_values}:
+        direction_phrase = response_phrase
+        body_cues = ("ear", "tail", "pupil", "posture")
+        direction_cues = ("toward", "away", "aim", "left", "right", "nearer", "trigger-side")
+        if not any(cue in direction_phrase for cue in body_cues) or not any(
+            cue in direction_phrase for cue in direction_cues
+        ):
+            failures.append(
+                {
+                    "check": "moe_response_reflex_direction",
+                    "reason": "a nonhuman reflex must name the responding body part and its direction toward a visible trigger",
+                    "phrase": evidence.get("visible_response_phrase"),
+                }
+            )
+        if "ear" in direction_phrase:
+            asymmetric_cues = (
+                "one ear",
+                "nearer ear",
+                "trigger-side ear",
+                "left ear",
+                "right ear",
+                "other ear",
+                "far ear",
+                "asymmetric",
+            )
+            if not any(cue in direction_phrase for cue in asymmetric_cues):
+                failures.append(
+                    {
+                        "check": "moe_response_reflex_direction",
+                        "reason": "an ear reflex must be asymmetric rather than two static symmetrical ears",
+                        "phrase": evidence.get("visible_response_phrase"),
+                    }
+                )
+            compact_ear_cues = (
+                "compact ear",
+                "compact ears",
+                "small ear",
+                "small ears",
+                "human-ear-scale",
+                "human ear scale",
+                "no taller than her human ear",
+                "no taller than his human ear",
+                "no taller than the visible human ear",
+                "human-ear height",
+            )
+            angle_difference_cues = (
+                "different angle",
+                "different angles",
+                "unequal angle",
+                "unequal angles",
+                "other ear keeps",
+                "far ear keeps",
+                "baseline angle",
+            )
+            reflex_missing = []
+            if not any(cue in direction_phrase for cue in compact_ear_cues):
+                reflex_missing.append("compact_human_ear_scale")
+            if not any(cue in direction_phrase for cue in angle_difference_cues):
+                reflex_missing.append("clearly_different_ear_angles")
+            if reflex_missing:
+                failures.append(
+                    {
+                        "check": "moe_response_nekomimi_scale_direction",
+                        "reason": (
+                            "a nekomimi ear reflex must keep each living ear compact and make the two "
+                            "ear-tip angles visibly different"
+                        ),
+                        "missing": reflex_missing,
+                        "phrase": evidence.get("visible_response_phrase"),
+                    }
+                )
+
+    text_free_background = (
+        contract.get("composition_guidance", {}).get("render_legibility", {}).get("text_free_background")
+        if isinstance(contract.get("composition_guidance"), dict)
+        else None
+    )
+    if text_free_background:
+        background_phrase = str(evidence.get("background_control_phrase") or "").lower()
+        if not background_phrase:
+            failures.append(
+                {
+                    "check": "moe_response_background_control",
+                    "reason": "moe composition requires literal unlettered-background evidence",
+                    "fields": ["background_control_phrase"],
+                }
+            )
+        else:
+            background_surface_cues = (
+                "plain background",
+                "plain wall",
+                "unlettered",
+                "without text",
+                "no text",
+                "text-free",
+                "unwritten",
+                "unmarked wall",
+                "soft bokeh without signs",
+            )
+            forbidden_background_cues = (
+                "chalkboard",
+                "lettering",
+                "menu board",
+                "pseudo-writing",
+                "signage",
+                "written text",
+            )
+            if (
+                not text_contains_term(prompt_en, str(evidence.get("background_control_phrase") or ""))
+                or not any(cue in background_phrase for cue in background_surface_cues)
+                or any(cue in background_phrase for cue in forbidden_background_cues)
+            ):
+                failures.append(
+                    {
+                        "check": "moe_response_background_control",
+                        "reason": (
+                            "background evidence must literally request a plain or unlettered surface "
+                            "without menus, signs, pseudo-writing, or other generated text"
+                        ),
+                        "phrase": evidence.get("background_control_phrase"),
+                    }
+                )
+
+    weak_only_tokens = {
+        "adorable",
+        "anime",
+        "beautiful",
+        "blush",
+        "blushing",
+        "cat",
+        "cute",
+        "ears",
+        "kawaii",
+        "maid",
+        "moe",
+        "pretty",
+        "shy",
+        "smile",
+    }
+    weak_only = []
+    for phrase in evidence_phrases:
+        tokens = {token for token in re.findall(r"[a-z]+", phrase.lower()) if token}
+        if tokens and tokens <= weak_only_tokens:
+            weak_only.append(phrase)
+    if weak_only:
+        failures.append(
+            {
+                "check": "moe_response_shortcut",
+                "reason": "cute labels, blush, ears, costume, or a shy smile alone are not moe-response evidence",
+                "phrases": weak_only,
+            }
+        )
+
+    youth_fragments = (
+        "baby face",
+        "baby-faced",
+        "childlike",
+        "child-like",
+        "schoolgirl",
+        "schoolboy",
+        "teenage",
+        "youthful proportions",
+        "oversized eyes",
+        "young-looking",
+        "looks underage",
+    )
+    youth_hits = [fragment for fragment in youth_fragments if fragment in prompt_en.lower()]
+    if youth_hits:
+        failures.append(
+            {
+                "check": "moe_response_adult_guard",
+                "reason": "youth morphology or minor coding cannot be used as moe evidence",
+                "terms": youth_hits,
+            }
+        )
+
+    if str(contract.get("sexual_tone") or "") == "nonsexual":
+        sensual_fragments = (
+            "cleavage",
+            "chest-forward",
+            "fetish",
+            "lingerie",
+            "pin-up",
+            "seductive",
+            "sultry",
+            "sensual gaze",
+            "sensual pose",
+            "sexualized",
+            "sexualised",
+        )
+        sensual_hits = [fragment for fragment in sensual_fragments if fragment in prompt_en.lower()]
+        if sensual_hits:
+            failures.append(
+                {
+                    "check": "moe_response_nonsexual_tone",
+                    "reason": "nonsexual moe response contains sensual or body-emphasis direction",
+                    "terms": sensual_hits,
+                }
+            )
+    return failures
 
 
 def audit_viewer_experience(
@@ -1148,6 +2894,7 @@ def audit_hybrid_augmentation(
 
     failures: list[dict[str, Any]] = []
     warnings: list[dict[str, Any]] = []
+    authorial_mode = str(contract.get("contract_version") or "") == "photo-hybrid-augmentation/v2"
     brief = composed.get("augmentation_brief")
     if not isinstance(brief, dict):
         return [
@@ -1246,7 +2993,8 @@ def audit_hybrid_augmentation(
             }
         )
 
-    accepted_ids: set[str] = set()
+    adopted_ids: set[str] = set()
+    adopted_states = {"transformed"} if authorial_mode else {"accepted", "modified"}
     for decision in decisions:
         candidate_id = str(decision.get("candidate_id") or "")
         state = str(decision.get("decision") or "")
@@ -1288,14 +3036,18 @@ def audit_hybrid_augmentation(
                     "candidate_id": candidate_id,
                 }
             )
-        if state in {"accepted", "modified"}:
-            accepted_ids.add(candidate_id)
+        if state in adopted_states:
+            adopted_ids.add(candidate_id)
             evidence = str(decision.get("prompt_evidence") or "").strip()
             if candidate_id not in chosen:
                 failures.append(
                     {
                         "check": "hybrid_augmentation_provenance",
-                        "reason": "accepted or modified augmentation candidate is missing from chosen_candidate_ids",
+                        "reason": (
+                            "transformed augmentation candidate is missing from chosen_candidate_ids"
+                            if authorial_mode
+                            else "accepted or modified augmentation candidate is missing from chosen_candidate_ids"
+                        ),
                         "candidate_id": candidate_id,
                     }
                 )
@@ -1303,12 +3055,77 @@ def audit_hybrid_augmentation(
                 failures.append(
                     {
                         "check": "hybrid_augmentation_binding",
-                        "reason": "accepted or modified detail requires literal prompt_evidence",
+                        "reason": (
+                            "transformed detail requires newly authored literal prompt_evidence"
+                            if authorial_mode
+                            else "accepted or modified detail requires literal prompt_evidence"
+                        ),
                         "candidate_id": candidate_id,
                         "prompt_evidence": evidence or None,
                     }
                 )
-            if state == "modified" and not str(decision.get("modification") or "").strip():
+            if authorial_mode:
+                interpretation = str(decision.get("artistic_interpretation") or "").strip()
+                transformation = str(decision.get("transformation") or "").strip()
+                dimensions = [
+                    str(item)
+                    for item in decision.get("transformation_dimensions") or []
+                    if str(item).strip()
+                ]
+                allowed_dimensions = {
+                    str(item)
+                    for item in adoption.get("transformation_dimensions") or []
+                    if str(item).strip()
+                }
+                if not interpretation or not transformation or not dimensions:
+                    failures.append(
+                        {
+                            "check": "hybrid_augmentation_authorial_transform",
+                            "reason": (
+                                "transformed detail requires artistic_interpretation, transformation, "
+                                "and at least one transformation dimension"
+                            ),
+                            "candidate_id": candidate_id,
+                        }
+                    )
+                unknown_dimensions = sorted(set(dimensions) - allowed_dimensions)
+                if unknown_dimensions:
+                    failures.append(
+                        {
+                            "check": "hybrid_augmentation_authorial_transform",
+                            "reason": "transformed detail uses an unknown transformation dimension",
+                            "candidate_id": candidate_id,
+                            "dimensions": unknown_dimensions,
+                        }
+                    )
+                source_candidate = candidate_objects.get(candidate_id, {})
+                source_terms = {
+                    str(item).lower()
+                    for item in source_candidate.get("concept_terms") or []
+                    if str(item).strip()
+                }
+                evidence_terms = authorial_evidence_tokens(evidence)
+                if (
+                    evidence
+                    and (
+                        len(evidence_terms) < 3
+                        or not (evidence_terms - source_terms)
+                    )
+                ):
+                    failures.append(
+                        {
+                            "check": "hybrid_augmentation_authorial_transform",
+                            "reason": (
+                                "prompt_evidence must add authored context or causality beyond the "
+                                "candidate's unordered source terms"
+                            ),
+                            "candidate_id": candidate_id,
+                            "source_terms": sorted(source_terms),
+                        }
+                    )
+            if not authorial_mode and state == "modified" and not str(
+                decision.get("modification") or ""
+            ).strip():
                 failures.append(
                     {
                         "check": "hybrid_augmentation_decisions",
@@ -1327,21 +3144,34 @@ def audit_hybrid_augmentation(
 
     if selected_route_id in route_map:
         try:
-            accepted_min = int(adoption.get("minimum_accepted_if_selected", 2) or 2)
+            accepted_min = int(
+                adoption.get(
+                    "minimum_transformed_if_selected" if authorial_mode else "minimum_accepted_if_selected",
+                    1 if authorial_mode else 2,
+                )
+                or (1 if authorial_mode else 2)
+            )
         except (TypeError, ValueError):
-            accepted_min = 2
+            accepted_min = 1 if authorial_mode else 2
         try:
-            accepted_max = int(adoption.get("maximum_accepted", 5) or 5)
+            accepted_max = int(
+                adoption.get("maximum_transformed" if authorial_mode else "maximum_accepted", 3 if authorial_mode else 5)
+                or (3 if authorial_mode else 5)
+            )
         except (TypeError, ValueError):
-            accepted_max = 5
-        if len(accepted_ids) < accepted_min or len(accepted_ids) > accepted_max:
+            accepted_max = 3 if authorial_mode else 5
+        if len(adopted_ids) < accepted_min or len(adopted_ids) > accepted_max:
             failures.append(
                 {
                     "check": "hybrid_augmentation_budget",
-                    "reason": "accepted augmentation detail count is outside the declared budget",
+                    "reason": (
+                        "transformed augmentation detail count is outside the declared budget"
+                        if authorial_mode
+                        else "accepted augmentation detail count is outside the declared budget"
+                    ),
                     "minimum": accepted_min,
                     "maximum": accepted_max,
-                    "actual": len(accepted_ids),
+                    "actual": len(adopted_ids),
                 }
             )
 
@@ -1398,19 +3228,38 @@ def audit_hybrid_augmentation(
                     }
                 )
             if expected_intensity > 0:
-                inventory_ids = {
-                    str(candidate.get("id") or "")
-                    for candidate in axis_contract.get("candidate_inventory") or []
-                    if isinstance(candidate, dict) and str(candidate.get("id") or "")
-                }
-                if not (accepted_ids & inventory_ids):
-                    failures.append(
-                        {
-                            "check": "adult_appeal_axes",
-                            "reason": "every active adult-appeal axis requires one accepted or modified candidate",
-                            "axis": axis_id,
-                        }
-                    )
+                if authorial_mode:
+                    interpretation = str(actual_axis.get("artistic_interpretation") or "").strip()
+                    axis_evidence = str(actual_axis.get("prompt_evidence") or "").strip()
+                    if (
+                        not interpretation
+                        or not axis_evidence
+                        or not text_contains_term(prompt_en, axis_evidence)
+                    ):
+                        failures.append(
+                            {
+                                "check": "adult_appeal_axes",
+                                "reason": (
+                                    "every active adult-appeal axis requires an agent-authored "
+                                    "interpretation with literal prompt evidence"
+                                ),
+                                "axis": axis_id,
+                            }
+                        )
+                else:
+                    inventory_ids = {
+                        str(candidate.get("id") or "")
+                        for candidate in axis_contract.get("candidate_inventory") or []
+                        if isinstance(candidate, dict) and str(candidate.get("id") or "")
+                    }
+                    if not (adopted_ids & inventory_ids):
+                        failures.append(
+                            {
+                                "check": "adult_appeal_axes",
+                                "reason": "every active adult-appeal axis requires one accepted or modified candidate",
+                                "axis": axis_id,
+                            }
+                        )
         expected_emphasis = str((adult_contract.get("blend") or {}).get("emphasis") or "")
         actual_emphasis = str((adult_brief.get("blend") or {}).get("emphasis") or "") if isinstance(adult_brief.get("blend"), dict) else ""
         if actual_emphasis != expected_emphasis:
@@ -1467,6 +3316,356 @@ def audit_hybrid_augmentation(
     return failures, warnings
 
 
+def audit_authorial_scene(
+    pack: dict[str, Any],
+    composed: dict[str, Any],
+    prompt_en: str,
+) -> list[dict[str, Any]]:
+    scene_contract = pack.get("scene_contract") if isinstance(pack.get("scene_contract"), dict) else {}
+    groups = [
+        group
+        for group in scene_contract.get("groups") or []
+        if isinstance(group, dict)
+        and str(group.get("strategy") or "") == "authorial_scene"
+        and str(group.get("source") or "") == "selected_render_blueprint_abstraction"
+    ]
+    if not groups:
+        return []
+
+    authored = composed.get("authored_scene")
+    if not isinstance(authored, dict):
+        return [
+            {
+                "check": "authorial_scene",
+                "reason": "v4 abstract scene contract requires an authored_scene object",
+            }
+        ]
+
+    failures: list[dict[str, Any]] = []
+    if not str(authored.get("governing_premise") or "").strip() or not str(
+        authored.get("artistic_rationale") or ""
+    ).strip():
+        failures.append(
+            {
+                "check": "authorial_scene_judgment",
+                "reason": "authored_scene requires a governing_premise and artistic_rationale",
+            }
+        )
+
+    atoms = authored.get("atoms") if isinstance(authored.get("atoms"), dict) else {}
+    required_slots = list(
+        dict.fromkeys(
+            str(slot)
+            for group in groups
+            for slot in group.get("required_authored_slots") or []
+            if str(slot)
+        )
+    )
+    evidence_phrases: list[str] = []
+    for slot in required_slots:
+        phrase = str(atoms.get(slot) or "").strip()
+        if not phrase:
+            failures.append(
+                {
+                    "check": "authorial_scene_atoms",
+                    "reason": "authored scene is missing a required newly written atom",
+                    "slot": slot,
+                }
+            )
+            continue
+        evidence_phrases.append(phrase)
+        if not text_contains_term(prompt_en, phrase):
+            failures.append(
+                {
+                    "check": "authorial_scene_binding",
+                    "reason": "authored scene atom is not literal in prompt_en",
+                    "slot": slot,
+                    "prompt_evidence": phrase,
+                }
+            )
+        if len(authorial_evidence_tokens(phrase)) < 3:
+            failures.append(
+                {
+                    "check": "authorial_scene_atoms",
+                    "reason": "authored scene atom is too fragmentary to establish an original relation",
+                    "slot": slot,
+                }
+            )
+    if len({phrase.lower() for phrase in evidence_phrases}) != len(evidence_phrases):
+        failures.append(
+            {
+                "check": "authorial_scene_atoms",
+                "reason": "subject, action, location, and prop must be distinct authored decisions",
+            }
+        )
+    coverage = pack.get("coverage") if isinstance(pack.get("coverage"), dict) else {}
+    intent_constraints = (
+        coverage.get("intent_constraints")
+        if isinstance(coverage.get("intent_constraints"), dict)
+        else {}
+    )
+    subject_atom = str(atoms.get("subject") or "")
+    if intent_constraints.get("no_people") and re.search(
+        r"\b(?:adult|boy|girl|human|man|men|person|people|woman|women)\b",
+        subject_atom,
+        flags=re.IGNORECASE,
+    ):
+        failures.append(
+            {
+                "check": "negative_presence_constraint",
+                "reason": "no-people authored scene contains an explicit human subject term",
+            }
+        )
+
+    choices = [row for row in authored.get("interpretive_choices") or [] if isinstance(row, dict)]
+    minimum_choices = max(
+        [
+            int((group.get("composition_policy") or {}).get("minimum_interpretive_choices", 2) or 2)
+            for group in groups
+        ]
+        or [2]
+    )
+    allowed_dimensions = {
+        str(item)
+        for group in groups
+        for item in (group.get("composition_policy") or {}).get("interpretive_dimensions") or []
+        if str(item)
+    }
+    choice_dimensions = [str(row.get("dimension") or "") for row in choices]
+    invalid_choices = [
+        row
+        for row in choices
+        if not str(row.get("dimension") or "").strip()
+        or not str(row.get("decision") or "").strip()
+        or not str(row.get("reason") or "").strip()
+        or (allowed_dimensions and str(row.get("dimension") or "") not in allowed_dimensions)
+    ]
+    if (
+        len(choices) < minimum_choices
+        or len(set(choice_dimensions)) < minimum_choices
+        or invalid_choices
+    ):
+        failures.append(
+            {
+                "check": "authorial_scene_judgment",
+                "reason": (
+                    "authored_scene requires distinct valid interpretive choices with a decision "
+                    "and artistic reason"
+                ),
+                "minimum": minimum_choices,
+                "actual_dimensions": choice_dimensions,
+            }
+        )
+    return failures
+
+
+def audit_authorial_open_slots(
+    pack: dict[str, Any],
+    composed: dict[str, Any],
+    prompt_en: str,
+) -> list[dict[str, Any]]:
+    contracts = [
+        row
+        for row in pack.get("authorial_open_slots") or []
+        if isinstance(row, dict) and str(row.get("slot") or "")
+    ]
+    if not contracts:
+        return []
+    authored_slots = composed.get("authored_slots")
+    if not isinstance(authored_slots, dict):
+        return [
+            {
+                "check": "authorial_open_slots",
+                "reason": "v4 authorial openings require an authored_slots object",
+                "slots": [str(row.get("slot")) for row in contracts],
+            }
+        ]
+
+    failures: list[dict[str, Any]] = []
+    for contract in contracts:
+        slot = str(contract.get("slot") or "")
+        decision = authored_slots.get(slot)
+        if not isinstance(decision, dict):
+            failures.append(
+                {
+                    "check": "authorial_open_slots",
+                    "reason": "missing authored decision for an open singleton scene slot",
+                    "slot": slot,
+                }
+            )
+            continue
+        evidence = str(decision.get("prompt_evidence") or "").strip()
+        rationale = str(decision.get("artistic_rationale") or "").strip()
+        if (
+            not evidence
+            or not rationale
+            or not text_contains_term(prompt_en, evidence)
+            or len(authorial_evidence_tokens(evidence)) < 3
+        ):
+            failures.append(
+                {
+                    "check": "authorial_open_slots",
+                    "reason": (
+                        "each open slot needs a newly authored literal prompt phrase and artistic rationale"
+                    ),
+                    "slot": slot,
+                    "prompt_evidence": evidence or None,
+                }
+            )
+        constraints = contract.get("constraints") if isinstance(contract.get("constraints"), dict) else {}
+        scene_family = str(constraints.get("scene_family") or "")
+        acknowledgments = {
+            str(item)
+            for item in decision.get("constraint_acknowledgments") or []
+            if str(item).strip()
+        }
+        if scene_family and scene_family not in acknowledgments:
+            failures.append(
+                {
+                    "check": "authorial_open_slot_constraints",
+                    "reason": "authored location must acknowledge its required role-scene family",
+                    "slot": slot,
+                    "required": scene_family,
+                }
+            )
+        forbidden_hits = [
+            str(term)
+            for term in constraints.get("forbidden_concepts") or []
+            if text_contains_term(evidence, str(term).replace("_", " "))
+        ]
+        if forbidden_hits:
+            failures.append(
+                {
+                    "check": "authorial_open_slot_constraints",
+                    "reason": "authored slot uses a forbidden role-scene concept",
+                    "slot": slot,
+                    "concepts": forbidden_hits,
+                }
+            )
+        if constraints.get("no_people") and re.search(
+            r"\b(?:adult|boy|girl|human|man|men|person|people|woman|women)\b",
+            evidence,
+            flags=re.IGNORECASE,
+        ):
+            failures.append(
+                {
+                    "check": "negative_presence_constraint",
+                    "reason": "no-people authorial subject contains an explicit human term",
+                    "slot": slot,
+                }
+            )
+    unexpected = sorted(set(authored_slots) - {str(row.get("slot")) for row in contracts})
+    if unexpected:
+        failures.append(
+            {
+                "check": "authorial_open_slots",
+                "reason": "authored_slots contains a slot that was not opened by the pack",
+                "slots": unexpected,
+            }
+        )
+    return failures
+
+
+def audit_candidate_interpretations(
+    pack: dict[str, Any],
+    composed: dict[str, Any],
+    prompt_en: str,
+    chosen: set[str],
+    candidate_objects: dict[str, dict[str, Any]],
+) -> list[dict[str, Any]]:
+    """Require authorship evidence for every ordinary v4 candidate choice."""
+
+    if str(pack.get("contract_version") or "") != "photo-candidate-pack/v4":
+        return []
+    augmentation_brief = (
+        composed.get("augmentation_brief")
+        if isinstance(composed.get("augmentation_brief"), dict)
+        else {}
+    )
+    transformed_augmentation_ids = {
+        str(row.get("candidate_id") or "")
+        for row in augmentation_brief.get("decisions") or []
+        if isinstance(row, dict)
+        and str(row.get("decision") or "") == "transformed"
+        and str(row.get("candidate_id") or "")
+    }
+    required_ids = chosen - transformed_augmentation_ids
+    rows = [
+        row
+        for row in composed.get("candidate_interpretations") or []
+        if isinstance(row, dict)
+    ]
+    row_ids = [str(row.get("candidate_id") or "") for row in rows]
+    failures: list[dict[str, Any]] = []
+    if len(row_ids) != len(set(row_ids)):
+        failures.append(
+            {
+                "check": "candidate_interpretations",
+                "reason": "each chosen candidate may have only one authorial interpretation",
+            }
+        )
+    missing = sorted(required_ids - set(row_ids))
+    unexpected = sorted(set(row_ids) - required_ids)
+    if missing or unexpected:
+        failures.append(
+            {
+                "check": "candidate_interpretations",
+                "reason": (
+                    "candidate_interpretations must cover every non-augmentation chosen candidate "
+                    "exactly once and no others"
+                ),
+                "missing": missing,
+                "unexpected": unexpected,
+            }
+        )
+
+    for row in rows:
+        candidate_id = str(row.get("candidate_id") or "")
+        if candidate_id not in required_ids:
+            continue
+        interpretation = str(row.get("artistic_interpretation") or "").strip()
+        transformation = str(row.get("transformation") or "").strip()
+        evidence = str(row.get("prompt_evidence") or "").strip()
+        if (
+            len(authorial_evidence_tokens(interpretation)) < 3
+            or len(authorial_evidence_tokens(transformation)) < 3
+            or not evidence
+            or not text_contains_term(prompt_en, evidence)
+        ):
+            failures.append(
+                {
+                    "check": "candidate_interpretation_authorship",
+                    "reason": (
+                        "each chosen candidate needs substantive artistic interpretation, transformation, "
+                        "and literal prompt evidence"
+                    ),
+                    "candidate_id": candidate_id,
+                }
+            )
+            continue
+        candidate = candidate_objects.get(candidate_id, {})
+        source_terms = {
+            token
+            for item in candidate.get("concept_terms") or []
+            for token in authorial_evidence_tokens(str(item))
+        }
+        evidence_terms = authorial_evidence_tokens(evidence)
+        new_terms = evidence_terms - source_terms
+        if len(evidence_terms) < 4 or len(new_terms) < 2:
+            failures.append(
+                {
+                    "check": "candidate_interpretation_authorship",
+                    "reason": (
+                        "prompt evidence must add at least two authored content words beyond the "
+                        "candidate's unordered source terms"
+                    ),
+                    "candidate_id": candidate_id,
+                    "source_terms": sorted(source_terms),
+                }
+            )
+    return failures
+
+
 def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dict[str, Any]:
     failures: list[dict[str, Any]] = []
     warnings: list[dict[str, Any]] = []
@@ -1484,6 +3683,7 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
                 "actual": contract_version or None,
             }
         )
+    failures.extend(audit_v4_authorial_pack(pack))
 
     required_fields = ("pack_id", "prompt_en", "negative_en", "chosen_candidate_ids", "composer")
     missing_fields = [field for field in required_fields if field not in composed]
@@ -1514,6 +3714,7 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
         failures.append({"check": "negative_en", "reason": "negative_en differs from candidate pack"})
 
     failures.extend(audit_creative_direction(pack, composed, prompt_en))
+    failures.extend(audit_moe_response(pack, composed, prompt_en))
     failures.extend(audit_viewer_experience(pack, composed, prompt_en))
 
     safety = pack.get("safety") if isinstance(pack.get("safety"), dict) else {}
@@ -1522,10 +3723,79 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
     failed_gates = [
         gate
         for gate in pack.get("concept_gates") or []
-        if isinstance(gate, dict) and gate.get("status") != "pass"
+        if isinstance(gate, dict) and gate.get("status") not in {"pass", "manual"}
     ]
     if failed_gates:
         failures.append({"check": "concept_gates", "reason": "candidate pack contains a failed concept gate", "gates": failed_gates})
+    manual_gates = [
+        gate
+        for gate in pack.get("concept_gates") or []
+        if isinstance(gate, dict) and gate.get("status") == "manual"
+    ]
+    if manual_gates:
+        manual_evidence = composed.get("manual_gate_evidence")
+        if not isinstance(manual_evidence, dict):
+            failures.append(
+                {
+                    "check": "concept_gates",
+                    "reason": "manual concept gates require prompt-bound evidence before pixel review",
+                    "gate_ids": [str(gate.get("id") or "") for gate in manual_gates],
+                }
+            )
+        else:
+            for gate in manual_gates:
+                gate_id = str(gate.get("id") or "")
+                evidence = manual_evidence.get(gate_id)
+                if not isinstance(evidence, dict):
+                    failures.append(
+                        {
+                            "check": "concept_gates",
+                            "reason": "manual concept gate is missing an evidence object",
+                            "gate_id": gate_id,
+                        }
+                    )
+                    continue
+                evidence_phrases = nonempty_string_list(evidence.get("evidence_phrases"))
+                minimum = 2 if gate_id in {"contradiction_in_frame", "costume_swap_test"} else 1
+                if len(evidence_phrases) < minimum:
+                    failures.append(
+                        {
+                            "check": "concept_gates",
+                            "reason": "manual concept gate has insufficient prompt evidence",
+                            "gate_id": gate_id,
+                            "minimum_phrases": minimum,
+                        }
+                    )
+                    continue
+                missing_phrases = [
+                    phrase for phrase in evidence_phrases if not text_contains_term(prompt_en, phrase)
+                ]
+                if missing_phrases:
+                    failures.append(
+                        {
+                            "check": "concept_gates",
+                            "reason": "manual concept-gate evidence is not literal in prompt_en",
+                            "gate_id": gate_id,
+                            "phrases": missing_phrases,
+                        }
+                    )
+                    continue
+                if str(evidence.get("review_stage") or "") != "pixel_review_required":
+                    failures.append(
+                        {
+                            "check": "concept_gates",
+                            "reason": "manual gate evidence must remain pending for pixel review",
+                            "gate_id": gate_id,
+                        }
+                    )
+                    continue
+                warnings.append(
+                    {
+                        "check": "manual_concept_gate",
+                        "reason": "prompt evidence is bound; native-pixel confirmation is still required",
+                        "gate_id": gate_id,
+                    }
+                )
 
     mandatory_texts = {
         str(intent.get("text") or "")
@@ -1574,7 +3844,7 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
 
     chosen = normalize_chosen_candidate_ids(composed.get("chosen_candidate_ids"))
     valid_ids = candidate_ids_from_pack(pack)
-    if not chosen:
+    if not chosen and contract_version != "photo-candidate-pack/v4":
         failures.append({"check": "chosen_candidate_ids", "reason": "no chosen_candidate_ids supplied"})
     invalid = sorted(candidate_id for candidate_id in chosen if candidate_id not in valid_ids)
     if invalid:
@@ -1613,6 +3883,17 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
     )
     failures.extend(hybrid_failures)
     warnings.extend(hybrid_warnings)
+    failures.extend(
+        audit_candidate_interpretations(
+            pack,
+            composed,
+            prompt_en,
+            chosen,
+            candidate_objects,
+        )
+    )
+    failures.extend(audit_authorial_scene(pack, composed, prompt_en))
+    failures.extend(audit_authorial_open_slots(pack, composed, prompt_en))
 
     coverage = pack.get("coverage") if isinstance(pack.get("coverage"), dict) else {}
     intent_constraints = coverage.get("intent_constraints") if isinstance(coverage.get("intent_constraints"), dict) else {}
@@ -1839,10 +4120,16 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
         render_contract = pack.get("render_contract") if isinstance(pack.get("render_contract"), dict) else {}
         selected_scene = render_contract.get("selected_scene") if isinstance(render_contract.get("selected_scene"), dict) else {}
         atomic_scene = selected_scene.get("atomic_scene") if isinstance(selected_scene.get("atomic_scene"), dict) else {}
+        authored_scene = composed.get("authored_scene") if isinstance(composed.get("authored_scene"), dict) else {}
+        authored_atoms = authored_scene.get("atoms") if isinstance(authored_scene.get("atoms"), dict) else {}
+        authored_slots = composed.get("authored_slots") if isinstance(composed.get("authored_slots"), dict) else {}
         chosen_clue_slots = sorted(
             slot
             for slot in clue_slots
-            if chosen_slots.get(slot) or isinstance(atomic_scene.get(slot), dict)
+            if chosen_slots.get(slot)
+            or isinstance(atomic_scene.get(slot), dict)
+            or bool(str(authored_atoms.get(slot) or "").strip())
+            or isinstance(authored_slots.get(slot), dict)
         )
         try:
             minimum_chosen = int(evidence_budget.get("minimum_chosen", 0))
@@ -1966,39 +4253,51 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
             )
     role_scene_policy = pack.get("role_scene_policy") if isinstance(pack.get("role_scene_policy"), dict) else {}
     if role_scene_policy.get("enabled"):
-        selected_locations = chosen_slots.get("location", set())
-        allowed_locations = {str(item) for item in role_scene_policy.get("allowed_locations") or []}
-        forbidden_locations = {str(item) for item in role_scene_policy.get("forbidden_locations") or []}
-        forbidden_locations.update(str(item) for item in role_scene_policy.get("discouraged_generic_locations") or [])
-        forbidden_selected = sorted(selected_locations & forbidden_locations)
-        if forbidden_selected:
-            failures.append(
-                {
-                    "check": "role_scene_policy",
-                    "reason": "role-incompatible location selected",
-                    "location_ids": forbidden_selected,
-                    "scene_family": role_scene_policy.get("scene_family"),
-                }
-            )
-        outside_allowed = sorted(selected_locations - allowed_locations) if allowed_locations else []
-        if outside_allowed and role_scene_policy.get("enforce"):
-            failures.append(
-                {
-                    "check": "role_scene_policy",
-                    "reason": "selected location is outside role scene pool",
-                    "location_ids": outside_allowed,
-                    "allowed_locations": sorted(allowed_locations),
-                    "scene_family": role_scene_policy.get("scene_family"),
-                }
-            )
-        if allowed_locations and not selected_locations and role_scene_policy.get("enforce"):
-            failures.append(
-                {
-                    "check": "role_scene_policy",
-                    "reason": "no location candidate id supplied for enforced role-scene audit",
-                    "scene_family": role_scene_policy.get("scene_family"),
-                }
-            )
+        if role_scene_policy.get("selection_mode") == "agent_authored_location":
+            authored_slots = composed.get("authored_slots") if isinstance(composed.get("authored_slots"), dict) else {}
+            authored_location = authored_slots.get("location")
+            if not isinstance(authored_location, dict):
+                failures.append(
+                    {
+                        "check": "role_scene_policy",
+                        "reason": "agent-authored role scene requires an authored location decision",
+                        "scene_family": role_scene_policy.get("scene_family"),
+                    }
+                )
+        else:
+            selected_locations = chosen_slots.get("location", set())
+            allowed_locations = {str(item) for item in role_scene_policy.get("allowed_locations") or []}
+            forbidden_locations = {str(item) for item in role_scene_policy.get("forbidden_locations") or []}
+            forbidden_locations.update(str(item) for item in role_scene_policy.get("discouraged_generic_locations") or [])
+            forbidden_selected = sorted(selected_locations & forbidden_locations)
+            if forbidden_selected:
+                failures.append(
+                    {
+                        "check": "role_scene_policy",
+                        "reason": "role-incompatible location selected",
+                        "location_ids": forbidden_selected,
+                        "scene_family": role_scene_policy.get("scene_family"),
+                    }
+                )
+            outside_allowed = sorted(selected_locations - allowed_locations) if allowed_locations else []
+            if outside_allowed and role_scene_policy.get("enforce"):
+                failures.append(
+                    {
+                        "check": "role_scene_policy",
+                        "reason": "selected location is outside role scene pool",
+                        "location_ids": outside_allowed,
+                        "allowed_locations": sorted(allowed_locations),
+                        "scene_family": role_scene_policy.get("scene_family"),
+                    }
+                )
+            if allowed_locations and not selected_locations and role_scene_policy.get("enforce"):
+                failures.append(
+                    {
+                        "check": "role_scene_policy",
+                        "reason": "no location candidate id supplied for enforced role-scene audit",
+                        "scene_family": role_scene_policy.get("scene_family"),
+                    }
+                )
 
     species_policy = pack.get("species_family") if isinstance(pack.get("species_family"), dict) else {}
     if species_policy.get("enabled") and not species_policy.get("hybrid_allowed"):

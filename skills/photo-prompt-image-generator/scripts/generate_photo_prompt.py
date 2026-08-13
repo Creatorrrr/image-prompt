@@ -1150,6 +1150,20 @@ def merge_affine_presets(spec: dict[str, Any], preset_ids: Sequence[str]) -> dic
     return spec
 
 
+def natural_moe_request_route_id(concept: str) -> str:
+    """Resolve the public natural-moe route without duplicating its grammar.
+
+    The wrapper owns legacy role/mixin recipes, while ``prompt_generator`` owns
+    the current multilingual moe intent contract. Loading that module here
+    keeps preset precedence aligned with the same resolver used by the engine.
+    """
+    generator = load_generator()
+    response = generator.resolve_moe_response_intent([str(concept or "")])
+    if response.get("requested") is not True or response.get("eligible") is not True:
+        return ""
+    return str(response.get("route_id") or "")
+
+
 def anchor_expansion_config(
     recipes: dict[str, Any],
     applied_recipes: Sequence[dict[str, Any]],
@@ -1337,7 +1351,6 @@ def canonicalize_concept(concept: str, recipes: dict[str, Any]) -> str:
     aliases = recipes.get("aliases", {}) if isinstance(recipes, dict) else {}
     if not isinstance(aliases, dict):
         return concept
-    normalized = concept
     roles = recipes.get("roles", {}) if isinstance(recipes, dict) else {}
     non_role_followers = {
         "시스템",
@@ -1350,24 +1363,41 @@ def canonicalize_concept(concept: str, recipes: dict[str, Any]) -> str:
         "장치",
         "산업",
     }
-    for alias, canonical in sorted(aliases.items(), key=lambda item: len(str(item[0])), reverse=True):
+    alias_rows: list[tuple[str, str]] = []
+    for alias, canonical in sorted(
+        aliases.items(), key=lambda item: len(str(item[0])), reverse=True
+    ):
         alias_text = str(alias or "").strip()
         canonical_text = str(canonical or "").strip()
         if alias_text and canonical_text:
-            pattern = re.compile(
-                rf"(?<![A-Za-z0-9가-힣]){re.escape(alias_text)}(?![A-Za-z0-9가-힣])"
-            )
+            alias_rows.append((alias_text, canonical_text))
+    if not alias_rows:
+        return concept
 
-            def replace(match: re.Match[str]) -> str:
-                if canonical_text in roles:
-                    tail = normalized[match.end() :].lstrip()
-                    follower = tail.split(None, 1)[0] if tail else ""
-                    if follower in non_role_followers:
-                        return match.group(0)
-                return canonical_text
+    # Replace against the original text in one pass. Sequential replacement
+    # can change the lexical boundary of an adjacent alias: for example,
+    # ``猫耳メイド`` used to become ``네코미미メイド`` first, after which the
+    # inserted Korean final character prevented ``メイド`` from matching.
+    # One alternation keeps every boundary anchored to the user's source text
+    # and also prevents a canonical value from being reinterpreted as input.
+    canonical_by_alias = dict(alias_rows)
+    korean_particle = r"(?:에게서|에게|께서|에서|으로|은|는|이|가|을|를|의|와|과|로|도|만|처럼)?"
+    alternatives = "|".join(re.escape(alias) for alias, _canonical in alias_rows)
+    pattern = re.compile(
+        rf"(?<![A-Za-z0-9가-힣])(?P<alias>{alternatives})"
+        rf"(?={korean_particle}(?:$|[^A-Za-z0-9가-힣]))"
+    )
 
-            normalized = pattern.sub(replace, normalized)
-    return normalized
+    def replace(match: re.Match[str]) -> str:
+        canonical_text = canonical_by_alias[match.group("alias")]
+        if canonical_text in roles:
+            tail = concept[match.end() :].lstrip()
+            follower = tail.split(None, 1)[0] if tail else ""
+            if follower in non_role_followers:
+                return match.group(0)
+        return canonical_text
+
+    return pattern.sub(replace, concept)
 
 
 def match_concept_role(concept: str, roles: dict[str, Any]) -> tuple[str | None, str, dict[str, Any]]:
@@ -1376,12 +1406,91 @@ def match_concept_role(concept: str, roles: dict[str, Any]) -> tuple[str | None,
         if stripped == role or stripped.endswith(role):
             name = stripped[: -len(role)].strip()
             return role, name, dict(roles[role] or {})
-        padded = f" {stripped} "
-        needle = f" {role} "
-        if needle in padded:
-            name = " ".join(stripped.replace(role, " ").split())
+        # Natural Korean/Japanese requests attach case/topic particles directly
+        # to a role (``바리스타의``, ``경호원이``, ``メイドが``). Treat the
+        # particle as syntax rather than part of the role or a person's name.
+        particle = r"(?:에게서|에게|께서|에서|으로|은|는|이|가|을|를|의|와|과|로|도|만|처럼|が|は|を|の|に|で|と|へ|も)?"
+        role_match = re.search(
+            rf"(?<![A-Za-z0-9가-힣]){re.escape(role)}{particle}(?![A-Za-z0-9가-힣])",
+            stripped,
+        )
+        if role_match:
+            name = " ".join(
+                f"{stripped[: role_match.start()]} {stripped[role_match.end() :]}".split()
+            )
             return role, name, dict(roles[role] or {})
     return None, stripped, {}
+
+
+def sanitize_inferred_likeness_reference(name: str) -> str:
+    """Keep an inferred proper-name reference; drop request descriptors.
+
+    Role parsing historically treated every prefix before a known role as a
+    person's name. Natural requests such as ``모에한 성인 네코미미 메이드``
+    therefore became likeness references. This conservative cleanup is only
+    for inferred references; an explicit ``--likeness-reference`` is untouched.
+    """
+    value = str(name or "")
+    descriptor_patterns = (
+        r"야하지\s*않(?:은|게|으면서도|으면서|고|도록|다)?",
+        r"성적이지\s*않(?:은|게|고|도록|다)?",
+        r"비\s*성적(?:인|으로)?",
+        r"non[-\s]?sexual(?:ized|ised)?",
+        r"性的(?:では|じゃ)?ない|非性的(?:な|に)?",
+        r"갭\s*모에|모에(?:한|하게|함|스러운|스럽게|감)?",
+        r"ギャップ\s*萌え|萌え(?:る|な|に|感)?|(?<![a-z0-9])moe(?![a-z0-9])",
+        r"(?<![가-힣])성인(?![가-힣])|(?<![a-z0-9])adult(?![a-z0-9])|成人",
+        r"네코\s*미미|고양이\s*귀?|동물\s*귀|케모노미미|수인",
+        r"猫耳|ケモノミミ|獣耳|(?<![a-z0-9])cat[-\s]?(?:earred|eared|ears)?(?![a-z0-9])|(?<![a-z0-9])(?:kemonomimi|beastkin)(?![a-z0-9])",
+        r"(?<![a-z0-9])(?:original|fictional|character)(?![a-z0-9])|오리지널|창작\s*캐릭터|캐릭터|キャラクター",
+        r"사진|순간|모습|장면|(?<![a-z0-9])(?:photo|photograph|portrait|picture|moment|scene)(?![a-z0-9])|写真|瞬間|場面|ポートレート",
+    )
+    for pattern in descriptor_patterns:
+        value = re.sub(pattern, " ", value, flags=re.IGNORECASE)
+    tokens = [
+        token
+        for token in re.split(
+            r"\s+",
+            re.sub(r"[\[\](){},:;、。！？!?「」『』【】]+", " ", value).strip(),
+        )
+        if token and token.lower() not in {"a", "an", "the", "of", "no", "without", "의", "の"}
+    ]
+    candidate = " ".join(tokens)
+    if not candidate:
+        return ""
+
+    # Inference must fail closed. Scene/request prose is far more common than
+    # an unstated likeness request, and explicit ``--likeness-reference``
+    # remains available for ambiguous names.
+    request_residue = {
+        "사진",
+        "순간",
+        "모습",
+        "장면",
+        "평소",
+        "실수",
+        "photo",
+        "photograph",
+        "portrait",
+        "picture",
+        "moment",
+        "scene",
+        "写真",
+        "瞬間",
+        "場面",
+        "ポートレート",
+    }
+    if any(token.lower() in request_residue for token in tokens):
+        return ""
+    if len(tokens) == 1 and re.fullmatch(r"[가-힣]{2,5}", candidate):
+        return candidate
+    if len(tokens) == 1 and re.fullmatch(r"[一-龯ぁ-んァ-ヶー]{2,12}", candidate):
+        return candidate
+    if 1 <= len(tokens) <= 4 and all(
+        re.fullmatch(r"[A-Z][A-Za-zÀ-ÖØ-öø-ÿ'’-]*", token) for token in tokens
+    ):
+        return candidate
+    return ""
 
 
 def match_concept_mixins(concept: str, mixins: dict[str, Any]) -> list[tuple[str, dict[str, Any]]]:
@@ -2091,15 +2200,25 @@ def resolve_concepts(
         )
         add_option(resolved_args, "--concept-lock", concept)
 
+        natural_moe_route = natural_moe_request_route_id(concept)
         preset = str(recipe.get("preset") or "")
         if not preset:
             preset = next(
                 (str(mixin_recipe.get("preset") or "") for _, mixin_recipe in mixin_matches if mixin_recipe.get("preset")),
                 "",
             )
-        affine_presets = [str(recipe.get("preset") or "")] if recipe else []
-        affine_presets += [str(m.get("preset") or "") for _, m in mixin_matches]
-        affine_presets += [str(b.get("preset") or "") for b in selected_bundles]
+        if natural_moe_route and role is None:
+            # A roleless natural request belongs to the current mechanism
+            # route. Legacy mixin presets such as candid_iphone_portrait are
+            # styling fallbacks, not stronger semantic owners. Keep their
+            # expression/prop anchors, but leave preset selection open so the
+            # engine records and applies its natural-moe route contract.
+            preset = ""
+            affine_presets: list[str] = []
+        else:
+            affine_presets = [str(recipe.get("preset") or "")] if recipe else []
+            affine_presets += [str(m.get("preset") or "") for _, m in mixin_matches]
+            affine_presets += [str(b.get("preset") or "") for b in selected_bundles]
         if effective_mode == "legacy" and preset and not has_preset_value:
             add_option(resolved_args, "--preset", preset)
             has_preset_value = True
@@ -2177,9 +2296,23 @@ def resolve_concepts(
                 (str(mixin_recipe.get("likeness_mode") or "") for _, mixin_recipe in mixin_matches if mixin_recipe.get("likeness_mode")),
                 "",
             )
-        if likeness_mode and name and not has_likeness_value:
+        # ``수인`` exact-input likeness inference is frozen by the historical
+        # explain snapshot.  Do not extend that quirk to new descriptor
+        # mixins such as ``네코미미`` or to natural request sentences.
+        exact_legacy_mixin_name = (
+            role is None
+            and len(mixin_matches) == 1
+            and mixin_matches[0][0] == "수인"
+            and name.strip() == "수인"
+        )
+        inferred_likeness_reference = (
+            name.strip()
+            if exact_legacy_mixin_name
+            else sanitize_inferred_likeness_reference(name)
+        )
+        if likeness_mode and inferred_likeness_reference and not has_likeness_value:
             add_option(resolved_args, "--likeness-mode", likeness_mode)
-            add_option(resolved_args, "--likeness-reference", name)
+            add_option(resolved_args, "--likeness-reference", inferred_likeness_reference)
             has_likeness_value = True
 
         if not applied_recipes:
@@ -2193,6 +2326,7 @@ def resolve_concepts(
             "concept": concept,
             "concept_mode": effective_mode,
             "name": name,
+            "inferred_likeness_reference": inferred_likeness_reference,
             "role": role,
             "applied_role": role,
             "applied_mixins": [mixin for mixin, _ in mixin_matches],

@@ -15,6 +15,7 @@ Canonical skill path: `skills/photo-prompt-image-generator`.
 - Candidate-sourced idea routes, selective adoption, and composable adult-appeal axes: `references/hybrid-augmentation-contract.md`
 - Viewer-perceived creativity, multi-proposal selection, prompt binding, and authorial grammar: `references/creative-direction-contract.md`
 - Viewer needs, affect causes, attachment, reinspection, commercial objectives, and metadata-free review: `references/viewer-experience-contract.md`
+- Natural-language adult moe, sexual-tone triage, fixed-reference identity control, causal event phases, nekomimi boundaries, and user-judged image review: `references/moe-response-contract.md`
 - Intent, concept, preset, slot, and anti-overfitting routing: `references/concept-routing.md`
 - Native image generation, explicit API use, saving, retries, and ledger records: `references/image-runtime.md`
 - Dictionary edits, validation, semantic index, and evaluation gates: `references/maintenance.md`
@@ -26,6 +27,8 @@ Do not load every reference for a simple prompt request.
 - `scripts/generate_photo_prompt.py`: preferred wrapper and concept resolver.
 - `scripts/prompt_generator.py`: JSON-driven generation engine.
 - `scripts/audit_composed_prompt.py`: fail-closed composed-prompt audit.
+- `scripts/audit_image_render_request.py`: verify the exact runtime prompt, negative bytes, audit boundary, and attached reference hashes before generation.
+- `scripts/audit_moe_render_review.py`: validate image-grounded hard-gate evidence and block representative promotion until the requesting user accepts the result as genuinely moe.
 - `scripts/audit_scene_expression.py`: frozen-baseline and merged-runtime audit for scene counts, functions, operational dominance, and explicit render contracts.
 - `assets/photo_prompt_tags.json`: presets, slots, weights, facets, and coherence rules.
 - `assets/photo_prompt_research_extension.json`: operational and scientific presets, slots, facets, and typed-domain overrides loaded alongside the base dictionary.
@@ -35,7 +38,7 @@ Do not load every reference for a simple prompt request.
 - `assets/photo_prompt_character_moe_extension.json`: selection-gated adult character behavior routes, shared families, typed runtime nodes, compatibility edges, and fail-closed guards.
 - `assets/photo_prompt_scene_expression_extension.json`: pilot scene-first data and shared scene-function/provenance vocabulary.
 - `assets/photo_prompt_scene_expression_worldbuilding.json` and `assets/photo_prompt_scene_expression_cjk.json`: compact route-specific non-operational scene blueprints; they extend render expression without duplicating research taxonomy slots.
-- `assets/photo_prompt_scene_expression_character_moe.json`: three sparse atomic character scenes per route; each selects one primary visual mechanism and at most two compatible support cues.
+- `assets/photo_prompt_scene_expression_character_moe.json`: at least four sparse atomic character scenes per route; each selects one primary visual mechanism and at most two compatible support cues. The generic natural-moe route may add bounded `natural_moe_default_only` everyday, expression-led, or pose-led scenes while direct preset selection retains its authored base scenes.
 - `assets/concept_recipes.json`: Korean concepts, identity cores, scene variants, guides, and gates.
 - `assets/photo_prompt_quality_layers.json`: domain quality profiles and photographic decision layers.
 - `assets/photo_prompt_semantic_index.json`: semantic retrieval manifest; vector shards live under `assets/photo_prompt_semantic_index_shards/` and are materialized transparently.
@@ -53,7 +56,7 @@ Prefer `.venv/bin/python` when the project virtual environment exists. Rule mode
   --hybrid-augmentation --emit-candidate-pack --n 1
 ```
 
-This emits `photo-candidate-pack/v3`. Use `--candidate-pack-version v2` only to replay a legacy pack consumer or historical contract; normal composition must use the clean v3 projection.
+This emits `photo-candidate-pack/v4`. It exposes candidates as unordered inspiration terms in a seed-shuffled, non-preferential order, gives the agent a seed-varying abstract authorial lens, and withholds reusable render-blueprint prose. It does not expose a sampler-selected candidate, scene entry, probability, weight, score, slot-level answer, intent-coverage candidate answer key, singleton routing preset, sampled motif, private preset ID, or expanded generator argv. Sampler-derived scene groups, quality axes, and craft winners are projected as optional unordered pools instead. Use `--candidate-pack-version v3` or `v2` only to replay a legacy consumer or historical contract; normal composition must use the authorial v4 projection.
 
 For a short Korean concept:
 
@@ -69,20 +72,36 @@ For a short Korean concept:
   "pack_id": "<exact pack id>",
   "prompt_en": "<agent-composed English prompt>",
   "negative_en": "<exact pack negative or null>",
-  "chosen_candidate_ids": ["preset:...", "slot:subject:..."],
+  "chosen_candidate_ids": ["slot:lighting:..."],
+  "candidate_interpretations": [
+    {
+      "candidate_id": "slot:lighting:...",
+      "artistic_interpretation": "<why this cue serves the authored premise>",
+      "transformation": "<how its context, relation, or material behavior changed>",
+      "prompt_evidence": "<new literal phrase bound into prompt_en>"
+    }
+  ],
   "composer": "agent"
 }
 ```
 
 Add `coverage_assertions` only when useful. Every asserted phrase must occur literally in `prompt_en`, and every key must be an exact `mandatory_intents[].text` value.
 
-When the pack contains `hybrid_augmentation.enabled: true`, `augmentation_brief` is required. Read `references/hybrid-augmentation-contract.md`, consider all three actual-candidate routes, select exactly one or reject all, and record every selected-route detail as accepted, modified, or rejected. Bind only accepted or modified details into `prompt_en` and `chosen_candidate_ids`; never accept candidates merely because the pack exposed them.
+When the v4 pack contains `hybrid_augmentation.enabled: true`, `augmentation_brief` is required. Read `references/hybrid-augmentation-contract.md`, consider all three actual-candidate routes, select exactly one or reject all, and record every selected-route detail as `transformed` or `rejected`. Candidate `concept_terms` are unordered inspiration only. For each transformed detail, invent the relationship and prompt prose, record the artistic interpretation and transformation dimensions, and bind the newly authored evidence into `prompt_en` and `chosen_candidate_ids`. Joining or lightly inflecting the exposed terms is not authorship and fails audit. v3/v2 replay packs retain their legacy states.
 
-For an eligible human candidate pack, `sensual_editorial` defaults to intensity `1` while `fetish_fashion` defaults to `0`, producing `sensual_led` emphasis. Fetish-fashion augmentation is opt-in. Pass `--sensual-editorial-intensity 0` to disable the remaining default.
+When `authorial_composition.authored_scene_required` is true, add `authored_scene` with `governing_premise`, `artistic_rationale`, newly written `atoms` for subject/action/location/prop, and at least two distinct `interpretive_choices` containing dimension, decision, and reason. Use only the abstract scene functions, stakes, genre anchors, evidence types, and authorial lens as constraints. The source blueprint sentence, ID, hash, and sibling inventory are intentionally unavailable; do not try to reconstruct them.
+
+When `authorial_open_slots` is present, the generator intentionally withheld a singleton subject/action/location/prop candidate that would otherwise anchor every prompt. Add `authored_slots.<slot>` with newly written `prompt_evidence` and an `artistic_rationale`. Bind the evidence literally. If the slot declares a `scene_family`, include that value in `constraint_acknowledgments` and author a compatible location; the family name itself is not prompt text.
+
+Every advisory v4 candidate is optional, and optional scene or augmentation groups may be rejected in full. `chosen_candidate_ids` may be empty only when no hard identity, species-family, role-scene, or safety contract requires an ID. For each chosen candidate not already transformed through `augmentation_brief`, add exactly one `candidate_interpretations` row with `candidate_id`, `artistic_interpretation`, `transformation`, and newly authored literal `prompt_evidence`. The evidence needs at least four content words and at least two words not supplied by that candidate's unordered concepts. Copying, concatenating, or lightly inflecting the candidate terms fails audit even when the resulting phrase is grammatical.
+
+For an eligible human candidate pack, including a plain adult-moe request, `sensual_editorial` normally defaults to intensity `1` while `fetish_fashion` defaults to `0`, producing `sensual_led` emphasis. Only explicit nonsexual moe wording suppresses both configured defaults to `0`; explicit adult sensual intent may strengthen the axis. Sexual appeal is a supporting axis, never a substitute for the pretty-and-cute adult character gate or character-specific event. Fetish-fashion augmentation remains opt-in. Pass `--sensual-editorial-intensity 0` to disable the remaining default on ordinary human paths.
 
 When the pack contains `creative_direction.enabled: true`, `creative_brief` is also required. Read `references/creative-direction-contract.md`, develop at least four distinct concept moves, critique them, select exactly one, and bind its visual consequences and authorial grammar literally into `prompt_en`.
 
 When the pack contains `viewer_experience.enabled: true`, `viewer_experience` is also required in the composed object. Read `references/viewer-experience-contract.md`, select one primary viewer need and one intended experience, then bind the visible hook and actor/action/target/consequence evidence into `prompt_en`.
+
+When the pack contains `moe_response.enabled: true`, `moe_response` is also required. Read `references/moe-response-contract.md`. Preserve the routed adult aesthetic baseline: explicit feminine -> adult bishoujo, explicit masculine -> adult bishonen, explicit androgynous/nonbinary -> beautiful-and-cute adult equivalent, and unspecified -> adult bishoujo. Also preserve the routed `relationship_register`: tsundere uses `peer_liking_under_denial`, explicitly mamang/maternal care uses `nurturant_benevolence`, ordinary requested care uses `directed_care_without_role_inference`, and other mechanisms remain `character_specific_reveal`. A relationship request outranks a compatible species reflex: for example, mamang nekomimi uses `quiet_care_trace` as primary and keeps `nonhuman_reflex_leak` as support. Bind a literal phrase that establishes adulthood, both pretty/beautiful and cute/charming first-read qualities, and at least two concrete face/hair/style details. Separately bind one warm or pleased facial micro-response in `affective_leak_phrase`; guardedness, annoyance, sadness, or embarrassment may frame the event but cannot be the only facial read. For `denial_care_leak`, also bind a distinct `active_denial_phrase` with a visible mouth, chin, shoulder, or helping-hand protest—guardedness, a label, or averted gaze alone does not qualify. Bind `care_action_anchor_phrase` to the recipient's visible hand, wound, or carried object at a named lower screen position. Separately bind `relationship_gaze_anchor_phrase` to one small blurred outer eye plus temple/profile sliver from the same adult recipient at a named upper frame edge. A wholly off-frame eye line is unverifiable and a second full face competes with the primary subject. Then bind `concealed_affection_phrase` as explicit geometry: name a three-quarter head turn toward the side opposite that landmark, keep the nose axis off the lens, let only the irises make a small oblique return to the landmark, soften the lower lids, and start one mouth corner lifting before it is suppressed. Direct frontal eye contact, a centered face, selfie-like viewer gaze, head and irises turning together, generic side-eye, task-only gaze, or maternal benevolence does not establish tsundere liking. For `nurturant_benevolence`, instead preserve a relaxed brow, patient soft eyes, reassuring mouth, and calm protective attention without importing active denial. Bind `background_control_phrase` to a plain/unlettered surface or text-free bokeh unless the user requested readable text. Then preserve the routed primary mechanism and bind the behavioral baseline, unfinished event phase, trigger, target, visible response, immediate consequence, continuity, and focal-plane evidence literally into `prompt_en`. Keep the complete English `prompt_en` within the pack's 50–120-word budget by reusing short substrings across moe, viewer, identity, and augmentation evidence rather than repeating explanations. Give the unfinished event a concrete physical separation from its endpoint; for a nekomimi ear reflex, keep each ear no taller than the visible human ear, show one trigger-side ear turning toward the in-frame cause, and give the other ear a clearly different baseline angle. A generic-looking person fails the entry gate; an attractive or sexual pose without the causal event also fails. When `reference_identity_control.enabled` is true, use the uploaded portrait as the sole identity reference, preserve eye aperture/shape/spacing, face length, lower-face and jaw width, and the other listed facial and adult-age anchors, and bind explicit no-enlarging/no-rounding/no-shortening/no-narrowing language in `reference_identity_phrase`. Change only the allowed expression/pose/outfit/light/setting fields. A rendered identity failure must be preserved as failed evidence and cannot be promoted as the representative candidate, even if it looks prettier or cuter.
 
 3. Audit before returning the prompt or generating an image:
 
@@ -94,6 +113,24 @@ When the pack contains `viewer_experience.enabled: true`, `viewer_experience` is
 Fix every failure and rerun. Warnings are a separate quality signal; inspect them rather than treating them as contract failure.
 
 4. If the user asked only for a prompt, return the audited `prompt_en`. If the user asked for an image, follow `references/image-runtime.md`.
+
+Before invoking an image tool, freeze the concrete runtime request and audit it separately from composition:
+
+```bash
+.venv/bin/python skills/photo-prompt-image-generator/scripts/audit_image_render_request.py \
+  --pack candidate_pack.json --composed composed_prompt.json --request render_request.json
+```
+
+The exact audited `prompt_en` must occur in `runtime_prompt_en`, `runtime_negative_en` must equal the pack's `negative_en` byte-for-byte, and every attached reference path/hash/role must validate. Do not generate on failure, and never let the longer runtime string inherit the composed prompt's PASS.
+
+After an eligible moe image is saved, record its pixel review and run the separate promotion audit:
+
+```bash
+.venv/bin/python skills/photo-prompt-image-generator/scripts/audit_moe_render_review.py \
+  --pack candidate_pack.json --review render_review.json --output render_review.audit.json
+```
+
+Every `required_hard_gates` entry from the pack must be exactly `pass` with concise image-grounded evidence; `partial`, missing, or failed gates block promotion. A technically qualified image remains pending until `user_judgment.source` is `requesting_user` with a faithful decision summary and the user accepts genuine moe plus baseline improvement when a baseline exists. The auditor validates recorded review evidence and file hashes; it does not inspect pixels, authenticate the speaker, or establish genuine user preference by itself. Populate requesting-user fields only from the actual conversation.
 
 ## Creative Discovery Workflow
 
@@ -131,7 +168,7 @@ Eligible human candidate packs use a low-intensity adult fashion default: `sensu
   --emit-candidate-pack --n 1
 ```
 
-- Use intensity `0..3` independently for each axis. The defaults are `1` for `sensual_editorial` and `0` for `fetish_fashion`; both zero means off.
+- Use intensity `0..3` independently for each axis. The ordinary eligible-human defaults are `1` for `sensual_editorial` and `0` for `fetish_fashion`; an explicit nonsexual moe route suppresses both to zero. Both zero means off.
 - Apply the configured default only when the resolved subject category is human. Block it for explicit no-people and non-human requests.
 - Intensity `1` keeps the fetish-fashion inventory to the lower tier; higher intensities widen the eligible material and garment pool.
 - Let `sensual_editorial` supply gaze, pose, light, framing, or silhouette decisions.
@@ -142,7 +179,7 @@ Eligible human candidate packs use a low-intensity adult fashion default: `sensu
 
 ## Viewer Experience Workflow
 
-Use `--viewer-experience` without raising creativity when the user explicitly asks about audience response, emotion, empathy, immersion, attachment, revisiting, sharing, purchase behavior, a commercial communication objective, or a subculture character relationship. Korean triggers include `독자`, `관객`, `감동`, `공감`, `몰입`, `애착`, `다시 보고 싶은`, `기억에 남는`, `광고`, and an explicit relation-centered `귀여움`; interpret meaning, not keyword presence.
+Use `--viewer-experience` without raising creativity when the user explicitly asks about audience response, emotion, empathy, immersion, attachment, revisiting, sharing, purchase behavior, a commercial communication objective, or a subculture character relationship. Korean triggers include `독자`, `관객`, `감동`, `공감`, `몰입`, `애착`, `다시 보고 싶은`, `기억에 남는`, `광고`, and an explicit relation-centered `귀여움`; interpret meaning, not keyword presence. A routed explicit moe request attaches this viewer contract automatically because moe is a requested response hypothesis.
 
 ```bash
 .venv/bin/python skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py \
@@ -187,17 +224,20 @@ There is no separate approval flag or policy mode. This project-level automatic 
 
 - Preserve every `mandatory_intent` as visible image content. This list contains required positive user meaning only; advisory role/soft guidance and excluded constraints remain typed in `intent_contract`. A candidate label is not proof of coverage.
 - Choose only IDs exposed in the pack whose `applicability.status` is `eligible`; never invent or reconstruct a masked candidate.
-- Treat `intent_contract` as typed request meaning and `scene_contract` as a hard boundary. A selected render blueprint contributes four mandatory literal scene atoms—subject, action, location, and prop—outside the ordinary sampler candidate pool.
-- Copy all four `selected_render_blueprint` labels into the composed prompt. Do not select an ordinary subject/action/location/prop candidate for the same controlled slots, and never reconstruct a sibling from `available_blueprint_ids`.
+- Treat `intent_contract` as typed request meaning. In v4, `optional_inspiration_group` scene candidates are rejectable and reveal no sampler winner; a private selected blueprint contributes only abstract functions, stakes, genre anchors, evidence types, and provenance, while the agent authors the concrete subject, action, location, and prop. v3/v2 retain fail-closed selected atomic entries and literal atoms only for replay.
+- When v4 requests `authored_scene`, write all four atoms yourself and bind them literally. Make at least two explicit interpretive choices; do not reconstruct a source scene from private data.
+- When v4 exposes `authorial_open_slots`, fill each opening through artistic judgment rather than recreating the removed singleton. Preserve listed hard constraints and bind every authored phrase literally.
+- Treat every v4 candidate, photographic category, craft dimension, visual proposition, and motif family as rejectable inspiration. For every ordinary chosen ID, record one `candidate_interpretations` decision and create prompt evidence that materially transforms the source concepts. Do not infer a preferred choice from array order, routing metadata, or profile data; v4 intentionally withholds those answers.
 - Respect `evidence_budget`: the selected physical prop normally consumes one clue, so add at most one other configured world-evidence slot when `maximum_chosen` is 2.
 - When `creative_exploration` is present, keep the sampler-selected subject, mandatory intents, and scene contract. Replace at most the stated number of slots, and use only listed contrast IDs that remain conflict-free together.
-- When `hybrid_augmentation` is present, keep the agent-authored concept core, consider all three candidate routes, select one or reject all, and record every selected-route candidate decision. Accepted and modified candidates require literal prompt evidence and provenance; rejected candidates must remain absent.
-- When adult-appeal axes are active, preserve their independent intensities and blend emphasis. Require one accepted detail per active axis, explicit adult-original-subject evidence, visible agency, and the cross-check of styling with pose, framing, and camera.
-- When `creative_direction` is present, follow `references/creative-direction-contract.md`. Select one proposal only; never blend rejected signatures into the final prompt. The concept move may reinterpret relationships inside the selected scene but may not replace mandatory subjects, atomic scene labels, character grammar, safety, or negative bytes.
+- When v4 `hybrid_augmentation` is present, keep the agent-authored concept core, consider all three candidate routes, select one or reject all, and record every selected-route candidate decision. Only artistically transformed candidates enter the prompt; they require newly authored relational evidence and provenance. Rejected candidates remain absent. v3/v2 follow their embedded legacy adoption contract.
+- When adult-appeal axes are active, preserve their independent intensities and blend emphasis. In v4, author a scene-specific interpretation and literal evidence per active axis; adopting an inventory candidate is optional. Always require explicit adult-original-subject evidence, visible agency, and the cross-check of styling with pose, framing, and camera.
+- When `creative_direction` is present, follow `references/creative-direction-contract.md`. Select one proposal only; never blend rejected signatures into the final prompt. The concept move may reinterpret relationships inside the selected scene but may not replace mandatory subjects, the authorial scene boundary (or legacy atomic labels), character grammar, safety, or negative bytes.
 - When `viewer_experience` is present, follow `references/viewer-experience-contract.md`. Keep one viewer need and intended experience, make affect causal through visible action, and preserve commercial clarity or typed character evidence. Genre labels, youth morphology, faces, and style adjectives alone are not attachment evidence.
+- When `moe_response` is present, follow `references/moe-response-contract.md`. First preserve the routed adult bishoujo/bishonen/androgynous aesthetic baseline and make the character read as both pretty and cute through concrete facial, eye, mouth, hair, or cohesive-style evidence. Preserve the routed relationship register rather than letting all warmth collapse into generic care. Add one specific warm affective leak and keep negative-affect cues to at most two. For `denial_care_leak`, keep the care-action target low in-frame, place one blurred outer-eye-plus-temple/profile sliver from the same adult recipient at a named upper frame edge, turn the primary head and nose three-quarter toward the opposite side, and return only the irises to that visible landmark while softened lower lids and a starting mouth-corner lift are suppressed. An imagined off-frame eye line, second full face, direct frontal eye contact, or head and irises turning together cannot stand in for concealed liking. For explicit mamang/maternal care, bind a concrete benevolent expression—relaxed brow, patient soft eyes, reassuring mouth, and calm protective attention—without adding tsundere denial; ordinary friendly care must not silently become mamang. Use a plain unlettered background unless text is requested. Then keep one primary mechanism, show an unfinished event phase with a concrete gap/contact/offset state, and place the face or gaze, responding hand/posture, and trigger or target in one focal plane. A nekomimi ear reflex must remain at human-ear scale, be asymmetric, and aim toward the visible trigger. The immediate consequence must be visible without completing the whole action. Neither the aesthetic layer nor the causal layer can substitute for the other. For identity-controlled renders, reject promotion if eye aperture/shape/spacing, face length, lower-face/jaw width, or adult age visibly drift.
 - Preserve `negative_en` byte-for-byte.
-- Respect hard conflicts, concept gates, enforced role-scene policy, and species-family locks.
-- When `character_grammar.enabled` is true, preserve the one node marked `primary` and use no more than its two support nodes. The v3 pack exposes only selected visual atoms, visual evidence types, and generic composition constraints; router anchors and policy/guard records remain private, while market/audience research classifications are not stored in runtime scene data. The selected atomic scene is the visible realization.
+- Respect hard conflicts, concept gates, enforced role-scene policy, and species-family locks. A manual gate may pass prompt preflight only with literal `manual_gate_evidence` and `review_stage: pixel_review_required`; inspect the generated pixels before treating it as satisfied.
+- When `character_grammar.enabled` is true, preserve the one node marked `primary` and use no more than its two support nodes. v4 exposes selected visual mechanisms, evidence types, generic composition constraints, and an abstract authorial scene contract; the agent invents the visible realization. Router anchors and policy/guard records remain private, while market/audience research classifications are not stored in runtime scene data.
 - Character routes require an explicitly adult original subject. Do not infer adulthood, identity, orientation, or personality from face/body proportions, hair, clothing, disability, ethnicity, or market origin.
 - `open_slots` expose only slot and bucket names. Invent a compatible detail; do not infer the hidden source choice.
 - Use one or two photographic craft decisions, not every available phrase.
@@ -216,7 +256,7 @@ See `references/composition-contract.md` for field-level details.
 - Use `--intent` for free-form semantic requests and `--concept-lock` for literal meaning that must remain dominant.
 - Use `--additional-requirement` only for concrete visible constraints not represented by tags.
 - Biodiversity monitoring, agriculture-food systems, and circular-material records are on-demand typed packs: name the domain in semantic intent or select their preset directly; they do not enter unrelated automatic concept pools.
-- Character-moe grammar is also on demand. Route it only from a specific character mechanism or an exact scoped alias; an ordinary cute portrait, animal photograph, real cultural record, or generic streamer request must remain on its existing route.
+- Character-moe grammar is also on demand. Route natural KO/JA/EN requests that explicitly ask for moe, gap moe, or a named character-specific mechanism when adult character context is present. Keep ordinary cute portraits, discussions of the word, negated requests, animal photographs, real cultural records, and generic streamer requests on their existing routes.
 - Rule mode gives a uniquely strong explicit request-term match deterministic priority while retaining the other sampler-eligible alternatives in the candidate pack.
 - K-pop/K-beauty/idol and fantasy candidates receive an implicit-theme penalty unless the request names that theme.
 - Concept recipes may define `identity_core` plus weighted `scene_variants`; keep the identity stable while rotating one atomic scene instead of mixing slots from separate exemplars.
