@@ -121,6 +121,10 @@ def generate_for_file(
     full_prompt = prompt_en + (f"\n\nAvoid: {negative_en}" if negative_en else "")
     pack_id = str(result.get("pack_id") or provenance.get("pack_id") or "")
     chosen_candidate_ids = result.get("chosen_candidate_ids")
+    chosen_visual_concept_ids = result.get("chosen_visual_concept_ids")
+    effective_visual_contract_sha256 = str(
+        result.get("effective_visual_contract_sha256") or ""
+    )
     composer = str(result.get("composer") or "")
     audit = result.get("audit") if isinstance(result.get("audit"), dict) else {}
     audit_status = str(result.get("audit_status") or audit.get("status") or "")
@@ -175,6 +179,16 @@ def generate_for_file(
             ledger_args += ["--pack-id", pack_id]
         if chosen_candidate_ids is not None:
             ledger_args += ["--chosen-candidate-ids-json", compact_json(chosen_candidate_ids)]
+        if chosen_visual_concept_ids is not None:
+            ledger_args += [
+                "--chosen-visual-concept-ids-json",
+                compact_json(chosen_visual_concept_ids),
+            ]
+        if effective_visual_contract_sha256:
+            ledger_args += [
+                "--effective-visual-contract-sha256",
+                effective_visual_contract_sha256,
+            ]
         if composer:
             ledger_args += ["--composer", composer]
         if audit_status:

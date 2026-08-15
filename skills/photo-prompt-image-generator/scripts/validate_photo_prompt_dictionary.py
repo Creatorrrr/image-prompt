@@ -46,6 +46,7 @@ VALID_MATCH_RULE_KEYS = {
 VALID_MATCH_FIELDS = {"id", "en", "ko", "embedding_text", "semantic_anchor"}
 DEFAULT_CONCEPT_RECIPES = Path(__file__).resolve().parents[1] / "assets" / "concept_recipes.json"
 DEFAULT_QUALITY_LAYERS = Path(__file__).resolve().parents[1] / "assets" / "photo_prompt_quality_layers.json"
+DEFAULT_VISUAL_OBLIGATIONS = Path(__file__).resolve().parents[1] / "assets" / "photo_prompt_visual_obligations.json"
 NO_TEXT_REQUIRED_TAG = "no_text_required"
 NO_TEXT_ANCHOR_TERMS = {
     "abstract",
@@ -2806,6 +2807,389 @@ def validate_slot_applicability(data: dict[str, Any], errors: list[str]) -> None
                 errors.append(f"slot_applicability.slots.{slot}.{key}: must be a boolean")
 
 
+def validate_visual_obligation_registry(path: Path, errors: list[str]) -> None:
+    if not path.exists():
+        errors.append(f"visual obligation registry missing: {path}")
+        return
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        errors.append(f"visual obligation registry is not valid JSON: {exc}")
+        return
+    if not isinstance(payload, dict):
+        errors.append("visual obligation registry: root must be an object")
+        return
+    expected_versions = {
+        "schema_version": "photo-visual-obligation-registry/v2",
+        "contract_version": "photo-visual-obligations/v1",
+        "visual_intent_contract_version": "photo-visual-intent/v1",
+        "concept_contract_version": "photo-visual-concepts/v1",
+    }
+    for field, expected in expected_versions.items():
+        if payload.get(field) != expected:
+            errors.append(
+                f"visual obligation registry.{field}: expected {expected!r}"
+            )
+    precedence = normalize_list(payload.get("precedence"))
+    if not precedence or len(set(precedence)) != len(precedence):
+        errors.append("visual obligation registry.precedence: must be non-empty and distinct")
+    activation_policy = payload.get("activation_policy")
+    if not isinstance(activation_policy, dict):
+        errors.append("visual obligation registry.activation_policy: must be an object")
+    elif any(value is not True for value in activation_policy.values()):
+        errors.append("visual obligation registry.activation_policy: every guard must be true")
+    evidence_policy = payload.get("evidence_policy")
+    if not isinstance(evidence_policy, dict):
+        errors.append("visual obligation registry.evidence_policy: must be an object")
+    else:
+        try:
+            default_min_words = int(evidence_policy.get("minimum_content_words_default"))
+        except (TypeError, ValueError):
+            default_min_words = 0
+        try:
+            overlap_limit = float(
+                evidence_policy.get("maximum_pairwise_content_token_overlap_ratio")
+            )
+        except (TypeError, ValueError):
+            overlap_limit = -1.0
+        if default_min_words < 2:
+            errors.append(
+                "visual obligation registry.evidence_policy.minimum_content_words_default: "
+                "must be at least 2"
+            )
+        if not 0.0 < overlap_limit < 1.0:
+            errors.append(
+                "visual obligation registry.evidence_policy."
+                "maximum_pairwise_content_token_overlap_ratio: must be between 0 and 1"
+            )
+        fillers = normalize_list(evidence_policy.get("forbidden_filler_phrases"))
+        if not fillers or len({value.casefold() for value in fillers}) != len(fillers):
+            errors.append(
+                "visual obligation registry.evidence_policy.forbidden_filler_phrases: "
+                "must be non-empty and distinct"
+            )
+
+    profiles = payload.get("profiles")
+    if not isinstance(profiles, list) or not profiles:
+        errors.append("visual obligation registry.profiles: must be a non-empty list")
+        return
+    profile_ids: set[str] = set()
+    gate_ids: set[str] = set()
+    glossary_alias_owners: dict[str, str] = {}
+    allowed_profile_keys = {
+        "id",
+        "category",
+        "activation",
+        "composition_instruction",
+        "concept_candidate",
+        "runtime_expression",
+        "required_evidence_fields",
+        "evidence_requirements",
+        "render_gates",
+        "reject_substitutes",
+    }
+    for index, profile in enumerate(profiles):
+        label = f"visual obligation registry.profiles[{index}]"
+        if not isinstance(profile, dict):
+            errors.append(f"{label}: must be an object")
+            continue
+        unknown = sorted(set(profile) - allowed_profile_keys)
+        if unknown:
+            errors.append(f"{label}: unknown keys {unknown}")
+        profile_id = str(profile.get("id") or "")
+        if re.fullmatch(r"[a-z][a-z0-9_]+", profile_id) is None:
+            errors.append(f"{label}.id: must be a stable snake_case id")
+        elif profile_id in profile_ids:
+            errors.append(f"{label}.id: duplicate {profile_id}")
+        profile_ids.add(profile_id)
+        if not str(profile.get("category") or "").strip():
+            errors.append(f"{label}.category: must be non-empty")
+        if len(str(profile.get("composition_instruction") or "").split()) < 8:
+            errors.append(f"{label}.composition_instruction: must be concrete")
+        activation = profile.get("activation")
+        if not isinstance(activation, dict):
+            errors.append(f"{label}.activation: must be an object")
+        else:
+            unknown_activation = sorted(
+                set(activation)
+                - {
+                    "any_terms",
+                    "project_glossary_aliases",
+                    "exclude_if_any_terms",
+                    "component_semantics",
+                    "soft_concept_cues",
+                    "requires_adult_character",
+                }
+            )
+            if unknown_activation:
+                errors.append(f"{label}.activation: unknown keys {unknown_activation}")
+            terms = normalize_list(activation.get("any_terms"))
+            if not terms or len({term.lower() for term in terms}) != len(terms):
+                errors.append(f"{label}.activation.any_terms: must be non-empty and distinct")
+            glossary_aliases = normalize_list(
+                activation.get("project_glossary_aliases")
+            )
+            if "project_glossary_aliases" in activation and (
+                not glossary_aliases
+                or len({alias.casefold() for alias in glossary_aliases})
+                != len(glossary_aliases)
+            ):
+                errors.append(
+                    f"{label}.activation.project_glossary_aliases: "
+                    "must be non-empty and distinct when declared"
+                )
+            natural_term_keys = {term.casefold() for term in terms}
+            for alias in glossary_aliases:
+                alias_key = alias.casefold()
+                if alias_key in natural_term_keys:
+                    errors.append(
+                        f"{label}.activation.project_glossary_aliases: "
+                        f"{alias!r} must not duplicate any_terms"
+                    )
+                prior_owner = glossary_alias_owners.get(alias_key)
+                if prior_owner is not None and prior_owner != profile_id:
+                    errors.append(
+                        f"{label}.activation.project_glossary_aliases: "
+                        f"{alias!r} is already owned by {prior_owner}"
+                    )
+                glossary_alias_owners[alias_key] = profile_id
+            if activation.get("requires_adult_character") is not True:
+                errors.append(f"{label}.activation.requires_adult_character: must be true")
+            for term_key in ("exclude_if_any_terms", "soft_concept_cues"):
+                values = normalize_list(activation.get(term_key))
+                if term_key in activation and (
+                    not values
+                    or len({value.casefold() for value in values}) != len(values)
+                ):
+                    errors.append(
+                        f"{label}.activation.{term_key}: must be non-empty and distinct when declared"
+                    )
+            component_semantics = activation.get("component_semantics")
+            if not isinstance(component_semantics, dict):
+                errors.append(f"{label}.activation.component_semantics: must be an object")
+            else:
+                allowed_component_keys = {
+                    "minimum_component_groups",
+                    "required_group_ids",
+                    "groups",
+                }
+                unknown_component_keys = sorted(
+                    set(component_semantics) - allowed_component_keys
+                )
+                if unknown_component_keys:
+                    errors.append(
+                        f"{label}.activation.component_semantics: unknown keys "
+                        f"{unknown_component_keys}"
+                    )
+                groups = component_semantics.get("groups")
+                group_ids: set[str] = set()
+                if not isinstance(groups, list) or not groups:
+                    errors.append(
+                        f"{label}.activation.component_semantics.groups: "
+                        "must be a non-empty list"
+                    )
+                    groups = []
+                for group_index, group in enumerate(groups):
+                    group_label = (
+                        f"{label}.activation.component_semantics.groups[{group_index}]"
+                    )
+                    if not isinstance(group, dict) or set(group) != {"id", "any_terms"}:
+                        errors.append(
+                            f"{group_label}: keys must be id and any_terms"
+                        )
+                        continue
+                    group_id = str(group.get("id") or "")
+                    if re.fullmatch(r"[a-z][a-z0-9_]+", group_id) is None:
+                        errors.append(f"{group_label}.id: invalid snake_case id")
+                    elif group_id in group_ids:
+                        errors.append(f"{group_label}.id: duplicate {group_id}")
+                    group_ids.add(group_id)
+                    group_terms = normalize_list(group.get("any_terms"))
+                    if not group_terms or len(
+                        {value.casefold() for value in group_terms}
+                    ) != len(group_terms):
+                        errors.append(
+                            f"{group_label}.any_terms: must be non-empty and distinct"
+                        )
+                try:
+                    minimum_groups = int(
+                        component_semantics.get("minimum_component_groups")
+                    )
+                except (TypeError, ValueError):
+                    minimum_groups = 0
+                if minimum_groups < 1 or minimum_groups > max(1, len(group_ids)):
+                    errors.append(
+                        f"{label}.activation.component_semantics.minimum_component_groups: "
+                        "must fit the declared group count"
+                    )
+                required_group_ids = set(
+                    normalize_list(component_semantics.get("required_group_ids"))
+                )
+                if not required_group_ids or not required_group_ids <= group_ids:
+                    errors.append(
+                        f"{label}.activation.component_semantics.required_group_ids: "
+                        "must be a non-empty subset of groups"
+                    )
+        concept_candidate = profile.get("concept_candidate")
+        if not isinstance(concept_candidate, dict) or set(concept_candidate) != {
+            "concept_terms"
+        }:
+            errors.append(f"{label}.concept_candidate: must contain only concept_terms")
+        else:
+            concept_terms = normalize_list(concept_candidate.get("concept_terms"))
+            if not concept_terms or len(
+                {value.casefold() for value in concept_terms}
+            ) != len(concept_terms):
+                errors.append(
+                    f"{label}.concept_candidate.concept_terms: must be non-empty and distinct"
+                )
+        runtime_expression = profile.get("runtime_expression")
+        if not isinstance(runtime_expression, dict) or set(runtime_expression) != {
+            "default_mode",
+            "prompt_label_terms",
+            "forbidden_prompt_terms",
+        }:
+            errors.append(
+                f"{label}.runtime_expression: keys must be default_mode, "
+                "prompt_label_terms, forbidden_prompt_terms"
+            )
+        else:
+            mode = runtime_expression.get("default_mode")
+            if mode not in {
+                "definition_only",
+                "label_plus_definition",
+                "definition_with_optional_label",
+            }:
+                errors.append(f"{label}.runtime_expression.default_mode: invalid value")
+            label_terms = normalize_list(runtime_expression.get("prompt_label_terms"))
+            forbidden_terms = normalize_list(
+                runtime_expression.get("forbidden_prompt_terms")
+            )
+            if mode == "label_plus_definition" and not label_terms:
+                errors.append(
+                    f"{label}.runtime_expression.prompt_label_terms: "
+                    "label_plus_definition requires at least one term"
+                )
+            if len({value.casefold() for value in label_terms}) != len(label_terms):
+                errors.append(
+                    f"{label}.runtime_expression.prompt_label_terms: must be distinct"
+                )
+            if len({value.casefold() for value in forbidden_terms}) != len(
+                forbidden_terms
+            ):
+                errors.append(
+                    f"{label}.runtime_expression.forbidden_prompt_terms: must be distinct"
+                )
+        evidence_fields = normalize_list(profile.get("required_evidence_fields"))
+        if not evidence_fields or len(set(evidence_fields)) != len(evidence_fields):
+            errors.append(f"{label}.required_evidence_fields: must be non-empty and distinct")
+        for field in evidence_fields:
+            if re.fullmatch(r"[a-z][a-z0-9_]+_phrase", field) is None:
+                errors.append(f"{label}.required_evidence_fields: invalid field {field!r}")
+        evidence_requirements = profile.get("evidence_requirements")
+        if not isinstance(evidence_requirements, dict):
+            errors.append(f"{label}.evidence_requirements: must be an object")
+            evidence_requirements = {}
+        missing_requirement_fields = sorted(
+            set(evidence_fields) - set(evidence_requirements)
+        )
+        extra_requirement_fields = sorted(
+            set(evidence_requirements) - set(evidence_fields)
+        )
+        if missing_requirement_fields or extra_requirement_fields:
+            errors.append(
+                f"{label}.evidence_requirements: keys must exactly match required fields; "
+                f"missing={missing_requirement_fields}, extra={extra_requirement_fields}"
+            )
+        for field, requirement in evidence_requirements.items():
+            requirement_label = f"{label}.evidence_requirements.{field}"
+            if not isinstance(requirement, dict):
+                errors.append(f"{requirement_label}: must be an object")
+                continue
+            unknown_requirement_keys = sorted(
+                set(requirement) - {"min_content_words", "must_mention_any", "must_not_contain"}
+            )
+            if unknown_requirement_keys:
+                errors.append(
+                    f"{requirement_label}: unknown keys {unknown_requirement_keys}"
+                )
+            try:
+                min_content_words = int(requirement.get("min_content_words"))
+            except (TypeError, ValueError):
+                min_content_words = 0
+            if min_content_words < 2:
+                errors.append(
+                    f"{requirement_label}.min_content_words: must be at least 2"
+                )
+            must_mention = normalize_list(requirement.get("must_mention_any"))
+            if not must_mention or len(
+                {value.casefold() for value in must_mention}
+            ) != len(must_mention):
+                errors.append(
+                    f"{requirement_label}.must_mention_any: must be non-empty and distinct"
+                )
+            must_not = normalize_list(requirement.get("must_not_contain"))
+            if "must_not_contain" in requirement and len(
+                {value.casefold() for value in must_not}
+            ) != len(must_not):
+                errors.append(
+                    f"{requirement_label}.must_not_contain: must be distinct"
+                )
+        gates = profile.get("render_gates")
+        if not isinstance(gates, list) or not gates:
+            errors.append(f"{label}.render_gates: must be a non-empty list")
+        else:
+            for gate_index, gate in enumerate(gates):
+                gate_label = f"{label}.render_gates[{gate_index}]"
+                if not isinstance(gate, dict):
+                    errors.append(f"{gate_label}: must be an object")
+                    continue
+                if set(gate) != {"id", "review_scale", "description"}:
+                    errors.append(
+                        f"{gate_label}: keys must be id, review_scale, description"
+                    )
+                gate_id = str(gate.get("id") or "")
+                if re.fullmatch(r"vo_[a-z0-9_]+", gate_id) is None:
+                    errors.append(f"{gate_label}.id: must start with vo_ and use snake_case")
+                elif gate_id in gate_ids:
+                    errors.append(f"{gate_label}.id: duplicate {gate_id}")
+                gate_ids.add(gate_id)
+                if gate.get("review_scale") not in {"thumbnail", "native", "both"}:
+                    errors.append(f"{gate_label}.review_scale: invalid value")
+                if len(str(gate.get("description") or "").split()) < 6:
+                    errors.append(f"{gate_label}.description: must be concrete")
+        rejects = normalize_list(profile.get("reject_substitutes"))
+        if not rejects or len(set(rejects)) != len(rejects):
+            errors.append(f"{label}.reject_substitutes: must be non-empty and distinct")
+
+    thigh_profile = next(
+        (
+            profile
+            for profile in profiles
+            if isinstance(profile, dict)
+            and profile.get("id") == "inner_thigh_negative_space"
+        ),
+        None,
+    )
+    if not isinstance(thigh_profile, dict):
+        errors.append("visual obligation registry: missing inner_thigh_negative_space profile")
+    else:
+        thigh_glossary_aliases = {
+            term.casefold()
+            for term in normalize_list(
+                (thigh_profile.get("activation") or {}).get(
+                    "project_glossary_aliases"
+                )
+            )
+        }
+        required_thigh_aliases = {"절대공역", "사이갭", "사이 갭"}
+        if not required_thigh_aliases <= thigh_glossary_aliases:
+            errors.append(
+                "inner_thigh_negative_space: project glossary must map 절대공역, "
+                "사이갭, and 사이 갭 to the explicit close-leg inner-thigh geometry profile"
+            )
+
+
 def validate_skill_doc_literals(path: Path, data: dict[str, Any], errors: list[str]) -> None:
     """Cross-check `--preset X` and `--set slot=id` literals in SKILL.md against the dictionary."""
     if not path.exists():
@@ -2834,6 +3218,7 @@ def main() -> int:
     parser.add_argument("--tags", default=Path(__file__).resolve().parents[1] / "assets" / "photo_prompt_tags.json")
     parser.add_argument("--concept-recipes", default=DEFAULT_CONCEPT_RECIPES)
     parser.add_argument("--quality-layers", default=DEFAULT_QUALITY_LAYERS)
+    parser.add_argument("--visual-obligations", default=DEFAULT_VISUAL_OBLIGATIONS)
     parser.add_argument("--skill-doc", default=Path(__file__).resolve().parents[1] / "SKILL.md")
     args = parser.parse_args()
 
@@ -2857,6 +3242,7 @@ def main() -> int:
     validate_slot_applicability(data, errors)
     validate_concept_recipes(Path(args.concept_recipes), data, errors)
     validate_quality_layers(Path(args.quality_layers), data, errors)
+    validate_visual_obligation_registry(Path(args.visual_obligations), errors)
     validate_skill_doc_literals(Path(args.skill_doc), data, errors)
     for label, entry in all_entries(data):
         validate_facets(label, entry, vocab, errors)

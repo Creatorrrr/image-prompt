@@ -56,6 +56,21 @@ def parse_chosen_candidate_ids(raw: str | None) -> object | None:
     raise ValueError("--chosen-candidate-ids-json must be a JSON string array or object")
 
 
+def parse_chosen_visual_concept_ids(raw: str | None) -> list[str] | None:
+    if raw is None:
+        return None
+    value = json.loads(raw)
+    if not isinstance(value, list) or not all(
+        isinstance(item, str) and item.strip() for item in value
+    ):
+        raise ValueError(
+            "--chosen-visual-concept-ids-json must be a JSON string array"
+        )
+    if len(value) != len(set(value)):
+        raise ValueError("--chosen-visual-concept-ids-json values must be distinct")
+    return value
+
+
 def parse_augmentation_brief(raw: str | None) -> object | None:
     if not raw:
         return None
@@ -103,6 +118,23 @@ def build_entry(args: argparse.Namespace) -> dict[str, object]:
     chosen_candidate_ids = parse_chosen_candidate_ids(args.chosen_candidate_ids_json)
     if chosen_candidate_ids is not None:
         entry["chosen_candidate_ids"] = chosen_candidate_ids
+    chosen_visual_concept_ids = parse_chosen_visual_concept_ids(
+        args.chosen_visual_concept_ids_json
+    )
+    if chosen_visual_concept_ids is not None:
+        entry["chosen_visual_concept_ids"] = chosen_visual_concept_ids
+    if args.effective_visual_contract_sha256:
+        if not re.fullmatch(r"[0-9a-f]{64}", args.effective_visual_contract_sha256):
+            raise ValueError(
+                "--effective-visual-contract-sha256 must be a 64-character SHA-256"
+            )
+        if not chosen_visual_concept_ids:
+            raise ValueError(
+                "--effective-visual-contract-sha256 requires at least one chosen visual concept"
+            )
+        entry["effective_visual_contract_sha256"] = (
+            args.effective_visual_contract_sha256
+        )
     if args.composer:
         entry["composer"] = args.composer
     if args.audit_status:
@@ -176,7 +208,7 @@ def build_independent_manifest(
                 "sha256": hashlib.sha256(image_path.read_bytes()).hexdigest(),
             }
         )
-    return {
+    manifest: dict[str, object] = {
         "contract_version": INDEPENDENT_RUN_MANIFEST_VERSION,
         **required_values,
         "cross_arm_inputs_used": False,
@@ -188,6 +220,13 @@ def build_independent_manifest(
         "image_paths": list(entry.get("image_paths") or []),
         "image_hashes": image_hashes,
     }
+    for field in (
+        "chosen_visual_concept_ids",
+        "effective_visual_contract_sha256",
+    ):
+        if field in entry:
+            manifest[field] = entry[field]
+    return manifest
 
 
 def append_entry(ledger: Path, entry: dict[str, object]) -> None:
@@ -213,6 +252,8 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--argv-json", default=None, help="Prompt-generation argv as a JSON string array.")
     parser.add_argument("--pack-id", default=None, help="Candidate pack id used for agent composition.")
     parser.add_argument("--chosen-candidate-ids-json", default=None, help="JSON array or slot map of candidate ids chosen by the composer.")
+    parser.add_argument("--chosen-visual-concept-ids-json", default=None, help="Exact composed chosen_visual_concept_ids JSON array, including [] when the pack exposed optional visual concepts.")
+    parser.add_argument("--effective-visual-contract-sha256", default=None, help="Pack-plus-composed effective visual contract SHA-256 when a visual concept was selected.")
     parser.add_argument("--composer", choices=sorted(VALID_COMPOSERS), default=None, help="Prompt composer type.")
     parser.add_argument("--audit-status", choices=sorted(VALID_AUDIT_STATUSES), default=None, help="Composed prompt audit status.")
     parser.add_argument("--augmentation-brief-json", default=None, help="Audited hybrid augmentation_brief as an inline JSON object.")

@@ -77,6 +77,7 @@ SEMANTIC_TEXT_RECIPE_VERSION = "semantic-text-v3"
 GENERATOR_VERSION = "2026.06.0"
 LIKENESS_MODES = ("off", "inspired")
 QUALITY_LAYERS_FILENAME = "photo_prompt_quality_layers.json"
+VISUAL_OBLIGATION_REGISTRY_FILENAME = "photo_prompt_visual_obligations.json"
 RESEARCH_EXTENSION_FILENAME = "photo_prompt_research_extension.json"
 RESEARCH_EXTENSION_FILENAMES = (
     RESEARCH_EXTENSION_FILENAME,
@@ -92,6 +93,7 @@ RESEARCH_EXTENSION_FILENAMES = (
 RESEARCH_EXTENSION_SCHEMA = "photo-prompt-research-extension/v1"
 CHARACTER_MECHANISM_GRAPH_SCHEMA = "photo-character-mechanism-graph/v1"
 QUALITY_LAYERS_DATA_KEY = "_quality_layers"
+VISUAL_OBLIGATIONS_DATA_KEY = "_visual_obligations"
 SOFT_ANCHOR_WEIGHT_MULTIPLIER = 24.0
 SOFT_ANCHOR_PROMOTED_WEIGHT_MULTIPLIER = 36.0
 SOFT_ANCHOR_PRIMARY_WEIGHT_MULTIPLIER = 48.0
@@ -129,6 +131,10 @@ CANDIDATE_PACK_HYBRID_AUTHORIAL_CONTRACT_VERSION = "photo-hybrid-augmentation/v2
 CANDIDATE_PACK_AUTHORIAL_COMPOSITION_VERSION = "photo-authorial-composition/v1"
 CANDIDATE_PACK_AUTHORIAL_SCENE_VERSION = "photo-authorial-scene/v1"
 AUTHORIAL_REQUEST_CONTRACT_VERSION = "authorial-request/v1"
+VISUAL_INTENT_CONTRACT_VERSION = "photo-visual-intent/v1"
+VISUAL_OBLIGATION_REGISTRY_SCHEMA_VERSION = "photo-visual-obligation-registry/v2"
+VISUAL_OBLIGATIONS_CONTRACT_VERSION = "photo-visual-obligations/v1"
+VISUAL_CONCEPTS_CONTRACT_VERSION = "photo-visual-concepts/v1"
 JAPANESE_SUBCULTURE_PHOTO_CONTRACT_VERSION = "japanese-subculture-photo/v1"
 JAPANESE_SUBCULTURE_PHOTO_STYLE_PRESET_IDS = (
     "lolita_coordinate_culture",
@@ -1915,6 +1921,42 @@ def default_quality_layers_path(tags_path: str | Path) -> Path:
 
 def load_quality_layers(path: str | Path) -> JsonDict:
     return load_json(path)
+
+
+def default_visual_obligation_registry_path(tags_path: str | Path) -> Path:
+    tags = Path(tags_path)
+    sibling = tags.parent / VISUAL_OBLIGATION_REGISTRY_FILENAME
+    if sibling.exists():
+        return sibling
+    return Path(__file__).resolve().parents[1] / "assets" / VISUAL_OBLIGATION_REGISTRY_FILENAME
+
+
+def load_visual_obligation_registry(path: str | Path) -> JsonDict:
+    payload = load_json(path)
+    if payload.get("schema_version") != VISUAL_OBLIGATION_REGISTRY_SCHEMA_VERSION:
+        raise ValueError(
+            "visual obligation registry schema_version must be "
+            f"{VISUAL_OBLIGATION_REGISTRY_SCHEMA_VERSION!r}"
+        )
+    if payload.get("contract_version") != VISUAL_OBLIGATIONS_CONTRACT_VERSION:
+        raise ValueError(
+            "visual obligation registry contract_version must be "
+            f"{VISUAL_OBLIGATIONS_CONTRACT_VERSION!r}"
+        )
+    if payload.get("visual_intent_contract_version") != VISUAL_INTENT_CONTRACT_VERSION:
+        raise ValueError(
+            "visual obligation registry visual_intent_contract_version must be "
+            f"{VISUAL_INTENT_CONTRACT_VERSION!r}"
+        )
+    if payload.get("concept_contract_version") != VISUAL_CONCEPTS_CONTRACT_VERSION:
+        raise ValueError(
+            "visual obligation registry concept_contract_version must be "
+            f"{VISUAL_CONCEPTS_CONTRACT_VERSION!r}"
+        )
+    profiles = payload.get("profiles")
+    if not isinstance(profiles, list) or not profiles:
+        raise ValueError("visual obligation registry requires a non-empty profiles list")
+    return payload
 
 
 def load_anchor_diversity_ledger(path: Optional[str]) -> JsonDict:
@@ -3964,6 +4006,59 @@ def candidate_pack_intent_routing_policy(data: JsonDict) -> JsonDict:
 
 
 @functools.lru_cache(maxsize=65_536)
+def intent_term_is_negated(text: str, term: str) -> bool:
+    """Return whether one otherwise-positive term is locally negated.
+
+    This is deliberately shared by ordinary intent aliases and visual-concept
+    routing.  A concept must not become positive merely because one caller has
+    a narrower negation vocabulary than another.
+    """
+
+    lowered = clean_spaces(str(text or "").lower())
+    normalized = clean_spaces(str(term or "").lower())
+    if not lowered or not normalized:
+        return False
+    if normalized.isascii() and re.search(r"[a-z0-9]", normalized):
+        term_pattern = (
+            r"(?<![a-z0-9])" + re.escape(normalized) + r"(?:s|es)?(?![a-z0-9])"
+        )
+        return bool(
+            re.search(
+                rf"(?<![a-z0-9])(?:no|without|exclude|excluding|omit|omitting|avoid|avoiding|"
+                rf"not(?:\s+(?:include|use|show|add))?)"
+                rf"(?:\s+(?:a|an|any|the))?\s+{term_pattern}",
+                lowered,
+            )
+            or re.search(
+                rf"{term_pattern}(?:\s+(?:concept|element|expression|pose|style|emphasis|keyword))?"
+                r"\s*(?:is|are|must\s+be|should\s+be)?\s*"
+                r"(?:excluded|omitted|forbidden|not\s+wanted|not\s+included)",
+                lowered,
+            )
+        )
+    escaped = re.escape(normalized)
+    korean_suffix = (
+        r"(?:\s*(?:요소|표현|장면|포즈|강조|개념|스타일|키워드))?"
+        r"\s*(?:은|는|이|가|을|를|도)?\s*"
+        r"(?:없는|없이|아닌|빼(?:고|줘|주세요)?|제외(?:하고|해|해주세요)?|"
+        r"금지|말고|하지\s*마|넣지\s*마|안\s*넣)"
+    )
+    korean_prefix = (
+        r"(?:빼고|제외하고|금지하고|넣지\s*말고|사용하지\s*말고)"
+        rf"[^,;.]{{0,12}}{escaped}"
+    )
+    japanese_suffix = (
+        rf"{escaped}(?:\s*(?:要素|表現|ラベル|ポーズ|強調|概念|スタイル))?"
+        r"\s*(?:は|を|が|も|の)?\s*(?:なし|抜き|除外|禁止|不要)"
+    )
+    return bool(
+        re.search(rf"{escaped}{korean_suffix}", lowered)
+        or re.search(korean_prefix, lowered)
+        or re.search(japanese_suffix, lowered)
+    )
+
+
+@functools.lru_cache(maxsize=65_536)
 def intent_alias_matches(text: str, alias: str) -> bool:
     normalized_text = clean_spaces(
         re.sub(r"[-\u2013\u2014/]+", " ", str(text or "").lower().replace("_", " "))
@@ -3973,19 +4068,13 @@ def intent_alias_matches(text: str, alias: str) -> bool:
     )
     if not normalized_text or not normalized_alias:
         return False
+    if intent_term_is_negated(normalized_text, normalized_alias):
+        return False
     if normalized_alias.isascii() and re.search(r"[a-z0-9]", normalized_alias):
         plural_suffix = ""
         final_word = normalized_alias.rsplit(" ", 1)[-1]
         if final_word.isalpha() and not final_word.endswith("s"):
             plural_suffix = r"(?:s|es)?"
-        negated = (
-            r"(?<![a-z0-9])(?:no|not|without)\s+(?:(?:a|any)\s+)?"
-            + re.escape(normalized_alias)
-            + plural_suffix
-            + r"(?![a-z0-9])"
-        )
-        if re.search(negated, normalized_text):
-            return False
         pattern = (
             r"(?<![a-z0-9])"
             + re.escape(normalized_alias)
@@ -6522,6 +6611,141 @@ def load_authorial_request_arg(raw: Optional[str], data: JsonDict) -> Optional[J
     return normalize_authorial_request(payload, data)
 
 
+def visual_obligation_profile_by_id(registry: JsonDict, profile_id: str) -> Optional[JsonDict]:
+    for profile in registry.get("profiles") or []:
+        if isinstance(profile, dict) and str(profile.get("id") or "") == profile_id:
+            return profile
+    return None
+
+
+def normalize_visual_intent(payload: Any, registry: JsonDict) -> JsonDict:
+    """Validate request-scoped hard visual bindings before candidate-pack creation."""
+
+    if not isinstance(payload, dict):
+        raise ValueError("--visual-intent-json must contain one JSON object")
+    allowed_fields = {"contract_version", "provenance", "obligations"}
+    unknown_fields = sorted(set(payload) - allowed_fields)
+    if unknown_fields:
+        raise ValueError(
+            "visual intent contains pack-derived or unsupported fields: "
+            + ", ".join(unknown_fields)
+        )
+    if str(payload.get("contract_version") or "") != VISUAL_INTENT_CONTRACT_VERSION:
+        raise ValueError(
+            f"visual intent contract_version must be {VISUAL_INTENT_CONTRACT_VERSION!r}"
+        )
+    if str(payload.get("provenance") or "") != "agent_prepack":
+        raise ValueError("visual intent provenance must be 'agent_prepack'")
+    raw_obligations = payload.get("obligations")
+    if not isinstance(raw_obligations, list) or not raw_obligations:
+        raise ValueError("visual intent requires a non-empty obligations list")
+
+    allowed_sources = {
+        "requesting_user_definition",
+        "explicit_user_requirement",
+        "agent_prepack_interpretation",
+    }
+    normalized_obligations: List[JsonDict] = []
+    seen_profile_ids: Set[str] = set()
+    for index, item in enumerate(raw_obligations):
+        if not isinstance(item, dict):
+            raise ValueError(f"visual intent obligation {index} must be an object")
+        allowed_item_fields = {
+            "profile_id",
+            "source",
+            "scope",
+            "source_text",
+            "bindings",
+        }
+        item_unknown = sorted(set(item) - allowed_item_fields)
+        if item_unknown:
+            raise ValueError(
+                f"visual intent obligation {index} contains unsupported fields: "
+                + ", ".join(item_unknown)
+            )
+        profile_id = str(item.get("profile_id") or "").strip()
+        profile = visual_obligation_profile_by_id(registry, profile_id)
+        if profile is None:
+            raise ValueError(f"visual intent obligation {index} has unknown profile_id {profile_id!r}")
+        if profile_id in seen_profile_ids:
+            raise ValueError(f"visual intent repeats profile_id {profile_id!r}")
+        seen_profile_ids.add(profile_id)
+        source = str(item.get("source") or "").strip()
+        if source not in allowed_sources:
+            raise ValueError(
+                f"visual intent obligation {index} source must be one of {sorted(allowed_sources)}"
+            )
+        if str(item.get("scope") or "") != "request_only":
+            raise ValueError(
+                f"visual intent obligation {index} scope must be 'request_only'"
+            )
+        source_text = clean_spaces(str(item.get("source_text") or ""))
+        if not source_text:
+            raise ValueError(f"visual intent obligation {index} source_text must be non-empty")
+        raw_bindings = item.get("bindings", {})
+        if not isinstance(raw_bindings, dict):
+            raise ValueError(f"visual intent obligation {index} bindings must be an object")
+        allowed_bindings = {
+            str(field)
+            for field in profile.get("required_evidence_fields") or []
+            if str(field).strip()
+        }
+        unknown_bindings = sorted(set(raw_bindings) - allowed_bindings)
+        if unknown_bindings:
+            raise ValueError(
+                f"visual intent obligation {index} has unknown binding fields: "
+                + ", ".join(unknown_bindings)
+            )
+        bindings: JsonDict = {}
+        for field, value in raw_bindings.items():
+            phrase = clean_spaces(str(value or ""))
+            if not phrase:
+                raise ValueError(
+                    f"visual intent obligation {index} binding {field!r} must be non-empty"
+                )
+            bindings[str(field)] = phrase
+        normalized_obligations.append(
+            {
+                "profile_id": profile_id,
+                "source": source,
+                "scope": "request_only",
+                "source_text": source_text,
+                "bindings": bindings,
+            }
+        )
+
+    normalized: JsonDict = {
+        "contract_version": VISUAL_INTENT_CONTRACT_VERSION,
+        "provenance": "agent_prepack",
+        "obligations": normalized_obligations,
+    }
+    canonical_bytes = json.dumps(
+        normalized,
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+    ).encode("utf-8")
+    normalized["canonical_sha256"] = hashlib.sha256(canonical_bytes).hexdigest()
+    normalized["request_id"] = normalized["canonical_sha256"][:16]
+    return normalized
+
+
+def load_visual_intent_arg(raw: Optional[str], registry: JsonDict) -> Optional[JsonDict]:
+    if not raw:
+        return None
+    try:
+        candidate = Path(raw)
+        is_file = candidate.exists()
+    except OSError:
+        is_file = False
+        candidate = Path(".")
+    if is_file:
+        payload: Any = json.loads(candidate.read_text(encoding="utf-8"))
+    else:
+        payload = json.loads(raw)
+    return normalize_visual_intent(payload, registry)
+
+
 def candidate_pack_uses_natural_moe_route_preset(
     result: JsonDict,
     preset: JsonDict,
@@ -7386,18 +7610,540 @@ def selection_balance_multiplier(data: JsonDict, entry: JsonDict, request_text: 
 
 
 def candidate_pack_intent_term_is_negated(text: str, term: str) -> bool:
-    lowered = str(text or "").lower()
-    normalized = str(term or "").lower().strip()
-    if not normalized:
-        return False
-    if normalized.isascii():
-        return bool(
-            re.search(
-                rf"\b(?:no|not|without)\b[^,;.]{{0,48}}(?<![a-z0-9]){re.escape(normalized)}(?![a-z0-9])",
-                lowered,
-            )
+    """Compatibility wrapper for the shared request-negation policy."""
+
+    return intent_term_is_negated(text, term)
+
+
+def candidate_pack_visual_obligation_request_sources(
+    result: JsonDict,
+    trace: JsonDict,
+) -> List[JsonDict]:
+    allowed_sources = {
+        "concept_lock",
+        "user_requirement",
+        "additional_requirement",
+        "intent",
+    }
+    return [
+        row
+        for row in candidate_pack_source_texts(result, trace)
+        if isinstance(row, dict)
+        and str(row.get("source") or "") in allowed_sources
+        and str(row.get("polarity") or "") != "excluded"
+        and str(row.get("text") or "").strip()
+    ]
+
+
+def candidate_pack_auto_visual_obligation_matches(
+    registry: JsonDict,
+    source_rows: Sequence[JsonDict],
+) -> Dict[str, List[JsonDict]]:
+    """Return exact request sources that activate each data-driven profile."""
+
+    matches: Dict[str, List[JsonDict]] = {}
+    for profile in registry.get("profiles") or []:
+        if not isinstance(profile, dict):
+            continue
+        profile_id = str(profile.get("id") or "").strip()
+        activation = (
+            profile.get("activation")
+            if isinstance(profile.get("activation"), dict)
+            else {}
         )
-    return bool(re.search(rf"{re.escape(normalized)}[^,;.]{{0,12}}(?:없는|없이|아닌)", lowered))
+        terms = [
+            str(term).strip()
+            for field in ("any_terms", "project_glossary_aliases")
+            for term in activation.get(field) or []
+            if str(term).strip()
+        ]
+        if not profile_id or not terms:
+            continue
+        profile_matches: List[JsonDict] = []
+        for row in source_rows:
+            text = str(row.get("text") or "")
+            excluded_terms = [
+                str(term).strip()
+                for term in activation.get("exclude_if_any_terms") or []
+                if str(term).strip()
+            ]
+            if any(intent_alias_matches(text, term) for term in excluded_terms):
+                continue
+            matched_terms = [
+                term
+                for term in terms
+                if not candidate_pack_intent_term_is_negated(text, term)
+                and intent_alias_matches(text, term)
+            ]
+            if not matched_terms:
+                continue
+            source_key = hashlib.sha256(
+                f"{row.get('source')}|{clean_spaces(text).lower()}".encode("utf-8")
+            ).hexdigest()[:16]
+            profile_matches.append(
+                {
+                    "source_intent_id": f"{row.get('source')}:{source_key}",
+                    "source": str(row.get("source") or ""),
+                }
+            )
+        if profile_matches:
+            matches[profile_id] = profile_matches
+    return matches
+
+
+def candidate_pack_visual_component_match(
+    profile: JsonDict,
+    text: str,
+) -> Optional[str]:
+    """Classify indirect lexical semantics without hard-activating a profile.
+
+    The component lexicon is intentionally data-driven.  It may make a concept
+    eligible for authorial opt-in, but it can never create a hard obligation.
+    """
+
+    activation = (
+        profile.get("activation")
+        if isinstance(profile.get("activation"), dict)
+        else {}
+    )
+    excluded_terms = [
+        str(term).strip()
+        for term in activation.get("exclude_if_any_terms") or []
+        if str(term).strip()
+    ]
+    if any(intent_alias_matches(text, term) for term in excluded_terms):
+        return None
+    semantics = (
+        activation.get("component_semantics")
+        if isinstance(activation.get("component_semantics"), dict)
+        else {}
+    )
+    groups = [
+        group
+        for group in semantics.get("groups") or []
+        if isinstance(group, dict) and str(group.get("id") or "").strip()
+    ]
+    matched_group_ids = {
+        str(group["id"])
+        for group in groups
+        if any(
+            intent_alias_matches(text, str(term))
+            for term in group.get("any_terms") or []
+            if str(term).strip()
+        )
+    }
+    try:
+        minimum_groups = int(semantics.get("minimum_component_groups", 2))
+    except (TypeError, ValueError):
+        minimum_groups = 2
+    required_groups = {
+        str(value)
+        for value in semantics.get("required_group_ids") or []
+        if str(value).strip()
+    }
+    if (
+        groups
+        and len(matched_group_ids) >= max(1, minimum_groups)
+        and required_groups <= matched_group_ids
+    ):
+        return "component_semantics"
+    soft_terms = [
+        str(term).strip()
+        for term in activation.get("soft_concept_cues") or []
+        if str(term).strip()
+    ]
+    if any(intent_alias_matches(text, term) for term in soft_terms):
+        return "soft_concept_cue"
+    return None
+
+
+def candidate_pack_auto_visual_concept_matches(
+    registry: JsonDict,
+    source_rows: Sequence[JsonDict],
+) -> Dict[str, List[JsonDict]]:
+    """Return indirect concept eligibility; never return hard activation."""
+
+    matches: Dict[str, List[JsonDict]] = {}
+    hard_matches = candidate_pack_auto_visual_obligation_matches(registry, source_rows)
+    for profile in registry.get("profiles") or []:
+        if not isinstance(profile, dict):
+            continue
+        profile_id = str(profile.get("id") or "").strip()
+        if not profile_id or profile_id in hard_matches:
+            continue
+        profile_matches: List[JsonDict] = []
+        for row in source_rows:
+            text = str(row.get("text") or "")
+            match_kind = candidate_pack_visual_component_match(profile, text)
+            if match_kind is None:
+                continue
+            source_key = hashlib.sha256(
+                f"{row.get('source')}|{clean_spaces(text).lower()}".encode("utf-8")
+            ).hexdigest()[:16]
+            profile_matches.append(
+                {
+                    "source_intent_id": f"{row.get('source')}:{source_key}",
+                    "source": str(row.get("source") or ""),
+                    "match_kind": match_kind,
+                }
+            )
+        if profile_matches:
+            matches[profile_id] = profile_matches
+    return matches
+
+
+def candidate_pack_visual_obligation_adult_context(
+    source_rows: Sequence[JsonDict],
+    moe_response: Optional[JsonDict],
+) -> bool:
+    if isinstance(moe_response, dict) and moe_response.get("enabled") is True:
+        return True
+    adult_terms = (
+        "adult",
+        "mid twenties",
+        "mid-twenties",
+        "twenty five or older",
+        "25 or older",
+        "성인",
+        "20대 중반",
+        "成人",
+    )
+    return any(
+        intent_alias_matches(str(row.get("text") or ""), term)
+        for row in source_rows
+        for term in adult_terms
+    )
+
+
+def candidate_pack_visual_profile_obligation(
+    profile: JsonDict,
+    registry: JsonDict,
+    *,
+    activation_source: str,
+    source_intent_ids: Sequence[str],
+    bindings: Optional[JsonDict] = None,
+) -> JsonDict:
+    """Materialize one profile into the same auditable obligation shape."""
+
+    render_gates = [
+        copy.deepcopy(gate)
+        for gate in profile.get("render_gates") or []
+        if isinstance(gate, dict) and str(gate.get("id") or "").strip()
+    ]
+    required_fields = [
+        str(field)
+        for field in profile.get("required_evidence_fields") or []
+        if str(field).strip()
+    ]
+    evidence_policy = (
+        registry.get("evidence_policy")
+        if isinstance(registry.get("evidence_policy"), dict)
+        else {}
+    )
+    obligation: JsonDict = {
+        "id": str(profile.get("id") or ""),
+        "category": str(profile.get("category") or "visual_mechanism"),
+        "activation": {
+            "source": activation_source,
+            "scope": "request_only",
+            "source_intent_ids": [str(value) for value in source_intent_ids],
+        },
+        "composition_instruction": str(profile.get("composition_instruction") or ""),
+        "prompt_binding": {
+            "composed_field": "visual_obligation_evidence",
+            "required_evidence_fields": required_fields,
+            "minimum_distinct_evidence_phrases": len(required_fields),
+            "prompt_evidence_must_be_literal": True,
+            "maximum_pairwise_content_token_overlap_ratio": float(
+                evidence_policy.get("maximum_pairwise_content_token_overlap_ratio", 0.8)
+            ),
+            "forbidden_filler_phrases": [
+                str(value)
+                for value in evidence_policy.get("forbidden_filler_phrases") or []
+                if str(value).strip()
+            ],
+        },
+        "evidence_requirements": copy.deepcopy(
+            profile.get("evidence_requirements") or {}
+        ),
+        "runtime_expression": copy.deepcopy(profile.get("runtime_expression") or {}),
+        "render_gates": render_gates,
+        "reject_substitutes": [
+            str(value)
+            for value in profile.get("reject_substitutes") or []
+            if str(value).strip()
+        ],
+    }
+    if bindings:
+        obligation["bindings"] = copy.deepcopy(bindings)
+    return obligation
+
+
+def candidate_pack_visual_obligations(
+    data: JsonDict,
+    result: JsonDict,
+    trace: JsonDict,
+    moe_response: Optional[JsonDict],
+) -> Optional[JsonDict]:
+    registry = (
+        data.get(VISUAL_OBLIGATIONS_DATA_KEY)
+        if isinstance(data.get(VISUAL_OBLIGATIONS_DATA_KEY), dict)
+        else {}
+    )
+    if not registry:
+        return None
+    source_rows = candidate_pack_visual_obligation_request_sources(result, trace)
+    auto_matches = candidate_pack_auto_visual_obligation_matches(registry, source_rows)
+    adult_context = candidate_pack_visual_obligation_adult_context(
+        source_rows,
+        moe_response,
+    )
+    provenance = result.get("provenance") if isinstance(result.get("provenance"), dict) else {}
+    explicit_intent = (
+        provenance.get("visual_intent")
+        if isinstance(provenance.get("visual_intent"), dict)
+        else None
+    )
+
+    user_source_texts = {
+        clean_spaces(str(row.get("text") or "")).lower()
+        for row in source_rows
+        if clean_spaces(str(row.get("text") or ""))
+    }
+    authorial_request = (
+        provenance.get("authorial_request")
+        if isinstance(provenance.get("authorial_request"), dict)
+        else {}
+    )
+    authorial_source_texts = {
+        clean_spaces(str(value)).lower()
+        for value in [
+            authorial_request.get("subject"),
+            authorial_request.get("setting"),
+            authorial_request.get("event"),
+            *(authorial_request.get("style_evidence") or []),
+        ]
+        if clean_spaces(str(value or ""))
+    }
+    explicit_by_profile: Dict[str, JsonDict] = {}
+    if explicit_intent is not None:
+        for item in explicit_intent.get("obligations") or []:
+            if not isinstance(item, dict):
+                continue
+            profile_id = str(item.get("profile_id") or "")
+            source_text = clean_spaces(str(item.get("source_text") or "")).lower()
+            allowed_texts = set(user_source_texts)
+            if str(item.get("source") or "") == "agent_prepack_interpretation":
+                allowed_texts.update(authorial_source_texts)
+            if source_text not in allowed_texts:
+                raise ValueError(
+                    f"visual intent profile {profile_id!r} source_text must exactly match "
+                    "a request source or its governing authorial-request field"
+                )
+            explicit_by_profile[profile_id] = item
+
+    obligations: List[JsonDict] = []
+    required_hard_gates: List[str] = []
+    for profile in registry.get("profiles") or []:
+        if not isinstance(profile, dict):
+            continue
+        profile_id = str(profile.get("id") or "").strip()
+        activation = (
+            profile.get("activation")
+            if isinstance(profile.get("activation"), dict)
+            else {}
+        )
+        explicit = explicit_by_profile.get(profile_id)
+        matched_sources = auto_matches.get(profile_id, [])
+        active = explicit is not None or bool(matched_sources)
+        if not active:
+            continue
+        if activation.get("requires_adult_character") is True and not adult_context:
+            if explicit is not None:
+                raise ValueError(
+                    f"visual intent profile {profile_id!r} requires explicit adult-character context"
+                )
+            continue
+        source_intent_ids = (
+            [
+                "visual-intent:"
+                + hashlib.sha256(
+                    clean_spaces(str(explicit.get("source_text") or "")).lower().encode("utf-8")
+                ).hexdigest()[:16]
+            ]
+            if explicit is not None
+            else [str(row["source_intent_id"]) for row in matched_sources]
+        )
+        obligation = candidate_pack_visual_profile_obligation(
+            profile,
+            registry,
+            activation_source=(
+                str(explicit.get("source") or "")
+                if explicit is not None
+                else "explicit_request_semantics"
+            ),
+            source_intent_ids=source_intent_ids,
+            bindings=(
+                explicit.get("bindings")
+                if explicit is not None and isinstance(explicit.get("bindings"), dict)
+                else None
+            ),
+        )
+        required_hard_gates.extend(
+            str(gate.get("id") or "")
+            for gate in obligation.get("render_gates") or []
+            if isinstance(gate, dict) and str(gate.get("id") or "").strip()
+        )
+        obligations.append(obligation)
+
+    if not obligations:
+        return None
+    contract: JsonDict = {
+        "enabled": True,
+        "contract_version": VISUAL_OBLIGATIONS_CONTRACT_VERSION,
+        "precedence": copy.deepcopy(registry.get("precedence") or []),
+        "scope": "request_only",
+        "strict_gate_set": True,
+        "obligations": obligations,
+        "required_hard_gates": list(dict.fromkeys(required_hard_gates)),
+        "retry_policy": {
+            "preserve_every_attempt": True,
+            "repair_only_failed_visual_obligations": True,
+            "preserve_passed_identity_and_mechanism_evidence": True,
+            "stop_at_first_all_hard_gates_pass": True,
+            "requesting_user_judgment_remains_separate": True,
+        },
+    }
+    if explicit_intent is not None:
+        contract["source_visual_intent_sha256"] = str(
+            explicit_intent.get("canonical_sha256") or ""
+        )
+    return contract
+
+
+def candidate_pack_visual_concept_candidates(
+    data: JsonDict,
+    result: JsonDict,
+    trace: JsonDict,
+    moe_response: Optional[JsonDict],
+    visual_obligations: Optional[JsonDict],
+) -> Optional[JsonDict]:
+    """Expose indirect concepts as optional, non-ranked v4 candidates.
+
+    The public candidate omits scores, matched terms, and routing reasons.  If
+    the composer selects it, its pre-baked opt-in obligation becomes hard in
+    the composed and render-review audits; otherwise it contributes no gate.
+    """
+
+    registry = (
+        data.get(VISUAL_OBLIGATIONS_DATA_KEY)
+        if isinstance(data.get(VISUAL_OBLIGATIONS_DATA_KEY), dict)
+        else {}
+    )
+    if not registry:
+        return None
+    source_rows = candidate_pack_visual_obligation_request_sources(result, trace)
+    if not candidate_pack_visual_obligation_adult_context(source_rows, moe_response):
+        return None
+    matches = candidate_pack_auto_visual_concept_matches(registry, source_rows)
+    active_hard_ids = {
+        str(item.get("id") or "")
+        for item in (visual_obligations or {}).get("obligations") or []
+        if isinstance(item, dict) and str(item.get("id") or "")
+    }
+    candidates: List[JsonDict] = []
+    for profile in registry.get("profiles") or []:
+        if not isinstance(profile, dict):
+            continue
+        profile_id = str(profile.get("id") or "").strip()
+        if not profile_id or profile_id in active_hard_ids or profile_id not in matches:
+            continue
+        concept_candidate = (
+            profile.get("concept_candidate")
+            if isinstance(profile.get("concept_candidate"), dict)
+            else {}
+        )
+        concept_terms = [
+            str(term).strip()
+            for term in concept_candidate.get("concept_terms") or []
+            if str(term).strip()
+        ]
+        if not concept_terms:
+            continue
+        obligation = candidate_pack_visual_profile_obligation(
+            profile,
+            registry,
+            activation_source="composer_opt_in",
+            source_intent_ids=[],
+        )
+        candidates.append(
+            {
+                "id": f"visual-concept:{profile_id}",
+                "content_form": "unordered_inspiration_terms",
+                "concept_terms": concept_terms,
+                "applicability": {
+                    "status": "eligible",
+                    "source": "request_scoped_concept_eligibility",
+                },
+                "opt_in_contract": {
+                    "effect": "promote_to_hard_visual_obligation",
+                    "visual_obligations_contract_version": VISUAL_OBLIGATIONS_CONTRACT_VERSION,
+                    "obligation": obligation,
+                },
+            }
+        )
+    if not candidates:
+        return None
+    return {
+        "enabled": True,
+        "contract_version": VISUAL_CONCEPTS_CONTRACT_VERSION,
+        "candidate_order": "seed_shuffled_non_preferential",
+        "selection_field": "chosen_visual_concept_ids",
+        "selection_policy": {
+            "all_candidates_optional": True,
+            "selection_list_required_even_when_empty": True,
+            "unselected_candidates_add_no_prompt_or_review_duty": True,
+            "selected_candidates_promote_opt_in_contract_to_hard_obligation": True,
+            "matched_terms_scores_and_routing_reasons_not_exposed": True,
+        },
+        "candidates": candidates,
+    }
+
+
+def candidate_pack_merge_visual_render_gates(
+    moe_response: Optional[JsonDict],
+    visual_obligations: Optional[JsonDict],
+) -> None:
+    if not isinstance(moe_response, dict) or not isinstance(visual_obligations, dict):
+        return
+    qualification = (
+        moe_response.get("render_qualification")
+        if isinstance(moe_response.get("render_qualification"), dict)
+        else None
+    )
+    if qualification is None:
+        return
+    visual_gates = [
+        str(gate)
+        for gate in visual_obligations.get("required_hard_gates") or []
+        if str(gate).strip()
+    ]
+    existing_request_specific = [
+        str(gate)
+        for gate in qualification.get("request_specific_hard_gates") or []
+        if str(gate).strip()
+    ]
+    qualification["request_specific_hard_gates"] = list(
+        dict.fromkeys(existing_request_specific + visual_gates)
+    )
+    existing_required = [
+        str(gate)
+        for gate in qualification.get("required_hard_gates") or []
+        if str(gate).strip()
+    ]
+    qualification["required_hard_gates"] = list(
+        dict.fromkeys(existing_required + visual_gates)
+    )
 
 
 def request_relevance_match_terms(entry: JsonDict, request_text: str, minimum_length: int) -> List[str]:
@@ -9742,6 +10488,28 @@ def candidate_pack_v4_shuffle_candidate_surfaces(projected: JsonDict, *, seed: s
     for key in ("core_candidates", "tension_candidates"):
         if isinstance(proposition.get(key), list):
             candidate_pack_v4_shuffle(proposition[key], seed=seed, scope=f"proposition:{key}")
+    visual_concepts = (
+        projected.get("visual_concept_candidates")
+        if isinstance(projected.get("visual_concept_candidates"), dict)
+        else {}
+    )
+    visual_candidates = (
+        visual_concepts.get("candidates")
+        if isinstance(visual_concepts.get("candidates"), list)
+        else []
+    )
+    for candidate in visual_candidates:
+        if isinstance(candidate, dict) and isinstance(candidate.get("concept_terms"), list):
+            candidate_pack_v4_shuffle(
+                candidate["concept_terms"],
+                seed=seed,
+                scope=f"visual-concept-terms:{candidate.get('id') or ''}",
+            )
+    candidate_pack_v4_shuffle(
+        visual_candidates,
+        seed=seed,
+        scope="visual-concepts",
+    )
     integration = (
         projected.get("photographic_integration")
         if isinstance(projected.get("photographic_integration"), dict)
@@ -10087,6 +10855,23 @@ def build_candidate_pack(
     creative_exploration = candidate_pack_creative_exploration(result, slots, candidate_entries)
     creative_direction = candidate_pack_creative_direction(result)
     moe_response = candidate_pack_moe_response(result)
+    visual_obligations = (
+        candidate_pack_visual_obligations(data, result, trace, moe_response)
+        if requested_contract_version == CANDIDATE_PACK_CONTRACT_V4
+        else None
+    )
+    visual_concept_candidates = (
+        candidate_pack_visual_concept_candidates(
+            data,
+            result,
+            trace,
+            moe_response,
+            visual_obligations,
+        )
+        if requested_contract_version == CANDIDATE_PACK_CONTRACT_V4
+        else None
+    )
+    candidate_pack_merge_visual_render_gates(moe_response, visual_obligations)
     viewer_experience = candidate_pack_viewer_experience(result)
     intent_constraints = copy.deepcopy(contract.get("intent_constraints", {}))
     if isinstance(intent_constraints, dict):
@@ -10199,6 +10984,17 @@ def build_candidate_pack(
     )
     if authorial_request is not None:
         pack["authorial_request"] = copy.deepcopy(authorial_request)
+    visual_intent = (
+        provenance.get("visual_intent")
+        if isinstance(provenance.get("visual_intent"), dict)
+        else None
+    )
+    if visual_intent is not None:
+        pack["visual_intent"] = copy.deepcopy(visual_intent)
+    if visual_obligations is not None:
+        pack["visual_obligations"] = visual_obligations
+    if visual_concept_candidates is not None:
+        pack["visual_concept_candidates"] = visual_concept_candidates
     if creative_direction is not None:
         pack["creative_direction"] = creative_direction
     if moe_response is not None:
@@ -19722,6 +20518,16 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         help="Inline JSON or path for an agent-authored pre-pack subject, setting, event and Japanese-subculture style contract. Requires v4 candidate-pack output.",
     )
     parser.add_argument(
+        "--visual-intent-json",
+        default=None,
+        help="Inline JSON or path for request-scoped hard visual geometry, mechanics, expression, transition, or behavior bindings. Requires v4 candidate-pack output.",
+    )
+    parser.add_argument(
+        "--visual-obligation-registry",
+        default=None,
+        help=argparse.SUPPRESS,
+    )
+    parser.add_argument(
         "--role-requirement",
         dest="role_requirements",
         action="append",
@@ -19868,6 +20674,10 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         raise ValueError("--authorial-request-json requires --emit-candidate-pack")
     if args.authorial_request_json and args.candidate_pack_version != "v4":
         raise ValueError("--authorial-request-json requires --candidate-pack-version v4")
+    if args.visual_intent_json and not args.emit_candidate_pack:
+        raise ValueError("--visual-intent-json requires --emit-candidate-pack")
+    if args.visual_intent_json and args.candidate_pack_version != "v4":
+        raise ValueError("--visual-intent-json requires --candidate-pack-version v4")
     if args.candidate_pack_version in {"v2", "v3"}:
         if not str(args.legacy_replay_reason or "").strip():
             raise ValueError(
@@ -19902,6 +20712,19 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     authorial_request = load_authorial_request_arg(args.authorial_request_json, data)
     quality_layers_path = Path(args.quality_layers) if args.quality_layers else default_quality_layers_path(args.tags)
     data[QUALITY_LAYERS_DATA_KEY] = load_quality_layers(quality_layers_path)
+    visual_obligation_registry_path = (
+        Path(args.visual_obligation_registry)
+        if args.visual_obligation_registry
+        else default_visual_obligation_registry_path(args.tags)
+    )
+    visual_obligation_registry = load_visual_obligation_registry(
+        visual_obligation_registry_path
+    )
+    data[VISUAL_OBLIGATIONS_DATA_KEY] = visual_obligation_registry
+    visual_intent = load_visual_intent_arg(
+        args.visual_intent_json,
+        visual_obligation_registry,
+    )
     available_scene_functions = set(
         normalize_list((data.get("facet_vocab") or {}).get("scene_function"))
     )
@@ -20073,6 +20896,10 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         if authorial_request is not None:
             result.setdefault("provenance", {})["authorial_request"] = copy.deepcopy(
                 authorial_request
+            )
+        if visual_intent is not None:
+            result.setdefault("provenance", {})["visual_intent"] = copy.deepcopy(
+                visual_intent
             )
         if args.legacy_replay_reason:
             result.setdefault("provenance", {})["legacy_replay_reason"] = clean_spaces(

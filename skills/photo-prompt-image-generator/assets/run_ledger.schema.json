@@ -123,6 +123,20 @@
         }
       ]
     },
+    "chosen_visual_concept_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^visual-concept:[a-z][a-z0-9_]+$"
+      },
+      "uniqueItems": true,
+      "description": "Exact composed optional visual-concept selection; an empty array records explicit rejection"
+    },
+    "effective_visual_contract_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "Canonical pack-plus-composed visual obligation contract used for runtime and pixel gates"
+    },
     "composer": {
       "enum": [
         "agent",

@@ -15,6 +15,8 @@ import json
 from pathlib import Path
 from typing import Any
 
+import audit_composed_prompt
+
 
 SCHEMA_VERSION = "photo-image-render-request/v2"
 
@@ -135,6 +137,52 @@ def audit_image_render_request(
             }
         )
 
+    effective_visual_contract, visual_selection_failures = (
+        audit_composed_prompt.derive_effective_visual_obligation_contract(
+            pack,
+            composed,
+        )
+    )
+    failures.extend(
+        {
+            "check": f"effective_visual_contract.{failure.get('check')}",
+            "reason": failure.get("reason"),
+            **{
+                key: value
+                for key, value in failure.items()
+                if key not in {"check", "reason"}
+            },
+        }
+        for failure in visual_selection_failures
+    )
+    effective_visual_sha256 = (
+        audit_composed_prompt.effective_visual_obligation_sha256(
+            effective_visual_contract
+        )
+    )
+    selected_visual_concepts = [
+        str(value)
+        for value in (effective_visual_contract or {}).get(
+            "selected_visual_concept_ids"
+        )
+        or []
+        if str(value).strip()
+    ]
+    if selected_visual_concepts and request.get(
+        "effective_visual_contract_sha256"
+    ) != effective_visual_sha256:
+        failures.append(
+            {
+                "check": "effective_visual_contract_sha256",
+                "reason": (
+                    "a selected visual concept requires the runtime request to bind the "
+                    "pack-plus-composed effective visual contract"
+                ),
+                "expected": effective_visual_sha256,
+                "actual": request.get("effective_visual_contract_sha256"),
+            }
+        )
+
     boundary = request.get("audit_boundary")
     if not isinstance(boundary, dict):
         failures.append(
@@ -231,6 +279,8 @@ def audit_image_render_request(
         "status": "pass" if not failures else "fail",
         "runtime_prompt_id": hashlib.sha256(runtime_prompt.encode("utf-8")).hexdigest()[:16],
         "negative_matches_pack": runtime_negative == pack_negative,
+        "effective_visual_contract_sha256": effective_visual_sha256,
+        "selected_visual_concept_ids": selected_visual_concepts,
         "reference_count": len(references),
         "failures": failures,
         "boundary": (
