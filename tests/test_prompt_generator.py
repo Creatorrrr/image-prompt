@@ -7524,6 +7524,8 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         prompt_id = hashlib.sha256(prompt.encode("utf-8")).hexdigest()[:16]
         source_argv = ["--intent", "adult repair handoff", "--seed", "42"]
         chosen = {"preset": "preset:p1", "subject": ["slot:subject:s1"]}
+        chosen_visual = ["visual-concept:inner_thigh_negative_space"]
+        effective_visual_sha = "f" * 64
         brief = {
             "selected_route_id": "material_world",
             "decisions": [{"candidate_id": "slot:subject:s1", "decision": "accepted"}],
@@ -7555,6 +7557,8 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                         "negative_en": negative,
                         "pack_id": "a" * 16,
                         "chosen_candidate_ids": chosen,
+                        "chosen_visual_concept_ids": chosen_visual,
+                        "effective_visual_contract_sha256": effective_visual_sha,
                         "composer": "agent",
                         "audit_status": "pass",
                         "augmentation_brief": brief,
@@ -7598,6 +7602,14 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             self.assertEqual(flag_value(second, "--negative-en"), negative)
             self.assertEqual(flag_value(second, "--pack-id"), "a" * 16)
             self.assertEqual(json.loads(flag_value(second, "--chosen-candidate-ids-json")), chosen)
+            self.assertEqual(
+                json.loads(flag_value(second, "--chosen-visual-concept-ids-json")),
+                chosen_visual,
+            )
+            self.assertEqual(
+                flag_value(second, "--effective-visual-contract-sha256"),
+                effective_visual_sha,
+            )
             self.assertEqual(flag_value(second, "--composer"), "agent")
             self.assertEqual(flag_value(second, "--audit-status"), "pass")
             self.assertEqual(json.loads(flag_value(second, "--augmentation-brief-json")), brief)

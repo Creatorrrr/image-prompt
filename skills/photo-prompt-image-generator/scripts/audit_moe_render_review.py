@@ -17,8 +17,11 @@ import sys
 from pathlib import Path
 from typing import Any
 
+import audit_composed_prompt
+
 
 REVIEW_SCHEMA_VERSION = "moe-render-review/v1"
+VISUAL_OBLIGATIONS_CONTRACT_VERSION = "photo-visual-obligations/v1"
 USER_JUDGMENT_VALUES = {"accepted", "rejected", "pending", "not_applicable"}
 USER_JUDGMENT_SOURCES = {"requesting_user", "not_yet_received"}
 
@@ -65,6 +68,7 @@ def audit_moe_render_review(
     pack: dict[str, Any],
     review: dict[str, Any],
     *,
+    composed: dict[str, Any] | None = None,
     review_path: Path | None = None,
 ) -> dict[str, Any]:
     """Return a deterministic promotion decision from declared review gates."""
@@ -91,11 +95,35 @@ def audit_moe_render_review(
         )
         qualification = {}
 
-    required_gates = [
+    base_required_gates = [
         str(value)
         for value in qualification.get("required_hard_gates") or []
         if isinstance(value, str) and value.strip()
     ]
+    effective_visual_contract, visual_selection_failures = (
+        audit_composed_prompt.derive_effective_visual_obligation_contract(
+            pack,
+            composed,
+        )
+    )
+    schema_failures.extend(
+        {
+            "check": f"effective_visual_contract.{failure.get('check')}",
+            "reason": failure.get("reason"),
+            **{
+                key: value
+                for key, value in failure.items()
+                if key not in {"check", "reason"}
+            },
+        }
+        for failure in visual_selection_failures
+    )
+    effective_visual_gates = [
+        str(value)
+        for value in (effective_visual_contract or {}).get("required_hard_gates") or []
+        if isinstance(value, str) and value.strip()
+    ]
+    required_gates = list(dict.fromkeys(base_required_gates + effective_visual_gates))
     if not required_gates:
         schema_failures.append(
             {
@@ -171,6 +199,49 @@ def audit_moe_render_review(
             {"check": "hard_gates", "reason": "render review requires a hard_gates object"}
         )
         hard_gates = {}
+    visual_contract = pack.get("visual_obligations")
+    if isinstance(visual_contract, dict) and visual_contract.get("enabled") is True:
+        if visual_contract.get("contract_version") != VISUAL_OBLIGATIONS_CONTRACT_VERSION:
+            schema_failures.append(
+                {
+                    "check": "visual_obligations.contract_version",
+                    "reason": "unsupported visual-obligations contract_version",
+                }
+            )
+        visual_required_gates = [
+            str(value)
+            for value in visual_contract.get("required_hard_gates") or []
+            if isinstance(value, str) and value.strip()
+        ]
+        missing_from_qualification = sorted(
+            set(visual_required_gates) - set(base_required_gates)
+        )
+        if missing_from_qualification:
+            schema_failures.append(
+                {
+                    "check": "visual_obligations.required_hard_gates",
+                    "reason": "visual hard gates were not merged into moe render qualification",
+                    "missing": missing_from_qualification,
+                }
+            )
+    if (
+        isinstance(effective_visual_contract, dict)
+        and effective_visual_contract.get("strict_gate_set") is True
+    ):
+        missing_review_gates = sorted(set(required_gates) - set(hard_gates))
+        extra_hard_gates = sorted(set(hard_gates) - set(required_gates))
+        if missing_review_gates or extra_hard_gates:
+            schema_failures.append(
+                {
+                    "check": "hard_gates",
+                    "reason": (
+                        "strict visual-obligation reviews must exactly equal the effective "
+                        "pack-plus-composed hard-gate set; supplemental observations belong outside hard_gates"
+                    ),
+                    "missing": missing_review_gates,
+                    "extra": extra_hard_gates,
+                }
+            )
     for gate in required_gates:
         item = hard_gates.get(gate)
         if not isinstance(item, dict):
@@ -302,6 +373,19 @@ def audit_moe_render_review(
         "technical_qualified": technical_qualified,
         "representative_eligible": representative_eligible,
         "required_hard_gate_count": len(required_gates),
+        "effective_visual_contract_sha256": (
+            audit_composed_prompt.effective_visual_obligation_sha256(
+                effective_visual_contract
+            )
+        ),
+        "selected_visual_concept_ids": [
+            str(value)
+            for value in (effective_visual_contract or {}).get(
+                "selected_visual_concept_ids"
+            )
+            or []
+            if str(value).strip()
+        ],
         "failed_hard_gates": failed_hard_gates,
         "schema_failures": schema_failures,
         "user_judgment": {
@@ -322,6 +406,13 @@ def audit_moe_render_review(
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--pack", required=True, help="Candidate-pack JSON path or inline JSON")
+    parser.add_argument(
+        "--composed",
+        help=(
+            "Audited composed-prompt JSON; required when the pack exposes optional "
+            "visual concept candidates"
+        ),
+    )
     parser.add_argument("--review", required=True, help="Render-review JSON path or inline JSON")
     parser.add_argument("--output", help="Optional path for the audit JSON")
     return parser.parse_args(argv)
@@ -331,12 +422,22 @@ def main(argv: list[str] | None = None) -> int:
     args = parse_args(argv)
     try:
         pack = first_pack(load_json_arg(args.pack))
+        composed = (
+            audit_composed_prompt.composed_object(load_json_arg(args.composed))
+            if args.composed
+            else None
+        )
         review = review_object(load_json_arg(args.review))
         review_path = None
         raw_review_path = Path(args.review).expanduser()
         if not args.review.strip().startswith(("{", "[")) and raw_review_path.is_file():
             review_path = raw_review_path.resolve()
-        summary = audit_moe_render_review(pack, review, review_path=review_path)
+        summary = audit_moe_render_review(
+            pack,
+            review,
+            composed=composed,
+            review_path=review_path,
+        )
     except (OSError, ValueError, json.JSONDecodeError) as exc:
         print(json.dumps({"status": "error", "reason": str(exc)}, ensure_ascii=False, indent=2))
         return 2

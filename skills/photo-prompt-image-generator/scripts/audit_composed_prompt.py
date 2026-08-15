@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import copy
 import hashlib
 import json
 import re
@@ -19,6 +20,9 @@ SUPPORTED_CANDIDATE_PACK_VERSIONS = {
 }
 MOE_PROMPT_DEFAULT_MIN_WORDS = 50
 MOE_PROMPT_DEFAULT_MAX_WORDS = 120
+VISUAL_OBLIGATIONS_CONTRACT_VERSION = "photo-visual-obligations/v1"
+VISUAL_INTENT_CONTRACT_VERSION = "photo-visual-intent/v1"
+VISUAL_CONCEPTS_CONTRACT_VERSION = "photo-visual-concepts/v1"
 
 
 def load_json_arg(raw: str) -> Any:
@@ -424,6 +428,78 @@ def audit_v4_authorial_pack(pack: dict[str, Any]) -> list[dict[str, Any]]:
                 for detail in route.get("details") or []
                 if isinstance(detail, dict)
             )
+    visual_concepts = (
+        pack.get("visual_concept_candidates")
+        if isinstance(pack.get("visual_concept_candidates"), dict)
+        else {}
+    )
+    visual_candidates = [
+        candidate
+        for candidate in visual_concepts.get("candidates") or []
+        if isinstance(candidate, dict)
+    ]
+    candidate_surfaces.extend(visual_candidates)
+    if visual_concepts:
+        candidate_ids = [str(candidate.get("id") or "") for candidate in visual_candidates]
+        selection_policy = (
+            visual_concepts.get("selection_policy")
+            if isinstance(visual_concepts.get("selection_policy"), dict)
+            else {}
+        )
+        concept_contract_invalid = (
+            visual_concepts.get("enabled") is not True
+            or visual_concepts.get("contract_version") != VISUAL_CONCEPTS_CONTRACT_VERSION
+            or visual_concepts.get("candidate_order") != "seed_shuffled_non_preferential"
+            or visual_concepts.get("selection_field") != "chosen_visual_concept_ids"
+            or not candidate_ids
+            or any(not candidate_id.startswith("visual-concept:") for candidate_id in candidate_ids)
+            or len(candidate_ids) != len(set(candidate_ids))
+            or any(
+                selection_policy.get(key) is not True
+                for key in (
+                    "all_candidates_optional",
+                    "selection_list_required_even_when_empty",
+                    "unselected_candidates_add_no_prompt_or_review_duty",
+                    "selected_candidates_promote_opt_in_contract_to_hard_obligation",
+                    "matched_terms_scores_and_routing_reasons_not_exposed",
+                )
+            )
+        )
+        for candidate in visual_candidates:
+            applicability = (
+                candidate.get("applicability")
+                if isinstance(candidate.get("applicability"), dict)
+                else {}
+            )
+            opt_in = (
+                candidate.get("opt_in_contract")
+                if isinstance(candidate.get("opt_in_contract"), dict)
+                else {}
+            )
+            obligation = (
+                opt_in.get("obligation")
+                if isinstance(opt_in.get("obligation"), dict)
+                else {}
+            )
+            if (
+                applicability.get("status") != "eligible"
+                or opt_in.get("effect") != "promote_to_hard_visual_obligation"
+                or opt_in.get("visual_obligations_contract_version")
+                != VISUAL_OBLIGATIONS_CONTRACT_VERSION
+                or not str(obligation.get("id") or "")
+                or not obligation.get("render_gates")
+            ):
+                concept_contract_invalid = True
+        if concept_contract_invalid:
+            failures.append(
+                {
+                    "check": "visual_concept_candidate_contract",
+                    "reason": (
+                        "v4 visual concepts must be optional non-ranked candidates with a complete "
+                        "pre-baked opt-in obligation"
+                    ),
+                }
+            )
     copyable = [
         str(candidate.get("id") or candidate.get("candidate_id") or "unknown")
         for candidate in candidate_surfaces
@@ -802,6 +878,559 @@ def nonempty_string_list(raw: Any) -> list[str]:
 
 def normalized_unique_count(values: Sequence[str]) -> int:
     return len({str(value).strip().lower() for value in values if str(value).strip()})
+
+
+def derive_effective_visual_obligation_contract(
+    pack: dict[str, Any],
+    composed: dict[str, Any] | None,
+) -> tuple[dict[str, Any] | None, list[dict[str, Any]]]:
+    """Derive the only authoritative visual gate set from pack plus selection.
+
+    Hard obligations are unconditional.  Optional visual concepts contribute
+    nothing until their IDs occur in the composed selection list; a selected
+    concept promotes its immutable opt-in obligation to the same hard contract.
+    """
+
+    failures: list[dict[str, Any]] = []
+    hard_contract = (
+        pack.get("visual_obligations")
+        if isinstance(pack.get("visual_obligations"), dict)
+        and pack.get("visual_obligations", {}).get("enabled") is True
+        else None
+    )
+    candidate_contract = (
+        pack.get("visual_concept_candidates")
+        if isinstance(pack.get("visual_concept_candidates"), dict)
+        and pack.get("visual_concept_candidates", {}).get("enabled") is True
+        else None
+    )
+    composed_object = composed if isinstance(composed, dict) else {}
+    raw_chosen = composed_object.get("chosen_visual_concept_ids")
+    if candidate_contract is not None and "chosen_visual_concept_ids" not in composed_object:
+        failures.append(
+            {
+                "check": "chosen_visual_concept_ids",
+                "reason": (
+                    "a pack with optional visual concepts requires an explicit selection list, "
+                    "which may be empty"
+                ),
+            }
+        )
+    if raw_chosen is None:
+        chosen_ids: list[str] = []
+    elif not isinstance(raw_chosen, list) or any(
+        not isinstance(value, str) or not value.strip() for value in raw_chosen
+    ):
+        failures.append(
+            {
+                "check": "chosen_visual_concept_ids",
+                "reason": "chosen visual concept ids must be a list of non-empty strings",
+            }
+        )
+        chosen_ids = []
+    else:
+        chosen_ids = [str(value).strip() for value in raw_chosen]
+        if len(chosen_ids) != len(set(chosen_ids)):
+            failures.append(
+                {
+                    "check": "chosen_visual_concept_ids",
+                    "reason": "chosen visual concept ids must be distinct",
+                }
+            )
+    if candidate_contract is None and chosen_ids:
+        failures.append(
+            {
+                "check": "chosen_visual_concept_ids",
+                "reason": "composed output selected visual concepts that the pack did not expose",
+                "ids": chosen_ids,
+            }
+        )
+    candidate_map = {
+        str(candidate.get("id") or ""): candidate
+        for candidate in (candidate_contract or {}).get("candidates") or []
+        if isinstance(candidate, dict) and str(candidate.get("id") or "")
+    }
+    unknown_ids = sorted(set(chosen_ids) - set(candidate_map))
+    if unknown_ids:
+        failures.append(
+            {
+                "check": "chosen_visual_concept_ids",
+                "reason": "unknown visual concept candidate id",
+                "ids": unknown_ids,
+            }
+        )
+
+    obligations = [
+        copy.deepcopy(item)
+        for item in (hard_contract or {}).get("obligations") or []
+        if isinstance(item, dict) and str(item.get("id") or "")
+    ]
+    seen_profile_ids = {str(item.get("id") or "") for item in obligations}
+    selected_candidate_ids: list[str] = []
+    for candidate_id in chosen_ids:
+        candidate = candidate_map.get(candidate_id)
+        if not isinstance(candidate, dict):
+            continue
+        opt_in = (
+            candidate.get("opt_in_contract")
+            if isinstance(candidate.get("opt_in_contract"), dict)
+            else {}
+        )
+        obligation = (
+            opt_in.get("obligation")
+            if isinstance(opt_in.get("obligation"), dict)
+            else None
+        )
+        profile_id = str((obligation or {}).get("id") or "")
+        if (
+            opt_in.get("effect") != "promote_to_hard_visual_obligation"
+            or opt_in.get("visual_obligations_contract_version")
+            != VISUAL_OBLIGATIONS_CONTRACT_VERSION
+            or not profile_id
+        ):
+            failures.append(
+                {
+                    "check": "visual_concept_opt_in_contract",
+                    "reason": "selected visual concept has an invalid opt-in obligation",
+                    "candidate_id": candidate_id,
+                }
+            )
+            continue
+        if profile_id in seen_profile_ids:
+            failures.append(
+                {
+                    "check": "visual_concept_opt_in_contract",
+                    "reason": "selected visual concept duplicates an already-effective profile",
+                    "candidate_id": candidate_id,
+                    "profile_id": profile_id,
+                }
+            )
+            continue
+        obligations.append(copy.deepcopy(obligation))
+        seen_profile_ids.add(profile_id)
+        selected_candidate_ids.append(candidate_id)
+    if not obligations:
+        return None, failures
+    required_hard_gates = list(
+        dict.fromkeys(
+            str(gate.get("id") or "")
+            for obligation in obligations
+            for gate in obligation.get("render_gates") or []
+            if isinstance(gate, dict) and str(gate.get("id") or "")
+        )
+    )
+    effective: dict[str, Any] = {
+        "enabled": True,
+        "contract_version": VISUAL_OBLIGATIONS_CONTRACT_VERSION,
+        "scope": "request_only",
+        "strict_gate_set": True,
+        "obligations": obligations,
+        "required_hard_gates": required_hard_gates,
+        "selected_visual_concept_ids": selected_candidate_ids,
+    }
+    if isinstance(hard_contract, dict):
+        for key in ("precedence", "retry_policy", "source_visual_intent_sha256"):
+            if key in hard_contract:
+                effective[key] = copy.deepcopy(hard_contract[key])
+    return effective, failures
+
+
+def effective_visual_obligation_sha256(contract: dict[str, Any] | None) -> str | None:
+    if not isinstance(contract, dict):
+        return None
+    canonical = json.dumps(
+        contract,
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+    )
+    return hashlib.sha256(canonical.encode("utf-8")).hexdigest()
+
+
+def audit_visual_obligations(
+    pack: dict[str, Any],
+    composed: dict[str, Any],
+    prompt_en: str,
+) -> list[dict[str, Any]]:
+    """Bind active request-scoped visual obligations to literal prompt evidence."""
+
+    contract, selection_failures = derive_effective_visual_obligation_contract(
+        pack,
+        composed,
+    )
+    supplied_evidence = composed.get("visual_obligation_evidence")
+    if not isinstance(contract, dict) or contract.get("enabled") is not True:
+        if supplied_evidence not in (None, {}):
+            selection_failures.append(
+                {
+                    "check": "visual_obligation_evidence",
+                    "reason": "composed output supplies visual-obligation evidence but the pack activates no visual obligations",
+                }
+            )
+        return selection_failures
+
+    failures: list[dict[str, Any]] = list(selection_failures)
+    if contract.get("contract_version") != VISUAL_OBLIGATIONS_CONTRACT_VERSION:
+        failures.append(
+            {
+                "check": "visual_obligations_contract",
+                "reason": "unsupported visual-obligations contract_version",
+                "expected": VISUAL_OBLIGATIONS_CONTRACT_VERSION,
+                "actual": contract.get("contract_version"),
+            }
+        )
+    visual_intent = pack.get("visual_intent")
+    source_visual_intent_sha256 = str(
+        contract.get("source_visual_intent_sha256") or ""
+    )
+    if visual_intent is not None or source_visual_intent_sha256:
+        if not isinstance(visual_intent, dict):
+            failures.append(
+                {
+                    "check": "visual_intent_integrity",
+                    "reason": "hash-bound visual obligations require the canonical visual_intent object",
+                }
+            )
+        else:
+            allowed_visual_intent_fields = {
+                "contract_version",
+                "provenance",
+                "obligations",
+                "canonical_sha256",
+                "request_id",
+            }
+            unknown_visual_intent_fields = sorted(
+                set(visual_intent) - allowed_visual_intent_fields
+            )
+            canonical_visual_intent = {
+                "contract_version": visual_intent.get("contract_version"),
+                "provenance": visual_intent.get("provenance"),
+                "obligations": visual_intent.get("obligations"),
+            }
+            actual_visual_intent_sha256 = hashlib.sha256(
+                json.dumps(
+                    canonical_visual_intent,
+                    ensure_ascii=False,
+                    sort_keys=True,
+                    separators=(",", ":"),
+                ).encode("utf-8")
+            ).hexdigest()
+            if (
+                unknown_visual_intent_fields
+                or visual_intent.get("contract_version")
+                != VISUAL_INTENT_CONTRACT_VERSION
+                or visual_intent.get("provenance") != "agent_prepack"
+                or str(visual_intent.get("canonical_sha256") or "")
+                != actual_visual_intent_sha256
+                or str(visual_intent.get("request_id") or "")
+                != actual_visual_intent_sha256[:16]
+                or source_visual_intent_sha256 != actual_visual_intent_sha256
+            ):
+                failures.append(
+                    {
+                        "check": "visual_intent_integrity",
+                        "reason": "visual_intent canonical bytes or source hash changed after pre-pack freezing",
+                        "unknown_fields": unknown_visual_intent_fields,
+                        "expected_sha256": actual_visual_intent_sha256,
+                        "actual_sha256": visual_intent.get("canonical_sha256"),
+                        "contract_sha256": source_visual_intent_sha256 or None,
+                    }
+                )
+    obligations = [
+        item
+        for item in contract.get("obligations") or []
+        if isinstance(item, dict) and str(item.get("id") or "").strip()
+    ]
+    expected_ids = {str(item["id"]) for item in obligations}
+    if isinstance(visual_intent, dict):
+        explicit_ids = {
+            str(item.get("profile_id") or "")
+            for item in visual_intent.get("obligations") or []
+            if isinstance(item, dict) and str(item.get("profile_id") or "")
+        }
+        missing_explicit_profiles = sorted(explicit_ids - expected_ids)
+        if missing_explicit_profiles:
+            failures.append(
+                {
+                    "check": "visual_intent_binding",
+                    "reason": "a pre-pack visual-intent profile is missing from active visual obligations",
+                    "missing": missing_explicit_profiles,
+                }
+            )
+    if not obligations:
+        failures.append(
+            {
+                "check": "visual_obligations_contract",
+                "reason": "enabled visual-obligations contract contains no obligations",
+            }
+        )
+    if not isinstance(supplied_evidence, dict):
+        failures.append(
+            {
+                "check": "visual_obligation_evidence",
+                "reason": "active visual obligations require a visual_obligation_evidence object",
+            }
+        )
+        supplied_evidence = {}
+    actual_ids = {str(key) for key in supplied_evidence}
+    missing_ids = sorted(expected_ids - actual_ids)
+    extra_ids = sorted(actual_ids - expected_ids)
+    if missing_ids or extra_ids:
+        failures.append(
+            {
+                "check": "visual_obligation_evidence",
+                "reason": "visual obligation evidence profile ids must exactly match the active pack profiles",
+                "missing": missing_ids,
+                "extra": extra_ids,
+            }
+        )
+
+    declared_gate_ids: list[str] = []
+    for obligation in obligations:
+        profile_id = str(obligation["id"])
+        binding = (
+            obligation.get("prompt_binding")
+            if isinstance(obligation.get("prompt_binding"), dict)
+            else {}
+        )
+        required_fields = [
+            str(field)
+            for field in binding.get("required_evidence_fields") or []
+            if str(field).strip()
+        ]
+        evidence_requirements = (
+            obligation.get("evidence_requirements")
+            if isinstance(obligation.get("evidence_requirements"), dict)
+            else {}
+        )
+        runtime_expression = (
+            obligation.get("runtime_expression")
+            if isinstance(obligation.get("runtime_expression"), dict)
+            else {}
+        )
+        expression_mode = str(runtime_expression.get("default_mode") or "")
+        label_terms = nonempty_string_list(runtime_expression.get("prompt_label_terms"))
+        forbidden_prompt_terms = nonempty_string_list(
+            runtime_expression.get("forbidden_prompt_terms")
+        )
+        if expression_mode == "label_plus_definition" and not any(
+            text_contains_term(prompt_en, term) for term in label_terms
+        ):
+            failures.append(
+                {
+                    "check": "visual_obligation_runtime_expression",
+                    "reason": "runtime expression policy requires a safe label plus component definition",
+                    "profile_id": profile_id,
+                    "accepted_labels": label_terms,
+                }
+            )
+        forbidden_runtime_hits = [
+            term for term in forbidden_prompt_terms if text_contains_term(prompt_en, term)
+        ]
+        if forbidden_runtime_hits:
+            failures.append(
+                {
+                    "check": "visual_obligation_runtime_expression",
+                    "reason": "runtime prompt contains a label forbidden by the profile expression policy",
+                    "profile_id": profile_id,
+                    "terms": forbidden_runtime_hits,
+                }
+            )
+        profile_evidence = supplied_evidence.get(profile_id)
+        if not isinstance(profile_evidence, dict):
+            continue
+        actual_fields = {str(key) for key in profile_evidence}
+        expected_fields = set(required_fields)
+        missing_fields = sorted(expected_fields - actual_fields)
+        extra_fields = sorted(actual_fields - expected_fields)
+        if missing_fields or extra_fields:
+            failures.append(
+                {
+                    "check": "visual_obligation_evidence",
+                    "reason": "profile evidence fields must exactly match its prompt-binding contract",
+                    "profile_id": profile_id,
+                    "missing": missing_fields,
+                    "extra": extra_fields,
+                }
+            )
+        literal_phrases: list[str] = []
+        for field in required_fields:
+            phrase = profile_evidence.get(field)
+            if not isinstance(phrase, str) or not phrase.strip():
+                failures.append(
+                    {
+                        "check": "visual_obligation_evidence",
+                        "reason": "required visual evidence must be a non-empty string",
+                        "profile_id": profile_id,
+                        "field": field,
+                    }
+                )
+                continue
+            phrase = phrase.strip()
+            literal_phrases.append(phrase)
+            if not text_contains_term(prompt_en, phrase):
+                failures.append(
+                    {
+                        "check": "visual_obligation_prompt_binding",
+                        "reason": "visual evidence phrase is not literal in prompt_en",
+                        "profile_id": profile_id,
+                        "field": field,
+                        "phrase": phrase,
+                    }
+                )
+            requirement = (
+                evidence_requirements.get(field)
+                if isinstance(evidence_requirements.get(field), dict)
+                else {}
+            )
+            try:
+                minimum_content_words = int(requirement.get("min_content_words", 3))
+            except (TypeError, ValueError):
+                minimum_content_words = 3
+            content_words = authorial_evidence_tokens(phrase)
+            if len(content_words) < minimum_content_words:
+                failures.append(
+                    {
+                        "check": "visual_obligation_semantic_evidence",
+                        "reason": "visual evidence phrase is too generic to prove its field",
+                        "profile_id": profile_id,
+                        "field": field,
+                        "minimum_content_words": minimum_content_words,
+                        "actual_content_words": len(content_words),
+                    }
+                )
+            required_anchors = nonempty_string_list(requirement.get("must_mention_any"))
+            if required_anchors and not any(
+                text_contains_term(phrase, anchor) for anchor in required_anchors
+            ):
+                failures.append(
+                    {
+                        "check": "visual_obligation_semantic_evidence",
+                        "reason": "visual evidence phrase lacks a profile-declared component anchor",
+                        "profile_id": profile_id,
+                        "field": field,
+                        "accepted_anchors": required_anchors,
+                    }
+                )
+            forbidden_field_hits = [
+                term
+                for term in nonempty_string_list(requirement.get("must_not_contain"))
+                if text_contains_term(phrase, term)
+            ]
+            if forbidden_field_hits:
+                failures.append(
+                    {
+                        "check": "visual_obligation_semantic_evidence",
+                        "reason": "visual evidence phrase contains a profile-declared contradiction",
+                        "profile_id": profile_id,
+                        "field": field,
+                        "terms": forbidden_field_hits,
+                    }
+                )
+            filler_hits = [
+                term
+                for term in nonempty_string_list(binding.get("forbidden_filler_phrases"))
+                if text_contains_term(phrase, term)
+            ]
+            if filler_hits:
+                failures.append(
+                    {
+                        "check": "visual_obligation_semantic_evidence",
+                        "reason": "field-name or checklist filler is not visual proof",
+                        "profile_id": profile_id,
+                        "field": field,
+                        "terms": filler_hits,
+                    }
+                )
+        try:
+            minimum_distinct = int(
+                binding.get("minimum_distinct_evidence_phrases", len(required_fields))
+            )
+        except (TypeError, ValueError):
+            minimum_distinct = len(required_fields)
+        if normalized_unique_count(literal_phrases) < minimum_distinct:
+            failures.append(
+                {
+                    "check": "visual_obligation_distinct_evidence",
+                    "reason": "different visual duties require distinct literal prompt phrases",
+                    "profile_id": profile_id,
+                    "minimum": minimum_distinct,
+                    "actual": normalized_unique_count(literal_phrases),
+                }
+            )
+        try:
+            overlap_limit = float(
+                binding.get("maximum_pairwise_content_token_overlap_ratio", 0.82)
+            )
+        except (TypeError, ValueError):
+            overlap_limit = 0.82
+        phrase_token_sets = [authorial_evidence_tokens(phrase) for phrase in literal_phrases]
+        excessive_overlap_pairs: list[list[int]] = []
+        for left_index, left_tokens in enumerate(phrase_token_sets):
+            for right_index in range(left_index + 1, len(phrase_token_sets)):
+                right_tokens = phrase_token_sets[right_index]
+                union = left_tokens | right_tokens
+                overlap = len(left_tokens & right_tokens) / len(union) if union else 1.0
+                if overlap > overlap_limit:
+                    excessive_overlap_pairs.append([left_index, right_index])
+        if excessive_overlap_pairs:
+            failures.append(
+                {
+                    "check": "visual_obligation_distinct_evidence",
+                    "reason": "visual duties reuse too much of the same content-token evidence",
+                    "profile_id": profile_id,
+                    "maximum_overlap_ratio": overlap_limit,
+                    "pairs": excessive_overlap_pairs,
+                }
+            )
+        hard_bindings = (
+            obligation.get("bindings")
+            if isinstance(obligation.get("bindings"), dict)
+            else {}
+        )
+        for field, expected_phrase in hard_bindings.items():
+            actual_phrase = str(profile_evidence.get(str(field)) or "").strip()
+            expected_phrase = str(expected_phrase or "").strip()
+            if actual_phrase != expected_phrase:
+                failures.append(
+                    {
+                        "check": "visual_obligation_hard_binding",
+                        "reason": "request-scoped pre-pack binding changed during composition",
+                        "profile_id": profile_id,
+                        "field": field,
+                        "expected": expected_phrase,
+                        "actual": actual_phrase or None,
+                    }
+                )
+            elif not text_contains_term(prompt_en, expected_phrase):
+                failures.append(
+                    {
+                        "check": "visual_obligation_hard_binding",
+                        "reason": "request-scoped pre-pack binding is not literal in prompt_en",
+                        "profile_id": profile_id,
+                        "field": field,
+                        "phrase": expected_phrase,
+                    }
+                )
+        declared_gate_ids.extend(
+            str(gate.get("id") or "")
+            for gate in obligation.get("render_gates") or []
+            if isinstance(gate, dict) and str(gate.get("id") or "").strip()
+        )
+
+    required_gate_ids = [
+        str(gate)
+        for gate in contract.get("required_hard_gates") or []
+        if str(gate).strip()
+    ]
+    if list(dict.fromkeys(declared_gate_ids)) != required_gate_ids:
+        failures.append(
+            {
+                "check": "visual_obligations_contract",
+                "reason": "required_hard_gates must exactly equal the ordered union of obligation render gates",
+            }
+        )
+    return failures
 
 
 def audit_moe_response(
@@ -3946,6 +4575,7 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
 
     failures.extend(audit_creative_direction(pack, composed, prompt_en))
     failures.extend(audit_moe_response(pack, composed, prompt_en))
+    failures.extend(audit_visual_obligations(pack, composed, prompt_en))
     failures.extend(audit_viewer_experience(pack, composed, prompt_en))
 
     safety = pack.get("safety") if isinstance(pack.get("safety"), dict) else {}
@@ -4592,11 +5222,26 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
 
     status = "fail" if failures else "pass"
     quality_status = "warn" if warnings else "pass"
+    effective_visual_contract, _ = derive_effective_visual_obligation_contract(
+        pack,
+        composed,
+    )
     return {
         "status": status,
         "quality_status": quality_status,
         "pack_id": pack_id or None,
         "chosen_candidate_count": len(chosen),
+        "chosen_visual_concept_ids": [
+            str(value)
+            for value in (effective_visual_contract or {}).get(
+                "selected_visual_concept_ids"
+            )
+            or []
+            if str(value).strip()
+        ],
+        "effective_visual_contract_sha256": effective_visual_obligation_sha256(
+            effective_visual_contract
+        ),
         "failures": failures,
         "warnings": warnings,
     }
