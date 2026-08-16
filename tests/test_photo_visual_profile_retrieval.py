@@ -179,6 +179,64 @@ class PhotoVisualProfileRetrievalTests(unittest.TestCase):
         self.assertEqual(profile_row["applicability"]["status"], "eligible")
         self.assertFalse(profile_row["required_in_final_prompt"])
 
+    def test_bm25f_only_paraphrase_is_optional_and_cannot_create_an_obligation(self):
+        source = "허벅지 사이의 공간이 매력적인 여성의 패션 사진"
+        fake_index = self.fake_index()
+        resolution = prompt_generator.resolve_visual_profile_hits(
+            self.registry,
+            [
+                {
+                    "source": "authorial_core_interpretation",
+                    "text": "an adult fashion portrait with close-leg negative space",
+                    "polarity": "advisory",
+                }
+            ],
+            visual_profile_index=fake_index,
+            query_text=source,
+            query_fields={
+                "active_request": source,
+                "interpreted_intent": "매력적인 허벅지 사이 공간",
+            },
+            adult_context=True,
+        )
+        hit = next(
+            row
+            for row in resolution["hits"]
+            if row["profile_id"] == "inner_thigh_negative_space"
+        )
+        self.assertEqual(hit["match_basis"], "bm25f")
+        self.assertFalse(hit["hard_eligible"])
+        self.assertTrue(hit["optional_eligible"])
+        self.assertTrue(resolution["bm25f_evaluated"])
+        self.assertFalse(resolution["embedding_evaluated"])
+
+    def test_bm25f_and_embedding_fuse_without_promoting_to_hard(self):
+        source = "허벅지 사이의 공간이 매력적인 여성의 패션 사진"
+        fake_index = self.fake_index()
+        resolution = prompt_generator.resolve_visual_profile_hits(
+            self.registry,
+            [
+                {
+                    "source": "authorial_core_interpretation",
+                    "text": "an adult fashion portrait with close-leg negative space",
+                    "polarity": "advisory",
+                }
+            ],
+            visual_profile_index=fake_index,
+            query_text=source,
+            query_fields={"active_request": source},
+            query_vector=[1.0, 0.0],
+            adult_context=True,
+        )
+        hit = next(
+            row
+            for row in resolution["hits"]
+            if row["profile_id"] == "inner_thigh_negative_space"
+        )
+        self.assertEqual(hit["match_basis"], "bm25f+embedding")
+        self.assertFalse(hit["hard_eligible"])
+        self.assertTrue(hit["optional_eligible"])
+
     def test_exact_hit_stays_hard_while_negation_and_user_definition_cannot_resurrect(self):
         fake_index = self.fake_index()
         fake_index["entries"]["deliberate_underarm_salience"]["vector"] = [

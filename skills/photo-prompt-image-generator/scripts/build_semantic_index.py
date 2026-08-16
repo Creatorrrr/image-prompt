@@ -16,9 +16,11 @@ from typing import Sequence
 from prompt_generator import (
     DEFAULT_SEMANTIC_DIMENSIONS,
     SEMANTIC_MODEL_ID,
+    SEMANTIC_BM25F_POLICY_VERSION,
     SEMANTIC_PROVIDER,
     SEMANTIC_TEXT_RECIPE_VERSION,
     dictionary_hash,
+    build_semantic_bm25f_payload,
     embed_texts_with_gemini,
     iter_semantic_entries,
     load_json,
@@ -265,6 +267,13 @@ def build_resumable_index_payload(
         if key not in entries:
             raise RuntimeError(f"Missing semantic vector for {key}.")
         ordered_entries[key] = entries[key]
+    bm25f_payload = build_semantic_bm25f_payload(data)
+    bm25f_documents = bm25f_payload.get("documents") or {}
+    for key in ordered_entries:
+        ordered_entries[key]["bm25f_document"] = bm25f_documents.get(key) or {}
+    payload["bm25f"] = {
+        key: value for key, value in bm25f_payload.items() if key != "documents"
+    }
     payload["entries"] = ordered_entries
     return payload
 
@@ -304,6 +313,7 @@ def main() -> int:
                 {
                     "provider": args.provider,
                     "semantic_text_recipe": SEMANTIC_TEXT_RECIPE_VERSION,
+                    "bm25f_policy_version": SEMANTIC_BM25F_POLICY_VERSION,
                     "embedding_model": args.model,
                     "embedding_dimensions": args.dimensions,
                     "entries": entry_count,

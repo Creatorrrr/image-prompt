@@ -11,7 +11,7 @@ Canonical skill path: `skills/photo-prompt-image-generator`.
 
 ## Non-Negotiable Phase Boundary
 
-Before `baseline_prompt_en` and its `photo-authorial-core/v2` hash are frozen, use only:
+Before `baseline_prompt_en` and its `photo-authorial-core/v3` hash are frozen, use only:
 
 - the current user conversation, including definitions, exclusions, modifiers, references, and corrections;
 - the model's general knowledge and independent visual reasoning;
@@ -65,7 +65,7 @@ Freeze it as:
 
 ```json
 {
-  "contract_version": "photo-authorial-core/v2",
+  "contract_version": "photo-authorial-core/v3",
   "provenance": "agent_prepack",
   "source_request": "<the complete byte-exact request_text from the envelope>",
   "interpreted_intent": "<contextual meaning and visual purpose>",
@@ -120,6 +120,8 @@ Freeze it as:
     "locked_dimensions": ["concept", "subject", "event"],
     "open_dimensions": ["framing", "composition", "lighting", "camera"]
   },
+  "semantic_assertions": [],
+  "request_lineage": null,
   "style": {
     "domain": "<fitting photographic domain>",
     "family": "<agent-authored style family>",
@@ -138,9 +140,12 @@ Rules:
 - `unresolved_ambiguities` is mandatory and must be empty. If it is not empty, ask or research before continuing.
 - `user_exclusions` contains only explicit requester negatives. Never use it to hide a requested concept, because exclusions are removed from semantic retrieval.
 - If a source-grounded shorthand label should aid interpretation and profile activation but should not be sent to the image runtime, put it in `runtime_forbidden_labels` and express its intended visible components in anchors and the baseline. Runtime-only labels remain in retrieval; only their literal runtime spelling is forbidden.
+- `semantic_assertions` is the only normal v6 input for meanings that need a typed downstream contract. A required assertion affects locked dimensions, an advisory assertion affects open dimensions, and an excluded assertion cannot be resurrected by retrieval. Every assertion cites active `source_span_ids`; every required evidence phrase is already literal in `baseline_prompt_en`.
+- For a required visible character response, lock `character_response`, add its own semantic anchor, and write one `character_response` assertion with the generic axes `surface_affect`, `underlying_affiliation`, `relationship_target`, `primary_action`, `affect_leak_timing`, `affect_leak_channels`, and `event_phase`. Select exactly one primary leak channel. Bind `actor_phrase`, `baseline_phrase`, `trigger_phrase`, `target_phrase`, `primary_action_phrase`, `affective_leak_phrase`, `visible_response_phrase`, `immediate_consequence_phrase`, and `continuity_phrase` to literal baseline text. Values are authored from the request; never route a named archetype to fixed gaze, face, pose, or story geometry.
+- `request_lineage` is `null` for an initial request. On a retry it hash-binds the parent request/core and separates preserved dimensions from the explicitly allowed changes; the two sets are non-empty and disjoint.
 - Every multi-arm run shares the immutable raw requester text but freezes a separate, exact-span-bound envelope and core for each arm before any arm sees project-local data.
 
-Pass the envelope with `--request-envelope-json`, the core with `--authorial-core-json`, and explicitly request candidate-pack v5. The generator canonicalizes both, rejects unsupported or ungrounded fields, and binds their hashes and active spans to retrieval, the public pack, composition, and runtime.
+Pass the envelope with `--request-envelope-json`, the core with `--authorial-core-json`, and explicitly request candidate-pack v6. The generator canonicalizes both, rejects unsupported or ungrounded fields, and binds their hashes and active spans to retrieval, the public pack, composition, and runtime.
 
 ## Phase 2 — Retrieve After the Core Is Frozen
 
@@ -152,21 +157,22 @@ Generate exactly one pack:
 .venv/bin/python skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py \
   --request-envelope-json request_envelope.json \
   --authorial-core-json authorial_core.json \
-  --candidate-pack-version v5 \
+  --candidate-pack-version v6 \
   --creativity 0.5 \
   --emit-candidate-pack --n 1
 ```
 
-The retrieval query is derived from the exact active requester spans, with true requester exclusions redacted, plus interpreted intent, subject, setting, event, visual priorities, baseline prompt, requester definitions, interpretation resolutions, and optional style evidence. Runtime-forbidden labels stay in retrieval. The pack must not define the baseline after the fact. `--concept-lock` is normally omitted and safely derived; if supplied, every value must byte-equal the active spans in order.
+The retrieval query is derived from the exact active requester spans, with true requester exclusions redacted, plus interpreted intent, subject, setting, event, visual priorities, baseline prompt, requester definitions, interpretation resolutions, and optional style evidence. Runtime-forbidden labels stay in retrieval. The pack must not define the baseline after the fact. `--concept-lock` is normally omitted and safely derived; if supplied, every value must byte-equal the active spans in order. V6 additionally projects those already-frozen fields into a versioned BM25F query. Tokenization is NFKC/casefolded and boundary-aware: conservative Korean suffix stripping may recognize an inflected whole term, while an unrelated word containing the same characters cannot activate it.
 
-Candidate-pack v5 separates two jobs:
+Candidate-pack v6 separates three jobs:
 
-- `semantic_clarification` is deterministic and unaffected by creativity or seed. The v2 core meaning is required and non-revisable inside the pack run; a material correction stops the run and requires requester input plus a rebuilt envelope/core/pack.
+- `semantic_assertions` and the baseline are the governing meaning. The v3 core is required and non-revisable inside the pack run; a material correction stops the run and requires requester input plus a rebuilt envelope/core/pack.
+- `semantic_clarification` and BM25F/embedding retrieval are post-core assistance. Exact request-scoped profile terms may retain their declared hard meaning. BM25F-only, embedding-only, and fused approximate hits are optional and can never create an assertion, required evidence phrase, or render gate.
 - `creative_augmentation` is sampled only after hard applicability, conflict, identity/species/no-people, safety, negative, and requester-exclusion filters. Creativity `0..0.25` permits `near`, `0.25..0.75` permits `near + adjacent`, and `0.75..1` also permits `lateral`; seed selects within the allowed range. Every transformed choice declares `affected_dimensions`, which must all be open and subordinate to the locked meaning.
 
-Every v5 downstream semantic default is also governed by `photo-downstream-intent-precedence/v1`. A default is active only when every dimension it can affect is explicitly listed in `intent_lock.open_dimensions`; a locked or otherwise non-open expression, style, event, relationship, sexual tone, appearance, pose, body geometry, framing, lighting, composition, or text dimension suppresses the corresponding positive instruction, negative-prompt suppression, and render gate. Evidence on a locked dimension must byte-equal its matching semantic-anchor phrase; evidence on another non-open dimension must already be literal in the frozen baseline. In particular, generic warm-affect, cute/beautiful styling, recovery-beat, character-mechanism, background-text, and sensual-support defaults never repair or reinterpret a closed requester meaning. This rule is dimension-based and must not be implemented as named-topic exceptions.
+V6 character-response compilation never calls the legacy raw-text moe router. It copies the typed axes and frozen evidence into `photo-character-response/v1`, permits one primary action and one primary affect-leak channel, and exposes any BM25F behavior nodes as score-free advisory candidates. A composer may reject them all. It may not substitute taxonomy labels for the assertion, add retrieved hard evidence, or introduce an unrequested relationship or emotion. The v5 downstream-default/regex path remains compatibility-only.
 
-Visual-profile retrieval is a deterministic substep of semantic clarification. One generated index contains boundary-aware exact lookup rows and one embedding vector per profile, all derived from the single authored registry and rejected when its registry hash or text recipe is stale. Exact request terms may retain their existing request-scoped hard meaning. A profile found only by embedding similarity is always an optional `visual_concept_candidate`: it creates no prompt duty or render gate unless the composer explicitly selects it. The same private resolution is projected into `visual_obligations`, `visual_concept_candidates`, and `semantic_clarification`; scores, vectors, matched terms, and rank remain private. This lookup is independent of creativity and seed.
+Visual-profile retrieval is a deterministic substep of semantic clarification. One generated index contains boundary-aware exact lookup rows, a fielded BM25F derivation, and one embedding vector per profile, all derived from the single authored registry and rejected when its registry hash, BM25F recipe/policy, or semantic text recipe is stale. Exact request terms may retain their existing request-scoped hard meaning. A profile found only by BM25F, embedding similarity, or reciprocal-rank fusion is always an optional `visual_concept_candidate`: it creates no prompt duty or render gate unless the composer explicitly selects it. The same private resolution is projected into `visual_obligations`, `visual_concept_candidates`, and `semantic_clarification`; scores, vectors, matched terms, and rank remain private. This lookup is independent of creativity and seed.
 
 Candidate order is never preference. Every creative candidate remains optional material.
 
@@ -259,7 +265,8 @@ Do not load every reference for a normal prompt request. Maintenance fixtures an
 
 ## Compatibility and Diagnostics
 
-- V5 plus `photo-request-envelope/v1`, `photo-authorial-core/v2`, and `photo-intent-lock/v1` is the normal workflow. V1 core packs remain audit-only legacy evidence and cannot be generated through the normal v5 CLI.
+- V6 plus `photo-request-envelope/v1`, `photo-authorial-core/v3`, `photo-intent-lock/v1`, and typed `semantic_assertions` is the normal workflow.
+- V5 plus `photo-authorial-core/v2` remains a compatibility workflow for replaying the prior raw-text character router and downstream-default contract. V1 core packs remain audit-only legacy evidence.
 - V4 remains available only for an explicit compatibility consumer. Its older `authorial-request/v1` and hybrid-augmentation behavior are unchanged.
 - V3/V2 are historical replay surfaces and require `--legacy-replay-reason`.
 - `--explain-scene-routing` is private diagnostic output and must never be used as a composition pack.
@@ -272,6 +279,8 @@ After changing this skill or its contracts, run focused tests first, then the re
 ```bash
 .venv/bin/python -m unittest tests.test_photo_prepack_isolation_v5 -v
 .venv/bin/python -m unittest tests.test_photo_authorial_core_v5 -v
+.venv/bin/python -m unittest tests.test_photo_authorial_core_v6 -v
+.venv/bin/python -m unittest tests.test_photo_bm25f_retrieval -v
 .venv/bin/python -m unittest tests.test_photo_visual_obligations -v
 .venv/bin/python -m unittest tests.test_photo_visual_profile_retrieval -v
 .venv/bin/python skills/photo-prompt-image-generator/scripts/build_visual_profile_index.py --check
