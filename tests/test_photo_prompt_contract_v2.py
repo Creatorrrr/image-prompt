@@ -334,7 +334,7 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
         self.assertIn("coverage_assertions", {failure["check"] for failure in spoofed_result["failures"]})
 
         unsupported = copy.deepcopy(pack)
-        unsupported["contract_version"] = "photo-candidate-pack/v5"
+        unsupported["contract_version"] = "photo-candidate-pack/v999"
         unsupported_result = audit_composed_prompt.audit_composed_prompt(
             unsupported,
             composed,

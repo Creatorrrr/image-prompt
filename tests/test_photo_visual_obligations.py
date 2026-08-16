@@ -238,6 +238,7 @@ class PhotoVisualObligationTests(unittest.TestCase):
                 "close_leg_geometry_phrase",
                 "inner_thigh_boundary_phrase",
                 "negative_space_phrase",
+                "appeal_emphasis_phrase",
                 "false_gap_exclusion_phrase",
                 "thumbnail_crop_phrase",
             ],
@@ -249,6 +250,7 @@ class PhotoVisualObligationTests(unittest.TestCase):
             {
                 "vo_inner_thigh_legs_close",
                 "vo_inner_thigh_true_negative_space",
+                "vo_inner_thigh_attractive_composition",
                 "vo_inner_thigh_not_false_gap",
                 "vo_inner_thigh_thumbnail_legibility",
             },

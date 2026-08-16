@@ -17,12 +17,16 @@ SUPPORTED_CANDIDATE_PACK_VERSIONS = {
     "photo-candidate-pack/v2",
     "photo-candidate-pack/v3",
     "photo-candidate-pack/v4",
+    "photo-candidate-pack/v5",
 }
 MOE_PROMPT_DEFAULT_MIN_WORDS = 50
 MOE_PROMPT_DEFAULT_MAX_WORDS = 120
 VISUAL_OBLIGATIONS_CONTRACT_VERSION = "photo-visual-obligations/v1"
 VISUAL_INTENT_CONTRACT_VERSION = "photo-visual-intent/v1"
 VISUAL_CONCEPTS_CONTRACT_VERSION = "photo-visual-concepts/v1"
+AUTHORIAL_CORE_CONTRACT_VERSION = "photo-authorial-core/v1"
+SEMANTIC_CLARIFICATION_CONTRACT_VERSION = "photo-semantic-clarification/v1"
+CREATIVE_AUGMENTATION_CONTRACT_VERSION = "photo-creative-augmentation/v1"
 
 
 def load_json_arg(raw: str) -> Any:
@@ -93,6 +97,13 @@ def authorial_evidence_tokens(text: str) -> set[str]:
         for token in re.findall(r"[A-Za-z0-9]+(?:[./'’\-][A-Za-z0-9]+)*", str(text or ""))
         if token.lower() not in AUTHORIAL_EVIDENCE_STOPWORDS
     }
+
+
+def authorial_general_content_words(text: str) -> list[str]:
+    return re.findall(
+        r"[A-Za-z0-9][A-Za-z0-9_-]*|[가-힣]{2,}|[ぁ-んァ-ン一-龯]{2,}",
+        str(text or ""),
+    )
 
 
 def normalize_chosen_candidate_ids(raw: Any) -> set[str]:
@@ -190,12 +201,23 @@ def candidate_ids_from_pack(pack: dict[str, Any]) -> set[str]:
     for candidate in hybrid_augmentation_candidates_from_pack(pack):
         if candidate.get("id"):
             ids.add(str(candidate["id"]))
+    for candidate in creative_augmentation_candidates_from_pack(pack):
+        if candidate.get("id"):
+            ids.add(str(candidate["id"]))
     return ids
 
 
 def hybrid_augmentation_candidates_from_pack(pack: dict[str, Any]) -> list[dict[str, Any]]:
     hybrid = pack.get("hybrid_augmentation") if isinstance(pack.get("hybrid_augmentation"), dict) else {}
-    adult = hybrid.get("adult_appeal") if isinstance(hybrid.get("adult_appeal"), dict) else {}
+    adult = (
+        pack.get("adult_appeal")
+        if isinstance(pack.get("adult_appeal"), dict)
+        else (
+            hybrid.get("adult_appeal")
+            if isinstance(hybrid.get("adult_appeal"), dict)
+            else {}
+        )
+    )
     axes = adult.get("axes") if isinstance(adult.get("axes"), dict) else {}
     candidates: list[dict[str, Any]] = []
     for axis in axes.values():
@@ -207,6 +229,21 @@ def hybrid_augmentation_candidates_from_pack(pack: dict[str, Any]) -> list[dict[
             if isinstance(candidate, dict)
         )
     return candidates
+
+
+def creative_augmentation_candidates_from_pack(
+    pack: dict[str, Any],
+) -> list[dict[str, Any]]:
+    contract = (
+        pack.get("creative_augmentation")
+        if isinstance(pack.get("creative_augmentation"), dict)
+        else {}
+    )
+    return [
+        candidate
+        for candidate in contract.get("candidates") or []
+        if isinstance(candidate, dict)
+    ]
 
 
 def candidate_objects_from_pack(pack: dict[str, Any]) -> dict[str, dict[str, Any]]:
@@ -241,11 +278,17 @@ def candidate_objects_from_pack(pack: dict[str, Any]) -> dict[str, dict[str, Any
     for candidate in hybrid_augmentation_candidates_from_pack(pack):
         if candidate.get("id"):
             candidates[str(candidate["id"])] = candidate
+    for candidate in creative_augmentation_candidates_from_pack(pack):
+        if candidate.get("id"):
+            candidates[str(candidate["id"])] = candidate
     return candidates
 
 
 def audit_v4_authorial_pack(pack: dict[str, Any]) -> list[dict[str, Any]]:
-    if str(pack.get("contract_version") or "") != "photo-candidate-pack/v4":
+    if str(pack.get("contract_version") or "") not in {
+        "photo-candidate-pack/v4",
+        "photo-candidate-pack/v5",
+    }:
         return []
     failures: list[dict[str, Any]] = []
     contract = (
@@ -4435,11 +4478,17 @@ def audit_candidate_interpretations(
 ) -> list[dict[str, Any]]:
     """Require authorship evidence for every ordinary v4 candidate choice."""
 
-    if str(pack.get("contract_version") or "") != "photo-candidate-pack/v4":
+    contract_version = str(pack.get("contract_version") or "")
+    if contract_version not in {"photo-candidate-pack/v4", "photo-candidate-pack/v5"}:
         return []
+    brief_field = (
+        "creative_augmentation_brief"
+        if contract_version == "photo-candidate-pack/v5"
+        else "augmentation_brief"
+    )
     augmentation_brief = (
-        composed.get("augmentation_brief")
-        if isinstance(composed.get("augmentation_brief"), dict)
+        composed.get(brief_field)
+        if isinstance(composed.get(brief_field), dict)
         else {}
     )
     transformed_augmentation_ids = {
@@ -4526,6 +4575,701 @@ def audit_candidate_interpretations(
     return failures
 
 
+def expected_authorial_core_retrieval_provenance(
+    core: dict[str, Any],
+) -> dict[str, Any]:
+    exclusions = [
+        re.sub(r"\s+", " ", str(item)).strip()
+        for item in core.get("user_exclusions") or []
+        if re.sub(r"\s+", " ", str(item)).strip()
+    ]
+    fields: list[tuple[str, str]] = []
+    redacted_fields: set[str] = set()
+
+    def clean(value: Any) -> str:
+        text = re.sub(r"\s+", " ", str(value or "")).strip()
+        text = re.sub(r"\s+([,.!?;:])", r"\1", text)
+        return re.sub(r"([.!?]){2,}", r"\1", text)
+
+    def add(field: str, value: Any) -> None:
+        text = clean(value)
+        for exclusion in exclusions:
+            if exclusion.isascii() and re.search(r"[A-Za-z0-9]", exclusion):
+                pattern = (
+                    r"(?<![A-Za-z0-9])"
+                    + re.escape(exclusion)
+                    + r"(?![A-Za-z0-9])"
+                )
+                updated = re.sub(pattern, " ", text, flags=re.IGNORECASE)
+            else:
+                updated = re.sub(
+                    re.escape(exclusion),
+                    " ",
+                    text,
+                    flags=re.IGNORECASE,
+                )
+            if updated != text:
+                redacted_fields.add(field)
+            text = updated
+        text = clean(re.sub(r"(?:\s*[,;:/|]\s*){2,}", " ", text).strip(" ,;:/|"))
+        if text:
+            fields.append((field, text))
+
+    add("source_request", core.get("source_request"))
+    add("interpreted_intent", core.get("interpreted_intent"))
+    add("subject", core.get("subject"))
+    add("setting", core.get("setting"))
+    add("event", core.get("event"))
+    for value in core.get("visual_priorities") or []:
+        add("visual_priority", value)
+    add("baseline_prompt_en", core.get("baseline_prompt_en"))
+    for definition in core.get("user_definitions") or []:
+        if isinstance(definition, dict):
+            add("user_definition_meaning", definition.get("interpreted_meaning"))
+            add("user_definition_prompt_evidence", definition.get("prompt_evidence"))
+    for interpretation in core.get("interpretation_provenance") or []:
+        if isinstance(interpretation, dict):
+            add("interpretation_resolution", interpretation.get("resolution"))
+    style = core.get("style") if isinstance(core.get("style"), dict) else {}
+    add("style_domain", style.get("domain"))
+    add("style_family", style.get("family"))
+    for value in style.get("evidence") or []:
+        add("style_evidence", value)
+
+    deduped: list[tuple[str, str]] = []
+    seen: set[str] = set()
+    for field, value in fields:
+        key = value.lower()
+        if key in seen:
+            continue
+        seen.add(key)
+        deduped.append((field, value))
+    query = " | ".join(value for _, value in deduped)
+    return {
+        "contract_version": "photo-retrieval-query-provenance/v1",
+        "source_authorial_core_sha256": str(core.get("canonical_sha256") or ""),
+        "source_request_sha256": hashlib.sha256(
+            str(core.get("source_request") or "").encode("utf-8")
+        ).hexdigest(),
+        "source_fields": [field for field, _ in deduped],
+        "query_sha256": hashlib.sha256(query.encode("utf-8")).hexdigest(),
+        "redacted_source_fields": sorted(redacted_fields),
+        "excluded_term_count": len(exclusions),
+        "exclusions_used_as_positive_query": False,
+    }
+
+
+def authorial_core_interpretation_contract_valid(core: dict[str, Any]) -> bool:
+    if "interpretation_provenance" not in core or "unresolved_ambiguities" not in core:
+        return False
+    if core.get("unresolved_ambiguities") != []:
+        return False
+    interpretations = core.get("interpretation_provenance")
+    if not isinstance(interpretations, list) or len(interpretations) > 8:
+        return False
+    user_terms = {
+        str(item.get("term") or "").strip().casefold()
+        for item in core.get("user_definitions") or []
+        if isinstance(item, dict) and str(item.get("term") or "").strip()
+    }
+    source_request = str(core.get("source_request") or "").casefold()
+    seen_terms: set[str] = set()
+    allowed_bases = {
+        "agent_general_knowledge",
+        "request_context",
+        "public_web_research",
+    }
+    for item in interpretations:
+        if not isinstance(item, dict) or set(item) != {
+            "term",
+            "source_text",
+            "basis",
+            "resolution",
+            "sources",
+        }:
+            return False
+        term = str(item.get("term") or "").strip()
+        source_text = str(item.get("source_text") or "").strip()
+        basis = str(item.get("basis") or "").strip()
+        resolution = str(item.get("resolution") or "").strip()
+        sources = item.get("sources")
+        key = term.casefold()
+        if (
+            not term
+            or not source_text
+            or key in seen_terms
+            or key in user_terms
+            or source_text.casefold() not in source_request
+            or basis not in allowed_bases
+            or len(authorial_general_content_words(resolution)) < 4
+            or not isinstance(sources, list)
+            or len(sources) > 4
+            or len(sources) != len(set(str(value) for value in sources))
+        ):
+            return False
+        seen_terms.add(key)
+        if basis == "public_web_research":
+            if not sources or any(
+                re.fullmatch(r"https?://[^\s]+", str(value), flags=re.IGNORECASE)
+                is None
+                for value in sources
+            ):
+                return False
+        elif sources:
+            return False
+    return True
+
+
+def audit_authorial_core_v5(
+    pack: dict[str, Any],
+    composed: dict[str, Any],
+    prompt_en: str,
+) -> list[dict[str, Any]]:
+    if str(pack.get("contract_version") or "") != "photo-candidate-pack/v5":
+        return []
+    failures: list[dict[str, Any]] = []
+    core = (
+        pack.get("authorial_core")
+        if isinstance(pack.get("authorial_core"), dict)
+        else {}
+    )
+    canonical_sha = str(core.get("canonical_sha256") or "")
+    canonical_material = copy.deepcopy(core)
+    canonical_material.pop("canonical_sha256", None)
+    canonical_material.pop("core_id", None)
+    expected_sha = hashlib.sha256(
+        json.dumps(
+            canonical_material,
+            ensure_ascii=False,
+            sort_keys=True,
+            separators=(",", ":"),
+        ).encode("utf-8")
+    ).hexdigest()
+    retrieval = (
+        (pack.get("provenance") or {}).get("retrieval_query")
+        if isinstance(pack.get("provenance"), dict)
+        else {}
+    )
+    expected_retrieval = expected_authorial_core_retrieval_provenance(core)
+    if (
+        core.get("contract_version") != AUTHORIAL_CORE_CONTRACT_VERSION
+        or core.get("provenance") != "agent_prepack"
+        or not authorial_core_interpretation_contract_valid(core)
+        or not canonical_sha
+        or canonical_sha != expected_sha
+        or not isinstance(retrieval, dict)
+        or retrieval != expected_retrieval
+    ):
+        failures.append(
+            {
+                "check": "authorial_core_integrity",
+                "reason": "v5 pack is not bound to one valid pre-pack authorial core and retrieval query",
+            }
+        )
+
+    binding = (
+        composed.get("authorial_core_binding")
+        if isinstance(composed.get("authorial_core_binding"), dict)
+        else {}
+    )
+    if str(binding.get("source_authorial_core_sha256") or "") != canonical_sha:
+        failures.append(
+            {
+                "check": "authorial_core_binding",
+                "reason": "composed prompt is not bound to the governing authorial core hash",
+            }
+        )
+    evidence = nonempty_string_list(binding.get("preserved_evidence"))
+    if len(evidence) < 3 or len({item.casefold() for item in evidence}) != len(evidence):
+        failures.append(
+            {
+                "check": "authorial_core_evidence",
+                "reason": "authorial_core_binding requires at least three distinct preserved evidence phrases",
+            }
+        )
+    baseline = str(core.get("baseline_prompt_en") or "")
+    for phrase in evidence:
+        if (
+            len(authorial_evidence_tokens(phrase)) < 2
+            or not text_contains_term(baseline, phrase)
+            or not text_contains_term(prompt_en, phrase)
+        ):
+            failures.append(
+                {
+                    "check": "authorial_core_evidence",
+                    "reason": (
+                        "preserved evidence must be substantive and occur literally in both "
+                        "baseline_prompt_en and prompt_en"
+                    ),
+                    "phrase": phrase,
+                }
+            )
+    decisions = [
+        row
+        for row in binding.get("authorial_decisions") or []
+        if isinstance(row, dict)
+    ]
+    dimensions = [str(row.get("dimension") or "") for row in decisions]
+    if (
+        len(decisions) < 2
+        or len(dimensions) != len(set(dimensions))
+        or any(
+            len(authorial_evidence_tokens(str(row.get("decision") or ""))) < 2
+            or len(authorial_evidence_tokens(str(row.get("rationale") or ""))) < 3
+            for row in decisions
+        )
+    ):
+        failures.append(
+            {
+                "check": "authorial_core_decisions",
+                "reason": "v5 composition requires at least two distinct substantive authorial decisions",
+            }
+        )
+    for exclusion in nonempty_string_list(core.get("user_exclusions")):
+        if text_contains_term(prompt_en, exclusion):
+            failures.append(
+                {
+                    "check": "authorial_core_exclusion",
+                    "reason": "final prompt reintroduced an explicit authorial-core exclusion",
+                    "exclusion": exclusion,
+                }
+            )
+    return failures
+
+
+def audit_semantic_clarification_v5(
+    pack: dict[str, Any],
+    composed: dict[str, Any],
+    prompt_en: str,
+) -> list[dict[str, Any]]:
+    contract = (
+        pack.get("semantic_clarification")
+        if isinstance(pack.get("semantic_clarification"), dict)
+        else {}
+    )
+    if not contract:
+        return []
+    failures: list[dict[str, Any]] = []
+    if (
+        contract.get("contract_version") != SEMANTIC_CLARIFICATION_CONTRACT_VERSION
+        or contract.get("affected_by_creativity") is not False
+        or contract.get("affected_by_seed") is not False
+    ):
+        failures.append(
+            {
+                "check": "semantic_clarification_contract",
+                "reason": "semantic clarification must be deterministic and separate from creative sampling",
+            }
+        )
+    candidates = [
+        row for row in contract.get("candidates") or [] if isinstance(row, dict)
+    ]
+    candidate_map = {
+        str(row.get("id") or ""): row
+        for row in candidates
+        if str(row.get("id") or "")
+    }
+    pack_candidate_ids = candidate_ids_from_pack(pack) | set(candidate_map)
+    decisions = [
+        row
+        for row in composed.get("semantic_clarification_decisions") or []
+        if isinstance(row, dict)
+    ]
+    decision_ids = [str(row.get("clarification_id") or "") for row in decisions]
+    if (
+        set(decision_ids) != set(candidate_map)
+        or len(decision_ids) != len(set(decision_ids))
+    ):
+        failures.append(
+            {
+                "check": "semantic_clarification_decisions",
+                "reason": "every clarification candidate requires exactly one typed decision",
+                "expected": sorted(candidate_map),
+                "actual": decision_ids,
+            }
+        )
+    for decision in decisions:
+        clarification_id = str(decision.get("clarification_id") or "")
+        candidate = candidate_map.get(clarification_id)
+        if candidate is None:
+            continue
+        state = str(decision.get("decision") or "")
+        rationale = str(decision.get("rationale") or "")
+        if state not in {"applied", "rejected", "superseded_by_revision"} or len(
+            authorial_evidence_tokens(rationale)
+        ) < 2:
+            failures.append(
+                {
+                    "check": "semantic_clarification_decisions",
+                    "reason": "each clarification needs a typed decision plus a substantive rationale",
+                    "clarification_id": clarification_id,
+                }
+            )
+            continue
+        status = str((candidate.get("applicability") or {}).get("status") or "")
+        revisable = candidate.get("revisable") is True
+        if revisable and state == "rejected":
+            failures.append(
+                {
+                    "check": "semantic_clarification_revision",
+                    "reason": "a revisable governing hypothesis must be applied or replaced by a typed revision",
+                    "clarification_id": clarification_id,
+                }
+            )
+        if candidate.get("required_in_final_prompt") is True and state != "applied":
+            failures.append(
+                {
+                    "check": "semantic_clarification_required",
+                    "reason": "a required meaning clarification cannot be rejected",
+                    "clarification_id": clarification_id,
+                }
+            )
+        if status in {"context_mismatch", "requires_existing_adult_context"} and state != "rejected":
+            failures.append(
+                {
+                    "check": "semantic_clarification_applicability",
+                    "reason": "a context-mismatched or adult-context-gated meaning cannot be applied",
+                    "clarification_id": clarification_id,
+                }
+            )
+        if state == "superseded_by_revision":
+            revised_meaning = str(decision.get("revised_meaning") or "").strip()
+            evidence = str(decision.get("prompt_evidence") or "").strip()
+            source_ids = nonempty_string_list(decision.get("revision_source_ids"))
+            invalid_source_ids = [
+                source_id
+                for source_id in source_ids
+                if source_id == clarification_id or source_id not in pack_candidate_ids
+            ]
+            original_terms = authorial_evidence_tokens(
+                str(candidate.get("interpreted_meaning") or "")
+            )
+            evidence_terms = authorial_evidence_tokens(evidence)
+            if (
+                not revisable
+                or str(decision.get("revision_basis") or "")
+                != "candidate_pack_clarification"
+                or len(authorial_general_content_words(revised_meaning)) < 4
+                or not source_ids
+                or len(source_ids) != len(set(source_ids))
+                or invalid_source_ids
+                or len(evidence_terms) < 4
+                or len(evidence_terms - original_terms) < 2
+                or not text_contains_term(prompt_en, evidence)
+            ):
+                failures.append(
+                    {
+                        "check": "semantic_clarification_revision",
+                        "reason": (
+                            "only an agent hypothesis may be superseded, and its typed revision must "
+                            "cite pack candidates and bind newly authored literal evidence"
+                        ),
+                        "clarification_id": clarification_id,
+                        "invalid_revision_source_ids": invalid_source_ids,
+                    }
+                )
+        if state == "applied":
+            evidence = str(decision.get("prompt_evidence") or "").strip()
+            if not evidence or not text_contains_term(prompt_en, evidence):
+                failures.append(
+                    {
+                        "check": "semantic_clarification_binding",
+                        "reason": "applied clarification needs literal prompt evidence",
+                        "clarification_id": clarification_id,
+                    }
+                )
+            required_evidence = str(candidate.get("required_prompt_evidence") or "")
+            if required_evidence and not text_contains_term(prompt_en, required_evidence):
+                failures.append(
+                    {
+                        "check": "semantic_clarification_user_definition",
+                        "reason": "requesting-user definition evidence was not preserved literally",
+                        "clarification_id": clarification_id,
+                    }
+                )
+        for label in candidate.get("forbidden_runtime_labels") or []:
+            if text_contains_term(prompt_en, str(label)):
+                failures.append(
+                    {
+                        "check": "semantic_clarification_sensitive_label",
+                        "reason": "a definition-only sensitive label leaked into prompt_en",
+                        "clarification_id": clarification_id,
+                        "label": label,
+                    }
+                )
+    return failures
+
+
+def audit_creative_augmentation_v5(
+    pack: dict[str, Any],
+    composed: dict[str, Any],
+    prompt_en: str,
+    chosen: set[str],
+) -> list[dict[str, Any]]:
+    contract = (
+        pack.get("creative_augmentation")
+        if isinstance(pack.get("creative_augmentation"), dict)
+        else {}
+    )
+    if not contract or not contract.get("enabled"):
+        return []
+    failures: list[dict[str, Any]] = []
+    candidates = creative_augmentation_candidates_from_pack(pack)
+    candidate_map = {
+        str(row.get("id") or ""): row
+        for row in candidates
+        if str(row.get("id") or "")
+    }
+    allowed_bands = {
+        str(item)
+        for item in ((contract.get("distance_policy") or {}).get("allowed_bands") or [])
+    }
+    if (
+        contract.get("contract_version") != CREATIVE_AUGMENTATION_CONTRACT_VERSION
+        or not re.fullmatch(r"[0-9a-f]{64}", str(contract.get("hard_eligible_pool_sha256") or ""))
+        or not re.fullmatch(r"[0-9a-f]{64}", str(contract.get("guard_invariant_sha256") or ""))
+        or any(str(row.get("semantic_band") or "") not in allowed_bands for row in candidates)
+    ):
+        failures.append(
+            {
+                "check": "creative_augmentation_contract",
+                "reason": "v5 creative augmentation has an invalid pool, guard, or distance-band contract",
+            }
+        )
+    brief = (
+        composed.get("creative_augmentation_brief")
+        if isinstance(composed.get("creative_augmentation_brief"), dict)
+        else {}
+    )
+    decisions = [
+        row for row in brief.get("decisions") or [] if isinstance(row, dict)
+    ]
+    decision_ids = [str(row.get("candidate_id") or "") for row in decisions]
+    if (
+        set(decision_ids) != set(candidate_map)
+        or len(decision_ids) != len(set(decision_ids))
+    ):
+        failures.append(
+            {
+                "check": "creative_augmentation_decisions",
+                "reason": "every sampled creative candidate requires exactly one transformed or rejected decision",
+                "expected": sorted(candidate_map),
+                "actual": decision_ids,
+            }
+        )
+    transformed: set[str] = set()
+    for decision in decisions:
+        candidate_id = str(decision.get("candidate_id") or "")
+        candidate = candidate_map.get(candidate_id)
+        if candidate is None:
+            continue
+        state = str(decision.get("decision") or "")
+        rationale = str(decision.get("rationale") or "")
+        if state not in {"transformed", "rejected"} or len(
+            authorial_evidence_tokens(rationale)
+        ) < 2:
+            failures.append(
+                {
+                    "check": "creative_augmentation_decisions",
+                    "reason": "every sampled candidate needs transformed/rejected plus rationale",
+                    "candidate_id": candidate_id,
+                }
+            )
+            continue
+        if state == "rejected":
+            if candidate_id in chosen:
+                failures.append(
+                    {
+                        "check": "creative_augmentation_provenance",
+                        "reason": "a rejected creative candidate must not be chosen",
+                        "candidate_id": candidate_id,
+                    }
+                )
+            continue
+        transformed.add(candidate_id)
+        evidence = str(decision.get("prompt_evidence") or "").strip()
+        interpretation = str(decision.get("artistic_interpretation") or "")
+        transformation = str(decision.get("transformation") or "")
+        if (
+            candidate_id not in chosen
+            or not evidence
+            or not text_contains_term(prompt_en, evidence)
+            or len(authorial_evidence_tokens(interpretation)) < 3
+            or len(authorial_evidence_tokens(transformation)) < 3
+        ):
+            failures.append(
+                {
+                    "check": "creative_augmentation_transform",
+                    "reason": "transformed material needs chosen provenance, interpretation, transformation, and literal evidence",
+                    "candidate_id": candidate_id,
+                }
+            )
+            continue
+        source_terms = {
+            token
+            for item in candidate.get("concept_terms") or []
+            for token in authorial_evidence_tokens(str(item))
+        }
+        evidence_terms = authorial_evidence_tokens(evidence)
+        if len(evidence_terms) < 4 or len(evidence_terms - source_terms) < 2:
+            failures.append(
+                {
+                    "check": "creative_augmentation_transform",
+                    "reason": "creative evidence must add at least two authored content words beyond source terms",
+                    "candidate_id": candidate_id,
+                }
+            )
+    if len(transformed) > int(
+        ((contract.get("selection_contract") or {}).get("maximum_transformed") or 3)
+    ):
+        failures.append(
+            {
+                "check": "creative_augmentation_budget",
+                "reason": "too many creative candidates were transformed",
+                "actual": len(transformed),
+            }
+        )
+    return failures
+
+
+def audit_adult_appeal_v5(
+    pack: dict[str, Any],
+    composed: dict[str, Any],
+    prompt_en: str,
+    chosen: set[str],
+    candidate_objects: dict[str, dict[str, Any]],
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    contract = (
+        pack.get("adult_appeal")
+        if isinstance(pack.get("adult_appeal"), dict)
+        else {}
+    )
+    if not contract.get("enabled"):
+        return [], []
+    failures: list[dict[str, Any]] = []
+    warnings: list[dict[str, Any]] = []
+    brief = (
+        composed.get("adult_appeal_brief")
+        if isinstance(composed.get("adult_appeal_brief"), dict)
+        else {}
+    )
+    adult_phrase = str(brief.get("adult_subject_phrase") or "")
+    agency_phrase = str(brief.get("agency_phrase") or "")
+    if (
+        not re.search(r"\badult\b", adult_phrase, flags=re.IGNORECASE)
+        or not text_contains_term(prompt_en, adult_phrase)
+    ):
+        failures.append(
+            {
+                "check": "adult_appeal_adult_subject",
+                "reason": "adult_subject_phrase must be literal and explicitly adult",
+            }
+        )
+    if not agency_phrase or not text_contains_term(prompt_en, agency_phrase):
+        failures.append(
+            {
+                "check": "adult_appeal_agency",
+                "reason": "agency_phrase must be literal in prompt_en",
+            }
+        )
+    expected_axes = contract.get("axes") if isinstance(contract.get("axes"), dict) else {}
+    actual_axes = brief.get("axes") if isinstance(brief.get("axes"), dict) else {}
+    for axis_id, axis in expected_axes.items():
+        if not isinstance(axis, dict):
+            continue
+        expected_intensity = int(axis.get("intensity", 0) or 0)
+        actual = actual_axes.get(axis_id) if isinstance(actual_axes.get(axis_id), dict) else {}
+        try:
+            actual_intensity = int(actual.get("intensity", -1))
+        except (TypeError, ValueError):
+            actual_intensity = -1
+        evidence = str(actual.get("prompt_evidence") or "")
+        if actual_intensity != expected_intensity or (
+            expected_intensity > 0
+            and (
+                len(authorial_evidence_tokens(str(actual.get("artistic_interpretation") or ""))) < 3
+                or not evidence
+                or not text_contains_term(prompt_en, evidence)
+            )
+        ):
+            failures.append(
+                {
+                    "check": "adult_appeal_axes",
+                    "reason": "active v5 adult-appeal axes must preserve intensity and authored literal evidence",
+                    "axis": axis_id,
+                }
+            )
+    expected_emphasis = str((contract.get("blend") or {}).get("emphasis") or "")
+    actual_emphasis = str((brief.get("blend") or {}).get("emphasis") or "")
+    if expected_emphasis != actual_emphasis:
+        failures.append(
+            {
+                "check": "adult_appeal_blend",
+                "reason": "v5 adult-appeal blend differs from the preserved contract",
+            }
+        )
+
+    # v5 moves the existing adult-appeal contract out of the fixed v4 hybrid
+    # block, but it must preserve the same styling/pose/camera cross-check.
+    # This is compatibility enforcement, not a new policy or routing rule.
+    combination = (
+        contract.get("combination_policy")
+        if isinstance(contract.get("combination_policy"), dict)
+        else {}
+    )
+    risk_hits: set[str] = set()
+    risk_groups = (
+        combination.get("risk_groups")
+        if isinstance(combination.get("risk_groups"), dict)
+        else {}
+    )
+    chosen_entry_ids = {
+        str(candidate_objects.get(candidate_id, {}).get("entry_id") or "")
+        for candidate_id in chosen
+    }
+    for group_id, group in risk_groups.items():
+        if not isinstance(group, dict):
+            continue
+        entry_ids = {str(item) for item in group.get("entry_ids") or []}
+        prompt_terms = [str(item) for item in group.get("prompt_terms") or []]
+        if chosen_entry_ids & entry_ids or any(
+            text_contains_term(prompt_en, term) for term in prompt_terms
+        ):
+            risk_hits.add(str(group_id))
+    for rule in combination.get("hard_combinations") or []:
+        if not isinstance(rule, dict):
+            continue
+        required = {str(item) for item in rule.get("all_of") or []}
+        if required and required <= risk_hits:
+            failures.append(
+                {
+                    "check": "adult_appeal_combination_risk",
+                    "reason": str(
+                        rule.get("reason")
+                        or "high-risk styling and camera combination"
+                    ),
+                    "rule_id": rule.get("id"),
+                    "risk_groups": sorted(required),
+                }
+            )
+    for rule in combination.get("warning_combinations") or []:
+        if not isinstance(rule, dict):
+            continue
+        required = {str(item) for item in rule.get("all_of") or []}
+        if required and required <= risk_hits:
+            warnings.append(
+                {
+                    "check": "adult_appeal_combination_risk",
+                    "reason": str(
+                        rule.get("reason") or "stacked adult-fashion emphasis"
+                    ),
+                    "rule_id": rule.get("id"),
+                    "risk_groups": sorted(required),
+                }
+            )
+    return failures, warnings
+
+
 def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dict[str, Any]:
     failures: list[dict[str, Any]] = []
     warnings: list[dict[str, Any]] = []
@@ -4577,6 +5321,8 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
     failures.extend(audit_moe_response(pack, composed, prompt_en))
     failures.extend(audit_visual_obligations(pack, composed, prompt_en))
     failures.extend(audit_viewer_experience(pack, composed, prompt_en))
+    failures.extend(audit_authorial_core_v5(pack, composed, prompt_en))
+    failures.extend(audit_semantic_clarification_v5(pack, composed, prompt_en))
 
     safety = pack.get("safety") if isinstance(pack.get("safety"), dict) else {}
     if safety.get("status") != "pass" or safety.get("requires_user_approval") is True:
@@ -4705,7 +5451,10 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
 
     chosen = normalize_chosen_candidate_ids(composed.get("chosen_candidate_ids"))
     valid_ids = candidate_ids_from_pack(pack)
-    if not chosen and contract_version != "photo-candidate-pack/v4":
+    if not chosen and contract_version not in {
+        "photo-candidate-pack/v4",
+        "photo-candidate-pack/v5",
+    }:
         failures.append({"check": "chosen_candidate_ids", "reason": "no chosen_candidate_ids supplied"})
     invalid = sorted(candidate_id for candidate_id in chosen if candidate_id not in valid_ids)
     if invalid:
@@ -4735,6 +5484,16 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
             }
         )
 
+    adult_v5_failures, adult_v5_warnings = audit_adult_appeal_v5(
+        pack,
+        composed,
+        prompt_en,
+        chosen,
+        candidate_objects,
+    )
+    failures.extend(adult_v5_failures)
+    warnings.extend(adult_v5_warnings)
+
     hybrid_failures, hybrid_warnings = audit_hybrid_augmentation(
         pack,
         composed,
@@ -4744,6 +5503,14 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
     )
     failures.extend(hybrid_failures)
     warnings.extend(hybrid_warnings)
+    failures.extend(
+        audit_creative_augmentation_v5(
+            pack,
+            composed,
+            prompt_en,
+            chosen,
+        )
+    )
     failures.extend(
         audit_candidate_interpretations(
             pack,

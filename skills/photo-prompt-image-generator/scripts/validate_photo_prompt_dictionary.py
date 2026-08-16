@@ -16,6 +16,8 @@ from prompt_generator import (
     VALID_PRESET_DOMAINS,
     VALID_SUBJECT_CATEGORIES,
     load_json,
+    load_visual_obligation_registry,
+    load_visual_profile_index,
     normalize_list,
 )
 
@@ -47,6 +49,7 @@ VALID_MATCH_FIELDS = {"id", "en", "ko", "embedding_text", "semantic_anchor"}
 DEFAULT_CONCEPT_RECIPES = Path(__file__).resolve().parents[1] / "assets" / "concept_recipes.json"
 DEFAULT_QUALITY_LAYERS = Path(__file__).resolve().parents[1] / "assets" / "photo_prompt_quality_layers.json"
 DEFAULT_VISUAL_OBLIGATIONS = Path(__file__).resolve().parents[1] / "assets" / "photo_prompt_visual_obligations.json"
+DEFAULT_VISUAL_PROFILE_INDEX = Path(__file__).resolve().parents[1] / "assets" / "photo_prompt_visual_profile_index.json"
 NO_TEXT_REQUIRED_TAG = "no_text_required"
 NO_TEXT_ANCHOR_TERMS = {
     "abstract",
@@ -2820,7 +2823,7 @@ def validate_visual_obligation_registry(path: Path, errors: list[str]) -> None:
         errors.append("visual obligation registry: root must be an object")
         return
     expected_versions = {
-        "schema_version": "photo-visual-obligation-registry/v2",
+        "schema_version": "photo-visual-obligation-registry/v3",
         "contract_version": "photo-visual-obligations/v1",
         "visual_intent_contract_version": "photo-visual-intent/v1",
         "concept_contract_version": "photo-visual-concepts/v1",
@@ -2838,6 +2841,39 @@ def validate_visual_obligation_registry(path: Path, errors: list[str]) -> None:
         errors.append("visual obligation registry.activation_policy: must be an object")
     elif any(value is not True for value in activation_policy.values()):
         errors.append("visual obligation registry.activation_policy: every guard must be true")
+    retrieval_policy = payload.get("retrieval_policy")
+    if not isinstance(retrieval_policy, dict) or set(retrieval_policy) != {
+        "minimum_similarity",
+        "best_score_margin",
+        "candidate_limit",
+    }:
+        errors.append(
+            "visual obligation registry.retrieval_policy: must declare minimum_similarity, "
+            "best_score_margin, and candidate_limit"
+        )
+    else:
+        try:
+            minimum_similarity = float(retrieval_policy.get("minimum_similarity"))
+            best_score_margin = float(retrieval_policy.get("best_score_margin"))
+            candidate_limit = int(retrieval_policy.get("candidate_limit"))
+        except (TypeError, ValueError):
+            minimum_similarity = -1.0
+            best_score_margin = -1.0
+            candidate_limit = 0
+        if not 0.0 <= minimum_similarity <= 1.0:
+            errors.append(
+                "visual obligation registry.retrieval_policy.minimum_similarity: "
+                "must be between 0 and 1"
+            )
+        if not 0.0 <= best_score_margin <= 1.0:
+            errors.append(
+                "visual obligation registry.retrieval_policy.best_score_margin: "
+                "must be between 0 and 1"
+            )
+        if candidate_limit < 1:
+            errors.append(
+                "visual obligation registry.retrieval_policy.candidate_limit: must be at least 1"
+            )
     evidence_policy = payload.get("evidence_policy")
     if not isinstance(evidence_policy, dict):
         errors.append("visual obligation registry.evidence_policy: must be an object")
@@ -2880,6 +2916,7 @@ def validate_visual_obligation_registry(path: Path, errors: list[str]) -> None:
         "id",
         "category",
         "activation",
+        "semantics",
         "composition_instruction",
         "concept_candidate",
         "runtime_expression",
@@ -2913,19 +2950,18 @@ def validate_visual_obligation_registry(path: Path, errors: list[str]) -> None:
             unknown_activation = sorted(
                 set(activation)
                 - {
-                    "any_terms",
+                    "exact_terms",
                     "project_glossary_aliases",
                     "exclude_if_any_terms",
-                    "component_semantics",
-                    "soft_concept_cues",
+                    "context_disambiguation",
                     "requires_adult_character",
                 }
             )
             if unknown_activation:
                 errors.append(f"{label}.activation: unknown keys {unknown_activation}")
-            terms = normalize_list(activation.get("any_terms"))
+            terms = normalize_list(activation.get("exact_terms"))
             if not terms or len({term.lower() for term in terms}) != len(terms):
-                errors.append(f"{label}.activation.any_terms: must be non-empty and distinct")
+                errors.append(f"{label}.activation.exact_terms: must be non-empty and distinct")
             glossary_aliases = normalize_list(
                 activation.get("project_glossary_aliases")
             )
@@ -2944,7 +2980,7 @@ def validate_visual_obligation_registry(path: Path, errors: list[str]) -> None:
                 if alias_key in natural_term_keys:
                     errors.append(
                         f"{label}.activation.project_glossary_aliases: "
-                        f"{alias!r} must not duplicate any_terms"
+                        f"{alias!r} must not duplicate exact_terms"
                     )
                 prior_owner = glossary_alias_owners.get(alias_key)
                 if prior_owner is not None and prior_owner != profile_id:
@@ -2955,7 +2991,7 @@ def validate_visual_obligation_registry(path: Path, errors: list[str]) -> None:
                 glossary_alias_owners[alias_key] = profile_id
             if activation.get("requires_adult_character") is not True:
                 errors.append(f"{label}.activation.requires_adult_character: must be true")
-            for term_key in ("exclude_if_any_terms", "soft_concept_cues"):
+            for term_key in ("exclude_if_any_terms",):
                 values = normalize_list(activation.get(term_key))
                 if term_key in activation and (
                     not values
@@ -2964,9 +3000,94 @@ def validate_visual_obligation_registry(path: Path, errors: list[str]) -> None:
                     errors.append(
                         f"{label}.activation.{term_key}: must be non-empty and distinct when declared"
                     )
-            component_semantics = activation.get("component_semantics")
+            context_disambiguation = activation.get("context_disambiguation")
+            if context_disambiguation is not None:
+                if not isinstance(context_disambiguation, dict):
+                    errors.append(
+                        f"{label}.activation.context_disambiguation: must be an object"
+                    )
+                else:
+                    allowed_context_keys = {
+                        "required_with_authorial_core",
+                        "any_terms",
+                        "exclude_if_any_terms",
+                    }
+                    unknown_context_keys = sorted(
+                        set(context_disambiguation) - allowed_context_keys
+                    )
+                    if unknown_context_keys:
+                        errors.append(
+                            f"{label}.activation.context_disambiguation: "
+                            f"unknown keys {unknown_context_keys}"
+                        )
+                    if (
+                        context_disambiguation.get(
+                            "required_with_authorial_core"
+                        )
+                        is not True
+                    ):
+                        errors.append(
+                            f"{label}.activation.context_disambiguation."
+                            "required_with_authorial_core: must be true"
+                        )
+                    for context_key in ("any_terms", "exclude_if_any_terms"):
+                        context_values = normalize_list(
+                            context_disambiguation.get(context_key)
+                        )
+                        if not context_values or len(
+                            {value.casefold() for value in context_values}
+                        ) != len(context_values):
+                            errors.append(
+                                f"{label}.activation.context_disambiguation."
+                                f"{context_key}: must be non-empty and distinct"
+                            )
+            semantics = profile.get("semantics")
+            if not isinstance(semantics, dict):
+                errors.append(f"{label}.semantics: must be an object")
+                semantics = {}
+            else:
+                unknown_semantic_keys = sorted(
+                    set(semantics)
+                    - {
+                        "definition",
+                        "paraphrase_examples",
+                        "contrast_examples",
+                        "component_semantics",
+                    }
+                )
+                if unknown_semantic_keys:
+                    errors.append(
+                        f"{label}.semantics: unknown keys {unknown_semantic_keys}"
+                    )
+                if len(str(semantics.get("definition") or "").split()) < 8:
+                    errors.append(f"{label}.semantics.definition: must be concrete")
+                for semantic_key in ("paraphrase_examples", "contrast_examples"):
+                    semantic_values = normalize_list(semantics.get(semantic_key))
+                    if not semantic_values or len(
+                        {value.casefold() for value in semantic_values}
+                    ) != len(semantic_values):
+                        errors.append(
+                            f"{label}.semantics.{semantic_key}: must be non-empty and distinct"
+                        )
+                semantic_examples = {
+                    value.casefold()
+                    for value in normalize_list(semantics.get("paraphrase_examples"))
+                }
+                exact_keys = {
+                    value.casefold()
+                    for value in [
+                        *terms,
+                        *normalize_list(activation.get("project_glossary_aliases")),
+                    ]
+                }
+                overlap = sorted(semantic_examples & exact_keys)
+                if overlap:
+                    errors.append(
+                        f"{label}.semantics.paraphrase_examples: must not duplicate exact activation terms {overlap}"
+                    )
+            component_semantics = semantics.get("component_semantics")
             if not isinstance(component_semantics, dict):
-                errors.append(f"{label}.activation.component_semantics: must be an object")
+                errors.append(f"{label}.semantics.component_semantics: must be an object")
             else:
                 allowed_component_keys = {
                     "minimum_component_groups",
@@ -2978,20 +3099,20 @@ def validate_visual_obligation_registry(path: Path, errors: list[str]) -> None:
                 )
                 if unknown_component_keys:
                     errors.append(
-                        f"{label}.activation.component_semantics: unknown keys "
+                        f"{label}.semantics.component_semantics: unknown keys "
                         f"{unknown_component_keys}"
                     )
                 groups = component_semantics.get("groups")
                 group_ids: set[str] = set()
                 if not isinstance(groups, list) or not groups:
                     errors.append(
-                        f"{label}.activation.component_semantics.groups: "
+                        f"{label}.semantics.component_semantics.groups: "
                         "must be a non-empty list"
                     )
                     groups = []
                 for group_index, group in enumerate(groups):
                     group_label = (
-                        f"{label}.activation.component_semantics.groups[{group_index}]"
+                        f"{label}.semantics.component_semantics.groups[{group_index}]"
                     )
                     if not isinstance(group, dict) or set(group) != {"id", "any_terms"}:
                         errors.append(
@@ -3019,7 +3140,7 @@ def validate_visual_obligation_registry(path: Path, errors: list[str]) -> None:
                     minimum_groups = 0
                 if minimum_groups < 1 or minimum_groups > max(1, len(group_ids)):
                     errors.append(
-                        f"{label}.activation.component_semantics.minimum_component_groups: "
+                        f"{label}.semantics.component_semantics.minimum_component_groups: "
                         "must fit the declared group count"
                     )
                 required_group_ids = set(
@@ -3027,7 +3148,7 @@ def validate_visual_obligation_registry(path: Path, errors: list[str]) -> None:
                 )
                 if not required_group_ids or not required_group_ids <= group_ids:
                     errors.append(
-                        f"{label}.activation.component_semantics.required_group_ids: "
+                        f"{label}.semantics.component_semantics.required_group_ids: "
                         "must be a non-empty subset of groups"
                     )
         concept_candidate = profile.get("concept_candidate")
@@ -3213,12 +3334,25 @@ def validate_skill_doc_literals(path: Path, data: dict[str, Any], errors: list[s
                 errors.append(f"SKILL.md: unknown id {value} for slot {slot} in --set example")
 
 
+def validate_visual_profile_index_file(
+    registry_path: Path,
+    index_path: Path,
+    errors: list[str],
+) -> None:
+    try:
+        registry = load_visual_obligation_registry(registry_path)
+        load_visual_profile_index(index_path, registry)
+    except (OSError, ValueError) as exc:
+        errors.append(f"visual profile index: {exc}")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Validate photo prompt dictionary semantic metadata.")
     parser.add_argument("--tags", default=Path(__file__).resolve().parents[1] / "assets" / "photo_prompt_tags.json")
     parser.add_argument("--concept-recipes", default=DEFAULT_CONCEPT_RECIPES)
     parser.add_argument("--quality-layers", default=DEFAULT_QUALITY_LAYERS)
     parser.add_argument("--visual-obligations", default=DEFAULT_VISUAL_OBLIGATIONS)
+    parser.add_argument("--visual-profile-index", default=DEFAULT_VISUAL_PROFILE_INDEX)
     parser.add_argument("--skill-doc", default=Path(__file__).resolve().parents[1] / "SKILL.md")
     args = parser.parse_args()
 
@@ -3243,6 +3377,11 @@ def main() -> int:
     validate_concept_recipes(Path(args.concept_recipes), data, errors)
     validate_quality_layers(Path(args.quality_layers), data, errors)
     validate_visual_obligation_registry(Path(args.visual_obligations), errors)
+    validate_visual_profile_index_file(
+        Path(args.visual_obligations),
+        Path(args.visual_profile_index),
+        errors,
+    )
     validate_skill_doc_literals(Path(args.skill_doc), data, errors)
     for label, entry in all_entries(data):
         validate_facets(label, entry, vocab, errors)

@@ -1,10 +1,46 @@
-# Hybrid Augmentation Contract
+# Candidate Augmentation Contracts
 
-Use this contract when the candidate pack contains `hybrid_augmentation.enabled: true`. In the default `photo-hybrid-augmentation/v2` contract, treat the pack as optional source vocabulary: keep the agent-authored concept core, inspect all three candidate-sourced routes, and artistically transform or reject their details. The pack never supplies final prompt prose. Validation and provenance protect this creative step; they do not replace the agent's authorship.
+## V5 Creative Augmentation
+
+The normal `photo-candidate-pack/v5` path does not expose `hybrid_augmentation` or three fixed routes. It exposes `photo-creative-augmentation/v1` after one pre-pack `photo-authorial-core/v1` has already established the standalone baseline.
+
+The generator forms one advisory pool only after existing applicability, conflict, identity/species/no-people, negative, safety, and explicit user-exclusion guards. Semantic mode ranks that pool from the redacted core query; rule mode uses context and lexical fallback for reproducible offline inspection. Scores remain private. Relative rank partitions the pool into `near`, `adjacent`, and `lateral`; creativity changes only the allowed bands, while seed performs weighted sampling without replacement inside them.
+
+Every sampled row requires a decision under `creative_augmentation_brief.decisions`:
+
+```json
+{
+  "creative_augmentation_brief": {
+    "decisions": [
+      {
+        "candidate_id": "slot:texture:example",
+        "decision": "transformed",
+        "rationale": "Why this material strengthens the frozen core.",
+        "artistic_interpretation": "The new role it plays in this scene.",
+        "transformation": "How context, causality, gesture, material, framing, light, mood, or timing changed.",
+        "prompt_evidence": "newly authored literal visible phrase with a relation or consequence"
+      },
+      {
+        "candidate_id": "slot:mood:example",
+        "decision": "rejected",
+        "rationale": "Why it weakens or confuses the core."
+      }
+    ]
+  }
+}
+```
+
+Rejecting all sampled rows is valid. Transform at most three; include transformed IDs in `chosen_candidate_ids`, keep rejected IDs out, and do not duplicate transformed rows in `candidate_interpretations`. Candidate `concept_terms` are unordered material. Evidence needs at least four content words and two newly authored words beyond those terms.
+
+V5 keeps an active adult-fashion contract at top-level `adult_appeal` rather than inside a hybrid route. Record its composed interpretation in `adult_appeal_brief`. Candidate adoption is optional, but exact axis intensities, blend, explicit adult subject, agency, and the existing combination audit remain mandatory. This is compatibility with the existing policy, not new adult routing.
+
+## V4 Hybrid Augmentation
+
+Use this compatibility contract when a v4 candidate pack contains `hybrid_augmentation.enabled: true`. In `photo-hybrid-augmentation/v2`, treat the pack as optional source vocabulary: keep the agent-authored concept core, inspect all three candidate-sourced routes, and artistically transform or reject their details. The pack never supplies final prompt prose. Validation and provenance protect this creative step; they do not replace the agent's authorship.
 
 ## Activation
 
-The contract is present when `--hybrid-augmentation` is explicit, when high creative direction requires it, or when an eligible adult-appeal axis is active. The default skill workflow passes `--hybrid-augmentation`. Eligible human candidate packs also activate the configured `sensual_editorial=1`, `fetish_fashion=0` adult-fashion default; no-people and non-human packs do not activate it.
+In v4, the contract is present when `--hybrid-augmentation` is explicit, when high creative direction requires it, or when an eligible adult-appeal axis is active. The normal skill workflow now uses v5 creative augmentation instead. Eligible human v4 candidate packs also activate the configured `sensual_editorial=1`, `fetish_fashion=0` adult-fashion default; no-people and non-human packs do not activate it.
 
 ## Candidate Routes
 
