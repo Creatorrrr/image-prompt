@@ -26,6 +26,7 @@ GENERATE_IMAGES_VIA_API_PATH = SKILL_DIR / "scripts" / "generate_images_via_api.
 AUDIT_COMPOSED_PATH = SKILL_DIR / "scripts" / "audit_composed_prompt.py"
 VALIDATOR_PATH = SKILL_DIR / "scripts" / "validate_photo_prompt_dictionary.py"
 INDEX_BUILDER_PATH = SKILL_DIR / "scripts" / "build_semantic_index.py"
+BM25F_RETRIEVAL_PATH = SKILL_DIR / "scripts" / "bm25f_retrieval.py"
 EVAL_SEMANTIC_PATH = SKILL_DIR / "scripts" / "eval_semantic.py"
 QUALITY_LAYERS_PATH = SKILL_DIR / "assets" / "photo_prompt_quality_layers.json"
 SEMANTIC_INDEX_PATH = SKILL_DIR / "assets" / "photo_prompt_semantic_index.json"
@@ -11782,6 +11783,10 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             )
             (scripts / "prompt_generator.py").write_text(
                 GENERATOR_PATH.read_text(encoding="utf-8"),
+                encoding="utf-8",
+            )
+            (scripts / "bm25f_retrieval.py").write_text(
+                BM25F_RETRIEVAL_PATH.read_text(encoding="utf-8"),
                 encoding="utf-8",
             )
             tags_path = assets / "photo_prompt_tags.json"

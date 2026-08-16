@@ -1,6 +1,34 @@
 # Moe Response Contract
 
-Use this contract when the candidate pack contains `moe_response.enabled: true`. It turns an explicit character-moe request into visible photographic evidence. It does not claim that a viewer will actually feel moe; only the requesting user can make that acceptance judgment.
+For the normal v6 workflow, use `character_response` when the candidate pack contains `photo-character-response/v1`. Its semantics were authored and frozen in `photo-authorial-core/v3`; do not run the raw moe router or use any named-archetype mechanism/register below to reinterpret them. The rest of this document beginning with “Requester-First V5 Precedence” applies only to compatibility packs that contain `moe_response.enabled: true`.
+
+## Typed V6 Character Response
+
+Copy the contract's nine `frozen_evidence` phrases into the final prompt exactly: actor, baseline, trigger, target, primary action, affect leak, visible response, immediate consequence, and continuity. Keep the declared semantic axes intact, use one primary action and exactly one primary affect-leak channel, and do not invent a relationship, emotion, gaze geometry, face landmark, pose, or story endpoint. `advisory_retrieval.candidates` are optional unordered support; they may all be rejected and can never replace or harden frozen evidence.
+
+The composed object binds this without exposing retrieval scores:
+
+```json
+{
+  "character_response": {
+    "source_contract_sha256": "<character_response.canonical_sha256>",
+    "evidence": {
+      "actor_phrase": "<exact frozen phrase>",
+      "baseline_phrase": "<exact frozen phrase>",
+      "trigger_phrase": "<exact frozen phrase>",
+      "target_phrase": "<exact frozen phrase>",
+      "primary_action_phrase": "<exact frozen phrase>",
+      "affective_leak_phrase": "<exact frozen phrase>",
+      "visible_response_phrase": "<exact frozen phrase>",
+      "immediate_consequence_phrase": "<exact frozen phrase>",
+      "continuity_phrase": "<exact frozen phrase>"
+    },
+    "selected_advisory_candidate_ids": []
+  }
+}
+```
+
+The composed audit requires every evidence value to remain byte-identical to the core and literal in `prompt_en`. A BM25F or embedding hit is never proof that the image expresses the character response. Rendered-pixel review and requester judgment remain separate terminal evidence.
 
 ## Requester-First V5 Precedence
 

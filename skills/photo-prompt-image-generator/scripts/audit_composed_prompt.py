@@ -18,6 +18,7 @@ SUPPORTED_CANDIDATE_PACK_VERSIONS = {
     "photo-candidate-pack/v3",
     "photo-candidate-pack/v4",
     "photo-candidate-pack/v5",
+    "photo-candidate-pack/v6",
 }
 MOE_PROMPT_DEFAULT_MIN_WORDS = 50
 MOE_PROMPT_DEFAULT_MAX_WORDS = 120
@@ -26,6 +27,12 @@ VISUAL_INTENT_CONTRACT_VERSION = "photo-visual-intent/v1"
 VISUAL_CONCEPTS_CONTRACT_VERSION = "photo-visual-concepts/v1"
 LEGACY_AUTHORIAL_CORE_CONTRACT_VERSION = "photo-authorial-core/v1"
 AUTHORIAL_CORE_CONTRACT_VERSION = "photo-authorial-core/v2"
+AUTHORIAL_CORE_V3_CONTRACT_VERSION = "photo-authorial-core/v3"
+AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS = {
+    AUTHORIAL_CORE_CONTRACT_VERSION,
+    AUTHORIAL_CORE_V3_CONTRACT_VERSION,
+}
+CHARACTER_RESPONSE_CONTRACT_VERSION = "photo-character-response/v1"
 REQUEST_ENVELOPE_CONTRACT_VERSION = "photo-request-envelope/v1"
 REQUEST_BINDING_CONTRACT_VERSION = "photo-request-binding/v1"
 INTENT_LOCK_CONTRACT_VERSION = "photo-intent-lock/v1"
@@ -63,6 +70,29 @@ INTENT_LOCK_DIMENSIONS = {
     "material",
     "timing",
     "atmosphere",
+}
+AUTHORIAL_CORE_V3_INTENT_LOCK_DIMENSIONS = INTENT_LOCK_DIMENSIONS | {
+    "character_response",
+}
+CHARACTER_RESPONSE_REQUIRED_AXES = {
+    "surface_affect",
+    "underlying_affiliation",
+    "relationship_target",
+    "primary_action",
+    "affect_leak_timing",
+    "affect_leak_channels",
+    "event_phase",
+}
+CHARACTER_RESPONSE_REQUIRED_EVIDENCE = {
+    "actor_phrase",
+    "baseline_phrase",
+    "trigger_phrase",
+    "target_phrase",
+    "primary_action_phrase",
+    "affective_leak_phrase",
+    "visible_response_phrase",
+    "immediate_consequence_phrase",
+    "continuity_phrase",
 }
 REQUIRED_INTENT_LOCK_DIMENSIONS = {"concept", "subject", "event"}
 MOE_RESPONSE_EVIDENCE_DIMENSIONS = {
@@ -475,6 +505,7 @@ def audit_v4_authorial_pack(pack: dict[str, Any]) -> list[dict[str, Any]]:
     if str(pack.get("contract_version") or "") not in {
         "photo-candidate-pack/v4",
         "photo-candidate-pack/v5",
+        "photo-candidate-pack/v6",
     }:
         return []
     failures: list[dict[str, Any]] = []
@@ -4949,11 +4980,15 @@ def audit_candidate_interpretations(
     """Require authorship evidence for every ordinary v4 candidate choice."""
 
     contract_version = str(pack.get("contract_version") or "")
-    if contract_version not in {"photo-candidate-pack/v4", "photo-candidate-pack/v5"}:
+    if contract_version not in {
+        "photo-candidate-pack/v4",
+        "photo-candidate-pack/v5",
+        "photo-candidate-pack/v6",
+    }:
         return []
     brief_field = (
         "creative_augmentation_brief"
-        if contract_version == "photo-candidate-pack/v5"
+        if contract_version in {"photo-candidate-pack/v5", "photo-candidate-pack/v6"}
         else "augmentation_brief"
     )
     augmentation_brief = (
@@ -5077,7 +5112,7 @@ def authorial_core_active_scope_contains(core: dict[str, Any], text: str) -> boo
 
 
 def authorial_core_v2_intent_contract_valid(core: dict[str, Any]) -> bool:
-    if core.get("contract_version") != AUTHORIAL_CORE_CONTRACT_VERSION:
+    if core.get("contract_version") not in AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS:
         return True
     source_request = core.get("source_request")
     binding = core.get("request_binding")
@@ -5168,6 +5203,11 @@ def authorial_core_v2_intent_contract_valid(core: dict[str, Any]) -> bool:
     lock_material = copy.deepcopy(intent_lock)
     lock_sha = str(lock_material.pop("canonical_sha256", "") or "")
     lock_id = str(lock_material.pop("lock_id", "") or "")
+    allowed_dimensions = (
+        AUTHORIAL_CORE_V3_INTENT_LOCK_DIMENSIONS
+        if core.get("contract_version") == AUTHORIAL_CORE_V3_CONTRACT_VERSION
+        else INTENT_LOCK_DIMENSIONS
+    )
     if (
         intent_lock.get("contract_version") != INTENT_LOCK_CONTRACT_VERSION
         or intent_lock.get("priority") != "requesting_user"
@@ -5192,7 +5232,7 @@ def authorial_core_v2_intent_contract_valid(core: dict[str, Any]) -> bool:
         or set(str(item) for item in locked) & set(str(item) for item in opened)
         or not REQUIRED_INTENT_LOCK_DIMENSIONS <= {str(item) for item in locked}
         or (set(str(item) for item in locked) | set(str(item) for item in opened))
-        - INTENT_LOCK_DIMENSIONS
+        - allowed_dimensions
     ):
         return False
     anchors = intent_lock.get("semantic_anchors")
@@ -5292,6 +5332,139 @@ def authorial_core_v2_intent_contract_valid(core: dict[str, Any]) -> bool:
     return True
 
 
+def authorial_core_v3_semantic_contract_valid(core: dict[str, Any]) -> bool:
+    if core.get("contract_version") != AUTHORIAL_CORE_V3_CONTRACT_VERSION:
+        return True
+    assertions = core.get("semantic_assertions")
+    intent_lock = (
+        core.get("intent_lock")
+        if isinstance(core.get("intent_lock"), dict)
+        else {}
+    )
+    binding = (
+        core.get("request_binding")
+        if isinstance(core.get("request_binding"), dict)
+        else {}
+    )
+    if not isinstance(assertions, list) or len(assertions) > 16:
+        return False
+    span_ids = {
+        str(item.get("span_id") or "")
+        for item in binding.get("active_spans") or []
+        if isinstance(item, dict)
+    }
+    locked = {str(value) for value in intent_lock.get("locked_dimensions") or []}
+    opened = {str(value) for value in intent_lock.get("open_dimensions") or []}
+    baseline = str(core.get("baseline_prompt_en") or "")
+    seen_ids: set[str] = set()
+    required_character_count = 0
+    for item in assertions:
+        if not isinstance(item, dict) or set(item) != {
+            "assertion_id",
+            "dimension",
+            "polarity",
+            "source_span_ids",
+            "axes",
+            "evidence",
+            "affected_dimensions",
+        }:
+            return False
+        assertion_id = str(item.get("assertion_id") or "")
+        dimension = str(item.get("dimension") or "")
+        polarity = str(item.get("polarity") or "")
+        source_span_ids = nonempty_string_list(item.get("source_span_ids"))
+        affected = nonempty_string_list(item.get("affected_dimensions"))
+        axes = item.get("axes") if isinstance(item.get("axes"), dict) else {}
+        evidence = (
+            item.get("evidence") if isinstance(item.get("evidence"), dict) else {}
+        )
+        if (
+            re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]{0,63}", assertion_id)
+            is None
+            or assertion_id in seen_ids
+            or dimension not in AUTHORIAL_CORE_V3_INTENT_LOCK_DIMENSIONS
+            or polarity not in {"required", "advisory", "excluded"}
+            or not source_span_ids
+            or len(source_span_ids) != len(set(source_span_ids))
+            or not set(source_span_ids) <= span_ids
+            or not affected
+            or len(affected) != len(set(affected))
+            or not set(affected) <= AUTHORIAL_CORE_V3_INTENT_LOCK_DIMENSIONS
+            or (polarity == "required" and not set(affected) <= locked)
+            or (polarity == "advisory" and not set(affected) <= opened)
+            or not 1 <= len(axes) <= 16
+            or len(evidence) > 16
+        ):
+            return False
+        seen_ids.add(assertion_id)
+        if any(
+            re.fullmatch(r"[a-z][a-z0-9_]{0,63}", str(key)) is None
+            or not (
+                isinstance(value, str)
+                and bool(value.strip())
+                or isinstance(value, list)
+                and 1 <= len(value) <= 8
+                and all(isinstance(part, str) and part.strip() for part in value)
+                and len(value) == len(set(value))
+            )
+            for key, value in axes.items()
+        ):
+            return False
+        if any(
+            re.fullmatch(r"[a-z][a-z0-9_]{0,63}", str(key)) is None
+            or not isinstance(value, str)
+            or len(authorial_evidence_tokens(value)) < 2
+            or not text_contains_term(baseline, value)
+            for key, value in evidence.items()
+        ):
+            return False
+        if polarity == "required" and not evidence:
+            return False
+        if dimension == "character_response" and polarity == "required":
+            required_character_count += 1
+            channels = axes.get("affect_leak_channels")
+            if (
+                not CHARACTER_RESPONSE_REQUIRED_AXES <= set(axes)
+                or not CHARACTER_RESPONSE_REQUIRED_EVIDENCE <= set(evidence)
+                or not isinstance(channels, list)
+                or len(channels) != 1
+            ):
+                return False
+    if required_character_count > 1:
+        return False
+
+    lineage = core.get("request_lineage")
+    if lineage is None:
+        return True
+    if not isinstance(lineage, dict) or set(lineage) != {
+        "parent_request_id",
+        "parent_core_sha256",
+        "preserved_dimensions",
+        "allowed_changes",
+    }:
+        return False
+    preserved = nonempty_string_list(lineage.get("preserved_dimensions"))
+    allowed = nonempty_string_list(lineage.get("allowed_changes"))
+    return bool(
+        re.fullmatch(
+            r"[A-Za-z0-9][A-Za-z0-9._:-]{0,127}",
+            str(lineage.get("parent_request_id") or ""),
+        )
+        and str(lineage.get("parent_request_id") or "")
+        != str(binding.get("request_id") or "")
+        and re.fullmatch(
+            r"[0-9a-f]{64}", str(lineage.get("parent_core_sha256") or "")
+        )
+        and preserved
+        and allowed
+        and len(preserved) == len(set(preserved))
+        and len(allowed) == len(set(allowed))
+        and set(preserved) <= AUTHORIAL_CORE_V3_INTENT_LOCK_DIMENSIONS
+        and set(allowed) <= AUTHORIAL_CORE_V3_INTENT_LOCK_DIMENSIONS
+        and not set(preserved) & set(allowed)
+    )
+
+
 def expected_authorial_core_retrieval_provenance(
     core: dict[str, Any],
 ) -> dict[str, Any]:
@@ -5332,7 +5505,7 @@ def expected_authorial_core_retrieval_provenance(
         if text:
             fields.append((field, text))
 
-    if core.get("contract_version") == AUTHORIAL_CORE_CONTRACT_VERSION:
+    if core.get("contract_version") in AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS:
         for value in authorial_core_active_span_texts(core):
             add("source_request_scope", value)
     else:
@@ -5369,7 +5542,7 @@ def expected_authorial_core_retrieval_provenance(
     provenance: dict[str, Any] = {
         "contract_version": (
             "photo-retrieval-query-provenance/v2"
-            if core.get("contract_version") == AUTHORIAL_CORE_CONTRACT_VERSION
+            if core.get("contract_version") in AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS
             else "photo-retrieval-query-provenance/v1"
         ),
         "source_authorial_core_sha256": str(core.get("canonical_sha256") or ""),
@@ -5382,7 +5555,7 @@ def expected_authorial_core_retrieval_provenance(
         "excluded_term_count": len(exclusions),
         "exclusions_used_as_positive_query": False,
     }
-    if core.get("contract_version") == AUTHORIAL_CORE_CONTRACT_VERSION:
+    if core.get("contract_version") in AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS:
         binding = (
             core.get("request_binding")
             if isinstance(core.get("request_binding"), dict)
@@ -5419,6 +5592,7 @@ def authorial_core_interpretation_contract_valid(core: dict[str, Any]) -> bool:
     if core.get("contract_version") not in {
         LEGACY_AUTHORIAL_CORE_CONTRACT_VERSION,
         AUTHORIAL_CORE_CONTRACT_VERSION,
+        AUTHORIAL_CORE_V3_CONTRACT_VERSION,
     }:
         return False
     if "interpretation_provenance" not in core or "unresolved_ambiguities" not in core:
@@ -5462,7 +5636,7 @@ def authorial_core_interpretation_contract_valid(core: dict[str, Any]) -> bool:
             or key in user_terms
             or source_text.casefold() not in source_request
             or (
-                core.get("contract_version") == AUTHORIAL_CORE_CONTRACT_VERSION
+                core.get("contract_version") in AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS
                 and not authorial_core_active_scope_contains(core, source_text)
             )
             or basis not in allowed_bases
@@ -5482,7 +5656,7 @@ def authorial_core_interpretation_contract_valid(core: dict[str, Any]) -> bool:
                 return False
         elif sources:
             return False
-    if core.get("contract_version") == AUTHORIAL_CORE_CONTRACT_VERSION:
+    if core.get("contract_version") in AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS:
         semantic_source_texts = [
             str(item.get("source_text") or "")
             for item in [
@@ -5507,7 +5681,8 @@ def audit_authorial_core_v5(
     composed: dict[str, Any],
     prompt_en: str,
 ) -> list[dict[str, Any]]:
-    if str(pack.get("contract_version") or "") != "photo-candidate-pack/v5":
+    pack_version = str(pack.get("contract_version") or "")
+    if pack_version not in {"photo-candidate-pack/v5", "photo-candidate-pack/v6"}:
         return []
     failures: list[dict[str, Any]] = []
     core = (
@@ -5533,9 +5708,9 @@ def audit_authorial_core_v5(
         else {}
     )
     expected_retrieval = expected_authorial_core_retrieval_provenance(core)
-    v2_core_fields_valid = True
-    if core.get("contract_version") == AUTHORIAL_CORE_CONTRACT_VERSION:
-        v2_core_fields_valid = set(core) == {
+    modern_core_fields_valid = True
+    if core.get("contract_version") in AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS:
+        expected_core_fields = {
             "contract_version",
             "provenance",
             "source_request",
@@ -5557,13 +5732,24 @@ def audit_authorial_core_v5(
             "canonical_sha256",
             "core_id",
         }
+        if core.get("contract_version") == AUTHORIAL_CORE_V3_CONTRACT_VERSION:
+            expected_core_fields.update({"semantic_assertions", "request_lineage"})
+        modern_core_fields_valid = set(core) == expected_core_fields
+    allowed_core_versions = (
+        {AUTHORIAL_CORE_V3_CONTRACT_VERSION}
+        if pack_version == "photo-candidate-pack/v6"
+        else {
+            LEGACY_AUTHORIAL_CORE_CONTRACT_VERSION,
+            AUTHORIAL_CORE_CONTRACT_VERSION,
+        }
+    )
     if (
-        core.get("contract_version")
-        not in {LEGACY_AUTHORIAL_CORE_CONTRACT_VERSION, AUTHORIAL_CORE_CONTRACT_VERSION}
+        core.get("contract_version") not in allowed_core_versions
         or core.get("provenance") != "agent_prepack"
         or not authorial_core_interpretation_contract_valid(core)
         or not authorial_core_v2_intent_contract_valid(core)
-        or not v2_core_fields_valid
+        or not authorial_core_v3_semantic_contract_valid(core)
+        or not modern_core_fields_valid
         or not canonical_sha
         or canonical_sha != expected_sha
         or str(core.get("core_id") or "") != canonical_sha[:16]
@@ -5573,7 +5759,7 @@ def audit_authorial_core_v5(
         failures.append(
             {
                 "check": "authorial_core_integrity",
-                "reason": "v5 pack is not bound to one valid pre-pack authorial core and retrieval query",
+                "reason": "v5/v6 pack is not bound to one valid versioned pre-pack authorial core and retrieval query",
             }
         )
 
@@ -5594,7 +5780,7 @@ def audit_authorial_core_v5(
         if isinstance(core.get("intent_lock"), dict)
         else {}
     )
-    intent_locked = core.get("contract_version") == AUTHORIAL_CORE_CONTRACT_VERSION
+    intent_locked = core.get("contract_version") in AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS
     if intent_locked and str(binding.get("source_intent_lock_sha256") or "") != str(
         intent_lock.get("canonical_sha256") or ""
     ):
@@ -5684,7 +5870,7 @@ def audit_authorial_core_v5(
             failures.append(
                 {
                     "check": "intent_preservation_contract",
-                    "reason": "v5 pack does not preserve the canonical requester-priority intent boundary",
+                    "reason": "v5/v6 pack does not preserve the canonical requester-priority intent boundary",
                 }
             )
     evidence = nonempty_string_list(binding.get("preserved_evidence"))
@@ -5982,7 +6168,7 @@ def audit_creative_augmentation_v5(
     )
     intent_lock = (
         core.get("intent_lock")
-        if core.get("contract_version") == AUTHORIAL_CORE_CONTRACT_VERSION
+        if core.get("contract_version") in AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS
         and isinstance(core.get("intent_lock"), dict)
         else {}
     )
@@ -6266,6 +6452,128 @@ def audit_adult_appeal_v5(
     return failures, warnings
 
 
+def audit_character_response_v6(
+    pack: dict[str, Any],
+    composed: dict[str, Any],
+    prompt_en: str,
+) -> list[dict[str, Any]]:
+    contract = (
+        pack.get("character_response")
+        if isinstance(pack.get("character_response"), dict)
+        else {}
+    )
+    if not contract:
+        return []
+    failures: list[dict[str, Any]] = []
+    core = (
+        pack.get("authorial_core")
+        if isinstance(pack.get("authorial_core"), dict)
+        else {}
+    )
+    frozen = (
+        contract.get("frozen_evidence")
+        if isinstance(contract.get("frozen_evidence"), dict)
+        else {}
+    )
+    binding = (
+        contract.get("prompt_binding")
+        if isinstance(contract.get("prompt_binding"), dict)
+        else {}
+    )
+    required_fields = nonempty_string_list(binding.get("required_evidence_fields"))
+    if (
+        contract.get("contract_version") != CHARACTER_RESPONSE_CONTRACT_VERSION
+        or contract.get("enabled") is not True
+        or contract.get("source") != "authorial_core_semantic_assertion"
+        or contract.get("source_authorial_core_sha256")
+        != core.get("canonical_sha256")
+        or contract.get("source_intent_lock_sha256")
+        != (core.get("intent_lock") or {}).get("canonical_sha256")
+        or set(required_fields) != CHARACTER_RESPONSE_REQUIRED_EVIDENCE
+        or set(frozen) < CHARACTER_RESPONSE_REQUIRED_EVIDENCE
+        or binding.get("new_hard_evidence_from_retrieval_forbidden") is not True
+        or not re.fullmatch(
+            r"[0-9a-f]{64}", str(contract.get("canonical_sha256") or "")
+        )
+    ):
+        failures.append(
+            {
+                "check": "character_response_contract",
+                "reason": "v6 character response is not bound to one typed assertion and its frozen generic evidence",
+            }
+        )
+    contract_material = copy.deepcopy(contract)
+    contract_sha = str(contract_material.pop("canonical_sha256", "") or "")
+    if contract_sha != canonical_json_sha256(contract_material):
+        failures.append(
+            {
+                "check": "character_response_integrity",
+                "reason": "character-response content does not match its canonical hash",
+            }
+        )
+
+    response = (
+        composed.get("character_response")
+        if isinstance(composed.get("character_response"), dict)
+        else {}
+    )
+    evidence = (
+        response.get("evidence")
+        if isinstance(response.get("evidence"), dict)
+        else {}
+    )
+    if str(response.get("source_contract_sha256") or "") != contract_sha:
+        failures.append(
+            {
+                "check": "character_response_binding",
+                "reason": "composed character response is not bound to the pack contract hash",
+            }
+        )
+    if set(evidence) != set(required_fields):
+        failures.append(
+            {
+                "check": "character_response_evidence",
+                "reason": "composed evidence must cover every required generic causal field exactly once",
+                "expected": required_fields,
+                "actual": sorted(evidence),
+            }
+        )
+    for field in required_fields:
+        expected_phrase = str(frozen.get(field) or "")
+        actual_phrase = str(evidence.get(field) or "")
+        if actual_phrase != expected_phrase or not text_contains_term(
+            prompt_en, actual_phrase
+        ):
+            failures.append(
+                {
+                    "check": "character_response_evidence",
+                    "reason": "typed evidence must remain byte-identical to the frozen phrase and literal in prompt_en",
+                    "field": field,
+                }
+            )
+
+    advisory = (
+        contract.get("advisory_retrieval")
+        if isinstance(contract.get("advisory_retrieval"), dict)
+        else {}
+    )
+    available_ids = {
+        str(item.get("candidate_id") or "")
+        for item in advisory.get("candidates") or []
+        if isinstance(item, dict) and str(item.get("candidate_id") or "")
+    }
+    selected = nonempty_string_list(response.get("selected_advisory_candidate_ids"))
+    if len(selected) != len(set(selected)) or not set(selected) <= available_ids:
+        failures.append(
+            {
+                "check": "character_response_advisory_selection",
+                "reason": "selected advisory behavior nodes must be distinct members of the retrieved optional set",
+                "unexpected": sorted(set(selected) - available_ids),
+            }
+        )
+    return failures
+
+
 def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dict[str, Any]:
     failures: list[dict[str, Any]] = []
     warnings: list[dict[str, Any]] = []
@@ -6315,6 +6623,7 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
 
     failures.extend(audit_creative_direction(pack, composed, prompt_en))
     failures.extend(audit_moe_response(pack, composed, prompt_en))
+    failures.extend(audit_character_response_v6(pack, composed, prompt_en))
     failures.extend(audit_visual_obligations(pack, composed, prompt_en))
     failures.extend(audit_viewer_experience(pack, composed, prompt_en))
     failures.extend(audit_authorial_core_v5(pack, composed, prompt_en))
@@ -6450,6 +6759,7 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
     if not chosen and contract_version not in {
         "photo-candidate-pack/v4",
         "photo-candidate-pack/v5",
+        "photo-candidate-pack/v6",
     }:
         failures.append({"check": "chosen_candidate_ids", "reason": "no chosen_candidate_ids supplied"})
     invalid = sorted(candidate_id for candidate_id in chosen if candidate_id not in valid_ids)

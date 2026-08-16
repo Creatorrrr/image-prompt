@@ -91,7 +91,8 @@ def audit_image_render_request(
     )
     intent_lock = (
         authorial_core.get("intent_lock")
-        if authorial_core.get("contract_version") == "photo-authorial-core/v2"
+        if authorial_core.get("contract_version")
+        in {"photo-authorial-core/v2", "photo-authorial-core/v3"}
         and isinstance(authorial_core.get("intent_lock"), dict)
         else {}
     )
@@ -100,7 +101,7 @@ def audit_image_render_request(
         failures.append(
             {
                 "check": "source_intent_lock_sha256",
-                "reason": "an intent-locked v5 render request must bind the exact requesting-user-priority intent lock",
+                "reason": "an intent-locked v5/v6 render request must bind the exact requesting-user-priority intent lock",
                 "expected": expected_intent_lock_sha256,
                 "actual": request.get("source_intent_lock_sha256"),
             }
