@@ -1,5 +1,5 @@
 {
-  "schema_version": "photo-visual-obligation-registry/v2",
+  "schema_version": "photo-visual-obligation-registry/v3",
   "contract_version": "photo-visual-obligations/v1",
   "visual_intent_contract_version": "photo-visual-intent/v1",
   "concept_contract_version": "photo-visual-concepts/v1",
@@ -12,16 +12,22 @@
   ],
   "activation_policy": {
     "request_only": true,
-    "exact_or_boundary_aware_terms": true,
+    "exact_terms_are_boundary_aware": true,
     "negated_terms_do_not_activate": true,
     "direct_terms_activate_hard_obligations": true,
-    "component_semantics_only_create_optional_candidates": true,
-    "soft_concept_cues_only_create_optional_candidates": true,
+    "semantic_examples_only_create_optional_candidates": true,
     "semantic_similarity_never_activates_hard_obligations": true,
+    "embedding_retrieval_is_seed_and_creativity_independent": true,
+    "user_definitions_take_precedence_over_registry_meanings": true,
     "project_glossary_aliases_are_profile_local": true,
     "reference_appearance_never_implies_personality_or_archetype": true,
     "ordinary_related_objects_do_not_activate_named_challenge_profiles": true,
     "profiles_do_not_rewrite_unrelated_requests": true
+  },
+  "retrieval_policy": {
+    "minimum_similarity": 0.7,
+    "best_score_margin": 0.08,
+    "candidate_limit": 2
   },
   "evidence_policy": {
     "minimum_content_words_default": 3,
@@ -38,17 +44,31 @@
       "id": "inner_thigh_negative_space",
       "category": "pose_geometry",
       "activation": {
-        "any_terms": [
+        "exact_terms": [
           "thigh gap",
           "inner thigh gap",
-          "inner-thigh negative space",
-          "허벅지 사이 공간",
-          "허벅지 사이의 공간"
+          "inner-thigh negative space"
         ],
         "project_glossary_aliases": [
           "절대공역",
           "사이갭",
           "사이 갭"
+        ],
+        "requires_adult_character": true
+      },
+      "semantics": {
+        "definition": "An attractive, deliberately framed pocket of visible background bounded by the actual upper inner-thigh contours while the legs and knees remain close rather than spread apart.",
+        "paraphrase_examples": [
+          "허벅지 사이 공간",
+          "허벅지 사이의 공간",
+          "모은 다리의 허벅지 사이로 비치는 빈 공간",
+          "매력적인 허벅지",
+          "허벅지 매력",
+          "각선미 강조",
+          "attractive thighs",
+          "thigh appeal",
+          "shapely thighs",
+          "a narrow opening between close upper inner thighs"
         ],
         "component_semantics": {
           "minimum_component_groups": 2,
@@ -102,15 +122,11 @@
             }
           ]
         },
-        "soft_concept_cues": [
-          "매력적인 허벅지",
-          "허벅지 매력",
-          "각선미 강조",
-          "attractive thighs",
-          "thigh appeal",
-          "shapely thighs"
-        ],
-        "requires_adult_character": true
+        "contrast_examples": [
+          "wide stance space below separated knees",
+          "a skirt or coat opening mistaken for body-bounded negative space",
+          "a dark garment seam or shadow"
+        ]
       },
       "concept_candidate": {
         "concept_terms": [
@@ -120,6 +136,7 @@
           "upper inner-thigh contours",
           "inverted triangle",
           "narrow background opening",
+          "deliberate attractive negative-space emphasis",
           "thumbnail crop",
           "false-gap exclusion"
         ]
@@ -132,11 +149,12 @@
         ],
         "forbidden_prompt_terms": []
       },
-      "composition_instruction": "Show a narrow background opening bounded by the actual upper inner-thigh contours while the legs remain adducted, crossed, or otherwise close; crop tightly enough that the geometry survives thumbnail review.",
+      "composition_instruction": "Show a narrow background opening bounded by the actual upper inner-thigh contours while the legs remain adducted, crossed, or otherwise close; make that true negative space a deliberate attractive compositional feature and crop tightly enough that the geometry survives thumbnail review.",
       "required_evidence_fields": [
         "close_leg_geometry_phrase",
         "inner_thigh_boundary_phrase",
         "negative_space_phrase",
+        "appeal_emphasis_phrase",
         "false_gap_exclusion_phrase",
         "thumbnail_crop_phrase"
       ],
@@ -152,6 +170,10 @@
         "negative_space_phrase": {
           "min_content_words": 3,
           "must_mention_any": ["background opening", "negative space", "triangular opening", "inverted triangle", "diamond opening"]
+        },
+        "appeal_emphasis_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": ["attractive negative space", "deliberate visual attraction", "appealing focal geometry", "visually alluring geometry"]
         },
         "false_gap_exclusion_phrase": {
           "min_content_words": 3,
@@ -172,6 +194,11 @@
           "id": "vo_inner_thigh_true_negative_space",
           "review_scale": "native",
           "description": "A clean background opening is bounded by the actual upper inner-thigh contours."
+        },
+        {
+          "id": "vo_inner_thigh_attractive_composition",
+          "review_scale": "thumbnail",
+          "description": "The true inner-thigh negative space is intentionally framed as an attractive focal geometry rather than an incidental gap."
         },
         {
           "id": "vo_inner_thigh_not_false_gap",
@@ -196,10 +223,22 @@
       "id": "composite_overwhelmed_expression",
       "category": "composite_expression",
       "activation": {
-        "any_terms": [
+        "exact_terms": [
           "ahegao",
           "아헤가오",
           "アヘ顔"
+        ],
+        "requires_adult_character": true
+      },
+      "semantics": {
+        "definition": "A simultaneous comic overwhelmed expression composed from upward or slightly asymmetric pupils, relaxed brows, a small rounded open mouth, a centered tongue tip beyond the lips, subtle blush, and a tired release rather than a contemptuous smirk.",
+        "paraphrase_examples": [
+          "우스운 멍한 표정",
+          "정신이 잠깐 풀린 표정",
+          "눈동자가 위를 향하고 혀끝을 내민 지친 홍조 표정",
+          "comic overwhelmed expression",
+          "dazed composure loss",
+          "overwhelmed bliss expression"
         ],
         "component_semantics": {
           "minimum_component_groups": 2,
@@ -243,14 +282,11 @@
             }
           ]
         },
-        "soft_concept_cues": [
-          "우스운 멍한 표정",
-          "정신이 잠깐 풀린 표정",
-          "comic overwhelmed expression",
-          "dazed composure loss",
-          "overwhelmed bliss expression"
-        ],
-        "requires_adult_character": true
+        "contrast_examples": [
+          "a contemptuous smug tongue-out taunt",
+          "ordinary eye contact with a neutral smile",
+          "an expression described only by a sensitive shorthand label"
+        ]
       },
       "concept_candidate": {
         "concept_terms": [
@@ -259,6 +295,8 @@
           "relaxed brows",
           "small rounded open mouth",
           "centered external tongue tip",
+          "subtle cheek blush",
+          "slightly fatigued release",
           "no contemptuous smirk",
           "fully clothed adult context"
         ]
@@ -268,17 +306,21 @@
         "prompt_label_terms": [],
         "forbidden_prompt_terms": [
           "ahegao",
+          "아헤가오",
+          "アヘ顔",
           "orgasm",
           "sexual ecstasy"
         ]
       },
-      "composition_instruction": "Translate the named expression into simultaneous, nonsexual facial components on an unmistakably adult subject: asymmetric upward eye drift, relaxed brows, a small symmetric rounded-open mouth, and a centered tongue tip visibly crossing the outer lip boundary, without a contemptuous smirk.",
+      "composition_instruction": "Translate the named expression into simultaneous, nonsexual facial components on an unmistakably adult subject: asymmetric upward eye drift, relaxed brows, a small symmetric rounded-open mouth, a centered tongue tip visibly crossing the outer lip boundary, subtle cheek blush, and a slightly fatigued release, without a contemptuous smirk.",
       "required_evidence_fields": [
         "adult_safe_context_phrase",
         "eye_configuration_phrase",
         "relaxed_brow_phrase",
         "rounded_open_mouth_phrase",
         "external_tongue_tip_phrase",
+        "subtle_blush_phrase",
+        "fatigued_release_phrase",
         "no_smirk_phrase",
         "simultaneous_expression_phrase"
       ],
@@ -303,6 +345,14 @@
         "external_tongue_tip_phrase": {
           "min_content_words": 3,
           "must_mention_any": ["tongue tip crosses", "tongue tip past", "external tongue tip", "tongue tip outside"]
+        },
+        "subtle_blush_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": ["subtle cheek blush", "faint blush", "lightly flushed cheeks", "soft facial flush"]
+        },
+        "fatigued_release_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": ["slightly fatigued", "tired release", "spent composure", "weary facial release"]
         },
         "no_smirk_phrase": {
           "min_content_words": 3,
@@ -335,6 +385,11 @@
           "description": "A small centered tongue tip crosses the outer lip boundary and is not wholly contained inside the mouth."
         },
         {
+          "id": "vo_overwhelmed_blush_and_fatigue",
+          "review_scale": "both",
+          "description": "A subtle cheek blush and slightly fatigued release coexist with the eye and mouth configuration."
+        },
+        {
           "id": "vo_overwhelmed_no_contempt_smirk",
           "review_scale": "thumbnail",
           "description": "The combined expression reads as comic overwhelmed composure loss, not contempt, disgust, mockery, or a one-sided smirk."
@@ -358,11 +413,22 @@
       "id": "hands_free_supported_drink_load",
       "category": "support_mechanics",
       "activation": {
-        "any_terms": [
+        "exact_terms": [
           "bubble tea challenge",
           "boba challenge",
           "버블티 챌린지",
           "보바 챌린지"
+        ],
+        "requires_adult_character": true
+      },
+      "semantics": {
+        "definition": "A hands-free drink-balancing action in which a near-upright cup visibly rests against an opaque covered upper torso with broad base contact and both hands clearly separated from the cup.",
+        "paraphrase_examples": [
+          "손을 쓰지 않는 버블티",
+          "가슴 위 컵 균형",
+          "컵을 상체로 받치는",
+          "hands-free bubble tea",
+          "balancing a drink on the torso"
         ],
         "component_semantics": {
           "minimum_component_groups": 2,
@@ -408,14 +474,11 @@
             }
           ]
         },
-        "soft_concept_cues": [
-          "손을 쓰지 않는 버블티",
-          "가슴 위 컵 균형",
-          "컵을 상체로 받치는",
-          "hands-free bubble tea",
-          "balancing a drink on the torso"
-        ],
-        "requires_adult_character": true
+        "contrast_examples": [
+          "holding a drink normally in one hand",
+          "a hidden shelf or strap supporting the cup",
+          "a tilted cup without visible base contact"
+        ]
       },
       "concept_candidate": {
         "concept_terms": [
@@ -510,7 +573,7 @@
       "id": "deliberate_underarm_salience",
       "category": "pose_salience",
       "activation": {
-        "any_terms": [
+        "exact_terms": [
           "underarm",
           "armpit",
           "겨드랑이",
@@ -522,6 +585,16 @@
           "armpit seam",
           "겨드랑이 봉제선",
           "겨드랑이 절개"
+        ],
+        "requires_adult_character": true
+      },
+      "semantics": {
+        "definition": "A deliberately posed and photographed natural hollow beneath a raised arm, kept anatomically plausible and visually salient in the same focal plane as the face.",
+        "paraphrase_examples": [
+          "팔을 들어 오목한 부위를 강조",
+          "raised-arm sensual pose",
+          "intentional raised-arm hollow emphasis",
+          "a tight portrait emphasizing the natural hollow under a lifted arm"
         ],
         "component_semantics": {
           "minimum_component_groups": 2,
@@ -561,12 +634,11 @@
             }
           ]
         },
-        "soft_concept_cues": [
-          "팔을 들어 오목한 부위를 강조",
-          "raised-arm sensual pose",
-          "intentional raised-arm hollow emphasis"
-        ],
-        "requires_adult_character": true
+        "contrast_examples": [
+          "an underarm garment seam or gusset",
+          "a prop hiding the raised-arm anatomy",
+          "a loose full-body crop where the region is not salient"
+        ]
       },
       "concept_candidate": {
         "concept_terms": [
@@ -656,7 +728,7 @@
       "id": "embodied_corruption_transition",
       "category": "state_transition",
       "activation": {
-        "any_terms": [
+        "exact_terms": [
           "corruption transformation",
           "dark corruption transformation",
           "corruption",
@@ -673,6 +745,47 @@
           "data corruption",
           "file corruption",
           "database corruption"
+        ],
+        "context_disambiguation": {
+          "required_with_authorial_core": true,
+          "any_terms": [
+            "character corruption",
+            "corruption transformation",
+            "embodied transition",
+            "visible transformation",
+            "former self",
+            "dark current state",
+            "becoming corrupted",
+            "changes allegiance",
+            "인물의 타락",
+            "캐릭터의 타락",
+            "타락해가는",
+            "몸에 번지는 변화",
+            "이전 모습",
+            "흑화",
+            "闇堕ち"
+          ],
+          "exclude_if_any_terms": [
+            "타락한 우아함",
+            "타락한 분위기",
+            "decadent elegance",
+            "fallen elegance",
+            "corrupted elegance",
+            "no character transformation",
+            "without a character transformation"
+          ]
+        },
+        "requires_adult_character": true
+      },
+      "semantics": {
+        "definition": "A visible character-state transition in which the former identity remains readable beside an unfinished darkness or corruption boundary spreading across the body, optionally tied to an allegiance choice or a suppressed remnant of the former self.",
+        "paraphrase_examples": [
+          "반쯤 어둠에 물든 주인공",
+          "옛 상징을 버리려다 망설이는",
+          "몸 위에 타락의 변화가 번지는 인물",
+          "half-darkened heroine",
+          "former self resisting darkness",
+          "a character visibly changing into a darker state"
         ],
         "component_semantics": {
           "minimum_component_groups": 2,
@@ -726,22 +839,20 @@
             }
           ]
         },
-        "soft_concept_cues": [
-          "반쯤 어둠에 물든 주인공",
-          "옛 상징을 버리려다 망설이는",
-          "half-darkened heroine",
-          "former self resisting darkness"
-        ],
-        "requires_adult_character": true
+        "contrast_examples": [
+          "political or institutional corruption",
+          "data or file corruption",
+          "decadent elegance without a character transformation"
+        ]
       },
       "concept_candidate": {
         "concept_terms": [
           "embodied dark-state transition",
           "former identity still visible",
           "unfinished on-body boundary",
-          "present-tense allegiance choice",
-          "released former emblem",
-          "suppressed relational remnant",
+          "context-specific visible cause",
+          "optional allegiance choice",
+          "optional former-self remnant",
           "corruption remains first-read"
         ]
       },
@@ -757,14 +868,12 @@
           "file corruption"
         ]
       },
-      "composition_instruction": "Put the transformation on the character and inside a present-tense choice: show a readable former state, a dark current state, an unfinished on-body boundary, an allegiance-changing action, and one involuntary relational remnant that the corrupted self tries to suppress.",
+      "composition_instruction": "When the request context means an embodied character transition, show a readable former state, a dark current state, an unfinished on-body boundary, and one visible context-specific cause or choice. Allegiance change and a suppressed former-self remnant are optional senses, not mandatory meanings of every corruption request.",
       "required_evidence_fields": [
         "former_state_phrase",
         "dark_current_state_phrase",
         "on_body_transition_boundary_phrase",
-        "allegiance_action_phrase",
-        "former_self_remnant_phrase",
-        "suppressed_relational_leak_phrase",
+        "context_specific_cause_phrase",
         "unfinished_transition_phrase"
       ],
       "evidence_requirements": {
@@ -780,17 +889,9 @@
           "min_content_words": 3,
           "must_mention_any": ["on-body boundary", "boundary across her", "stops at her wrist", "spreading across her body"]
         },
-        "allegiance_action_phrase": {
+        "context_specific_cause_phrase": {
           "min_content_words": 3,
-          "must_mention_any": ["releases the former", "drops the old", "accepts the dark", "rejects the old", "changes allegiance"]
-        },
-        "former_self_remnant_phrase": {
-          "min_content_words": 3,
-          "must_mention_any": ["former-self remnant", "former warmth", "old caring reflex", "former loyalty"]
-        },
-        "suppressed_relational_leak_phrase": {
-          "min_content_words": 3,
-          "must_mention_any": ["suppresses", "immediately restrains", "tries to hide", "flattens the warm"]
+          "must_mention_any": ["visible cause", "present-tense choice", "accepts the change", "resists the change", "source of the transformation"]
         },
         "unfinished_transition_phrase": {
           "min_content_words": 3,
@@ -814,14 +915,9 @@
           "description": "A clear unfinished boundary between former and dark states exists on the character."
         },
         {
-          "id": "vo_corruption_allegiance_action",
-          "review_scale": "both",
-          "description": "A visible present-tense accept, reject, release, replace, or conceal action makes the allegiance change causal."
-        },
-        {
-          "id": "vo_corruption_relational_remnant",
+          "id": "vo_corruption_contextual_cause",
           "review_scale": "thumbnail",
-          "description": "One warm former-self or relational micro-response leaks through and is being suppressed."
+          "description": "A visible cause or present-tense choice expresses the request-specific sense of corruption without forcing one allegiance or relationship story."
         },
         {
           "id": "vo_corruption_remains_primary",
@@ -841,10 +937,22 @@
       "id": "adult_mesugaki_status_play",
       "category": "behavioral_archetype",
       "activation": {
-        "any_terms": [
+        "exact_terms": [
           "mesugaki",
           "메스가키",
           "メスガキ"
+        ],
+        "requires_adult_character": true
+      },
+      "semantics": {
+        "definition": "An unmistakably adult peer rival with a youthful but adult presentation, haughty half-lidded eyes, a smug poised bearing, and teasing one-up behavior, with any warm crack or small setback kept optional rather than required.",
+        "paraphrase_examples": [
+          "도도한 성인 라이벌",
+          "잘난 척하는 성인 라이벌",
+          "건방지고 도도하지만 앳돼 보이는 성인 인물",
+          "smug adult rival",
+          "haughty adult peer",
+          "teasing one-up"
         ],
         "component_semantics": {
           "minimum_component_groups": 2,
@@ -858,9 +966,12 @@
                 "점수로 잘난 척",
                 "한 수 위라고 뽐내",
                 "도도한 라이벌",
+                "건방지고 도도한 표정",
+                "거만한 반쯤 감긴 눈",
                 "haughty one-up",
                 "boasts over one point",
                 "smug peer rival",
+                "haughty smug expression",
                 "status play"
               ]
             },
@@ -898,42 +1009,38 @@
             }
           ]
         },
-        "soft_concept_cues": [
-          "도도한 성인 라이벌",
-          "잘난 척하는 성인 라이벌",
-          "smug adult rival",
-          "haughty adult peer",
-          "teasing one-up"
-        ],
-        "requires_adult_character": true
+        "contrast_examples": [
+          "childlike body morphology",
+          "generic cuteness without haughty status play",
+          "a warm helpful scene with no smug rivalry"
+        ]
       },
       "concept_candidate": {
         "concept_terms": [
           "unmistakably adult peer rival",
-          "haughty status play",
-          "one visible one-up action",
-          "small setback or offered help",
-          "brief involuntary warm crack",
-          "attempted composure recovery",
-          "behavior rather than youthful morphology"
+          "haughty and smug facial baseline",
+          "poised arrogant bearing",
+          "fresh youthful adult styling",
+          "behavior rather than childlike morphology",
+          "optional one-up incident",
+          "optional warm composure crack"
         ]
       },
       "runtime_expression": {
         "default_mode": "definition_only",
         "prompt_label_terms": [],
         "forbidden_prompt_terms": [
-          "mesugaki"
+          "mesugaki",
+          "메스가키",
+          "メスガキ"
         ]
       },
-      "composition_instruction": "Express the adult archetype through status play rather than facial morphology: an unmistakably adult peer performs one visible haughty one-up action, suffers a small legible setback or receives help, and leaks a brief warm crack before recovering composure.",
+      "composition_instruction": "Express the archetype as an unmistakably adult peer with a haughty, poised, smug facial baseline and fresh youthful adult styling without childlike morphology. A one-up incident, setback, warm crack, or recovery beat may strengthen a fitting scene, but none is a mandatory meaning of the archetype.",
       "required_evidence_fields": [
         "adult_role_phrase",
         "haughty_baseline_phrase",
-        "status_action_phrase",
-        "visible_target_phrase",
-        "setback_or_help_trigger_phrase",
-        "involuntary_warm_crack_phrase",
-        "recovery_attempt_phrase",
+        "smug_expression_phrase",
+        "adult_youthful_styling_phrase",
         "appearance_inference_exclusion_phrase"
       ],
       "evidence_requirements": {
@@ -946,29 +1053,17 @@
           "min_content_words": 3,
           "must_mention_any": ["haughty baseline", "raised brow", "half-lidded", "superior smirk", "chin-down"]
         },
-        "status_action_phrase": {
+        "smug_expression_phrase": {
           "min_content_words": 3,
-          "must_mention_any": ["one-up action", "boasts over", "points at the score", "flaunts the win"]
+          "must_mention_any": ["smug expression", "superior smirk", "self-satisfied mouth", "cool arrogant gaze"]
         },
-        "visible_target_phrase": {
+        "adult_youthful_styling_phrase": {
           "min_content_words": 3,
-          "must_mention_any": ["visible target", "peer holds", "score display", "recipient hand", "opponent"]
-        },
-        "setback_or_help_trigger_phrase": {
-          "min_content_words": 3,
-          "must_mention_any": ["small setback", "offered help", "returned item", "one-point loss", "peer helps"]
-        },
-        "involuntary_warm_crack_phrase": {
-          "min_content_words": 3,
-          "must_mention_any": ["warm crack", "mouth corner softens", "cheek warmth", "brief grateful warmth"]
-        },
-        "recovery_attempt_phrase": {
-          "min_content_words": 3,
-          "must_mention_any": ["regain composure", "recovers the smirk", "suppresses the warmth", "flattens the smile"]
+          "must_mention_any": ["youthful adult styling", "fresh adult styling", "young-adult energy", "playful adult styling"]
         },
         "appearance_inference_exclusion_phrase": {
           "min_content_words": 3,
-          "must_mention_any": ["behavior not morphology", "not youthful styling", "not twin tails", "adult behavior carries"]
+          "must_mention_any": ["behavior not childlike morphology", "not childlike proportions", "not twin tails alone", "adult behavior carries"]
         }
       },
       "render_gates": [
@@ -983,19 +1078,9 @@
           "description": "Pose, eyelids, brow, and mouth establish a haughty peer-rival baseline rather than generic cuteness."
         },
         {
-          "id": "vo_mesugaki_status_action_and_target",
+          "id": "vo_mesugaki_youthful_adult_styling",
           "review_scale": "both",
-          "description": "One concrete one-up action and its visible target or score consequence are legible in the same crop."
-        },
-        {
-          "id": "vo_mesugaki_small_setback_trigger",
-          "review_scale": "both",
-          "description": "A small setback or offered help visibly interrupts the haughty baseline."
-        },
-        {
-          "id": "vo_mesugaki_warm_crack_and_recovery",
-          "review_scale": "thumbnail",
-          "description": "A brief involuntary warm crack and an attempted recovery coexist; neither generic smugness nor generic embarrassment qualifies."
+          "description": "Fresh or playful styling reads as adult young-person energy while body and facial morphology remain unmistakably adult."
         },
         {
           "id": "vo_mesugaki_behavior_not_morphology",
@@ -1005,10 +1090,10 @@
       ],
       "reject_substitutes": [
         "twin_tails_as_personality_evidence",
-        "small_face_or_youthful_styling_as_archetype_evidence",
-        "smirk_only_without_status_action",
+        "small_face_or_childlike_morphology_as_archetype_evidence",
+        "generic_cute_face_without_haughty_behavior",
         "bullying_or_humiliation",
-        "generic_arcade_pose_without_setback_and_warm_crack"
+        "minor_coded_role_or_schoolchild_styling"
       ]
     }
   ]

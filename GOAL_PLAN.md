@@ -1,105 +1,103 @@
-# Independent Japanese-Subculture Moe Generation Goal
-
-- 작성: 2026-08-13 14:35 KST
-- 상태: completed
-- 완료: 2026-08-13 15:53 KST
-- 대상: `skills/photo-prompt-image-generator`
-- 기준 ref: `main@795691ed4f84`
-- 자동 목표 상향: 비활성
-- 이전 목표 경계: `795691e:GOAL_PLAN.md`의 v10 츤데레 픽셀 사용자 판정은 완료로 간주하지 않는다. 그 미해결 사실은 `docs/failed-reports/2026-08-12-moe-aesthetic-contract-user-preference-failure.md`에 보존하며, 이번 독립 5-arm 시험과 별개의 사용자 선호 목표로 둔다.
+# Visual Profile Hybrid Retrieval Goal
 
 ## 목표와 실제 산출물
 
-- 원래 사용자 요청: 다섯 개의 서로 독립된 서브에이전트 환경에서 각 에이전트가 현재 `photo-prompt-image-generator` 스킬을 실제로 읽고 사용해, 첨부된 가상 성인 인물을 바탕으로 일본 서브컬처 스타일의 모에한 프롬프트와 이미지를 하나씩 독립 생성한다. 모든 결과가 식물에 물주는 장면으로 수렴한 이전 시험의 전달·선택 결함을 고치고 다시 시험한다.
-- 최종 제품/결과: 일반적인 일본 서브컬처 모에 요청이 우연한 부분 문자열 때문에 식물 장면으로 라우팅되지 않는다. 각 에이전트는 후보팩 생성 전에 자기만의 구조화된 콘셉트 코어와 구체적인 일본 서브컬처 사진 스타일 근거를 작성하며, 후보팩·composed prompt·실제 이미지·호출 ledger를 자기 작업공간에 남긴다. 다섯 결과는 숨김이나 재시도 없이 함께 제시된다.
-- 범위: v4 장면 relevance selector, typed Japanese-subculture photo style contract, 후보팩 이전 authorial request 계약, 관련 composer/audit 및 skill 문서, v2/v3 명시적 호환 경계, 5개 분리 worktree에서 각 1회 이미지 생성 시험.
-- 비목표: 이전 v10 츤데레 한 장의 추가 qualification, 일반 사진 전체의 미학 재설계, 특정 기존 캐릭터·작가·브랜드 복제, 첨부 인물의 실제 신원 추론, 일러스트 생성기로 전환, 배포·push·PR, 기존 대규모 `output/` 이력 정리, 이미지 모델 전반의 보편적 모에 성능 주장.
+- 원래 사용자 요청: 시각 프로필을 하나의 원본 데이터로 관리하면서 exact 용어 매칭과 embedding 유사도 조회를 한 전용 인덱스·resolver에서 함께 수행하고, 설명형 요청도 관련 프로필 후보를 찾게 한다.
+- 최종 제품/결과: `photo-prompt-image-generator`가 authorial core를 동결한 뒤에만 registry-hash-bound 시각 프로필 인덱스를 조회한다. 명시적 프로젝트 용어는 deterministic exact hit로 유지하고, 일반 설명·의역은 embedding hit로 찾아 선택 가능한 의미/강화 후보로만 노출한다.
+- 범위: 시각 프로필 registry schema, 생성형 sidecar index와 builder, 단일 resolver, candidate-pack v5의 `visual_obligations`·`visual_concept_candidates`·`semantic_clarification` projection, validator/tests/reference 계약.
+- 비목표:
+  - 최초 의미 해석이나 기본 프롬프트 작성 전에 registry/index/candidate pack을 읽는 동작
+  - embedding-only hit를 자동 hard obligation으로 승격하는 동작
+  - creativity나 seed로 의미 조회 결과를 바꾸는 동작
+  - 이미지 생성·픽셀 품질 평가, 일반 semantic index 재설계, v2/v3 제거
+  - 새로운 성인/안전 필터·분류기·차단 조건을 추가하거나 기존 차단을 강화하는 변경. 기존 경계는 유지할 수 있고, 문맥상 명확한 성인 표현을 더 인정해 허용 범위를 넓히는 변경만 가능하다.
 
 ## 진척 계약
 
-- 진척으로 인정: selector/contract/composer의 실제 동작 변화, 고정 입력에서 달라진 장면·스타일·콘셉트 코어, 에이전트별 독립 prompt와 실제 픽셀, 실패를 포함한 정확한 호출 결과.
-- 진척으로 인정하지 않음: 계획·테스트·schema·audit·manifest만 추가한 상태, `Japanese subculture` 또는 `moe`라는 라벨만 붙인 prompt, 같은 내부 장면을 말만 바꿔 다섯 번 재사용한 결과, prompt PASS를 픽셀 품질 PASS로 주장한 상태.
-- 검증-only 작업 상한: 기준선 재현 1회 후 각 제품 단계당 focused 검증 1회, 마지막 affected regression 1회. 검증-only checkpoint를 두 번 연속 만들지 않는다.
-- 실행 지식 작업 상한: 관련 보고서 전문 최대 5건, matching failed report 우선 갱신, 성공 보고서 기본 최대 1건, 별도 checkpoint 금지.
-- 진행 로그: `product delta -> direct evidence -> remaining product gap -> blocker`.
+- 진척으로 인정: 단일 원본 registry에서 exact/semantic index가 생성됨, 한 resolver의 결과가 실제 pack 세 projection을 구동함, 설명형 입력에서 embedding-only optional 후보가 나타남, exact 용어와 user definition 우선순위가 실제 동작함.
+- 진척으로 인정하지 않음: 문서·schema·index 파일·테스트만 추가되고 runtime 조회가 기존 중복 matcher를 계속 사용하는 상태, 실제 vector를 사용하지 않는 이름뿐인 embedding 경로, 성인/안전 차단만 늘어난 상태.
+- 검증-only 작업 상한: 단계별 focused 검증 1회와 최종 affected suite 1회. 연속 두 checkpoint를 검증-only로 쓰지 않는다.
+- 실행 지식 작업 상한: 후보 기본 15건, 관련도순 전문 최대 5건/조회, 성공 보고서 기본 최대 1건, 별도 checkpoint 금지.
 
 ## 기준선과 고정 결정
 
-- 현재 기준선: commit `795691e`의 default candidate pack은 v4이며 blueprint ID와 구체 장면 원자를 숨기고 에이전트가 장면을 새로 쓰게 한다. 그러나 내부 blueprint relevance가 요청 전체에서 길이 4 이상의 단어를 부분 문자열로 세기 때문에 `mist`가 `unmistakably`에 맞는다. 고정 seed `1301, 2603, 3907, 5209, 6503` 모두 내부 식물 관찰/급수 blueprint를 고른다.
-- 최근 수정의 유효한 경계: v4 authorial scene과 pack privacy는 이전 v3의 구체 장면 복사를 줄였지만, 선택기 입력·일본 서브컬처 style evidence·후보팩 이전 에이전트 창작 provenance를 해결하지 않았다. 기존 v4 focused tests 5건과 dictionary/scene/semantic 무결성 검사는 통과했으므로 호환 기준선으로 유지한다.
-- 독립성 정의: 다섯 에이전트는 같은 최종 source ref와 같은 사용자 첨부 이미지만 공유한다. 서로 다른 detached worktree·artifact 디렉터리·seed를 사용하고 다른 arm의 prompt/pack/image/message를 읽거나 입력으로 쓰지 않는다. 독립성 합격과 결과 다양성 평가는 분리한다.
-- 스타일 정의: `일본 서브컬처 스타일`은 인종·국적·실존 인물을 추론하는 말이 아니다. 사진에서 보이는 구체적인 fashion/community/venue/styling 계열 하나와 최소 두 개의 시각 근거로 materialize해야 한다. 라벨만 있는 경우 fail-closed 한다.
-- authorial 정의: 각 에이전트가 후보팩 생성 전에 `authorial_request/v1`의 subject, setting, event, style domain/evidence, variation key를 직접 확정한다. pack 이후에 선택된 내부 장면을 역으로 포장한 텍스트는 authorial provenance가 아니다.
+- 현재 기준선:
+  - v5는 pre-core 지식 격리와 frozen authorial core를 이미 사용한다.
+  - `photo_prompt_visual_obligations.json`이 6개 프로필의 exact term, 구성요소 lexicon, 설명, obligation/render gate를 함께 보유한다.
+  - hard activation, indirect concept matching, semantic clarification이 비슷한 매칭을 별도로 재계산하며 visual-profile embedding index는 없다.
+  - `허벅지 사이의 공간` 같은 일반 설명도 현재 exact hard term에 포함돼 있어 optional semantic discovery와 구분되지 않는다.
+- 고정 설계:
+  - 사람이 편집하는 원본은 registry 하나다. index는 registry hash와 text recipe에 묶인 재생성 가능한 파생물이다.
+  - index는 exact alias lookup과 profile semantic vectors를 함께 가진다. runtime은 한 `resolve_visual_profile_hits` 결과만 계산하고 public pack 필드는 이를 projection한다.
+  - exact hit는 기존 요청·문맥·성인 조건을 만족할 때만 기존 hard semantics를 유지한다. embedding-only hit는 항상 optional/eligible이며 선택 전에는 prompt duty나 render gate를 만들지 않는다.
+  - user definition과 explicit visual intent가 registry보다 우선한다. authorial-core 필드는 exact hard activation의 소스가 될 수 없고 embedding query 문맥으로만 쓰인다.
+  - semantic profile retrieval은 deterministic하고 creativity/seed와 독립이다. 창의성 범위·sampling은 기존 `creative_augmentation`에서만 다룬다.
+  - 일반 설명형 표현은 exact activation 목록에서 semantic examples로 이동한다. `절대공역`처럼 의도적으로 유지하는 프로젝트 용어는 exact alias로 남는다.
 - 관련 과거 실행 보고서와 적용 교훈:
-  - `docs/failed-reports/2026-08-12-natural-moe-default-scene-repair-convergence.md`: generic natural request와 강하게 저술된 연구 장면의 relevance를 분리하고 no-preset end-to-end를 확인한다.
-  - `docs/failed-reports/2026-08-12-atomic-scene-candidate-trace-leak.md`: selector를 고칠 때 score trace와 rule fallback 등 모든 projection branch에 같은 경계를 적용한다.
-  - `docs/failed-reports/2026-08-12-moe-aesthetic-contract-user-preference-failure.md`: prompt/audit 합격을 픽셀 모에 합격으로 대체하지 않고, 첨부 identity 기준과 실제 결과를 보존한다.
-  - `docs/failed-reports/2026-08-12-natural-moe-composite-mixin-gate.md`: 역할·종족·스타일이 합성될 때 한 축이 다른 축을 덮지 않게 하고 공개 wrapper까지 검증한다.
-  - `docs/passed-reports/2026-08-07-subculture-taxonomy-on-demand-routing.md`: 기존 bilingual on-demand subculture extension과 scoped route를 재사용하되 rendered distinctiveness는 별도로 확인한다.
+  - `docs/failed-reports/2026-08-07-semantic-index-batch-response.md`: Gemini index 생성은 검증된 batch size 1과 cardinality check를 유지한다.
+  - `docs/failed-reports/2026-08-07-worldbuilding-scoped-route-semantic-competition.md`: 사용자 exact typed hit가 embedding 유사도보다 우선하며 generic semantic 결과가 이를 덮지 못하게 한다.
+  - `docs/failed-reports/2026-08-13-scene-blueprint-substring-relevance-collision.md`: 긴 authored prose나 raw substring을 직접 relevance 근거로 쓰지 않고 boundary-aware exact lookup과 전용 semantic text를 분리한다.
+  - `docs/failed-reports/2026-08-11-photo-mandatory-intent-polarity-contamination.md`: 요청의 positive/negative/provenance를 보존하고 exclusion을 positive retrieval 신호로 승격하지 않는다.
+  - `docs/passed-reports/2026-08-11-photo-intent-preserving-optimization.md`: user hard phrase와 no-people 의미는 권위 있게 유지하고 optional guidance를 hard duty로 바꾸지 않는다.
 
 ## 실행 단계
 
 | 단계 | 실제 산출물/동작 변화 | 최소 직접 검증 | 완료 조건 |
 |---|---|---|---|
-| 1. 고정 재현과 실패 지식 결박 | 동일 입력/5 seed에서 식물 수렴과 substring evidence를 재현하고 matching failed report를 생성 또는 갱신한다 | 공개 wrapper pack과 private routing trace 비교 | `mist`/`unmistakably` 오탐과 후보팩 이전 콘셉트 부재가 재현 가능하고, 기대/관찰/원인이 재시도 전에 기록됨 |
-| 2. 장면 relevance selector 수리 | scene-bearing intent와 age/identity/tone/safety control을 분리하고 boundary-aware matching 및 blueprint 전용 selection cues를 사용한다. opt-in private `--explain-scene-routing`은 점수 근거만 노출한다 | exact collision negative와 explicit plant positive focused test | generic 일본 서브컬처 모에 요청은 식물 장면을 relevance winner로 고르지 않고, 식물/물주기를 명시한 요청은 해당 장면을 계속 고름 |
-| 3. typed 일본 서브컬처 사진 스타일 | 기존 subculture extension을 재사용해 `japanese_subculture_photo/v1`을 만들고 style family, 최소 두 visible cues, scoped exclusions를 pack/composition에 결박한다. 무관한 강테마 후보는 명시 의도 없이는 제외한다 | label-only/ethnicity-inference/irrelevant-theme mutation과 3개 이상 style family focused cases | 일반 요청도 구체적인 한 계열과 두 근거를 가지며 스타일 라벨만으로 통과하지 않고 국적·민족 외형을 발명하지 않음 |
-| 4. 후보팩 이전 authorial request | CLI/public wrapper가 에이전트 작성 `authorial_request/v1`을 받아 canonical SHA와 `agent_prepack` provenance를 기록하고, v4 authored scene/core가 그 subject/setting/event/style 의미를 보존한다 | pack-before/pack-after provenance mutation, 5개 고정 variation input | pack 이후 역포장이나 빈 콘셉트는 실패하고, 유효한 pre-pack request는 composed prompt까지 보존됨 |
-| 5. 버전·런타임 경계와 skill 지침 | 새 실행은 v4 preflight를 기본으로 하고 v2/v3에는 explicit `legacy_replay_reason`을 요구한다. manifest에 skill/source hash, pack version, concept-core hash, reference hash, image-call count를 기록하도록 스킬 실행 계약을 갱신한다 | v4 default와 explicit legacy replay focused regression | 오래된 v3를 새 실행으로 가장할 수 없고 기존 명시적 compatibility projection은 유지됨 |
-| 6. 다섯 독립 arm 실제 재시험 | 최종 source ref로 detached worktree 5개를 만들고, 각 서브에이전트가 그 안의 스킬을 처음부터 읽은 뒤 독립 콘셉트·pack·prompt를 만들고 첨부 reference만 사용해 이미지 도구를 정확히 1회 호출한다 | arm별 manifest/ledger, native 픽셀 thumbnail+full review, 전체 결과 병렬 제시 | 5개 arm 모두 다른 arm 산출물 무참조를 증명하고 prompt와 실제 이미지 1개씩을 남김. 독립성 결과와 시각적 다양성 결과를 별도 보고함 |
+| 1. 원본 schema와 파생 index | registry를 exact activation과 semantic definition/examples/components가 구분되는 단일 원본으로 바꾸고, registry hash·text recipe·exact lookup·Gemini vectors를 가진 `photo_prompt_visual_profile_index.json` 및 builder를 만든다 | validator와 builder의 cache/hash/cardinality focused test | broad descriptive phrase는 semantic source에만 있고 명시적 프로젝트 용어는 exact lookup에 있으며 stale index가 거부됨 |
+| 2. 단일 hybrid resolver | exact, exclusion/context, user-definition precedence, cosine semantic retrieval을 한 resolver로 합치고 post-core query vector를 재사용한다 | fake-vector exact/embedding/negation/context cases | exact와 embedding 결과가 typed basis를 가지며 embedding-only는 hard가 될 수 없고 pre-core 경로에서는 index를 조회하지 않음 |
+| 3. pack projection 전환 | `visual_obligations`, `visual_concept_candidates`, `semantic_clarification`이 같은 resolution 객체를 projection하고 기존 중복 component/direct scan을 정상 경로에서 제거한다 | 대표 exact 용어와 설명형 paraphrase v5 pack | exact는 기존 hard obligation, paraphrase는 optional concept+clarification, unselected optional은 gate 0개 |
+| 4. 계약·호환 경계 정리 | skill/reference/validator/audit provenance를 새 index/resolver 계약에 맞추고 v4 exact/explicit replay를 유지한다 | focused v4/v5 contract tests와 public privacy check | public pack에 vector/score/matched term이 노출되지 않고 user definition, negative, exact visual intent가 보존됨 |
+| 5. 실제 index와 최종 통합 | 실제 768차원 visual index를 생성하고 representative runtime 및 affected regression을 완료한다 | 실제 score replay, 관련 unit/validator/index integrity, compile, `git diff --check` | 설명형 입력이 관련 optional 프로필을 찾고 무관 control은 찾지 않으며 모든 최종 기준 통과 |
 
 ## 최종 완료 기준
 
-1. exact generic 입력과 다섯 고정 seed에서 우연한 substring 때문에 식물 관찰/급수 장면이 선택되지 않으며, 명시적 식물/물주기 요청은 해당 장면을 선택한다.
-2. 새 v4 pack/composed prompt는 `japanese_subculture_photo/v1`의 구체 style family와 최소 두 visible cues를 보존하고, label-only·민족 외형 추론·무관 강테마 치환을 fail-closed 한다.
-3. 유효한 `authorial_request/v1`은 후보팩 전에 생성된 canonical SHA와 provenance를 가지며 subject/setting/event/style 의미가 최종 prompt까지 보존된다.
-4. default v4와 명시적 v2/v3 compatibility가 모두 동작하되 새 실행에서 legacy를 쓰려면 `legacy_replay_reason`이 필요하다.
-5. 다섯 arm은 분리 worktree/입력/ledger를 가지며 다른 arm의 산출물을 읽지 않고 현재 스킬을 직접 사용했다는 증거를 남긴다. 결과 다양성은 독립성의 대리 지표로 쓰지 않는다.
-6. 각 arm은 첨부 인물을 성인 identity reference로만 다루고, 일본 서브컬처 style evidence가 실제 prompt와 픽셀에 최소 두 가지 읽히는지 정직하게 판정한 이미지 1개를 남긴다. 생성 실패/정책 차단은 이미지 성공으로 세지 않는다.
-7. selector/style/authorial/version focused tests와 affected photo regressions, dictionary/scene/semantic integrity, `git diff --check`가 통과한다.
-8. 최종 보고는 다섯 prompt·이미지·manifest 경로, 독립성 판정, 시각 다양성 판정, 각 픽셀의 모에/style 한계, 미검증 범위를 숨김없이 제시한다.
+1. 사람이 유지보수하는 시각 프로필 의미·alias·obligation 데이터는 registry 하나이며, 전용 index는 registry hash가 맞아야 로드되는 재생성 파생물이다.
+2. exact lookup과 embedding similarity가 하나의 resolver에서 한 번 계산되고 세 candidate-pack 필드는 동일 resolution을 projection한다.
+3. `절대공역` 같은 exact 프로젝트 용어는 authorial core 이후 deterministic direct hit가 되고, `허벅지 사이의 공간이 매력적인 성인 여성` 같은 설명형 요청은 관련 프로필을 embedding-only optional 후보로 찾을 수 있다.
+4. embedding-only hit는 자동 hard obligation, prompt evidence duty, render gate를 만들지 않는다. composer가 명시적으로 선택한 경우에만 기존 opt-in obligation 전체가 활성화된다.
+5. user definition·explicit visual intent·negation·context disambiguation이 우선하며 authorial-core 서술만으로 exact hard activation을 만들지 않는다. retrieval은 creativity와 seed에 불변이다.
+6. 새 성인/안전 차단 조건이나 강화된 gate가 없고, 기존 adult/safety 회귀가 유지되거나 명확한 adult 문맥 인정 범위만 넓어진다.
+7. 실제 visual-profile index integrity, focused exact/embedding/runtime tests, affected photo regression, dictionary/scene checks, compile과 diff check가 통과한다. 결과는 prompt/routing 계약까지만 주장한다.
 
 ## 검증 수준과 예산
 
-- 위험 수준: medium. 로컬 offline prompt/product 변경과 이미지 생성이며 배포·외부 mutation은 없다.
-- 반복 중 focused 검증: 수정한 selector/style/authorial/version 경계의 동결 사례만 실행한다. 제품 변경 없이 evaluator만 확장하지 않는다.
-- 이미지 예산: 최종 arm당 exactly one image-tool call, 합계 5회. retry, best-of-N, favorable selection, 다른 arm 이미지의 편집·참조를 금지한다.
-- 최종 검증: affected photo unit/contract suite, dictionary/scene/semantic 무결성, 다섯 arm manifest와 native pixels를 한 번 확인한다. 독립 검토는 이 계획의 기준만 재확인하고 새 기준을 만들지 않는다.
-- 검증 확장 전 질문 조건: 기존 경로로 mandatory criterion을 확인할 수 없어 새 외부 service/평가 campaign이 필요하거나, 합계 5회를 넘는 이미지 호출·유료 API·배포·material scope 확대가 필요할 때 중단하고 묻는다.
+- 위험 수준: medium. 로컬 prompt retrieval과 public candidate-pack 의미가 바뀌지만 배포·이미지 API·외부 상태 변경은 없다.
+- 반복 중 focused 검증: schema/index, resolver, projection마다 해당 test module만 실행한다.
+- 최종 검증: visual-profile 실제 index replay, prepack/core/visual-obligation focused suite, affected photo suite, dictionary와 기존 semantic-index integrity, scene-expression current audit, compile, `git diff --check`를 한 번 수행한다.
+- 검증 확장 전 질문 조건: 새 유료 서비스·새 embedding provider, 이미지 생성 campaign, v4 public 계약 파기, 별도 adult/safety 정책, 새 verifier artifact family가 mandatory criterion에 필요할 때 중단한다.
+- 구현 iteration 한도: 같은 고정 입력에서 같은 원인의 제품 수정은 단계당 최대 3회. 초과 시 기준이나 안전 경계를 임의로 바꾸지 않고 material failure와 선택지를 보고한다.
 
 ## 중단 조건과 실행 지식
 
-- 같은 고정 입력이 같은 selector 원인으로 제품 수정 2회 뒤에도 실패하면 단어를 임의 삭제하거나 seed를 고르지 않고 trace와 선택지를 보고한다.
-- 스타일 family를 안전하게 materialize하려면 국적/민족/특정 IP를 추론해야만 하는 설계가 되면 그 접근을 중단하고 추상적인 community/fashion/venue 근거로 되돌린다.
-- 유효한 pre-pack authorial request와 기존 v4 privacy/compatibility를 동시에 보존할 수 없으면 public/private 경계를 완화하지 말고 사용자에게 tradeoff를 묻는다.
-- 이미지 호출이 픽스를 필요로 하는 입력 감사에서 실패하면 호출하지 않고 제품을 최대 2회 수정한다. 호출 뒤 무픽셀/정책 차단/시각 실패가 발생하면 해당 arm의 1회 결과로 보존하며 재시도하지 않는다.
-- credential, token, secret, 민감 endpoint, 고객/개인정보는 보고서·로그·ledger에 저장하지 않는다. 첨부 파일은 경로·hash·`fictional adult identity reference` 역할만 기록하고 생체 신원을 추론하지 않는다.
-- 시작·재개 시 `docs/failed-reports/`와 `docs/passed-reports/` 파일명·header metadata를 module/path, environment, status, 최신순으로 평가하고 전문은 기본 최대 5건만 읽는다. 충돌하면 현재 source와 직접 evidence가 우선한다.
-- material failure는 재시도 전에 기존 matching failed report를 우선 갱신하고 같은 원인을 한 보고서에 통합한다. resolved/superseded lifecycle 변경은 관련 양쪽 보고서에 같은 변경으로 연결한다.
-- 모든 최종 기준 통과 뒤에만 성공 보고서를 기본 최대 1건 작성한다. 자격은 기존 material failure 해결, 기본/문서화된 접근 실패 뒤 비자명한 대안, 또는 현재 코드만으로 비싸게 복원되는 다단계 재현 절차 중 하나여야 한다. 단순 테스트·문서·중간 빌드 통과는 자격이 아니다.
-- 목표가 blocked/partial이면 passed report를 만들지 않고 matching failed report의 resolution/workaround 또는 최종 진행 요약에 검증된 부분 결과를 남긴다.
-- 실행 지식 보고는 별도 stage/checkpoint가 아니며 제품 delta를 대체하거나 다음 구현을 지연하지 않는다.
-- 적용 실행 지식: 위 5개 보고서. 새 material failure가 생기면 경로를 진행 로그와 최종 요약에 기록한다.
-
-## 완료 결과 (2026-08-13)
-
-- 완료 범위: selector의 `mist`/`unmistakably` 부분 문자열 충돌을 제거하고, `japanese-subculture-photo/v1`, 후보팩 이전 `authorial-request/v1`, v4 기본 및 명시적 legacy replay 경계, 독립 실행 manifest/ledger 계약을 구현했다.
-- 기준 1 PASS: 다섯 고정 seed의 일반 일본 서브컬처 요청에서 식물 장면은 0/5였고, 명시적 식물 요청은 식물 blueprint를 계속 선택한다.
-- 기준 2 PASS: v4 pack/composed prompt가 style family와 최소 두 visible cues를 보존하며 label-only, 민족 외형 추론, 무관 강테마 치환을 fail-closed 한다.
-- 기준 3 PASS: 각 arm의 후보팩 이전 authorial request는 고유 canonical SHA와 `agent_prepack` provenance를 가지며 subject/setting/event/style 의미가 prompt까지 보존됐다.
-- 기준 4 PASS: default v4가 동작하고 v2/v3는 `legacy_replay_reason` 없이는 새 실행에 사용할 수 없으며 명시적 compatibility projection은 유지된다.
-- 기준 5 PASS: 다섯 detached worktree는 서로 다른 arm/worktree/seed/request/pack/prompt/image hash를 가지며 모든 manifest가 `cross_arm_inputs_used=false`를 기록한다. root-side JSON/NDJSON 경로 검사에서도 다른 arm 참조는 발견되지 않았다.
-- 기준 6 PASS(정직한 픽셀 판정): 실제 이미지 5/5, 성인 identity 5/5, 요청 style family의 독립 visible cues 최소 두 개 5/5, 식물 장면 0/5였다. 행동 기반 모에 사건은 1/5만 읽혔고, 그 한 장도 exact negative 위반으로 완전 기술 적격은 0/5였다. 사용자 본인의 진짜 모에 판정은 5장 모두 pending이다.
-- 기준 7 PASS: affected unit/contract suite 343/343, scene-expression 112/112, generalization 79/79, frozen holdout 24/24, domain-v2 holdout 6/6, dictionary metadata, 6,513-entry semantic index, Python compile, `git diff --check`가 통과했다.
-- 기준 8 PASS: 다섯 prompt/image/manifest, 독립성·다양성·픽셀 한계와 실행 중 pre-materialization 오류를 `generated_images/japanese-subculture-moe-five-reference-v2-20260813/evaluation/review_summary.md`에 보존했다.
-- 다양성 판정: 독립성은 통과했지만 style family는 Decora 2개와 retro arcade 3개, 총 2/8 계열에 수렴해 부분적이다. 독립성을 다양성의 대리 지표로 사용하지 않는다.
-- 남은 별도 제품 gap: dense causal moe beat의 픽셀 전달력이 불안정하다. 현 5-call 예산을 숨은 재시도로 늘리지 않고 `docs/failed-reports/2026-08-13-independent-moe-causal-event-pixel-attrition.md`에 open failure로 기록했다. 후속 개선은 새 목표와 새 이미지 예산을 필요로 한다.
-- 실행 절차 공개: root 배정에서 public wrapper 대신 internal `prompt_generator.py`를 지정하면서 절대 tags 경로를 빠뜨려 pack materialization 전 실패가 발생했다. 각 arm은 이미 동결한 authorial request로 v4 pack을 정확히 하나만 materialize했고 이미지 호출은 정확히 한 번, retry 0회였다.
+- 중단하고 질문할 조건: credential/유료 호출의 새 승인이 필요함, 파괴적 변경이나 외부 상태 mutation이 필요함, single-source와 호환성을 함께 달성하려면 public schema 파기가 불가피함, 또는 완료를 위해 성인/안전 차단 강화를 요구하는 상황.
+- 시작·재개 시 current report index가 있으면 원문과 함께 검색하고, 없으면 전체 `docs/failed-reports/`·`docs/passed-reports/`의 filename·header metadata·raw text를 검색한다. exact error/problem signature, exact path/module/symbol/API/test, environment/version, approach/exclusion, lifecycle validity 순으로 관련도를 매기고 recency는 tie-breaker로만 쓴다. 전문은 조회당 기본 최대 5건이며 다른 mandatory criterion이나 material risk가 해결되지 않을 때만 이유를 밝히고 확장한다. 현재 source와 직접 evidence가 과거 보고서보다 우선한다.
+- material failure는 재시도 전에 현재 시각을 확인하고 secret, token, credential, 민감 endpoint, 고객·개인정보를 제거한 뒤 matching failed report를 먼저 갱신한다. 같은 원인은 한 보고서에 통합하며 expected/observed, 재현 조건, 직접 evidence, cause confidence, failed attempts, resolution/next safe step, reuse guidance를 기록한다.
+- lifecycle 변경은 양방향으로 같은 change에 반영한다. supersede 시 이전 보고서의 `Superseded by`와 새 보고서의 `Supersedes`를 함께 갱신하고, success가 failure를 해결하면 failed를 `resolved`로 바꾸고 양쪽을 연결한다. 현재 evidence가 active success를 깨면 success를 `superseded`로 표시하고 새 failure와 연결한다.
+- 모든 최종 기준 통과 후에만 success report를 기본 최대 1건 작성한다. 자격은 (1) material failed report 해결, (2) 같은 고정 조건에서 기본·문서화된 접근 실패 뒤 발견한 비자명한 대안, (3) 현재 코드만으로 싸게 복원할 수 없는 필수 다단계 재현 절차 중 하나다. 중간 테스트, 문서, schema, 단순 명령 PASS는 자격이 아니다.
+- 목표가 blocked/partial이면 passed report를 만들지 않는다. 검증된 부분 결과는 matching failed report의 resolution/workaround 또는 최종 진행 요약에 남긴다. 보고서 catalog가 활성 상태이면 수동 편집하지 않고 같은 change에서 재생성·검증한다.
+- 실행 지식 보고는 별도 stage/checkpoint가 아니며 product delta를 대체하거나 다음 구현을 지연하지 않는다. 최종 보고에는 적용·생성·갱신한 모든 report 경로를 포함한다.
 
 ## Codex 실행 계약
 
-- 이 `GOAL_PLAN.md`의 범위, 진척 계약, 검증 예산, 완료 기준을 권위 있는 경계로 사용한다.
-- setup 이후 각 checkpoint는 product delta, 사용자-visible artifact, measured candidate result 또는 binding implementation decision을 남긴다. 테스트·문서·schema만으로 완료하지 않는다.
-- 반복 중 focused 검증을 사용하고 마지막에 위험 비례 최종 검증을 한 번 수행한다.
-- 최종 보고에는 실제 산출물, 변경 파일, 핵심 검증과 결과, 완료 기준별 pass/fail, 실행 지식 경로, 남은 위험을 포함한다.
-- material scope 또는 validation program 확대 전에는 사용자에게 질문하며 자동 target uplift는 하지 않는다.
+- 이 파일의 범위, 진척 계약, 검증 예산, 완료 기준과 실행 지식 계약을 권위 있는 경계로 사용한다.
+- setup 이후 각 checkpoint는 product delta나 measured behavior를 남긴다. focused 검증 후 다음 제품 변경으로 진행하고 마지막에만 전체 affected 검증을 수행한다.
+- 테스트·문서·schema·index 파일만으로 완료하지 않으며 자동 target uplift를 하지 않는다.
+- 사용자 작업과 현재 dirty worktree를 보존하고 이번 목표와 겹치는 파일만 신중하게 수정한다.
+- 최종 보고에는 실제 runtime 산출물, 변경 파일, 핵심 검증 결과, 완료 기준별 pass/fail, 실행 지식 경로와 남은 위험을 포함한다.
+
+## 진행 기록
+
+- 2026-08-16 KST — 목표 생성 및 단계 1 진행 중.
+  - product delta: 없음(기준선·완료 계약 동결).
+  - direct evidence: 현재 registry의 중복 matcher, broad exact term, 전용 embedding index 부재를 source에서 확인했고 관련 failed/passed 보고서 5건을 적용했다.
+  - remaining product gap: 단계 1~5 전체.
+  - blocker: 없음.
+- 2026-08-16 12:38 KST — 단계 1~5 및 visual-profile 목표 완료.
+  - product delta: registry v3를 exact activation과 semantic material이 분리된 단일 원본으로 전환하고, registry SHA-256에 묶인 768차원 sidecar와 batch-size-one builder를 추가했다. 한 resolver가 exact·embedding·negation·context·user-definition 우선순위를 계산하고 `visual_obligations`, `visual_concept_candidates`, `semantic_clarification` 세 필드가 동일 결과를 투영한다.
+  - direct evidence: actual index 6 profiles/27 exact terms. exact `절대공역`은 hard obligation 하나만, 설명형 허벅지 요청은 hard 0개와 optional `inner_thigh_negative_space` 하나만 생성했다. exact-free full-core 양성 6개는 모두 의도 프로필 1위/optional로 통과했고 최저 점수는 0.770205, 인접 대조군 6개는 모두 후보 0개이며 최고 점수는 0.681438이었다. public visual-profile blocks에 score/vector/rank/matched term/match basis가 없고 pack audit도 통과했다.
+  - safety boundary: 새 성인/안전 차단·분류·gate를 추가하거나 강화하지 않았다. 기존 adult context가 `여성`, `女性`, `woman`, `women`, `lady`를 더 인정하도록 허용 범위만 넓혔고 관련 기존 계약 5개와 allowing-context 회귀가 통과했다.
+  - validation: focused core/prepack/visual 31/31, adult/contract 5/5, dictionary valid, scene-expression 112/112, general semantic index 6,513 entries valid, compile/index/diff checks pass. repository-wide discovery는 584개 중 11 failures/5 errors였으나 동일 16건이 temporary clean `HEAD`에서도 재현되어 별도 subculture 기준선 결함으로 귀속했다.
+  - execution knowledge: resolved `2026-08-16-visual-profile-exact-query-secondary-semantic-leak.md`, `2026-08-16-visual-profile-aligned-user-definition-suppression.md`, `2026-08-16-generic-adult-fashion-visual-profile-leak.md`, `2026-08-16-embedding-positive-blocked-by-lexical-context-guard.md`; active success `2026-08-16-visual-profile-hybrid-retrieval.md`; unrelated open baseline `2026-08-16-full-suite-subculture-boundary-failures.md`.
+  - remaining product gap: 없음. 이미지 생성과 pixel 품질 판정은 원래 비범위이며 주장하지 않는다.
+  - blocker: visual-profile 목표에는 없음. 저장소 전체 green은 별도 subculture 목표가 필요하다.
