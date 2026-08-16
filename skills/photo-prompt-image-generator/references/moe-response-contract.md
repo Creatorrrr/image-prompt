@@ -2,13 +2,21 @@
 
 Use this contract when the candidate pack contains `moe_response.enabled: true`. It turns an explicit character-moe request into visible photographic evidence. It does not claim that a viewer will actually feel moe; only the requesting user can make that acceptance judgment.
 
+## Requester-First V5 Precedence
+
+When a v5 pack contains `moe_response.intent_precedence`, every semantic default below is conditional. `photo-downstream-intent-precedence/v1` declares each rule's affected dimensions and activates it only when all of them are explicitly listed in `intent_lock.open_dimensions`. A locked or otherwise non-open dimension suppresses the corresponding positive instruction, negative-prompt term, evidence duty, and render gate. Locked evidence must exactly reuse the matching semantic-anchor phrase; evidence on another non-open dimension must already occur in the frozen baseline. The composed audit recomputes these states from the immutable core.
+
+Consequently, a generic warm-affect countercue, pretty/cute styling treatment, recovery beat, character-response mechanism, background-text suppression, or sensual-support default may never repair or reinterpret a closed requester meaning. If expression is closed, do not add softened eyes, a smile, warmth, embarrassment, a negative-affect limit, or a later emotional recovery unless the frozen baseline already contains it. If style, text, appearance, event, relationship, or sexual tone is closed, apply the same rule to that dimension. This is a general dimension boundary, not an exception list for named topics. Explicit request-derived obligations still apply, but only as realizations of the same frozen anchors.
+
 ## Operational Meaning
 
 In this skill, moe has two jointly necessary layers. First, the character must pass an aesthetic entry condition: an unmistakably adult original character who reads as both beautiful/pretty and cute/charming, normally an adult `bishoujo` design when presentation is unspecified, an adult `bishonen` design for an explicitly masculine character, or a beautiful/cute adult androgynous equivalent when requested. Second, a small event must make that particular character newly legible. Beauty or cuteness alone is insufficient, but it is not optional. Adult sexual appeal may strengthen the result and is not inherently opposed to moe; it remains a separate supporting axis. Youth, sexual appeal, costumes, animal ears, blush, kindness, or a shy smile never substitute for either required layer.
 
-Build one causal beat:
+When the causal-event and affective defaults are active, build one causal beat:
 
 `adult pretty+cute character-design entry -> behavioral baseline -> visible trigger/target -> unfinished event phase -> involuntary or costly response -> warm affective leak -> immediate consequence -> character-specific second reading`
+
+When either default is suppressed, replace its stage with the corresponding frozen requester anchor; do not fill the gap with a new generic beat.
 
 The frame should let a viewer infer both the character's usual rule and the instant in which something leaks through it. The consequence must already be visible, but the action must not have collapsed into a settled endpoint.
 
@@ -17,7 +25,7 @@ The frame should let a viewer infer both the character's usual rule and the inst
 - Appearance is the entry gate, not decoration. Give the adult character harmonious refined facial features, lively eyes at realistic adult scale, a softly expressive mouth, well-kept hair, and cohesive styling so the first thumbnail read is both pretty and cute. An ordinary generic casting fails even if the later event is strong.
 - Situation establishes the character's ordinary rule and puts one small stake at risk. Prefer an exact local event over a generic job, repair, or kindness scenario.
 - Action carries the causal change. Show direction, recipient or target, contact state, and what is not yet complete.
-- Expression records a timed leak and must not stop at annoyance, sadness, boredom, or embarrassment. Pair any guarded cue with one specific warm countercue visible on the same face: softened eyes, an almost-smile, one pleased or relieved mouth corner, fondness that briefly escapes, or playful embarrassment. Use no more than two negative-affect cues; a pout plus an averted gaze with no positive countercue is not sufficient.
+- When `affective_balance_default` is active, expression records a timed leak and must not stop at annoyance, sadness, boredom, or embarrassment. Pair any guarded cue with one specific warm countercue visible on the same face and use no more than two negative-affect cues. When it is suppressed, neither the countercue nor the negative-affect cap applies; expression comes only from the frozen baseline and requester anchors.
 - Pose makes agency and timing readable. Use weight shift, hand interruption, guarded torso, reach/recoil, or one limb lagging behind the intention; avoid a model pose with props.
 - Appearance preserves identity and continuity. Role clothing, nekomimi, or another trait explains who acts; it does not replace the event.
 - Style and atmosphere support intimacy and observation through distance, light, material continuity, and focal hierarchy. Unless the user asks for readable text, keep the background plain and unlettered: no menu board, chalkboard writing, signage, captions, pseudo-writing, decorative hearts, sparkles, blush circles, or manga reaction marks.
@@ -61,14 +69,14 @@ Relationship semantics outrank compatible presentation or species reflexes. A ma
     "support_mechanisms": [],
     "prompt_evidence": {
       "actor_phrase": "literal prompt substring",
-      "aesthetic_baseline_phrase": "literal adult plus pretty and cute design substring with at least two concrete face/hair/style details",
+      "aesthetic_baseline_phrase": "conditional: literal adult plus pretty and cute design substring when the aesthetic-style default is active",
       "active_denial_phrase": "required for denial_care_leak: literal visible mouth, chin, shoulder, or helping-hand protest",
       "care_action_anchor_phrase": "required for denial_care_leak: recipient hand, wound, or carried object visibly low in-frame",
       "relationship_gaze_anchor_phrase": "required for denial_care_leak: one blurred partial outer eye plus temple/profile sliver from the same adult recipient at a named upper frame edge",
       "concealed_affection_phrase": "required for denial_care_leak: named three-quarter head and nose turn toward the side opposite the landmark, only the irises returning obliquely, softened lower lids, and one starting mouth-corner lift immediately suppressed",
       "benevolent_affect_phrase": "required for nurturant_benevolence: relaxed brow, patient soft eyes, reassuring mouth, and calm protective attention in one literal expression phrase",
-      "affective_leak_phrase": "literal warm or pleased facial micro-response that counters guarded or negative affect",
-      "background_control_phrase": "literal plain or unlettered background instruction without text or symbolic shorthand",
+      "affective_leak_phrase": "conditional: literal warm or pleased facial micro-response only when affective_balance_default is active",
+      "background_control_phrase": "conditional: literal plain or unlettered background instruction only when the text default is active",
       "baseline_phrase": "literal prompt substring",
       "event_phase_phrase": "literal prompt substring",
       "trigger_phrase": "literal prompt substring",
@@ -83,14 +91,14 @@ Relationship semantics outrank compatible presentation or species reflexes. A ma
 }
 ```
 
-Bind the routed aesthetic baseline literally before the event description. The phrase must establish explicit adulthood, both pretty/beautiful and cute/charming first-read qualities, and at least two concrete character-design details such as face, eyes, mouth, hair, or cohesive styling. Preserve the routed `relationship_register`; warmth is not interchangeable across archetypes. For `denial_care_leak`, bind `active_denial_phrase` separately with a visible mouth, chin, shoulder, or helping-hand protest; guardedness, `tsundere`, side-eye, or an averted gaze alone does not qualify. Bind `care_action_anchor_phrase` to the recipient's visible hand, wound, or carried object at a named lower screen position. Bind `relationship_gaze_anchor_phrase` separately to one blurred partial outer eye plus temple/profile sliver from the same adult recipient at a named upper frame edge. Then bind `concealed_affection_phrase` as one continuous geometry: a named three-quarter head turn points the nose toward the side opposite the landmark; only the irises or pupils make a small oblique return to it; the lower lids soften; one mouth corner starts to lift and is suppressed. All visual facts are required. Direct frontal eye contact is too overt; looking only at the hand or object reads as care; a second full face competes; head and irises turning together reads as a generic side-look; generic warmth, maternal benevolence, or a generic side-eye does not prove peer liking. For an explicit mamang or maternal request, route to `nurturant_benevolence` and bind `benevolent_affect_phrase` with all four concrete cues: relaxed brow, patient soft eyes, reassuring mouth, and calm protective attention. Do not import active denial or romantic gaze leakage. Ordinary care requests instead use `directed_care_without_role_inference`, so friendliness alone never invents motherhood. Bind `affective_leak_phrase` separately again, then bind `background_control_phrase` as a plain wall, unlettered material surface, or text-free bokeh unless the request explicitly needs readable text. Keep face/gaze, hand/posture, and trigger/target in one close or medium focal plane. Name an unfinished event and one concrete physical separation. If all required evidence does not fit within 120 words, simplify the event or remove optional augmentation; do not expand the budget.
+Bind exactly the fields listed by `prompt_binding.required_evidence_fields`; the list is authoritative. When the aesthetic-style default is active, bind the routed aesthetic baseline literally before the event description. Preserve explicit routed relationship semantics without inventing a new relation. Request-derived `denial_care_leak`, `nurturant_benevolence`, and ordinary-care fields retain their typed evidence requirements, but any locked-dimension phrase must exactly reuse its matching requester anchor. Bind `affective_leak_phrase` only when present in the required list, and bind `background_control_phrase` only when present. When the generic causal mechanism is suppressed, the frozen authorial-core event replaces the behavioral-baseline/trigger/target/recovery schema; do not invent those fields. Keep any required face/gaze, hand/posture, and target evidence in one close or medium focal plane. If all required evidence does not fit within 120 words, remove optional augmentation; never alter the requester meaning or expand the budget.
 
 ## Aesthetic Routing
 
 - Explicit feminine presentation routes to `adult_bishoujo`.
 - Explicit masculine presentation routes to `adult_bishonen`.
 - Explicit androgynous, nonbinary, or gender-neutral presentation routes to `adult_beautiful_cute_character` without forcing femininity or masculinity.
-- Gender-unspecified explicit moe routes default to `adult_bishoujo`; this default is local to moe and must never affect ordinary non-moe photographs.
+- Gender-unspecified explicit moe routes default to `adult_bishoujo` only on legacy packs or when the v5 style dimension is explicitly open; otherwise the frozen requester subject/style remains unchanged.
 
 These are adult character-design categories, not literal age labels. Say `adult woman`, `adult man`, or `adult character`, preferably `mid-twenties or older`, rather than `girl`, `boy`, or a school-age term. “Bishoujo-inspired” and “bishonen-inspired” describe the polished beauty/cuteness read, while the prompt retains realistic adult eye scale and adult morphology.
 
@@ -104,7 +112,7 @@ At pixel review, compare the source portrait, the current user-preferred baselin
 
 ## Adult Sexual-Tone Axis
 
-Adult age and sexual tone are independent. Explicit nonsexual wording routes to `sexual_tone: nonsexual`, disables the configured sensual-editorial and fetish-fashion defaults, and keeps the subject explicitly adult. A plain adult-moe request routes to `sexual_tone: sensual_optional`: it may retain the eligible-human low-intensity sensual-editorial default as a subordinate cue while fetish fashion stays off. Explicit adult sensual wording routes to `sexual_tone: sensual` and may strengthen that cue under visible agency. Do not infer a stronger sexual tone from gender, body, clothing, role, or market convention.
+Adult age and sexual tone are independent. Explicit nonsexual wording routes to `sexual_tone: nonsexual`, disables configured sensual-editorial and fetish-fashion defaults, and keeps the subject explicitly adult. A legacy plain adult-moe request may use `sexual_tone: sensual_optional`. V5 may retain that skill default only when sexual tone, style, composition, expression, pose, body geometry, framing, and lighting are all explicitly open; otherwise it is suppressed. Explicit adult sensual wording remains requester-controlled under the frozen core and visible agency. Do not infer a stronger sexual tone from gender, body, clothing, role, or market convention.
 
 Never use childlike proportions, baby-face direction, oversized eyes, school-age coding, or age ambiguity as moe evidence. Nonsexual does not mean sterile: closeness, warmth, embarrassment, reciprocity, or tactile care can remain. `sensual_optional` does not mean body-first: gaze, posture, silhouette, fabric, or lighting may add adult appeal only after the pretty-and-cute face and character-specific response remain dominant.
 
@@ -123,7 +131,7 @@ Reject or repair these outcomes:
 - endpoint collapse: a cup already handed over, a mistake already fixed, or an arrangement already restored;
 - generic kindness: a helpful act with no baseline contradiction, cost, leak, or character-specific rule;
 - label substitution: `cute`, `moe`, blush, ears, hearts, or a smile used as the evidence;
-- affective collapse: a pout, scowl, averted gaze, sadness, or boredom dominates the face without one specific warm or pleased countercue;
+- affective collapse: when `affective_balance_default` is active, a guarded or negative face lacks its required warm countercue; when it is suppressed, judge only fidelity to the frozen expression anchors;
 - collapsed relationship vector: the character looks only at the hand, wound, object, or care task, so generic or maternal nurturance is mislabeled as tsundere liking;
 - unverifiable affection vector: the recipient exists only as an off-frame eye line, a second full face competes with the primary subject, or the head and irises turn together instead of opposing each other around a visible partial recipient landmark;
 - overexposed affection vector: the face and nose point at the lens with direct frontal eye contact, so liking reads as an open viewer-facing gaze instead of an involuntary oblique leak;
@@ -148,7 +156,7 @@ The composed-prompt audit is fail-closed preflight. A manual concept gate with l
 
 Review generated pixels twice:
 
-1. At thumbnail size, verify adult/role identity, pretty-and-cute facial entry, one warm affective leak, focal hierarchy, trigger, response, and consequence are recoverable without reading metadata. For tsundere, require the small blurred partial recipient landmark and reject direct frontal eye contact or a same-direction side-look: the three-quarter head turn must oppose the landmark while only the irises return, and softened lower lids plus the suppressed starting mouth-corner lift must survive. Reject a face whose dominant read is merely annoyed, sad, bored, blank, openly affectionate, or viewer-facing.
+1. At thumbnail size, verify the candidate pack's exact required gates without reading metadata. Pretty-and-cute entry, warm affective leak, trigger/recovery causality, or plain background are gates only when `intent_precedence` leaves their rules active or an exact request-derived obligation requires them. A suppressed generic gate must not be reintroduced during review; judge locked expression and event dimensions against their frozen anchors.
 2. At native size, verify identity hard gates first—eye aperture/shape/spacing, face length, lower-face/jaw width, and adult-age continuity—then hands, contact state, event phase, species anatomy and ear scale, the requested sexual tone, a text-free background when text was not requested, and the absence of unrequested visual shorthand. Any identity hard-gate failure blocks representative promotion.
 
 Record technical and causal qualification separately from user preference. An agent may say the scene is readable or that a specific defect remains; it must not declare the image moe or better on the user's behalf.

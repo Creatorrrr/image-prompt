@@ -2,7 +2,7 @@
 
 ## V5 Creative Augmentation
 
-The normal `photo-candidate-pack/v5` path does not expose `hybrid_augmentation` or three fixed routes. It exposes `photo-creative-augmentation/v1` after one pre-pack `photo-authorial-core/v1` has already established the standalone baseline.
+The normal `photo-candidate-pack/v5` path does not expose `hybrid_augmentation` or three fixed routes. It exposes `photo-creative-augmentation/v1` only after one request-envelope-bound `photo-authorial-core/v2` and `photo-intent-lock/v1` have established the standalone baseline and locked requester meaning. Every transformed candidate declares affected dimensions and may touch only open dimensions.
 
 The generator forms one advisory pool only after existing applicability, conflict, identity/species/no-people, negative, safety, and explicit user-exclusion guards. Semantic mode ranks that pool from the redacted core query; rule mode uses context and lexical fallback for reproducible offline inspection. Scores remain private. Relative rank partitions the pool into `near`, `adjacent`, and `lateral`; creativity changes only the allowed bands, while seed performs weighted sampling without replacement inside them.
 

@@ -24,7 +24,194 @@ MOE_PROMPT_DEFAULT_MAX_WORDS = 120
 VISUAL_OBLIGATIONS_CONTRACT_VERSION = "photo-visual-obligations/v1"
 VISUAL_INTENT_CONTRACT_VERSION = "photo-visual-intent/v1"
 VISUAL_CONCEPTS_CONTRACT_VERSION = "photo-visual-concepts/v1"
-AUTHORIAL_CORE_CONTRACT_VERSION = "photo-authorial-core/v1"
+LEGACY_AUTHORIAL_CORE_CONTRACT_VERSION = "photo-authorial-core/v1"
+AUTHORIAL_CORE_CONTRACT_VERSION = "photo-authorial-core/v2"
+REQUEST_ENVELOPE_CONTRACT_VERSION = "photo-request-envelope/v1"
+REQUEST_BINDING_CONTRACT_VERSION = "photo-request-binding/v1"
+INTENT_LOCK_CONTRACT_VERSION = "photo-intent-lock/v1"
+INTENT_PRESERVATION_CONTRACT_VERSION = "photo-intent-preservation/v1"
+DOWNSTREAM_INTENT_PRECEDENCE_CONTRACT_VERSION = (
+    "photo-downstream-intent-precedence/v1"
+)
+INTENT_LOCK_DIMENSIONS = {
+    "concept",
+    "subject",
+    "identity",
+    "count",
+    "age",
+    "role",
+    "species",
+    "appearance",
+    "pose",
+    "body_geometry",
+    "expression",
+    "action",
+    "event",
+    "setting",
+    "relationship",
+    "sexual_tone",
+    "style",
+    "reference_use",
+    "viewer_outcome",
+    "text",
+    "format",
+    "framing",
+    "composition",
+    "lighting",
+    "camera",
+    "color",
+    "material",
+    "timing",
+    "atmosphere",
+}
+REQUIRED_INTENT_LOCK_DIMENSIONS = {"concept", "subject", "event"}
+MOE_RESPONSE_EVIDENCE_DIMENSIONS = {
+    "actor_phrase": "subject",
+    "aesthetic_baseline_phrase": "style",
+    "affective_leak_phrase": "expression",
+    "active_denial_phrase": "expression",
+    "care_action_anchor_phrase": "relationship",
+    "relationship_gaze_anchor_phrase": "relationship",
+    "concealed_affection_phrase": "expression",
+    "benevolent_affect_phrase": "expression",
+    "baseline_phrase": "role",
+    "event_phase_phrase": "event",
+    "trigger_phrase": "event",
+    "target_phrase": "event",
+    "visible_response_phrase": "expression",
+    "immediate_consequence_phrase": "event",
+    "continuity_phrase": "event",
+    "background_control_phrase": "setting",
+    "focal_plane_phrase": "composition",
+    "reference_identity_phrase": "identity",
+}
+MOE_RESPONSE_DEFAULT_RULE_DIMENSIONS = {
+    "aesthetic_style_default": ("style",),
+    "aesthetic_expression_default": ("expression",),
+    "affective_balance_default": ("expression",),
+    "generic_character_response_mechanism": (
+        "event",
+        "expression",
+        "pose",
+        "relationship",
+    ),
+    "generic_relationship_register": ("relationship", "expression"),
+    "default_sensual_support": ("sexual_tone", "style", "composition"),
+    "generic_expression_negative_suppression": ("expression",),
+    "generic_style_negative_suppression": ("style",),
+    "generic_appearance_negative_suppression": ("appearance",),
+    "generic_text_negative_suppression": ("text",),
+}
+ADULT_APPEAL_DEFAULT_AFFECTED_DIMENSIONS = {
+    "sexual_tone",
+    "style",
+    "composition",
+    "expression",
+    "pose",
+    "body_geometry",
+    "framing",
+    "lighting",
+}
+MOE_WARM_AFFECT_GROUPS = (
+    ("softened eye", "soft eyes", "eyes soften", "gentle eye", "warm eye"),
+    (
+        "lower lids soften",
+        "softened lower lids",
+        "lower eyelids soften",
+        "softened lower eyelids",
+    ),
+    (
+        "almost-smile",
+        "almost smile",
+        "near-smile",
+        "near smile",
+        "smile threatens",
+        "smile starts",
+    ),
+    (
+        "mouth corner lifts",
+        "lifted mouth corner",
+        "pleased mouth corner",
+        "relieved mouth corner",
+    ),
+    ("mouth corner starts to lift", "mouth corner begins to lift"),
+    ("fond", "fondness", "pleased", "relieved", "tender", "warmth"),
+    (
+        "playful embarrassment",
+        "playfully embarrassed",
+        "bashful delight",
+        "private delight",
+    ),
+)
+MOE_NEGATIVE_AFFECT_CUES = (
+    "annoyed",
+    "angry",
+    "averted gaze",
+    "bored",
+    "cold stare",
+    "frown",
+    "irritated",
+    "listless",
+    "pout",
+    "pursed",
+    "sad",
+    "scowl",
+    "skeptical",
+    "sullen",
+)
+MOE_WARM_EXPRESSION_DEFAULT_MARKERS = (
+    "softened eye",
+    "soft eyes",
+    "eyes soften",
+    "gentle eye",
+    "warm eye",
+    "lower lids soften",
+    "softened lower lids",
+    "lower eyelids soften",
+    "softened lower eyelids",
+    "almost-smile",
+    "almost smile",
+    "near-smile",
+    "near smile",
+    "smile threatens",
+    "smile starts",
+    "mouth corner lifts",
+    "lifted mouth corner",
+    "pleased mouth corner",
+    "relieved mouth corner",
+    "mouth corner starts to lift",
+    "mouth corner begins to lift",
+    "fondness",
+    "playful embarrassment",
+    "playfully embarrassed",
+    "bashful delight",
+    "private delight",
+)
+MOE_NEGATIVE_DEFAULT_TERMS_BY_RULE = {
+    "generic_expression_negative_suppression": (
+        "blank bored expression",
+        "listless expression",
+        "pure scowl without a warm micro-expression",
+    ),
+    "generic_style_negative_suppression": (
+        "generic sparkle overlays",
+        "decorative blush circles",
+        "unrequested heart symbols",
+        "heart-shaped pupils",
+        "heart-shaped latte art",
+        "cartoon motion lines",
+        "manga reaction marks",
+        "comic emphasis marks",
+    ),
+    "generic_appearance_negative_suppression": ("oversized anime eyes",),
+    "generic_text_negative_suppression": (
+        "readable background text",
+        "pseudo-writing",
+        "menu board lettering",
+        "chalkboard writing",
+        "signage behind the subject",
+    ),
+}
 SEMANTIC_CLARIFICATION_CONTRACT_VERSION = "photo-semantic-clarification/v1"
 CREATIVE_AUGMENTATION_CONTRACT_VERSION = "photo-creative-augmentation/v1"
 
@@ -1476,6 +1663,288 @@ def audit_visual_obligations(
     return failures
 
 
+def expected_moe_intent_precedence(
+    pack: dict[str, Any],
+    contract: dict[str, Any],
+) -> dict[str, Any] | None:
+    core = pack.get("authorial_core") if isinstance(pack.get("authorial_core"), dict) else {}
+    if core.get("contract_version") != AUTHORIAL_CORE_CONTRACT_VERSION:
+        return None
+    intent_lock = core.get("intent_lock") if isinstance(core.get("intent_lock"), dict) else {}
+    locked_dimensions = [
+        str(item)
+        for item in intent_lock.get("locked_dimensions") or []
+        if str(item) in INTENT_LOCK_DIMENSIONS
+    ]
+    open_dimensions = [
+        str(item)
+        for item in intent_lock.get("open_dimensions") or []
+        if str(item) in INTENT_LOCK_DIMENSIONS
+    ]
+    open_set = set(open_dimensions)
+    applicability = {
+        "aesthetic_style_default": True,
+        "aesthetic_expression_default": True,
+        "affective_balance_default": True,
+        "generic_character_response_mechanism": (
+            str(contract.get("primary_mechanism") or "")
+            == "character_specific_reveal"
+        ),
+        "generic_relationship_register": (
+            str(contract.get("relationship_register") or "")
+            == "character_specific_reveal"
+        ),
+        "default_sensual_support": contract.get("defaulted_sensual_optional") is True,
+        "generic_expression_negative_suppression": True,
+        "generic_style_negative_suppression": True,
+        "generic_appearance_negative_suppression": True,
+        "generic_text_negative_suppression": True,
+    }
+    rules: list[dict[str, Any]] = []
+    for rule_id, affected in MOE_RESPONSE_DEFAULT_RULE_DIMENSIONS.items():
+        affected_dimensions = list(affected)
+        if not applicability.get(rule_id, False):
+            status = "not_applicable"
+            blocked_dimensions: list[str] = []
+        else:
+            blocked_dimensions = sorted(set(affected_dimensions) - open_set)
+            status = (
+                "active"
+                if not blocked_dimensions
+                else "suppressed_requesting_user_priority"
+            )
+        rules.append(
+            {
+                "rule_id": rule_id,
+                "affected_dimensions": affected_dimensions,
+                "status": status,
+                "blocked_dimensions": blocked_dimensions,
+            }
+        )
+    return {
+        "contract_version": DOWNSTREAM_INTENT_PRECEDENCE_CONTRACT_VERSION,
+        "priority": "requesting_user",
+        "source_intent_lock_sha256": str(intent_lock.get("canonical_sha256") or ""),
+        "locked_dimensions": locked_dimensions,
+        "open_dimensions": open_dimensions,
+        "closed_dimensions": sorted(INTENT_LOCK_DIMENSIONS - open_set),
+        "default_rule_policy": "active_only_when_all_affected_dimensions_are_explicitly_open",
+        "non_open_evidence_policy": (
+            "reuse_matching_locked_anchor_or_frozen_baseline_only"
+        ),
+        "evidence_field_dimensions": copy.deepcopy(
+            MOE_RESPONSE_EVIDENCE_DIMENSIONS
+        ),
+        "rules": rules,
+    }
+
+
+def moe_intent_rule_status(precedence: Any, rule_id: str) -> str:
+    if not isinstance(precedence, dict):
+        return "legacy_unscoped"
+    for row in precedence.get("rules") or []:
+        if isinstance(row, dict) and row.get("rule_id") == rule_id:
+            return str(row.get("status") or "")
+    return "missing"
+
+
+def audit_moe_intent_precedence(
+    pack: dict[str, Any],
+    contract: dict[str, Any],
+    response: dict[str, Any],
+    prompt_en: str,
+) -> list[dict[str, Any]]:
+    expected = expected_moe_intent_precedence(pack, contract)
+    actual = contract.get("intent_precedence")
+    if expected is None:
+        return []
+    failures: list[dict[str, Any]] = []
+    if actual != expected:
+        return [
+            {
+                "check": "moe_response_intent_precedence",
+                "reason": (
+                    "v2 downstream-default precedence must be an exact recomputable projection of the requesting-user intent lock"
+                ),
+                "expected": expected,
+                "actual": actual,
+            }
+        ]
+
+    composition_guidance = (
+        contract.get("composition_guidance")
+        if isinstance(contract.get("composition_guidance"), dict)
+        else {}
+    )
+    binding = (
+        contract.get("prompt_binding")
+        if isinstance(contract.get("prompt_binding"), dict)
+        else {}
+    )
+    required_evidence_fields = {
+        str(item) for item in binding.get("required_evidence_fields") or []
+    }
+    affective_active = (
+        moe_intent_rule_status(actual, "affective_balance_default") == "active"
+    )
+    aesthetic_active = (
+        moe_intent_rule_status(actual, "aesthetic_style_default") == "active"
+    )
+    generic_mechanism_suppressed = (
+        moe_intent_rule_status(actual, "generic_character_response_mechanism")
+        == "suppressed_requesting_user_priority"
+    )
+    text_default_active = (
+        moe_intent_rule_status(actual, "generic_text_negative_suppression")
+        == "active"
+    )
+    affective_guidance = (
+        composition_guidance.get("affective_balance")
+        if isinstance(composition_guidance.get("affective_balance"), dict)
+        else {}
+    )
+    aesthetic_guidance = (
+        composition_guidance.get("aesthetic_entry_condition")
+        if isinstance(composition_guidance.get("aesthetic_entry_condition"), dict)
+        else {}
+    )
+    structural_mismatches: list[str] = []
+    if affective_guidance.get("required") is not affective_active:
+        structural_mismatches.append("affective_balance.required")
+    if affective_guidance.get("status") != (
+        "active" if affective_active else "suppressed_requesting_user_priority"
+    ):
+        structural_mismatches.append("affective_balance.status")
+    if ("affective_leak_phrase" in required_evidence_fields) is not affective_active:
+        structural_mismatches.append("affective_leak_phrase")
+    if aesthetic_guidance.get("required") is not aesthetic_active:
+        structural_mismatches.append("aesthetic_entry_condition.required")
+    if aesthetic_guidance.get("status") != (
+        "active" if aesthetic_active else "suppressed_requesting_user_priority"
+    ):
+        structural_mismatches.append("aesthetic_entry_condition.status")
+    if ("aesthetic_baseline_phrase" in required_evidence_fields) is not aesthetic_active:
+        structural_mismatches.append("aesthetic_baseline_phrase")
+    causal_evidence_fields = {
+        "baseline_phrase",
+        "event_phase_phrase",
+        "trigger_phrase",
+        "target_phrase",
+        "immediate_consequence_phrase",
+        "continuity_phrase",
+    }
+    if generic_mechanism_suppressed and (
+        causal_evidence_fields & required_evidence_fields
+    ):
+        structural_mismatches.append("generic_causal_evidence_fields")
+    background_expected = (
+        contract.get("explicit_text_requested") is not True and text_default_active
+    )
+    if ("background_control_phrase" in required_evidence_fields) is not background_expected:
+        structural_mismatches.append("background_control_phrase")
+    if structural_mismatches:
+        failures.append(
+            {
+                "check": "moe_response_intent_precedence",
+                "reason": (
+                    "moe-response composition duties do not reflect the recomputed requester-first rule states"
+                ),
+                "fields": structural_mismatches,
+            }
+        )
+
+    evidence = response.get("prompt_evidence")
+    evidence = evidence if isinstance(evidence, dict) else {}
+    core = pack["authorial_core"]
+    baseline_prompt = str(core.get("baseline_prompt_en") or "")
+    intent_lock = core.get("intent_lock") if isinstance(core.get("intent_lock"), dict) else {}
+    locked_dimensions = set(intent_lock.get("locked_dimensions") or [])
+    open_dimensions = set(intent_lock.get("open_dimensions") or [])
+    anchors_by_dimension: dict[str, set[str]] = {}
+    for anchor in intent_lock.get("semantic_anchors") or []:
+        if not isinstance(anchor, dict):
+            continue
+        dimension = str(anchor.get("dimension") or "")
+        phrase = str(anchor.get("prompt_evidence") or "")
+        if dimension and phrase:
+            anchors_by_dimension.setdefault(dimension, set()).add(phrase)
+
+    for field, raw_phrase in evidence.items():
+        dimension = MOE_RESPONSE_EVIDENCE_DIMENSIONS.get(str(field))
+        phrase = str(raw_phrase or "").strip()
+        if not dimension or not phrase or dimension in open_dimensions:
+            continue
+        if dimension in locked_dimensions:
+            allowed = anchors_by_dimension.get(dimension, set())
+            valid = phrase in allowed
+            required_source = "matching_locked_semantic_anchor"
+        else:
+            allowed = set()
+            valid = text_contains_term(baseline_prompt, phrase)
+            required_source = "frozen_baseline_prompt"
+        if not valid:
+            failures.append(
+                {
+                    "check": "moe_response_intent_precedence",
+                    "reason": (
+                        "moe-response evidence on a non-open dimension introduced semantics outside the requester-first frozen boundary"
+                    ),
+                    "field": field,
+                    "dimension": dimension,
+                    "required_source": required_source,
+                    "allowed_locked_anchor_evidence": sorted(allowed),
+                    "actual": phrase,
+                }
+            )
+
+    negative_en = str(pack.get("negative_en") or "").lower()
+    for rule_id, terms in MOE_NEGATIVE_DEFAULT_TERMS_BY_RULE.items():
+        if moe_intent_rule_status(actual, rule_id) != "suppressed_requesting_user_priority":
+            continue
+        leaked_terms = [term for term in terms if term.lower() in negative_en]
+        if leaked_terms:
+            failures.append(
+                {
+                    "check": "moe_response_intent_precedence",
+                    "reason": (
+                        "negative prompt retained a generic downstream default for a non-open semantic dimension"
+                    ),
+                    "rule_id": rule_id,
+                    "terms": leaked_terms,
+                }
+            )
+
+    if (
+        moe_intent_rule_status(actual, "affective_balance_default")
+        == "suppressed_requesting_user_priority"
+    ):
+        baseline_lower = baseline_prompt.lower()
+        prompt_lower = prompt_en.lower()
+        baseline_has_warm_default = any(
+            cue in baseline_lower for cue in MOE_WARM_EXPRESSION_DEFAULT_MARKERS
+        )
+        prompt_warm_hits = sorted(
+            {
+                cue
+                for cue in MOE_WARM_EXPRESSION_DEFAULT_MARKERS
+                if cue in prompt_lower
+            }
+        )
+        if prompt_warm_hits and not baseline_has_warm_default:
+            failures.append(
+                {
+                    "check": "moe_response_intent_precedence",
+                    "reason": (
+                        "a suppressed warm-affect default leaked into a closed expression dimension without frozen requester evidence"
+                    ),
+                    "rule_id": "affective_balance_default",
+                    "terms": prompt_warm_hits,
+                }
+            )
+
+    return failures
+
+
 def audit_moe_response(
     pack: dict[str, Any],
     composed: dict[str, Any],
@@ -1495,6 +1964,14 @@ def audit_moe_response(
         ]
 
     failures: list[dict[str, Any]] = []
+    failures.extend(
+        audit_moe_intent_precedence(
+            pack,
+            contract,
+            response,
+            prompt_en,
+        )
+    )
     composition_guidance = (
         contract.get("composition_guidance")
         if isinstance(contract.get("composition_guidance"), dict)
@@ -1543,17 +2020,21 @@ def audit_moe_response(
             }
         )
 
-    scalar_fields = (
-        "aesthetic_baseline",
-        "mechanism",
-        "relationship_register",
-        "baseline",
-        "event_phase",
-        "trigger",
-        "target",
-        "visible_response",
-        "immediate_consequence",
-        "continuity",
+    scalar_fields = tuple(
+        field
+        for field in (
+            "aesthetic_baseline",
+            "mechanism",
+            "relationship_register",
+            "baseline",
+            "event_phase",
+            "trigger",
+            "target",
+            "visible_response",
+            "immediate_consequence",
+            "continuity",
+        )
+        if field in required_fields
     )
     invalid_scalars = [
         field
@@ -1631,11 +2112,23 @@ def audit_moe_response(
             }
         )
 
+    causal_fields = (
+        "baseline",
+        "trigger",
+        "target",
+        "visible_response",
+        "immediate_consequence",
+    )
     causal_values = [
         str(response.get(field) or "")
-        for field in ("baseline", "trigger", "target", "visible_response", "immediate_consequence")
+        for field in causal_fields
+        if field in required_fields
     ]
-    if all(causal_values) and normalized_unique_count(causal_values) < 5:
+    if (
+        len(causal_values) == len(causal_fields)
+        and all(causal_values)
+        and normalized_unique_count(causal_values) < len(causal_fields)
+    ):
         failures.append(
             {
                 "check": "moe_response_causal_chain",
@@ -1839,31 +2332,8 @@ def audit_moe_response(
             )
 
     affective_phrase = str(evidence.get("affective_leak_phrase") or "").lower()
-    warm_affect_groups = (
-        ("softened eye", "soft eyes", "eyes soften", "gentle eye", "warm eye"),
-        ("lower lids soften", "softened lower lids", "lower eyelids soften", "softened lower eyelids"),
-        ("almost-smile", "almost smile", "near-smile", "near smile", "smile threatens", "smile starts"),
-        ("mouth corner lifts", "lifted mouth corner", "pleased mouth corner", "relieved mouth corner"),
-        ("mouth corner starts to lift", "mouth corner begins to lift"),
-        ("fond", "fondness", "pleased", "relieved", "tender", "warmth"),
-        ("playful embarrassment", "playfully embarrassed", "bashful delight", "private delight"),
-    )
-    negative_affect_cues = (
-        "annoyed",
-        "angry",
-        "averted gaze",
-        "bored",
-        "cold stare",
-        "frown",
-        "irritated",
-        "listless",
-        "pout",
-        "pursed",
-        "sad",
-        "scowl",
-        "skeptical",
-        "sullen",
-    )
+    warm_affect_groups = MOE_WARM_AFFECT_GROUPS
+    negative_affect_cues = MOE_NEGATIVE_AFFECT_CUES
     affective_missing = []
     if affective_phrase:
         if not any(any(cue in affective_phrase for cue in group) for group in warm_affect_groups):
@@ -4575,6 +5045,253 @@ def audit_candidate_interpretations(
     return failures
 
 
+def canonical_json_sha256(payload: Any) -> str:
+    return hashlib.sha256(
+        json.dumps(
+            payload,
+            ensure_ascii=False,
+            sort_keys=True,
+            separators=(",", ":"),
+        ).encode("utf-8")
+    ).hexdigest()
+
+
+def authorial_core_active_span_texts(core: dict[str, Any]) -> list[str]:
+    binding = (
+        core.get("request_binding")
+        if isinstance(core.get("request_binding"), dict)
+        else {}
+    )
+    return [
+        str(item.get("text") or "")
+        for item in binding.get("active_spans") or []
+        if isinstance(item, dict) and str(item.get("text") or "")
+    ]
+
+
+def authorial_core_active_scope_contains(core: dict[str, Any], text: str) -> bool:
+    needle = str(text or "").strip().casefold()
+    return bool(needle) and any(
+        needle in source.casefold() for source in authorial_core_active_span_texts(core)
+    )
+
+
+def authorial_core_v2_intent_contract_valid(core: dict[str, Any]) -> bool:
+    if core.get("contract_version") != AUTHORIAL_CORE_CONTRACT_VERSION:
+        return True
+    source_request = core.get("source_request")
+    binding = core.get("request_binding")
+    if not isinstance(source_request, str) or not source_request or not isinstance(binding, dict):
+        return False
+    if set(binding) != {
+        "contract_version",
+        "request_id",
+        "request_sha256",
+        "request_envelope_sha256",
+        "active_spans",
+    } or binding.get("contract_version") != REQUEST_BINDING_CONTRACT_VERSION:
+        return False
+    if re.fullmatch(
+        r"[A-Za-z0-9][A-Za-z0-9._:-]{0,127}",
+        str(binding.get("request_id") or ""),
+    ) is None:
+        return False
+    if binding.get("request_sha256") != hashlib.sha256(
+        source_request.encode("utf-8")
+    ).hexdigest():
+        return False
+    if re.fullmatch(
+        r"[0-9a-f]{64}", str(binding.get("request_envelope_sha256") or "")
+    ) is None:
+        return False
+    spans = binding.get("active_spans")
+    if not isinstance(spans, list) or not 1 <= len(spans) <= 16:
+        return False
+    previous_end = -1
+    seen_ids: set[str] = set()
+    seen_texts: set[str] = set()
+    for item in spans:
+        if not isinstance(item, dict) or set(item) != {"span_id", "start", "end", "text"}:
+            return False
+        span_id = str(item.get("span_id") or "")
+        start = item.get("start")
+        end = item.get("end")
+        text = item.get("text")
+        if (
+            re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]{0,63}", span_id) is None
+            or span_id in seen_ids
+            or isinstance(start, bool)
+            or isinstance(end, bool)
+            or not isinstance(start, int)
+            or not isinstance(end, int)
+            or start < 0
+            or end <= start
+            or start < previous_end
+            or end > len(source_request)
+            or not isinstance(text, str)
+            or source_request[start:end] != text
+            or text.casefold() in seen_texts
+        ):
+            return False
+        seen_ids.add(span_id)
+        seen_texts.add(text.casefold())
+        previous_end = end
+    reconstructed_envelope = {
+        "contract_version": REQUEST_ENVELOPE_CONTRACT_VERSION,
+        "provenance": "requesting_user",
+        "request_id": str(binding.get("request_id") or ""),
+        "request_text": source_request,
+        "request_sha256": str(binding.get("request_sha256") or ""),
+        "active_spans": spans,
+    }
+    if binding.get("request_envelope_sha256") != canonical_json_sha256(
+        reconstructed_envelope
+    ):
+        return False
+
+    intent_lock = core.get("intent_lock")
+    if not isinstance(intent_lock, dict):
+        return False
+    if set(intent_lock) != {
+        "contract_version",
+        "priority",
+        "semantic_anchors",
+        "locked_dimensions",
+        "open_dimensions",
+        "augmentation_policy",
+        "material_change_policy",
+        "candidate_revision_policy",
+        "canonical_sha256",
+        "lock_id",
+    }:
+        return False
+    lock_material = copy.deepcopy(intent_lock)
+    lock_sha = str(lock_material.pop("canonical_sha256", "") or "")
+    lock_id = str(lock_material.pop("lock_id", "") or "")
+    if (
+        intent_lock.get("contract_version") != INTENT_LOCK_CONTRACT_VERSION
+        or intent_lock.get("priority") != "requesting_user"
+        or intent_lock.get("augmentation_policy")
+        != "open_dimensions_only_and_subordinate"
+        or intent_lock.get("material_change_policy")
+        != "rebuild_core_after_requester_input"
+        or intent_lock.get("candidate_revision_policy") != "forbidden"
+        or lock_sha != canonical_json_sha256(lock_material)
+        or lock_id != lock_sha[:16]
+    ):
+        return False
+    locked = intent_lock.get("locked_dimensions")
+    opened = intent_lock.get("open_dimensions")
+    if (
+        not isinstance(locked, list)
+        or not locked
+        or len(locked) != len(set(str(item) for item in locked))
+        or not isinstance(opened, list)
+        or len(opened) < 2
+        or len(opened) != len(set(str(item) for item in opened))
+        or set(str(item) for item in locked) & set(str(item) for item in opened)
+        or not REQUIRED_INTENT_LOCK_DIMENSIONS <= {str(item) for item in locked}
+        or (set(str(item) for item in locked) | set(str(item) for item in opened))
+        - INTENT_LOCK_DIMENSIONS
+    ):
+        return False
+    anchors = intent_lock.get("semantic_anchors")
+    if not isinstance(anchors, list) or not 1 <= len(anchors) <= 16:
+        return False
+    baseline = str(core.get("baseline_prompt_en") or "")
+    seen_anchor_ids: set[str] = set()
+    seen_anchor_evidence: set[str] = set()
+    for item in anchors:
+        if not isinstance(item, dict) or set(item) != {
+            "anchor_id",
+            "source_text",
+            "dimension",
+            "prompt_evidence",
+        }:
+            return False
+        anchor_id = str(item.get("anchor_id") or "")
+        source_text = str(item.get("source_text") or "")
+        dimension = str(item.get("dimension") or "")
+        evidence = str(item.get("prompt_evidence") or "")
+        if (
+            re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]{0,63}", anchor_id) is None
+            or anchor_id in seen_anchor_ids
+            or dimension not in locked
+            or len(authorial_general_content_words(source_text)) < 1
+            or not authorial_core_active_scope_contains(core, source_text)
+            or len(authorial_evidence_tokens(evidence)) < 2
+            or not text_contains_term(baseline, evidence)
+            or evidence.casefold() in seen_anchor_evidence
+        ):
+            return False
+        seen_anchor_ids.add(anchor_id)
+        seen_anchor_evidence.add(evidence.casefold())
+    if {str(item.get("dimension") or "") for item in anchors} != {
+        str(item) for item in locked
+    }:
+        return False
+    if any(
+        not any(
+            str(anchor.get("source_text") or "").casefold()
+            in str(span_text).casefold()
+            for anchor in anchors
+        )
+        for span_text in authorial_core_active_span_texts(core)
+    ):
+        return False
+    definitions = core.get("user_definitions")
+    if not isinstance(definitions, list) or len(definitions) > 8:
+        return False
+    seen_definition_terms: set[str] = set()
+    for item in definitions:
+        if not isinstance(item, dict) or set(item) != {
+            "term",
+            "source_text",
+            "interpreted_meaning",
+            "prompt_evidence",
+        }:
+            return False
+        term = str(item.get("term") or "").strip()
+        source_text = str(item.get("source_text") or "").strip()
+        evidence = str(item.get("prompt_evidence") or "").strip()
+        if (
+            not term
+            or term.casefold() in seen_definition_terms
+            or source_text.casefold()
+            not in {
+                span.casefold() for span in authorial_core_active_span_texts(core)
+            }
+            or source_text.casefold() == term.casefold()
+            or len(authorial_general_content_words(str(item.get("interpreted_meaning") or ""))) < 4
+            or len(authorial_evidence_tokens(evidence)) < 4
+            or not text_contains_term(baseline, evidence)
+        ):
+            return False
+        seen_definition_terms.add(term.casefold())
+    runtime_labels = nonempty_string_list(core.get("runtime_forbidden_labels"))
+    if len(runtime_labels) > 12 or len(runtime_labels) != len(
+        {item.casefold() for item in runtime_labels}
+    ):
+        return False
+    if any(
+        not authorial_core_active_scope_contains(core, label)
+        or text_contains_term(baseline, label)
+        for label in runtime_labels
+    ):
+        return False
+    exclusions = nonempty_string_list(core.get("user_exclusions"))
+    if any(
+        not authorial_core_active_scope_contains(core, exclusion)
+        for exclusion in exclusions
+    ):
+        return False
+    if {item.casefold() for item in runtime_labels} & {
+        item.casefold() for item in exclusions
+    }:
+        return False
+    return True
+
+
 def expected_authorial_core_retrieval_provenance(
     core: dict[str, Any],
 ) -> dict[str, Any]:
@@ -4615,7 +5332,11 @@ def expected_authorial_core_retrieval_provenance(
         if text:
             fields.append((field, text))
 
-    add("source_request", core.get("source_request"))
+    if core.get("contract_version") == AUTHORIAL_CORE_CONTRACT_VERSION:
+        for value in authorial_core_active_span_texts(core):
+            add("source_request_scope", value)
+    else:
+        add("source_request", core.get("source_request"))
     add("interpreted_intent", core.get("interpreted_intent"))
     add("subject", core.get("subject"))
     add("setting", core.get("setting"))
@@ -4645,8 +5366,12 @@ def expected_authorial_core_retrieval_provenance(
         seen.add(key)
         deduped.append((field, value))
     query = " | ".join(value for _, value in deduped)
-    return {
-        "contract_version": "photo-retrieval-query-provenance/v1",
+    provenance: dict[str, Any] = {
+        "contract_version": (
+            "photo-retrieval-query-provenance/v2"
+            if core.get("contract_version") == AUTHORIAL_CORE_CONTRACT_VERSION
+            else "photo-retrieval-query-provenance/v1"
+        ),
         "source_authorial_core_sha256": str(core.get("canonical_sha256") or ""),
         "source_request_sha256": hashlib.sha256(
             str(core.get("source_request") or "").encode("utf-8")
@@ -4657,9 +5382,45 @@ def expected_authorial_core_retrieval_provenance(
         "excluded_term_count": len(exclusions),
         "exclusions_used_as_positive_query": False,
     }
+    if core.get("contract_version") == AUTHORIAL_CORE_CONTRACT_VERSION:
+        binding = (
+            core.get("request_binding")
+            if isinstance(core.get("request_binding"), dict)
+            else {}
+        )
+        intent_lock = (
+            core.get("intent_lock")
+            if isinstance(core.get("intent_lock"), dict)
+            else {}
+        )
+        active_spans = [
+            item
+            for item in binding.get("active_spans") or []
+            if isinstance(item, dict) and str(item.get("text") or "")
+        ]
+        provenance.update(
+            {
+                "request_envelope_sha256": str(
+                    binding.get("request_envelope_sha256") or ""
+                ),
+                "active_scope_sha256": canonical_json_sha256(active_spans),
+                "source_intent_lock_sha256": str(
+                    intent_lock.get("canonical_sha256") or ""
+                ),
+                "runtime_forbidden_label_count": len(
+                    core.get("runtime_forbidden_labels") or []
+                ),
+            }
+        )
+    return provenance
 
 
 def authorial_core_interpretation_contract_valid(core: dict[str, Any]) -> bool:
+    if core.get("contract_version") not in {
+        LEGACY_AUTHORIAL_CORE_CONTRACT_VERSION,
+        AUTHORIAL_CORE_CONTRACT_VERSION,
+    }:
+        return False
     if "interpretation_provenance" not in core or "unresolved_ambiguities" not in core:
         return False
     if core.get("unresolved_ambiguities") != []:
@@ -4700,6 +5461,10 @@ def authorial_core_interpretation_contract_valid(core: dict[str, Any]) -> bool:
             or key in seen_terms
             or key in user_terms
             or source_text.casefold() not in source_request
+            or (
+                core.get("contract_version") == AUTHORIAL_CORE_CONTRACT_VERSION
+                and not authorial_core_active_scope_contains(core, source_text)
+            )
             or basis not in allowed_bases
             or len(authorial_general_content_words(resolution)) < 4
             or not isinstance(sources, list)
@@ -4716,6 +5481,23 @@ def authorial_core_interpretation_contract_valid(core: dict[str, Any]) -> bool:
             ):
                 return False
         elif sources:
+            return False
+    if core.get("contract_version") == AUTHORIAL_CORE_CONTRACT_VERSION:
+        semantic_source_texts = [
+            str(item.get("source_text") or "")
+            for item in [
+                *(core.get("user_definitions") or []),
+                *interpretations,
+            ]
+            if isinstance(item, dict) and str(item.get("source_text") or "")
+        ]
+        if any(
+            not any(
+                source.casefold() in span.casefold()
+                for source in semantic_source_texts
+            )
+            for span in authorial_core_active_span_texts(core)
+        ):
             return False
     return True
 
@@ -4751,12 +5533,40 @@ def audit_authorial_core_v5(
         else {}
     )
     expected_retrieval = expected_authorial_core_retrieval_provenance(core)
+    v2_core_fields_valid = True
+    if core.get("contract_version") == AUTHORIAL_CORE_CONTRACT_VERSION:
+        v2_core_fields_valid = set(core) == {
+            "contract_version",
+            "provenance",
+            "source_request",
+            "interpreted_intent",
+            "subject",
+            "setting",
+            "event",
+            "visual_priorities",
+            "baseline_prompt_en",
+            "user_definitions",
+            "interpretation_provenance",
+            "unresolved_ambiguities",
+            "user_exclusions",
+            "runtime_forbidden_labels",
+            "intent_lock",
+            "request_binding",
+            "style",
+            "variation_key",
+            "canonical_sha256",
+            "core_id",
+        }
     if (
-        core.get("contract_version") != AUTHORIAL_CORE_CONTRACT_VERSION
+        core.get("contract_version")
+        not in {LEGACY_AUTHORIAL_CORE_CONTRACT_VERSION, AUTHORIAL_CORE_CONTRACT_VERSION}
         or core.get("provenance") != "agent_prepack"
         or not authorial_core_interpretation_contract_valid(core)
+        or not authorial_core_v2_intent_contract_valid(core)
+        or not v2_core_fields_valid
         or not canonical_sha
         or canonical_sha != expected_sha
+        or str(core.get("core_id") or "") != canonical_sha[:16]
         or not isinstance(retrieval, dict)
         or retrieval != expected_retrieval
     ):
@@ -4779,6 +5589,104 @@ def audit_authorial_core_v5(
                 "reason": "composed prompt is not bound to the governing authorial core hash",
             }
         )
+    intent_lock = (
+        core.get("intent_lock")
+        if isinstance(core.get("intent_lock"), dict)
+        else {}
+    )
+    intent_locked = core.get("contract_version") == AUTHORIAL_CORE_CONTRACT_VERSION
+    if intent_locked and str(binding.get("source_intent_lock_sha256") or "") != str(
+        intent_lock.get("canonical_sha256") or ""
+    ):
+        failures.append(
+            {
+                "check": "intent_lock_binding",
+                "reason": "composed prompt is not bound to the requesting-user-priority intent lock",
+            }
+        )
+    if intent_locked:
+        required_anchor_ids = {
+            str(item.get("anchor_id") or "")
+            for item in intent_lock.get("semantic_anchors") or []
+            if isinstance(item, dict) and str(item.get("anchor_id") or "")
+        }
+        preserved_anchor_id_list = nonempty_string_list(
+            binding.get("preserved_anchor_ids")
+        )
+        preserved_anchor_ids = set(preserved_anchor_id_list)
+        if (
+            preserved_anchor_ids != required_anchor_ids
+            or len(preserved_anchor_id_list) != len(preserved_anchor_ids)
+        ):
+            failures.append(
+                {
+                    "check": "intent_lock_anchor_binding",
+                    "reason": "authorial_core_binding must preserve every semantic anchor id exactly once",
+                    "expected": sorted(required_anchor_ids),
+                    "actual": sorted(preserved_anchor_ids),
+                }
+            )
+        for anchor in intent_lock.get("semantic_anchors") or []:
+            if not isinstance(anchor, dict):
+                continue
+            phrase = str(anchor.get("prompt_evidence") or "")
+            if not phrase or not text_contains_term(prompt_en, phrase):
+                failures.append(
+                    {
+                        "check": "intent_lock_prompt_evidence",
+                        "reason": "every requesting-user semantic anchor must remain literal in prompt_en",
+                        "anchor_id": anchor.get("anchor_id"),
+                        "phrase": phrase,
+                    }
+                )
+        preservation = (
+            pack.get("intent_preservation")
+            if isinstance(pack.get("intent_preservation"), dict)
+            else {}
+        )
+        if (
+            set(preservation)
+            != {
+                "contract_version",
+                "source_authorial_core_sha256",
+                "source_intent_lock_sha256",
+                "priority_order",
+                "required_anchor_ids",
+                "locked_dimensions",
+                "open_dimensions",
+                "material_change_action",
+                "creative_change_boundary",
+            }
+            or
+            preservation.get("contract_version")
+            != INTENT_PRESERVATION_CONTRACT_VERSION
+            or preservation.get("source_authorial_core_sha256") != canonical_sha
+            or preservation.get("source_intent_lock_sha256")
+            != intent_lock.get("canonical_sha256")
+            or preservation.get("priority_order")
+            != [
+                "requesting_user_definition",
+                "requesting_user_semantic_anchor",
+                "requesting_user_modifier_or_exclusion",
+                "agent_prepack_interpretation",
+                "creative_augmentation",
+            ]
+            or set(nonempty_string_list(preservation.get("required_anchor_ids")))
+            != required_anchor_ids
+            or preservation.get("locked_dimensions")
+            != intent_lock.get("locked_dimensions")
+            or preservation.get("open_dimensions") != intent_lock.get("open_dimensions")
+            or preservation.get("material_change_action")
+            != "stop_and_rebuild_core_after_requester_input"
+            or preservation.get("creative_change_boundary")
+            != "open_dimensions_only_and_subordinate"
+        ):
+            failures.append(
+                {
+                    "check": "intent_preservation_contract",
+                    "reason": "v5 pack does not preserve the canonical requester-priority intent boundary",
+                }
+            )
     evidence = nonempty_string_list(binding.get("preserved_evidence"))
     if len(evidence) < 3 or len({item.casefold() for item in evidence}) != len(evidence):
         failures.append(
@@ -4825,6 +5733,50 @@ def audit_authorial_core_v5(
                 "reason": "v5 composition requires at least two distinct substantive authorial decisions",
             }
         )
+    if intent_locked:
+        open_dimensions = {
+            str(item) for item in intent_lock.get("open_dimensions") or []
+        }
+        adult_appeal = (
+            pack.get("adult_appeal")
+            if isinstance(pack.get("adult_appeal"), dict)
+            else {}
+        )
+        if (
+            adult_appeal.get("enabled") is True
+            and adult_appeal.get("activation_source") == "skill_default"
+            and not ADULT_APPEAL_DEFAULT_AFFECTED_DIMENSIONS.issubset(
+                open_dimensions
+            )
+        ):
+            failures.append(
+                {
+                    "check": "intent_lock_adult_appeal_default",
+                    "reason": (
+                        "the skill-default adult-appeal axis may be active only when every semantic dimension it can affect is explicitly open"
+                    ),
+                    "required_open_dimensions": sorted(
+                        ADULT_APPEAL_DEFAULT_AFFECTED_DIMENSIONS
+                    ),
+                    "open_dimensions": sorted(open_dimensions),
+                }
+            )
+        invalid_dimensions = sorted(
+            {
+                str(row.get("dimension") or "")
+                for row in decisions
+                if str(row.get("dimension") or "") not in open_dimensions
+            }
+        )
+        if invalid_dimensions:
+            failures.append(
+                {
+                    "check": "intent_lock_authorial_dimensions",
+                    "reason": "authorial decisions may change only dimensions left open by the intent lock",
+                    "invalid_dimensions": invalid_dimensions,
+                    "open_dimensions": sorted(open_dimensions),
+                }
+            )
     for exclusion in nonempty_string_list(core.get("user_exclusions")):
         if text_contains_term(prompt_en, exclusion):
             failures.append(
@@ -4832,6 +5784,15 @@ def audit_authorial_core_v5(
                     "check": "authorial_core_exclusion",
                     "reason": "final prompt reintroduced an explicit authorial-core exclusion",
                     "exclusion": exclusion,
+                }
+            )
+    for label in nonempty_string_list(core.get("runtime_forbidden_labels")):
+        if text_contains_term(prompt_en, label):
+            failures.append(
+                {
+                    "check": "intent_lock_runtime_label",
+                    "reason": "a runtime-only label leaked into prompt_en without being removed from meaning resolution",
+                    "label": label,
                 }
             )
     return failures
@@ -5014,6 +5975,17 @@ def audit_creative_augmentation_v5(
     if not contract or not contract.get("enabled"):
         return []
     failures: list[dict[str, Any]] = []
+    core = (
+        pack.get("authorial_core")
+        if isinstance(pack.get("authorial_core"), dict)
+        else {}
+    )
+    intent_lock = (
+        core.get("intent_lock")
+        if core.get("contract_version") == AUTHORIAL_CORE_CONTRACT_VERSION
+        and isinstance(core.get("intent_lock"), dict)
+        else {}
+    )
     candidates = creative_augmentation_candidates_from_pack(pack)
     candidate_map = {
         str(row.get("id") or ""): row
@@ -5090,6 +6062,30 @@ def audit_creative_augmentation_v5(
         evidence = str(decision.get("prompt_evidence") or "").strip()
         interpretation = str(decision.get("artistic_interpretation") or "")
         transformation = str(decision.get("transformation") or "")
+        affected_dimensions = nonempty_string_list(
+            decision.get("affected_dimensions")
+        )
+        if intent_lock:
+            open_dimensions = {
+                str(item) for item in intent_lock.get("open_dimensions") or []
+            }
+            invalid_dimensions = sorted(
+                set(affected_dimensions) - open_dimensions
+            )
+            if (
+                not affected_dimensions
+                or len(affected_dimensions) != len(set(affected_dimensions))
+                or invalid_dimensions
+            ):
+                failures.append(
+                    {
+                        "check": "intent_lock_creative_dimensions",
+                        "reason": "a transformed candidate must name distinct affected dimensions and keep them within the intent lock's open dimensions",
+                        "candidate_id": candidate_id,
+                        "invalid_dimensions": invalid_dimensions,
+                        "open_dimensions": sorted(open_dimensions),
+                    }
+                )
         if (
             candidate_id not in chosen
             or not evidence

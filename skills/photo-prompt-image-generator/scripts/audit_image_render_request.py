@@ -84,6 +84,28 @@ def audit_image_render_request(
             }
         )
 
+    authorial_core = (
+        pack.get("authorial_core")
+        if isinstance(pack.get("authorial_core"), dict)
+        else {}
+    )
+    intent_lock = (
+        authorial_core.get("intent_lock")
+        if authorial_core.get("contract_version") == "photo-authorial-core/v2"
+        and isinstance(authorial_core.get("intent_lock"), dict)
+        else {}
+    )
+    expected_intent_lock_sha256 = str(intent_lock.get("canonical_sha256") or "")
+    if intent_lock and request.get("source_intent_lock_sha256") != expected_intent_lock_sha256:
+        failures.append(
+            {
+                "check": "source_intent_lock_sha256",
+                "reason": "an intent-locked v5 render request must bind the exact requesting-user-priority intent lock",
+                "expected": expected_intent_lock_sha256,
+                "actual": request.get("source_intent_lock_sha256"),
+            }
+        )
+
     runtime_prompt = request.get("runtime_prompt_en")
     if not isinstance(runtime_prompt, str) or not runtime_prompt.strip():
         failures.append(
@@ -278,6 +300,7 @@ def audit_image_render_request(
         "pack_id": pack_id,
         "status": "pass" if not failures else "fail",
         "runtime_prompt_id": hashlib.sha256(runtime_prompt.encode("utf-8")).hexdigest()[:16],
+        "source_intent_lock_sha256": expected_intent_lock_sha256 or None,
         "negative_matches_pack": runtime_negative == pack_negative,
         "effective_visual_contract_sha256": effective_visual_sha256,
         "selected_visual_concept_ids": selected_visual_concepts,
