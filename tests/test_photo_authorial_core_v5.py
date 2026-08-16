@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import hashlib
 import json
 import random
 import subprocess
@@ -19,10 +20,39 @@ if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
 
 import audit_composed_prompt  # noqa: E402
+import audit_image_render_request  # noqa: E402
 import prompt_generator  # noqa: E402
 
 
 class PhotoAuthorialCoreV5Tests(unittest.TestCase):
+    @staticmethod
+    def envelope(request_text: str, active_texts: tuple[str, ...] | None = None) -> dict:
+        active_texts = active_texts or (request_text,)
+        spans = []
+        search_from = 0
+        for index, text in enumerate(active_texts):
+            start = request_text.find(text, search_from)
+            if start < 0:
+                raise AssertionError(f"active text is not in request: {text!r}")
+            end = start + len(text)
+            spans.append(
+                {
+                    "span_id": f"scope_{index + 1}",
+                    "start": start,
+                    "end": end,
+                    "text": text,
+                }
+            )
+            search_from = end
+        return {
+            "contract_version": "photo-request-envelope/v1",
+            "provenance": "requesting_user",
+            "request_id": "test-request",
+            "request_text": request_text,
+            "request_sha256": hashlib.sha256(request_text.encode("utf-8")).hexdigest(),
+            "active_spans": spans,
+        }
+
     @staticmethod
     def core(
         source_request: str,
@@ -44,11 +74,61 @@ class PhotoAuthorialCoreV5Tests(unittest.TestCase):
             "slate colors, shallow focus, and tactile glaze detail."
         ),
         definitions: tuple[dict, ...] = (),
-        interpretations: tuple[dict, ...] = (),
-        exclusions: tuple[str, ...] = ("people", "bright sunlight"),
+        interpretations: tuple[dict, ...] | None = None,
+        exclusions: tuple[str, ...] = (),
+        runtime_forbidden_labels: tuple[str, ...] = (),
+        locked_dimensions: tuple[str, ...] = ("concept", "subject", "event"),
+        open_dimensions: tuple[str, ...] = (
+            "framing",
+            "composition",
+            "lighting",
+            "camera",
+            "color",
+            "material",
+            "atmosphere",
+            "relationship",
+        ),
+        anchor_evidence: tuple[str, ...] | None = None,
     ) -> dict:
+        if interpretations is None:
+            interpretations = (
+                {
+                    "term": "governing request",
+                    "source_text": source_request,
+                    "basis": "request_context",
+                    "resolution": interpreted_intent,
+                    "sources": [],
+                },
+            )
+        if anchor_evidence is None:
+            candidates = [subject, event, *visual_priorities]
+            evidence_candidates = [
+                phrase
+                for phrase in candidates
+                if phrase.casefold() in baseline_prompt_en.casefold()
+            ]
+            baseline_tokens = baseline_prompt_en.split()
+            for start in range(0, max(len(baseline_tokens) - 3, 0), 2):
+                phrase = " ".join(baseline_tokens[start : start + 4]).strip(
+                    " ,.;:!?"
+                )
+                if phrase and phrase.casefold() in baseline_prompt_en.casefold():
+                    evidence_candidates.append(phrase)
+            unique_evidence: list[str] = []
+            seen_evidence: set[str] = set()
+            for phrase in evidence_candidates:
+                key = phrase.strip().casefold()
+                if key and key not in seen_evidence:
+                    seen_evidence.add(key)
+                    unique_evidence.append(phrase)
+            anchor_evidence = tuple(unique_evidence)
+        evidence_rows = list(anchor_evidence)
+        if len(evidence_rows) < len(locked_dimensions):
+            raise AssertionError(
+                "test core needs one distinct baseline evidence phrase per locked dimension"
+            )
         return {
-            "contract_version": "photo-authorial-core/v1",
+            "contract_version": "photo-authorial-core/v2",
             "provenance": "agent_prepack",
             "source_request": source_request,
             "interpreted_intent": interpreted_intent,
@@ -61,6 +141,22 @@ class PhotoAuthorialCoreV5Tests(unittest.TestCase):
             "interpretation_provenance": list(interpretations),
             "unresolved_ambiguities": [],
             "user_exclusions": list(exclusions),
+            "runtime_forbidden_labels": list(runtime_forbidden_labels),
+            "intent_lock": {
+                "contract_version": "photo-intent-lock/v1",
+                "priority": "requesting_user",
+                "semantic_anchors": [
+                    {
+                        "anchor_id": f"anchor_{dimension}",
+                        "source_text": source_request,
+                        "dimension": dimension,
+                        "prompt_evidence": evidence_rows[index],
+                    }
+                    for index, dimension in enumerate(locked_dimensions)
+                ],
+                "locked_dimensions": list(locked_dimensions),
+                "open_dimensions": list(open_dimensions),
+            },
             "style": {
                 "domain": "general_photo",
                 "family": "context-led photographic study",
@@ -85,6 +181,7 @@ class PhotoAuthorialCoreV5Tests(unittest.TestCase):
         seed: int = 91,
         creativity: float = 0.5,
     ) -> dict:
+        envelope = self.envelope(core["source_request"])
         completed = self.run_wrapper_raw(
             "--selection-mode",
             "rule",
@@ -93,8 +190,8 @@ class PhotoAuthorialCoreV5Tests(unittest.TestCase):
             "--emit-candidate-pack",
             "--candidate-pack-version",
             "v5",
-            "--concept-lock",
-            core["source_request"],
+            "--request-envelope-json",
+            json.dumps(envelope, ensure_ascii=False),
             "--authorial-core-json",
             json.dumps(core, ensure_ascii=False),
             "--creativity",
@@ -120,16 +217,26 @@ class PhotoAuthorialCoreV5Tests(unittest.TestCase):
         return None
 
     def test_general_core_is_prepack_hash_bound_and_v4_remains_compatible(self):
-        source = "Photorealistic blue porcelain teacup still life in a quiet rainlit kitchen"
-        raw_core = self.core(source)
-        normalized = prompt_generator.normalize_authorial_core(raw_core)
+        source = (
+            "Photorealistic blue porcelain teacup still life in a quiet rainlit kitchen "
+            "without people or bright sunlight"
+        )
+        raw_core = self.core(source, exclusions=("people", "bright sunlight"))
+        envelope = prompt_generator.normalize_request_envelope(self.envelope(source))
+        normalized = prompt_generator.normalize_authorial_core(
+            raw_core,
+            request_envelope=envelope,
+        )
         self.assertEqual(normalized["provenance"], "agent_prepack")
         self.assertRegex(normalized["canonical_sha256"], r"^[0-9a-f]{64}$")
 
         invalid = copy.deepcopy(raw_core)
         invalid["candidate_ids"] = ["slot:location:private-answer"]
         with self.assertRaisesRegex(ValueError, "pack-derived or unsupported"):
-            prompt_generator.normalize_authorial_core(invalid)
+            prompt_generator.normalize_authorial_core(
+                invalid,
+                request_envelope=envelope,
+            )
 
         pack = self.run_v5(raw_core)
         core = pack["authorial_core"]
@@ -142,8 +249,13 @@ class PhotoAuthorialCoreV5Tests(unittest.TestCase):
             for row in pack["semantic_clarification"]["candidates"]
             if row["id"] == "clarification:authorial-core:interpreted-intent"
         )
-        self.assertEqual(core_clarification["applicability"]["status"], "review_required")
-        self.assertTrue(core_clarification["revisable"])
+        self.assertEqual(core_clarification["applicability"]["status"], "required")
+        self.assertFalse(core_clarification["revisable"])
+        self.assertTrue(core_clarification["required_in_final_prompt"])
+        self.assertEqual(
+            pack["intent_preservation"]["source_intent_lock_sha256"],
+            core["intent_lock"]["canonical_sha256"],
+        )
         self.assertIn("baseline_prompt_en", retrieval["source_fields"])
         self.assertFalse(retrieval["exclusions_used_as_positive_query"])
         self.assertTrue(pack["coverage"]["intent_constraints"]["no_people"])
@@ -155,8 +267,6 @@ class PhotoAuthorialCoreV5Tests(unittest.TestCase):
             "--emit-candidate-pack",
             "--candidate-pack-version",
             "v5",
-            "--concept-lock",
-            source,
         )
         self.assertNotEqual(missing.returncode, 0)
         self.assertIn("requires --authorial-core-json", missing.stderr)
@@ -169,13 +279,13 @@ class PhotoAuthorialCoreV5Tests(unittest.TestCase):
             "--emit-candidate-pack",
             "--candidate-pack-version",
             "v5",
-            "--concept-lock",
-            source,
+            "--request-envelope-json",
+            json.dumps(self.envelope(source), ensure_ascii=False),
             "--authorial-core-json",
             json.dumps(mismatched),
         )
         self.assertNotEqual(mismatch_run.returncode, 0)
-        self.assertIn("must exactly match a user request source", mismatch_run.stderr)
+        self.assertIn("must exactly match request envelope request_text bytes", mismatch_run.stderr)
 
         legacy = self.run_wrapper_raw(
             "--selection-mode",
@@ -188,6 +298,159 @@ class PhotoAuthorialCoreV5Tests(unittest.TestCase):
         )
         self.assertEqual(legacy.returncode, 0, legacy.stderr)
         self.assertEqual(json.loads(legacy.stdout)[0]["contract_version"], "photo-candidate-pack/v4")
+
+    def test_request_envelope_and_intent_lock_fail_closed_for_arbitrary_topics(self):
+        source = (
+            "Create a glass lighthouse above a frozen lake, lit by green moonlight"
+        )
+        active_texts = (
+            "glass lighthouse above a frozen lake",
+            "green moonlight",
+        )
+        baseline = (
+            "One glass lighthouse floats above a frozen lake as cracked ice reflects its clear "
+            "silhouette, while green moonlight creates long emerald shadows, pale mist, crisp "
+            "surface texture, distant depth, and a quiet impossible nocturnal event."
+        )
+        raw_core = self.core(
+            source,
+            interpreted_intent=(
+                "A physically legible surreal photograph of a glass lighthouse floating above frozen water under green moonlight"
+            ),
+            subject="one glass lighthouse",
+            setting="a wide frozen lake at night",
+            event="one glass lighthouse floats above a frozen lake",
+            visual_priorities=(
+                "transparent glass lighthouse silhouette",
+                "frozen lake surface texture",
+                "green moonlight shadows",
+            ),
+            baseline_prompt_en=baseline,
+            interpretations=(
+                {
+                    "term": "floating lighthouse event",
+                    "source_text": active_texts[0],
+                    "basis": "request_context",
+                    "resolution": "a glass lighthouse visibly floating above a frozen lake",
+                    "sources": [],
+                },
+                {
+                    "term": "lighting modifier",
+                    "source_text": active_texts[1],
+                    "basis": "request_context",
+                    "resolution": "green moonlight visibly controls the scene lighting and shadows",
+                    "sources": [],
+                },
+            ),
+            locked_dimensions=("concept", "subject", "event", "lighting"),
+            open_dimensions=(
+                "framing",
+                "composition",
+                "camera",
+                "color",
+                "material",
+                "atmosphere",
+            ),
+            anchor_evidence=(
+                "quiet impossible nocturnal event",
+                "One glass lighthouse",
+                "glass lighthouse floats above a frozen lake",
+                "green moonlight creates long emerald shadows",
+            ),
+        )
+        for anchor in raw_core["intent_lock"]["semantic_anchors"]:
+            anchor["source_text"] = (
+                active_texts[1]
+                if anchor["dimension"] == "lighting"
+                else active_texts[0]
+            )
+        envelope = prompt_generator.normalize_request_envelope(
+            self.envelope(source, active_texts)
+        )
+        normalized = prompt_generator.normalize_authorial_core(
+            raw_core,
+            request_envelope=envelope,
+        )
+        retrieval_text, provenance = prompt_generator.authorial_core_retrieval_text(
+            normalized
+        )
+        self.assertIn(active_texts[0], retrieval_text)
+        self.assertIn(active_texts[1], retrieval_text)
+        self.assertEqual(
+            provenance["active_scope_sha256"],
+            prompt_generator.canonical_json_sha256(
+                normalized["request_binding"]["active_spans"]
+            ),
+        )
+        forged_binding = copy.deepcopy(normalized)
+        forged_binding["request_binding"]["request_envelope_sha256"] = "0" * 64
+        forged_material = copy.deepcopy(forged_binding)
+        forged_material.pop("canonical_sha256")
+        forged_material.pop("core_id")
+        forged_binding["canonical_sha256"] = prompt_generator.canonical_json_sha256(
+            forged_material
+        )
+        forged_binding["core_id"] = forged_binding["canonical_sha256"][:16]
+        self.assertFalse(
+            audit_composed_prompt.authorial_core_v2_intent_contract_valid(
+                forged_binding
+            )
+        )
+
+        missing_envelope = self.run_wrapper_raw(
+            "--selection-mode",
+            "rule",
+            "--emit-candidate-pack",
+            "--candidate-pack-version",
+            "v5",
+            "--authorial-core-json",
+            json.dumps(raw_core, ensure_ascii=False),
+        )
+        self.assertNotEqual(missing_envelope.returncode, 0)
+        self.assertIn("requires --request-envelope-json", missing_envelope.stderr)
+
+        unanchored = copy.deepcopy(raw_core)
+        unanchored["intent_lock"]["semantic_anchors"] = [
+            row
+            for row in unanchored["intent_lock"]["semantic_anchors"]
+            if row["dimension"] != "lighting"
+        ]
+        unanchored["intent_lock"]["locked_dimensions"].remove("lighting")
+        unanchored["intent_lock"]["open_dimensions"].append("lighting")
+        with self.assertRaisesRegex(ValueError, "coverage for every active"):
+            prompt_generator.normalize_authorial_core(
+                unanchored,
+                request_envelope=envelope,
+            )
+
+        missing_event_lock = copy.deepcopy(raw_core)
+        missing_event_lock["intent_lock"]["semantic_anchors"] = [
+            row
+            for row in missing_event_lock["intent_lock"]["semantic_anchors"]
+            if row["dimension"] != "event"
+        ]
+        missing_event_lock["intent_lock"]["locked_dimensions"].remove("event")
+        missing_event_lock["intent_lock"]["open_dimensions"].append("event")
+        with self.assertRaisesRegex(ValueError, "concept, subject, and event"):
+            prompt_generator.normalize_authorial_core(
+                missing_event_lock,
+                request_envelope=envelope,
+            )
+
+        forged_definition = copy.deepcopy(raw_core)
+        forged_definition["user_definitions"] = [
+            {
+                "term": "green moonlight",
+                "source_text": "green moonlight",
+                "interpreted_meaning": "a soothing natural green ambient light",
+                "prompt_evidence": "green moonlight creates long emerald shadows",
+            }
+        ]
+        with self.assertRaisesRegex(ValueError, "bare term"):
+            prompt_generator.normalize_authorial_core(
+                forged_definition,
+                request_envelope=envelope,
+            )
 
     def test_authorial_core_text_is_the_actual_semantic_query_and_changes_selection(self):
         data = {
@@ -221,9 +484,10 @@ class PhotoAuthorialCoreV5Tests(unittest.TestCase):
                 "slot:location:misty_forest": {"vector": [0.0, 1.0]},
             },
         }
+        red_source = "A red geometric studio product photograph without a misty forest"
         red_core = prompt_generator.normalize_authorial_core(
             self.core(
-                "A red geometric studio product photograph",
+                red_source,
                 interpreted_intent="A precise red geometric studio study with ordered planes and hard edges",
                 setting="a red geometric studio interior",
                 baseline_prompt_en=(
@@ -232,11 +496,15 @@ class PhotoAuthorialCoreV5Tests(unittest.TestCase):
                     "tactile glaze form a precise product photograph."
                 ),
                 exclusions=("misty forest",),
-            )
+            ),
+            request_envelope=prompt_generator.normalize_request_envelope(
+                self.envelope(red_source)
+            ),
         )
+        forest_source = "A misty cedar forest product photograph without a red studio"
         forest_core = prompt_generator.normalize_authorial_core(
             self.core(
-                "A misty cedar forest product photograph",
+                forest_source,
                 interpreted_intent="A quiet misty cedar forest study with layered trunks and diffuse air",
                 setting="a misty cedar forest clearing",
                 baseline_prompt_en=(
@@ -245,7 +513,10 @@ class PhotoAuthorialCoreV5Tests(unittest.TestCase):
                     "form an atmospheric product photograph."
                 ),
                 exclusions=("red studio",),
-            )
+            ),
+            request_envelope=prompt_generator.normalize_request_envelope(
+                self.envelope(forest_source)
+            ),
         )
         red_query, red_provenance = prompt_generator.authorial_core_retrieval_text(red_core)
         forest_query, forest_provenance = prompt_generator.authorial_core_retrieval_text(forest_core)
@@ -367,15 +638,29 @@ class PhotoAuthorialCoreV5Tests(unittest.TestCase):
                     "opening is bounded by the actual upper inner-thigh contours, framed as attractive "
                     "negative space with a tight thigh-dominant crop and no false garment gap."
                 ),
-                definitions=(
+                interpretations=(
                     {
                         "term": "절대공역",
                         "source_text": "절대공역",
-                        "interpreted_meaning": "true negative space bounded by close upper inner thigh contours",
-                        "prompt_evidence": "narrow background opening is bounded by the actual upper inner-thigh contours",
+                        "basis": "agent_general_knowledge",
+                        "resolution": "true negative space bounded by close upper inner thigh contours",
+                        "sources": [],
                     },
                 ),
-                exclusions=("wide stance", "garment opening"),
+                locked_dimensions=(
+                    "concept",
+                    "subject",
+                    "event",
+                    "pose",
+                    "body_geometry",
+                ),
+                anchor_evidence=(
+                    "attractive negative space",
+                    "unmistakably adult woman",
+                    "narrow background opening is bounded",
+                    "stands with knees close",
+                    "actual upper inner-thigh contours",
+                ),
             ),
             creativity=0.0,
         )
@@ -401,15 +686,28 @@ class PhotoAuthorialCoreV5Tests(unittest.TestCase):
                     "eye drift, relaxed brows, a small rounded open mouth, a centered external tongue "
                     "tip, subtle cheek blush, and a slightly fatigued release all at once."
                 ),
-                definitions=(
+                interpretations=(
                     {
                         "term": "아헤가오",
                         "source_text": "아헤가오",
-                        "interpreted_meaning": "simultaneous upward eyes external tongue blush and tired release",
-                        "prompt_evidence": "asymmetric upward eye drift, relaxed brows, a small rounded open mouth",
+                        "basis": "agent_general_knowledge",
+                        "resolution": "simultaneous upward eyes external tongue blush and tired release",
+                        "sources": [],
                     },
                 ),
-                exclusions=("아헤가오", "orgasm", "sexual act"),
+                runtime_forbidden_labels=("아헤가오",),
+                locked_dimensions=(
+                    "concept",
+                    "subject",
+                    "event",
+                    "expression",
+                ),
+                anchor_evidence=(
+                    "slightly fatigued release all at once",
+                    "unmistakably adult woman",
+                    "shows asymmetric upward eye drift",
+                    "relaxed brows, a small rounded open mouth",
+                ),
             ),
             creativity=0.0,
         )
@@ -432,7 +730,28 @@ class PhotoAuthorialCoreV5Tests(unittest.TestCase):
                     "mouth, and a centered external tongue tip as separate readable components under "
                     "plain studio light without assigning age or sexual context."
                 ),
-                exclusions=("아헤가오", "explicit sexual act"),
+                interpretations=(
+                    {
+                        "term": "아헤가오",
+                        "source_text": "아헤가오",
+                        "basis": "agent_general_knowledge",
+                        "resolution": "simultaneous upward eyes external tongue blush and tired release",
+                        "sources": [],
+                    },
+                ),
+                runtime_forbidden_labels=("아헤가오",),
+                locked_dimensions=(
+                    "concept",
+                    "subject",
+                    "event",
+                    "expression",
+                ),
+                anchor_evidence=(
+                    "separate readable components",
+                    "A close portrait",
+                    "centered external tongue tip",
+                    "upward-directed eyes, relaxed brows",
+                ),
             ),
             creativity=0.0,
         )
@@ -456,7 +775,15 @@ class PhotoAuthorialCoreV5Tests(unittest.TestCase):
                     "visible beside a dark current state, an unfinished on-body boundary still spreads, "
                     "and a present-tense visible cause makes the transformation readable."
                 ),
-                exclusions=("political corruption", "completed costume swap"),
+                interpretations=(
+                    {
+                        "term": "타락",
+                        "source_text": "타락",
+                        "basis": "request_context",
+                        "resolution": "an embodied identity transition rather than political corruption",
+                        "sources": [],
+                    },
+                ),
             ),
             creativity=0.0,
         )
@@ -479,7 +806,15 @@ class PhotoAuthorialCoreV5Tests(unittest.TestCase):
                     "salon, expressing decadent elegance through tarnished gold, bruised velvet, restrained "
                     "shadows, and weathered luxury without a character transformation."
                 ),
-                exclusions=("embodied metamorphosis", "allegiance change"),
+                interpretations=(
+                    {
+                        "term": "타락한 우아함",
+                        "source_text": "타락한 우아함",
+                        "basis": "request_context",
+                        "resolution": "a decadent elegance mood without an embodied identity transition",
+                        "sources": [],
+                    },
+                ),
             ),
             creativity=0.0,
         )
@@ -503,15 +838,32 @@ class PhotoAuthorialCoreV5Tests(unittest.TestCase):
                     "eyes, a cool superior smirk, poised arrogant bearing, and fresh youthful adult "
                     "styling while behavior, not childlike morphology, carries the archetype."
                 ),
-                definitions=(
+                interpretations=(
                     {
                         "term": "메스가키",
                         "source_text": "메스가키",
-                        "interpreted_meaning": "adult haughty smug poise with youthful adult styling",
-                        "prompt_evidence": "poised arrogant bearing, and fresh youthful adult styling",
+                        "basis": "agent_general_knowledge",
+                        "resolution": "adult haughty smug poise with youthful adult styling",
+                        "sources": [],
                     },
                 ),
-                exclusions=("메스가키", "childlike proportions", "schoolchild styling"),
+                runtime_forbidden_labels=("메스가키",),
+                locked_dimensions=(
+                    "concept",
+                    "subject",
+                    "event",
+                    "role",
+                    "expression",
+                    "style",
+                ),
+                anchor_evidence=(
+                    "behavior, not childlike morphology, carries the archetype",
+                    "unmistakably adult peer rival",
+                    "faces the camera with a raised brow",
+                    "cool superior smirk",
+                    "half-lidded eyes",
+                    "fresh youthful adult styling",
+                ),
             ),
             creativity=0.0,
         )
@@ -523,9 +875,267 @@ class PhotoAuthorialCoreV5Tests(unittest.TestCase):
         self.assertNotIn("warm_crack_phrase", required)
         self.assertIn("메스가키", status_play["runtime_expression"]["forbidden_prompt_terms"])
 
+    def test_requester_first_dimension_precedence_suppresses_generic_moe_rewrites(self):
+        source = (
+            "Create a moe portrait of an adult peer rival whose exact expression is a cool superior smirk"
+        )
+        baseline = (
+            "A requester-defined rival portrait shows an unmistakably adult peer rival who holds her "
+            "exact expression without a recovery beat: a cool superior mouth smirk, steady half-lidded "
+            "eyes, and poised competitive bearing in a clean portrait studio."
+        )
+        pack = self.run_v5(
+            self.core(
+                source,
+                interpreted_intent=(
+                    "A moe-directed adult rival portrait that preserves the requester's exact cool superior expression"
+                ),
+                subject="an unmistakably adult peer rival",
+                setting="a clean portrait studio",
+                event="she holds her exact expression without a recovery beat",
+                visual_priorities=(
+                    "cool superior mouth smirk",
+                    "steady half-lidded eyes",
+                    "poised competitive bearing",
+                ),
+                baseline_prompt_en=baseline,
+                interpretations=(
+                    {
+                        "term": "exact rival expression",
+                        "source_text": source,
+                        "basis": "request_context",
+                        "resolution": (
+                            "preserve the cool superior smirk without adding a warm recovery expression"
+                        ),
+                        "sources": [],
+                    },
+                ),
+                locked_dimensions=("concept", "subject", "event", "expression"),
+                open_dimensions=(
+                    "framing",
+                    "composition",
+                    "lighting",
+                    "camera",
+                    "color",
+                    "material",
+                    "atmosphere",
+                    "relationship",
+                    "setting",
+                ),
+                anchor_evidence=(
+                    "requester-defined rival portrait",
+                    "unmistakably adult peer rival",
+                    "holds her exact expression without a recovery beat",
+                    "cool superior mouth smirk",
+                ),
+            ),
+            creativity=0.0,
+        )
+        contract = pack["moe_response"]
+        precedence = contract["intent_precedence"]
+        statuses = {
+            row["rule_id"]: row["status"] for row in precedence["rules"]
+        }
+        for rule_id in (
+            "aesthetic_style_default",
+            "aesthetic_expression_default",
+            "affective_balance_default",
+            "generic_character_response_mechanism",
+            "generic_relationship_register",
+            "default_sensual_support",
+            "generic_expression_negative_suppression",
+        ):
+            self.assertEqual(
+                statuses[rule_id],
+                "suppressed_requesting_user_priority",
+            )
+        required_evidence = set(
+            contract["prompt_binding"]["required_evidence_fields"]
+        )
+        self.assertNotIn("affective_leak_phrase", required_evidence)
+        self.assertNotIn("aesthetic_baseline_phrase", required_evidence)
+        self.assertFalse(
+            contract["composition_guidance"]["affective_balance"]["required"]
+        )
+        self.assertFalse(
+            contract["composition_guidance"]["aesthetic_entry_condition"][
+                "required"
+            ]
+        )
+        self.assertIn(
+            "requesting_user_locked_response_legibility",
+            contract["render_qualification"]["mechanism_hard_gates"],
+        )
+        for forbidden_default in (
+            "blank bored expression",
+            "listless expression",
+            "pure scowl without a warm micro-expression",
+        ):
+            self.assertNotIn(forbidden_default, pack["negative_en"])
+        self.assertNotIn("adult_appeal", pack)
+
+        non_moe_source = (
+            "Photorealistic portrait of an adult woman architect reviewing a blueprint at her drafting table"
+        )
+        non_moe_baseline = (
+            "A documentary architect portrait shows an unmistakably adult woman architect who reviews "
+            "a blueprint at her drafting table, surrounded by scale rulers, tracing paper, restrained "
+            "window light, and precise working posture."
+        )
+        closed_adult_default = self.run_v5(
+            self.core(
+                non_moe_source,
+                interpreted_intent=(
+                    "A documentary work portrait of an adult architect studying a physical blueprint"
+                ),
+                subject="an unmistakably adult woman architect",
+                setting="an active architecture drafting studio",
+                event="she reviews a blueprint at her drafting table",
+                visual_priorities=(
+                    "physical blueprint",
+                    "scale rulers and tracing paper",
+                    "precise working posture",
+                ),
+                baseline_prompt_en=non_moe_baseline,
+                anchor_evidence=(
+                    "documentary architect portrait",
+                    "unmistakably adult woman architect",
+                    "reviews a blueprint at her drafting table",
+                ),
+            ),
+            creativity=0.0,
+        )
+        self.assertNotIn("adult_appeal", closed_adult_default)
+
+        open_adult_default = self.run_v5(
+            self.core(
+                non_moe_source,
+                interpreted_intent=(
+                    "A documentary work portrait of an adult architect studying a physical blueprint"
+                ),
+                subject="an unmistakably adult woman architect",
+                setting="an active architecture drafting studio",
+                event="she reviews a blueprint at her drafting table",
+                visual_priorities=(
+                    "physical blueprint",
+                    "scale rulers and tracing paper",
+                    "precise working posture",
+                ),
+                baseline_prompt_en=non_moe_baseline,
+                open_dimensions=(
+                    "sexual_tone",
+                    "style",
+                    "composition",
+                    "expression",
+                    "pose",
+                    "body_geometry",
+                    "framing",
+                    "lighting",
+                    "camera",
+                    "color",
+                    "material",
+                    "atmosphere",
+                    "relationship",
+                    "setting",
+                ),
+                anchor_evidence=(
+                    "documentary architect portrait",
+                    "unmistakably adult woman architect",
+                    "reviews a blueprint at her drafting table",
+                ),
+            ),
+            creativity=0.0,
+        )
+        self.assertEqual(
+            open_adult_default["adult_appeal"]["activation_source"],
+            "skill_default",
+        )
+        injected_default = copy.deepcopy(closed_adult_default)
+        injected_default["adult_appeal"] = copy.deepcopy(
+            open_adult_default["adult_appeal"]
+        )
+        injected_failures = audit_composed_prompt.audit_authorial_core_v5(
+            injected_default,
+            {},
+            non_moe_baseline,
+        )
+        self.assertIn(
+            "intent_lock_adult_appeal_default",
+            {row["check"] for row in injected_failures},
+        )
+
+        prompt = (
+            "An unmistakably adult peer rival stands in a restrained portrait studio. Her cool "
+            "superior mouth smirk remains exact, accompanied by steady half-lidded eyes and poised "
+            "competitive bearing. Neutral window light defines her adult features without changing "
+            "the requested affect. The same focal plane holds her face and hands with a portrait prop, "
+            "while a close vertical frame and muted slate palette keep attention on that unchanged expression."
+        )
+        response = {
+            "aesthetic_baseline": contract["aesthetic_baseline"],
+            "mechanism": contract["primary_mechanism"],
+            "relationship_register": contract["relationship_register"],
+            "visible_response": "the locked mouth smirk remains unchanged",
+            "support_mechanisms": [],
+            "prompt_evidence": {
+                "actor_phrase": "unmistakably adult peer rival",
+                "visible_response_phrase": "cool superior mouth smirk",
+                "focal_plane_phrase": (
+                    "same focal plane holds her face and hands with a portrait prop"
+                ),
+            },
+        }
+        failures = audit_composed_prompt.audit_moe_response(
+            pack,
+            {"moe_response": response},
+            prompt,
+        )
+        self.assertNotIn(
+            "moe_response_intent_precedence",
+            {row["check"] for row in failures},
+            failures,
+        )
+
+        leaked_prompt = f"{prompt} Her softened eyes reveal warmth."
+        leaked_failures = audit_composed_prompt.audit_moe_response(
+            pack,
+            {"moe_response": response},
+            leaked_prompt,
+        )
+        self.assertIn(
+            "moe_response_intent_precedence",
+            {row["check"] for row in leaked_failures},
+        )
+
+        invented_evidence = copy.deepcopy(response)
+        invented_evidence["prompt_evidence"]["visible_response_phrase"] = (
+            "softened eyes reveal warmth"
+        )
+        invented_failures = audit_composed_prompt.audit_moe_response(
+            pack,
+            {"moe_response": invented_evidence},
+            leaked_prompt,
+        )
+        precedence_failures = [
+            row
+            for row in invented_failures
+            if row["check"] == "moe_response_intent_precedence"
+        ]
+        self.assertTrue(
+            any(row.get("field") == "visible_response_phrase" for row in precedence_failures),
+            precedence_failures,
+        )
+
     def test_v5_composition_audit_binds_core_and_rejects_copying(self):
-        source = "Photorealistic blue porcelain teacup still life in a quiet rainlit kitchen"
-        pack = self.run_v5(self.core(source), seed=91, creativity=0.5)
+        source = (
+            "Photorealistic blue porcelain teacup still life in a quiet rainlit kitchen "
+            "without people or bright sunlight"
+        )
+        pack = self.run_v5(
+            self.core(source, exclusions=("people", "bright sunlight")),
+            seed=91,
+            creativity=0.5,
+        )
         prompt = (
             "Photorealistic blue porcelain teacup still life in a quiet rainlit kitchen. A blue "
             "porcelain teacup rests on a dark kitchen counter while delicate rising steam catches "
@@ -559,6 +1169,11 @@ class PhotoAuthorialCoreV5Tests(unittest.TestCase):
             "candidate_interpretations": [],
             "authorial_core_binding": {
                 "source_authorial_core_sha256": pack["authorial_core"]["canonical_sha256"],
+                "source_intent_lock_sha256": pack["authorial_core"]["intent_lock"]["canonical_sha256"],
+                "preserved_anchor_ids": [
+                    row["anchor_id"]
+                    for row in pack["authorial_core"]["intent_lock"]["semantic_anchors"]
+                ],
                 "preserved_evidence": [
                     "blue porcelain teacup",
                     "delicate rising steam",
@@ -583,12 +1198,97 @@ class PhotoAuthorialCoreV5Tests(unittest.TestCase):
         audit = audit_composed_prompt.audit_composed_prompt(pack, composed)
         self.assertEqual(audit["status"], "pass", audit["failures"])
 
+        render_request = {
+            "schema_version": "photo-image-render-request/v2",
+            "pack_id": pack["pack_id"],
+            "runtime_prompt_en": f"{prompt} Avoid: {pack['negative_en']}",
+            "runtime_negative_en": pack["negative_en"],
+            "source_intent_lock_sha256": pack["authorial_core"]["intent_lock"]["canonical_sha256"],
+            "references": [],
+            "audit_boundary": {
+                "composed_prompt_audit_status": "pass",
+                "runtime_prompt_audit_status": "not_run",
+                "inherits_composed_prompt_pass": False,
+            },
+        }
+        runtime_audit = audit_image_render_request.audit_image_render_request(
+            pack,
+            composed,
+            render_request,
+        )
+        self.assertEqual(runtime_audit["status"], "pass", runtime_audit["failures"])
+        unbound_render = copy.deepcopy(render_request)
+        unbound_render.pop("source_intent_lock_sha256")
+        unbound_audit = audit_image_render_request.audit_image_render_request(
+            pack,
+            composed,
+            unbound_render,
+        )
+        self.assertIn(
+            "source_intent_lock_sha256",
+            {row["check"] for row in unbound_audit["failures"]},
+        )
+
         missing_binding = copy.deepcopy(composed)
         missing_binding.pop("authorial_core_binding")
         missing_audit = audit_composed_prompt.audit_composed_prompt(pack, missing_binding)
         self.assertIn(
             "authorial_core_binding",
             {row["check"] for row in missing_audit["failures"]},
+        )
+
+        locked_change = copy.deepcopy(composed)
+        locked_change["authorial_core_binding"]["authorial_decisions"][0][
+            "dimension"
+        ] = "subject"
+        locked_change_audit = audit_composed_prompt.audit_composed_prompt(
+            pack,
+            locked_change,
+        )
+        self.assertIn(
+            "intent_lock_authorial_dimensions",
+            {row["check"] for row in locked_change_audit["failures"]},
+        )
+
+        missing_anchor = copy.deepcopy(composed)
+        missing_anchor["prompt_en"] = missing_anchor["prompt_en"].replace(
+            "rainlit window reflections",
+            "wet glass reflections",
+        )
+        missing_anchor_audit = audit_composed_prompt.audit_composed_prompt(
+            pack,
+            missing_anchor,
+        )
+        self.assertIn(
+            "intent_lock_prompt_evidence",
+            {row["check"] for row in missing_anchor_audit["failures"]},
+        )
+
+        superseded = copy.deepcopy(composed)
+        core_decision = next(
+            row
+            for row in superseded["semantic_clarification_decisions"]
+            if row["clarification_id"]
+            == "clarification:authorial-core:interpreted-intent"
+        )
+        core_decision.update(
+            {
+                "decision": "superseded_by_revision",
+                "revision_basis": "candidate_pack_clarification",
+                "revised_meaning": "a materially different replacement concept authored after retrieval",
+                "revision_source_ids": [
+                    pack["creative_augmentation"]["candidates"][0]["id"]
+                ],
+                "prompt_evidence": "deliberate stillness around the handle",
+            }
+        )
+        superseded_audit = audit_composed_prompt.audit_composed_prompt(
+            pack,
+            superseded,
+        )
+        self.assertTrue(
+            {"semantic_clarification_required", "semantic_clarification_revision"}
+            <= {row["check"] for row in superseded_audit["failures"]}
         )
 
         mutated_pack = copy.deepcopy(pack)
@@ -601,6 +1301,18 @@ class PhotoAuthorialCoreV5Tests(unittest.TestCase):
         self.assertIn(
             "authorial_core_integrity",
             {row["check"] for row in retrieval_failures},
+        )
+
+        reordered_priority = copy.deepcopy(pack)
+        reordered_priority["intent_preservation"]["priority_order"].reverse()
+        priority_failures = audit_composed_prompt.audit_authorial_core_v5(
+            reordered_priority,
+            composed,
+            prompt,
+        )
+        self.assertIn(
+            "intent_preservation_contract",
+            {row["check"] for row in priority_failures},
         )
 
         exclusion_leak = copy.deepcopy(composed)
@@ -629,12 +1341,25 @@ class PhotoAuthorialCoreV5Tests(unittest.TestCase):
                         "artistic_interpretation": "reframes material against domestic quiet",
                         "transformation": "moves source terms into foreground tension",
                         "prompt_evidence": copied_evidence,
+                        "affected_dimensions": ["material"],
                     }
                 )
         copied_audit = audit_composed_prompt.audit_composed_prompt(pack, copied)
         self.assertIn(
             "creative_augmentation_transform",
             {row["check"] for row in copied_audit["failures"]},
+        )
+        locked_creative = copy.deepcopy(copied)
+        for decision in locked_creative["creative_augmentation_brief"]["decisions"]:
+            if decision["candidate_id"] == candidate_id:
+                decision["affected_dimensions"] = ["subject"]
+        locked_creative_audit = audit_composed_prompt.audit_composed_prompt(
+            pack,
+            locked_creative,
+        )
+        self.assertIn(
+            "intent_lock_creative_dimensions",
+            {row["check"] for row in locked_creative_audit["failures"]},
         )
 
     def test_sensitive_label_leak_fails_semantic_clarification_audit(self):
@@ -650,15 +1375,26 @@ class PhotoAuthorialCoreV5Tests(unittest.TestCase):
                 "mouth, and a centered external tongue tip as separate readable components under "
                 "plain studio light without assigning age or sexual context."
             ),
-            exclusions=("아헤가오", "explicit sexual act"),
+            interpretations=(
+                {
+                    "term": "아헤가오",
+                    "source_text": "아헤가오",
+                    "basis": "agent_general_knowledge",
+                    "resolution": "simultaneous upward eyes external tongue blush and tired release",
+                    "sources": [],
+                },
+            ),
+            runtime_forbidden_labels=("아헤가오",),
         )
         pack = self.run_v5(core, creativity=0.0)
         retrieval_text, retrieval = prompt_generator.authorial_core_retrieval_text(
             pack["authorial_core"]
         )
-        self.assertNotIn("아헤가오", retrieval_text)
+        self.assertIn("아헤가오", retrieval_text)
         self.assertIn("upward-directed eyes", retrieval_text)
-        self.assertIn("source_request", retrieval["redacted_source_fields"])
+        self.assertIn("source_request_scope", retrieval["source_fields"])
+        self.assertNotIn("source_request_scope", retrieval["redacted_source_fields"])
+        self.assertEqual(retrieval["runtime_forbidden_label_count"], 1)
         self.assertEqual(pack["provenance"]["retrieval_query"], retrieval)
         decisions = []
         for row in pack["semantic_clarification"]["candidates"]:

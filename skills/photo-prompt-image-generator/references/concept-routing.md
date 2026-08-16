@@ -1,6 +1,6 @@
 # Concept and Selection Routing
 
-Post-core only. Do not read this reference until `photo-authorial-core/v1` and its standalone baseline prompt have been frozen.
+Post-core only. Do not read this reference until the request envelope, `photo-authorial-core/v2`, `photo-intent-lock/v1`, and standalone baseline prompt have been frozen.
 
 ## Choose the Narrowest Input
 
@@ -13,7 +13,7 @@ Post-core only. Do not read this reference until `photo-authorial-core/v1` and i
 
 Do not use `--intent` with rule mode. Rule mode is deterministic weighted selection; semantic mode uses the local semantic index and API-backed query embedding.
 
-For the normal skill path, the CLI source and `photo-authorial-core/v1` already exist before this reference becomes available. The exact source remains authoritative, while semantic retrieval uses its exclusion-redacted text together with the independently authored contextual interpretation, standalone baseline prompt, request-scoped definitions, recorded interpretation resolutions, and visible priorities. A recipe, preset, profile, or candidate may not backfill that initial core. Raw CLI v4 remains a compatibility path only.
+For the normal skill path, the byte-exact request envelope and `photo-authorial-core/v2` already exist before this reference becomes available. Exact active requester spans remain authoritative, while semantic retrieval uses their true-exclusion-redacted text together with the independently authored contextual interpretation, standalone baseline prompt, request-scoped definitions, recorded interpretation resolutions, visible priorities, and runtime-only labels. A recipe, preset, profile, or candidate may not backfill or revise that initial core. Routing and augmentation are subordinate to locked dimensions; raw CLI v4 remains a compatibility path only.
 
 `user_definitions` has request-local precedence over registry aliases. `user_exclusions` is a negative filter and never a positive query field. When it explicitly excludes people, v5 reuses the existing no-people guard; this can suppress the configured eligible-human adult-fashion default but does not create a new adult/safety policy.
 
@@ -35,9 +35,9 @@ Natural multilingual character-response requests route through the data-driven c
 
 Keep routing scoped. A generic aesthetic, animal photo, dictionary discussion, negated request, unrelated word fragment, or generic occupation must not activate a character-response route. Parse multiword negative tone phrases as constraints; do not split their control words into positive `mandatory_intents`.
 
-Treat adult age and sexual tone independently. Explicit nonsexual wording routes to `sexual_tone: nonsexual` and suppresses configured sensual/fetish defaults. A plain adult-moe request routes to `sexual_tone: sensual_optional` and keeps the eligible-human low-intensity `sensual_editorial=1`, `fetish_fashion=0` default as supporting appeal. Explicit adult sensual wording routes to `sexual_tone: sensual`. Sexual appeal may support adult moe, but it never substitutes for the pretty-and-cute character-design gate or the character-specific response.
+Treat adult age and sexual tone independently. Explicit nonsexual wording routes to `sexual_tone: nonsexual` and suppresses configured sensual/fetish defaults. A legacy plain adult-moe request routes to `sexual_tone: sensual_optional`; v5 keeps its eligible-human low-intensity default only when sexual tone, style, composition, expression, pose, body geometry, framing, and lighting are all explicitly open in the intent lock. Explicit adult sensual wording routes to `sexual_tone: sensual` under the frozen requester core. Sexual appeal may support adult moe, but it never substitutes for or rewrites requester-defined character, expression, event, or tone.
 
-Preserve the returned pack's adult character-design entry conditions, presentation choice, relationship register, and causal response mechanism. A route-local default must not affect ordinary requests outside that route. Resolve the route before generic rule-mode preset and subject sampling while preserving an explicit preset or narrower role/mixin recipe.
+Preserve explicit request-derived adult character-design conditions, presentation choice, relationship register, and causal response mechanism. On v5, `intent_precedence` suppresses every route-local default whose affected dimensions are not all open; a suppressed default cannot survive as positive prose, negative-prompt text, an evidence duty, or a render gate. Resolve the route before generic rule-mode preset and subject sampling while preserving an explicit preset or narrower role/mixin recipe, but never let that route supersede the frozen requester core.
 
 Preserve requested roles and species layers exactly as expressed by the user and resolved in the frozen core. Do not broaden a narrow species feature into a full species-family contract, and do not let natural descriptive text become a named-person likeness reference.
 

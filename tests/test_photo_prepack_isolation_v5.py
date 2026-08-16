@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import hashlib
 import json
 import subprocess
 import sys
@@ -163,7 +164,7 @@ class PhotoPrepackIsolationV5Tests(unittest.TestCase):
     def test_public_v5_flow_resolves_profile_only_after_receiving_a_frozen_core(self):
         source_text = "성인 여성의 절대공역 사진"
         core = {
-            "contract_version": "photo-authorial-core/v1",
+            "contract_version": "photo-authorial-core/v2",
             "provenance": "agent_prepack",
             "source_request": source_text,
             "interpreted_intent": (
@@ -194,12 +195,59 @@ class PhotoPrepackIsolationV5Tests(unittest.TestCase):
             ],
             "unresolved_ambiguities": [],
             "user_exclusions": [],
+            "runtime_forbidden_labels": ["절대공역"],
+            "intent_lock": {
+                "contract_version": "photo-intent-lock/v1",
+                "priority": "requesting_user",
+                "semantic_anchors": [
+                    {
+                        "anchor_id": "core_concept",
+                        "source_text": "절대공역",
+                        "dimension": "concept",
+                        "prompt_evidence": "narrow background opening between the upper inner-thigh contours",
+                    },
+                    {
+                        "anchor_id": "core_subject",
+                        "source_text": "절대공역",
+                        "dimension": "subject",
+                        "prompt_evidence": "unmistakably adult woman",
+                    },
+                    {
+                        "anchor_id": "core_event",
+                        "source_text": "절대공역",
+                        "dimension": "event",
+                        "prompt_evidence": "bringing her legs close in a balanced self-directed pose",
+                    },
+                ],
+                "locked_dimensions": ["concept", "subject", "event"],
+                "open_dimensions": [
+                    "framing",
+                    "composition",
+                    "lighting",
+                    "camera",
+                ],
+            },
             "style": {
                 "domain": "general_photo",
                 "family": "restrained adult fashion editorial",
                 "evidence": ["clean soft light", "restrained editorial framing"],
             },
             "variation_key": "postcore-profile-resolution",
+        }
+        envelope = {
+            "contract_version": "photo-request-envelope/v1",
+            "provenance": "requesting_user",
+            "request_id": "postcore-profile-resolution",
+            "request_text": source_text,
+            "request_sha256": hashlib.sha256(source_text.encode("utf-8")).hexdigest(),
+            "active_spans": [
+                {
+                    "span_id": "topic",
+                    "start": 0,
+                    "end": len(source_text),
+                    "text": source_text,
+                }
+            ],
         }
         visual_intent = {
             "contract_version": "photo-visual-intent/v1",
@@ -224,8 +272,8 @@ class PhotoPrepackIsolationV5Tests(unittest.TestCase):
                 "--emit-candidate-pack",
                 "--candidate-pack-version",
                 "v5",
-                "--concept-lock",
-                source_text,
+                "--request-envelope-json",
+                json.dumps(envelope, ensure_ascii=False),
                 "--authorial-core-json",
                 json.dumps(core, ensure_ascii=False),
                 "--visual-intent-json",

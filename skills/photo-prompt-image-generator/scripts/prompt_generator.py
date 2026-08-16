@@ -135,7 +135,98 @@ CANDIDATE_PACK_HYBRID_AUTHORIAL_CONTRACT_VERSION = "photo-hybrid-augmentation/v2
 CANDIDATE_PACK_AUTHORIAL_COMPOSITION_VERSION = "photo-authorial-composition/v1"
 CANDIDATE_PACK_AUTHORIAL_SCENE_VERSION = "photo-authorial-scene/v1"
 AUTHORIAL_REQUEST_CONTRACT_VERSION = "authorial-request/v1"
-AUTHORIAL_CORE_CONTRACT_VERSION = "photo-authorial-core/v1"
+LEGACY_AUTHORIAL_CORE_CONTRACT_VERSION = "photo-authorial-core/v1"
+AUTHORIAL_CORE_CONTRACT_VERSION = "photo-authorial-core/v2"
+REQUEST_ENVELOPE_CONTRACT_VERSION = "photo-request-envelope/v1"
+REQUEST_BINDING_CONTRACT_VERSION = "photo-request-binding/v1"
+INTENT_LOCK_CONTRACT_VERSION = "photo-intent-lock/v1"
+INTENT_PRESERVATION_CONTRACT_VERSION = "photo-intent-preservation/v1"
+DOWNSTREAM_INTENT_PRECEDENCE_CONTRACT_VERSION = (
+    "photo-downstream-intent-precedence/v1"
+)
+INTENT_LOCK_DIMENSIONS = {
+    "concept",
+    "subject",
+    "identity",
+    "count",
+    "age",
+    "role",
+    "species",
+    "appearance",
+    "pose",
+    "body_geometry",
+    "expression",
+    "action",
+    "event",
+    "setting",
+    "relationship",
+    "sexual_tone",
+    "style",
+    "reference_use",
+    "viewer_outcome",
+    "text",
+    "format",
+    "framing",
+    "composition",
+    "lighting",
+    "camera",
+    "color",
+    "material",
+    "timing",
+    "atmosphere",
+}
+REQUIRED_INTENT_LOCK_DIMENSIONS = {"concept", "subject", "event"}
+
+# These maps describe semantic impact, not topic meaning.  They let the v5
+# request lock govern downstream defaults without special-casing any named
+# archetype, expression, culture, or genre.
+MOE_RESPONSE_EVIDENCE_DIMENSIONS = {
+    "actor_phrase": "subject",
+    "aesthetic_baseline_phrase": "style",
+    "affective_leak_phrase": "expression",
+    "active_denial_phrase": "expression",
+    "care_action_anchor_phrase": "relationship",
+    "relationship_gaze_anchor_phrase": "relationship",
+    "concealed_affection_phrase": "expression",
+    "benevolent_affect_phrase": "expression",
+    "baseline_phrase": "role",
+    "event_phase_phrase": "event",
+    "trigger_phrase": "event",
+    "target_phrase": "event",
+    "visible_response_phrase": "expression",
+    "immediate_consequence_phrase": "event",
+    "continuity_phrase": "event",
+    "background_control_phrase": "setting",
+    "focal_plane_phrase": "composition",
+    "reference_identity_phrase": "identity",
+}
+MOE_RESPONSE_DEFAULT_RULE_DIMENSIONS = {
+    "aesthetic_style_default": ("style",),
+    "aesthetic_expression_default": ("expression",),
+    "affective_balance_default": ("expression",),
+    "generic_character_response_mechanism": (
+        "event",
+        "expression",
+        "pose",
+        "relationship",
+    ),
+    "generic_relationship_register": ("relationship", "expression"),
+    "default_sensual_support": ("sexual_tone", "style", "composition"),
+    "generic_expression_negative_suppression": ("expression",),
+    "generic_style_negative_suppression": ("style",),
+    "generic_appearance_negative_suppression": ("appearance",),
+    "generic_text_negative_suppression": ("text",),
+}
+ADULT_APPEAL_DEFAULT_AFFECTED_DIMENSIONS = {
+    "sexual_tone",
+    "style",
+    "composition",
+    "expression",
+    "pose",
+    "body_geometry",
+    "framing",
+    "lighting",
+}
 SEMANTIC_CLARIFICATION_CONTRACT_VERSION = "photo-semantic-clarification/v1"
 CREATIVE_AUGMENTATION_CONTRACT_VERSION = "photo-creative-augmentation/v1"
 VISUAL_INTENT_CONTRACT_VERSION = "photo-visual-intent/v1"
@@ -4688,6 +4779,22 @@ def candidate_pack_mandatory_intents(
 ) -> tuple[List[JsonDict], List[JsonDict]]:
     intents: List[JsonDict] = []
     seen: Set[tuple[str, str]] = set()
+    provenance = (
+        result.get("provenance")
+        if isinstance(result.get("provenance"), dict)
+        else {}
+    )
+    authorial_core = (
+        provenance.get("authorial_core")
+        if isinstance(provenance.get("authorial_core"), dict)
+        else {}
+    )
+    intent_anchors = (
+        ((authorial_core.get("intent_lock") or {}).get("semantic_anchors") or [])
+        if authorial_core.get("contract_version") == AUTHORIAL_CORE_CONTRACT_VERSION
+        and isinstance(authorial_core.get("intent_lock"), dict)
+        else []
+    )
     for source_row in candidate_pack_source_texts(result, trace):
         if source_row.get("mandatory") is not True:
             continue
@@ -4699,7 +4806,27 @@ def candidate_pack_mandatory_intents(
             if character_response.get("requested") is True
             else source_text
         )
-        if character_response.get("requested") is True:
+        anchored_terms = [
+            clean_spaces(str(anchor.get("prompt_evidence") or ""))
+            for anchor in intent_anchors
+            if isinstance(anchor, dict)
+            and str(anchor.get("source_text") or "").casefold()
+            in source_text.casefold()
+            and clean_spaces(str(anchor.get("prompt_evidence") or ""))
+        ]
+        if anchored_terms and source in {
+            "concept_lock",
+            "intent",
+            "user_requirement",
+            "additional_requirement",
+        }:
+            # An intent-locked v5 request audits the frozen positive evidence,
+            # not every token in raw natural language.  This keeps user
+            # negatives and connective words from being inverted into
+            # mandatory positive prompt terms while retaining the untouched
+            # raw span for routing and profile activation.
+            intent_terms = list(dict.fromkeys(anchored_terms))
+        elif character_response.get("requested") is True:
             intent_terms = candidate_pack_moe_identity_terms(source_text)
         elif source in {"concept_lock", "intent"} or intent_explicitly_excludes_people(source_text):
             intent_terms = [
@@ -4980,6 +5107,114 @@ def candidate_pack_creative_direction(result: JsonDict) -> Optional[JsonDict]:
     }
 
 
+def authorial_core_intent_dimension_scope(core: Any) -> JsonDict:
+    """Return the explicit v2 dimension boundary for downstream defaults."""
+
+    if not isinstance(core, dict) or core.get("contract_version") != AUTHORIAL_CORE_CONTRACT_VERSION:
+        return {"enabled": False}
+    intent_lock = core.get("intent_lock") if isinstance(core.get("intent_lock"), dict) else {}
+    locked_dimensions = [
+        str(item)
+        for item in intent_lock.get("locked_dimensions") or []
+        if str(item) in INTENT_LOCK_DIMENSIONS
+    ]
+    open_dimensions = [
+        str(item)
+        for item in intent_lock.get("open_dimensions") or []
+        if str(item) in INTENT_LOCK_DIMENSIONS
+    ]
+    return {
+        "enabled": True,
+        "source_intent_lock_sha256": str(intent_lock.get("canonical_sha256") or ""),
+        "locked_dimensions": locked_dimensions,
+        "open_dimensions": open_dimensions,
+        "closed_dimensions": sorted(INTENT_LOCK_DIMENSIONS - set(open_dimensions)),
+    }
+
+
+def candidate_pack_moe_intent_precedence(
+    core: Any,
+    response: JsonDict,
+) -> Optional[JsonDict]:
+    """Bind generic character defaults to the v2 requester's open dimensions.
+
+    This is intentionally dimension-based.  A downstream rule is active only
+    when every semantic dimension it can change was explicitly left open.  The
+    policy therefore applies to arbitrary requests without keyword exceptions.
+    """
+
+    scope = authorial_core_intent_dimension_scope(core)
+    if scope.get("enabled") is not True:
+        return None
+    open_dimensions = set(scope.get("open_dimensions") or [])
+    applicability = {
+        "aesthetic_style_default": True,
+        "aesthetic_expression_default": True,
+        "affective_balance_default": True,
+        "generic_character_response_mechanism": (
+            str(response.get("primary_mechanism") or "")
+            == "character_specific_reveal"
+        ),
+        "generic_relationship_register": (
+            str(response.get("relationship_register") or "")
+            == "character_specific_reveal"
+        ),
+        "default_sensual_support": response.get("defaulted_sensual_optional") is True,
+        "generic_expression_negative_suppression": True,
+        "generic_style_negative_suppression": True,
+        "generic_appearance_negative_suppression": True,
+        "generic_text_negative_suppression": True,
+    }
+    rules: List[JsonDict] = []
+    for rule_id, affected in MOE_RESPONSE_DEFAULT_RULE_DIMENSIONS.items():
+        affected_dimensions = list(affected)
+        if not applicability.get(rule_id, False):
+            status = "not_applicable"
+            blocked_dimensions: List[str] = []
+        else:
+            blocked_dimensions = sorted(set(affected_dimensions) - open_dimensions)
+            status = (
+                "active"
+                if not blocked_dimensions
+                else "suppressed_requesting_user_priority"
+            )
+        rules.append(
+            {
+                "rule_id": rule_id,
+                "affected_dimensions": affected_dimensions,
+                "status": status,
+                "blocked_dimensions": blocked_dimensions,
+            }
+        )
+    return {
+        "contract_version": DOWNSTREAM_INTENT_PRECEDENCE_CONTRACT_VERSION,
+        "priority": "requesting_user",
+        "source_intent_lock_sha256": scope["source_intent_lock_sha256"],
+        "locked_dimensions": scope["locked_dimensions"],
+        "open_dimensions": scope["open_dimensions"],
+        "closed_dimensions": scope["closed_dimensions"],
+        "default_rule_policy": "active_only_when_all_affected_dimensions_are_explicitly_open",
+        "non_open_evidence_policy": (
+            "reuse_matching_locked_anchor_or_frozen_baseline_only"
+        ),
+        "evidence_field_dimensions": copy.deepcopy(
+            MOE_RESPONSE_EVIDENCE_DIMENSIONS
+        ),
+        "rules": rules,
+    }
+
+
+def downstream_intent_rule_active(precedence: Any, rule_id: str) -> bool:
+    if not isinstance(precedence, dict):
+        return True
+    return any(
+        isinstance(row, dict)
+        and row.get("rule_id") == rule_id
+        and row.get("status") == "active"
+        for row in precedence.get("rules") or []
+    )
+
+
 def candidate_pack_moe_response(result: JsonDict) -> Optional[JsonDict]:
     """Expose a character-response composition contract for explicit moe intent."""
     provenance = result.get("provenance") if isinstance(result.get("provenance"), dict) else {}
@@ -4990,6 +5225,16 @@ def candidate_pack_moe_response(result: JsonDict) -> Optional[JsonDict]:
     )
     if response.get("requested") is not True or response.get("eligible") is not True:
         return None
+
+    authorial_core = (
+        provenance.get("authorial_core")
+        if isinstance(provenance.get("authorial_core"), dict)
+        else None
+    )
+    intent_precedence = candidate_pack_moe_intent_precedence(
+        authorial_core,
+        response,
+    )
 
     mechanism = str(response.get("primary_mechanism") or "character_specific_reveal")
     relationship_register = str(
@@ -5124,6 +5369,87 @@ def candidate_pack_moe_response(result: JsonDict) -> Optional[JsonDict]:
         aesthetic_instructions = identity_aesthetic_instructions
     if aesthetic_baseline not in aesthetic_instructions:
         aesthetic_baseline = MOE_AESTHETIC_BISHOUJO
+
+    aesthetic_style_default_active = downstream_intent_rule_active(
+        intent_precedence,
+        "aesthetic_style_default",
+    )
+    aesthetic_expression_default_active = downstream_intent_rule_active(
+        intent_precedence,
+        "aesthetic_expression_default",
+    )
+    affective_balance_default_active = downstream_intent_rule_active(
+        intent_precedence,
+        "affective_balance_default",
+    )
+    generic_mechanism_active = downstream_intent_rule_active(
+        intent_precedence,
+        "generic_character_response_mechanism",
+    )
+    generic_relationship_active = downstream_intent_rule_active(
+        intent_precedence,
+        "generic_relationship_register",
+    )
+    default_sensual_support_active = downstream_intent_rule_active(
+        intent_precedence,
+        "default_sensual_support",
+    )
+    generic_expression_negative_active = downstream_intent_rule_active(
+        intent_precedence,
+        "generic_expression_negative_suppression",
+    )
+    generic_style_negative_active = downstream_intent_rule_active(
+        intent_precedence,
+        "generic_style_negative_suppression",
+    )
+    generic_appearance_negative_active = downstream_intent_rule_active(
+        intent_precedence,
+        "generic_appearance_negative_suppression",
+    )
+    generic_text_negative_active = downstream_intent_rule_active(
+        intent_precedence,
+        "generic_text_negative_suppression",
+    )
+    generic_causal_default_active = not (
+        mechanism == "character_specific_reveal" and not generic_mechanism_active
+    )
+
+    aesthetic_instruction = aesthetic_instructions[aesthetic_baseline]
+    if not aesthetic_style_default_active:
+        aesthetic_instruction = (
+            "Do not add a generic bishoujo, bishonen, cute, beautiful, grooming, or styling default. "
+            "Preserve the frozen baseline and requesting-user semantic anchors exactly; only open "
+            "dimensions may receive new photographic treatment."
+        )
+    elif not aesthetic_expression_default_active:
+        aesthetic_instruction = (
+            "Use the routed adult presentation only for grooming, hair finish, outfit cohesion, and "
+            "other explicitly open style choices. Do not add, soften, warm, sweeten, intensify, or "
+            "otherwise reinterpret the eyes, mouth, gaze, or affect; every expression cue comes only "
+            "from the frozen baseline and requesting-user semantic anchors."
+        )
+
+    mechanism_instruction = mechanism_instructions.get(
+        mechanism,
+        mechanism_instructions["character_specific_reveal"],
+    )
+    if mechanism == "character_specific_reveal" and not generic_mechanism_active:
+        mechanism_instruction = (
+            "Do not invent a generic character-response mechanism. Restate only the frozen event and "
+            "expression evidence; all new action, pose, relationship, or reaction semantics are forbidden "
+            "unless their dimensions are explicitly open."
+        )
+
+    relationship_instruction = relationship_register_instructions.get(
+        relationship_register,
+        relationship_register_instructions["character_specific_reveal"],
+    )
+    if relationship_register == "character_specific_reveal" and not generic_relationship_active:
+        relationship_instruction = (
+            "Do not infer a new relationship or facial response. Preserve the frozen baseline and "
+            "requesting-user semantic anchors; use relationship or expression details only when those "
+            "dimensions are explicitly open."
+        )
     sexual_tone_instructions = {
         "nonsexual": (
             "Use explicitly nonsexual framing and suppress sensual-editorial and fetish-fashion styling. "
@@ -5138,6 +5464,15 @@ def candidate_pack_moe_response(result: JsonDict) -> Optional[JsonDict]:
             "pretty-and-cute character design and the character-specific event rather than making a generic pin-up."
         ),
     }
+    sexual_tone_instruction = sexual_tone_instructions.get(
+        sexual_tone,
+        sexual_tone_instructions["sensual_optional"],
+    )
+    if response.get("defaulted_sensual_optional") is True and not default_sensual_support_active:
+        sexual_tone_instruction = (
+            "Do not add the skill's sensual-support default. Preserve only sexual tone, styling, and "
+            "composition evidence already present in the frozen baseline or requesting-user anchors."
+        )
     explicit_text_requested = response.get("explicit_text_requested") is True
     required_evidence_fields = [
         "actor_phrase",
@@ -5152,30 +5487,45 @@ def candidate_pack_moe_response(result: JsonDict) -> Optional[JsonDict]:
         "continuity_phrase",
         "focal_plane_phrase",
     ]
-    if not explicit_text_requested:
+    if not aesthetic_style_default_active:
+        required_evidence_fields.remove("aesthetic_baseline_phrase")
+    if not affective_balance_default_active:
+        required_evidence_fields.remove("affective_leak_phrase")
+    if not explicit_text_requested and generic_text_negative_active:
         required_evidence_fields.insert(3, "background_control_phrase")
+    if not generic_causal_default_active:
+        for field in (
+            "baseline_phrase",
+            "event_phase_phrase",
+            "trigger_phrase",
+            "target_phrase",
+            "immediate_consequence_phrase",
+            "continuity_phrase",
+        ):
+            required_evidence_fields.remove(field)
     if identity_controlled:
         required_evidence_fields.append("reference_identity_phrase")
+    response_evidence_boundary_index = min(
+        (
+            required_evidence_fields.index(field)
+            for field in ("affective_leak_phrase", "baseline_phrase")
+            if field in required_evidence_fields
+        ),
+        default=len(required_evidence_fields),
+    )
     if mechanism == "denial_care_leak":
-        required_evidence_fields.insert(
-            required_evidence_fields.index("affective_leak_phrase"),
-            "active_denial_phrase",
-        )
-        required_evidence_fields.insert(
-            required_evidence_fields.index("affective_leak_phrase"),
-            "concealed_affection_phrase",
-        )
-        required_evidence_fields.insert(
-            required_evidence_fields.index("concealed_affection_phrase"),
-            "relationship_gaze_anchor_phrase",
-        )
-        required_evidence_fields.insert(
-            required_evidence_fields.index("relationship_gaze_anchor_phrase"),
-            "care_action_anchor_phrase",
-        )
+        for field in reversed(
+            (
+                "active_denial_phrase",
+                "care_action_anchor_phrase",
+                "relationship_gaze_anchor_phrase",
+                "concealed_affection_phrase",
+            )
+        ):
+            required_evidence_fields.insert(response_evidence_boundary_index, field)
     if relationship_register == "nurturant_benevolence":
         required_evidence_fields.insert(
-            required_evidence_fields.index("affective_leak_phrase"),
+            response_evidence_boundary_index,
             "benevolent_affect_phrase",
         )
     general_render_gates = [
@@ -5185,6 +5535,15 @@ def candidate_pack_moe_response(result: JsonDict) -> Optional[JsonDict]:
         "requested_sexual_tone",
         "background_and_shortcut_integrity",
     ]
+    if not aesthetic_style_default_active:
+        general_render_gates.remove("pretty_and_cute_entry")
+    if (
+        response.get("defaulted_sensual_optional") is True
+        and not default_sensual_support_active
+    ):
+        general_render_gates.remove("requested_sexual_tone")
+    if not generic_text_negative_active and not generic_style_negative_active:
+        general_render_gates.remove("background_and_shortcut_integrity")
     if relationship_register == "peer_liking_under_denial":
         mechanism_render_gates = [
             "active_denial",
@@ -5208,7 +5567,11 @@ def candidate_pack_moe_response(result: JsonDict) -> Optional[JsonDict]:
             "calm_protective_attention",
         ]
     else:
-        mechanism_render_gates = ["primary_mechanism_legibility"]
+        mechanism_render_gates = (
+            ["primary_mechanism_legibility"]
+            if generic_mechanism_active
+            else ["requesting_user_locked_response_legibility"]
+        )
     support_render_gates = []
     if (
         mechanism == "nonhuman_reflex_leak"
@@ -5247,29 +5610,20 @@ def candidate_pack_moe_response(result: JsonDict) -> Optional[JsonDict]:
         "route_id": str(response.get("route_id") or MOE_RESPONSE_DEFAULT_ROUTE),
         "primary_mechanism": mechanism,
         "relationship_register": relationship_register,
-        "relationship_register_instruction": relationship_register_instructions.get(
-            relationship_register,
-            relationship_register_instructions["character_specific_reveal"],
-        ),
+        "relationship_register_instruction": relationship_instruction,
         "support_mechanisms": normalize_list(response.get("support_mechanisms"))[:2],
         "aesthetic_baseline": aesthetic_baseline,
         "aesthetic_presentation_source": str(
             response.get("aesthetic_presentation_source") or "default_bishoujo"
         ),
-        "aesthetic_instruction": aesthetic_instructions[aesthetic_baseline],
+        "aesthetic_instruction": aesthetic_instruction,
         "sexual_tone": sexual_tone,
         "explicit_nonsexual": response.get("explicit_nonsexual") is True,
         "explicit_sensual": response.get("explicit_sensual") is True,
         "explicit_text_requested": explicit_text_requested,
         "defaulted_sensual_optional": response.get("defaulted_sensual_optional") is True,
-        "sexual_tone_instruction": sexual_tone_instructions.get(
-            sexual_tone,
-            sexual_tone_instructions["sensual_optional"],
-        ),
-        "mechanism_instruction": mechanism_instructions.get(
-            mechanism,
-            mechanism_instructions["character_specific_reveal"],
-        ),
+        "sexual_tone_instruction": sexual_tone_instruction,
+        "mechanism_instruction": mechanism_instruction,
         "required_fields": [
             "aesthetic_baseline",
             "mechanism",
@@ -5300,7 +5654,12 @@ def candidate_pack_moe_response(result: JsonDict) -> Optional[JsonDict]:
                 ),
             },
             "aesthetic_entry_condition": {
-                "required": True,
+                "required": aesthetic_style_default_active,
+                "status": (
+                    "active"
+                    if aesthetic_style_default_active
+                    else "suppressed_requesting_user_priority"
+                ),
                 "rule": (
                     "The character must first read as an attractive adult bishoujo, bishonen, or "
                     "explicitly requested androgynous equivalent. Pretty and cute are both required; "
@@ -5309,14 +5668,29 @@ def candidate_pack_moe_response(result: JsonDict) -> Optional[JsonDict]:
                 "thumbnail_priority": "face_hair_grooming_and_cohesive_character_styling",
             },
             "affective_balance": {
-                "required": True,
-                "rule": (
-                    "The face must show one specific warm, pleased, relieved, fond, or playfully embarrassed "
-                    "micro-response in addition to any guarded, annoyed, or flustered cue. Negative affect may "
-                    "frame the contradiction but must not dominate the first facial read."
+                "required": affective_balance_default_active,
+                "status": (
+                    "active"
+                    if affective_balance_default_active
+                    else "suppressed_requesting_user_priority"
                 ),
-                "positive_cue_count": 1,
-                "maximum_negative_cue_count": 2,
+                "rule": (
+                    (
+                        "The face must show one specific warm, pleased, relieved, fond, or playfully embarrassed "
+                        "micro-response in addition to any guarded, annoyed, or flustered cue. Negative affect may "
+                        "frame the contradiction but must not dominate the first facial read."
+                    )
+                    if affective_balance_default_active
+                    else (
+                        "Do not add a generic warm, pleased, relieved, fond, embarrassed, softened-eye, or "
+                        "almost-smile countercue. Preserve only expression evidence from the frozen baseline "
+                        "and requesting-user semantic anchors."
+                    )
+                ),
+                "positive_cue_count": 1 if affective_balance_default_active else 0,
+                "maximum_negative_cue_count": (
+                    2 if affective_balance_default_active else None
+                ),
                 "reject": [
                     "pure_annoyance_or_sadness",
                     "blank_bored_or_listless_face",
@@ -5478,6 +5852,88 @@ def candidate_pack_moe_response(result: JsonDict) -> Optional[JsonDict]:
             ),
         },
     }
+    if not aesthetic_style_default_active:
+        contract["composition_guidance"]["aesthetic_entry_condition"]["rule"] = (
+            "No generic aesthetic entry condition may be added. Preserve the frozen baseline and "
+            "requesting-user semantic anchors for subject and style."
+        )
+        contract["composition_guidance"]["aesthetic_entry_condition"][
+            "thumbnail_priority"
+        ] = "requesting_user_locked_subject_and_style"
+        contract["composition_guidance"]["keep"] = [
+            item
+            for item in contract["composition_guidance"]["keep"]
+            if item
+            != "routed_adult_bishoujo_bishonen_or_androgynous_aesthetic_baseline"
+        ]
+    if not affective_balance_default_active:
+        contract["composition_guidance"]["affective_balance"]["reject"] = []
+    if not generic_causal_default_active:
+        for field in (
+            "baseline",
+            "event_phase",
+            "trigger",
+            "target",
+            "immediate_consequence",
+            "continuity",
+        ):
+            contract["required_fields"].remove(field)
+        contract["composition_guidance"]["causal_chain"] = [
+            "frozen_requesting_user_event_anchor",
+            "frozen_requesting_user_expression_anchor_when_present",
+            "literal_authorial_core_continuity",
+        ]
+        contract["composition_guidance"]["render_legibility"].pop(
+            "unfinished_state",
+            None,
+        )
+        contract["composition_guidance"]["keep"] = [
+            item
+            for item in contract["composition_guidance"]["keep"]
+            if item != "one_primary_mechanism"
+        ]
+    if not generic_text_negative_active and not explicit_text_requested:
+        contract["composition_guidance"]["render_legibility"].pop(
+            "text_free_background",
+            None,
+        )
+
+    inactive_rejects: Set[str] = set()
+    if not aesthetic_style_default_active:
+        inactive_rejects.update(
+            {
+                "ordinary_or_generic_casting_without_both_pretty_and_cute_first_read",
+                "aesthetic_only_without_character_specific_event",
+                "cute_or_moe_label_as_evidence",
+            }
+        )
+    if not generic_expression_negative_active:
+        inactive_rejects.update(
+            {
+                "blush_only",
+                "generic_shy_smile_or_pretty_pose_only",
+                "negative_facial_affect_without_one_warm_countercue",
+            }
+        )
+    if not generic_appearance_negative_active:
+        inactive_rejects.add("oversized_eyes_or_youth_morphology")
+    if not generic_style_negative_active:
+        inactive_rejects.update(
+            {
+                "animal_ears_or_costume_only",
+                "unrequested_heart_sparkle_or_cartoon_reaction_shorthand",
+            }
+        )
+    if not generic_text_negative_active:
+        inactive_rejects.add("unrequested_background_text_or_pseudo_writing")
+    if inactive_rejects:
+        contract["composition_guidance"]["reject"] = [
+            item
+            for item in contract["composition_guidance"]["reject"]
+            if item not in inactive_rejects
+        ]
+    if intent_precedence is not None:
+        contract["intent_precedence"] = intent_precedence
     if identity_controlled:
         contract["reference_identity_control"] = {
             "enabled": True,
@@ -6893,7 +7349,311 @@ def load_authorial_request_arg(raw: Optional[str], data: JsonDict) -> Optional[J
     return normalize_authorial_request(payload, data)
 
 
-def normalize_authorial_core(payload: Any) -> JsonDict:
+def normalize_request_envelope(payload: Any) -> JsonDict:
+    """Validate the requesting-user text before an agent authors a v2 core.
+
+    The envelope is intentionally separate from the core.  It gives the CLI a
+    second, exact source of truth and lets a multi-part request select only
+    byte-grounded spans instead of inventing a per-arm paraphrase.
+    """
+
+    if not isinstance(payload, dict):
+        raise ValueError("--request-envelope-json must contain one JSON object")
+    allowed_fields = {
+        "contract_version",
+        "provenance",
+        "request_id",
+        "request_text",
+        "request_sha256",
+        "active_spans",
+    }
+    unknown_fields = sorted(set(payload) - allowed_fields)
+    if unknown_fields:
+        raise ValueError(
+            "request envelope contains unsupported fields: "
+            + ", ".join(unknown_fields)
+        )
+    if payload.get("contract_version") != REQUEST_ENVELOPE_CONTRACT_VERSION:
+        raise ValueError(
+            "request envelope contract_version must be "
+            f"{REQUEST_ENVELOPE_CONTRACT_VERSION!r}"
+        )
+    if payload.get("provenance") != "requesting_user":
+        raise ValueError("request envelope provenance must be 'requesting_user'")
+
+    request_id = str(payload.get("request_id") or "").strip()
+    if re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._:-]{0,127}", request_id) is None:
+        raise ValueError(
+            "request envelope request_id must be a stable 1-128 character identifier"
+        )
+    request_text = payload.get("request_text")
+    if not isinstance(request_text, str) or not request_text.strip():
+        raise ValueError("request envelope request_text must be the non-empty exact user text")
+    request_sha256 = str(payload.get("request_sha256") or "").lower()
+    expected_request_sha256 = hashlib.sha256(request_text.encode("utf-8")).hexdigest()
+    if request_sha256 != expected_request_sha256:
+        raise ValueError("request envelope request_sha256 does not match request_text bytes")
+
+    raw_spans = payload.get("active_spans")
+    if not isinstance(raw_spans, list) or not 1 <= len(raw_spans) <= 16:
+        raise ValueError("request envelope active_spans must contain one to sixteen rows")
+    spans: List[JsonDict] = []
+    seen_ids: Set[str] = set()
+    seen_texts: Set[str] = set()
+    for index, item in enumerate(raw_spans):
+        if not isinstance(item, dict) or set(item) != {"span_id", "start", "end", "text"}:
+            raise ValueError(
+                f"request envelope active span {index} must contain only span_id, start, end, and text"
+            )
+        span_id = str(item.get("span_id") or "").strip()
+        if re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]{0,63}", span_id) is None:
+            raise ValueError(f"request envelope active span {index} has an invalid span_id")
+        if span_id in seen_ids:
+            raise ValueError(f"request envelope repeats active span id {span_id!r}")
+        seen_ids.add(span_id)
+        start = item.get("start")
+        end = item.get("end")
+        if (
+            isinstance(start, bool)
+            or isinstance(end, bool)
+            or not isinstance(start, int)
+            or not isinstance(end, int)
+            or start < 0
+            or end <= start
+            or end > len(request_text)
+        ):
+            raise ValueError(f"request envelope active span {index} has invalid offsets")
+        text = item.get("text")
+        if not isinstance(text, str) or request_text[start:end] != text:
+            raise ValueError(
+                f"request envelope active span {index} text does not match request_text offsets"
+            )
+        text_key = text.casefold()
+        if text_key in seen_texts:
+            raise ValueError("request envelope active span texts must be distinct")
+        seen_texts.add(text_key)
+        spans.append({"span_id": span_id, "start": start, "end": end, "text": text})
+    spans.sort(key=lambda row: (int(row["start"]), int(row["end"]), str(row["span_id"])))
+    for previous, current in zip(spans, spans[1:]):
+        if int(current["start"]) < int(previous["end"]):
+            raise ValueError("request envelope active spans must not overlap")
+
+    normalized: JsonDict = {
+        "contract_version": REQUEST_ENVELOPE_CONTRACT_VERSION,
+        "provenance": "requesting_user",
+        "request_id": request_id,
+        "request_text": request_text,
+        "request_sha256": request_sha256,
+        "active_spans": spans,
+    }
+    normalized["canonical_sha256"] = canonical_json_sha256(normalized)
+    normalized["envelope_id"] = normalized["canonical_sha256"][:16]
+    return normalized
+
+
+def load_request_envelope_arg(raw: Optional[str]) -> Optional[JsonDict]:
+    if not raw:
+        return None
+    payload: Any
+    try:
+        candidate = Path(raw)
+        is_file = candidate.exists()
+    except OSError:
+        is_file = False
+        candidate = Path(".")
+    if is_file:
+        payload = json.loads(candidate.read_text(encoding="utf-8"))
+    else:
+        payload = json.loads(raw)
+    return normalize_request_envelope(payload)
+
+
+def request_envelope_active_texts(envelope: JsonDict) -> List[str]:
+    return [
+        str(item.get("text") or "")
+        for item in envelope.get("active_spans") or []
+        if isinstance(item, dict) and str(item.get("text") or "")
+    ]
+
+
+def request_scope_contains(envelope: JsonDict, source_text: str) -> bool:
+    needle = str(source_text or "").strip().casefold()
+    return bool(needle) and any(
+        needle in text.casefold() for text in request_envelope_active_texts(envelope)
+    )
+
+
+def normalize_intent_lock(
+    payload: Any,
+    *,
+    envelope: JsonDict,
+    baseline_prompt_en: str,
+) -> JsonDict:
+    if not isinstance(payload, dict):
+        raise ValueError("authorial core intent_lock must be one JSON object")
+    allowed_fields = {
+        "contract_version",
+        "priority",
+        "semantic_anchors",
+        "locked_dimensions",
+        "open_dimensions",
+    }
+    unknown_fields = sorted(set(payload) - allowed_fields)
+    if unknown_fields:
+        raise ValueError(
+            "authorial core intent_lock contains unsupported fields: "
+            + ", ".join(unknown_fields)
+        )
+    if payload.get("contract_version") != INTENT_LOCK_CONTRACT_VERSION:
+        raise ValueError(
+            f"authorial core intent_lock contract_version must be {INTENT_LOCK_CONTRACT_VERSION!r}"
+        )
+    if payload.get("priority") != "requesting_user":
+        raise ValueError("authorial core intent_lock priority must be 'requesting_user'")
+
+    locked_dimensions = [
+        str(item).strip()
+        for item in normalize_list(payload.get("locked_dimensions"))
+        if str(item).strip()
+    ]
+    open_dimensions = [
+        str(item).strip()
+        for item in normalize_list(payload.get("open_dimensions"))
+        if str(item).strip()
+    ]
+    if not locked_dimensions or len(set(locked_dimensions)) != len(locked_dimensions):
+        raise ValueError("authorial core intent_lock requires distinct locked_dimensions")
+    if len(open_dimensions) < 2 or len(set(open_dimensions)) != len(open_dimensions):
+        raise ValueError(
+            "authorial core intent_lock requires at least two distinct open_dimensions"
+        )
+    unknown_dimensions = sorted(
+        (set(locked_dimensions) | set(open_dimensions)) - INTENT_LOCK_DIMENSIONS
+    )
+    if unknown_dimensions:
+        raise ValueError(
+            "authorial core intent_lock contains unknown dimensions: "
+            + ", ".join(unknown_dimensions)
+        )
+    missing_required_dimensions = sorted(
+        REQUIRED_INTENT_LOCK_DIMENSIONS - set(locked_dimensions)
+    )
+    if missing_required_dimensions:
+        raise ValueError(
+            "authorial core intent_lock must lock the governing concept, subject, and event dimensions: "
+            + ", ".join(missing_required_dimensions)
+        )
+    overlap = sorted(set(locked_dimensions) & set(open_dimensions))
+    if overlap:
+        raise ValueError(
+            "authorial core intent_lock dimensions cannot be both locked and open: "
+            + ", ".join(overlap)
+        )
+
+    raw_anchors = payload.get("semantic_anchors")
+    if not isinstance(raw_anchors, list) or not 1 <= len(raw_anchors) <= 16:
+        raise ValueError(
+            "authorial core intent_lock semantic_anchors must contain one to sixteen rows"
+        )
+    anchors: List[JsonDict] = []
+    seen_ids: Set[str] = set()
+    seen_evidence: Set[str] = set()
+    for index, item in enumerate(raw_anchors):
+        if not isinstance(item, dict) or set(item) != {
+            "anchor_id",
+            "source_text",
+            "dimension",
+            "prompt_evidence",
+        }:
+            raise ValueError(
+                f"authorial core intent anchor {index} must contain only anchor_id, source_text, dimension, and prompt_evidence"
+            )
+        anchor_id = str(item.get("anchor_id") or "").strip()
+        if re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]{0,63}", anchor_id) is None:
+            raise ValueError(f"authorial core intent anchor {index} has an invalid anchor_id")
+        if anchor_id in seen_ids:
+            raise ValueError(f"authorial core repeats intent anchor id {anchor_id!r}")
+        seen_ids.add(anchor_id)
+        source_text = str(item.get("source_text") or "").strip()
+        dimension = str(item.get("dimension") or "").strip()
+        evidence = clean_spaces(str(item.get("prompt_evidence") or ""))
+        if len(authorial_request_content_words(source_text)) < 1:
+            raise ValueError(
+                f"authorial core intent anchor {index} source_text must contain a substantive requester term"
+            )
+        if not request_scope_contains(envelope, source_text):
+            raise ValueError(
+                f"authorial core intent anchor {index} source_text is not grounded in an active requesting-user span"
+            )
+        if dimension not in locked_dimensions:
+            raise ValueError(
+                f"authorial core intent anchor {index} dimension must be locked"
+            )
+        if len(authorial_request_content_words(evidence)) < 2:
+            raise ValueError(
+                f"authorial core intent anchor {index} prompt_evidence needs at least two content words"
+            )
+        if evidence.casefold() not in baseline_prompt_en.casefold():
+            raise ValueError(
+                f"authorial core intent anchor {index} prompt_evidence must occur in baseline_prompt_en"
+            )
+        if evidence.casefold() in seen_evidence:
+            raise ValueError(
+                "authorial core intent anchors require distinct prompt_evidence for each locked dimension"
+            )
+        seen_evidence.add(evidence.casefold())
+        anchors.append(
+            {
+                "anchor_id": anchor_id,
+                "source_text": source_text,
+                "dimension": dimension,
+                "prompt_evidence": evidence,
+            }
+        )
+
+    anchored_dimensions = {str(item["dimension"]) for item in anchors}
+    missing_dimension_anchors = sorted(set(locked_dimensions) - anchored_dimensions)
+    if missing_dimension_anchors:
+        raise ValueError(
+            "authorial core intent_lock requires at least one semantic anchor for every locked dimension: "
+            + ", ".join(missing_dimension_anchors)
+        )
+    uncovered_span_ids = [
+        str(span.get("span_id") or "")
+        for span in envelope.get("active_spans") or []
+        if isinstance(span, dict)
+        and not any(
+            str(anchor.get("source_text") or "").casefold()
+            in str(span.get("text") or "").casefold()
+            for anchor in anchors
+        )
+    ]
+    if uncovered_span_ids:
+        raise ValueError(
+            "authorial core intent_lock requires semantic-anchor coverage for every active requesting-user span: "
+            + ", ".join(uncovered_span_ids)
+        )
+
+    normalized: JsonDict = {
+        "contract_version": INTENT_LOCK_CONTRACT_VERSION,
+        "priority": "requesting_user",
+        "semantic_anchors": anchors,
+        "locked_dimensions": locked_dimensions,
+        "open_dimensions": open_dimensions,
+        "augmentation_policy": "open_dimensions_only_and_subordinate",
+        "material_change_policy": "rebuild_core_after_requester_input",
+        "candidate_revision_policy": "forbidden",
+    }
+    normalized["canonical_sha256"] = canonical_json_sha256(normalized)
+    normalized["lock_id"] = normalized["canonical_sha256"][:16]
+    return normalized
+
+
+def normalize_authorial_core(
+    payload: Any,
+    *,
+    request_envelope: Optional[JsonDict] = None,
+) -> JsonDict:
     """Validate an agent-authored concept core frozen before candidate retrieval.
 
     This contract is deliberately domain-neutral.  The deterministic generator
@@ -6903,6 +7663,15 @@ def normalize_authorial_core(payload: Any) -> JsonDict:
 
     if not isinstance(payload, dict):
         raise ValueError("--authorial-core-json must contain one JSON object")
+    core_version = str(payload.get("contract_version") or "")
+    if core_version not in {
+        LEGACY_AUTHORIAL_CORE_CONTRACT_VERSION,
+        AUTHORIAL_CORE_CONTRACT_VERSION,
+    }:
+        raise ValueError(
+            "authorial core contract_version must be one of "
+            f"{[LEGACY_AUTHORIAL_CORE_CONTRACT_VERSION, AUTHORIAL_CORE_CONTRACT_VERSION]!r}"
+        )
     allowed_fields = {
         "contract_version",
         "provenance",
@@ -6920,6 +7689,8 @@ def normalize_authorial_core(payload: Any) -> JsonDict:
         "style",
         "variation_key",
     }
+    if core_version == AUTHORIAL_CORE_CONTRACT_VERSION:
+        allowed_fields.update({"intent_lock", "runtime_forbidden_labels"})
     unknown_fields = sorted(set(payload) - allowed_fields)
     if unknown_fields:
         raise ValueError(
@@ -6932,10 +7703,13 @@ def normalize_authorial_core(payload: Any) -> JsonDict:
                 f"authorial core requires {required_field}; resolve meaning before freezing the baseline"
             )
 
+    source_request = str(payload.get("source_request") or "")
+    if core_version == LEGACY_AUTHORIAL_CORE_CONTRACT_VERSION:
+        source_request = clean_spaces(source_request)
     normalized: JsonDict = {
-        "contract_version": str(payload.get("contract_version") or ""),
+        "contract_version": core_version,
         "provenance": str(payload.get("provenance") or ""),
-        "source_request": clean_spaces(str(payload.get("source_request") or "")),
+        "source_request": source_request,
         "interpreted_intent": clean_spaces(str(payload.get("interpreted_intent") or "")),
         "subject": clean_spaces(str(payload.get("subject") or "")),
         "setting": clean_spaces(str(payload.get("setting") or "")),
@@ -6957,10 +7731,41 @@ def normalize_authorial_core(payload: Any) -> JsonDict:
         "style": None,
         "variation_key": str(payload.get("variation_key") or "").strip(),
     }
-    if normalized["contract_version"] != AUTHORIAL_CORE_CONTRACT_VERSION:
-        raise ValueError(
-            f"authorial core contract_version must be {AUTHORIAL_CORE_CONTRACT_VERSION!r}"
-        )
+    if core_version == AUTHORIAL_CORE_CONTRACT_VERSION:
+        if request_envelope is None:
+            raise ValueError(
+                "photo-authorial-core/v2 requires --request-envelope-json"
+            )
+        if source_request != str(request_envelope.get("request_text") or ""):
+            raise ValueError(
+                "authorial core source_request must exactly match request envelope request_text bytes"
+            )
+        normalized["request_binding"] = {
+            "contract_version": REQUEST_BINDING_CONTRACT_VERSION,
+            "request_id": str(request_envelope.get("request_id") or ""),
+            "request_sha256": str(request_envelope.get("request_sha256") or ""),
+            "request_envelope_sha256": str(
+                request_envelope.get("canonical_sha256") or ""
+            ),
+            "active_spans": copy.deepcopy(request_envelope.get("active_spans") or []),
+        }
+        runtime_forbidden_labels = [
+            str(item).strip()
+            for item in normalize_list(payload.get("runtime_forbidden_labels"))
+            if str(item).strip()
+        ]
+        if len(runtime_forbidden_labels) > 12 or len(
+            {item.casefold() for item in runtime_forbidden_labels}
+        ) != len(runtime_forbidden_labels):
+            raise ValueError(
+                "authorial core runtime_forbidden_labels must contain at most twelve distinct phrases"
+            )
+        for label in runtime_forbidden_labels:
+            if not request_scope_contains(request_envelope, label):
+                raise ValueError(
+                    "authorial core runtime_forbidden_labels must be grounded in an active requesting-user span"
+                )
+        normalized["runtime_forbidden_labels"] = runtime_forbidden_labels
     if normalized["provenance"] != "agent_prepack":
         raise ValueError("authorial core provenance must be 'agent_prepack'")
     if not normalized["source_request"]:
@@ -6996,6 +7801,23 @@ def normalize_authorial_core(payload: Any) -> JsonDict:
         raise ValueError(
             "authorial core baseline_prompt_en must contain 24 to 180 English words"
         )
+    if core_version == AUTHORIAL_CORE_CONTRACT_VERSION:
+        assert request_envelope is not None
+        normalized["intent_lock"] = normalize_intent_lock(
+            payload.get("intent_lock"),
+            envelope=request_envelope,
+            baseline_prompt_en=normalized["baseline_prompt_en"],
+        )
+        leaked_runtime_labels = [
+            label
+            for label in normalized.get("runtime_forbidden_labels") or []
+            if str(label).casefold() in normalized["baseline_prompt_en"].casefold()
+        ]
+        if leaked_runtime_labels:
+            raise ValueError(
+                "authorial core baseline_prompt_en contains runtime-only labels: "
+                + ", ".join(leaked_runtime_labels)
+            )
 
     raw_definitions = payload.get("user_definitions", [])
     if raw_definitions is None:
@@ -7033,6 +7855,25 @@ def normalize_authorial_core(payload: Any) -> JsonDict:
         if source_text.lower() not in source_request_lower:
             raise ValueError(
                 f"authorial core user definition {index} source_text is not grounded in source_request"
+            )
+        if (
+            core_version == AUTHORIAL_CORE_CONTRACT_VERSION
+            and request_envelope is not None
+            and source_text.casefold()
+            not in {
+                text.casefold()
+                for text in request_envelope_active_texts(request_envelope)
+            }
+        ):
+            raise ValueError(
+                f"authorial core user definition {index} source_text must equal one complete active requesting-user span"
+            )
+        if (
+            core_version == AUTHORIAL_CORE_CONTRACT_VERSION
+            and source_text.casefold() == term.casefold()
+        ):
+            raise ValueError(
+                f"authorial core user definition {index} cannot infer a requesting-user definition from a bare term; use interpretation_provenance instead"
             )
         if len(authorial_request_content_words(meaning)) < 4:
             raise ValueError(
@@ -7104,6 +7945,14 @@ def normalize_authorial_core(payload: Any) -> JsonDict:
             raise ValueError(
                 f"authorial core interpretation provenance {index} source_text is not grounded in source_request"
             )
+        if (
+            core_version == AUTHORIAL_CORE_CONTRACT_VERSION
+            and request_envelope is not None
+            and not request_scope_contains(request_envelope, source_text)
+        ):
+            raise ValueError(
+                f"authorial core interpretation provenance {index} source_text is not grounded in an active requesting-user span"
+            )
         if basis not in allowed_interpretation_bases:
             raise ValueError(
                 f"authorial core interpretation provenance {index} basis must be one of "
@@ -7144,6 +7993,31 @@ def normalize_authorial_core(payload: Any) -> JsonDict:
             }
         )
 
+    if core_version == AUTHORIAL_CORE_CONTRACT_VERSION:
+        assert request_envelope is not None
+        semantic_source_texts = [
+            str(item.get("source_text") or "")
+            for item in [
+                *normalized["user_definitions"],
+                *normalized["interpretation_provenance"],
+            ]
+            if isinstance(item, dict) and str(item.get("source_text") or "")
+        ]
+        uncovered_interpretation_spans = [
+            str(span.get("span_id") or "")
+            for span in request_envelope.get("active_spans") or []
+            if isinstance(span, dict)
+            and not any(
+                source.casefold() in str(span.get("text") or "").casefold()
+                for source in semantic_source_texts
+            )
+        ]
+        if uncovered_interpretation_spans:
+            raise ValueError(
+                "photo-authorial-core/v2 requires requesting-user definition or interpretation provenance coverage for every active span: "
+                + ", ".join(uncovered_interpretation_spans)
+            )
+
     raw_unresolved = payload.get("unresolved_ambiguities")
     if not isinstance(raw_unresolved, list):
         raise ValueError("authorial core unresolved_ambiguities must be a list")
@@ -7164,6 +8038,28 @@ def normalize_authorial_core(payload: Any) -> JsonDict:
         raise ValueError("authorial core user_exclusions must contain at most twelve phrases")
     if len({item.lower() for item in exclusions}) != len(exclusions):
         raise ValueError("authorial core user_exclusions must be distinct")
+    if core_version == AUTHORIAL_CORE_CONTRACT_VERSION:
+        assert request_envelope is not None
+        ungrounded_exclusions = [
+            item
+            for item in exclusions
+            if not request_scope_contains(request_envelope, item)
+        ]
+        if ungrounded_exclusions:
+            raise ValueError(
+                "photo-authorial-core/v2 user_exclusions must be grounded in active requesting-user spans: "
+                + ", ".join(ungrounded_exclusions)
+            )
+        runtime_label_keys = {
+            str(item).casefold()
+            for item in normalized.get("runtime_forbidden_labels") or []
+        }
+        overlap = [item for item in exclusions if item.casefold() in runtime_label_keys]
+        if overlap:
+            raise ValueError(
+                "a runtime-only label cannot also be a semantic user exclusion: "
+                + ", ".join(overlap)
+            )
     leaked_exclusions = [
         item
         for item in exclusions
@@ -7215,7 +8111,11 @@ def normalize_authorial_core(payload: Any) -> JsonDict:
     return normalized
 
 
-def load_authorial_core_arg(raw: Optional[str]) -> Optional[JsonDict]:
+def load_authorial_core_arg(
+    raw: Optional[str],
+    *,
+    request_envelope: Optional[JsonDict] = None,
+) -> Optional[JsonDict]:
     if not raw:
         return None
     payload: Any
@@ -7229,7 +8129,7 @@ def load_authorial_core_arg(raw: Optional[str]) -> Optional[JsonDict]:
         payload = json.loads(candidate.read_text(encoding="utf-8"))
     else:
         payload = json.loads(raw)
-    return normalize_authorial_core(payload)
+    return normalize_authorial_core(payload, request_envelope=request_envelope)
 
 
 def authorial_core_retrieval_text(
@@ -7275,7 +8175,21 @@ def authorial_core_retrieval_text(
         if text:
             fields.append((field, text))
 
-    add("source_request", core.get("source_request"))
+    request_binding = (
+        core.get("request_binding")
+        if isinstance(core.get("request_binding"), dict)
+        else {}
+    )
+    active_spans = [
+        item
+        for item in request_binding.get("active_spans") or []
+        if isinstance(item, dict) and str(item.get("text") or "")
+    ]
+    if core.get("contract_version") == AUTHORIAL_CORE_CONTRACT_VERSION:
+        for item in active_spans:
+            add("source_request_scope", item.get("text"))
+    else:
+        add("source_request", core.get("source_request"))
     add("interpreted_intent", core.get("interpreted_intent"))
     add("subject", core.get("subject"))
     add("setting", core.get("setting"))
@@ -7308,8 +8222,12 @@ def authorial_core_retrieval_text(
         deduped.append((field, value))
     query = " | ".join(value for _, value in deduped)
     query_sha256 = hashlib.sha256(query.encode("utf-8")).hexdigest()
-    return query, {
-        "contract_version": "photo-retrieval-query-provenance/v1",
+    provenance: JsonDict = {
+        "contract_version": (
+            "photo-retrieval-query-provenance/v2"
+            if core.get("contract_version") == AUTHORIAL_CORE_CONTRACT_VERSION
+            else "photo-retrieval-query-provenance/v1"
+        ),
         "source_authorial_core_sha256": str(core.get("canonical_sha256") or ""),
         "source_request_sha256": hashlib.sha256(
             str(core.get("source_request") or "").encode("utf-8")
@@ -7320,6 +8238,27 @@ def authorial_core_retrieval_text(
         "excluded_term_count": len(exclusions),
         "exclusions_used_as_positive_query": False,
     }
+    if core.get("contract_version") == AUTHORIAL_CORE_CONTRACT_VERSION:
+        intent_lock = (
+            core.get("intent_lock")
+            if isinstance(core.get("intent_lock"), dict)
+            else {}
+        )
+        provenance.update(
+            {
+                "request_envelope_sha256": str(
+                    request_binding.get("request_envelope_sha256") or ""
+                ),
+                "active_scope_sha256": canonical_json_sha256(active_spans),
+                "source_intent_lock_sha256": str(
+                    intent_lock.get("canonical_sha256") or ""
+                ),
+                "runtime_forbidden_label_count": len(
+                    core.get("runtime_forbidden_labels") or []
+                ),
+            }
+        )
+    return query, provenance
 
 
 def authorial_core_generation_constraints(core: JsonDict) -> JsonDict:
@@ -7346,10 +8285,28 @@ def authorial_core_generation_constraints(core: JsonDict) -> JsonDict:
             f"{exclusion}なし",
         )
     )
+    dimension_scope = authorial_core_intent_dimension_scope(core)
     return {
         "no_people": no_people,
         "source": "explicit_authorial_core_user_exclusions",
         "excluded_term_count": len(exclusions),
+        **(
+            {
+                "intent_precedence": {
+                    "contract_version": DOWNSTREAM_INTENT_PRECEDENCE_CONTRACT_VERSION,
+                    "source_intent_lock_sha256": dimension_scope[
+                        "source_intent_lock_sha256"
+                    ],
+                    "locked_dimensions": dimension_scope["locked_dimensions"],
+                    "open_dimensions": dimension_scope["open_dimensions"],
+                    "default_rule_policy": (
+                        "active_only_when_all_affected_dimensions_are_explicitly_open"
+                    ),
+                }
+            }
+            if dimension_scope.get("enabled") is True
+            else {}
+        ),
     }
 
 
@@ -9403,10 +10360,18 @@ def candidate_pack_semantic_clarification(
     )
     candidates: List[JsonDict] = []
     if core:
+        intent_locked = (
+            core.get("contract_version") == AUTHORIAL_CORE_CONTRACT_VERSION
+            and isinstance(core.get("intent_lock"), dict)
+        )
         candidates.append(
             {
                 "id": "clarification:authorial-core:interpreted-intent",
-                "source": "agent_prepack_interpretation",
+                "source": (
+                    "agent_prepack_interpretation_bound_by_requesting_user_intent"
+                    if intent_locked
+                    else "agent_prepack_interpretation"
+                ),
                 "interpreted_meaning": str(core.get("interpreted_intent") or ""),
                 "meaning_components": [
                     str(item)
@@ -9414,12 +10379,25 @@ def candidate_pack_semantic_clarification(
                     if str(item).strip()
                 ],
                 "applicability": {
-                    "status": "review_required",
-                    "reason": "prepack_agent_hypothesis_governs_unless_a_typed_pack_clarification_supersedes_it",
+                    "status": "required" if intent_locked else "review_required",
+                    "reason": (
+                        "requesting_user_intent_lock_requires_a_new_core_for_any_material_change"
+                        if intent_locked
+                        else "prepack_agent_hypothesis_governs_unless_a_typed_pack_clarification_supersedes_it"
+                    ),
                 },
-                "required_in_final_prompt": False,
-                "revisable": True,
+                "required_in_final_prompt": intent_locked,
+                "revisable": not intent_locked,
                 "creative_sampling": False,
+                **(
+                    {
+                        "forbidden_runtime_labels": copy.deepcopy(
+                            core.get("runtime_forbidden_labels") or []
+                        )
+                    }
+                    if core.get("runtime_forbidden_labels")
+                    else {}
+                ),
             }
         )
     for definition in core.get("user_definitions") or []:
@@ -12607,11 +13585,57 @@ def candidate_pack_project_v5(
         "minimum_authorial_decisions": 2,
         "evidence_must_be_literal_in_baseline_and_final_prompt": True,
     }
+    intent_lock = (
+        core.get("intent_lock")
+        if isinstance(core.get("intent_lock"), dict)
+        else {}
+    )
+    if core.get("contract_version") == AUTHORIAL_CORE_CONTRACT_VERSION:
+        authorial["core_binding_contract"].update(
+            {
+                "source_intent_lock_sha256_required": True,
+                "all_semantic_anchor_ids_required": True,
+                "authorial_decisions_limited_to_open_dimensions": True,
+            }
+        )
+        projected["intent_preservation"] = {
+            "contract_version": INTENT_PRESERVATION_CONTRACT_VERSION,
+            "source_authorial_core_sha256": str(core.get("canonical_sha256") or ""),
+            "source_intent_lock_sha256": str(
+                intent_lock.get("canonical_sha256") or ""
+            ),
+            "priority_order": [
+                "requesting_user_definition",
+                "requesting_user_semantic_anchor",
+                "requesting_user_modifier_or_exclusion",
+                "agent_prepack_interpretation",
+                "creative_augmentation",
+            ],
+            "required_anchor_ids": [
+                str(item.get("anchor_id") or "")
+                for item in intent_lock.get("semantic_anchors") or []
+                if isinstance(item, dict) and str(item.get("anchor_id") or "")
+            ],
+            "locked_dimensions": copy.deepcopy(
+                intent_lock.get("locked_dimensions") or []
+            ),
+            "open_dimensions": copy.deepcopy(intent_lock.get("open_dimensions") or []),
+            "material_change_action": "stop_and_rebuild_core_after_requester_input",
+            "creative_change_boundary": "open_dimensions_only_and_subordinate",
+        }
     projected["authorial_composition"] = authorial
-    projected["creative_augmentation"] = candidate_pack_v5_creative_augmentation(
+    creative_augmentation = candidate_pack_v5_creative_augmentation(
         projected,
         private_relevance,
     )
+    if core.get("contract_version") == AUTHORIAL_CORE_CONTRACT_VERSION:
+        creative_augmentation.setdefault("selection_contract", {})[
+            "transformed_affected_dimensions_required"
+        ] = True
+        creative_augmentation["selection_contract"][
+            "transformed_dimensions_must_be_open"
+        ] = True
+    projected["creative_augmentation"] = creative_augmentation
     return projected
 
 
@@ -21609,17 +22633,47 @@ def moe_response_default_negative_entries(
         (r"만화|망가|코믹", r"漫画|マンガ", r"(?<![a-z0-9])(?:manga|comic)(?![a-z0-9])"),
     )
     text_requested = text_matches_any_pattern(source_text, MOE_TEXT_REQUEST_PATTERNS)
+    intent_precedence = (
+        contract.get("authorial_core_constraints", {}).get("intent_precedence")
+        if isinstance(contract.get("authorial_core_constraints"), dict)
+        and isinstance(
+            contract.get("authorial_core_constraints", {}).get("intent_precedence"),
+            dict,
+        )
+        else None
+    )
+    explicitly_open_dimensions = (
+        set(intent_precedence.get("open_dimensions") or [])
+        if isinstance(intent_precedence, dict)
+        else None
+    )
+
+    def default_dimensions_open(*dimensions: str) -> bool:
+        return (
+            True
+            if explicitly_open_dimensions is None
+            else set(dimensions).issubset(explicitly_open_dimensions)
+        )
+
     terms = [
-        "generic sparkle overlays",
-        "decorative blush circles",
         "childlike facial morphology",
         "minor appearance",
         "school-age coding",
-        "oversized anime eyes",
-        "blank bored expression",
-        "listless expression",
-        "pure scowl without a warm micro-expression",
     ]
+    if default_dimensions_open("style"):
+        terms.append("generic sparkle overlays")
+    if default_dimensions_open("style", "expression"):
+        terms.append("decorative blush circles")
+    if default_dimensions_open("appearance"):
+        terms.append("oversized anime eyes")
+    if default_dimensions_open("expression"):
+        terms.extend(
+            [
+                "blank bored expression",
+                "listless expression",
+                "pure scowl without a warm micro-expression",
+            ]
+        )
     if str(reference_edit_mode or "off") == "identity":
         terms.extend(
             [
@@ -21630,7 +22684,7 @@ def moe_response_default_negative_entries(
                 "de-aged identity",
             ]
         )
-    if not heart_requested:
+    if not heart_requested and default_dimensions_open("style"):
         terms.extend(
             [
                 "unrequested heart symbols",
@@ -21638,7 +22692,7 @@ def moe_response_default_negative_entries(
                 "heart-shaped latte art",
             ]
         )
-    if not graphic_requested:
+    if not graphic_requested and default_dimensions_open("style"):
         terms.extend(
             [
                 "cartoon motion lines",
@@ -21646,7 +22700,7 @@ def moe_response_default_negative_entries(
                 "comic emphasis marks",
             ]
         )
-    if not text_requested:
+    if not text_requested and default_dimensions_open("text"):
         terms.extend(
             [
                 "readable background text",
@@ -21983,20 +23037,47 @@ def generate_once(
         if isinstance(generation_contract.get("intent_constraints"), dict)
         else {}
     )
-    if (
+    authorial_intent_precedence = (
+        generation_contract.get("authorial_core_constraints", {}).get(
+            "intent_precedence"
+        )
+        if isinstance(generation_contract.get("authorial_core_constraints"), dict)
+        and isinstance(
+            generation_contract.get("authorial_core_constraints", {}).get(
+                "intent_precedence"
+            ),
+            dict,
+        )
+        else None
+    )
+    default_adult_appeal_dimensions_open = (
+        True
+        if authorial_intent_precedence is None
+        else ADULT_APPEAL_DEFAULT_AFFECTED_DIMENSIONS.issubset(
+            set(authorial_intent_precedence.get("open_dimensions") or [])
+        )
+    )
+    explicit_nonsexual_moe = (
         isinstance(character_response_intent, dict)
         and character_response_intent.get("requested") is True
         and character_response_intent.get("eligible") is True
         and character_response_intent.get("explicit_nonsexual") is True
-        and adult_appeal_activation_source == "skill_default"
+    )
+    if (
+        adult_appeal_activation_source == "skill_default"
+        and (explicit_nonsexual_moe or not default_adult_appeal_dimensions_open)
     ):
-        # Only an explicit nonsexual request neutralizes the configured adult
-        # appeal default. Plain adult moe retains low-intensity sensual support;
-        # explicit CLI controls still win either way.
+        # Explicit nonsexual intent and the v2 open-dimension boundary both
+        # neutralize the skill default. Explicit user/CLI controls remain
+        # separate, but a skill default cannot author a closed semantic axis.
         sensual_editorial_intensity = 0
         fetish_fashion_intensity = 0
         adult_appeal_emphasis = "balanced"
-        adult_appeal_activation_source = "explicit_nonsexual_moe"
+        adult_appeal_activation_source = (
+            "explicit_nonsexual_moe"
+            if explicit_nonsexual_moe
+            else "suppressed_requesting_user_intent_priority"
+        )
     expand_soft_anchor_pools(generation_contract, semantic_context, data)
     affinity_status = soft_preset_affinity_status(
         preset,
@@ -22611,7 +23692,12 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     parser.add_argument(
         "--authorial-core-json",
         default=None,
-        help="Inline JSON or path for the domain-neutral agent-authored pre-pack concept and baseline prompt. Required for v5 candidate-pack output.",
+        help="Inline JSON or path for the domain-neutral agent-authored pre-pack concept, requester-priority intent lock, and baseline prompt. Required for v5 candidate-pack output.",
+    )
+    parser.add_argument(
+        "--request-envelope-json",
+        default=None,
+        help="Inline JSON or path containing the exact requesting-user text and byte-grounded active spans. Required for v5 candidate-pack output.",
     )
     parser.add_argument(
         "--visual-intent-json",
@@ -22781,6 +23867,10 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         raise ValueError("--authorial-core-json requires --candidate-pack-version v5")
     if args.candidate_pack_version == "v5" and not args.authorial_core_json:
         raise ValueError("--candidate-pack-version v5 requires --authorial-core-json")
+    if args.request_envelope_json and args.candidate_pack_version != "v5":
+        raise ValueError("--request-envelope-json requires --candidate-pack-version v5")
+    if args.candidate_pack_version == "v5" and not args.request_envelope_json:
+        raise ValueError("--candidate-pack-version v5 requires --request-envelope-json")
     if args.visual_intent_json and not args.emit_candidate_pack:
         raise ValueError("--visual-intent-json requires --emit-candidate-pack")
     if args.visual_intent_json and args.candidate_pack_version not in {"v4", "v5"}:
@@ -22817,7 +23907,11 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 
     data = load_json(args.tags)
     authorial_request = load_authorial_request_arg(args.authorial_request_json, data)
-    authorial_core = load_authorial_core_arg(args.authorial_core_json)
+    request_envelope = load_request_envelope_arg(args.request_envelope_json)
+    authorial_core = load_authorial_core_arg(
+        args.authorial_core_json,
+        request_envelope=request_envelope,
+    )
     quality_layers_path = Path(args.quality_layers) if args.quality_layers else default_quality_layers_path(args.tags)
     data[QUALITY_LAYERS_DATA_KEY] = load_quality_layers(quality_layers_path)
     visual_obligation_registry_path = (
@@ -22937,24 +24031,36 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     elif selection_mode != "rule" and resolved_intent == DEFAULT_SEMANTIC_INTENT and (args.default_intent or semantic_defaulted or not intent_explicit):
         intent_source = "default"
     if isinstance(authorial_core, dict):
-        request_sources = [
-            *normalize_list(args.concept_locks),
-            *normalize_list(args.user_mandatory_intents),
-            *normalize_list(args.additional_requirements),
-        ]
-        if intent_source == "user" and resolved_intent:
-            request_sources.append(str(resolved_intent))
-        normalized_source = clean_spaces(
-            str(authorial_core.get("source_request") or "")
-        ).lower()
-        if normalized_source not in {
-            clean_spaces(str(value)).lower()
-            for value in request_sources
-            if clean_spaces(str(value))
-        }:
+        if authorial_core.get("contract_version") != AUTHORIAL_CORE_CONTRACT_VERSION:
             raise ValueError(
-                "authorial core source_request must exactly match a user request source "
-                "such as --concept-lock, --intent, or --additional-requirement"
+                "normal v5 generation requires photo-authorial-core/v2; v1 remains audit-only legacy evidence"
+            )
+        if not isinstance(request_envelope, dict):
+            raise ValueError("normal v5 generation requires one validated request envelope")
+        active_request_texts = request_envelope_active_texts(request_envelope)
+        supplied_concept_locks = normalize_list(args.concept_locks)
+        if supplied_concept_locks and supplied_concept_locks != active_request_texts:
+            raise ValueError(
+                "v5 --concept-lock values must exactly equal the request-envelope active spans in order; omit them to derive the values safely"
+            )
+        args.concept_locks = list(active_request_texts)
+        ungrounded_request_controls = [
+            str(value)
+            for value in [
+                *normalize_list(args.user_mandatory_intents),
+                *normalize_list(args.additional_requirements),
+                *(
+                    [str(resolved_intent)]
+                    if intent_source == "user" and resolved_intent
+                    else []
+                ),
+            ]
+            if str(value) not in active_request_texts
+        ]
+        if ungrounded_request_controls:
+            raise ValueError(
+                "v5 user-priority request controls must be exact active request-envelope spans: "
+                + "; ".join(ungrounded_request_controls)
             )
     filter_strictness, semantic_weight, semantic_profile = resolve_semantic_runtime_options(
         selection_mode,
