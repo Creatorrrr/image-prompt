@@ -11478,13 +11478,13 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         )
         failures = []
         rows = self.generator.iter_semantic_entries(self.generator.load_json(TAGS_PATH))
-        for key, _kind, entry, slot in rows:
-            text = self.generator.semantic_text_for_entry(entry, slot)
+        for key, kind, entry, slot in rows:
+            text = self.generator.semantic_text_for_entry(entry, slot, kind=kind)
             match = forbidden.search(text)
             if match:
                 failures.append((key, match.group(0), text[:240]))
 
-        self.assertEqual(len(rows), 6513)
+        self.assertEqual(len(rows), 6525)
         self.assertEqual(failures, [])
 
     def test_semantic_index_builder_records_gemini_metadata_and_entries(self):
@@ -11537,7 +11537,10 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertFalse(out_path.exists())
         self.assertIn("gemini-embedding-2", result.stdout)
         self.assertIn("768", result.stdout)
-        self.assertIn("semantic-text-v3", result.stdout)
+        self.assertIn(
+            self.generator.SEMANTIC_TEXT_RECIPE_VERSION,
+            result.stdout,
+        )
 
     def test_semantic_index_builder_loads_project_env_file(self):
         builder = load_index_builder()
@@ -11625,6 +11628,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                     retry_initial_delay=0,
                     cache_indexes=[],
                 )
+                first_payload["semantic_text_recipe"] = "semantic-text-older"
                 builder.write_payload(output, first_payload)
                 embed_calls.clear()
 
@@ -11654,6 +11658,10 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             first_payload["entries"]["preset:base_portrait"]["vector"],
         )
         self.assertNotEqual(second_payload["dictionary_hash"], first_payload["dictionary_hash"])
+        self.assertEqual(
+            second_payload["semantic_text_recipe"],
+            self.generator.SEMANTIC_TEXT_RECIPE_VERSION,
+        )
 
     def test_semantic_index_shards_round_trip_exact_entry_order_and_values(self):
         builder = load_index_builder()

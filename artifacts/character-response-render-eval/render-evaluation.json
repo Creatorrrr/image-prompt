@@ -1,0 +1,99 @@
+{
+  "schema_version": "photo-character-response-render-evaluation/v1",
+  "evaluated_at": "2026-08-17T11:22:00+09:00",
+  "generation_mode": "built_in_image_gen",
+  "review_method": {
+    "reviewer_count": 3,
+    "independent": true,
+    "labels_hidden_from_reviewers": true,
+    "input_scope": "/tmp/char-response-blind.zZSVaa/a.png through f.png only",
+    "categories": {
+      "1": "guarded, rejecting, or distancing surface contradicted by minimized or involuntary positive affiliation toward the same counterpart",
+      "2": "pure hostility with no positive affiliation",
+      "3": "open generic kindness or routine service with no guarded contradiction",
+      "4": "possessive or surveillant control rather than prosocial care"
+    }
+  },
+  "cases": [
+    {
+      "path": "positive-cafe-care.png",
+      "sha256": "83a54f3834127468cd715f87941275e4be2d23a958f3870fde8be5d3cdf9ffca",
+      "intended_category": 1,
+      "anonymous_id": "f.png",
+      "reviewer_categories": [1, 1, 1],
+      "reviewer_confidences": [0.88, 0.82, 0.97],
+      "consensus_category": 1,
+      "result": "pass",
+      "pixel_summary": "The stern face and careful unfinished bandaging of the same recipient create a clear guarded-care contradiction; reviewers noted that treatment concentration remains a secondary reading."
+    },
+    {
+      "path": "positive-workshop-care.png",
+      "sha256": "991d6f2d37e188a2c89a823d3399ce699ae248403b015ccccc1480da8970e9a2",
+      "intended_category": 1,
+      "anonymous_id": "b.png",
+      "reviewer_categories": [1, 1, 1],
+      "reviewer_confidences": [0.91, 0.92, 0.93],
+      "consensus_category": 1,
+      "result": "pass",
+      "pixel_summary": "The guarded face and direct warming gesture toward the rain-soaked counterpart read as a clear same-target contradiction."
+    },
+    {
+      "path": "positive-kitchen-care.png",
+      "sha256": "17db3be47e1c26b046235ff3b850ec137d0810ff632653f78430247c4f655054",
+      "intended_category": 1,
+      "anonymous_id": "d.png",
+      "reviewer_categories": [3, 3, 1],
+      "reviewer_confidences": [0.77, 0.66, 0.66],
+      "consensus_category": 3,
+      "result": "fail",
+      "pixel_summary": "A serious expression plus plated-food handoff was read by the majority as routine professional service or open care, not observable guarded rejection contradicted by concealed affiliation."
+    },
+    {
+      "path": "contrast-pure-hostility.png",
+      "sha256": "4cb7feb3b19e61f64a213f3dad4e79a1ec044bd2224aa348bd9c74cfb732e3f3",
+      "intended_category": 2,
+      "anonymous_id": "e.png",
+      "reviewer_categories": [2, 2, 2],
+      "reviewer_confidences": [0.99, 0.99, 0.99],
+      "consensus_category": 2,
+      "result": "pass"
+    },
+    {
+      "path": "contrast-open-kindness.png",
+      "sha256": "499f7188910edf92c23dd0d9ce98c5ec9eb539d16b30a7180bd5f1dd700e843c",
+      "intended_category": 3,
+      "anonymous_id": "a.png",
+      "reviewer_categories": [3, 3, 3],
+      "reviewer_confidences": [0.98, 0.99, 0.99],
+      "consensus_category": 3,
+      "result": "pass"
+    },
+    {
+      "path": "contrast-possessive-control.png",
+      "sha256": "ef3f7dce5ccb33bcb8dd963984e70abcd256ca07cbe4a040ba615120046f6455",
+      "intended_category": 4,
+      "anonymous_id": "c.png",
+      "reviewer_categories": [4, 4, 4],
+      "reviewer_confidences": [0.73, 0.77, 0.82],
+      "consensus_category": 4,
+      "result": "pass",
+      "pixel_summary": "All reviewers preferred the control reading, while noting a weaker alternate interpretation of navigation or key handoff."
+    }
+  ],
+  "metrics": {
+    "consensus_exact_cases": 5,
+    "case_count": 6,
+    "consensus_exact_rate": 0.8333333333,
+    "positive_concept_recall": 0.6666666667,
+    "positive_concept_precision": 1.0,
+    "confounder_consensus_accuracy": 1.0,
+    "unanimous_case_rate": 0.8333333333
+  },
+  "promotion_decision": {
+    "status": "no_go_for_hard_contract_promotion",
+    "reason": "The data meaning and contrast set separate all three confounders, but one of three positive scenes collapses into routine professional service at pixel level. A neutral serious face is not reliable evidence of a guarded or rejecting social surface.",
+    "current_action": "Keep character-response profiles advisory-only and do not promote profile relations into a new hard authorial-core or candidate-pack contract.",
+    "next_evaluation": "Add fresh positive scenes with an observable guarded social action distinct from neutral concentration, paired with role-only-service negatives, and repeat independent blind review."
+  },
+  "evidence_boundary": "This is generated-pixel evidence from three independent reviewers, not requesting-user acceptance and not proof that every future render will express the concept."
+}
