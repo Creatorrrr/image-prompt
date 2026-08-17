@@ -1,16 +1,22 @@
-# Canonical Meaning-Aware Moe Grammar v3
+# Canonical and Visual Meaning-Aware Moe Grammar v4
 
 ## Product boundary
 
-The layer covers the exact 29 reviewed element IDs reconstructed from 34 origin articles. It has three versioned paths:
+The layer covers the exact 29 reviewed element IDs reconstructed from 34 origin articles. It has four versioned paths:
 
 - `subculture-illustration-moe-element-plan/v1` is the immutable fixed-clause prototype retained for replay.
 - `subculture-illustration-moe-grammar/v2` plus `subculture-illustration-candidate-pack/v4` is immutable historical product replay.
-- `subculture-illustration-moe-grammar/v3` plus `subculture-illustration-candidate-pack/v5` is the default product path. It binds canonical meaning before selecting research-backed subtypes and composes real candidate/atom IDs into one sparse event.
+- `subculture-illustration-moe-grammar/v3` plus `subculture-illustration-candidate-pack/v5` is immutable meaning-only replay.
+- `subculture-illustration-moe-grammar/v4` plus `subculture-illustration-candidate-pack/v6` is the default product path. It binds canonical meaning, a typed alias, and exactly one visual variant before composing real candidate/atom IDs into one sparse event.
 
-Activation always requires an explicit element ID or complete reviewed alias supplied to the API. Ordinary request prose is never scanned to activate elements, and contextual words may only rank variants inside an already selected element. One to three elements may be selected. Their order declares the governing primary first.
+Activation always requires an explicit element ID or complete reviewed alias supplied to the API. Ordinary request prose is never scanned to activate elements, and contextual words may only rank variants inside an already selected element. One to three elements may be selected. Their order declares the governing primary first. V4 types aliases as follows:
 
-This layer does not change refusal/filter behavior, negative prompts, retry policy, photo routing, or universal-scene eligibility. The base v1-v3 pack is embedded unchanged and its safety/negative fields are exact-copied into v5. The semantic binding records that downstream safety evaluation must consider both the original request and canonical meaning; removing a runtime label never authorizes semantic substitution or policy evasion.
+- `exact`: another complete name for the same concept;
+- `variant`: a complete name for one particular visual lineage and therefore a hard candidate-subtype restriction;
+- `carrier`: a concrete visual construction that can carry the concept without replacing its canonical meaning;
+- `related`: useful search/context vocabulary that is not sufficiently equivalent to activate the element and must fail closed.
+
+This layer does not change refusal/filter behavior, negative prompts, retry policy, photo routing, or universal-scene eligibility. The base v1-v3 pack is embedded unchanged and its safety/negative fields are exact-copied into v6. The semantic binding records that downstream safety evaluation must consider both the original request and canonical meaning; removing a runtime label never authorizes semantic substitution or policy evasion.
 
 ## Research authority
 
@@ -27,6 +33,18 @@ Every dossier keeps at least three research questions, distinct semantic subtype
 `illustration_moe_grammar_v2.json` and its compiler remain byte-stable historical evidence. `moe_meaning_contracts_v1.json` binds the exact five dossier hashes and adds one ordered contract per element: canonical definition, essential and non-equivalent semantics, preference axes, runtime-label policy, semantic fidelity, visible component groups, false substitutes, forbidden inferences, adult requirement, and media capability.
 
 `compile_moe_grammar_v3.py` deterministically combines that meaning source with the v2 candidate object, removes placeholder subtypes, replaces metadata-contaminated display definitions with canonical definitions, and rejects forbidden runtime labels in candidate prompt fragments. The v3 grammar contains the same 29 dossiers, 233 researched candidates, and 198 sources. Re-running it with `--check` must reproduce the stored bytes exactly.
+
+`image_search_evidence_v1.json` adds one qualitative image-search record per element: multilingual queries, confidence, recurring visible features, confounds, representative URLs when a stable non-explicit source was found, and explicit limitations. Empty representative-URL arrays are allowed and stay paired with honest confidence/limitations; they must not be filled with inferred or unstable sources merely to satisfy a count.
+
+`moe_meaning_contracts_v2.json` is an extension, not a replacement for v1 meaning. Each of its 29 contracts hash-binds the v1 contract and one image-evidence record, types every legacy alias, assigns every one of the 233 candidate subtypes to exactly one of 52 visual variants, and gives each variant:
+
+- all required v1 component-group IDs;
+- literal `all_of_en` anchors and a bounded `any_of` minimum;
+- topology edges, camera requirements, temporal states, and interactions;
+- known negative visual confounds for later rendered-pixel review;
+- supported output modes.
+
+`compile_moe_grammar_v4.py` deterministically attaches those contracts to the v3 grammar. Neither compiler rewrites v1-v3 inputs.
 
 ## Intent and selection
 
@@ -46,7 +64,7 @@ Candidate precedence is:
 
 One isolated word is not enough to route a material variant because it may occur in a negated comparison. A preference route needs at least two matching candidate cues or two matched axis values. With no material preference, creativity `0.5` chooses the one canonical novelty-1 candidate. An explicit creative/authorial request activates the existing high-development contract and targets novelty 2 without changing the stored `0.5` value.
 
-The selected pack records the original token, matched cues, selected candidate ID, reason, target novelty, subtype, preference profile, source claims, representation, resources, compatibility tags, semantic fidelity, and exact canonical meaning-contract hash. It embeds each complete selected contract in order. Unselected sibling elements never enter the pack.
+The selected pack records the original token, its alias relation, matched cues, selected candidate ID, reason, target novelty, subtype, preference profile, source claims, representation, resources, compatibility tags, semantic fidelity, canonical meaning-contract hash, selected visual-variant ID, and visual-contract hash. It embeds each complete selected canonical and visual contract in order. Unselected sibling elements and non-selected visual lineages never enter the pack.
 
 ## Sparse bundle and compatibility
 
@@ -60,28 +78,30 @@ Compatibility is typed and sparse. `illustration_moe_compatibility_v2.json` owns
 
 ## Composition and audit
 
-`generate_moe_candidate_pack.py` wraps an already built v1-v3 pack. The default v5 draft uses one hierarchy:
+`generate_moe_candidate_pack.py` wraps an already built v1-v3 pack. The default v6 draft uses one hierarchy:
 
 1. base scene foundation;
 2. one governing candidate direction;
 3. up to two subordinate visible directions;
 4. one shared-event compatibility bridge.
 
-Do not append a separate label list or 29-element prompt block. Before composition, add a label-free visible phrase for every required meaning component group that the selected primary atom does not already carry. Every selected candidate and atom ID appears in `required_chosen_candidate_ids`; every selected atom phrase appears in `moe_evidence` and the composed prompt; every canonical contract appears in `meaning_evidence`.
+Do not append a separate label list or 29-element prompt block. Before composition, add a label-free visible phrase for every required v1 meaning component group that the selected primary atom does not already carry. Then bind the selected visual variant's all-of anchors, the required number of any-of alternatives, topology, camera, temporal, and interaction phrases. Intersect candidate and variant output modes and fail when no shared mode exists. Every selected candidate and atom ID appears in `required_chosen_candidate_ids`; every selected atom phrase appears in `moe_evidence`; every canonical contract appears in `meaning_evidence`; and every selected visual variant appears in `visual_evidence`.
 
-`audit_moe_candidate_pack` reloads the local v3 meaning grammar and deterministically replays selection. It checks the unchanged base pack, exact safety/negative preservation, original-request hash, local meaning-contract bytes and hash, fidelity declaration, one-primary/two-support cardinality, chosen IDs, literal node evidence, all required component groups, forbidden runtime labels, adult declaration, and sequence/interaction capability. Recomputing an embedded contract hash or `pack_id` cannot authorize a changed meaning.
+`audit_moe_candidate_pack` reloads the local v4 grammar and deterministically replays selection. It checks the unchanged base pack, exact safety/negative preservation, original-request hash, canonical and visual asset hashes/bytes, typed alias policy, candidate-subtype ownership, one-primary/two-support cardinality, chosen IDs, literal node evidence, every required visual phrase and any-of minimum, forbidden runtime labels, adult declaration, and supported output mode. Recomputing an embedded contract hash or `pack_id` cannot authorize changed meaning or a cross-lineage variant.
 
-The v5 audit proves selection, canonical meaning binding, and prompt components only. It does not prove that pixels rendered correctly, that the audience prefers the result, that a meme's historical origin is certain, or that the base composed prompt passed its ordinary audit. Run the ordinary composed-prompt audit for the base workflow and inspect generated pixels separately when an image is requested.
+The v6 audit proves selection, canonical/visual contract binding, and prompt components only. Negative visual confounds are deliberately carried into `visual_evidence` as pixel-review criteria rather than treated as forbidden words: a valid positive prompt may say “rather than a generic smug face.” The audit does not prove that pixels rendered correctly, that the audience prefers the result, that a meme's historical origin is certain, or that the base composed prompt passed its ordinary audit. Run the ordinary composed-prompt audit for the base workflow and inspect generated pixels separately when an image is requested.
 
 ## Commands
 
-Compile the normalized grammar:
+Build and compile the current visual grammar:
 
 ```bash
+.venv/bin/python skills/subculture-illustration-image-generator/scripts/build_moe_meaning_contracts_v2.py --check
 .venv/bin/python skills/subculture-illustration-image-generator/scripts/compile_moe_grammar_v3.py --check
+.venv/bin/python skills/subculture-illustration-image-generator/scripts/compile_moe_grammar_v4.py --check
 ```
 
-Wrap an ordinary pack and compose a v5 draft:
+Wrap an ordinary pack and compose a v6 draft:
 
 ```bash
 .venv/bin/python skills/subculture-illustration-image-generator/scripts/generate_moe_candidate_pack.py \
@@ -91,19 +111,22 @@ Wrap an ordinary pack and compose a v5 draft:
   --compose-from "An adult repairer pauses during one visible workshop action"
 ```
 
-Use `--grammar-version v2` only when explicitly replaying the historical v4 contract.
+Use `--grammar-version v3` only for historical v5 meaning-only replay and `--grammar-version v2` only for historical v4 replay.
 
 Focused validation:
 
 ```bash
 .venv/bin/python -m unittest tests.test_subculture_illustration_moe_elements -v
-.venv/bin/python skills/subculture-illustration-image-generator/scripts/qualify_moe_grammar_v3.py
+.venv/bin/python skills/subculture-illustration-image-generator/scripts/qualify_moe_grammar_v4.py --check
 ruff check \
-  skills/subculture-illustration-image-generator/scripts/compile_moe_grammar_v3.py \
+  skills/subculture-illustration-image-generator/scripts/build_moe_meaning_contracts_v2.py \
+  skills/subculture-illustration-image-generator/scripts/compile_moe_grammar_v4.py \
   skills/subculture-illustration-image-generator/scripts/moe_meaning_contract.py \
+  skills/subculture-illustration-image-generator/scripts/moe_visual_contract.py \
   skills/subculture-illustration-image-generator/scripts/moe_element_runtime.py \
   skills/subculture-illustration-image-generator/scripts/generate_moe_candidate_pack.py \
+  skills/subculture-illustration-image-generator/scripts/qualify_moe_grammar_v4.py \
   tests/test_subculture_illustration_moe_elements.py
 ```
 
-The focused suite directly covers 29 neutral selections, 29 material preference deltas, 6 sparse combinations, creativity `0.5` preservation, deterministic compilation, prompt composition/audit, sensitive-label omission, contract/fidelity/component/media mutation rejection, explicit v2/v4 replay, and frozen retry/photo hashes. The 12-case v3 qualification is semantic/prompt preflight only. Neither check runs image generation, pixel review, universal 24x417, hidden 1,152-run qualification, or exhaustive pairwise combinations.
+The focused suite directly covers historical v2/v4 and v3/v5 replay plus all 29 v4 canonical selections, all 124 typed aliases, six related-only rejections, variant-lineage isolation, prompt composition/audit, sensitive-label omission, contract/component/media mutation rejection, and frozen retry/photo hashes. The 153-case v4 qualification is semantic/visual prompt preflight only. Neither check runs image generation, pixel review, universal 24x417, hidden 1,152-run qualification, or exhaustive pairwise combinations.

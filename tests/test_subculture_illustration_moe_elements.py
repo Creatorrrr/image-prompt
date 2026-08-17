@@ -20,12 +20,16 @@ from moe_element_runtime import (  # noqa: E402
     AUDIT_SCHEMA,
     COMPOSED_SCHEMA,
     COMPOSED_SCHEMA_V2,
+    COMPOSED_SCHEMA_V4,
     GRAMMAR_SCHEMA,
     GRAMMAR_SCHEMA_V2,
+    GRAMMAR_SCHEMA_V4,
     PACK_AUDIT_SCHEMA,
     PACK_AUDIT_SCHEMA_V2,
+    PACK_AUDIT_SCHEMA_V4,
     PACK_SCHEMA,
     PACK_SCHEMA_V4,
+    PACK_SCHEMA_V6,
     PLAN_SCHEMA,
     MoeElementError,
     audit_moe_candidate_pack,
@@ -41,8 +45,11 @@ from moe_element_runtime import (  # noqa: E402
 )
 from compile_moe_grammar_v2 import compile_grammar as compile_grammar_v2  # noqa: E402
 from compile_moe_grammar_v3 import compile_grammar as compile_grammar_v3  # noqa: E402
+from compile_moe_grammar_v4 import compile_grammar as compile_grammar_v4  # noqa: E402
+from build_moe_meaning_contracts_v2 import build_assets as build_visual_assets  # noqa: E402
 from illustration_runtime import build_candidate_pack  # noqa: E402
 from moe_meaning_contract import runtime_label_present  # noqa: E402
+from qualify_moe_grammar_v4 import build_qualification  # noqa: E402
 
 
 class SubcultureIllustrationMoeElementTests(unittest.TestCase):
@@ -747,6 +754,296 @@ class SubcultureIllustrationMoeGrammarV3Tests(unittest.TestCase):
         self.assertEqual("fail", audit["status"])
         self.assertIn(
             "meaning_capability", {failure["check"] for failure in audit["failures"]}
+        )
+
+
+class SubcultureIllustrationMoeGrammarV4Tests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.legacy = load_moe_element_assets(ASSET_ROOT)
+        cls.grammar = load_moe_grammar_assets(
+            ASSET_ROOT,
+            legacy_assets=cls.legacy,
+            grammar_version="v4",
+        )
+        cls.foundation = (
+            "An original adult-character illustration with one causal event"
+        )
+        cls.corpus = json.loads(
+            (
+                ASSET_ROOT
+                / "research_evidence_moe_elements"
+                / "intent_corpus_v2.json"
+            ).read_text(encoding="utf-8")
+        )
+
+    def _build(
+        self,
+        requested_tokens: list[str],
+        *,
+        request: str = "성인 캐릭터로 요청한 시각 의미를 정확히 보여줘.",
+        output_mode: str = "auto",
+    ) -> tuple[dict, dict]:
+        base = build_candidate_pack(
+            request,
+            seed=43,
+            creativity=0.5,
+            contract_version="v2",
+        )
+        pack = build_moe_candidate_pack(
+            base,
+            requested_tokens,
+            preference_text=request,
+            output_mode=output_mode,
+            legacy_assets=self.legacy,
+            grammar_assets=self.grammar,
+        )
+        composed = compose_moe_prompt_draft(pack, self.foundation)
+        return pack, composed
+
+    @staticmethod
+    def _rehash_pack(pack: dict) -> None:
+        pack["pack_id"] = None
+        pack["pack_id"] = hashlib.sha256(canonical_json_bytes(pack)).hexdigest()[:16]
+
+    def test_visual_assets_and_v4_grammar_are_reproducible_and_complete(self) -> None:
+        evidence, visual = build_visual_assets(ASSET_ROOT)
+        stored_evidence = json.loads(
+            (
+                ASSET_ROOT
+                / "research_evidence_moe_elements"
+                / "image_search_evidence_v1.json"
+            ).read_text(encoding="utf-8")
+        )
+        stored_visual = json.loads(
+            (
+                ASSET_ROOT
+                / "research_evidence_moe_elements"
+                / "moe_meaning_contracts_v2.json"
+            ).read_text(encoding="utf-8")
+        )
+        stored_grammar = json.loads(
+            (ASSET_ROOT / "illustration_moe_grammar_v4.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        self.assertEqual(evidence, stored_evidence)
+        self.assertEqual(visual, stored_visual)
+        self.assertEqual(compile_grammar_v4(ASSET_ROOT), stored_grammar)
+        self.assertEqual(GRAMMAR_SCHEMA_V4, stored_grammar["schema"])
+        self.assertEqual(
+            hashlib.sha256(
+                (ASSET_ROOT / "illustration_moe_grammar_v3.json").read_bytes()
+            ).hexdigest(),
+            stored_grammar["base_grammar_v3_sha256"],
+        )
+        self.assertEqual(29, visual["contract_count"])
+        self.assertEqual(29, evidence["record_count"])
+        self.assertEqual(52, sum(len(row["visual_variants"]) for row in visual["contracts"]))
+        self.assertEqual(124, len(self.grammar.visual_contracts.alias_bindings))
+        relation_counts: dict[str, int] = {}
+        for binding in self.grammar.visual_contracts.alias_bindings.values():
+            relation = binding["relation"]
+            relation_counts[relation] = relation_counts.get(relation, 0) + 1
+        self.assertEqual(
+            {"exact": 98, "variant": 6, "carrier": 14, "related": 6},
+            relation_counts,
+        )
+        for record in evidence["records"]:
+            self.assertTrue(record["queries"])
+            self.assertGreaterEqual(len(record["recurring_features_en"]), 2)
+            self.assertTrue(
+                all(
+                    url.startswith("https://")
+                    for url in record["representative_source_urls"]
+                )
+            )
+
+    def test_all_29_canonical_elements_emit_and_audit_visual_evidence(self) -> None:
+        for element_id in self.legacy.records_by_id:
+            with self.subTest(element_id=element_id):
+                pack, composed = self._build([element_id])
+                self.assertEqual(PACK_SCHEMA_V6, pack["contract_version"])
+                self.assertEqual(COMPOSED_SCHEMA_V4, composed["schema"])
+                self.assertEqual(
+                    "canonical", pack["moe_intent"][0]["alias_relation"]
+                )
+                self.assertEqual(1, len(composed["visual_evidence"]))
+                audit = audit_moe_candidate_pack(
+                    pack,
+                    composed,
+                    legacy_assets=self.legacy,
+                    grammar_assets=self.grammar,
+                )
+                self.assertEqual(PACK_AUDIT_SCHEMA_V4, audit["schema"])
+                self.assertEqual("pass", audit["status"], audit["failures"])
+
+    def test_v4_qualification_covers_all_canonical_and_alias_contracts(self) -> None:
+        stored = json.loads(
+            (
+                ASSET_ROOT
+                / "research_evidence_moe_elements"
+                / "qualification_v4.json"
+            ).read_text(encoding="utf-8")
+        )
+        self.assertEqual(build_qualification(ASSET_ROOT), stored)
+        self.assertEqual("pass", stored["status"])
+        self.assertEqual(29, stored["canonical_case_count"])
+        self.assertEqual(124, stored["alias_case_count"])
+        self.assertEqual(118, stored["activating_alias_count"])
+        self.assertEqual(6, stored["related_alias_rejection_count"])
+        self.assertEqual(153, stored["pass_count"])
+
+    def test_alias_relations_activate_or_reject_without_silent_substitution(
+        self,
+    ) -> None:
+        for binding in self.grammar.visual_contracts.alias_bindings.values():
+            alias = binding["alias"]
+            with self.subTest(alias=alias, relation=binding["relation"]):
+                if binding["relation"] == "related":
+                    with self.assertRaisesRegex(MoeElementError, "related-only"):
+                        self._build([alias])
+                    continue
+                pack, composed = self._build([alias])
+                self.assertEqual(
+                    binding["relation"], pack["moe_intent"][0]["alias_relation"]
+                )
+                self.assertEqual(
+                    binding["element_id"],
+                    pack["request_contract"]["selected_element_ids"][0],
+                )
+                if binding["relation"] == "variant":
+                    self.assertEqual(
+                        binding["variant_id"],
+                        pack["moe_intent"][0]["selected_visual_variant_id"],
+                    )
+                audit = audit_moe_candidate_pack(
+                    pack,
+                    composed,
+                    legacy_assets=self.legacy,
+                    grammar_assets=self.grammar,
+                )
+                self.assertEqual("pass", audit["status"], audit["failures"])
+
+    def test_variant_alias_forces_one_lineage_without_cross_variant_mixing(self) -> None:
+        pack, composed = self._build(["body-swap transformation"])
+        candidate = pack["moe_grammar"]["selected_candidates"][0]
+        binding = pack["moe_grammar"]["visual_bindings"][0]
+        variant = binding["selected_variant"]
+        self.assertEqual("reciprocal_body_swap", candidate["visual_variant_id"])
+        self.assertIn(candidate["subtype_id"], variant["candidate_subtype_ids"])
+        for phrase in variant["all_of_en"]:
+            self.assertIn(phrase, composed["prompt_en"])
+        other_variants = [
+            row
+            for row in binding["contract"]["visual_variants"]
+            if row["id"] != variant["id"]
+        ]
+        for other in other_variants:
+            self.assertFalse(
+                all(phrase in composed["prompt_en"] for phrase in other["all_of_en"])
+            )
+
+    def test_sensitive_label_is_omitted_while_visual_geometry_stays_exact(self) -> None:
+        pack, composed = self._build(["moe_ahegao_expression"])
+        meaning = pack["moe_grammar"]["meaning_bindings"][0]["contract"]
+        variant = pack["moe_grammar"]["visual_bindings"][0]["selected_variant"]
+        for label in meaning["runtime_forbidden_labels"]:
+            self.assertFalse(runtime_label_present(label, composed["prompt_en"]))
+        for field in (
+            "all_of_en",
+            "topology_edges_en",
+            "camera_requirements_en",
+        ):
+            for phrase in variant[field]:
+                self.assertIn(phrase, composed["prompt_en"])
+        self.assertIn("tongue", composed["prompt_en"].casefold())
+        audit = audit_moe_candidate_pack(
+            pack,
+            composed,
+            legacy_assets=self.legacy,
+            grammar_assets=self.grammar,
+        )
+        self.assertEqual("pass", audit["status"], audit["failures"])
+
+    def test_six_multi_element_cases_share_visual_mode_and_sparse_budget(self) -> None:
+        for row in self.corpus["sections"]["cross_element_combinations"]:
+            with self.subTest(case=row["id"]):
+                pack, composed = self._build(
+                    row["expected_element_ids"],
+                    request=row["request_ko"],
+                )
+                nodes = pack["moe_grammar"]["selected_nodes"]
+                self.assertEqual(
+                    len(row["expected_element_ids"]),
+                    len(pack["moe_grammar"]["visual_bindings"]),
+                )
+                self.assertEqual(
+                    1, sum(node["selected_role"] == "primary" for node in nodes)
+                )
+                self.assertLessEqual(len(nodes), 3)
+                audit = audit_moe_candidate_pack(
+                    pack,
+                    composed,
+                    legacy_assets=self.legacy,
+                    grammar_assets=self.grammar,
+                )
+                self.assertEqual("pass", audit["status"], audit["failures"])
+
+    def test_negative_confound_is_pixel_review_not_a_lexical_ban(self) -> None:
+        pack, composed = self._build(["moe_mesugaki_provocation"])
+        self.assertIn("rather than a generic smug face", composed["prompt_en"])
+        self.assertIn(
+            "generic smug face",
+            composed["visual_evidence"][0]["negative_visual_confounds_en"],
+        )
+        audit = audit_moe_candidate_pack(
+            pack,
+            composed,
+            legacy_assets=self.legacy,
+            grammar_assets=self.grammar,
+        )
+        self.assertEqual("pass", audit["status"], audit["failures"])
+
+    def test_visual_phrase_contract_and_medium_mutations_fail_closed(self) -> None:
+        pack, composed = self._build(["moe_tsf_transformation"])
+        variant = pack["moe_grammar"]["visual_bindings"][0]["selected_variant"]
+        missing = copy.deepcopy(composed)
+        required_phrase = variant["topology_edges_en"][0]
+        missing["prompt_en"] = missing["prompt_en"].replace(
+            required_phrase, "generic transformation framing"
+        )
+        audit = audit_moe_candidate_pack(
+            pack,
+            missing,
+            legacy_assets=self.legacy,
+            grammar_assets=self.grammar,
+        )
+        self.assertEqual("fail", audit["status"])
+        self.assertIn(
+            "visual_requirement", {failure["check"] for failure in audit["failures"]}
+        )
+
+        with self.assertRaisesRegex(MoeElementError, "cannot carry"):
+            self._build(
+                ["moe_darkening_corruption"],
+                output_mode="single_frame",
+            )
+
+        forged = copy.deepcopy(pack)
+        forged["semantic_contract"]["image_search_evidence_sha256"] = "0" * 64
+        self._rehash_pack(forged)
+        forged_composed = compose_moe_prompt_draft(forged, self.foundation)
+        audit = audit_moe_candidate_pack(
+            forged,
+            forged_composed,
+            legacy_assets=self.legacy,
+            grammar_assets=self.grammar,
+        )
+        self.assertEqual("fail", audit["status"])
+        self.assertIn(
+            "visual_meaning_bindings",
+            {failure["check"] for failure in audit["failures"]},
         )
 
 

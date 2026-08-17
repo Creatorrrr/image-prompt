@@ -1,5 +1,7 @@
 # 29개 모에요소 의미 계약 v3 개선·구현 계획
 
+> 역사 기록: 이 문서는 v3/v5 구현 시점의 계획과 결과를 보존한다. 현재 기본 경로와 시각 의미 확장은 `2026-08-18-moe-visual-meaning-v4-implementation.md`를 따른다.
+
 작성일: 2026-08-17
 대상: `subculture-illustration-image-generator`의 명시적 모에요소 경로
 

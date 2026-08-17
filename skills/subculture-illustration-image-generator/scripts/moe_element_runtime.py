@@ -4,7 +4,8 @@
 This module is deliberately additive. It does not alter the historical v1-v3
 base pack, safety metadata, negative prompt, retry policy, or universal selector.
 A caller explicitly names one to three element IDs or reviewed aliases. The
-default v3 path emits a meaning-aware v5 wrapper; explicit v2 replays v4.
+default v4 path emits a visual-meaning-aware v6 wrapper; explicit v3/v2 replay
+the historical v5/v4 wrappers.
 """
 
 from __future__ import annotations
@@ -26,6 +27,18 @@ from moe_meaning_contract import (
     load_meaning_contracts,
     runtime_label_present,
 )
+from moe_visual_contract import (
+    ACTIVATING_ALIAS_RELATIONS,
+    IMAGE_EVIDENCE_FILENAME,
+    IMAGE_EVIDENCE_SCHEMA,
+    VISUAL_MEANING_FILENAME,
+    VISUAL_MEANING_SCHEMA,
+    MoeVisualContractError,
+    MoeVisualMeaningContracts,
+    load_visual_meaning_contracts,
+    normalize_alias,
+    visual_contract_sha256,
+)
 
 
 ASSET_SCHEMA = "subculture-illustration-moe-elements/v1"
@@ -34,12 +47,16 @@ PLAN_SCHEMA = "subculture-illustration-moe-element-plan/v1"
 AUDIT_SCHEMA = "subculture-illustration-moe-element-audit/v1"
 GRAMMAR_SCHEMA_V2 = "subculture-illustration-moe-grammar/v2"
 GRAMMAR_SCHEMA = "subculture-illustration-moe-grammar/v3"
+GRAMMAR_SCHEMA_V4 = "subculture-illustration-moe-grammar/v4"
 PACK_SCHEMA_V4 = "subculture-illustration-candidate-pack/v4"
 PACK_SCHEMA = "subculture-illustration-candidate-pack/v5"
+PACK_SCHEMA_V6 = "subculture-illustration-candidate-pack/v6"
 COMPOSED_SCHEMA_V2 = "subculture-illustration-moe-composed-prompt/v2"
 COMPOSED_SCHEMA = "subculture-illustration-moe-composed-prompt/v3"
+COMPOSED_SCHEMA_V4 = "subculture-illustration-moe-composed-prompt/v4"
 PACK_AUDIT_SCHEMA_V2 = "subculture-illustration-moe-candidate-pack-audit/v2"
 PACK_AUDIT_SCHEMA = "subculture-illustration-moe-candidate-pack-audit/v3"
+PACK_AUDIT_SCHEMA_V4 = "subculture-illustration-moe-candidate-pack-audit/v4"
 MAX_SELECTED_ELEMENTS = 3
 REPRESENTATION_MODES = {
     "single_frame",
@@ -95,6 +112,7 @@ class MoeGrammarAssets:
     compatibility: dict[str, Any]
     compatibility_sha256: str
     version: str
+    visual_contracts: MoeVisualMeaningContracts | None
 
 
 def default_asset_dir() -> Path:
@@ -365,6 +383,83 @@ def resolve_element_tokens(
     return selected
 
 
+def _resolve_visual_element_bindings(
+    requested_tokens: Sequence[str],
+    *,
+    legacy: MoeElementAssets,
+    grammar: MoeGrammarAssets,
+) -> list[dict[str, Any]]:
+    """Resolve v4 tokens without treating every related search term as identity."""
+
+    if grammar.version != "v4" or grammar.visual_contracts is None:
+        raise MoeElementError("typed visual alias resolution requires the v4 grammar")
+    if isinstance(requested_tokens, (str, bytes, bytearray)) or not isinstance(
+        requested_tokens, Sequence
+    ):
+        raise MoeElementError("requested_tokens must be an array")
+    if len(requested_tokens) > MAX_SELECTED_ELEMENTS:
+        raise MoeElementError(
+            f"at most {MAX_SELECTED_ELEMENTS} moe elements may be selected"
+        )
+
+    canonical_ids: dict[str, str] = {}
+    canonical_labels: dict[str, str] = {}
+    for element_id, record in legacy.records_by_id.items():
+        canonical_ids[normalize_alias(element_id)] = element_id
+        for token in (record["label_ko"], record["label_en"]):
+            canonical_labels[normalize_alias(str(token))] = element_id
+
+    bindings: list[dict[str, Any]] = []
+    selected_ids: list[str] = []
+    for index, token in enumerate(requested_tokens):
+        if not isinstance(token, str) or not token.strip():
+            raise MoeElementError(f"requested token {index} must be a nonempty string")
+        normalized = normalize_alias(token)
+        element_id = canonical_ids.get(normalized)
+        relation = "canonical"
+        variant_id = None
+        if element_id is None:
+            alias_binding = grammar.visual_contracts.alias_bindings.get(normalized)
+            if alias_binding is not None:
+                relation = str(alias_binding["relation"])
+                element_id = str(alias_binding["element_id"])
+                variant_id = alias_binding["variant_id"]
+                if relation not in ACTIVATING_ALIAS_RELATIONS:
+                    raise MoeElementError(
+                        f"related-only keyword {token!r} does not uniquely name "
+                        f"{element_id}; use its canonical ID or an exact, variant, "
+                        "or carrier alias"
+                    )
+            else:
+                element_id = canonical_labels.get(normalized)
+            if element_id is None:
+                raise MoeElementError(
+                    f"unknown moe element or reviewed alias: {token!r}"
+                )
+        if element_id in selected_ids:
+            raise MoeElementError(f"duplicate moe element selection: {element_id}")
+        selected_ids.append(element_id)
+        bindings.append(
+            {
+                "requested_token": token,
+                "element_id": element_id,
+                "alias_relation": relation,
+                "requested_variant_id": variant_id,
+            }
+        )
+
+    selected_set = set(selected_ids)
+    for element_id in selected_ids:
+        conflicts = selected_set.intersection(
+            legacy.records_by_id[element_id]["incompatible_with"]
+        )
+        if conflicts:
+            raise MoeElementError(
+                f"incompatible moe elements: {element_id} / {sorted(conflicts)[0]}"
+            )
+    return bindings
+
+
 def _required_output_modes(records: Sequence[Mapping[str, Any]]) -> list[str]:
     modes = {str(record["representation_mode"]) for record in records}
     if (
@@ -610,20 +705,24 @@ def load_moe_grammar_assets(
     asset_dir: str | Path | None = None,
     *,
     legacy_assets: MoeElementAssets | None = None,
-    grammar_version: str = "v3",
+    grammar_version: str = "v4",
 ) -> MoeGrammarAssets:
-    """Load the current v3 meaning grammar or explicit historical v2 replay.
+    """Load current v4 visual meaning or explicit historical v3/v2 replay.
 
     The v1 inventory stays byte-stable and remains the authority for explicit
-    element IDs and aliases. V3 adds canonical/runtime meaning contracts while
-    v2 remains available only through an explicit version argument.
+    element IDs. V4 types aliases and visual variants, v3 adds canonical/runtime
+    meaning contracts, and v2 remains available only through explicit replay.
     """
 
     root = Path(asset_dir).expanduser().resolve() if asset_dir else default_asset_dir()
     legacy = legacy_assets or load_moe_element_assets(root)
-    if grammar_version not in {"v2", "v3"}:
-        raise MoeElementError("grammar_version must be v2 or v3")
-    grammar_schema = GRAMMAR_SCHEMA if grammar_version == "v3" else GRAMMAR_SCHEMA_V2
+    if grammar_version not in {"v2", "v3", "v4"}:
+        raise MoeElementError("grammar_version must be v2, v3, or v4")
+    grammar_schema = {
+        "v2": GRAMMAR_SCHEMA_V2,
+        "v3": GRAMMAR_SCHEMA,
+        "v4": GRAMMAR_SCHEMA_V4,
+    }[grammar_version]
     payload, grammar_sha = _load_json(
         root / f"illustration_moe_grammar_{grammar_version}.json"
     )
@@ -646,8 +745,18 @@ def load_moe_grammar_assets(
         "compatibility_rules",
         "elements",
     }
-    if grammar_version == "v3":
+    if grammar_version in {"v3", "v4"}:
         grammar_keys.update({"meaning_contract_schema", "meaning_contracts_sha256"})
+    if grammar_version == "v4":
+        grammar_keys.update(
+            {
+                "base_grammar_v3_sha256",
+                "visual_meaning_contract_schema",
+                "visual_meaning_contracts_sha256",
+                "image_search_evidence_schema",
+                "image_search_evidence_sha256",
+            }
+        )
     top = _exact_keys(
         payload,
         grammar_keys,
@@ -655,8 +764,32 @@ def load_moe_grammar_assets(
     )
     if top["schema"] != grammar_schema:
         raise MoeElementError("moe grammar schema mismatch")
+    if grammar_version == "v4":
+        base_v3, base_v3_sha = _load_json(root / "illustration_moe_grammar_v3.json")
+        if base_v3.get("schema") != GRAMMAR_SCHEMA:
+            raise MoeElementError("v4 base grammar schema mismatch")
+        if top["base_grammar_v3_sha256"] != base_v3_sha:
+            raise MoeElementError("v4 base grammar hash mismatch")
+        base_projection = copy.deepcopy(payload)
+        for field in (
+            "base_grammar_v3_sha256",
+            "visual_meaning_contract_schema",
+            "visual_meaning_contracts_sha256",
+            "image_search_evidence_schema",
+            "image_search_evidence_sha256",
+        ):
+            base_projection.pop(field)
+        base_projection["schema"] = GRAMMAR_SCHEMA
+        base_projection["created_at"] = base_v3.get("created_at")
+        for element in base_projection.get("elements", []):
+            if isinstance(element, dict):
+                element.pop("visual_meaning_contract", None)
+                element.pop("visual_meaning_contract_sha256", None)
+        if canonical_json_bytes(base_projection) != canonical_json_bytes(base_v3):
+            raise MoeElementError("v4 base grammar projection drift")
     meaning_assets = None
-    if grammar_version == "v3":
+    visual_assets = None
+    if grammar_version in {"v3", "v4"}:
         expected_ids = [
             row["id"]
             for row in sorted(
@@ -674,6 +807,43 @@ def load_moe_grammar_assets(
             raise MoeElementError("moe grammar meaning contract schema mismatch")
         if top["meaning_contracts_sha256"] != meaning_assets.sha256:
             raise MoeElementError("moe grammar meaning contract hash mismatch")
+    if grammar_version == "v4":
+        if meaning_assets is None:
+            raise MoeElementError("v4 base meaning contracts were not loaded")
+        try:
+            visual_assets = load_visual_meaning_contracts(
+                root
+                / "research_evidence_moe_elements"
+                / VISUAL_MEANING_FILENAME,
+                evidence_path=(
+                    root
+                    / "research_evidence_moe_elements"
+                    / IMAGE_EVIDENCE_FILENAME
+                ),
+                base_meanings=meaning_assets,
+                expected_element_ids=expected_ids,
+                expected_aliases={
+                    element_id: legacy.records_by_id[element_id]["aliases"]
+                    for element_id in expected_ids
+                },
+                expected_candidate_subtypes={
+                    str(element["id"]): {
+                        str(candidate["subtype_id"])
+                        for candidate in element["candidates"]
+                    }
+                    for element in top["elements"]
+                },
+            )
+        except MoeVisualContractError as exc:
+            raise MoeElementError(str(exc)) from exc
+        if top["visual_meaning_contract_schema"] != VISUAL_MEANING_SCHEMA:
+            raise MoeElementError("moe grammar visual meaning schema mismatch")
+        if top["visual_meaning_contracts_sha256"] != visual_assets.sha256:
+            raise MoeElementError("moe grammar visual meaning hash mismatch")
+        if top["image_search_evidence_schema"] != IMAGE_EVIDENCE_SCHEMA:
+            raise MoeElementError("moe grammar image evidence schema mismatch")
+        if top["image_search_evidence_sha256"] != visual_assets.evidence_sha256:
+            raise MoeElementError("moe grammar image evidence hash mismatch")
     if top["legacy_element_asset_sha256"] != legacy.element_asset_sha256:
         raise MoeElementError("moe grammar legacy element hash mismatch")
     if top["legacy_research_sha256"] != legacy.research_sha256:
@@ -814,8 +984,12 @@ def load_moe_grammar_assets(
         "design_inference",
         "limitations",
     }
-    if grammar_version == "v3":
+    if grammar_version in {"v3", "v4"}:
         element_keys.update({"meaning_contract", "meaning_contract_sha256"})
+    if grammar_version == "v4":
+        element_keys.update(
+            {"visual_meaning_contract", "visual_meaning_contract_sha256"}
+        )
     candidate_keys = {
         "id",
         "label_en",
@@ -870,9 +1044,9 @@ def load_moe_grammar_assets(
         ):
             raise MoeElementError(f"{element_id}.definition_and_history is empty")
         meaning_contract = None
-        if grammar_version == "v3":
+        if grammar_version in {"v3", "v4"}:
             if meaning_assets is None:
-                raise MoeElementError("v3 meaning contracts were not loaded")
+                raise MoeElementError("meaning contracts were not loaded")
             expected_contract = meaning_assets.contracts_by_id[element_id]
             meaning_contract = element["meaning_contract"]
             if canonical_json_bytes(meaning_contract) != canonical_json_bytes(
@@ -886,6 +1060,18 @@ def load_moe_grammar_assets(
                 != expected_contract["canonical_definition_ko"]
             ):
                 raise MoeElementError(f"{element_id}.canonical definition drift")
+        if grammar_version == "v4":
+            if visual_assets is None:
+                raise MoeElementError("v4 visual meaning contracts were not loaded")
+            expected_visual_contract = visual_assets.contracts_by_id[element_id]
+            if canonical_json_bytes(
+                element["visual_meaning_contract"]
+            ) != canonical_json_bytes(expected_visual_contract):
+                raise MoeElementError(f"{element_id}.visual_meaning_contract drift")
+            if element["visual_meaning_contract_sha256"] != visual_contract_sha256(
+                expected_visual_contract
+            ):
+                raise MoeElementError(f"{element_id}.visual meaning contract hash drift")
         _string_list(
             element["observable_or_narrative_evidence"],
             name=f"{element_id}.observable_or_narrative_evidence",
@@ -923,7 +1109,9 @@ def load_moe_grammar_assets(
                     f"{element_id} has duplicate subtype {subtype_id}"
                 )
             subtype_ids.add(subtype_id)
-            if grammar_version == "v3" and subtype_id.startswith("researched_variant_"):
+            if grammar_version in {"v3", "v4"} and subtype_id.startswith(
+                "researched_variant_"
+            ):
                 raise MoeElementError(f"{element_id} retains a placeholder subtype")
             for field in ("label", "distinction"):
                 if not isinstance(subtype[field], str) or not subtype[field].strip():
@@ -1084,7 +1272,7 @@ def load_moe_grammar_assets(
                     name=f"{candidate_id}.support_atoms[{support_index}]",
                     atom_ids=atom_ids,
                 )
-            if grammar_version == "v3" and meaning_contract is not None:
+            if grammar_version in {"v3", "v4"} and meaning_contract is not None:
                 runtime_fragments = [
                     candidate["primary_atom"]["prompt_fragment_en"],
                     *[support["prompt_fragment_en"] for support in support_atoms],
@@ -1200,6 +1388,7 @@ def load_moe_grammar_assets(
         compatibility=compatibility,
         compatibility_sha256=compatibility_sha,
         version=grammar_version,
+        visual_contracts=visual_assets,
     )
 
 
@@ -1224,8 +1413,18 @@ def _select_v2_candidate(
     creativity: float,
     creative_development_required: bool,
     seed: int,
+    allowed_subtype_ids: set[str] | None = None,
 ) -> tuple[dict[str, Any], list[str], str, int]:
-    candidates = list(element["candidates"])
+    candidates = [
+        candidate
+        for candidate in element["candidates"]
+        if allowed_subtype_ids is None
+        or str(candidate["subtype_id"]) in allowed_subtype_ids
+    ]
+    if not candidates:
+        raise MoeElementError(
+            f"{element['id']} has no candidate for the requested visual variant"
+        )
     matched_axis_values: dict[str, set[str]] = {}
     matched_axis_cues: dict[tuple[str, str], list[str]] = {}
     for axis in element["preference_axes"]:
@@ -1365,6 +1564,119 @@ def _bind_required_meaning_components(
     )
 
 
+def _visual_variants_by_id(
+    contract: Mapping[str, Any],
+) -> dict[str, Mapping[str, Any]]:
+    return {str(variant["id"]): variant for variant in contract["visual_variants"]}
+
+
+def _select_visual_variant(
+    contract: Mapping[str, Any],
+    *,
+    candidate_subtype_id: str,
+    requested_variant_id: str | None,
+) -> Mapping[str, Any]:
+    variants = _visual_variants_by_id(contract)
+    if requested_variant_id is not None:
+        variant = variants.get(requested_variant_id)
+        if variant is None:
+            raise MoeElementError(
+                f"{contract['element_id']} references unknown visual variant "
+                f"{requested_variant_id!r}"
+            )
+        if candidate_subtype_id not in variant["candidate_subtype_ids"]:
+            raise MoeElementError(
+                f"{contract['element_id']} candidate subtype {candidate_subtype_id!r} "
+                f"does not belong to visual variant {requested_variant_id!r}"
+            )
+        return variant
+    owners = [
+        variant
+        for variant in variants.values()
+        if candidate_subtype_id in variant["candidate_subtype_ids"]
+    ]
+    if len(owners) != 1:
+        raise MoeElementError(
+            f"{contract['element_id']} candidate subtype {candidate_subtype_id!r} "
+            "must resolve to exactly one visual variant"
+        )
+    return owners[0]
+
+
+def _bind_visual_variant_constraints(
+    prompt_fragment: str,
+    variant: Mapping[str, Any],
+) -> str:
+    """Bind the selected visual signature as literal, auditable prompt facts."""
+
+    required_phrases = [
+        *variant["all_of_en"],
+        *variant["any_of"]["alternatives_en"][: variant["any_of"]["minimum"]],
+        *variant["topology_edges_en"],
+        *variant["camera_requirements_en"],
+        *variant["temporal_states_en"],
+        *variant["interaction_requirements_en"],
+    ]
+    additions = [
+        phrase
+        for phrase in required_phrases
+        if not _normalized_phrase_contains(prompt_fragment, phrase)
+    ]
+    if not additions:
+        return prompt_fragment
+    return (
+        f"{prompt_fragment.rstrip()} Visual proof requirements: "
+        f"{'; '.join(additions)}."
+    )
+
+
+def _visual_allowed_output_modes(
+    base_modes: Sequence[str],
+    variants: Sequence[Mapping[str, Any]],
+) -> list[str]:
+    allowed = list(base_modes)
+    for variant in variants:
+        supported = set(variant["supported_output_modes"])
+        allowed = [mode for mode in allowed if mode in supported]
+    if not allowed:
+        selected = [str(variant["id"]) for variant in variants]
+        raise MoeElementError(
+            "selected visual variants have no shared output mode: "
+            + ", ".join(selected)
+        )
+    return allowed
+
+
+def _visual_evidence_projection(
+    *,
+    element_id: str,
+    contract_sha256_value: str,
+    variant: Mapping[str, Any],
+    image_evidence_id: str,
+) -> dict[str, Any]:
+    return {
+        "element_id": element_id,
+        "contract_sha256": contract_sha256_value,
+        "selected_variant_id": variant["id"],
+        "required_component_group_ids": list(
+            variant["required_component_group_ids"]
+        ),
+        "all_of_en": list(variant["all_of_en"]),
+        "any_of": copy.deepcopy(variant["any_of"]),
+        "topology_edges_en": list(variant["topology_edges_en"]),
+        "camera_requirements_en": list(variant["camera_requirements_en"]),
+        "temporal_states_en": list(variant["temporal_states_en"]),
+        "interaction_requirements_en": list(
+            variant["interaction_requirements_en"]
+        ),
+        "negative_visual_confounds_en": list(
+            variant["negative_visual_confounds_en"]
+        ),
+        "supported_output_modes": list(variant["supported_output_modes"]),
+        "image_evidence_id": image_evidence_id,
+    }
+
+
 def build_moe_candidate_pack(
     base_candidate_pack: Mapping[str, Any],
     requested_tokens: Sequence[str],
@@ -1374,7 +1686,7 @@ def build_moe_candidate_pack(
     legacy_assets: MoeElementAssets | None = None,
     grammar_assets: MoeGrammarAssets | None = None,
 ) -> dict[str, Any]:
-    """Wrap an unchanged base pack with v5 meaning-aware or v4 replay data."""
+    """Wrap an unchanged base pack with v6 visual meaning or historical replay."""
 
     if not isinstance(base_candidate_pack, Mapping):
         raise MoeElementError("base_candidate_pack must be an object")
@@ -1418,11 +1730,37 @@ def build_moe_candidate_pack(
     grammar = grammar_assets or load_moe_grammar_assets(
         legacy_assets=legacy, asset_dir=legacy.asset_dir
     )
-    meaning_aware = grammar.version == "v3"
-    pack_schema = PACK_SCHEMA if meaning_aware else PACK_SCHEMA_V4
-    composed_schema = COMPOSED_SCHEMA if meaning_aware else COMPOSED_SCHEMA_V2
-    selected_legacy = resolve_element_tokens(requested_tokens, assets=legacy)
-    selected_ids = [record["id"] for record in selected_legacy]
+    meaning_aware = grammar.version in {"v3", "v4"}
+    visual_aware = grammar.version == "v4"
+    pack_schema = {
+        "v2": PACK_SCHEMA_V4,
+        "v3": PACK_SCHEMA,
+        "v4": PACK_SCHEMA_V6,
+    }[grammar.version]
+    composed_schema = {
+        "v2": COMPOSED_SCHEMA_V2,
+        "v3": COMPOSED_SCHEMA,
+        "v4": COMPOSED_SCHEMA_V4,
+    }[grammar.version]
+    if visual_aware:
+        token_bindings = _resolve_visual_element_bindings(
+            requested_tokens,
+            legacy=legacy,
+            grammar=grammar,
+        )
+        selected_ids = [str(binding["element_id"]) for binding in token_bindings]
+    else:
+        selected_legacy = resolve_element_tokens(requested_tokens, assets=legacy)
+        selected_ids = [record["id"] for record in selected_legacy]
+        token_bindings = [
+            {
+                "requested_token": token,
+                "element_id": element_id,
+                "alias_relation": "historical_untyped",
+                "requested_variant_id": None,
+            }
+            for token, element_id in zip(requested_tokens, selected_ids, strict=True)
+        ]
     selected_set = set(selected_ids)
     hard_conflicts = {
         tuple(pair) for pair in grammar.payload["compatibility_rules"]["hard_conflicts"]
@@ -1451,18 +1789,48 @@ def build_moe_candidate_pack(
     intent_rows: list[dict[str, Any]] = []
     selected_nodes: list[dict[str, Any]] = []
     selected_meaning_bindings: list[dict[str, Any]] = []
+    selected_visual_bindings: list[dict[str, Any]] = []
+    selected_visual_variants: list[Mapping[str, Any]] = []
     required_moe_ids: list[str] = []
-    for element_index, (token, element_id) in enumerate(
-        zip(requested_tokens, selected_ids, strict=True)
-    ):
+    for element_index, token_binding in enumerate(token_bindings):
+        token = str(token_binding["requested_token"])
+        element_id = str(token_binding["element_id"])
         element = grammar.elements_by_id[element_id]
+        visual_contract = (
+            element["visual_meaning_contract"] if visual_aware else None
+        )
+        requested_variant_id = token_binding["requested_variant_id"]
+        allowed_subtype_ids = None
+        if isinstance(visual_contract, Mapping) and requested_variant_id is not None:
+            requested_variant = _visual_variants_by_id(visual_contract).get(
+                str(requested_variant_id)
+            )
+            if requested_variant is None:
+                raise MoeElementError(
+                    f"{element_id} has no requested visual variant "
+                    f"{requested_variant_id!r}"
+                )
+            allowed_subtype_ids = set(requested_variant["candidate_subtype_ids"])
         candidate, matched_cues, reason, target_novelty = _select_v2_candidate(
             element,
             preference_text=exact_preference_text,
             creativity=creativity_value,
             creative_development_required=creative_development_required,
             seed=seed,
+            allowed_subtype_ids=allowed_subtype_ids,
         )
+        visual_variant = None
+        if isinstance(visual_contract, Mapping):
+            visual_variant = _select_visual_variant(
+                visual_contract,
+                candidate_subtype_id=str(candidate["subtype_id"]),
+                requested_variant_id=(
+                    str(requested_variant_id)
+                    if requested_variant_id is not None
+                    else None
+                ),
+            )
+            selected_visual_variants.append(visual_variant)
         ranked_supports = sorted(
             candidate["support_atoms"],
             key=lambda atom: _stable_rank(
@@ -1484,6 +1852,11 @@ def build_moe_candidate_pack(
             primary_prompt_fragment = _bind_required_meaning_components(
                 primary_prompt_fragment,
                 meaning_contract,
+            )
+        if isinstance(visual_variant, Mapping):
+            primary_prompt_fragment = _bind_visual_variant_constraints(
+                primary_prompt_fragment,
+                visual_variant,
             )
         exposed_ids = [
             f"moe:{candidate['id']}",
@@ -1545,19 +1918,50 @@ def build_moe_candidate_pack(
                     "contract": copy.deepcopy(meaning_contract),
                 }
             )
+        if visual_aware and isinstance(visual_contract, Mapping) and isinstance(
+            visual_variant, Mapping
+        ):
+            selected_candidate["visual_variant_id"] = visual_variant["id"]
+            selected_candidate["visual_meaning_contract_sha256"] = element[
+                "visual_meaning_contract_sha256"
+            ]
+            selected_visual_bindings.append(
+                {
+                    "element_id": element_id,
+                    "source": "typed_visual_meaning_contract",
+                    "contract_sha256": element[
+                        "visual_meaning_contract_sha256"
+                    ],
+                    "contract": copy.deepcopy(visual_contract),
+                    "selected_variant_id": visual_variant["id"],
+                    "selected_variant": copy.deepcopy(visual_variant),
+                    "image_evidence_id": visual_contract["image_evidence_id"],
+                }
+            )
         selected_candidates.append(selected_candidate)
-        intent_rows.append(
-            {
-                "requested_token": token,
-                "element_id": element_id,
-                "matched_preference_cues": matched_cues,
-                "selected_candidate_id": candidate["id"],
-                "selection_reason": reason,
-                "target_novelty_level": target_novelty,
-            }
-        )
+        intent_row = {
+            "requested_token": token,
+            "element_id": element_id,
+            "matched_preference_cues": matched_cues,
+            "selected_candidate_id": candidate["id"],
+            "selection_reason": reason,
+            "target_novelty_level": target_novelty,
+        }
+        if visual_aware:
+            intent_row["alias_relation"] = token_binding["alias_relation"]
+            intent_row["selected_visual_variant_id"] = (
+                visual_variant["id"]
+                if isinstance(visual_variant, Mapping)
+                else None
+            )
+        intent_rows.append(intent_row)
 
     allowed_modes = _v2_allowed_output_modes(selected_candidates)
+    if visual_aware:
+        allowed_modes = _visual_allowed_output_modes(
+            allowed_modes,
+            selected_visual_variants,
+        )
     resolved_output_mode = allowed_modes[0] if output_mode == "auto" else output_mode
     if output_mode != "auto" and output_mode not in allowed_modes:
         raise MoeElementError(
@@ -1587,9 +1991,11 @@ def build_moe_candidate_pack(
     if len(combined_required_ids) != len(set(combined_required_ids)):
         raise MoeElementError("moe required candidate IDs must remain unique")
 
-    grammar_hash_key = (
-        "moe_grammar_v3_sha256" if meaning_aware else "moe_grammar_v2_sha256"
-    )
+    grammar_hash_key = {
+        "v2": "moe_grammar_v2_sha256",
+        "v3": "moe_grammar_v3_sha256",
+        "v4": "moe_grammar_v4_sha256",
+    }[grammar.version]
     pack: dict[str, Any] = {
         "contract_version": pack_schema,
         "pack_id": None,
@@ -1653,23 +2059,23 @@ def build_moe_candidate_pack(
             "moe_compatibility_v2_sha256": grammar.compatibility_sha256,
         },
         "provenance": {
-            "generator_version": (
-                "subculture-illustration-moe-generator/v3"
-                if meaning_aware
-                else "subculture-illustration-moe-generator/v2"
-            ),
-            "selection_mode": (
-                "canonical_meaning_preference_sparse_bundle_v3"
-                if meaning_aware
-                else "research_preference_sparse_bundle_v2"
-            ),
+            "generator_version": {
+                "v2": "subculture-illustration-moe-generator/v2",
+                "v3": "subculture-illustration-moe-generator/v3",
+                "v4": "subculture-illustration-moe-generator/v4",
+            }[grammar.version],
+            "selection_mode": {
+                "v2": "research_preference_sparse_bundle_v2",
+                "v3": "canonical_meaning_preference_sparse_bundle_v3",
+                "v4": "typed_visual_meaning_sparse_bundle_v4",
+            }[grammar.version],
             "base_pack_id": base_pack["pack_id"],
             "seed": seed,
         },
     }
     if meaning_aware:
         pack["moe_grammar"]["meaning_bindings"] = selected_meaning_bindings
-        pack["semantic_contract"] = {
+        semantic_contract = {
             "schema": "subculture-illustration-moe-semantic-binding/v1",
             "original_request_sha256": hashlib.sha256(
                 request_text.encode("utf-8")
@@ -1678,6 +2084,33 @@ def build_moe_candidate_pack(
             "safety_evaluation_source": "original_request_plus_canonical_meaning",
             "silent_semantic_substitution": "forbidden",
         }
+        if visual_aware:
+            pack["moe_grammar"]["visual_bindings"] = selected_visual_bindings
+            semantic_contract.update(
+                {
+                    "schema": "subculture-illustration-moe-semantic-binding/v2",
+                    "visual_meaning_contracts_sha256": grammar.payload[
+                        "visual_meaning_contracts_sha256"
+                    ],
+                    "image_search_evidence_sha256": grammar.payload[
+                        "image_search_evidence_sha256"
+                    ],
+                    "alias_resolution_policy": (
+                        "typed_exact_variant_carrier_related_v1"
+                    ),
+                }
+            )
+            pack["asset_hashes"].update(
+                {
+                    "moe_visual_meaning_contracts_v2_sha256": grammar.payload[
+                        "visual_meaning_contracts_sha256"
+                    ],
+                    "moe_image_search_evidence_v1_sha256": grammar.payload[
+                        "image_search_evidence_sha256"
+                    ],
+                }
+            )
+        pack["semantic_contract"] = semantic_contract
     pack["pack_id"] = hashlib.sha256(canonical_json_bytes(pack)).hexdigest()[:16]
     return pack
 
@@ -1689,9 +2122,10 @@ def compose_moe_prompt_draft(
     """Create one hierarchy-aware shared-event draft, not a label suffix block."""
 
     pack_schema = pack.get("contract_version")
-    if pack_schema not in {PACK_SCHEMA_V4, PACK_SCHEMA}:
-        raise MoeElementError("compose_moe_prompt_draft requires a v4 or v5 pack")
-    meaning_aware = pack_schema == PACK_SCHEMA
+    if pack_schema not in {PACK_SCHEMA_V4, PACK_SCHEMA, PACK_SCHEMA_V6}:
+        raise MoeElementError("compose_moe_prompt_draft requires a v4, v5, or v6 pack")
+    meaning_aware = pack_schema in {PACK_SCHEMA, PACK_SCHEMA_V6}
+    visual_aware = pack_schema == PACK_SCHEMA_V6
     if not isinstance(base_prompt_en, str) or not base_prompt_en.strip():
         raise MoeElementError("base_prompt_en must be nonempty")
     grammar = pack.get("moe_grammar")
@@ -1749,7 +2183,11 @@ def compose_moe_prompt_draft(
             }
         )
     result = {
-        "schema": COMPOSED_SCHEMA if meaning_aware else COMPOSED_SCHEMA_V2,
+        "schema": {
+            PACK_SCHEMA_V4: COMPOSED_SCHEMA_V2,
+            PACK_SCHEMA: COMPOSED_SCHEMA,
+            PACK_SCHEMA_V6: COMPOSED_SCHEMA_V4,
+        }[pack_schema],
         "pack_id": pack["pack_id"],
         "base_pack_id": composition["base_pack_id"],
         "prompt_en": prompt,
@@ -1767,7 +2205,7 @@ def compose_moe_prompt_draft(
     if meaning_aware:
         bindings = grammar.get("meaning_bindings")
         if not isinstance(bindings, list):
-            raise MoeElementError("v5 pack lacks meaning bindings")
+            raise MoeElementError("meaning-aware pack lacks meaning bindings")
         result["meaning_evidence"] = [
             {
                 "element_id": binding["element_id"],
@@ -1789,6 +2227,19 @@ def compose_moe_prompt_draft(
                     raise MoeElementError(
                         f"runtime prompt leaks forbidden meaning label {label!r}"
                     )
+    if visual_aware:
+        visual_bindings = grammar.get("visual_bindings")
+        if not isinstance(visual_bindings, list):
+            raise MoeElementError("v6 pack lacks visual meaning bindings")
+        result["visual_evidence"] = [
+            _visual_evidence_projection(
+                element_id=str(binding["element_id"]),
+                contract_sha256_value=str(binding["contract_sha256"]),
+                variant=binding["selected_variant"],
+                image_evidence_id=str(binding["image_evidence_id"]),
+            )
+            for binding in visual_bindings
+        ]
     return result
 
 
@@ -1799,24 +2250,35 @@ def audit_moe_candidate_pack(
     legacy_assets: MoeElementAssets | None = None,
     grammar_assets: MoeGrammarAssets | None = None,
 ) -> dict[str, Any]:
-    """Replay selection and bind v5 meaning or explicit historical v4 evidence."""
+    """Replay selection and audit v6 visual meaning or historical v5/v4."""
 
     failures: list[dict[str, Any]] = []
     resolved_grammar_for_audit = grammar_assets
     pack_schema = pack.get("contract_version")
-    meaning_aware = pack_schema == PACK_SCHEMA
-    expected_composed_schema = COMPOSED_SCHEMA if meaning_aware else COMPOSED_SCHEMA_V2
-    expected_audit_schema = PACK_AUDIT_SCHEMA if meaning_aware else PACK_AUDIT_SCHEMA_V2
+    meaning_aware = pack_schema in {PACK_SCHEMA, PACK_SCHEMA_V6}
+    visual_aware = pack_schema == PACK_SCHEMA_V6
+    expected_composed_schema = {
+        PACK_SCHEMA_V4: COMPOSED_SCHEMA_V2,
+        PACK_SCHEMA: COMPOSED_SCHEMA,
+        PACK_SCHEMA_V6: COMPOSED_SCHEMA_V4,
+    }.get(pack_schema, COMPOSED_SCHEMA_V4)
+    expected_audit_schema = {
+        PACK_SCHEMA_V4: PACK_AUDIT_SCHEMA_V2,
+        PACK_SCHEMA: PACK_AUDIT_SCHEMA,
+        PACK_SCHEMA_V6: PACK_AUDIT_SCHEMA_V4,
+    }.get(pack_schema, PACK_AUDIT_SCHEMA_V4)
     supplied_pack_id = pack.get("pack_id")
     replay_id_input = copy.deepcopy(dict(pack))
     replay_id_input["pack_id"] = None
     expected_pack_id = hashlib.sha256(
         canonical_json_bytes(replay_id_input)
     ).hexdigest()[:16]
-    if pack_schema not in {PACK_SCHEMA_V4, PACK_SCHEMA}:
-        failures.append({"check": "schema", "message": "v4/v5 pack schema mismatch"})
+    if pack_schema not in {PACK_SCHEMA_V4, PACK_SCHEMA, PACK_SCHEMA_V6}:
+        failures.append(
+            {"check": "schema", "message": "v4/v5/v6 pack schema mismatch"}
+        )
     if supplied_pack_id != expected_pack_id:
-        failures.append({"check": "pack_id", "message": "v4/v5 pack_id drift"})
+        failures.append({"check": "pack_id", "message": "v4/v5/v6 pack_id drift"})
     base_pack = pack.get("base_candidate_pack")
     request = pack.get("request_contract")
     if not isinstance(base_pack, Mapping) or not isinstance(request, Mapping):
@@ -1834,7 +2296,13 @@ def audit_moe_candidate_pack(
                     if isinstance(embedded_grammar, Mapping)
                     else None
                 )
-                replay_version = "v2" if embedded_schema == GRAMMAR_SCHEMA_V2 else "v3"
+                replay_version = {
+                    GRAMMAR_SCHEMA_V2: "v2",
+                    GRAMMAR_SCHEMA: "v3",
+                    GRAMMAR_SCHEMA_V4: "v4",
+                }.get(embedded_schema)
+                if replay_version is None:
+                    raise MoeElementError("embedded moe grammar schema mismatch")
                 resolved_grammar = load_moe_grammar_assets(
                     resolved_legacy.asset_dir,
                     legacy_assets=resolved_legacy,
@@ -1851,7 +2319,7 @@ def audit_moe_candidate_pack(
             )
             if canonical_json_bytes(replayed) != canonical_json_bytes(dict(pack)):
                 failures.append(
-                    {"check": "replay", "message": "v4/v5 selection replay drift"}
+                    {"check": "replay", "message": "v4/v5/v6 selection replay drift"}
                 )
         except (MoeElementError, TypeError, ValueError) as exc:
             failures.append({"check": "replay", "message": str(exc)})
@@ -1971,6 +2439,14 @@ def audit_moe_candidate_pack(
             "safety_evaluation_source",
             "silent_semantic_substitution",
         }
+        if visual_aware:
+            expected_semantic_keys.update(
+                {
+                    "visual_meaning_contracts_sha256",
+                    "image_search_evidence_sha256",
+                    "alias_resolution_policy",
+                }
+            )
         if (
             not isinstance(semantic_contract, Mapping)
             or set(semantic_contract) != expected_semantic_keys
@@ -1978,7 +2454,7 @@ def audit_moe_candidate_pack(
             failures.append(
                 {
                     "check": "semantic_contract",
-                    "message": "v5 semantic contract is missing or structurally changed",
+                    "message": "meaning semantic contract is missing or structurally changed",
                 }
             )
             semantic_contract = {}
@@ -1990,9 +2466,12 @@ def audit_moe_candidate_pack(
             if isinstance(request_text, str)
             else None
         )
-        if semantic_contract.get("schema") != (
-            "subculture-illustration-moe-semantic-binding/v1"
-        ):
+        expected_semantic_schema = (
+            "subculture-illustration-moe-semantic-binding/v2"
+            if visual_aware
+            else "subculture-illustration-moe-semantic-binding/v1"
+        )
+        if semantic_contract.get("schema") != expected_semantic_schema:
             failures.append(
                 {"check": "semantic_contract", "message": "semantic schema drift"}
             )
@@ -2061,14 +2540,18 @@ def audit_moe_candidate_pack(
             bindings = []
 
         canonical_contract_rows: list[dict[str, Any]] = []
+        expected_grammar_version = "v4" if visual_aware else "v3"
         if (
             resolved_grammar_for_audit is None
-            or resolved_grammar_for_audit.version != "v3"
+            or resolved_grammar_for_audit.version != expected_grammar_version
         ):
             failures.append(
                 {
                     "check": "meaning_bindings",
-                    "message": "v5 audit requires the validated v3 meaning grammar",
+                    "message": (
+                        f"audit requires the validated {expected_grammar_version} "
+                        "meaning grammar"
+                    ),
                 }
             )
         else:
@@ -2085,6 +2568,42 @@ def audit_moe_candidate_pack(
                         "message": "meaning-contract asset hash drift",
                     }
                 )
+            if visual_aware:
+                expected_visual_sha = resolved_grammar_for_audit.payload.get(
+                    "visual_meaning_contracts_sha256"
+                )
+                expected_image_evidence_sha = resolved_grammar_for_audit.payload.get(
+                    "image_search_evidence_sha256"
+                )
+                if (
+                    semantic_contract.get("visual_meaning_contracts_sha256")
+                    != expected_visual_sha
+                ):
+                    failures.append(
+                        {
+                            "check": "visual_meaning_bindings",
+                            "message": "visual-meaning contract asset hash drift",
+                        }
+                    )
+                if (
+                    semantic_contract.get("image_search_evidence_sha256")
+                    != expected_image_evidence_sha
+                ):
+                    failures.append(
+                        {
+                            "check": "visual_meaning_bindings",
+                            "message": "image-search evidence asset hash drift",
+                        }
+                    )
+                if semantic_contract.get("alias_resolution_policy") != (
+                    "typed_exact_variant_carrier_related_v1"
+                ):
+                    failures.append(
+                        {
+                            "check": "visual_alias_policy",
+                            "message": "typed visual alias policy drift",
+                        }
+                    )
             for candidate in selected_candidates:
                 if not isinstance(candidate, Mapping):
                     failures.append(
@@ -2246,6 +2765,209 @@ def audit_moe_candidate_pack(
                         "message": f"{element_id} requires an explicitly adult subject",
                     }
                 )
+        if visual_aware:
+            visual_bindings = (
+                grammar.get("visual_bindings")
+                if isinstance(grammar, Mapping)
+                else None
+            )
+            if (
+                not isinstance(visual_bindings, list)
+                or len(visual_bindings) != len(selected_ids)
+                or any(not isinstance(binding, Mapping) for binding in visual_bindings)
+                or [
+                    binding.get("element_id")
+                    for binding in visual_bindings
+                    if isinstance(binding, Mapping)
+                ]
+                != selected_ids
+            ):
+                failures.append(
+                    {
+                        "check": "visual_meaning_bindings",
+                        "message": (
+                            "visual meaning bindings do not match selected element order"
+                        ),
+                    }
+                )
+                visual_bindings = []
+
+            expected_visual_evidence: list[dict[str, Any]] = []
+            if (
+                resolved_grammar_for_audit is not None
+                and resolved_grammar_for_audit.version == "v4"
+            ):
+                expected_asset_hashes = {
+                    "moe_visual_meaning_contracts_v2_sha256": (
+                        resolved_grammar_for_audit.payload.get(
+                            "visual_meaning_contracts_sha256"
+                        )
+                    ),
+                    "moe_image_search_evidence_v1_sha256": (
+                        resolved_grammar_for_audit.payload.get(
+                            "image_search_evidence_sha256"
+                        )
+                    ),
+                }
+                asset_hashes = pack.get("asset_hashes")
+                for key, expected_hash in expected_asset_hashes.items():
+                    if (
+                        not isinstance(asset_hashes, Mapping)
+                        or asset_hashes.get(key) != expected_hash
+                    ):
+                        failures.append(
+                            {
+                                "check": "visual_asset_hashes",
+                                "message": f"{key} drift",
+                            }
+                        )
+
+                for index, candidate in enumerate(selected_candidates):
+                    if not isinstance(candidate, Mapping):
+                        continue
+                    element_id = str(candidate.get("element_id"))
+                    expected_element = resolved_grammar_for_audit.elements_by_id.get(
+                        element_id
+                    )
+                    if expected_element is None:
+                        continue
+                    contract = expected_element["visual_meaning_contract"]
+                    contract_hash = expected_element[
+                        "visual_meaning_contract_sha256"
+                    ]
+                    variant_id = candidate.get("visual_variant_id")
+                    variant = _visual_variants_by_id(contract).get(str(variant_id))
+                    if variant is None:
+                        failures.append(
+                            {
+                                "check": "visual_variant",
+                                "element_id": element_id,
+                                "message": "selected visual variant is unknown",
+                            }
+                        )
+                        continue
+                    if candidate.get("subtype_id") not in variant[
+                        "candidate_subtype_ids"
+                    ]:
+                        failures.append(
+                            {
+                                "check": "visual_variant",
+                                "element_id": element_id,
+                                "message": (
+                                    "candidate subtype belongs to a different visual "
+                                    "variant"
+                                ),
+                            }
+                        )
+                    if (
+                        candidate.get("visual_meaning_contract_sha256")
+                        != contract_hash
+                    ):
+                        failures.append(
+                            {
+                                "check": "visual_meaning_bindings",
+                                "element_id": element_id,
+                                "message": "selected candidate visual contract hash drift",
+                            }
+                        )
+
+                    expected_binding = {
+                        "element_id": element_id,
+                        "source": "typed_visual_meaning_contract",
+                        "contract_sha256": contract_hash,
+                        "contract": contract,
+                        "selected_variant_id": variant["id"],
+                        "selected_variant": variant,
+                        "image_evidence_id": contract["image_evidence_id"],
+                    }
+                    if index >= len(visual_bindings) or canonical_json_bytes(
+                        visual_bindings[index]
+                    ) != canonical_json_bytes(expected_binding):
+                        failures.append(
+                            {
+                                "check": "visual_meaning_bindings",
+                                "element_id": element_id,
+                                "message": "visual meaning binding drift",
+                            }
+                        )
+
+                    expected_visual_evidence.append(
+                        _visual_evidence_projection(
+                            element_id=element_id,
+                            contract_sha256_value=str(contract_hash),
+                            variant=variant,
+                            image_evidence_id=str(contract["image_evidence_id"]),
+                        )
+                    )
+
+                    required_fields = (
+                        "all_of_en",
+                        "topology_edges_en",
+                        "camera_requirements_en",
+                        "temporal_states_en",
+                        "interaction_requirements_en",
+                    )
+                    for field in required_fields:
+                        for phrase in variant[field]:
+                            if not _normalized_phrase_contains(prompt_en, phrase):
+                                failures.append(
+                                    {
+                                        "check": "visual_requirement",
+                                        "element_id": element_id,
+                                        "variant_id": variant["id"],
+                                        "field": field,
+                                        "message": (
+                                            "required visual phrase is absent from prompt"
+                                        ),
+                                    }
+                                )
+                    any_of = variant["any_of"]
+                    any_matches = [
+                        phrase
+                        for phrase in any_of["alternatives_en"]
+                        if _normalized_phrase_contains(prompt_en, phrase)
+                    ]
+                    if len(any_matches) < any_of["minimum"]:
+                        failures.append(
+                            {
+                                "check": "visual_any_of",
+                                "element_id": element_id,
+                                "variant_id": variant["id"],
+                                "message": "visual alternative minimum is not met",
+                            }
+                        )
+                    if resolved_mode not in variant["supported_output_modes"]:
+                        failures.append(
+                            {
+                                "check": "visual_output_mode",
+                                "element_id": element_id,
+                                "variant_id": variant["id"],
+                                "message": (
+                                    "resolved output mode cannot prove this visual variant"
+                                ),
+                            }
+                        )
+
+            if composed.get("visual_evidence") != expected_visual_evidence:
+                failures.append(
+                    {
+                        "check": "visual_evidence",
+                        "message": "composed visual evidence projection drift",
+                    }
+                )
+            intent_rows = pack.get("moe_intent")
+            if not isinstance(intent_rows, list) or any(
+                not isinstance(row, Mapping)
+                or row.get("alias_relation")
+                not in {"canonical", *ACTIVATING_ALIAS_RELATIONS}
+                for row in intent_rows
+            ):
+                failures.append(
+                    {
+                        "check": "visual_alias_policy",
+                        "message": "non-activating or untyped visual alias reached v6",
+                    }
+                )
     if isinstance(base_pack, Mapping):
         if pack.get("safety") != base_pack.get("safety"):
             failures.append(
@@ -2278,8 +3000,10 @@ __all__ = [
     "AUDIT_SCHEMA",
     "COMPOSED_SCHEMA",
     "COMPOSED_SCHEMA_V2",
+    "COMPOSED_SCHEMA_V4",
     "GRAMMAR_SCHEMA",
     "GRAMMAR_SCHEMA_V2",
+    "GRAMMAR_SCHEMA_V4",
     "MAX_SELECTED_ELEMENTS",
     "MoeGrammarAssets",
     "MoeElementAssets",
@@ -2287,8 +3011,10 @@ __all__ = [
     "PLAN_SCHEMA",
     "PACK_AUDIT_SCHEMA",
     "PACK_AUDIT_SCHEMA_V2",
+    "PACK_AUDIT_SCHEMA_V4",
     "PACK_SCHEMA",
     "PACK_SCHEMA_V4",
+    "PACK_SCHEMA_V6",
     "RESEARCH_SCHEMA",
     "audit_moe_element_prompt",
     "audit_moe_candidate_pack",
