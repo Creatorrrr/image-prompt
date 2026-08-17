@@ -6265,29 +6265,26 @@ def _canonical_photo_pack_id(pack: Mapping[str, Any]) -> str:
     return hashlib.sha256(canonical_json_bytes(hashable)).hexdigest()[:16]
 
 
-def _selected_photo_ids(pack: Mapping[str, Any]) -> list[str]:
+def _public_photo_candidate_count(pack: Mapping[str, Any]) -> int:
     presets = pack.get("presets")
     slots = pack.get("slots")
     _require(
         isinstance(presets, list) and isinstance(slots, dict),
         "photo baseline pack shape mismatch",
     )
-    selected = [
-        str(item["id"])
-        for item in presets
-        if isinstance(item, dict) and item.get("selected_by_sampler") is True
-    ]
-    selected.extend(
-        str(slot["selected"]) for slot in slots.values() if isinstance(slot, dict)
+    return len(presets) + sum(
+        len(slot["candidates"])
+        for slot in slots.values()
+        if isinstance(slot, dict) and isinstance(slot.get("candidates"), list)
     )
-    return selected
 
 
 def validate_photo_regression_baseline(asset_dir: Path) -> dict[str, Any]:
     """Validate immutable photo history plus the current sibling boundary."""
 
     historical_path = asset_dir / "photo_regression_baseline_v1.json"
-    baseline_path = asset_dir / "photo_regression_baseline_v2.json"
+    prior_path = asset_dir / "photo_regression_baseline_v2.json"
+    baseline_path = asset_dir / "photo_regression_baseline_v3.json"
     universal_baseline = _load_json(asset_dir / "universal_scene_baseline_v1.json")
     photo_boundary = universal_baseline.get("photo_boundary")
     _require(
@@ -6306,15 +6303,26 @@ def validate_photo_regression_baseline(asset_dir: Path) -> dict[str, Any]:
         and historical.get("pack_id") == photo_boundary.get("expected_pack_id"),
         "historical photo baseline contract drift",
     )
-    baseline = _load_json(baseline_path)
+    prior = _load_json(prior_path)
     _require(
-        baseline.get("schema") == "photo_regression_baseline/v2"
-        and baseline.get("status") == "current"
-        and baseline.get("historical_baseline")
+        prior.get("schema") == "photo_regression_baseline/v2"
+        and prior.get("historical_baseline")
         == {
             "path": historical_path.name,
             "schema": "photo_regression_baseline/v1",
             "sha256": _sha256(historical_path),
+        },
+        "prior photo baseline lineage mismatch",
+    )
+    baseline = _load_json(baseline_path)
+    _require(
+        baseline.get("schema") == "photo_regression_baseline/v3"
+        and baseline.get("status") == "current"
+        and baseline.get("historical_baseline")
+        == {
+            "path": prior_path.name,
+            "schema": "photo_regression_baseline/v2",
+            "sha256": _sha256(prior_path),
         },
         "current photo baseline lineage mismatch",
     )
@@ -6324,8 +6332,12 @@ def validate_photo_regression_baseline(asset_dir: Path) -> dict[str, Any]:
         "photo baseline command invalid",
     )
     _require(command.count("--output-file") == 1, "photo baseline output flag mismatch")
+    _require(
+        command.count("--candidate-pack-version") == 1
+        and command[command.index("--candidate-pack-version") + 1] == "v4",
+        "photo baseline candidate-pack version must be explicitly pinned to v4",
+    )
     output_index = command.index("--output-file") + 1
-    frozen_output = command[output_index]
     repo_root = Path(__file__).resolve().parents[3]
     with tempfile.TemporaryDirectory(prefix="illustration-photo-boundary-") as temp_dir:
         temporary_output = Path(temp_dir) / "photo-candidate-pack.json"
@@ -6347,7 +6359,8 @@ def validate_photo_regression_baseline(asset_dir: Path) -> dict[str, Any]:
             completed.returncode == 0,
             f"photo baseline command failed: {completed.stderr or completed.stdout}",
         )
-        payload = _load_json(temporary_output)
+        raw = temporary_output.read_bytes()
+        payload = json.loads(raw)
     _require(
         isinstance(payload, list)
         and len(payload) == 1
@@ -6357,35 +6370,37 @@ def validate_photo_regression_baseline(asset_dir: Path) -> dict[str, Any]:
     pack = payload[0]
     provenance = pack.get("provenance")
     _require(
-        isinstance(provenance, dict) and isinstance(provenance.get("argv"), list),
-        "photo baseline provenance missing",
+        isinstance(provenance, dict)
+        and provenance.get("private_routing_exposed") is False,
+        "photo baseline public provenance contract missing",
     )
-    emitted_argv = provenance["argv"]
+    private_fields = baseline.get("private_fields_absent")
     _require(
-        emitted_argv.count("--output-file") == 1, "photo baseline emitted argv invalid"
+        isinstance(private_fields, list)
+        and private_fields
+        and all(isinstance(field, str) and field for field in private_fields)
+        and provenance.get("omitted_private_fields") == private_fields
+        and not (set(private_fields) & set(provenance)),
+        "photo baseline leaked or misdeclared private provenance",
     )
-    emitted_index = emitted_argv.index("--output-file") + 1
-    emitted_argv[emitted_index] = frozen_output
-    pack["pack_id"] = _canonical_photo_pack_id(pack)
-    normalized_bytes = (
-        json.dumps(payload, ensure_ascii=False, indent=2) + "\n"
-    ).encode("utf-8")
-    digest = hashlib.sha256(normalized_bytes).hexdigest()
+    digest = hashlib.sha256(raw).hexdigest()
     _require(
         digest == baseline.get("sha256"),
         "current photo baseline candidate-pack bytes drift",
     )
     _require(
-        pack.get("pack_id") == baseline.get("pack_id"),
+        pack.get("pack_id")
+        == _canonical_photo_pack_id(pack)
+        == baseline.get("pack_id"),
         "current photo baseline pack ID drift",
     )
     _require(
-        provenance.get("sample_prompt_id") == baseline.get("sample_prompt_id"),
-        "photo baseline sample ID drift",
+        pack.get("contract_version") == baseline.get("contract_version"),
+        "photo baseline contract version drift",
     )
     _require(
-        _selected_photo_ids(pack) == baseline.get("selected_ids"),
-        "photo baseline selected IDs drift",
+        _public_photo_candidate_count(pack) == baseline.get("public_candidate_count"),
+        "photo baseline public candidate count drift",
     )
     _require(
         pack.get("negative_en") == baseline.get("negative_en"),
@@ -6908,6 +6923,148 @@ def _validate_contract_effect_profiles(
     return profiles
 
 
+def _validate_universal_composition_literal_carriers(
+    semantic_asset: Mapping[str, Any],
+    contracts_by_case: Mapping[str, Mapping[str, Any]],
+) -> dict[str, int]:
+    """Prove explicit English carriers exactly cover the canonical target set."""
+
+    profile_set = semantic_asset.get("composition_literal_carrier_profiles")
+    _require(
+        isinstance(profile_set, Mapping)
+        and list(profile_set) == ["identity_core", "fixed_slots", "event_roles"],
+        "universal composition literal-carrier section mismatch",
+    )
+    section_fields = {
+        "identity_core": ["fact_id", "polarity", "required_lexeme_groups"],
+        "fixed_slots": ["slot_id", "value_id", "required_lexeme_groups"],
+        "event_roles": ["role_id", "value_id", "required_lexeme_groups"],
+    }
+    key_fields = {
+        "identity_core": ("fact_id", "polarity"),
+        "fixed_slots": ("slot_id", "value_id"),
+        "event_roles": ("role_id", "value_id"),
+    }
+    internal_tokens = {
+        "atom",
+        "candidate",
+        "cbg",
+        "dpa",
+        "ecs",
+        "facet",
+        "gha",
+        "global",
+        "id",
+        "ofm",
+        "predicate",
+        "profile",
+        "sdc",
+        "sptg",
+        "uao",
+        "ubp",
+        "ugf",
+        "usc",
+        "ush",
+        "usl",
+    }
+    actual: dict[str, set[tuple[str, ...]]] = {
+        section: set() for section in section_fields
+    }
+    for section, fields in section_fields.items():
+        records = profile_set.get(section) if isinstance(profile_set, Mapping) else None
+        _require(
+            isinstance(records, list) and records,
+            f"universal composition carrier {section} must be a nonempty list",
+        )
+        for index, profile in enumerate(records):
+            _require(
+                isinstance(profile, Mapping) and list(profile) == fields,
+                f"universal composition carrier shape/order drift: {section}[{index}]",
+            )
+            key = tuple(str(profile.get(field, "")) for field in key_fields[section])
+            _require(
+                all(key) and key not in actual[section],
+                f"universal composition carrier key is empty or duplicated: {section}/{key}",
+            )
+            if section == "identity_core":
+                _require(
+                    key[1] in {"asserted_presence", "forbidden"},
+                    f"universal composition carrier polarity drift: {key}",
+                )
+            groups = profile.get("required_lexeme_groups")
+            _require(
+                isinstance(groups, list)
+                and 1 <= len(groups) <= (3 if section == "identity_core" else 2),
+                f"universal composition carrier group bound drift: {section}/{key}",
+            )
+            seen_groups: set[tuple[str, ...]] = set()
+            for group in groups:
+                normalized_group = tuple(str(item) for item in group) if isinstance(group, list) else ()
+                _require(
+                    bool(normalized_group)
+                    and normalized_group not in seen_groups
+                    and len(normalized_group) == len(set(normalized_group))
+                    and all(
+                        re.fullmatch(r"[a-z0-9]+(?: [a-z0-9]+)*", alternative)
+                        is not None
+                        and alternative == normalize_text(alternative)
+                        and not (set(alternative.split()) & internal_tokens)
+                        for alternative in normalized_group
+                    ),
+                    f"universal composition carrier must be normalized reviewed English: {section}/{key}",
+                )
+                seen_groups.add(normalized_group)
+            actual[section].add(key)
+
+    expected: dict[str, set[tuple[str, ...]]] = {
+        section: set() for section in section_fields
+    }
+    for contract in contracts_by_case.values():
+        identity = contract["identity_core"]
+        for entity in identity["entities"]:
+            expected["identity_core"].update(
+                (str(fact["id"]), "asserted_presence")
+                for fact in entity["feature_facts"]
+            )
+        expected["identity_core"].update(
+            (str(fact["id"]), "asserted_presence")
+            for fact in identity["scene_facts"]
+        )
+        expected["identity_core"].update(
+            (str(fact["id"]), "forbidden")
+            for fact in identity["forbidden_facts"]
+        )
+        for slot in contract["slot_states"]:
+            if slot["state"] == "fixed":
+                expected["fixed_slots"].update(
+                    (str(slot["slot_id"]), str(binding["value_id"]))
+                    for binding in slot["value_phrase_bindings"]
+                )
+        expected["event_roles"].update(
+            (str(role["role_id"]), str(role["value_id"]))
+            for role in contract["event_roles"]
+            if role["state"] == "fixed"
+        )
+    _require(
+        actual == expected,
+        "universal composition carriers do not exactly cover canonical semantic targets",
+    )
+    total = sum(len(values) for values in actual.values())
+    _require(
+        semantic_asset.get("counts", {}).get(
+            "composition_literal_carrier_profiles"
+        )
+        == total,
+        "universal composition carrier count drift",
+    )
+    return {
+        "identity_core": len(actual["identity_core"]),
+        "fixed_slots": len(actual["fixed_slots"]),
+        "event_roles": len(actual["event_roles"]),
+        "total": total,
+    }
+
+
 def _validate_universal_literal_realization_profiles(
     semantic_asset: Mapping[str, Any],
     candidate_by_id: Mapping[str, Mapping[str, Any]],
@@ -6924,6 +7081,7 @@ def _validate_universal_literal_realization_profiles(
         "literal_polarity_contract",
         "literal_quantity_bindings",
         "identity_literal_profiles",
+        "composition_literal_carrier_profiles",
         "context_literal_profiles",
         "literal_visual_realization_profiles",
         "visual_carrier_profiles",
@@ -8044,6 +8202,18 @@ def validate_universal_scene_runtime_assets(
         "universal compatibility resource kinds must exactly equal the unique closed 24-kind domain",
     )
     graph_resource_kinds = set(graph_resource_kind_values)
+    current_contracts_by_case = {
+        str(row["case_id"]): row["canonical_scene_contract"]
+        for row in _load_jsonl(
+            asset_dir / "universal_scene_current_holdout_v2.jsonl"
+        )
+    }
+    composition_literal_carrier_policy = (
+        _validate_universal_composition_literal_carriers(
+            semantic_asset,
+            current_contracts_by_case,
+        )
+    )
     literal_realization_policy = _validate_universal_literal_realization_profiles(
         semantic_asset,
         candidate_by_id,
@@ -9585,6 +9755,7 @@ def validate_universal_scene_runtime_assets(
         "embodiment_profile_count": len(embodiments),
         "proposal_profile_count": len(proposal_profiles),
         "context_distance_profile_count": len(context_profiles),
+        "composition_literal_carrier_policy": composition_literal_carrier_policy,
         "literal_realization_policy": literal_realization_policy,
         "visual_owner_mapping_policy": visual_owner_mapping_policy,
         "fixed_prop_eligibility_policy": fixed_prop_eligibility_policy,

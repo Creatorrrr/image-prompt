@@ -26,7 +26,11 @@ def main() -> int:
     output_path = evidence_root / "qualification_v2.json"
     corpus = json.loads(corpus_path.read_text(encoding="utf-8"))
     legacy = load_moe_element_assets(asset_dir)
-    grammar = load_moe_grammar_assets(asset_dir, legacy_assets=legacy)
+    grammar = load_moe_grammar_assets(
+        asset_dir,
+        legacy_assets=legacy,
+        grammar_version="v2",
+    )
     results: list[dict[str, object]] = []
     foundation = "An original adult-character illustration with one causal event"
     for index, row in enumerate(

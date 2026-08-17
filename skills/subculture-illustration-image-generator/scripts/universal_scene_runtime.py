@@ -1396,11 +1396,43 @@ def _phrase_has_closed_polarity(
     return bool(polarities) and set(polarities) == {"negated"}
 
 
+def _reviewed_composition_literal_groups(
+    assets: UniversalSceneAssets,
+    section: str,
+    target: Mapping[str, str],
+) -> list[list[str]] | None:
+    """Resolve an exact asset-owned semantic target to English prompt anchors."""
+
+    profiles = assets.semantic_bindings["composition_literal_carrier_profiles"]
+    records = profiles.get(section)
+    if not isinstance(records, list):
+        raise SelectionError(f"composition carrier section {section!r} is unavailable")
+    for profile in records:
+        if all(str(profile.get(key)) == value for key, value in target.items()):
+            return [
+                [str(alternative) for alternative in group]
+                for group in profile["required_lexeme_groups"]
+            ]
+    return None
+
+
 def _literal_identity_carrier_groups(
     phrases: Sequence[str],
     assets: UniversalSceneAssets,
+    *,
+    fact_id: str | None = None,
+    polarity: str | None = None,
 ) -> list[list[str]]:
-    """Bind identity prose to reviewed literals, never to caller-authored IDs."""
+    """Bind identity prose to reviewed English semantics, never raw CJK text."""
+
+    if fact_id is not None and polarity is not None:
+        reviewed_target = _reviewed_composition_literal_groups(
+            assets,
+            "identity_core",
+            {"fact_id": fact_id, "polarity": polarity},
+        )
+        if reviewed_target is not None:
+            return reviewed_target
 
     reviewed_groups: list[list[str]] = []
     uncovered_phrases: list[str] = []
@@ -1436,6 +1468,16 @@ def _literal_identity_carrier_groups(
                     words.append(word)
         return [" ".join(words)]
 
+    non_english = [
+        phrase
+        for phrase in uncovered_phrases
+        if not _is_normalized_english_lexeme(_normalize_text(phrase))
+    ]
+    if non_english:
+        target = fact_id or "<unregistered fact>"
+        raise SelectionError(
+            f"identity carrier {target!r} lacks a reviewed English semantic profile"
+        )
     raw_group_count = 1 if uncovered_phrases else 0
     reviewed_budget = 3 - raw_group_count
     if len(reviewed_groups) > reviewed_budget:
@@ -1458,8 +1500,20 @@ def _literal_value_carrier_groups(
     phrases: Sequence[str],
     semantic_values: Sequence[str],
     assets: UniversalSceneAssets,
+    *,
+    profile_section: str | None = None,
+    profile_key: Mapping[str, str] | None = None,
 ) -> list[list[str]]:
     """Use catalog/sense semantics when reviewed, else retain the literal span."""
+
+    if profile_section is not None and profile_key is not None:
+        reviewed_target = _reviewed_composition_literal_groups(
+            assets,
+            profile_section,
+            profile_key,
+        )
+        if reviewed_target is not None:
+            return reviewed_target
 
     result: list[list[str]] = []
     fully_covered = False
@@ -1525,7 +1579,13 @@ def _literal_value_carrier_groups(
                         compact_terms.append(token)
             result.append([" ".join(compact_terms)])
         elif not fully_covered:
-            result.append([str(phrase) for phrase in phrases])
+            normalized_phrases = [_normalize_text(str(phrase)) for phrase in phrases]
+            if not all(_is_normalized_english_lexeme(item) for item in normalized_phrases):
+                target = ":".join(profile_key.values()) if profile_key else "<unregistered value>"
+                raise SelectionError(
+                    f"value carrier {target!r} lacks a reviewed English semantic profile"
+                )
+            result.append(normalized_phrases)
         return result
     return _literal_identity_carrier_groups(phrases, assets)[:2]
 
@@ -3142,6 +3202,96 @@ def _is_normalized_english_lexeme(value: str) -> bool:
     )
 
 
+def _validate_composition_literal_carrier_profiles(value: Any) -> int:
+    """Validate exact semantic-target mappings used by English composition."""
+
+    profiles = _require_mapping(
+        value,
+        "semantic_bindings.composition_literal_carrier_profiles",
+        AssetValidationError,
+    )
+    section_specs: Mapping[
+        str,
+        tuple[tuple[str, ...], tuple[str, ...]],
+    ] = {
+        "identity_core": (
+            ("fact_id", "polarity"),
+            ("fact_id", "polarity", "required_lexeme_groups"),
+        ),
+        "fixed_slots": (
+            ("slot_id", "value_id"),
+            ("slot_id", "value_id", "required_lexeme_groups"),
+        ),
+        "event_roles": (
+            ("role_id", "value_id"),
+            ("role_id", "value_id", "required_lexeme_groups"),
+        ),
+    }
+    _require_exact_keys(
+        profiles,
+        section_specs,
+        "semantic_bindings.composition_literal_carrier_profiles",
+        AssetValidationError,
+    )
+    total = 0
+    for section, (identity_keys, exact_keys) in section_specs.items():
+        records = _require_list(
+            profiles[section],
+            f"semantic_bindings.composition_literal_carrier_profiles.{section}",
+            AssetValidationError,
+        )
+        if not records:
+            raise AssetValidationError(
+                f"semantic_bindings.composition_literal_carrier_profiles.{section} must not be empty"
+            )
+        seen: set[tuple[str, ...]] = set()
+        for index, raw_profile in enumerate(records):
+            where = (
+                "semantic_bindings.composition_literal_carrier_profiles."
+                f"{section}[{index}]"
+            )
+            profile = _require_mapping(raw_profile, where, AssetValidationError)
+            _require_exact_keys(
+                profile,
+                exact_keys,
+                where,
+                AssetValidationError,
+            )
+            key = tuple(
+                _require_nonempty_string(
+                    profile[field], f"{where}.{field}", AssetValidationError
+                )
+                for field in identity_keys
+            )
+            if section == "identity_core" and profile["polarity"] not in {
+                "asserted_presence",
+                "forbidden",
+            }:
+                raise AssetValidationError(
+                    f"{where}.polarity is outside the closed source-profile enum"
+                )
+            if key in seen:
+                raise AssetValidationError(
+                    f"{where} duplicates semantic target {key!r}"
+                )
+            seen.add(key)
+            groups = _validate_lexeme_groups(
+                profile["required_lexeme_groups"],
+                f"{where}.required_lexeme_groups",
+                maximum_groups=3 if section == "identity_core" else 2,
+            )
+            if not all(
+                _is_normalized_english_lexeme(str(alternative))
+                for group in groups
+                for alternative in group
+            ):
+                raise AssetValidationError(
+                    f"{where}.required_lexeme_groups must contain normalized English only"
+                )
+        total += len(records)
+    return total
+
+
 def _validate_semantic_bindings_asset(
     asset: Mapping[str, Any],
     *,
@@ -3166,6 +3316,7 @@ def _validate_semantic_bindings_asset(
             "literal_polarity_contract",
             "literal_quantity_bindings",
             "identity_literal_profiles",
+            "composition_literal_carrier_profiles",
             "context_literal_profiles",
             "literal_visual_realization_profiles",
             "visual_carrier_profiles",
@@ -3445,6 +3596,12 @@ def _validate_semantic_bindings_asset(
             f"{where}.required_lexeme_groups",
             maximum_groups=3,
         )
+
+    composition_literal_carrier_count = (
+        _validate_composition_literal_carrier_profiles(
+            asset["composition_literal_carrier_profiles"]
+        )
+    )
 
     context_literal_profiles = _require_list(
         asset["context_literal_profiles"],
@@ -4066,6 +4223,7 @@ def _validate_semantic_bindings_asset(
         "literal_polarity_targets": len(target_profiles),
         "literal_quantity_bindings": len(quantity_bindings),
         "identity_literal_profiles": len(identity_profiles),
+        "composition_literal_carrier_profiles": composition_literal_carrier_count,
         "context_literal_profiles": len(context_literal_profiles),
         "literal_visual_realization_profiles": len(literal_realization_profiles),
         "visual_carrier_profiles": len(visual_profiles),
@@ -6889,6 +7047,8 @@ def _build_composition_carriers(
                 fact_groups = _literal_identity_carrier_groups(
                     [str(phrase) for phrase in fact["request_phrases"]],
                     assets,
+                    fact_id=fact_id,
+                    polarity="asserted_presence",
                 )
             identity_items.append(
                 {
@@ -6914,6 +7074,12 @@ def _build_composition_carriers(
                     "required_lexeme_groups": _literal_identity_carrier_groups(
                         [str(phrase) for phrase in fact["request_phrases"]],
                         assets,
+                        fact_id=str(fact["id"]),
+                        polarity=(
+                            "forbidden"
+                            if fact_kind == "forbidden_facts"
+                            else "asserted_presence"
+                        ),
                     ),
                 }
             )
@@ -6926,6 +7092,11 @@ def _build_composition_carriers(
                 [str(phrase) for phrase in binding["request_phrases"]],
                 [str(binding["value_id"])],
                 assets,
+                profile_section="fixed_slots",
+                profile_key={
+                    "slot_id": str(slot["slot_id"]),
+                    "value_id": str(binding["value_id"]),
+                },
             ),
         }
         for slot in validated.contract["slot_states"]
@@ -6944,6 +7115,11 @@ def _build_composition_carriers(
                     ],
                     [str(roles[role_id]["value_id"])],
                     assets,
+                    profile_section="event_roles",
+                    profile_key={
+                        "role_id": role_id,
+                        "value_id": str(roles[role_id]["value_id"]),
+                    },
                 )
                 if roles[role_id]["source"] == "user_fixed"
                 else _carrier_lexeme_group(

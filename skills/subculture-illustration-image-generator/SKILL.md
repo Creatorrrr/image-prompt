@@ -19,6 +19,7 @@ Canonical skill path: `skills/subculture-illustration-image-generator`.
 - Cover, key-art, card, scroll, and adaptation behavior: `references/format-contracts.md`
 - Image generation, artifact saving, and pixel review: `references/image-runtime.md`
 - Research, graph, format, and test maintenance: `references/maintenance.md`
+- Canonical meaning, explicit activation, sparse selection, and v5 audit: `references/moe-element-contract.md`
 
 Do not load all references for a simple prompt request.
 
@@ -26,10 +27,12 @@ Do not load all references for a simple prompt request.
 
 - `scripts/generate_illustration_prompt.py`: deterministic local candidate-pack wrapper.
 - `scripts/generate_moe_element_plan.py`: legacy v1 explicit supplement replay; do not use it as the rich product path.
-- `scripts/compile_moe_grammar_v2.py`: deterministic compiler from five claim-level dossier shards and the 58-case intent corpus.
-- `scripts/generate_moe_candidate_pack.py`: explicit-only v4 wrapper, preference-aware selector, shared-event composer, and replay audit entrypoint.
-- `scripts/moe_element_runtime.py`: v1 replay plus v2 dossier/grammar loading, sparse selection, v4 composition, and fail-closed audit.
+- `scripts/compile_moe_grammar_v2.py`: immutable historical compiler from five claim-level dossier shards and the 58-case intent corpus.
+- `scripts/compile_moe_grammar_v3.py`: deterministic compiler that binds every v2 candidate family to the normalized 29-element meaning contracts without changing v2 bytes.
+- `scripts/generate_moe_candidate_pack.py`: explicit-only v5 meaning-aware wrapper, preference selector, shared-event composer, and replay audit entrypoint. Pass `--grammar-version v2` only for historical v4 replay.
+- `scripts/moe_element_runtime.py`: v1 replay, explicit v2/v4 replay, default v3/v5 semantic binding, sparse selection, component composition, and fail-closed audit.
 - `scripts/illustration_runtime.py`: typed research graph, route, format, and sparse-bundle runtime.
+- `scripts/compile_universal_composition_carriers.py`: deterministic compiler for exact fact/polarity, slot/value, and role/value targets into normalized English composition carriers; it also refreshes the raw-byte sibling bindings.
 - `scripts/universal_scene_runtime.py`: v3 literal-contract validation and topic-independent one-event selection. It is not a natural-language parser.
 - `scripts/audit_composed_prompt.py`: fail-closed final-prompt audit.
 - `scripts/validate_illustration_assets.py`: research, graph, format, and holdout validator.
@@ -38,10 +41,12 @@ Do not load all references for a simple prompt request.
 - `assets/illustration_topic_crosswalk_v1.json`: 24 topic routes and local aliases.
 - `assets/illustration_universal_scene_candidates_v1.json`: route-independent expression, pose, action, relation, prop, and environment candidates.
 - `assets/illustration_universal_compatibility_graph_v1.json`: fixed/closed/open, resource, distance, bridge, and salience policy for the v3 universal layer.
-- `assets/illustration_universal_semantic_bindings_v1.json`: reviewed literal, polarity, embodiment, prop, context, and mandatory visual-realization bindings. It is policy data, not a prompt lexicon.
+- `assets/illustration_universal_semantic_bindings_v1.json`: reviewed literal, polarity, embodiment, prop, context, mandatory visual-realization, and closed English composition-carrier bindings. The carrier table maps canonical semantic targets; it is not a free-form translator or a source-request template.
 - `assets/image_generation_retry_policy_v1.json`: typed initial-call plus three unchanged-retry contract for every generation phase.
 - `assets/illustration_moe_elements_v1.json`: immutable 29-ID/alias baseline used by v1 replay and explicit activation.
-- `assets/research_evidence_moe_elements/dossiers_v2/`, `intent_corpus_v2.json`, `illustration_moe_grammar_v2.json`, and `illustration_moe_compatibility_v2.json`: 29 claim-level dossiers, 233 executable variants, paired neutral/preference expectations, and sparse frame/camera/resource policy. They enrich explicitly requested elements; they are not automatic tags or a replacement scene selector.
+- `assets/research_evidence_moe_elements/dossiers_v2/`, `intent_corpus_v2.json`, `illustration_moe_grammar_v2.json`, and `illustration_moe_compatibility_v2.json`: immutable 29-element research, 233 executable variants, paired neutral/preference expectations, and sparse frame/camera/resource policy used by v2 replay and as hash-bound v3 source material.
+- `assets/research_evidence_moe_elements/moe_meaning_contracts_v1.json` and `illustration_moe_grammar_v3.json`: normalized canonical definitions, essential/non-equivalent semantics, typed semantic axes, sensitive runtime-label policy, required visible component groups, fidelity class, adult-subject rule, and single-frame/sequence/interaction capability for all 29 elements. They enrich only explicitly requested elements and are never an automatic tagger or replacement scene selector.
+- `assets/research_evidence_moe_elements/qualification_v3.json`: bounded 12-case v5 semantic-binding and prompt-component preflight. It is not rendered-pixel or population-preference evidence.
 - `assets/research_evidence_illustration/`: source-traceable research shards; do not copy source prose into prompts.
 - `assets/research_evidence_universal_scene/`: independently audited 20-topic evidence for the universal layer; matrices are synthesis, not independent sources.
 - `assets/universal_scene_prompt_holdout_v1.jsonl` and `assets/universal_scene_contract_holdout_v1.jsonl`: immutable historical request/scene-contract sources; regression evidence, never templates for deriving a new request.
@@ -60,7 +65,7 @@ Do not load all references for a simple prompt request.
 1. Decide that the requested output is illustration rather than photography. Route photographic output to `$photo-prompt-image-generator`.
 2. Before calling the wrapper, automatically derive one `subculture-illustration-scene-contract/v2` from the original request. The user does not need to request or write it. Bind explicit positive facts as `fixed`, bind only literal negative constraints as `closed`, and leave every ambiguity `open` or `unknown`. Partition each fixed slot value into its own phrase binding and typed polarity anchors; bind all eight participant roles to declared identity entities without inventing an owner. Choose `catalog_exact` only for a full exact catalog capability projection and otherwise use a validated declared subset. Do not infer emotion, personality, relationship, intent, culture, age, gender, diagnosis, ownership, or body capability. See `references/universal-scene-contract.md`.
 3. Run the wrapper with the original request, the derived scene-contract JSON, explicit format when known, and a stable seed when reproducibility matters. The default is v3. Use explicit `--contract-version v1` or `v2` only to replay immutable historical evidence; those paths reject a scene contract and never load universal assets.
-3a. When the user explicitly requests one of the 29 researched moe elements, first build the ordinary v1-v3 pack, then pass that unchanged pack plus one to three exact IDs or complete reviewed aliases to `generate_moe_candidate_pack.py`. Use the original request as preference text. The selector interprets research-backed subtype, viewpoint, intensity, material, pose, camera, and format cues only inside those explicitly selected elements; it never scans prose to activate a sibling element. The v4 wrapper must expose exactly one governing moe primary and at most two total support nodes, preserve the base safety and negative prompt byte-for-byte, and recompose all selected nodes into the base scene's single event. Do not use the legacy v1 supplement's append block for new work. Run `audit_moe_candidate_pack` after composition.
+3a. When the user explicitly requests one of the 29 researched moe elements, first build the ordinary v1-v3 pack, then pass that unchanged pack plus one to three exact IDs or complete reviewed aliases to `generate_moe_candidate_pack.py`. Use the original request as preference text. The default v3 grammar first binds the element's canonical meaning, essential/non-equivalent semantics, fidelity class, and medium capability; preference cues then select a variant only inside that element. It never scans prose to activate a sibling element. Preserve the canonical definition even when a sensitive runtime label is omitted: build the visible form from every required component group and record `safe_analogue`, `partial_evidence`, `sequence_required`, or `interaction_required` honestly instead of silently claiming exact equivalence. Evaluate safety from the original request plus canonical meaning; never turn label omission into safety evasion or semantic substitution. The v5 wrapper exposes exactly one governing moe primary and at most two total support nodes, preserves the base safety and negative prompt byte-for-byte, and recomposes all selected nodes into the base scene's single event. Do not use the legacy v1 supplement's append block for new work. Run `audit_moe_candidate_pack` after composition.
 4. Inspect the compact pack. The existing authorial layer still exposes exactly one primary visual atom and at most two compatible supports. The additive `universal_scene` embeds the full canonical scene contract, including all participant bindings, plus exact identity, slot, context, and fixed-role projections, exactly one connected event, at most one optional remote premise, causal bridges, owner-resolved resource claims, authenticated `composition_carriers`, and atom-owned future pixel obligations. Literal visual-realization groups matched by fixed semantics are reserved before ordinary catalog proposals and must preserve their profile, value binding, participant owner, quantifier, and candidate-owned evidence. V3 also preserves `request_contract.prior_exposure_ids` as an exact unique ordered list; use an empty list unless the workflow was explicitly given local prior-exposure IDs.
 5. Compose one English prompt as `composer: agent`. Preserve the user's visible subject and event; bind only observable evidence. Write the v3 object with the existing v2 fields, `second_look_plan`, and additive `universal_scene_evidence`, including exact literal coverage for every value in every fixed slot. Each linked evidence phrase must express at least one alternative from every authenticated lexeme group for its fact, slot, role, atom, bridge, or resource. A forbidden identity fact needs an explicit negator scoped to its anchors in the same clause.
 6. Run the composed-prompt audit. Fix the prompt or composition object until structural and literal gates pass. This audit validates planning evidence, not rendered pixels.
@@ -89,6 +94,16 @@ Audit example:
   --composed /tmp/illustration-composed.json
 ```
 
+Explicit moe-element example:
+
+```bash
+.venv/bin/python skills/subculture-illustration-image-generator/scripts/generate_moe_candidate_pack.py \
+  --base-pack /tmp/illustration-pack.json \
+  --element moe_ahegao_expression \
+  --preference-text "눈과 입의 외적 구성을 정확히 살린 성인 캐릭터 표정" \
+  --compose-from "An original adult-character close portrait"
+```
+
 ## Creative and Viewer Defaults
 
 - Use balanced creativity `0.5` by default when the user gives an ordinary illustration brief.
@@ -112,4 +127,4 @@ Audit example:
 - Default safety metadata passes automatically. Perform a separate safety evaluation only when the user explicitly requests it; platform safety still applies.
 - Retrying a safety or policy refusal never authorizes prompt rewriting, euphemistic substitution, model downgrade, or policy evasion. A higher-priority platform instruction to stop overrides the remaining retry budget.
 - An audit pass proves prompt binding, not rendered salience, originality across history, audience emotion, virality, or sales. Inspect actual pixels for image claims.
-- Moe-element activation is explicit-only. A culture label is routing metadata; the selected v2 candidate must describe observable construction, action, relation, camera, or format evidence. Preference cues choose only among candidates of the explicitly selected element. The v4 wrapper never changes ordinary safety metadata, refusal/retry behavior, negative prompt, or universal-scene eligibility, and v1-v3 replay remains untouched.
+- Moe-element activation is explicit-only. Canonical meaning is authority; a culture label is only routing metadata and may be forbidden on runtime prompt surfaces. The selected v3 candidate must bind all required visible component groups and describe observable construction, action, relation, camera, or format evidence. Label omission must not weaken the stored definition, erase sexual/adult lineage, reclassify a safe analogue as exact, or bypass safety review. Preference cues choose only among candidates of the explicitly selected element. The v5 wrapper never changes ordinary safety metadata, refusal/retry behavior, negative prompt, or universal-scene eligibility, and explicit v1-v4 replay remains untouched.

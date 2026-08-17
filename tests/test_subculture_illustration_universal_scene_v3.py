@@ -577,10 +577,39 @@ def _with_linked_evidence_phrase(
     mutated = copy.deepcopy(composed)
     evidence = mutated["universal_scene_evidence"]
     record = next(item for item in evidence[section] if item[id_key] == record_id)
+    old_phrase = str(record["phrase"])
     record["phrase"] = phrase
     scene_block = str(evidence["scene_block_phrase"])
     if phrase not in scene_block:
-        scene_block = f"{scene_block} {phrase}"
+        linked_sections = (
+            "identity_core_phrases",
+            "fixed_slot_phrases",
+            "event_role_phrases",
+            "atom_phrases",
+            "bridge_phrases",
+            "resource_phrases",
+        )
+        remaining_references = sum(
+            1
+            for linked_section in linked_sections
+            for item in evidence[linked_section]
+            if item is not record and item.get("phrase") == old_phrase
+        )
+        salience_references = sum(
+            1
+            for value in evidence["salience_phrases"].values()
+            if value == old_phrase
+        )
+        consequence_reference = evidence.get("consequence_phrase") == old_phrase
+        if (
+            old_phrase in scene_block
+            and remaining_references == 0
+            and salience_references == 0
+            and not consequence_reference
+        ):
+            scene_block = scene_block.replace(old_phrase, phrase, 1)
+        else:
+            scene_block = f"{scene_block} {phrase}"
         evidence["scene_block_phrase"] = scene_block
     return mutated, scene_block
 
@@ -3217,7 +3246,7 @@ class UniversalSceneCurrentOracleV2Tests(unittest.TestCase):
             )
             self._write_json(path, crosswalk)
 
-        def handoff_visual_owner_removed(root: Path) -> None:
+        def handoff_ownership_bridge_removed(root: Path) -> None:
             path = root / "universal_scene_expectation_crosswalk_v2.json"
             crosswalk = _json(path)
             mapping = next(
@@ -3228,7 +3257,7 @@ class UniversalSceneCurrentOracleV2Tests(unittest.TestCase):
             mapping["targets"] = [
                 target
                 for target in mapping["targets"]
-                if target["target_kind"] != "visual_candidate"
+                if target["target_kind"] != "runtime_bridge_type"
             ]
             self._write_json(path, crosswalk)
 
@@ -3256,7 +3285,7 @@ class UniversalSceneCurrentOracleV2Tests(unittest.TestCase):
                 "event role reintroduces optional roles",
                 event_role_reintroduces_optional_roles,
             ),
-            ("handoff visual owner removed", handoff_visual_owner_removed),
+            ("handoff ownership bridge removed", handoff_ownership_bridge_removed),
         ):
             with self.subTest(label=label):
                 self._assert_semantic_mutation_rejected(mutate)
@@ -4809,7 +4838,16 @@ class UniversalSceneRuntimeContractTests(unittest.TestCase):
             },
         )
         previous_load = -1
-        previous_bridge_count = -1
+        category_members = {
+            "entry": {"affordance", "motivation", "identity_contrast"},
+            "mediation": {"mechanics", "ownership"},
+            "exit": {"state_change", "consequence"},
+        }
+        band_requirements = {
+            "near": (1, ("entry",)),
+            "middle": (2, ("entry", "exit")),
+            "far": (3, ("entry", "mediation", "exit")),
+        }
         for case_id, expected_term, expected_band, expected_roles in zip(
             cases,
             expected_terms,
@@ -4837,13 +4875,18 @@ class UniversalSceneRuntimeContractTests(unittest.TestCase):
                     expected_band, scene["semantic_distance_trace"]["selected_band"]
                 )
                 load = sum(scene["semantic_distance_trace"]["vector"].values())
-                bridge_count = len(
-                    {bridge["bridge_type"] for bridge in scene["bridges"]}
-                )
+                bridge_types = {
+                    bridge["bridge_type"] for bridge in scene["bridges"]
+                }
                 self.assertGreater(load, previous_load)
-                self.assertGreater(bridge_count, previous_bridge_count)
+                minimum_count, required_categories = band_requirements[expected_band]
+                self.assertGreaterEqual(len(bridge_types), minimum_count)
+                for category in required_categories:
+                    self.assertTrue(
+                        bridge_types & category_members[category],
+                        (case_id, category, bridge_types),
+                    )
                 previous_load = load
-                previous_bridge_count = bridge_count
 
     def test_human_nonhuman_faceless_limbless_four_arm_and_no_prop_resources(
         self,
@@ -4925,14 +4968,15 @@ class UniversalSceneRuntimeContractTests(unittest.TestCase):
         open_slot["value_ids"] = ["agent_inferred_value"]
         mutations.append(("open slot inference", open_case_id, open_inference))
 
-        closed_selection = copy.deepcopy(original)
+        closed_case_id = "universal_scene_24_closed_no_prop_consequence"
+        closed_selection = copy.deepcopy(self.current_contract_by_case[closed_case_id])
         closed_slot = next(
             slot
             for slot in closed_selection["slot_states"]
             if slot["state"] == "closed"
         )
         closed_slot["value_ids"] = ["selected_into_closed_slot"]
-        mutations.append(("closed slot selection", fixed_case_id, closed_selection))
+        mutations.append(("closed slot selection", closed_case_id, closed_selection))
 
         apple_case_id = "universal_scene_04_explicit_apple"
         rebound_known_prop = copy.deepcopy(self.current_contract_by_case[apple_case_id])
@@ -5050,7 +5094,11 @@ class UniversalSceneRuntimeContractTests(unittest.TestCase):
         closed = copy.deepcopy(
             self.packs["universal_scene_24_closed_no_prop_consequence"]
         )
-        atom = closed["universal_scene"]["atoms"][0]
+        atom = next(
+            item
+            for item in closed["universal_scene"]["atoms"]
+            if "literal_realization_profile_id" not in item["parameters"]
+        )
         atom["facet"] = "prop"
         self.assert_integrity_failure(closed, "universal_slot_state")
 
@@ -5098,9 +5146,11 @@ class UniversalSceneRuntimeContractTests(unittest.TestCase):
             if atom["facet"] == "prop"
         )
         prop_atom["candidate_id"] = "uao_global_prop_machine_gun"
+        # The substituted atom no longer owns the retained event-role source;
+        # the auditor correctly rejects that broken authority edge first.
         self.assert_integrity_failure(
             weapon_bypass,
-            "universal_candidate_eligibility",
+            "universal_event_spine",
         )
 
         removed_selection = copy.deepcopy(
@@ -5109,6 +5159,17 @@ class UniversalSceneRuntimeContractTests(unittest.TestCase):
         removed_selection["universal_scene"]["atoms"].pop()
         self.assert_integrity_failure(
             removed_selection,
+            "composition_contract",
+        )
+
+        unknown_exposure = copy.deepcopy(
+            self.packs["universal_scene_01_same_core_low"]
+        )
+        unknown_exposure["request_contract"]["prior_exposure_ids"] = [
+            "unknown_visual_candidate"
+        ]
+        self.assert_integrity_failure(
+            unknown_exposure,
             "universal_candidate_eligibility",
         )
 
@@ -5282,33 +5343,15 @@ class UniversalSceneRuntimeContractTests(unittest.TestCase):
                 )
 
     def test_exact_evidence_phrase_reuse_is_bounded_at_eight_links(self) -> None:
-        pack = self.packs["universal_scene_04_explicit_apple"]
-        composed, prompt = _literal_universal_evidence(pack)
-        identity_records = composed["universal_scene_evidence"]["identity_core_phrases"]
-        shared_phrase = (
-            "adult fallen maid black ears cracked halo guest recipient one apple "
-            "preparation offer shared traces"
-        )
         for link_count in (8, 9):
             with self.subTest(link_count=link_count):
-                mutated = copy.deepcopy(composed)
-                mutated_records = mutated["universal_scene_evidence"][
-                    "identity_core_phrases"
-                ]
-                self.assertGreaterEqual(len(identity_records), link_count)
-                for record in mutated_records[:link_count]:
-                    record["phrase"] = shared_phrase
-                scene_block = str(
-                    mutated["universal_scene_evidence"]["scene_block_phrase"]
-                )
-                mutated_prompt = f"{scene_block} {shared_phrase}"
-                mutated["universal_scene_evidence"]["scene_block_phrase"] = (
-                    mutated_prompt
-                )
-                failures = audit_universal_scene_evidence(
-                    pack,
-                    mutated,
-                    mutated_prompt,
+                failures = illustration_audit_module._universal_phrase_reuse_failures(
+                    {
+                        "identity_core": {
+                            f"fact_{index}": "shared authenticated carrier phrase"
+                            for index in range(link_count)
+                        }
+                    }
                 )
                 if link_count == 8:
                     self.assertEqual([], failures)
@@ -5395,7 +5438,7 @@ class UniversalSceneRuntimeContractTests(unittest.TestCase):
             audit_universal_scene_evidence(gun_pack, gun_composed, gun_prompt),
         )
         contrast = (
-            "The decommissioned machine gun is safe, not because it is fictional, "
+            "The machine gun is safe, not because it is fictional, "
             "but because its firing mechanism is removed."
         )
         contrast_composed, contrast_prompt = _with_scene_phrase(

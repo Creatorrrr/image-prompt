@@ -19,23 +19,30 @@ sys.path.insert(0, str(SCRIPT_ROOT))
 from moe_element_runtime import (  # noqa: E402
     AUDIT_SCHEMA,
     COMPOSED_SCHEMA,
+    COMPOSED_SCHEMA_V2,
     GRAMMAR_SCHEMA,
+    GRAMMAR_SCHEMA_V2,
     PACK_AUDIT_SCHEMA,
+    PACK_AUDIT_SCHEMA_V2,
     PACK_SCHEMA,
+    PACK_SCHEMA_V4,
     PLAN_SCHEMA,
     MoeElementError,
     audit_moe_candidate_pack,
     audit_moe_element_prompt,
     build_moe_candidate_pack,
     build_moe_element_plan,
+    canonical_json_bytes,
     compose_moe_prompt_draft,
     list_moe_elements,
     load_moe_element_assets,
     load_moe_grammar_assets,
     resolve_element_tokens,
 )
-from compile_moe_grammar_v2 import compile_grammar  # noqa: E402
+from compile_moe_grammar_v2 import compile_grammar as compile_grammar_v2  # noqa: E402
+from compile_moe_grammar_v3 import compile_grammar as compile_grammar_v3  # noqa: E402
 from illustration_runtime import build_candidate_pack  # noqa: E402
+from moe_meaning_contract import runtime_label_present  # noqa: E402
 
 
 class SubcultureIllustrationMoeElementTests(unittest.TestCase):
@@ -92,6 +99,7 @@ class SubcultureIllustrationMoeGrammarV2Tests(unittest.TestCase):
         cls.grammar = load_moe_grammar_assets(
             ASSET_ROOT,
             legacy_assets=cls.legacy,
+            grammar_version="v2",
         )
         cls.corpus = json.loads(
             (
@@ -117,14 +125,14 @@ class SubcultureIllustrationMoeGrammarV2Tests(unittest.TestCase):
         return base, pack
 
     def test_compiled_grammar_is_reproducible_and_research_rich(self) -> None:
-        compiled = compile_grammar(ASSET_ROOT)
+        compiled = compile_grammar_v2(ASSET_ROOT)
         stored = json.loads(
             (ASSET_ROOT / "illustration_moe_grammar_v2.json").read_text(
                 encoding="utf-8"
             )
         )
         self.assertEqual(compiled, stored)
-        self.assertEqual(GRAMMAR_SCHEMA, stored["schema"])
+        self.assertEqual(GRAMMAR_SCHEMA_V2, stored["schema"])
         self.assertEqual(29, stored["element_count"])
         self.assertGreaterEqual(stored["candidate_count"], 200)
         self.assertEqual(29, len(self.grammar.elements_by_id))
@@ -168,7 +176,7 @@ class SubcultureIllustrationMoeGrammarV2Tests(unittest.TestCase):
             with self.subTest(case=row["id"]):
                 base, pack = self._build(row)
                 selected = pack["moe_grammar"]["selected_candidates"]
-                self.assertEqual(PACK_SCHEMA, pack["contract_version"])
+                self.assertEqual(PACK_SCHEMA_V4, pack["contract_version"])
                 self.assertEqual(1, len(selected))
                 self.assertTrue(selected[0]["canonical_default"])
                 self.assertIn(
@@ -188,8 +196,8 @@ class SubcultureIllustrationMoeGrammarV2Tests(unittest.TestCase):
                     legacy_assets=self.legacy,
                     grammar_assets=self.grammar,
                 )
-                self.assertEqual(COMPOSED_SCHEMA, composed["schema"])
-                self.assertEqual(PACK_AUDIT_SCHEMA, audit["schema"])
+                self.assertEqual(COMPOSED_SCHEMA_V2, composed["schema"])
+                self.assertEqual(PACK_AUDIT_SCHEMA_V2, audit["schema"])
                 self.assertEqual("pass", audit["status"], audit["failures"])
 
     def test_all_29_preferences_select_the_expected_material_variant(self) -> None:
@@ -439,6 +447,307 @@ class SubcultureIllustrationMoeGrammarV2Tests(unittest.TestCase):
                 self.assertEqual(
                     digest, hashlib.sha256((ASSET_ROOT / name).read_bytes()).hexdigest()
                 )
+
+
+class SubcultureIllustrationMoeGrammarV3Tests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.legacy = load_moe_element_assets(ASSET_ROOT)
+        cls.grammar = load_moe_grammar_assets(
+            ASSET_ROOT,
+            legacy_assets=cls.legacy,
+            grammar_version="v3",
+        )
+        cls.corpus = json.loads(
+            (
+                ASSET_ROOT / "research_evidence_moe_elements" / "intent_corpus_v2.json"
+            ).read_text(encoding="utf-8")
+        )
+        cls.foundation = (
+            "An original adult-character illustration with one causal event"
+        )
+
+    def _build(
+        self,
+        request: str,
+        element_ids: list[str],
+        *,
+        seed: int = 29,
+        output_mode: str = "auto",
+    ) -> tuple[dict, dict, dict]:
+        base = build_candidate_pack(
+            request,
+            seed=seed,
+            creativity=0.5,
+            contract_version="v2",
+        )
+        pack = build_moe_candidate_pack(
+            base,
+            element_ids,
+            preference_text=request,
+            output_mode=output_mode,
+            legacy_assets=self.legacy,
+            grammar_assets=self.grammar,
+        )
+        composed = compose_moe_prompt_draft(pack, self.foundation)
+        return base, pack, composed
+
+    @staticmethod
+    def _rehash_pack(pack: dict) -> None:
+        pack["pack_id"] = None
+        pack["pack_id"] = hashlib.sha256(canonical_json_bytes(pack)).hexdigest()[:16]
+
+    def test_v3_compile_is_reproducible_and_all_meanings_are_normalized(self) -> None:
+        compiled = compile_grammar_v3(ASSET_ROOT)
+        stored = json.loads(
+            (ASSET_ROOT / "illustration_moe_grammar_v3.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        self.assertEqual(compiled, stored)
+        self.assertEqual(GRAMMAR_SCHEMA, stored["schema"])
+        self.assertEqual(29, stored["element_count"])
+        self.assertEqual(29, len(self.grammar.elements_by_id))
+        for element in stored["elements"]:
+            contract = element["meaning_contract"]
+            self.assertEqual(
+                contract["canonical_definition_ko"],
+                element["definition_and_history"],
+            )
+            self.assertNotIn("SRC_", element["definition_and_history"])
+            self.assertFalse(
+                any(
+                    subtype["id"].startswith("researched_variant_")
+                    for subtype in element["semantic_subtypes"]
+                )
+            )
+            self.assertGreaterEqual(len(contract["essential_semantics_ko"]), 2)
+            self.assertGreaterEqual(len(contract["non_equivalents_ko"]), 2)
+            self.assertGreaterEqual(len(contract["component_groups"]), 2)
+
+        ahegao = self.grammar.elements_by_id["moe_ahegao_expression"][
+            "meaning_contract"
+        ]
+        self.assertIn("성적 쾌감", ahegao["canonical_definition_ko"])
+        self.assertIn("표정 통제를 잃은", ahegao["canonical_definition_ko"])
+        self.assertEqual("exact_componentized", ahegao["semantic_fidelity"])
+        self.assertIn("ahegao", ahegao["runtime_forbidden_labels"])
+        self.assertEqual(
+            [
+                "eye_control_loss",
+                "mouth_control_loss",
+                "tongue_exposure",
+                "secondary_overload_marker",
+            ],
+            [group["id"] for group in ahegao["component_groups"]],
+        )
+        self.assertEqual(
+            "safe_analogue",
+            self.grammar.elements_by_id["moe_mesugaki_provocation"]["meaning_contract"][
+                "semantic_fidelity"
+            ],
+        )
+
+    def test_all_neutral_and_preference_requests_bind_and_audit_meaning(self) -> None:
+        rows = [
+            *self.corpus["sections"]["neutral_requests"],
+            *self.corpus["sections"]["preference_requests"],
+        ]
+        self.assertEqual(58, len(rows))
+        for row in rows:
+            with self.subTest(case=row["id"]):
+                base, pack, composed = self._build(
+                    row["request_ko"], row["expected_element_ids"]
+                )
+                self.assertEqual(PACK_SCHEMA, pack["contract_version"])
+                self.assertEqual(COMPOSED_SCHEMA, composed["schema"])
+                self.assertEqual(base["safety"], pack["safety"])
+                self.assertEqual(base["negative_en"], pack["negative_en"])
+                self.assertEqual(
+                    "original_request_plus_canonical_meaning",
+                    pack["semantic_contract"]["safety_evaluation_source"],
+                )
+                self.assertEqual(
+                    "forbidden",
+                    pack["semantic_contract"]["silent_semantic_substitution"],
+                )
+                bindings = pack["moe_grammar"]["meaning_bindings"]
+                selected = pack["moe_grammar"]["selected_candidates"]
+                self.assertEqual(
+                    row["expected_element_ids"],
+                    [binding["element_id"] for binding in bindings],
+                )
+                for candidate, binding in zip(selected, bindings, strict=True):
+                    self.assertEqual(
+                        binding["contract_sha256"],
+                        candidate["meaning_contract_sha256"],
+                    )
+                    for label in binding["contract"]["runtime_forbidden_labels"]:
+                        self.assertFalse(
+                            runtime_label_present(label, composed["prompt_en"])
+                        )
+                        self.assertFalse(
+                            runtime_label_present(label, composed["negative_en"])
+                        )
+                audit = audit_moe_candidate_pack(
+                    pack,
+                    composed,
+                    legacy_assets=self.legacy,
+                    grammar_assets=self.grammar,
+                )
+                self.assertEqual(PACK_AUDIT_SCHEMA, audit["schema"])
+                self.assertEqual("pass", audit["status"], audit["failures"])
+
+    def test_v3_qualification_is_bound_to_current_assets(self) -> None:
+        qualification = json.loads(
+            (
+                ASSET_ROOT / "research_evidence_moe_elements" / "qualification_v3.json"
+            ).read_text(encoding="utf-8")
+        )
+        self.assertEqual(
+            "subculture-illustration-moe-prompt-qualification/v3",
+            qualification["schema"],
+        )
+        self.assertEqual(self.grammar.grammar_sha256, qualification["grammar_sha256"])
+        self.assertEqual(
+            self.grammar.payload["meaning_contracts_sha256"],
+            qualification["meaning_contracts_sha256"],
+        )
+        self.assertEqual(29, qualification["meaning_contract_count"])
+        self.assertEqual(12, qualification["case_count"])
+        self.assertEqual(12, qualification["pass_count"])
+        self.assertEqual("pass", qualification["status"])
+
+    def test_sensitive_label_component_and_contract_mutations_fail_closed(self) -> None:
+        request = "아헤가오의 눈과 입 구성을 정확히 살린 성인 캐릭터 얼굴을 그려줘."
+        _, pack, composed = self._build(request, ["moe_ahegao_expression"])
+        self.assertIn("tongue", composed["prompt_en"].casefold())
+        self.assertTrue(
+            any(
+                marker in composed["prompt_en"].casefold()
+                for marker in ("drool", "tears", "sweat", "flush", "asymmetry")
+            )
+        )
+
+        leaked = copy.deepcopy(composed)
+        leaked["prompt_en"] += " Use an ahegao expression."
+        audit = audit_moe_candidate_pack(
+            pack,
+            leaked,
+            legacy_assets=self.legacy,
+            grammar_assets=self.grammar,
+        )
+        self.assertEqual("fail", audit["status"])
+        self.assertIn(
+            "runtime_label_policy", {failure["check"] for failure in audit["failures"]}
+        )
+
+        missing = copy.deepcopy(composed)
+        for node in pack["moe_grammar"]["selected_nodes"]:
+            missing["prompt_en"] = missing["prompt_en"].replace(
+                node["prompt_fragment_en"], "Show a generic facial expression."
+            )
+        audit = audit_moe_candidate_pack(
+            pack,
+            missing,
+            legacy_assets=self.legacy,
+            grammar_assets=self.grammar,
+        )
+        self.assertEqual("fail", audit["status"])
+        self.assertTrue(
+            {"literal_evidence", "meaning_component_group"}.issubset(
+                {failure["check"] for failure in audit["failures"]}
+            )
+        )
+
+        forged_pack = copy.deepcopy(pack)
+        binding = forged_pack["moe_grammar"]["meaning_bindings"][0]
+        binding["contract"]["canonical_definition_ko"] += " 임의 축약."
+        forged_hash = hashlib.sha256(
+            canonical_json_bytes(binding["contract"])
+        ).hexdigest()
+        binding["contract_sha256"] = forged_hash
+        forged_pack["moe_grammar"]["selected_candidates"][0][
+            "meaning_contract_sha256"
+        ] = forged_hash
+        self._rehash_pack(forged_pack)
+        forged_composed = compose_moe_prompt_draft(forged_pack, self.foundation)
+        audit = audit_moe_candidate_pack(
+            forged_pack,
+            forged_composed,
+            legacy_assets=self.legacy,
+            grammar_assets=self.grammar,
+        )
+        self.assertEqual("fail", audit["status"])
+        self.assertIn(
+            "meaning_bindings", {failure["check"] for failure in audit["failures"]}
+        )
+
+        malformed_pack = copy.deepcopy(pack)
+        malformed_pack["moe_grammar"]["meaning_bindings"][0]["contract"].pop(
+            "component_groups"
+        )
+        self._rehash_pack(malformed_pack)
+        audit = audit_moe_candidate_pack(
+            malformed_pack,
+            composed,
+            legacy_assets=self.legacy,
+            grammar_assets=self.grammar,
+        )
+        self.assertEqual("fail", audit["status"])
+        self.assertIn(
+            "meaning_bindings", {failure["check"] for failure in audit["failures"]}
+        )
+
+    def test_safe_analogue_and_medium_capability_cannot_be_overclaimed(self) -> None:
+        _, safe_pack, _ = self._build(
+            "메스가키의 관계적 도발을 성인 캐릭터로 안전하게 표현해줘.",
+            ["moe_mesugaki_provocation"],
+        )
+        forged_safe = copy.deepcopy(safe_pack)
+        forged_safe["moe_grammar"]["selected_candidates"][0]["semantic_fidelity"] = (
+            "exact_componentized"
+        )
+        self._rehash_pack(forged_safe)
+        forged_composed = compose_moe_prompt_draft(forged_safe, self.foundation)
+        audit = audit_moe_candidate_pack(
+            forged_safe,
+            forged_composed,
+            legacy_assets=self.legacy,
+            grammar_assets=self.grammar,
+        )
+        self.assertEqual("fail", audit["status"])
+        self.assertIn(
+            "semantic_fidelity", {failure["check"] for failure in audit["failures"]}
+        )
+
+        with self.assertRaisesRegex(MoeElementError, "cannot carry"):
+            self._build(
+                "흑화 전후의 동일 인물을 보여줘.",
+                ["moe_darkening_corruption"],
+                output_mode="single_frame",
+            )
+
+        _, interaction_pack, _ = self._build(
+            "화면을 흔들 때 움직여 보이는 착시를 만들어줘.",
+            ["moe_screen_shake_illusion"],
+        )
+        forged_interaction = copy.deepcopy(interaction_pack)
+        forged_interaction["moe_grammar"]["frame_contract"]["resolved_output_mode"] = (
+            "single_frame"
+        )
+        self._rehash_pack(forged_interaction)
+        forged_composed = compose_moe_prompt_draft(forged_interaction, self.foundation)
+        audit = audit_moe_candidate_pack(
+            forged_interaction,
+            forged_composed,
+            legacy_assets=self.legacy,
+            grammar_assets=self.grammar,
+        )
+        self.assertEqual("fail", audit["status"])
+        self.assertIn(
+            "meaning_capability", {failure["check"] for failure in audit["failures"]}
+        )
 
 
 if __name__ == "__main__":
