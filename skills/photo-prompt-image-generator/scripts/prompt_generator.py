@@ -90,8 +90,8 @@ LLM_POLISH_MODES = ("off", "strict")
 SEMANTIC_PROVIDER = "gemini"
 DEFAULT_SEMANTIC_DIMENSIONS = 768
 SEMANTIC_MODEL_ID = "gemini-embedding-2"
-SEMANTIC_TEXT_RECIPE_VERSION = "semantic-text-v3"
-SEMANTIC_BM25F_POLICY_VERSION = "photo-semantic-bm25f-policy/v1"
+SEMANTIC_TEXT_RECIPE_VERSION = "semantic-text-v4"
+SEMANTIC_BM25F_POLICY_VERSION = "photo-semantic-bm25f-policy/v2"
 VISUAL_PROFILE_BM25F_POLICY_VERSION = "photo-visual-profile-bm25f-policy/v1"
 GENERATOR_VERSION = "2026.06.0"
 LIKENESS_MODES = ("off", "inspired")
@@ -111,7 +111,26 @@ RESEARCH_EXTENSION_FILENAMES = (
     "photo_prompt_scene_expression_character_moe.json",
 )
 RESEARCH_EXTENSION_SCHEMA = "photo-prompt-research-extension/v1"
-CHARACTER_MECHANISM_GRAPH_SCHEMA = "photo-character-mechanism-graph/v1"
+CHARACTER_MECHANISM_GRAPH_SCHEMA = "photo-character-mechanism-graph/v2"
+CHARACTER_CONCEPT_RELATION_OPERATORS = {
+    "allowed_semantic_class",
+    "contrasts",
+    "same_target",
+    "temporal_order",
+    "one_of",
+    "not_confounder",
+}
+CHARACTER_CONCEPT_EVIDENCE_ROLES = {
+    "baseline",
+    "relationship_target",
+    "surface_behavior",
+    "primary_action",
+    "affect_leak",
+    "contradicting_action_or_leak",
+    "visible_response",
+    "immediate_consequence",
+    "continuity",
+}
 QUALITY_LAYERS_DATA_KEY = "_quality_layers"
 VISUAL_OBLIGATIONS_DATA_KEY = "_visual_obligations"
 VISUAL_PROFILE_INDEX_DATA_KEY = "_visual_profile_index"
@@ -299,6 +318,10 @@ SEMANTIC_BM25F_POLICY: JsonDict = {
         "aliases": {"weight": 4.0, "b": 0.2},
         "labels": {"weight": 3.0, "b": 0.35},
         "semantic_caption": {"weight": 2.5, "b": 0.7},
+        "definition": {"weight": 3.0, "b": 0.65},
+        "paraphrases": {"weight": 2.25, "b": 0.7},
+        "semantic_relations": {"weight": 2.5, "b": 0.55},
+        "manifestations": {"weight": 0.75, "b": 0.7},
         "keywords": {"weight": 1.5, "b": 0.6},
         "slot_context": {"weight": 0.35, "b": 0.2},
     },
@@ -1808,6 +1831,77 @@ def character_runtime_node_family_ids(node: JsonDict) -> Set[str]:
     return {str(item) for item in values if str(item)}
 
 
+def character_axis_vocabularies(data: JsonDict) -> Dict[str, JsonDict]:
+    """Return authored semantic-axis vocabularies keyed by generic axis name."""
+
+    graph = data.get("character_mechanism_graph")
+    rows = graph.get("axis_vocabularies") if isinstance(graph, dict) else []
+    return {
+        str(row.get("id") or ""): row
+        for row in rows or []
+        if isinstance(row, dict) and str(row.get("id") or "")
+    }
+
+
+def character_response_concept_profiles(data: JsonDict) -> List[JsonDict]:
+    """Return data-authored character-response meanings without scene recipes."""
+
+    graph = data.get("character_mechanism_graph")
+    rows = graph.get("concept_profiles") if isinstance(graph, dict) else []
+    return [copy.deepcopy(row) for row in rows or [] if isinstance(row, dict)]
+
+
+def character_axis_class_aliases(data: JsonDict, axis: str) -> Dict[str, List[str]]:
+    vocabulary = character_axis_vocabularies(data).get(str(axis)) or {}
+    result: Dict[str, List[str]] = {}
+    for row in vocabulary.get("classes") or []:
+        if not isinstance(row, dict) or not str(row.get("id") or ""):
+            continue
+        class_id = str(row["id"])
+        aliases = [class_id]
+        aliases.extend(
+            clean_spaces(str(value))
+            for value in normalize_list(row.get("aliases"))
+            if clean_spaces(str(value))
+        )
+        result[class_id] = list(dict.fromkeys(aliases))
+    return result
+
+
+def semantic_text_contains_authored_term(text: Any, term: Any) -> bool:
+    """Match an authored term with the shared multilingual tokenizer boundaries."""
+
+    normalized_term = clean_spaces(str(term or ""))
+    normalized_text = clean_spaces(str(text or ""))
+    if not normalized_term or not normalized_text:
+        return False
+    term_tokens = set(
+        tokenize_bm25f_text(normalized_term, lexicon=[normalized_term])
+    )
+    text_tokens = set(
+        tokenize_bm25f_text(normalized_text, lexicon=[normalized_term])
+    )
+    return bool(term_tokens) and term_tokens.issubset(text_tokens)
+
+
+def character_axis_value_classes(data: JsonDict, axis: str, value: Any) -> Set[str]:
+    """Map an authored free-text axis value onto data-declared semantic classes."""
+
+    text = clean_spaces(str(value or "")).casefold()
+    if not text:
+        return set()
+    matched: Set[str] = set()
+    for class_id, aliases in character_axis_class_aliases(data, axis).items():
+        if any(
+            text == clean_spaces(str(alias)).casefold()
+            or semantic_text_contains_authored_term(text, alias)
+            for alias in aliases
+            if clean_spaces(str(alias))
+        ):
+            matched.add(class_id)
+    return matched
+
+
 def validate_character_mechanism_graph(data: JsonDict) -> None:
     """Validate the optional character graph and every bound preset scene.
 
@@ -1858,6 +1952,8 @@ def validate_character_mechanism_graph(data: JsonDict) -> None:
 
     families = unique_rows("families")
     nodes = unique_rows("runtime_nodes")
+    axis_vocabularies = unique_rows("axis_vocabularies")
+    concept_profiles = unique_rows("concept_profiles")
     policies = unique_rows("policies")
     edges = unique_rows("compatibility_edges")
     guards = unique_rows("guard_rules")
@@ -1906,6 +2002,215 @@ def validate_character_mechanism_graph(data: JsonDict) -> None:
             raise ValueError(f"character runtime node {node_id} misclassifies nonvisual guidance")
         if role == "visual_atom" and str(node.get("priority_dimension") or "") not in expected_priority:
             raise ValueError(f"character visual runtime node {node_id} has invalid priority dimension")
+
+    vocabulary_classes: Dict[str, Set[str]] = {}
+    for axis_id, vocabulary in axis_vocabularies.items():
+        allowed_vocabulary_fields = {"id", "description", "classes"}
+        unknown_vocabulary_fields = set(vocabulary) - allowed_vocabulary_fields
+        if unknown_vocabulary_fields:
+            raise ValueError(
+                f"character axis vocabulary {axis_id} has unsupported fields "
+                f"{sorted(unknown_vocabulary_fields)}"
+            )
+        classes = vocabulary.get("classes")
+        if not isinstance(classes, list) or not classes:
+            raise ValueError(f"character axis vocabulary {axis_id} requires classes")
+        class_ids: Set[str] = set()
+        for row in classes:
+            if not isinstance(row, dict) or set(row) - {"id", "aliases", "description"}:
+                raise ValueError(
+                    f"character axis vocabulary {axis_id} has an invalid class row"
+                )
+            class_id = str(row.get("id") or "")
+            aliases = normalize_list(row.get("aliases"))
+            if not class_id or class_id in class_ids or not aliases:
+                raise ValueError(
+                    f"character axis vocabulary {axis_id} classes require unique IDs and aliases"
+                )
+            class_ids.add(class_id)
+        vocabulary_classes[axis_id] = class_ids
+
+    allowed_profile_fields = {
+        "id",
+        "domain",
+        "en",
+        "ko",
+        "ja",
+        "aliases",
+        "definition",
+        "paraphrases",
+        "axis_requirements",
+        "axis_exclusions",
+        "required_relations",
+        "required_evidence_roles",
+        "confounders",
+        "optional_runtime_node_ids",
+        "applicability",
+    }
+    for profile_id, profile in concept_profiles.items():
+        unknown_profile_fields = set(profile) - allowed_profile_fields
+        if unknown_profile_fields:
+            raise ValueError(
+                f"character concept profile {profile_id} has unsupported fields "
+                f"{sorted(unknown_profile_fields)}"
+            )
+        if str(profile.get("domain") or "") != "character_response":
+            raise ValueError(
+                f"character concept profile {profile_id} must use character_response domain"
+            )
+        if not str(profile.get("definition") or "").strip():
+            raise ValueError(f"character concept profile {profile_id} requires a definition")
+        paraphrases = normalize_list(profile.get("paraphrases"))
+        if len(paraphrases) < 3 or len(paraphrases) != len(set(paraphrases)):
+            raise ValueError(
+                f"character concept profile {profile_id} requires distinct multilingual paraphrases"
+            )
+        aliases = normalize_list(profile.get("aliases"))
+        if not aliases or len(aliases) != len(set(aliases)):
+            raise ValueError(
+                f"character concept profile {profile_id} requires distinct aliases"
+            )
+        for label in ("en", "ko", "ja"):
+            if not str(profile.get(label) or "").strip():
+                raise ValueError(
+                    f"character concept profile {profile_id} requires {label} label"
+                )
+        for field in ("axis_requirements", "axis_exclusions"):
+            constraints = profile.get(field) or {}
+            if not isinstance(constraints, dict):
+                raise ValueError(
+                    f"character concept profile {profile_id}.{field} must be an object"
+                )
+            for axis_id, constraint in constraints.items():
+                if axis_id not in vocabulary_classes or not isinstance(constraint, dict):
+                    raise ValueError(
+                        f"character concept profile {profile_id}.{field}.{axis_id} is invalid"
+                    )
+                if set(constraint) != {"semantic_classes"}:
+                    raise ValueError(
+                        f"character concept profile {profile_id}.{field}.{axis_id} "
+                        "must declare semantic_classes only"
+                    )
+                class_ids = normalize_list(constraint.get("semantic_classes"))
+                if not class_ids or not set(class_ids).issubset(
+                    vocabulary_classes[axis_id]
+                ):
+                    raise ValueError(
+                        f"character concept profile {profile_id}.{field}.{axis_id} "
+                        "references unknown semantic classes"
+                    )
+        relations = profile.get("required_relations")
+        if not isinstance(relations, list) or not relations:
+            raise ValueError(
+                f"character concept profile {profile_id} requires semantic relations"
+            )
+        for relation in relations:
+            if not isinstance(relation, dict):
+                raise ValueError(
+                    f"character concept profile {profile_id} has a non-object relation"
+                )
+            operator = str(relation.get("operator") or "")
+            if operator not in CHARACTER_CONCEPT_RELATION_OPERATORS:
+                raise ValueError(
+                    f"character concept profile {profile_id} has invalid relation operator {operator!r}"
+                )
+            if operator == "contrasts" and not all(
+                str(relation.get(key) or "") for key in ("left", "right")
+            ):
+                raise ValueError(
+                    f"character concept profile {profile_id} has an invalid contrasts relation"
+                )
+            if operator == "same_target" and len(
+                set(normalize_list(relation.get("members")))
+            ) < 2:
+                raise ValueError(
+                    f"character concept profile {profile_id} has an invalid same_target relation"
+                )
+            if operator == "temporal_order" and not all(
+                str(relation.get(key) or "") for key in ("first", "then")
+            ):
+                raise ValueError(
+                    f"character concept profile {profile_id} has an invalid temporal relation"
+                )
+        evidence_roles = normalize_list(profile.get("required_evidence_roles"))
+        if (
+            not evidence_roles
+            or len(evidence_roles) != len(set(evidence_roles))
+            or not set(evidence_roles).issubset(CHARACTER_CONCEPT_EVIDENCE_ROLES)
+        ):
+            raise ValueError(
+                f"character concept profile {profile_id} has invalid evidence roles"
+            )
+        confounders = profile.get("confounders")
+        if not isinstance(confounders, list) or not confounders:
+            raise ValueError(
+                f"character concept profile {profile_id} requires confounders"
+            )
+        confounder_ids: Set[str] = set()
+        for confounder in confounders:
+            confounder_id = str(
+                confounder.get("id") if isinstance(confounder, dict) else ""
+            )
+            definition = str(
+                confounder.get("definition") if isinstance(confounder, dict) else ""
+            )
+            if not confounder_id or confounder_id in confounder_ids or not definition:
+                raise ValueError(
+                    f"character concept profile {profile_id} has invalid confounders"
+                )
+            allowed_confounder_fields = {
+                "id",
+                "en",
+                "ko",
+                "ja",
+                "aliases",
+                "definition",
+                "paraphrases",
+            }
+            if set(confounder) - allowed_confounder_fields:
+                raise ValueError(
+                    f"character concept profile {profile_id} confounder "
+                    f"{confounder_id} has unsupported fields"
+                )
+            if any(
+                not str(confounder.get(label) or "").strip()
+                for label in ("en", "ko", "ja")
+            ):
+                raise ValueError(
+                    f"character concept profile {profile_id} confounder "
+                    f"{confounder_id} requires en, ko, and ja meanings"
+                )
+            confounder_paraphrases = normalize_list(
+                confounder.get("paraphrases")
+            )
+            if (
+                len(confounder_paraphrases) < 2
+                or len(confounder_paraphrases)
+                != len(set(confounder_paraphrases))
+            ):
+                raise ValueError(
+                    f"character concept profile {profile_id} confounder "
+                    f"{confounder_id} requires distinct paraphrases"
+                )
+            confounder_ids.add(confounder_id)
+        optional_runtime_ids = normalize_list(profile.get("optional_runtime_node_ids"))
+        if (
+            not optional_runtime_ids
+            or len(optional_runtime_ids) != len(set(optional_runtime_ids))
+            or any(runtime_id not in nodes for runtime_id in optional_runtime_ids)
+        ):
+            raise ValueError(
+                f"character concept profile {profile_id} has invalid optional runtime nodes"
+            )
+        applicability = profile.get("applicability")
+        if not isinstance(applicability, dict) or applicability != {
+            "retrieval_only": True,
+            "hard_eligible": False,
+            "requester_definition_precedence": True,
+        }:
+            raise ValueError(
+                f"character concept profile {profile_id} must remain requester-first and advisory"
+            )
 
     for edge_id, edge in edges.items():
         topic_id = str(edge.get("topic_id") or "")
@@ -8989,15 +9294,223 @@ def resolve_character_response_intent(core: Any) -> JsonDict:
     return resolution
 
 
+def semantic_character_response_concept_document_ids(data: JsonDict) -> Set[str]:
+    return {
+        key
+        for key, kind, _entry, _slot in iter_semantic_entries(data)
+        if kind == "character_response_concept"
+    }
+
+
+def semantic_character_response_confounder_document_ids(
+    data: JsonDict,
+    *,
+    profile_id: Optional[str] = None,
+) -> Set[str]:
+    """Return data-authored contrast documents for one or all concept profiles."""
+
+    expected_profile_id = str(profile_id or "")
+    return {
+        key
+        for key, kind, entry, _slot in iter_semantic_entries(data)
+        if kind == "character_response_confounder"
+        and (
+            not expected_profile_id
+            or str(entry.get("concept_profile_id") or "") == expected_profile_id
+        )
+    }
+
+
+def rank_character_response_concept_candidates(
+    data: JsonDict,
+    bm25f_payload: JsonDict,
+    query_fields: JsonDict,
+    *,
+    limit: int = 3,
+) -> List[JsonDict]:
+    """Rank concept meanings contrastively against their authored confounders.
+
+    Scores and matched terms remain private retrieval evidence. A concept is
+    eligible only when its BM25F document outranks every matching confounder
+    declared by that same profile. This supplies a data-driven negative class
+    without concept-specific regular expressions or a second meaning store.
+    """
+
+    concept_ids = semantic_character_response_concept_document_ids(data)
+    confounder_ids = semantic_character_response_confounder_document_ids(data)
+    allowed_ids = concept_ids | confounder_ids
+    if not concept_ids or not allowed_ids or int(limit) <= 0:
+        return []
+    ranked = rank_bm25f(
+        bm25f_payload,
+        query_fields,
+        allowed_ids=allowed_ids,
+        limit=len(allowed_ids),
+    )
+    entries_by_key = {
+        key: (kind, entry)
+        for key, kind, entry, _slot in iter_semantic_entries(data)
+    }
+    rows_by_id = {
+        str(row.get("document_id") or ""): row
+        for row in ranked
+        if str(row.get("document_id") or "")
+    }
+    accepted: List[JsonDict] = []
+    for row in ranked:
+        document_id = str(row.get("document_id") or "")
+        source = entries_by_key.get(document_id)
+        if source is None or source[0] != "character_response_concept":
+            continue
+        profile_id = str(source[1].get("id") or "")
+        matching_confounders = [
+            rows_by_id[confounder_id]
+            for confounder_id in semantic_character_response_confounder_document_ids(
+                data,
+                profile_id=profile_id,
+            )
+            if confounder_id in rows_by_id
+        ]
+        concept_score = float(row.get("score", 0.0) or 0.0)
+        best_confounder_score = max(
+            (float(candidate.get("score", 0.0) or 0.0) for candidate in matching_confounders),
+            default=0.0,
+        )
+        if concept_score > best_confounder_score:
+            accepted.append(row)
+        if len(accepted) >= int(limit):
+            break
+    return accepted
+
+
 def semantic_character_response_document_ids(data: JsonDict) -> Set[str]:
-    """Select behavior support nodes by authored taxonomy membership, not IDs."""
+    """Select generic behavior support by typed kind or authored membership."""
 
     allowed: Set[str] = set()
-    for key, _kind, entry, _slot in iter_semantic_entries(data):
+    for key, kind, entry, _slot in iter_semantic_entries(data):
+        if kind == "character_mechanism_node":
+            allowed.add(key)
+            continue
         tags = {str(value) for value in normalize_list(entry.get("tags"))}
         if tags & {"character_moe_grammar", "character_scene_grammar"}:
             allowed.add(key)
     return allowed
+
+
+def character_profile_requester_definition_override(
+    core: JsonDict,
+    profile: JsonDict,
+) -> bool:
+    aliases = [
+        clean_spaces(str(value))
+        for value in normalize_list(profile.get("aliases"))
+        if clean_spaces(str(value))
+    ]
+    if not aliases:
+        return False
+    for definition in core.get("user_definitions") or []:
+        if not isinstance(definition, dict):
+            continue
+        text = " ".join(
+            clean_spaces(str(definition.get(key) or ""))
+            for key in (
+                "term",
+                "source_text",
+                "interpreted_meaning",
+                "definition",
+                "resolution",
+            )
+        )
+        if any(
+            semantic_text_contains_authored_term(text, alias)
+            for alias in aliases
+        ):
+            return True
+    return False
+
+
+def evaluate_character_response_profile(
+    core: JsonDict,
+    data: JsonDict,
+    profile: JsonDict,
+) -> JsonDict:
+    """Advisory data-driven conformance; never revises the frozen assertion."""
+
+    resolution = resolve_character_response_intent(core)
+    if resolution.get("enabled") is not True:
+        return {
+            "status": "not_applicable",
+            "reason": "no_required_character_response_assertion",
+            "hard_eligible": False,
+        }
+    if character_profile_requester_definition_override(core, profile):
+        return {
+            "status": "superseded_by_requester_definition",
+            "reason": "requester_definition_precedence",
+            "hard_eligible": False,
+        }
+    axes = resolution.get("semantic_axes") or {}
+    missing_axes: List[str] = []
+    conflicting_axes: List[str] = []
+    matched_classes: JsonDict = {}
+    for axis, constraint in (profile.get("axis_requirements") or {}).items():
+        allowed_classes = set(normalize_list((constraint or {}).get("semantic_classes")))
+        values = normalize_list(axes.get(axis))
+        actual_classes = {
+            class_id
+            for value in values
+            for class_id in character_axis_value_classes(data, axis, value)
+        }
+        matched_classes[str(axis)] = sorted(actual_classes)
+        if not actual_classes & allowed_classes:
+            missing_axes.append(str(axis))
+    for axis, constraint in (profile.get("axis_exclusions") or {}).items():
+        excluded_classes = set(normalize_list((constraint or {}).get("semantic_classes")))
+        values = normalize_list(axes.get(axis))
+        actual_classes = {
+            class_id
+            for value in values
+            for class_id in character_axis_value_classes(data, axis, value)
+        }
+        if actual_classes & excluded_classes:
+            conflicting_axes.append(str(axis))
+    asserted_relations = [
+        relation
+        for assertion in core.get("semantic_assertions") or []
+        if isinstance(assertion, dict)
+        and assertion.get("dimension") == "character_response"
+        and assertion.get("polarity") == "required"
+        for relation in assertion.get("relations") or []
+        if isinstance(relation, dict)
+    ]
+    asserted_relation_hashes = {
+        canonical_json_sha256(relation) for relation in asserted_relations
+    }
+    missing_relations = [
+        str(relation.get("operator") or "")
+        for relation in profile.get("required_relations") or []
+        if isinstance(relation, dict)
+        and canonical_json_sha256(relation) not in asserted_relation_hashes
+    ]
+    if conflicting_axes:
+        status = "conflicting"
+        reason = "excluded_semantic_classes_present"
+    elif missing_axes or missing_relations:
+        status = "incomplete"
+        reason = "required_axes_or_relations_missing"
+    else:
+        status = "consistent"
+        reason = "typed_assertion_matches_profile"
+    return {
+        "status": status,
+        "reason": reason,
+        "missing_axes": sorted(set(missing_axes)),
+        "conflicting_axes": sorted(set(conflicting_axes)),
+        "missing_relation_operators": sorted(set(missing_relations)),
+        "matched_axis_classes": matched_classes,
+        "hard_eligible": False,
+        "frozen_core_revision_forbidden": True,
+    }
 
 
 def retrieve_character_response_behavior_candidates(
@@ -9017,24 +9530,64 @@ def retrieve_character_response_behavior_candidates(
             "reason": "bm25f_index_unavailable",
             "candidates": [],
         }
-    allowed_ids = semantic_character_response_document_ids(data)
-    if not allowed_ids:
+    concept_ids = semantic_character_response_concept_document_ids(data)
+    behavior_ids = semantic_character_response_document_ids(data)
+    if not concept_ids and not behavior_ids:
         return {
             "evaluated": False,
             "reason": "no_authored_behavior_documents",
             "candidates": [],
         }
     query_fields = authorial_core_bm25f_query_fields(core)
-    rows = rank_bm25f(
-        semantic_bm25f_payload_from_index(semantic_index),
+    bm25f_payload = semantic_bm25f_payload_from_index(semantic_index)
+    concept_rows = rank_character_response_concept_candidates(
+        data,
+        bm25f_payload,
         query_fields,
-        allowed_ids=allowed_ids,
-        limit=max(1, int(limit)),
+        limit=min(3, max(1, int(limit))),
     )
     entries_by_key = {
         key: (kind, entry, slot)
         for key, kind, entry, slot in iter_semantic_entries(data)
     }
+    linked_behavior_ids: Set[str] = set()
+    concept_consistency_by_id: Dict[str, JsonDict] = {}
+    for row in concept_rows:
+        document_id = str(row.get("document_id") or "")
+        source = entries_by_key.get(document_id)
+        if source is None:
+            continue
+        _kind, profile, _slot = source
+        consistency = evaluate_character_response_profile(core, data, profile)
+        concept_consistency_by_id[document_id] = consistency
+        if consistency.get("status") in {
+            "conflicting",
+            "superseded_by_requester_definition",
+        }:
+            continue
+        linked_behavior_ids.update(
+            f"character_mechanism_node:{runtime_id}"
+            for runtime_id in normalize_list(profile.get("optional_runtime_node_ids"))
+        )
+    legacy_behavior_ids = {
+        key
+        for key in behavior_ids
+        if (entries_by_key.get(key) or (None, None, None))[0]
+        != "character_mechanism_node"
+    }
+    ranked_behavior_ids = linked_behavior_ids if concept_rows else legacy_behavior_ids
+    remaining = max(0, int(limit) - len(concept_rows))
+    behavior_rows = (
+        rank_bm25f(
+            bm25f_payload,
+            query_fields,
+            allowed_ids=ranked_behavior_ids,
+            limit=remaining,
+        )
+        if remaining and ranked_behavior_ids
+        else []
+    )
+    rows = [*concept_rows, *behavior_rows]
     candidates: List[JsonDict] = []
     for row in rows:
         key = str(row.get("document_id") or "")
@@ -9049,19 +9602,34 @@ def retrieve_character_response_behavior_candidates(
                 *normalize_list(entry.get("embedding_text")),
                 str(entry.get("en") or ""),
                 str(entry.get("ko") or ""),
+                str(entry.get("ja") or ""),
             )
             if clean_spaces(str(value))
         ]
-        candidates.append(
-            {
-                "candidate_id": key,
-                "kind": kind,
-                "slot": slot,
-                "concept_terms": list(dict.fromkeys(terms))[:12],
-                "applicability": "advisory_only",
-                "hard_eligible": False,
-            }
-        )
+        candidate: JsonDict = {
+            "candidate_id": key,
+            "candidate_type": (
+                "concept_profile"
+                if kind == "character_response_concept"
+                else "behavior_support"
+            ),
+            "kind": kind,
+            "slot": slot,
+            "concept_terms": list(dict.fromkeys(terms))[:12],
+            "applicability": "advisory_only",
+            "hard_eligible": False,
+        }
+        if kind == "character_response_concept":
+            consistency = concept_consistency_by_id.get(key) or (
+                evaluate_character_response_profile(core, data, entry)
+            )
+            candidate["semantic_consistency"] = consistency
+            if consistency.get("status") in {
+                "conflicting",
+                "superseded_by_requester_definition",
+            }:
+                candidate["applicability"] = "diagnostic_only"
+        candidates.append(candidate)
     seed = int.from_bytes(
         hashlib.sha256(
             f"character-response-bm25f|{core.get('canonical_sha256') or ''}".encode(
@@ -9077,6 +9645,15 @@ def retrieve_character_response_behavior_candidates(
         "query_fields_sha256": canonical_json_sha256(query_fields),
         "candidate_order": "deterministically_shuffled_non_preferential",
         "hardening_policy": "retrieval_hits_never_create_required_evidence",
+        "concept_profile_matches": len(concept_rows),
+        "concept_profile_support_matches": sum(
+            1
+            for consistency in concept_consistency_by_id.values()
+            if consistency.get("status") not in {
+                "conflicting",
+                "superseded_by_requester_definition",
+            }
+        ),
         "candidates": candidates,
     }
 
@@ -15232,6 +15809,7 @@ def dictionary_hash(data: JsonDict) -> str:
         "recipes": data.get("recipes", []),
         "slots": data.get("slots", {}),
         "facet_vocab": data.get("facet_vocab", {}),
+        "character_mechanism_graph": data.get("character_mechanism_graph", {}),
     }
     payload = json.dumps(material, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
@@ -15329,15 +15907,60 @@ def semantic_axis_routed_families_for_slot(source: Optional[JsonDict], slot: str
     }
 
 
-def semantic_text_for_entry(entry: Entry, slot: Optional[str] = None) -> str:
+def semantic_relation_texts(entry: Entry) -> List[str]:
+    texts: List[str] = []
+    for relation in entry.get("required_relations") or []:
+        if not isinstance(relation, dict):
+            continue
+        operator = clean_spaces(str(relation.get("operator") or ""))
+        if operator == "contrasts":
+            texts.append(
+                f"{relation.get('left')} contrasts with {relation.get('right')}"
+            )
+        elif operator == "same_target":
+            texts.append(
+                "same relationship target for "
+                + ", ".join(normalize_list(relation.get("members")))
+            )
+        elif operator == "temporal_order":
+            texts.append(
+                f"{relation.get('first')} precedes or coexists before {relation.get('then')}"
+            )
+        else:
+            texts.append(" ".join(str(value) for value in relation.values()))
+    return [clean_spaces(value) for value in texts if clean_spaces(value)]
+
+
+def semantic_text_for_entry(
+    entry: Entry,
+    slot: Optional[str] = None,
+    *,
+    kind: Optional[str] = None,
+) -> str:
     """Build embedding input from public visual-language fields only.
 
     Stable IDs, tags, kinds, facets, routing metadata, and validation notes are
     control-plane data. Including them makes retrieval learn how an entry was
     developed instead of what should be visible in the photograph.
     """
-    parts: List[str] = [semantic_caption_for_entry(entry, slot)]
-    for key in ("en", "ko"):
+    if kind == "character_response_concept":
+        parts: List[str] = [
+            "Character-response concept meaning: "
+            + clean_spaces(str(entry.get("definition") or ""))
+        ]
+    elif kind == "character_response_confounder":
+        parts = [
+            "Character-response confounder meaning: "
+            + clean_spaces(str(entry.get("definition") or ""))
+        ]
+    elif kind == "character_mechanism_node":
+        parts = [
+            "Optional character-response mechanism: "
+            + clean_spaces(str(entry.get("definition") or ""))
+        ]
+    else:
+        parts = [semantic_caption_for_entry(entry, slot)]
+    for key in ("en", "ko", "ja"):
         if entry.get(key):
             parts.append(f"{key} label: {entry[key]}.")
     for key in ("aliases", "keywords", "terms"):
@@ -15346,12 +15969,23 @@ def semantic_text_for_entry(entry: Entry, slot: Optional[str] = None) -> str:
             parts.append(f"{key}: {', '.join(values)}.")
     if slot:
         parts.append(f"slot: {slot}.")
+    relations = semantic_relation_texts(entry)
+    if relations:
+        parts.append("semantic relations: " + "; ".join(relations) + ".")
+    manifestations = normalize_list(entry.get("manifestations"))
+    if manifestations:
+        parts.append("optional manifestations: " + "; ".join(manifestations) + ".")
+    paraphrases = normalize_list(entry.get("paraphrases"))
+    if paraphrases:
+        parts.append("paraphrases: " + "; ".join(paraphrases) + ".")
     return " ".join(parts)
 
 
 def semantic_bm25f_fields_for_entry(
     entry: Entry,
     slot: Optional[str] = None,
+    *,
+    kind: Optional[str] = None,
 ) -> JsonDict:
     """Project public visual-language fields into one generic BM25F document."""
 
@@ -15363,24 +15997,65 @@ def semantic_bm25f_fields_for_entry(
         ],
         "labels": [
             clean_spaces(str(entry.get(key) or ""))
-            for key in ("en", "ko")
+            for key in ("en", "ko", "ja")
             if clean_spaces(str(entry.get(key) or ""))
         ],
-        "semantic_caption": [semantic_caption_for_entry(entry, slot)],
+        "semantic_caption": [
+            semantic_caption_for_entry(entry, slot)
+            if kind
+            not in {
+                "character_response_concept",
+                "character_response_confounder",
+                "character_mechanism_node",
+            }
+            else (
+                "Character-response concept meaning"
+                if kind == "character_response_concept"
+                else (
+                    "Character-response confounder meaning"
+                    if kind == "character_response_confounder"
+                    else "Optional character-response mechanism"
+                )
+            )
+        ],
+        "definition": [clean_spaces(str(entry.get("definition") or ""))]
+        if clean_spaces(str(entry.get("definition") or ""))
+        else [],
+        "paraphrases": [
+            clean_spaces(str(value))
+            for value in normalize_list(entry.get("paraphrases"))
+            if clean_spaces(str(value))
+        ],
+        "semantic_relations": semantic_relation_texts(entry),
+        "manifestations": [
+            clean_spaces(str(value))
+            for value in normalize_list(entry.get("manifestations"))
+            if clean_spaces(str(value))
+        ],
         "keywords": [
             clean_spaces(str(value))
             for key in ("keywords", "terms", "embedding_text")
             for value in normalize_list(entry.get(key))
             if clean_spaces(str(value))
         ],
-        "slot_context": [clean_spaces(str(slot or ""))] if slot else [],
+        "slot_context": [
+            clean_spaces(str(slot or kind or ""))
+        ]
+        if slot
+        or kind
+        in {
+            "character_response_concept",
+            "character_response_confounder",
+            "character_mechanism_node",
+        }
+        else [],
     }
 
 
 def semantic_bm25f_documents(data: JsonDict) -> Dict[str, JsonDict]:
     return {
-        key: semantic_bm25f_fields_for_entry(entry, slot)
-        for key, _kind, entry, slot in iter_semantic_entries(data)
+        key: semantic_bm25f_fields_for_entry(entry, slot, kind=kind)
+        for key, kind, entry, slot in iter_semantic_entries(data)
     }
 
 
@@ -15390,7 +16065,7 @@ def semantic_bm25f_lexicon(data: JsonDict) -> List[str]:
         {
             clean_spaces(str(value))
             for fields in documents.values()
-            for field in ("aliases", "labels")
+            for field in ("aliases", "labels", "paraphrases")
             for value in fields.get(field) or []
             if clean_spaces(str(value))
         },
@@ -15554,6 +16229,15 @@ def semantic_entry_key(kind: str, entry: Entry, slot: Optional[str] = None) -> s
         return f"preset:{entry.get('id')}"
     if kind == "virtual_preset":
         return f"preset:virtual:{entry.get('id')}"
+    if kind == "character_response_concept":
+        return f"character_response_concept:{entry.get('id')}"
+    if kind == "character_response_confounder":
+        return (
+            "character_response_confounder:"
+            f"{entry.get('concept_profile_id')}:{entry.get('id')}"
+        )
+    if kind == "character_mechanism_node":
+        return f"character_mechanism_node:{entry.get('id')}"
     return f"slot:{slot}:{entry.get('id')}"
 
 
@@ -15571,6 +16255,47 @@ def iter_semantic_entries(data: JsonDict) -> List[tuple[str, str, Entry, Optiona
         for entry in slot_entries:
             key = semantic_entry_key("slot", entry, slot)
             entries.append((key, "slot", entry, slot))
+    graph = data.get("character_mechanism_graph")
+    if isinstance(graph, dict):
+        nodes_by_id = {
+            str(node.get("id") or ""): node
+            for node in graph.get("runtime_nodes") or []
+            if isinstance(node, dict) and str(node.get("id") or "")
+        }
+        referenced_runtime_ids: Set[str] = set()
+        for raw_profile in graph.get("concept_profiles") or []:
+            if not isinstance(raw_profile, dict):
+                continue
+            profile = copy.deepcopy(raw_profile)
+            runtime_ids = normalize_list(profile.get("optional_runtime_node_ids"))
+            referenced_runtime_ids.update(runtime_ids)
+            profile["manifestations"] = [
+                clean_spaces(str((nodes_by_id.get(runtime_id) or {}).get("definition") or ""))
+                for runtime_id in runtime_ids
+                if clean_spaces(
+                    str((nodes_by_id.get(runtime_id) or {}).get("definition") or "")
+                )
+            ]
+            key = semantic_entry_key("character_response_concept", profile)
+            entries.append((key, "character_response_concept", profile, None))
+            for raw_confounder in profile.get("confounders") or []:
+                if not isinstance(raw_confounder, dict):
+                    continue
+                confounder = copy.deepcopy(raw_confounder)
+                confounder["concept_profile_id"] = str(profile.get("id") or "")
+                key = semantic_entry_key(
+                    "character_response_confounder",
+                    confounder,
+                )
+                entries.append(
+                    (key, "character_response_confounder", confounder, None)
+                )
+        for runtime_id in sorted(referenced_runtime_ids):
+            node = nodes_by_id.get(runtime_id)
+            if node is None:
+                continue
+            key = semantic_entry_key("character_mechanism_node", node)
+            entries.append((key, "character_mechanism_node", node, None))
     return entries
 
 
@@ -15591,7 +16316,10 @@ def build_semantic_index_payload(
     dims = semantic_dimensions_value(dimensions)
     batch = max(1, int(batch_size))
     rows = iter_semantic_entries(data)
-    texts = [semantic_text_for_entry(entry, slot) for _, _, entry, slot in rows]
+    texts = [
+        semantic_text_for_entry(entry, slot, kind=kind)
+        for _, kind, entry, slot in rows
+    ]
     vectors: List[List[float]] = []
     for start in range(0, len(texts), batch):
         vectors.extend(

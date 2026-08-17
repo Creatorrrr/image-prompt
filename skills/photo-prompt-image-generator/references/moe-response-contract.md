@@ -6,6 +6,8 @@ For the normal v6 workflow, use `character_response` when the candidate pack con
 
 Copy the contract's nine `frozen_evidence` phrases into the final prompt exactly: actor, baseline, trigger, target, primary action, affect leak, visible response, immediate consequence, and continuity. Keep the declared semantic axes intact, use one primary action and exactly one primary affect-leak channel, and do not invent a relationship, emotion, gaze geometry, face landmark, pose, or story endpoint. `advisory_retrieval.candidates` are optional unordered support; they may all be rejected and can never replace or harden frozen evidence.
 
+A `concept_profile` candidate comes from contrastive BM25F over one data-authored meaning and its data-authored confounders. Its `semantic_consistency` reports only whether the frozen typed assertion matches the profile's abstract axes and relations. `incomplete` and `conflicting` are diagnostics, not instructions to add missing geometry or rewrite the baseline; `consistent` is not a render gate. `conflicting` and `superseded_by_requester_definition` make the candidate `diagnostic_only`, suppress all linked behavior support, and forbid legacy fallback. Behavior-support candidates may come only from an eligible retained profile's optional runtime-node links, and all retrieval scores, ranks, matched terms, frequencies, and vectors remain private.
+
 The composed object binds this without exposing retrieval scores:
 
 ```json

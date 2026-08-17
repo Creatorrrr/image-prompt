@@ -70,7 +70,16 @@ def checkpoint_path_for(output: Path, explicit: str | Path | None = None) -> Pat
 
 
 def metadata_matches(payload: dict, expected: dict, require_dictionary_hash: bool = False) -> bool:
-    keys = ["provider", "semantic_text_recipe", "embedding_model", "embedding_dimensions"]
+    """Check vector-space compatibility before exact text-level cache reuse.
+
+    A semantic text recipe version can change because new document kinds or
+    fields were added while older entries retain byte-identical input text.
+    ``build_resumable_index_payload`` compares every cached entry's exact text
+    before reuse, so provider/model/dimensions are the only global vector-space
+    constraints required here.
+    """
+
+    keys = ["provider", "embedding_model", "embedding_dimensions"]
     if require_dictionary_hash:
         keys.append("dictionary_hash")
     return all(payload.get(key) == expected.get(key) for key in keys)
@@ -219,7 +228,7 @@ def build_resumable_index_payload(
 
     pending = []
     for key, kind, entry, slot in rows:
-        text = semantic_text_for_entry(entry, slot)
+        text = semantic_text_for_entry(entry, slot, kind=kind)
         cached = entries.get(key)
         if (
             cached

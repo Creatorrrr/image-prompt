@@ -5398,7 +5398,7 @@
     "subject_category_overrides": {}
   },
   "character_mechanism_graph": {
-    "schema_version": "photo-character-mechanism-graph/v1",
+    "schema_version": "photo-character-mechanism-graph/v2",
     "domain": "character_moe_grammar",
     "priority_order": [
       "observable_action",
@@ -5408,6 +5408,455 @@
       "costume"
     ],
     "max_support_cues": 2,
+    "axis_vocabularies": [
+      {
+        "id": "surface_affect",
+        "description": "The social function of the character's outwardly displayed affect, independent of pose or facial geometry.",
+        "classes": [
+          {
+            "id": "guarded",
+            "aliases": [
+              "guarded",
+              "defensive",
+              "reserved",
+              "경계하는",
+              "방어적인",
+              "퉁명스러운",
+              "警戒した",
+              "身構えた"
+            ]
+          },
+          {
+            "id": "rejecting",
+            "aliases": [
+              "rejecting",
+              "dismissive",
+              "protesting",
+              "거절하는",
+              "일축하는",
+              "拒む",
+              "突き放す"
+            ]
+          },
+          {
+            "id": "distancing",
+            "aliases": [
+              "distancing",
+              "aloof",
+              "keeping distance",
+              "거리를 두는",
+              "냉담한",
+              "距離を置く",
+              "よそよそしい"
+            ]
+          },
+          {
+            "id": "open_warmth",
+            "aliases": [
+              "open warmth",
+              "openly affectionate",
+              "openly caring",
+              "공개적인 애정",
+              "다정함을 숨기지 않는",
+              "素直な好意"
+            ]
+          },
+          {
+            "id": "hostile",
+            "aliases": [
+              "hostile",
+              "cruel",
+              "threatening",
+              "적대적인",
+              "잔인한",
+              "敵対的",
+              "残酷な"
+            ]
+          },
+          {
+            "id": "shy_avoidance",
+            "aliases": [
+              "shy avoidance",
+              "timid",
+              "수줍어 피하는",
+              "소심한",
+              "恥ずかしくて避ける"
+            ]
+          },
+          {
+            "id": "professional_neutral",
+            "aliases": [
+              "professional neutral",
+              "routine service",
+              "직업적인 중립",
+              "일상적 서비스",
+              "職業的な中立"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "underlying_affiliation",
+        "description": "The authored valence of the character's affiliation toward the named relationship target.",
+        "classes": [
+          {
+            "id": "positive",
+            "aliases": [
+              "positive",
+              "caring",
+              "fond",
+              "prosocial",
+              "호감",
+              "애착",
+              "아끼는",
+              "好意",
+              "思いやり"
+            ]
+          },
+          {
+            "id": "neutral",
+            "aliases": [
+              "neutral",
+              "indifferent",
+              "중립",
+              "무관심",
+              "中立",
+              "無関心"
+            ]
+          },
+          {
+            "id": "negative",
+            "aliases": [
+              "negative",
+              "dislike",
+              "hostility",
+              "반감",
+              "혐오",
+              "敵意",
+              "嫌悪"
+            ]
+          },
+          {
+            "id": "obsessive",
+            "aliases": [
+              "obsessive",
+              "possessive",
+              "집착",
+              "소유욕",
+              "執着",
+              "独占欲"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "affect_leak_timing",
+        "description": "The temporal relation between the outward response and the positive-affect leak.",
+        "classes": [
+          {
+            "id": "during_surface",
+            "aliases": [
+              "during surface denial",
+              "simultaneous",
+              "while protesting",
+              "퉁명스러운 태도 중",
+              "거절과 동시에",
+              "拒みながら"
+            ]
+          },
+          {
+            "id": "after_surface",
+            "aliases": [
+              "after surface denial",
+              "delayed",
+              "afterward",
+              "뒤늦게",
+              "거절 뒤에",
+              "遅れて",
+              "拒んだ後"
+            ]
+          },
+          {
+            "id": "immediate_open",
+            "aliases": [
+              "immediate open affection",
+              "openly from the start",
+              "처음부터 공개적인 애정",
+              "最初から素直な好意"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "affect_leak_intentionality",
+        "description": "Whether the affective evidence is involuntary, deliberately minimized, openly deliberate, or absent.",
+        "classes": [
+          {
+            "id": "involuntary",
+            "aliases": [
+              "involuntary",
+              "unbidden",
+              "uncontrolled",
+              "무의식적인",
+              "저절로 드러나는",
+              "無意識に漏れる"
+            ]
+          },
+          {
+            "id": "minimized",
+            "aliases": [
+              "minimized",
+              "suppressed",
+              "played down",
+              "감추려는",
+              "억누른",
+              "押し隠した"
+            ]
+          },
+          {
+            "id": "deliberate",
+            "aliases": [
+              "deliberate",
+              "openly intended",
+              "의도적으로 공개한",
+              "意図的に示す"
+            ]
+          },
+          {
+            "id": "absent",
+            "aliases": [
+              "absent",
+              "no affect leak",
+              "감정 누출 없음",
+              "感情の漏れなし"
+            ]
+          }
+        ]
+      }
+    ],
+    "concept_profiles": [
+      {
+        "id": "tsundere",
+        "domain": "character_response",
+        "en": "a guarded, rejecting, or distancing surface toward one counterpart contradicted by a minimized or involuntary sign of positive affiliation toward that same counterpart",
+        "ko": "특정 상대에게 퉁명스럽거나 거리를 두지만 같은 상대에 대한 숨은 호감이 비의도적이거나 억제된 반응으로 드러나는 츤데레",
+        "ja": "特定の相手にそっけなく距離を置きながら、同じ相手への好意が無意識または抑えた反応として漏れるツンデレ",
+        "aliases": [
+          "츤데레",
+          "ツンデレ",
+          "tsundere"
+        ],
+        "definition": "A guarded, rejecting, or distancing surface toward a specific counterpart is contradicted by a minimized or involuntary sign of positive affiliation toward that same counterpart. The contradiction, shared relationship target, and concealment failure define the concept; no particular gaze, facial geometry, pose, role, or prop is required.",
+        "paraphrases": [
+          "퉁명스럽게 말하면서도 다친 동료를 계속 챙기고 그 반응을 몰래 확인한다",
+          "같은 상대를 밀어내는 태도와 숨길 수 없는 호감의 흔적이 동시에 드러난다",
+          "차갑게 선을 긋지만 행동은 같은 상대를 보호하고 애정 표현은 곧바로 축소한다",
+          "She keeps helping the same counterpart while dismissing any suggestion that she cares.",
+          "A rejecting surface gives way to one minimized sign of positive affiliation toward the same person.",
+          "冷たく振る舞いながら同じ相手への気遣いが漏れ、その好意をすぐに隠そうとする",
+          "同じ相手への気遣い",
+          "好意が漏れる",
+          "好意を隠す"
+        ],
+        "axis_requirements": {
+          "surface_affect": {
+            "semantic_classes": [
+              "guarded",
+              "rejecting",
+              "distancing"
+            ]
+          },
+          "underlying_affiliation": {
+            "semantic_classes": [
+              "positive"
+            ]
+          },
+          "affect_leak_timing": {
+            "semantic_classes": [
+              "during_surface",
+              "after_surface"
+            ]
+          },
+          "affect_leak_intentionality": {
+            "semantic_classes": [
+              "involuntary",
+              "minimized"
+            ]
+          }
+        },
+        "axis_exclusions": {
+          "surface_affect": {
+            "semantic_classes": [
+              "hostile",
+              "shy_avoidance",
+              "professional_neutral",
+              "open_warmth"
+            ]
+          },
+          "underlying_affiliation": {
+            "semantic_classes": [
+              "neutral",
+              "negative",
+              "obsessive"
+            ]
+          },
+          "affect_leak_timing": {
+            "semantic_classes": [
+              "immediate_open"
+            ]
+          },
+          "affect_leak_intentionality": {
+            "semantic_classes": [
+              "deliberate",
+              "absent"
+            ]
+          }
+        },
+        "required_relations": [
+          {
+            "operator": "contrasts",
+            "left": "surface_affect",
+            "right": "underlying_affiliation"
+          },
+          {
+            "operator": "same_target",
+            "members": [
+              "relationship_target",
+              "primary_action",
+              "affect_leak"
+            ]
+          },
+          {
+            "operator": "temporal_order",
+            "first": "surface_affect",
+            "then": "affect_leak"
+          }
+        ],
+        "required_evidence_roles": [
+          "baseline",
+          "relationship_target",
+          "surface_behavior",
+          "contradicting_action_or_leak",
+          "immediate_consequence"
+        ],
+        "confounders": [
+        {
+          "id": "pure_hostility",
+          "en": "pure hostility toward the counterpart with no observable positive affiliation",
+          "ko": "같은 상대에 대한 호감이나 배려 없이 미워하고 위협하며 화만 내는 순수한 적대",
+          "ja": "同じ相手への好意や気遣いがなく、憎み脅すだけの純粋な敵意",
+          "aliases": [
+            "pure hostility",
+            "순수한 적대",
+            "純粋な敵意"
+          ],
+          "definition": "The surface is hostile and no positive affiliation toward the same counterpart becomes observable.",
+          "paraphrases": [
+            "상대를 미워해서 위협하고 계속 화만 낸다",
+            "no positive affiliation, only hostility toward the target",
+            "相手を憎んで脅すだけで好意はない"
+          ]
+        },
+        {
+          "id": "generic_shyness",
+          "en": "generic shyness without a denial-versus-affiliation contradiction",
+          "ko": "거절과 숨은 호감의 대비 없이 그저 수줍어서 시선을 피하는 일반적인 소심함",
+          "ja": "拒絶と隠れた好意の対比がなく、ただ恥ずかしくて避ける一般的な内気さ",
+          "aliases": [
+            "generic shyness",
+            "일반적인 소심함",
+            "一般的な内気さ"
+          ],
+          "definition": "The character merely avoids attention without active guardedness or a denial-versus-affiliation contradiction.",
+          "paraphrases": [
+            "그저 수줍어서 관심을 피한다",
+            "merely shy without a guarded contradiction",
+            "ただ恥ずかしくて注目を避ける"
+          ]
+        },
+        {
+          "id": "generic_kindness",
+          "en": "generic open kindness with no guarded or rejecting surface",
+          "ko": "누구에게나 공개적으로 상냥하고 친절하여 감정 대비가 없는 일반적 호의",
+          "ja": "そっけない表面や拒絶がなく、誰にでも素直に優しい一般的な親切",
+          "aliases": [
+            "generic kindness",
+            "일반적 호의",
+            "一般的な親切"
+          ],
+          "definition": "A helpful act is openly warm and has no guarded or rejecting surface to contradict.",
+          "paraphrases": [
+            "누구에게나 상냥하고 공개적으로 친절하다",
+            "open kindness without a guarded surface",
+            "誰にでも素直に優しくする"
+          ]
+        },
+        {
+          "id": "role_only_service",
+          "en": "routine professional service explained only by role duty",
+          "ko": "숨은 호감이 아니라 직업적 의무만으로 설명되는 일상적 서비스 행동",
+          "ja": "隠れた好意ではなく職務上の義務だけで説明できる日常的なサービス",
+          "aliases": [
+            "role-only service",
+            "직업적 의무",
+            "職務上の義務"
+          ],
+          "definition": "The behavior is fully explained by routine professional or service duty rather than concealed affiliation.",
+          "paraphrases": [
+            "직원으로서 일상적인 서비스를 한다",
+            "routine professional duty only",
+            "職員として通常のサービスをする"
+          ]
+        },
+        {
+          "id": "open_affection_without_concealment",
+          "en": "open affection expressed from the start without concealment or denial",
+          "ko": "감추거나 부정하지 않고 처음부터 호감을 공개적으로 표현하는 애정",
+          "ja": "隠したり否定したりせず最初から好意を素直に示す愛情",
+          "aliases": [
+            "open affection",
+            "공개적인 애정",
+            "素直な愛情"
+          ],
+          "definition": "Positive affiliation is deliberately and openly expressed from the start.",
+          "paraphrases": [
+            "처음부터 호감을 숨기지 않고 표현한다",
+            "open affection from the start",
+            "最初から好意を隠さず示す"
+          ]
+        },
+        {
+          "id": "possessive_obsession",
+          "en": "possessive obsession centered on surveillance, control, coercion, or ownership",
+          "ko": "배려보다 감시 통제 강요 소유욕이 앞서는 집착적 관계",
+          "ja": "思いやりではなく監視、支配、強要、独占欲が中心の執着関係",
+          "aliases": [
+            "possessive obsession",
+            "얀데레",
+            "ヤンデレ"
+          ],
+          "definition": "Control, surveillance, coercion, or possessiveness replaces prosocial affiliation and concealment failure.",
+          "paraphrases": [
+            "상대를 감시하고 소유하려는 얀데레",
+            "surveillance, control, coercion, and possessiveness",
+            "相手を監視して独占しようとする"
+          ]
+        }
+        ],
+        "optional_runtime_node_ids": [
+          "affection_latency_axis",
+          "dere_type_label_guard",
+          "outward_inner_affect_split",
+          "protective_distance_behavior",
+          "relationship_triggered_softening"
+        ],
+        "applicability": {
+          "retrieval_only": true,
+          "hard_eligible": false,
+          "requester_definition_precedence": true
+        }
+      }
+    ],
     "families": [
       {
         "id": "trait_contrast_graph",
