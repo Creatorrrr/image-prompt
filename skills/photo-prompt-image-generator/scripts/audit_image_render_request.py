@@ -206,6 +206,65 @@ def audit_image_render_request(
             }
         )
 
+    runtime_label_rules: list[dict[str, str]] = [
+        {"label": str(label), "source": "authorial_core"}
+        for label in authorial_core.get("runtime_forbidden_labels") or []
+        if str(label).strip()
+    ]
+    for obligation in (effective_visual_contract or {}).get("obligations") or []:
+        if not isinstance(obligation, dict):
+            continue
+        expression = (
+            obligation.get("runtime_expression")
+            if isinstance(obligation.get("runtime_expression"), dict)
+            else {}
+        )
+        runtime_label_rules.extend(
+            {
+                "label": str(label),
+                "source": f"visual_profile:{obligation.get('id') or ''}",
+            }
+            for label in expression.get("runtime_forbidden_labels") or []
+            if str(label).strip()
+        )
+    deduped_runtime_rules: list[dict[str, str]] = []
+    seen_runtime_labels: set[str] = set()
+    for rule in runtime_label_rules:
+        key = rule["label"].casefold()
+        if key in seen_runtime_labels:
+            continue
+        seen_runtime_labels.add(key)
+        deduped_runtime_rules.append(rule)
+    runtime_surfaces = {
+        "runtime_prompt_en": runtime_prompt,
+        "runtime_negative_en": (
+            str(runtime_negative) if runtime_negative is not None else ""
+        ),
+    }
+    runtime_label_hits = [
+        {
+            **rule,
+            "surfaces": [
+                surface
+                for surface, text in runtime_surfaces.items()
+                if audit_composed_prompt.text_contains_term(text, rule["label"])
+            ],
+        }
+        for rule in deduped_runtime_rules
+        if any(
+            audit_composed_prompt.text_contains_term(text, rule["label"])
+            for text in runtime_surfaces.values()
+        )
+    ]
+    if runtime_label_hits:
+        failures.append(
+            {
+                "check": "runtime_forbidden_label",
+                "reason": "a meaning-resolution label leaked into a concrete runtime prompt surface",
+                "hits": runtime_label_hits,
+            }
+        )
+
     boundary = request.get("audit_boundary")
     if not isinstance(boundary, dict):
         failures.append(

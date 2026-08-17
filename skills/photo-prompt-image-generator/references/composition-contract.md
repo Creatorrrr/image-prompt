@@ -2,9 +2,9 @@
 
 Post-core only. This reference must not participate in initial meaning resolution or baseline authoring.
 
-## Candidate Pack v5: Normal Skill Contract
+## Candidate Pack v6: Normal Skill Contract
 
-The normal skill path explicitly requests `--candidate-pack-version v5` and supplies one external `photo-request-envelope/v1` plus one `photo-authorial-core/v2`. The raw CLI still defaults to v4 for compatibility, so omission of the version flag is not a valid normal-skill shortcut. A v1 core is accepted only when auditing historical pack evidence; the normal v5 generator rejects it.
+The normal skill path explicitly requests `--candidate-pack-version v6` and supplies one external `photo-request-envelope/v1` plus one `photo-authorial-core/v3`. The raw CLI still defaults to v4 for compatibility, so omission of the version flag is not a valid normal-skill shortcut. V5/v2 and v1 cores remain compatibility or historical-audit paths.
 
 The request envelope is frozen before delegation. It contains the complete byte-exact requester text, its SHA-256, and one or more exact non-overlapping active spans. Multi-topic runs keep the same raw requester text and select only exact arm-local topic and governing global-modifier spans; an agent-authored per-arm paraphrase is invalid. The agent then writes the core before reading any pack, profile, registry, project reference, fixture, or prior result. The core contains that same complete raw text, a context-resolved interpretation, concrete subject/setting/event, two to six visual priorities, a standalone 24–180-word English baseline prompt, optional request-scoped definitions, true requester exclusions, optional runtime-only labels, optional style evidence, `interpretation_provenance`, mandatory empty `unresolved_ambiguities`, and an `agent_prepack` provenance marker.
 
@@ -23,11 +23,13 @@ Visual-profile clarification uses one registry-bound hybrid resolver after the c
 
 The public v5 pack contains no relevance score, probability, sampler winner, fixed three-route hybrid answer, or candidate prose. Every creative row contains unordered concept terms and a semantic band only. A seed chooses material within the allowed range; array order is non-preferential. General candidate retrieval may use rule/context fallback for offline inspection, but v5 visual-profile rule mode is exact-only; only semantic-mode evidence proves embedding-based profile discovery. V4 retains its prior lexical optional-profile behavior for compatibility.
 
-The composed object adds three v5 bindings:
+The composed object keeps the three v5 bindings and adds typed v6 bindings:
 
 - `authorial_core_binding` repeats the exact core and intent-lock hashes, preserves every anchor ID and anchor evidence, lists at least three distinct substantive phrases occurring literally in both baseline and final prompt, and records at least two authored decisions with different open dimensions and rationales. Every explicit `user_exclusions` and `runtime_forbidden_labels` phrase remains absent from the final prompt.
 - `semantic_clarification_decisions` gives every clarification one typed decision. Ordinary rows use `applied` or `rejected`: required meanings cannot be rejected, and context-mismatched or adult-context-gated meanings cannot be applied. V2 core and requester-definition rows are never revisable. `superseded_by_revision` remains auditable only on a historical v1 core hypothesis; it is invalid for v2. Applied evidence is literal, requester evidence is preserved exactly, and runtime-only labels stay absent.
 - `creative_augmentation_brief.decisions` decides every sampled creative row as `transformed` or `rejected`. At most three may be transformed. A transformed ID enters `chosen_candidate_ids` and receives interpretation, transformation, rationale, newly authored literal evidence with at least two content words beyond its source terms, and open-only `affected_dimensions`. Rejecting every creative row is valid.
+- If `semantic_assertion_obligations` exists, `semantic_assertion_evidence` contains exactly `source_contract_sha256` plus an `evidence` map keyed by every required non-character assertion ID. Fields and phrases byte-equal the frozen core evidence and every phrase is literal in `prompt_en`; omitting the pack block, assertion, field, or phrase fails closed.
+- If `character_response` exists, its specialized composed binding remains authoritative for the one required causal response assertion. The audit also compares its assertion ID, source spans, axes, and frozen evidence directly with the core, so removing or mutating the compiled contract cannot bypass the typed meaning.
 
 V5 preserves the v4 authorial scene, open-slot, visual-obligation, viewer, moe, creative-direction, adult-axis, negative, and ordinary candidate-interpretation contracts where present, but all of them are subordinate to `intent_preservation`. They may realize or enrich open dimensions and cannot replace a locked requester meaning. It moves an allowed adult-axis block to top-level `adult_appeal` and expects `adult_appeal_brief`; a skill-default adult axis is omitted unless sexual tone, style, composition, expression, pose, body geometry, framing, and lighting are all explicitly open. Explicit requester controls remain subject to the frozen core and ordinary safety checks.
 

@@ -2046,16 +2046,41 @@ def resolve_concepts(
 
         for mixin, mixin_recipe in mixin_matches:
             applied_recipes.append(mixin_recipe)
-            scaffold_recipes.append(mixin_recipe)
+            soft_bypass_legacy_scaffold = bool(
+                effective_mode == "soft"
+                and mixin_recipe.get("soft_bypass_legacy_scaffold") is True
+            )
+            if not soft_bypass_legacy_scaffold:
+                scaffold_recipes.append(mixin_recipe)
             safety_evaluation_items.extend(
                 safety_transform_items_for_recipe(mixin, mixin_recipe)
             )
-            selected_bundle = select_bundle_for_mixin(concept, mixin, mixin_recipe, args, role)
-            mixin_base_set = set_values_to_forced(mixin_recipe.get("set"))
-            additional_requirements.extend(normalize_list(mixin_recipe.get("additional")))
+            selected_bundle = (
+                None
+                if soft_bypass_legacy_scaffold
+                else select_bundle_for_mixin(
+                    concept,
+                    mixin,
+                    mixin_recipe,
+                    args,
+                    role,
+                )
+            )
+            mixin_base_set = (
+                []
+                if soft_bypass_legacy_scaffold
+                else set_values_to_forced(mixin_recipe.get("set"))
+            )
+            if not soft_bypass_legacy_scaffold:
+                additional_requirements.extend(
+                    normalize_list(mixin_recipe.get("additional"))
+                )
             soft_safety_requirements.extend(soft_safety_requirements_for_recipe(mixin_recipe))
-            soft_salience_cues.extend(soft_salience_cues_for_recipe(mixin_recipe))
-            intent_axes.extend(normalize_list(mixin_recipe.get("intent_axis")))
+            if soft_bypass_legacy_scaffold:
+                intent_axes.extend(normalize_list(mixin_recipe.get("soft_intent_axis")))
+            else:
+                soft_salience_cues.extend(soft_salience_cues_for_recipe(mixin_recipe))
+                intent_axes.extend(normalize_list(mixin_recipe.get("intent_axis")))
             intensity_variant = select_mixin_intensity_variant(concept, mixin_recipe)
             if intensity_variant:
                 variants = mixin_recipe.get("intensity_variants")
@@ -2287,6 +2312,13 @@ def resolve_concepts(
                     max_salience = min(max_salience, min(soft_mixin_cue_budgets))
                 for cue in list(dict.fromkeys(soft_salience_cues))[: max(0, max_salience)]:
                     add_option(resolved_args, "--soft-requirement", cue)
+        elif effective_mode == "soft" and soft_safety_requirements:
+            if typed_requirement_routing:
+                for requirement in dict.fromkeys(soft_safety_requirements):
+                    add_option(resolved_args, "--negative-requirement", requirement)
+            else:
+                for requirement in dict.fromkeys(soft_safety_requirements):
+                    add_option(resolved_args, "--additional-requirement", requirement)
         for axis in intent_axes:
             add_option(resolved_args, "--intent-axis", axis)
 

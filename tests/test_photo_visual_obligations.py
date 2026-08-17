@@ -572,6 +572,124 @@ class PhotoVisualObligationTests(unittest.TestCase):
             {failure["check"] for failure in filler_failures},
         )
 
+    def test_contained_affect_profile_uses_components_and_blocks_labels_at_runtime(self):
+        pack = self.moe_pack(
+            "Photorealistic adult character portrait with a menhera gothic-lolita concept",
+            seed=1413,
+        )
+        obligation = pack["visual_obligations"]["obligations"][0]
+        self.assertEqual(
+            obligation["id"],
+            "contained_affect_self_presentation",
+        )
+        component_semantics = obligation["component_semantics"]
+        self.assertEqual(component_semantics["minimum_component_groups"], 3)
+        self.assertEqual(
+            set(component_semantics["required_group_ids"]),
+            {
+                "controlled_social_surface",
+                "contained_affect_leak",
+                "regulation_or_connection_trace",
+            },
+        )
+        self.assertNotIn(
+            "phone",
+            " ".join(component_semantics["required_group_ids"]),
+        )
+        self.assertEqual(
+            obligation["runtime_expression"]["runtime_forbidden_labels"],
+            ["menhera", "멘헤라", "メンヘラ"],
+        )
+
+        evidence = self.visual_evidence_for_obligation(obligation)
+        prompt_en = self.prompt_for_obligation(obligation, evidence)
+        composed = {
+            "pack_id": pack["pack_id"],
+            "prompt_en": prompt_en,
+            "negative_en": pack["negative_en"],
+            "chosen_visual_concept_ids": [],
+            "visual_obligation_evidence": {obligation["id"]: evidence},
+        }
+        self.assertEqual(
+            audit_composed_prompt.audit_visual_obligations(
+                pack,
+                composed,
+                prompt_en,
+            ),
+            [],
+        )
+        runtime_prompt = prompt_en + f"\nAvoid: {pack['negative_en']}"
+        request = {
+            "schema_version": "photo-image-render-request/v2",
+            "pack_id": pack["pack_id"],
+            "runtime_prompt_en": runtime_prompt,
+            "runtime_negative_en": pack["negative_en"],
+            "audit_boundary": {
+                "composed_prompt_audit_status": "pass",
+                "runtime_prompt_audit_status": "not_run",
+                "inherits_composed_prompt_pass": False,
+            },
+            "references": [],
+        }
+        passed = audit_image_render_request.audit_image_render_request(
+            pack,
+            composed,
+            request,
+        )
+        self.assertEqual(passed["status"], "pass", passed)
+
+        positive_leak = copy.deepcopy(request)
+        positive_leak["runtime_prompt_en"] += "\nmenhera"
+        positive_audit = audit_image_render_request.audit_image_render_request(
+            pack,
+            composed,
+            positive_leak,
+        )
+        self.assertIn(
+            "runtime_forbidden_label",
+            {failure["check"] for failure in positive_audit["failures"]},
+        )
+
+        negative_pack = copy.deepcopy(pack)
+        negative_pack["negative_en"] += ", menhera"
+        negative_composed = copy.deepcopy(composed)
+        negative_composed["negative_en"] = negative_pack["negative_en"]
+        negative_request = copy.deepcopy(request)
+        negative_request["runtime_negative_en"] = negative_pack["negative_en"]
+        negative_request["runtime_prompt_en"] = (
+            prompt_en + f"\nAvoid: {negative_pack['negative_en']}"
+        )
+        negative_audit = audit_image_render_request.audit_image_render_request(
+            negative_pack,
+            negative_composed,
+            negative_request,
+        )
+        runtime_failure = next(
+            failure
+            for failure in negative_audit["failures"]
+            if failure["check"] == "runtime_forbidden_label"
+        )
+        self.assertIn(
+            "runtime_negative_en",
+            runtime_failure["hits"][0]["surfaces"],
+        )
+
+        core_pack = copy.deepcopy(pack)
+        core_pack["authorial_core"] = {
+            "runtime_forbidden_labels": ["private concept"]
+        }
+        core_leak = copy.deepcopy(request)
+        core_leak["runtime_prompt_en"] += "\nprivate concept"
+        core_audit = audit_image_render_request.audit_image_render_request(
+            core_pack,
+            composed,
+            core_leak,
+        )
+        self.assertIn(
+            "runtime_forbidden_label",
+            {failure["check"] for failure in core_audit["failures"]},
+        )
+
     def test_selected_visual_concept_binds_runtime_and_render_review(self):
         pack = self.moe_pack(
             "Photorealistic explicitly nonsexual behavior-led moe scene of an adult "

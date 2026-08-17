@@ -33,6 +33,9 @@ AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS = {
     AUTHORIAL_CORE_V3_CONTRACT_VERSION,
 }
 CHARACTER_RESPONSE_CONTRACT_VERSION = "photo-character-response/v1"
+SEMANTIC_ASSERTION_OBLIGATIONS_CONTRACT_VERSION = (
+    "photo-semantic-assertion-obligations/v1"
+)
 REQUEST_ENVELOPE_CONTRACT_VERSION = "photo-request-envelope/v1"
 REQUEST_BINDING_CONTRACT_VERSION = "photo-request-binding/v1"
 INTENT_LOCK_CONTRACT_VERSION = "photo-intent-lock/v1"
@@ -6457,19 +6460,43 @@ def audit_character_response_v6(
     composed: dict[str, Any],
     prompt_en: str,
 ) -> list[dict[str, Any]]:
+    core = (
+        pack.get("authorial_core")
+        if isinstance(pack.get("authorial_core"), dict)
+        else {}
+    )
+    required_assertions = [
+        item
+        for item in core.get("semantic_assertions") or []
+        if isinstance(item, dict)
+        and item.get("dimension") == "character_response"
+        and item.get("polarity") == "required"
+    ]
     contract = (
         pack.get("character_response")
         if isinstance(pack.get("character_response"), dict)
         else {}
     )
     if not contract:
-        return []
+        return (
+            [
+                {
+                    "check": "character_response_contract",
+                    "reason": "a required typed character-response assertion is missing its downstream contract",
+                }
+            ]
+            if required_assertions
+            else []
+        )
     failures: list[dict[str, Any]] = []
-    core = (
-        pack.get("authorial_core")
-        if isinstance(pack.get("authorial_core"), dict)
-        else {}
-    )
+    if len(required_assertions) != 1:
+        return [
+            {
+                "check": "character_response_contract",
+                "reason": "a character-response contract requires exactly one governing typed assertion",
+            }
+        ]
+    governing_assertion = required_assertions[0]
     frozen = (
         contract.get("frozen_evidence")
         if isinstance(contract.get("frozen_evidence"), dict)
@@ -6489,6 +6516,12 @@ def audit_character_response_v6(
         != core.get("canonical_sha256")
         or contract.get("source_intent_lock_sha256")
         != (core.get("intent_lock") or {}).get("canonical_sha256")
+        or contract.get("source_assertion_id")
+        != governing_assertion.get("assertion_id")
+        or contract.get("source_span_ids")
+        != governing_assertion.get("source_span_ids")
+        or contract.get("semantic_axes") != governing_assertion.get("axes")
+        or frozen != governing_assertion.get("evidence")
         or set(required_fields) != CHARACTER_RESPONSE_REQUIRED_EVIDENCE
         or set(frozen) < CHARACTER_RESPONSE_REQUIRED_EVIDENCE
         or binding.get("new_hard_evidence_from_retrieval_forbidden") is not True
@@ -6574,6 +6607,156 @@ def audit_character_response_v6(
     return failures
 
 
+def expected_semantic_assertion_obligations(
+    core: dict[str, Any],
+) -> dict[str, Any] | None:
+    if core.get("contract_version") != AUTHORIAL_CORE_V3_CONTRACT_VERSION:
+        return None
+    assertions = [
+        item
+        for item in core.get("semantic_assertions") or []
+        if isinstance(item, dict)
+        and item.get("polarity") == "required"
+        and item.get("dimension") != "character_response"
+    ]
+    if not assertions:
+        return None
+    obligations: list[dict[str, Any]] = []
+    for assertion in assertions:
+        frozen = copy.deepcopy(assertion.get("evidence") or {})
+        obligations.append(
+            {
+                "assertion_id": str(assertion.get("assertion_id") or ""),
+                "dimension": str(assertion.get("dimension") or ""),
+                "affected_dimensions": copy.deepcopy(
+                    assertion.get("affected_dimensions") or []
+                ),
+                "source_span_ids": copy.deepcopy(
+                    assertion.get("source_span_ids") or []
+                ),
+                "semantic_axes": copy.deepcopy(assertion.get("axes") or {}),
+                "frozen_evidence": frozen,
+                "prompt_binding": {
+                    "required_evidence_fields": list(frozen),
+                    "all_required_phrases_must_be_literal_in_final_prompt": True,
+                    "evidence_must_remain_byte_identical": True,
+                    "new_hard_evidence_from_retrieval_forbidden": True,
+                },
+            }
+        )
+    expected: dict[str, Any] = {
+        "contract_version": SEMANTIC_ASSERTION_OBLIGATIONS_CONTRACT_VERSION,
+        "enabled": True,
+        "source": "authorial_core_semantic_assertions",
+        "source_authorial_core_sha256": str(core.get("canonical_sha256") or ""),
+        "source_intent_lock_sha256": str(
+            ((core.get("intent_lock") or {}).get("canonical_sha256") or "")
+        ),
+        "composed_field": "semantic_assertion_evidence",
+        "obligations": obligations,
+    }
+    expected["canonical_sha256"] = canonical_json_sha256(expected)
+    return expected
+
+
+def audit_semantic_assertion_obligations_v6(
+    pack: dict[str, Any],
+    composed: dict[str, Any],
+    prompt_en: str,
+) -> list[dict[str, Any]]:
+    core = (
+        pack.get("authorial_core")
+        if isinstance(pack.get("authorial_core"), dict)
+        else {}
+    )
+    expected = expected_semantic_assertion_obligations(core)
+    supplied = (
+        pack.get("semantic_assertion_obligations")
+        if isinstance(pack.get("semantic_assertion_obligations"), dict)
+        else None
+    )
+    composed_binding = composed.get("semantic_assertion_evidence")
+    if expected is None:
+        if supplied is None and composed_binding in (None, {}):
+            return []
+        return [
+            {
+                "check": "semantic_assertion_obligations_contract",
+                "reason": "semantic-assertion evidence was supplied without a required non-character typed assertion",
+            }
+        ]
+    failures: list[dict[str, Any]] = []
+    if supplied != expected:
+        failures.append(
+            {
+                "check": "semantic_assertion_obligations_contract",
+                "reason": "required typed semantic assertions were changed or dropped after the authorial core was frozen",
+            }
+        )
+    if not isinstance(composed_binding, dict) or set(composed_binding) != {
+        "source_contract_sha256",
+        "evidence",
+    }:
+        return failures + [
+            {
+                "check": "semantic_assertion_evidence",
+                "reason": "composed output must bind the exact semantic-assertion contract and evidence map",
+            }
+        ]
+    if composed_binding.get("source_contract_sha256") != expected.get(
+        "canonical_sha256"
+    ):
+        failures.append(
+            {
+                "check": "semantic_assertion_evidence",
+                "reason": "composed semantic evidence is not bound to the governing contract hash",
+            }
+        )
+    actual_by_id = (
+        composed_binding.get("evidence")
+        if isinstance(composed_binding.get("evidence"), dict)
+        else {}
+    )
+    expected_by_id = {
+        str(obligation.get("assertion_id") or ""): obligation.get(
+            "frozen_evidence"
+        )
+        for obligation in expected.get("obligations") or []
+        if isinstance(obligation, dict)
+    }
+    if set(actual_by_id) != set(expected_by_id):
+        failures.append(
+            {
+                "check": "semantic_assertion_evidence",
+                "reason": "composed evidence must cover every required assertion exactly once",
+                "expected": sorted(expected_by_id),
+                "actual": sorted(actual_by_id),
+            }
+        )
+    for assertion_id, expected_evidence in expected_by_id.items():
+        actual_evidence = actual_by_id.get(assertion_id)
+        if not isinstance(actual_evidence, dict) or actual_evidence != expected_evidence:
+            failures.append(
+                {
+                    "check": "semantic_assertion_evidence",
+                    "reason": "typed semantic evidence must remain byte-identical to the frozen assertion",
+                    "assertion_id": assertion_id,
+                }
+            )
+            continue
+        for field, phrase in expected_evidence.items():
+            if not text_contains_term(prompt_en, str(phrase or "")):
+                failures.append(
+                    {
+                        "check": "semantic_assertion_evidence",
+                        "reason": "every frozen semantic-evidence phrase must remain literal in prompt_en",
+                        "assertion_id": assertion_id,
+                        "field": field,
+                    }
+                )
+    return failures
+
+
 def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dict[str, Any]:
     failures: list[dict[str, Any]] = []
     warnings: list[dict[str, Any]] = []
@@ -6624,6 +6807,9 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
     failures.extend(audit_creative_direction(pack, composed, prompt_en))
     failures.extend(audit_moe_response(pack, composed, prompt_en))
     failures.extend(audit_character_response_v6(pack, composed, prompt_en))
+    failures.extend(
+        audit_semantic_assertion_obligations_v6(pack, composed, prompt_en)
+    )
     failures.extend(audit_visual_obligations(pack, composed, prompt_en))
     failures.extend(audit_viewer_experience(pack, composed, prompt_en))
     failures.extend(audit_authorial_core_v5(pack, composed, prompt_en))
