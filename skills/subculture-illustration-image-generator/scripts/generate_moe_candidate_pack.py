@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build or audit the research-backed additive moe candidate-pack v4."""
+"""Build or audit current v5 or explicit historical v4 moe candidate packs."""
 
 from __future__ import annotations
 
@@ -67,12 +67,18 @@ def _parser() -> argparse.ArgumentParser:
         default="auto",
     )
     parser.add_argument(
+        "--grammar-version",
+        choices=("v3", "v2"),
+        default="v3",
+        help="current meaning-aware v3 (default) or explicit historical v2 replay",
+    )
+    parser.add_argument(
         "--compose-from",
-        help="optional already-audited base English prompt; emits an auditable v4 draft",
+        help="optional already-audited base English prompt; emits an auditable draft",
     )
     parser.add_argument(
         "--audit-composed",
-        help="optional v4 composed JSON path or inline JSON",
+        help="optional composed JSON path or inline JSON",
     )
     parser.add_argument("--asset-dir", help=argparse.SUPPRESS)
     return parser
@@ -85,6 +91,7 @@ def main(argv: list[str] | None = None) -> int:
         grammar = load_moe_grammar_assets(
             args.asset_dir,
             legacy_assets=legacy,
+            grammar_version=args.grammar_version,
         )
         pack = build_moe_candidate_pack(
             _load_object(args.base_pack, name="base pack"),
