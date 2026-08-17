@@ -2304,7 +2304,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertGreaterEqual(len(femme_prop[0]["pool"]), 2)
         self.assertIn("wax_sealed_dossier_prop", femme_prop[0]["pool"])
 
-    def test_concept_soft_spec_carries_v5_render_constraints(self):
+    def test_menhera_soft_mode_keeps_role_constraints_without_legacy_scaffold(self):
         payload = self.run_wrapper_json(
             "--concept",
             "유나 바니걸 멘헤라",
@@ -2324,15 +2324,24 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         forwarded_spec = json.loads(payload["forward_args"][spec_index])
 
         subject_constraints = forwarded_spec["free_slot_constraints"].get("subject_framing", {})
-        self.assertIn("head_and_shoulders_crop", subject_constraints.get("allow_pool", []))
+        self.assertIn("head_and_shoulders_crop", subject_constraints.get("prefer_ids", []))
         self.assertIn("full_body_framing", subject_constraints.get("deny_pool", []))
-        self.assertIn("bare shoulders", forwarded_spec["render_suppress_terms"])
-        self.assertIn("full-body costume display", forwarded_spec["render_suppress_terms"])
-        self.assertTrue(forwarded_spec["dual_read_requirement"].get("enabled"))
-        self.assertGreaterEqual(forwarded_spec["dual_read_requirement"].get("min_role_hits", 0), 1)
-        self.assertGreaterEqual(forwarded_spec["dual_read_requirement"].get("min_mixin_hits", 0), 1)
+        self.assertEqual(forwarded_spec["render_suppress_terms"], [])
+        self.assertEqual(forwarded_spec["dual_read_requirement"], {})
         self.assertEqual(forwarded_spec.get("mixin_cue_budget"), 1)
-        self.assertIn("discouraged_axes", forwarded_spec["preset_affinity"])
+        self.assertIn("preferred_presets", forwarded_spec["preset_affinity"])
+        explanation = payload["concepts"][0]
+        self.assertEqual(explanation["selected_bundles"], [])
+        self.assertEqual(
+            explanation["combined_forced_slots"],
+            {
+                "subject": ["adult_stage_dancer"],
+                "costume_style": ["bunny_girl_costume"],
+            },
+        )
+        joined = " ".join(payload["forward_args"])
+        self.assertIn("controlled social surface", joined)
+        self.assertIn("do not require a phone, flower, mirror, ribbon", joined)
 
     def test_concept_soft_spec_carries_v6_render_directives(self):
         payload = self.run_wrapper_json(
@@ -4329,10 +4338,36 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         )
         self.assertNotIn("hospital", item["prompt_en"].lower())
 
-    def test_concept_recipe_expands_menhera_as_non_graphic_mixin(self):
+    def test_menhera_defaults_to_semantic_soft_mode_without_fixed_props(self):
         payload = self.run_wrapper_json(
             "--concept",
             "멘헤라",
+            "--explain-concept",
+            "--selection-mode",
+            "rule",
+            "--seed",
+            "900",
+            "--plain",
+            "--no-negative",
+        )
+
+        concept = payload["concepts"][0]
+        self.assertEqual(concept["concept_mode"], "soft")
+        self.assertEqual(concept["applied_mixins"], ["멘헤라"])
+        self.assertEqual(concept["combined_forced_slots"], {})
+        self.assertEqual(concept["selected_bundles"], [])
+        self.assertNotIn("--preset", payload["forward_args"])
+        self.assertNotIn("--soft-anchor-spec", payload["forward_args"])
+        joined = " ".join(payload["forward_args"])
+        self.assertIn("controlled social surface", joined)
+        self.assertIn("interrupted self-regulation or connection gesture", joined)
+
+    def test_explicit_legacy_concept_recipe_expands_menhera_as_non_graphic_mixin(self):
+        payload = self.run_wrapper_json(
+            "--concept",
+            "멘헤라",
+            "--concept-mode",
+            "legacy",
             "--explain-concept",
             "--selection-mode",
             "rule",
@@ -4370,6 +4405,8 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         payload = self.run_wrapper_json(
             "--concept",
             "카리나 메이드 멘헤라",
+            "--concept-mode",
+            "legacy",
             "--explain-concept",
             "--selection-mode",
             "rule",
@@ -4400,6 +4437,8 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         nurse = self.run_wrapper_json(
             "--concept",
             "윈터 간호사 멘헤라",
+            "--concept-mode",
+            "legacy",
             "--selection-mode",
             "rule",
             "--seed",
@@ -4422,6 +4461,8 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         casual = self.run_wrapper_json(
             "--concept",
             "아일릿 원희 사복 여친 멘헤라",
+            "--concept-mode",
+            "legacy",
             "--selection-mode",
             "rule",
             "--seed",
@@ -4446,6 +4487,8 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         bunny = self.run_wrapper_json(
             "--concept",
             "유나 바니걸 멘헤라",
+            "--concept-mode",
+            "legacy",
             "--selection-mode",
             "rule",
             "--seed",
@@ -4493,6 +4536,8 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             explanation = self.run_wrapper_json(
                 "--concept",
                 concept,
+                "--concept-mode",
+                "legacy",
                 "--explain-concept",
                 "--selection-mode",
                 "rule",
@@ -4532,6 +4577,8 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         police = self.run_wrapper_json(
             "--concept",
             "닝닝 경찰 멘헤라",
+            "--concept-mode",
+            "legacy",
             "--selection-mode",
             "rule",
             "--seed",
@@ -4552,6 +4599,8 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         miner = self.run_wrapper_json(
             "--concept",
             "지젤 광부 멘헤라",
+            "--concept-mode",
+            "legacy",
             "--selection-mode",
             "rule",
             "--seed",
@@ -4571,6 +4620,8 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         casual = self.run_wrapper_json(
             "--concept",
             "아일릿 원희 사복 여친 멘헤라",
+            "--concept-mode",
+            "legacy",
             "--selection-mode",
             "rule",
             "--seed",
@@ -4590,6 +4641,8 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         princess = self.run_wrapper_json(
             "--concept",
             "설윤 공주 멘헤라",
+            "--concept-mode",
+            "legacy",
             "--selection-mode",
             "rule",
             "--seed",
@@ -4610,6 +4663,8 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         nurse = self.run_wrapper_json(
             "--concept",
             "윈터 간호사 멘헤라",
+            "--concept-mode",
+            "legacy",
             "--selection-mode",
             "rule",
             "--seed",

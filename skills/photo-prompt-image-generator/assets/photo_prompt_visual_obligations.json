@@ -147,7 +147,8 @@
           "thigh gap",
           "inner-thigh negative space"
         ],
-        "forbidden_prompt_terms": []
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
       },
       "composition_instruction": "Show a narrow background opening bounded by the actual upper inner-thigh contours while the legs remain adducted, crossed, or otherwise close; make that true negative space a deliberate attractive compositional feature and crop tightly enough that the geometry survives thumbnail review.",
       "required_evidence_fields": [
@@ -310,6 +311,11 @@
           "アヘ顔",
           "orgasm",
           "sexual ecstasy"
+        ],
+        "runtime_forbidden_labels": [
+          "ahegao",
+          "아헤가오",
+          "アヘ顔"
         ]
       },
       "composition_instruction": "Translate the named expression into simultaneous, nonsexual facial components on an unmistakably adult subject: asymmetric upward eye drift, relaxed brows, a small symmetric rounded-open mouth, a centered tongue tip visibly crossing the outer lip boundary, subtle cheek blush, and a slightly fatigued release, without a contemptuous smirk.",
@@ -497,7 +503,8 @@
           "bubble tea challenge",
           "boba challenge"
         ],
-        "forbidden_prompt_terms": []
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
       },
       "composition_instruction": "Make the drink's stability physically readable: the near-upright cup has broad visible base contact and slight fabric compression on a fully covered upper-torso support surface, its center of mass stays inside that support, and both hands remain clearly separated.",
       "required_evidence_fields": [
@@ -657,7 +664,8 @@
           "underarm emphasis",
           "armpit pose"
         ],
-        "forbidden_prompt_terms": []
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
       },
       "composition_instruction": "Construct the frame around an intentional overhead arm pose so the face, raised-arm line, and natural underarm hollow form one readable focal plane; use crop, light, and anatomy rather than a strap or prop as a substitute for emphasis.",
       "required_evidence_fields": [
@@ -866,7 +874,8 @@
           "political corruption",
           "data corruption",
           "file corruption"
-        ]
+        ],
+        "runtime_forbidden_labels": []
       },
       "composition_instruction": "When the request context means an embodied character transition, show a readable former state, a dark current state, an unfinished on-body boundary, and one visible context-specific cause or choice. Allegiance change and a suppressed former-self remnant are optional senses, not mandatory meanings of every corruption request.",
       "required_evidence_fields": [
@@ -931,6 +940,238 @@
         "completed_costume_swap_without_transition",
         "good_and_evil_split_without_present_action",
         "warm_care_scene_where_corruption_is_secondary"
+      ]
+    },
+    {
+      "id": "contained_affect_self_presentation",
+      "category": "affective_self_presentation",
+      "activation": {
+        "exact_terms": [
+          "menhera",
+          "멘헤라",
+          "メンヘラ"
+        ],
+        "context_disambiguation": {
+          "required_with_authorial_core": true,
+          "any_terms": [
+            "adult character",
+            "adult subject",
+            "adult portrait",
+            "character portrait",
+            "character concept",
+            "fashion concept",
+            "gothic lolita",
+            "성인 캐릭터",
+            "성인 인물",
+            "인물 사진",
+            "캐릭터 컨셉",
+            "패션 컨셉",
+            "고스로리",
+            "大人のキャラクター",
+            "人物ポートレート",
+            "キャラクターコンセプト"
+          ],
+          "exclude_if_any_terms": [
+            "explain the word",
+            "word history",
+            "etymology of",
+            "dictionary entry",
+            "real patient case",
+            "단어 뜻",
+            "용어를 설명",
+            "단어의 역사",
+            "어원",
+            "사전 항목",
+            "실제 환자 사례",
+            "言葉の意味",
+            "語源",
+            "辞書項目",
+            "実際の患者"
+          ]
+        },
+        "requires_adult_character": true
+      },
+      "semantics": {
+        "definition": "An adult fictional character whose carefully controlled social presentation remains intact while a small contained affect leak and one interrupted self-regulation or connection gesture become simultaneously visible, without treating a label as a diagnosis or reducing the concept to sadness, fashion, or a fixed prop.",
+        "paraphrase_examples": [
+          "겉은 단정하게 유지하지만 미세한 감정 누출과 멈칫한 자기조절 동작이 함께 보이는 성인 캐릭터",
+          "차분한 사회적 표면 아래 유리처럼 젖은 눈과 중단된 손동작이 동시에 드러나는 인물",
+          "controlled adult self-presentation with a contained emotional leak and an interrupted regulating gesture",
+          "a composed social mask that visibly strains for one quiet moment"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 3,
+          "required_group_ids": [
+            "controlled_social_surface",
+            "contained_affect_leak",
+            "regulation_or_connection_trace"
+          ],
+          "groups": [
+            {
+              "id": "controlled_social_surface",
+              "any_terms": [
+                "단정한 자세",
+                "정돈된 옷차림",
+                "침착한 표정",
+                "사회적 표면",
+                "controlled posture",
+                "precise grooming",
+                "carefully composed expression",
+                "orderly styling",
+                "steady social mask"
+              ]
+            },
+            {
+              "id": "contained_affect_leak",
+              "any_terms": [
+                "유리처럼 젖은 눈",
+                "아래 눈꺼풀의 옅은 붉음",
+                "입가의 미세한 긴장",
+                "참은 숨",
+                "glassy lower eyelids",
+                "faint lower-lid redness",
+                "held-back tears",
+                "microtension at the mouth",
+                "slightly uneven breath"
+              ]
+            },
+            {
+              "id": "regulation_or_connection_trace",
+              "any_terms": [
+                "옷깃을 고치다 멈춘 손",
+                "리본에서 멈춘 손가락",
+                "끝내지 못한 손짓",
+                "중단된 자기조절 동작",
+                "fingers pause at",
+                "self-adjusting gesture",
+                "unfinished reaching gesture",
+                "hand stops midway",
+                "interrupted self-soothing gesture"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "generic gothic or cute fashion with no affective contradiction",
+          "sad eyes or tears alone",
+          "a phone, flower, mirror, ribbon, or pastel palette used as the whole meaning",
+          "acute crisis, medicalized distress, or self-harm symbolism"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "unmistakably adult dignified character",
+          "controlled social surface",
+          "precise grooming and composed posture",
+          "contained affect leak",
+          "glassy lower eyelids or restrained mouth tension",
+          "interrupted self-regulation or connection gesture",
+          "all three cues coexist in one quiet moment",
+          "requested role and style remain intact",
+          "no diagnosis or crisis shorthand",
+          "no fixed prop requirement"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_only",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [
+          "menhera",
+          "멘헤라",
+          "メンヘラ",
+          "mentally ill girl",
+          "crazy girl",
+          "psychotic girl"
+        ],
+        "runtime_forbidden_labels": [
+          "menhera",
+          "멘헤라",
+          "メンヘラ"
+        ]
+      },
+      "composition_instruction": "Translate the requested concept into simultaneous external evidence on an unmistakably adult, dignified fictional character: preserve a carefully controlled social surface, show one restrained affect leak around the eyes, mouth, or breath, and make one interrupted self-regulation or connection gesture readable in the same moment. Keep the requested role and fashion intact; do not substitute a diagnosis, acute crisis, self-harm symbol, or mandatory phone, flower, mirror, ribbon, or palette.",
+      "required_evidence_fields": [
+        "adult_dignified_subject_phrase",
+        "controlled_surface_phrase",
+        "contained_affect_leak_phrase",
+        "regulation_or_connection_trace_phrase",
+        "coexistence_phrase"
+      ],
+      "evidence_requirements": {
+        "adult_dignified_subject_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": ["adult character", "adult subject", "unmistakably adult", "adult fictional character"],
+          "must_not_contain": ["girl", "teen", "schoolgirl"]
+        },
+        "controlled_surface_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": ["controlled posture", "precise grooming", "carefully composed expression", "orderly styling", "steady social mask"]
+        },
+        "contained_affect_leak_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": ["glassy lower eyelids", "faint lower-lid redness", "held-back tears", "microtension at the mouth", "slightly uneven breath"]
+        },
+        "regulation_or_connection_trace_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": ["fingers pause at", "self-adjusting gesture", "unfinished reaching gesture", "hand stops midway", "interrupted self-soothing gesture"]
+        },
+        "coexistence_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": ["same moment", "coexist", "simultaneously", "against the composed surface", "all three cues"]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_contained_affect_adult_dignity",
+          "review_scale": "both",
+          "description": "The fictional subject is unmistakably adult, dignified, fully clothed, and not framed as a patient or crisis victim."
+        },
+        {
+          "id": "vo_contained_affect_controlled_surface",
+          "review_scale": "thumbnail",
+          "description": "Grooming, posture, and facial baseline retain a carefully controlled public-facing surface."
+        },
+        {
+          "id": "vo_contained_affect_leak_readable",
+          "review_scale": "native",
+          "description": "A restrained affect leak is visibly readable around the eyes, mouth, or breath without melodramatic collapse."
+        },
+        {
+          "id": "vo_contained_affect_interrupted_trace",
+          "review_scale": "both",
+          "description": "One interrupted self-regulation or connection gesture is visibly unfinished rather than merely described."
+        },
+        {
+          "id": "vo_contained_affect_three_way_coexistence",
+          "review_scale": "both",
+          "description": "Controlled surface, affect leak, and interrupted gesture coexist on the same character in the same moment."
+        },
+        {
+          "id": "vo_contained_affect_not_generic_sad_fashion",
+          "review_scale": "thumbnail",
+          "description": "The image reads as a specific three-part affective contradiction, not merely gothic fashion, a sad gaze, or a decorative prop."
+        },
+        {
+          "id": "vo_contained_affect_requested_identity_preserved",
+          "review_scale": "both",
+          "description": "The user's requested role, fashion, and reference-face use remain intact and are not replaced by the affective profile."
+        },
+        {
+          "id": "vo_contained_affect_no_crisis_substitute",
+          "review_scale": "native",
+          "description": "No diagnosis text, acute crisis staging, medicalized distress, self-harm cue, or sexualized vulnerability substitutes for the requested meaning."
+        }
+      ],
+      "reject_substitutes": [
+        "generic_gothic_or_cute_fashion_only",
+        "sad_gaze_or_tears_only",
+        "phone_flower_mirror_or_ribbon_only",
+        "fixed_pastel_or_black_palette_only",
+        "acute_crisis_or_medical_symbolism",
+        "self_harm_or_bandaged_wrist_cue",
+        "sexualized_vulnerability",
+        "yandere_surveillance_or_possession",
+        "reference_face_treated_as_personality_evidence"
       ]
     },
     {
@@ -1030,6 +1271,11 @@
         "default_mode": "definition_only",
         "prompt_label_terms": [],
         "forbidden_prompt_terms": [
+          "mesugaki",
+          "메스가키",
+          "メスガキ"
+        ],
+        "runtime_forbidden_labels": [
           "mesugaki",
           "메스가키",
           "メスガキ"

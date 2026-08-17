@@ -12694,6 +12694,12 @@
     },
     "멘헤라": {
       "preset": "candid_iphone_portrait",
+      "concept_mode_default": "soft",
+      "soft_bypass_legacy_scaffold": true,
+      "soft_intent_axis": [
+        "an unmistakably adult fictional character keeps a carefully controlled social surface while one contained affect leak and one interrupted self-regulation or connection gesture remain visible together",
+        "preserve the requested role and fashion; do not infer personality from a reference face and do not require a phone, flower, mirror, ribbon, or fixed pastel palette"
+      ],
       "set": {
         "expression": "emotional_teary_eyes",
         "makeup_style": "igari_blush",
@@ -13272,7 +13278,7 @@
         "mixin": 1
       },
       "safety_requirements": [
-        "menhera cue must stay yami-kawaii emotional styling: no self-harm, wounds, blood, pills, medical emergency, or explicit sexual distress framing"
+        "keep the adult contained-affect concept dignified and non-graphic: no self-harm, wounds, blood, pills, medical emergency, diagnosis text, or explicit sexual distress framing"
       ],
       "salience_cues": [
         "teary eyes, unread-message phone glow, compact mirror, or fragile pastel styling near the face"
@@ -13543,20 +13549,20 @@
         ]
       },
       "guide": {
-        "definition_ko": "멘헤라는 진단·자해 장면·'crazy girlfriend' 캐리커처가 아니라 yami-kawaii/jirai-kei 감정 분위기다. 폰 글로우와 미읽음 메시지의 감각, 눈물/공허한 먼 시선, Igari풍 지친 눈 메이크업, 시든 부케, 깨지거나 조각난 거울, 풀린 리본, 작은 보호적 큐트 소품, 어수선한 파스텔 침실, 병원 대기실 광, 차가운 디지캠 그레인으로 표현한다.",
+        "definition_ko": "멘헤라는 진단·자해 장면·낙인 캐리커처가 아니다. 성인 가상 인물이 단정한 사회적 표면을 유지하는 동시에, 눈가·입가·호흡의 억제된 감정 누출과 끝내지 못한 자기조절 또는 연결 손동작을 한 순간에 함께 보이게 구성한다. 휴대폰·꽃·거울·리본·파스텔 팔레트는 요청 맥락에 맞을 때만 선택하는 소품이며 의미의 필수조건이 아니다.",
         "dominant_axes": [
-          "unread_message_waiting",
-          "care_fatigue",
-          "fragile_cute_armor",
-          "quiet_burnout"
+          "controlled_social_surface",
+          "contained_affect_leak",
+          "interrupted_regulation_or_connection",
+          "same_moment_coexistence"
         ],
-        "anchor_guidance": "역할 번들마다 지배 가시 앵커 1개와 역할에 맞는 감정 레지스터를 고른다(phone+tears+wilted flowers 단일 공식 금지). expression은 teary/blank/serene/avoidant/downcast를 로테이션한다.",
+        "anchor_guidance": "역할과 패션을 먼저 보존하고, 통제된 표면·억제된 감정 누출·중단된 손동작의 세 구성군을 같은 성인 인물에게 동시에 배치한다. 특정 표정, 소품, 색, 방, 서사는 고정하지 않는다.",
         "anti_patterns": [
           "자해 결과물, 붕대 손목, 주사기/IV/약물, 의료 오용 이미지",
           "정신질환 라벨링, 위기 스펙터클, 낙인 캐리커처",
           "미성년 코딩, 성적 취약성, 페티시 스테이징, pin-up"
         ],
-        "safety_notes": "피사체는 존엄하게 다뤄지는 성인 가상 인물로 유지하고, 취약함은 분위기·광·소품·절제된 자세로 표현한다."
+        "safety_notes": "피사체는 존엄하게 다뤄지는 성인 가상 인물로 유지하고, 급성 위기·진단·자해·성적 취약성 대신 절제된 외적 구성요소의 공존으로 표현한다."
       },
       "review_gates": [
         {
@@ -13577,16 +13583,9 @@
           }
         },
         {
-          "id": "igari_makeup_forced",
-          "check": "makeup_style이 igari_blush로 강제되어야 한다",
-          "machine_checkable": true,
-          "assert": {
-            "type": "forced_slot_any",
-            "slot": "makeup_style",
-            "any_of": [
-              "igari_blush"
-            ]
-          }
+          "id": "three_component_contained_affect",
+          "check": "통제된 사회적 표면, 억제된 감정 누출, 중단된 자기조절 또는 연결 동작이 같은 성인 인물에게 동시에 보여야 한다.",
+          "machine_checkable": false
         },
         {
           "id": "no_crisis_imagery",

@@ -164,6 +164,9 @@ AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS = {
     AUTHORIAL_CORE_V3_CONTRACT_VERSION,
 }
 CHARACTER_RESPONSE_CONTRACT_VERSION = "photo-character-response/v1"
+SEMANTIC_ASSERTION_OBLIGATIONS_CONTRACT_VERSION = (
+    "photo-semantic-assertion-obligations/v1"
+)
 CHARACTER_RESPONSE_REQUIRED_AXES = {
     "surface_affect",
     "underlying_affiliation",
@@ -9163,6 +9166,67 @@ def compile_character_response_contract(
     return contract
 
 
+def compile_semantic_assertion_obligations(core: Any) -> Optional[JsonDict]:
+    """Bind required non-character typed meaning to final prompt evidence.
+
+    Character response keeps its specialized causal contract. Every other
+    required v3 semantic assertion is projected through this generic contract
+    so a registry or retrieval candidate cannot silently replace the meaning
+    that the pre-pack author froze.
+    """
+
+    if (
+        not isinstance(core, dict)
+        or core.get("contract_version") != AUTHORIAL_CORE_V3_CONTRACT_VERSION
+    ):
+        return None
+    assertions = [
+        item
+        for item in core.get("semantic_assertions") or []
+        if isinstance(item, dict)
+        and item.get("polarity") == "required"
+        and item.get("dimension") != "character_response"
+    ]
+    if not assertions:
+        return None
+    obligations: List[JsonDict] = []
+    for assertion in assertions:
+        evidence = copy.deepcopy(assertion.get("evidence") or {})
+        obligations.append(
+            {
+                "assertion_id": str(assertion.get("assertion_id") or ""),
+                "dimension": str(assertion.get("dimension") or ""),
+                "affected_dimensions": copy.deepcopy(
+                    assertion.get("affected_dimensions") or []
+                ),
+                "source_span_ids": copy.deepcopy(
+                    assertion.get("source_span_ids") or []
+                ),
+                "semantic_axes": copy.deepcopy(assertion.get("axes") or {}),
+                "frozen_evidence": evidence,
+                "prompt_binding": {
+                    "required_evidence_fields": list(evidence),
+                    "all_required_phrases_must_be_literal_in_final_prompt": True,
+                    "evidence_must_remain_byte_identical": True,
+                    "new_hard_evidence_from_retrieval_forbidden": True,
+                },
+            }
+        )
+    contract: JsonDict = {
+        "contract_version": SEMANTIC_ASSERTION_OBLIGATIONS_CONTRACT_VERSION,
+        "enabled": True,
+        "source": "authorial_core_semantic_assertions",
+        "source_authorial_core_sha256": str(core.get("canonical_sha256") or ""),
+        "source_intent_lock_sha256": str(
+            ((core.get("intent_lock") or {}).get("canonical_sha256") or "")
+        ),
+        "composed_field": "semantic_assertion_evidence",
+        "obligations": obligations,
+    }
+    contract["canonical_sha256"] = canonical_json_sha256(contract)
+    return contract
+
+
 def authorial_core_generation_constraints(core: JsonDict) -> JsonDict:
     """Translate only explicit structural exclusions into existing guards.
 
@@ -10999,6 +11063,9 @@ def candidate_pack_visual_profile_obligation(
             "source_intent_ids": [str(value) for value in source_intent_ids],
         },
         "composition_instruction": str(profile.get("composition_instruction") or ""),
+        "component_semantics": copy.deepcopy(
+            ((profile.get("semantics") or {}).get("component_semantics")) or {}
+        ),
         "prompt_binding": {
             "composed_field": "visual_obligation_evidence",
             "required_evidence_fields": required_fields,
@@ -11542,7 +11609,7 @@ def candidate_pack_semantic_clarification(
                 ),
                 "forbidden_runtime_labels": [
                     str(item)
-                    for item in runtime.get("forbidden_prompt_terms") or []
+                    for item in runtime.get("runtime_forbidden_labels") or []
                     if str(item).strip()
                 ],
                 "applicability": {
@@ -14872,6 +14939,11 @@ def build_candidate_pack(
         if requested_contract_version == CANDIDATE_PACK_CONTRACT_V6
         else None
     )
+    semantic_assertion_obligations = (
+        compile_semantic_assertion_obligations(authorial_core)
+        if requested_contract_version == CANDIDATE_PACK_CONTRACT_V6
+        else None
+    )
     moe_response = (
         None
         if requested_contract_version == CANDIDATE_PACK_CONTRACT_V6
@@ -15087,6 +15159,8 @@ def build_candidate_pack(
             pack["provenance"]["character_response"] = legacy_character_response
     if character_response is not None:
         pack["character_response"] = character_response
+    if semantic_assertion_obligations is not None:
+        pack["semantic_assertion_obligations"] = semantic_assertion_obligations
     if viewer_experience is not None:
         pack["viewer_experience"] = viewer_experience
     if japanese_subculture_photo is not None:

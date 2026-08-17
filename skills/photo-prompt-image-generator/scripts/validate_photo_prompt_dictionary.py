@@ -2069,6 +2069,10 @@ def validate_concept_recipe_entry(
     concept_mode_default = recipe.get("concept_mode_default")
     if concept_mode_default is not None and str(concept_mode_default) not in {"legacy", "soft"}:
         errors.append(f"{label}.concept_mode_default: must be legacy or soft")
+    if "soft_bypass_legacy_scaffold" in recipe and not isinstance(
+        recipe.get("soft_bypass_legacy_scaffold"), bool
+    ):
+        errors.append(f"{label}.soft_bypass_legacy_scaffold: must be a boolean")
     validate_anchor_expansion(label, recipe.get("anchor_expansion"), errors)
     validate_concept_guide(label, recipe.get("guide"), errors)
     validate_reference_scaffold_schema(label, recipe, by_slot, errors)
@@ -3169,10 +3173,11 @@ def validate_visual_obligation_registry(path: Path, errors: list[str]) -> None:
             "default_mode",
             "prompt_label_terms",
             "forbidden_prompt_terms",
+            "runtime_forbidden_labels",
         }:
             errors.append(
                 f"{label}.runtime_expression: keys must be default_mode, "
-                "prompt_label_terms, forbidden_prompt_terms"
+                "prompt_label_terms, forbidden_prompt_terms, runtime_forbidden_labels"
             )
         else:
             mode = runtime_expression.get("default_mode")
@@ -3185,6 +3190,9 @@ def validate_visual_obligation_registry(path: Path, errors: list[str]) -> None:
             label_terms = normalize_list(runtime_expression.get("prompt_label_terms"))
             forbidden_terms = normalize_list(
                 runtime_expression.get("forbidden_prompt_terms")
+            )
+            runtime_forbidden_labels = normalize_list(
+                runtime_expression.get("runtime_forbidden_labels")
             )
             if mode == "label_plus_definition" and not label_terms:
                 errors.append(
@@ -3200,6 +3208,24 @@ def validate_visual_obligation_registry(path: Path, errors: list[str]) -> None:
             ):
                 errors.append(
                     f"{label}.runtime_expression.forbidden_prompt_terms: must be distinct"
+                )
+            if len(
+                {value.casefold() for value in runtime_forbidden_labels}
+            ) != len(runtime_forbidden_labels):
+                errors.append(
+                    f"{label}.runtime_expression.runtime_forbidden_labels: must be distinct"
+                )
+            if not {
+                value.casefold() for value in runtime_forbidden_labels
+            }.issubset({value.casefold() for value in forbidden_terms}):
+                errors.append(
+                    f"{label}.runtime_expression.runtime_forbidden_labels: "
+                    "must be a subset of forbidden_prompt_terms"
+                )
+            if mode == "definition_only" and not runtime_forbidden_labels:
+                errors.append(
+                    f"{label}.runtime_expression.runtime_forbidden_labels: "
+                    "definition_only requires at least one runtime label"
                 )
         evidence_fields = normalize_list(profile.get("required_evidence_fields"))
         if not evidence_fields or len(set(evidence_fields)) != len(evidence_fields):

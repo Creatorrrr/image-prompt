@@ -164,6 +164,34 @@ def core() -> dict:
     }
 
 
+def core_with_concept_assertion() -> dict:
+    payload = core()
+    payload["semantic_assertions"].append(
+        {
+            "assertion_id": "guarded_care_concept",
+            "dimension": "concept",
+            "polarity": "required",
+            "source_span_ids": ["topic"],
+            "affected_dimensions": ["concept"],
+            "axes": {
+                "controlled_surface": "stern_professional_posture",
+                "contained_affect_leak": "delayed_gaze_check",
+                "connection_trace": "practical_peer_care",
+            },
+            "evidence": {
+                "controlled_surface_phrase": "keeps her stern professional posture",
+                "contained_affect_leak_phrase": (
+                    "looks away before checking their reaction"
+                ),
+                "connection_trace_phrase": (
+                    "wraps the coworker's scraped wrist with practical care"
+                ),
+            },
+        }
+    )
+    return payload
+
+
 class PhotoAuthorialCoreV6Tests(unittest.TestCase):
     def normalize(self, payload: dict, request_id: str = "v6-request") -> dict:
         normalized_envelope = prompt_generator.normalize_request_envelope(
@@ -281,6 +309,69 @@ class PhotoAuthorialCoreV6Tests(unittest.TestCase):
         )
         self.assertNotIn("score", json.dumps(retrieval, ensure_ascii=False))
 
+    def test_required_non_character_assertion_binds_final_prompt_evidence(self):
+        normalized = self.normalize(core_with_concept_assertion())
+        contract = prompt_generator.compile_semantic_assertion_obligations(
+            normalized
+        )
+        self.assertIsNotNone(contract)
+        assert contract is not None
+        self.assertEqual(
+            contract["contract_version"],
+            "photo-semantic-assertion-obligations/v1",
+        )
+        self.assertEqual(
+            [row["assertion_id"] for row in contract["obligations"]],
+            ["guarded_care_concept"],
+        )
+        evidence = contract["obligations"][0]["frozen_evidence"]
+        pack = {
+            "authorial_core": normalized,
+            "semantic_assertion_obligations": contract,
+        }
+        composed = {
+            "semantic_assertion_evidence": {
+                "source_contract_sha256": contract["canonical_sha256"],
+                "evidence": {"guarded_care_concept": copy.deepcopy(evidence)},
+            }
+        }
+        self.assertEqual(
+            audit_composed_prompt.audit_semantic_assertion_obligations_v6(
+                pack,
+                composed,
+                BASELINE,
+            ),
+            [],
+        )
+
+        changed = copy.deepcopy(composed)
+        changed["semantic_assertion_evidence"]["evidence"][
+            "guarded_care_concept"
+        ]["contained_affect_leak_phrase"] = "an invented emotional shorthand"
+        changed_failures = (
+            audit_composed_prompt.audit_semantic_assertion_obligations_v6(
+                pack,
+                changed,
+                BASELINE,
+            )
+        )
+        self.assertIn(
+            "semantic_assertion_evidence",
+            {failure["check"] for failure in changed_failures},
+        )
+
+        missing_contract_failures = (
+            audit_composed_prompt.audit_semantic_assertion_obligations_v6(
+                {"authorial_core": normalized},
+                composed,
+                BASELINE,
+            )
+        )
+        self.assertIn(
+            "semantic_assertion_obligations_contract",
+            {failure["check"] for failure in missing_contract_failures},
+        )
+
     def test_v6_routing_never_calls_legacy_raw_moe_router(self):
         typed_core = {
             "contract_version": "photo-authorial-core/v3",
@@ -310,7 +401,7 @@ class PhotoAuthorialCoreV6Tests(unittest.TestCase):
         data = self.runtime_data()
         normalized_envelope = prompt_generator.normalize_request_envelope(envelope())
         normalized_core = prompt_generator.normalize_authorial_core(
-            core(),
+            core_with_concept_assertion(),
             request_envelope=normalized_envelope,
         )
         with mock.patch.object(
@@ -336,6 +427,7 @@ class PhotoAuthorialCoreV6Tests(unittest.TestCase):
             pack = prompt_generator.build_candidate_pack(result, data, "v6")
         self.assertEqual(pack["contract_version"], "photo-candidate-pack/v6")
         self.assertIn("character_response", pack)
+        self.assertIn("semantic_assertion_obligations", pack)
         self.assertNotIn("moe_response", pack)
         self.assertTrue(
             pack["coverage"]["intent_constraints"]["character_response"]["enabled"]
@@ -419,6 +511,31 @@ class PhotoAuthorialCoreV6Tests(unittest.TestCase):
         self.assertIn(
             "character_response_evidence",
             {failure["check"] for failure in failures},
+        )
+
+        missing_contract = audit_composed_prompt.audit_character_response_v6(
+            {"authorial_core": normalized},
+            composed,
+            BASELINE,
+        )
+        self.assertIn(
+            "character_response_contract",
+            {failure["check"] for failure in missing_contract},
+        )
+
+        mutated_contract = copy.deepcopy(contract)
+        mutated_contract["semantic_axes"]["surface_affect"] = "cheerful"
+        mutated_failures = audit_composed_prompt.audit_character_response_v6(
+            {
+                "authorial_core": normalized,
+                "character_response": mutated_contract,
+            },
+            composed,
+            BASELINE,
+        )
+        self.assertIn(
+            "character_response_contract",
+            {failure["check"] for failure in mutated_failures},
         )
 
     def test_cjk_exact_matching_is_boundary_aware(self):

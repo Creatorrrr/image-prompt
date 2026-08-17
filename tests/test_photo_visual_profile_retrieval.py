@@ -99,6 +99,18 @@ class PhotoVisualProfileRetrievalTests(unittest.TestCase):
         self.assertNotIn("허벅지 사이의 공간", exact_terms)
         semantic_text = self.index["entries"]["inner_thigh_negative_space"]["text"]
         self.assertIn("허벅지 사이의 공간", semantic_text)
+        contained_terms = {
+            row["term"]
+            for row in self.index["exact_lookup"]
+            if row["profile_id"] == "contained_affect_self_presentation"
+        }
+        self.assertEqual(contained_terms, {"menhera", "멘헤라", "メンヘラ"})
+        self.assertIn(
+            "controlled social presentation",
+            self.index["entries"]["contained_affect_self_presentation"][
+                "text"
+            ],
+        )
         self.assertEqual(self.index["retrieval_policy"]["minimum_similarity"], 0.7)
 
         changed = copy.deepcopy(self.registry)
@@ -368,6 +380,70 @@ class PhotoVisualProfileRetrievalTests(unittest.TestCase):
                         None,
                     )
                 )
+
+    def test_sensitive_contained_affect_term_requires_visual_character_context(self):
+        eligible_rows = [
+            {
+                "source": "concept_lock",
+                "text": "성인 고스로리 멘헤라 캐릭터 사진",
+                "polarity": "required",
+            },
+            {
+                "source": "authorial_core_interpretation",
+                "text": (
+                    "an adult character portrait with a controlled social surface, "
+                    "contained affect leak, and interrupted regulating gesture"
+                ),
+                "polarity": "advisory",
+            },
+        ]
+        eligible = prompt_generator.resolve_visual_profile_hits(
+            self.registry,
+            eligible_rows,
+            visual_profile_index=self.index,
+            adult_context=True,
+        )
+        hit = next(
+            row
+            for row in eligible["hits"]
+            if row["profile_id"] == "contained_affect_self_presentation"
+        )
+        self.assertEqual(hit["applicability_status"], "required")
+        self.assertTrue(hit["hard_eligible"])
+
+        for interpretation in (
+            "explain the word history and dictionary entry",
+            "a technical terminology note with no character or portrait",
+        ):
+            with self.subTest(interpretation=interpretation):
+                mismatch = prompt_generator.resolve_visual_profile_hits(
+                    self.registry,
+                    [
+                        {
+                            "source": "concept_lock",
+                            "text": "멘헤라",
+                            "polarity": "required",
+                        },
+                        {
+                            "source": "authorial_core_interpretation",
+                            "text": interpretation,
+                            "polarity": "advisory",
+                        },
+                    ],
+                    visual_profile_index=self.index,
+                    adult_context=True,
+                )
+                mismatch_hit = next(
+                    row
+                    for row in mismatch["hits"]
+                    if row["profile_id"]
+                    == "contained_affect_self_presentation"
+                )
+                self.assertEqual(
+                    mismatch_hit["applicability_status"],
+                    "context_mismatch",
+                )
+                self.assertFalse(mismatch_hit["hard_eligible"])
 
     def test_embedding_score_is_positive_context_proof_but_shared_negatives_still_win(self):
         vectors = {
