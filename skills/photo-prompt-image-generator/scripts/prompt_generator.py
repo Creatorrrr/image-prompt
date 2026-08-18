@@ -191,6 +191,11 @@ AUTHORIAL_REQUEST_CONTRACT_VERSION = "authorial-request/v1"
 LEGACY_AUTHORIAL_CORE_CONTRACT_VERSION = "photo-authorial-core/v1"
 AUTHORIAL_CORE_CONTRACT_VERSION = "photo-authorial-core/v2"
 AUTHORIAL_CORE_V3_CONTRACT_VERSION = "photo-authorial-core/v3"
+AUTHORIAL_PROMPT_BUDGET_CONTRACT_VERSION = "photo-authorial-prompt-budget/v1"
+AUTHORIAL_PROMPT_MIN_WORDS = 24
+AUTHORIAL_PROMPT_RECOMMENDED_MAX_WORDS = 180
+AUTHORIAL_PROMPT_ABSOLUTE_MAX_WORDS = 320
+AUTHORIAL_PROMPT_REQUIRED_EVIDENCE_HEADROOM_WORDS = 80
 AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS = {
     AUTHORIAL_CORE_CONTRACT_VERSION,
     AUTHORIAL_CORE_V3_CONTRACT_VERSION,
@@ -568,8 +573,8 @@ CANDIDATE_PACK_VIEWER_COMMERCIAL_OBJECTIVES = (
     "return",
 )
 MOE_RESPONSE_CONTRACT_VERSION = "moe_response_contract/v10"
-MOE_RESPONSE_PROMPT_MIN_WORDS = 50
-MOE_RESPONSE_PROMPT_MAX_WORDS = 120
+MOE_RESPONSE_PROMPT_RECOMMENDED_MIN_WORDS = 50
+MOE_RESPONSE_PROMPT_RECOMMENDED_MAX_WORDS = 120
 MOE_RESPONSE_DOMAIN = "character_moe_grammar"
 MOE_RESPONSE_DEFAULT_ROUTE = "character_attribute_composition_scene"
 MOE_RESPONSE_GAP_ROUTE = "character_gap_contrast_scene"
@@ -6543,12 +6548,16 @@ def candidate_pack_moe_response(result: JsonDict) -> Optional[JsonDict]:
         "composition_guidance": {
             "prompt_budget": {
                 "language": "en",
-                "minimum_words": MOE_RESPONSE_PROMPT_MIN_WORDS,
-                "maximum_words": MOE_RESPONSE_PROMPT_MAX_WORDS,
+                "minimum_words": AUTHORIAL_PROMPT_MIN_WORDS,
+                "recommended_minimum_words": MOE_RESPONSE_PROMPT_RECOMMENDED_MIN_WORDS,
+                "recommended_maximum_words": MOE_RESPONSE_PROMPT_RECOMMENDED_MAX_WORDS,
+                "absolute_maximum_words": AUTHORIAL_PROMPT_ABSOLUTE_MAX_WORDS,
                 "counting_rule": "ascii_words_with_internal_hyphens_or_apostrophes",
                 "rule": (
-                    "Keep prompt_en between 50 and 120 English words. Reuse short literal phrases across "
-                    "moe, viewer, identity, and augmentation evidence instead of stacking explanations."
+                    "Prefer 50 to 120 English words, but treat that range as advisory. Keep prompt_en "
+                    "between the absolute 24 and 320 word bounds, preserve required evidence, and reuse "
+                    "short literal phrases across moe, viewer, identity, and augmentation evidence instead "
+                    "of stacking explanations."
                 ),
             },
             "aesthetic_entry_condition": {
@@ -8162,6 +8171,24 @@ def authorial_request_content_words(text: str) -> List[str]:
     ]
 
 
+def authorial_prompt_budget_contract() -> JsonDict:
+    return {
+        "contract_version": AUTHORIAL_PROMPT_BUDGET_CONTRACT_VERSION,
+        "language": "en",
+        "minimum_words": AUTHORIAL_PROMPT_MIN_WORDS,
+        "recommended_maximum_words": AUTHORIAL_PROMPT_RECOMMENDED_MAX_WORDS,
+        "absolute_maximum_words": AUTHORIAL_PROMPT_ABSOLUTE_MAX_WORDS,
+        "required_evidence_headroom_words": AUTHORIAL_PROMPT_REQUIRED_EVIDENCE_HEADROOM_WORDS,
+        "counting_rule": "ascii_words_with_internal_hyphens_or_apostrophes",
+        "policy": {
+            "recommended_maximum_is_warning": True,
+            "absolute_bounds_are_blocking": True,
+            "required_evidence_expands_advisory_ceiling": True,
+            "requester_meaning_outranks_concision": True,
+        },
+    }
+
+
 def normalize_authorial_request(payload: Any, data: JsonDict) -> JsonDict:
     if not isinstance(payload, dict):
         raise ValueError("--authorial-request-json must contain one JSON object")
@@ -9056,9 +9083,12 @@ def normalize_authorial_core(
         r"[A-Za-z0-9]+(?:['’\-][A-Za-z0-9]+)*",
         normalized["baseline_prompt_en"],
     )
-    if not 24 <= len(baseline_words) <= 180:
+    if not AUTHORIAL_PROMPT_MIN_WORDS <= len(
+        baseline_words
+    ) <= AUTHORIAL_PROMPT_ABSOLUTE_MAX_WORDS:
         raise ValueError(
-            "authorial core baseline_prompt_en must contain 24 to 180 English words"
+            "authorial core baseline_prompt_en must contain 24 to 320 English words; "
+            "180 is the recommended maximum"
         )
     if core_version in AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS:
         blanket_negative_directives = find_blanket_negative_directives(
@@ -15574,6 +15604,7 @@ def candidate_pack_project_v5(
     authorial["prepack_authorial_core_bound"] = True
     authorial["governing_core_sha256"] = str(core.get("canonical_sha256") or "")
     authorial["baseline_prompt_precedes_candidate_pack"] = True
+    authorial["prompt_budget"] = authorial_prompt_budget_contract()
     authorial["core_binding_contract"] = {
         "composed_field": "authorial_core_binding",
         "minimum_preserved_evidence_phrases": 3,
