@@ -1,0 +1,25 @@
+{
+  "contract_version": "photo-authorial-core-schema-correction/v1",
+  "correction_scope": "mechanical_v3_schema_normalization_only",
+  "reason": "Two pre-emission generator checks exposed mechanical v3 schema mismatches. The correction removes one ungrounded duplicate runtime label, maps the face-reference lock to the supported reference_use dimension, and converts the character-response assertion and relations to the current field names without changing any literal baseline phrase, evidence phrase, axis value, relationship, or visual meaning.",
+  "before_file_sha256": "8b99216cebd71cce4c18722bba5c1e90ca51ab2ba783ab0c91787afb7674d364",
+  "after_file_sha256": "b57b99ddebfdc781f58cca70172cb52ea5803fd9b0f078e7a536796e08644dd8",
+  "correction_steps": [
+    {
+      "pre_emission_error": "authorial core runtime_forbidden_labels must be grounded in an active requesting-user span",
+      "before_file_sha256": "8b99216cebd71cce4c18722bba5c1e90ca51ab2ba783ab0c91787afb7674d364",
+      "after_file_sha256": "63d886fc83f3beb82db33f27bb58f5e9c246cbb96b8452c28cb26e99ee88336f",
+      "change": "Removed the ungrounded English duplicate 'yandere'; preserved the requester-grounded forbidden label '얀데레'."
+    },
+    {
+      "pre_emission_error": "authorial core intent_lock contains unknown dimensions: identity_reference",
+      "before_file_sha256": "63d886fc83f3beb82db33f27bb58f5e9c246cbb96b8452c28cb26e99ee88336f",
+      "after_file_sha256": "b57b99ddebfdc781f58cca70172cb52ea5803fd9b0f078e7a536796e08644dd8",
+      "change": "Renamed identity_reference to supported reference_use and normalized assertion_type/requirement/relation field shapes to dimension/polarity/operator while retaining the same values and relations."
+    }
+  ],
+  "baseline_prompt_sha256_before_and_after": "f8fa2ee59d1b6ec70eb8541f594cd75f53ce42df31cf28c830cbbd7b97a4c307",
+  "semantic_assertions_serialized_sha256_before": "49abb48ecf437da994073d57d31aaa43da23e91a59314066994425ea830e1b81",
+  "semantic_assertions_serialized_sha256_after": "c1462069dd40ca9b82fdaec8983ec811c7293b6210b9ce119bcbb7c9d853ec94",
+  "semantic_change": false
+}

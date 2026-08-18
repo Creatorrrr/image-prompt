@@ -690,6 +690,89 @@ class PhotoVisualObligationTests(unittest.TestCase):
             {failure["check"] for failure in core_audit["failures"]},
         )
 
+    def test_yandere_profile_requires_affection_control_relation_not_role_prop(self):
+        pack = self.moe_pack(
+            "Photorealistic adult fictional nurse character portrait with a yandere concept",
+            seed=1414,
+        )
+        obligation = pack["visual_obligations"]["obligations"][0]
+        self.assertEqual(obligation["id"], "yandere_affection_control_relation")
+        self.assertEqual(
+            set(obligation["component_semantics"]["required_group_ids"]),
+            {
+                "specific_affection_target",
+                "affectionate_surface_or_care",
+                "boundary_intrusion_or_access_control",
+                "visible_same_target_consequence",
+            },
+        )
+        self.assertEqual(
+            obligation["prompt_binding"]["required_evidence_fields"],
+            [
+                "adult_fictional_subject_phrase",
+                "specific_affection_target_phrase",
+                "affectionate_surface_phrase",
+                "boundary_intrusion_action_phrase",
+                "visible_choice_consequence_phrase",
+                "expression_contrast_phrase",
+                "single_frame_coexistence_phrase",
+            ],
+        )
+        self.assertEqual(
+            obligation["runtime_expression"]["runtime_forbidden_labels"],
+            ["yandere", "얀데레", "ヤンデレ"],
+        )
+        gate_ids = {row["id"] for row in obligation["render_gates"]}
+        self.assertIn("vo_yandere_same_affection_target", gate_ids)
+        self.assertIn("vo_yandere_affection_and_control_coexist", gate_ids)
+        self.assertIn("vo_yandere_same_target_consequence", gate_ids)
+        self.assertIn("vo_yandere_not_role_prop_horror", gate_ids)
+        self.assertIn(
+            "syringe_weapon_blood_or_red_light_only",
+            obligation["reject_substitutes"],
+        )
+        self.assertIn(
+            "reference_face_treated_as_personality_evidence",
+            obligation["reject_substitutes"],
+        )
+
+        evidence = self.visual_evidence_for_obligation(obligation)
+        prompt_en = self.prompt_for_obligation(obligation, evidence)
+        composed = {
+            "pack_id": pack["pack_id"],
+            "prompt_en": prompt_en,
+            "negative_en": pack["negative_en"],
+            "chosen_visual_concept_ids": [],
+            "visual_obligation_evidence": {obligation["id"]: evidence},
+        }
+        self.assertEqual(
+            audit_composed_prompt.audit_visual_obligations(
+                pack,
+                composed,
+                prompt_en,
+            ),
+            [],
+        )
+
+        role_prop_only = copy.deepcopy(composed)
+        role_prop_only["visual_obligation_evidence"][obligation["id"]][
+            "boundary_intrusion_action_phrase"
+        ] = "a nurse holds a syringe as an ordinary clinical prop"
+        role_prop_prompt = self.prompt_for_obligation(
+            obligation,
+            role_prop_only["visual_obligation_evidence"][obligation["id"]],
+        )
+        role_prop_only["prompt_en"] = role_prop_prompt
+        failures = audit_composed_prompt.audit_visual_obligations(
+            pack,
+            role_prop_only,
+            role_prop_prompt,
+        )
+        self.assertIn(
+            "visual_obligation_semantic_evidence",
+            {failure["check"] for failure in failures},
+        )
+
     def test_selected_visual_concept_binds_runtime_and_render_review(self):
         pack = self.moe_pack(
             "Photorealistic explicitly nonsexual behavior-led moe scene of an adult "

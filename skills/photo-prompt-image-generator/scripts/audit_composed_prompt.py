@@ -22,6 +22,8 @@ SUPPORTED_CANDIDATE_PACK_VERSIONS = {
 }
 MOE_PROMPT_DEFAULT_MIN_WORDS = 50
 MOE_PROMPT_DEFAULT_MAX_WORDS = 120
+AUTHORIAL_PROMPT_MIN_WORDS = 24
+AUTHORIAL_PROMPT_MAX_WORDS = 180
 VISUAL_OBLIGATIONS_CONTRACT_VERSION = "photo-visual-obligations/v1"
 VISUAL_INTENT_CONTRACT_VERSION = "photo-visual-intent/v1"
 VISUAL_CONCEPTS_CONTRACT_VERSION = "photo-visual-concepts/v1"
@@ -96,6 +98,22 @@ CHARACTER_RESPONSE_REQUIRED_EVIDENCE = {
     "visible_response_phrase",
     "immediate_consequence_phrase",
     "continuity_phrase",
+}
+CHARACTER_RESPONSE_RELATION_MEMBERS = {
+    "actor",
+    "baseline",
+    "surface_affect",
+    "underlying_affiliation",
+    "relationship_target",
+    "target",
+    "primary_action",
+    "affect_leak",
+    "affect_leak_timing",
+    "trigger",
+    "visible_response",
+    "immediate_consequence",
+    "continuity",
+    "event_phase",
 }
 REQUIRED_INTENT_LOCK_DIMENSIONS = {"concept", "subject", "event"}
 MOE_RESPONSE_EVIDENCE_DIMENSIONS = {
@@ -5361,8 +5379,79 @@ def authorial_core_v3_semantic_contract_valid(core: dict[str, Any]) -> bool:
     baseline = str(core.get("baseline_prompt_en") or "")
     seen_ids: set[str] = set()
     required_character_count = 0
+
+    def valid_character_relation(relation: Any) -> bool:
+        if not isinstance(relation, dict):
+            return False
+        operator = str(relation.get("operator") or "")
+        identifier = r"[a-z][a-z0-9_]{0,63}"
+        if operator == "same_target" and set(relation) == {
+            "operator",
+            "members",
+        }:
+            members = nonempty_string_list(relation.get("members"))
+            return bool(
+                2 <= len(members) <= 8
+                and len(members) == len(set(members))
+                and "relationship_target" in members
+                and set(members) <= CHARACTER_RESPONSE_RELATION_MEMBERS
+                and all(re.fullmatch(identifier, value) for value in members)
+            )
+        if operator == "contrasts" and set(relation) == {
+            "operator",
+            "left",
+            "right",
+        }:
+            left = str(relation.get("left") or "")
+            right = str(relation.get("right") or "")
+            return bool(
+                left != right
+                and {left, right} <= CHARACTER_RESPONSE_RELATION_MEMBERS
+                and re.fullmatch(identifier, left)
+                and re.fullmatch(identifier, right)
+            )
+        if operator == "temporal_order" and set(relation) == {
+            "operator",
+            "first",
+            "then",
+        }:
+            first = str(relation.get("first") or "")
+            then = str(relation.get("then") or "")
+            return bool(
+                first != then
+                and {first, then} <= CHARACTER_RESPONSE_RELATION_MEMBERS
+                and re.fullmatch(identifier, first)
+                and re.fullmatch(identifier, then)
+            )
+        return False
+
+    def character_relation_signature(relation: dict[str, Any]) -> tuple[Any, ...]:
+        operator = str(relation.get("operator") or "")
+        if operator == "same_target":
+            return operator, tuple(sorted(nonempty_string_list(relation.get("members"))))
+        if operator == "contrasts":
+            return operator, str(relation.get("left") or ""), str(
+                relation.get("right") or ""
+            )
+        return operator, str(relation.get("first") or ""), str(
+            relation.get("then") or ""
+        )
+
+    def valid_character_relations(relations: Any) -> bool:
+        if not isinstance(relations, list) or not 1 <= len(relations) <= 8:
+            return False
+        signatures: set[tuple[Any, ...]] = set()
+        for relation in relations:
+            if not valid_character_relation(relation):
+                return False
+            signature = character_relation_signature(relation)
+            if signature in signatures:
+                return False
+            signatures.add(signature)
+        return True
+
     for item in assertions:
-        if not isinstance(item, dict) or set(item) != {
+        required_fields = {
             "assertion_id",
             "dimension",
             "polarity",
@@ -5370,6 +5459,10 @@ def authorial_core_v3_semantic_contract_valid(core: dict[str, Any]) -> bool:
             "axes",
             "evidence",
             "affected_dimensions",
+        }
+        if not isinstance(item, dict) or frozenset(item) not in {
+            frozenset(required_fields),
+            frozenset(required_fields | {"relations"}),
         }:
             return False
         assertion_id = str(item.get("assertion_id") or "")
@@ -5381,6 +5474,7 @@ def authorial_core_v3_semantic_contract_valid(core: dict[str, Any]) -> bool:
         evidence = (
             item.get("evidence") if isinstance(item.get("evidence"), dict) else {}
         )
+        relations = item.get("relations") if "relations" in item else None
         if (
             re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]{0,63}", assertion_id)
             is None
@@ -5397,6 +5491,13 @@ def authorial_core_v3_semantic_contract_valid(core: dict[str, Any]) -> bool:
             or (polarity == "advisory" and not set(affected) <= opened)
             or not 1 <= len(axes) <= 16
             or len(evidence) > 16
+            or (
+                relations is not None
+                and (
+                    dimension != "character_response"
+                    or not valid_character_relations(relations)
+                )
+            )
         ):
             return False
         seen_ids.add(assertion_id)
@@ -5693,6 +5794,21 @@ def audit_authorial_core_v5(
         if isinstance(pack.get("authorial_core"), dict)
         else {}
     )
+    prompt_word_count = english_prompt_word_count(prompt_en)
+    if not AUTHORIAL_PROMPT_MIN_WORDS <= prompt_word_count <= AUTHORIAL_PROMPT_MAX_WORDS:
+        failures.append(
+            {
+                "check": "authorial_core_prompt_budget",
+                "reason": (
+                    "v5/v6 prompt_en must remain within the standalone photographic "
+                    "prompt budget so required visual relationships do not compete with "
+                    "optional composition prose"
+                ),
+                "minimum_words": AUTHORIAL_PROMPT_MIN_WORDS,
+                "maximum_words": AUTHORIAL_PROMPT_MAX_WORDS,
+                "actual_words": prompt_word_count,
+            }
+        )
     canonical_sha = str(core.get("canonical_sha256") or "")
     canonical_material = copy.deepcopy(core)
     canonical_material.pop("canonical_sha256", None)
