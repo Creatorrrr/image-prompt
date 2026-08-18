@@ -226,6 +226,7 @@ INTENT_PRESERVATION_CONTRACT_VERSION = "photo-intent-preservation/v1"
 DOWNSTREAM_INTENT_PRECEDENCE_CONTRACT_VERSION = (
     "photo-downstream-intent-precedence/v1"
 )
+NEGATIVE_INTENT_GUARD_CONTRACT_VERSION = "photo-negative-intent-guard/v1"
 INTENT_LOCK_DIMENSIONS = {
     "concept",
     "subject",
@@ -261,6 +262,54 @@ AUTHORIAL_CORE_V3_INTENT_LOCK_DIMENSIONS = INTENT_LOCK_DIMENSIONS | {
     "character_response",
 }
 REQUIRED_INTENT_LOCK_DIMENSIONS = {"concept", "subject", "event"}
+
+# Normal v5/v6 authorial runs keep automatic negative prompts deliberately
+# narrow.  These phrases describe photographic/rendering defects rather than
+# deleting a subject, relationship, action, emotion, prop, count, or genre
+# signal.  Requester-owned exclusions and identity-preservation controls are
+# admitted separately by ``authorial_negative_term_allowed``.
+AUTHORIAL_INTENT_NEUTRAL_NEGATIVE_TERMS = {
+    "3d render look",
+    "awkward animal anatomy",
+    "body distortion",
+    "broken facial features",
+    "broken window geometry",
+    "cartoon style",
+    "cgi look",
+    "digital illustration",
+    "distorted fingers",
+    "excessive hdr",
+    "fake-looking background",
+    "flat collage look",
+    "illustration look",
+    "impossible perspective",
+    "inaccurate reflections",
+    "inconsistent shadows",
+    "low resolution",
+    "obvious cutout edges",
+    "over-processed retouching",
+    "overly smooth fur",
+    "plastic-looking food texture",
+    "plastic-looking skin",
+    "unmatched lighting",
+    "unrealistic hands",
+    "unrealistic steam",
+    "warped product geometry",
+    "warped walls",
+}
+
+# These terms are not generic safety or taste defaults.  They are permitted
+# only when the caller has explicitly enabled identity-reference preservation,
+# where they protect the requested source identity from structural drift.
+AUTHORIAL_IDENTITY_PRESERVATION_NEGATIVE_TERMS = {
+    "de-aged identity",
+    "dollified facial proportions",
+    "duplicate primary subject",
+    "enlarged or rounder eyes than the identity reference",
+    "narrowed jaw compared with the identity reference",
+    "second full recipient face",
+    "shortened face compared with the identity reference",
+}
 
 # These maps describe semantic impact, not topic meaning.  They let the v5
 # request lock govern downstream defaults without special-casing any named
@@ -3003,6 +3052,168 @@ def clean_spaces(text: str) -> str:
     text = re.sub(r"\s+([,.!?;:])", r"\1", text)
     text = re.sub(r"([.!?]){2,}", r"\1", text)
     return text
+
+
+def normalize_negative_intent_term(text: str) -> str:
+    """Normalize one runtime-negative item without changing its meaning."""
+
+    return clean_spaces(str(text or "")).strip(" .;:!?\"'").casefold()
+
+
+def strip_negative_directive_prefix(text: str) -> str:
+    normalized = normalize_negative_intent_term(text)
+    return re.sub(
+        r"^(?:no|without|avoid|exclude|excluding|do\s+not|don't|never)\s+",
+        "",
+        normalized,
+        count=1,
+    ).strip()
+
+
+def negative_term_matches_requester_exclusion(
+    term: str,
+    exclusions: Sequence[str],
+) -> bool:
+    """Admit only an exclusion that is visibly grounded in requester text.
+
+    The comparison removes only an explicit negative directive prefix.  The
+    remaining phrase must equal one complete exclusion; splitting a combined
+    exclusion, matching a substring, synonym expansion, and broader category
+    inference are intentionally forbidden.
+    """
+
+    term_key = strip_negative_directive_prefix(term)
+    if not term_key:
+        return False
+    for exclusion in exclusions:
+        exclusion_key = strip_negative_directive_prefix(str(exclusion))
+        if exclusion_key and term_key == exclusion_key:
+            return True
+    return False
+
+
+def authorial_negative_term_allowed(
+    term: str,
+    core: JsonDict,
+    *,
+    identity_preservation_enabled: bool,
+) -> bool:
+    """Return whether a v5/v6 runtime-negative item is intent-safe.
+
+    Generic safety, taste, count, action, relationship, expression, wardrobe,
+    and genre suppressions are intentionally absent from the automatic lane.
+    They are allowed only when they are a true requester exclusion.  Identity
+    controls are a separate opt-in lane tied to an attached identity source.
+    """
+
+    key = normalize_negative_intent_term(term)
+    if key in AUTHORIAL_INTENT_NEUTRAL_NEGATIVE_TERMS:
+        return True
+    if (
+        identity_preservation_enabled
+        and key in AUTHORIAL_IDENTITY_PRESERVATION_NEGATIVE_TERMS
+    ):
+        return True
+    return negative_term_matches_requester_exclusion(
+        key,
+        [str(item) for item in core.get("user_exclusions") or []],
+    )
+
+
+def filter_authorial_negative_entries(
+    entries: Sequence[Entry],
+    core: JsonDict,
+    *,
+    identity_preservation_enabled: bool,
+) -> tuple[List[Entry], List[str]]:
+    """Remove downstream negatives that can author a different image meaning."""
+
+    kept: List[Entry] = []
+    suppressed: List[str] = []
+    for entry in entries:
+        term = localize(entry, "en").strip()
+        if authorial_negative_term_allowed(
+            term,
+            core,
+            identity_preservation_enabled=identity_preservation_enabled,
+        ):
+            kept.append(entry)
+        elif term:
+            suppressed.append(term)
+    return kept, suppressed
+
+
+def split_negative_prompt_terms(value: Any) -> List[str]:
+    if value is None:
+        return []
+    return [
+        clean_spaces(part)
+        for part in str(value).split(",")
+        if clean_spaces(part)
+    ]
+
+
+def find_blanket_negative_directives(text: str) -> List[str]:
+    """Find prompt-writing directives that delete broad visual semantics.
+
+    This deliberately targets instruction-shaped prose, not every grammatical
+    negation.  Narrative phrases such as ``she does not look away`` are not
+    classified here.  Broad clauses such as ``No contact, gore, or extra
+    people`` and ``never touching anyone`` are, because they behave like a
+    second ungrounded request embedded in the positive prompt.
+    """
+
+    value = str(text or "")
+    patterns = (
+        re.compile(
+            r"(?:^|[.;!?:—]\s+|,\s+)((?:no\b|do\s+not\b|don't\b|avoid\b|exclude\b)[^.;!?]*)",
+            flags=re.IGNORECASE,
+        ),
+        re.compile(
+            r"(?:^|[.;!?:—]\s+|,\s+)(never\s+(?:touch(?:es|ed|ing)?|inject(?:s|ed|ing)?|contact(?:s|ed|ing)?|show(?:s|ed|ing)?|depict(?:s|ed|ing)?|include(?:s|d|ing)?|use(?:s|d|ing)?|reveal(?:s|ed|ing)?|sexualiz(?:e|es|ed|ing)|crop(?:s|ped|ping)?|add(?:s|ed|ing)?)\b[^.;!?]*)",
+            flags=re.IGNORECASE,
+        ),
+    )
+    directives: List[str] = []
+    seen: Set[str] = set()
+    for pattern in patterns:
+        for match in pattern.finditer(value):
+            directive = clean_spaces(match.group(1))
+            key = directive.casefold()
+            if directive and key not in seen:
+                directives.append(directive)
+                seen.add(key)
+    return directives
+
+
+def build_negative_intent_guard(
+    core: JsonDict,
+    negative_en: Any,
+    *,
+    identity_preservation_enabled: bool,
+) -> JsonDict:
+    """Build the public, recomputable v5/v6 negative-intent boundary."""
+
+    guard: JsonDict = {
+        "contract_version": NEGATIVE_INTENT_GUARD_CONTRACT_VERSION,
+        "source_authorial_core_sha256": str(core.get("canonical_sha256") or ""),
+        "source_intent_lock_sha256": str(
+            ((core.get("intent_lock") or {}).get("canonical_sha256") or "")
+        ),
+        "positive_prompt_policy": "positive_description_only_no_blanket_negative_directives",
+        "automatic_negative_policy": "intent_neutral_photographic_defects_only",
+        "requester_exclusion_policy": "exact_active_request_scope_only",
+        "platform_safety_policy": "enforce_outside_prompt_unless_requester_explicit",
+        "local_boundary_policy": "positive_geometry_or_visible_state",
+        "identity_preservation_enabled": bool(identity_preservation_enabled),
+        "explicit_user_exclusions": [
+            str(item) for item in core.get("user_exclusions") or []
+        ],
+        "emitted_terms": split_negative_prompt_terms(negative_en),
+    }
+    guard["canonical_sha256"] = canonical_json_sha256(guard)
+    guard["guard_id"] = str(guard["canonical_sha256"])[:16]
+    return guard
 
 
 def ensure_period(text: str) -> str:
@@ -8850,6 +9061,17 @@ def normalize_authorial_core(
             "authorial core baseline_prompt_en must contain 24 to 180 English words"
         )
     if core_version in AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS:
+        blanket_negative_directives = find_blanket_negative_directives(
+            normalized["baseline_prompt_en"]
+        )
+        if blanket_negative_directives:
+            raise ValueError(
+                "authorial core baseline_prompt_en contains blanket negative directives; "
+                "keep semantic exclusions in request-grounded user_exclusions, keep "
+                "platform policy outside prompt prose, and express local boundaries as "
+                "positive geometry or visible state: "
+                + " | ".join(blanket_negative_directives)
+            )
         assert request_envelope is not None
         normalized["intent_lock"] = normalize_intent_lock(
             payload.get("intent_lock"),
@@ -15849,6 +16071,23 @@ def build_candidate_pack(
         pack["provenance"]["retrieval_query"] = copy.deepcopy(
             provenance.get("retrieval_query", {})
         )
+        if (
+            isinstance(authorial_core, dict)
+            and authorial_core.get("contract_version")
+            in AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS
+        ):
+            negative_intent_guard = (
+                result.get("negative_intent_guard")
+                if isinstance(result.get("negative_intent_guard"), dict)
+                else None
+            )
+            if negative_intent_guard is None:
+                raise ValueError(
+                    "modern v5/v6 candidate pack requires the negative-intent guard"
+                )
+            pack["negative_intent_guard"] = copy.deepcopy(
+                negative_intent_guard
+            )
     visual_intent = (
         provenance.get("visual_intent")
         if isinstance(provenance.get("visual_intent"), dict)
@@ -25533,8 +25772,40 @@ def generate_once(
                     negative_entries.append(entry)
                     existing.add(localize(entry, "en").lower())
             generation_contract["soft_render_suppress_terms"] = [localize(entry, "en") for entry in soft_suppress_entries]
+        if (
+            isinstance(authorial_core, dict)
+            and authorial_core.get("contract_version")
+            in AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS
+        ):
+            negative_entries, suppressed_negative_terms = (
+                filter_authorial_negative_entries(
+                    negative_entries,
+                    authorial_core,
+                    identity_preservation_enabled=(
+                        str(reference_edit_mode or "off") == "identity"
+                    ),
+                )
+            )
+            generation_contract["negative_intent_guard"] = {
+                "contract_version": NEGATIVE_INTENT_GUARD_CONTRACT_VERSION,
+                "suppressed_automatic_terms": suppressed_negative_terms,
+                "suppressed_automatic_term_count": len(suppressed_negative_terms),
+            }
         for lang in langs:
             result[f"negative_{lang}"] = render_negative_prompt(negative_entries, lang)
+
+    if (
+        isinstance(authorial_core, dict)
+        and authorial_core.get("contract_version")
+        in AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS
+    ):
+        result["negative_intent_guard"] = build_negative_intent_guard(
+            authorial_core,
+            result.get("negative_en"),
+            identity_preservation_enabled=(
+                str(reference_edit_mode or "off") == "identity"
+            ),
+        )
 
     result["quality"] = evaluate_generation_quality(generation_contract, render_picked, result, semantic_context)
 

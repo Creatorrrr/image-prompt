@@ -566,6 +566,164 @@ class PhotoAuthorialCoreV6Tests(unittest.TestCase):
         self.assertEqual(budget_failure["actual_words"], 181)
         self.assertEqual(budget_failure["maximum_words"], 180)
 
+    def test_blanket_negative_rewrite_is_rejected_before_core_freeze(self):
+        payload = core()
+        payload["baseline_prompt_en"] += (
+            " No injection, contact, gore, sexuality, cleavage, or extra people."
+        )
+        with self.assertRaisesRegex(ValueError, "blanket negative directives"):
+            self.normalize(payload)
+
+        inline = core()
+        inline["baseline_prompt_en"] = inline["baseline_prompt_en"].replace(
+            "with practical care,",
+            "with practical care, never touching anyone,",
+        )
+        with self.assertRaisesRegex(ValueError, "blanket negative directives"):
+            self.normalize(inline)
+
+        self.assertEqual(
+            prompt_generator.find_blanket_negative_directives(
+                "Keep the scene intense. Constraints: no contact or gore."
+            ),
+            ["no contact or gore"],
+        )
+
+    def test_negative_intent_guard_filters_semantic_defaults_and_is_auditable(self):
+        normalized = self.normalize(core())
+        entries = [
+            {"en": "low resolution", "ko": "저해상도"},
+            {"en": "unrealistic hands", "ko": "비현실적인 손"},
+            {"en": "awkward expression", "ko": "어색한 표정"},
+            {"en": "extra people", "ko": "추가 인물"},
+            {"en": "no contact", "ko": "접촉 없음"},
+            {"en": "gore", "ko": "고어"},
+        ]
+        kept, suppressed = prompt_generator.filter_authorial_negative_entries(
+            entries,
+            normalized,
+            identity_preservation_enabled=False,
+        )
+        self.assertEqual(
+            [entry["en"] for entry in kept],
+            ["low resolution", "unrealistic hands"],
+        )
+        self.assertEqual(
+            suppressed,
+            ["awkward expression", "extra people", "no contact", "gore"],
+        )
+
+        requester_exclusion_core = copy.deepcopy(normalized)
+        requester_exclusion_core["user_exclusions"] = ["No gore."]
+        requester_kept, requester_suppressed = (
+            prompt_generator.filter_authorial_negative_entries(
+                [
+                    {"en": "gore", "ko": "고어"},
+                    {"en": "no contact", "ko": "접촉 없음"},
+                ],
+                requester_exclusion_core,
+                identity_preservation_enabled=False,
+            )
+        )
+        self.assertEqual(
+            [entry["en"] for entry in requester_kept],
+            ["gore"],
+        )
+        self.assertEqual(requester_suppressed, ["no contact"])
+
+        identity_kept, identity_suppressed = (
+            prompt_generator.filter_authorial_negative_entries(
+                [
+                    {
+                        "en": "dollified facial proportions",
+                        "ko": "인형화된 얼굴 비율",
+                    }
+                ],
+                normalized,
+                identity_preservation_enabled=True,
+            )
+        )
+        self.assertEqual(
+            [entry["en"] for entry in identity_kept],
+            ["dollified facial proportions"],
+        )
+        self.assertEqual(identity_suppressed, [])
+
+        data = self.runtime_data()
+        result = prompt_generator.generate_once(
+            data,
+            random.Random(1415),
+            "character_attribute_composition_scene",
+            ["en"],
+            True,
+            12,
+            True,
+            selection_mode="rule",
+            include_trace=True,
+            concept_locks=[REQUEST],
+            seed=1415,
+            creativity=0.0,
+            authorial_core=normalized,
+        )
+        pack = prompt_generator.build_candidate_pack(result, data, "v6")
+        guard = pack["negative_intent_guard"]
+        self.assertEqual(
+            guard["contract_version"],
+            "photo-negative-intent-guard/v1",
+        )
+        self.assertEqual(
+            guard["emitted_terms"],
+            prompt_generator.split_negative_prompt_terms(pack["negative_en"]),
+        )
+        self.assertTrue(
+            set(term.casefold() for term in guard["emitted_terms"])
+            <= prompt_generator.AUTHORIAL_INTENT_NEUTRAL_NEGATIVE_TERMS
+        )
+        self.assertEqual(
+            audit_composed_prompt.audit_negative_intent_guard(pack, BASELINE),
+            [],
+        )
+
+        harmful_prompt_failures = (
+            audit_composed_prompt.audit_negative_intent_guard(
+                pack,
+                BASELINE
+                + " No injection, contact, gore, sexuality, cleavage, or extra people.",
+            )
+        )
+        self.assertIn(
+            "negative_intent_guard_prompt",
+            {row["check"] for row in harmful_prompt_failures},
+        )
+
+        tampered = copy.deepcopy(pack)
+        tampered["negative_en"] = f"{pack['negative_en']}, no contact"
+        tampered["negative_intent_guard"] = (
+            prompt_generator.build_negative_intent_guard(
+                normalized,
+                tampered["negative_en"],
+                identity_preservation_enabled=False,
+            )
+        )
+        tampered_failures = audit_composed_prompt.audit_negative_intent_guard(
+            tampered,
+            BASELINE,
+        )
+        self.assertIn(
+            "negative_intent_guard_terms",
+            {row["check"] for row in tampered_failures},
+        )
+
+    def test_negative_intent_guard_generator_and_auditor_vocabularies_match(self):
+        self.assertEqual(
+            prompt_generator.AUTHORIAL_INTENT_NEUTRAL_NEGATIVE_TERMS,
+            audit_composed_prompt.AUTHORIAL_INTENT_NEUTRAL_NEGATIVE_TERMS,
+        )
+        self.assertEqual(
+            prompt_generator.AUTHORIAL_IDENTITY_PRESERVATION_NEGATIVE_TERMS,
+            audit_composed_prompt.AUTHORIAL_IDENTITY_PRESERVATION_NEGATIVE_TERMS,
+        )
+
     def test_retry_lineage_is_hash_bound_and_dimension_disjoint(self):
         payload = core()
         payload["request_lineage"] = {

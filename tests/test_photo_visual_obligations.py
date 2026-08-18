@@ -706,6 +706,17 @@ class PhotoVisualObligationTests(unittest.TestCase):
                 "visible_same_target_consequence",
             },
         )
+        component_group_ids = {
+            row["id"] for row in obligation["component_semantics"]["groups"]
+        }
+        self.assertTrue(
+            {
+                "supporting_affiliative_outward_signal",
+                "supporting_target_fixation_signal",
+                "direct_obsessive_madness_display",
+            }
+            <= component_group_ids
+        )
         self.assertEqual(
             obligation["prompt_binding"]["required_evidence_fields"],
             [
@@ -714,7 +725,9 @@ class PhotoVisualObligationTests(unittest.TestCase):
                 "affectionate_surface_phrase",
                 "boundary_intrusion_action_phrase",
                 "visible_choice_consequence_phrase",
-                "expression_contrast_phrase",
+                "outward_affection_signal_phrase",
+                "target_fixation_signal_phrase",
+                "direct_obsessive_madness_phrase",
                 "single_frame_coexistence_phrase",
             ],
         )
@@ -727,6 +740,16 @@ class PhotoVisualObligationTests(unittest.TestCase):
         self.assertIn("vo_yandere_affection_and_control_coexist", gate_ids)
         self.assertIn("vo_yandere_same_target_consequence", gate_ids)
         self.assertIn("vo_yandere_not_role_prop_horror", gate_ids)
+        self.assertIn("vo_yandere_two_channel_outward_supports", gate_ids)
+        self.assertIn("vo_yandere_direct_obsessive_madness", gate_ids)
+        self.assertIn("vo_yandere_non_graphic_fictional_intensity", gate_ids)
+        self.assertNotIn("vo_yandere_nonviolent_safe_staging", gate_ids)
+        two_channel_gate = next(
+            row
+            for row in obligation["render_gates"]
+            if row["id"] == "vo_yandere_two_channel_outward_supports"
+        )
+        self.assertEqual(two_channel_gate["review_scale"], "both")
         self.assertIn(
             "syringe_weapon_blood_or_red_light_only",
             obligation["reject_substitutes"],
@@ -734,6 +757,18 @@ class PhotoVisualObligationTests(unittest.TestCase):
         self.assertIn(
             "reference_face_treated_as_personality_evidence",
             obligation["reject_substitutes"],
+        )
+        self.assertIn(
+            "single_affiliative_face_or_fixed_stare_only",
+            obligation["reject_substitutes"],
+        )
+        self.assertIn(
+            "affection_and_fixation_without_direct_visible_madness",
+            obligation["reject_substitutes"],
+        )
+        self.assertIn(
+            "Non-graphic blood, a visible weapon, a syringe",
+            obligation["composition_instruction"],
         )
 
         evidence = self.visual_evidence_for_obligation(obligation)
@@ -767,6 +802,44 @@ class PhotoVisualObligationTests(unittest.TestCase):
             pack,
             role_prop_only,
             role_prop_prompt,
+        )
+        self.assertIn(
+            "visual_obligation_semantic_evidence",
+            {failure["check"] for failure in failures},
+        )
+
+        restrained_without_madness = copy.deepcopy(composed)
+        restrained_without_madness["visual_obligation_evidence"][obligation["id"]][
+            "direct_obsessive_madness_phrase"
+        ] = "a gentle affectionate portrait remains calm and composed"
+        restrained_prompt = self.prompt_for_obligation(
+            obligation,
+            restrained_without_madness["visual_obligation_evidence"][obligation["id"]],
+        )
+        restrained_without_madness["prompt_en"] = restrained_prompt
+        failures = audit_composed_prompt.audit_visual_obligations(
+            pack,
+            restrained_without_madness,
+            restrained_prompt,
+        )
+        self.assertIn(
+            "visual_obligation_semantic_evidence",
+            {failure["check"] for failure in failures},
+        )
+
+        one_channel_only = copy.deepcopy(composed)
+        one_channel_only["visual_obligation_evidence"][obligation["id"]][
+            "target_fixation_signal_phrase"
+        ] = "an intense gaze supplies generic horror styling"
+        one_channel_prompt = self.prompt_for_obligation(
+            obligation,
+            one_channel_only["visual_obligation_evidence"][obligation["id"]],
+        )
+        one_channel_only["prompt_en"] = one_channel_prompt
+        failures = audit_composed_prompt.audit_visual_obligations(
+            pack,
+            one_channel_only,
+            one_channel_prompt,
         )
         self.assertIn(
             "visual_obligation_semantic_evidence",
