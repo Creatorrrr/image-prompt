@@ -112,13 +112,26 @@ RESEARCH_EXTENSION_FILENAMES = (
 )
 RESEARCH_EXTENSION_SCHEMA = "photo-prompt-research-extension/v1"
 CHARACTER_MECHANISM_GRAPH_SCHEMA = "photo-character-mechanism-graph/v2"
-CHARACTER_CONCEPT_RELATION_OPERATORS = {
-    "allowed_semantic_class",
-    "contrasts",
-    "same_target",
-    "temporal_order",
-    "one_of",
-    "not_confounder",
+CHARACTER_RESPONSE_RELATION_FIELDS = {
+    "contrasts": {"operator", "left", "right"},
+    "same_target": {"operator", "members"},
+    "temporal_order": {"operator", "first", "then"},
+}
+CHARACTER_RESPONSE_RELATION_MEMBERS = {
+    "actor",
+    "baseline",
+    "surface_affect",
+    "underlying_affiliation",
+    "relationship_target",
+    "target",
+    "primary_action",
+    "affect_leak",
+    "affect_leak_timing",
+    "trigger",
+    "visible_response",
+    "immediate_consequence",
+    "continuity",
+    "event_phase",
 }
 CHARACTER_CONCEPT_EVIDENCE_ROLES = {
     "baseline",
@@ -2100,38 +2113,48 @@ def validate_character_mechanism_graph(data: JsonDict) -> None:
                         "references unknown semantic classes"
                     )
         relations = profile.get("required_relations")
-        if not isinstance(relations, list) or not relations:
+        if not isinstance(relations, list) or not 1 <= len(relations) <= 8:
             raise ValueError(
                 f"character concept profile {profile_id} requires semantic relations"
             )
+        relation_signatures: Set[tuple[Any, ...]] = set()
         for relation in relations:
             if not isinstance(relation, dict):
                 raise ValueError(
                     f"character concept profile {profile_id} has a non-object relation"
                 )
             operator = str(relation.get("operator") or "")
-            if operator not in CHARACTER_CONCEPT_RELATION_OPERATORS:
+            expected_fields = CHARACTER_RESPONSE_RELATION_FIELDS.get(operator)
+            if expected_fields is None or set(relation) != expected_fields:
                 raise ValueError(
-                    f"character concept profile {profile_id} has invalid relation operator {operator!r}"
+                    f"character concept profile {profile_id} has an invalid relation shape"
                 )
-            if operator == "contrasts" and not all(
-                str(relation.get(key) or "") for key in ("left", "right")
-            ):
+            if operator == "same_target":
+                members = normalize_list(relation.get("members"))
+                valid = bool(
+                    2 <= len(members) <= 8
+                    and len(members) == len(set(members))
+                    and "relationship_target" in members
+                    and set(members) <= CHARACTER_RESPONSE_RELATION_MEMBERS
+                )
+            else:
+                left_key, right_key = (
+                    ("left", "right")
+                    if operator == "contrasts"
+                    else ("first", "then")
+                )
+                left = str(relation.get(left_key) or "")
+                right = str(relation.get(right_key) or "")
+                valid = bool(
+                    left != right
+                    and {left, right} <= CHARACTER_RESPONSE_RELATION_MEMBERS
+                )
+            signature = character_response_relation_signature(relation)
+            if not valid or signature in relation_signatures:
                 raise ValueError(
-                    f"character concept profile {profile_id} has an invalid contrasts relation"
+                    f"character concept profile {profile_id} has invalid or repeated semantic relation members"
                 )
-            if operator == "same_target" and len(
-                set(normalize_list(relation.get("members")))
-            ) < 2:
-                raise ValueError(
-                    f"character concept profile {profile_id} has an invalid same_target relation"
-                )
-            if operator == "temporal_order" and not all(
-                str(relation.get(key) or "") for key in ("first", "then")
-            ):
-                raise ValueError(
-                    f"character concept profile {profile_id} has an invalid temporal relation"
-                )
+            relation_signatures.add(signature)
         evidence_roles = normalize_list(profile.get("required_evidence_roles"))
         if (
             not evidence_roles
@@ -2472,6 +2495,25 @@ def canonical_json_sha256(payload: Any) -> str:
         separators=(",", ":"),
     ).encode("utf-8")
     return hashlib.sha256(canonical).hexdigest()
+
+
+def character_response_relation_signature(
+    relation: Mapping[str, Any],
+) -> tuple[Any, ...]:
+    """Return a semantic signature; same-target member order is immaterial."""
+
+    operator = str(relation.get("operator") or "")
+    if operator == "same_target":
+        return operator, tuple(sorted(normalize_list(relation.get("members"))))
+    if operator == "contrasts":
+        return operator, str(relation.get("left") or ""), str(
+            relation.get("right") or ""
+        )
+    if operator == "temporal_order":
+        return operator, str(relation.get("first") or ""), str(
+            relation.get("then") or ""
+        )
+    return operator, canonical_json_sha256(relation)
 
 
 def visual_profile_registry_sha256(registry: JsonDict) -> str:
@@ -8337,6 +8379,7 @@ def normalize_semantic_assertions(
             "polarity",
             "source_span_ids",
             "axes",
+            "relations",
             "evidence",
             "affected_dimensions",
         }
@@ -8427,6 +8470,93 @@ def normalize_semantic_assertions(
                 )
             axes[key] = values if isinstance(raw_value, list) else values[0]
 
+        relations: List[JsonDict] = []
+        if "relations" in item:
+            raw_relations = item.get("relations")
+            if dimension != "character_response":
+                raise ValueError(
+                    f"semantic assertion {assertion_id!r} relations are supported only for character_response"
+                )
+            if not isinstance(raw_relations, list) or not 1 <= len(raw_relations) <= 8:
+                raise ValueError(
+                    f"semantic assertion {assertion_id!r} relations must contain one to eight rows"
+                )
+            relation_signatures: Set[tuple[Any, ...]] = set()
+            for relation_index, raw_relation in enumerate(raw_relations):
+                if not isinstance(raw_relation, dict):
+                    raise ValueError(
+                        f"semantic assertion {assertion_id!r} relation {relation_index} must be one object"
+                    )
+                operator = str(raw_relation.get("operator") or "").strip()
+                expected_fields = CHARACTER_RESPONSE_RELATION_FIELDS.get(operator)
+                if expected_fields is None or set(raw_relation) != expected_fields:
+                    raise ValueError(
+                        f"semantic assertion {assertion_id!r} relation {relation_index} has an invalid operator or shape"
+                    )
+                if operator == "same_target":
+                    members = [
+                        str(value).strip()
+                        for value in normalize_list(raw_relation.get("members"))
+                        if str(value).strip()
+                    ]
+                    if (
+                        not 2 <= len(members) <= 8
+                        or len(members) != len(set(members))
+                        or "relationship_target" not in members
+                        or not set(members).issubset(
+                            CHARACTER_RESPONSE_RELATION_MEMBERS
+                        )
+                        or any(
+                            re.fullmatch(r"[a-z][a-z0-9_]{0,63}", value) is None
+                            for value in members
+                        )
+                    ):
+                        raise ValueError(
+                            f"semantic assertion {assertion_id!r} relation {relation_index} needs distinct semantic members"
+                        )
+                    normalized_relation = {"operator": operator, "members": members}
+                    signature = character_response_relation_signature(
+                        normalized_relation
+                    )
+                    if signature in relation_signatures:
+                        raise ValueError(
+                            f"semantic assertion {assertion_id!r} relation {relation_index} repeats a semantic relation"
+                        )
+                    relation_signatures.add(signature)
+                    relations.append(normalized_relation)
+                    continue
+                left_key, right_key = (
+                    ("left", "right")
+                    if operator == "contrasts"
+                    else ("first", "then")
+                )
+                left = str(raw_relation.get(left_key) or "").strip()
+                right = str(raw_relation.get(right_key) or "").strip()
+                if (
+                    left == right
+                    or left not in CHARACTER_RESPONSE_RELATION_MEMBERS
+                    or right not in CHARACTER_RESPONSE_RELATION_MEMBERS
+                    or re.fullmatch(r"[a-z][a-z0-9_]{0,63}", left) is None
+                    or re.fullmatch(r"[a-z][a-z0-9_]{0,63}", right) is None
+                ):
+                    raise ValueError(
+                        f"semantic assertion {assertion_id!r} relation {relation_index} needs two distinct semantic members"
+                    )
+                normalized_relation = {
+                    "operator": operator,
+                    left_key: left,
+                    right_key: right,
+                }
+                signature = character_response_relation_signature(
+                    normalized_relation
+                )
+                if signature in relation_signatures:
+                    raise ValueError(
+                        f"semantic assertion {assertion_id!r} relation {relation_index} repeats a semantic relation"
+                    )
+                relation_signatures.add(signature)
+                relations.append(normalized_relation)
+
         raw_evidence = item.get("evidence") or {}
         if not isinstance(raw_evidence, dict) or len(raw_evidence) > 16:
             raise ValueError(
@@ -8478,17 +8608,18 @@ def normalize_semantic_assertions(
                     "required character_response assertion is missing generic causal evidence: "
                     + ", ".join(missing_evidence)
                 )
-        normalized.append(
-            {
-                "assertion_id": assertion_id,
-                "dimension": dimension,
-                "polarity": polarity,
-                "source_span_ids": source_span_ids,
-                "axes": axes,
-                "evidence": evidence,
-                "affected_dimensions": affected_dimensions,
-            }
-        )
+        normalized_assertion = {
+            "assertion_id": assertion_id,
+            "dimension": dimension,
+            "polarity": polarity,
+            "source_span_ids": source_span_ids,
+            "axes": axes,
+            "evidence": evidence,
+            "affected_dimensions": affected_dimensions,
+        }
+        if relations:
+            normalized_assertion["relations"] = relations
+        normalized.append(normalized_assertion)
     required_character_assertions = [
         item
         for item in normalized
@@ -9290,6 +9421,8 @@ def resolve_character_response_intent(core: Any) -> JsonDict:
         "primary_affect_leak_channel": str(leak_channels[0] if leak_channels else ""),
         "frozen_evidence": evidence,
     }
+    if assertion.get("relations"):
+        resolution["semantic_relations"] = copy.deepcopy(assertion["relations"])
     resolution["canonical_sha256"] = canonical_json_sha256(resolution)
     return resolution
 
@@ -9483,14 +9616,16 @@ def evaluate_character_response_profile(
         for relation in assertion.get("relations") or []
         if isinstance(relation, dict)
     ]
-    asserted_relation_hashes = {
-        canonical_json_sha256(relation) for relation in asserted_relations
+    asserted_relation_signatures = {
+        character_response_relation_signature(relation)
+        for relation in asserted_relations
     }
     missing_relations = [
         str(relation.get("operator") or "")
         for relation in profile.get("required_relations") or []
         if isinstance(relation, dict)
-        and canonical_json_sha256(relation) not in asserted_relation_hashes
+        and character_response_relation_signature(relation)
+        not in asserted_relation_signatures
     ]
     if conflicting_axes:
         status = "conflicting"
@@ -9699,6 +9834,9 @@ def compile_character_response_contract(
         "source_assertion_id": resolution["source_assertion_id"],
         "source_span_ids": copy.deepcopy(resolution.get("source_span_ids") or []),
         "semantic_axes": semantic_axes,
+        "semantic_relations": copy.deepcopy(
+            resolution.get("semantic_relations") or []
+        ),
         "primary_affect_leak_channel": resolution[
             "primary_affect_leak_channel"
         ],

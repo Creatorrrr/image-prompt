@@ -5841,6 +5841,23 @@
             "surveillance, control, coercion, and possessiveness",
             "相手を監視して独占しようとする"
           ]
+        },
+        {
+          "id": "ordinary_jealousy_autonomy_preserved",
+          "en": "brief ordinary jealousy with autonomy and boundaries explicitly preserved",
+          "ko": "잠깐 질투하지만 상대의 경계와 선택을 명확히 존중하는 일반 감정",
+          "ja": "一時的に嫉妬しても相手の境界と選択を明確に尊重する一般的な感情",
+          "aliases": [
+            "ordinary jealousy",
+            "일반적인 질투",
+            "普通の嫉妬"
+          ],
+          "definition": "A brief jealous reaction leaves autonomy, choice, and personal boundaries intact.",
+          "paraphrases": [
+            "다른 사람을 보고 잠깐 질투하지만 상대의 선택과 경계를 존중한다",
+            "brief jealousy with autonomy, choice, and boundaries left intact",
+            "一時的に嫉妬するが相手の選択と境界を尊重する"
+          ]
         }
         ],
         "optional_runtime_node_ids": [
@@ -5849,6 +5866,234 @@
           "outward_inner_affect_split",
           "protective_distance_behavior",
           "relationship_triggered_softening"
+        ],
+        "applicability": {
+          "retrieval_only": true,
+          "hard_eligible": false,
+          "requester_definition_precedence": true
+        }
+      },
+      {
+        "id": "yandere",
+        "domain": "character_response",
+        "en": "sincere affection toward one specific adult counterpart escalating into possessive monitoring, boundary intrusion, or access control directed at that same counterpart",
+        "ko": "한 명의 동일한 성인 상대를 향한 진심 어린 애정이 그 상대의 경계를 넘는 소유적 감시나 접근 통제로 번지는 얀데레",
+        "ja": "一人の同じ成人相手への純粋な好意が、その相手の境界を越える独占的な監視やアクセス支配へ発展するヤンデレ",
+        "aliases": [
+          "얀데레",
+          "ヤンデレ",
+          "yandere"
+        ],
+        "definition": "Sincere affection or devoted care toward one identifiable adult counterpart escalates into a possessive, target-directed action that crosses a personal boundary or appropriates access, followed by an observable consequence for that same counterpart. The affection-control relation and shared target define the concept; no hairstyle, eye color, costume, role, weapon, blood, medical tool, fixed gaze, smile, or diagnosis is required.",
+        "paraphrases": [
+          "같은 성인 상대를 정성껏 돌보지만 그 사람의 출입과 일정을 자기 손에 두려는 행동이 이미 드러난다",
+          "다정한 표정과 헌신은 한 사람에게만 향하고 그 애정이 같은 사람의 사적 경계를 넘는 소유 행동으로 이어진다",
+          "사랑하는 한 명을 위한 과도한 배려가 그 사람의 다른 선택지를 줄이는 결과를 남긴다",
+          "Her sincere care for one adult counterpart becomes possessive monitoring of that same person's access and choices.",
+          "A tender outward response and one boundary-crossing action point to the same affection target, with the consequence already visible.",
+          "Devotion to one identifiable adult turns into nonviolent control rather than generic jealousy or horror styling.",
+          "同じ成人相手への優しい世話が、その人の出入りや予定を自分の管理下に置く行動へ変わる",
+          "一人への愛情表現と、その同じ相手の境界を越える独占行動が同時に見える",
+          "純粋な献身が同じ相手の選択肢を狭めた結果まで画面に残っている"
+        ],
+        "axis_requirements": {
+          "surface_affect": {
+            "semantic_classes": [
+              "open_warmth",
+              "professional_neutral",
+              "guarded"
+            ]
+          },
+          "underlying_affiliation": {
+            "semantic_classes": [
+              "obsessive"
+            ]
+          },
+          "affect_leak_intentionality": {
+            "semantic_classes": [
+              "deliberate",
+              "involuntary"
+            ]
+          }
+        },
+        "axis_exclusions": {
+          "surface_affect": {
+            "semantic_classes": [
+              "hostile"
+            ]
+          },
+          "underlying_affiliation": {
+            "semantic_classes": [
+              "neutral",
+              "negative"
+            ]
+          },
+          "affect_leak_intentionality": {
+            "semantic_classes": [
+              "absent"
+            ]
+          }
+        },
+        "required_relations": [
+          {
+            "operator": "same_target",
+            "members": [
+              "relationship_target",
+              "surface_affect",
+              "primary_action",
+              "immediate_consequence"
+            ]
+          },
+          {
+            "operator": "temporal_order",
+            "first": "trigger",
+            "then": "primary_action"
+          },
+          {
+            "operator": "contrasts",
+            "left": "surface_affect",
+            "right": "immediate_consequence"
+          }
+        ],
+        "required_evidence_roles": [
+          "baseline",
+          "relationship_target",
+          "primary_action",
+          "affect_leak",
+          "visible_response",
+          "immediate_consequence",
+          "continuity"
+        ],
+        "confounders": [
+          {
+            "id": "generic_open_devotion",
+            "en": "open romantic devotion that preserves the counterpart's boundaries and choices",
+            "ko": "상대의 경계와 선택을 존중하며 공개적으로 다정한 일반적 헌신",
+            "ja": "相手の境界と選択を尊重する素直で一般的な献身",
+            "aliases": [
+              "generic devotion",
+              "일반적 헌신",
+              "一般的な献身"
+            ],
+            "definition": "Affection and care remain open and prosocial, with no possessive monitoring, boundary intrusion, or access consequence.",
+            "paraphrases": [
+              "사랑하는 상대를 다정하게 돕지만 그 사람의 선택은 그대로 존중한다",
+              "openly loving care with no boundary crossing or possessive consequence",
+              "相手の選択を尊重しながら素直に優しく世話をする"
+            ]
+          },
+          {
+            "id": "ordinary_jealousy",
+            "en": "ordinary jealousy or insecurity without a target-directed boundary crossing",
+            "ko": "같은 상대의 경계를 넘는 행동 없이 질투하거나 불안해하는 일반적 감정",
+            "ja": "同じ相手への境界侵入行動を伴わない一般的な嫉妬や不安",
+            "aliases": [
+              "ordinary jealousy",
+              "일반적인 질투",
+              "普通の嫉妬"
+            ],
+            "definition": "The character feels jealous or insecure, but no concrete possessive action or changed access state is visible.",
+            "paraphrases": [
+              "다른 사람을 보고 질투하지만 상대의 경계나 선택에는 손대지 않는다",
+              "jealous expression without possessive action or consequence",
+              "嫉妬した表情だけで相手の境界には踏み込まない"
+            ]
+          },
+          {
+            "id": "role_only_care",
+            "en": "routine professional care or a role portrait with no possessive relationship action",
+            "ko": "소유적 관계 행동 없이 직업적 돌봄이나 역할 소품만 보이는 인물 사진",
+            "ja": "独占的な関係行動がなく職務上のケアや役割小物だけを見せる人物写真",
+            "aliases": [
+              "routine professional care",
+              "주사기를 든 일반 간호사",
+              "注射器を持つ普通の看護師"
+            ],
+            "definition": "A nurse, caregiver, attendant, or other role performs ordinary duty; costume and tools do not establish obsessive affection.",
+            "paraphrases": [
+              "간호사가 주사기를 들고 차분하게 환자를 돌보는 일반 의료 장면",
+              "a nurse holding a syringe in an ordinary clinical portrait",
+              "看護師が注射器を持って通常のケアをする医療ポートレート"
+            ]
+          },
+          {
+            "id": "horror_threat_aesthetic",
+          "en": "generic horror or pure hostility built from threats, anger, a weapon, blood, red light, or an intense stare",
+          "ko": "애정 대상과 소유 행동 없이 미움 위협 분노 무기 피 붉은 조명 강렬한 시선으로 만든 일반 공포나 순수 적대",
+          "ja": "愛情対象や独占行動がなく憎悪、脅迫、怒り、武器、血、赤い照明、強い視線だけで作る一般的な恐怖や純粋な敵意",
+            "aliases": [
+              "generic horror menace",
+              "일반 공포 인물",
+              "一般的なホラー人物"
+            ],
+          "definition": "Threat styling or pure hostility is visible, but there is no affectionate same-target relationship or possessive boundary consequence.",
+          "paraphrases": [
+            "칼과 피와 붉은 조명만 있는 무서운 인물 사진",
+            "상대를 미워해서 위협하고 계속 화만 내며 호감은 없다",
+            "weapon, blood, and a menacing stare with no affection target",
+            "only hatred, threats, and anger toward the target with no sincere affection",
+            "武器と血と怖い視線だけで愛情対象が見えない"
+          ]
+          },
+          {
+            "id": "detached_surveillance",
+            "en": "detached surveillance, investigation, or security monitoring with no sincere affection",
+            "ko": "진심 어린 애정 없이 업무나 적대 목적으로 대상을 감시하는 조사 보안 행동",
+            "ja": "純粋な好意がなく業務や敵対目的で対象を監視する調査・警備行動",
+            "aliases": [
+              "detached surveillance",
+              "업무상 감시",
+              "職務上の監視"
+            ],
+            "definition": "Monitoring is explained by work, investigation, fear, or hostility rather than affection toward the same target.",
+            "paraphrases": [
+              "보안 요원이 업무상 화면을 감시하지만 개인적 애정은 없다",
+              "professional monitoring without devotion to the observed person",
+              "警備担当者が業務で監視するだけで個人的な好意はない"
+            ]
+          },
+          {
+            "id": "tsundere_guarded_affection",
+            "en": "guarded affection that leaks through care while preserving the counterpart's autonomy",
+            "ko": "퉁명스러운 표면 아래 호감이 돌봄으로 새지만 상대의 자율성은 침범하지 않는 츤데레",
+            "ja": "そっけない表面から好意がケアとして漏れるが相手の自律性は侵さないツンデレ",
+            "aliases": [
+              "tsundere guarded affection",
+              "츤데레 돌봄",
+              "ツンデレの気遣い"
+            ],
+            "definition": "A rejecting or guarded surface is contradicted by prosocial care, without possession, surveillance, or boundary control.",
+            "paraphrases": [
+              "퉁명스럽게 굴지만 같은 상대를 돕고 선택을 존중한다",
+              "guarded care with concealed liking and no possessive control",
+              "そっけなく助けながらも相手の選択を尊重する"
+            ]
+          },
+          {
+            "id": "contained_personal_distress",
+            "en": "contained personal distress or a strained social mask without possessive target-directed action",
+            "ko": "소유적 대상 행동 없이 감정 누출과 불안정한 사회적 표면만 보이는 개인적 고통",
+            "ja": "独占的な対象行動がなく感情の漏れと不安定な社会的表面だけが見える個人的苦痛",
+            "aliases": [
+              "contained personal distress",
+              "억눌린 개인적 고통",
+              "抑えた個人的苦痛"
+            ],
+            "definition": "A composed person shows strain, tears, or self-regulation difficulty, but no affection-control relationship is established.",
+            "paraphrases": [
+              "단정한 인물이 눈물을 참지만 특정 애정 대상이나 경계 침범은 없다",
+              "a strained composed portrait without a possessive relationship action",
+              "整った人物が涙をこらえるだけで特定の愛情対象や境界侵入はない"
+            ]
+          }
+        ],
+        "optional_runtime_node_ids": [
+          "appearance_behavior_expectation_gap",
+          "behavioral_trait_evidence",
+          "contextual_behavior_trigger",
+          "facial_microexpression_anchor",
+          "gaze_relationship_evidence",
+          "relationship_stance_evidence"
         ],
         "applicability": {
           "retrieval_only": true,

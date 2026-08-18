@@ -28,6 +28,20 @@ BASELINE = (
     "The coworker's relieved shoulders answer the gesture, while her compact ears tilt "
     "toward them and the same dark uniform keeps her identity continuous."
 )
+YANDERE_REQUEST = (
+    "성인 얀데레 간호사가 같은 성인 환자를 다정히 돌보면서 "
+    "퇴원 일정과 병실 출입을 통제하는 장면"
+)
+YANDERE_BASELINE = (
+    "An adult fictional nurse gently adjusts a blanket for the same adult patient in "
+    "a quiet recovery room. A signed discharge note triggers the moment. Her sincere "
+    "devoted care stays visible as she takes control of the patient's discharge schedule "
+    "and quietly keeps the visitor pass, with a slightly asymmetric tender smile under "
+    "an overfocused steady gaze and faint lower-lid tension. The same adult patient's "
+    "reaching hand stops at the missing visitor pass, and the altered discharge schedule "
+    "is already visible on the bedside chart. Affection and boundary control coexist in "
+    "one frame, while the same white clinical uniform keeps her identity continuous."
+)
 
 
 def envelope(request_id: str = "v6-request") -> dict:
@@ -132,8 +146,29 @@ def core() -> dict:
                     "primary_action": "practical_care",
                     "affect_leak_timing": "delayed",
                     "affect_leak_channels": ["gaze"],
+                    "affect_leak_intentionality": "minimized",
                     "event_phase": "unfinished",
                 },
+                "relations": [
+                    {
+                        "operator": "contrasts",
+                        "left": "surface_affect",
+                        "right": "underlying_affiliation",
+                    },
+                    {
+                        "operator": "same_target",
+                        "members": [
+                            "relationship_target",
+                            "primary_action",
+                            "affect_leak",
+                        ],
+                    },
+                    {
+                        "operator": "temporal_order",
+                        "first": "surface_affect",
+                        "then": "affect_leak",
+                    },
+                ],
                 "evidence": {
                     "actor_phrase": "An adult cat-eared maid",
                     "baseline_phrase": "keeps her stern professional posture",
@@ -161,6 +196,177 @@ def core() -> dict:
             "evidence": ["quiet corridor depth", "tactile first-aid props"],
         },
         "variation_key": "typed-v6-test",
+    }
+
+
+def yandere_envelope(request_id: str = "v6-yandere-request") -> dict:
+    return {
+        "contract_version": "photo-request-envelope/v1",
+        "provenance": "requesting_user",
+        "request_id": request_id,
+        "request_text": YANDERE_REQUEST,
+        "request_sha256": hashlib.sha256(YANDERE_REQUEST.encode("utf-8")).hexdigest(),
+        "active_spans": [
+            {
+                "span_id": "topic",
+                "start": 0,
+                "end": len(YANDERE_REQUEST),
+                "text": YANDERE_REQUEST,
+            }
+        ],
+    }
+
+
+def yandere_core() -> dict:
+    return {
+        "contract_version": "photo-authorial-core/v3",
+        "provenance": "agent_prepack",
+        "source_request": YANDERE_REQUEST,
+        "interpreted_intent": (
+            "An adult fictional nurse directs sincere care and possessive access control "
+            "toward the same adult patient"
+        ),
+        "subject": "one adult fictional nurse and one adult patient",
+        "setting": "a quiet adult recovery room",
+        "event": "care for the patient becomes control of discharge and visitor access",
+        "visual_priorities": [
+            "sincere care and boundary control in one frame",
+            "same adult affection target",
+            "visible changed access consequence",
+        ],
+        "baseline_prompt_en": YANDERE_BASELINE,
+        "user_definitions": [],
+        "interpretation_provenance": [
+            {
+                "term": "얀데레",
+                "source_text": "얀데레",
+                "basis": "agent_general_knowledge",
+                "resolution": (
+                    "sincere affection toward one adult target escalating into a "
+                    "boundary-crossing control action toward that same target"
+                ),
+                "sources": [],
+            }
+        ],
+        "unresolved_ambiguities": [],
+        "user_exclusions": [],
+        "runtime_forbidden_labels": ["얀데레"],
+        "intent_lock": {
+            "contract_version": "photo-intent-lock/v1",
+            "priority": "requesting_user",
+            "semantic_anchors": [
+                {
+                    "anchor_id": "concept",
+                    "source_text": YANDERE_REQUEST,
+                    "dimension": "concept",
+                    "prompt_evidence": "Affection and boundary control coexist in one frame",
+                },
+                {
+                    "anchor_id": "subject",
+                    "source_text": YANDERE_REQUEST,
+                    "dimension": "subject",
+                    "prompt_evidence": "An adult fictional nurse",
+                },
+                {
+                    "anchor_id": "event",
+                    "source_text": YANDERE_REQUEST,
+                    "dimension": "event",
+                    "prompt_evidence": (
+                        "takes control of the patient's discharge schedule and quietly "
+                        "keeps the visitor pass"
+                    ),
+                },
+                {
+                    "anchor_id": "character_response",
+                    "source_text": YANDERE_REQUEST,
+                    "dimension": "character_response",
+                    "prompt_evidence": "Her sincere devoted care stays visible",
+                },
+            ],
+            "locked_dimensions": [
+                "concept",
+                "subject",
+                "event",
+                "character_response",
+            ],
+            "open_dimensions": [
+                "framing",
+                "composition",
+                "lighting",
+                "camera",
+                "color",
+            ],
+        },
+        "semantic_assertions": [
+            {
+                "assertion_id": "affection_control_same_target",
+                "dimension": "character_response",
+                "polarity": "required",
+                "source_span_ids": ["topic"],
+                "affected_dimensions": ["character_response"],
+                "axes": {
+                    "surface_affect": "openly affectionate",
+                    "underlying_affiliation": "possessive",
+                    "relationship_target": "same_adult_patient",
+                    "primary_action": "appropriates_access",
+                    "affect_leak_timing": "immediate",
+                    "affect_leak_channels": ["gaze"],
+                    "event_phase": "unfinished",
+                    "affect_leak_intentionality": "deliberate",
+                },
+                "relations": [
+                    {
+                        "operator": "same_target",
+                        "members": [
+                            "relationship_target",
+                            "surface_affect",
+                            "primary_action",
+                            "immediate_consequence",
+                        ],
+                    },
+                    {
+                        "operator": "temporal_order",
+                        "first": "trigger",
+                        "then": "primary_action",
+                    },
+                    {
+                        "operator": "contrasts",
+                        "left": "surface_affect",
+                        "right": "immediate_consequence",
+                    },
+                ],
+                "evidence": {
+                    "actor_phrase": "An adult fictional nurse",
+                    "baseline_phrase": "Her sincere devoted care stays visible",
+                    "trigger_phrase": "A signed discharge note triggers the moment",
+                    "target_phrase": "the same adult patient",
+                    "primary_action_phrase": (
+                        "takes control of the patient's discharge schedule and quietly "
+                        "keeps the visitor pass"
+                    ),
+                    "affective_leak_phrase": (
+                        "a slightly asymmetric tender smile under an overfocused steady "
+                        "gaze and faint lower-lid tension"
+                    ),
+                    "visible_response_phrase": (
+                        "The same adult patient's reaching hand stops at the missing visitor pass"
+                    ),
+                    "immediate_consequence_phrase": (
+                        "the altered discharge schedule is already visible on the bedside chart"
+                    ),
+                    "continuity_phrase": (
+                        "the same white clinical uniform keeps her identity continuous"
+                    ),
+                },
+            }
+        ],
+        "request_lineage": None,
+        "style": {
+            "domain": "character_editorial",
+            "family": "restrained relational narrative portrait",
+            "evidence": ["quiet recovery room", "bedside access traces"],
+        },
+        "variation_key": "typed-v6-yandere-test",
     }
 
 
@@ -232,6 +438,10 @@ class PhotoAuthorialCoreV6Tests(unittest.TestCase):
         assertion = normalized["semantic_assertions"][0]
         self.assertEqual(assertion["dimension"], "character_response")
         self.assertEqual(assertion["axes"]["surface_affect"], "guarded")
+        self.assertEqual(
+            {row["operator"] for row in assertion["relations"]},
+            {"contrasts", "same_target", "temporal_order"},
+        )
         self.assertIn(assertion["evidence"]["trigger_phrase"], BASELINE)
         self.assertRegex(normalized["canonical_sha256"], r"^[0-9a-f]{64}$")
 
@@ -261,6 +471,100 @@ class PhotoAuthorialCoreV6Tests(unittest.TestCase):
         ]
         with self.assertRaisesRegex(ValueError, "exactly one primary_action"):
             self.normalize(multiple_actions)
+
+        malformed_relation = core()
+        malformed_relation["semantic_assertions"][0]["relations"][1]["members"] = [
+            "relationship_target",
+            "relationship_target",
+        ]
+        with self.assertRaisesRegex(ValueError, "distinct semantic members"):
+            self.normalize(malformed_relation)
+
+        unknown_relation_member = core()
+        unknown_relation_member["semantic_assertions"][0]["relations"][1][
+            "members"
+        ].append("invented_relation_member")
+        with self.assertRaisesRegex(ValueError, "distinct semantic members"):
+            self.normalize(unknown_relation_member)
+
+        missing_target_member = core()
+        missing_target_member["semantic_assertions"][0]["relations"][1][
+            "members"
+        ].remove("relationship_target")
+        with self.assertRaisesRegex(ValueError, "distinct semantic members"):
+            self.normalize(missing_target_member)
+
+    def test_authorial_core_and_composed_prompt_share_the_24_to_180_word_budget(self):
+        too_long = core()
+        baseline_count = audit_composed_prompt.english_prompt_word_count(
+            too_long["baseline_prompt_en"]
+        )
+        too_long["baseline_prompt_en"] += " " + " ".join(
+            ["detail"] * (181 - baseline_count)
+        )
+        with self.assertRaisesRegex(ValueError, "24 to 180 English words"):
+            self.normalize(too_long)
+
+        data = self.runtime_data()
+        normalized = self.normalize(core())
+        result = prompt_generator.generate_once(
+            data,
+            random.Random(1416),
+            "character_attribute_composition_scene",
+            ["en"],
+            True,
+            12,
+            True,
+            selection_mode="rule",
+            include_trace=True,
+            concept_locks=[REQUEST],
+            seed=1416,
+            creativity=0.0,
+            authorial_core=normalized,
+        )
+        pack = prompt_generator.build_candidate_pack(result, data, "v6")
+        prompt_count = audit_composed_prompt.english_prompt_word_count(BASELINE)
+        oversized_prompt = BASELINE + " " + " ".join(
+            ["detail"] * (181 - prompt_count)
+        )
+        binding = {
+            "source_authorial_core_sha256": normalized["canonical_sha256"],
+            "source_intent_lock_sha256": normalized["intent_lock"][
+                "canonical_sha256"
+            ],
+            "preserved_anchor_ids": [
+                row["anchor_id"]
+                for row in normalized["intent_lock"]["semantic_anchors"]
+            ],
+            "preserved_evidence": [
+                row["prompt_evidence"]
+                for row in normalized["intent_lock"]["semantic_anchors"][:3]
+            ],
+            "authorial_decisions": [
+                {
+                    "dimension": "composition",
+                    "decision": "retain the corridor depth",
+                    "rationale": "keeps the causal response sequence readable",
+                },
+                {
+                    "dimension": "lighting",
+                    "decision": "use restrained practical light",
+                    "rationale": "keeps the small affect leak visible",
+                },
+            ],
+        }
+        failures = audit_composed_prompt.audit_authorial_core_v5(
+            pack,
+            {"authorial_core_binding": binding},
+            oversized_prompt,
+        )
+        budget_failure = next(
+            row
+            for row in failures
+            if row["check"] == "authorial_core_prompt_budget"
+        )
+        self.assertEqual(budget_failure["actual_words"], 181)
+        self.assertEqual(budget_failure["maximum_words"], 180)
 
     def test_retry_lineage_is_hash_bound_and_dimension_disjoint(self):
         payload = core()
@@ -299,6 +603,10 @@ class PhotoAuthorialCoreV6Tests(unittest.TestCase):
         self.assertEqual(contract["behavior_budget"]["primary_action_count"], 1)
         self.assertEqual(contract["primary_affect_leak_channel"], "gaze")
         self.assertEqual(
+            contract["semantic_relations"],
+            normalized["semantic_assertions"][0]["relations"],
+        )
+        self.assertEqual(
             contract["frozen_evidence"]["primary_action_phrase"],
             "wraps the coworker's scraped wrist with practical care",
         )
@@ -308,6 +616,224 @@ class PhotoAuthorialCoreV6Tests(unittest.TestCase):
             all(candidate["hard_eligible"] is False for candidate in retrieval["candidates"])
         )
         self.assertNotIn("score", json.dumps(retrieval, ensure_ascii=False))
+
+    def test_yandere_core_binds_same_target_affection_control_relation(self):
+        normalized_envelope = prompt_generator.normalize_request_envelope(
+            yandere_envelope()
+        )
+        normalized = prompt_generator.normalize_authorial_core(
+            yandere_core(),
+            request_envelope=normalized_envelope,
+        )
+        assertion = normalized["semantic_assertions"][0]
+        self.assertEqual(assertion["axes"]["underlying_affiliation"], "possessive")
+        self.assertEqual(
+            assertion["relations"],
+            [
+                {
+                    "operator": "same_target",
+                    "members": [
+                        "relationship_target",
+                        "surface_affect",
+                        "primary_action",
+                        "immediate_consequence",
+                    ],
+                },
+                {
+                    "operator": "temporal_order",
+                    "first": "trigger",
+                    "then": "primary_action",
+                },
+                {
+                    "operator": "contrasts",
+                    "left": "surface_affect",
+                    "right": "immediate_consequence",
+                },
+            ],
+        )
+        data = self.runtime_data()
+        profile = next(
+            row
+            for row in prompt_generator.character_response_concept_profiles(data)
+            if row["id"] == "yandere"
+        )
+        evaluation = prompt_generator.evaluate_character_response_profile(
+            normalized,
+            data,
+            profile,
+        )
+        self.assertEqual(evaluation["status"], "consistent", evaluation)
+        contract = prompt_generator.compile_character_response_contract(
+            normalized,
+            data=data,
+            semantic_index=data[prompt_generator.SEMANTIC_INDEX_DATA_KEY],
+        )
+        self.assertIsNotNone(contract)
+        assert contract is not None
+        self.assertEqual(contract["semantic_relations"], assertion["relations"])
+
+    def test_yandere_v6_pack_carries_relation_and_visual_obligation(self):
+        data = self.runtime_data()
+        normalized_envelope = prompt_generator.normalize_request_envelope(
+            yandere_envelope()
+        )
+        normalized_core = prompt_generator.normalize_authorial_core(
+            yandere_core(),
+            request_envelope=normalized_envelope,
+        )
+        result = prompt_generator.generate_once(
+            data,
+            random.Random(1415),
+            "character_attribute_composition_scene",
+            ["en"],
+            True,
+            12,
+            True,
+            selection_mode="rule",
+            include_trace=True,
+            concept_locks=[YANDERE_REQUEST],
+            seed=1415,
+            creativity=0.0,
+            authorial_core=normalized_core,
+        )
+        pack = prompt_generator.build_candidate_pack(result, data, "v6")
+        self.assertEqual(pack["contract_version"], "photo-candidate-pack/v6")
+        self.assertEqual(
+            pack["character_response"]["semantic_relations"],
+            normalized_core["semantic_assertions"][0]["relations"],
+        )
+        concept_candidates = pack["character_response"]["advisory_retrieval"][
+            "candidates"
+        ]
+        yandere_candidate = next(
+            row
+            for row in concept_candidates
+            if row["candidate_id"] == "character_response_concept:yandere"
+        )
+        self.assertEqual(
+            yandere_candidate["semantic_consistency"]["status"],
+            "consistent",
+        )
+        self.assertFalse(yandere_candidate["hard_eligible"])
+        self.assertEqual(
+            [
+                row["id"]
+                for row in pack["visual_obligations"]["obligations"]
+            ],
+            ["yandere_affection_control_relation"],
+        )
+        obligation = pack["visual_obligations"]["obligations"][0]
+        self.assertEqual(
+            obligation["runtime_expression"]["default_mode"],
+            "definition_only",
+        )
+        self.assertIn(
+            "syringe_weapon_blood_or_red_light_only",
+            obligation["reject_substitutes"],
+        )
+
+    def test_retry_preserves_yandere_as_a_hard_visual_obligation(self):
+        retry_request = "실패한 이미지를 같은 의미로 다시 생성해줘"
+        raw_envelope = yandere_envelope("v6-yandere-retry")
+        raw_envelope["request_text"] = retry_request
+        raw_envelope["request_sha256"] = hashlib.sha256(
+            retry_request.encode("utf-8")
+        ).hexdigest()
+        raw_envelope["active_spans"] = [
+            {
+                "span_id": "retry",
+                "start": 0,
+                "end": len(retry_request),
+                "text": retry_request,
+            }
+        ]
+        normalized_envelope = prompt_generator.normalize_request_envelope(
+            raw_envelope
+        )
+        raw_core = yandere_core()
+        raw_core["source_request"] = retry_request
+        raw_core["runtime_forbidden_labels"] = []
+        raw_core["interpretation_provenance"] = [
+            {
+                "term": "same meaning retry",
+                "source_text": retry_request,
+                "basis": "request_context",
+                "resolution": (
+                    "preserve the parent concept subject event and character response"
+                ),
+                "sources": [],
+            }
+        ]
+        for anchor in raw_core["intent_lock"]["semantic_anchors"]:
+            anchor["source_text"] = retry_request
+        raw_core["semantic_assertions"][0]["source_span_ids"] = ["retry"]
+        raw_core["request_lineage"] = {
+            "parent_request_id": "v6-yandere-request",
+            "parent_core_sha256": "a" * 64,
+            "preserved_dimensions": [
+                "concept",
+                "subject",
+                "event",
+                "character_response",
+            ],
+            "allowed_changes": ["framing", "composition", "lighting", "camera"],
+        }
+        normalized_core = prompt_generator.normalize_authorial_core(
+            raw_core,
+            request_envelope=normalized_envelope,
+        )
+        data = self.runtime_data()
+        visual_intent = prompt_generator.normalize_visual_intent(
+            {
+                "contract_version": "photo-visual-intent/v1",
+                "provenance": "agent_prepack",
+                "obligations": [
+                    {
+                        "profile_id": "yandere_affection_control_relation",
+                        "source": "agent_postcore_interpretation",
+                        "scope": "request_only",
+                        "source_text": normalized_core["baseline_prompt_en"],
+                        "bindings": {},
+                    }
+                ],
+            },
+            data[prompt_generator.VISUAL_OBLIGATIONS_DATA_KEY],
+            data[prompt_generator.VISUAL_PROFILE_INDEX_DATA_KEY],
+        )
+        result = prompt_generator.generate_once(
+            data,
+            random.Random(1417),
+            "character_attribute_composition_scene",
+            ["en"],
+            True,
+            12,
+            True,
+            selection_mode="rule",
+            include_trace=True,
+            concept_locks=[retry_request],
+            seed=1417,
+            creativity=0.0,
+            authorial_core=normalized_core,
+        )
+        result.setdefault("provenance", {})["visual_intent"] = visual_intent
+        pack = prompt_generator.build_candidate_pack(result, data, "v6")
+        self.assertEqual(
+            [row["id"] for row in pack["visual_obligations"]["obligations"]],
+            ["yandere_affection_control_relation"],
+        )
+        self.assertEqual(
+            pack["visual_obligations"]["obligations"][0]["activation"]["source"],
+            "agent_postcore_interpretation",
+        )
+        self.assertNotIn(
+            "visual-concept:yandere_affection_control_relation",
+            {
+                row["id"]
+                for row in (pack.get("visual_concept_candidates") or {}).get(
+                    "candidates", []
+                )
+            },
+        )
 
     def test_required_non_character_assertion_binds_final_prompt_evidence(self):
         normalized = self.normalize(core_with_concept_assertion())

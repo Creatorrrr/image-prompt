@@ -1,0 +1,92 @@
+{
+  "contract_version": "photo-skill-ab-evaluation/v1",
+  "date": "2026-08-17",
+  "protocol": {
+    "independent_agent_contexts": true,
+    "separate_output_directories": true,
+    "same_reference_image": true,
+    "same_native_generation_tool": true,
+    "one_generation_call_per_arm": true,
+    "retries_allowed": false,
+    "prompt_review_blinded": true,
+    "pixel_review_blinded": true
+  },
+  "arms": {
+    "skill": {
+      "target_skill_used": true,
+      "pack_id": "f0ab0cae8b2c0945",
+      "composed_audit_status": "pass",
+      "runtime_audit_status": "pass",
+      "generation_call_count": 1,
+      "delivery_status": "success",
+      "image_path": "/Users/chasoik/Projects/image-prompt/output/skill-evaluation/2026-08-17-yandere-nurse/skill/generated.png",
+      "image_sha256": "22984e0b471a380933818c5a16a72985f8c25e822166dff534ee5550d3c7db8d",
+      "image_size": [1122, 1402],
+      "prompt_word_count": 267,
+      "visual_contract_status": "fail"
+    },
+    "baseline": {
+      "target_skill_used": false,
+      "generation_call_count": 1,
+      "delivery_status": "moderation_blocked",
+      "moderation_stage": "output",
+      "moderation_category": "sexual",
+      "image_path": null,
+      "prompt_word_count": 286
+    }
+  },
+  "blind_prompt_review": {
+    "mapping": {
+      "prompt-river": "skill",
+      "prompt-maple": "baseline"
+    },
+    "scores_out_of_50": {
+      "skill": [48, 48, 46],
+      "baseline": [35, 31, 35]
+    },
+    "mean": {
+      "skill": 47.33,
+      "baseline": 33.67,
+      "skill_advantage": 13.66
+    },
+    "reviewer_preference": {
+      "skill": 3,
+      "baseline": 0
+    },
+    "consensus": "The skill prompt expresses obsession as one target-directed incident with affect contrast and an already-visible consequence; the baseline relies mainly on stare, rose, locket, and syringe symbolism."
+  },
+  "blind_pixel_review": {
+    "candidate_mapping": {
+      "candidate-orchid": "skill"
+    },
+    "baseline_candidate_available": false,
+    "skill_scores_out_of_100": [75, 77, 77],
+    "skill_mean": 76.33,
+    "skill_median": 77,
+    "strict_qualification": {
+      "pass": 0,
+      "fail": 3
+    },
+    "mean_categories": {
+      "reference_face_fidelity_out_of_20": 16.67,
+      "adult_nurse_and_syringe_out_of_20": 18.33,
+      "obsessive_romance_behavior_out_of_30": 16.67,
+      "photo_anatomy_prop_coherence_out_of_20": 16.33,
+      "composition_integration_out_of_10": 8.33
+    },
+    "consensus": "Strong face resemblance, nurse and syringe legibility, composition, and photographic finish; the visible result reads as a glamorous or ominous nurse portrait because the nurse does not visibly move the call button and the chart grip does not clearly show the intended possessive affect leak."
+  },
+  "assessment": {
+    "delivery_winner": "skill",
+    "prompt_semantics_winner": "skill",
+    "comparative_pixel_winner": "inconclusive_no_baseline_pixels",
+    "skill_render_qualification": "fail",
+    "overall_trial_conclusion": "The skill materially improved behavior-led prompt semantics and delivered the only image in this one-attempt trial, but it did not make the defining relationship action survive rendering."
+  },
+  "limitations": [
+    "Only one stochastic image call was allowed per arm.",
+    "The baseline output moderation block prevents a paired pixel-quality comparison.",
+    "A moderation difference in one pair does not establish that the skill caused higher delivery reliability.",
+    "The skill prompt assigned the two available hands to the syringe and chart while also describing movement of the call button, creating a physical-action ambiguity not caught by preflight audit."
+  ]
+}

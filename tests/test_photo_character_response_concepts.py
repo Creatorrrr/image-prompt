@@ -39,6 +39,13 @@ class PhotoCharacterResponseConceptTests(unittest.TestCase):
             )
             if row.get("id") == "tsundere"
         )
+        cls.yandere_profile = next(
+            row
+            for row in prompt_generator.character_response_concept_profiles(
+                cls.data
+            )
+            if row.get("id") == "yandere"
+        )
 
     def normalize_core(self) -> dict:
         request_envelope = prompt_generator.normalize_request_envelope(envelope())
@@ -111,10 +118,29 @@ class PhotoCharacterResponseConceptTests(unittest.TestCase):
                 profile_id="tsundere",
             )
         )
-        self.assertEqual(concept_ids, {"character_response_concept:tsundere"})
-        self.assertEqual(len(confounder_ids), 6)
+        self.assertEqual(
+            concept_ids,
+            {
+                "character_response_concept:tsundere",
+                "character_response_concept:yandere",
+            },
+        )
+        self.assertEqual(len(confounder_ids), 7)
         self.assertTrue(
             all(document_id in self.bm25f["documents"] for document_id in confounder_ids)
+        )
+        yandere_confounder_ids = (
+            prompt_generator.semantic_character_response_confounder_document_ids(
+                self.data,
+                profile_id="yandere",
+            )
+        )
+        self.assertEqual(len(yandere_confounder_ids), 7)
+        self.assertTrue(
+            all(
+                document_id in self.bm25f["documents"]
+                for document_id in yandere_confounder_ids
+            )
         )
 
     def test_actual_generated_index_contains_profile_and_confounders(self):
@@ -123,10 +149,139 @@ class PhotoCharacterResponseConceptTests(unittest.TestCase):
         )
         prompt_generator.validate_semantic_index_metadata(index, self.data)
         self.assertIn("character_response_concept:tsundere", index["entries"])
+        self.assertIn("character_response_concept:yandere", index["entries"])
         self.assertIn(
             "character_response_confounder:tsundere:pure_hostility",
             index["entries"],
         )
+        self.assertIn(
+            "character_response_confounder:yandere:role_only_care",
+            index["entries"],
+        )
+
+    def test_yandere_profile_is_behavior_led_and_contrastive(self):
+        profile = self.yandere_profile
+        self.assertEqual(profile["domain"], "character_response")
+        self.assertEqual(
+            profile["axis_requirements"]["underlying_affiliation"][
+                "semantic_classes"
+            ],
+            ["obsessive"],
+        )
+        self.assertEqual(
+            {row["operator"] for row in profile["required_relations"]},
+            {"contrasts", "same_target", "temporal_order"},
+        )
+        same_target = next(
+            row
+            for row in profile["required_relations"]
+            if row["operator"] == "same_target"
+        )
+        self.assertEqual(
+            same_target["members"],
+            [
+                "relationship_target",
+                "surface_affect",
+                "primary_action",
+                "immediate_consequence",
+            ],
+        )
+        self.assertIn("role_only_care", {row["id"] for row in profile["confounders"]})
+        self.assertIn(
+            "horror_threat_aesthetic",
+            {row["id"] for row in profile["confounders"]},
+        )
+        serialized = json.dumps(profile, ensure_ascii=False)
+        for scene_field in (
+            "camera",
+            "composition",
+            "facial_geometry",
+            "gaze_direction",
+            "pose",
+            "prop",
+            "relationship_register",
+        ):
+            self.assertNotIn(f'"{scene_field}"', serialized)
+
+        normalized = self.normalize_core()
+        assertion = normalized["semantic_assertions"][0]
+        assertion["axes"].update(
+            {
+                "surface_affect": "openly affectionate",
+                "underlying_affiliation": "possessive",
+                "affect_leak_intentionality": "deliberate",
+            }
+        )
+        assertion["relations"] = copy.deepcopy(profile["required_relations"])
+        result = prompt_generator.evaluate_character_response_profile(
+            normalized,
+            self.data,
+            profile,
+        )
+        self.assertEqual(result["status"], "consistent")
+
+        reordered = copy.deepcopy(normalized)
+        same_target_assertion = next(
+            row
+            for row in reordered["semantic_assertions"][0]["relations"]
+            if row["operator"] == "same_target"
+        )
+        same_target_assertion["members"].reverse()
+        result = prompt_generator.evaluate_character_response_profile(
+            reordered,
+            self.data,
+            profile,
+        )
+        self.assertEqual(result["status"], "consistent")
+
+        missing_consequence = copy.deepcopy(normalized)
+        missing_same_target = next(
+            row
+            for row in missing_consequence["semantic_assertions"][0]["relations"]
+            if row["operator"] == "same_target"
+        )
+        missing_same_target["members"].remove("immediate_consequence")
+        result = prompt_generator.evaluate_character_response_profile(
+            missing_consequence,
+            self.data,
+            profile,
+        )
+        self.assertEqual(result["status"], "incomplete")
+        self.assertEqual(result["missing_relation_operators"], ["same_target"])
+
+        assertion["axes"]["underlying_affiliation"] = "negative"
+        result = prompt_generator.evaluate_character_response_profile(
+            normalized,
+            self.data,
+            profile,
+        )
+        self.assertEqual(result["status"], "conflicting")
+
+    def test_yandere_atomic_support_excludes_horror_and_invisible_shortcuts(self):
+        slot_entries = {
+            str(row.get("id") or ""): row
+            for slot in ("expression", "mood", "reflection_logic")
+            for row in self.data.get("slots", {}).get(slot, [])
+            if isinstance(row, dict)
+        }
+        for entry_id in (
+            "half_lidded_menacing_distant_gaze",
+            "reflection_extra_presence",
+            "obsessive_devotion",
+        ):
+            self.assertNotIn("yandere", slot_entries[entry_id].get("tags", []))
+
+        for slot, entry_id in (
+            ("expression", "obsessive_tender_smile"),
+            ("distance_narrative", "half_step_too_close"),
+            ("relational_action", "pulling_handoff_back"),
+        ):
+            entry = next(
+                row
+                for row in self.data.get("slots", {}).get(slot, [])
+                if row.get("id") == entry_id
+            )
+            self.assertIn("yandere", entry.get("tags", []))
 
     def test_post_core_retrieval_is_advisory_and_score_free(self):
         normalized = self.normalize_core()
@@ -174,7 +329,7 @@ class PhotoCharacterResponseConceptTests(unittest.TestCase):
         )
         self.assertEqual(
             concept["semantic_consistency"]["status"],
-            "incomplete",
+            "consistent",
         )
         self.assertFalse(concept["semantic_consistency"]["hard_eligible"])
 
@@ -253,7 +408,8 @@ class PhotoCharacterResponseConceptTests(unittest.TestCase):
                 profile = next(
                     row
                     for row in retrieval["candidates"]
-                    if row["candidate_type"] == "concept_profile"
+                    if row["candidate_id"]
+                    == "character_response_concept:tsundere"
                 )
                 self.assertEqual(
                     profile["semantic_consistency"]["status"],

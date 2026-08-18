@@ -1,0 +1,88 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "[$photo-prompt-image-generator](/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/SKILL.md) 첨부한 이미지의 외모에 어울리는 주사기를 든 얀데레 간호사 컨셉 프롬프트 작성하고 이미지 생성해줘. 첨부한 이미지는 얼굴만 참고하고 구도는 자유롭게 해줘. 이 작업을 각각 독립된 환경의 서브에이전트에서 하나는 스킬을 사용하고 다른 하나는 스킬을 사용하지 않고 작업하도록 하고 두 결과를 취합하여 스킬의 성능을 평가해줘.",
+  "interpreted_intent": "Create a photorealistic adult yandere-nurse character portrait whose sweetness and possessiveness are simultaneously legible, using the attached image only to guide the face while allowing a new composition.",
+  "subject": "An adult woman working as a hospital nurse, with facial appearance guided by the attached reference image.",
+  "setting": "An after-hours hospital treatment room.",
+  "event": "She holds a capped medical syringe beside her cheek without touching or injecting anyone.",
+  "visual_priorities": [
+    "Faithful facial resemblance to the attached reference",
+    "A readable contradiction between gentle care and controlled possessive menace",
+    "A clearly visible but non-contact medical syringe"
+  ],
+  "baseline_prompt_en": "Create a photorealistic cinematic photograph of an adult woman working as a hospital nurse; use the attached reference image for her face only, closely preserving her pale-blonde hair, soft oval features, wide gray-brown eyes, straight brows, small nose, and glossy rose lips. Present her as obsessively affectionate yet unnervingly possessive in an after-hours treatment room, holding a capped medical syringe beside her cheek without touching anyone. Her gentle bedside smile and unwavering eye contact suggest tender devotion slipping into controlled menace. Prioritize faithful facial resemblance, expressive eyes, and the contradiction between clinical care and restrained danger. Use a clean white uniform, natural skin texture, cool fluorescent light cut by a faint red monitor glow, and shallow depth of field. No blood, no injury, no injection, no text, no watermark.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "얀데레 간호사 컨셉",
+      "source_text": "첨부한 이미지의 외모에 어울리는 주사기를 든 얀데레 간호사 컨셉 프롬프트 작성하고 이미지 생성해줘.",
+      "basis": "agent_general_knowledge",
+      "resolution": "An adult nurse whose outward tenderness visibly coexists with exclusive, unsettling possessiveness; the danger remains restrained and non-graphic.",
+      "sources": []
+    },
+    {
+      "term": "얼굴만 참고하고 구도는 자유롭게",
+      "source_text": "첨부한 이미지는 얼굴만 참고하고 구도는 자유롭게 해줘.",
+      "basis": "request_context",
+      "resolution": "Use the attachment only for facial appearance and identity cues; invent a new pose, framing, environment, and camera composition.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "얀데레 간호사 컨셉",
+        "dimension": "concept",
+        "prompt_evidence": "obsessively affectionate yet unnervingly possessive"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "간호사",
+        "dimension": "subject",
+        "prompt_evidence": "an adult woman working as a hospital nurse"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "주사기를 든",
+        "dimension": "event",
+        "prompt_evidence": "holding a capped medical syringe beside her cheek without touching anyone"
+      },
+      {
+        "anchor_id": "reference_face_only",
+        "source_text": "첨부한 이미지는 얼굴만 참고",
+        "dimension": "subject",
+        "prompt_evidence": "use the attached reference image for her face only"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event"
+    ],
+    "open_dimensions": [
+      "setting",
+      "framing",
+      "composition",
+      "lighting",
+      "camera"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "photorealistic character photography",
+    "family": "cinematic psychological-thriller portrait",
+    "evidence": [
+      "natural skin texture",
+      "cool fluorescent light cut by a faint red monitor glow"
+    ]
+  },
+  "variation_key": "skill-arm-a"
+}

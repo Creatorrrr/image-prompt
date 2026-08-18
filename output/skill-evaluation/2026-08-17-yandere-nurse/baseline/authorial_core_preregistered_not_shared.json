@@ -1,0 +1,150 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "[$photo-prompt-image-generator](/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/SKILL.md) 첨부한 이미지의 외모에 어울리는 주사기를 든 얀데레 간호사 컨셉 프롬프트 작성하고 이미지 생성해줘. 첨부한 이미지는 얼굴만 참고하고 구도는 자유롭게 해줘. 이 작업을 각각 독립된 환경의 서브에이전트에서 하나는 스킬을 사용하고 다른 하나는 스킬을 사용하지 않고 작업하도록 하고 두 결과를 취합하여 스킬의 성능을 평가해줘.",
+  "interpreted_intent": "Create a photorealistic, non-graphic romantic-obsession nurse concept whose behavior visibly targets one adult beloved patient, while using the attached image only for the adult nurse's facial appearance and leaving composition open.",
+  "subject": "An unmistakably adult woman nurse whose facial appearance is based only on the attached reference face, holding a capped syringe.",
+  "setting": "A dim private adult recovery room at night.",
+  "event": "She moves her one adult beloved patient's bedside call button just beyond his fingertips while holding a capped syringe; the displaced button is already visible.",
+  "visual_priorities": [
+    "Faithful use of only the reference face's ash-blonde, gray-eyed adult appearance",
+    "A legible single-frame contrast between a gentle professional manner and possessive devotion directed at one adult patient",
+    "A clearly visible capped syringe with no injection, blood, or injury"
+  ],
+  "baseline_prompt_en": "Photorealistic cinematic portrait of an unmistakably adult woman nurse in a dim private recovery room, using only the attached face as appearance reference: delicate oval face, pale luminous skin, long ash-blonde hair with wispy bangs, gray-brown eyes, softly glossy pink lips. This is a controlled romantic-obsession scene centered on her one adult beloved patient, the only other person in frame. After he reaches toward the bedside call button, she calmly moves it just beyond his fingertips while holding a capped syringe upright in her other hand; the displaced button now rests visibly out of reach. A gentle professional smile remains on her face, but possessive devotion leaks through the white-knuckled grip on his chart. The same adult patient's wrist and call-button reach remain visible. Photorealistic cinematic editorial, waist-up oblique framing, 50mm, shallow depth of field, clinical white uniform, cold teal fluorescent light crossed by muted red monitor glow, natural skin texture, no injection, no blood, no injury, no text, no watermark.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "얀데레 간호사 컨셉",
+      "source_text": "첨부한 이미지의 외모에 어울리는 주사기를 든 얀데레 간호사 컨셉 프롬프트 작성하고 이미지 생성해줘.",
+      "basis": "agent_general_knowledge",
+      "resolution": "An adult nurse whose outwardly gentle professional affect contrasts with possessive romantic fixation, made visible through a concrete action directed at one adult beloved patient and an involuntary affect leak.",
+      "sources": []
+    },
+    {
+      "term": "얼굴만 참고하고 구도는 자유롭게",
+      "source_text": "첨부한 이미지는 얼굴만 참고하고 구도는 자유롭게 해줘.",
+      "basis": "request_context",
+      "resolution": "Use only facial appearance cues from the attachment; do not preserve the reference clothing, pose, crop, background, or composition.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [
+    "yandere",
+    "얀데레"
+  ],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "첨부한 이미지의 외모에 어울리는 주사기를 든 얀데레 간호사 컨셉 프롬프트 작성하고 이미지 생성해줘.",
+        "dimension": "concept",
+        "prompt_evidence": "a controlled romantic-obsession scene"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지의 외모에 어울리는 주사기를 든 얀데레 간호사 컨셉 프롬프트 작성하고 이미지 생성해줘.",
+        "dimension": "subject",
+        "prompt_evidence": "an unmistakably adult woman nurse"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "첨부한 이미지의 외모에 어울리는 주사기를 든 얀데레 간호사 컨셉 프롬프트 작성하고 이미지 생성해줘.",
+        "dimension": "event",
+        "prompt_evidence": "she calmly moves it just beyond his fingertips while holding a capped syringe upright in her other hand"
+      },
+      {
+        "anchor_id": "character_response",
+        "source_text": "첨부한 이미지의 외모에 어울리는 주사기를 든 얀데레 간호사 컨셉 프롬프트 작성하고 이미지 생성해줘.",
+        "dimension": "character_response",
+        "prompt_evidence": "A gentle professional smile remains on her face, but possessive devotion leaks through the white-knuckled grip on his chart"
+      },
+      {
+        "anchor_id": "face_reference_only",
+        "source_text": "첨부한 이미지는 얼굴만 참고하고 구도는 자유롭게 해줘.",
+        "dimension": "identity_reference",
+        "prompt_evidence": "using only the attached face as appearance reference"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "character_response",
+      "identity_reference"
+    ],
+    "open_dimensions": [
+      "setting",
+      "framing",
+      "composition",
+      "lighting",
+      "camera"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "adult_possessive_nurse_response",
+      "assertion_type": "character_response",
+      "requirement": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "character_response"
+      ],
+      "axes": {
+        "surface_affect": "gentle professional reassurance",
+        "underlying_affiliation": "possessive romantic devotion",
+        "relationship_target": "one adult beloved patient",
+        "primary_action": "moves his bedside call button just beyond his fingertips",
+        "affect_leak_timing": "while maintaining her professional smile",
+        "affect_leak_channels": [
+          "hand_tension"
+        ],
+        "event_phase": "the consequence is already visible"
+      },
+      "relations": [
+        {
+          "relation": "same_target",
+          "from": "primary_action",
+          "to": "relationship_target"
+        },
+        {
+          "relation": "contrasts",
+          "from": "surface_affect",
+          "to": "underlying_affiliation"
+        },
+        {
+          "relation": "temporal_order",
+          "from": "primary_action",
+          "to": "event_phase"
+        }
+      ],
+      "evidence": {
+        "actor_phrase": "an unmistakably adult woman nurse",
+        "baseline_phrase": "a controlled romantic-obsession scene",
+        "trigger_phrase": "After he reaches toward the bedside call button",
+        "target_phrase": "her one adult beloved patient, the only other person in frame",
+        "primary_action_phrase": "she calmly moves it just beyond his fingertips while holding a capped syringe upright in her other hand",
+        "affective_leak_phrase": "possessive devotion leaks through the white-knuckled grip on his chart",
+        "visible_response_phrase": "A gentle professional smile remains on her face",
+        "immediate_consequence_phrase": "the displaced button now rests visibly out of reach",
+        "continuity_phrase": "The same adult patient's wrist and call-button reach remain visible"
+      }
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "photorealistic cinematic character editorial",
+    "family": "cold clinical intimacy with restrained psychological tension",
+    "evidence": [
+      "cold teal fluorescent light crossed by muted red monitor glow",
+      "50mm shallow-depth waist-up oblique framing"
+    ]
+  },
+  "variation_key": "arm-b-no-skill-preregistered-not-shared"
+}
