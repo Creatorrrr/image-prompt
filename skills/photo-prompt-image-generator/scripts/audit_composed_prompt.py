@@ -20,10 +20,13 @@ SUPPORTED_CANDIDATE_PACK_VERSIONS = {
     "photo-candidate-pack/v5",
     "photo-candidate-pack/v6",
 }
-MOE_PROMPT_DEFAULT_MIN_WORDS = 50
-MOE_PROMPT_DEFAULT_MAX_WORDS = 120
+MOE_PROMPT_DEFAULT_RECOMMENDED_MIN_WORDS = 50
+MOE_PROMPT_DEFAULT_RECOMMENDED_MAX_WORDS = 120
 AUTHORIAL_PROMPT_MIN_WORDS = 24
-AUTHORIAL_PROMPT_MAX_WORDS = 180
+AUTHORIAL_PROMPT_RECOMMENDED_MAX_WORDS = 180
+AUTHORIAL_PROMPT_ABSOLUTE_MAX_WORDS = 320
+AUTHORIAL_PROMPT_REQUIRED_EVIDENCE_HEADROOM_WORDS = 80
+AUTHORIAL_PROMPT_BUDGET_CONTRACT_VERSION = "photo-authorial-prompt-budget/v1"
 VISUAL_OBLIGATIONS_CONTRACT_VERSION = "photo-visual-obligations/v1"
 VISUAL_INTENT_CONTRACT_VERSION = "photo-visual-intent/v1"
 VISUAL_CONCEPTS_CONTRACT_VERSION = "photo-visual-concepts/v1"
@@ -548,6 +551,156 @@ def text_contains_term(text: str, term: str) -> bool:
 def english_prompt_word_count(text: str) -> int:
     """Count image-prompt words consistently across the contract and audit."""
     return len(re.findall(r"[A-Za-z0-9]+(?:['’\-][A-Za-z0-9]+)*", str(text or "")))
+
+
+def expected_authorial_prompt_budget_contract() -> dict[str, Any]:
+    return {
+        "contract_version": AUTHORIAL_PROMPT_BUDGET_CONTRACT_VERSION,
+        "language": "en",
+        "minimum_words": AUTHORIAL_PROMPT_MIN_WORDS,
+        "recommended_maximum_words": AUTHORIAL_PROMPT_RECOMMENDED_MAX_WORDS,
+        "absolute_maximum_words": AUTHORIAL_PROMPT_ABSOLUTE_MAX_WORDS,
+        "required_evidence_headroom_words": AUTHORIAL_PROMPT_REQUIRED_EVIDENCE_HEADROOM_WORDS,
+        "counting_rule": "ascii_words_with_internal_hyphens_or_apostrophes",
+        "policy": {
+            "recommended_maximum_is_warning": True,
+            "absolute_bounds_are_blocking": True,
+            "required_evidence_expands_advisory_ceiling": True,
+            "requester_meaning_outranks_concision": True,
+        },
+    }
+
+
+def nested_prompt_evidence_strings(value: Any) -> list[str]:
+    if isinstance(value, str):
+        text = value.strip()
+        return [text] if text else []
+    if isinstance(value, dict):
+        return [
+            phrase
+            for nested in value.values()
+            for phrase in nested_prompt_evidence_strings(nested)
+        ]
+    if isinstance(value, list):
+        return [
+            phrase
+            for nested in value
+            for phrase in nested_prompt_evidence_strings(nested)
+        ]
+    return []
+
+
+def authorial_required_prompt_evidence(
+    pack: dict[str, Any],
+    composed: dict[str, Any],
+    *,
+    baseline_only: bool = False,
+) -> list[str]:
+    """Collect literal hard-evidence phrases without treating optional ideas as duties."""
+
+    phrases: list[str] = []
+    core = pack.get("authorial_core") if isinstance(pack.get("authorial_core"), dict) else {}
+    intent_lock = (
+        core.get("intent_lock") if isinstance(core.get("intent_lock"), dict) else {}
+    )
+    phrases.extend(
+        str(anchor.get("prompt_evidence") or "").strip()
+        for anchor in intent_lock.get("semantic_anchors") or []
+        if isinstance(anchor, dict) and str(anchor.get("prompt_evidence") or "").strip()
+    )
+    phrases.extend(
+        str(definition.get("prompt_evidence") or "").strip()
+        for definition in core.get("user_definitions") or []
+        if isinstance(definition, dict)
+        and str(definition.get("prompt_evidence") or "").strip()
+    )
+    for assertion in core.get("semantic_assertions") or []:
+        if not isinstance(assertion, dict) or assertion.get("polarity") != "required":
+            continue
+        phrases.extend(nested_prompt_evidence_strings(assertion.get("evidence")))
+
+    if not baseline_only:
+        binding = (
+            composed.get("authorial_core_binding")
+            if isinstance(composed.get("authorial_core_binding"), dict)
+            else {}
+        )
+        phrases.extend(nested_prompt_evidence_strings(binding.get("preserved_evidence")))
+        for field, evidence_field in (
+            ("character_response", "evidence"),
+            ("semantic_assertion_evidence", "evidence"),
+            ("moe_response", "prompt_evidence"),
+            ("viewer_experience", "prompt_evidence"),
+        ):
+            payload = composed.get(field) if isinstance(composed.get(field), dict) else {}
+            phrases.extend(nested_prompt_evidence_strings(payload.get(evidence_field)))
+        phrases.extend(
+            nested_prompt_evidence_strings(composed.get("visual_obligation_evidence"))
+        )
+        phrases.extend(nested_prompt_evidence_strings(composed.get("coverage_assertions")))
+        manual_gate_evidence = (
+            composed.get("manual_gate_evidence")
+            if isinstance(composed.get("manual_gate_evidence"), dict)
+            else {}
+        )
+        for evidence in manual_gate_evidence.values():
+            if isinstance(evidence, dict):
+                phrases.extend(
+                    nested_prompt_evidence_strings(evidence.get("evidence_phrases"))
+                )
+
+    deduped: list[str] = []
+    seen: set[str] = set()
+    for phrase in phrases:
+        key = phrase.casefold()
+        if not phrase or key in seen:
+            continue
+        seen.add(key)
+        deduped.append(phrase)
+    return deduped
+
+
+def authorial_prompt_budget_metrics(
+    pack: dict[str, Any],
+    composed: dict[str, Any],
+    prompt_en: str,
+    *,
+    baseline_only: bool = False,
+) -> dict[str, int]:
+    word_matches = list(
+        re.finditer(r"[A-Za-z0-9]+(?:['’\-][A-Za-z0-9]+)*", str(prompt_en or ""))
+    )
+    covered_word_indexes: set[int] = set()
+    phrases = authorial_required_prompt_evidence(
+        pack,
+        composed,
+        baseline_only=baseline_only,
+    )
+    for phrase in phrases:
+        match = re.search(re.escape(phrase), prompt_en, flags=re.IGNORECASE)
+        if match is None:
+            continue
+        covered_word_indexes.update(
+            index
+            for index, word in enumerate(word_matches)
+            if word.start() >= match.start() and word.end() <= match.end()
+        )
+    actual_words = len(word_matches)
+    required_evidence_words = len(covered_word_indexes)
+    effective_recommended_maximum_words = min(
+        AUTHORIAL_PROMPT_ABSOLUTE_MAX_WORDS,
+        max(
+            AUTHORIAL_PROMPT_RECOMMENDED_MAX_WORDS,
+            required_evidence_words
+            + AUTHORIAL_PROMPT_REQUIRED_EVIDENCE_HEADROOM_WORDS,
+        ),
+    )
+    return {
+        "actual_words": actual_words,
+        "required_evidence_words": required_evidence_words,
+        "optional_prose_words": actual_words - required_evidence_words,
+        "effective_recommended_maximum_words": effective_recommended_maximum_words,
+    }
 
 
 AUTHORIAL_EVIDENCE_STOPWORDS = {
@@ -2244,6 +2397,7 @@ def audit_moe_response(
     pack: dict[str, Any],
     composed: dict[str, Any],
     prompt_en: str,
+    warnings: list[dict[str, Any]] | None = None,
 ) -> list[dict[str, Any]]:
     contract = pack.get("moe_response")
     if not isinstance(contract, dict) or not contract.get("enabled"):
@@ -2278,32 +2432,100 @@ def audit_moe_response(
         else {}
     )
     if prompt_budget:
-        try:
-            minimum_prompt_words = int(
-                prompt_budget.get("minimum_words", MOE_PROMPT_DEFAULT_MIN_WORDS)
-            )
-        except (TypeError, ValueError):
-            minimum_prompt_words = MOE_PROMPT_DEFAULT_MIN_WORDS
-        try:
-            maximum_prompt_words = int(
-                prompt_budget.get("maximum_words", MOE_PROMPT_DEFAULT_MAX_WORDS)
-            )
-        except (TypeError, ValueError):
-            maximum_prompt_words = MOE_PROMPT_DEFAULT_MAX_WORDS
         prompt_word_count = english_prompt_word_count(prompt_en)
-        if not minimum_prompt_words <= prompt_word_count <= maximum_prompt_words:
-            failures.append(
-                {
-                    "check": "moe_response_prompt_budget",
-                    "reason": (
-                        "moe prompt_en must stay within the compact word budget so identity, event, "
-                        "expression, and styling instructions do not compete for one still frame"
-                    ),
-                    "minimum_words": minimum_prompt_words,
-                    "maximum_words": maximum_prompt_words,
-                    "actual_words": prompt_word_count,
-                }
+        advisory_budget = all(
+            field in prompt_budget
+            for field in (
+                "recommended_minimum_words",
+                "recommended_maximum_words",
+                "absolute_maximum_words",
             )
+        )
+        if advisory_budget:
+            try:
+                minimum_prompt_words = int(
+                    prompt_budget.get("minimum_words", AUTHORIAL_PROMPT_MIN_WORDS)
+                )
+                recommended_minimum_words = int(
+                    prompt_budget.get(
+                        "recommended_minimum_words",
+                        MOE_PROMPT_DEFAULT_RECOMMENDED_MIN_WORDS,
+                    )
+                )
+                recommended_maximum_words = int(
+                    prompt_budget.get(
+                        "recommended_maximum_words",
+                        MOE_PROMPT_DEFAULT_RECOMMENDED_MAX_WORDS,
+                    )
+                )
+                absolute_maximum_words = int(
+                    prompt_budget.get(
+                        "absolute_maximum_words",
+                        AUTHORIAL_PROMPT_ABSOLUTE_MAX_WORDS,
+                    )
+                )
+            except (TypeError, ValueError):
+                minimum_prompt_words = AUTHORIAL_PROMPT_MIN_WORDS
+                recommended_minimum_words = MOE_PROMPT_DEFAULT_RECOMMENDED_MIN_WORDS
+                recommended_maximum_words = MOE_PROMPT_DEFAULT_RECOMMENDED_MAX_WORDS
+                absolute_maximum_words = AUTHORIAL_PROMPT_ABSOLUTE_MAX_WORDS
+            if not minimum_prompt_words <= prompt_word_count <= absolute_maximum_words:
+                failures.append(
+                    {
+                        "check": "moe_response_prompt_budget",
+                        "reason": "moe prompt_en exceeds the absolute compatibility bounds",
+                        "minimum_words": minimum_prompt_words,
+                        "absolute_maximum_words": absolute_maximum_words,
+                        "actual_words": prompt_word_count,
+                    }
+                )
+            elif warnings is not None and not (
+                recommended_minimum_words
+                <= prompt_word_count
+                <= recommended_maximum_words
+            ):
+                warnings.append(
+                    {
+                        "check": "moe_response_prompt_budget",
+                        "reason": (
+                            "moe prompt_en is outside the advisory compact range; preserve required "
+                            "meaning before shortening optional prose"
+                        ),
+                        "recommended_minimum_words": recommended_minimum_words,
+                        "recommended_maximum_words": recommended_maximum_words,
+                        "absolute_maximum_words": absolute_maximum_words,
+                        "actual_words": prompt_word_count,
+                    }
+                )
+        else:
+            try:
+                minimum_prompt_words = int(
+                    prompt_budget.get(
+                        "minimum_words", MOE_PROMPT_DEFAULT_RECOMMENDED_MIN_WORDS
+                    )
+                )
+            except (TypeError, ValueError):
+                minimum_prompt_words = MOE_PROMPT_DEFAULT_RECOMMENDED_MIN_WORDS
+            try:
+                maximum_prompt_words = int(
+                    prompt_budget.get(
+                        "maximum_words", MOE_PROMPT_DEFAULT_RECOMMENDED_MAX_WORDS
+                    )
+                )
+            except (TypeError, ValueError):
+                maximum_prompt_words = MOE_PROMPT_DEFAULT_RECOMMENDED_MAX_WORDS
+            if not minimum_prompt_words <= prompt_word_count <= maximum_prompt_words:
+                failures.append(
+                    {
+                        "check": "moe_response_prompt_budget",
+                        "reason": (
+                            "legacy moe prompt_en must stay within its recorded compact word budget"
+                        ),
+                        "minimum_words": minimum_prompt_words,
+                        "maximum_words": maximum_prompt_words,
+                        "actual_words": prompt_word_count,
+                    }
+                )
     required_fields = [str(item) for item in contract.get("required_fields") or [] if str(item)]
     missing_fields = [field for field in required_fields if field not in response]
     if missing_fields:
@@ -6027,6 +6249,7 @@ def audit_authorial_core_v5(
     pack: dict[str, Any],
     composed: dict[str, Any],
     prompt_en: str,
+    warnings: list[dict[str, Any]] | None = None,
 ) -> list[dict[str, Any]]:
     pack_version = str(pack.get("contract_version") or "")
     if pack_version not in {"photo-candidate-pack/v5", "photo-candidate-pack/v6"}:
@@ -6037,21 +6260,134 @@ def audit_authorial_core_v5(
         if isinstance(pack.get("authorial_core"), dict)
         else {}
     )
-    prompt_word_count = english_prompt_word_count(prompt_en)
-    if not AUTHORIAL_PROMPT_MIN_WORDS <= prompt_word_count <= AUTHORIAL_PROMPT_MAX_WORDS:
+    authorial_composition = (
+        pack.get("authorial_composition")
+        if isinstance(pack.get("authorial_composition"), dict)
+        else {}
+    )
+    recorded_budget = (
+        authorial_composition.get("prompt_budget")
+        if isinstance(authorial_composition.get("prompt_budget"), dict)
+        else None
+    )
+    expected_budget = expected_authorial_prompt_budget_contract()
+    uses_advisory_budget = recorded_budget == expected_budget
+    if recorded_budget is not None and not uses_advisory_budget:
         failures.append(
             {
-                "check": "authorial_core_prompt_budget",
-                "reason": (
-                    "v5/v6 prompt_en must remain within the standalone photographic "
-                    "prompt budget so required visual relationships do not compete with "
-                    "optional composition prose"
-                ),
-                "minimum_words": AUTHORIAL_PROMPT_MIN_WORDS,
-                "maximum_words": AUTHORIAL_PROMPT_MAX_WORDS,
-                "actual_words": prompt_word_count,
+                "check": "authorial_prompt_budget_contract",
+                "reason": "the versioned authorial prompt-budget policy was changed after pack generation",
+                "expected": expected_budget,
+                "actual": recorded_budget,
             }
         )
+
+    if uses_advisory_budget:
+        prompt_metrics = authorial_prompt_budget_metrics(pack, composed, prompt_en)
+        prompt_word_count = prompt_metrics["actual_words"]
+        if not (
+            AUTHORIAL_PROMPT_MIN_WORDS
+            <= prompt_word_count
+            <= AUTHORIAL_PROMPT_ABSOLUTE_MAX_WORDS
+        ):
+            failures.append(
+                {
+                    "check": "authorial_core_prompt_budget",
+                    "reason": "v5/v6 prompt_en exceeds the absolute photographic prompt bounds",
+                    "minimum_words": AUTHORIAL_PROMPT_MIN_WORDS,
+                    "recommended_maximum_words": AUTHORIAL_PROMPT_RECOMMENDED_MAX_WORDS,
+                    "absolute_maximum_words": AUTHORIAL_PROMPT_ABSOLUTE_MAX_WORDS,
+                    "actual_words": prompt_word_count,
+                }
+            )
+        elif (
+            warnings is not None
+            and prompt_word_count > AUTHORIAL_PROMPT_RECOMMENDED_MAX_WORDS
+        ):
+            warnings.append(
+                {
+                    "check": "authorial_prompt_recommended_budget",
+                    "reason": (
+                        "prompt_en exceeds the default concise target; this is advisory because "
+                        "requester meaning and literal hard evidence take priority"
+                    ),
+                    "recommended_maximum_words": AUTHORIAL_PROMPT_RECOMMENDED_MAX_WORDS,
+                    "absolute_maximum_words": AUTHORIAL_PROMPT_ABSOLUTE_MAX_WORDS,
+                    **prompt_metrics,
+                }
+            )
+            if (
+                prompt_word_count
+                > prompt_metrics["effective_recommended_maximum_words"]
+            ):
+                warnings.append(
+                    {
+                        "check": "authorial_prompt_optional_prose_budget",
+                        "reason": (
+                            "prompt_en exceeds the evidence-adjusted advisory ceiling; trim optional "
+                            "candidate, styling, camera, or explanatory prose before hard evidence"
+                        ),
+                        "required_evidence_headroom_words": AUTHORIAL_PROMPT_REQUIRED_EVIDENCE_HEADROOM_WORDS,
+                        "absolute_maximum_words": AUTHORIAL_PROMPT_ABSOLUTE_MAX_WORDS,
+                        **prompt_metrics,
+                    }
+                )
+
+        baseline_prompt = str(core.get("baseline_prompt_en") or "")
+        baseline_metrics = authorial_prompt_budget_metrics(
+            pack,
+            composed,
+            baseline_prompt,
+            baseline_only=True,
+        )
+        baseline_word_count = baseline_metrics["actual_words"]
+        if not (
+            AUTHORIAL_PROMPT_MIN_WORDS
+            <= baseline_word_count
+            <= AUTHORIAL_PROMPT_ABSOLUTE_MAX_WORDS
+        ):
+            failures.append(
+                {
+                    "check": "authorial_core_baseline_prompt_budget",
+                    "reason": "baseline_prompt_en exceeds the absolute photographic prompt bounds",
+                    "minimum_words": AUTHORIAL_PROMPT_MIN_WORDS,
+                    "recommended_maximum_words": AUTHORIAL_PROMPT_RECOMMENDED_MAX_WORDS,
+                    "absolute_maximum_words": AUTHORIAL_PROMPT_ABSOLUTE_MAX_WORDS,
+                    "actual_words": baseline_word_count,
+                }
+            )
+        elif (
+            warnings is not None
+            and baseline_word_count > AUTHORIAL_PROMPT_RECOMMENDED_MAX_WORDS
+        ):
+            warnings.append(
+                {
+                    "check": "authorial_core_baseline_recommended_budget",
+                    "reason": (
+                        "baseline_prompt_en exceeds the default concise target but remains within "
+                        "the absolute bound"
+                    ),
+                    "recommended_maximum_words": AUTHORIAL_PROMPT_RECOMMENDED_MAX_WORDS,
+                    "absolute_maximum_words": AUTHORIAL_PROMPT_ABSOLUTE_MAX_WORDS,
+                    **baseline_metrics,
+                }
+            )
+    else:
+        prompt_word_count = english_prompt_word_count(prompt_en)
+        if not (
+            AUTHORIAL_PROMPT_MIN_WORDS
+            <= prompt_word_count
+            <= AUTHORIAL_PROMPT_RECOMMENDED_MAX_WORDS
+        ):
+            failures.append(
+                {
+                    "check": "authorial_core_prompt_budget",
+                    "reason": "legacy v5/v6 packs retain their recorded 24 to 180 word hard boundary",
+                    "minimum_words": AUTHORIAL_PROMPT_MIN_WORDS,
+                    "maximum_words": AUTHORIAL_PROMPT_RECOMMENDED_MAX_WORDS,
+                    "actual_words": prompt_word_count,
+                }
+            )
     canonical_sha = str(core.get("canonical_sha256") or "")
     canonical_material = copy.deepcopy(core)
     canonical_material.pop("canonical_sha256", None)
@@ -7165,14 +7501,14 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
     failures.extend(audit_negative_intent_guard(pack, prompt_en))
 
     failures.extend(audit_creative_direction(pack, composed, prompt_en))
-    failures.extend(audit_moe_response(pack, composed, prompt_en))
+    failures.extend(audit_moe_response(pack, composed, prompt_en, warnings))
     failures.extend(audit_character_response_v6(pack, composed, prompt_en))
     failures.extend(
         audit_semantic_assertion_obligations_v6(pack, composed, prompt_en)
     )
     failures.extend(audit_visual_obligations(pack, composed, prompt_en))
     failures.extend(audit_viewer_experience(pack, composed, prompt_en))
-    failures.extend(audit_authorial_core_v5(pack, composed, prompt_en))
+    failures.extend(audit_authorial_core_v5(pack, composed, prompt_en, warnings))
     failures.extend(audit_semantic_clarification_v5(pack, composed, prompt_en))
 
     safety = pack.get("safety") if isinstance(pack.get("safety"), dict) else {}

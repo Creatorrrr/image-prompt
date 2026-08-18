@@ -45,7 +45,7 @@ Therefore, the durable photographic mechanism remains relational: affection, con
 1. The first relation contract bound target, action, and affect leak but omitted the consequence. The corrected `same_target` vector binds `relationship_target`, `surface_affect`, `primary_action`, and `immediate_consequence`.
 2. Relation rows previously accepted arbitrary identifiers and treated member order as meaningful. Validation now permits only declared generic axes and causal roles, requires `relationship_target`, rejects duplicates, and compares `same_target` members as an unordered set.
 3. An elliptical retry could preserve the concept in lineage while leaving its visual profile as an unselected optional candidate. A preserved parent hard obligation must now be recreated through hash-bound post-core visual intent from an exact current core field.
-4. The authorial baseline had a 24–180 word boundary, but the final composed prompt could exceed it. The v5/v6 composed audit now enforces the same boundary.
+4. The authorial baseline had a 24–180 hard boundary, and the final composed audit later copied that same fixed cap. The current versioned budget keeps 24–320 as absolute bounds, treats 180 as an advisory target, and expands the advisory ceiling for literal hard evidence rather than forcing semantic compression.
 5. Research rows linked sweet-surface evidence to unrelated menacing-gaze, reflection-horror, and invisible-mood candidates. Those links and direct yandere routing tags were removed, and source-specific limitations were recorded.
 
 ## Composition priority for the next render
@@ -54,7 +54,7 @@ Use a tight patient-point-of-view close portrait so the adult nurse dominates th
 
 ## Acceptance gates
 
-1. Text preflight: all frozen evidence is literal, the hard visual profile survives retries, forbidden labels remain out of runtime text, and `prompt_en` is 24–180 words.
+1. Text preflight: all frozen evidence is literal, the hard visual profile survives retries, forbidden labels remain out of runtime text, and `prompt_en` stays within the absolute 24–320 word bounds; exceeding the default 180-word target is reported as an advisory warning.
 2. Thumbnail review: obsessive love and barely controlled madness are immediately readable on the character, with affection and threat directed toward the same target; the frame does not collapse into “ordinary nurse” or “loveless generic horror.”
 3. Native-size review: affiliative face signal, target-locked eye-head-body orientation, ecstatic instability, weapon/tool separation from skin, non-graphic blood treatment, adult identity, and reference-face fidelity are intact.
 4. Process report: prompt/audit pass, delivery success, pixel legibility, and user acceptance are reported separately.
