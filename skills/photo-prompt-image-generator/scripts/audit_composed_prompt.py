@@ -45,6 +45,7 @@ INTENT_PRESERVATION_CONTRACT_VERSION = "photo-intent-preservation/v1"
 DOWNSTREAM_INTENT_PRECEDENCE_CONTRACT_VERSION = (
     "photo-downstream-intent-precedence/v1"
 )
+NEGATIVE_INTENT_GUARD_CONTRACT_VERSION = "photo-negative-intent-guard/v1"
 INTENT_LOCK_DIMENSIONS = {
     "concept",
     "subject",
@@ -78,6 +79,44 @@ INTENT_LOCK_DIMENSIONS = {
 }
 AUTHORIAL_CORE_V3_INTENT_LOCK_DIMENSIONS = INTENT_LOCK_DIMENSIONS | {
     "character_response",
+}
+AUTHORIAL_INTENT_NEUTRAL_NEGATIVE_TERMS = {
+    "3d render look",
+    "awkward animal anatomy",
+    "body distortion",
+    "broken facial features",
+    "broken window geometry",
+    "cartoon style",
+    "cgi look",
+    "digital illustration",
+    "distorted fingers",
+    "excessive hdr",
+    "fake-looking background",
+    "flat collage look",
+    "illustration look",
+    "impossible perspective",
+    "inaccurate reflections",
+    "inconsistent shadows",
+    "low resolution",
+    "obvious cutout edges",
+    "over-processed retouching",
+    "overly smooth fur",
+    "plastic-looking food texture",
+    "plastic-looking skin",
+    "unmatched lighting",
+    "unrealistic hands",
+    "unrealistic steam",
+    "warped product geometry",
+    "warped walls",
+}
+AUTHORIAL_IDENTITY_PRESERVATION_NEGATIVE_TERMS = {
+    "de-aged identity",
+    "dollified facial proportions",
+    "duplicate primary subject",
+    "enlarged or rounder eyes than the identity reference",
+    "narrowed jaw compared with the identity reference",
+    "second full recipient face",
+    "shortened face compared with the identity reference",
 }
 CHARACTER_RESPONSE_REQUIRED_AXES = {
     "surface_affect",
@@ -288,6 +327,210 @@ def composed_object(payload: Any) -> dict[str, Any]:
     if not isinstance(payload, dict):
         raise ValueError("composed prompt must be a JSON object")
     return payload
+
+
+def clean_prompt_spaces(text: str) -> str:
+    value = re.sub(r"\s+", " ", str(text or "")).strip()
+    return re.sub(r"\s+([,.!?;:])", r"\1", value)
+
+
+def normalize_negative_intent_term(text: str) -> str:
+    return clean_prompt_spaces(text).strip(" .;:!?\"'").casefold()
+
+
+def strip_negative_directive_prefix(text: str) -> str:
+    normalized = normalize_negative_intent_term(text)
+    return re.sub(
+        r"^(?:no|without|avoid|exclude|excluding|do\s+not|don't|never)\s+",
+        "",
+        normalized,
+        count=1,
+    ).strip()
+
+
+def negative_term_matches_requester_exclusion(
+    term: str,
+    exclusions: Sequence[str],
+) -> bool:
+    term_key = strip_negative_directive_prefix(term)
+    if not term_key:
+        return False
+    for exclusion in exclusions:
+        exclusion_key = strip_negative_directive_prefix(str(exclusion))
+        if exclusion_key and term_key == exclusion_key:
+            return True
+    return False
+
+
+def authorial_negative_term_allowed(
+    term: str,
+    core: dict[str, Any],
+    *,
+    identity_preservation_enabled: bool,
+) -> bool:
+    key = normalize_negative_intent_term(term)
+    if key in AUTHORIAL_INTENT_NEUTRAL_NEGATIVE_TERMS:
+        return True
+    if (
+        identity_preservation_enabled
+        and key in AUTHORIAL_IDENTITY_PRESERVATION_NEGATIVE_TERMS
+    ):
+        return True
+    return negative_term_matches_requester_exclusion(
+        key,
+        [str(item) for item in core.get("user_exclusions") or []],
+    )
+
+
+def split_negative_prompt_terms(value: Any) -> list[str]:
+    if value is None:
+        return []
+    return [
+        clean_prompt_spaces(part)
+        for part in str(value).split(",")
+        if clean_prompt_spaces(part)
+    ]
+
+
+def find_blanket_negative_directives(text: str) -> list[str]:
+    value = str(text or "")
+    patterns = (
+        re.compile(
+            r"(?:^|[.;!?:—]\s+|,\s+)((?:no\b|do\s+not\b|don't\b|avoid\b|exclude\b)[^.;!?]*)",
+            flags=re.IGNORECASE,
+        ),
+        re.compile(
+            r"(?:^|[.;!?:—]\s+|,\s+)(never\s+(?:touch(?:es|ed|ing)?|inject(?:s|ed|ing)?|contact(?:s|ed|ing)?|show(?:s|ed|ing)?|depict(?:s|ed|ing)?|include(?:s|d|ing)?|use(?:s|d|ing)?|reveal(?:s|ed|ing)?|sexualiz(?:e|es|ed|ing)|crop(?:s|ped|ping)?|add(?:s|ed|ing)?)\b[^.;!?]*)",
+            flags=re.IGNORECASE,
+        ),
+    )
+    directives: list[str] = []
+    seen: set[str] = set()
+    for pattern in patterns:
+        for match in pattern.finditer(value):
+            directive = clean_prompt_spaces(match.group(1))
+            key = directive.casefold()
+            if directive and key not in seen:
+                directives.append(directive)
+                seen.add(key)
+    return directives
+
+
+def expected_negative_intent_guard(pack: dict[str, Any]) -> dict[str, Any] | None:
+    core = pack.get("authorial_core") if isinstance(pack.get("authorial_core"), dict) else {}
+    if core.get("contract_version") not in AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS:
+        return None
+    provenance = (
+        pack.get("provenance")
+        if isinstance(pack.get("provenance"), dict)
+        else {}
+    )
+    identity_preservation_enabled = (
+        str(provenance.get("reference_edit_mode") or "off") == "identity"
+    )
+    guard: dict[str, Any] = {
+        "contract_version": NEGATIVE_INTENT_GUARD_CONTRACT_VERSION,
+        "source_authorial_core_sha256": str(core.get("canonical_sha256") or ""),
+        "source_intent_lock_sha256": str(
+            ((core.get("intent_lock") or {}).get("canonical_sha256") or "")
+        ),
+        "positive_prompt_policy": "positive_description_only_no_blanket_negative_directives",
+        "automatic_negative_policy": "intent_neutral_photographic_defects_only",
+        "requester_exclusion_policy": "exact_active_request_scope_only",
+        "platform_safety_policy": "enforce_outside_prompt_unless_requester_explicit",
+        "local_boundary_policy": "positive_geometry_or_visible_state",
+        "identity_preservation_enabled": identity_preservation_enabled,
+        "explicit_user_exclusions": [
+            str(item) for item in core.get("user_exclusions") or []
+        ],
+        "emitted_terms": split_negative_prompt_terms(pack.get("negative_en")),
+    }
+    guard["canonical_sha256"] = canonical_json_sha256(guard)
+    guard["guard_id"] = str(guard["canonical_sha256"])[:16]
+    return guard
+
+
+def audit_negative_intent_guard(
+    pack: dict[str, Any],
+    prompt_en: str,
+) -> list[dict[str, Any]]:
+    expected = expected_negative_intent_guard(pack)
+    if expected is None:
+        return []
+    failures: list[dict[str, Any]] = []
+    actual = (
+        pack.get("negative_intent_guard")
+        if isinstance(pack.get("negative_intent_guard"), dict)
+        else None
+    )
+    if actual != expected:
+        failures.append(
+            {
+                "check": "negative_intent_guard_contract",
+                "reason": (
+                    "v5/v6 pack must expose the exact recomputable requester-first negative-intent boundary"
+                ),
+                "expected": expected,
+                "actual": actual,
+            }
+        )
+
+    core = pack.get("authorial_core") if isinstance(pack.get("authorial_core"), dict) else {}
+    identity_enabled = bool(expected["identity_preservation_enabled"])
+    terms = split_negative_prompt_terms(pack.get("negative_en"))
+    disallowed_terms = [
+        term
+        for term in terms
+        if not authorial_negative_term_allowed(
+            term,
+            core,
+            identity_preservation_enabled=identity_enabled,
+        )
+    ]
+    if disallowed_terms:
+        failures.append(
+            {
+                "check": "negative_intent_guard_terms",
+                "reason": (
+                    "automatic negative_en contains semantic suppression that is neither a requester exclusion, an intent-neutral photographic defect, nor an enabled identity-preservation control"
+                ),
+                "terms": disallowed_terms,
+            }
+        )
+    normalized_terms = [normalize_negative_intent_term(term) for term in terms]
+    if len(normalized_terms) != len(set(normalized_terms)):
+        failures.append(
+            {
+                "check": "negative_intent_guard_terms",
+                "reason": "negative_en contains duplicate normalized terms",
+            }
+        )
+
+    baseline_directives = find_blanket_negative_directives(
+        str(core.get("baseline_prompt_en") or "")
+    )
+    if baseline_directives:
+        failures.append(
+            {
+                "check": "negative_intent_guard_baseline",
+                "reason": (
+                    "baseline_prompt_en embeds blanket negative directives instead of positive visual realization"
+                ),
+                "directives": baseline_directives,
+            }
+        )
+    prompt_directives = find_blanket_negative_directives(prompt_en)
+    if prompt_directives:
+        failures.append(
+            {
+                "check": "negative_intent_guard_prompt",
+                "reason": (
+                    "prompt_en embeds blanket negative directives; use positive local geometry or visible state and keep platform enforcement outside prompt prose"
+                ),
+                "directives": prompt_directives,
+            }
+        )
+    return failures
 
 
 def text_contains_term(text: str, term: str) -> bool:
@@ -6919,6 +7162,7 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
     pack_negative = pack.get("negative_en")
     if negative_en != pack_negative:
         failures.append({"check": "negative_en", "reason": "negative_en differs from candidate pack"})
+    failures.extend(audit_negative_intent_guard(pack, prompt_en))
 
     failures.extend(audit_creative_direction(pack, composed, prompt_en))
     failures.extend(audit_moe_response(pack, composed, prompt_en))

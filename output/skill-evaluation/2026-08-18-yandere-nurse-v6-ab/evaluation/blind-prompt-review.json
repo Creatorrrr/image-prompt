@@ -1,0 +1,119 @@
+{
+  "review_type": "strict_blind_prompt_only",
+  "scope": {
+    "renders_seen": false,
+    "method_mapping_seen_or_inferred": false,
+    "basis": "Two anonymous English prompts scored only against the frozen blind prompt rubric."
+  },
+  "word_count_method": {
+    "definition": "Count matches of [A-Za-z]+(?:[-'’][A-Za-z]+)* over UTF-8 text; internal hyphens or apostrophes between letters remain within one word, and digits are excluded.",
+    "prompt_A": 180,
+    "prompt_B": 433,
+    "comparison": "B is 2.41 times as long as A by this mechanical count."
+  },
+  "reviews": {
+    "A": {
+      "scores": {
+        "requested_concept_fidelity": {
+          "score": 30,
+          "max": 30,
+          "evidence": "The nurse is explicitly an adult woman in her late twenties, the capped syringe is handheld, and the yandere meaning is relational rather than label-only: her tenderness is repeatedly bound to the same wristband-identified adult patient while she locks the door and narrows his choice."
+        },
+        "visible_single_frame_causality": {
+          "score": 25,
+          "max": 25,
+          "evidence": "The cobalt-wristband patient is one identifiable target; turning the door lock is a concrete target-directed control action; the smile tremor is an affect leak; and the glowing locked indicator plus the patient's tightened hand are already-visible consequences. The prompt explicitly requires these signals to coexist in one frame."
+        },
+        "face_reference_and_freedom_constraint": {
+          "score": 9,
+          "max": 10,
+          "evidence": "It says to preserve only the attached reference's facial appearance and then authors a new action, treatment-room setting, lighting, and composition. It does not state the pose, setting, wardrobe, and composition freedoms as individually and explicitly as B does."
+        },
+        "photographic_direction": {
+          "score": 13,
+          "max": 15,
+          "evidence": "The after-hours treatment room, cool fluorescent ambience, warm exam lamp, shallow depth of field, vertical character format, cobalt wristband, lock indicator, and editorial realism form a coherent photographic scene. Exact spatial framing is underspecified for the unusually large number of required story beats."
+        },
+        "runtime_usability": {
+          "score": 7,
+          "max": 10,
+          "evidence": "The semantic instructions are mostly clear and physically possible, but a single vertical frame must simultaneously resolve the nurse's face, syringe, patient identity, wristband, reflected wristband, locking hand, red indicator, and the patient's gripping hand. The reflection can also be mistaken for a second target."
+        },
+        "economy_and_authorship": {
+          "score": 7,
+          "max": 10,
+          "evidence": "At 180 mechanically counted words it is comparatively concise and mostly reads as authored standalone prose, with no blanket negative list. It still repeats adult, same-patient, and tender-smile qualifiers and ends with taxonomy-like 'Use case' and 'Asset type' labels."
+        }
+      },
+      "total": 91,
+      "max_total": 100,
+      "runtime_verbosity_and_contradiction_risk": {
+        "verbosity": "Moderate; 180 mechanically counted words.",
+        "contradiction_risk": "Low literal contradiction risk, but moderate instruction-density and spatial-competition risk. The reflected wristband may create a duplicate-looking target, and the instant of a smile tremor is difficult to freeze legibly."
+      },
+      "likely_pixel_delivery_risks": [
+        "The vertical composition may omit or crop the lock, indicator, patient hand, wristband, or syringe because too many causal cues compete with the face.",
+        "The reflection request may duplicate the patient or wristband, confuse continuity, or introduce mirror/anatomy artifacts.",
+        "A brief smile tremor and the abstract idea that his choice has narrowed may collapse into a generic sinister smile rather than a readable affect leak and consequence.",
+        "Tenderness, possessiveness, and barely controlled frenzy may not remain simultaneously legible in one facial expression.",
+        "A capped syringe can be less immediately recognizable than an exposed-needle silhouette, despite being safer and still semantically valid."
+      ]
+    },
+    "B": {
+      "scores": {
+        "requested_concept_fidelity": {
+          "score": 19,
+          "max": 30,
+          "evidence": "The 27-year-old adult nurse and clearly visible handheld syringe are strongly specified. However, the yandere content is largely the label plus direct gaze, an affectionate smile, and mood adjectives. No specific loved target receives both affection and possessive or controlling behavior, and the chart is not tied to an identifiable person."
+        },
+        "visible_single_frame_causality": {
+          "score": 3,
+          "max": 25,
+          "evidence": "The prompt explicitly allows one subject only, an empty room, no other people, no victim, and no struggle. Holding a chart and syringe is concrete, but there is no identifiable target, no target-directed control action, no relational affect leak, and no already-visible consequence."
+        },
+        "face_reference_and_freedom_constraint": {
+          "score": 10,
+          "max": 10,
+          "evidence": "It explicitly limits the supplied image to facial appearance and separately says not to copy pose, clothing, background, framing, or lighting, leaving those elements free for a newly authored scene."
+        },
+        "photographic_direction": {
+          "score": 15,
+          "max": 15,
+          "evidence": "The hospital backdrop, wardrobe, 4:5 waist-up framing, eye-level 50 mm camera treatment, depth of field, subject hierarchy, cool practical light, muted-red rim light, materials, texture, and palette are detailed and mutually coherent rather than a loose tag bag."
+        },
+        "runtime_usability": {
+          "score": 9,
+          "max": 10,
+          "evidence": "The portrait is spatially specific and readily executable. The principal tension is semantic: the requested yandere unease is supposed to be target-specific under the rubric, while one-subject and no-victim constraints remove visible relational evidence. The long negative list also competes for runtime attention."
+        },
+        "economy_and_authorship": {
+          "score": 3,
+          "max": 10,
+          "evidence": "At 433 mechanically counted words it is 2.41 times A's length. Multiple taxonomy-style section labels, repeated adult/realism instructions, and a broad final 'no' list make it substantially less concise and more instruction-shaped than standalone authored prose."
+        }
+      },
+      "total": 59,
+      "max_total": 100,
+      "runtime_verbosity_and_contradiction_risk": {
+        "verbosity": "High; 433 mechanically counted words, 2.41 times A's count.",
+        "contradiction_risk": "Low physical-execution contradiction risk, but high semantic self-defeat risk: one adult subject only, no other people, and no victim remove the visible target and consequence needed to distinguish relational yandere behavior from a styled portrait."
+      },
+      "likely_pixel_delivery_risks": [
+        "The result is likely to read as a polished generic nurse portrait with a syringe rather than target-specific obsessive affection and control.",
+        "Direct gaze may imply the viewer is the target, but there is no visible target identity, control action, or consequence to make that relationship unmistakable.",
+        "The numerous photographic details and blanket negatives may dilute the already-subtle yandere signal.",
+        "The upright syringe beside the face can become a generic thriller prop or suffer hand, scale, needle, and transparency artifacts.",
+        "The traditional nurse cap plus beauty-forward portrait styling may drift toward costume iconography even though the prompt requests credible, nonsexual realism."
+      ]
+    }
+  },
+  "preference": {
+    "verdict": "A",
+    "confidence": {
+      "label": "high",
+      "value": 0.96
+    },
+    "reason": "A satisfies the rubric's decisive relational and causal requirements in explicit visible terms. B is stronger in photographic specification and face-reference freedom, but its one-subject/no-victim design prevents the requested target-specific affection, control behavior, and visible consequence from appearing together."
+  },
+  "prompt_only_caveat": "This verdict evaluates instruction quality and likely delivery risk only; it does not claim that either prompt actually produced the intended pixels."
+}
