@@ -46,6 +46,13 @@ class PhotoCharacterResponseConceptTests(unittest.TestCase):
             )
             if row.get("id") == "yandere"
         )
+        cls.kuudere_profile = next(
+            row
+            for row in prompt_generator.character_response_concept_profiles(
+                cls.data
+            )
+            if row.get("id") == "kuudere"
+        )
 
     def normalize_core(self) -> dict:
         request_envelope = prompt_generator.normalize_request_envelope(envelope())
@@ -123,6 +130,7 @@ class PhotoCharacterResponseConceptTests(unittest.TestCase):
             {
                 "character_response_concept:tsundere",
                 "character_response_concept:yandere",
+                "character_response_concept:kuudere",
             },
         )
         self.assertEqual(len(confounder_ids), 7)
@@ -142,6 +150,19 @@ class PhotoCharacterResponseConceptTests(unittest.TestCase):
                 for document_id in yandere_confounder_ids
             )
         )
+        kuudere_confounder_ids = (
+            prompt_generator.semantic_character_response_confounder_document_ids(
+                self.data,
+                profile_id="kuudere",
+            )
+        )
+        self.assertEqual(len(kuudere_confounder_ids), 7)
+        self.assertTrue(
+            all(
+                document_id in self.bm25f["documents"]
+                for document_id in kuudere_confounder_ids
+            )
+        )
 
     def test_actual_generated_index_contains_profile_and_confounders(self):
         index = prompt_generator.load_semantic_index_payload(
@@ -150,12 +171,17 @@ class PhotoCharacterResponseConceptTests(unittest.TestCase):
         prompt_generator.validate_semantic_index_metadata(index, self.data)
         self.assertIn("character_response_concept:tsundere", index["entries"])
         self.assertIn("character_response_concept:yandere", index["entries"])
+        self.assertIn("character_response_concept:kuudere", index["entries"])
         self.assertIn(
             "character_response_confounder:tsundere:pure_hostility",
             index["entries"],
         )
         self.assertIn(
             "character_response_confounder:yandere:role_only_care",
+            index["entries"],
+        )
+        self.assertIn(
+            "character_response_confounder:kuudere:generic_stoicism",
             index["entries"],
         )
 
@@ -282,6 +308,88 @@ class PhotoCharacterResponseConceptTests(unittest.TestCase):
                 if row.get("id") == entry_id
             )
             self.assertIn("yandere", entry.get("tags", []))
+
+    def test_kuudere_profile_keeps_composure_and_same_target_care_together(self):
+        profile = self.kuudere_profile
+        self.assertEqual(
+            profile["axis_requirements"]["surface_affect"]["semantic_classes"],
+            ["composed_reserve"],
+        )
+        self.assertEqual(
+            profile["axis_requirements"]["affect_leak_timing"][
+                "semantic_classes"
+            ],
+            ["within_stable_surface"],
+        )
+        self.assertEqual(
+            {row["operator"] for row in profile["required_relations"]},
+            {"contrasts", "same_target", "temporal_order"},
+        )
+        same_target = next(
+            row
+            for row in profile["required_relations"]
+            if row["operator"] == "same_target"
+        )
+        self.assertEqual(
+            same_target["members"],
+            [
+                "relationship_target",
+                "primary_action",
+                "affect_leak",
+                "immediate_consequence",
+            ],
+        )
+        confounder_ids = {row["id"] for row in profile["confounders"]}
+        self.assertTrue(
+            {
+                "generic_stoicism",
+                "dandere_shy_withdrawal",
+                "tsundere_hostile_denial",
+                "role_only_service",
+                "yandere_possessive_control",
+            }
+            <= confounder_ids
+        )
+        serialized = json.dumps(profile, ensure_ascii=False)
+        for scene_field in (
+            "camera",
+            "composition",
+            "facial_geometry",
+            "gaze_direction",
+            "pose",
+            "prop",
+            "relationship_register",
+        ):
+            self.assertNotIn(f'"{scene_field}"', serialized)
+
+        normalized = self.normalize_core()
+        assertion = normalized["semantic_assertions"][0]
+        assertion["axes"].update(
+            {
+                "surface_affect": "composed reserve",
+                "underlying_affiliation": "positive",
+                "affect_leak_timing": "within the stable composed surface",
+                "affect_leak_intentionality": "understated",
+            }
+        )
+        assertion["relations"] = copy.deepcopy(profile["required_relations"])
+        result = prompt_generator.evaluate_character_response_profile(
+            normalized,
+            self.data,
+            profile,
+        )
+        self.assertEqual(result["status"], "consistent")
+
+        conflict = copy.deepcopy(normalized)
+        conflict["semantic_assertions"][0]["axes"][
+            "surface_affect"
+        ] = "shy avoidance"
+        result = prompt_generator.evaluate_character_response_profile(
+            conflict,
+            self.data,
+            profile,
+        )
+        self.assertEqual(result["status"], "conflicting")
 
     def test_post_core_retrieval_is_advisory_and_score_free(self):
         normalized = self.normalize_core()

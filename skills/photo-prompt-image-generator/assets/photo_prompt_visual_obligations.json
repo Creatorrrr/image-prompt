@@ -1858,6 +1858,386 @@
         "visible_restrained_or_harmed_victim",
         "reference_face_treated_as_personality_evidence"
       ]
+    },
+    {
+      "id": "kuudere_composed_warmth_relation",
+      "category": "behavioral_archetype",
+      "activation": {
+        "exact_terms": [
+          "kuudere",
+          "cooldere",
+          "cool-dere",
+          "쿨데레",
+          "쿠데레",
+          "쿨 데레",
+          "クーデレ"
+        ],
+        "exclude_if_any_terms": [
+          "no kuudere",
+          "without kuudere",
+          "no cooldere",
+          "쿨데레 제외",
+          "쿨데레 없이",
+          "쿠데레 제외",
+          "クーデレなし"
+        ],
+        "context_disambiguation": {
+          "required_with_authorial_core": true,
+          "any_terms": [
+            "adult character",
+            "adult portrait",
+            "character portrait",
+            "character concept",
+            "photo prompt",
+            "fictional scene",
+            "adult coworker",
+            "adult partner",
+            "성인 캐릭터",
+            "성인 인물",
+            "인물 사진",
+            "캐릭터 컨셉",
+            "캐릭터 콘셉트",
+            "사진 프롬프트",
+            "성인 동료",
+            "성인 파트너",
+            "成人キャラクター",
+            "人物ポートレート",
+            "キャラクターコンセプト",
+            "写真プロンプト",
+            "成人の同僚",
+            "成人のパートナー"
+          ],
+          "exclude_if_any_terms": [
+            "explain the word",
+            "word history",
+            "etymology of",
+            "dictionary entry",
+            "단어 뜻",
+            "용어를 설명",
+            "단어의 역사",
+            "어원",
+            "사전 항목",
+            "言葉の意味",
+            "語源",
+            "辞書項目"
+          ]
+        },
+        "requires_adult_character": true
+      },
+      "semantics": {
+        "definition": "An adult fictional character keeps a calm, low-expression baseline while one localized softening and one understated practical action reveal positive affiliation toward a specific trusted adult counterpart, with a visible helpful consequence for that same counterpart. The stable surface and selective warmth must coexist; neutral beauty, expressionlessness, competence, hair, eyes, costume, role, posture, palette, or a caring prop alone cannot carry the concept.",
+        "paraphrase_examples": [
+          "침착하고 표정 변화가 적은 성인 인물이 같은 신뢰 상대의 젖은 소매를 조용히 정리해 주고 상대가 편해진 순간 입매만 작게 풀리는 장면",
+          "차분한 표면은 그대로인 채 특정 성인 동료에게 필요한 도구를 먼저 건네고 그 동료가 작업을 재개하는 동안 눈가만 부드러워지는 인물",
+          "an adult character keeps a composed low-expression surface while quietly fixing one practical problem for the same trusted adult counterpart, whose visible relief coincides with one small mouth-corner softening",
+          "a restrained adult offers unobtrusive help to one identifiable trusted counterpart and stays composed as that person visibly benefits",
+          "冷静で表情の少ない成人人物が、同じ信頼相手を静かに助け、その相手が安心した瞬間だけ口元をわずかに和らげる"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "composed_low_expression_surface",
+            "specific_trusted_target",
+            "quiet_target_directed_support",
+            "localized_warmth_leak",
+            "visible_same_target_consequence"
+          ],
+          "groups": [
+            {
+              "id": "composed_low_expression_surface",
+              "any_terms": [
+                "침착한 저표현 표면",
+                "차분한 태도를 유지",
+                "담담한 표정 기준선",
+                "composed low-expression surface",
+                "calm restrained baseline",
+                "stable emotional reserve",
+                "冷静で表情の少ない表面",
+                "平静な抑制を保つ"
+              ]
+            },
+            {
+              "id": "specific_trusted_target",
+              "any_terms": [
+                "같은 신뢰 상대",
+                "특정 성인 동료",
+                "한 명의 믿는 상대",
+                "same trusted adult counterpart",
+                "one identifiable trusted counterpart",
+                "specific adult companion",
+                "同じ信頼相手",
+                "特定の成人の仲間"
+              ]
+            },
+            {
+              "id": "quiet_target_directed_support",
+              "any_terms": [
+                "조용히 실용적으로 돕",
+                "필요한 물건을 먼저 건넴",
+                "상대의 불편을 말없이 해결",
+                "quietly solves one practical problem",
+                "understated target-directed support",
+                "silently places needed help within reach",
+                "静かに実用的な助けを行う",
+                "必要な物を黙って差し出す"
+              ]
+            },
+            {
+              "id": "localized_warmth_leak",
+              "any_terms": [
+                "입매만 작게 풀",
+                "눈가만 부드러워",
+                "한쪽 어깨의 긴장만 완화",
+                "one small mouth-corner softening",
+                "only the lower lids ease",
+                "one localized warmth cue",
+                "口元だけがわずかに和らぐ",
+                "目元だけが柔らかくなる"
+              ]
+            },
+            {
+              "id": "visible_same_target_consequence",
+              "any_terms": [
+                "같은 상대가 안도",
+                "그 동료가 작업을 재개",
+                "상대의 불편이 이미 해결",
+                "the same counterpart visibly relaxes",
+                "the counterpart can resume the task",
+                "the practical problem is visibly resolved",
+                "同じ相手が安心する",
+                "相手が作業を再開できる"
+              ]
+            },
+            {
+              "id": "supporting_low_amplitude_face",
+              "any_terms": [
+                "거의 움직이지 않는 눈썹과 작은 입매 변화",
+                "하안검 긴장만 아주 조금 풀림",
+                "restrained brow and fractional mouth change",
+                "slight lower-lid easing without a broad smile",
+                "静かな眉とごく小さな口元の変化"
+              ]
+            },
+            {
+              "id": "supporting_economical_posture",
+              "any_terms": [
+                "곧고 안정적인 자세와 절제된 손동작",
+                "불필요한 몸짓이 적은 움직임",
+                "stable upright posture and economical gesture",
+                "low-amplitude movement without theatrical posing",
+                "安定した姿勢と控えめな手の動き"
+              ]
+            },
+            {
+              "id": "supporting_restrained_styling",
+              "any_terms": [
+                "단정하고 절제된 실루엣",
+                "저채도 또는 차가운 중성 계열",
+                "neat restrained silhouette",
+                "muted or cool-neutral styling",
+                "整った控えめなシルエット",
+                "低彩度または寒色寄りの中性色"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "an expressionless attractive portrait with no trusted counterpart, caring action, or visible benefit",
+          "a shy adult avoiding attention because of anxiety without calm practical follow-through",
+          "a rejecting or flustered tsundere response that reverses into hidden care",
+          "routine professional service performed identically for every client",
+          "broad open affection or a large personality switch that erases the restrained baseline",
+          "possessive monitoring, coercion, or boundary control presented as care"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "unmistakably adult fictional character",
+          "calm low-expression baseline that remains stable",
+          "one identifiable trusted adult counterpart",
+          "one quiet target-directed practical support action",
+          "one already-visible benefit for that same counterpart",
+          "one localized warmth cue rather than a broad smile",
+          "restrained lower-lid brow or mouth-corner softening as optional facial support",
+          "stable upright posture and economical gesture as optional posture support",
+          "neat simple silhouette and muted or cool-neutral styling as optional appearance support",
+          "hair color eye color hairstyle costume gender and role remain request-driven rather than personality evidence",
+          "no hostile denial shy withdrawal open exuberance possessive control or abrupt personality switch",
+          "relationship behavior rather than expressionless beauty or a caring prop alone"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_only",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [
+          "kuudere",
+          "cooldere",
+          "cool-dere",
+          "쿨데레",
+          "쿠데레",
+          "쿨 데레",
+          "クーデレ"
+        ],
+        "runtime_forbidden_labels": [
+          "kuudere",
+          "cooldere",
+          "cool-dere",
+          "쿨데레",
+          "쿠데레",
+          "쿨 데레",
+          "クーデレ"
+        ]
+      },
+      "composition_instruction": "Preserve the requested adult fictional identity, role, wardrobe, and visual style. In one still, keep a calm low-expression baseline visibly stable while one concrete, quiet practical action helps one identifiable trusted adult counterpart and leaves an already-visible helpful consequence for that same counterpart. Add only one localized warmth leak, such as slight lower-lid easing, a restrained brow release, a fractional mouth-corner softening, or reduced tension in the hand or shoulder nearest the target. Optional outward support may use economical gesture, stable upright posture, a neat simple silhouette, restrained grooming, or a muted/cool-neutral palette, but these are conventions rather than requirements. Do not assign fixed hair color, eye color, hairstyle, costume, gender, occupation, gaze direction, camera angle, or prop, and do not let expressionlessness, competence, beauty, a cool palette, or a caring object substitute for the same-target action and consequence. Preserve the counterpart's autonomy; avoid hostile denial, shy withdrawal, possessive control, broad open affection, or an abrupt personality switch.",
+      "required_evidence_fields": [
+        "adult_fictional_subject_phrase",
+        "composed_surface_phrase",
+        "specific_trusted_target_phrase",
+        "quiet_support_action_phrase",
+        "localized_warmth_leak_phrase",
+        "same_target_consequence_phrase",
+        "stable_surface_coexistence_phrase",
+        "appearance_nonproof_phrase"
+      ],
+      "evidence_requirements": {
+        "adult_fictional_subject_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "adult fictional character",
+            "unmistakably adult character",
+            "adult fictional subject",
+            "adult fictional coworker",
+            "adult fictional partner"
+          ],
+          "must_not_contain": [
+            "girl",
+            "teen",
+            "schoolgirl"
+          ]
+        },
+        "composed_surface_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "composed low-expression surface",
+            "calm restrained baseline",
+            "stable emotional reserve",
+            "low-amplitude composed expression"
+          ]
+        },
+        "specific_trusted_target_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "same trusted adult counterpart",
+            "one identifiable trusted counterpart",
+            "specific adult companion",
+            "same trusted coworker"
+          ]
+        },
+        "quiet_support_action_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "quietly solves one practical problem",
+            "understated target-directed support",
+            "silently places needed help within reach",
+            "quietly adjusts the counterpart's wet sleeve",
+            "hands over the needed tool without ceremony"
+          ]
+        },
+        "localized_warmth_leak_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "one small mouth-corner softening",
+            "only the lower lids ease",
+            "one localized warmth cue",
+            "restrained brow release",
+            "near-target shoulder tension eases"
+          ]
+        },
+        "same_target_consequence_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "the same counterpart visibly relaxes",
+            "the counterpart can resume the task",
+            "the practical problem is visibly resolved",
+            "the same trusted coworker is visibly more comfortable"
+          ]
+        },
+        "stable_surface_coexistence_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "stable surface and localized warmth coexist",
+            "composure remains intact in the same moment",
+            "one still preserves the calm baseline",
+            "without an abrupt personality switch"
+          ]
+        },
+        "appearance_nonproof_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "appearance remains request-driven rather than personality proof",
+            "hair eyes costume and role are not personality evidence",
+            "muted styling is optional support only",
+            "expressionless beauty alone does not carry the concept"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_kuudere_adult_fictional_identity",
+          "review_scale": "both",
+          "description": "The subject and any relationship counterpart are unmistakably adult fictional people, while the requested identity, role, and styling remain intact."
+        },
+        {
+          "id": "vo_kuudere_composed_surface",
+          "review_scale": "thumbnail",
+          "description": "A calm low-expression baseline remains immediately legible without becoming hostile, frightened, vacant, or broadly cheerful."
+        },
+        {
+          "id": "vo_kuudere_specific_trusted_target",
+          "review_scale": "thumbnail",
+          "description": "The quiet support action and localized warmth clearly point to one identifiable trusted adult counterpart rather than everyone in the scene."
+        },
+        {
+          "id": "vo_kuudere_quiet_support_action",
+          "review_scale": "both",
+          "description": "One practical target-directed act is concretely readable and is not replaced by an adjective, gaze, costume, role, or caring prop alone."
+        },
+        {
+          "id": "vo_kuudere_localized_warmth",
+          "review_scale": "native",
+          "description": "Exactly one restrained facial, hand, or shoulder region softens toward the trusted counterpart while the rest of the composed baseline remains stable."
+        },
+        {
+          "id": "vo_kuudere_same_target_consequence",
+          "review_scale": "both",
+          "description": "An already-visible helpful consequence belongs to the same counterpart, such as relief, restored comfort, or resumed activity."
+        },
+        {
+          "id": "vo_kuudere_stable_coexistence",
+          "review_scale": "both",
+          "description": "Stable composure, selective warmth, practical support, and its same-target consequence coexist in one still without an abrupt personality reversal."
+        },
+        {
+          "id": "vo_kuudere_appearance_is_optional_support",
+          "review_scale": "both",
+          "description": "Hair, eyes, costume, gender, role, posture, and muted or cool styling remain optional; none is accepted as archetype proof without the relationship behavior."
+        }
+      ],
+      "reject_substitutes": [
+        "expressionless_or_attractive_face_only",
+        "cool_palette_or_muted_costume_only",
+        "hair_eye_color_or_hairstyle_as_personality_evidence",
+        "competent_professional_role_only",
+        "routine_service_or_caring_prop_only",
+        "generic_shyness_or_anxious_avoidance",
+        "hostile_rejection_or_flustered_tsundere_denial",
+        "broad_open_affection_or_large_smile",
+        "possessive_monitoring_control_or_boundary_intrusion",
+        "warmth_cue_without_specific_target",
+        "support_action_without_visible_same_target_consequence",
+        "abrupt_full_personality_switch",
+        "reference_face_treated_as_personality_evidence"
+      ]
     }
   ]
 }

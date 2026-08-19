@@ -8237,6 +8237,18 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertEqual(recipes["aliases"]["걸크"], "걸크러시")
         self.assertEqual(recipes["aliases"]["저승사자"], "사신")
         self.assertEqual(recipes["aliases"]["쿠데레"], "쿨데레")
+        self.assertEqual(recipes["aliases"]["クーデレ"], "쿨데레")
+        self.assertEqual(recipes["aliases"]["kuudere"], "쿨데레")
+        self.assertEqual(recipes["aliases"]["cool-dere"], "쿨데레")
+        kuudere = recipes["mixins"]["쿨데레"]
+        self.assertEqual(kuudere["set"]["expression"], "aloof_composed_gaze")
+        self.assertEqual(kuudere["set"]["action"], "offering_spare_umbrella")
+        self.assertNotIn("makeup_style", kuudere["set"])
+        self.assertNotIn("prop", kuudere["set"])
+        self.assertEqual(
+            set(kuudere["anchor_families"]),
+            {"stable_composure", "target_linked_quiet_care"},
+        )
         self.assertEqual(recipes["aliases"]["선생님"], "교사")
         self.assertEqual(recipes["aliases"]["직장인"], "회사원")
         self.assertEqual(recipes["aliases"]["월급쟁이"], "회사원")
@@ -11484,7 +11496,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             if match:
                 failures.append((key, match.group(0), text[:240]))
 
-        self.assertEqual(len(rows), 6540)
+        self.assertEqual(len(rows), 6549)
         self.assertEqual(failures, [])
 
     def test_semantic_index_builder_records_gemini_metadata_and_entries(self):
