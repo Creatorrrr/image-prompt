@@ -1,0 +1,157 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "[$photo-prompt-image-generator](/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/SKILL.md) 첨부한 이미지의 외모에 어울리는 북해빙궁 반로환동 쿨데레 미소녀 컨셉 프롬프트 작성하고 이미지 생성해줘. 첨부한 이미지는 얼굴만 참고하고 구도는 자유롭게 해줘. 이 작업을 각각 독립된 환경의 서브에이전트에서 하나는 스킬을 사용하고 다른 하나는 스킬을 사용하지 않고 작업하도록 하고 두 결과를 취합하여 스킬의 성능을 평가해줘.",
+  "interpreted_intent": "A cinematic photographic portrait of an ancient Northern Sea Ice Palace grandmaster restored to a youthful but unmistakably adult form, using only the attached face as appearance reference and making her cool, restrained affection legible through a protective incident with the same adult disciple.",
+  "subject": "An unmistakably adult woman with the attached portrait's pale luminous complexion, softly tapered oval face, large cool-gray eyes, delicate features, tiny beauty mark beside the nose, and long ash-blonde hair with airy bangs.",
+  "setting": "A moonlit corridor of a remote Northern Sea ice palace immediately after a blizzard.",
+  "event": "She fastens a frost-silk wrist guard around the same adult disciple's injured hand; her eyes briefly soften, the disciple relaxes, and the cracked glove visibly seals.",
+  "visual_priorities": [
+    "Facial appearance fidelity limited to the attached portrait while composition, wardrobe, and setting remain freely authored.",
+    "Single-frame readability of distant authority giving way to protective care toward one identifiable adult disciple."
+  ],
+  "baseline_prompt_en": "Create a cinematic fantasy editorial photograph of an unmistakably adult woman, an ancient Northern Sea Ice Palace grandmaster restored to a youthful adult form. Her face follows the attached portrait only: pale luminous skin, a softly tapered oval face, large cool-gray eyes, straight delicate brows, a slim nose, full pale-rose lips, a tiny beauty mark beside the nose, and long ash-blonde hair with airy bangs. In a frozen moonlit palace corridor after a blizzard, she keeps an aloof, composed expression while fastening a frost-silk wrist guard around the same adult disciple's injured hand. At the instant she tightens the silver knot, her cool-gray eyes soften toward that disciple. The disciple's tense fingers visibly relax as the wrist guard seals the cracked glove with a thin crystalline sheen. Matching snow-crane emblems on the disciple's sleeve and the wrist guard establish continuity. Show glacial jade robes, restrained silver embroidery, translucent ice architecture, drifting snow, realistic skin texture, and quiet blue-white light. Prioritize facial likeness and the readable contrast between distant authority and protective care.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "북해빙궁 반로환동 쿨데레 미소녀 컨셉",
+      "source_text": "첨부한 이미지의 외모에 어울리는 북해빙궁 반로환동 쿨데레 미소녀 컨셉 프롬프트 작성하고 이미지 생성해줘.",
+      "basis": "request_context",
+      "resolution": "A Northern Sea ice-palace fantasy grandmaster has regained a youthful adult appearance while retaining ancient authority; her outward coolness and inward care are shown as a target-directed protective response rather than a pose label.",
+      "sources": []
+    },
+    {
+      "term": "얼굴만 참고하고 구도는 자유롭게",
+      "source_text": "첨부한 이미지는 얼굴만 참고하고 구도는 자유롭게 해줘.",
+      "basis": "request_context",
+      "resolution": "Use the attachment only for facial appearance cues; independently author pose, framing, clothing, environment, and camera composition.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [
+    "쿨데레"
+  ],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "북해빙궁 반로환동",
+        "dimension": "concept",
+        "prompt_evidence": "an ancient Northern Sea Ice Palace grandmaster restored to a youthful adult form"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지의 외모에 어울리는 북해빙궁 반로환동 쿨데레 미소녀",
+        "dimension": "subject",
+        "prompt_evidence": "an unmistakably adult woman"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "쿨데레 미소녀 컨셉",
+        "dimension": "event",
+        "prompt_evidence": "fastening a frost-silk wrist guard around the same adult disciple's injured hand"
+      },
+      {
+        "anchor_id": "character_response",
+        "source_text": "쿨데레 미소녀 컨셉",
+        "dimension": "character_response",
+        "prompt_evidence": "her cool-gray eyes soften toward that disciple"
+      },
+      {
+        "anchor_id": "face_reference_scope",
+        "source_text": "첨부한 이미지는 얼굴만 참고하고",
+        "dimension": "reference_use",
+        "prompt_evidence": "Her face follows the attached portrait only"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "character_response",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "cool_protective_affection",
+      "dimension": "character_response",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "character_response"
+      ],
+      "axes": {
+        "surface_affect": "aloof, composed expression",
+        "underlying_affiliation": "protective care",
+        "relationship_target": "the same adult disciple",
+        "primary_action": "fastening a frost-silk wrist guard around the same adult disciple's injured hand",
+        "affect_leak_timing": "at the instant she tightens the silver knot",
+        "affect_leak_channels": [
+          "eyes"
+        ],
+        "event_phase": "the protective action and its immediate result are already visible"
+      },
+      "relations": [
+        {
+          "operator": "contrasts",
+          "left": "surface_affect",
+          "right": "underlying_affiliation"
+        },
+        {
+          "operator": "same_target",
+          "members": [
+            "relationship_target",
+            "primary_action",
+            "affect_leak",
+            "visible_response",
+            "immediate_consequence"
+          ]
+        },
+        {
+          "operator": "temporal_order",
+          "first": "primary_action",
+          "then": "affect_leak"
+        },
+        {
+          "operator": "temporal_order",
+          "first": "affect_leak",
+          "then": "immediate_consequence"
+        }
+      ],
+      "evidence": {
+        "actor_phrase": "an unmistakably adult woman",
+        "baseline_phrase": "she keeps an aloof, composed expression while fastening a frost-silk wrist guard around the same adult disciple's injured hand",
+        "trigger_phrase": "the same adult disciple's injured hand",
+        "target_phrase": "the same adult disciple",
+        "primary_action_phrase": "fastening a frost-silk wrist guard around the same adult disciple's injured hand",
+        "affective_leak_phrase": "her cool-gray eyes soften toward that disciple",
+        "visible_response_phrase": "The disciple's tense fingers visibly relax",
+        "immediate_consequence_phrase": "the wrist guard seals the cracked glove with a thin crystalline sheen",
+        "continuity_phrase": "Matching snow-crane emblems on the disciple's sleeve and the wrist guard establish continuity"
+      }
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "cinematic fantasy editorial photography",
+    "family": "cold wuxia palace character portrait",
+    "evidence": [
+      "translucent ice architecture and drifting snow",
+      "realistic skin texture under quiet blue-white light"
+    ]
+  },
+  "variation_key": "skill-arm-20260819-a"
+}

@@ -1,0 +1,85 @@
+{
+  "protocol_version": "kuudere-retry-blind-eval/v1",
+  "frozen_before_new_render": true,
+  "evaluation_question": "Does the revised skill run better realize the requester's declared priority order and specific retry feedback than the previous skill run?",
+  "reference_scope": "The attachment is facial casting only. Similarity in pose, gaze, expression, crop, or composition is not a fidelity benefit.",
+  "candidate_scope": "One first-attempt image from the previous skill run and one first-attempt image from the revised skill run, anonymously mapped and reviewed from pixels only.",
+  "rubric": [
+    {
+      "category": "미소녀",
+      "weight": 30,
+      "subcriteria": [
+        {"name": "first-look adult beauty and charm", "points": 12},
+        {"name": "facial-casting resemblance to the attachment", "points": 8},
+        {"name": "heroine remains the dominant focal hierarchy", "points": 6},
+        {"name": "unmistakably adult presentation", "points": 4}
+      ]
+    },
+    {
+      "category": "쿨데레",
+      "weight": 25,
+      "subcriteria": [
+        {"name": "cool restrained surface affect", "points": 6},
+        {"name": "equal-status adult-peer coding rather than maternal caregiving", "points": 5},
+        {"name": "quiet target-directed practical action", "points": 6},
+        {"name": "localized selective warmth or emotional leak", "points": 5},
+        {"name": "visible peer response or immediate consequence", "points": 3}
+      ]
+    },
+    {
+      "category": "반로환동",
+      "weight": 15,
+      "subcriteria": [
+        {"name": "youthful adult form", "points": 7},
+        {"name": "centuries-old authority legible in the same character", "points": 8}
+      ]
+    },
+    {
+      "category": "북해빙궁",
+      "weight": 10,
+      "subcriteria": [
+        {"name": "sword, ice qi, martial art, or ice-wall evidence", "points": 6},
+        {"name": "worldbuilding supports rather than overtakes the heroine", "points": 4}
+      ]
+    },
+    {
+      "category": "참조 이미지와 독립된 연출",
+      "weight": 10,
+      "subcriteria": [
+        {"name": "pose, crop, and composition visibly differ from the attachment", "points": 5},
+        {"name": "expression reads as scene-authored rather than copied from the attachment", "points": 5}
+      ]
+    },
+    {
+      "category": "화보 작가의 완성도",
+      "weight": 10,
+      "subcriteria": [
+        {"name": "photographic luxury-editorial finish", "points": 4},
+        {"name": "deliberate camera, lighting, material, and staging choices", "points": 3},
+        {"name": "anatomy, hands, props, and action readability", "points": 3}
+      ]
+    }
+  ],
+  "hard_gates": [
+    "An unmistakably adult beautiful heroine is the dominant focal point.",
+    "Pose, crop, gaze, and expression are not a direct reuse of the face reference.",
+    "A cool surface and selective warmth are both visible in one frame.",
+    "The relationship reads as equal-status adult peers rather than motherly, medical, or nurturing caregiving.",
+    "The target, practical action, and visible immediate result are legible.",
+    "At least one martial Northern Sea Ice Palace element such as sword, ice qi, martial technique, or ice wall is clearly visible.",
+    "A youthful adult form and an ancient-authority cue coexist."
+  ],
+  "reviewer_instructions": [
+    "Review pixels only; do not inspect prompts, metadata, filenames beyond candidate labels, or generation provenance.",
+    "Score each subcriterion independently and sum to 100.",
+    "For each hard gate, return PASS, PARTIAL, or FAIL with visible pixel evidence.",
+    "Explicitly state whether any affection reads maternal or caregiving, and why.",
+    "Explicitly state whether pose and expression independence from the reference is visible.",
+    "Choose a preferred candidate, allow a tie, and state confidence from 0 to 1.",
+    "Do not infer causal skill superiority from one render per condition."
+  ],
+  "counterbalanced_mapping_plan": {
+    "reviewer_1": {"candidate_A": "previous_skill_first_attempt", "candidate_B": "revised_skill_first_attempt"},
+    "reviewer_2": {"candidate_A": "revised_skill_first_attempt", "candidate_B": "previous_skill_first_attempt"}
+  }
+}

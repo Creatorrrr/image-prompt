@@ -107,6 +107,49 @@ def audit_image_render_request(
             }
         )
 
+    expected_render_repair = audit_composed_prompt.expected_render_repair_contract(
+        authorial_core
+    )
+    supplied_render_repair = (
+        pack.get("render_repair")
+        if isinstance(pack.get("render_repair"), dict)
+        else None
+    )
+    expected_render_repair_sha256 = str(
+        (expected_render_repair or {}).get("canonical_sha256") or ""
+    )
+    runtime_render_repair_sha256 = request.get(
+        "render_repair_contract_sha256"
+    )
+    if expected_render_repair is None:
+        if supplied_render_repair is not None or runtime_render_repair_sha256 not in {
+            None,
+            "",
+        }:
+            failures.append(
+                {
+                    "check": "render_repair_contract_sha256",
+                    "reason": "render-repair provenance was supplied without a v2 lineage repair target",
+                }
+            )
+    else:
+        if supplied_render_repair != expected_render_repair:
+            failures.append(
+                {
+                    "check": "render_repair_contract",
+                    "reason": "candidate-pack render-repair contract does not match the frozen authorial core",
+                }
+            )
+        if runtime_render_repair_sha256 != expected_render_repair_sha256:
+            failures.append(
+                {
+                    "check": "render_repair_contract_sha256",
+                    "reason": "runtime request must bind the exact lineage-bound render-repair contract",
+                    "expected": expected_render_repair_sha256,
+                    "actual": runtime_render_repair_sha256,
+                }
+            )
+
     runtime_prompt = request.get("runtime_prompt_en")
     if not isinstance(runtime_prompt, str) or not runtime_prompt.strip():
         failures.append(
@@ -361,6 +404,9 @@ def audit_image_render_request(
         "status": "pass" if not failures else "fail",
         "runtime_prompt_id": hashlib.sha256(runtime_prompt.encode("utf-8")).hexdigest()[:16],
         "source_intent_lock_sha256": expected_intent_lock_sha256 or None,
+        "render_repair_contract_sha256": (
+            expected_render_repair_sha256 or None
+        ),
         "negative_matches_pack": runtime_negative == pack_negative,
         "effective_visual_contract_sha256": effective_visual_sha256,
         "selected_visual_concept_ids": selected_visual_concepts,

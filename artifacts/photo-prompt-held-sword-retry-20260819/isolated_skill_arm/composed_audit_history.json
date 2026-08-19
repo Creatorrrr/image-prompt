@@ -1,0 +1,27 @@
+{
+  "contract_version": "held-sword-composed-audit-history/v1",
+  "pack_id": "dc67bf66d3255f63",
+  "candidate_pack_sha256": "7dcf6ad4a55652d8cb89740e0784caa7916f61dc1d4b2c14abe81fee8f30ec93",
+  "composed_prompt_sha256": "ce38a6e114166a564c0bc8089bda875df32cdb7e291cdbfddc99044c9d2d3584",
+  "records": [
+    {
+      "sequence": 1,
+      "auditor_sha256": "54a23832c7656fe2efdf5b8e864241d8781442a7f371e8bc9bc56bc99a18ebbf",
+      "result_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-prompt-held-sword-retry-20260819/isolated_skill_arm/composed_audit_blocked.json",
+      "status": "fail",
+      "failure_checks": [
+        "authorial_core_integrity"
+      ],
+      "diagnosis": "The original auditor accepted only the legacy four-field request_lineage shape inside its v3 semantic-integrity validator while separately requiring photo-request-lineage/v2 for render repair. No prompt, core, pack, or runtime input was changed in response."
+    },
+    {
+      "sequence": 2,
+      "auditor_sha256": "174f5f4486171747d5088416164d3a761d9596a5f3059366f6a0761b65667d41",
+      "result_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-prompt-held-sword-retry-20260819/isolated_skill_arm/composed_audit_corrected.json",
+      "status": "pass",
+      "failure_checks": [],
+      "quality_status": "warn",
+      "coordinator_change_scope": "Only the contradictory auditor integrity validator and provenance-only manifest auditor hash changed; frozen request, core, protocol, generator, candidate pack, and composed prompt remained unchanged."
+    }
+  ]
+}

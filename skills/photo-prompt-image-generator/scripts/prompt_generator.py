@@ -204,6 +204,47 @@ CHARACTER_RESPONSE_CONTRACT_VERSION = "photo-character-response/v1"
 SEMANTIC_ASSERTION_OBLIGATIONS_CONTRACT_VERSION = (
     "photo-semantic-assertion-obligations/v1"
 )
+REQUEST_LINEAGE_V2_CONTRACT_VERSION = "photo-request-lineage/v2"
+RENDER_REPAIR_CONTRACT_VERSION = "photo-render-repair/v1"
+RENDER_REPAIR_IMPORTANCE_VALUES = {"primary", "supporting"}
+RENDER_REPAIR_INTERACTION_STATES = {
+    "held",
+    "wielded",
+    "used",
+    "handed_off",
+    "carried",
+    "worn",
+    "sheathed",
+    "mounted",
+    "resting",
+    "other",
+}
+RENDER_REPAIR_CONTACT_EXPECTATIONS = {
+    "required",
+    "transitional",
+    "absent",
+    "unspecified",
+}
+RENDER_REPAIR_RELATION_ORIGINS = {
+    "parent_preserved",
+    "requester_corrected",
+}
+RENDER_REPAIR_ALLOWED_AXES = {
+    "object_geometry",
+    "contact_geometry",
+    "local_pose",
+    "camera",
+    "framing",
+    "lighting",
+    "material",
+    "occlusion",
+}
+RENDER_REPAIR_DIMENSION_AXES = {
+    "camera": "camera",
+    "framing": "framing",
+    "lighting": "lighting",
+    "material": "material",
+}
 CHARACTER_RESPONSE_REQUIRED_AXES = {
     "surface_affect",
     "underlying_affiliation",
@@ -8875,17 +8916,31 @@ def normalize_request_lineage(
     payload: Any,
     *,
     current_request_id: str,
+    envelope: Optional[JsonDict] = None,
+    intent_lock: Optional[JsonDict] = None,
+    baseline_prompt_en: str = "",
+    semantic_assertions: Optional[Sequence[JsonDict]] = None,
 ) -> Optional[JsonDict]:
     if payload is None:
         return None
     if not isinstance(payload, dict):
         raise ValueError("authorial core request_lineage must be an object or null")
-    allowed_fields = {
+    base_fields = {
         "parent_request_id",
         "parent_core_sha256",
         "preserved_dimensions",
         "allowed_changes",
     }
+    contract_version = str(payload.get("contract_version") or "").strip()
+    is_v2 = contract_version == REQUEST_LINEAGE_V2_CONTRACT_VERSION
+    if contract_version and not is_v2:
+        raise ValueError(
+            "request_lineage contract_version must be "
+            f"{REQUEST_LINEAGE_V2_CONTRACT_VERSION!r} when supplied"
+        )
+    allowed_fields = set(base_fields)
+    if is_v2:
+        allowed_fields.update({"contract_version", "repair_targets"})
     unknown_fields = sorted(set(payload) - allowed_fields)
     if unknown_fields:
         raise ValueError(
@@ -8924,12 +8979,228 @@ def normalize_request_lineage(
         raise ValueError(
             "request_lineage preserved_dimensions and allowed_changes must be disjoint"
         )
-    return {
+    normalized: JsonDict = {
         "parent_request_id": parent_request_id,
         "parent_core_sha256": parent_core_sha256,
         "preserved_dimensions": preserved_dimensions,
         "allowed_changes": allowed_changes,
     }
+    if not is_v2:
+        return normalized
+
+    if envelope is None or intent_lock is None:
+        raise ValueError(
+            "photo-request-lineage/v2 requires the active request envelope and intent lock"
+        )
+    raw_targets = payload.get("repair_targets")
+    if not isinstance(raw_targets, list) or not 1 <= len(raw_targets) <= 8:
+        raise ValueError(
+            "photo-request-lineage/v2 repair_targets must contain one to eight rows"
+        )
+    active_span_ids = {
+        str(row.get("span_id") or "")
+        for row in envelope.get("active_spans") or []
+        if isinstance(row, dict)
+    }
+    locked_dimensions = set(intent_lock.get("locked_dimensions") or [])
+    assertions = [
+        row
+        for row in semantic_assertions or []
+        if isinstance(row, dict) and row.get("polarity") == "required"
+    ]
+    normalized_targets: List[JsonDict] = []
+    seen_repair_ids: Set[str] = set()
+    for index, raw_target in enumerate(raw_targets):
+        if not isinstance(raw_target, dict):
+            raise ValueError(f"request_lineage repair target {index} must be one object")
+        expected_fields = {
+            "repair_id",
+            "source_span_ids",
+            "importance",
+            "relation_origin",
+            "actor_phrase",
+            "object_phrase",
+            "interaction_state",
+            "actor_object_contact",
+            "protected_dimensions",
+            "allowed_repair_axes",
+            "interaction_phrase",
+            "recognition_phrase",
+        }
+        if set(raw_target) != expected_fields:
+            raise ValueError(
+                f"request_lineage repair target {index} must contain exactly: "
+                + ", ".join(sorted(expected_fields))
+            )
+        repair_id = str(raw_target.get("repair_id") or "").strip()
+        if (
+            re.fullmatch(r"[a-z][a-z0-9_]{0,63}", repair_id) is None
+            or repair_id in seen_repair_ids
+        ):
+            raise ValueError(
+                f"request_lineage repair target {index} has an invalid or repeated repair_id"
+            )
+        seen_repair_ids.add(repair_id)
+        source_span_ids = [
+            str(value).strip()
+            for value in normalize_list(raw_target.get("source_span_ids"))
+            if str(value).strip()
+        ]
+        if (
+            not source_span_ids
+            or len(source_span_ids) != len(set(source_span_ids))
+            or not set(source_span_ids).issubset(active_span_ids)
+        ):
+            raise ValueError(
+                f"request_lineage repair target {repair_id!r} requires distinct active source_span_ids"
+            )
+        importance = str(raw_target.get("importance") or "").strip()
+        if importance not in RENDER_REPAIR_IMPORTANCE_VALUES:
+            raise ValueError(
+                f"request_lineage repair target {repair_id!r} importance must be primary or supporting"
+            )
+        relation_origin = str(raw_target.get("relation_origin") or "").strip()
+        if relation_origin not in RENDER_REPAIR_RELATION_ORIGINS:
+            raise ValueError(
+                f"request_lineage repair target {repair_id!r} has an unsupported relation_origin"
+            )
+        interaction_state = str(raw_target.get("interaction_state") or "").strip()
+        if interaction_state not in RENDER_REPAIR_INTERACTION_STATES:
+            raise ValueError(
+                f"request_lineage repair target {repair_id!r} has an unsupported interaction_state"
+            )
+        actor_object_contact = str(
+            raw_target.get("actor_object_contact") or ""
+        ).strip()
+        if actor_object_contact not in RENDER_REPAIR_CONTACT_EXPECTATIONS:
+            raise ValueError(
+                f"request_lineage repair target {repair_id!r} has an unsupported actor_object_contact"
+            )
+        if (
+            interaction_state
+            in {"held", "wielded", "used", "handed_off", "carried", "worn"}
+            and actor_object_contact == "absent"
+        ):
+            raise ValueError(
+                f"request_lineage repair target {repair_id!r} cannot remove actor-object contact from an interactive state"
+            )
+        protected_dimensions = [
+            str(value).strip()
+            for value in normalize_list(raw_target.get("protected_dimensions"))
+            if str(value).strip()
+        ]
+        protected_source_dimensions = (
+            set(preserved_dimensions)
+            if relation_origin == "parent_preserved"
+            else set(allowed_changes)
+        )
+        if (
+            not protected_dimensions
+            or len(protected_dimensions) != len(set(protected_dimensions))
+            or "action" not in protected_dimensions
+            or not set(protected_dimensions).issubset(locked_dimensions)
+            or not set(protected_dimensions).issubset(protected_source_dimensions)
+        ):
+            raise ValueError(
+                f"request_lineage repair target {repair_id!r} must protect locked action plus any other dimensions from its declared relation origin"
+            )
+        allowed_repair_axes = [
+            str(value).strip()
+            for value in normalize_list(raw_target.get("allowed_repair_axes"))
+            if str(value).strip()
+        ]
+        if (
+            not allowed_repair_axes
+            or len(allowed_repair_axes) != len(set(allowed_repair_axes))
+            or not set(allowed_repair_axes).issubset(RENDER_REPAIR_ALLOWED_AXES)
+        ):
+            raise ValueError(
+                f"request_lineage repair target {repair_id!r} has invalid allowed_repair_axes"
+            )
+        for repair_axis, dimension in RENDER_REPAIR_DIMENSION_AXES.items():
+            if repair_axis in allowed_repair_axes and dimension not in allowed_changes:
+                raise ValueError(
+                    f"request_lineage repair target {repair_id!r} axis {repair_axis!r} requires {dimension!r} in allowed_changes"
+                )
+
+        actor_phrase = clean_spaces(str(raw_target.get("actor_phrase") or ""))
+        object_phrase = clean_spaces(str(raw_target.get("object_phrase") or ""))
+        interaction_phrase = clean_spaces(
+            str(raw_target.get("interaction_phrase") or "")
+        )
+        recognition_phrase = clean_spaces(
+            str(raw_target.get("recognition_phrase") or "")
+        )
+        for label, phrase, minimum in (
+            ("actor_phrase", actor_phrase, 1),
+            ("object_phrase", object_phrase, 1),
+            ("interaction_phrase", interaction_phrase, 4),
+            ("recognition_phrase", recognition_phrase, 4),
+        ):
+            if len(authorial_request_content_words(phrase)) < minimum:
+                raise ValueError(
+                    f"request_lineage repair target {repair_id!r} {label} is not substantive"
+                )
+            if phrase.casefold() not in baseline_prompt_en.casefold():
+                raise ValueError(
+                    f"request_lineage repair target {repair_id!r} {label} must occur in baseline_prompt_en"
+                )
+        if interaction_phrase.casefold() == recognition_phrase.casefold():
+            raise ValueError(
+                f"request_lineage repair target {repair_id!r} needs distinct interaction and recognition evidence"
+            )
+        if actor_phrase.casefold() not in interaction_phrase.casefold():
+            raise ValueError(
+                f"request_lineage repair target {repair_id!r} interaction_phrase must contain actor_phrase"
+            )
+        if object_phrase.casefold() not in interaction_phrase.casefold():
+            raise ValueError(
+                f"request_lineage repair target {repair_id!r} interaction_phrase must contain object_phrase"
+            )
+        if object_phrase.casefold() not in recognition_phrase.casefold():
+            raise ValueError(
+                f"request_lineage repair target {repair_id!r} recognition_phrase must contain object_phrase"
+            )
+        evidence_pair = {interaction_phrase.casefold(), recognition_phrase.casefold()}
+        owns_evidence_pair = any(
+            evidence_pair.issubset(
+                {
+                    str(value).casefold()
+                    for value in (assertion.get("evidence") or {}).values()
+                    if str(value).strip()
+                }
+            )
+            for assertion in assertions
+            if "action" in set(assertion.get("affected_dimensions") or [])
+        )
+        if not owns_evidence_pair:
+            raise ValueError(
+                f"request_lineage repair target {repair_id!r} must bind interaction and recognition phrases through one required action semantic assertion"
+            )
+        normalized_targets.append(
+            {
+                "repair_id": repair_id,
+                "source_span_ids": source_span_ids,
+                "importance": importance,
+                "relation_origin": relation_origin,
+                "actor_phrase": actor_phrase,
+                "object_phrase": object_phrase,
+                "interaction_state": interaction_state,
+                "actor_object_contact": actor_object_contact,
+                "protected_dimensions": protected_dimensions,
+                "allowed_repair_axes": allowed_repair_axes,
+                "interaction_phrase": interaction_phrase,
+                "recognition_phrase": recognition_phrase,
+            }
+        )
+
+    normalized = {
+        "contract_version": REQUEST_LINEAGE_V2_CONTRACT_VERSION,
+        **normalized,
+        "repair_targets": normalized_targets,
+    }
+    normalized["canonical_sha256"] = canonical_json_sha256(normalized)
+    return normalized
 
 
 def normalize_authorial_core(
@@ -9139,6 +9410,10 @@ def normalize_authorial_core(
                 current_request_id=str(
                     normalized.get("request_binding", {}).get("request_id") or ""
                 ),
+                envelope=request_envelope,
+                intent_lock=normalized["intent_lock"],
+                baseline_prompt_en=normalized["baseline_prompt_en"],
+                semantic_assertions=normalized["semantic_assertions"],
             )
 
     raw_definitions = payload.get("user_definitions", [])
@@ -10189,6 +10464,145 @@ def compile_semantic_assertion_obligations(core: Any) -> Optional[JsonDict]:
         ),
         "composed_field": "semantic_assertion_evidence",
         "obligations": obligations,
+    }
+    contract["canonical_sha256"] = canonical_json_sha256(contract)
+    return contract
+
+
+def render_repair_target_gates(target: JsonDict) -> List[JsonDict]:
+    """Return the generic coarse pixel gates for one meaningful prop interaction."""
+
+    repair_id = str(target.get("repair_id") or "")
+    gates: List[JsonDict] = [
+        {
+            "id": f"rr_{repair_id}_object_class_legible",
+            "review_scale": "both",
+            "criterion": (
+                "The target object is recognizable as the intended object class at thumbnail "
+                "and native scale."
+            ),
+        },
+        {
+            "id": f"rr_{repair_id}_gross_structure_coherent",
+            "review_scale": "native",
+            "criterion": (
+                "The target object's major parts form one coherent, non-grotesque structure; "
+                "minor ornament differences are non-blocking."
+            ),
+        },
+        {
+            "id": f"rr_{repair_id}_intended_interaction_matches",
+            "review_scale": "both",
+            "criterion": (
+                "The actor, object, and intended interaction state match the frozen relation; "
+                "removal, relocation, concealment, or transfer is not a repair."
+            ),
+        },
+    ]
+    if str(target.get("actor_object_contact") or "") in {
+        "required",
+        "transitional",
+    }:
+        gates.append(
+            {
+                "id": f"rr_{repair_id}_contact_anatomy_coherent",
+                "review_scale": "native",
+                "criterion": (
+                    "The event-critical actor-object contact and principal anatomy are coherent "
+                    "without severe fusion or impossible articulation."
+                ),
+            }
+        )
+    return gates
+
+
+def compile_render_repair_contract(core: Any) -> Optional[JsonDict]:
+    """Project a lineage-bound fidelity repair into prompt and pixel duties.
+
+    The contract is intentionally object-agnostic.  It preserves the actor-object
+    affordance frozen before retrieval and permits only local rendering repair;
+    it does not contain named props or domain-specific prompt prose.
+    """
+
+    if not isinstance(core, dict):
+        return None
+    lineage = (
+        core.get("request_lineage")
+        if isinstance(core.get("request_lineage"), dict)
+        else {}
+    )
+    if lineage.get("contract_version") != REQUEST_LINEAGE_V2_CONTRACT_VERSION:
+        return None
+    targets: List[JsonDict] = []
+    required_hard_gates: List[str] = []
+    for target in lineage.get("repair_targets") or []:
+        if not isinstance(target, dict):
+            continue
+        gates = render_repair_target_gates(target)
+        gate_ids = [str(gate["id"]) for gate in gates]
+        required_hard_gates.extend(gate_ids)
+        targets.append(
+            {
+                "repair_id": str(target.get("repair_id") or ""),
+                "source_span_ids": copy.deepcopy(target.get("source_span_ids") or []),
+                "importance": str(target.get("importance") or ""),
+                "relation_origin": str(target.get("relation_origin") or ""),
+                "actor_phrase": str(target.get("actor_phrase") or ""),
+                "object_phrase": str(target.get("object_phrase") or ""),
+                "interaction_state": str(target.get("interaction_state") or ""),
+                "actor_object_contact": str(
+                    target.get("actor_object_contact") or ""
+                ),
+                "protected_dimensions": copy.deepcopy(
+                    target.get("protected_dimensions") or []
+                ),
+                "allowed_repair_axes": copy.deepcopy(
+                    target.get("allowed_repair_axes") or []
+                ),
+                "frozen_evidence": {
+                    "interaction_phrase": str(
+                        target.get("interaction_phrase") or ""
+                    ),
+                    "recognition_phrase": str(
+                        target.get("recognition_phrase") or ""
+                    ),
+                },
+                "prompt_binding": {
+                    "required_evidence_fields": [
+                        "interaction_phrase",
+                        "recognition_phrase",
+                    ],
+                    "all_required_phrases_must_be_literal_in_final_prompt": True,
+                    "evidence_must_remain_byte_identical": True,
+                    "semantic_substitution_forbidden": True,
+                },
+                "render_gates": gates,
+                "required_hard_gates": gate_ids,
+            }
+        )
+    contract: JsonDict = {
+        "contract_version": RENDER_REPAIR_CONTRACT_VERSION,
+        "enabled": True,
+        "source": "authorial_core_request_lineage",
+        "source_authorial_core_sha256": str(core.get("canonical_sha256") or ""),
+        "source_intent_lock_sha256": str(
+            ((core.get("intent_lock") or {}).get("canonical_sha256") or "")
+        ),
+        "source_request_lineage_sha256": str(
+            lineage.get("canonical_sha256") or ""
+        ),
+        "composed_field": "render_repair_evidence",
+        "strict_gate_set": True,
+        "major_only": True,
+        "targets": targets,
+        "required_hard_gates": required_hard_gates,
+        "retry_policy": {
+            "preserve_interaction_relation": True,
+            "repair_smallest_failed_gate_set": True,
+            "removal_relocation_concealment_or_transfer_is_not_repair": True,
+            "minor_decorative_variation_is_non_blocking": True,
+            "maximum_additional_attempts": 1,
+        },
     }
     contract["canonical_sha256"] = canonical_json_sha256(contract)
     return contract
@@ -15912,6 +16326,11 @@ def build_candidate_pack(
         if requested_contract_version == CANDIDATE_PACK_CONTRACT_V6
         else None
     )
+    render_repair = (
+        compile_render_repair_contract(authorial_core)
+        if requested_contract_version == CANDIDATE_PACK_CONTRACT_V6
+        else None
+    )
     moe_response = (
         None
         if requested_contract_version == CANDIDATE_PACK_CONTRACT_V6
@@ -16146,6 +16565,8 @@ def build_candidate_pack(
         pack["character_response"] = character_response
     if semantic_assertion_obligations is not None:
         pack["semantic_assertion_obligations"] = semantic_assertion_obligations
+    if render_repair is not None:
+        pack["render_repair"] = render_repair
     if viewer_experience is not None:
         pack["viewer_experience"] = viewer_experience
     if japanese_subculture_photo is not None:
