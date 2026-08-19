@@ -1,0 +1,181 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "[$photo-prompt-image-generator](/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/SKILL.md) 해변가에서 수영복 차림의 일본 스타일 금태양에게 벽치기 당하는 쿨데레 문학소녀 프롬프트 작성하고 이미지 생성해줘.",
+  "interpreted_intent": "A playful adult romantic beach tableau that makes the Japanese golden-haired, deeply tanned flirt archetype, the kabedon geometry, and the cool literary woman's involuntary affectionate reaction immediately readable in one photographic frame.",
+  "subject": "Two unmistakably adult Japanese people in their mid-twenties: a deeply tanned, bleached-golden-haired confident man and a reserved literature graduate student.",
+  "setting": "A sunlit wall beside a Japanese beach club, with sea, sand, and summer wind visible nearby.",
+  "event": "The man performs a clear kabedon beside the woman's head while she answers his teasing closeness with a small caring gesture that exposes her concealed attraction.",
+  "visual_priorities": [
+    "Clearly legible palm-to-wall kabedon geometry and adult beach styling",
+    "Cool outward composure contrasted with one unmistakable affectionate leak and its visible consequence"
+  ],
+  "baseline_prompt_en": "Create a cinematic contemporary Japanese summer fashion photograph beside a sunlit beach, featuring two unmistakably adult Japanese people in their mid-twenties dressed in coordinated adult swimwear. A confident, deeply tanned man with bleached golden-blond hair, a patterned open resort shirt over black swim trunks, a gold chain, and a teasing grin performs a clear kabedon: his right palm planted flat on the beach-club wall beside the woman's head as he leans close. The adult woman is a reserved literature graduate student in a navy one-piece swimsuit with a light linen cover-up, holding an open paperback against her chest. She meets the same man's gaze with a level, cool expression, then quietly straightens his wind-lifted collar with her free hand. Her cool composure cracks into a warm blush across her ears; her thumb loses its page and several pages flutter, an already-visible consequence of his sudden closeness. Keep both faces, his braced arm, her target-directed gesture, the paperback, and their charged but playful relationship legible in one frame.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "전체 장면 요청",
+      "source_text": "해변가에서 수영복 차림의 일본 스타일 금태양에게 벽치기 당하는 쿨데레 문학소녀",
+      "basis": "request_context",
+      "resolution": "An adult beach romance scene combining a Japanese-styled golden-haired tanned flirt, a readable wall-brace, and a cool literary woman's concealed affection becoming visible.",
+      "sources": []
+    },
+    {
+      "term": "일본 스타일 금태양",
+      "source_text": "일본 스타일 금태양",
+      "basis": "agent_general_knowledge",
+      "resolution": "An unmistakably adult Japanese beach-fashion flirt archetype shown through deep tan, bleached golden-blond hair, flashy resort styling, confidence, and teasing charm.",
+      "sources": []
+    },
+    {
+      "term": "벽치기",
+      "source_text": "벽치기",
+      "basis": "agent_general_knowledge",
+      "resolution": "A kabedon pose in which one palm is planted on the wall beside the other person's head while leaning close.",
+      "sources": []
+    },
+    {
+      "term": "쿨데레 문학소녀",
+      "source_text": "쿨데레 문학소녀",
+      "basis": "agent_general_knowledge",
+      "resolution": "An unmistakably adult literary woman whose level, restrained exterior contrasts with a small target-directed caring action and an involuntary blush that reveal concealed attraction.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [
+    "금태양",
+    "쿨데레"
+  ],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "일본 스타일 금태양에게 벽치기 당하는 쿨데레 문학소녀",
+        "dimension": "concept",
+        "prompt_evidence": "performs a clear kabedon"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "일본 스타일 금태양에게 벽치기 당하는 쿨데레 문학소녀",
+        "dimension": "subject",
+        "prompt_evidence": "two unmistakably adult Japanese people in their mid-twenties"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "벽치기 당하는",
+        "dimension": "event",
+        "prompt_evidence": "his right palm planted flat on the beach-club wall beside the woman's head as he leans close"
+      },
+      {
+        "anchor_id": "core_setting",
+        "source_text": "해변가에서",
+        "dimension": "setting",
+        "prompt_evidence": "beside a sunlit beach"
+      },
+      {
+        "anchor_id": "core_wardrobe",
+        "source_text": "수영복 차림의",
+        "dimension": "appearance",
+        "prompt_evidence": "dressed in coordinated adult swimwear"
+      },
+      {
+        "anchor_id": "core_character_response",
+        "source_text": "쿨데레 문학소녀",
+        "dimension": "character_response",
+        "prompt_evidence": "Her cool composure cracks into a warm blush across her ears"
+      },
+      {
+        "anchor_id": "core_style",
+        "source_text": "일본 스타일",
+        "dimension": "style",
+        "prompt_evidence": "contemporary Japanese summer fashion photograph"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "setting",
+      "appearance",
+      "character_response",
+      "style"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "cool_literary_woman_response",
+      "dimension": "character_response",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "character_response"
+      ],
+      "axes": {
+        "surface_affect": "level, cool composure",
+        "underlying_affiliation": "concealed romantic attraction toward the same man",
+        "relationship_target": "the same adult man performing the wall-brace",
+        "primary_action": "quietly straightening his wind-lifted collar",
+        "affect_leak_timing": "immediately after his sudden closeness",
+        "affect_leak_channels": [
+          "warm blush across her ears"
+        ],
+        "event_phase": "the immediate reaction already visible in the same frame"
+      },
+      "relations": [
+        {
+          "operator": "same_target",
+          "members": [
+            "relationship_target",
+            "primary_action",
+            "underlying_affiliation",
+            "affect_leak",
+            "immediate_consequence"
+          ]
+        },
+        {
+          "operator": "contrasts",
+          "left": "surface_affect",
+          "right": "underlying_affiliation"
+        },
+        {
+          "operator": "temporal_order",
+          "first": "trigger",
+          "then": "affect_leak"
+        }
+      ],
+      "evidence": {
+        "actor_phrase": "The adult woman is a reserved literature graduate student",
+        "baseline_phrase": "She meets the same man's gaze with a level, cool expression",
+        "trigger_phrase": "his sudden closeness",
+        "target_phrase": "the same man",
+        "primary_action_phrase": "quietly straightens his wind-lifted collar with her free hand",
+        "affective_leak_phrase": "a warm blush across her ears",
+        "visible_response_phrase": "her thumb loses its page and several pages flutter",
+        "immediate_consequence_phrase": "several pages flutter",
+        "continuity_phrase": "the same man's gaze"
+      }
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "cinematic beach fashion photography",
+    "family": "contemporary Japanese summer romance editorial",
+    "evidence": [
+      "sunlit beach-club wall with sea and wind",
+      "adult resort swimwear and a readable romantic character beat"
+    ]
+  },
+  "variation_key": "beach-kabedon-cool-literary-woman-001"
+}

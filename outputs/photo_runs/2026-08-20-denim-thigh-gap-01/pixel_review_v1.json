@@ -1,0 +1,66 @@
+{
+  "schema_version": "photo-visual-obligation-render-review/v1",
+  "pack_id": "0321fd49f1c5efd5",
+  "source_effective_visual_contract_sha256": "90e48e11bba661a7fde545fcfa18e463f4780fb3ab58dbaafbcdcfb1dbe1c281",
+  "reviewer": {
+    "reviewer_id": "codex",
+    "method": "direct_pixel_inspection"
+  },
+  "result": {
+    "path": "/Users/chasoik/Projects/image-prompt/generated_images/denim-thigh-gap-20260820/denim-thigh-gap-commercial-v1.png",
+    "sha256": "2ae272c9fb62404fe7a95364c68415c5f7d29c7dfe95e603c79645fc85da8a77"
+  },
+  "review_assets": {
+    "native": "/Users/chasoik/Projects/image-prompt/generated_images/denim-thigh-gap-20260820/denim-thigh-gap-commercial-v1.png",
+    "thumbnail": "/Users/chasoik/Projects/image-prompt/outputs/photo_runs/2026-08-20-denim-thigh-gap-01/review-thumbnail-v1.png"
+  },
+  "hard_gates": {
+    "vo_inner_thigh_legs_close": {
+      "status": "fail",
+      "reviewed_scales": [
+        "thumbnail",
+        "native"
+      ],
+      "evidence": "Both thighs angle outward with a clearly separated stance; the knees are outside the crop and close-leg geometry is not visible."
+    },
+    "vo_inner_thigh_true_negative_space": {
+      "status": "pass",
+      "reviewed_scales": [
+        "native"
+      ],
+      "evidence": "A clean white background opening is visibly bounded by the model's actual upper inner-thigh contours."
+    },
+    "vo_inner_thigh_attractive_composition": {
+      "status": "pass",
+      "reviewed_scales": [
+        "thumbnail"
+      ],
+      "evidence": "The central white opening remains a readable focal shape beneath the denim shorts in the 320-pixel thumbnail."
+    },
+    "vo_inner_thigh_not_false_gap": {
+      "status": "fail",
+      "reviewed_scales": [
+        "native"
+      ],
+      "evidence": "The opening is produced mainly by an outward, wide stance rather than a narrow pocket between close upper thighs."
+    },
+    "vo_inner_thigh_thumbnail_legibility": {
+      "status": "fail",
+      "reviewed_scales": [
+        "thumbnail"
+      ],
+      "evidence": "The opening is visible at thumbnail scale, but the required close-leg geometry is absent and reads as a broad V-shaped stance."
+    }
+  },
+  "technical_status": "failed_hard_gates",
+  "failed_gate_ids": [
+    "vo_inner_thigh_legs_close",
+    "vo_inner_thigh_not_false_gap",
+    "vo_inner_thigh_thumbnail_legibility"
+  ],
+  "user_judgment": {
+    "source": "not_yet_received",
+    "status": "pending",
+    "evidence": ""
+  }
+}

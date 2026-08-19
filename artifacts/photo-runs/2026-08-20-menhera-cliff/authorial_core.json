@@ -1,0 +1,150 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "[$photo-prompt-image-generator](/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/SKILL.md) 해안가 절벽에서 떨어지는 순간의 백의 멘헤라 미소녀 컨셉의 프롬프트 작성하고 이미지 생성해줘",
+  "interpreted_intent": "A cinematic, non-graphic photograph of an unmistakably adult white-clad woman suspended in a fall from a coastal cliff, with a fragile dark-sweet emotional contradiction made visible through a calm smile, one tear, and a relationship-directed gesture.",
+  "subject": "An unmistakably adult woman in her mid-twenties wearing a flowing white dress.",
+  "setting": "Open air beneath an eroded coastal cliff above dark turquoise surf.",
+  "event": "She is fully suspended in the instant after her fingertips separate from an adult figure at the cliff edge.",
+  "visual_priorities": [
+    "The falling body must read immediately through open-air separation, wind-driven fabric, and strong vertical depth.",
+    "Her tender calm smile, single upward-blown tear, and reaching hand must remain clearly legible in one frame."
+  ],
+  "baseline_prompt_en": "Create a cinematic editorial photograph of an unmistakably adult woman in her mid-twenties wearing a flowing white dress, caught in the instant of falling away from a coastal cliff above dark turquoise surf. Her body is fully suspended in open air, wind lifting the white fabric and long black hair while the eroded cliff edge recedes above her. She turns a tender, disturbingly calm smile toward the same adult figure at the cliff edge and reaches one hand back toward that figure's outstretched hand; matching thin red bracelets identify their bond. A single tear has just escaped beneath her smile, blown upward by the fall. Their fingertips have separated, and the red thread connecting the bracelets is pulled taut and beginning to unravel between them, making the widening distance immediately visible. Freeze the unresolved descent before impact, with pale overcast light, sea spray, dramatic vertical depth, and sharp facial detail.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "멘헤라 미소녀 컨셉",
+      "source_text": "해안가 절벽에서 떨어지는 순간의 백의 멘헤라 미소녀 컨셉",
+      "basis": "request_context",
+      "resolution": "A clearly adult beautiful woman whose emotionally fragile, darkly sweet character is shown through the contradiction of a tender calm smile, a single tear, and a bond-directed gesture during the requested fall.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [
+    "멘헤라"
+  ],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "멘헤라 미소녀 컨셉",
+        "dimension": "concept",
+        "prompt_evidence": "a tender, disturbingly calm smile"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "미소녀",
+        "dimension": "subject",
+        "prompt_evidence": "an unmistakably adult woman in her mid-twenties"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "떨어지는 순간",
+        "dimension": "event",
+        "prompt_evidence": "caught in the instant of falling away from a coastal cliff"
+      },
+      {
+        "anchor_id": "core_setting",
+        "source_text": "해안가 절벽에서",
+        "dimension": "setting",
+        "prompt_evidence": "a coastal cliff above dark turquoise surf"
+      },
+      {
+        "anchor_id": "core_wardrobe",
+        "source_text": "백의",
+        "dimension": "appearance",
+        "prompt_evidence": "wearing a flowing white dress"
+      },
+      {
+        "anchor_id": "core_character_response",
+        "source_text": "멘헤라",
+        "dimension": "character_response",
+        "prompt_evidence": "A single tear has just escaped beneath her smile"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "setting",
+      "appearance",
+      "character_response"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "menhera_character_response",
+      "dimension": "character_response",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "character_response"
+      ],
+      "axes": {
+        "surface_affect": "tender, disturbingly calm smile",
+        "underlying_affiliation": "fragile attachment to the same adult figure",
+        "relationship_target": "the same adult figure at the cliff edge",
+        "primary_action": "reaches one hand back toward that figure's outstretched hand",
+        "affect_leak_timing": "immediately after their fingertips separate",
+        "affect_leak_channels": [
+          "tear"
+        ],
+        "event_phase": "during the unresolved fall"
+      },
+      "relations": [
+        {
+          "operator": "same_target",
+          "members": [
+            "relationship_target",
+            "underlying_affiliation",
+            "primary_action"
+          ]
+        },
+        {
+          "operator": "contrasts",
+          "left": "surface_affect",
+          "right": "affect_leak"
+        },
+        {
+          "operator": "temporal_order",
+          "first": "primary_action",
+          "then": "affect_leak_timing"
+        }
+      ],
+      "evidence": {
+        "actor_phrase": "an unmistakably adult woman in her mid-twenties",
+        "baseline_phrase": "She turns a tender, disturbingly calm smile toward the same adult figure at the cliff edge",
+        "trigger_phrase": "caught in the instant of falling away from a coastal cliff above dark turquoise surf",
+        "target_phrase": "the same adult figure at the cliff edge",
+        "primary_action_phrase": "reaches one hand back toward that figure's outstretched hand",
+        "affective_leak_phrase": "A single tear has just escaped beneath her smile",
+        "visible_response_phrase": "a tender, disturbingly calm smile",
+        "immediate_consequence_phrase": "Their fingertips have separated",
+        "continuity_phrase": "matching thin red bracelets identify their bond"
+      }
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "cinematic editorial photography",
+    "family": "storm-lit psychological coastal portrait",
+    "evidence": [
+      "pale overcast light and airborne sea spray",
+      "dramatic vertical depth with sharp facial detail"
+    ]
+  },
+  "variation_key": "menhera-cliff-white-v1"
+}

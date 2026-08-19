@@ -1,0 +1,67 @@
+{
+  "schema_version": "photo-visual-obligation-render-review/v1",
+  "pack_id": "0321fd49f1c5efd5",
+  "source_effective_visual_contract_sha256": "90e48e11bba661a7fde545fcfa18e463f4780fb3ab58dbaafbcdcfb1dbe1c281",
+  "reviewer": {
+    "reviewer_id": "codex",
+    "method": "direct_pixel_inspection"
+  },
+  "result": {
+    "path": "/Users/chasoik/Projects/image-prompt/generated_images/denim-thigh-gap-20260820/denim-thigh-gap-commercial-v2.png",
+    "sha256": "7e1f1da7aa9c4a86affe8e9ec916fa0966e8c9860e9dba9d1c565a4fbbeac4e5"
+  },
+  "review_assets": {
+    "native": "/Users/chasoik/Projects/image-prompt/generated_images/denim-thigh-gap-20260820/denim-thigh-gap-commercial-v2.png",
+    "thumbnail": "/Users/chasoik/Projects/image-prompt/outputs/photo_runs/2026-08-20-denim-thigh-gap-01/review-thumbnail-v2.png"
+  },
+  "hard_gates": {
+    "vo_inner_thigh_legs_close": {
+      "status": "pass",
+      "reviewed_scales": [
+        "thumbnail",
+        "native"
+      ],
+      "evidence": "The thighs remain close and nearly parallel through the visible crop, clearly reading as an adducted rather than wide stance."
+    },
+    "vo_inner_thigh_true_negative_space": {
+      "status": "fail",
+      "reviewed_scales": [
+        "native"
+      ],
+      "evidence": "The region between the thighs is a dark contact seam or shadow; a clean patch of the white studio background is not visible."
+    },
+    "vo_inner_thigh_attractive_composition": {
+      "status": "fail",
+      "reviewed_scales": [
+        "thumbnail"
+      ],
+      "evidence": "At 320 pixels the inner-thigh region collapses to a thin dark line rather than a deliberate focal opening."
+    },
+    "vo_inner_thigh_not_false_gap": {
+      "status": "fail",
+      "reviewed_scales": [
+        "native"
+      ],
+      "evidence": "The apparent separation is a narrow dark shadow/contact line, one of the contract's rejected substitutes for true background negative space."
+    },
+    "vo_inner_thigh_thumbnail_legibility": {
+      "status": "fail",
+      "reviewed_scales": [
+        "thumbnail"
+      ],
+      "evidence": "The close-leg geometry remains legible, but the required narrow white opening disappears at thumbnail scale."
+    }
+  },
+  "technical_status": "failed_hard_gates",
+  "failed_gate_ids": [
+    "vo_inner_thigh_true_negative_space",
+    "vo_inner_thigh_attractive_composition",
+    "vo_inner_thigh_not_false_gap",
+    "vo_inner_thigh_thumbnail_legibility"
+  ],
+  "user_judgment": {
+    "source": "not_yet_received",
+    "status": "pending",
+    "evidence": ""
+  }
+}

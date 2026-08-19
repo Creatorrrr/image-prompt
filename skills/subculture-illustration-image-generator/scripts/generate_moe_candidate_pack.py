@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build or audit current v6 or explicit historical v5/v4 moe candidate packs."""
+"""Build or audit current v7 or explicit historical v6/v5/v4 moe packs."""
 
 from __future__ import annotations
 
@@ -68,11 +68,11 @@ def _parser() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         "--grammar-version",
-        choices=("v4", "v3", "v2"),
-        default="v4",
+        choices=("v5", "v4", "v3", "v2"),
+        default="v5",
         help=(
-            "current visual-meaning v4 (default), meaning-only v3 replay, "
-            "or historical v2 replay"
+            "current researched visual-additions v5 (default), visual v4 replay, "
+            "meaning-only v3 replay, or historical v2 replay"
         ),
     )
     parser.add_argument(
