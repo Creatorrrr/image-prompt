@@ -1208,6 +1208,117 @@ class PhotoVisualObligationTests(unittest.TestCase):
         )
         self.assertNotIn("visual_obligations", pack)
 
+    def test_kuudere_profile_requires_stable_composure_and_same_target_care(self):
+        pack = self.moe_pack(
+            "Photorealistic adult fictional coworker character portrait with a "
+            "kuudere concept",
+            seed=1421,
+        )
+        obligation = pack["visual_obligations"]["obligations"][0]
+        self.assertEqual(
+            obligation["id"],
+            "kuudere_composed_warmth_relation",
+        )
+        self.assertEqual(
+            set(obligation["component_semantics"]["required_group_ids"]),
+            {
+                "composed_low_expression_surface",
+                "specific_trusted_target",
+                "quiet_target_directed_support",
+                "localized_warmth_leak",
+                "visible_same_target_consequence",
+            },
+        )
+        group_ids = {
+            row["id"] for row in obligation["component_semantics"]["groups"]
+        }
+        self.assertTrue(
+            {
+                "supporting_low_amplitude_face",
+                "supporting_economical_posture",
+                "supporting_restrained_styling",
+            }
+            <= group_ids
+        )
+        self.assertEqual(
+            obligation["prompt_binding"]["required_evidence_fields"],
+            [
+                "adult_fictional_subject_phrase",
+                "composed_surface_phrase",
+                "specific_trusted_target_phrase",
+                "quiet_support_action_phrase",
+                "localized_warmth_leak_phrase",
+                "same_target_consequence_phrase",
+                "stable_surface_coexistence_phrase",
+                "appearance_nonproof_phrase",
+            ],
+        )
+        self.assertEqual(
+            obligation["runtime_expression"]["runtime_forbidden_labels"],
+            [
+                "kuudere",
+                "cooldere",
+                "cool-dere",
+                "쿨데레",
+                "쿠데레",
+                "쿨 데레",
+                "クーデレ",
+            ],
+        )
+        self.assertIn(
+            "Hair, eyes, costume, gender, role, posture",
+            next(
+                row["description"]
+                for row in obligation["render_gates"]
+                if row["id"] == "vo_kuudere_appearance_is_optional_support"
+            ),
+        )
+        self.assertIn(
+            "hair_eye_color_or_hairstyle_as_personality_evidence",
+            obligation["reject_substitutes"],
+        )
+        self.assertIn(
+            "same-target action and consequence",
+            obligation["composition_instruction"],
+        )
+
+        evidence = self.visual_evidence_for_obligation(obligation)
+        prompt_en = self.prompt_for_obligation(obligation, evidence)
+        composed = {
+            "pack_id": pack["pack_id"],
+            "prompt_en": prompt_en,
+            "negative_en": pack["negative_en"],
+            "chosen_visual_concept_ids": [],
+            "visual_obligation_evidence": {obligation["id"]: evidence},
+        }
+        self.assertEqual(
+            audit_composed_prompt.audit_visual_obligations(
+                pack,
+                composed,
+                prompt_en,
+            ),
+            [],
+        )
+
+        role_only = copy.deepcopy(composed)
+        role_only["visual_obligation_evidence"][obligation["id"]][
+            "quiet_support_action_phrase"
+        ] = "routine professional service performed for every client"
+        role_only_prompt = self.prompt_for_obligation(
+            obligation,
+            role_only["visual_obligation_evidence"][obligation["id"]],
+        )
+        role_only["prompt_en"] = role_only_prompt
+        failures = audit_composed_prompt.audit_visual_obligations(
+            pack,
+            role_only,
+            role_only_prompt,
+        )
+        self.assertIn(
+            "visual_obligation_semantic_evidence",
+            {failure["check"] for failure in failures},
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
