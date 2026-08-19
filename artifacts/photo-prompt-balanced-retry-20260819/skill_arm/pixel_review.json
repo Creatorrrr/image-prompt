@@ -1,0 +1,158 @@
+{
+  "review_version": "balanced-kuudere-retry-pixel-review/v1",
+  "source_protocol": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-prompt-balanced-retry-20260819/evaluation/protocol.json",
+    "protocol_version": "balanced-kuudere-retry-eval/v1",
+    "sha256": "84d8160e164b78ecd92736465de461e36203e7da086abfc38aa8d3b13fbc33ab"
+  },
+  "image": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-prompt-balanced-retry-20260819/skill_arm/generated_images/balanced-kuudere-first-attempt.png",
+    "sha256": "a5fc3d34bc0b8e960c41a9c01f1cad00a7b669eaa469a8439013537af3797f55",
+    "width": 1024,
+    "height": 1536,
+    "color_mode": "RGB",
+    "attempt": 1
+  },
+  "review_scales": {
+    "thumbnail": {
+      "artifact_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-prompt-balanced-retry-20260819/skill_arm/generated_images/balanced-kuudere-first-attempt-thumbnail.png",
+      "width": 240,
+      "height": 360,
+      "sha256": "1321aa092c5d3ff9418bfca21e604b8d2d94e6ae034d6efd96af8c9cd388947e",
+      "observations": [
+        "The adult heroine and her face are the immediate first read.",
+        "Her cool oblique gaze and the small mantle exchange remain legible as the second read.",
+        "The vertical straight sword is recognizable at the left edge and is separate from both people.",
+        "Clean translucent architecture supports the portrait instead of competing with it."
+      ]
+    },
+    "native": {
+      "width": 1024,
+      "height": 1536,
+      "observations": [
+        "The face is coherent, unmistakably adult, softly beautiful, and retains the supplied portrait's pale oval-face, gray-eye, rose-lip, and ash-blonde appearance cues.",
+        "The heroine's cloth-grasping hand and the companion's withdrawing hand are anatomically plausible, distinct, and connected only through the mantle event.",
+        "The sword has a readable pommel, wrapped grip, straight guard, and vertical blade silhouette with no hand fusion.",
+        "The eye softening is subtle and the companion's surprise is understated, but her peer-specific acceptance is readable through gaze, cloth grip, and the paused withdrawing hand."
+      ]
+    }
+  },
+  "rubric": {
+    "score": 92,
+    "maximum": 100,
+    "categories": [
+      {
+        "category": "미소녀",
+        "score": 38,
+        "maximum": 40,
+        "subcriteria": [
+          {"name": "first-look adult beauty and soft charm", "score": 15, "maximum": 15},
+          {"name": "facial-casting resemblance", "score": 10, "maximum": 12},
+          {"name": "face is large and visually dominant", "score": 8, "maximum": 8},
+          {"name": "unmistakably adult presentation", "score": 5, "maximum": 5}
+        ]
+      },
+      {
+        "category": "쿨데레",
+        "score": 21,
+        "maximum": 25,
+        "subcriteria": [
+          {"name": "cool unreadable surface", "score": 7, "maximum": 7},
+          {"name": "small localized selective warmth", "score": 6, "maximum": 7},
+          {"name": "peer-specific acceptance and visible response", "score": 4, "maximum": 6},
+          {"name": "equal adult peers rather than maternal caregiving", "score": 4, "maximum": 5}
+        ]
+      },
+      {
+        "category": "반로환동",
+        "score": 9,
+        "maximum": 10,
+        "subcriteria": [
+          {"name": "youthful adult form", "score": 4, "maximum": 4},
+          {"name": "quiet ancient authority without visual overload", "score": 5, "maximum": 6}
+        ]
+      },
+      {
+        "category": "북해빙궁",
+        "score": 8,
+        "maximum": 8,
+        "subcriteria": [
+          {"name": "restrained ice-palace cue", "score": 4, "maximum": 4},
+          {"name": "one readable martial cue", "score": 2, "maximum": 2},
+          {"name": "worldbuilding remains supporting evidence", "score": 2, "maximum": 2}
+        ]
+      },
+      {
+        "category": "현대적 균형",
+        "score": 6,
+        "maximum": 7,
+        "subcriteria": [
+          {"name": "contemporary minimal treatment rather than a classical costume tableau", "score": 3, "maximum": 4},
+          {"name": "clean visual hierarchy and negative space", "score": 3, "maximum": 3}
+        ]
+      },
+      {
+        "category": "소품과 손의 명료도",
+        "score": 5,
+        "maximum": 5,
+        "subcriteria": [
+          {"name": "straight sword is unmistakably sword-like and separate from hands", "score": 3, "maximum": 3},
+          {"name": "mantle and hands are readable without major fusion", "score": 2, "maximum": 2}
+        ]
+      },
+      {
+        "category": "화보 완성도",
+        "score": 5,
+        "maximum": 5,
+        "subcriteria": [
+          {"name": "luxury beauty-campaign photography", "score": 3, "maximum": 3},
+          {"name": "realistic face, fabric, light, and anatomy", "score": 2, "maximum": 2}
+        ]
+      }
+    ]
+  },
+  "major_repair_triggers": [
+    {
+      "id": "beauty_or_face_scale_failure",
+      "triggered": false,
+      "status": "pass",
+      "evidence": "At thumbnail and native scale, the adult heroine is the unmistakable first-look beauty subject and her face is large and dominant."
+    },
+    {
+      "id": "sword_grotesque_fused_or_unrecognizable",
+      "triggered": false,
+      "status": "pass",
+      "evidence": "The single vertical straight sword has a recognizable grip, guard, and blade silhouette and is fully separate from both people's hands."
+    },
+    {
+      "id": "classical_worldbuilding_dominates",
+      "triggered": false,
+      "status": "pass",
+      "evidence": "Minimal translucent ice planes remain soft background support; the face-led human interaction dominates."
+    },
+    {
+      "id": "severe_face_or_principal_hand_anatomy_failure",
+      "triggered": false,
+      "status": "pass",
+      "evidence": "The principal face and both event-critical hands are coherent and readable with no severe anatomy disruption."
+    }
+  ],
+  "non_trigger_observations": [
+    "The sword-rack hardware is secondary and not independently prominent, while the sword silhouette remains readable.",
+    "The frost cue is subtle and the weathered seal is clearer; this is explicitly not a retry trigger.",
+    "The lower-eyelid warmth and the companion's surprise are understated rather than emphatic, while the overall cool-versus-selective-acceptance gestalt remains readable.",
+    "The clothing retains a restrained wuxia silhouette, but classical palace ornament does not dominate the contemporary minimal frame."
+  ],
+  "retry_decision": {
+    "recommendation": "stop",
+    "additional_image_call_authorized": false,
+    "reason": "No frozen major repair trigger fired, so the protocol requires stopping after the initial render.",
+    "coordinator_review": "The coordinator independently found all four major triggers untriggered and explicitly instructed not to retry.",
+    "image_call_count": 1
+  },
+  "selection": {
+    "selected": true,
+    "selection_basis": "first non-triggering render under the frozen retry policy",
+    "user_judgment": "not_yet_received"
+  }
+}

@@ -18,8 +18,9 @@ DEFAULT_LEDGER = PROJECT_ROOT / "runs" / "image_runs.ndjson"
 VALID_STATUSES = {"success", "safety_block", "error"}
 VALID_COMPOSERS = {"agent", "auto"}
 VALID_AUDIT_STATUSES = {"pass", "warn", "fail", "not_run"}
-VALID_CANDIDATE_PACK_VERSIONS = {"v2", "v3", "v4"}
-INDEPENDENT_RUN_MANIFEST_VERSION = "photo-independent-run-manifest/v1"
+VALID_CANDIDATE_PACK_VERSIONS = {"v2", "v3", "v4", "v5", "v6"}
+LEGACY_INDEPENDENT_RUN_MANIFEST_VERSION = "photo-independent-run-manifest/v1"
+MODERN_INDEPENDENT_RUN_MANIFEST_VERSION = "photo-independent-run-manifest/v2"
 
 
 def stable_text_id(text: str | None, length: int = 16) -> str | None:
@@ -142,10 +143,27 @@ def build_entry(args: argparse.Namespace) -> dict[str, object]:
     augmentation_brief = parse_augmentation_brief(args.augmentation_brief_json)
     if augmentation_brief is not None:
         entry["augmentation_brief"] = augmentation_brief
-    for field in ("skill_sha256", "authorial_request_sha256"):
+    for field in (
+        "skill_sha256",
+        "authorial_request_sha256",
+        "authorial_core_sha256",
+        "intent_lock_sha256",
+        "render_repair_contract_sha256",
+    ):
         value = str(getattr(args, field) or "")
         if value and not re.fullmatch(r"[0-9a-f]{64}", value):
             raise ValueError(f"--{field.replace('_', '-')} must be a 64-character SHA-256")
+    failed_repair_gate_ids = [
+        str(value).strip()
+        for value in args.failed_repair_gate_id or []
+        if str(value).strip()
+    ]
+    if len(failed_repair_gate_ids) != len(set(failed_repair_gate_ids)):
+        raise ValueError("--failed-repair-gate-id values must be distinct")
+    if failed_repair_gate_ids and not args.render_repair_contract_sha256:
+        raise ValueError(
+            "--failed-repair-gate-id requires --render-repair-contract-sha256"
+        )
     for value in args.reference_sha256 or []:
         if not re.fullmatch(r"[0-9a-f]{64}", str(value)):
             raise ValueError("--reference-sha256 must be a 64-character SHA-256")
@@ -158,6 +176,10 @@ def build_entry(args: argparse.Namespace) -> dict[str, object]:
         "source_ref": args.source_ref,
         "candidate_pack_version": args.candidate_pack_version,
         "authorial_request_sha256": args.authorial_request_sha256,
+        "authorial_core_sha256": args.authorial_core_sha256,
+        "intent_lock_sha256": args.intent_lock_sha256,
+        "render_repair_contract_sha256": args.render_repair_contract_sha256,
+        "failed_repair_gate_ids": failed_repair_gate_ids,
         "reference_sha256": list(args.reference_sha256 or []),
         "image_call_count": args.image_call_count,
     }
@@ -173,15 +195,31 @@ def build_independent_manifest(
     entry: dict[str, object],
     args: argparse.Namespace,
 ) -> dict[str, object]:
-    required_values = {
+    common_required_values = {
         "arm_id": args.arm_id,
         "worktree_id": args.worktree_id,
         "skill_sha256": args.skill_sha256,
         "source_ref": args.source_ref,
         "candidate_pack_version": args.candidate_pack_version,
-        "authorial_request_sha256": args.authorial_request_sha256,
         "reference_sha256": list(args.reference_sha256 or []),
         "image_call_count": args.image_call_count,
+    }
+    is_modern = args.candidate_pack_version in {"v5", "v6"}
+    contract_version = (
+        MODERN_INDEPENDENT_RUN_MANIFEST_VERSION
+        if is_modern
+        else LEGACY_INDEPENDENT_RUN_MANIFEST_VERSION
+    )
+    required_values = {
+        **common_required_values,
+        **(
+            {
+                "authorial_core_sha256": args.authorial_core_sha256,
+                "intent_lock_sha256": args.intent_lock_sha256,
+            }
+            if is_modern
+            else {"authorial_request_sha256": args.authorial_request_sha256}
+        ),
     }
     missing = [
         key
@@ -209,7 +247,7 @@ def build_independent_manifest(
             }
         )
     manifest: dict[str, object] = {
-        "contract_version": INDEPENDENT_RUN_MANIFEST_VERSION,
+        "contract_version": contract_version,
         **required_values,
         "cross_arm_inputs_used": False,
         "ledger_run_id": entry["run_id"],
@@ -223,6 +261,8 @@ def build_independent_manifest(
     for field in (
         "chosen_visual_concept_ids",
         "effective_visual_contract_sha256",
+        "render_repair_contract_sha256",
+        "failed_repair_gate_ids",
     ):
         if field in entry:
             manifest[field] = entry[field]
@@ -263,6 +303,10 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--source-ref", default=None, help="Commit or source-snapshot identity used by the arm.")
     parser.add_argument("--candidate-pack-version", choices=sorted(VALID_CANDIDATE_PACK_VERSIONS), default=None, help="Candidate-pack version used by the arm.")
     parser.add_argument("--authorial-request-sha256", default=None, help="Canonical pre-pack authorial request SHA-256.")
+    parser.add_argument("--authorial-core-sha256", default=None, help="Canonical pre-pack authorial core SHA-256 for v5/v6.")
+    parser.add_argument("--intent-lock-sha256", default=None, help="Canonical requesting-user intent-lock SHA-256 for v5/v6.")
+    parser.add_argument("--render-repair-contract-sha256", default=None, help="Canonical generic render-repair contract SHA-256, when enabled.")
+    parser.add_argument("--failed-repair-gate-id", action="append", default=[], help="Failed generic repair hard-gate ID. Repeatable.")
     parser.add_argument("--reference-sha256", action="append", default=[], help="SHA-256 for an attached reference input. Repeatable.")
     parser.add_argument("--image-call-count", type=int, default=None, help="Total image-tool calls consumed by this arm.")
     parser.add_argument("--independent-no-cross-arm-inputs", action="store_true", help="Assert that no other arm output was used as input.")

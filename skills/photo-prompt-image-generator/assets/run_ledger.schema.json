@@ -172,12 +172,34 @@
       "enum": [
         "v2",
         "v3",
-        "v4"
+        "v4",
+        "v5",
+        "v6"
       ]
     },
     "authorial_request_sha256": {
       "type": "string",
       "pattern": "^[0-9a-f]{64}$"
+    },
+    "authorial_core_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "intent_lock_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "render_repair_contract_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "failed_repair_gate_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
     },
     "reference_sha256": {
       "type": "array",

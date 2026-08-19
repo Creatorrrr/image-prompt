@@ -1,0 +1,64 @@
+{
+  "protocol_version": "held-sword-kuudere-retry-eval/v1",
+  "frozen_before_candidate_pack_or_render": true,
+  "requester_priority_order": [
+    "미소녀",
+    "쿨데레",
+    "반로환동",
+    "북해빙궁"
+  ],
+  "weighted_rubric": {
+    "미소녀": 40,
+    "쿨데레": 25,
+    "반로환동": 10,
+    "북해빙궁": 8,
+    "검_상호작용_명료도": 7,
+    "현대적_균형": 5,
+    "화보_및_주요_해부_완성도": 5
+  },
+  "reference_contract": {
+    "path": "/Users/chasoik/Downloads/4FBED371-F292-4BB7-8800-B33B91190D45.jpeg",
+    "sha256": "a8aa61ee7f1452e8b155dc557e55aa7bb662e6755617f779e78ffbae6d769022",
+    "use": "facial appearance only",
+    "composition_and_expression": "newly authored"
+  },
+  "first_attempt_requirements": {
+    "beauty_first_read": "The adult heroine and her luminous face dominate before worldbuilding or weapon detail.",
+    "kuudere_second_read": "A cool stable surface contrasts with one small same-peer-specific acceptance and a visible peer response.",
+    "rejuvenation_support": "Youthful adult appearance contains quiet long-lived authority without elderly or child coding.",
+    "worldbuilding_support": "Modern translucent ice architecture and restrained frost remain subordinate, not an ornate classical tableau.",
+    "held_sword_relation": "The heroine herself visibly holds one recognizable straight double-edged jian by its grip; wall placement, removal, concealment, or transfer fails."
+  },
+  "generic_repair_hard_gates": [
+    "rr_held_martial_prop_object_class_legible",
+    "rr_held_martial_prop_gross_structure_coherent",
+    "rr_held_martial_prop_intended_interaction_matches",
+    "rr_held_martial_prop_contact_anatomy_coherent"
+  ],
+  "major_retry_triggers": [
+    "The heroine is no longer the unmistakable adult beauty first read or the face has a severe structural failure.",
+    "The cool surface plus same-peer-specific selective acceptance is absent or reads primarily as maternal caregiving.",
+    "Any frozen generic repair hard gate fails for the held sword.",
+    "Classical palace or martial-world decoration visually overwhelms the heroine.",
+    "An event-critical principal hand has severe fusion, impossible articulation, or missing contact."
+  ],
+  "non_retry_observations": [
+    "Minor engraving, filigree, frost, scabbard, jewelry, or background accessory variation.",
+    "Small non-critical costume asymmetry that does not alter the priority reads.",
+    "A restrained worldbuilding cue being subtler than expected while beauty and concept remain legible."
+  ],
+  "retry_policy": {
+    "maximum_additional_image_calls": 1,
+    "retry_only_after_direct_thumbnail_and_native_review": true,
+    "repair_smallest_failed_major_gate_set": true,
+    "preserve_passed_beauty_character_identity_and_interaction_evidence": true,
+    "sword_removal_relocation_concealment_or_transfer_forbidden": true,
+    "minor_decoration_never_triggers_retry": true,
+    "stop_at_first_complete_major_gate_pass": true
+  },
+  "review_scales": [
+    "thumbnail",
+    "native"
+  ],
+  "qualification_boundary": "Prompt, composed audit, and runtime audit are preflight only. Qualification requires direct review of the exact saved pixels and remains separate from requester preference."
+}

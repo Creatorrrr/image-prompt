@@ -1,0 +1,64 @@
+{
+  "contract": "photo-prompt-skill-ab-evaluation/v1",
+  "experiment_id": "photo-prompt-ab-20260819",
+  "protocol": "one independent first-attempt image per arm; two metadata-blind pixel reviewers",
+  "reference": {
+    "path": "/Users/chasoik/Downloads/4FBED371-F292-4BB7-8800-B33B91190D45.jpeg",
+    "role": "face_appearance_reference_only",
+    "sha256": "a8aa61ee7f1452e8b155dc557e55aa7bb662e6755617f779e78ffbae6d769022"
+  },
+  "arms": {
+    "skill": {
+      "candidate_code": "candidate-alpha",
+      "first_attempt_delivery": "success",
+      "image_call_count": 1,
+      "candidate_pack_count": 1,
+      "candidate_pack_version": "v6",
+      "composed_audit": "pass",
+      "runtime_audit": "pass",
+      "positive_prompt_words": 172,
+      "runtime_prompt_words": 190,
+      "image_sha256": "dbcab60bc4b2510cfef2f4826de8e49f0a5bd1b1f9598475aba9985979962a72",
+      "dimensions": [1086, 1448],
+      "blind_pixel_scores": [80, 81],
+      "blind_pixel_mean": 80.5,
+      "hard_observation_passes": 11,
+      "hard_observation_total": 12
+    },
+    "baseline": {
+      "candidate_code": "candidate-beta",
+      "first_attempt_delivery": "success",
+      "image_call_count": 1,
+      "candidate_pack_count": 0,
+      "composed_audit": "not_applicable",
+      "runtime_audit": "not_applicable",
+      "prompt_words": 351,
+      "image_sha256": "08661e2869b93c8efae9cb96bc5d56cee98f0ee96f7d9c9d883f5cff1a9bbeeb",
+      "dimensions": [1023, 1537],
+      "blind_pixel_scores": [90, 90],
+      "blind_pixel_mean": 90.0,
+      "hard_observation_passes": 12,
+      "hard_observation_total": 12
+    }
+  },
+  "blind_category_means": {
+    "facial_appearance_resemblance": {"skill": 14.0, "baseline": 11.5, "skill_minus_baseline": 2.5},
+    "northern_sea_ice_palace_world": {"skill": 12.0, "baseline": 15.0, "skill_minus_baseline": -3.0},
+    "rejuvenated_ancient_grandmaster": {"skill": 9.0, "baseline": 14.0, "skill_minus_baseline": -5.0},
+    "cool_but_caring_character_response": {"skill": 23.5, "baseline": 27.5, "skill_minus_baseline": -4.0},
+    "composition_and_photographic_credibility": {"skill": 13.5, "baseline": 13.5, "skill_minus_baseline": 0.0},
+    "anatomy_and_artifact_control": {"skill": 8.5, "baseline": 8.5, "skill_minus_baseline": 0.0}
+  },
+  "prompt_efficiency": {
+    "positive_words_reduction_vs_baseline_percent": 51.0,
+    "skill_runtime_words_reduction_vs_baseline_prompt_percent": 45.9
+  },
+  "result": {
+    "both_first_attempts_delivered": true,
+    "both_blind_reviewers_preferred": "baseline",
+    "baseline_pixel_margin_points": 9.5,
+    "skill_visual_superiority_demonstrated": false,
+    "causal_superiority_established": false,
+    "requesting_user_judgment": "pending"
+  }
+}

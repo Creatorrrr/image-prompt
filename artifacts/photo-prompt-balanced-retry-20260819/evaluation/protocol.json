@@ -1,0 +1,88 @@
+{
+  "protocol_version": "balanced-kuudere-retry-eval/v1",
+  "frozen_before_render": true,
+  "purpose": "Evaluate whether the new render restores adult beauty first-read while retaining a restrained peer-specific response and keeping rejuvenation, ice-palace worldbuilding, and props subordinate and clear.",
+  "rubric": [
+    {
+      "category": "미소녀",
+      "weight": 40,
+      "subcriteria": [
+        {"name": "first-look adult beauty and soft charm", "points": 15},
+        {"name": "facial-casting resemblance", "points": 12},
+        {"name": "face is large and visually dominant", "points": 8},
+        {"name": "unmistakably adult presentation", "points": 5}
+      ]
+    },
+    {
+      "category": "쿨데레",
+      "weight": 25,
+      "subcriteria": [
+        {"name": "cool unreadable surface", "points": 7},
+        {"name": "small localized selective warmth", "points": 7},
+        {"name": "peer-specific acceptance and visible response", "points": 6},
+        {"name": "equal adult peers rather than maternal caregiving", "points": 5}
+      ]
+    },
+    {
+      "category": "반로환동",
+      "weight": 10,
+      "subcriteria": [
+        {"name": "youthful adult form", "points": 4},
+        {"name": "quiet ancient authority without visual overload", "points": 6}
+      ]
+    },
+    {
+      "category": "북해빙궁",
+      "weight": 8,
+      "subcriteria": [
+        {"name": "restrained ice-palace cue", "points": 4},
+        {"name": "one readable martial cue", "points": 2},
+        {"name": "worldbuilding remains supporting evidence", "points": 2}
+      ]
+    },
+    {
+      "category": "현대적 균형",
+      "weight": 7,
+      "subcriteria": [
+        {"name": "contemporary minimal treatment rather than a classical costume tableau", "points": 4},
+        {"name": "clean visual hierarchy and negative space", "points": 3}
+      ]
+    },
+    {
+      "category": "소품과 손의 명료도",
+      "weight": 5,
+      "subcriteria": [
+        {"name": "straight sword is unmistakably sword-like and separate from hands", "points": 3},
+        {"name": "mantle and hands are readable without major fusion", "points": 2}
+      ]
+    },
+    {
+      "category": "화보 완성도",
+      "weight": 5,
+      "subcriteria": [
+        {"name": "luxury beauty-campaign photography", "points": 3},
+        {"name": "realistic face, fabric, light, and anatomy", "points": 2}
+      ]
+    }
+  ],
+  "major_repair_triggers": [
+    "The heroine is not the unmistakable first-look beauty subject or her face is again reduced to environmental scale.",
+    "The single straight sword is visibly grotesque, fused with a hand, or not recognizable as a sword.",
+    "Classical palace ornament and worldbuilding dominate the image instead of supporting the beauty portrait.",
+    "A face or principal hand has a severe anatomy failure that disrupts the intended event."
+  ],
+  "non_triggers": [
+    "Minor ornament asymmetry or tiny background decorative artifacts.",
+    "A subtle belt seal or frost cue that is not independently obvious.",
+    "Small sword-rack details that remain secondary while the sword silhouette is readable.",
+    "A micro-expression that is subtle but the cool-versus-selective-warmth gestalt remains readable."
+  ],
+  "retry_policy": {
+    "maximum_additional_image_calls": 1,
+    "retry_only_after_coordinator_review": true,
+    "retry_requires_at_least_one_major_repair_trigger": true,
+    "stop_after_first_non_triggering_render": true,
+    "preserve_every_attempt": true,
+    "do_not_average_components_across_attempts": true
+  }
+}
