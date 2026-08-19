@@ -714,6 +714,13 @@ class PhotoVisualObligationTests(unittest.TestCase):
                 "supporting_affiliative_outward_signal",
                 "supporting_target_fixation_signal",
                 "direct_obsessive_madness_display",
+                "supporting_face_mode_sweet_threat_mismatch",
+                "supporting_target_triggered_face_mismatch",
+                "supporting_meso_scale_facial_mechanics",
+                "supporting_face_mode_dead_eye_devotion",
+                "supporting_face_mode_ecstatic_face_cradle",
+                "supporting_face_mode_manic_possessive",
+                "supporting_face_mode_abandonment_fracture",
             }
             <= component_group_ids
         )
@@ -742,6 +749,8 @@ class PhotoVisualObligationTests(unittest.TestCase):
         self.assertIn("vo_yandere_not_role_prop_horror", gate_ids)
         self.assertIn("vo_yandere_two_channel_outward_supports", gate_ids)
         self.assertIn("vo_yandere_direct_obsessive_madness", gate_ids)
+        self.assertIn("vo_yandere_face_mode_not_generic", gate_ids)
+        self.assertIn("vo_yandere_eye_physics_and_target_lock", gate_ids)
         self.assertIn("vo_yandere_non_graphic_fictional_intensity", gate_ids)
         self.assertNotIn("vo_yandere_nonviolent_safe_staging", gate_ids)
         two_channel_gate = next(
@@ -767,8 +776,75 @@ class PhotoVisualObligationTests(unittest.TestCase):
             obligation["reject_substitutes"],
         )
         self.assertIn(
-            "Non-graphic blood, a visible weapon, a syringe",
+            "pupil_size_used_as_love_or_possession_proof",
+            obligation["reject_substitutes"],
+        )
+        self.assertIn(
+            "face_cradle_pose_without_same_target_control_relation",
+            obligation["reject_substitutes"],
+        )
+        self.assertIn(
+            "incompatible_dead_eye_tear_bright_tiny_pupil_mode_stack",
+            obligation["reject_substitutes"],
+        )
+        self.assertIn(
+            "sparkling_beauty_irises_or_large_catchlights_erasing_selected_face_mode",
+            obligation["reject_substitutes"],
+        )
+        self.assertIn(
+            "broad_friendly_smile_or_playful_head_tilt_erasing_eye_mouth_contradiction",
+            obligation["reject_substitutes"],
+        )
+        self.assertIn(
+            "target_reaction_changes_mouth_and_eyes_together",
+            obligation["reject_substitutes"],
+        )
+        self.assertIn(
+            "pale_iris_texture_only_while_lids_head_and_mouth_remain_friendly",
+            obligation["reject_substitutes"],
+        )
+        self.assertIn(
+            "Choose exactly one of these modes",
             obligation["composition_instruction"],
+        )
+        self.assertIn(
+            "freeze one mouth corner partway through a fractional deepening while the eyes remain fixed and unchanged",
+            obligation["composition_instruction"],
+        )
+        self.assertIn(
+            "changing iris texture alone is insufficient",
+            obligation["composition_instruction"],
+        )
+        face_mode_gate = next(
+            row
+            for row in obligation["render_gates"]
+            if row["id"] == "vo_yandere_face_mode_not_generic"
+        )
+        self.assertIn("bright detailed beauty irises", face_mode_gate["description"])
+        eye_gate = next(
+            row
+            for row in obligation["render_gates"]
+            if row["id"] == "vo_yandere_eye_physics_and_target_lock"
+        )
+        self.assertIn("one tiny dim scene-coherent catchlight", eye_gate["description"])
+
+        target_trigger_group = next(
+            row
+            for row in obligation["component_semantics"]["groups"]
+            if row["id"] == "supporting_target_triggered_face_mismatch"
+        )
+        self.assertIn(
+            "the same target's reaching hand is visible while one mouth corner is frozen partway through a fractional deepening and the eyes remain fixed",
+            target_trigger_group["any_terms"],
+        )
+        meso_scale_group = next(
+            row
+            for row in obligation["component_semantics"]["groups"]
+            if row["id"] == "supporting_meso_scale_facial_mechanics"
+        )
+        self.assertIn(
+            "meso-scale facial mechanics break the friendly beauty read rather than relying on pale irises alone",
+            meso_scale_group["any_terms"],
         )
 
         evidence = self.visual_evidence_for_obligation(obligation)
@@ -808,6 +884,34 @@ class PhotoVisualObligationTests(unittest.TestCase):
             {failure["check"] for failure in failures},
         )
 
+        mode_phrases = [
+            "warm mouth against an overfocused tense gaze",
+            "precisely target-locked yet unnervingly lifeless",
+            "both palms cradle her cheeks and jaw beneath an adoring flushed gaze",
+            "wide sclera and tiny pupils beneath a loving crooked smile",
+            "moist eyes and a tightening mouth track the withdrawing beloved",
+            "her smile deepens by a fraction while her eyes remain unchanged",
+        ]
+        for mode_phrase in mode_phrases:
+            with self.subTest(face_mode=mode_phrase):
+                mode_composed = copy.deepcopy(composed)
+                mode_evidence = mode_composed["visual_obligation_evidence"][
+                    obligation["id"]
+                ]
+                mode_evidence["direct_obsessive_madness_phrase"] = (
+                    f"{mode_phrase} while the same-target action remains visible"
+                )
+                mode_prompt = self.prompt_for_obligation(obligation, mode_evidence)
+                mode_composed["prompt_en"] = mode_prompt
+                self.assertEqual(
+                    audit_composed_prompt.audit_visual_obligations(
+                        pack,
+                        mode_composed,
+                        mode_prompt,
+                    ),
+                    [],
+                )
+
         restrained_without_madness = copy.deepcopy(composed)
         restrained_without_madness["visual_obligation_evidence"][obligation["id"]][
             "direct_obsessive_madness_phrase"
@@ -845,6 +949,32 @@ class PhotoVisualObligationTests(unittest.TestCase):
             "visual_obligation_semantic_evidence",
             {failure["check"] for failure in failures},
         )
+
+    def test_generic_face_cues_do_not_hard_activate_yandere_relation(self):
+        generic_prompts = [
+            "Photorealistic adult portrait with dead eyes, dim catchlights, and low-contrast irises",
+            "Photorealistic adult portrait with both palms cradling her cheeks and an adoring gaze",
+            "Photorealistic adult portrait with very small pupils and wide sclera",
+            "Photorealistic beauty portrait with sparkling gray irises, large catchlights, a broad friendly smile, and a playful head tilt",
+        ]
+        for text in generic_prompts:
+            with self.subTest(text=text):
+                source_rows = [
+                    {
+                        "source": "concept_lock",
+                        "text": text,
+                        "polarity": "required",
+                        "priority": "critical",
+                        "mandatory": True,
+                    }
+                ]
+                self.assertNotIn(
+                    "yandere_affection_control_relation",
+                    prompt_generator.candidate_pack_auto_visual_obligation_matches(
+                        self.registry,
+                        source_rows,
+                    ),
+                )
 
     def test_selected_visual_concept_binds_runtime_and_render_review(self):
         pack = self.moe_pack(
