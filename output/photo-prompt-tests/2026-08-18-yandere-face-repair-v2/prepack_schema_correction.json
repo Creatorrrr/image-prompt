@@ -1,0 +1,27 @@
+{
+  "contract_version": "photo-prepack-schema-correction/v1",
+  "source_core_path": "authorial_core.initial.json",
+  "corrections": [
+    {
+      "field": "runtime_forbidden_labels",
+      "before": [
+        "yandere",
+        "얀데레",
+        "ヤンデレ"
+      ],
+      "after": [],
+      "reason": "The current active requester span does not contain these labels. The lineage-preserved visual profile independently supplies the same runtime label firewall, so removing the ungrounded duplicate changes no intended pixels or prompt evidence."
+    },
+    {
+      "field": "request_lineage",
+      "before": {
+        "parent_request_sha256": "e1dad779b8d3c7c3a483c8c9b9dbef425727a34d6c2fcea6e2abeaae62ec6ee5",
+        "parent_authorial_core_sha256": "509725e4e304765e9bf6355e9d644aaa1a459cf6c1ce4cac844fc58576ff675c"
+      },
+      "after": {
+        "parent_core_sha256": "509725e4e304765e9bf6355e9d644aaa1a459cf6c1ce4cac844fc58576ff675c"
+      },
+      "reason": "The v3 lineage schema accepts the parent request ID and canonical parent core digest; the parent request digest is already recoverable from the inspected parent pack and is not a lineage field."
+    }
+  ]
+}

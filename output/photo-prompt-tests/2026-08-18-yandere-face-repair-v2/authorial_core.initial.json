@@ -1,0 +1,150 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 데이터에 반영하고 프롬프트 작성과 이미지 생성을 다시 한번 테스트해줘",
+  "interpreted_intent": "Carry the prior adult fictional yandere nurse scene forward, preserve its already-readable control action and consequence, incorporate the facial-semantics findings into reusable visual data, and retest the image as a face-only edit using a sweet-threat mismatch: a genuinely tender mouth makes a tiny target-triggered change while the same patient's precisely fixed eyes remain eerily unchanged.",
+  "subject": "The unmistakably adult fictional nurse in the supplied scene, preserving the attached reference woman's pale oval face, ash-blonde hair, gray eyes, and natural adult facial geometry.",
+  "setting": "The existing quiet private treatment room, preserved from the supplied edit-target scene.",
+  "event": "The nurse keeps one palm pinning the same adult patient's call button on the far trolley while the patient's reaching fingers remain visibly separated from it, and her tender smile deepens by a fraction while her target-locked eyes do not react.",
+  "visual_priorities": [
+    "Reference-face fidelity and preservation of every already-successful non-facial scene element",
+    "A coherent sweet-threat facial mode built from a tender micro-smile, matte low-contrast irises, tiny coherent catchlights, taut lids, and an upright head",
+    "The same patient's reach triggers a fractional mouth change while the eyes remain fixed and unchanged"
+  ],
+  "baseline_prompt_en": "Photorealistic identity-preserving facial edit of the supplied adult fictional nurse scene. Preserve the reference woman's pale oval face, ash-blonde hair, gray eyes, and natural adult facial geometry, and keep the uniform, capped syringe, palm pinning the same adult patient's call button on the far trolley, reaching fingers, visible gap, cable, camera, and clinical background unchanged. Her small closed-lip asymmetric smile remains genuinely tender, one corner barely higher with faint natural flush. Both eyes stay precisely fixed on the same adult patient: pale matte low-contrast gray irises, one tiny dim scene-coherent catchlight per eye, slightly elevated upper lids, taut lower lids, and an almost motionless brow form an unnervingly overfocused stare. As the patient reaches for the call button, her smile deepens by a fraction while her eyes remain unchanged; the reaching adult patient's fingers remain separated from the button by a visible gap. Her nearly upright head, affectionate mouth, frozen target-lock, controlling palm, and visible consequence coexist in the same instant.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "시각 데이터에 반영하고 프롬프트 작성과 이미지 생성을 다시 한번 테스트해줘",
+      "source_text": "시각 데이터에 반영하고 프롬프트 작성과 이미지 생성을 다시 한번 테스트해줘",
+      "basis": "request_context",
+      "resolution": "Apply the immediately preceding discussion of stronger facial madness to the prior adult yandere nurse test, preserving its successful scene and testing a face-only sweet-threat mismatch rather than another whole-scene regeneration.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "시각 데이터에 반영하고 프롬프트 작성과 이미지 생성을 다시 한번 테스트해줘",
+        "dimension": "concept",
+        "prompt_evidence": "Her nearly upright head, affectionate mouth, frozen target-lock, controlling palm, and visible consequence coexist in the same instant"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "시각 데이터에 반영하고 프롬프트 작성과 이미지 생성을 다시 한번 테스트해줘",
+        "dimension": "subject",
+        "prompt_evidence": "the supplied adult fictional nurse scene"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "시각 데이터에 반영하고 프롬프트 작성과 이미지 생성을 다시 한번 테스트해줘",
+        "dimension": "event",
+        "prompt_evidence": "palm pinning the same adult patient's call button on the far trolley"
+      },
+      {
+        "anchor_id": "core_character_response",
+        "source_text": "시각 데이터에 반영하고 프롬프트 작성과 이미지 생성을 다시 한번 테스트해줘",
+        "dimension": "character_response",
+        "prompt_evidence": "her smile deepens by a fraction while her eyes remain unchanged"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "character_response"
+    ],
+    "open_dimensions": [
+      "expression",
+      "lighting"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "adult_yandere_nurse_sweet_threat_response",
+      "dimension": "character_response",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "axes": {
+        "surface_affect": "a small closed-lip asymmetric smile remains genuinely tender",
+        "underlying_affiliation": "genuine tenderness toward the same adult patient",
+        "relationship_target": "the same identifiable adult patient",
+        "primary_action": [
+          "palm pinning the same adult patient's call button on the far trolley"
+        ],
+        "affect_leak_timing": "as the patient reaches for the call button",
+        "affect_leak_channels": [
+          "eyes"
+        ],
+        "event_phase": "the reaching adult patient's fingers remain separated from the button by a visible gap"
+      },
+      "evidence": {
+        "actor_phrase": "the supplied adult fictional nurse",
+        "baseline_phrase": "Her small closed-lip asymmetric smile remains genuinely tender",
+        "trigger_phrase": "As the patient reaches for the call button",
+        "target_phrase": "the same adult patient",
+        "primary_action_phrase": "palm pinning the same adult patient's call button on the far trolley",
+        "affective_leak_phrase": "an unnervingly overfocused stare",
+        "visible_response_phrase": "her smile deepens by a fraction while her eyes remain unchanged",
+        "immediate_consequence_phrase": "the reaching adult patient's fingers remain separated from the button by a visible gap",
+        "continuity_phrase": "Both eyes stay precisely fixed on the same adult patient"
+      },
+      "affected_dimensions": [
+        "character_response"
+      ],
+      "relations": [
+        {
+          "operator": "same_target",
+          "members": [
+            "relationship_target",
+            "surface_affect",
+            "underlying_affiliation",
+            "primary_action",
+            "immediate_consequence"
+          ]
+        },
+        {
+          "operator": "contrasts",
+          "left": "surface_affect",
+          "right": "affect_leak"
+        },
+        {
+          "operator": "temporal_order",
+          "first": "primary_action",
+          "then": "immediate_consequence"
+        }
+      ]
+    }
+  ],
+  "request_lineage": {
+    "parent_request_id": "2026-08-18-yandere-face-semantics-test",
+    "parent_core_sha256": "509725e4e304765e9bf6355e9d644aaa1a459cf6c1ce4cac844fc58576ff675c",
+    "preserved_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "character_response"
+    ],
+    "allowed_changes": [
+      "expression",
+      "lighting"
+    ]
+  },
+  "style": {
+    "domain": "photorealistic identity-preserving character edit",
+    "family": "intimate clinical sweet-threat tension",
+    "evidence": [
+      "Photorealistic identity-preserving facial edit",
+      "one tiny dim scene-coherent catchlight per eye"
+    ]
+  },
+  "variation_key": "sweet-threat-face-repair-v2"
+}

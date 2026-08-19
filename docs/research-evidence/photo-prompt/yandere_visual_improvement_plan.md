@@ -50,7 +50,29 @@ Therefore, the durable photographic mechanism remains relational: affection, con
 
 ## Composition priority for the next render
 
-Use a tight patient-point-of-view close portrait so the adult nurse dominates the frame. Make obsessive love and instability simultaneous: feverishly adoring target-lock, tear-bright widened eyes, flushed cheeks, and an ecstatic asymmetric smile that looks loving and barely controlled. Let an uncapped syringe or another medical weapon remain clearly visible without touching skin, and permit sparse non-graphic blood flecks on her glove, cheek, or uniform. Keep a minimal adult beloved marker—such as a blurred shoulder or recoiling hand—so her attention and the already-visible consequence point to the same target. The direct facial and bodily performance must remain primary; the blood, tool, and lighting amplify it.
+The facial contract now separates five production modes instead of stacking every convention into one face:
+
+1. **Sweet-threat mismatch:** a warm or tender mouth conflicts with overfocused, lower-lid-tense eyes.
+2. **Dead-eye devotion:** exact beloved-directed target lock, dim but physically coherent catchlights, flattened low-contrast irises, and a tender mouth.
+3. **Ecstatic face cradle:** both palms support the cheeks and jaw while blush and an adoring gaze remain directed to the same beloved.
+4. **Manic possessiveness:** wide sclera and small pupils amplify danger but do not prove affection or possession by themselves.
+5. **Abandonment fracture:** moist eyes and a tightening mouth visibly react to the same beloved withdrawing.
+
+Select exactly one primary mode per still. Treat pupil scale, iris scale, gaze focus, catchlight state, and iris contrast as independent variables: “dead eyes” are not synonymous with dilated pupils, and a vacant gaze cannot count as beloved-directed target lock. In photorealism, do not demand impossible zero catchlight under a bright source; use dim, scene-coherent catchlights and reduced iris contrast. A broad grin can erase the eye-mouth contradiction, so prefer a small asymmetric tender smile when testing the mismatch or dead-eye modes.
+
+The first three patient-point-of-view render attempts established an important pixel-level failure mode. The adult nurse, capped syringe, far-trolley call button, reaching patient hand, cable, visible gap, and identity all became readable, but the face repeatedly collapsed into a calm beauty portrait: detailed bright irises, strong attractive catchlights, relaxed lids, and a softly tilted head outweighed the authored dead-eye language. Prompt/audit success therefore did not prove facial madness.
+
+The next repair test keeps the successful third scene as an edit target and changes the face only. It selects **sweet-threat mismatch** rather than stacking another dead-eye instruction: a small closed-lip asymmetric tender smile, nearly upright head, slightly elevated upper lids, taut lower lids, almost motionless brow, pale matte low-contrast irises, and one tiny dim scene-coherent catchlight per eye. The same adult patient's reach is the visible trigger; the smile deepens by a fraction while the eyes remain precisely fixed and unchanged. This target-triggered divergence is stronger than a static adjective because the mouth communicates genuine affection while the nonreactive eye system communicates overcontrol.
+
+The repair preserves every previously passing action and identity gate. Large sparkling catchlights, bright detailed beauty irises, a broad friendly smile, relaxed lids, a playful head tilt, or simultaneous movement of both mouth and eyes are recorded as false substitutes for this selected mode. These are request-scoped production controls, not a claim that one facial configuration universally defines the archetype.
+
+## 2026-08-19 face-only forward-test result
+
+Two bounded native edits tested the repaired data against the successful third scene. Attempt 1 preserved identity, the capped syringe, the pinned call button, the reaching patient hand, cable, gap, framing, and background, but its bright detailed irises, prominent beauty catchlights, relaxed lids, friendly mouth, and head tilt still read as a gentle beauty portrait. Attempt 2 changed only the eye region. It successfully produced paler matte irises, lower internal iris contrast, and smaller dimmer catchlights while preserving every scene invariant.
+
+Attempt 2 still failed the first-look madness gate. This isolates a reusable lesson: **eye micro-texture is not enough**. The selected facial mode needs meso-scale mechanics—slightly elevated upper lids, taut lower lids, an almost motionless brow, a near-upright head, and a visibly unfinished one-corner mouth change—to survive together. If the lids, head angle, and mouth remain socially friendly, pale irises merely create a soft fantasy-eye beauty effect.
+
+The test also exposes a still-image observability boundary. “The mouth changed while the eyes did not” is a temporal claim that one photograph cannot prove by itself. Future composition data therefore freezes an observable unfinished state: the same target's reaching or withdrawing movement remains visible, one mouth corner is caught partway through a fractional deepening, and the eyes remain fixed. This is an optional production translation of the relationship event, not a new universal definition or a standalone archetype gate.
 
 ## Acceptance gates
 
