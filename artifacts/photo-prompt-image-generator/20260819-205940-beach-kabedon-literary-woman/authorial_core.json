@@ -1,0 +1,169 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "[$photo-prompt-image-generator](/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/SKILL.md) 해변가에서 금태양에게 벽치기 당하는 문학소녀 프롬프트 작성하고 이미지 생성해줘.",
+  "interpreted_intent": "A cinematic beachside photograph of an unmistakably adult bookish woman caught in a one-arm wall-pin gesture by an unmistakably adult, confident blond and deeply suntanned man, with her flustered reaction and his cocky attraction readable in one frame.",
+  "subject": "An unmistakably adult bookish woman in her mid-twenties with a paperback, paired with an unmistakably adult athletic blond and deeply suntanned man in his late twenties.",
+  "setting": "The sun-warmed white wall of a beachside pavilion beside turquoise surf and beach grass.",
+  "event": "The adult man braces one palm beside the adult woman's head and leans into a one-arm wall pin while she reacts with startled, flushed composure.",
+  "visual_priorities": [
+    "Instantly readable one-arm wall-pin body geometry between two unmistakably adult figures",
+    "A clear contrast between bookish restraint and sun-bronzed cocky confidence, including a target-directed emotional leak"
+  ],
+  "baseline_prompt_en": "An unmistakably adult bookish woman in her mid-twenties stands with her back against the sun-warmed white wall of a beachside pavilion, holding a weathered paperback against her chest. An unmistakably adult athletic blond man in his late twenties, deeply suntanned and dressed in an open coral resort shirt over a white tank, plants one palm on the wall beside her head and leans into a confident one-arm wall pin, directing the gesture toward her. The scene reads as a charged beachside confrontation between contrasting adult personalities. His cocky half-smile slips into a briefly intent, unmistakably attracted gaze as the paperback tilts between them. He keeps his braced hand beside the same woman; her startled composure cracks into a flushed, involuntary glance toward him, and the paperback lowers slightly between them. The frame catches this already-visible consequence in one moment, with turquoise surf, beach grass, and low golden sunlight behind them. Cinematic editorial photography, natural skin texture, crisp relational body language, intimate medium shot, shallow depth of field.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "해변가에서 금태양에게 벽치기 당하는 문학소녀",
+      "source_text": "해변가에서 금태양에게 벽치기 당하는 문학소녀",
+      "basis": "request_context",
+      "resolution": "A beachside encounter between two adults: a bookish woman is held in a recognizable one-arm wall-pin pose by a cocky blond, deeply suntanned man.",
+      "sources": []
+    },
+    {
+      "term": "금태양",
+      "source_text": "금태양",
+      "basis": "agent_general_knowledge",
+      "resolution": "An adult blond, deeply suntanned, athletic and socially assertive bad-boy archetype, rendered through appearance and cocky target-directed behavior.",
+      "sources": []
+    },
+    {
+      "term": "벽치기",
+      "source_text": "벽치기",
+      "basis": "agent_general_knowledge",
+      "resolution": "A kabedon-style pose in which one adult plants a palm on the wall beside the other adult's head and leans in, creating close romantic tension.",
+      "sources": []
+    },
+    {
+      "term": "문학소녀",
+      "source_text": "문학소녀",
+      "basis": "agent_general_knowledge",
+      "resolution": "An adult bookish woman visually identified by a weathered paperback, restrained styling, and composed demeanor.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [
+    "금태양",
+    "벽치기",
+    "문학소녀"
+  ],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "금태양에게 벽치기 당하는 문학소녀",
+        "dimension": "concept",
+        "prompt_evidence": "a charged beachside confrontation between contrasting adult personalities"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "문학소녀",
+        "dimension": "subject",
+        "prompt_evidence": "An unmistakably adult bookish woman in her mid-twenties"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "벽치기 당하는",
+        "dimension": "event",
+        "prompt_evidence": "plants one palm on the wall beside her head and leans into a confident one-arm wall pin"
+      },
+      {
+        "anchor_id": "core_setting",
+        "source_text": "해변가에서",
+        "dimension": "setting",
+        "prompt_evidence": "the sun-warmed white wall of a beachside pavilion"
+      },
+      {
+        "anchor_id": "core_character_response",
+        "source_text": "금태양에게",
+        "dimension": "character_response",
+        "prompt_evidence": "His cocky half-smile slips into a briefly intent, unmistakably attracted gaze"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "setting",
+      "character_response"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "adult_kabedon_character_response",
+      "dimension": "character_response",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "character_response"
+      ],
+      "axes": {
+        "surface_affect": "cocky confidence",
+        "underlying_affiliation": "focused attraction toward the same adult bookish woman",
+        "relationship_target": "the adult bookish woman in her mid-twenties",
+        "primary_action": "one-arm wall pin directed toward her",
+        "affect_leak_timing": "as the paperback tilts between them",
+        "affect_leak_channels": [
+          "facial_expression"
+        ],
+        "affect_leak_intentionality": "briefly revealed",
+        "event_phase": "during the maintained wall pin"
+      },
+      "relations": [
+        {
+          "operator": "contrasts",
+          "left": "surface_affect",
+          "right": "underlying_affiliation"
+        },
+        {
+          "operator": "same_target",
+          "members": [
+            "relationship_target",
+            "primary_action",
+            "affect_leak",
+            "visible_response",
+            "immediate_consequence"
+          ]
+        },
+        {
+          "operator": "temporal_order",
+          "first": "primary_action",
+          "then": "affect_leak"
+        }
+      ],
+      "evidence": {
+        "actor_phrase": "An unmistakably adult athletic blond man in his late twenties, deeply suntanned",
+        "baseline_phrase": "His cocky half-smile slips into a briefly intent, unmistakably attracted gaze",
+        "trigger_phrase": "as the paperback tilts between them",
+        "target_phrase": "the same woman",
+        "primary_action_phrase": "plants one palm on the wall beside her head and leans into a confident one-arm wall pin",
+        "affective_leak_phrase": "His cocky half-smile slips into a briefly intent, unmistakably attracted gaze",
+        "visible_response_phrase": "her startled composure cracks into a flushed, involuntary glance toward him",
+        "immediate_consequence_phrase": "the paperback lowers slightly between them",
+        "continuity_phrase": "He keeps his braced hand beside the same woman"
+      }
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "cinematic lifestyle editorial photography",
+    "family": "golden-hour coastal romantic tension",
+    "evidence": [
+      "natural skin texture",
+      "turquoise surf and low golden sunlight"
+    ]
+  },
+  "variation_key": "beach-kabedon-literary-woman-01"
+}
