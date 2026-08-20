@@ -1,6 +1,6 @@
 ---
 id: core.background-color
-version: 5
+version: 6
 priority: 102
 type: core
 tier: 0
@@ -22,6 +22,7 @@ provides_anchors:
   - low_legibility_background
   - color_mood
   - background_legibility_ceiling
+  - color_causality
 ---
 
 # Core: background, color, and environment zoning
@@ -36,6 +37,7 @@ Always. Every image has a background, color structure, or negative-space field t
 - Preserve the source background's visual priority. If background elements are dim, cropped, blurred, low-legibility, partly hidden, or secondary, keep them as low-detail background massing rather than turning them into clean readable objects.
 - Treat background legibility and information density as part of the source aesthetic. A named or distinctive background element must inherit the source-visible blur, haze, contrast, and detail ceiling rather than becoming a crisp landmark.
 - Preserve color mood, palette, color cast, saturation, contrast, shadow color, highlight color, and local color relationships. Do not neutralize a visible cast or push the image toward a postcard, clean-room, catalog, cinematic, or studio palette unless that is visibly present.
+- Separate intrinsic surface color from illumination color, global color cast, and exposure. Consolidate each important surface or region into one owned color instruction; other modules may describe how light shifts it but must not restate the same hue direction as additional emphasis.
 - For underexposed, low-contrast, compressed, or hazy backgrounds, distinguish fully crushed regions from regions that still show folds, edges, silhouettes, texture, or environmental hints. Preserve remaining detail without turning dark areas into featureless black or brightly recovered scenery.
 - Prevent clean-room drift for products, portraits, screenshots, documents, and ordinary scenes. Do not replace messy, partial, compressed, cropped, or ordinary background zones with a smooth backdrop, empty studio, clean wall, perfect sky, luxury interior, or tidy product surface unless visibly present.
 - Treat background zoning as part of crop and coordinate fidelity. Edge bands, side strips, awkward headroom, bottom UI bands, floor/wall seams, horizon placement, poster edges, and environmental slivers must remain in their visible positions when they matter.

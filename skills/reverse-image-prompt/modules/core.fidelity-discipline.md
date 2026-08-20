@@ -1,6 +1,6 @@
 ---
 id: core.fidelity-discipline
-version: 7
+version: 8
 priority: 104
 type: core
 tier: 0
@@ -25,6 +25,7 @@ provides_anchors:
   - attractiveness_polish_separation
   - aesthetic_causal_signature
   - direct_perceptual_appeal
+  - aggregate_prior_cluster_audit
 ---
 
 # Core: fidelity discipline and anti-normalization
@@ -40,13 +41,14 @@ Always. Prevent cleaner, more generic, more plausible, or more category-normaliz
 - Preserve illusion, mismatch, mixed-media layering, scale incongruity, low fidelity, or awkward capture above a more plausible scene.
 - Weaken broad portrait, fashion, garment, product, genre, and body-region labels whenever their default pulls toward common composition, cleaner styling, expanded crop, completion, or beautification. Put visible evidence before shorthand.
 - Treat source fidelity ceiling as an affirmative requirement: do not exceed visible sharpness, cleanliness, glamour, lighting balance, readability, symmetry, or plausibility unless requested.
-- Avoid `high quality`, `crisp`, `clean`, `luxury`, `cinematic`, or `studio` unless visibly supported without conflicting with crop, light, artifacts, or ordinary capture.
 
 ## Aesthetic salience gate
 
 Decide whether changing the visible form, surface, light, color, or hierarchy while retaining the objects would materially change the image's identity or appeal.
 
 In diagnostic mode, name the source-supported perceptual appeal directly before decomposing it into visible mechanisms. Do not attribute unseen motive, identity, or story.
+
+Keep that appeal reading out of the production prompt until it has been translated into bounded, observable render controls. An evaluative phrase is not itself an invariant.
 
 Build a sparse Aesthetic Causal Signature from only the form, surface, light-to-form, color, sharpness, and hierarchy axes that materially create the image's perceptual proposition.
 
@@ -56,17 +58,13 @@ Build a sparse Aesthetic Causal Signature from only the form, surface, light-to-
 - **Color/tone:** palette, cast, saturation, range, and local contrast.
 - **Hierarchy:** dominant shapes, material roles, subject/environment balance, and first attention.
 
-Select only axes with causal weight. The cues must reinforce one proposition rather than form a comprehensive checklist.
-
-- **High salience:** use three to six mutually supporting causal cues.
-- **Neutral:** use one or two ordinary visible cues without a special style block.
-- **Ambiguous:** describe observed behavior and avoid named genre, camera, film, or era presets.
-
-Use three to six mutually supporting look anchors only when the source aesthetic is high-salience; otherwise use one or two ordinary cues.
+Select only axes with causal weight. Use three to six mutually supporting look anchors only when the source aesthetic is high-salience; otherwise use one or two ordinary cues. For ambiguous evidence, describe observed behavior rather than invoking a genre, camera, film, or era preset.
 
 Treat descriptive detail and rendered sharpness as independent controls. Detailed geometry may remain soft, compressed, flat, rough, or low-legibility; do not let detail raise sharpness, scale, polish, or priority.
 
 Translate evaluative or mood words into visible mechanisms. A broad descriptor cannot replace supported form, surface, tone, color, light, sharpness, and hierarchy. Use it at most once, then describe its causes.
+
+Audit prior-heavy cues as a combined cluster, not only as isolated labels. Temporarily ignore the subject nouns and ask whether the remaining quality, lighting, surface, framing, and style language strongly invokes a category default unsupported by the source. Rewrite the unsupported cluster from visible evidence; do not turn its individual words into a universal blacklist.
 
 ## Prompt additions
 
@@ -77,9 +75,3 @@ When the source look materially differs from a clean default, place a compact Ae
 ## Optional negative contribution
 
 Reject only likely beautification, relighting, sharpening, style upgrade, symmetry, scene-normalization, crop, or category-default drift.
-
-## Optional settings contribution
-
-- Fidelity ceiling locks:
-- Anti-polish and anti-normalization locks:
-- Broad-label weakening locks:

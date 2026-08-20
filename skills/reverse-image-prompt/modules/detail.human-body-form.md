@@ -1,6 +1,6 @@
 ---
 id: detail.human-body-form
-version: 1
+version: 2
 priority: 80
 type: detail
 tier: 3
@@ -26,6 +26,7 @@ provides_anchors:
   - muscle_lighting_separation
   - skin_surface_signature
   - body_region_hierarchy
+  - persistent_induced_form_split
 ---
 
 # Detail: human body form, proportion, and surface
@@ -39,6 +40,8 @@ Load only when visible body form is a first-order part of the image's identity o
 Start with the large-scale form proposition before region detail. State directly what visible quality carries the impression—such as long-lined, compact, broad, narrow, soft, firm, relaxed, tense, delicate, sturdy, or strongly defined—then test it against observable causes. A broad descriptor is a hypothesis, not a substitute for evidence.
 
 Build a visible human-body form signature from source-supported proportion, contour, tissue, tension, and region hierarchy rather than from a body-type label.
+
+Split persistent body-form evidence from induced appearance before selecting prompt controls. Persistent evidence comes from repeated contour and proportion relationships; induced evidence may come from pose, compression, perspective, garment pressure, highlight, self-shadow, cast shadow, occlusion, or processing. Preserve the visible combination without promoting an induced effect into an intrinsic body invariant.
 
 Use only the axes that materially distinguish the source:
 
@@ -59,11 +62,13 @@ Analyze the transitions between regions, not only isolated sizes. A waist, shoul
 - Do not translate smooth lighting into low muscularity, or hard directional shadow into greater muscularity, without contour evidence.
 - Keep skin tone separate from exposure and color cast. Record both the underlying visible hue relationship and the illumination that shifts it.
 
-## Prompt contribution
+## Evidence contribution
 
-When body form is appearance-led, place one compact form proposition after frame and subject scale, followed by two to four causal cues covering only the decisive proportion, contour/tissue, light-to-form, surface, or hierarchy evidence. When it is secondary, use one bounded sentence and keep it behind the primary face, action, object, or relationship.
+When body form is appearance-led, contribute one compact form proposition and only the decisive proportion, contour/tissue, light-to-form, surface, or hierarchy evidence. The output composer assigns the final clause owner. When body form is secondary, its evidence stays behind the primary face, action, object, or relationship and may require no standalone sentence.
 
 Use a body-type, fitness, or beauty descriptor at most once and only when it reduces ambiguity. Immediately constrain its category prior with visible proportions, tissue transitions, posture, lighting, and crop. Avoid stacking synonyms that would exaggerate leanness, softness, muscularity, curvature, size, or polish.
+
+Do not restate one form direction in the proposition, regional inventory, lighting description, and negative prompt. Merge those observations into one source-relative semantic slot, then delete redundant intensity.
 
 Describe body regions in their source role. A region that acts mainly as a bright plane, dark silhouette boundary, negative-space edge, garment support, or cropped foreground mass should remain that role instead of becoming a separately posed focal subject.
 

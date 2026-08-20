@@ -1,6 +1,6 @@
 ---
 id: core.output-contract
-version: 9
+version: 10
 priority: 98
 type: core
 tier: 0
@@ -21,6 +21,9 @@ provides_anchors:
   - output_sections
   - negative_primary_concept
   - recommended_settings_aspect
+  - module_evidence_not_prose
+  - clause_ownership
+  - diagnostic_render_separation
 ---
 
 # Core: adaptive output contract
@@ -33,31 +36,31 @@ Always. Apply after the visual analysis and routed modules.
 
 Emit only sections required by the selected output mode.
 
-For a generation request, always emit:
+For a generation request, emit:
 
 ```text
 PROMPT:
 ...
 ```
 
-Write a standalone English prompt whose order follows the dominant fidelity axis:
+Write a standalone English prompt ordered by the dominant fidelity axis:
 
-- Start every mode with the frame shape, medium, fidelity ceiling, and one-sentence primary perceptual proposition.
-- **Relationship-led:** establish composition, crop, major zones, topology, interaction geometry, and up to five critical spatial anchors before local appearance.
-- **Appearance-led:** establish the compact Aesthetic Causal Signature and source-specific subject form, surface, light-to-form, color, and hierarchy before secondary pose coordinates or inventory.
-- **Information-led:** establish layout, reading order, information hierarchy, legibility, and container relationships before decorative styling.
-- **Mixed:** name the two co-primary invariants early and interleave only the cues needed to show how they depend on each other.
-- Finish with remaining subject detail, camera/rendering behavior, background, meaningful artifacts, and only the highest-risk drift constraints.
+- Begin with frame shape, medium, fidelity ceiling, and the perceptual proposition.
+- **Relationship-led:** place crop, major zones, topology, interaction geometry, and only critical spatial anchors before local appearance.
+- **Appearance-led:** place the compact causal signature and source-specific form, surface, light-to-form, color, and hierarchy before flexible pose or inventory.
+- **Information-led:** place layout, reading order, hierarchy, legibility, and container relations before decoration.
+- **Mixed:** name the co-primary invariants early and include only cues showing their dependency.
+- Finish with remaining subject, capture, background, artifact, and highest-risk drift controls.
 
-Use short labeled blocks or compact paragraphs for complex images. Aim for the smallest prompt that preserves the source hierarchy; a typical prompt should not need every possible camera, anatomy, lighting, and settings field.
+Selected modules contribute evidence candidates, not mandatory prose. The output composer merges them by semantic slot before drafting; module count must not determine prompt length.
 
-Keep essential requirements affirmative. Prefer `only a narrow cropped strip remains visible` over relying on `do not expand the strip` in another section.
+Assign one clause owner to each emitted semantic slot. Normally state its affirmative target once; a second clause is justified only when it supplies a distinct high-risk boundary rather than repeating the target through synonyms.
 
-Relate every major component or coherent group to another component or stable scene zone. Keep each concept-critical side, containment, contact, and support relation in `PROMPT:` as one compact affirmative sentence. Do not leave it implied only by an action verb, approximate coordinate, or negative prompt.
+Use compact paragraphs or short blocks for complex images. Apply no fixed global word cap; every additional clause must add a new control. Keep essential crop, partial visibility, and interaction requirements affirmative. Relate each major component to another component or stable zone, and state inversion-prone side, containment, contact, or support directly.
 
-For a high-salience look, keep one compact Aesthetic Signature in the first or second paragraph before fine face, material, or background inventory. Use three to six source-supported causal cues spanning only material form, surface, light-to-form, tone/color, sharpness, or hierarchy axes. For a neutral look, use one or two cues without a labeled block. Do not fill every axis or repeat the signature through synonyms.
+For a high-salience look, put one compact Aesthetic Signature before fine inventory and use only source-supported causal axes. For a neutral look, use one or two ordinary cues. Preserve major-region hierarchy by relative area, tonal or material role, edge contact, legibility, and first attention even when flexible pose or placement changes.
 
-When `detail.human-face-likeness` is selected, keep one dedicated likeness passage. If `subject.human` selects a broad person-gestalt anchor, place that one compact anchor at the start of the passage, then immediately constrain it with scale-appropriate visible anchors. Never use demographic, beauty, or character shorthand as the whole likeness description.
+When face likeness is selected, use one dedicated, scale-appropriate passage. A broad person-gestalt anchor may lead it but cannot replace visible geometry or raise beauty polish.
 
 ## NEGATIVE PROMPT
 
@@ -68,9 +71,7 @@ NEGATIVE PROMPT:
 ...
 ```
 
-Use one compact, image-specific list. Do not duplicate the entire prompt. Include only likely failure modes that are difficult to express affirmatively.
-
-When a negative prompt is supported, reject only likely concept and fidelity drift.
+When a negative prompt is supported, reject only likely concept and fidelity drift. Keep it compact and image-specific; do not duplicate the positive prompt or use negatives to counter an overstrong positive cluster. Rewrite the positive wording to source-relative strength first.
 
 ## RECOMMENDED SETTINGS
 
@@ -85,15 +86,11 @@ RECOMMENDED SETTINGS:
 - Prompt-only limits:
 ```
 
-- Include only fields that map to real controls of the target generator.
-- Separate source dimensions from the requested target size.
-- Omit irrelevant fields instead of filling them with prose.
-- Read `references/model-adapters.md` before naming model-specific values.
-- Keep visual locks in `PROMPT:`, not in settings.
+Include only real controls of the named generator. Separate source dimensions from the requested target size. Omit irrelevant fields, read `references/model-adapters.md` before naming values, and keep visual locks in `PROMPT:`.
 
 ## Diagnostic mode
 
-For `diagnostic`, first state the source-supported perceptual proposition or appeal directly in the user's language, then explain the form, surface, light, color, hierarchy, spatial, and capture mechanisms that create it. Separate invariants from pose or placement details that may vary. A candidate `PROMPT:` may follow, but do not force generation-only sections.
+For `diagnostic`, state the source-supported proposition or appeal directly, then explain its visible form, surface, light, color, hierarchy, spatial, and capture mechanisms. Keep diagnostic appeal language separate from render instructions: a candidate prompt receives bounded observable mechanisms, not copied evaluative intensity. Separate invariants from flexible pose or placement; include a candidate prompt only when useful.
 
 ## Final rule
 

@@ -1,6 +1,6 @@
 ---
 id: core.visual-evidence
-version: 5
+version: 6
 priority: 110
 type: core
 tier: 0
@@ -15,6 +15,7 @@ conflicts: []
 provides_anchors:
   - standalone_reference_ban
   - visible_evidence_only
+  - causal_origin_attribution
 ---
 
 # Core: visual evidence
@@ -35,6 +36,7 @@ Always.
 - In `polished-fidelity` mode, improve only the dimensions requested by the user; do not silently alter crop, pose, relationships, identity-relevant appearance, or geometry.
 - Give partial elements a visibility budget: what remains visible, how large it is, where it touches the frame, and whether it stays secondary or low-detail.
 - Do not complete hidden anatomy, objects, clothing, text, reflections, or background fragments.
+- Before treating an observed contour, scale, color, surface, or definition as intrinsic, separate effects caused by pose or deformation, perspective, lighting or shadow, material interaction or occlusion, and capture or processing. Preserve the visible result while assigning each prompt control to the most plausible visible cause.
 
 ## Prompt contribution
 

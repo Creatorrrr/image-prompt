@@ -1,6 +1,6 @@
 ---
 id: medium.photographic-capture
-version: 6
+version: 7
 priority: 72
 type: medium
 tier: 2
@@ -26,6 +26,9 @@ conflicts:
 provides_anchors:
   - sharpness_topology
   - contrast_topology
+  - photographic_causal_decomposition
+  - color_light_decomposition
+  - light_to_form_strength
 ---
 
 # Medium: photographic capture, camera, focus, lighting
@@ -34,9 +37,9 @@ provides_anchors:
 
 Load for photographs, phone captures, snapshots, camera previews, scanned photos, and photorealistic images whose camera/focus/lighting behavior should be preserved.
 
-## Prompt additions
+## Evidence contribution
 
-Describe photographic capture:
+Contribute only photographic controls that materially affect an invariant or likely drift. Describe:
 
 - camera distance, height, angle, roll/rotation, lens impression, perspective distortion
 - subject-to-camera relationship and how perspective affects face/body/object/background proportions
@@ -55,6 +58,10 @@ Map contrast topology separately at the global scene, major subject masses, loca
 - State whether shadows flatten volume, softly imply it, separate overlapping planes, or hard-sculpt contours. Do not let `dramatic lighting` stand in for that behavior.
 - Distinguish diffuse, matte, translucent, oily, glossy, metallic, woven, and absorbent responses only when visible; different surfaces under one light need not share highlight width or black level.
 
+Decompose photographic appearance into intrinsic subject evidence, pose or deformation, perspective, illumination and shadow, material interaction or occlusion, and capture or processing. Preserve their combined visible result, but do not let one cause rewrite another.
+
+Record important color relationships as intrinsic surface hue, illumination color, global cast, and exposure response. Assign the consolidated hue instruction to one semantic slot; this module should describe the photographic shift rather than repeat another module's color target.
+
 Distinguish global low acutance, diffusion, haze, compression, or processing softness from depth-of-field blur. Use `shallow depth of field` or premium-looking bokeh only when a visibly sharper focus plane is separated from defocused layers. If the nominal focus subject is also soft, preserve that softness instead of sharpening it while blurring only the background.
 
 Describe edge sharpness and microcontrast separately. Preserve highlight rolloff, bloom radius, black level, shadow lift, local contrast, and texture suppression only when visible; do not infer a lens or filter.
@@ -64,6 +71,8 @@ Describe lighting-to-volume:
 - main light direction, intensity, softness, temperature, fill, bounce, rim light, backlight, flash, practical light, window light, screen light, neon, daylight, ambient light
 - highlight placement, shadow falloff, black-level handling, bright-fabric bloom, dark-fabric absorption, local contrast, haze, clipped highlights, lifted shadows, crushed shadows, underexposure, overexposure
 - visible cast shadows, self-shadowing, contact shadows only when they affect likeness, separation, occlusion, or composition
+
+Set light-to-form strength source-relatively as flattening, subtle revelation, moderate separation, or strong sculpture. Keep global contrast distinct from local form contrast so a dark frame or wide tonal range does not automatically create hard internal definition.
 
 Do not relight into cleaner, brighter, more commercial, more frontal, more beauty-oriented, more contrasty, more cinematic, more sculpted, more exposed, or more evenly lit lighting if that changes visible structure.
 
