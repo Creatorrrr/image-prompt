@@ -18,6 +18,7 @@ PROFILE_MODULES = {
     "portrait": [
         "subject.human",
         "detail.human-face-likeness",
+        "detail.human-body-form",
         "medium.photographic-capture",
         "detail.pose-hands-gesture",
         "detail.clothing-fashion",

@@ -1,6 +1,6 @@
 ---
 id: subject.human
-version: 8
+version: 9
 priority: 82
 type: subject
 tier: 2
@@ -77,9 +77,10 @@ Check portrait prompts for aesthetic-upgrade drift.
 
 Describe only visible image-plane structure shaped by pose, crop, clothing, lens perspective, light, shadow, blur, and occlusion. Do not infer hidden anatomy.
 
-- Preserve shoulder span, torso length, waist and hip placement, limb thickness, stance, and clothing-shaped silhouette only to the degree visible.
+- First decide whether visible body form is a primary aesthetic invariant, a structural connector, or secondary support. Do not allocate detail merely because a body region is large in the crop.
+- Preserve source-relative shoulder span, torso length, waist and hip placement, limb thickness, contour rhythm, stance, and clothing-shaped silhouette only to the degree visible.
+- Separate anatomical proportion from near-camera enlargement, foreshortening, pose compression, garment pressure, and light/shadow shaping. Do not convert a bright edge or dark groove into unsupported anatomy.
 - Keep the torso, pelvis, and center of mass in the source-visible spatial zone; do not let a contact pose silently relocate the person across a barrier, edge, opening, or support surface.
-- Separate near-camera enlargement from anatomical size.
 - Preserve a clearly visible large-scale body silhouette without exaggeration or reduction.
 - Keep a moderate or obscured body silhouette secondary rather than promoting it.
 - If age is unclear or the person is not clearly adult, use neutral, non-sexual silhouette and clothing language.
@@ -89,6 +90,7 @@ Describe only visible image-plane structure shaped by pose, crop, clothing, lens
 ## Module handoff
 
 - Add `detail.human-face-likeness` for a prominent or clearly readable face.
+- Add `detail.human-body-form` when visible proportion, contour, tissue character, muscle definition, skin surface, or body-region hierarchy is a first-order part of the image's identity or appeal.
 - Add `detail.pose-hands-gesture` when hand shape, grip, contact, limb mechanics, or pose landmarks matter.
 - Add `detail.clothing-fashion` when garment boundaries, fit, seams, straps, or coverage affect the visible silhouette.
 - Add `detail.tight-selfie-hierarchy` for a close phone selfie whose face/hair hierarchy and edge crop are first-order.
