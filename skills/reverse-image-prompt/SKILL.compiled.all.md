@@ -7,7 +7,7 @@ description: Reverse engineer a standalone English text-to-image prompt from a p
 
 ## Purpose
 
-Turn one provided image into a standalone text-to-image prompt that preserves the visible concept, composition, crop, subject, pose, major-component spatial relationships, aesthetic signature, camera or rendering treatment, lighting, background, color, medium, and meaningful artifacts.
+Turn one provided image into a standalone text-to-image prompt that preserves its primary perceptual proposition: the visible concept or appeal that makes the image itself rather than merely a collection of matching objects. Preserve the source-specific composition, form, surface, light, hierarchy, crop, subject, pose, major-component relationships, color, medium, and meaningful artifacts that causally create that proposition.
 
 Default to **faithful** reconstruction. Preserve awkward, soft, cropped, partial, compressed, or mixed-media evidence instead of silently beautifying or completing it.
 
@@ -49,16 +49,25 @@ If the target generator is known, read `references/model-adapters.md` and apply 
    - Do not identify people, characters, brands, artists, cameras, lenses, film stocks, or private identities from appearance.
    - Keep uncertainty internal during analysis. In the final generation prompt, describe the visible ambiguity itself with terms such as `indistinct`, `partially obscured`, `low-legibility`, or `soft-edged`; avoid weakening commands with repeated `likely` or `appears`.
 
-3. Analyze silently in this order:
-   1. Primary concept, perceptual relationship, and major-component spatial topology.
-   2. Frame ratio, crop, subject scale, major zones, boundary sides, and edge interactions.
-   3. Global aesthetic salience and the smallest source-specific look signature.
-   4. Visible subjects, their image-plane roles, and—only when it materially reduces ambiguity—a compact broad person-gestalt anchor before local human detail.
-   5. Pose, contact/support, containment, boundary crossing, occlusion, completion-prone regions, and negative space.
-   6. Camera or virtual-camera behavior, perspective, focus, and blur.
-   7. Lighting, atmosphere, color, contrast, highlights, and shadows.
-   8. Background zones and depth layers.
-   9. Medium, texture, artifacts, UI, and text marks.
+3. Analyze silently with an adaptive hierarchy:
+   1. State the primary perceptual proposition and, in diagnostic mode, the source-supported appeal directly rather than euphemistically.
+   2. Classify the dominant fidelity axis as `relationship-led`, `appearance-led`, `information-led`, or `mixed`.
+   3. Separate two to four aesthetic or structural invariants from dimensions that may vary without losing the proposition. Record the smallest causal cue set rather than every visible field.
+   4. Lock frame ratio, crop, subject scale, major zones, boundary sides, and edge interactions.
+   5. For relationship-led or mixed images, map major-component topology, contact/support, containment, boundary crossing, occlusion, and negative space. For appearance-led images, map form, surface, light-to-form, color, material roles, and subject/environment hierarchy first. For information-led images, map layout, reading order, legibility, and container hierarchy first.
+   6. Analyze visible subjects and their image-plane roles. Use a compact broad person-gestalt anchor only when it materially reduces ambiguity; decompose salient human form or appearance into visible causes.
+   7. Add only materially important pose, camera/perspective, focus, lighting, background, medium, texture, artifact, UI, and text evidence.
+
+   Use this sparse internal map; leave irrelevant fields empty rather than completing a checklist:
+
+```yaml
+dominant_fidelity:
+  mode: relationship-led | appearance-led | information-led | mixed
+  perceptual_proposition: ""
+  invariants: []
+  flexible_dimensions: []
+  causal_cues: []       # only material form, surface, light, color, hierarchy, topology, or information cues
+```
 
 4. Build and resolve this internal facet map:
 
@@ -68,21 +77,19 @@ detected_facets:
   medium: []          # photographic, screenshot-ui, non-photographic, unspecified
   relationships: []   # ordinary, occlusion, replacement, reflection, screen-frame-within-frame, scale-miniature, mixed-media
   capture_quality: [] # low-quality, compressed, underexposed, motion-blurred, flash, casual-phone
-  detail_risks: []    # face-detail, clothing, hands, text-logo, ui, small-props, cropped-edges, tight-selfie, face-hand-gesture, accessory-torso-budget
+  detail_risks: []    # face-detail, body-form, body-proportion, muscle-definition, body-tension, skin-surface, body-region-hierarchy, clothing, hands, text-logo, ui, small-props, cropped-edges, tight-selfie, face-hand-gesture, accessory-torso-budget
   style: []           # stylized-character-maturity or another narrow risk
 ```
 
 5. Merge selected rules using this priority:
    1. Visible-evidence and safety limits.
-   2. Primary concept, perceptual relationship, and any high-salience aesthetic signature.
-   3. Frame ratio, crop, major zones, boundary sides, contact/support relations, and visibility budgets.
-   4. Occlusion, reflection, screen/frame, replacement, scale, and continuity.
-   5. Subject-specific fidelity.
-   6. Medium, camera, lighting, focus, and artifact fidelity.
-   7. Background, color, and secondary details.
-   8. Generic style or aesthetic shorthand.
+   2. Primary perceptual proposition, dominant fidelity axis, and invariants.
+   3. The mode-leading evidence: topology for relationship-led, causal appearance signature for appearance-led, information hierarchy for information-led, or the named co-primary pair for mixed.
+   4. Frame ratio, crop, major zones, boundary sides, visibility, and completion budgets.
+   5. Subject, medium, camera, lighting, focus, artifact, background, and color fidelity that supports the proposition.
+   6. Flexible pose or placement detail, secondary elements, and generic shorthand.
 
-6. Draft the smallest prompt that carries every concept-critical constraint. If the source look is high-salience, place one compact Aesthetic Signature near the beginning; if it is neutral, use only one or two ordinary look cues. Give each major component or coherent group at least one explicit spatial relation to another component or stable scene zone. Give each major interaction one relation clause when its side, containment, contact, support, or depth order could otherwise flip. Prefer short labeled blocks or compact paragraphs over a field-completion checklist.
+6. Draft the smallest prompt that carries every invariant and concept-critical constraint. Let its order follow the dominant fidelity axis. If the source look is high-salience, place one compact Aesthetic Causal Signature near the beginning; if neutral, use only one or two ordinary cues. Translate broad appeal words into form, surface, light, color, hierarchy, or spatial mechanisms. Give each major component one relation and each inversion-prone interaction one relation clause, but do not let flexible pose coordinates or secondary details outrank the primary proposition.
 
 7. Apply the pre-emit gate and report prompt-only limits honestly.
 
@@ -93,7 +100,8 @@ detected_facets:
 - Load every visible Tier 1 relationship module, including both photographic and non-photographic medium modules for genuine mixed media.
 - Load Tier 3 and Tier 4 modules only for visible, material risks.
 - For a prominent or clearly readable human face, add `face-detail`; for a small, blurred, shadowed, or heavily occluded face, keep only scale-appropriate human evidence and do not invent micro-features.
-- Treat the spatial topology of major components as Tier 0 evidence. Do not route it away as an optional detail merely because the scene has no special visual effect.
+- Add a human body-form risk only when visible proportion, contour/tissue, muscle definition, skin surface, tension, or body-region hierarchy is first-order. Do not route it merely because a person or torso is visible.
+- Treat the spatial topology of major components as Tier 0 evidence, but let the dominant fidelity axis determine its prompt weight. Do not force ordinary topology to outrank appearance or information invariants.
 - Treat adaptive aesthetic analysis as Tier 0 evidence, not as a style preset. Do not load extra style modules merely to fill an aesthetic checklist.
 - Keep the normal route within 3-8 non-core modules. Refine an over-budget facet map instead of loading every plausible module.
 - Treat `ordinary`, `cropped-edges`, and `small-props` as core-handled observations unless another visible risk requires a dedicated module.
@@ -106,7 +114,7 @@ Always write the production prompt in English. Match the response language for d
 - Always emit `PROMPT:` for generation requests.
 - Emit `NEGATIVE PROMPT:` only when the user requests it or the named downstream generator supports a separate negative prompt.
 - Emit `RECOMMENDED SETTINGS:` only when requested, when a target generator is known, or when source dimensions require a model-specific target-size explanation.
-- For `diagnostic` mode, use ordinary analysis headings and include a candidate prompt only if useful.
+- For `diagnostic` mode, first name the visible core appeal or perceptual proposition directly, then explain the causal form, surface, lighting, color, hierarchy, spatial, and capture evidence. Distinguish invariants from pose or placement differences that would not destroy the aesthetic. Include a candidate prompt only if useful.
 - Essential crop, relationship, occlusion, high-salience aesthetic, and medium constraints must remain in `PROMPT:` even when optional sections are present.
 
 Do not mention the attached/reference image inside the generated prompt.
@@ -221,17 +229,22 @@ If settings are requested:
 
 # Included module: `concept.primary-relationship`
 
-# Concept: primary visual relationship
+# Concept: primary perceptual proposition and relationship
 
 ## When to load
 
-Always. Apply more deeply to occlusion, replacement, reflection, frame-within-frame, miniature scale, mixed media, collage, or other relationship-led images.
+Always. Apply spatial analysis more deeply to occlusion, replacement, reflection, frame-within-frame, miniature scale, mixed media, collage, and other relationship-led images. Do not assume every image is relationship-led.
 
 ## Core rule
 
 State the primary visual concept and perceptual relationship before inventory details.
 
-An object-complete prompt can still fail when the overlap, alignment, scale, seam, replacement, foreground/background ordering, side of a boundary, or support relationship is wrong.
+Classify the dominant fidelity axis as `relationship-led`, `appearance-led`, `information-led`, or `mixed` before deciding prompt order.
+
+- `relationship-led`: topology or interaction carries the image.
+- `appearance-led`: form, surface, light, color, or visible gestalt carries it despite modest pose variation.
+- `information-led`: layout, legibility, sequence, or data hierarchy carries it.
+- `mixed`: two named axes are genuinely co-primary.
 
 Preserve the side-of-boundary, containment, contact, support, and depth order of concept-critical elements.
 
@@ -239,43 +252,34 @@ Preserve the side-of-boundary, containment, contact, support, and depth order of
 
 Form internally:
 
-1. Literal visible elements.
-2. The relationship viewers are meant to perceive.
-3. The stable reference zones: visible floor/ground/support plane, interior or exterior region, near or far side, foreground or background layer, and any frame, barrier, opening, or container boundary.
-4. For each concept-critical pair, the participating parts, relative side or containment, contact point, support or load-bearing role, depth order, occlusion, and whether either element crosses the boundary.
-5. The cues that create it: alignment, contour continuation, overlap, shared line, crop boundary, contact, scale match, reflection, replacement, frame, or medium contrast.
-6. The one to three most likely failure modes.
+1. The visible elements, hierarchy, and primary perceptual proposition: what makes the image itself or compelling, beyond object inventory.
+2. The dominant fidelity axis and smallest causal cue set.
+3. Separate aesthetic invariants from flexible dimensions before drafting. An invariant would materially weaken or change the proposition if altered; a flexible dimension may vary without losing it.
+4. For relationship-led or mixed images, the stable zones and each critical pair's side, containment, contact, support, depth, occlusion, and boundary crossing.
+5. One to three likely failures, including a category default replacing source-specific evidence.
 
-Build a sparse relation graph rather than an inventory: connect each major component or coherent repeated group to at least one other major component or stable reference zone. Group crowds, repeated objects, or background clusters when they share the same relation. Do not enumerate every possible pair.
+Build a sparse relation graph, grouping repeated elements that share a relation. For ordinary images, keep an ordinary premise. In appearance-led images, preserve spatial facts without letting minor pose coordinates outrank form, surface, light, color, or hierarchy. In information-led images, prioritize layout and legibility.
 
-For ordinary images, state an ordinary premise and do not invent a special effect.
-
-Distinguish image-plane overlap from scene-space containment, contact, and support.
-
-Contact alone is underspecified. `Holding`, `leaning`, `resting`, `sitting`, `standing against`, or similar interaction verbs must not replace the visible geometry when a plausible spatial inversion would change the scene. Record which part touches which surface or edge, which element carries visible weight, and where the remainder of the subject sits relative to the boundary or support plane.
-
-Use object- or scene-relative zones when screen left/right would be ambiguous. Prefer a visible shared reference such as the same side as the floor or platform, within an enclosure, outside an opening, or on the near/far side of a structure. Name a semantic side only when the image actually supports it.
+Distinguish image-plane overlap from scene-space containment, contact, and support. A bare verb such as `holding`, `leaning`, or `sitting` is insufficient when the geometry could plausibly invert. Record contact, visible weight support, and relation to the boundary or support plane. Use object- or scene-relative zones when screen directions are ambiguous.
 
 For special relationships, use this compact Concept Spec:
 
 - Name each concept-critical element, its image-plane role, and its relationship.
-- Record the join, seam, overlap, contact, or containment geometry.
-- Record what stays hidden, partial, or absent.
-- Record the required boundary side, support relation, layer order, scale relationship, and coherence ceiling.
+- Record join, overlap, contact, containment, hidden or partial regions, boundary side, support, layer order, scale, and coherence ceiling.
 
 ## Prompt contribution
 
-Write a construction recipe, not a prop list. Explain what each element contributes and the minimum geometry required for the effect to read correctly. Spend more words on the relationship than on secondary textures or labels.
+Write a construction recipe, not a prop list. Lead with the dominant axis and invariants; spend more words on topology only when it is first-order.
 
 Give each major component or coherent group at least one explicit spatial relation to another major component or stable reference zone.
 
 For each concept-critical interaction, write one explicit relation sentence naming both elements, their relevant parts, the side or zone, any contact point, and what provides support when visible.
 
-Keep this selective: normally one to three interaction sentences are enough. Do not enumerate every pair of objects, and do not add coordinates when the topological relationship is already clear in natural language.
+Normally one to three interaction sentences suffice. Avoid redundant coordinates.
 
 ## Optional negative contribution
 
-When a negative prompt is supported, reject only likely concept and fidelity drift: broken seams, wrong boundary side, inverted containment or support, implausible boundary crossing, wrong layer order, duplicated counterparts, completed hidden regions, normalized medium contrast, or a concept-critical element demoted to a generic prop.
+When supported, reject only likely drift: broken seams, wrong boundary side, inverted containment or support, wrong layer order, completed hidden regions, normalized appearance, or a primary invariant demoted to generic detail.
 
 
 ---
@@ -286,41 +290,52 @@ When a negative prompt is supported, reject only likely concept and fidelity dri
 
 ## When to load
 
-Always. This module keeps every routed path from becoming cleaner, more generic, more attractive, more plausible, or more category-normalized than the source.
+Always. Prevent cleaner, more generic, more plausible, or more category-normalized drift.
 
 ## Rules
 
-- Cap generated polish to the source. If the source is casual, degraded, compressed, dim, soft, awkwardly framed, low-resolution, underexposed, socially edited, or non-editorial, prevent cleaner, brighter, more symmetrical, more complete, more evenly lit, more editorial, or more polished drift.
-- Preserve source aesthetics and non-identifying appearance, not a normalized beauty ideal or product ideal. Keep roughness, awkwardness, asymmetry, styling, social-media look, visible mood, surface sheen, color cast, retouching level, and medium imperfections when present.
-- Treat subject attractiveness and image polish as separate controls. A supported attractiveness anchor may describe the visible person gestalt, but it must not imply stronger symmetry, skin cleanup, makeup, styling, crop, focus, lighting, or editorial finish than the source.
-- Do not resolve the image into the nearest plausible or more coherent scene. If the concept depends on illusion, mismatch, uncanny composite structure, mixed-media layering, scale incongruity, low fidelity, or awkward capture, preserve that relationship above realism and plausibility.
-- Weaken broad portrait, fashion, garment, product, genre, and body-region labels whenever the label would pull the generator toward a common composition, cleaner styling, expanded crop, completed object, or more attractive category default. Put visible geometry, crop, relationship, medium, and fidelity constraints before shorthand labels.
-- Treat source fidelity ceiling as an affirmative requirement: the output should not exceed the visible source in sharpness, cleanliness, glamour, lighting balance, polish, readability, symmetry, or plausibility unless the user explicitly asks for improvement.
-- Do not use absolute enhancement terms such as `high quality`, `sharp`, `crisp`, `clean`, `pristine`, `luxury`, `cinematic`, or `studio` unless the source visibly supports them and they do not conflict with crop, lighting, artifacts, or ordinary capture.
+- Cap generated polish to the source. Preserve visible roughness, softness, asymmetry, color cast, retouching level, ordinary capture, and medium imperfections.
+- Treat subject attractiveness and image polish as separate controls. A supported attractiveness anchor must not imply cleaner skin, symmetry, makeup, crop, focus, lighting, or editorial finish.
+- Preserve illusion, mismatch, mixed-media layering, scale incongruity, low fidelity, or awkward capture above a more plausible scene.
+- Weaken broad portrait, fashion, garment, product, genre, and body-region labels whenever their default pulls toward common composition, cleaner styling, expanded crop, completion, or beautification. Put visible evidence before shorthand.
+- Treat source fidelity ceiling as an affirmative requirement: do not exceed visible sharpness, cleanliness, glamour, lighting balance, readability, symmetry, or plausibility unless requested.
+- Avoid `high quality`, `crisp`, `clean`, `luxury`, `cinematic`, or `studio` unless visibly supported without conflicting with crop, light, artifacts, or ordinary capture.
 
 ## Aesthetic salience gate
 
-Decide whether changing the global look while preserving the objects would materially change the image.
+Decide whether changing the visible form, surface, light, color, or hierarchy while retaining the objects would materially change the image's identity or appeal.
 
-- **High-salience look:** select three to six mutually supporting anchors from tone curve and microcontrast; palette, cast, and saturation; sharpness distribution; diffusion, bloom, haze, grain, compression, or surface treatment; lighting character; and subject/environment hierarchy.
-- **Neutral look:** use one or two ordinary visible cues. Do not create a special style block.
-- **Ambiguous look:** describe only observed behavior and avoid named genre, camera, film, or era presets.
+In diagnostic mode, name the source-supported perceptual appeal directly before decomposing it into visible mechanisms. Do not attribute unseen motive, identity, or story.
+
+Build a sparse Aesthetic Causal Signature from only the form, surface, light-to-form, color, sharpness, and hierarchy axes that materially create the image's perceptual proposition.
+
+- **Form:** silhouette, proportion, contour rhythm, tension, softness, or rigidity.
+- **Surface:** texture, finish, translucency, sheen, grain, or processing.
+- **Light-to-form:** flattening, soft revelation, separation, or hard sculpture.
+- **Color/tone:** palette, cast, saturation, range, and local contrast.
+- **Hierarchy:** dominant shapes, material roles, subject/environment balance, and first attention.
+
+Select only axes with causal weight. The cues must reinforce one proposition rather than form a comprehensive checklist.
+
+- **High salience:** use three to six mutually supporting causal cues.
+- **Neutral:** use one or two ordinary visible cues without a special style block.
+- **Ambiguous:** describe observed behavior and avoid named genre, camera, film, or era presets.
 
 Use three to six mutually supporting look anchors only when the source aesthetic is high-salience; otherwise use one or two ordinary cues.
 
-Treat descriptive detail and rendered sharpness as independent controls. Detailed geometry may remain soft, low-contrast, compressed, flat, rough, or low-legibility. Do not let face, product, garment, or environment detail silently raise local sharpness, scale, polish, or visual priority.
+Treat descriptive detail and rendered sharpness as independent controls. Detailed geometry may remain soft, compressed, flat, rough, or low-legibility; do not let detail raise sharpness, scale, polish, or priority.
 
-Translate mood words into visible mechanisms. A term such as dramatic, nostalgic, cinematic, clean, or premium cannot replace its supported tone, color, light, sharpness, and texture evidence.
+Translate evaluative or mood words into visible mechanisms. A broad descriptor cannot replace supported form, surface, tone, color, light, sharpness, and hierarchy. Use it at most once, then describe its causes.
 
 ## Prompt additions
 
-State the source fidelity ceiling early when the image is casual, degraded, stylized, awkward, or illusion-dependent. Use source-specific counterweights such as `still visibly compressed`, `not upgraded into a studio portrait`, `not cleaned into a product shot`, or `not normalized into a plausible full scene`.
+State the fidelity ceiling early when the image is casual, degraded, stylized, awkward, or illusion-dependent.
 
-When the source look materially differs from a clean default, place a compact Aesthetic Signature near the beginning of `PROMPT:`. Keep its strongest look lock affirmative and repeat at most one highest-risk drift constraint near the end; do not scatter the same adjectives through every paragraph.
+When the source look materially differs from a clean default, place a compact Aesthetic Signature near the beginning of `PROMPT:`. In appearance-led mode, put it before pose minutiae; repeat at most one highest-risk drift constraint near the end.
 
 ## Optional negative contribution
 
-Reject beautification, over-polish, relighting, sharpening, style upgrade, social-media glamorization, product-shot cleanup, symmetry correction, plausible-scene normalization, expanded crop, and broad-label defaults that contradict visible evidence.
+Reject only likely beautification, relighting, sharpening, style upgrade, symmetry, scene-normalization, crop, or category-default drift.
 
 ## Optional settings contribution
 
@@ -376,33 +391,28 @@ Always. Apply immediately before the final answer.
 
 ## Gate
 
-- Confirm that `PROMPT:` contains the primary visual concept and every non-negotiable relationship, crop, occlusion, boundary, and medium constraint.
-- Preserve source hierarchy: dominant concept first, primary subject and interaction next, secondary elements last.
-- Check whether a secondary element receives more words than its visible importance supports. Compress it when it does.
-- Audit coordinate contradictions before emitting. Remove a numeric anchor when it conflicts with clearer visible spatial evidence.
-- Use at most five numeric anchors unless the source is a layout-dense UI or diagram and numeric bands materially help.
-- Confirm that every major component or coherent group has at least one explicit spatial relation to another component or stable scene zone; no major element should remain a free-floating inventory item.
-- For every concept-critical interaction, confirm that the relevant side or zone, any contact parts, support role, containment, and depth order are explicit enough to prevent a plausible spatial inversion.
-- Distinguish image-plane overlap from scene-space contact or support. A bare interaction verb is insufficient when the subject could be placed on the wrong side of a boundary while still satisfying the verb.
-- Confirm that each primary subject's main mass remains in the source-visible region and that only visibly crossing or overlapping parts cross a barrier, opening, frame, edge, or support surface.
-- Confirm every partial or edge-adjacent region remains partial; do not let wording imply a completed body, garment, object, reflection, screen, poster, or text block.
-- Distinguish head/hair cropping from actual facial-feature cropping.
-- If the source look is high-salience, confirm that its compact Aesthetic Signature appears before fine subject detail and that its anchors agree rather than mixing incompatible clean, hazy, sharp, flat, cinematic, casual, or studio defaults.
-- Confirm that descriptive detail has not increased subject scale, local sharpness, background legibility, retouching, microcontrast, or lighting polish beyond the source.
-- Remove `shallow depth of field`, beauty lighting, premium bokeh, clean digital capture, or other category defaults unless their visible mechanisms are actually supported.
+- Confirm that `PROMPT:` contains the primary visual concept, dominant fidelity axis, aesthetic invariants, and every non-negotiable relationship, crop, occlusion, boundary, and medium constraint.
+- Verify that the first-order proposition leads the prompt: relationship geometry for relationship-led images, form/surface/light/hierarchy for appearance-led images, and layout/legibility for information-led images. Do not overlock dimensions marked flexible.
+- Preserve source hierarchy. Check whether a secondary element receives more words than its visible importance supports. Compress secondary pose, material, accessory, or micro-detail when it receives more emphasis than a primary invariant.
+- Audit semantic salience amplification across exact repeats, synonyms, paraphrases, labels, negatives, and settings; a repeatedly described dimension gains visual priority even when no sentence is duplicated verbatim.
+- State the image's core proposition in one sentence and its causal signature in two to four cues. If that summary is unclear or the cues disagree, rewrite before adding detail.
+- Confirm that form, surface, light-to-form, color, material roles, and hierarchy all support the same proposition rather than importing unrelated attractive defaults.
+- Audit coordinate contradictions before emitting. Remove a numeric anchor when it conflicts with clearer evidence; use at most five unless a layout-dense UI or diagram materially benefits.
+- Relate every major component or coherent group to another component or stable zone. For concept-critical interactions, make side, contact, support, containment, and depth order explicit enough to prevent a plausible inversion; distinguish 2D overlap from scene-space contact.
+- Keep each primary mass in its source-visible region and every partial or edge-adjacent body, garment, object, reflection, screen, poster, or text block incomplete. Distinguish hair-outline crop from facial-feature crop.
+- If the look is high-salience, place its compact Aesthetic Signature before fine detail and keep the cues mutually compatible. For a neutral look, remove the unnecessary signature.
+- Confirm that descriptive detail has not increased subject scale, sharpness, background legibility, retouching, contrast, lighting polish, or a category's default silhouette beyond the source.
+- Remove unsupported `shallow depth of field`, beauty lighting, premium bokeh, clean capture, body-type, garment, genre, or other prior-heavy labels unless visible mechanisms constrain their default pull.
 - If a human face is prominent and readable, confirm the prompt includes a selective, scale-appropriate likeness set covering the strongest visible face geometry, expression/gaze, hair boundary, and surface/lighting cues. If one broad person-gestalt anchor materially reduces ambiguity, place it before—not instead of—the likeness set; ensure it remains an approximation rather than an identity claim and does not raise beauty polish.
 - If a human face is small, soft, shadowed, or heavily occluded, remove speculative micro-features and preserve only reliable head orientation, hair mass, tone, and visibility.
-- Remove repeated constraints that appear unchanged in the prompt, negative prompt, and settings.
-- Remove unsupported camera, lens, identity, brand, artist, or hidden-content assumptions.
-- Remove generic quality words that would raise polish above the selected intent mode.
+- Remove unsupported camera, lens, identity, brand, artist, hidden-content, and generic quality assumptions.
 - Report prompt-only limits honestly when exact text, identity, pose, hands, UI placement, tiny marks, or complex seams are unlikely to reproduce reliably.
 
 ## Length and clarity
 
 - Prefer one measured statement plus one drift constraint for a secondary element.
-- Keep constraints concrete and observable.
-- Do not repeat important locks merely to make the output look exhaustive.
-- If the prompt has become a checklist of every possible visual field, rewrite around the image's actual hierarchy.
+- Keep constraints concrete and observable; do not repeat locks merely to look exhaustive.
+- If the prompt has become a field checklist, rewrite around the dominant proposition, its causal cues, and source hierarchy.
 
 
 ---
@@ -426,13 +436,14 @@ PROMPT:
 ...
 ```
 
-Write a standalone English prompt in a skimmable order:
+Write a standalone English prompt whose order follows the dominant fidelity axis:
 
-1. Scene, frame shape, medium, fidelity ceiling, primary concept, and any high-salience Aesthetic Signature.
-2. Composition, crop, subject scale, major zones, major-component spatial topology, and up to five critical spatial anchors.
-3. Subject appearance, pose, gaze, interaction geometry, contact/support, occlusion, and completion boundaries.
-4. Camera or rendering behavior, lighting, color, focus, texture, and meaningful artifacts.
-5. Compact constraints covering only the highest-risk drift.
+- Start every mode with the frame shape, medium, fidelity ceiling, and one-sentence primary perceptual proposition.
+- **Relationship-led:** establish composition, crop, major zones, topology, interaction geometry, and up to five critical spatial anchors before local appearance.
+- **Appearance-led:** establish the compact Aesthetic Causal Signature and source-specific subject form, surface, light-to-form, color, and hierarchy before secondary pose coordinates or inventory.
+- **Information-led:** establish layout, reading order, information hierarchy, legibility, and container relationships before decorative styling.
+- **Mixed:** name the two co-primary invariants early and interleave only the cues needed to show how they depend on each other.
+- Finish with remaining subject detail, camera/rendering behavior, background, meaningful artifacts, and only the highest-risk drift constraints.
 
 Use short labeled blocks or compact paragraphs for complex images. Aim for the smallest prompt that preserves the source hierarchy; a typical prompt should not need every possible camera, anatomy, lighting, and settings field.
 
@@ -440,7 +451,7 @@ Keep essential requirements affirmative. Prefer `only a narrow cropped strip rem
 
 Relate every major component or coherent group to another component or stable scene zone. Keep each concept-critical side, containment, contact, and support relation in `PROMPT:` as one compact affirmative sentence. Do not leave it implied only by an action verb, approximate coordinate, or negative prompt.
 
-For a high-salience look, keep one compact Aesthetic Signature in the first or second paragraph before fine face, material, or background inventory. Use three to six source-supported anchors spanning only the dominant tone, color, sharpness, optical/surface, lighting, or hierarchy axes. For a neutral look, use one or two cues without a labeled block. Do not fill every axis or repeat the signature verbatim.
+For a high-salience look, keep one compact Aesthetic Signature in the first or second paragraph before fine face, material, or background inventory. Use three to six source-supported causal cues spanning only material form, surface, light-to-form, tone/color, sharpness, or hierarchy axes. For a neutral look, use one or two cues without a labeled block. Do not fill every axis or repeat the signature through synonyms.
 
 When `detail.human-face-likeness` is selected, keep one dedicated likeness passage. If `subject.human` selects a broad person-gestalt anchor, place that one compact anchor at the start of the passage, then immediately constrain it with scale-appropriate visible anchors. Never use demographic, beauty, or character shorthand as the whole likeness description.
 
@@ -478,11 +489,11 @@ RECOMMENDED SETTINGS:
 
 ## Diagnostic mode
 
-For `diagnostic`, explain the evidence and uncertainties in the user's language. A candidate `PROMPT:` may follow, but do not force generation-only sections.
+For `diagnostic`, first state the source-supported perceptual proposition or appeal directly in the user's language, then explain the form, surface, light, color, hierarchy, spatial, and capture mechanisms that create it. Separate invariants from pose or placement details that may vary. A candidate `PROMPT:` may follow, but do not force generation-only sections.
 
 ## Final rule
 
-Read `PROMPT:` as if the source image and every optional section disappeared. If the primary relationship, crop, subject hierarchy, medium, or fidelity ceiling would be lost, revise the prompt itself.
+Read `PROMPT:` as if the source image and every optional section disappeared. If the primary proposition, its invariants, crop, required relationship, subject hierarchy, medium, or fidelity ceiling would be lost, revise the prompt itself.
 
 
 ---
@@ -721,9 +732,10 @@ Check portrait prompts for aesthetic-upgrade drift.
 
 Describe only visible image-plane structure shaped by pose, crop, clothing, lens perspective, light, shadow, blur, and occlusion. Do not infer hidden anatomy.
 
-- Preserve shoulder span, torso length, waist and hip placement, limb thickness, stance, and clothing-shaped silhouette only to the degree visible.
+- First decide whether visible body form is a primary aesthetic invariant, a structural connector, or secondary support. Do not allocate detail merely because a body region is large in the crop.
+- Preserve source-relative shoulder span, torso length, waist and hip placement, limb thickness, contour rhythm, stance, and clothing-shaped silhouette only to the degree visible.
+- Separate anatomical proportion from near-camera enlargement, foreshortening, pose compression, garment pressure, and light/shadow shaping. Do not convert a bright edge or dark groove into unsupported anatomy.
 - Keep the torso, pelvis, and center of mass in the source-visible spatial zone; do not let a contact pose silently relocate the person across a barrier, edge, opening, or support surface.
-- Separate near-camera enlargement from anatomical size.
 - Preserve a clearly visible large-scale body silhouette without exaggeration or reduction.
 - Keep a moderate or obscured body silhouette secondary rather than promoting it.
 - If age is unclear or the person is not clearly adult, use neutral, non-sexual silhouette and clothing language.
@@ -733,6 +745,7 @@ Describe only visible image-plane structure shaped by pose, crop, clothing, lens
 ## Module handoff
 
 - Add `detail.human-face-likeness` for a prominent or clearly readable face.
+- Add `detail.human-body-form` when visible proportion, contour, tissue character, muscle definition, skin surface, or body-region hierarchy is a first-order part of the image's identity or appeal.
 - Add `detail.pose-hands-gesture` when hand shape, grip, contact, limb mechanics, or pose landmarks matter.
 - Add `detail.clothing-fashion` when garment boundaries, fit, seams, straps, or coverage affect the visible silhouette.
 - Add `detail.tight-selfie-hierarchy` for a close phone selfie whose face/hair hierarchy and edge crop are first-order.
@@ -850,6 +863,13 @@ Describe photographic capture:
 - For casual phone, screenshot, social-video, or compressed outdoor captures, state the capture imperfection ceiling before beauty, fashion, scenic, studio, or product shorthand. Preserve handheld asymmetry, preview/compression softness, flattened distant layers, bloom, haze, clipped highlights, low-legibility marks, and ordinary non-editorial framing when visible.
 
 Map sharpness separately across the primary subject, secondary details, foreground, and background.
+
+Map contrast topology separately at the global scene, major subject masses, local form transitions, and surface/material boundaries.
+
+- Identify the largest continuous bright shapes and darkest framing masses before listing small highlights or shadows.
+- Separate overall tonal range from local subject contrast. A low-contrast scene can still have one crisp boundary; a high-contrast scene can retain soft internal form.
+- State whether shadows flatten volume, softly imply it, separate overlapping planes, or hard-sculpt contours. Do not let `dramatic lighting` stand in for that behavior.
+- Distinguish diffuse, matte, translucent, oily, glossy, metallic, woven, and absorbent responses only when visible; different surfaces under one light need not share highlight width or black level.
 
 Distinguish global low acutance, diffusion, haze, compression, or processing softness from depth-of-field blur. Use `shallow depth of field` or premium-looking bokeh only when a visibly sharper focus plane is separated from defocused layers. If the nominal focus subject is also soft, preserve that softness instead of sharpening it while blurring only the background.
 
@@ -1148,6 +1168,65 @@ Reject forced photo realism, forced illustration, forced 3D rendering, forced ap
 
 ---
 
+# Included module: `detail.human-body-form`
+
+# Detail: human body form, proportion, and surface
+
+## When to load
+
+Load only when visible body form is a first-order part of the image's identity or perceptual appeal: source-relative proportion, silhouette, contour rhythm, tissue character, muscular definition, skin surface, or the hierarchy among body regions. Do not load merely because a person is present.
+
+## Analysis
+
+Start with the large-scale form proposition before region detail. State directly what visible quality carries the impression—such as long-lined, compact, broad, narrow, soft, firm, relaxed, tense, delicate, sturdy, or strongly defined—then test it against observable causes. A broad descriptor is a hypothesis, not a substitute for evidence.
+
+Build a visible human-body form signature from source-supported proportion, contour, tissue, tension, and region hierarchy rather than from a body-type label.
+
+Use only the axes that materially distinguish the source:
+
+- **Proportion:** source-relative spans and transitions among head, shoulders, ribcage/torso, waist, pelvis/hips, arms, legs, hands, and feet where visible. Prefer relationships such as `shoulders only slightly wider than the waist` over inferred measurements.
+- **Contour and tissue:** straight or curved outer contours, abrupt or gradual width changes, bony landmarks, soft tissue transitions, firmness, softness, compression, folds, and where contours disappear into clothing, crop, or shadow.
+- **Tension and posture:** relaxed suspension, bracing, extension, compression, twist, weight-bearing, or flexion. Distinguish persistent form from a temporary pose effect.
+- **Definition:** Separate visible muscle or skeletal definition from contour created by pose, perspective, garment pressure, highlight, self-shadow, and cast shadow.
+- **Surface:** Describe skin as a surface system: lightness, hue family, saturation, undertone, tonal variation, finish, texture, and response to light only where visible.
+- **Hierarchy:** Assign each visible body region a hierarchy role—primary form, structural connector, supporting mass, edge crop, or low-legibility background evidence.
+
+Analyze the transitions between regions, not only isolated sizes. A waist, shoulder, joint, torso, or limb reads through its relation to adjacent forms, garment boundaries, negative space, and the direction of light.
+
+## Perspective and light separation
+
+- Establish camera distance, angle, and foreshortening before treating image-plane width as anatomy.
+- Compare near and far counterparts when visible; do not force symmetry through an oblique view.
+- Identify the largest bright and dark masses crossing the body, then decide whether they flatten, softly imply, separate, or strongly sculpt form.
+- Do not translate smooth lighting into low muscularity, or hard directional shadow into greater muscularity, without contour evidence.
+- Keep skin tone separate from exposure and color cast. Record both the underlying visible hue relationship and the illumination that shifts it.
+
+## Prompt contribution
+
+When body form is appearance-led, place one compact form proposition after frame and subject scale, followed by two to four causal cues covering only the decisive proportion, contour/tissue, light-to-form, surface, or hierarchy evidence. When it is secondary, use one bounded sentence and keep it behind the primary face, action, object, or relationship.
+
+Use a body-type, fitness, or beauty descriptor at most once and only when it reduces ambiguity. Immediately constrain its category prior with visible proportions, tissue transitions, posture, lighting, and crop. Avoid stacking synonyms that would exaggerate leanness, softness, muscularity, curvature, size, or polish.
+
+Describe body regions in their source role. A region that acts mainly as a bright plane, dark silhouette boundary, negative-space edge, garment support, or cropped foreground mass should remain that role instead of becoming a separately posed focal subject.
+
+## Diagnostic mode
+
+If the visible appeal is substantially carried by body form or skin rendering, name that plainly first. Then explain which source-supported proportion, contour, tissue, tension, surface, lighting, and hierarchy cues produce the impression, and which pose or placement changes would remain compatible with it.
+
+## Optional negative contribution
+
+Reject only source-likely drift: category-default anatomy, exaggerated or erased definition, changed relative proportions, inflated foreground perspective, rigid symmetry, relighting that invents form, uniform plastic skin, altered undertone, completed cropped anatomy, or secondary regions promoted into the main subject.
+
+## Optional settings contribution
+
+- Body-form invariants:
+- Perspective-versus-proportion locks:
+- Skin and light-to-form locks:
+- Flexible pose or placement dimensions:
+
+
+---
+
 # Included module: `detail.human-face-likeness`
 
 # Detail: human face likeness
@@ -1239,12 +1318,16 @@ Describe visible garment geometry before broad category labels:
 
 Prefer visible garment geometry over broad fashion-category labels.
 Treat visible band-height drift as a composition failure.
+Assign each visible garment or accessory a material role: primary subject, silhouette boundary, frame, texture support, or low-legibility mass.
 
-- fit, fabric type/thickness, opacity/transparency, stiffness/looseness
+- fit, visible thickness and weight, opacity/transparency, stiffness/looseness
 - fabric tension, wrinkles, folds, material sheen, pattern scale
+- weave or knit scale, nap, grain, coating, reflectivity, and edge behavior only where legible
 - neckline depth/width, collar, shirt opening, sleeve opening, strap position
 - seams, waist seam, under-bust seam if visible, buttons, lace, closures, hems
 - garment layers and how they interact with body shape, pose, props, hair, hands, shadow, and crop
+
+Before using a garment category label, specify the visible opacity, thickness, weight, weave or knit scale, finish, and construction cues that must override its default prior. Omit dimensions that cannot be seen; the point is to disambiguate the material, not to fill a fabric checklist.
 
 Create a coverage map when clothing placement matters:
 
@@ -1256,7 +1339,7 @@ Create a coverage map when clothing placement matters:
 
 Treat close upper-torso edges as measured boundary bands, not fashion labels. Lock neckline/garment-edge width, lowest y-position, visible skin/underlayer area above and below it, sleeve/shoulder fabric area, and bottom crop.
 
-Avoid broad labels such as `off-shoulder`, `low neckline`, `camisole`, `dress`, `lingerie`, `corset`, `crop top`, or `fashion portrait` if they would deepen, widen, clarify, center, tighten, reveal, or glamorize the garment beyond the source.
+Avoid broad labels such as `off-shoulder`, `low neckline`, `camisole`, `dress`, `lingerie`, `corset`, `crop top`, or `fashion portrait` if their category prior would deepen, widen, clarify, center, tighten, reveal, structure, or glamorize the garment beyond the source. Category labels follow geometry and material role; they do not define them.
 
 For bottom-edge or side-edge clothing/body crops, distinguish a narrow visible band from a completed outfit or body region. If the source only shows a hem, waistband, partial pocket, side edge, lower garment strip, or crop-boundary gap, describe it as a bounded edge band with height/area and nearby anchors. Avoid wording that invites centered body construction, full pockets, completed legs, or a wider exposed/covered band than the source.
 

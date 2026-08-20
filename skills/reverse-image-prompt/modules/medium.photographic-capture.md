@@ -1,6 +1,6 @@
 ---
 id: medium.photographic-capture
-version: 5
+version: 6
 priority: 72
 type: medium
 tier: 2
@@ -25,6 +25,7 @@ conflicts:
   - medium.unspecified-visual
 provides_anchors:
   - sharpness_topology
+  - contrast_topology
 ---
 
 # Medium: photographic capture, camera, focus, lighting
@@ -46,6 +47,13 @@ Describe photographic capture:
 - For casual phone, screenshot, social-video, or compressed outdoor captures, state the capture imperfection ceiling before beauty, fashion, scenic, studio, or product shorthand. Preserve handheld asymmetry, preview/compression softness, flattened distant layers, bloom, haze, clipped highlights, low-legibility marks, and ordinary non-editorial framing when visible.
 
 Map sharpness separately across the primary subject, secondary details, foreground, and background.
+
+Map contrast topology separately at the global scene, major subject masses, local form transitions, and surface/material boundaries.
+
+- Identify the largest continuous bright shapes and darkest framing masses before listing small highlights or shadows.
+- Separate overall tonal range from local subject contrast. A low-contrast scene can still have one crisp boundary; a high-contrast scene can retain soft internal form.
+- State whether shadows flatten volume, softly imply it, separate overlapping planes, or hard-sculpt contours. Do not let `dramatic lighting` stand in for that behavior.
+- Distinguish diffuse, matte, translucent, oily, glossy, metallic, woven, and absorbent responses only when visible; different surfaces under one light need not share highlight width or black level.
 
 Distinguish global low acutance, diffusion, haze, compression, or processing softness from depth-of-field blur. Use `shallow depth of field` or premium-looking bokeh only when a visibly sharper focus plane is separated from defocused layers. If the nominal focus subject is also soft, preserve that softness instead of sharpening it while blurring only the background.
 

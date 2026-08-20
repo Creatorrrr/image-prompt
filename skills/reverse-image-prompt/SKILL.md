@@ -7,7 +7,7 @@ description: Reverse engineer a standalone English text-to-image prompt from a p
 
 ## Purpose
 
-Turn one provided image into a standalone text-to-image prompt that preserves the visible concept, composition, crop, subject, pose, major-component spatial relationships, aesthetic signature, camera or rendering treatment, lighting, background, color, medium, and meaningful artifacts.
+Turn one provided image into a standalone text-to-image prompt that preserves its primary perceptual proposition: the visible concept or appeal that makes the image itself rather than merely a collection of matching objects. Preserve the source-specific composition, form, surface, light, hierarchy, crop, subject, pose, major-component relationships, color, medium, and meaningful artifacts that causally create that proposition.
 
 Default to **faithful** reconstruction. Preserve awkward, soft, cropped, partial, compressed, or mixed-media evidence instead of silently beautifying or completing it.
 
@@ -49,16 +49,25 @@ If the target generator is known, read `references/model-adapters.md` and apply 
    - Do not identify people, characters, brands, artists, cameras, lenses, film stocks, or private identities from appearance.
    - Keep uncertainty internal during analysis. In the final generation prompt, describe the visible ambiguity itself with terms such as `indistinct`, `partially obscured`, `low-legibility`, or `soft-edged`; avoid weakening commands with repeated `likely` or `appears`.
 
-3. Analyze silently in this order:
-   1. Primary concept, perceptual relationship, and major-component spatial topology.
-   2. Frame ratio, crop, subject scale, major zones, boundary sides, and edge interactions.
-   3. Global aesthetic salience and the smallest source-specific look signature.
-   4. Visible subjects, their image-plane roles, and—only when it materially reduces ambiguity—a compact broad person-gestalt anchor before local human detail.
-   5. Pose, contact/support, containment, boundary crossing, occlusion, completion-prone regions, and negative space.
-   6. Camera or virtual-camera behavior, perspective, focus, and blur.
-   7. Lighting, atmosphere, color, contrast, highlights, and shadows.
-   8. Background zones and depth layers.
-   9. Medium, texture, artifacts, UI, and text marks.
+3. Analyze silently with an adaptive hierarchy:
+   1. State the primary perceptual proposition and, in diagnostic mode, the source-supported appeal directly rather than euphemistically.
+   2. Classify the dominant fidelity axis as `relationship-led`, `appearance-led`, `information-led`, or `mixed`.
+   3. Separate two to four aesthetic or structural invariants from dimensions that may vary without losing the proposition. Record the smallest causal cue set rather than every visible field.
+   4. Lock frame ratio, crop, subject scale, major zones, boundary sides, and edge interactions.
+   5. For relationship-led or mixed images, map major-component topology, contact/support, containment, boundary crossing, occlusion, and negative space. For appearance-led images, map form, surface, light-to-form, color, material roles, and subject/environment hierarchy first. For information-led images, map layout, reading order, legibility, and container hierarchy first.
+   6. Analyze visible subjects and their image-plane roles. Use a compact broad person-gestalt anchor only when it materially reduces ambiguity; decompose salient human form or appearance into visible causes.
+   7. Add only materially important pose, camera/perspective, focus, lighting, background, medium, texture, artifact, UI, and text evidence.
+
+   Use this sparse internal map; leave irrelevant fields empty rather than completing a checklist:
+
+```yaml
+dominant_fidelity:
+  mode: relationship-led | appearance-led | information-led | mixed
+  perceptual_proposition: ""
+  invariants: []
+  flexible_dimensions: []
+  causal_cues: []       # only material form, surface, light, color, hierarchy, topology, or information cues
+```
 
 4. Build and resolve this internal facet map:
 
@@ -68,21 +77,19 @@ detected_facets:
   medium: []          # photographic, screenshot-ui, non-photographic, unspecified
   relationships: []   # ordinary, occlusion, replacement, reflection, screen-frame-within-frame, scale-miniature, mixed-media
   capture_quality: [] # low-quality, compressed, underexposed, motion-blurred, flash, casual-phone
-  detail_risks: []    # face-detail, clothing, hands, text-logo, ui, small-props, cropped-edges, tight-selfie, face-hand-gesture, accessory-torso-budget
+  detail_risks: []    # face-detail, body-form, body-proportion, muscle-definition, body-tension, skin-surface, body-region-hierarchy, clothing, hands, text-logo, ui, small-props, cropped-edges, tight-selfie, face-hand-gesture, accessory-torso-budget
   style: []           # stylized-character-maturity or another narrow risk
 ```
 
 5. Merge selected rules using this priority:
    1. Visible-evidence and safety limits.
-   2. Primary concept, perceptual relationship, and any high-salience aesthetic signature.
-   3. Frame ratio, crop, major zones, boundary sides, contact/support relations, and visibility budgets.
-   4. Occlusion, reflection, screen/frame, replacement, scale, and continuity.
-   5. Subject-specific fidelity.
-   6. Medium, camera, lighting, focus, and artifact fidelity.
-   7. Background, color, and secondary details.
-   8. Generic style or aesthetic shorthand.
+   2. Primary perceptual proposition, dominant fidelity axis, and invariants.
+   3. The mode-leading evidence: topology for relationship-led, causal appearance signature for appearance-led, information hierarchy for information-led, or the named co-primary pair for mixed.
+   4. Frame ratio, crop, major zones, boundary sides, visibility, and completion budgets.
+   5. Subject, medium, camera, lighting, focus, artifact, background, and color fidelity that supports the proposition.
+   6. Flexible pose or placement detail, secondary elements, and generic shorthand.
 
-6. Draft the smallest prompt that carries every concept-critical constraint. If the source look is high-salience, place one compact Aesthetic Signature near the beginning; if it is neutral, use only one or two ordinary look cues. Give each major component or coherent group at least one explicit spatial relation to another component or stable scene zone. Give each major interaction one relation clause when its side, containment, contact, support, or depth order could otherwise flip. Prefer short labeled blocks or compact paragraphs over a field-completion checklist.
+6. Draft the smallest prompt that carries every invariant and concept-critical constraint. Let its order follow the dominant fidelity axis. If the source look is high-salience, place one compact Aesthetic Causal Signature near the beginning; if neutral, use only one or two ordinary cues. Translate broad appeal words into form, surface, light, color, hierarchy, or spatial mechanisms. Give each major component one relation and each inversion-prone interaction one relation clause, but do not let flexible pose coordinates or secondary details outrank the primary proposition.
 
 7. Apply the pre-emit gate and report prompt-only limits honestly.
 
@@ -93,7 +100,8 @@ detected_facets:
 - Load every visible Tier 1 relationship module, including both photographic and non-photographic medium modules for genuine mixed media.
 - Load Tier 3 and Tier 4 modules only for visible, material risks.
 - For a prominent or clearly readable human face, add `face-detail`; for a small, blurred, shadowed, or heavily occluded face, keep only scale-appropriate human evidence and do not invent micro-features.
-- Treat the spatial topology of major components as Tier 0 evidence. Do not route it away as an optional detail merely because the scene has no special visual effect.
+- Add a human body-form risk only when visible proportion, contour/tissue, muscle definition, skin surface, tension, or body-region hierarchy is first-order. Do not route it merely because a person or torso is visible.
+- Treat the spatial topology of major components as Tier 0 evidence, but let the dominant fidelity axis determine its prompt weight. Do not force ordinary topology to outrank appearance or information invariants.
 - Treat adaptive aesthetic analysis as Tier 0 evidence, not as a style preset. Do not load extra style modules merely to fill an aesthetic checklist.
 - Keep the normal route within 3-8 non-core modules. Refine an over-budget facet map instead of loading every plausible module.
 - Treat `ordinary`, `cropped-edges`, and `small-props` as core-handled observations unless another visible risk requires a dedicated module.
@@ -106,7 +114,7 @@ Always write the production prompt in English. Match the response language for d
 - Always emit `PROMPT:` for generation requests.
 - Emit `NEGATIVE PROMPT:` only when the user requests it or the named downstream generator supports a separate negative prompt.
 - Emit `RECOMMENDED SETTINGS:` only when requested, when a target generator is known, or when source dimensions require a model-specific target-size explanation.
-- For `diagnostic` mode, use ordinary analysis headings and include a candidate prompt only if useful.
+- For `diagnostic` mode, first name the visible core appeal or perceptual proposition directly, then explain the causal form, surface, lighting, color, hierarchy, spatial, and capture evidence. Distinguish invariants from pose or placement differences that would not destroy the aesthetic. Include a candidate prompt only if useful.
 - Essential crop, relationship, occlusion, high-salience aesthetic, and medium constraints must remain in `PROMPT:` even when optional sections are present.
 
 Do not mention the attached/reference image inside the generated prompt.

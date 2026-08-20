@@ -1,6 +1,6 @@
 ---
 id: detail.clothing-fashion
-version: 4
+version: 5
 priority: 78
 type: detail
 tier: 3
@@ -25,6 +25,8 @@ conflicts: []
 provides_anchors:
   - band_height_drift
   - garment_geometry
+  - material_role
+  - category_prior_disambiguation
 ---
 
 # Detail: clothing, fashion, accessories, and coverage maps
@@ -39,12 +41,16 @@ Describe visible garment geometry before broad category labels:
 
 Prefer visible garment geometry over broad fashion-category labels.
 Treat visible band-height drift as a composition failure.
+Assign each visible garment or accessory a material role: primary subject, silhouette boundary, frame, texture support, or low-legibility mass.
 
-- fit, fabric type/thickness, opacity/transparency, stiffness/looseness
+- fit, visible thickness and weight, opacity/transparency, stiffness/looseness
 - fabric tension, wrinkles, folds, material sheen, pattern scale
+- weave or knit scale, nap, grain, coating, reflectivity, and edge behavior only where legible
 - neckline depth/width, collar, shirt opening, sleeve opening, strap position
 - seams, waist seam, under-bust seam if visible, buttons, lace, closures, hems
 - garment layers and how they interact with body shape, pose, props, hair, hands, shadow, and crop
+
+Before using a garment category label, specify the visible opacity, thickness, weight, weave or knit scale, finish, and construction cues that must override its default prior. Omit dimensions that cannot be seen; the point is to disambiguate the material, not to fill a fabric checklist.
 
 Create a coverage map when clothing placement matters:
 
@@ -56,7 +62,7 @@ Create a coverage map when clothing placement matters:
 
 Treat close upper-torso edges as measured boundary bands, not fashion labels. Lock neckline/garment-edge width, lowest y-position, visible skin/underlayer area above and below it, sleeve/shoulder fabric area, and bottom crop.
 
-Avoid broad labels such as `off-shoulder`, `low neckline`, `camisole`, `dress`, `lingerie`, `corset`, `crop top`, or `fashion portrait` if they would deepen, widen, clarify, center, tighten, reveal, or glamorize the garment beyond the source.
+Avoid broad labels such as `off-shoulder`, `low neckline`, `camisole`, `dress`, `lingerie`, `corset`, `crop top`, or `fashion portrait` if their category prior would deepen, widen, clarify, center, tighten, reveal, structure, or glamorize the garment beyond the source. Category labels follow geometry and material role; they do not define them.
 
 For bottom-edge or side-edge clothing/body crops, distinguish a narrow visible band from a completed outfit or body region. If the source only shows a hem, waistband, partial pocket, side edge, lower garment strip, or crop-boundary gap, describe it as a bounded edge band with height/area and nearby anchors. Avoid wording that invites centered body construction, full pockets, completed legs, or a wider exposed/covered band than the source.
 

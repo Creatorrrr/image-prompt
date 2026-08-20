@@ -55,6 +55,26 @@ class RouteResolverTests(unittest.TestCase):
         )
         self.assertIn("subject.human", modules)
         self.assertNotIn("detail.human-face-likeness", modules)
+        self.assertNotIn("detail.human-body-form", modules)
+
+    def test_first_order_human_body_form_selects_dedicated_detail(self) -> None:
+        modules = resolve_modules(
+            {
+                "subjects": ["human"],
+                "medium": ["photographic"],
+                "relationships": ["ordinary"],
+                "detail_risks": [
+                    "body-form",
+                    "body-proportion",
+                    "muscle-definition",
+                    "skin-surface",
+                ],
+            },
+            self.manifest,
+        )
+        self.assertIn("detail.human-body-form", modules)
+        self.assertIn("subject.human", modules)
+        self.assertIn("medium.photographic-capture", modules)
 
     def test_mixed_media_allows_photo_and_render_layers(self) -> None:
         modules = resolve_modules(
@@ -95,12 +115,38 @@ class RouteResolverTests(unittest.TestCase):
         self.assertTrue(
             {
                 "subject_environment_balance",
+                "dominant_fidelity_axis",
+                "aesthetic_invariants",
+                "flexible_dimensions",
                 "aesthetic_salience_gate",
                 "aesthetic_signature_early",
+                "aesthetic_causal_signature",
+                "direct_perceptual_appeal",
                 "detail_not_sharpness",
                 "attractiveness_polish_separation",
                 "background_legibility_ceiling",
+                "semantic_salience_amplification",
             }.issubset(CORE_ANCHOR_IDS)
+        )
+
+    def test_human_body_form_exposes_causal_form_anchors(self) -> None:
+        body = module_map(self.manifest)["detail.human-body-form"]
+        self.assertTrue(
+            {
+                "human_body_form_signature",
+                "muscle_lighting_separation",
+                "skin_surface_signature",
+                "body_region_hierarchy",
+            }.issubset(body["provides_anchors"])
+        )
+
+    def test_photo_and_clothing_expose_contrast_and_material_anchors(self) -> None:
+        modules = module_map(self.manifest)
+        self.assertIn("contrast_topology", modules["medium.photographic-capture"]["provides_anchors"])
+        self.assertTrue(
+            {"material_role", "category_prior_disambiguation"}.issubset(
+                modules["detail.clothing-fashion"]["provides_anchors"]
+            )
         )
 
     def test_human_subject_exposes_broad_person_gestalt_anchor(self) -> None:

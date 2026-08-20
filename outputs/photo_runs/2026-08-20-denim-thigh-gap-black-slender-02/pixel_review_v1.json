@@ -1,0 +1,67 @@
+{
+  "schema_version": "photo-visual-obligation-render-review/v1",
+  "pack_id": "008add47a985eea1",
+  "source_effective_visual_contract_sha256": "68edd9d3315f6a50888b427ede9eba3a9b8adfe1202996c22aa47f2bb153e77b",
+  "reviewer": {
+    "reviewer_id": "codex",
+    "method": "direct_pixel_inspection"
+  },
+  "result": {
+    "path": "/Users/chasoik/Projects/image-prompt/generated_images/black-hot-pants-slender-20260820/black-hot-pants-slender-v1.png",
+    "sha256": "d542e56954de0c80e1a7adc400ed0d81210120d025e5a7e10b599569388599b2"
+  },
+  "review_assets": {
+    "native": "/Users/chasoik/Projects/image-prompt/outputs/photo_runs/2026-08-20-denim-thigh-gap-black-slender-02/review-native-center-crop-v1.png",
+    "thumbnail": "/Users/chasoik/Projects/image-prompt/outputs/photo_runs/2026-08-20-denim-thigh-gap-black-slender-02/review-thumbnail-v1.png"
+  },
+  "hard_gates": {
+    "vo_inner_thigh_legs_close": {
+      "status": "pass",
+      "reviewed_scales": [
+        "thumbnail",
+        "native"
+      ],
+      "evidence": "The visible thighs are close, nearly parallel, and converging rather than spread in a wide stance."
+    },
+    "vo_inner_thigh_true_negative_space": {
+      "status": "fail",
+      "reviewed_scales": [
+        "native"
+      ],
+      "evidence": "A tiny white patch exists, but black fringe and a dark central artifact interrupt the opening, so clean continuous background space is not established."
+    },
+    "vo_inner_thigh_attractive_composition": {
+      "status": "fail",
+      "reviewed_scales": [
+        "thumbnail"
+      ],
+      "evidence": "At 320 pixels the intended opening collapses to a very small white dot and is not yet a deliberate focal geometry."
+    },
+    "vo_inner_thigh_not_false_gap": {
+      "status": "fail",
+      "reviewed_scales": [
+        "native"
+      ],
+      "evidence": "The white patch sits directly beneath the frayed black hem with a black fuzzy line, making it ambiguous with a garment opening, seam, or shadow artifact."
+    },
+    "vo_inner_thigh_thumbnail_legibility": {
+      "status": "fail",
+      "reviewed_scales": [
+        "thumbnail"
+      ],
+      "evidence": "The close-leg pose is readable, but the narrow inverted-triangle background opening is too small and artifact-obscured to remain distinct."
+    }
+  },
+  "technical_status": "failed_hard_gates",
+  "failed_gate_ids": [
+    "vo_inner_thigh_true_negative_space",
+    "vo_inner_thigh_attractive_composition",
+    "vo_inner_thigh_not_false_gap",
+    "vo_inner_thigh_thumbnail_legibility"
+  ],
+  "user_judgment": {
+    "source": "not_yet_received",
+    "status": "pending",
+    "evidence": ""
+  }
+}

@@ -1,6 +1,6 @@
 ---
 id: core.output-contract
-version: 8
+version: 9
 priority: 98
 type: core
 tier: 0
@@ -40,13 +40,14 @@ PROMPT:
 ...
 ```
 
-Write a standalone English prompt in a skimmable order:
+Write a standalone English prompt whose order follows the dominant fidelity axis:
 
-1. Scene, frame shape, medium, fidelity ceiling, primary concept, and any high-salience Aesthetic Signature.
-2. Composition, crop, subject scale, major zones, major-component spatial topology, and up to five critical spatial anchors.
-3. Subject appearance, pose, gaze, interaction geometry, contact/support, occlusion, and completion boundaries.
-4. Camera or rendering behavior, lighting, color, focus, texture, and meaningful artifacts.
-5. Compact constraints covering only the highest-risk drift.
+- Start every mode with the frame shape, medium, fidelity ceiling, and one-sentence primary perceptual proposition.
+- **Relationship-led:** establish composition, crop, major zones, topology, interaction geometry, and up to five critical spatial anchors before local appearance.
+- **Appearance-led:** establish the compact Aesthetic Causal Signature and source-specific subject form, surface, light-to-form, color, and hierarchy before secondary pose coordinates or inventory.
+- **Information-led:** establish layout, reading order, information hierarchy, legibility, and container relationships before decorative styling.
+- **Mixed:** name the two co-primary invariants early and interleave only the cues needed to show how they depend on each other.
+- Finish with remaining subject detail, camera/rendering behavior, background, meaningful artifacts, and only the highest-risk drift constraints.
 
 Use short labeled blocks or compact paragraphs for complex images. Aim for the smallest prompt that preserves the source hierarchy; a typical prompt should not need every possible camera, anatomy, lighting, and settings field.
 
@@ -54,7 +55,7 @@ Keep essential requirements affirmative. Prefer `only a narrow cropped strip rem
 
 Relate every major component or coherent group to another component or stable scene zone. Keep each concept-critical side, containment, contact, and support relation in `PROMPT:` as one compact affirmative sentence. Do not leave it implied only by an action verb, approximate coordinate, or negative prompt.
 
-For a high-salience look, keep one compact Aesthetic Signature in the first or second paragraph before fine face, material, or background inventory. Use three to six source-supported anchors spanning only the dominant tone, color, sharpness, optical/surface, lighting, or hierarchy axes. For a neutral look, use one or two cues without a labeled block. Do not fill every axis or repeat the signature verbatim.
+For a high-salience look, keep one compact Aesthetic Signature in the first or second paragraph before fine face, material, or background inventory. Use three to six source-supported causal cues spanning only material form, surface, light-to-form, tone/color, sharpness, or hierarchy axes. For a neutral look, use one or two cues without a labeled block. Do not fill every axis or repeat the signature through synonyms.
 
 When `detail.human-face-likeness` is selected, keep one dedicated likeness passage. If `subject.human` selects a broad person-gestalt anchor, place that one compact anchor at the start of the passage, then immediately constrain it with scale-appropriate visible anchors. Never use demographic, beauty, or character shorthand as the whole likeness description.
 
@@ -92,8 +93,8 @@ RECOMMENDED SETTINGS:
 
 ## Diagnostic mode
 
-For `diagnostic`, explain the evidence and uncertainties in the user's language. A candidate `PROMPT:` may follow, but do not force generation-only sections.
+For `diagnostic`, first state the source-supported perceptual proposition or appeal directly in the user's language, then explain the form, surface, light, color, hierarchy, spatial, and capture mechanisms that create it. Separate invariants from pose or placement details that may vary. A candidate `PROMPT:` may follow, but do not force generation-only sections.
 
 ## Final rule
 
-Read `PROMPT:` as if the source image and every optional section disappeared. If the primary relationship, crop, subject hierarchy, medium, or fidelity ceiling would be lost, revise the prompt itself.
+Read `PROMPT:` as if the source image and every optional section disappeared. If the primary proposition, its invariants, crop, required relationship, subject hierarchy, medium, or fidelity ceiling would be lost, revise the prompt itself.

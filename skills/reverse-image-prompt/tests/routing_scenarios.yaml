@@ -30,8 +30,10 @@
         "human_detail_hierarchy",
         "face_anchor_budget",
         "expression_gaze_hair_geometry",
-        "sharpness_topology"
-      ]
+        "sharpness_topology",
+        "contrast_topology"
+      ],
+      "expect_excludes": ["detail.human-body-form"]
     },
     {
       "id": "clothing-neckline-crop",
@@ -51,7 +53,9 @@
         "symmetric_large_body_lock",
         "symmetric_moderate_body_lock",
         "band_height_drift",
-        "garment_geometry"
+        "garment_geometry",
+        "material_role",
+        "category_prior_disambiguation"
       ]
     },
     {
@@ -328,10 +332,47 @@
         "medium.photographic-capture"
       ],
       "expect_excludes": [
-        "detail.human-face-likeness"
+        "detail.human-face-likeness",
+        "detail.human-body-form"
       ],
       "required_anchors": ["face_fidelity"],
       "max_non_core_modules": 2
+    },
+    {
+      "id": "appearance-led-human-body-form",
+      "facets": {
+        "subjects": ["human"],
+        "medium": ["photographic"],
+        "relationships": ["ordinary"],
+        "detail_risks": [
+          "body-form",
+          "body-proportion",
+          "muscle-definition",
+          "body-tension",
+          "skin-surface",
+          "body-region-hierarchy",
+          "clothing"
+        ]
+      },
+      "expect_includes": [
+        "subject.human",
+        "medium.photographic-capture",
+        "detail.human-body-form",
+        "detail.clothing-fashion"
+      ],
+      "expect_excludes": [
+        "detail.human-face-likeness"
+      ],
+      "required_anchors": [
+        "human_body_form_signature",
+        "muscle_lighting_separation",
+        "skin_surface_signature",
+        "body_region_hierarchy",
+        "contrast_topology",
+        "material_role",
+        "category_prior_disambiguation"
+      ],
+      "max_non_core_modules": 4
     },
     {
       "id": "unknown-facet-value-fails-visibly",
