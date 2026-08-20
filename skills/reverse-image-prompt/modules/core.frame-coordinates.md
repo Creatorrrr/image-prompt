@@ -1,6 +1,6 @@
 ---
 id: core.frame-coordinates
-version: 6
+version: 7
 priority: 108
 type: core
 tier: 0
@@ -20,6 +20,7 @@ provides_anchors:
   - aspect_ratio_drift_major
   - normalized_coordinates
   - subject_environment_balance
+  - major_region_hierarchy
 ---
 
 # Core: frame, crop, and spatial anchors
@@ -39,15 +40,15 @@ Always.
 - Lock subject frame share and negative-space share before adding face or object micro-detail.
 - Describe which evidence occupies the top, middle, bottom, left, center, and right zones when those bands control the composition.
 
+## Major-region hierarchy
+
+Map the few largest visually coherent regions as a major-region hierarchy before local detail. For each, record relative area, tonal or material role, first-attention priority, legibility, and contact with the frame edge. Use source-relative roles such as dominant field, supporting mass, edge frame, or low-legibility zone rather than fixed percentages.
+
+Preserve the hierarchy of region shares even when a flexible pose, viewpoint, or placement changes. Exact coordinates may move while the balance among dominant, supporting, and framing regions remains stable.
+
 ## Spatial language
 
-Prefer generator-friendly spatial relationships:
-
-- `centered`, `left third`, `upper-right`, `near the bottom edge`
-- `occupies roughly half the frame height`
-- `touches the left edge`, `cropped above the knees`
-- `overlaps the lower half of the face`
-- `leaves a narrow band of background on the right`
+Prefer generator-friendly relations such as `left third`, `near the bottom edge`, `occupies roughly half the frame height`, `touches the left edge`, or `leaves a narrow background band`.
 
 ## Relational coordinate frames
 
@@ -75,9 +76,4 @@ Use normalized coordinates only for concept-critical anchors.
 
 ## Target-size handoff
 
-If settings are requested:
-
-- Report `Source frame` as metadata.
-- Report `Target size` separately and validate it against the named generator.
-- Prefer `auto` when no valid deterministic adapter is available.
-- Explain any small ratio-preserving adjustment instead of presenting it as the original size.
+If settings are requested, report the source frame as metadata and the validated target size separately. Prefer `auto` without a valid deterministic adapter, and disclose ratio-preserving adjustments.

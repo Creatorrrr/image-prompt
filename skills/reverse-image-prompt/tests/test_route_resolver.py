@@ -115,17 +115,29 @@ class RouteResolverTests(unittest.TestCase):
         self.assertTrue(
             {
                 "subject_environment_balance",
+                "major_region_hierarchy",
                 "dominant_fidelity_axis",
                 "aesthetic_invariants",
                 "flexible_dimensions",
+                "appeal_render_separation",
+                "invariant_salience_ledger",
                 "aesthetic_salience_gate",
                 "aesthetic_signature_early",
                 "aesthetic_causal_signature",
                 "direct_perceptual_appeal",
+                "aggregate_prior_cluster_audit",
                 "detail_not_sharpness",
                 "attractiveness_polish_separation",
                 "background_legibility_ceiling",
+                "color_causality",
+                "causal_origin_attribution",
                 "semantic_salience_amplification",
+                "semantic_claim_merge",
+                "net_salience_audit",
+                "replacement_correction",
+                "module_evidence_not_prose",
+                "clause_ownership",
+                "diagnostic_render_separation",
             }.issubset(CORE_ANCHOR_IDS)
         )
 
@@ -137,16 +149,26 @@ class RouteResolverTests(unittest.TestCase):
                 "muscle_lighting_separation",
                 "skin_surface_signature",
                 "body_region_hierarchy",
+                "persistent_induced_form_split",
             }.issubset(body["provides_anchors"])
         )
 
     def test_photo_and_clothing_expose_contrast_and_material_anchors(self) -> None:
         modules = module_map(self.manifest)
-        self.assertIn("contrast_topology", modules["medium.photographic-capture"]["provides_anchors"])
         self.assertTrue(
-            {"material_role", "category_prior_disambiguation"}.issubset(
-                modules["detail.clothing-fashion"]["provides_anchors"]
-            )
+            {
+                "contrast_topology",
+                "photographic_causal_decomposition",
+                "color_light_decomposition",
+                "light_to_form_strength",
+            }.issubset(modules["medium.photographic-capture"]["provides_anchors"])
+        )
+        self.assertTrue(
+            {
+                "material_role",
+                "category_prior_disambiguation",
+                "detail_role_ceiling",
+            }.issubset(modules["detail.clothing-fashion"]["provides_anchors"])
         )
 
     def test_human_subject_exposes_broad_person_gestalt_anchor(self) -> None:

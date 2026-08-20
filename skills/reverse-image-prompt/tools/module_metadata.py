@@ -22,7 +22,7 @@ def strip_frontmatter(text: str) -> str:
     if text.startswith("---\n"):
         end = text.find("\n---\n", 4)
         if end != -1:
-            return text[end + len("\n---\n"):].lstrip()
+            return text[end + len("\n---\n") :].lstrip()
     return text
 
 
@@ -34,7 +34,7 @@ def parse_frontmatter_text(text: str) -> tuple[dict[str, Any], str]:
         raise ValueError("unterminated frontmatter")
 
     raw = text[4:end]
-    body = text[end + len("\n---\n"):].lstrip()
+    body = text[end + len("\n---\n") :].lstrip()
     data: dict[str, Any] = {}
     current_key: str | None = None
 
@@ -80,7 +80,11 @@ def module_files(root: Path = ROOT) -> list[Path]:
 
 
 def module_sort_key(module: dict[str, Any]) -> tuple[int, int, str]:
-    return (int(module.get("tier", 99)), -int(module.get("priority", 0)), str(module.get("id", "")))
+    return (
+        int(module.get("tier", 99)),
+        -int(module.get("priority", 0)),
+        str(module.get("id", "")),
+    )
 
 
 def load_manifest(root: Path = ROOT) -> dict[str, Any]:
@@ -125,7 +129,7 @@ def build_manifest(root: Path = ROOT) -> dict[str, Any]:
     return {
         "name": "reverse-image-prompt",
         "architecture": "modular facet router",
-        "version": "3.0.0-adaptive-output",
+        "version": "3.1.0-salience-compiler",
         "entrypoint": "SKILL.md",
         "source": "generated from modules/*.md frontmatter by tools/gen_manifest.py",
         "tiers": {str(k): v for k, v in TIERS.items()},
@@ -186,4 +190,6 @@ def expand_dependencies(module_ids: list[str], manifest: dict[str, Any]) -> list
     for module_id in module_ids:
         visit(module_id)
 
-    return [m["id"] for m in sorted((modules[mid] for mid in resolved), key=module_sort_key)]
+    return [
+        m["id"] for m in sorted((modules[mid] for mid in resolved), key=module_sort_key)
+    ]

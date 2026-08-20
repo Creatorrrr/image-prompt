@@ -1,6 +1,6 @@
 ---
 id: detail.clothing-fashion
-version: 5
+version: 6
 priority: 78
 type: detail
 tier: 3
@@ -27,6 +27,7 @@ provides_anchors:
   - garment_geometry
   - material_role
   - category_prior_disambiguation
+  - detail_role_ceiling
 ---
 
 # Detail: clothing, fashion, accessories, and coverage maps
@@ -35,13 +36,15 @@ provides_anchors:
 
 Load when clothing placement, garment edges, neckline, straps, accessories, exposed/covered bands, fabric tension, or fashion labels affect fidelity.
 
-## Prompt additions
+## Evidence contribution
 
 Describe visible garment geometry before broad category labels:
 
 Prefer visible garment geometry over broad fashion-category labels.
 Treat visible band-height drift as a composition failure.
 Assign each visible garment or accessory a material role: primary subject, silhouette boundary, frame, texture support, or low-legibility mass.
+
+Route selection does not entitle clothing to prompt space. Cap material and construction detail to the garment's hierarchy role; a framing or supporting garment must not receive more semantic emphasis, sharpness, or completion than the primary invariant.
 
 - fit, visible thickness and weight, opacity/transparency, stiffness/looseness
 - fabric tension, wrinkles, folds, material sheen, pattern scale
