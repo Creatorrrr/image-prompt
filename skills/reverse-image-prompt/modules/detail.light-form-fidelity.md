@@ -1,0 +1,104 @@
+---
+id: detail.light-form-fidelity
+version: 2
+priority: 79
+type: detail
+tier: 3
+facet: detail-risk
+facet_values:
+  - lighting-fidelity
+  - light-direction
+  - shadow-topology
+  - light-to-form
+  - material-light-response
+  - background-spill
+triggers:
+  - user explicitly prioritizes faithful lighting, shadow, or light-to-form reproduction
+  - illumination or shadow topology materially carries the image
+  - source/render comparison identifies lighting as a material residual
+avoid_when:
+  - lighting is incidental and the selected medium module is sufficient
+dependencies:
+  - core.visual-evidence
+  - core.frame-coordinates
+  - core.fidelity-discipline
+  - core.background-color
+conflicts: []
+provides_anchors:
+  - light_form_contract
+  - observed_light_result
+  - source_geometry_fill_separation
+  - global_local_light_contrast
+  - shadow_ownership
+  - material_light_response
+  - pose_light_dependency
+  - lighting_color_contract_handoff
+  - light_control_ledger
+  - render_light_verification
+---
+
+# Detail: lighting and light-to-form fidelity
+
+## When to load
+
+Load only when illumination, shadow topology, light-induced form, material response, or background spill is an invariant; when the user explicitly requests lighting fidelity; or when a source/render comparison finds a material lighting residual. Do not load merely because an image is lit.
+
+## Three-stage Light/Form Contract
+
+Build a source-relative Light/Form Contract only when illumination materially carries fidelity.
+
+Keep three stages separate:
+
+1. **Observation:** the visible spatial light result.
+2. **Actuation:** the smallest literal prompt controls that reproduce that result.
+3. **Verification:** what a delivered render actually reproduced.
+
+Treat the observed light-to-form result as evidence and the physical lighting setup as a confidence-rated hypothesis. One image rarely identifies a unique lamp, modifier, fill source, or post-processing path. When the cause is uncertain, preserve the visible result with result-space relations rather than letting an invented rig carry the prompt alone.
+
+## Visible result before rig inference
+
+Record the largest continuous bright and dark masses before small highlights. Map global tonal range, local form contrast, gradient character, edge softness, and the relative visibility of major planes.
+
+Keep global tonal range separate from local form contrast. A wide scene range or dark frame does not require strong internal modeling; a compressed scene may still contain a hard contact edge.
+
+Set light-to-form strength source-relatively as flattening, subtle revelation, moderate separation, or strong sculpture. Describe what the light does to visible form instead of substituting broad mood or quality shorthand.
+
+## Source hypothesis
+
+Separate source geometry, apparent source size, and fill structure. Record source count, direction relative to camera and subject, elevation, apparent angular size, fill or bounce behavior, confidence, and visible evidence only when they matter.
+
+Apparent source size owns shadow-edge softness; it does not automatically own fill level or local contrast. A large off-axis source can remain sculpting, and a small near-axis source can flatten form.
+
+Use `physical-cause` or `physical-plus-result` actuation only with medium- or high-confidence source evidence. With low confidence, use `result-space-only` or keep the hypothesis diagnostic.
+
+## Spatial effects and shadow ownership
+
+For each material region effect, record its role as broad plane, gradient, highlight, shadow, rim, or spill; its source-relative strength; edge character; and evidence. Use semantic region relations rather than fixed coordinates unless exact placement is itself invariant.
+
+Assign each material dark region to cast shadow, self-shadow, contact or occlusion, material response, processing, mixed, or uncertain ownership. Do not promote a small contact shadow into a broad directional-light field, and do not encode an illumination-induced contour as intrinsic form.
+
+Keep material response and background spill separate from source intensity. Matte, glossy, metallic, translucent, woven, and absorbent surfaces under one light may have different highlight width, black level, and texture visibility.
+
+## Pose and geometry dependence
+
+Record whether each light pattern is pose-bound, pose-robust, mixed, or uncertain. When pose is flexible, preserve relational outcomes such as major-plane balance, gradient depth, or light-to-form class while allowing exact highlight coordinates to move. When pose is locked and the evidence is stable, tighter placement may be justified.
+
+## Color and tone handoff
+
+Let the Light/Form Contract own spatial illumination structure and the Color/Tone Contract own displayed color, exposure, and tone response. Illumination color, white balance, intrinsic value or hue, highlight rolloff, and tone-curve compression remain in the shared color/tone path; do not emit the same brightness or contrast pull independently from both contracts.
+
+## Final prompt control ledger
+
+Copy every exact prompt excerpt that changes lighting or light-to-form into the final lighting control ledger. Link it to one emitted claim, one owner among source geometry, fill, local form contrast, shadow topology, material response, or background spill, and its complete effect list. The ledger is an internal trace, not an output template: copy the smallest exact clause that carries the control, omit non-material observations, and do not add headings, repetitions, or prose merely to make the ledger look complete. Split cross-owner compounds and replace overstrong positive controls rather than appending counter-negatives.
+
+When measured comparison is warranted, read `references/lighting-reproduction-evaluation.md`. Use only analyst-selected regions and profiles, retain source/profile uncertainty, and never convert diagnostic measurements directly into prompt wording.
+
+## Output and diagnosis
+
+When lighting is primary, emit one compact causal passage ordered by visible effect: source-supported topology when reliable, fill and local form contrast, decisive shadow ownership, then material or background response. When supporting, use only the smallest relational control.
+
+Diagnose source/render differences as source geometry, apparent size, fill, local form contrast, shadow topology, material response, background spill, exposure or processing, or unresolved. Prompt validation never substitutes for rendered-pixel lighting verification.
+
+## Optional negative contribution
+
+Reject only source-likely lighting drift such as an unsupported key/fill split, wrong shadow owner, exaggerated sculpture or flattening, enlarged specular response, or excess background spill. Do not install fixed lighting words, directions, ratios, subject regions, or numeric targets.

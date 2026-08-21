@@ -1,6 +1,6 @@
 ---
 id: medium.photographic-capture
-version: 9
+version: 11
 priority: 72
 type: medium
 tier: 2
@@ -31,6 +31,8 @@ provides_anchors:
   - light_to_form_strength
   - white_balance_exposure_separation
   - photographic_tone_response
+  - tone_zone_sampling_separation
+  - global_local_color_residual
 ---
 
 # Medium: photographic capture, camera, focus, lighting
@@ -68,11 +70,11 @@ Treat the image's sampled or visually read color as displayed capture output. Wi
 
 Separate photographic white balance or global cast from exposure and tone-curve behavior. A warmer or cooler capture shift must not silently darken, brighten, saturate, or desaturate an intrinsic surface unless the source supports each change.
 
-Map source-visible highlight, midtone, and shadow response separately when tonal reproduction is material. Preserve clipping, rolloff, lifted or crushed shadows, and local tone compression without using them as substitutes for intrinsic surface lightness or chroma.
+Map source-visible highlight, midtone, and shadow response separately when tonal reproduction is material. Use comparable midtone or flat patches for displayed intrinsic color and separate highlight or shadow patches for response; never widen an intrinsic target by pooling several illumination zones. Preserve clipping, rolloff, lifted or crushed shadows, and local tone compression without using them as substitutes for intrinsic surface lightness or chroma.
 
 Use reliable neutral anchors or consistent multi-region behavior to support a global white-balance claim. When the evidence is mixed or weak, contribute the observed local shifts and uncertainty to the shared Color/Tone Contract rather than forcing a global cast.
 
-In source/render comparison, compare several target patches with contextual or neutral patches. A common direction across both groups supports a global exposure, cast, or processing explanation; a target-only direction supports a local or intrinsic explanation; mixed directions stay unresolved.
+In source/render comparison, compare several target patches with contextual or neutral patches. Estimate the shared Lab movement from contextual groups, then subtract it from each target group's movement to expose the target-local residual. A common direction across both groups supports a global exposure, cast, or processing explanation; a target-only residual supports a local or intrinsic explanation; mixed directions stay unresolved. Do not declare pixel fidelity without an explicit tolerance policy or user judgment.
 
 Distinguish global low acutance, diffusion, haze, compression, or processing softness from depth-of-field blur. Use `shallow depth of field` or premium-looking bokeh only when a visibly sharper focus plane is separated from defocused layers. If the nominal focus subject is also soft, preserve that softness instead of sharpening it while blurring only the background.
 
@@ -85,6 +87,8 @@ Describe lighting-to-volume:
 - visible cast shadows, self-shadowing, contact shadows only when they affect likeness, separation, occlusion, or composition
 
 Set light-to-form strength source-relatively as flattening, subtle revelation, moderate separation, or strong sculpture. Keep global contrast distinct from local form contrast so a dark frame or wide tonal range does not automatically create hard internal definition.
+
+When lighting itself is first-order, contribute capture evidence to `detail.light-form-fidelity` instead of independently owning source geometry, fill, shadow topology, material response, or background spill. Keep exposure, tone curve, white balance, and illumination color in the photographic Color/Tone handoff so the two contracts do not repeat one visible pull.
 
 Do not relight into cleaner, brighter, more commercial, more frontal, more beauty-oriented, more contrasty, more cinematic, more sculpted, more exposed, or more evenly lit lighting if that changes visible structure.
 

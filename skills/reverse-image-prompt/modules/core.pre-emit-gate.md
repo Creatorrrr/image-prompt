@@ -1,6 +1,6 @@
 ---
 id: core.pre-emit-gate
-version: 12
+version: 14
 priority: 100
 type: core
 tier: 0
@@ -30,6 +30,13 @@ provides_anchors:
   - unowned_appearance_claim_audit
   - causal_color_phrase_scope
   - final_color_control_ledger
+  - intrinsic_axis_emission_coverage
+  - axis_control_separability
+  - light_form_causal_consistency
+  - unowned_lighting_claim_audit
+  - global_local_contrast_separation
+  - shadow_owner_coverage
+  - final_light_control_ledger
 ---
 
 # Core: pre-emit gate
@@ -44,27 +51,41 @@ Apply this as a rewrite pass, not a checklist appended to the draft.
 
 ### Coverage and ownership
 
-- Confirm that `PROMPT:` contains the primary visual concept, dominant fidelity axis, aesthetic invariants, and every non-negotiable relationship, crop, occlusion, boundary, and medium constraint.
+- Confirm that `PROMPT:` contains the primary visual concept.
 - Merge candidate claims by semantic slot before writing prose; each emitted slot has one clause owner.
-- Give every primary invariant one affirmative render control; keep flexible dimensions supporting. Lead with topology for relationship-led, appearance for appearance-led, and layout/legibility for information-led images.
+- Give each primary invariant one affirmative control; keep flexible dimensions supporting. Order by the dominant fidelity axis.
 
 ### Net salience
 
 - Audit semantic salience amplification across exact repeats, synonyms, paraphrases, labels, negatives, and settings; a repeatedly described dimension gains visual priority even when no sentence is duplicated verbatim.
 - Compare each slot's aggregate direction and strength with its source target. Plausible cues still fail when their combined pull exaggerates an invariant.
 - Correct an overstrong draft by replacing or deleting the amplifying language, not by appending a negative counterweight. Keep at most one distinct high-risk boundary per slot.
-- Preserve source hierarchy. Check whether a secondary element receives more words than its visible importance supports; compress it when it competes with a primary invariant.
-- Audit prior-heavy quality, lighting, surface, framing, and style language as one cluster; rewrite unsupported category defaults from evidence.
+- Check whether a secondary element receives more words than its visible importance supports; compress it when it competes with a primary invariant.
+- Rewrite unsupported category defaults from evidence.
 
 ### Causal, color, and tone consistency
 
-- Keep form, surface, light-to-form, color, material roles, and hierarchy causally consistent. Do not encode induced effects as intrinsic, and translate direct appeal into observable controls.
+- Keep form, surface, light, color, material, and hierarchy causally consistent; do not encode induced effects as intrinsic.
 - Audit shared perceptual effects across semantic slots, causal layers, paragraphs, negatives, and settings. Slot names being unique does not make repeated value, chroma, hue, or contrast directions independent.
 - For a material color or tone effect, verify one aggregate source-relative target and the evidence for every emitted intrinsic, illumination, global-cast, exposure, processing, or hierarchy contribution. Merge or delete a contribution whose causal layer lacks independent evidence.
 - Assign every appearance-changing color or tone phrase to one causal layer; treat free-floating mood or color adjectives as unowned claims and rewrite them from observable axes.
 - Split an ambiguous color phrase when one modifier could silently control intrinsic surface, illumination, exposure, or processing at the same time.
 - Re-read the exact final `PROMPT:` rather than trusting the analysis plan. Reconcile every exact color-changing excerpt in the final prompt with one emitted claim, one causal layer, and its complete aggregate effect budget. Split, replace, or delete any unowned excerpt, repeated direction, or multi-layer compound.
-- Check global cast against reliable neutral or multi-region evidence; otherwise retain uncertainty and relative relations. Keep hierarchy to area, value, chroma, or contrast unless hue contrast itself is invariant.
+- For every required intrinsic value, chroma, or hue observation, trace one uninterrupted path from region axis to same-region/same-axis aggregate effect, emitted claim, and intrinsic axis-control. A relative hierarchy, exposure, illumination, or processing clause cannot satisfy missing intrinsic surface value or chroma.
+- Give an axis-control one region and one perceptual axis. If one phrase changes several axes, split its literal excerpts or mark it as a justified secondary compound-control; never use a compound-control to satisfy a required intrinsic axis.
+- Keep midtone or flat evidence that establishes displayed intrinsic color separate from highlight and shadow evidence that establishes tone response. Mixed tone-zone evidence may remain diagnostic but cannot drive an intrinsic axis-control.
+- Treat an appearance metaphor as explanation-only unless it has generator-and-version-specific response evidence. An unverified metaphor cannot be the sole carrier of a material color axis.
+- Check global cast against reliable neutral or multi-region evidence; otherwise retain uncertainty.
+
+### Lighting and light-to-form consistency
+
+- For material lighting, verify one source-relative Light/Form target and evidence for every emitted source-geometry, fill, local-form-contrast, shadow-topology, material-response, or background-spill contribution.
+- Assign every lighting-changing phrase to one Light/Form owner. Split a phrase that lets apparent source size silently determine fill, local contrast, exposure, material gloss, or background spill.
+- Keep global tonal range and local form contrast as separate effects. Do not infer one from the other or let differently named claims amplify the same light-to-form direction.
+- Give every material shadow event a source-supported owner or mark it mixed or uncertain. Do not convert contact, occlusion, material absorption, or processing into a directional source without evidence.
+- Treat the visible spatial result as authoritative over a physical-light hypothesis. A low-confidence rig may be diagnostic or paired with result-space controls, but cannot carry a primary lighting invariant alone.
+- Reconcile every exact lighting-changing excerpt with one emitted claim, one owner, and its complete lighting-effect list. Keep Light/Form spatial effects separate from Color/Tone value, hue, exposure, and tone-curve controls.
+- When pose or geometry may vary, preserve the source-supported light-to-form relation while allowing non-invariant highlight coordinates to move.
 
 ### Spatial and fidelity checks
 

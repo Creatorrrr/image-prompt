@@ -1,6 +1,6 @@
 ---
 id: core.output-contract
-version: 12
+version: 14
 priority: 98
 type: core
 tier: 0
@@ -25,6 +25,7 @@ provides_anchors:
   - clause_ownership
   - diagnostic_render_separation
   - color_tone_output_ownership
+  - light_form_output_ownership
 ---
 
 # Core: adaptive output contract
@@ -62,6 +63,10 @@ When color or tone is material, assign each emitted control to one causal layer 
 Draft intrinsic surface, illumination, global response, and processing as distinct compact clauses when more than one is supported. Before emission, make every exact color-changing phrase traceable to the final color-control ledger; a metaphor may summarize resolved axes but cannot create another directional control.
 
 Place one compact color-tone passage early when primary; when supporting, use the smallest relational control. Hierarchy normally owns area, value, chroma, or contrast, not repeated surface hue.
+
+When lighting is material, assign each emitted control to one Light/Form owner and one source-relative effect budget. Separate source geometry, apparent source size, fill, local form contrast, shadow topology, material response, and background spill; do not let a generic lighting adjective own several of them at once.
+
+Lead with the visible result and add a physical-light explanation only at its supported confidence. Before emission, make every exact lighting-changing phrase traceable to the final Light/Form control ledger. Treat that ledger as internal bookkeeping over the smallest exact clauses, never as a reason to expose a schema, repeat a control, or lengthen the production prompt. Keep spatial illumination structure in that ledger and displayed color, exposure, and tone response in the Color/Tone ledger.
 
 Use compact blocks for complex images and no fixed word cap; every clause must add a control. Keep essential crop, partial visibility, and interactions affirmative. Relate major components and state inversion-prone topology directly.
 

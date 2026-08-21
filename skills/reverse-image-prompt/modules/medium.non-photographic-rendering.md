@@ -1,6 +1,6 @@
 ---
 id: medium.non-photographic-rendering
-version: 4
+version: 5
 priority: 72
 type: medium
 tier: 2
@@ -47,6 +47,8 @@ Adapt fidelity rules to the visible medium:
 - composition and crop over style shorthand; do not use a famous artist or copyrighted character name
 
 If the image mixes photographic and non-photographic layers, combine with `concept.mixed-media-illusion`.
+
+When rendered or painted lighting is first-order, contribute the visible shading evidence to `detail.light-form-fidelity`. Treat physical lamp placement as optional and confidence-rated; for stylized media, preserve value grouping, gradient or cel-step structure, shadow ownership, material response, and spill as image-space results.
 
 ## Optional negative contribution
 

@@ -62,6 +62,70 @@ VALID_COLOR_CAUSAL_LAYERS = {
 VALID_COLOR_CONFIDENCE = {"high", "medium", "low"}
 VALID_NEUTRAL_ANCHOR_STATUS = {"available", "unavailable", "uncertain"}
 VALID_TONE_ZONES = {"highlight", "midtone", "shadow", "flat"}
+VALID_COLOR_AXIS_ROLES = {"primary", "supporting"}
+VALID_COLOR_AXIS_EMISSIONS = {"required", "diagnostic-only"}
+VALID_COLOR_EVIDENCE_SCOPES = VALID_TONE_ZONES | {"mixed"}
+VALID_COLOR_CONTROL_ROLES = {"axis-control", "compound-control"}
+VALID_APPEARANCE_METAPHOR_STATUS = {
+    "explanation-only",
+    "model-calibrated",
+    "unverified",
+}
+VALID_LIGHT_IMPORTANCE = {"primary", "supporting"}
+VALID_LIGHT_OBSERVATION_SCOPES = {"source-visible", "user-specified"}
+VALID_LIGHT_FORM_CONTRAST = {"flattening", "subtle", "moderate", "strong"}
+VALID_LIGHT_MODEL_TYPES = {"physical-light", "rendered-shading", "mixed", "uncertain"}
+VALID_LIGHT_SOURCE_COUNTS = {"one-dominant", "multiple", "mixed", "uncertain"}
+VALID_LIGHT_AXIS_OFFSETS = {"near-axis", "slight", "moderate", "strong", "uncertain"}
+VALID_LIGHT_ELEVATIONS = {"below", "level", "slight-above", "high", "uncertain"}
+VALID_LIGHT_SOURCE_SIZES = {"small", "medium", "large", "uncertain"}
+VALID_LIGHT_FILL_STRUCTURES = {"high", "moderate", "low", "mixed", "uncertain"}
+VALID_LIGHT_ACTUATIONS = {
+    "physical-cause",
+    "physical-plus-result",
+    "result-space-only",
+    "diagnostic-only",
+}
+VALID_LIGHT_REGION_EFFECT_ROLES = {
+    "broad-plane",
+    "gradient",
+    "highlight",
+    "shadow",
+    "rim",
+    "spill",
+}
+VALID_SHADOW_OWNERS = {
+    "cast",
+    "self",
+    "contact-occlusion",
+    "material-response",
+    "processing",
+    "mixed",
+    "uncertain",
+}
+VALID_LIGHT_MATERIAL_RESPONSES = {
+    "diffuse",
+    "absorbent",
+    "glossy",
+    "metallic",
+    "translucent",
+    "woven",
+    "mixed",
+}
+VALID_LIGHT_GEOMETRY_DEPENDENCIES = {
+    "pose-bound",
+    "pose-robust",
+    "mixed",
+    "uncertain",
+}
+VALID_LIGHT_EFFECT_AXES = {
+    "source-geometry",
+    "fill",
+    "local-form-contrast",
+    "shadow-topology",
+    "material-response",
+    "background-spill",
+}
 
 
 def _contract(plan: dict[str, Any]) -> dict[str, Any]:
@@ -79,6 +143,10 @@ def _nonempty_strings(value: Any) -> bool:
 
 def _nonempty_string(value: Any) -> bool:
     return isinstance(value, str) and bool(value.strip())
+
+
+def _string_list(value: Any) -> bool:
+    return isinstance(value, list) and all(_nonempty_string(item) for item in value)
 
 
 def _audit_color_tone_contract(
@@ -149,6 +217,7 @@ def _audit_color_tone_contract(
         regions = []
 
     color_region_ids: set[str] = set()
+    axis_requirements: list[tuple[str, str, str, dict[str, Any]]] = []
     for index, region in enumerate(regions):
         label = f"color_tone_contract.regions[{index}]"
         if not isinstance(region, dict):
@@ -189,6 +258,33 @@ def _audit_color_tone_contract(
                 errors.append(f"{axis_label}.confidence is invalid")
             if not _nonempty_strings(axis_spec.get("source_evidence")):
                 errors.append(f"{axis_label}.source_evidence must contain visible evidence")
+            if axis_spec.get("role") not in VALID_COLOR_AXIS_ROLES:
+                errors.append(f"{axis_label}.role is invalid")
+            evidence_scope = axis_spec.get("evidence_scope")
+            if evidence_scope not in VALID_COLOR_EVIDENCE_SCOPES:
+                errors.append(f"{axis_label}.evidence_scope is invalid")
+            emission = axis_spec.get("emission")
+            if emission not in VALID_COLOR_AXIS_EMISSIONS:
+                errors.append(f"{axis_label}.emission is invalid")
+            effect_id = axis_spec.get("aggregate_effect_id")
+            if emission == "required" and not _nonempty_string(effect_id):
+                errors.append(
+                    f"{axis_label}.aggregate_effect_id is required for an emitted axis"
+                )
+            if emission == "diagnostic-only":
+                if not _nonempty_string(axis_spec.get("non_emission_reason")):
+                    errors.append(
+                        f"{axis_label}.non_emission_reason is required for a diagnostic-only axis"
+                    )
+                if _nonempty_string(effect_id):
+                    errors.append(
+                        f"{axis_label} cannot reference an aggregate effect when diagnostic-only"
+                    )
+            if evidence_scope == "mixed" and emission == "required":
+                errors.append(
+                    f"{axis_label}: mixed tone-zone evidence cannot drive an emitted intrinsic axis"
+                )
+            axis_requirements.append((str(region_id), str(axis), axis_label, axis_spec))
         if (
             importance == "primary"
             and region.get("role") == "dominant"
@@ -334,6 +430,23 @@ def _audit_color_tone_contract(
             "a primary color_tone_contract must contain a primary aggregate effect"
         )
 
+    for region_id, axis, axis_label, axis_spec in axis_requirements:
+        if axis_spec.get("emission") != "required":
+            continue
+        effect_id = axis_spec.get("aggregate_effect_id")
+        effect = aggregate_map.get(effect_id)
+        if effect is None:
+            errors.append(f"{axis_label}.aggregate_effect_id is unknown")
+            continue
+        if effect.get("region_id") != region_id or effect.get("axis") != axis:
+            errors.append(
+                f"{axis_label}.aggregate_effect_id must match the same region and axis"
+            )
+        if axis_spec.get("role") == "primary" and effect.get("role") != "primary":
+            errors.append(
+                f"{axis_label}: a primary intrinsic axis requires a primary aggregate effect"
+            )
+
     color_claim_ids = color_contract.get("claim_ids")
     if not _nonempty_strings(color_claim_ids):
         errors.append(
@@ -439,6 +552,7 @@ def _audit_color_tone_contract(
     control_ids: set[str] = set()
     prompt_excerpts: set[str] = set()
     controlled_claim_counts: dict[str, int] = {}
+    axis_control_effects: set[str] = set()
     for index, control in enumerate(emitted_controls):
         label = f"color_tone_contract.emitted_controls[{index}]"
         if not isinstance(control, dict):
@@ -473,6 +587,10 @@ def _audit_color_tone_contract(
         layer = control.get("causal_layer")
         if not isinstance(layer, str) or layer not in VALID_COLOR_CAUSAL_LAYERS:
             errors.append(f"{label}.causal_layer is invalid")
+
+        control_role = control.get("control_role")
+        if control_role not in VALID_COLOR_CONTROL_ROLES:
+            errors.append(f"{label}.control_role is invalid")
 
         effect_ids = control.get("aggregate_effect_ids")
         if not _nonempty_strings(effect_ids):
@@ -512,11 +630,559 @@ def _audit_color_tone_contract(
                 f"{label} must represent exactly one causal layer matching its claim"
             )
 
+        resolved_effects = [
+            aggregate_map[effect_id]
+            for effect_id in effect_ids
+            if effect_id in aggregate_map
+        ]
+        if control_role == "axis-control":
+            region_id = control.get("region_id")
+            axis = control.get("axis")
+            if region_id not in known_regions:
+                errors.append(f"{label}.region_id references an unknown region")
+            if axis not in VALID_COLOR_AXES:
+                errors.append(f"{label}.axis is invalid")
+            if any(
+                effect.get("region_id") != region_id or effect.get("axis") != axis
+                for effect in resolved_effects
+            ):
+                errors.append(
+                    f"{label}: an axis-control may reference only one matching region and axis"
+                )
+            if layer == "intrinsic":
+                axis_control_effects.update(effect_ids)
+        elif control_role == "compound-control":
+            if not _nonempty_string(control.get("compound_justification")):
+                errors.append(
+                    f"{label}.compound_justification is required for a compound-control"
+                )
+            effect_signatures = {
+                (effect.get("region_id"), effect.get("axis"))
+                for effect in resolved_effects
+            }
+            if len(effect_signatures) < 2:
+                errors.append(
+                    f"{label}: use axis-control when a control affects only one region and axis"
+                )
+
     for claim_id in sorted(listed_claim_ids & set(claim_map)):
         count = controlled_claim_counts.get(claim_id, 0)
         if count != 1:
             errors.append(
                 f"color/tone claim {claim_id!r} must have exactly one emitted final-prompt control"
+            )
+
+    for _region_id, _axis, axis_label, axis_spec in axis_requirements:
+        if axis_spec.get("emission") != "required":
+            continue
+        effect_id = axis_spec.get("aggregate_effect_id")
+        if effect_id not in axis_control_effects:
+            errors.append(
+                f"{axis_label}: required intrinsic axis needs its own intrinsic axis-control"
+            )
+
+    appearance_metaphors = color_contract.get("appearance_metaphors", [])
+    if not isinstance(appearance_metaphors, list):
+        errors.append("color_tone_contract.appearance_metaphors must be a list")
+        appearance_metaphors = []
+    for index, metaphor in enumerate(appearance_metaphors):
+        label = f"color_tone_contract.appearance_metaphors[{index}]"
+        if not isinstance(metaphor, dict):
+            errors.append(f"{label} must be an object")
+            continue
+        if not _nonempty_string(metaphor.get("phrase")):
+            errors.append(f"{label}.phrase must be non-empty")
+        status = metaphor.get("status")
+        if status not in VALID_APPEARANCE_METAPHOR_STATUS:
+            errors.append(f"{label}.status is invalid")
+        emit = metaphor.get("emit")
+        if not isinstance(emit, bool):
+            errors.append(f"{label}.emit must be boolean")
+        if emit and status != "model-calibrated":
+            errors.append(
+                f"{label}: only a model-calibrated appearance metaphor may be emitted"
+            )
+        if emit and not _nonempty_strings(metaphor.get("calibration_evidence")):
+            errors.append(
+                f"{label}.calibration_evidence is required for an emitted metaphor"
+            )
+        decomposed_ids = metaphor.get("decomposed_control_ids", [])
+        if not isinstance(decomposed_ids, list) or not all(
+            _nonempty_string(item) for item in decomposed_ids
+        ):
+            errors.append(f"{label}.decomposed_control_ids must be strings")
+        unknown_controls = sorted(set(decomposed_ids) - control_ids)
+        if unknown_controls:
+            errors.append(
+                f"{label}.decomposed_control_ids references unknown controls: "
+                + ", ".join(unknown_controls)
+            )
+
+    return errors
+
+
+def _audit_light_form_contract(
+    contract: dict[str, Any],
+    claim_map: dict[str, dict[str, Any]],
+    major_region_ids: set[str],
+) -> list[str]:
+    """Validate the optional source-relative lighting decision contract."""
+
+    errors: list[str] = []
+    light_contract = contract.get("light_form_contract")
+    claims_with_effects = {
+        claim_id
+        for claim_id, claim in claim_map.items()
+        if isinstance(claim.get("lighting_effects"), list)
+        and bool(claim["lighting_effects"])
+    }
+    if light_contract is None:
+        if claims_with_effects:
+            errors.append(
+                "candidate claims with lighting_effects require light_form_contract"
+            )
+        return errors
+    if not isinstance(light_contract, dict):
+        return ["light_form_contract must be an object"]
+
+    importance = light_contract.get("importance")
+    if importance not in VALID_LIGHT_IMPORTANCE:
+        errors.append(
+            "light_form_contract.importance must be one of "
+            f"{sorted(VALID_LIGHT_IMPORTANCE)}"
+        )
+    scope = light_contract.get("observation_scope")
+    if scope not in VALID_LIGHT_OBSERVATION_SCOPES:
+        errors.append(
+            "light_form_contract.observation_scope must be one of "
+            f"{sorted(VALID_LIGHT_OBSERVATION_SCOPES)}"
+        )
+
+    observed = light_contract.get("observed_result")
+    if not isinstance(observed, dict):
+        errors.append("light_form_contract.observed_result must be an object")
+        observed = {}
+    for field in ("global_tonal_range", "gradient_character"):
+        if not _nonempty_string(observed.get(field)):
+            errors.append(
+                f"light_form_contract.observed_result.{field} must be non-empty"
+            )
+    if observed.get("local_form_contrast") not in VALID_LIGHT_FORM_CONTRAST:
+        errors.append(
+            "light_form_contract.observed_result.local_form_contrast is invalid"
+        )
+    for field in ("largest_bright_masses", "largest_dark_masses"):
+        value = observed.get(field, [])
+        if not _string_list(value):
+            errors.append(
+                f"light_form_contract.observed_result.{field} must be a list of strings"
+            )
+        elif importance == "primary" and not value:
+            errors.append(
+                f"light_form_contract.observed_result.{field} must record primary massing"
+            )
+    if not _nonempty_strings(observed.get("source_evidence")):
+        errors.append(
+            "light_form_contract.observed_result.source_evidence must contain visible evidence"
+        )
+
+    hypothesis = light_contract.get("source_hypothesis")
+    if not isinstance(hypothesis, dict):
+        errors.append("light_form_contract.source_hypothesis must be an object")
+        hypothesis = {}
+    hypothesis_fields = (
+        ("model_type", VALID_LIGHT_MODEL_TYPES),
+        ("source_count", VALID_LIGHT_SOURCE_COUNTS),
+        ("camera_axis_offset", VALID_LIGHT_AXIS_OFFSETS),
+        ("elevation", VALID_LIGHT_ELEVATIONS),
+        ("apparent_angular_size", VALID_LIGHT_SOURCE_SIZES),
+        ("fill_structure", VALID_LIGHT_FILL_STRUCTURES),
+        ("confidence", VALID_COLOR_CONFIDENCE),
+        ("actuation", VALID_LIGHT_ACTUATIONS),
+    )
+    for field, allowed in hypothesis_fields:
+        if hypothesis.get(field) not in allowed:
+            errors.append(f"light_form_contract.source_hypothesis.{field} is invalid")
+    if not _nonempty_string(hypothesis.get("front_side_back_relation")):
+        errors.append(
+            "light_form_contract.source_hypothesis.front_side_back_relation must be non-empty"
+        )
+    if not _nonempty_strings(hypothesis.get("source_evidence")):
+        errors.append(
+            "light_form_contract.source_hypothesis.source_evidence must contain visible evidence"
+        )
+    if hypothesis.get("confidence") == "low" and hypothesis.get("actuation") in {
+        "physical-cause",
+        "physical-plus-result",
+    }:
+        errors.append(
+            "a low-confidence source hypothesis cannot emit a physical-light cause"
+        )
+
+    known_regions = major_region_ids | {"global"}
+    region_effects = light_contract.get("region_effects", [])
+    if not isinstance(region_effects, list):
+        errors.append("light_form_contract.region_effects must be a list")
+        region_effects = []
+    if importance == "primary" and not region_effects:
+        errors.append(
+            "a primary light_form_contract must contain observed region effects"
+        )
+    region_effect_ids: set[str] = set()
+    spill_region_count = 0
+    for index, effect in enumerate(region_effects):
+        label = f"light_form_contract.region_effects[{index}]"
+        if not isinstance(effect, dict):
+            errors.append(f"{label} must be an object")
+            continue
+        effect_id = effect.get("id")
+        if not _nonempty_string(effect_id):
+            errors.append(f"{label}.id must be non-empty")
+        elif effect_id in region_effect_ids:
+            errors.append(f"duplicate observed lighting region effect id: {effect_id}")
+        else:
+            region_effect_ids.add(effect_id)
+        if effect.get("region_id") not in known_regions:
+            errors.append(f"{label}.region_id references an unknown region")
+        if effect.get("role") not in VALID_LIGHT_REGION_EFFECT_ROLES:
+            errors.append(f"{label}.role is invalid")
+        elif effect.get("role") == "spill":
+            spill_region_count += 1
+        if not _nonempty_string(effect.get("value_relation")):
+            errors.append(f"{label}.value_relation must be non-empty")
+        if effect.get("gradient_strength") not in VALID_STRENGTHS:
+            errors.append(f"{label}.gradient_strength is invalid")
+        if not _nonempty_string(effect.get("edge_character")):
+            errors.append(f"{label}.edge_character must be non-empty")
+        if not _nonempty_strings(effect.get("source_evidence")):
+            errors.append(f"{label}.source_evidence must contain visible evidence")
+
+    shadow_events = light_contract.get("shadow_events", [])
+    if not isinstance(shadow_events, list):
+        errors.append("light_form_contract.shadow_events must be a list")
+        shadow_events = []
+    shadow_ids: set[str] = set()
+    for index, shadow in enumerate(shadow_events):
+        label = f"light_form_contract.shadow_events[{index}]"
+        if not isinstance(shadow, dict):
+            errors.append(f"{label} must be an object")
+            continue
+        shadow_id = shadow.get("id")
+        if not _nonempty_string(shadow_id):
+            errors.append(f"{label}.id must be non-empty")
+        elif shadow_id in shadow_ids:
+            errors.append(f"duplicate shadow event id: {shadow_id}")
+        else:
+            shadow_ids.add(shadow_id)
+        if shadow.get("region_id") not in known_regions:
+            errors.append(f"{label}.region_id references an unknown region")
+        if shadow.get("owner") not in VALID_SHADOW_OWNERS:
+            errors.append(f"{label}.owner is invalid")
+        if not _nonempty_string(shadow.get("footprint")):
+            errors.append(f"{label}.footprint must be non-empty")
+        if not _nonempty_string(shadow.get("edge_character")):
+            errors.append(f"{label}.edge_character must be non-empty")
+        if shadow.get("confidence") not in VALID_COLOR_CONFIDENCE:
+            errors.append(f"{label}.confidence is invalid")
+        if not _nonempty_strings(shadow.get("source_evidence")):
+            errors.append(f"{label}.source_evidence must contain visible evidence")
+
+    material_responses = light_contract.get("material_responses", [])
+    if not isinstance(material_responses, list):
+        errors.append("light_form_contract.material_responses must be a list")
+        material_responses = []
+    material_region_ids: set[str] = set()
+    for index, material in enumerate(material_responses):
+        label = f"light_form_contract.material_responses[{index}]"
+        if not isinstance(material, dict):
+            errors.append(f"{label} must be an object")
+            continue
+        region_id = material.get("region_id")
+        if region_id not in known_regions:
+            errors.append(f"{label}.region_id references an unknown region")
+        elif region_id in material_region_ids:
+            errors.append(f"duplicate material-light response region: {region_id}")
+        else:
+            material_region_ids.add(region_id)
+        if material.get("response") not in VALID_LIGHT_MATERIAL_RESPONSES:
+            errors.append(f"{label}.response is invalid")
+        for field in ("highlight_width", "highlight_strength", "black_level_behavior"):
+            if not _nonempty_string(material.get(field)):
+                errors.append(f"{label}.{field} must be non-empty")
+        if not _nonempty_strings(material.get("source_evidence")):
+            errors.append(f"{label}.source_evidence must contain visible evidence")
+
+    pose_dependency = light_contract.get("pose_light_dependency")
+    if not isinstance(pose_dependency, dict):
+        errors.append("light_form_contract.pose_light_dependency must be an object")
+        pose_dependency = {}
+    geometry_dependency = pose_dependency.get("geometry_dependency")
+    if geometry_dependency not in VALID_LIGHT_GEOMETRY_DEPENDENCIES:
+        errors.append(
+            "light_form_contract.pose_light_dependency.geometry_dependency is invalid"
+        )
+    if not _nonempty_string(pose_dependency.get("preserved_result")):
+        errors.append(
+            "light_form_contract.pose_light_dependency.preserved_result must be non-empty"
+        )
+    flexible_effects = pose_dependency.get("flexible_effects", [])
+    if not _string_list(flexible_effects):
+        errors.append(
+            "light_form_contract.pose_light_dependency.flexible_effects must be a list of strings"
+        )
+    elif geometry_dependency in {"pose-robust", "mixed"} and not flexible_effects:
+        errors.append(
+            "pose-robust or mixed lighting must name flexible light effects"
+        )
+    if not _nonempty_strings(pose_dependency.get("source_evidence")):
+        errors.append(
+            "light_form_contract.pose_light_dependency.source_evidence must contain visible evidence"
+        )
+
+    aggregate_effects = light_contract.get("aggregate_effects")
+    if not isinstance(aggregate_effects, list) or not aggregate_effects:
+        errors.append(
+            "light_form_contract.aggregate_effects must contain at least one source target"
+        )
+        aggregate_effects = []
+    aggregate_map: dict[str, dict[str, Any]] = {}
+    aggregate_signatures: dict[tuple[str, str, str], str] = {}
+    primary_effect_count = 0
+    effect_axes: set[str] = set()
+    for index, effect in enumerate(aggregate_effects):
+        label = f"light_form_contract.aggregate_effects[{index}]"
+        if not isinstance(effect, dict):
+            errors.append(f"{label} must be an object")
+            continue
+        effect_id = effect.get("id")
+        if not _nonempty_string(effect_id):
+            errors.append(f"{label}.id must be non-empty")
+            continue
+        if effect_id in aggregate_map:
+            errors.append(f"duplicate aggregate lighting effect id: {effect_id}")
+        aggregate_map[str(effect_id)] = effect
+        axis = effect.get("axis")
+        if axis not in VALID_LIGHT_EFFECT_AXES:
+            errors.append(f"{label}.axis is invalid")
+        else:
+            effect_axes.add(str(axis))
+        direction = effect.get("direction")
+        if not _nonempty_string(direction):
+            errors.append(f"{label}.direction must be non-empty")
+        region_id = effect.get("region_id")
+        if region_id not in known_regions:
+            errors.append(f"{label}.region_id references an unknown region")
+        if (
+            axis in VALID_LIGHT_EFFECT_AXES
+            and _nonempty_string(direction)
+            and region_id in known_regions
+        ):
+            normalized_direction = "-".join(
+                direction.casefold().replace("_", " ").replace("-", " ").split()
+            )
+            signature = (str(region_id), str(axis), normalized_direction)
+            previous = aggregate_signatures.get(signature)
+            if previous is not None:
+                errors.append(
+                    f"aggregate lighting effects {previous!r} and {effect_id!r} split one region/axis/direction"
+                )
+            else:
+                aggregate_signatures[signature] = str(effect_id)
+        if effect.get("role") not in VALID_INVARIANT_ROLES:
+            errors.append(f"{label}.role is invalid")
+        elif effect.get("role") == "primary":
+            primary_effect_count += 1
+        if effect.get("target_strength") not in VALID_STRENGTHS:
+            errors.append(f"{label}.target_strength is invalid")
+        if not isinstance(effect.get("source_supported"), bool):
+            errors.append(f"{label}.source_supported must be boolean")
+        if not _nonempty_strings(effect.get("source_evidence")):
+            errors.append(f"{label}.source_evidence must contain visible evidence")
+        if not _nonempty_strings(effect.get("claim_ids")):
+            errors.append(f"{label}.claim_ids must contain emitted lighting claims")
+    if importance == "primary" and primary_effect_count == 0:
+        errors.append(
+            "a primary light_form_contract must contain a primary aggregate effect"
+        )
+
+    actuation = hypothesis.get("actuation")
+    physical_axes = effect_axes & {"source-geometry", "fill"}
+    result_axes = effect_axes - {"source-geometry", "fill"}
+    if actuation == "physical-cause" and "source-geometry" not in effect_axes:
+        errors.append("physical-cause actuation requires a source-geometry effect")
+    if actuation == "physical-plus-result" and (
+        "source-geometry" not in effect_axes or not result_axes
+    ):
+        errors.append(
+            "physical-plus-result actuation requires source geometry and a result-space effect"
+        )
+    if actuation in {"result-space-only", "diagnostic-only"} and physical_axes:
+        errors.append(
+            f"{actuation} actuation cannot emit source-geometry or fill effects"
+        )
+    if "fill" in effect_axes and hypothesis.get("fill_structure") == "uncertain":
+        errors.append("an emitted fill effect requires a source-supported fill structure")
+    if "shadow-topology" in effect_axes and not shadow_events:
+        errors.append("a shadow-topology effect requires at least one shadow event")
+    if "material-response" in effect_axes and not material_responses:
+        errors.append("a material-response effect requires observed material response")
+    if "background-spill" in effect_axes and spill_region_count == 0:
+        errors.append("a background-spill effect requires an observed spill region")
+
+    light_claim_ids = light_contract.get("claim_ids")
+    if not _nonempty_strings(light_claim_ids):
+        errors.append(
+            "light_form_contract.claim_ids must contain emitted lighting claims"
+        )
+        light_claim_ids = []
+    listed_claim_ids = set(light_claim_ids)
+    unknown_claims = sorted(listed_claim_ids - set(claim_map))
+    if unknown_claims:
+        errors.append(
+            "light_form_contract.claim_ids references unknown claims: "
+            + ", ".join(unknown_claims)
+        )
+    unlisted_effect_claims = sorted(claims_with_effects - listed_claim_ids)
+    if unlisted_effect_claims:
+        errors.append(
+            "claims with lighting_effects missing from light_form_contract.claim_ids: "
+            + ", ".join(unlisted_effect_claims)
+        )
+
+    observed_effect_claims: dict[str, set[str]] = {}
+    for claim_id in sorted(listed_claim_ids & set(claim_map)):
+        claim = claim_map[claim_id]
+        if not claim.get("emit"):
+            errors.append(f"{claim_id}: Light/Form contract may reference only emitted claims")
+        effects = claim.get("lighting_effects")
+        if not isinstance(effects, list) or not effects:
+            errors.append(f"{claim_id}: lighting_effects must be a non-empty list")
+            continue
+        for index, effect_ref in enumerate(effects):
+            label = f"{claim_id}.lighting_effects[{index}]"
+            if not isinstance(effect_ref, dict):
+                errors.append(f"{label} must be an object")
+                continue
+            effect_id = effect_ref.get("aggregate_effect_id")
+            if effect_id not in aggregate_map:
+                errors.append(f"{label}.aggregate_effect_id is unknown")
+                continue
+            if effect_ref.get("confidence") not in VALID_COLOR_CONFIDENCE:
+                errors.append(f"{label}.confidence is invalid")
+            if not _nonempty_strings(effect_ref.get("source_evidence")):
+                errors.append(f"{label}.source_evidence must contain visible evidence")
+            observed_effect_claims.setdefault(str(effect_id), set()).add(claim_id)
+
+    for effect_id, effect in aggregate_map.items():
+        declared_claims = set(effect.get("claim_ids", []))
+        unknown = sorted(declared_claims - listed_claim_ids)
+        if unknown:
+            errors.append(
+                f"aggregate lighting effect {effect_id!r} references unlisted claims: "
+                + ", ".join(unknown)
+            )
+        observed = observed_effect_claims.get(effect_id, set())
+        if declared_claims != observed:
+            errors.append(
+                f"aggregate lighting effect {effect_id!r} claim_ids do not match lighting_effects references"
+            )
+
+    controls = light_contract.get("emitted_controls")
+    if not isinstance(controls, list) or not controls:
+        errors.append(
+            "light_form_contract.emitted_controls must contain exact final-prompt controls"
+        )
+        controls = []
+    control_ids: set[str] = set()
+    prompt_excerpts: set[str] = set()
+    controlled_claim_counts: dict[str, int] = {}
+    for index, control in enumerate(controls):
+        label = f"light_form_contract.emitted_controls[{index}]"
+        if not isinstance(control, dict):
+            errors.append(f"{label} must be an object")
+            continue
+        control_id = control.get("id")
+        if not _nonempty_string(control_id):
+            errors.append(f"{label}.id must be non-empty")
+        elif control_id in control_ids:
+            errors.append(f"duplicate emitted lighting control id: {control_id}")
+        else:
+            control_ids.add(str(control_id))
+        excerpt = control.get("prompt_excerpt")
+        if not _nonempty_string(excerpt):
+            errors.append(f"{label}.prompt_excerpt must be non-empty")
+        elif excerpt.strip() in prompt_excerpts:
+            errors.append(f"duplicate emitted lighting control excerpt: {excerpt.strip()!r}")
+        else:
+            prompt_excerpts.add(excerpt.strip())
+        claim_id = control.get("claim_id")
+        if not _nonempty_string(claim_id) or claim_id not in listed_claim_ids:
+            errors.append(f"{label}.claim_id must reference a listed lighting claim")
+            continue
+        controlled_claim_counts[str(claim_id)] = (
+            controlled_claim_counts.get(str(claim_id), 0) + 1
+        )
+        owner = control.get("owner")
+        if owner not in VALID_LIGHT_EFFECT_AXES:
+            errors.append(f"{label}.owner is invalid")
+        effect_ids = control.get("aggregate_effect_ids")
+        if not _nonempty_strings(effect_ids):
+            errors.append(f"{label}.aggregate_effect_ids must be non-empty")
+            effect_ids = []
+        elif len(effect_ids) != len(set(effect_ids)):
+            errors.append(f"{label}.aggregate_effect_ids contains duplicates")
+        unknown_effects = sorted(set(effect_ids) - set(aggregate_map))
+        if unknown_effects:
+            errors.append(
+                f"{label}.aggregate_effect_ids references unknown effects: "
+                + ", ".join(unknown_effects)
+            )
+        claim = claim_map.get(str(claim_id), {})
+        claim_effects = claim.get("lighting_effects", [])
+        expected_effect_ids = {
+            ref.get("aggregate_effect_id")
+            for ref in claim_effects
+            if isinstance(ref, dict) and ref.get("aggregate_effect_id") in aggregate_map
+        }
+        if set(effect_ids) != expected_effect_ids:
+            errors.append(
+                f"{label}.aggregate_effect_ids must exactly match the claim's lighting effects"
+            )
+        resolved_axes = {
+            aggregate_map[effect_id].get("axis")
+            for effect_id in effect_ids
+            if effect_id in aggregate_map
+        }
+        if resolved_axes != {owner}:
+            errors.append(
+                f"{label} must represent exactly one Light/Form owner matching its effects"
+            )
+
+    for claim_id in sorted(listed_claim_ids & set(claim_map)):
+        count = controlled_claim_counts.get(claim_id, 0)
+        if count != 1:
+            errors.append(
+                f"lighting claim {claim_id!r} must have exactly one emitted final-prompt control"
+            )
+
+    color_contract = contract.get("color_tone_contract")
+    if isinstance(color_contract, dict):
+        color_claim_ids = set(color_contract.get("claim_ids", []))
+        overlap = sorted(listed_claim_ids & color_claim_ids)
+        if overlap:
+            errors.append(
+                "Light/Form and Color/Tone contracts cannot own the same claims: "
+                + ", ".join(overlap)
+            )
+        color_excerpts = {
+            item.get("prompt_excerpt", "").strip()
+            for item in color_contract.get("emitted_controls", [])
+            if isinstance(item, dict) and _nonempty_string(item.get("prompt_excerpt"))
+        }
+        excerpt_overlap = sorted(prompt_excerpts & color_excerpts)
+        if excerpt_overlap:
+            errors.append(
+                "Light/Form and Color/Tone contracts cannot own the same prompt excerpts"
             )
 
     return errors
@@ -741,6 +1407,17 @@ def audit_plan(plan: dict[str, Any]) -> list[str]:
         )
     errors.extend(_audit_color_tone_contract(contract, claim_map, region_ids))
 
+    if any(
+        isinstance(invariant, dict)
+        and invariant.get("axis") == "light-to-form"
+        and invariant.get("role") == "primary"
+        for invariant in invariants
+    ) and "light_form_contract" not in contract:
+        errors.append(
+            "a primary light-to-form invariant requires a source-relative light_form_contract"
+        )
+    errors.extend(_audit_light_form_contract(contract, claim_map, region_ids))
+
     return errors
 
 
@@ -760,6 +1437,17 @@ def primary_signature(plan: dict[str, Any]) -> set[tuple[str, str, str]]:
                 f"{item.get('direction')}:{item.get('target_strength')}",
             )
             for item in color_contract.get("aggregate_effects", [])
+            if isinstance(item, dict) and item.get("role") == "primary"
+        )
+    light_contract = contract.get("light_form_contract")
+    if isinstance(light_contract, dict):
+        signature.update(
+            (
+                f"light-effect:{item.get('id')}",
+                f"{item.get('axis')}:{item.get('region_id')}",
+                f"{item.get('direction')}:{item.get('target_strength')}",
+            )
+            for item in light_contract.get("aggregate_effects", [])
             if isinstance(item, dict) and item.get("role") == "primary"
         )
     return signature

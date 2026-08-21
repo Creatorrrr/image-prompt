@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 from pathlib import Path
+import json
+import re
 import sys
 import tempfile
 import unittest
@@ -22,6 +24,8 @@ from color_probe import (  # noqa: E402
     compare_group_reports,
     compare_reports,
     comparison_context,
+    delta_e2000,
+    load_sampling_spec,
     parse_group,
     parse_region,
     summarize_groups,
@@ -75,6 +79,14 @@ class ColorProbeTests(unittest.TestCase):
         self.assertLess(delta["lab_d65"][0], 0.0)
         self.assertGreater(delta["chroma"], 0.0)
         self.assertGreater(delta["delta_e76"], 0.0)
+        self.assertGreater(delta["delta_e2000"], 0.0)
+
+    def test_delta_e2000_matches_published_reference_pair(self) -> None:
+        self.assertAlmostEqual(
+            delta_e2000((50.0, 2.6772, -79.7751), (50.0, 0.0, -82.7485)),
+            2.0425,
+            places=4,
+        )
 
     def test_comparison_requires_matching_region_names(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -152,6 +164,78 @@ class ColorProbeTests(unittest.TestCase):
             {"profile_status": "embedded-profile-converted-to-srgb"},
         )
         self.assertEqual(context["scope"], "assumed-display-space-relative")
+
+    def test_sampling_spec_keeps_independent_bounds_and_tone_zone_metadata(self) -> None:
+        payload = {
+            "regions": [
+                {
+                    "name": "target-a",
+                    "source_bounds": [0.1, 0.1, 0.2, 0.2],
+                    "comparison_bounds": [0.2, 0.1, 0.3, 0.2],
+                    "semantic_role": "target",
+                    "tone_zone": "midtone",
+                    "purpose": "intrinsic-displayed-color",
+                },
+                {
+                    "name": "target-b",
+                    "source_bounds": [0.3, 0.1, 0.4, 0.2],
+                    "comparison_bounds": [0.4, 0.1, 0.5, 0.2],
+                    "semantic_role": "target",
+                    "tone_zone": "midtone",
+                    "purpose": "intrinsic-displayed-color",
+                },
+            ],
+            "groups": [
+                {
+                    "name": "target",
+                    "region_names": ["target-a", "target-b"],
+                    "semantic_role": "target",
+                    "tone_zone": "midtone",
+                    "purpose": "intrinsic-displayed-color",
+                }
+            ],
+        }
+        with tempfile.TemporaryDirectory() as temp_dir:
+            path = Path(temp_dir) / "sampling.json"
+            path.write_text(json.dumps(payload), encoding="utf-8")
+            source, comparison, groups = load_sampling_spec(path)
+        self.assertNotEqual(source[0].bounds, comparison[0].bounds)
+        self.assertEqual(source[0].tone_zone, "midtone")
+        self.assertEqual(groups[0].semantic_role, "target")
+
+    def test_sampling_spec_rejects_mixed_intrinsic_group(self) -> None:
+        payload = {
+            "regions": [
+                {
+                    "name": "mixed-a",
+                    "source_bounds": [0.1, 0.1, 0.2, 0.2],
+                    "semantic_role": "target",
+                    "tone_zone": "mixed",
+                    "purpose": "intrinsic-displayed-color",
+                }
+            ]
+        }
+        with tempfile.TemporaryDirectory() as temp_dir:
+            path = Path(temp_dir) / "sampling.json"
+            path.write_text(json.dumps(payload), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "midtone or flat"):
+                load_sampling_spec(path)
+
+    def test_documented_sampling_spec_is_valid(self) -> None:
+        reference = (
+            Path(__file__).resolve().parents[1]
+            / "references"
+            / "color-reproduction-evaluation.md"
+        ).read_text(encoding="utf-8")
+        match = re.search(r"```json\n(.*?)\n```", reference, re.DOTALL)
+        self.assertIsNotNone(match)
+        with tempfile.TemporaryDirectory() as temp_dir:
+            path = Path(temp_dir) / "sampling.json"
+            path.write_text(match.group(1), encoding="utf-8")
+            source, comparison, groups = load_sampling_spec(path)
+        self.assertEqual(len(source), 4)
+        self.assertEqual(len(comparison), 4)
+        self.assertEqual({group.name for group in groups}, {"target-midtone", "context"})
 
 
 if __name__ == "__main__":

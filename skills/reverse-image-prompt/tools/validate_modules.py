@@ -17,8 +17,8 @@ VALID_TYPES = {"core", "concept", "subject", "detail", "medium", "style"}
 VALID_FACETS = {"core", "relationship", "subject", "medium", "detail-risk", "style"}
 MAX_MODULE_WORDS = 1200
 MAX_MODULE_LINES = 160
-MAX_TOTAL_MODULE_WORDS = 15000
-MAX_CORE_WORDS = 3500
+MAX_TOTAL_MODULE_WORDS = 17000
+MAX_CORE_WORDS = 3800
 MAX_DUPLICATE_LINE_RATIO = 0.10
 PROHIBITED_RUNTIME_TEXT = (
     "Legacy monolith fidelity rules preserved verbatim",

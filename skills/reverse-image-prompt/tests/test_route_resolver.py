@@ -72,6 +72,20 @@ class RouteResolverTests(unittest.TestCase):
         self.assertIn("medium.photographic-capture", modules)
         self.assertIn("subject.generic-object", modules)
 
+    def test_material_lighting_risk_selects_light_form_detail(self) -> None:
+        modules = resolve_modules(
+            {
+                "subjects": ["generic-object"],
+                "medium": ["photographic"],
+                "relationships": ["ordinary"],
+                "detail_risks": ["lighting-fidelity", "shadow-topology"],
+            },
+            self.manifest,
+        )
+        self.assertIn("detail.light-form-fidelity", modules)
+        self.assertIn("medium.photographic-capture", modules)
+        self.assertNotIn("detail.color-tone-fidelity", modules)
+
     def test_first_order_human_body_form_selects_dedicated_detail(self) -> None:
         modules = resolve_modules(
             {
@@ -159,10 +173,16 @@ class RouteResolverTests(unittest.TestCase):
                 "unowned_appearance_claim_audit",
                 "causal_color_phrase_scope",
                 "final_color_control_ledger",
+                "light_form_causal_consistency",
+                "unowned_lighting_claim_audit",
+                "global_local_contrast_separation",
+                "shadow_owner_coverage",
+                "final_light_control_ledger",
                 "module_evidence_not_prose",
                 "clause_ownership",
                 "diagnostic_render_separation",
                 "color_tone_output_ownership",
+                "light_form_output_ownership",
             }.issubset(CORE_ANCHOR_IDS)
         )
 
@@ -193,6 +213,23 @@ class RouteResolverTests(unittest.TestCase):
                 "display_color_scope",
                 "region_group_color_comparison",
             }.issubset(color["provides_anchors"])
+        )
+
+    def test_light_form_detail_exposes_generic_causal_anchors(self) -> None:
+        light = module_map(self.manifest)["detail.light-form-fidelity"]
+        self.assertTrue(
+            {
+                "light_form_contract",
+                "observed_light_result",
+                "source_geometry_fill_separation",
+                "global_local_light_contrast",
+                "shadow_ownership",
+                "material_light_response",
+                "pose_light_dependency",
+                "lighting_color_contract_handoff",
+                "light_control_ledger",
+                "render_light_verification",
+            }.issubset(light["provides_anchors"])
         )
 
     def test_photo_and_clothing_expose_contrast_and_material_anchors(self) -> None:
