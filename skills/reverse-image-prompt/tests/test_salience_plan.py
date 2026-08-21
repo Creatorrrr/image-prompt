@@ -143,6 +143,7 @@ def valid_color_plan() -> dict:
     )
     contract["color_tone_contract"] = {
         "importance": "primary",
+        "observation_scope": "source-visible",
         "global": {
             "cast_or_palette_shift": "no strong global shift is visible",
             "exposure_behavior": "the central field retains highlight detail",
@@ -211,6 +212,15 @@ def valid_color_plan() -> dict:
                 "source_evidence": ["broad source-visible value separation"],
             }
         ],
+        "emitted_controls": [
+            {
+                "id": "control-surface-tone",
+                "prompt_excerpt": "a central field lighter and lower-chroma than the surround",
+                "claim_id": "claim-surface-tone",
+                "causal_layer": "intrinsic",
+                "aggregate_effect_ids": ["central-value-relation"],
+            }
+        ],
     }
     return plan
 
@@ -231,6 +241,41 @@ class SaliencePlanTests(unittest.TestCase):
 
     def test_valid_color_tone_contract_passes(self) -> None:
         self.assertEqual(audit_plan(valid_color_plan()), [])
+
+    def test_color_tone_contract_requires_observation_scope(self) -> None:
+        plan = valid_color_plan()
+        del plan["render_contract"]["color_tone_contract"]["observation_scope"]
+        self.assertTrue(
+            any("observation_scope" in error for error in audit_plan(plan))
+        )
+
+    def test_color_tone_contract_requires_final_prompt_controls(self) -> None:
+        plan = valid_color_plan()
+        del plan["render_contract"]["color_tone_contract"]["emitted_controls"]
+        self.assertTrue(
+            any("emitted_controls" in error for error in audit_plan(plan))
+        )
+
+    def test_one_color_claim_cannot_have_two_final_prompt_controls(self) -> None:
+        plan = valid_color_plan()
+        controls = plan["render_contract"]["color_tone_contract"]["emitted_controls"]
+        duplicate = deepcopy(controls[0])
+        duplicate["id"] = "control-surface-tone-again"
+        duplicate["prompt_excerpt"] = "the central field remains visibly lighter"
+        controls.append(duplicate)
+        self.assertTrue(
+            any("exactly one emitted final-prompt control" in error for error in audit_plan(plan))
+        )
+
+    def test_final_prompt_control_must_match_claim_layer_and_effects(self) -> None:
+        plan = valid_color_plan()
+        control = plan["render_contract"]["color_tone_contract"]["emitted_controls"][0]
+        control["causal_layer"] = "illumination"
+        control["aggregate_effect_ids"] = ["unknown-effect"]
+        errors = audit_plan(plan)
+        self.assertTrue(any("unknown effects" in error for error in errors))
+        self.assertTrue(any("exactly match" in error for error in errors))
+        self.assertTrue(any("exactly one causal layer" in error for error in errors))
 
     def test_color_invariant_requires_color_tone_contract(self) -> None:
         plan = valid_color_plan()
@@ -326,6 +371,15 @@ class SaliencePlanTests(unittest.TestCase):
         contract["candidate_claims"].append(illumination)
         color_contract = contract["color_tone_contract"]
         color_contract["claim_ids"].append(illumination["id"])
+        color_contract["emitted_controls"].append(
+            {
+                "id": "control-supported-light-shift",
+                "prompt_excerpt": "a matching source-visible illumination shift",
+                "claim_id": illumination["id"],
+                "causal_layer": "illumination",
+                "aggregate_effect_ids": ["central-value-relation"],
+            }
+        )
         aggregate = color_contract["aggregate_effects"][0]
         aggregate["claim_ids"].append(illumination["id"])
         aggregate["source_evidence"].append(

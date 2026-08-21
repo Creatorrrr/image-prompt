@@ -142,6 +142,7 @@ class RouteResolverTests(unittest.TestCase):
                 "direct_perceptual_appeal",
                 "aggregate_prior_cluster_audit",
                 "broad_color_descriptor_discipline",
+                "color_metaphor_decomposition",
                 "detail_not_sharpness",
                 "attractiveness_polish_separation",
                 "background_legibility_ceiling",
@@ -156,6 +157,8 @@ class RouteResolverTests(unittest.TestCase):
                 "cross_slot_perceptual_effect_audit",
                 "color_tone_causal_consistency",
                 "unowned_appearance_claim_audit",
+                "causal_color_phrase_scope",
+                "final_color_control_ledger",
                 "module_evidence_not_prose",
                 "clause_ownership",
                 "diagnostic_render_separation",
@@ -187,6 +190,8 @@ class RouteResolverTests(unittest.TestCase):
                 "aggregate_color_effect_budget",
                 "tone_zone_response",
                 "color_measurement_limits",
+                "display_color_scope",
+                "region_group_color_comparison",
             }.issubset(color["provides_anchors"])
         )
 
