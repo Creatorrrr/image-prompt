@@ -1,6 +1,6 @@
 ---
 id: core.pre-emit-gate
-version: 11
+version: 12
 priority: 100
 type: core
 tier: 0
@@ -28,6 +28,8 @@ provides_anchors:
   - cross_slot_perceptual_effect_audit
   - color_tone_causal_consistency
   - unowned_appearance_claim_audit
+  - causal_color_phrase_scope
+  - final_color_control_ledger
 ---
 
 # Core: pre-emit gate
@@ -60,6 +62,8 @@ Apply this as a rewrite pass, not a checklist appended to the draft.
 - Audit shared perceptual effects across semantic slots, causal layers, paragraphs, negatives, and settings. Slot names being unique does not make repeated value, chroma, hue, or contrast directions independent.
 - For a material color or tone effect, verify one aggregate source-relative target and the evidence for every emitted intrinsic, illumination, global-cast, exposure, processing, or hierarchy contribution. Merge or delete a contribution whose causal layer lacks independent evidence.
 - Assign every appearance-changing color or tone phrase to one causal layer; treat free-floating mood or color adjectives as unowned claims and rewrite them from observable axes.
+- Split an ambiguous color phrase when one modifier could silently control intrinsic surface, illumination, exposure, or processing at the same time.
+- Re-read the exact final `PROMPT:` rather than trusting the analysis plan. Reconcile every exact color-changing excerpt in the final prompt with one emitted claim, one causal layer, and its complete aggregate effect budget. Split, replace, or delete any unowned excerpt, repeated direction, or multi-layer compound.
 - Check global cast against reliable neutral or multi-region evidence; otherwise retain uncertainty and relative relations. Keep hierarchy to area, value, chroma, or contrast unless hue contrast itself is invariant.
 
 ### Spatial and fidelity checks

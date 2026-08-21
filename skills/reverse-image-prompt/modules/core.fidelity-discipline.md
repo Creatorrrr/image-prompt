@@ -1,6 +1,6 @@
 ---
 id: core.fidelity-discipline
-version: 9
+version: 10
 priority: 104
 type: core
 tier: 0
@@ -27,6 +27,7 @@ provides_anchors:
   - direct_perceptual_appeal
   - aggregate_prior_cluster_audit
   - broad_color_descriptor_discipline
+  - color_metaphor_decomposition
 ---
 
 # Core: fidelity discipline and anti-normalization
@@ -66,6 +67,8 @@ Treat descriptive detail and rendered sharpness as independent controls. Detail 
 Translate evaluative or mood words into visible mechanisms. Use a broad descriptor at most once; it cannot replace causal evidence.
 
 Treat a broad color descriptor as a hypothesis about one causal layer, not as shorthand for hue, value, chroma, lighting, mood, and processing at once. Replace overload with source-supported axes.
+
+Decompose an appearance metaphor into observable color axes, surface behavior, and illumination before using it as a non-directional summary. A metaphor may summarize resolved evidence once; it must not add a second color, gloss, softness, luminosity, or grading instruction.
 
 Audit prior-heavy cues as a combined cluster, not only as isolated labels. Ignore subject nouns temporarily; rewrite unsupported quality, lighting, surface, framing, or style defaults from evidence without a universal blacklist.
 

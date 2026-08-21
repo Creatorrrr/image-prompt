@@ -3,7 +3,8 @@
 
 The probe is diagnostic only. It reports robust source-relative color evidence,
 profile status, and optional source/render deltas; it never emits prompt text or
-auto-detects skin, products, backgrounds, or other semantic regions.
+auto-detects skin, products, backgrounds, or other semantic regions. Optional
+groups are analyst-named and use equal region weighting.
 """
 
 from __future__ import annotations
@@ -34,6 +35,12 @@ class RegionSpec:
     bounds: tuple[float, float, float, float]
 
 
+@dataclass(frozen=True)
+class GroupSpec:
+    name: str
+    region_names: tuple[str, ...]
+
+
 def parse_region(raw: str) -> RegionSpec:
     """Parse NAME=X0,Y0,X1,Y1 with normalized coordinates."""
 
@@ -55,6 +62,23 @@ def parse_region(raw: str) -> RegionSpec:
             f"region {name!r} coordinates must satisfy 0 <= x0 < x1 <= 1 and 0 <= y0 < y1 <= 1"
         )
     return RegionSpec(name=name, bounds=(x0, y0, x1, y1))
+
+
+def parse_group(raw: str) -> GroupSpec:
+    """Parse NAME=REGION_A,REGION_B with at least two unique members."""
+
+    if "=" not in raw:
+        raise ValueError("group must use NAME=REGION_A,REGION_B")
+    name, raw_members = raw.split("=", 1)
+    name = name.strip()
+    if not name:
+        raise ValueError("group name must be non-empty")
+    region_names = tuple(part.strip() for part in raw_members.split(",") if part.strip())
+    if len(region_names) < 2:
+        raise ValueError(f"group {name!r} must contain at least two regions")
+    if len(set(region_names)) != len(region_names):
+        raise ValueError(f"group {name!r} region names must be unique")
+    return GroupSpec(name=name, region_names=region_names)
 
 
 def _load_srgb(path: Path) -> tuple[Image.Image, str, list[str]]:
@@ -263,6 +287,125 @@ def compare_reports(source: dict[str, Any], target: dict[str, Any]) -> list[dict
     return comparisons
 
 
+def summarize_groups(
+    report: dict[str, Any], groups: list[GroupSpec]
+) -> list[dict[str, Any]]:
+    """Summarize analyst-selected groups with equal weight per region median."""
+
+    group_names = [group.name for group in groups]
+    if len(set(group_names)) != len(group_names):
+        raise ValueError("group names must be unique")
+    region_map = {region["name"]: region for region in report["regions"]}
+
+    summaries: list[dict[str, Any]] = []
+    for group in groups:
+        unknown = sorted(set(group.region_names) - set(region_map))
+        if unknown:
+            raise ValueError(
+                f"group {group.name!r} references unknown regions: {', '.join(unknown)}"
+            )
+        medians = [region_map[name]["median"] for name in group.region_names]
+        lab_median = tuple(
+            statistics.median(median["lab_d65"][axis] for median in medians)
+            for axis in range(3)
+        )
+        chroma = math.hypot(lab_median[1], lab_median[2])
+        hue = math.degrees(math.atan2(lab_median[2], lab_median[1])) % 360.0
+        lightness_values = [median["lab_d65"][0] for median in medians]
+        chroma_values = [median["chroma"] for median in medians]
+        summaries.append(
+            {
+                "name": group.name,
+                "region_names": list(group.region_names),
+                "region_count": len(group.region_names),
+                "equal_region_median": {
+                    "lab_d65": _round_triplet(lab_median, 3),
+                    "chroma": round(chroma, 3),
+                    "hue_degrees": round(hue, 3),
+                },
+                "region_median_ranges": {
+                    "lightness": _round_triplet(
+                        (min(lightness_values), max(lightness_values)), 3
+                    ),
+                    "chroma": _round_triplet(
+                        (min(chroma_values), max(chroma_values)), 3
+                    ),
+                },
+            }
+        )
+    return summaries
+
+
+def compare_group_reports(
+    source_groups: list[dict[str, Any]],
+    target_groups: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    """Compare matching equal-region group summaries."""
+
+    source_map = {group["name"]: group for group in source_groups}
+    target_map = {group["name"]: group for group in target_groups}
+    if set(source_map) != set(target_map):
+        raise ValueError("source and comparison reports must use matching group names")
+
+    comparisons: list[dict[str, Any]] = []
+    for name in sorted(source_map):
+        source_group = source_map[name]
+        target_group = target_map[name]
+        if set(source_group["region_names"]) != set(target_group["region_names"]):
+            raise ValueError(f"group {name!r} must use matching region names")
+        source_median = source_group["equal_region_median"]
+        target_median = target_group["equal_region_median"]
+        source_lab = source_median["lab_d65"]
+        target_lab = target_median["lab_d65"]
+        delta_lab = [target_lab[index] - source_lab[index] for index in range(3)]
+        comparisons.append(
+            {
+                "name": name,
+                "region_names": source_group["region_names"],
+                "target_minus_source": {
+                    "lab_d65": _round_triplet(delta_lab, 3),
+                    "delta_e76": round(
+                        math.sqrt(sum(value * value for value in delta_lab)), 3
+                    ),
+                    "chroma": round(
+                        target_median["chroma"] - source_median["chroma"], 3
+                    ),
+                    "hue_degrees": round(
+                        _hue_delta(
+                            target_median["hue_degrees"],
+                            source_median["hue_degrees"],
+                        ),
+                        3,
+                    ),
+                },
+            }
+        )
+    return comparisons
+
+
+def comparison_context(
+    source: dict[str, Any], target: dict[str, Any]
+) -> dict[str, str]:
+    """State the strongest color interpretation supported by profile evidence."""
+
+    statuses = {source.get("profile_status"), target.get("profile_status")}
+    if statuses == {"embedded-profile-converted-to-srgb"}:
+        return {
+            "scope": "color-managed-relative",
+            "limitation": (
+                "relative displayed-color comparison after converting both embedded profiles; "
+                "scene-referred or material true color remains unsupported"
+            ),
+        }
+    return {
+        "scope": "assumed-display-space-relative",
+        "limitation": (
+            "relative displayed-color comparison with missing or failed profile evidence; "
+            "absolute scene-referred, material, or biological color is unsupported"
+        ),
+    }
+
+
 def main(argv: list[str]) -> int:
     parser = argparse.ArgumentParser(
         description="Probe manually selected normalized image regions for color evidence."
@@ -281,12 +424,22 @@ def main(argv: list[str]) -> int:
         default=[],
         help="optional comparison bounds using matching region names; defaults to source bounds",
     )
+    parser.add_argument(
+        "--group",
+        action="append",
+        default=[],
+        help="NAME=REGION_A,REGION_B; repeat for analyst-named equal-weight groups",
+    )
     parser.add_argument("--max-samples", type=int, default=MAX_DEFAULT_SAMPLES)
     args = parser.parse_args(argv)
 
     try:
         source_regions = [parse_region(raw) for raw in args.region]
         source = analyze_image(Path(args.image), source_regions, args.max_samples)
+        groups = [parse_group(raw) for raw in args.group]
+        source_groups = summarize_groups(source, groups) if groups else []
+        if source_groups:
+            source["groups"] = source_groups
         payload: dict[str, Any] = {"source": source}
         if args.compare:
             compare_regions = (
@@ -297,6 +450,13 @@ def main(argv: list[str]) -> int:
             target = analyze_image(Path(args.compare), compare_regions, args.max_samples)
             payload["comparison"] = target
             payload["deltas"] = compare_reports(source, target)
+            payload["comparison_context"] = comparison_context(source, target)
+            if groups:
+                target_groups = summarize_groups(target, groups)
+                target["groups"] = target_groups
+                payload["group_deltas"] = compare_group_reports(
+                    source_groups, target_groups
+                )
     except (OSError, RuntimeError, ValueError) as exc:
         print(json.dumps({"status": "failed", "error": str(exc)}, indent=2))
         return 1

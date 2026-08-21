@@ -129,7 +129,7 @@ def build_manifest(root: Path = ROOT) -> dict[str, Any]:
     return {
         "name": "reverse-image-prompt",
         "architecture": "modular facet router",
-        "version": "3.2.0-color-tone-contract",
+        "version": "3.3.0-color-control-ledger",
         "entrypoint": "SKILL.md",
         "source": "generated from modules/*.md frontmatter by tools/gen_manifest.py",
         "tiers": {str(k): v for k, v in TIERS.items()},

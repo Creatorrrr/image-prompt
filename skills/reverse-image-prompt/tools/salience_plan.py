@@ -48,6 +48,7 @@ VALID_REGION_ROLES = {"dominant", "supporting", "edge-frame", "low-legibility"}
 VALID_RELATIVE_AREAS = {"small", "medium", "large"}
 VALID_ATTENTION = {"primary", "secondary", "background"}
 VALID_COLOR_IMPORTANCE = {"primary", "supporting"}
+VALID_COLOR_OBSERVATION_SCOPES = {"source-visible", "color-managed", "user-specified"}
 VALID_COLOR_AXES = {"value", "chroma", "hue", "contrast"}
 VALID_INTRINSIC_COLOR_AXES = {"value", "chroma", "hue"}
 VALID_COLOR_CAUSAL_LAYERS = {
@@ -108,6 +109,13 @@ def _audit_color_tone_contract(
     if importance not in VALID_COLOR_IMPORTANCE:
         errors.append(
             f"color_tone_contract.importance must be one of {sorted(VALID_COLOR_IMPORTANCE)}"
+        )
+
+    observation_scope = color_contract.get("observation_scope")
+    if not isinstance(observation_scope, str) or observation_scope not in VALID_COLOR_OBSERVATION_SCOPES:
+        errors.append(
+            "color_tone_contract.observation_scope must be one of "
+            f"{sorted(VALID_COLOR_OBSERVATION_SCOPES)}"
         )
 
     global_spec = color_contract.get("global")
@@ -419,6 +427,96 @@ def _audit_color_tone_contract(
         if effect.get("source_supported") is False and observed_claims:
             errors.append(
                 f"aggregate effect {effect_id!r} is unsupported but contains emitted claims"
+            )
+
+    emitted_controls = color_contract.get("emitted_controls")
+    if not isinstance(emitted_controls, list) or not emitted_controls:
+        errors.append(
+            "color_tone_contract.emitted_controls must contain exact final-prompt controls"
+        )
+        emitted_controls = []
+
+    control_ids: set[str] = set()
+    prompt_excerpts: set[str] = set()
+    controlled_claim_counts: dict[str, int] = {}
+    for index, control in enumerate(emitted_controls):
+        label = f"color_tone_contract.emitted_controls[{index}]"
+        if not isinstance(control, dict):
+            errors.append(f"{label} must be an object")
+            continue
+
+        control_id = control.get("id")
+        if not _nonempty_string(control_id):
+            errors.append(f"{label}.id must be non-empty")
+        elif control_id in control_ids:
+            errors.append(f"duplicate emitted color control id: {control_id}")
+        else:
+            control_ids.add(control_id)
+
+        prompt_excerpt = control.get("prompt_excerpt")
+        if not _nonempty_string(prompt_excerpt):
+            errors.append(f"{label}.prompt_excerpt must be non-empty")
+        else:
+            normalized_excerpt = prompt_excerpt.strip()
+            if normalized_excerpt in prompt_excerpts:
+                errors.append(
+                    f"duplicate emitted color control excerpt: {normalized_excerpt!r}"
+                )
+            prompt_excerpts.add(normalized_excerpt)
+
+        claim_id = control.get("claim_id")
+        if not _nonempty_string(claim_id) or claim_id not in listed_claim_ids:
+            errors.append(f"{label}.claim_id must reference a listed color/tone claim")
+            continue
+        controlled_claim_counts[claim_id] = controlled_claim_counts.get(claim_id, 0) + 1
+
+        layer = control.get("causal_layer")
+        if not isinstance(layer, str) or layer not in VALID_COLOR_CAUSAL_LAYERS:
+            errors.append(f"{label}.causal_layer is invalid")
+
+        effect_ids = control.get("aggregate_effect_ids")
+        if not _nonempty_strings(effect_ids):
+            errors.append(f"{label}.aggregate_effect_ids must be non-empty")
+            effect_ids = []
+        elif len(effect_ids) != len(set(effect_ids)):
+            errors.append(f"{label}.aggregate_effect_ids contains duplicates")
+        unknown_effect_ids = sorted(set(effect_ids) - set(aggregate_map))
+        if unknown_effect_ids:
+            errors.append(
+                f"{label}.aggregate_effect_ids references unknown effects: "
+                + ", ".join(unknown_effect_ids)
+            )
+
+        claim = claim_map.get(claim_id)
+        if not claim:
+            continue
+        claim_effects = claim.get("perceptual_effects")
+        if not isinstance(claim_effects, list):
+            continue
+        expected_effect_ids = {
+            ref.get("aggregate_effect_id")
+            for ref in claim_effects
+            if isinstance(ref, dict) and ref.get("aggregate_effect_id") in aggregate_map
+        }
+        expected_layers = {
+            ref.get("causal_layer")
+            for ref in claim_effects
+            if isinstance(ref, dict) and ref.get("causal_layer") in VALID_COLOR_CAUSAL_LAYERS
+        }
+        if set(effect_ids) != expected_effect_ids:
+            errors.append(
+                f"{label}.aggregate_effect_ids must exactly match the claim's perceptual effects"
+            )
+        if expected_layers != {layer}:
+            errors.append(
+                f"{label} must represent exactly one causal layer matching its claim"
+            )
+
+    for claim_id in sorted(listed_claim_ids & set(claim_map)):
+        count = controlled_claim_counts.get(claim_id, 0)
+        if count != 1:
+            errors.append(
+                f"color/tone claim {claim_id!r} must have exactly one emitted final-prompt control"
             )
 
     return errors

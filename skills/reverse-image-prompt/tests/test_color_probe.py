@@ -16,10 +16,15 @@ TOOLS = Path(__file__).resolve().parents[1] / "tools"
 sys.path.insert(0, str(TOOLS))
 
 from color_probe import (  # noqa: E402
+    GroupSpec,
     RegionSpec,
     analyze_image,
+    compare_group_reports,
     compare_reports,
+    comparison_context,
+    parse_group,
     parse_region,
+    summarize_groups,
 )
 
 
@@ -34,6 +39,16 @@ class ColorProbeTests(unittest.TestCase):
     def test_region_parser_rejects_out_of_range_bounds(self) -> None:
         with self.assertRaisesRegex(ValueError, "0 <= x0"):
             parse_region("field=-0.1,0,1,1")
+
+    def test_group_parser_requires_two_unique_regions(self) -> None:
+        self.assertEqual(
+            parse_group("target=patch-a,patch-b"),
+            GroupSpec("target", ("patch-a", "patch-b")),
+        )
+        with self.assertRaisesRegex(ValueError, "at least two"):
+            parse_group("target=patch-a")
+        with self.assertRaisesRegex(ValueError, "must be unique"):
+            parse_group("target=patch-a,patch-a")
 
     def test_solid_region_reports_stable_median_and_missing_profile(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -69,6 +84,74 @@ class ColorProbeTests(unittest.TestCase):
             target = analyze_image(path, [RegionSpec("two", (0, 0, 1, 1))])
         with self.assertRaisesRegex(ValueError, "matching region names"):
             compare_reports(source, target)
+
+    def test_group_summary_equal_weights_region_medians(self) -> None:
+        report = {
+            "regions": [
+                {
+                    "name": "large",
+                    "sample_count": 10000,
+                    "median": {
+                        "lab_d65": [20.0, 10.0, 0.0],
+                        "chroma": 10.0,
+                        "hue_degrees": 0.0,
+                    },
+                },
+                {
+                    "name": "small",
+                    "sample_count": 10,
+                    "median": {
+                        "lab_d65": [80.0, 0.0, 10.0],
+                        "chroma": 10.0,
+                        "hue_degrees": 90.0,
+                    },
+                },
+            ]
+        }
+        summary = summarize_groups(
+            report, [GroupSpec("target", ("large", "small"))]
+        )[0]
+        self.assertEqual(summary["equal_region_median"]["lab_d65"], [50.0, 5.0, 5.0])
+        self.assertEqual(summary["region_median_ranges"]["lightness"], [20.0, 80.0])
+
+    def test_group_summary_rejects_unknown_region(self) -> None:
+        report = {"regions": [{"name": "one", "median": {}}]}
+        with self.assertRaisesRegex(ValueError, "unknown regions"):
+            summarize_groups(report, [GroupSpec("target", ("one", "two"))])
+
+    def test_group_comparison_and_profile_context_are_relative(self) -> None:
+        source_groups = [
+            {
+                "name": "target",
+                "region_names": ["a", "b"],
+                "equal_region_median": {
+                    "lab_d65": [70.0, 5.0, 5.0],
+                    "chroma": 7.071,
+                    "hue_degrees": 45.0,
+                },
+            }
+        ]
+        target_groups = [
+            {
+                "name": "target",
+                "region_names": ["a", "b"],
+                "equal_region_median": {
+                    "lab_d65": [60.0, 10.0, 10.0],
+                    "chroma": 14.142,
+                    "hue_degrees": 45.0,
+                },
+            }
+        ]
+        delta = compare_group_reports(source_groups, target_groups)[0][
+            "target_minus_source"
+        ]
+        self.assertEqual(delta["lab_d65"], [-10.0, 5.0, 5.0])
+        self.assertGreater(delta["chroma"], 0.0)
+        context = comparison_context(
+            {"profile_status": "missing-profile-assumed-srgb"},
+            {"profile_status": "embedded-profile-converted-to-srgb"},
+        )
+        self.assertEqual(context["scope"], "assumed-display-space-relative")
 
 
 if __name__ == "__main__":

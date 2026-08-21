@@ -1,6 +1,6 @@
 ---
 id: detail.human-body-form
-version: 3
+version: 4
 priority: 80
 type: detail
 tier: 3
@@ -63,6 +63,7 @@ Analyze the transitions between regions, not only isolated sizes. A waist, shoul
 - Do not translate smooth lighting into low muscularity, or hard directional shadow into greater muscularity, without contour evidence.
 - Keep skin tone separate from exposure and color cast. Record both the underlying visible hue relationship and the illumination that shifts it.
 - When skin tone is material, contribute region evidence to the shared Color/Tone Contract instead of independently owning illumination, global cast, or exposure. Keep human-surface evidence source-relative; do not install a preferred skin value, hue, saturation, undertone, or finish.
+- Describe source-visible skin color through value, chroma, hue relations, tone zones, and light response. Do not use racial, ethnic, or demographic identity as a shortcut for those observable color controls.
 
 ## Evidence contribution
 
