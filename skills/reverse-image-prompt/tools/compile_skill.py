@@ -19,6 +19,7 @@ PROFILE_MODULES = {
         "subject.human",
         "detail.human-face-likeness",
         "detail.human-body-form",
+        "detail.color-tone-fidelity",
         "medium.photographic-capture",
         "detail.pose-hands-gesture",
         "detail.clothing-fashion",
@@ -26,10 +27,12 @@ PROFILE_MODULES = {
     "screenshot": [
         "medium.screenshot-ui",
         "subject.generic-object",
+        "detail.color-tone-fidelity",
         "detail.low-quality-artifacts",
     ],
     "product": [
         "subject.product",
+        "detail.color-tone-fidelity",
         "medium.photographic-capture",
         "detail.text-logo-label",
         "detail.pose-hands-gesture",

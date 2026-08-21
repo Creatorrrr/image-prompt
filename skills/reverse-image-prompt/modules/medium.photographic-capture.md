@@ -1,6 +1,6 @@
 ---
 id: medium.photographic-capture
-version: 7
+version: 8
 priority: 72
 type: medium
 tier: 2
@@ -29,6 +29,8 @@ provides_anchors:
   - photographic_causal_decomposition
   - color_light_decomposition
   - light_to_form_strength
+  - white_balance_exposure_separation
+  - photographic_tone_response
 ---
 
 # Medium: photographic capture, camera, focus, lighting
@@ -61,6 +63,12 @@ Map contrast topology separately at the global scene, major subject masses, loca
 Decompose photographic appearance into intrinsic subject evidence, pose or deformation, perspective, illumination and shadow, material interaction or occlusion, and capture or processing. Preserve their combined visible result, but do not let one cause rewrite another.
 
 Record important color relationships as intrinsic surface hue, illumination color, global cast, and exposure response. Assign the consolidated hue instruction to one semantic slot; this module should describe the photographic shift rather than repeat another module's color target.
+
+Separate photographic white balance or global cast from exposure and tone-curve behavior. A warmer or cooler capture shift must not silently darken, brighten, saturate, or desaturate an intrinsic surface unless the source supports each change.
+
+Map source-visible highlight, midtone, and shadow response separately when tonal reproduction is material. Preserve clipping, rolloff, lifted or crushed shadows, and local tone compression without using them as substitutes for intrinsic surface lightness or chroma.
+
+Use reliable neutral anchors or consistent multi-region behavior to support a global white-balance claim. When the evidence is mixed or weak, contribute the observed local shifts and uncertainty to the shared Color/Tone Contract rather than forcing a global cast.
 
 Distinguish global low acutance, diffusion, haze, compression, or processing softness from depth-of-field blur. Use `shallow depth of field` or premium-looking bokeh only when a visibly sharper focus plane is separated from defocused layers. If the nominal focus subject is also soft, preserve that softness instead of sharpening it while blurring only the background.
 

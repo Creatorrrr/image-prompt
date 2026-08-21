@@ -56,6 +56,21 @@ class RouteResolverTests(unittest.TestCase):
         self.assertIn("subject.human", modules)
         self.assertNotIn("detail.human-face-likeness", modules)
         self.assertNotIn("detail.human-body-form", modules)
+        self.assertNotIn("detail.color-tone-fidelity", modules)
+
+    def test_material_color_tone_risk_selects_generic_fidelity_detail(self) -> None:
+        modules = resolve_modules(
+            {
+                "subjects": ["generic-object"],
+                "medium": ["photographic"],
+                "relationships": ["ordinary"],
+                "detail_risks": ["color-tone"],
+            },
+            self.manifest,
+        )
+        self.assertIn("detail.color-tone-fidelity", modules)
+        self.assertIn("medium.photographic-capture", modules)
+        self.assertIn("subject.generic-object", modules)
 
     def test_first_order_human_body_form_selects_dedicated_detail(self) -> None:
         modules = resolve_modules(
@@ -126,18 +141,25 @@ class RouteResolverTests(unittest.TestCase):
                 "aesthetic_causal_signature",
                 "direct_perceptual_appeal",
                 "aggregate_prior_cluster_audit",
+                "broad_color_descriptor_discipline",
                 "detail_not_sharpness",
                 "attractiveness_polish_separation",
                 "background_legibility_ceiling",
                 "color_causality",
+                "global_cast_consistency",
+                "neutral_reference_anchor",
                 "causal_origin_attribution",
                 "semantic_salience_amplification",
                 "semantic_claim_merge",
                 "net_salience_audit",
                 "replacement_correction",
+                "cross_slot_perceptual_effect_audit",
+                "color_tone_causal_consistency",
+                "unowned_appearance_claim_audit",
                 "module_evidence_not_prose",
                 "clause_ownership",
                 "diagnostic_render_separation",
+                "color_tone_output_ownership",
             }.issubset(CORE_ANCHOR_IDS)
         )
 
@@ -150,7 +172,22 @@ class RouteResolverTests(unittest.TestCase):
                 "skin_surface_signature",
                 "body_region_hierarchy",
                 "persistent_induced_form_split",
+                "skin_color_contract_handoff",
             }.issubset(body["provides_anchors"])
+        )
+
+    def test_color_tone_detail_exposes_generic_causal_anchors(self) -> None:
+        color = module_map(self.manifest)["detail.color-tone-fidelity"]
+        self.assertTrue(
+            {
+                "color_tone_contract",
+                "color_causal_layers",
+                "relative_color_calibration",
+                "neutral_anchor_confidence",
+                "aggregate_color_effect_budget",
+                "tone_zone_response",
+                "color_measurement_limits",
+            }.issubset(color["provides_anchors"])
         )
 
     def test_photo_and_clothing_expose_contrast_and_material_anchors(self) -> None:
@@ -161,6 +198,8 @@ class RouteResolverTests(unittest.TestCase):
                 "photographic_causal_decomposition",
                 "color_light_decomposition",
                 "light_to_form_strength",
+                "white_balance_exposure_separation",
+                "photographic_tone_response",
             }.issubset(modules["medium.photographic-capture"]["provides_anchors"])
         )
         self.assertTrue(

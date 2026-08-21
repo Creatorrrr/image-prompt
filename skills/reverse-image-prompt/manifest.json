@@ -1,7 +1,7 @@
 {
   "name": "reverse-image-prompt",
   "architecture": "modular facet router",
-  "version": "3.1.0-salience-compiler",
+  "version": "3.2.0-color-tone-contract",
   "entrypoint": "SKILL.md",
   "source": "generated from modules/*.md frontmatter by tools/gen_manifest.py",
   "tiers": {
@@ -110,7 +110,7 @@
     },
     {
       "id": "core.fidelity-discipline",
-      "version": 8,
+      "version": 9,
       "file": "modules/core.fidelity-discipline.md",
       "type": "core",
       "tier": 0,
@@ -139,12 +139,13 @@
         "attractiveness_polish_separation",
         "aesthetic_causal_signature",
         "direct_perceptual_appeal",
-        "aggregate_prior_cluster_audit"
+        "aggregate_prior_cluster_audit",
+        "broad_color_descriptor_discipline"
       ]
     },
     {
       "id": "core.background-color",
-      "version": 6,
+      "version": 7,
       "file": "modules/core.background-color.md",
       "type": "core",
       "tier": 0,
@@ -170,12 +171,14 @@
         "low_legibility_background",
         "color_mood",
         "background_legibility_ceiling",
-        "color_causality"
+        "color_causality",
+        "global_cast_consistency",
+        "neutral_reference_anchor"
       ]
     },
     {
       "id": "core.pre-emit-gate",
-      "version": 10,
+      "version": 11,
       "file": "modules/core.pre-emit-gate.md",
       "type": "core",
       "tier": 0,
@@ -203,12 +206,15 @@
         "semantic_salience_amplification",
         "semantic_claim_merge",
         "net_salience_audit",
-        "replacement_correction"
+        "replacement_correction",
+        "cross_slot_perceptual_effect_audit",
+        "color_tone_causal_consistency",
+        "unowned_appearance_claim_audit"
       ]
     },
     {
       "id": "core.output-contract",
-      "version": 10,
+      "version": 11,
       "file": "modules/core.output-contract.md",
       "type": "core",
       "tier": 0,
@@ -235,7 +241,8 @@
         "recommended_settings_aspect",
         "module_evidence_not_prose",
         "clause_ownership",
-        "diagnostic_render_separation"
+        "diagnostic_render_separation",
+        "color_tone_output_ownership"
       ]
     },
     {
@@ -498,7 +505,7 @@
     },
     {
       "id": "medium.photographic-capture",
-      "version": 7,
+      "version": 8,
       "file": "modules/medium.photographic-capture.md",
       "type": "medium",
       "tier": 2,
@@ -532,7 +539,9 @@
         "contrast_topology",
         "photographic_causal_decomposition",
         "color_light_decomposition",
-        "light_to_form_strength"
+        "light_to_form_strength",
+        "white_balance_exposure_separation",
+        "photographic_tone_response"
       ]
     },
     {
@@ -804,7 +813,7 @@
     },
     {
       "id": "detail.human-body-form",
-      "version": 2,
+      "version": 3,
       "file": "modules/detail.human-body-form.md",
       "type": "detail",
       "tier": 3,
@@ -835,7 +844,8 @@
         "muscle_lighting_separation",
         "skin_surface_signature",
         "body_region_hierarchy",
-        "persistent_induced_form_split"
+        "persistent_induced_form_split",
+        "skin_color_contract_handoff"
       ]
     },
     {
@@ -871,6 +881,49 @@
         "human_detail_hierarchy",
         "face_anchor_budget",
         "expression_gaze_hair_geometry"
+      ]
+    },
+    {
+      "id": "detail.color-tone-fidelity",
+      "version": 1,
+      "file": "modules/detail.color-tone-fidelity.md",
+      "type": "detail",
+      "tier": 3,
+      "facet": "detail-risk",
+      "facet_values": [
+        "color-tone",
+        "color-fidelity",
+        "tone-fidelity",
+        "surface-color",
+        "global-cast",
+        "white-balance",
+        "exposure-tone",
+        "palette-relationship"
+      ],
+      "priority": 79,
+      "triggers": [
+        "user explicitly prioritizes faithful color or tonal reproduction",
+        "value, chroma, hue, cast, exposure, or tone response materially carries the image",
+        "intrinsic surface color may be confused with illumination, global cast, or processing"
+      ],
+      "avoid_when": [
+        "color is incidental and ordinary core color handling is sufficient"
+      ],
+      "dependencies": [
+        "core.visual-evidence",
+        "core.frame-coordinates",
+        "core.fidelity-discipline",
+        "core.background-color"
+      ],
+      "conflicts": [],
+      "provides_anchors": [
+        "color_tone_contract",
+        "color_causal_layers",
+        "relative_color_calibration",
+        "neutral_anchor_confidence",
+        "aggregate_color_effect_budget",
+        "tone_zone_response",
+        "color_measurement_limits"
       ]
     },
     {

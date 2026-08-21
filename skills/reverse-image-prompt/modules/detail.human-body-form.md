@@ -1,6 +1,6 @@
 ---
 id: detail.human-body-form
-version: 2
+version: 3
 priority: 80
 type: detail
 tier: 3
@@ -27,6 +27,7 @@ provides_anchors:
   - skin_surface_signature
   - body_region_hierarchy
   - persistent_induced_form_split
+  - skin_color_contract_handoff
 ---
 
 # Detail: human body form, proportion, and surface
@@ -61,6 +62,7 @@ Analyze the transitions between regions, not only isolated sizes. A waist, shoul
 - Identify the largest bright and dark masses crossing the body, then decide whether they flatten, softly imply, separate, or strongly sculpt form.
 - Do not translate smooth lighting into low muscularity, or hard directional shadow into greater muscularity, without contour evidence.
 - Keep skin tone separate from exposure and color cast. Record both the underlying visible hue relationship and the illumination that shifts it.
+- When skin tone is material, contribute region evidence to the shared Color/Tone Contract instead of independently owning illumination, global cast, or exposure. Keep human-surface evidence source-relative; do not install a preferred skin value, hue, saturation, undertone, or finish.
 
 ## Evidence contribution
 
