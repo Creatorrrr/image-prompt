@@ -113,7 +113,7 @@ def valid_color_plan() -> dict:
             "id": "surface-tone",
             "axis": "color",
             "role": "primary",
-            "observation": "the central field stays lighter and lower-chroma than the surround",
+            "observation": "the central field stays visibly lighter than the surround",
             "causal_origin": "intrinsic",
             "target_strength": "moderate",
             "source_evidence": ["consistent central midtone across a broad region"],
@@ -158,18 +158,30 @@ def valid_color_plan() -> dict:
                 "intrinsic_axes": [
                     {
                         "axis": "value",
+                        "role": "primary",
+                        "evidence_scope": "flat",
+                        "emission": "required",
+                        "aggregate_effect_id": "central-value-relation",
                         "observation": "lighter than the surrounding field",
                         "confidence": "high",
                         "source_evidence": ["broad value separation at the boundary"],
                     },
                     {
                         "axis": "chroma",
+                        "role": "supporting",
+                        "evidence_scope": "flat",
+                        "emission": "diagnostic-only",
+                        "non_emission_reason": "the visible chroma bias is too weak to justify a separate prompt control",
                         "observation": "restrained rather than vivid",
                         "confidence": "medium",
                         "source_evidence": ["small channel separation across midtones"],
                     },
                     {
                         "axis": "hue",
+                        "role": "supporting",
+                        "evidence_scope": "flat",
+                        "emission": "diagnostic-only",
+                        "non_emission_reason": "the near-neutral hue direction is not stable enough to emit",
                         "observation": "near-neutral with a slight source-visible bias",
                         "confidence": "medium",
                         "source_evidence": ["stable hue relationship across the region"],
@@ -215,13 +227,134 @@ def valid_color_plan() -> dict:
         "emitted_controls": [
             {
                 "id": "control-surface-tone",
-                "prompt_excerpt": "a central field lighter and lower-chroma than the surround",
+                "prompt_excerpt": "a central field visibly lighter than the surround",
                 "claim_id": "claim-surface-tone",
                 "causal_layer": "intrinsic",
+                "control_role": "axis-control",
+                "region_id": "central-form",
+                "axis": "value",
                 "aggregate_effect_ids": ["central-value-relation"],
             }
         ],
     }
+    return plan
+
+
+def valid_light_plan() -> dict:
+    plan = valid_plan()
+    contract = plan["render_contract"]
+    contract["invariants"].append(
+        {
+            "id": "light-shape",
+            "axis": "light-to-form",
+            "role": "primary",
+            "observation": "broad planes remain readable through shallow gradients",
+            "causal_origin": "lighting-shadow",
+            "target_strength": "moderate",
+            "source_evidence": ["large continuous plane with low internal value variation"],
+            "clause_owner": "detail.light-form-fidelity",
+        }
+    )
+    contract["candidate_claims"].append(
+        {
+            "id": "claim-light-shape",
+            "semantic_slot": "light-shape",
+            "owner": "detail.light-form-fidelity",
+            "role": "primary",
+            "polarity": "affirmative",
+            "target_strength": "moderate",
+            "source_kind": "translated-causal-control",
+            "source_evidence": ["shallow gradients across the dominant plane"],
+            "emit": True,
+            "lighting_effects": [
+                {
+                    "aggregate_effect_id": "dominant-local-form-contrast",
+                    "confidence": "high",
+                    "source_evidence": ["broad plane retains low internal contrast"],
+                }
+            ],
+        }
+    )
+    contract["light_form_contract"] = {
+        "importance": "primary",
+        "observation_scope": "source-visible",
+        "observed_result": {
+            "global_tonal_range": "wide separation between the central form and surrounding field",
+            "local_form_contrast": "subtle",
+            "gradient_character": "long shallow transitions across the dominant plane",
+            "largest_bright_masses": ["central-form"],
+            "largest_dark_masses": ["surrounding-field"],
+            "source_evidence": ["continuous source-visible value massing"],
+        },
+        "source_hypothesis": {
+            "model_type": "uncertain",
+            "source_count": "uncertain",
+            "camera_axis_offset": "uncertain",
+            "elevation": "uncertain",
+            "front_side_back_relation": "the physical source is not uniquely recoverable",
+            "apparent_angular_size": "uncertain",
+            "fill_structure": "uncertain",
+            "confidence": "low",
+            "actuation": "result-space-only",
+            "source_evidence": ["visible gradient without a decisive cast-shadow direction"],
+        },
+        "region_effects": [
+            {
+                "id": "central-broad-plane",
+                "region_id": "central-form",
+                "role": "broad-plane",
+                "value_relation": "internally even relative to the surrounding field",
+                "gradient_strength": "subtle",
+                "edge_character": "long feathered transition",
+                "source_evidence": ["low internal variation across a broad area"],
+            }
+        ],
+        "shadow_events": [],
+        "material_responses": [],
+        "pose_light_dependency": {
+            "geometry_dependency": "pose-robust",
+            "preserved_result": "the dominant plane retains shallow light-to-form modeling",
+            "flexible_effects": ["the exact highlight coordinate may move"],
+            "source_evidence": ["the invariant is regional contrast rather than a point highlight"],
+        },
+        "claim_ids": ["claim-light-shape"],
+        "aggregate_effects": [
+            {
+                "id": "dominant-local-form-contrast",
+                "region_id": "central-form",
+                "axis": "local-form-contrast",
+                "direction": "shallow-internal-modeling",
+                "role": "primary",
+                "target_strength": "moderate",
+                "claim_ids": ["claim-light-shape"],
+                "source_supported": True,
+                "source_evidence": ["broad plane retains low internal contrast"],
+            }
+        ],
+        "emitted_controls": [
+            {
+                "id": "control-light-shape",
+                "prompt_excerpt": "broad planes revealed only by long shallow gradients",
+                "claim_id": "claim-light-shape",
+                "owner": "local-form-contrast",
+                "aggregate_effect_ids": ["dominant-local-form-contrast"],
+            }
+        ],
+    }
+    return plan
+
+
+def valid_color_and_light_plan() -> dict:
+    plan = valid_color_plan()
+    light_plan = valid_light_plan()["render_contract"]
+    plan_contract = plan["render_contract"]
+    plan_contract["invariants"].append(deepcopy(light_plan["invariants"][-1]))
+    plan_contract["candidate_claims"].append(
+        deepcopy(light_plan["candidate_claims"][-1])
+    )
+    plan_contract["light_form_contract"] = deepcopy(
+        light_plan["light_form_contract"]
+    )
     return plan
 
 
@@ -241,6 +374,121 @@ class SaliencePlanTests(unittest.TestCase):
 
     def test_valid_color_tone_contract_passes(self) -> None:
         self.assertEqual(audit_plan(valid_color_plan()), [])
+
+    def test_valid_light_form_contract_passes(self) -> None:
+        self.assertEqual(audit_plan(valid_light_plan()), [])
+
+    def test_primary_light_invariant_requires_light_form_contract(self) -> None:
+        plan = valid_light_plan()
+        del plan["render_contract"]["light_form_contract"]
+        self.assertTrue(
+            any(
+                "primary light-to-form invariant requires" in error
+                for error in audit_plan(plan)
+            )
+        )
+
+    def test_low_confidence_rig_cannot_emit_physical_cause(self) -> None:
+        plan = valid_light_plan()
+        hypothesis = plan["render_contract"]["light_form_contract"][
+            "source_hypothesis"
+        ]
+        hypothesis["actuation"] = "physical-cause"
+        effect = plan["render_contract"]["light_form_contract"][
+            "aggregate_effects"
+        ][0]
+        effect["axis"] = "source-geometry"
+        control = plan["render_contract"]["light_form_contract"][
+            "emitted_controls"
+        ][0]
+        control["owner"] = "source-geometry"
+        self.assertTrue(
+            any(
+                "low-confidence source hypothesis" in error
+                for error in audit_plan(plan)
+            )
+        )
+
+    def test_result_space_actuation_rejects_source_geometry(self) -> None:
+        plan = valid_light_plan()
+        effect = plan["render_contract"]["light_form_contract"][
+            "aggregate_effects"
+        ][0]
+        effect["axis"] = "source-geometry"
+        control = plan["render_contract"]["light_form_contract"][
+            "emitted_controls"
+        ][0]
+        control["owner"] = "source-geometry"
+        self.assertTrue(
+            any(
+                "result-space-only actuation cannot emit" in error
+                for error in audit_plan(plan)
+            )
+        )
+
+    def test_shadow_topology_requires_owned_shadow_event(self) -> None:
+        plan = valid_light_plan()
+        light_contract = plan["render_contract"]["light_form_contract"]
+        light_contract["aggregate_effects"][0]["axis"] = "shadow-topology"
+        light_contract["emitted_controls"][0]["owner"] = "shadow-topology"
+        self.assertTrue(
+            any(
+                "requires at least one shadow event" in error
+                for error in audit_plan(plan)
+            )
+        )
+
+    def test_pose_robust_light_contract_names_flexible_effect(self) -> None:
+        plan = valid_light_plan()
+        plan["render_contract"]["light_form_contract"]["pose_light_dependency"][
+            "flexible_effects"
+        ] = []
+        self.assertTrue(
+            any(
+                "pose-robust or mixed lighting" in error
+                for error in audit_plan(plan)
+            )
+        )
+
+    def test_lighting_control_owner_must_match_effect_axis(self) -> None:
+        plan = valid_light_plan()
+        plan["render_contract"]["light_form_contract"]["emitted_controls"][0][
+            "owner"
+        ] = "material-response"
+        self.assertTrue(
+            any(
+                "exactly one Light/Form owner" in error
+                for error in audit_plan(plan)
+            )
+        )
+
+    def test_color_and_light_contracts_cannot_share_claim_or_excerpt(self) -> None:
+        plan = valid_color_and_light_plan()
+        contract = plan["render_contract"]
+        light_contract = contract["light_form_contract"]
+        light_contract["claim_ids"] = ["claim-surface-tone"]
+        light_contract["emitted_controls"][0]["claim_id"] = "claim-surface-tone"
+        light_contract["emitted_controls"][0]["prompt_excerpt"] = contract[
+            "color_tone_contract"
+        ]["emitted_controls"][0]["prompt_excerpt"]
+        errors = audit_plan(plan)
+        self.assertTrue(any("cannot own the same claims" in error for error in errors))
+        self.assertTrue(any("cannot own the same prompt excerpts" in error for error in errors))
+
+    def test_primary_lighting_effect_changes_pair_signature(self) -> None:
+        baseline = valid_light_plan()
+        variant = deepcopy(baseline)
+        variant["render_contract"]["light_form_contract"]["aggregate_effects"][0][
+            "direction"
+        ] = "strong-internal-modeling"
+        self.assertTrue(
+            any(
+                "changed the primary salience signature" in error
+                for error in compare_plans(
+                    baseline, variant, "invariant-preserving"
+                )
+            )
+        )
 
     def test_color_tone_contract_requires_observation_scope(self) -> None:
         plan = valid_color_plan()
@@ -294,6 +542,106 @@ class SaliencePlanTests(unittest.TestCase):
         axes[:] = [axis for axis in axes if axis["axis"] != "hue"]
         self.assertTrue(
             any("primary intrinsic axes" in error for error in audit_plan(plan))
+        )
+
+    def test_required_intrinsic_axis_must_link_to_an_effect(self) -> None:
+        plan = valid_color_plan()
+        axis = plan["render_contract"]["color_tone_contract"]["regions"][0][
+            "intrinsic_axes"
+        ][0]
+        del axis["aggregate_effect_id"]
+        self.assertTrue(
+            any(
+                "aggregate_effect_id is required" in error
+                for error in audit_plan(plan)
+            )
+        )
+
+    def test_diagnostic_only_axis_requires_reason(self) -> None:
+        plan = valid_color_plan()
+        axis = plan["render_contract"]["color_tone_contract"]["regions"][0][
+            "intrinsic_axes"
+        ][1]
+        del axis["non_emission_reason"]
+        self.assertTrue(
+            any("non_emission_reason" in error for error in audit_plan(plan))
+        )
+
+    def test_mixed_tone_zone_cannot_drive_intrinsic_axis(self) -> None:
+        plan = valid_color_plan()
+        axis = plan["render_contract"]["color_tone_contract"]["regions"][0][
+            "intrinsic_axes"
+        ][0]
+        axis["evidence_scope"] = "mixed"
+        self.assertTrue(
+            any("mixed tone-zone evidence" in error for error in audit_plan(plan))
+        )
+
+    def test_required_intrinsic_axis_needs_intrinsic_axis_control(self) -> None:
+        plan = valid_color_plan()
+        contract = plan["render_contract"]
+        claim = contract["candidate_claims"][-1]
+        claim["perceptual_effects"][0]["causal_layer"] = "hierarchy"
+        control = contract["color_tone_contract"]["emitted_controls"][0]
+        control["causal_layer"] = "hierarchy"
+        self.assertTrue(
+            any(
+                "required intrinsic axis needs its own intrinsic axis-control" in error
+                for error in audit_plan(plan)
+            )
+        )
+
+    def test_axis_control_cannot_cover_multiple_axes(self) -> None:
+        plan = valid_color_plan()
+        contract = plan["render_contract"]
+        claim = contract["candidate_claims"][-1]
+        claim["perceptual_effects"].append(
+            {
+                "aggregate_effect_id": "central-chroma-relation",
+                "causal_layer": "intrinsic",
+                "confidence": "medium",
+                "source_evidence": ["the central field remains restrained"],
+            }
+        )
+        color_contract = contract["color_tone_contract"]
+        color_contract["aggregate_effects"].append(
+            {
+                "id": "central-chroma-relation",
+                "region_id": "central-form",
+                "axis": "chroma",
+                "direction": "restrained-chroma",
+                "role": "supporting",
+                "target_strength": "subtle",
+                "claim_ids": ["claim-surface-tone"],
+                "source_supported": True,
+                "source_evidence": ["small channel separation"],
+            }
+        )
+        color_contract["emitted_controls"][0]["aggregate_effect_ids"].append(
+            "central-chroma-relation"
+        )
+        self.assertTrue(
+            any(
+                "axis-control may reference only one matching region and axis" in error
+                for error in audit_plan(plan)
+            )
+        )
+
+    def test_unverified_appearance_metaphor_cannot_emit(self) -> None:
+        plan = valid_color_plan()
+        plan["render_contract"]["color_tone_contract"]["appearance_metaphors"] = [
+            {
+                "phrase": "material-like color shorthand",
+                "status": "unverified",
+                "emit": True,
+                "decomposed_control_ids": ["control-surface-tone"],
+            }
+        ]
+        self.assertTrue(
+            any(
+                "only a model-calibrated appearance metaphor" in error
+                for error in audit_plan(plan)
+            )
         )
 
     def test_same_color_effect_cannot_repeat_one_causal_layer(self) -> None:
@@ -377,6 +725,9 @@ class SaliencePlanTests(unittest.TestCase):
                 "prompt_excerpt": "a matching source-visible illumination shift",
                 "claim_id": illumination["id"],
                 "causal_layer": "illumination",
+                "control_role": "axis-control",
+                "region_id": "central-form",
+                "axis": "value",
                 "aggregate_effect_ids": ["central-value-relation"],
             }
         )

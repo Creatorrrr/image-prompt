@@ -20,6 +20,7 @@ PROFILE_MODULES = {
         "detail.human-face-likeness",
         "detail.human-body-form",
         "detail.color-tone-fidelity",
+        "detail.light-form-fidelity",
         "medium.photographic-capture",
         "detail.pose-hands-gesture",
         "detail.clothing-fashion",
@@ -33,6 +34,7 @@ PROFILE_MODULES = {
     "product": [
         "subject.product",
         "detail.color-tone-fidelity",
+        "detail.light-form-fidelity",
         "medium.photographic-capture",
         "detail.text-logo-label",
         "detail.pose-hands-gesture",

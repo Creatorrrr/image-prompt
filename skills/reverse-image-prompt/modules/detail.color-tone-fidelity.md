@@ -1,6 +1,6 @@
 ---
 id: detail.color-tone-fidelity
-version: 2
+version: 3
 priority: 79
 type: detail
 tier: 3
@@ -36,88 +36,93 @@ provides_anchors:
   - color_measurement_limits
   - display_color_scope
   - region_group_color_comparison
+  - color_axis_emission_coverage
+  - color_actuation_contract
+  - color_control_effectiveness
+  - render_color_verification
 ---
 
 # Detail: color and tone fidelity
 
 ## When to load
 
-Load only when color or tonal behavior is a primary or supporting invariant, the user explicitly asks for tone fidelity, or a likely causal mix-up could materially change the image. Do not load merely because an image contains color.
+Load only when color/tone is an invariant, the user requests fidelity, or a causal mix-up could materially change the image. Do not load merely because an image contains color.
 
-## Color/Tone Contract
+## Three-stage Color/Tone Contract
 
 Build a source-relative Color/Tone Contract only when color or tonal behavior materially carries fidelity.
 
-Set its observation scope first: `source-visible` for ordinary image evidence, `color-managed` only when trustworthy profile/calibration evidence exists, or `user-specified` for an explicit external target. Treat sampled pixels as source-visible display color, not proof of biological, material, or scene-referred true color. For human surfaces, never substitute racial, ethnic, or demographic identity labels for observable color evidence.
+Keep three stages separate:
 
-For each important region, record only observable evidence:
+1. **Observation:** what the source visibly supports.
+2. **Actuation:** which literal prompt control carries each material source axis to the named generator.
+3. **Verification:** what a delivered render actually reproduced. Prompt validation never substitutes for rendered-pixel verification.
 
-- separate value or lightness, chroma or saturation, and hue family or undertone
-- identify the region's visual role and source-visible relation to another region
-- distinguish intrinsic surface behavior from illumination, global cast or palette shift, exposure or tone curve, and processing
-- record confidence and uncertainty instead of inventing a missing color cause
+Set scope to `source-visible`, `color-managed` only with trustworthy calibration evidence, or `user-specified` for an explicit external target. Treat sampled pixels as source-visible display color, not proof of biological, material, or scene-referred true color. For human surfaces, use observable evidence rather than demographic identity labels.
+
+For each important region:
+
+- separate value/lightness, chroma/saturation, and hue family/undertone;
+- record role, relation to another region, confidence, and uncertainty;
+- separate intrinsic surface from illumination, global cast/palette, exposure/tone curve, and processing.
+
+For every intrinsic value, chroma, or hue axis, record `role`, `evidence_scope`, and `emission`. Use `required` only when the axis materially needs a final prompt control. Use `diagnostic-only` with a concrete non-emission reason when an axis is low-confidence, incidental, or already unsupported at prompt precision. Link every required intrinsic axis to exactly one same-region, same-axis aggregate effect.
 
 Assign every material color or tone observation to intrinsic surface, illumination, global cast or palette shift, exposure or tone curve, or processing.
 
 Describe important regions through separate value, chroma, and hue observations plus source-visible relations to other regions. Do not let one broad adjective silently determine all three axes.
 
-Treat an appearance metaphor as a hypothesis that may mix color, finish, illumination, and polish. Decompose it into value, chroma, hue, surface behavior, and light response first. If it remains useful, emit it once only as a non-directional summary of those already-owned controls.
+Decompose an appearance metaphor into value, chroma, hue, surface, and light response. Mark it `explanation-only`, `unverified`, or `model-calibrated`; only the last may appear once as a summary of already-owned controls, with evidence for the exact generator/version. Treat control effectiveness as generator-and-version-specific evidence.
 
-Map highlight, midtone, shadow, or flat-field behavior only at the granularity the source supports. A flat graphic need not acquire photographic tone zones, and a clipped, compressed, mixed-light, or low-legibility region must retain that uncertainty.
+Map highlight, midtone, shadow, or flat-field behavior only at the granularity the source supports. Do not pool tone zones into an intrinsic target: use comparable midtone or flat patches for displayed intrinsic axes and separate groups for highlight and shadow response. Retain uncertainty for clipping, compression, mixed light, and low legibility.
 
 ## Calibration evidence
 
-Treat a possible neutral as a calibration anchor only with visible evidence and an explicit confidence level. A white, gray, black, metallic, or low-chroma region may still be shifted by colored illumination, reflection, exposure, clipping, compression, or grading.
+Treat a possible neutral as a calibration anchor only with visible evidence and an explicit confidence level. Nominal white, gray, black, metallic, or low-chroma regions may still be shifted by light, reflection, exposure, clipping, compression, or grading.
 
-When no reliable neutral exists, preserve relative color relationships and mark global-cast uncertainty rather than inventing a white balance. In photographs, translate a supported global cast into white-balance or capture language; in non-photographic work, treat it as a palette or rendering shift.
+Without a reliable neutral, preserve relative relationships and mark global-cast uncertainty. Translate photographic cast into white-balance/capture language and non-photographic cast into palette/rendering language.
 
-Use more than one representative patch when measurement tools are available and tone is first-order. Prefer robust region summaries over a single pixel. Inspect embedded color-profile status, and disclose any assumed display space or missing profile.
+When measurement is justified, use multiple representative patches, robust summaries, profile status, and disclosed display-space assumptions.
 
-Compare multiple target patches with contextual or neutral groups before attributing a color difference to an intrinsic surface or a global cause. Equal-weight region summaries prevent one large patch from dominating. Shared movement across target and context supports a global cast, exposure, or processing cause; target-only movement supports a local or intrinsic cause; mixed evidence remains uncertain.
+Classify auxiliary references as `calibrated-color-target`, `color-managed-reference`, `uncalibrated-vocabulary-chart`, or `photographic-example`. Only the first two establish numeric targets; inconsistent labels remain vocabulary.
 
-For an exact local file, the optional probe accepts analyst-selected normalized regions and never chooses semantic targets itself:
+Compare multiple target patches with contextual or neutral groups before attributing a color difference to an intrinsic surface or a global cause. Use equal-weight summaries. Shared movement supports global cast/exposure/processing; target-only movement supports a local cause; mixed evidence remains uncertain.
+
+The optional probe accepts analyst-selected normalized regions and never chooses semantic targets:
 
 ```bash
-python tools/color_probe.py IMAGE --region name=x0,y0,x1,y1
-python tools/color_probe.py SOURCE --region name=x0,y0,x1,y1 \
-  --compare RENDER --compare-region name=x0,y0,x1,y1
-python tools/color_probe.py SOURCE \
-  --region target-a=x0,y0,x1,y1 --region target-b=x0,y0,x1,y1 \
-  --region context-a=x0,y0,x1,y1 --region context-b=x0,y0,x1,y1 \
-  --group target=target-a,target-b --group context=context-a,context-b \
-  --compare RENDER
+python tools/color_probe.py SOURCE --compare RENDER --spec SAMPLING.json
+python tools/color_fidelity_eval.py COMPARISON.json --policy POLICY.json
 ```
 
-Use matching region names for comparison. Select bounds from visible evidence and keep differently posed or cropped images on independently chosen bounds.
+Use measurements as diagnostic evidence, never as automatic prompt wording or proof of intrinsic color. Keep exact values out unless the generator supports them and evidence justifies the precision.
 
-Use measurements as diagnostic evidence, never as automatic prompt wording or proof of intrinsic color. Exact RGB, hex, Lab, or temperature values should not enter a production prompt unless the downstream generator genuinely supports them and the source evidence justifies that precision.
+Estimate the shared Lab movement from contextual groups, then subtract it from each target group's movement to expose the target-local residual. Without an explicit tolerance policy, report the decomposition as unscored.
 
 ## Cross-layer effect budget
 
 Merge color and tone claims by their shared perceptual effect across causal layers, not only by semantic-slot name.
 
-Give material effects a canonical source-relative effect identifier covering the affected region, perceptual axis, direction, and aggregate strength. If intrinsic color, illumination, global cast, exposure, processing, or hierarchy all push the same region in the same direction, require independent evidence for each layer and judge their combined pull against one aggregate target.
+Give each material effect a source-relative identifier covering region, axis, direction, and aggregate strength. Multiple causal layers pushing one region/axis require independent evidence and one aggregate target.
 
 - Merge unsupported repetition into one owned control.
-- Preserve genuinely multi-layer color only when the source supports every layer and their aggregate result.
-- Let hierarchy own relative area, value, chroma, or contrast. It may own hue only when hue contrast itself is an invariant; it must not repeat another region's intrinsic hue for emphasis.
+- Preserve multi-layer color only when every layer and the aggregate result are supported.
+- Let hierarchy own relative area, value, chroma, or contrast; let it own hue only when hue contrast is invariant.
 - Treat free-floating color or mood words as unowned until assigned to one causal layer.
 
 ## Final prompt control ledger
 
-After drafting, copy every exact final-prompt excerpt that can change value, chroma, hue, contrast, cast, exposure, finish, or grading into `emitted_controls`. Give each excerpt one emitted claim, one causal layer, and the complete aggregate-effect list referenced by that claim. Split an ambiguous compound when a modifier could apply to intrinsic surface, illumination, exposure, or processing simultaneously. Every color/tone claim must be covered exactly once; do not merely copy the earlier analysis wording.
+Copy every exact prompt excerpt that changes color/tone into `emitted_controls`. Give an `axis-control` one claim, causal layer, region, axis, and complete effect list. A required intrinsic axis is complete only when it has its own intrinsic axis-control; hierarchy, exposure, or illumination cannot substitute. A justified secondary `compound-control` cannot satisfy a required axis. Cover each claim exactly once and split ambiguous compounds.
 
-When a final draft over-pulls an axis, replace or remove the responsible positive control. Do not append an opposing negative instruction. This ledger is semantic and source-relative: it requires neither a fixed adjective list nor a preferred numeric target.
+When a draft over-pulls an axis, replace or remove its positive control rather than appending an opposing negative.
 
-## Evidence contribution
+## Output and diagnosis
 
-When color or tone is primary, contribute one compact causal signature before flexible pose or inventory. Normally cover the dominant region's intrinsic value/chroma/hue, the supported light or global shift, and its highlight-to-shadow or flat-field response without repeating a direction.
+When color is primary, emit one compact causal signature before flexible inventory: dominant-region axes, supported global/light shift, and tone response without repeated direction.
 
-When color is supporting, contribute only the smallest relational cue needed to preserve it. Use one source-likely drift boundary only when replacing or merging the affirmative wording does not already control the risk.
+When supporting, emit only the smallest relational cue. Diagnose differences as intrinsic, illumination, global cast, exposure/tone curve, processing, or unresolved; keep profile/measurement uncertainty separate from visual judgment.
 
-## Diagnostic mode
-
-State whether the observed difference is principally intrinsic color, illumination, global cast, exposure or tone curve, processing, or an unresolved combination. Keep profile and measurement uncertainty separate from visual judgment.
+For render comparisons, report prompt validity, pixel availability, evaluation status, global component, target-local residual, and user judgment separately. An identical-prompt retry is not a color correction. Revise one dominant residual axis at a time only with permission, then freeze a new version.
 
 ## Optional negative contribution
 

@@ -403,8 +403,102 @@
         "aggregate_color_effect_budget",
         "tone_zone_response",
         "color_measurement_limits",
+        "color_axis_emission_coverage",
+        "color_actuation_contract",
+        "color_control_effectiveness",
+        "render_color_verification",
         "white_balance_exposure_separation",
-        "photographic_tone_response"
+        "photographic_tone_response",
+        "tone_zone_sampling_separation",
+        "global_local_color_residual"
+      ],
+      "max_non_core_modules": 3
+    },
+    {
+      "id": "color-critical-human-photographic",
+      "facets": {
+        "subjects": ["human"],
+        "medium": ["photographic"],
+        "relationships": ["ordinary"],
+        "detail_risks": ["color-fidelity", "white-balance"]
+      },
+      "expect_includes": [
+        "subject.human",
+        "medium.photographic-capture",
+        "detail.color-tone-fidelity"
+      ],
+      "expect_excludes": [
+        "detail.human-body-form",
+        "detail.human-face-likeness"
+      ],
+      "required_anchors": [
+        "display_color_scope",
+        "color_axis_emission_coverage",
+        "color_actuation_contract",
+        "tone_zone_sampling_separation",
+        "global_local_color_residual"
+      ],
+      "max_non_core_modules": 3
+    },
+    {
+      "id": "lighting-critical-generic-object",
+      "facets": {
+        "subjects": ["generic-object"],
+        "medium": ["photographic"],
+        "relationships": ["ordinary"],
+        "detail_risks": [
+          "lighting-fidelity",
+          "light-direction",
+          "shadow-topology",
+          "material-light-response",
+          "background-spill"
+        ]
+      },
+      "expect_includes": [
+        "subject.generic-object",
+        "medium.photographic-capture",
+        "detail.light-form-fidelity"
+      ],
+      "expect_excludes": [
+        "detail.color-tone-fidelity",
+        "detail.human-body-form"
+      ],
+      "required_anchors": [
+        "light_form_contract",
+        "observed_light_result",
+        "source_geometry_fill_separation",
+        "global_local_light_contrast",
+        "shadow_ownership",
+        "material_light_response",
+        "pose_light_dependency",
+        "lighting_color_contract_handoff",
+        "light_control_ledger",
+        "render_light_verification",
+        "contrast_topology",
+        "light_to_form_strength"
+      ],
+      "max_non_core_modules": 3
+    },
+    {
+      "id": "lighting-critical-non-photographic",
+      "facets": {
+        "subjects": ["generic-object"],
+        "medium": ["non-photographic"],
+        "relationships": ["ordinary"],
+        "detail_risks": ["light-to-form", "shadow-topology"]
+      },
+      "expect_includes": [
+        "subject.generic-object",
+        "medium.non-photographic-rendering",
+        "detail.light-form-fidelity"
+      ],
+      "expect_excludes": [
+        "medium.photographic-capture"
+      ],
+      "required_anchors": [
+        "light_form_contract",
+        "shadow_ownership",
+        "pose_light_dependency"
       ],
       "max_non_core_modules": 3
     },

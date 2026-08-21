@@ -179,7 +179,7 @@
     },
     {
       "id": "core.pre-emit-gate",
-      "version": 12,
+      "version": 14,
       "file": "modules/core.pre-emit-gate.md",
       "type": "core",
       "tier": 0,
@@ -212,12 +212,19 @@
         "color_tone_causal_consistency",
         "unowned_appearance_claim_audit",
         "causal_color_phrase_scope",
-        "final_color_control_ledger"
+        "final_color_control_ledger",
+        "intrinsic_axis_emission_coverage",
+        "axis_control_separability",
+        "light_form_causal_consistency",
+        "unowned_lighting_claim_audit",
+        "global_local_contrast_separation",
+        "shadow_owner_coverage",
+        "final_light_control_ledger"
       ]
     },
     {
       "id": "core.output-contract",
-      "version": 12,
+      "version": 14,
       "file": "modules/core.output-contract.md",
       "type": "core",
       "tier": 0,
@@ -245,7 +252,8 @@
         "module_evidence_not_prose",
         "clause_ownership",
         "diagnostic_render_separation",
-        "color_tone_output_ownership"
+        "color_tone_output_ownership",
+        "light_form_output_ownership"
       ]
     },
     {
@@ -474,7 +482,7 @@
     },
     {
       "id": "medium.non-photographic-rendering",
-      "version": 4,
+      "version": 5,
       "file": "modules/medium.non-photographic-rendering.md",
       "type": "medium",
       "tier": 2,
@@ -508,7 +516,7 @@
     },
     {
       "id": "medium.photographic-capture",
-      "version": 9,
+      "version": 11,
       "file": "modules/medium.photographic-capture.md",
       "type": "medium",
       "tier": 2,
@@ -544,7 +552,9 @@
         "color_light_decomposition",
         "light_to_form_strength",
         "white_balance_exposure_separation",
-        "photographic_tone_response"
+        "photographic_tone_response",
+        "tone_zone_sampling_separation",
+        "global_local_color_residual"
       ]
     },
     {
@@ -888,7 +898,7 @@
     },
     {
       "id": "detail.color-tone-fidelity",
-      "version": 2,
+      "version": 3,
       "file": "modules/detail.color-tone-fidelity.md",
       "type": "detail",
       "tier": 3,
@@ -928,7 +938,55 @@
         "tone_zone_response",
         "color_measurement_limits",
         "display_color_scope",
-        "region_group_color_comparison"
+        "region_group_color_comparison",
+        "color_axis_emission_coverage",
+        "color_actuation_contract",
+        "color_control_effectiveness",
+        "render_color_verification"
+      ]
+    },
+    {
+      "id": "detail.light-form-fidelity",
+      "version": 2,
+      "file": "modules/detail.light-form-fidelity.md",
+      "type": "detail",
+      "tier": 3,
+      "facet": "detail-risk",
+      "facet_values": [
+        "lighting-fidelity",
+        "light-direction",
+        "shadow-topology",
+        "light-to-form",
+        "material-light-response",
+        "background-spill"
+      ],
+      "priority": 79,
+      "triggers": [
+        "user explicitly prioritizes faithful lighting, shadow, or light-to-form reproduction",
+        "illumination or shadow topology materially carries the image",
+        "source/render comparison identifies lighting as a material residual"
+      ],
+      "avoid_when": [
+        "lighting is incidental and the selected medium module is sufficient"
+      ],
+      "dependencies": [
+        "core.visual-evidence",
+        "core.frame-coordinates",
+        "core.fidelity-discipline",
+        "core.background-color"
+      ],
+      "conflicts": [],
+      "provides_anchors": [
+        "light_form_contract",
+        "observed_light_result",
+        "source_geometry_fill_separation",
+        "global_local_light_contrast",
+        "shadow_ownership",
+        "material_light_response",
+        "pose_light_dependency",
+        "lighting_color_contract_handoff",
+        "light_control_ledger",
+        "render_light_verification"
       ]
     },
     {

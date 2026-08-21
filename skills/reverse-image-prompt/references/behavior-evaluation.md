@@ -18,7 +18,7 @@ An undelivered render is unscored, not a visual-quality failure. A single stocha
 
 Do not derive the evaluation set from one reported failure. Use raw images or artifacts that were not used to write the current correction and cover materially different subjects, media, and dominant fidelity modes.
 
-Include matched transformation pairs:
+Across the evaluation suite, include matched transformation pairs. They are not mandatory extra inputs for each independent single-source pass, and an evaluator must not invent or retrieve a second source outside that pass's scope:
 
 - **Invariant-preserving pair:** the primary appeal or proposition remains stable while a flexible dimension such as minor pose, viewpoint, placement, or incidental capture changes.
 - **Aesthetic-changing pair:** object inventory stays substantially similar while a primary form, surface, light-to-form, color, hierarchy, topology, or information invariant changes.
@@ -34,7 +34,7 @@ For a before/after comparison, give each arm only the raw request, source artifa
 For each arm:
 
 1. Record the internal plan in the schema from `SKILL.md` without exposing it to the downstream image generator.
-2. Draft the standalone prompt. When color/tone is material, update `emitted_controls` from literal excerpts of that final draft rather than anticipated wording.
+2. Draft the standalone prompt. When color/tone or lighting/light-to-form is material, update each routed contract's `emitted_controls` from literal excerpts of that final draft rather than anticipated wording.
 3. Validate the reconciled plan with `python tools/salience_plan.py PLAN.json` when a persisted evaluation artifact is appropriate.
 4. Freeze the authored prompt before generation.
 5. Compare prompt semantics without requiring shared wording or headings.
@@ -131,8 +131,13 @@ color_tone_contract:
       role: dominant | supporting | edge-frame | low-legibility
       intrinsic_axes:
         - axis: value | chroma | hue
+          role: primary | supporting
+          evidence_scope: highlight | midtone | shadow | flat | mixed
           observation: "source-relative observation"
           confidence: high | medium | low
+          emission: required | diagnostic-only
+          aggregate_effect_id: "required only when emission is required"
+          non_emission_reason: "required only when diagnostic-only"
           source_evidence: []
       tone_zones:
         - zone: highlight | midtone | shadow | flat
@@ -163,14 +168,31 @@ color_tone_contract:
       prompt_excerpt: "literal excerpt copied from the final production prompt"
       claim_id: "one listed emitted claim id"
       causal_layer: intrinsic | illumination | global-cast | exposure | processing | hierarchy
+      control_role: axis-control | compound-control
+      region_id: "required for axis-control"
+      axis: value | chroma | hue | contrast
+      compound_justification: "required only for compound-control"
       aggregate_effect_ids: ["every aggregate effect referenced by that claim"]
+  appearance_metaphors:
+    - phrase: "optional appearance shorthand"
+      status: explanation-only | unverified | model-calibrated
+      emit: false
+      decomposed_control_ids: []
 ```
 
 Every claim listed by the contract carries `perceptual_effects`, each naming one aggregate effect, one causal layer (`intrinsic`, `illumination`, `global-cast`, `exposure`, `processing`, or `hierarchy`), confidence, and evidence. Claims sharing a region, axis, and direction use one canonical effect even when their semantic-slot names differ. Repeating one causal layer is a merge failure. Multiple causal layers are valid only when each layer and their combined pull are independently source-supported.
 
-Every listed color/tone claim is represented exactly once in `emitted_controls`. Its literal final-prompt excerpt must match that claim's sole causal layer and complete aggregate-effect set. The structural validator checks ownership and consistency; the reviewer verifies that the excerpt was copied literally and that no omitted phrase elsewhere in the prompt also changes color or tone.
+Every listed color/tone claim is represented exactly once in `emitted_controls`. Its literal final-prompt excerpt must match that claim's sole causal layer and complete aggregate-effect set. Every required intrinsic axis links to one same-region/same-axis effect and its own intrinsic axis-control. A compound-control may compress secondary evidence but cannot satisfy a required intrinsic axis. The structural validator checks ownership and consistency; the reviewer verifies that the excerpt was copied literally and that no omitted phrase elsewhere in the prompt also changes color or tone.
 
 The schema deliberately contains no preferred hue, skin value, palette, metaphor, adjective blacklist, numeric color, identity proxy, or generator workaround. A hierarchy-layer hue effect additionally requires source evidence that hue contrast itself is invariant.
+
+### Optional Light/Form Contract schema
+
+When a persisted plan contains a primary `light-to-form` invariant or the routed `detail.light-form-fidelity` module, add the source-relative `light_form_contract` defined in `references/lighting-reproduction-evaluation.md`. Keep that schema in the dedicated reference rather than duplicating it here.
+
+The contract records the visible result before a confidence-rated source hypothesis, then region effects, shadow ownership, material response, pose dependence, aggregate effects, and literal final-prompt controls. Candidate claims use `lighting_effects`, not the Color/Tone contract's `perceptual_effects`.
+
+Every listed lighting claim is represented exactly once in `emitted_controls`. A low-confidence physical-light hypothesis cannot carry an emitted source-geometry or fill control; use result-space effects or keep it diagnostic. Global tonal range and local form contrast remain distinct. The same claim or literal excerpt cannot be owned independently by both the Light/Form and Color/Tone contracts.
 
 ## Prompt-level rubric
 
@@ -183,10 +205,17 @@ Review the standalone prompt with the source visible and score distinct question
 - Are intrinsic properties separated from pose/deformation, perspective, lighting/shadow, material interaction/occlusion, and processing?
 - Are intrinsic surface color, illumination, global cast, and exposure kept distinct?
 - When color or tone is material, are value, chroma, hue, tone-zone response, processing, and neutral-anchor confidence represented at source-relative strength?
+- Does every required intrinsic axis continue through a same-region/same-axis effect and literal intrinsic axis-control, instead of being replaced by hierarchy, exposure, or illumination?
+- Is displayed intrinsic color based on comparable midtone or flat evidence rather than a pooled highlight/midtone/shadow range?
 - Is the observation scope limited to what the image/profile evidence supports rather than claiming biological, material, or scene-referred true color?
 - Was each appearance metaphor decomposed before use, and does any retained metaphor merely summarize rather than add color, finish, illumination, or polish?
 - Does every literal color-changing phrase in the final prompt appear once in the control ledger with one causal layer and a complete effect budget?
 - Do differently named claims avoid accumulating the same color or tone direction beyond one supported aggregate target?
+- When lighting is material, is the visible result recorded before the physical-light hypothesis, with confidence and evidence for any emitted source geometry?
+- Are apparent source size, fill, global tonal range, local form contrast, shadow ownership, material response, and background spill kept causally distinct?
+- Does every literal lighting-changing phrase appear once in the Light/Form control ledger with one owner and a complete effect set?
+- When pose or geometry is flexible, does the prompt preserve the light-to-form relation without overlocking incidental highlight coordinates?
+- Do the Light/Form and Color/Tone contracts avoid duplicate claims, excerpts, and contrast directions?
 - Does the major-region area and attention hierarchy survive?
 - Do combined quality, lighting, surface, framing, and style cues import an unsupported category default?
 - Is the fidelity ceiling preserved without polishing, sharpening, completing, or normalizing the source?
@@ -211,6 +240,10 @@ Blind the arm mapping and review both thumbnail and native scale. Score at least
 
 For color- or tone-critical cases, additionally score source-relative region value, chroma, hue direction, highlight/midtone/shadow or flat-field response, neutral-anchor drift, global cast, exposure, and processing. Prefer relative region comparisons over exact pixel equality when geometry, stochastic texture, or lighting placement varies. Record embedded-profile status and any assumed display space when measurement is used.
 
+When persisted measurement is warranted, use `color_probe.py --spec` to retain independently selected source/render bounds, semantic group roles, and tone zones. Use `color_fidelity_eval.py` to separate contextual shared movement from target-local residual. Without a justified acceptance policy, record the result as `unscored`; do not promote a structural PASS to a pixel PASS.
+
+For lighting-critical comparisons, read `references/lighting-reproduction-evaluation.md`. Use `light_probe.py` only with analyst-selected regions, relations, and profiles to compare regional lightness, local gradient amplitude, transition width, material response, and background spill. The probe cannot identify semantics, infer a rig, or declare fidelity.
+
 When comparing a source and render, include multiple analyst-selected patches from the target surface and at least one contextual or neutral group where the image permits it. Check whether drift is shared across groups before labeling it intrinsic or global; do not infer semantics from coordinates or patch names.
 
 Include held-out causal pairs spanning materially different subjects and media:
@@ -226,8 +259,16 @@ Include held-out causal pairs spanning materially different subjects and media:
 - a color/finish metaphor versus an axis-equivalent description across human and non-human surfaces
 - embedded-profile, missing-profile, and failed-profile cases
 - local target drift versus a shared target-and-context drift
+- large near-axis versus large off-axis illumination
+- small near-axis versus small off-axis illumination
+- high global tonal range with low local form contrast, and the inverse
+- the same light with changed geometry or pose
+- cast, self, contact-occlusion, material-response, and processing-owned darkness
+- diffuse, absorbent, glossy, metallic, translucent, and woven material response
 
 The motivating image may remain one regression sample, but promotion requires improvement across this causal matrix. Use optional multi-region measurements only as diagnostic evidence; never turn one sample's numeric values or wording into runtime expectations.
+
+For generator control-effectiveness evaluation, change one axis-control at a time and record the exact model/version, settings, reference handling, repeated-render median movement, variance, and unintended-axis leakage. Include both human and non-human surfaces. A response table is stale when the model version or relevant conditioning route changes.
 
 Promote a change only when it improves unrelated held-out behavior without material regression in other dominant modes. Keep package PASS, prompt PASS, delivered pixels, pixel fidelity, and user preference as separate claims.
 
@@ -236,6 +277,7 @@ Promote a change only when it improves unrelated held-out behavior without mater
 - Put source-relative axes and causal distinctions in runtime instructions, not example-specific desired values.
 - Do not add a fixed adjective blacklist, fixed global word count, exact source proportions, or generator-specific workaround to solve one case.
 - Do not install a preferred human color, demographic-to-color mapping, fixed metaphor dictionary, or subject-specific measurement region.
+- Do not install a preferred source direction, fill level, light-to-form strength, shadow owner, material response, or subject-specific lighting coordinate.
 - Prefer changing the merge or attribution rule over adding another subject exception.
 - Corrections replace or remove amplifying claims; they do not accumulate counter-negatives.
 - Treat one case as a regression sample, never as proof that a general rule succeeds or fails everywhere.

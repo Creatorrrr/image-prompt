@@ -1,0 +1,208 @@
+# Color reproduction and control-effectiveness evaluation
+
+Read this reference only when routed color/tone fidelity requires measured source evidence, source/render comparison, actual generation, or controlled color revision. Ordinary incidental-color prompt extraction does not need it.
+
+## Evidence boundary
+
+Keep three artifacts distinct:
+
+1. **Observation contract:** source-visible or color-managed evidence from the input.
+2. **Actuation contract:** literal generator controls intended to carry that evidence.
+3. **Verification report:** measured delivered pixels and an optional acceptance policy.
+
+A correct observation and structurally valid prompt do not prove that the downstream model obeyed the control. A render that was blocked or never returned is unscored. Measurements describe displayed image color, not biological, material, demographic, or scene-referred truth.
+
+## Reference classification
+
+Classify any auxiliary swatch, chart, named palette, or example before using it:
+
+- `calibrated-color-target`: measured values and a defined observation condition are available.
+- `color-managed-reference`: a trustworthy embedded profile or explicit managed space supports display-color comparison.
+- `uncalibrated-vocabulary-chart`: names or swatches are present without calibration evidence.
+- `photographic-example`: subject color is mixed with lighting, exposure, optics, makeup, material finish, and processing.
+
+Only calibrated or color-managed references may establish numeric targets. Vocabulary charts may suggest language but cannot define one true color. If two references use one label for materially different swatches, downgrade the label to vocabulary. Never turn a human color label into a racial, ethnic, national, or demographic proxy.
+
+## Sampling design
+
+The analyst chooses semantic regions. Tools must not auto-detect skin, products, food, paint, clothing, or other target classes.
+
+Use several small, internally coherent patches when the image permits. Avoid boundaries, specular highlights, deep occlusion, clipped pixels, compression blocks, and mixed materials unless one of those effects is itself the target.
+
+Separate groups by both semantic role and tone zone:
+
+- target midtone or flat groups estimate displayed intrinsic value, chroma, and hue
+- target highlight groups estimate highlight response and clipping or rolloff
+- target shadow groups estimate shadow response, compression, and cast
+- contextual or neutral-like groups estimate shared exposure, cast, and processing movement
+
+Do not mix highlight, midtone, and shadow patches in a group used to drive an intrinsic axis. A `mixed` evidence scope is diagnostic-only.
+
+When source and render geometry differ, choose source and render bounds independently while retaining matching region names, semantic roles, and tone zones. Coordinate equality is not semantic correspondence.
+
+### Sampling specification
+
+`color_probe.py --spec` accepts JSON of this form:
+
+```json
+{
+  "regions": [
+    {
+      "name": "target-midtone-a",
+      "source_bounds": [0.1, 0.1, 0.2, 0.2],
+      "comparison_bounds": [0.2, 0.1, 0.3, 0.2],
+      "semantic_role": "target",
+      "tone_zone": "midtone",
+      "purpose": "intrinsic-displayed-color"
+    },
+    {
+      "name": "target-midtone-b",
+      "source_bounds": [0.3, 0.1, 0.4, 0.2],
+      "comparison_bounds": [0.4, 0.1, 0.5, 0.2],
+      "semantic_role": "target",
+      "tone_zone": "midtone",
+      "purpose": "intrinsic-displayed-color"
+    },
+    {
+      "name": "context-a",
+      "source_bounds": [0.7, 0.1, 0.8, 0.2],
+      "comparison_bounds": [0.65, 0.1, 0.75, 0.2],
+      "semantic_role": "context",
+      "tone_zone": "flat",
+      "purpose": "global-cast-and-exposure"
+    },
+    {
+      "name": "context-b",
+      "source_bounds": [0.7, 0.3, 0.8, 0.4],
+      "comparison_bounds": [0.65, 0.3, 0.75, 0.4],
+      "semantic_role": "context",
+      "tone_zone": "flat",
+      "purpose": "global-cast-and-exposure"
+    }
+  ],
+  "groups": [
+    {
+      "name": "target-midtone",
+      "region_names": ["target-midtone-a", "target-midtone-b"],
+      "semantic_role": "target",
+      "tone_zone": "midtone",
+      "purpose": "intrinsic-displayed-color"
+    },
+    {
+      "name": "context",
+      "region_names": ["context-a", "context-b"],
+      "semantic_role": "context",
+      "tone_zone": "flat",
+      "purpose": "global-cast-and-exposure"
+    }
+  ]
+}
+```
+
+Bounds are normalized. `comparison_bounds` may be omitted when the same bounds remain valid.
+
+## Measurement interpretation
+
+Use CIELAB axes separately:
+
+- `L*` for displayed value or lightness
+- `a*` and `b*` for opponent-color movement
+- `C*` for chroma magnitude
+- circular hue difference only when chroma supports a stable hue reading
+- CIEDE2000 as a summary distance, never as a replacement for axis diagnosis
+
+Prefer equal weighting of region medians so a large patch does not overpower smaller semantic peers. Keep the source group dispersion with its center; a center without dispersion overstates precision.
+
+An embedded profile converted successfully to sRGB supports a color-managed relative comparison. Missing or failed profiles support only an assumed-display-space relative comparison. Neither establishes scene reflectance or intrinsic biological color.
+
+## Global and target-local decomposition
+
+For matching groups, compute each render-minus-source Lab movement. Let `G` be the component-wise median movement across contextual groups. For a target group with movement `T`, compute the target-local residual `R = T - G`.
+
+- large `G` with small `R`: principally global exposure, cast, or processing
+- small `G` with large `R`: principally target-local or intrinsic rendering drift
+- large `G` and large `R`: mixed
+- weak, inconsistent, or uncalibrated evidence: inconclusive
+
+For local chroma and hue, subtract `G` in Lab first, then recompute the corrected target's chroma and hue relative to its source. Do not subtract hue angles directly.
+
+## Acceptance policy
+
+`color_fidelity_eval.py` reports decomposition without a policy, but returns `unscored`. A policy may set any subset of these positive tolerances:
+
+```yaml
+target:
+  max_abs_delta_l: <positive task-specific tolerance>
+  max_abs_delta_c: <positive task-specific tolerance>
+  max_abs_hue_degrees: <positive task-specific tolerance>
+  max_delta_e2000: <positive task-specific tolerance>
+context:
+  max_abs_delta_l: <positive task-specific tolerance>
+  max_opponent_shift: <positive task-specific tolerance>
+```
+
+Omit unused keys. Choose tolerances from source-region dispersion, profile uncertainty, repeated-render variance, task importance, and any user-specified requirement. If no justified policy exists, do not invent a PASS.
+
+## Actuation contract
+
+For each material intrinsic axis, link:
+
+```text
+region intrinsic axis
+-> same-region and same-axis aggregate effect
+-> emitted claim
+-> literal intrinsic axis-control
+```
+
+An axis-control owns one region, one axis, and one causal layer. Split literal prompt excerpts when a sentence contains several clauses. A hierarchy or exposure relationship cannot replace a missing intrinsic surface-value control. A justified compound-control may compress secondary multi-axis evidence, but it cannot satisfy a required intrinsic axis.
+
+Appearance metaphors are `explanation-only` or `unverified` by default. They may be emitted only when an exact generator-and-version evaluation shows that the phrase reinforces already-owned axes without unacceptable cross-axis leakage.
+
+Exact RGB, hex, Lab, or color-temperature values remain evaluation evidence unless the named generator documents numeric color control and the task supports that precision.
+
+## Generator response calibration
+
+Natural-language color controls are model actuators, not universal color definitions. Maintain response evidence by exact model and version only when enough independent evaluation exists.
+
+For each tested descriptor, record:
+
+- intended axis and source-relative direction
+- observed median Lab movement
+- repeated-render variance
+- movement in unintended axes
+- human and non-human context coverage
+- photographic and non-photographic coverage when applicable
+- model identifier, version, settings, and reference handling
+
+Use matched prompts that change one control at a time. Do not promote the closest single render; compare distributions. Do not install a fixed preferred color, demographic mapping, adjective blacklist, or one-case workaround.
+
+## Reference-conditioned generation
+
+When the named generator and user request permit visual conditioning, prefer the strongest supported route:
+
+1. direct source-image edit or reference conditioning
+2. analyst-selected highlight, midtone, shadow, and context palette reference
+3. generator-version-calibrated text controls
+4. uncalibrated generator-agnostic text
+
+Keep the production prompt standalone: do not mention an absent reference inside its text. Pass a reference through the tool input. Respect a text-only request.
+
+## Retry and revision
+
+An identical-prompt retry samples the same control distribution. Preserve exact bytes and hash when the user requests frozen retries, measure each delivered render, and stop at the user's cap. Do not claim that retries corrected a systematic axis error.
+
+When prompt revision is allowed, change only the largest policy-normalized residual axis, create a new prompt version and hash, and re-evaluate. If no policy exists, report the measured residuals and ask or infer only within the user's stated scope; do not silently optimize several axes at once.
+
+## Reporting
+
+Report these outcomes separately:
+
+1. package and route validity
+2. salience-plan and axis-coverage validity
+3. prompt freeze/integrity
+4. delivered-render availability
+5. color evaluation: pass, fail, or unscored
+6. drift classification and dominant residual axis
+7. user judgment
+
+The motivating image may be a regression sample, but promotion requires unrelated human and non-human, photographic and non-photographic, profile-present and profile-missing cases.

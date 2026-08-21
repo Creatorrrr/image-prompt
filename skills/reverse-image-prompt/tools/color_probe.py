@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import argparse
 from dataclasses import dataclass
+import hashlib
 import io
 import json
 import math
@@ -27,18 +28,34 @@ except ImportError:  # pragma: no cover - exercised only without optional depend
 
 
 MAX_DEFAULT_SAMPLES = 50_000
+VALID_TONE_ZONES = {"highlight", "midtone", "shadow", "flat", "mixed"}
+VALID_SEMANTIC_ROLES = {"target", "context", "neutral", "supporting"}
+VALID_PURPOSES = {
+    "intrinsic-displayed-color",
+    "highlight-response",
+    "shadow-response",
+    "global-cast-and-exposure",
+    "relative-relation",
+    "diagnostic",
+}
 
 
 @dataclass(frozen=True)
 class RegionSpec:
     name: str
     bounds: tuple[float, float, float, float]
+    semantic_role: str = ""
+    tone_zone: str = ""
+    purpose: str = ""
 
 
 @dataclass(frozen=True)
 class GroupSpec:
     name: str
     region_names: tuple[str, ...]
+    semantic_role: str = ""
+    tone_zone: str = ""
+    purpose: str = ""
 
 
 def parse_region(raw: str) -> RegionSpec:
@@ -79,6 +96,133 @@ def parse_group(raw: str) -> GroupSpec:
     if len(set(region_names)) != len(region_names):
         raise ValueError(f"group {name!r} region names must be unique")
     return GroupSpec(name=name, region_names=region_names)
+
+
+def _parse_bounds(value: Any, label: str) -> tuple[float, float, float, float]:
+    if not isinstance(value, list) or len(value) != 4:
+        raise ValueError(f"{label} must contain four normalized coordinates")
+    if not all(isinstance(item, (int, float)) for item in value):
+        raise ValueError(f"{label} coordinates must be numeric")
+    x0, y0, x1, y1 = (float(item) for item in value)
+    if not (0.0 <= x0 < x1 <= 1.0 and 0.0 <= y0 < y1 <= 1.0):
+        raise ValueError(
+            f"{label} must satisfy 0 <= x0 < x1 <= 1 and 0 <= y0 < y1 <= 1"
+        )
+    return x0, y0, x1, y1
+
+
+def _validate_region_metadata(
+    semantic_role: Any,
+    tone_zone: Any,
+    purpose: Any,
+    label: str,
+) -> tuple[str, str, str]:
+    if semantic_role not in VALID_SEMANTIC_ROLES:
+        raise ValueError(f"{label}.semantic_role is invalid")
+    if tone_zone not in VALID_TONE_ZONES:
+        raise ValueError(f"{label}.tone_zone is invalid")
+    if purpose not in VALID_PURPOSES:
+        raise ValueError(f"{label}.purpose is invalid")
+    if purpose == "intrinsic-displayed-color" and tone_zone not in {"midtone", "flat"}:
+        raise ValueError(
+            f"{label}: intrinsic-displayed-color requires a midtone or flat tone_zone"
+        )
+    return str(semantic_role), str(tone_zone), str(purpose)
+
+
+def load_sampling_spec(
+    path: Path,
+) -> tuple[list[RegionSpec], list[RegionSpec], list[GroupSpec]]:
+    """Load analyst-authored source/render bounds and semantic group metadata."""
+
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(payload, dict):
+        raise ValueError("sampling spec must be an object")
+    raw_regions = payload.get("regions")
+    if not isinstance(raw_regions, list) or not raw_regions:
+        raise ValueError("sampling spec regions must be a non-empty list")
+
+    source_regions: list[RegionSpec] = []
+    comparison_regions: list[RegionSpec] = []
+    seen_names: set[str] = set()
+    for index, raw_region in enumerate(raw_regions):
+        label = f"sampling spec regions[{index}]"
+        if not isinstance(raw_region, dict):
+            raise ValueError(f"{label} must be an object")
+        name = raw_region.get("name")
+        if not isinstance(name, str) or not name.strip():
+            raise ValueError(f"{label}.name must be non-empty")
+        name = name.strip()
+        if name in seen_names:
+            raise ValueError(f"duplicate sampling region name: {name}")
+        seen_names.add(name)
+        source_bounds = _parse_bounds(raw_region.get("source_bounds"), f"{label}.source_bounds")
+        comparison_bounds = _parse_bounds(
+            raw_region.get("comparison_bounds", raw_region.get("source_bounds")),
+            f"{label}.comparison_bounds",
+        )
+        semantic_role, tone_zone, purpose = _validate_region_metadata(
+            raw_region.get("semantic_role"),
+            raw_region.get("tone_zone"),
+            raw_region.get("purpose"),
+            label,
+        )
+        source_regions.append(
+            RegionSpec(name, source_bounds, semantic_role, tone_zone, purpose)
+        )
+        comparison_regions.append(
+            RegionSpec(name, comparison_bounds, semantic_role, tone_zone, purpose)
+        )
+
+    raw_groups = payload.get("groups", [])
+    if not isinstance(raw_groups, list):
+        raise ValueError("sampling spec groups must be a list")
+    groups: list[GroupSpec] = []
+    seen_group_names: set[str] = set()
+    region_map = {region.name: region for region in source_regions}
+    for index, raw_group in enumerate(raw_groups):
+        label = f"sampling spec groups[{index}]"
+        if not isinstance(raw_group, dict):
+            raise ValueError(f"{label} must be an object")
+        name = raw_group.get("name")
+        if not isinstance(name, str) or not name.strip():
+            raise ValueError(f"{label}.name must be non-empty")
+        name = name.strip()
+        if name in seen_group_names:
+            raise ValueError(f"duplicate sampling group name: {name}")
+        seen_group_names.add(name)
+        raw_members = raw_group.get("region_names")
+        if not isinstance(raw_members, list) or len(raw_members) < 2 or not all(
+            isinstance(item, str) and item.strip() for item in raw_members
+        ):
+            raise ValueError(f"{label}.region_names must contain at least two names")
+        region_names = tuple(item.strip() for item in raw_members)
+        if len(set(region_names)) != len(region_names):
+            raise ValueError(f"{label}.region_names must be unique")
+        unknown = sorted(set(region_names) - set(region_map))
+        if unknown:
+            raise ValueError(f"{label} references unknown regions: {', '.join(unknown)}")
+        semantic_role, tone_zone, purpose = _validate_region_metadata(
+            raw_group.get("semantic_role"),
+            raw_group.get("tone_zone"),
+            raw_group.get("purpose"),
+            label,
+        )
+        for region_name in region_names:
+            region = region_map[region_name]
+            if (
+                region.semantic_role != semantic_role
+                or region.tone_zone != tone_zone
+                or region.purpose != purpose
+            ):
+                raise ValueError(
+                    f"{label} metadata must match every member region"
+                )
+        groups.append(
+            GroupSpec(name, region_names, semantic_role, tone_zone, purpose)
+        )
+
+    return source_regions, comparison_regions, groups
 
 
 def _load_srgb(path: Path) -> tuple[Image.Image, str, list[str]]:
@@ -141,6 +285,84 @@ def srgb_to_lab(rgb: tuple[int, int, int]) -> tuple[float, float, float]:
     return 116.0 * fy - 16.0, 500.0 * (fx - fy), 200.0 * (fy - fz)
 
 
+def delta_e2000(
+    lab_a: Iterable[float], lab_b: Iterable[float]
+) -> float:
+    """Return CIEDE2000 color difference for two CIELAB triplets."""
+
+    l1, a1, b1 = (float(value) for value in lab_a)
+    l2, a2, b2 = (float(value) for value in lab_b)
+    c1 = math.hypot(a1, b1)
+    c2 = math.hypot(a2, b2)
+    c_bar = (c1 + c2) / 2.0
+    c_bar_7 = c_bar**7
+    g = 0.5 * (1.0 - math.sqrt(c_bar_7 / (c_bar_7 + 25.0**7)))
+    a1_prime = (1.0 + g) * a1
+    a2_prime = (1.0 + g) * a2
+    c1_prime = math.hypot(a1_prime, b1)
+    c2_prime = math.hypot(a2_prime, b2)
+
+    def hue_prime(a_value: float, b_value: float) -> float:
+        if a_value == 0.0 and b_value == 0.0:
+            return 0.0
+        return math.degrees(math.atan2(b_value, a_value)) % 360.0
+
+    h1_prime = hue_prime(a1_prime, b1)
+    h2_prime = hue_prime(a2_prime, b2)
+    delta_l_prime = l2 - l1
+    delta_c_prime = c2_prime - c1_prime
+    if c1_prime * c2_prime == 0.0:
+        delta_h_prime = 0.0
+    else:
+        raw_delta_h = h2_prime - h1_prime
+        if abs(raw_delta_h) <= 180.0:
+            delta_h_prime = raw_delta_h
+        elif raw_delta_h > 180.0:
+            delta_h_prime = raw_delta_h - 360.0
+        else:
+            delta_h_prime = raw_delta_h + 360.0
+    delta_big_h_prime = 2.0 * math.sqrt(c1_prime * c2_prime) * math.sin(
+        math.radians(delta_h_prime / 2.0)
+    )
+
+    l_bar_prime = (l1 + l2) / 2.0
+    c_bar_prime = (c1_prime + c2_prime) / 2.0
+    if c1_prime * c2_prime == 0.0:
+        h_bar_prime = h1_prime + h2_prime
+    elif abs(h1_prime - h2_prime) <= 180.0:
+        h_bar_prime = (h1_prime + h2_prime) / 2.0
+    elif h1_prime + h2_prime < 360.0:
+        h_bar_prime = (h1_prime + h2_prime + 360.0) / 2.0
+    else:
+        h_bar_prime = (h1_prime + h2_prime - 360.0) / 2.0
+
+    t = (
+        1.0
+        - 0.17 * math.cos(math.radians(h_bar_prime - 30.0))
+        + 0.24 * math.cos(math.radians(2.0 * h_bar_prime))
+        + 0.32 * math.cos(math.radians(3.0 * h_bar_prime + 6.0))
+        - 0.20 * math.cos(math.radians(4.0 * h_bar_prime - 63.0))
+    )
+    delta_theta = 30.0 * math.exp(-(((h_bar_prime - 275.0) / 25.0) ** 2))
+    c_bar_prime_7 = c_bar_prime**7
+    r_c = 2.0 * math.sqrt(
+        c_bar_prime_7 / (c_bar_prime_7 + 25.0**7)
+    )
+    s_l = 1.0 + (0.015 * ((l_bar_prime - 50.0) ** 2)) / math.sqrt(
+        20.0 + ((l_bar_prime - 50.0) ** 2)
+    )
+    s_c = 1.0 + 0.045 * c_bar_prime
+    s_h = 1.0 + 0.015 * c_bar_prime * t
+    r_t = -math.sin(math.radians(2.0 * delta_theta)) * r_c
+
+    l_term = delta_l_prime / s_l
+    c_term = delta_c_prime / s_c
+    h_term = delta_big_h_prime / s_h
+    return math.sqrt(
+        l_term**2 + c_term**2 + h_term**2 + r_t * c_term * h_term
+    )
+
+
 def _percentile(values: list[float], fraction: float) -> float:
     ordered = sorted(values)
     if not ordered:
@@ -169,6 +391,36 @@ def _sample_pixels(image: Image.Image, max_samples: int) -> list[tuple[int, int,
 
 def _round_triplet(values: Iterable[float], digits: int = 3) -> list[float]:
     return [round(float(value), digits) for value in values]
+
+
+def _quartiles(values: list[float]) -> dict[str, float]:
+    return {
+        "p25": round(_percentile(values, 0.25), 3),
+        "p50": round(_percentile(values, 0.50), 3),
+        "p75": round(_percentile(values, 0.75), 3),
+    }
+
+
+def _weighted_hue_statistics(
+    a_values: list[float], b_values: list[float]
+) -> dict[str, float | None]:
+    weights = [math.hypot(a_value, b_value) for a_value, b_value in zip(a_values, b_values)]
+    total_weight = sum(weights)
+    if total_weight == 0.0:
+        return {"weighted_mean_degrees": None, "concentration": 0.0}
+    x = sum(
+        weight * math.cos(math.atan2(b_value, a_value))
+        for a_value, b_value, weight in zip(a_values, b_values, weights)
+    )
+    y = sum(
+        weight * math.sin(math.atan2(b_value, a_value))
+        for a_value, b_value, weight in zip(a_values, b_values, weights)
+    )
+    mean = math.degrees(math.atan2(y, x)) % 360.0
+    return {
+        "weighted_mean_degrees": round(mean, 3),
+        "concentration": round(math.hypot(x, y) / total_weight, 6),
+    }
 
 
 def _summarize_region(
@@ -203,6 +455,9 @@ def _summarize_region(
 
     return {
         "name": region.name,
+        "semantic_role": region.semantic_role or None,
+        "tone_zone": region.tone_zone or None,
+        "purpose": region.purpose or None,
         "normalized_bounds": _round_triplet(region.bounds, 6),
         "pixel_bounds": list(pixel_bounds),
         "sample_count": len(pixels),
@@ -214,12 +469,21 @@ def _summarize_region(
         },
         "iqr": {
             "lightness": round(_percentile(l_values, 0.75) - _percentile(l_values, 0.25), 3),
+            "a": round(_percentile(a_values, 0.75) - _percentile(a_values, 0.25), 3),
+            "b": round(_percentile(b_values, 0.75) - _percentile(b_values, 0.25), 3),
             "chroma": round(
                 _percentile(chroma_values, 0.75)
                 - _percentile(chroma_values, 0.25),
                 3,
             ),
         },
+        "quantiles": {
+            "lightness": _quartiles(l_values),
+            "a": _quartiles(a_values),
+            "b": _quartiles(b_values),
+            "chroma": _quartiles(chroma_values),
+        },
+        "hue_statistics": _weighted_hue_statistics(a_values, b_values),
     }
 
 
@@ -239,6 +503,7 @@ def analyze_image(
     image, profile_status, warnings = _load_srgb(path)
     return {
         "path": str(path.resolve()),
+        "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
         "size": {"width": image.width, "height": image.height},
         "profile_status": profile_status,
         "warnings": warnings,
@@ -271,6 +536,7 @@ def compare_reports(source: dict[str, Any], target: dict[str, Any]) -> list[dict
                 "target_minus_source": {
                     "lab_d65": _round_triplet(delta_lab, 3),
                     "delta_e76": round(math.sqrt(sum(value * value for value in delta_lab)), 3),
+                    "delta_e2000": round(delta_e2000(source_lab, target_lab), 3),
                     "chroma": round(
                         target_median["chroma"] - source_median["chroma"], 3
                     ),
@@ -318,6 +584,9 @@ def summarize_groups(
                 "name": group.name,
                 "region_names": list(group.region_names),
                 "region_count": len(group.region_names),
+                "semantic_role": group.semantic_role or None,
+                "tone_zone": group.tone_zone or None,
+                "purpose": group.purpose or None,
                 "equal_region_median": {
                     "lab_d65": _round_triplet(lab_median, 3),
                     "chroma": round(chroma, 3),
@@ -326,6 +595,20 @@ def summarize_groups(
                 "region_median_ranges": {
                     "lightness": _round_triplet(
                         (min(lightness_values), max(lightness_values)), 3
+                    ),
+                    "a": _round_triplet(
+                        (
+                            min(median["lab_d65"][1] for median in medians),
+                            max(median["lab_d65"][1] for median in medians),
+                        ),
+                        3,
+                    ),
+                    "b": _round_triplet(
+                        (
+                            min(median["lab_d65"][2] for median in medians),
+                            max(median["lab_d65"][2] for median in medians),
+                        ),
+                        3,
                     ),
                     "chroma": _round_triplet(
                         (min(chroma_values), max(chroma_values)), 3
@@ -353,6 +636,9 @@ def compare_group_reports(
         target_group = target_map[name]
         if set(source_group["region_names"]) != set(target_group["region_names"]):
             raise ValueError(f"group {name!r} must use matching region names")
+        for field in ("semantic_role", "tone_zone", "purpose"):
+            if source_group.get(field) != target_group.get(field):
+                raise ValueError(f"group {name!r} must use matching {field}")
         source_median = source_group["equal_region_median"]
         target_median = target_group["equal_region_median"]
         source_lab = source_median["lab_d65"]
@@ -362,11 +648,15 @@ def compare_group_reports(
             {
                 "name": name,
                 "region_names": source_group["region_names"],
+                "semantic_role": source_group.get("semantic_role"),
+                "tone_zone": source_group.get("tone_zone"),
+                "purpose": source_group.get("purpose"),
                 "target_minus_source": {
                     "lab_d65": _round_triplet(delta_lab, 3),
                     "delta_e76": round(
                         math.sqrt(sum(value * value for value in delta_lab)), 3
                     ),
+                    "delta_e2000": round(delta_e2000(source_lab, target_lab), 3),
                     "chroma": round(
                         target_median["chroma"] - source_median["chroma"], 3
                     ),
@@ -414,8 +704,13 @@ def main(argv: list[str]) -> int:
     parser.add_argument(
         "--region",
         action="append",
-        required=True,
+        default=[],
         help="NAME=X0,Y0,X1,Y1 using normalized coordinates; repeat as needed",
+    )
+    parser.add_argument(
+        "--spec",
+        default="",
+        help="optional JSON sampling spec with source/comparison bounds and group metadata",
     )
     parser.add_argument("--compare", default="", help="optional comparison image")
     parser.add_argument(
@@ -434,19 +729,36 @@ def main(argv: list[str]) -> int:
     args = parser.parse_args(argv)
 
     try:
-        source_regions = [parse_region(raw) for raw in args.region]
-        source = analyze_image(Path(args.image), source_regions, args.max_samples)
-        groups = [parse_group(raw) for raw in args.group]
-        source_groups = summarize_groups(source, groups) if groups else []
-        if source_groups:
-            source["groups"] = source_groups
-        payload: dict[str, Any] = {"source": source}
-        if args.compare:
+        if args.spec and (args.region or args.compare_region or args.group):
+            raise ValueError(
+                "--spec cannot be combined with --region, --compare-region, or --group"
+            )
+        sampling_spec_record: dict[str, str] | None = None
+        if args.spec:
+            spec_path = Path(args.spec)
+            source_regions, compare_regions, groups = load_sampling_spec(spec_path)
+            sampling_spec_record = {
+                "path": str(spec_path.resolve()),
+                "sha256": hashlib.sha256(spec_path.read_bytes()).hexdigest(),
+            }
+        else:
+            if not args.region:
+                raise ValueError("provide at least one --region or a --spec")
+            source_regions = [parse_region(raw) for raw in args.region]
             compare_regions = (
                 [parse_region(raw) for raw in args.compare_region]
                 if args.compare_region
                 else source_regions
             )
+            groups = [parse_group(raw) for raw in args.group]
+        source = analyze_image(Path(args.image), source_regions, args.max_samples)
+        source_groups = summarize_groups(source, groups) if groups else []
+        if source_groups:
+            source["groups"] = source_groups
+        payload: dict[str, Any] = {"source": source}
+        if sampling_spec_record:
+            payload["sampling_spec"] = sampling_spec_record
+        if args.compare:
             target = analyze_image(Path(args.compare), compare_regions, args.max_samples)
             payload["comparison"] = target
             payload["deltas"] = compare_reports(source, target)
