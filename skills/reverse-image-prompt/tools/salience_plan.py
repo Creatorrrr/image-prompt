@@ -47,6 +47,20 @@ VALID_SOURCE_KINDS = {
 VALID_REGION_ROLES = {"dominant", "supporting", "edge-frame", "low-legibility"}
 VALID_RELATIVE_AREAS = {"small", "medium", "large"}
 VALID_ATTENTION = {"primary", "secondary", "background"}
+VALID_COLOR_IMPORTANCE = {"primary", "supporting"}
+VALID_COLOR_AXES = {"value", "chroma", "hue", "contrast"}
+VALID_INTRINSIC_COLOR_AXES = {"value", "chroma", "hue"}
+VALID_COLOR_CAUSAL_LAYERS = {
+    "intrinsic",
+    "illumination",
+    "global-cast",
+    "exposure",
+    "processing",
+    "hierarchy",
+}
+VALID_COLOR_CONFIDENCE = {"high", "medium", "low"}
+VALID_NEUTRAL_ANCHOR_STATUS = {"available", "unavailable", "uncertain"}
+VALID_TONE_ZONES = {"highlight", "midtone", "shadow", "flat"}
 
 
 def _contract(plan: dict[str, Any]) -> dict[str, Any]:
@@ -60,6 +74,354 @@ def _nonempty_strings(value: Any) -> bool:
         and bool(value)
         and all(isinstance(item, str) and item.strip() for item in value)
     )
+
+
+def _nonempty_string(value: Any) -> bool:
+    return isinstance(value, str) and bool(value.strip())
+
+
+def _audit_color_tone_contract(
+    contract: dict[str, Any],
+    claim_map: dict[str, dict[str, Any]],
+    major_region_ids: set[str],
+) -> list[str]:
+    """Validate the optional source-relative color/tone decision contract."""
+
+    errors: list[str] = []
+    color_contract = contract.get("color_tone_contract")
+    claims_with_effects = {
+        claim_id
+        for claim_id, claim in claim_map.items()
+        if isinstance(claim.get("perceptual_effects"), list)
+        and bool(claim["perceptual_effects"])
+    }
+    if color_contract is None:
+        if claims_with_effects:
+            errors.append(
+                "candidate claims with perceptual_effects require color_tone_contract"
+            )
+        return errors
+    if not isinstance(color_contract, dict):
+        return ["color_tone_contract must be an object"]
+
+    importance = color_contract.get("importance")
+    if importance not in VALID_COLOR_IMPORTANCE:
+        errors.append(
+            f"color_tone_contract.importance must be one of {sorted(VALID_COLOR_IMPORTANCE)}"
+        )
+
+    global_spec = color_contract.get("global")
+    if not isinstance(global_spec, dict):
+        errors.append("color_tone_contract.global must be an object")
+    else:
+        global_fields = (
+            "cast_or_palette_shift",
+            "exposure_behavior",
+            "contrast_and_tone_curve",
+            "processing_shift",
+        )
+        populated = False
+        for field in global_fields:
+            value = global_spec.get(field)
+            if value is not None and not isinstance(value, str):
+                errors.append(f"color_tone_contract.global.{field} must be a string")
+            populated = populated or _nonempty_string(value)
+        if not populated:
+            errors.append(
+                "color_tone_contract.global must record at least one observed or uncertain global behavior"
+            )
+        if not _nonempty_strings(global_spec.get("source_evidence")):
+            errors.append(
+                "color_tone_contract.global.source_evidence must contain visible evidence"
+            )
+
+    regions = color_contract.get("regions")
+    if not isinstance(regions, list) or not regions:
+        errors.append("color_tone_contract.regions must contain at least one region")
+        regions = []
+
+    color_region_ids: set[str] = set()
+    for index, region in enumerate(regions):
+        label = f"color_tone_contract.regions[{index}]"
+        if not isinstance(region, dict):
+            errors.append(f"{label} must be an object")
+            continue
+        region_id = region.get("id")
+        if not _nonempty_string(region_id):
+            errors.append(f"{label}.id must be non-empty")
+            continue
+        if region_id in color_region_ids:
+            errors.append(f"duplicate color/tone region id: {region_id}")
+        color_region_ids.add(region_id)
+        if region.get("role") not in VALID_REGION_ROLES:
+            errors.append(f"{label}.role is invalid")
+        if not _nonempty_strings(region.get("source_evidence")):
+            errors.append(f"{label}.source_evidence must contain visible evidence")
+
+        intrinsic_axes = region.get("intrinsic_axes")
+        if not isinstance(intrinsic_axes, list) or not intrinsic_axes:
+            errors.append(f"{label}.intrinsic_axes must contain observed axes")
+            intrinsic_axes = []
+        seen_axes: set[str] = set()
+        for axis_index, axis_spec in enumerate(intrinsic_axes):
+            axis_label = f"{label}.intrinsic_axes[{axis_index}]"
+            if not isinstance(axis_spec, dict):
+                errors.append(f"{axis_label} must be an object")
+                continue
+            axis = axis_spec.get("axis")
+            if axis not in VALID_INTRINSIC_COLOR_AXES:
+                errors.append(f"{axis_label}.axis is invalid")
+                continue
+            if axis in seen_axes:
+                errors.append(f"{label} repeats intrinsic axis {axis!r}")
+            seen_axes.add(axis)
+            if not _nonempty_string(axis_spec.get("observation")):
+                errors.append(f"{axis_label}.observation must be non-empty")
+            if axis_spec.get("confidence") not in VALID_COLOR_CONFIDENCE:
+                errors.append(f"{axis_label}.confidence is invalid")
+            if not _nonempty_strings(axis_spec.get("source_evidence")):
+                errors.append(f"{axis_label}.source_evidence must contain visible evidence")
+        if (
+            importance == "primary"
+            and region.get("role") == "dominant"
+            and seen_axes != VALID_INTRINSIC_COLOR_AXES
+        ):
+            missing = sorted(VALID_INTRINSIC_COLOR_AXES - seen_axes)
+            if missing:
+                errors.append(
+                    f"{label} must account for primary intrinsic axes: {', '.join(missing)}"
+                )
+
+        tone_zones = region.get("tone_zones", [])
+        if not isinstance(tone_zones, list):
+            errors.append(f"{label}.tone_zones must be a list")
+            tone_zones = []
+        if importance == "primary" and region.get("role") == "dominant" and not tone_zones:
+            errors.append(
+                f"{label}.tone_zones must record highlight/midtone/shadow or flat behavior"
+            )
+        seen_zones: set[str] = set()
+        for zone_index, zone_spec in enumerate(tone_zones):
+            zone_label = f"{label}.tone_zones[{zone_index}]"
+            if not isinstance(zone_spec, dict):
+                errors.append(f"{zone_label} must be an object")
+                continue
+            zone = zone_spec.get("zone")
+            if zone not in VALID_TONE_ZONES:
+                errors.append(f"{zone_label}.zone is invalid")
+                continue
+            if zone in seen_zones:
+                errors.append(f"{label} repeats tone zone {zone!r}")
+            seen_zones.add(zone)
+            if not _nonempty_string(zone_spec.get("observation")):
+                errors.append(f"{zone_label}.observation must be non-empty")
+            if zone_spec.get("confidence") not in VALID_COLOR_CONFIDENCE:
+                errors.append(f"{zone_label}.confidence is invalid")
+            if not _nonempty_strings(zone_spec.get("source_evidence")):
+                errors.append(f"{zone_label}.source_evidence must contain visible evidence")
+
+        relations = region.get("relative_relations", [])
+        if not isinstance(relations, list) or not all(
+            _nonempty_string(item) for item in relations
+        ):
+            errors.append(f"{label}.relative_relations must be non-empty strings")
+        elif importance == "primary" and region.get("role") == "dominant" and not relations:
+            errors.append(
+                f"{label}.relative_relations must calibrate a primary color/tone region"
+            )
+
+    neutral_status = color_contract.get("neutral_anchor_status")
+    if neutral_status not in VALID_NEUTRAL_ANCHOR_STATUS:
+        errors.append("color_tone_contract.neutral_anchor_status is invalid")
+    uncertainty_note = color_contract.get("uncertainty_note", "")
+    if neutral_status in {"unavailable", "uncertain"} and not _nonempty_string(
+        uncertainty_note
+    ):
+        errors.append(
+            "color_tone_contract.uncertainty_note is required without a reliable neutral anchor"
+        )
+
+    neutral_anchors = color_contract.get("neutral_anchors", [])
+    if not isinstance(neutral_anchors, list):
+        errors.append("color_tone_contract.neutral_anchors must be a list")
+        neutral_anchors = []
+    known_regions = color_region_ids | major_region_ids | {"global"}
+    reliable_anchor_count = 0
+    for index, anchor in enumerate(neutral_anchors):
+        label = f"color_tone_contract.neutral_anchors[{index}]"
+        if not isinstance(anchor, dict):
+            errors.append(f"{label} must be an object")
+            continue
+        region_id = anchor.get("region_id")
+        if region_id not in known_regions:
+            errors.append(f"{label}.region_id references an unknown region")
+        confidence = anchor.get("confidence")
+        if confidence not in VALID_COLOR_CONFIDENCE:
+            errors.append(f"{label}.confidence is invalid")
+        elif confidence in {"high", "medium"}:
+            reliable_anchor_count += 1
+        if not _nonempty_strings(anchor.get("source_evidence")):
+            errors.append(f"{label}.source_evidence must contain visible evidence")
+    if neutral_status == "available" and reliable_anchor_count == 0:
+        errors.append(
+            "color_tone_contract requires a medium- or high-confidence neutral anchor when status is available"
+        )
+
+    aggregate_effects = color_contract.get("aggregate_effects")
+    if not isinstance(aggregate_effects, list) or not aggregate_effects:
+        errors.append(
+            "color_tone_contract.aggregate_effects must contain at least one source target"
+        )
+        aggregate_effects = []
+    aggregate_map: dict[str, dict[str, Any]] = {}
+    aggregate_signatures: dict[tuple[str, str, str], str] = {}
+    primary_effect_count = 0
+    for index, effect in enumerate(aggregate_effects):
+        label = f"color_tone_contract.aggregate_effects[{index}]"
+        if not isinstance(effect, dict):
+            errors.append(f"{label} must be an object")
+            continue
+        effect_id = effect.get("id")
+        if not _nonempty_string(effect_id):
+            errors.append(f"{label}.id must be non-empty")
+            continue
+        if effect_id in aggregate_map:
+            errors.append(f"duplicate aggregate color/tone effect id: {effect_id}")
+        aggregate_map[effect_id] = effect
+        axis = effect.get("axis")
+        if axis not in VALID_COLOR_AXES:
+            errors.append(f"{label}.axis is invalid")
+        direction = effect.get("direction")
+        if not _nonempty_string(direction):
+            errors.append(f"{label}.direction must be non-empty")
+        region_id = effect.get("region_id")
+        if region_id not in known_regions:
+            errors.append(f"{label}.region_id references an unknown region")
+        if axis in VALID_COLOR_AXES and _nonempty_string(direction) and region_id in known_regions:
+            normalized_direction = "-".join(
+                direction.casefold().replace("_", " ").replace("-", " ").split()
+            )
+            signature = (str(region_id), str(axis), normalized_direction)
+            previous = aggregate_signatures.get(signature)
+            if previous is not None:
+                errors.append(
+                    f"aggregate effects {previous!r} and {effect_id!r} split one region/axis/direction"
+                )
+            else:
+                aggregate_signatures[signature] = str(effect_id)
+        if effect.get("role") not in VALID_INVARIANT_ROLES:
+            errors.append(f"{label}.role is invalid")
+        elif effect.get("role") == "primary":
+            primary_effect_count += 1
+        if effect.get("target_strength") not in VALID_STRENGTHS:
+            errors.append(f"{label}.target_strength is invalid")
+        if not isinstance(effect.get("source_supported"), bool):
+            errors.append(f"{label}.source_supported must be boolean")
+        if not _nonempty_strings(effect.get("source_evidence")):
+            errors.append(f"{label}.source_evidence must contain visible evidence")
+        if not _nonempty_strings(effect.get("claim_ids")):
+            errors.append(f"{label}.claim_ids must contain emitted color/tone claims")
+    if importance == "primary" and primary_effect_count == 0:
+        errors.append(
+            "a primary color_tone_contract must contain a primary aggregate effect"
+        )
+
+    color_claim_ids = color_contract.get("claim_ids")
+    if not _nonempty_strings(color_claim_ids):
+        errors.append(
+            "color_tone_contract.claim_ids must contain emitted color/tone claims"
+        )
+        color_claim_ids = []
+    listed_claim_ids = set(color_claim_ids)
+    unknown_claims = sorted(listed_claim_ids - set(claim_map))
+    if unknown_claims:
+        errors.append(
+            "color_tone_contract.claim_ids references unknown claims: "
+            + ", ".join(unknown_claims)
+        )
+    unlisted_effect_claims = sorted(claims_with_effects - listed_claim_ids)
+    if unlisted_effect_claims:
+        errors.append(
+            "claims with perceptual_effects missing from color_tone_contract.claim_ids: "
+            + ", ".join(unlisted_effect_claims)
+        )
+
+    observed_effect_claims: dict[str, set[str]] = {}
+    observed_effect_layers: dict[str, list[str]] = {}
+    for claim_id in sorted(listed_claim_ids & set(claim_map)):
+        claim = claim_map[claim_id]
+        if not claim.get("emit"):
+            errors.append(f"{claim_id}: color/tone contract may reference only emitted claims")
+        effects = claim.get("perceptual_effects")
+        if not isinstance(effects, list) or not effects:
+            errors.append(f"{claim_id}: perceptual_effects must be a non-empty list")
+            continue
+        for index, effect_ref in enumerate(effects):
+            label = f"{claim_id}.perceptual_effects[{index}]"
+            if not isinstance(effect_ref, dict):
+                errors.append(f"{label} must be an object")
+                continue
+            effect_id = effect_ref.get("aggregate_effect_id")
+            if effect_id not in aggregate_map:
+                errors.append(f"{label}.aggregate_effect_id is unknown")
+                continue
+            layer = effect_ref.get("causal_layer")
+            if layer not in VALID_COLOR_CAUSAL_LAYERS:
+                errors.append(f"{label}.causal_layer is invalid")
+                continue
+            confidence = effect_ref.get("confidence")
+            if confidence not in VALID_COLOR_CONFIDENCE:
+                errors.append(f"{label}.confidence is invalid")
+            if not _nonempty_strings(effect_ref.get("source_evidence")):
+                errors.append(f"{label}.source_evidence must contain visible evidence")
+
+            aggregate = aggregate_map[effect_id]
+            if (
+                layer == "hierarchy"
+                and aggregate.get("axis") == "hue"
+                and effect_ref.get("hue_contrast_invariant") is not True
+            ):
+                errors.append(
+                    f"{label}: hierarchy may carry hue only when hue_contrast_invariant is true"
+                )
+            if (
+                layer == "global-cast"
+                and neutral_status == "unavailable"
+                and confidence == "high"
+            ):
+                errors.append(
+                    f"{label}: high-confidence global cast requires more than unavailable neutral evidence"
+                )
+            observed_effect_claims.setdefault(effect_id, set()).add(claim_id)
+            observed_effect_layers.setdefault(effect_id, []).append(layer)
+
+    for effect_id, effect in aggregate_map.items():
+        declared_claims = set(effect.get("claim_ids", []))
+        unknown = sorted(declared_claims - set(claim_map))
+        if unknown:
+            errors.append(
+                f"aggregate effect {effect_id!r} references unknown claims: {', '.join(unknown)}"
+            )
+        observed_claims = observed_effect_claims.get(effect_id, set())
+        if declared_claims != observed_claims:
+            errors.append(
+                f"aggregate effect {effect_id!r} claim_ids must match claims that reference it"
+            )
+        layers = observed_effect_layers.get(effect_id, [])
+        if len(layers) != len(set(layers)):
+            errors.append(
+                f"aggregate effect {effect_id!r} repeats one causal layer across emitted claims"
+            )
+        if len(set(layers)) > 1 and effect.get("source_supported") is not True:
+            errors.append(
+                f"aggregate effect {effect_id!r} spans causal layers without source support"
+            )
+        if effect.get("source_supported") is False and observed_claims:
+            errors.append(
+                f"aggregate effect {effect_id!r} is unsupported but contains emitted claims"
+            )
+
+    return errors
 
 
 def audit_plan(plan: dict[str, Any]) -> list[str]:
@@ -272,16 +634,37 @@ def audit_plan(plan: dict[str, Any]) -> list[str]:
         ):
             errors.append(f"{label}: unsupported prior cluster contains emitted claims")
 
+    if any(
+        isinstance(invariant, dict) and invariant.get("axis") == "color"
+        for invariant in invariants
+    ) and "color_tone_contract" not in contract:
+        errors.append(
+            "a color invariant requires a source-relative color_tone_contract"
+        )
+    errors.extend(_audit_color_tone_contract(contract, claim_map, region_ids))
+
     return errors
 
 
 def primary_signature(plan: dict[str, Any]) -> set[tuple[str, str, str]]:
     contract = _contract(plan)
-    return {
+    signature = {
         (str(item.get("id")), str(item.get("axis")), str(item.get("target_strength")))
         for item in contract.get("invariants", [])
         if isinstance(item, dict) and item.get("role") == "primary"
     }
+    color_contract = contract.get("color_tone_contract")
+    if isinstance(color_contract, dict):
+        signature.update(
+            (
+                f"color-effect:{item.get('id')}",
+                f"{item.get('axis')}:{item.get('region_id')}",
+                f"{item.get('direction')}:{item.get('target_strength')}",
+            )
+            for item in color_contract.get("aggregate_effects", [])
+            if isinstance(item, dict) and item.get("role") == "primary"
+        )
+    return signature
 
 
 def compare_plans(

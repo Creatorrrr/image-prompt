@@ -111,6 +111,57 @@ Use source-relative identifiers rather than required wording. The evaluator may 
 
 Valid axes, causes, strengths, roles, and comparison relations are defined by `tools/salience_plan.py`. A negative emitted claim must be a distinct high-risk drift boundary; it cannot serve as a counterweight for an overstrong affirmative cluster.
 
+### Optional Color/Tone Contract schema
+
+When a persisted plan contains a color invariant or the routed `detail.color-tone-fidelity` module, add a source-relative `color_tone_contract`. Values below describe structure, not required wording or desired colors:
+
+```yaml
+color_tone_contract:
+  importance: primary | supporting
+  global:
+    cast_or_palette_shift: "observed, absent, mixed, or uncertain behavior"
+    exposure_behavior: "source-relative exposure response"
+    contrast_and_tone_curve: "global and local tone behavior"
+    processing_shift: "visible grading or processing behavior"
+    source_evidence: []
+  regions:
+    - id: "region id"
+      role: dominant | supporting | edge-frame | low-legibility
+      intrinsic_axes:
+        - axis: value | chroma | hue
+          observation: "source-relative observation"
+          confidence: high | medium | low
+          source_evidence: []
+      tone_zones:
+        - zone: highlight | midtone | shadow | flat
+          observation: "source-relative response"
+          confidence: high | medium | low
+          source_evidence: []
+      relative_relations: []
+      source_evidence: []
+  neutral_anchor_status: available | unavailable | uncertain
+  uncertainty_note: "required when no reliable neutral anchor is available"
+  neutral_anchors:
+    - region_id: "known region id"
+      confidence: high | medium | low
+      source_evidence: []
+  claim_ids: []
+  aggregate_effects:
+    - id: "canonical effect id"
+      region_id: "known region id or global"
+      axis: value | chroma | hue | contrast
+      direction: "canonical source-relative direction"
+      role: primary | supporting
+      target_strength: subtle | moderate | strong
+      claim_ids: []
+      source_supported: true
+      source_evidence: []
+```
+
+Every claim listed by the contract carries `perceptual_effects`, each naming one aggregate effect, one causal layer (`intrinsic`, `illumination`, `global-cast`, `exposure`, `processing`, or `hierarchy`), confidence, and evidence. Claims sharing a region, axis, and direction use one canonical effect even when their semantic-slot names differ. Repeating one causal layer is a merge failure. Multiple causal layers are valid only when each layer and their combined pull are independently source-supported.
+
+The schema deliberately contains no preferred hue, skin value, palette, adjective, numeric color, or generator workaround. A hierarchy-layer hue effect additionally requires source evidence that hue contrast itself is invariant.
+
 ## Prompt-level rubric
 
 Review the standalone prompt with the source visible and score distinct questions:
@@ -121,6 +172,8 @@ Review the standalone prompt with the source visible and score distinct question
 - Does each semantic slot have one owner rather than repeated synonymous emphasis?
 - Are intrinsic properties separated from pose/deformation, perspective, lighting/shadow, material interaction/occlusion, and processing?
 - Are intrinsic surface color, illumination, global cast, and exposure kept distinct?
+- When color or tone is material, are value, chroma, hue, tone-zone response, processing, and neutral-anchor confidence represented at source-relative strength?
+- Do differently named claims avoid accumulating the same color or tone direction beyond one supported aggregate target?
 - Does the major-region area and attention hierarchy survive?
 - Do combined quality, lighting, surface, framing, and style cues import an unsupported category default?
 - Is the fidelity ceiling preserved without polishing, sharpening, completing, or normalizing the source?
@@ -142,6 +195,20 @@ Blind the arm mapping and review both thumbnail and native scale. Score at least
 - surface and material role
 - fidelity-ceiling or polish drift
 - category-prior drift
+
+For color- or tone-critical cases, additionally score source-relative region value, chroma, hue direction, highlight/midtone/shadow or flat-field response, neutral-anchor drift, global cast, exposure, and processing. Prefer relative region comparisons over exact pixel equality when geometry, stochastic texture, or lighting placement varies. Record embedded-profile status and any assumed display space when measurement is used.
+
+Include held-out causal pairs spanning materially different subjects and media:
+
+- the same intrinsic surface under different illumination
+- different intrinsic surfaces under comparable illumination
+- similar hue with changed exposure, chroma, or tone curve
+- local colored illumination versus a global cast or palette shift
+- low saturation versus simple underexposure
+- monochrome, flat-color, mixed-light, photographic, and non-photographic sources
+- human and non-human subjects without making either category the runtime default
+
+The motivating image may remain one regression sample, but promotion requires improvement across this causal matrix. Use optional multi-region measurements only as diagnostic evidence; never turn one sample's numeric values or wording into runtime expectations.
 
 Promote a change only when it improves unrelated held-out behavior without material regression in other dominant modes. Keep package PASS, prompt PASS, delivered pixels, pixel fidelity, and user preference as separate claims.
 

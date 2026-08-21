@@ -1,6 +1,6 @@
 ---
 id: core.background-color
-version: 6
+version: 7
 priority: 102
 type: core
 tier: 0
@@ -23,35 +23,37 @@ provides_anchors:
   - color_mood
   - background_legibility_ceiling
   - color_causality
+  - global_cast_consistency
+  - neutral_reference_anchor
 ---
 
 # Core: background, color, and environment zoning
 
 ## When to load
 
-Always. Every image has a background, color structure, or negative-space field that can drift if ignored.
+Always. Every image has background, color, or negative-space structure.
 
 ## Rules
 
-- Analyze background zoning as image-plane structure: foreground, midground, background, edge bands, negative space, depth layers, occluded zones, dark masses, bright windows, flat fields, texture bands, and ambiguous low-detail regions.
-- Preserve the source background's visual priority. If background elements are dim, cropped, blurred, low-legibility, partly hidden, or secondary, keep them as low-detail background massing rather than turning them into clean readable objects.
-- Treat background legibility and information density as part of the source aesthetic. A named or distinctive background element must inherit the source-visible blur, haze, contrast, and detail ceiling rather than becoming a crisp landmark.
-- Preserve color mood, palette, color cast, saturation, contrast, shadow color, highlight color, and local color relationships. Do not neutralize a visible cast or push the image toward a postcard, clean-room, catalog, cinematic, or studio palette unless that is visibly present.
-- Separate intrinsic surface color from illumination color, global color cast, and exposure. Consolidate each important surface or region into one owned color instruction; other modules may describe how light shifts it but must not restate the same hue direction as additional emphasis.
-- For underexposed, low-contrast, compressed, or hazy backgrounds, distinguish fully crushed regions from regions that still show folds, edges, silhouettes, texture, or environmental hints. Preserve remaining detail without turning dark areas into featureless black or brightly recovered scenery.
-- Prevent clean-room drift for products, portraits, screenshots, documents, and ordinary scenes. Do not replace messy, partial, compressed, cropped, or ordinary background zones with a smooth backdrop, empty studio, clean wall, perfect sky, luxury interior, or tidy product surface unless visibly present.
-- Treat background zoning as part of crop and coordinate fidelity. Edge bands, side strips, awkward headroom, bottom UI bands, floor/wall seams, horizon placement, poster edges, and environmental slivers must remain in their visible positions when they matter.
+- Analyze background zoning as image-plane layers, edge bands, negative space, dark or bright masses, texture, and low-detail regions; preserve their crop positions.
+- Preserve background priority. Keep dim, cropped, blurred, hidden, or secondary elements as low-detail massing.
+- Treat background legibility and information density as part of the source aesthetic. Named elements inherit source blur, haze, contrast, and detail limits.
+- Preserve color mood, cast, saturation, contrast, shadow/highlight color, and local relationships; do not normalize them toward genre defaults.
+- Separate intrinsic surface color from illumination color, global color cast or palette shift, exposure or tone curve, and processing. Consolidate each important surface or region into one owned color instruction; other modules may describe how light shifts it but must not restate the same perceptual direction as additional emphasis.
+- Keep global cast consistent with the source-visible behavior of multiple regions rather than inferring it from one salient surface. When a global shift is uncertain, preserve relative region relationships instead of forcing a white balance or palette grade.
+- Treat a possible neutral reference as evidence only when its low-chroma appearance survives visible illumination, reflection, exposure, clipping, compression, and processing. Record confidence rather than assuming that white, gray, black, or metal is neutral.
+- Keep value, chroma, and hue relationships separate. A hierarchy statement may own relative brightness, saturation, area, or contrast, but must not restate a region's intrinsic hue unless hue contrast itself carries the hierarchy.
+- In dark, compressed, or hazy areas, distinguish crushed regions from remaining folds, edges, silhouettes, texture, or hints; neither erase nor brightly recover them.
+- Prevent clean-room drift: do not replace messy, partial, compressed, or ordinary zones with a tidy backdrop unless visible.
 
 ## Prompt additions
 
-Describe background zones by position, mass, contrast, legibility, depth, and color behavior before using broad setting labels.
+Describe zones by position, mass, contrast, legibility, depth, and color behavior before setting labels.
 
 ## Optional negative contribution
 
-Reject postcard scenery, clean-room backdrop, studio sweep, tidy catalog surface, brightened recovered background, readable invented signage, removed clutter, added depth, and background elements becoming cleaner or more central than visible.
+Reject source-likely cleanup, recovery, invented legibility, removed clutter, added depth, or priority drift.
 
 ## Optional settings contribution
 
-- Background zoning locks:
-- Palette/color-cast locks:
-- Low-legibility background massing locks:
+- Background, palette/cast, and low-legibility locks:

@@ -59,7 +59,8 @@ When evaluating or revising this skill, also read `references/behavior-evaluatio
    5. Map the few largest coherent image regions by relative area, tonal role, edge contact, legibility, and attention. For relationship-led or mixed images, map major-component topology, contact/support, containment, boundary crossing, occlusion, and negative space. For appearance-led images, map form, surface, light-to-form, color, material roles, and subject/environment hierarchy first. For information-led images, map layout, reading order, legibility, and container hierarchy first.
    6. Analyze visible subjects and their image-plane roles. Use a compact broad person-gestalt anchor only when it materially reduces ambiguity; decompose salient human form or appearance into visible causes.
    7. Before treating shape, scale, color, surface, or definition as intrinsic, separate effects caused by pose/deformation, perspective, lighting/shadow, material interaction or occlusion, and capture/processing.
-   8. Add only materially important pose, camera/perspective, focus, lighting, background, medium, texture, artifact, UI, and text evidence.
+   8. When color or tonal behavior is material, build the source-relative Color/Tone Contract from `detail.color-tone-fidelity`: separate region value, chroma, and hue from illumination, global cast or palette shift, exposure or tone curve, and processing; record neutral-anchor confidence and cross-layer aggregate effects.
+   9. Add only materially important pose, camera/perspective, focus, lighting, background, medium, texture, artifact, UI, and text evidence.
 
    Use this sparse internal map; leave irrelevant fields empty rather than completing a checklist:
 
@@ -80,6 +81,7 @@ render_contract:
   flexible_dimensions: []
   major_regions: []     # relative area, tonal/material role, edge contact, legibility, attention
   candidate_claims: []  # evidence candidates from modules; not automatic prompt sentences
+  color_tone_contract: {}  # only when color/tone is materially fidelity-bearing
 ```
 
 4. Build and resolve this internal facet map:
@@ -90,11 +92,11 @@ detected_facets:
   medium: []          # photographic, screenshot-ui, non-photographic, unspecified
   relationships: []   # ordinary, occlusion, replacement, reflection, screen-frame-within-frame, scale-miniature, mixed-media
   capture_quality: [] # low-quality, compressed, underexposed, motion-blurred, flash, casual-phone
-  detail_risks: []    # face-detail, body-form, body-proportion, muscle-definition, body-tension, skin-surface, body-region-hierarchy, clothing, hands, text-logo, ui, small-props, cropped-edges, tight-selfie, face-hand-gesture, accessory-torso-budget
+  detail_risks: []    # face-detail, body-form, body-proportion, muscle-definition, body-tension, skin-surface, body-region-hierarchy, color-tone, color-fidelity, tone-fidelity, surface-color, global-cast, white-balance, exposure-tone, palette-relationship, clothing, hands, text-logo, ui, small-props, cropped-edges, tight-selfie, face-hand-gesture, accessory-torso-budget
   style: []           # stylized-character-maturity or another narrow risk
 ```
 
-5. Treat selected modules as evidence contributors, not prose entitlements. Merge candidate claims by semantic slot before drafting; one module owns each emitted slot while other modules may strengthen its evidence. Resolve conflicts and allocate prompt weight using this priority:
+5. Treat selected modules as evidence contributors, not prose entitlements. Merge candidate claims by semantic slot before drafting; one module owns each emitted slot while other modules may strengthen its evidence. For material color and tone, also merge claims by shared perceptual effect across intrinsic surface, illumination, global cast, exposure, processing, and hierarchy even when their semantic-slot names differ. Resolve conflicts and allocate prompt weight using this priority:
    1. Visible-evidence and safety limits.
    2. Primary perceptual proposition, dominant fidelity axis, and invariants.
    3. The mode-leading evidence: topology for relationship-led, causal appearance signature for appearance-led, information hierarchy for information-led, or the named co-primary pair for mixed.
@@ -102,7 +104,7 @@ detected_facets:
    5. Subject, medium, camera, lighting, focus, artifact, background, and color fidelity that supports the proposition.
    6. Flexible pose or placement detail, secondary elements, and generic shorthand.
 
-6. Draft the smallest prompt that carries every invariant and concept-critical constraint. Let its order follow the dominant fidelity axis. If the source look is high-salience, place one compact Aesthetic Causal Signature near the beginning; if neutral, use only one or two ordinary cues. Translate broad appeal words into form, surface, light, color, hierarchy, or spatial mechanisms. Normally express a semantic slot once and add at most one source-supported drift boundary for a genuinely high-risk failure. Correct an overstrong draft by replacing or deleting the amplifying language, not by appending a negative counterweight. Give each major component one relation and each inversion-prone interaction one relation clause, but do not let flexible pose coordinates or secondary details outrank the primary proposition.
+6. Draft the smallest prompt that carries every invariant and concept-critical constraint. Let its order follow the dominant fidelity axis. If the source look is high-salience, place one compact Aesthetic Causal Signature near the beginning; if neutral, use only one or two ordinary cues. Translate broad appeal words into form, surface, light, color, hierarchy, or spatial mechanisms. Normally express a semantic slot once and add at most one source-supported drift boundary for a genuinely high-risk failure. For material color or tone, assign every emitted direction to one causal layer and one aggregate effect budget; do not let hierarchy repeat a surface hue unless hue contrast is itself invariant. Correct an overstrong draft by replacing or deleting the amplifying language, not by appending a negative counterweight. Give each major component one relation and each inversion-prone interaction one relation clause, but do not let flexible pose coordinates or secondary details outrank the primary proposition.
 
 7. Apply the pre-emit gate and report prompt-only limits honestly.
 
@@ -114,6 +116,7 @@ detected_facets:
 - Load Tier 3 and Tier 4 modules only for visible, material risks.
 - For a prominent or clearly readable human face, add `face-detail`; for a small, blurred, shadowed, or heavily occluded face, keep only scale-appropriate human evidence and do not invent micro-features.
 - Add a human body-form risk only when visible proportion, contour/tissue, muscle definition, skin surface, tension, or body-region hierarchy is first-order. Do not route it merely because a person or torso is visible.
+- Add `detail.color-tone-fidelity` only when color or tonal behavior is first-order, the user explicitly prioritizes tone fidelity, or confusion among intrinsic color, illumination, cast, exposure, and processing would materially change the image. Do not route it for ordinary incidental color.
 - Treat the spatial topology of major components as Tier 0 evidence, but let the dominant fidelity axis determine its prompt weight. Do not force ordinary topology to outrank appearance or information invariants.
 - Treat adaptive aesthetic analysis as Tier 0 evidence, not as a style preset. Do not load extra style modules merely to fill an aesthetic checklist.
 - Module selection controls what must be checked, not how many words it receives. A routed detail module may contribute no standalone sentence when its evidence is already owned by a primary invariant.
@@ -306,17 +309,17 @@ Always. Prevent cleaner, more generic, more plausible, or more category-normaliz
 
 - Cap generated polish to the source. Preserve visible roughness, softness, asymmetry, color cast, retouching level, ordinary capture, and medium imperfections.
 - Treat subject attractiveness and image polish as separate controls. A supported attractiveness anchor must not imply cleaner skin, symmetry, makeup, crop, focus, lighting, or editorial finish.
-- Preserve illusion, mismatch, mixed-media layering, scale incongruity, low fidelity, or awkward capture above a more plausible scene.
-- Weaken broad portrait, fashion, garment, product, genre, and body-region labels whenever their default pulls toward common composition, cleaner styling, expanded crop, completion, or beautification. Put visible evidence before shorthand.
+- Preserve visible illusion, mismatch, mixed-media layering, scale incongruity, low fidelity, or awkward capture above plausibility.
+- Weaken broad portrait, fashion, garment, product, genre, and body-region labels when they pull toward cleaner styling, expanded crop, completion, or beautification. Put evidence before shorthand.
 - Treat source fidelity ceiling as an affirmative requirement: do not exceed visible sharpness, cleanliness, glamour, lighting balance, readability, symmetry, or plausibility unless requested.
 
 ## Aesthetic salience gate
 
-Decide whether changing the visible form, surface, light, color, or hierarchy while retaining the objects would materially change the image's identity or appeal.
+Decide whether changing visible form, surface, light, color, or hierarchy while retaining objects would change the image's identity or appeal.
 
-In diagnostic mode, name the source-supported perceptual appeal directly before decomposing it into visible mechanisms. Do not attribute unseen motive, identity, or story.
+In diagnostic mode, name the source-supported perceptual appeal directly before its visible mechanisms; do not infer motive, identity, or story.
 
-Keep that appeal reading out of the production prompt until it has been translated into bounded, observable render controls. An evaluative phrase is not itself an invariant.
+Keep appeal language out of the prompt until translated into bounded controls; evaluation is not an invariant.
 
 Build a sparse Aesthetic Causal Signature from only the form, surface, light-to-form, color, sharpness, and hierarchy axes that materially create the image's perceptual proposition.
 
@@ -326,19 +329,21 @@ Build a sparse Aesthetic Causal Signature from only the form, surface, light-to-
 - **Color/tone:** palette, cast, saturation, range, and local contrast.
 - **Hierarchy:** dominant shapes, material roles, subject/environment balance, and first attention.
 
-Select only axes with causal weight. Use three to six mutually supporting look anchors only when the source aesthetic is high-salience; otherwise use one or two ordinary cues. For ambiguous evidence, describe observed behavior rather than invoking a genre, camera, film, or era preset.
+Select only causal axes. Use three to six mutually supporting look anchors only when the source aesthetic is high-salience; otherwise use one or two ordinary cues. Describe ambiguity instead of invoking presets.
 
-Treat descriptive detail and rendered sharpness as independent controls. Detailed geometry may remain soft, compressed, flat, rough, or low-legibility; do not let detail raise sharpness, scale, polish, or priority.
+Treat descriptive detail and rendered sharpness as independent controls. Detail must not raise sharpness, scale, polish, or priority.
 
-Translate evaluative or mood words into visible mechanisms. A broad descriptor cannot replace supported form, surface, tone, color, light, sharpness, and hierarchy. Use it at most once, then describe its causes.
+Translate evaluative or mood words into visible mechanisms. Use a broad descriptor at most once; it cannot replace causal evidence.
 
-Audit prior-heavy cues as a combined cluster, not only as isolated labels. Temporarily ignore the subject nouns and ask whether the remaining quality, lighting, surface, framing, and style language strongly invokes a category default unsupported by the source. Rewrite the unsupported cluster from visible evidence; do not turn its individual words into a universal blacklist.
+Treat a broad color descriptor as a hypothesis about one causal layer, not as shorthand for hue, value, chroma, lighting, mood, and processing at once. Replace overload with source-supported axes.
+
+Audit prior-heavy cues as a combined cluster, not only as isolated labels. Ignore subject nouns temporarily; rewrite unsupported quality, lighting, surface, framing, or style defaults from evidence without a universal blacklist.
 
 ## Prompt additions
 
 State the fidelity ceiling early when the image is casual, degraded, stylized, awkward, or illusion-dependent.
 
-When the source look materially differs from a clean default, place a compact Aesthetic Signature near the beginning of `PROMPT:`. In appearance-led mode, put it before pose minutiae; repeat at most one highest-risk drift constraint near the end.
+When the source differs from a clean default, place a compact Aesthetic Signature early; add at most one highest-risk boundary.
 
 ## Optional negative contribution
 
@@ -353,32 +358,32 @@ Reject only likely beautification, relighting, sharpening, style upgrade, symmet
 
 ## When to load
 
-Always. Every image has a background, color structure, or negative-space field that can drift if ignored.
+Always. Every image has background, color, or negative-space structure.
 
 ## Rules
 
-- Analyze background zoning as image-plane structure: foreground, midground, background, edge bands, negative space, depth layers, occluded zones, dark masses, bright windows, flat fields, texture bands, and ambiguous low-detail regions.
-- Preserve the source background's visual priority. If background elements are dim, cropped, blurred, low-legibility, partly hidden, or secondary, keep them as low-detail background massing rather than turning them into clean readable objects.
-- Treat background legibility and information density as part of the source aesthetic. A named or distinctive background element must inherit the source-visible blur, haze, contrast, and detail ceiling rather than becoming a crisp landmark.
-- Preserve color mood, palette, color cast, saturation, contrast, shadow color, highlight color, and local color relationships. Do not neutralize a visible cast or push the image toward a postcard, clean-room, catalog, cinematic, or studio palette unless that is visibly present.
-- Separate intrinsic surface color from illumination color, global color cast, and exposure. Consolidate each important surface or region into one owned color instruction; other modules may describe how light shifts it but must not restate the same hue direction as additional emphasis.
-- For underexposed, low-contrast, compressed, or hazy backgrounds, distinguish fully crushed regions from regions that still show folds, edges, silhouettes, texture, or environmental hints. Preserve remaining detail without turning dark areas into featureless black or brightly recovered scenery.
-- Prevent clean-room drift for products, portraits, screenshots, documents, and ordinary scenes. Do not replace messy, partial, compressed, cropped, or ordinary background zones with a smooth backdrop, empty studio, clean wall, perfect sky, luxury interior, or tidy product surface unless visibly present.
-- Treat background zoning as part of crop and coordinate fidelity. Edge bands, side strips, awkward headroom, bottom UI bands, floor/wall seams, horizon placement, poster edges, and environmental slivers must remain in their visible positions when they matter.
+- Analyze background zoning as image-plane layers, edge bands, negative space, dark or bright masses, texture, and low-detail regions; preserve their crop positions.
+- Preserve background priority. Keep dim, cropped, blurred, hidden, or secondary elements as low-detail massing.
+- Treat background legibility and information density as part of the source aesthetic. Named elements inherit source blur, haze, contrast, and detail limits.
+- Preserve color mood, cast, saturation, contrast, shadow/highlight color, and local relationships; do not normalize them toward genre defaults.
+- Separate intrinsic surface color from illumination color, global color cast or palette shift, exposure or tone curve, and processing. Consolidate each important surface or region into one owned color instruction; other modules may describe how light shifts it but must not restate the same perceptual direction as additional emphasis.
+- Keep global cast consistent with the source-visible behavior of multiple regions rather than inferring it from one salient surface. When a global shift is uncertain, preserve relative region relationships instead of forcing a white balance or palette grade.
+- Treat a possible neutral reference as evidence only when its low-chroma appearance survives visible illumination, reflection, exposure, clipping, compression, and processing. Record confidence rather than assuming that white, gray, black, or metal is neutral.
+- Keep value, chroma, and hue relationships separate. A hierarchy statement may own relative brightness, saturation, area, or contrast, but must not restate a region's intrinsic hue unless hue contrast itself carries the hierarchy.
+- In dark, compressed, or hazy areas, distinguish crushed regions from remaining folds, edges, silhouettes, texture, or hints; neither erase nor brightly recover them.
+- Prevent clean-room drift: do not replace messy, partial, compressed, or ordinary zones with a tidy backdrop unless visible.
 
 ## Prompt additions
 
-Describe background zones by position, mass, contrast, legibility, depth, and color behavior before using broad setting labels.
+Describe zones by position, mass, contrast, legibility, depth, and color behavior before setting labels.
 
 ## Optional negative contribution
 
-Reject postcard scenery, clean-room backdrop, studio sweep, tidy catalog surface, brightened recovered background, readable invented signage, removed clutter, added depth, and background elements becoming cleaner or more central than visible.
+Reject source-likely cleanup, recovery, invented legibility, removed clutter, added depth, or priority drift.
 
 ## Optional settings contribution
 
-- Background zoning locks:
-- Palette/color-cast locks:
-- Low-legibility background massing locks:
+- Background, palette/cast, and low-legibility locks:
 
 
 ---
@@ -398,38 +403,38 @@ Apply this as a rewrite pass, not a checklist appended to the draft.
 ### Coverage and ownership
 
 - Confirm that `PROMPT:` contains the primary visual concept, dominant fidelity axis, aesthetic invariants, and every non-negotiable relationship, crop, occlusion, boundary, and medium constraint.
-- Merge candidate claims by semantic slot before writing prose; each emitted slot has one clause owner. Other modules may add evidence but not synonymous output clauses.
-- Give every primary invariant one affirmative render control. Keep flexible dimensions supporting unless the source makes their exact state proposition-critical.
-- Verify that the first-order proposition leads the prompt: relationship geometry for relationship-led images, form/surface/light/hierarchy for appearance-led images, and layout/legibility for information-led images.
+- Merge candidate claims by semantic slot before writing prose; each emitted slot has one clause owner.
+- Give every primary invariant one affirmative render control; keep flexible dimensions supporting. Lead with topology for relationship-led, appearance for appearance-led, and layout/legibility for information-led images.
 
 ### Net salience
 
 - Audit semantic salience amplification across exact repeats, synonyms, paraphrases, labels, negatives, and settings; a repeatedly described dimension gains visual priority even when no sentence is duplicated verbatim.
-- Compare each slot's aggregate direction and strength with its source target. A set of individually plausible cues fails when their combined pull exaggerates an invariant or promotes a supporting axis.
-- Correct an overstrong draft by replacing or deleting the amplifying language, not by appending a negative counterweight. Normally keep one affirmative clause per slot and only one high-risk drift boundary when it adds a distinct control.
-- Preserve source hierarchy. Check whether a secondary element receives more words than its visible importance supports. Compress secondary pose, material, accessory, or micro-detail when it competes with a primary invariant.
-- Audit prior-heavy language as a combined cluster. If quality, lighting, surface, framing, and style cues collectively invoke an unsupported category default, rewrite the cluster from evidence instead of blacklisting individual words.
+- Compare each slot's aggregate direction and strength with its source target. Plausible cues still fail when their combined pull exaggerates an invariant.
+- Correct an overstrong draft by replacing or deleting the amplifying language, not by appending a negative counterweight. Keep at most one distinct high-risk boundary per slot.
+- Preserve source hierarchy. Check whether a secondary element receives more words than its visible importance supports; compress it when it competes with a primary invariant.
+- Audit prior-heavy quality, lighting, surface, framing, and style language as one cluster; rewrite unsupported category defaults from evidence.
 
-### Causal consistency
+### Causal, color, and tone consistency
 
-- Confirm that form, surface, light-to-form, color, material roles, and hierarchy support one proposition. Do not encode pose, perspective, shadow, material pressure, occlusion, or processing as intrinsic shape or surface without visible evidence.
-- Keep intrinsic surface color, illumination color, global cast, and exposure distinct. Remove repeated hue-direction cues owned by another slot.
-- Ensure the direct appeal reading was translated into observable controls rather than copied as unbounded evaluative intensity.
+- Keep form, surface, light-to-form, color, material roles, and hierarchy causally consistent. Do not encode induced effects as intrinsic, and translate direct appeal into observable controls.
+- Audit shared perceptual effects across semantic slots, causal layers, paragraphs, negatives, and settings. Slot names being unique does not make repeated value, chroma, hue, or contrast directions independent.
+- For a material color or tone effect, verify one aggregate source-relative target and the evidence for every emitted intrinsic, illumination, global-cast, exposure, processing, or hierarchy contribution. Merge or delete a contribution whose causal layer lacks independent evidence.
+- Assign every appearance-changing color or tone phrase to one causal layer; treat free-floating mood or color adjectives as unowned claims and rewrite them from observable axes.
+- Check global cast against reliable neutral or multi-region evidence; otherwise retain uncertainty and relative relations. Keep hierarchy to area, value, chroma, or contrast unless hue contrast itself is invariant.
 
 ### Spatial and fidelity checks
 
-- Audit coordinate contradictions before emitting. Remove a numeric anchor when it conflicts with clearer evidence; use at most five unless a layout-dense UI or diagram materially benefits.
+- Audit coordinate contradictions before emitting. Remove conflicting numeric anchors; use at most five unless a dense UI or diagram benefits.
 - Relate every major component or coherent group to another component or stable zone. Make inversion-prone side, contact, support, containment, and depth order explicit; distinguish 2D overlap from scene-space contact.
 - Preserve the relative area and attention order of major regions. Keep partial or edge-adjacent bodies, garments, objects, reflections, screens, posters, and text blocks incomplete.
 - Confirm that detail has not increased subject scale, sharpness, background legibility, retouching, contrast, lighting polish, or a category's default silhouette beyond the source.
-- For a prominent readable face, retain a selective scale-appropriate likeness set. For a small, soft, shadowed, or occluded face, remove speculative micro-features and keep only reliable orientation, hair mass, tone, and visibility.
-- Remove unsupported camera, lens, identity, brand, artist, hidden-content, and generic quality assumptions. Report prompt-only limits honestly when exact text, identity, pose, hands, UI placement, tiny marks, or complex seams remain unreliable.
+- Retain scale-appropriate face evidence: selective likeness anchors when readable, only orientation, hair mass, tone, and visibility when small or obscured.
+- Remove unsupported camera, lens, identity, brand, artist, hidden-content, and quality assumptions. Report prompt-only limits honestly for unreliable exact details.
 
 ## Length and clarity
 
-- Prefer one measured statement for a secondary element; add a drift constraint only for a distinct high-risk failure.
-- Keep constraints concrete and observable; do not repeat locks merely to look exhaustive.
-- If the prompt has become a field checklist, rewrite around the dominant proposition, its causal cues, and source hierarchy.
+- Prefer one concrete statement for a secondary element and add a boundary only for a distinct high-risk failure.
+- If the prompt reads as a checklist, rewrite around the proposition, causal cues, and source hierarchy.
 
 
 ---
@@ -456,21 +461,25 @@ PROMPT:
 Write a standalone English prompt ordered by the dominant fidelity axis:
 
 - Begin with frame shape, medium, fidelity ceiling, and the perceptual proposition.
-- **Relationship-led:** place crop, major zones, topology, interaction geometry, and only critical spatial anchors before local appearance.
-- **Appearance-led:** place the compact causal signature and source-specific form, surface, light-to-form, color, and hierarchy before flexible pose or inventory.
-- **Information-led:** place layout, reading order, hierarchy, legibility, and container relations before decoration.
-- **Mixed:** name the co-primary invariants early and include only cues showing their dependency.
-- Finish with remaining subject, capture, background, artifact, and highest-risk drift controls.
+- **Relationship-led:** crop, major zones, topology, interaction, then appearance.
+- **Appearance-led:** causal form, surface, light, color, hierarchy, then flexible pose or inventory.
+- **Information-led:** layout, reading order, hierarchy, legibility, then decoration.
+- **Mixed:** name co-primary invariants and only cues showing their dependency.
+- Finish with supporting subject, capture, background, artifact, and drift controls.
 
-Selected modules contribute evidence candidates, not mandatory prose. The output composer merges them by semantic slot before drafting; module count must not determine prompt length.
+Selected modules contribute evidence candidates, not mandatory prose. Merge them by semantic slot; module count must not determine prompt length.
 
-Assign one clause owner to each emitted semantic slot. Normally state its affirmative target once; a second clause is justified only when it supplies a distinct high-risk boundary rather than repeating the target through synonyms.
+Assign one clause owner to each emitted semantic slot. State its affirmative target once; add only a distinct high-risk boundary.
 
-Use compact paragraphs or short blocks for complex images. Apply no fixed global word cap; every additional clause must add a new control. Keep essential crop, partial visibility, and interaction requirements affirmative. Relate each major component to another component or stable zone, and state inversion-prone side, containment, contact, or support directly.
+When color or tone is material, assign each emitted control to one causal layer and one perceptual effect budget. Use source-relative value, chroma, and hue; keep intrinsic surface, illumination, global cast, exposure, processing, and hierarchy consistent.
 
-For a high-salience look, put one compact Aesthetic Signature before fine inventory and use only source-supported causal axes. For a neutral look, use one or two ordinary cues. Preserve major-region hierarchy by relative area, tonal or material role, edge contact, legibility, and first attention even when flexible pose or placement changes.
+Place one compact color-tone passage early when primary; when supporting, use the smallest relational control. Hierarchy normally owns area, value, chroma, or contrast, not repeated surface hue.
 
-When face likeness is selected, use one dedicated, scale-appropriate passage. A broad person-gestalt anchor may lead it but cannot replace visible geometry or raise beauty polish.
+Use compact blocks for complex images and no fixed word cap; every clause must add a control. Keep essential crop, partial visibility, and interactions affirmative. Relate major components and state inversion-prone topology directly.
+
+For a high-salience look, put one supported Aesthetic Signature before inventory; for a neutral look, use one or two cues. Preserve major-region area, role, edge contact, legibility, and attention.
+
+When face likeness is selected, use one scale-appropriate passage; a gestalt anchor cannot replace visible geometry or raise polish.
 
 ## NEGATIVE PROMPT
 
@@ -481,7 +490,7 @@ NEGATIVE PROMPT:
 ...
 ```
 
-When a negative prompt is supported, reject only likely concept and fidelity drift. Keep it compact and image-specific; do not duplicate the positive prompt or use negatives to counter an overstrong positive cluster. Rewrite the positive wording to source-relative strength first.
+When a negative prompt is supported, reject only likely concept and fidelity drift. Keep it compact; rewrite an overstrong positive instead of countering it with negatives.
 
 ## RECOMMENDED SETTINGS
 
@@ -496,11 +505,11 @@ RECOMMENDED SETTINGS:
 - Prompt-only limits:
 ```
 
-Include only real controls of the named generator. Separate source dimensions from the requested target size. Omit irrelevant fields, read `references/model-adapters.md` before naming values, and keep visual locks in `PROMPT:`.
+Include only real generator controls. Separate source dimensions from the requested target size, read `references/model-adapters.md`, and keep visual locks in `PROMPT:`.
 
 ## Diagnostic mode
 
-For `diagnostic`, state the source-supported proposition or appeal directly, then explain its visible form, surface, light, color, hierarchy, spatial, and capture mechanisms. Keep diagnostic appeal language separate from render instructions: a candidate prompt receives bounded observable mechanisms, not copied evaluative intensity. Separate invariants from flexible pose or placement; include a candidate prompt only when useful.
+For `diagnostic`, state the source-supported proposition, then its visible causal mechanisms. Keep diagnostic appeal language separate from render instructions, distinguish invariants from flexible dimensions, and include a prompt only when useful.
 
 ## Final rule
 

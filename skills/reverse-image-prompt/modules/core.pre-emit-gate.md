@@ -1,6 +1,6 @@
 ---
 id: core.pre-emit-gate
-version: 10
+version: 11
 priority: 100
 type: core
 tier: 0
@@ -25,6 +25,9 @@ provides_anchors:
   - semantic_claim_merge
   - net_salience_audit
   - replacement_correction
+  - cross_slot_perceptual_effect_audit
+  - color_tone_causal_consistency
+  - unowned_appearance_claim_audit
 ---
 
 # Core: pre-emit gate
@@ -40,35 +43,35 @@ Apply this as a rewrite pass, not a checklist appended to the draft.
 ### Coverage and ownership
 
 - Confirm that `PROMPT:` contains the primary visual concept, dominant fidelity axis, aesthetic invariants, and every non-negotiable relationship, crop, occlusion, boundary, and medium constraint.
-- Merge candidate claims by semantic slot before writing prose; each emitted slot has one clause owner. Other modules may add evidence but not synonymous output clauses.
-- Give every primary invariant one affirmative render control. Keep flexible dimensions supporting unless the source makes their exact state proposition-critical.
-- Verify that the first-order proposition leads the prompt: relationship geometry for relationship-led images, form/surface/light/hierarchy for appearance-led images, and layout/legibility for information-led images.
+- Merge candidate claims by semantic slot before writing prose; each emitted slot has one clause owner.
+- Give every primary invariant one affirmative render control; keep flexible dimensions supporting. Lead with topology for relationship-led, appearance for appearance-led, and layout/legibility for information-led images.
 
 ### Net salience
 
 - Audit semantic salience amplification across exact repeats, synonyms, paraphrases, labels, negatives, and settings; a repeatedly described dimension gains visual priority even when no sentence is duplicated verbatim.
-- Compare each slot's aggregate direction and strength with its source target. A set of individually plausible cues fails when their combined pull exaggerates an invariant or promotes a supporting axis.
-- Correct an overstrong draft by replacing or deleting the amplifying language, not by appending a negative counterweight. Normally keep one affirmative clause per slot and only one high-risk drift boundary when it adds a distinct control.
-- Preserve source hierarchy. Check whether a secondary element receives more words than its visible importance supports. Compress secondary pose, material, accessory, or micro-detail when it competes with a primary invariant.
-- Audit prior-heavy language as a combined cluster. If quality, lighting, surface, framing, and style cues collectively invoke an unsupported category default, rewrite the cluster from evidence instead of blacklisting individual words.
+- Compare each slot's aggregate direction and strength with its source target. Plausible cues still fail when their combined pull exaggerates an invariant.
+- Correct an overstrong draft by replacing or deleting the amplifying language, not by appending a negative counterweight. Keep at most one distinct high-risk boundary per slot.
+- Preserve source hierarchy. Check whether a secondary element receives more words than its visible importance supports; compress it when it competes with a primary invariant.
+- Audit prior-heavy quality, lighting, surface, framing, and style language as one cluster; rewrite unsupported category defaults from evidence.
 
-### Causal consistency
+### Causal, color, and tone consistency
 
-- Confirm that form, surface, light-to-form, color, material roles, and hierarchy support one proposition. Do not encode pose, perspective, shadow, material pressure, occlusion, or processing as intrinsic shape or surface without visible evidence.
-- Keep intrinsic surface color, illumination color, global cast, and exposure distinct. Remove repeated hue-direction cues owned by another slot.
-- Ensure the direct appeal reading was translated into observable controls rather than copied as unbounded evaluative intensity.
+- Keep form, surface, light-to-form, color, material roles, and hierarchy causally consistent. Do not encode induced effects as intrinsic, and translate direct appeal into observable controls.
+- Audit shared perceptual effects across semantic slots, causal layers, paragraphs, negatives, and settings. Slot names being unique does not make repeated value, chroma, hue, or contrast directions independent.
+- For a material color or tone effect, verify one aggregate source-relative target and the evidence for every emitted intrinsic, illumination, global-cast, exposure, processing, or hierarchy contribution. Merge or delete a contribution whose causal layer lacks independent evidence.
+- Assign every appearance-changing color or tone phrase to one causal layer; treat free-floating mood or color adjectives as unowned claims and rewrite them from observable axes.
+- Check global cast against reliable neutral or multi-region evidence; otherwise retain uncertainty and relative relations. Keep hierarchy to area, value, chroma, or contrast unless hue contrast itself is invariant.
 
 ### Spatial and fidelity checks
 
-- Audit coordinate contradictions before emitting. Remove a numeric anchor when it conflicts with clearer evidence; use at most five unless a layout-dense UI or diagram materially benefits.
+- Audit coordinate contradictions before emitting. Remove conflicting numeric anchors; use at most five unless a dense UI or diagram benefits.
 - Relate every major component or coherent group to another component or stable zone. Make inversion-prone side, contact, support, containment, and depth order explicit; distinguish 2D overlap from scene-space contact.
 - Preserve the relative area and attention order of major regions. Keep partial or edge-adjacent bodies, garments, objects, reflections, screens, posters, and text blocks incomplete.
 - Confirm that detail has not increased subject scale, sharpness, background legibility, retouching, contrast, lighting polish, or a category's default silhouette beyond the source.
-- For a prominent readable face, retain a selective scale-appropriate likeness set. For a small, soft, shadowed, or occluded face, remove speculative micro-features and keep only reliable orientation, hair mass, tone, and visibility.
-- Remove unsupported camera, lens, identity, brand, artist, hidden-content, and generic quality assumptions. Report prompt-only limits honestly when exact text, identity, pose, hands, UI placement, tiny marks, or complex seams remain unreliable.
+- Retain scale-appropriate face evidence: selective likeness anchors when readable, only orientation, hair mass, tone, and visibility when small or obscured.
+- Remove unsupported camera, lens, identity, brand, artist, hidden-content, and quality assumptions. Report prompt-only limits honestly for unreliable exact details.
 
 ## Length and clarity
 
-- Prefer one measured statement for a secondary element; add a drift constraint only for a distinct high-risk failure.
-- Keep constraints concrete and observable; do not repeat locks merely to look exhaustive.
-- If the prompt has become a field checklist, rewrite around the dominant proposition, its causal cues, and source hierarchy.
+- Prefer one concrete statement for a secondary element and add a boundary only for a distinct high-risk failure.
+- If the prompt reads as a checklist, rewrite around the proposition, causal cues, and source hierarchy.

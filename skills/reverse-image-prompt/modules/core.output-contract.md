@@ -1,6 +1,6 @@
 ---
 id: core.output-contract
-version: 10
+version: 11
 priority: 98
 type: core
 tier: 0
@@ -24,6 +24,7 @@ provides_anchors:
   - module_evidence_not_prose
   - clause_ownership
   - diagnostic_render_separation
+  - color_tone_output_ownership
 ---
 
 # Core: adaptive output contract
@@ -46,21 +47,25 @@ PROMPT:
 Write a standalone English prompt ordered by the dominant fidelity axis:
 
 - Begin with frame shape, medium, fidelity ceiling, and the perceptual proposition.
-- **Relationship-led:** place crop, major zones, topology, interaction geometry, and only critical spatial anchors before local appearance.
-- **Appearance-led:** place the compact causal signature and source-specific form, surface, light-to-form, color, and hierarchy before flexible pose or inventory.
-- **Information-led:** place layout, reading order, hierarchy, legibility, and container relations before decoration.
-- **Mixed:** name the co-primary invariants early and include only cues showing their dependency.
-- Finish with remaining subject, capture, background, artifact, and highest-risk drift controls.
+- **Relationship-led:** crop, major zones, topology, interaction, then appearance.
+- **Appearance-led:** causal form, surface, light, color, hierarchy, then flexible pose or inventory.
+- **Information-led:** layout, reading order, hierarchy, legibility, then decoration.
+- **Mixed:** name co-primary invariants and only cues showing their dependency.
+- Finish with supporting subject, capture, background, artifact, and drift controls.
 
-Selected modules contribute evidence candidates, not mandatory prose. The output composer merges them by semantic slot before drafting; module count must not determine prompt length.
+Selected modules contribute evidence candidates, not mandatory prose. Merge them by semantic slot; module count must not determine prompt length.
 
-Assign one clause owner to each emitted semantic slot. Normally state its affirmative target once; a second clause is justified only when it supplies a distinct high-risk boundary rather than repeating the target through synonyms.
+Assign one clause owner to each emitted semantic slot. State its affirmative target once; add only a distinct high-risk boundary.
 
-Use compact paragraphs or short blocks for complex images. Apply no fixed global word cap; every additional clause must add a new control. Keep essential crop, partial visibility, and interaction requirements affirmative. Relate each major component to another component or stable zone, and state inversion-prone side, containment, contact, or support directly.
+When color or tone is material, assign each emitted control to one causal layer and one perceptual effect budget. Use source-relative value, chroma, and hue; keep intrinsic surface, illumination, global cast, exposure, processing, and hierarchy consistent.
 
-For a high-salience look, put one compact Aesthetic Signature before fine inventory and use only source-supported causal axes. For a neutral look, use one or two ordinary cues. Preserve major-region hierarchy by relative area, tonal or material role, edge contact, legibility, and first attention even when flexible pose or placement changes.
+Place one compact color-tone passage early when primary; when supporting, use the smallest relational control. Hierarchy normally owns area, value, chroma, or contrast, not repeated surface hue.
 
-When face likeness is selected, use one dedicated, scale-appropriate passage. A broad person-gestalt anchor may lead it but cannot replace visible geometry or raise beauty polish.
+Use compact blocks for complex images and no fixed word cap; every clause must add a control. Keep essential crop, partial visibility, and interactions affirmative. Relate major components and state inversion-prone topology directly.
+
+For a high-salience look, put one supported Aesthetic Signature before inventory; for a neutral look, use one or two cues. Preserve major-region area, role, edge contact, legibility, and attention.
+
+When face likeness is selected, use one scale-appropriate passage; a gestalt anchor cannot replace visible geometry or raise polish.
 
 ## NEGATIVE PROMPT
 
@@ -71,7 +76,7 @@ NEGATIVE PROMPT:
 ...
 ```
 
-When a negative prompt is supported, reject only likely concept and fidelity drift. Keep it compact and image-specific; do not duplicate the positive prompt or use negatives to counter an overstrong positive cluster. Rewrite the positive wording to source-relative strength first.
+When a negative prompt is supported, reject only likely concept and fidelity drift. Keep it compact; rewrite an overstrong positive instead of countering it with negatives.
 
 ## RECOMMENDED SETTINGS
 
@@ -86,11 +91,11 @@ RECOMMENDED SETTINGS:
 - Prompt-only limits:
 ```
 
-Include only real controls of the named generator. Separate source dimensions from the requested target size. Omit irrelevant fields, read `references/model-adapters.md` before naming values, and keep visual locks in `PROMPT:`.
+Include only real generator controls. Separate source dimensions from the requested target size, read `references/model-adapters.md`, and keep visual locks in `PROMPT:`.
 
 ## Diagnostic mode
 
-For `diagnostic`, state the source-supported proposition or appeal directly, then explain its visible form, surface, light, color, hierarchy, spatial, and capture mechanisms. Keep diagnostic appeal language separate from render instructions: a candidate prompt receives bounded observable mechanisms, not copied evaluative intensity. Separate invariants from flexible pose or placement; include a candidate prompt only when useful.
+For `diagnostic`, state the source-supported proposition, then its visible causal mechanisms. Keep diagnostic appeal language separate from render instructions, distinguish invariants from flexible dimensions, and include a prompt only when useful.
 
 ## Final rule
 

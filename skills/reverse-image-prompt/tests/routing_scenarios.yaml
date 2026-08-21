@@ -380,6 +380,35 @@
       "max_non_core_modules": 4
     },
     {
+      "id": "color-critical-generic-object",
+      "facets": {
+        "subjects": ["generic-object"],
+        "medium": ["photographic"],
+        "relationships": ["ordinary"],
+        "detail_risks": ["color-tone"]
+      },
+      "expect_includes": [
+        "subject.generic-object",
+        "medium.photographic-capture",
+        "detail.color-tone-fidelity"
+      ],
+      "expect_excludes": [
+        "detail.human-body-form"
+      ],
+      "required_anchors": [
+        "color_tone_contract",
+        "color_causal_layers",
+        "relative_color_calibration",
+        "neutral_anchor_confidence",
+        "aggregate_color_effect_budget",
+        "tone_zone_response",
+        "color_measurement_limits",
+        "white_balance_exposure_separation",
+        "photographic_tone_response"
+      ],
+      "max_non_core_modules": 3
+    },
+    {
       "id": "unknown-facet-value-fails-visibly",
       "facets": {
         "subjects": ["generic-object"],
