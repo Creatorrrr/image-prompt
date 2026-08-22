@@ -1162,6 +1162,18 @@ class PhotoAuthorialCoreV6Tests(unittest.TestCase):
             "vo_reality_error_cross_surface_consistency",
             pack["visual_obligations"]["required_hard_gates"],
         )
+        self.assertIn(
+            "authored_rule_legibility_phrase",
+            obligation["prompt_binding"]["required_evidence_fields"],
+        )
+        self.assertIn(
+            "vo_reality_error_authored_rule_legibility",
+            pack["visual_obligations"]["required_hard_gates"],
+        )
+        self.assertIn(
+            "vo_reality_error_not_generation_defect_substitute",
+            pack["visual_obligations"]["required_hard_gates"],
+        )
         self.assertNotIn(
             "medium_native_glitch",
             {

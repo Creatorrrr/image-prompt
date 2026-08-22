@@ -176,7 +176,10 @@ color_tone_contract:
       finish: {term: matte | satin | luminous | dewy | uncertain, confidence: high | medium | low}
       evenness: {term: even | naturally-varied | freckled | uncertain, confidence: high | medium | low}
     friendly_label_review:
-      - phrase: "analyst-authored candidate"
+      - phrase: "<user-or-vocabulary-supplied-label>"
+        candidate_source:
+          kind: user-supplied | versioned-vocabulary
+          reference: "request field, vocabulary id, or artifact reference"
         label_scope: value-depth | undertone | surface-finish | composite-appearance
         axis_requirements: {}
         matched_axes: []
@@ -215,7 +218,7 @@ Every claim listed by the contract carries `perceptual_effects`, each naming one
 
 Every listed color/tone claim is represented exactly once in `emitted_controls`. Its literal final-prompt excerpt must match that claim's sole causal layer and complete aggregate-effect set. Every required intrinsic or displayed-tone axis links to one same-region/same-axis effect and its own axis-control. A compound-control may compress secondary evidence but cannot satisfy a required axis. The structural validator checks ownership and consistency; the reviewer verifies that the excerpt was copied literally and that no omitted phrase elsewhere in the prompt also changes color or tone.
 
-`surface_color_language` is optional unless measured surface color is being translated or a friendly label is considered. Classify value depth, chroma, and undertone independently; finish and evenness require separate visual evidence. A compatible review does not by itself authorize prompt emission. Any emitted friendly label must also be `model-calibrated`, carry calibration evidence, and summarize already-owned literal axis controls.
+`surface_color_language` is optional unless measured surface color is being translated or an externally supplied friendly label is considered. Classify value depth, chroma, and undertone independently; finish and evenness require separate visual evidence. Every reviewed label records whether it came from the user or an explicitly versioned task vocabulary plus a non-empty reference. The skill must not invent the candidate. A compatible review does not by itself authorize prompt emission. Any emitted friendly label must also be `model-calibrated`, carry calibration evidence, and summarize already-owned literal axis controls.
 
 The schema deliberately contains no preferred hue, skin value, palette, metaphor, adjective blacklist, numeric color, identity proxy, or generator workaround. A hierarchy-layer hue effect additionally requires source evidence that hue contrast itself is invariant.
 
@@ -317,6 +320,7 @@ Promote a change only when it improves unrelated held-out behavior without mater
 - Put source-relative axes and causal distinctions in runtime instructions, not example-specific desired values.
 - Do not add a fixed adjective blacklist, fixed global word count, exact source proportions, or generator-specific workaround to solve one case.
 - Do not install a preferred human color, demographic-to-color mapping, fixed image-specific metaphor dictionary, or subject-specific measurement region. A versioned source-visible axis vocabulary is allowed only when it records uncertainty and does not select a preferred label.
+- Do not place named friendly-label examples or concrete preferred axis combinations in runtime instructions. Keep semantic label cases in held-out tests, and require runtime candidates to carry user or versioned-vocabulary provenance.
 - Do not install a preferred source direction, fill level, light-to-form strength, shadow owner, material response, or subject-specific lighting coordinate.
 - Prefer changing the merge or attribution rule over adding another subject exception.
 - Corrections replace or remove amplifying claims; they do not accumulate counter-negatives.

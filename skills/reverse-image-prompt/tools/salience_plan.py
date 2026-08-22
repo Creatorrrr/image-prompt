@@ -120,6 +120,7 @@ VALID_FRIENDLY_LABEL_SCOPES = {
     "composite-appearance",
 }
 VALID_FRIENDLY_LABEL_REVIEWS = {"compatible", "conflicting", "inconclusive"}
+VALID_FRIENDLY_LABEL_SOURCES = {"user-supplied", "versioned-vocabulary"}
 VALID_LIGHT_IMPORTANCE = {"primary", "supporting"}
 VALID_LIGHT_OBSERVATION_SCOPES = {"source-visible", "user-specified"}
 VALID_LIGHT_FORM_CONTRAST = {"flattening", "subtle", "moderate", "strong"}
@@ -896,6 +897,14 @@ def _audit_color_tone_contract(
             if phrase in seen_phrases:
                 errors.append(f"{label}.phrase is duplicated")
             seen_phrases.add(phrase)
+            candidate_source = review.get("candidate_source")
+            if not isinstance(candidate_source, dict):
+                errors.append(f"{label}.candidate_source must be an object")
+            else:
+                if candidate_source.get("kind") not in VALID_FRIENDLY_LABEL_SOURCES:
+                    errors.append(f"{label}.candidate_source.kind is invalid")
+                if not _nonempty_string(candidate_source.get("reference")):
+                    errors.append(f"{label}.candidate_source.reference must be non-empty")
             scope = review.get("label_scope")
             if scope not in VALID_FRIENDLY_LABEL_SCOPES:
                 errors.append(f"{label}.label_scope is invalid")

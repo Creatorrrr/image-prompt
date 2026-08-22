@@ -124,12 +124,12 @@ profile-aware measurement
 -> causal review
 -> value-depth, chroma, and undertone classification
 -> separately observed finish and evenness
--> optional analyst-authored friendly-label compatibility review
+-> optional externally supplied friendly-label compatibility review
 ```
 
-The controlled terms are source-visible axes, not identity categories. `olive` is an undertone independent of value depth. Composite labels such as `milky` or `porcelain-like` are never sufficient controls by themselves: review their declared axis requirements, emit literal axes first, and retain a friendly label only with exact generator/version response evidence. An ambiguous or conflicting candidate remains non-emitted.
+The controlled terms are source-visible axes, not identity categories. Undertone remains independent of value depth. A composite friendly label is never a sufficient control by itself: review the declared axis requirements of a label supplied by the user or an explicitly versioned task vocabulary, emit literal axes first, and retain the label only with exact generator/version response evidence. Do not originate a candidate from this reference. An ambiguous or conflicting candidate remains non-emitted.
 
-When persisted, place the classifier result under `surface_color_language` with `policy_id`, `policy_status`, `observation_scope`, `profile_status`, `region_id`, source evidence, all five axis classifications, and optional `friendly_label_review` entries. Each review retains its `axis_requirements`, `matched_axes`, `conflicting_axes`, `unresolved_axes`, and `review_status`. Do not store image-specific target values or preferred labels in the policy file.
+When persisted, place the classifier result under `surface_color_language` with `policy_id`, `policy_status`, `observation_scope`, `profile_status`, `region_id`, source evidence, all five axis classifications, and optional `friendly_label_review` entries. Each review retains `candidate_source` (`kind` and `reference`), `axis_requirements`, `matched_axes`, `conflicting_axes`, `unresolved_axes`, and `review_status`. Do not store image-specific target values or preferred labels in the policy file.
 
 ## Displayed tone-response axes
 

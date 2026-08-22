@@ -429,6 +429,10 @@ def with_displayed_key_response(plan: dict) -> dict:
 def add_surface_language_review(plan: dict, *, conflicting: bool = False) -> dict:
     review = {
         "phrase": "analyst candidate label",
+        "candidate_source": {
+            "kind": "user-supplied",
+            "reference": "held-out test input",
+        },
         "label_scope": "composite-appearance",
         "axis_requirements": {
             "value_depth": ["light"],
@@ -526,6 +530,32 @@ class SaliencePlanTests(unittest.TestCase):
             }
         ]
         self.assertEqual(audit_plan(plan), [])
+
+    def test_surface_language_review_requires_external_candidate_source(self) -> None:
+        plan = add_surface_language_review(valid_color_plan())
+        review = plan["render_contract"]["color_tone_contract"][
+            "surface_color_language"
+        ]["friendly_label_review"][0]
+        del review["candidate_source"]
+        self.assertTrue(
+            any(
+                "candidate_source must be an object" in error
+                for error in audit_plan(plan)
+            )
+        )
+
+    def test_surface_language_review_rejects_internal_candidate_source(self) -> None:
+        plan = add_surface_language_review(valid_color_plan())
+        review = plan["render_contract"]["color_tone_contract"][
+            "surface_color_language"
+        ]["friendly_label_review"][0]
+        review["candidate_source"]["kind"] = "skill-example"
+        self.assertTrue(
+            any(
+                "candidate_source.kind is invalid" in error
+                for error in audit_plan(plan)
+            )
+        )
 
     def test_conflicting_surface_label_cannot_be_emitted(self) -> None:
         plan = add_surface_language_review(valid_color_plan(), conflicting=True)
