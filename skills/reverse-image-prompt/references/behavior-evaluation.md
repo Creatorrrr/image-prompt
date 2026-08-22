@@ -230,6 +230,8 @@ The contract records the visible result before a confidence-rated source hypothe
 
 Every listed lighting claim is represented exactly once in `emitted_controls`. A low-confidence physical-light hypothesis cannot carry an emitted source-geometry or fill control; use result-space effects or keep it diagnostic. Global tonal range and local form contrast remain distinct. The same claim or literal excerpt cannot be owned independently by both the Light/Form and Color/Tone contracts.
 
+`lighting_language` and `lighting_labels` are optional. When present, the controlled summary is reconstructed from independently classified source-visible axes and remains explanation-only. Named friendly-label candidates require user or explicitly versioned-vocabulary provenance; compatibility is recalculated from their declared axis requirements. Emission additionally requires exact generator/version calibration and links to already-owned literal controls.
+
 ## Prompt-level rubric
 
 Review the standalone prompt with the source visible and score distinct questions:
@@ -252,6 +254,8 @@ Review the standalone prompt with the source visible and score distinct question
 - Do differently named claims avoid accumulating the same color or tone direction beyond one supported aggregate target?
 - When lighting is material, is the visible result recorded before the physical-light hypothesis, with confidence and evidence for any emitted source geometry?
 - Are apparent source size, fill, global tonal range, bright-plane coverage, local form contrast, gradient extent, shadow ownership, material response, and background spill kept causally distinct?
+- When compact lighting language is used, were displayed key, shadow floor, edge softness, local form contrast, bright-plane coverage, gradient extent, directionality, and fill classified independently before the summary, with unresolved or conflicting labels left non-emitted?
+- Does any emitted friendly lighting label have external provenance, exact generator/version calibration, and immediate literal decomposition without adding a second lighting direction?
 - Does every literal lighting-changing phrase appear once in the Light/Form control ledger with one owner and a complete effect set?
 - When pose or geometry is flexible, does the prompt preserve the light-to-form relation without overlocking incidental highlight coordinates?
 - Do the Light/Form and Color/Tone contracts avoid duplicate claims, excerpts, and contrast directions?
@@ -308,6 +312,9 @@ Include held-out causal pairs spanning materially different subjects and media:
 - the same light with changed geometry or pose
 - cast, self, contact-occlusion, material-response, and processing-owned darkness
 - diffuse, absorbent, glossy, metallic, translucent, and woven material response
+- identical core lighting axes with unrelated subjects and media, so a controlled summary remains stable without becoming a preferred preset
+- one-axis lighting changes that keep the other axes fixed, especially edge softness versus local form contrast and displayed key versus bright-plane coverage
+- compatible, conflicting, inconclusive, missing-candidate, and stale-generator-calibration label cases
 
 The motivating image may remain one regression sample, but promotion requires improvement across this causal matrix. Use optional multi-region measurements only as diagnostic evidence; never turn one sample's numeric values or wording into runtime expectations.
 
@@ -322,6 +329,7 @@ Promote a change only when it improves unrelated held-out behavior without mater
 - Do not install a preferred human color, demographic-to-color mapping, fixed image-specific metaphor dictionary, or subject-specific measurement region. A versioned source-visible axis vocabulary is allowed only when it records uncertainty and does not select a preferred label.
 - Do not place named friendly-label examples or concrete preferred axis combinations in runtime instructions. Keep semantic label cases in held-out tests, and require runtime candidates to carry user or versioned-vocabulary provenance.
 - Do not install a preferred source direction, fill level, light-to-form strength, shadow owner, material response, or subject-specific lighting coordinate.
+- Do not install named friendly lighting-label examples, preferred composite-light combinations, or one generator's response as universal semantics. Runtime candidates require external provenance; generator calibration expires with the relevant model/version or conditioning route.
 - Prefer changing the merge or attribution rule over adding another subject exception.
 - Corrections replace or remove amplifying claims; they do not accumulate counter-negatives.
 - Treat one case as a regression sample, never as proof that a general rule succeeds or fails everywhere.

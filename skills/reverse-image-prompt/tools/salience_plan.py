@@ -13,6 +13,11 @@ from pathlib import Path
 import sys
 from typing import Any
 
+from lighting_language import (
+    classify_observation as classify_lighting_observation,
+    review_candidates as review_lighting_candidates,
+)
+
 
 VALID_MODES = {"relationship-led", "appearance-led", "information-led", "mixed"}
 VALID_AXES = {
@@ -181,6 +186,21 @@ VALID_LIGHT_EFFECT_AXES = {
     "material-response",
     "background-spill",
 }
+VALID_LIGHT_LANGUAGE_POLICY_STATUS = {
+    "uncalibrated-language-prototype",
+    "model-calibrated",
+}
+VALID_LIGHT_LABEL_STATUS = {
+    "explanation-only",
+    "unverified",
+    "model-calibrated",
+}
+
+LIGHTING_LANGUAGE_POLICY_PATH = (
+    Path(__file__).resolve().parents[1]
+    / "references"
+    / "lighting-language-policy.json"
+)
 
 
 def _contract(plan: dict[str, Any]) -> dict[str, Any]:
@@ -202,6 +222,220 @@ def _nonempty_string(value: Any) -> bool:
 
 def _string_list(value: Any) -> bool:
     return isinstance(value, list) and all(_nonempty_string(item) for item in value)
+
+
+def _audit_lighting_language(
+    light_contract: dict[str, Any],
+    color_contract: dict[str, Any] | None,
+    known_regions: set[str],
+    control_ids: set[str],
+) -> list[str]:
+    """Validate optional axis-first lighting language and emitted shorthand."""
+
+    errors: list[str] = []
+    lighting_language = light_contract.get("lighting_language")
+    labels = light_contract.get("lighting_labels", [])
+    if lighting_language is None:
+        if not isinstance(labels, list):
+            errors.append("light_form_contract.lighting_labels must be a list")
+        elif labels:
+            errors.append(
+                "light_form_contract.lighting_labels requires lighting_language compatibility review"
+            )
+        return errors
+    if not isinstance(lighting_language, dict):
+        return ["light_form_contract.lighting_language must be an object"]
+
+    try:
+        policy = json.loads(LIGHTING_LANGUAGE_POLICY_PATH.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        return [f"lighting language policy could not be loaded: {exc}"]
+
+    prefix = "light_form_contract.lighting_language"
+    if lighting_language.get("policy_id") != policy.get("id"):
+        errors.append(f"{prefix}.policy_id must match the selected policy")
+    if lighting_language.get("policy_status") not in VALID_LIGHT_LANGUAGE_POLICY_STATUS:
+        errors.append(f"{prefix}.policy_status is invalid")
+    elif lighting_language.get("policy_status") != policy.get("status"):
+        errors.append(f"{prefix}.policy_status must match the selected policy")
+    if lighting_language.get("observation_scope") != light_contract.get(
+        "observation_scope"
+    ):
+        errors.append(
+            f"{prefix}.observation_scope must match the Light/Form contract"
+        )
+    if lighting_language.get("region_id") not in known_regions:
+        errors.append(f"{prefix}.region_id references an unknown region")
+    if not _nonempty_strings(lighting_language.get("source_evidence")):
+        errors.append(f"{prefix}.source_evidence must contain visible evidence")
+
+    observation = {
+        "observation_scope": lighting_language.get("observation_scope"),
+        "region_id": lighting_language.get("region_id"),
+        "source_evidence": lighting_language.get("source_evidence"),
+        "axis_classification": lighting_language.get("axis_classification"),
+    }
+    classification: dict[str, Any] | None = None
+    try:
+        classification = classify_lighting_observation(observation, policy)
+    except ValueError as exc:
+        errors.append(f"{prefix}: {exc}")
+
+    compatible_phrases: set[str] = set()
+    if classification is not None:
+        expected_summary = classification["controlled_summary"]
+        if lighting_language.get("controlled_summary") != expected_summary:
+            errors.append(
+                f"{prefix}.controlled_summary must match the policy-derived explanation-only summary"
+            )
+
+        classifications = classification["axis_classification"]
+        observed = light_contract.get("observed_result", {})
+        hypothesis = light_contract.get("source_hypothesis", {})
+        contract_axis_values = {
+            "local_form_contrast": observed.get("local_form_contrast"),
+            "bright_plane_coverage": observed.get("bright_plane_coverage"),
+            "gradient_extent": observed.get("gradient_extent"),
+            "fill_structure": hypothesis.get("fill_structure"),
+        }
+        for axis, contract_value in contract_axis_values.items():
+            language_value = classifications[axis]["term"]
+            if language_value not in {"mixed", "uncertain"} and language_value != contract_value:
+                errors.append(
+                    f"{prefix}.axis_classification.{axis} conflicts with the Light/Form contract"
+                )
+
+        if isinstance(color_contract, dict):
+            tone_responses = color_contract.get("displayed_tone_response", [])
+            if isinstance(tone_responses, list):
+                language_region = lighting_language.get("region_id")
+                tone_axis_map = {
+                    "displayed-key-level": "displayed_key_level",
+                    "shadow-floor": "shadow_floor",
+                }
+                for tone_axis, language_axis in tone_axis_map.items():
+                    matching_classes = {
+                        item.get("class")
+                        for item in tone_responses
+                        if isinstance(item, dict)
+                        and item.get("axis") == tone_axis
+                        and item.get("region_id") == language_region
+                    }
+                    language_value = classifications[language_axis]["term"]
+                    if (
+                        matching_classes
+                        and language_value not in {"mixed", "uncertain"}
+                        and matching_classes != {language_value}
+                    ):
+                        errors.append(
+                            f"{prefix}.axis_classification.{language_axis} conflicts with the Color/Tone contract"
+                        )
+
+        reviews = lighting_language.get("friendly_label_review", [])
+        if not isinstance(reviews, list):
+            errors.append(f"{prefix}.friendly_label_review must be a list")
+            reviews = []
+        seen_phrases: set[str] = set()
+        for index, review in enumerate(reviews):
+            label = f"{prefix}.friendly_label_review[{index}]"
+            if not isinstance(review, dict):
+                errors.append(f"{label} must be an object")
+                continue
+            phrase = review.get("phrase")
+            if _nonempty_string(phrase):
+                normalized_phrase = phrase.strip()
+                if normalized_phrase in seen_phrases:
+                    errors.append(f"{label}.phrase is duplicated")
+                seen_phrases.add(normalized_phrase)
+            try:
+                expected_reviews = review_lighting_candidates(
+                    classification,
+                    {
+                        "candidate_source": review.get("candidate_source"),
+                        "candidates": [
+                            {
+                                "phrase": phrase,
+                                "label_scope": review.get("label_scope"),
+                                "axis_requirements": review.get("axis_requirements"),
+                            }
+                        ],
+                    },
+                    policy,
+                )
+            except ValueError as exc:
+                errors.append(f"{label}: {exc}")
+                continue
+            expected = expected_reviews[0]
+            if any(review.get(field) != value for field, value in expected.items()):
+                errors.append(
+                    f"{label} compatibility result does not match the classified evidence"
+                )
+                continue
+            if expected["review_status"] == "compatible":
+                compatible_phrases.add(expected["phrase"])
+
+    if not isinstance(labels, list):
+        errors.append("light_form_contract.lighting_labels must be a list")
+        labels = []
+    seen_label_phrases: set[str] = set()
+    emitted_label_count = 0
+    for index, lighting_label in enumerate(labels):
+        label = f"light_form_contract.lighting_labels[{index}]"
+        if not isinstance(lighting_label, dict):
+            errors.append(f"{label} must be an object")
+            continue
+        phrase = lighting_label.get("phrase")
+        if not _nonempty_string(phrase):
+            errors.append(f"{label}.phrase must be non-empty")
+        else:
+            normalized_phrase = phrase.strip()
+            if normalized_phrase in seen_label_phrases:
+                errors.append(f"{label}.phrase is duplicated")
+            seen_label_phrases.add(normalized_phrase)
+        status = lighting_label.get("status")
+        if status not in VALID_LIGHT_LABEL_STATUS:
+            errors.append(f"{label}.status is invalid")
+        emit = lighting_label.get("emit")
+        if not isinstance(emit, bool):
+            errors.append(f"{label}.emit must be boolean")
+            emit = False
+        elif emit:
+            emitted_label_count += 1
+        if emit and status != "model-calibrated":
+            errors.append(f"{label}: only a model-calibrated lighting label may be emitted")
+        if status == "model-calibrated":
+            for field in ("generator_id", "generator_version", "conditioning_route"):
+                if not _nonempty_string(lighting_label.get(field)):
+                    errors.append(f"{label}.{field} is required for model calibration")
+            if not _nonempty_strings(lighting_label.get("calibration_evidence")):
+                errors.append(f"{label}.calibration_evidence is required for model calibration")
+        if emit and (
+            not _nonempty_string(phrase) or phrase.strip() not in compatible_phrases
+        ):
+            errors.append(
+                f"{label}: an emitted friendly lighting label requires a compatible review"
+            )
+        decomposed_ids = lighting_label.get("decomposed_control_ids", [])
+        if not isinstance(decomposed_ids, list) or not all(
+            _nonempty_string(item) for item in decomposed_ids
+        ):
+            errors.append(f"{label}.decomposed_control_ids must be strings")
+            decomposed_ids = []
+        if emit and not decomposed_ids:
+            errors.append(
+                f"{label}: an emitted friendly lighting label requires literal decomposed controls"
+            )
+        unknown_controls = sorted(set(decomposed_ids) - control_ids)
+        if unknown_controls:
+            errors.append(
+                f"{label}.decomposed_control_ids references unknown controls: "
+                + ", ".join(unknown_controls)
+            )
+
+    if emitted_label_count > 1:
+        errors.append("light_form_contract may emit at most one friendly lighting label")
+
+    return errors
 
 
 def _audit_color_tone_contract(
@@ -1490,6 +1724,15 @@ def _audit_light_form_contract(
             )
 
     color_contract = contract.get("color_tone_contract")
+    errors.extend(
+        _audit_lighting_language(
+            light_contract,
+            color_contract if isinstance(color_contract, dict) else None,
+            known_regions,
+            control_ids,
+        )
+    )
+
     if isinstance(color_contract, dict):
         color_claim_ids = set(color_contract.get("claim_ids", []))
         overlap = sorted(listed_claim_ids & color_claim_ids)

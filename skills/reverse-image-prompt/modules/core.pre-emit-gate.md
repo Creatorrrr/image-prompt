@@ -1,6 +1,6 @@
 ---
 id: core.pre-emit-gate
-version: 14
+version: 15
 priority: 100
 type: core
 tier: 0
@@ -80,11 +80,12 @@ Apply this as a rewrite pass, not a checklist appended to the draft.
 ### Lighting and light-to-form consistency
 
 - For material lighting, verify one source-relative Light/Form target and evidence for every emitted source-geometry, fill, local-form-contrast, shadow-topology, material-response, or background-spill contribution.
-- Assign every lighting-changing phrase to one Light/Form owner. Split a phrase that lets apparent source size silently determine fill, local contrast, exposure, material gloss, or background spill.
-- Keep global tonal range and local form contrast as separate effects. Do not infer one from the other or let differently named claims amplify the same light-to-form direction.
-- Give every material shadow event a source-supported owner or mark it mixed or uncertain. Do not convert contact, occlusion, material absorption, or processing into a directional source without evidence.
-- Treat the visible spatial result as authoritative over a physical-light hypothesis. A low-confidence rig may be diagnostic or paired with result-space controls, but cannot carry a primary lighting invariant alone.
-- Reconcile every exact lighting-changing excerpt with one emitted claim, one owner, and its complete lighting-effect list. Keep Light/Form spatial effects separate from Color/Tone value, hue, exposure, and tone-curve controls.
+- Assign every lighting-changing phrase to one Light/Form owner. Split multi-owner compounds.
+- Keep global tonal range and local form contrast as separate effects. Merge synonymous directions.
+- Give every material shadow event a source-supported owner or mark it mixed or uncertain. Do not infer source direction from contact, occlusion, absorption, or processing.
+- The visible spatial result outranks a rig hypothesis; a low-confidence cause cannot carry a primary invariant alone.
+- Reconcile every exact lighting-changing excerpt with one emitted claim, one owner, and its complete lighting-effect list. Keep spatial Light/Form effects separate from Color/Tone.
+- Keep controlled lighting summaries diagnostic. Emit one externally sourced label only with compatible axes, exact generator/version calibration, and literal decomposition.
 - When pose or geometry may vary, preserve the source-supported light-to-form relation while allowing non-invariant highlight coordinates to move.
 
 ### Spatial and fidelity checks

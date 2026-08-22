@@ -73,6 +73,37 @@ light_form_contract:
     preserved_result: "light-to-form relation that must survive"
     flexible_effects: []
     source_evidence: []
+  lighting_language:  # optional; diagnostic translation, not a new effect owner
+    policy_id: "versioned lighting-language policy"
+    policy_status: uncalibrated-language-prototype | model-calibrated
+    observation_scope: source-visible
+    region_id: "known major region or global"
+    source_evidence: []
+    axis_classification:
+      displayed_key_level: {term: "policy term", confidence: high | medium | low, source_evidence: []}
+      shadow_floor: {term: "policy term", confidence: high | medium | low, source_evidence: []}
+      edge_softness: {term: "policy term", confidence: high | medium | low, source_evidence: []}
+      local_form_contrast: {term: "policy term", confidence: high | medium | low, source_evidence: []}
+      bright_plane_coverage: {term: "policy term", confidence: high | medium | low, source_evidence: []}
+      gradient_extent: {term: "policy term", confidence: high | medium | low, source_evidence: []}
+      directionality: {term: "policy term", confidence: high | medium | low, source_evidence: []}
+      fill_structure: {term: "policy term", confidence: high | medium | low, source_evidence: []}
+    controlled_summary:
+      phrase: null
+      status: explanation-only | inconclusive
+      emit: false
+      decomposed_axes: []
+      unresolved_axes: []
+    friendly_label_review: []
+  lighting_labels:  # optional externally sourced shorthand after compatibility review
+    - phrase: "candidate label"
+      status: explanation-only | unverified | model-calibrated
+      emit: false
+      generator_id: "required only for model-calibrated status"
+      generator_version: "required only for model-calibrated status"
+      conditioning_route: "required only for model-calibrated status"
+      calibration_evidence: []
+      decomposed_control_ids: []
   claim_ids: []
   aggregate_effects:
     - id: "canonical light effect"
@@ -93,6 +124,8 @@ light_form_contract:
 ```
 
 Candidate claims listed by this contract carry `lighting_effects`, each with an `aggregate_effect_id`, confidence, and source evidence. Every listed claim is emitted, represented exactly once in `emitted_controls`, and references the same complete effect set. A `prompt_excerpt` may be the smallest exact clause inside a compact sentence; it need not be a standalone sentence or visible output section. Two effect IDs may not hide the same region, axis, and direction.
+
+`lighting_language` is optional unless source-visible lighting is being translated into a compact composite or an externally supplied friendly label is considered. Use `references/lighting-language.md` and its versioned policy. Classify every axis independently, preserve evidence and uncertainty, and keep its deterministic `controlled_summary` explanation-only. Every named friendly-label review records user or versioned-vocabulary provenance. Compatibility does not authorize emission: an emitted entry in `lighting_labels` must additionally be model-calibrated for the exact generator/version, carry calibration evidence, and reference already-owned literal controls.
 
 ## Cause and result rules
 
@@ -238,5 +271,9 @@ This matrix is for building and promoting a skill-level evaluation suite, not fo
 - diffuse, absorbent, glossy, metallic, translucent, and woven responses
 - human and non-human subjects
 - photographic and non-photographic media
+- the same displayed key with different edge softness or local form contrast
+- the same edge softness with flattening versus strong local modeling
+- compatible, conflicting, unresolved, and missing externally supplied label candidates
+- label-present versus axis-equivalent literal-only prompts on the exact target generator/version
 
 Score prompt validity, delivered pixels, pixel fidelity, and user judgment separately. The motivating case is one regression sample, never a runtime default or proof of general success.
