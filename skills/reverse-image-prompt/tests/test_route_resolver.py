@@ -229,6 +229,9 @@ class RouteResolverTests(unittest.TestCase):
                 "lighting_color_contract_handoff",
                 "light_control_ledger",
                 "render_light_verification",
+                "lighting_language_translation",
+                "lighting_friendly_label_review",
+                "lighting_label_external_source",
             }.issubset(light["provides_anchors"])
         )
 

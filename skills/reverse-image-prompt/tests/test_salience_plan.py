@@ -470,6 +470,84 @@ def add_surface_language_review(plan: dict, *, conflicting: bool = False) -> dic
     return plan
 
 
+def add_lighting_language_review(plan: dict, *, conflicting: bool = False) -> dict:
+    review = {
+        "phrase": "held-out candidate lighting label",
+        "candidate_source": {
+            "kind": "user-supplied",
+            "reference": "held-out test input",
+        },
+        "label_scope": "composite-lighting",
+        "axis_requirements": {
+            "displayed_key_level": ["high"],
+            "edge_softness": ["soft"],
+            "local_form_contrast": ["subtle"],
+        },
+        "matched_axes": [
+            "displayed_key_level",
+            "edge_softness",
+            "local_form_contrast",
+        ],
+        "conflicting_axes": [],
+        "unresolved_axes": [],
+        "review_status": "compatible",
+    }
+    if conflicting:
+        review["axis_requirements"]["displayed_key_level"] = ["low"]
+        review["matched_axes"] = ["edge_softness", "local_form_contrast"]
+        review["conflicting_axes"] = ["displayed_key_level"]
+        review["review_status"] = "conflicting"
+    light_contract = plan["render_contract"]["light_form_contract"]
+
+    def axis(term: str, confidence: str = "high") -> dict:
+        return {
+            "term": term,
+            "confidence": confidence,
+            "source_evidence": (
+                [] if term in {"mixed", "uncertain"} else ["held-out visible evidence"]
+            ),
+        }
+
+    light_contract["lighting_language"] = {
+        "policy_id": "source-visible-lighting-language-v1",
+        "policy_status": "uncalibrated-language-prototype",
+        "observation_scope": "source-visible",
+        "region_id": "central-form",
+        "source_evidence": ["analyst-separated broad and local lighting evidence"],
+        "axis_classification": {
+            "displayed_key_level": axis("high"),
+            "shadow_floor": axis("deep", "medium"),
+            "edge_softness": axis("soft"),
+            "local_form_contrast": axis("subtle"),
+            "bright_plane_coverage": axis("broad"),
+            "gradient_extent": axis("long"),
+            "directionality": axis("uncertain", "low"),
+            "fill_structure": axis("uncertain", "low"),
+        },
+        "controlled_summary": {
+            "phrase": "high-key soft-edged gently-modeling light",
+            "status": "explanation-only",
+            "emit": False,
+            "decomposed_axes": [
+                "displayed_key_level",
+                "edge_softness",
+                "local_form_contrast",
+            ],
+            "unresolved_axes": [],
+        },
+        "friendly_label_review": [review],
+    }
+    light_contract["lighting_labels"] = [
+        {
+            "phrase": "held-out candidate lighting label",
+            "status": "explanation-only",
+            "emit": False,
+            "decomposed_control_ids": ["control-light-shape"],
+        }
+    ]
+    return plan
+
+
 class SaliencePlanTests(unittest.TestCase):
     def test_valid_source_relative_plan_passes(self) -> None:
         self.assertEqual(audit_plan(valid_plan()), [])
@@ -577,6 +655,122 @@ class SaliencePlanTests(unittest.TestCase):
 
     def test_valid_light_form_contract_passes(self) -> None:
         self.assertEqual(audit_plan(valid_light_plan()), [])
+
+    def test_valid_axis_first_lighting_language_review_passes(self) -> None:
+        self.assertEqual(
+            audit_plan(add_lighting_language_review(valid_light_plan())), []
+        )
+
+    def test_controlled_lighting_summary_cannot_be_emitted(self) -> None:
+        plan = add_lighting_language_review(valid_light_plan())
+        summary = plan["render_contract"]["light_form_contract"][
+            "lighting_language"
+        ]["controlled_summary"]
+        summary["emit"] = True
+        self.assertTrue(
+            any(
+                "policy-derived explanation-only summary" in error
+                for error in audit_plan(plan)
+            )
+        )
+
+    def test_conflicting_friendly_lighting_label_cannot_be_emitted(self) -> None:
+        plan = add_lighting_language_review(valid_light_plan(), conflicting=True)
+        lighting_label = plan["render_contract"]["light_form_contract"][
+            "lighting_labels"
+        ][0]
+        lighting_label.update(
+            {
+                "status": "model-calibrated",
+                "emit": True,
+                "generator_id": "held-out-generator",
+                "generator_version": "held-out-version",
+                "conditioning_route": "text-only",
+                "calibration_evidence": ["held-out matched response study"],
+            }
+        )
+        self.assertTrue(
+            any(
+                "requires a compatible review" in error for error in audit_plan(plan)
+            )
+        )
+
+    def test_uncalibrated_friendly_lighting_label_cannot_be_emitted(self) -> None:
+        plan = add_lighting_language_review(valid_light_plan())
+        lighting_label = plan["render_contract"]["light_form_contract"][
+            "lighting_labels"
+        ][0]
+        lighting_label["emit"] = True
+        self.assertTrue(
+            any(
+                "only a model-calibrated lighting label" in error
+                for error in audit_plan(plan)
+            )
+        )
+
+    def test_model_calibrated_friendly_lighting_label_may_lead_literal_controls(self) -> None:
+        plan = add_lighting_language_review(valid_light_plan())
+        lighting_label = plan["render_contract"]["light_form_contract"][
+            "lighting_labels"
+        ][0]
+        lighting_label.update(
+            {
+                "status": "model-calibrated",
+                "emit": True,
+                "generator_id": "held-out-generator",
+                "generator_version": "held-out-version",
+                "conditioning_route": "text-only",
+                "calibration_evidence": ["held-out matched response study"],
+            }
+        )
+        self.assertEqual(audit_plan(plan), [])
+
+    def test_lighting_language_must_match_color_tone_key_class(self) -> None:
+        plan = add_lighting_language_review(
+            with_displayed_key_response(valid_color_and_light_plan())
+        )
+        language = plan["render_contract"]["light_form_contract"][
+            "lighting_language"
+        ]
+        language["axis_classification"]["displayed_key_level"]["term"] = "low"
+        language["controlled_summary"]["phrase"] = (
+            "low-key soft-edged gently-modeling light"
+        )
+        self.assertTrue(
+            any(
+                "conflicts with the Color/Tone contract" in error
+                for error in audit_plan(plan)
+            )
+        )
+
+    def test_at_most_one_friendly_lighting_label_may_be_emitted(self) -> None:
+        plan = add_lighting_language_review(valid_light_plan())
+        light_contract = plan["render_contract"]["light_form_contract"]
+        calibrated = light_contract["lighting_labels"][0]
+        calibrated.update(
+            {
+                "status": "model-calibrated",
+                "emit": True,
+                "generator_id": "held-out-generator",
+                "generator_version": "held-out-version",
+                "conditioning_route": "text-only",
+                "calibration_evidence": ["held-out matched response study"],
+            }
+        )
+        duplicate = deepcopy(calibrated)
+        duplicate["phrase"] = "second held-out candidate lighting label"
+        light_contract["lighting_language"]["friendly_label_review"].append(
+            {
+                **deepcopy(
+                    light_contract["lighting_language"]["friendly_label_review"][0]
+                ),
+                "phrase": duplicate["phrase"],
+            }
+        )
+        light_contract["lighting_labels"].append(duplicate)
+        self.assertTrue(
+            any("at most one friendly lighting label" in error for error in audit_plan(plan))
+        )
 
     def test_light_observation_requires_separate_coverage_extent_and_spill(self) -> None:
         plan = valid_light_plan()

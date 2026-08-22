@@ -1,6 +1,6 @@
 ---
 id: core.output-contract
-version: 14
+version: 15
 priority: 98
 type: core
 tier: 0
@@ -64,9 +64,9 @@ Draft intrinsic surface, illumination, global response, and processing as distin
 
 Place one compact color-tone passage early when primary; when supporting, use the smallest relational control. Hierarchy normally owns area, value, chroma, or contrast, not repeated surface hue.
 
-When lighting is material, assign each emitted control to one Light/Form owner and one source-relative effect budget. Separate source geometry, apparent source size, fill, local form contrast, shadow topology, material response, and background spill; do not let a generic lighting adjective own several of them at once.
+When lighting is material, assign each emitted control to one Light/Form owner and source-relative effect budget. Keep source geometry, apparent size, fill, local contrast, shadow topology, material response, and spill separate; generic adjectives cannot own several.
 
-Lead with the visible result and add a physical-light explanation only at its supported confidence. Before emission, make every exact lighting-changing phrase traceable to the final Light/Form control ledger. Treat that ledger as internal bookkeeping over the smallest exact clauses, never as a reason to expose a schema, repeat a control, or lengthen the production prompt. Keep spatial illumination structure in that ledger and displayed color, exposure, and tone response in the Color/Tone ledger.
+Lead with the visible result; add physical cause only at supported confidence. Reconcile every exact lighting-changing phrase with one ledger owner and complete effect list. The ledger is internal, not output prose or grounds for repetition. Keep spatial illumination there and displayed color, exposure, and tone response in Color/Tone. Controlled summaries stay diagnostic. An externally sourced friendly label may appear once only after compatible-axis and exact generator/version calibration, immediately before its literal decomposition.
 
 Use compact blocks for complex images and no fixed word cap; every clause must add a control. Keep essential crop, partial visibility, and interactions affirmative. Relate major components and state inversion-prone topology directly.
 

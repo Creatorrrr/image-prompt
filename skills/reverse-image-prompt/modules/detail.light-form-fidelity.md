@@ -1,6 +1,6 @@
 ---
 id: detail.light-form-fidelity
-version: 3
+version: 4
 priority: 79
 type: detail
 tier: 3
@@ -37,6 +37,9 @@ provides_anchors:
   - render_light_verification
   - apparent_illumination_signature
   - bright_plane_coverage
+  - lighting_language_translation
+  - lighting_friendly_label_review
+  - lighting_label_external_source
 ---
 
 # Detail: lighting and light-to-form fidelity
@@ -90,6 +93,14 @@ Record whether each light pattern is pose-bound, pose-robust, mixed, or uncertai
 ## Color and tone handoff
 
 Let the Light/Form Contract own spatial illumination structure and the Color/Tone Contract own displayed color, exposure, and tone response. More specifically, Light/Form owns bright-plane coverage, gradient extent, and background spill; Color/Tone owns displayed key level, shadow floor, highlight rolloff, and microcontrast. Do not emit the same brightness or contrast pull independently from both contracts.
+
+## Controlled lighting language
+
+When compact human-readable lighting language is useful, read `references/lighting-language.md`. Classify displayed key level, shadow floor, edge softness, local form contrast, bright-plane coverage, gradient extent, directionality, and fill structure independently before composing any summary. This language layer may read evidence owned by both contracts, but it owns no new lighting or tone effect.
+
+The versioned policy may deterministically compose one explanation-only summary from resolved axis tokens. It contains no preferred combination or named lighting preset. A named friendly-label candidate may come only from the user or an explicitly versioned task vocabulary; the skill does not invent candidates. Keep conflicting or inconclusive candidates non-emitted.
+
+Literal region, direction, coverage, gradient, contrast, shadow, displayed-tone, and fill controls remain authoritative. Emit an externally sourced friendly label at most once only when exact generator/version evidence marks it compatible and model-calibrated, and immediately unpack it with already-owned literal controls. The label never satisfies a missing axis or justifies a physical rig.
 
 ## Final prompt control ledger
 
