@@ -2993,8 +2993,13 @@ def validate_visual_obligation_registry(path: Path, errors: list[str]) -> None:
                         f"{alias!r} is already owned by {prior_owner}"
                     )
                 glossary_alias_owners[alias_key] = profile_id
-            if activation.get("requires_adult_character") is not True:
-                errors.append(f"{label}.activation.requires_adult_character: must be true")
+            if not isinstance(
+                activation.get("requires_adult_character"),
+                bool,
+            ):
+                errors.append(
+                    f"{label}.activation.requires_adult_character: must be boolean"
+                )
             for term_key in ("exclude_if_any_terms",):
                 values = normalize_list(activation.get(term_key))
                 if term_key in activation and (

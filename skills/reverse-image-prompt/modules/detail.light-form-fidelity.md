@@ -1,6 +1,6 @@
 ---
 id: detail.light-form-fidelity
-version: 2
+version: 3
 priority: 79
 type: detail
 tier: 3
@@ -35,6 +35,8 @@ provides_anchors:
   - lighting_color_contract_handoff
   - light_control_ledger
   - render_light_verification
+  - apparent_illumination_signature
+  - bright_plane_coverage
 ---
 
 # Detail: lighting and light-to-form fidelity
@@ -57,9 +59,11 @@ Treat the observed light-to-form result as evidence and the physical lighting se
 
 ## Visible result before rig inference
 
-Record the largest continuous bright and dark masses before small highlights. Map global tonal range, local form contrast, gradient character, edge softness, and the relative visibility of major planes.
+Record the largest continuous bright and dark masses before small highlights. Map global tonal range, bright-plane coverage, local form contrast, gradient character and extent, edge softness, background spill, and the relative visibility of major planes.
 
 Keep global tonal range separate from local form contrast. A wide scene range or dark frame does not require strong internal modeling; a compressed scene may still contain a hard contact edge.
+
+Build apparent illumination from displayed key level, bright-plane coverage, shadow floor, local form contrast, gradient extent, highlight rolloff, microcontrast, and background spill. Keep bright-plane coverage separate from displayed key level and local form contrast. An ordinary image supports this result-space signature, not physical illuminance or lamp power.
 
 Set light-to-form strength source-relatively as flattening, subtle revelation, moderate separation, or strong sculpture. Describe what the light does to visible form instead of substituting broad mood or quality shorthand.
 
@@ -85,7 +89,7 @@ Record whether each light pattern is pose-bound, pose-robust, mixed, or uncertai
 
 ## Color and tone handoff
 
-Let the Light/Form Contract own spatial illumination structure and the Color/Tone Contract own displayed color, exposure, and tone response. Illumination color, white balance, intrinsic value or hue, highlight rolloff, and tone-curve compression remain in the shared color/tone path; do not emit the same brightness or contrast pull independently from both contracts.
+Let the Light/Form Contract own spatial illumination structure and the Color/Tone Contract own displayed color, exposure, and tone response. More specifically, Light/Form owns bright-plane coverage, gradient extent, and background spill; Color/Tone owns displayed key level, shadow floor, highlight rolloff, and microcontrast. Do not emit the same brightness or contrast pull independently from both contracts.
 
 ## Final prompt control ledger
 

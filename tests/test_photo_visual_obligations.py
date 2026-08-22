@@ -194,6 +194,48 @@ class PhotoVisualObligationTests(unittest.TestCase):
     def test_frozen_visual_concept_routing_holdout(self):
         self.assert_routing_fixture(ROUTING_HOLDOUT_PATH)
 
+    def test_general_visual_profiles_route_without_adult_character_context(self):
+        reality_result = {
+            "provenance": {
+                "concept_lock": [
+                    "A clean photographic beach scene governed by one reality error"
+                ]
+            }
+        }
+        data = {prompt_generator.VISUAL_OBLIGATIONS_DATA_KEY: self.registry}
+        materialized = prompt_generator.candidate_pack_visual_obligations(
+            data,
+            reality_result,
+            {},
+            None,
+        )
+        self.assertIsNotNone(materialized)
+        self.assertEqual(
+            [row["id"] for row in materialized["obligations"]],
+            ["diegetic_reality_invariant_failure"],
+        )
+
+        glitch_result = {
+            "provenance": {
+                "concept_lock": [
+                    "A video compression stream develops motion-vector displacement "
+                    "inside one bounded failure zone while the scene remains recognizable"
+                ]
+            }
+        }
+        candidates = prompt_generator.candidate_pack_visual_concept_candidates(
+            data,
+            glitch_result,
+            {},
+            None,
+            None,
+        )
+        self.assertIsNotNone(candidates)
+        self.assertEqual(
+            [row["id"] for row in candidates["candidates"]],
+            ["visual-concept:medium_native_glitch"],
+        )
+
     def test_named_challenge_materializes_prompt_and_render_obligations(self):
         pack = self.moe_pack(
             "Photorealistic explicitly nonsexual behavior-led moe scene of an adult "
@@ -280,6 +322,33 @@ class PhotoVisualObligationTests(unittest.TestCase):
             )
         self.assertTrue(
             any("already owned by inner_thigh_negative_space" in error for error in errors),
+            errors,
+        )
+
+    def test_general_profile_adult_eligibility_must_be_an_explicit_boolean(self):
+        mutated = copy.deepcopy(self.registry)
+        profile = next(
+            row
+            for row in mutated["profiles"]
+            if row["id"] == "diegetic_reality_invariant_failure"
+        )
+        profile["activation"]["requires_adult_character"] = "false"
+        with tempfile.TemporaryDirectory() as tmp:
+            registry_path = Path(tmp) / "registry.json"
+            registry_path.write_text(
+                json.dumps(mutated, ensure_ascii=False),
+                encoding="utf-8",
+            )
+            errors: list[str] = []
+            validate_photo_prompt_dictionary.validate_visual_obligation_registry(
+                registry_path,
+                errors,
+            )
+        self.assertTrue(
+            any(
+                "activation.requires_adult_character: must be boolean" in error
+                for error in errors
+            ),
             errors,
         )
 

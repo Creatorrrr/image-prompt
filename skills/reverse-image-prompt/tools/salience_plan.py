@@ -49,7 +49,13 @@ VALID_RELATIVE_AREAS = {"small", "medium", "large"}
 VALID_ATTENTION = {"primary", "secondary", "background"}
 VALID_COLOR_IMPORTANCE = {"primary", "supporting"}
 VALID_COLOR_OBSERVATION_SCOPES = {"source-visible", "color-managed", "user-specified"}
-VALID_COLOR_AXES = {"value", "chroma", "hue", "contrast"}
+VALID_DISPLAYED_TONE_AXES = {
+    "displayed-key-level",
+    "shadow-floor",
+    "highlight-rolloff",
+    "microcontrast",
+}
+VALID_COLOR_AXES = {"value", "chroma", "hue", "contrast"} | VALID_DISPLAYED_TONE_AXES
 VALID_INTRINSIC_COLOR_AXES = {"value", "chroma", "hue"}
 VALID_COLOR_CAUSAL_LAYERS = {
     "intrinsic",
@@ -71,9 +77,55 @@ VALID_APPEARANCE_METAPHOR_STATUS = {
     "model-calibrated",
     "unverified",
 }
+VALID_DISPLAYED_TONE_CLASSES = {
+    "displayed-key-level": {"very-low", "low", "middle", "high", "very-high", "uncertain"},
+    "shadow-floor": {"crushed", "deep", "open", "lifted", "mixed", "uncertain"},
+    "highlight-rolloff": {
+        "clipped",
+        "abrupt-unclipped",
+        "gradual-unclipped",
+        "compressed",
+        "mixed",
+        "uncertain",
+    },
+    "microcontrast": {"suppressed", "natural", "emphasized", "mixed", "uncertain"},
+}
+DISPLAYED_TONE_ALLOWED_LAYERS = {
+    "displayed-key-level": {"illumination", "exposure", "processing"},
+    "shadow-floor": {"illumination", "exposure", "processing"},
+    "highlight-rolloff": {"exposure", "processing"},
+    "microcontrast": {"illumination", "processing"},
+}
+VALID_SURFACE_LANGUAGE_POLICY_STATUS = {
+    "uncalibrated-language-prototype",
+    "model-calibrated",
+}
+VALID_SURFACE_VALUE_DEPTH = {"very-light", "light", "medium", "deep", "uncertain"}
+VALID_SURFACE_CHROMA = {"very-low", "low", "moderate", "rich", "uncertain"}
+VALID_SURFACE_UNDERTONES = {
+    "rosy",
+    "peach",
+    "neutral",
+    "golden",
+    "olive",
+    "mixed",
+    "uncertain",
+}
+VALID_SURFACE_FINISH = {"matte", "satin", "luminous", "dewy", "uncertain"}
+VALID_SURFACE_EVENNESS = {"even", "naturally-varied", "freckled", "uncertain"}
+VALID_FRIENDLY_LABEL_SCOPES = {
+    "value-depth",
+    "undertone",
+    "surface-finish",
+    "composite-appearance",
+}
+VALID_FRIENDLY_LABEL_REVIEWS = {"compatible", "conflicting", "inconclusive"}
 VALID_LIGHT_IMPORTANCE = {"primary", "supporting"}
 VALID_LIGHT_OBSERVATION_SCOPES = {"source-visible", "user-specified"}
 VALID_LIGHT_FORM_CONTRAST = {"flattening", "subtle", "moderate", "strong"}
+VALID_LIGHT_BRIGHT_COVERAGE = {"narrow", "balanced", "broad", "mixed", "uncertain"}
+VALID_LIGHT_GRADIENT_EXTENT = {"short", "medium", "long", "mixed", "uncertain"}
+VALID_LIGHT_BACKGROUND_SPILL = {"suppressed", "low", "moderate", "high", "mixed", "uncertain"}
 VALID_LIGHT_MODEL_TYPES = {"physical-light", "rendered-shading", "mixed", "uncertain"}
 VALID_LIGHT_SOURCE_COUNTS = {"one-dominant", "multiple", "mixed", "uncertain"}
 VALID_LIGHT_AXIS_OFFSETS = {"near-axis", "slight", "moderate", "strong", "uncertain"}
@@ -122,6 +174,8 @@ VALID_LIGHT_EFFECT_AXES = {
     "source-geometry",
     "fill",
     "local-form-contrast",
+    "bright-plane-coverage",
+    "gradient-extent",
     "shadow-topology",
     "material-response",
     "background-spill",
@@ -218,6 +272,7 @@ def _audit_color_tone_contract(
 
     color_region_ids: set[str] = set()
     axis_requirements: list[tuple[str, str, str, dict[str, Any]]] = []
+    displayed_tone_requirements: list[tuple[str, str, str, dict[str, Any]]] = []
     for index, region in enumerate(regions):
         label = f"color_tone_contract.regions[{index}]"
         if not isinstance(region, dict):
@@ -371,6 +426,56 @@ def _audit_color_tone_contract(
             "color_tone_contract requires a medium- or high-confidence neutral anchor when status is available"
         )
 
+    displayed_tone_response = color_contract.get("displayed_tone_response", [])
+    if not isinstance(displayed_tone_response, list):
+        errors.append("color_tone_contract.displayed_tone_response must be a list")
+        displayed_tone_response = []
+    seen_displayed_axes: set[tuple[str, str]] = set()
+    for index, response in enumerate(displayed_tone_response):
+        label = f"color_tone_contract.displayed_tone_response[{index}]"
+        if not isinstance(response, dict):
+            errors.append(f"{label} must be an object")
+            continue
+        region_id = response.get("region_id")
+        axis = response.get("axis")
+        if region_id not in known_regions:
+            errors.append(f"{label}.region_id references an unknown region")
+        if axis not in VALID_DISPLAYED_TONE_AXES:
+            errors.append(f"{label}.axis is invalid")
+            continue
+        signature = (str(region_id), str(axis))
+        if signature in seen_displayed_axes:
+            errors.append(f"{label} repeats one region and displayed-tone axis")
+        seen_displayed_axes.add(signature)
+        if response.get("class") not in VALID_DISPLAYED_TONE_CLASSES[axis]:
+            errors.append(f"{label}.class is invalid for {axis}")
+        if response.get("role") not in VALID_COLOR_AXIS_ROLES:
+            errors.append(f"{label}.role is invalid")
+        if response.get("confidence") not in VALID_COLOR_CONFIDENCE:
+            errors.append(f"{label}.confidence is invalid")
+        if not _nonempty_strings(response.get("source_evidence")):
+            errors.append(f"{label}.source_evidence must contain visible evidence")
+        emission = response.get("emission")
+        if emission not in VALID_COLOR_AXIS_EMISSIONS:
+            errors.append(f"{label}.emission is invalid")
+        effect_id = response.get("aggregate_effect_id")
+        if emission == "required" and not _nonempty_string(effect_id):
+            errors.append(
+                f"{label}.aggregate_effect_id is required for an emitted displayed-tone axis"
+            )
+        if emission == "diagnostic-only":
+            if not _nonempty_string(response.get("non_emission_reason")):
+                errors.append(
+                    f"{label}.non_emission_reason is required for a diagnostic-only axis"
+                )
+            if _nonempty_string(effect_id):
+                errors.append(
+                    f"{label} cannot reference an aggregate effect when diagnostic-only"
+                )
+        displayed_tone_requirements.append(
+            (str(region_id), str(axis), label, response)
+        )
+
     aggregate_effects = color_contract.get("aggregate_effects")
     if not isinstance(aggregate_effects, list) or not aggregate_effects:
         errors.append(
@@ -445,6 +550,23 @@ def _audit_color_tone_contract(
         if axis_spec.get("role") == "primary" and effect.get("role") != "primary":
             errors.append(
                 f"{axis_label}: a primary intrinsic axis requires a primary aggregate effect"
+            )
+
+    for region_id, axis, axis_label, axis_spec in displayed_tone_requirements:
+        if axis_spec.get("emission") != "required":
+            continue
+        effect_id = axis_spec.get("aggregate_effect_id")
+        effect = aggregate_map.get(effect_id)
+        if effect is None:
+            errors.append(f"{axis_label}.aggregate_effect_id is unknown")
+            continue
+        if effect.get("region_id") != region_id or effect.get("axis") != axis:
+            errors.append(
+                f"{axis_label}.aggregate_effect_id must match the same region and displayed-tone axis"
+            )
+        if axis_spec.get("role") == "primary" and effect.get("role") != "primary":
+            errors.append(
+                f"{axis_label}: a primary displayed-tone axis requires a primary aggregate effect"
             )
 
     color_claim_ids = color_contract.get("claim_ids")
@@ -553,6 +675,7 @@ def _audit_color_tone_contract(
     prompt_excerpts: set[str] = set()
     controlled_claim_counts: dict[str, int] = {}
     axis_control_effects: set[str] = set()
+    intrinsic_axis_control_effects: set[str] = set()
     for index, control in enumerate(emitted_controls):
         label = f"color_tone_contract.emitted_controls[{index}]"
         if not isinstance(control, dict):
@@ -649,8 +772,13 @@ def _audit_color_tone_contract(
                 errors.append(
                     f"{label}: an axis-control may reference only one matching region and axis"
                 )
+            axis_control_effects.update(effect_ids)
             if layer == "intrinsic":
-                axis_control_effects.update(effect_ids)
+                intrinsic_axis_control_effects.update(effect_ids)
+            if axis in VALID_DISPLAYED_TONE_AXES and layer not in DISPLAYED_TONE_ALLOWED_LAYERS[axis]:
+                errors.append(
+                    f"{label}: {axis} cannot be owned by causal layer {layer!r}"
+                )
         elif control_role == "compound-control":
             if not _nonempty_string(control.get("compound_justification")):
                 errors.append(
@@ -676,10 +804,168 @@ def _audit_color_tone_contract(
         if axis_spec.get("emission") != "required":
             continue
         effect_id = axis_spec.get("aggregate_effect_id")
-        if effect_id not in axis_control_effects:
+        if effect_id not in intrinsic_axis_control_effects:
             errors.append(
                 f"{axis_label}: required intrinsic axis needs its own intrinsic axis-control"
             )
+
+    for _region_id, _axis, axis_label, axis_spec in displayed_tone_requirements:
+        if axis_spec.get("emission") != "required":
+            continue
+        effect_id = axis_spec.get("aggregate_effect_id")
+        if effect_id not in axis_control_effects:
+            errors.append(
+                f"{axis_label}: required displayed-tone axis needs its own axis-control"
+            )
+
+    compatible_friendly_labels: set[str] = set()
+    surface_language = color_contract.get("surface_color_language")
+    if surface_language is not None:
+        if not isinstance(surface_language, dict):
+            errors.append("color_tone_contract.surface_color_language must be an object")
+            surface_language = {}
+        if not _nonempty_string(surface_language.get("policy_id")):
+            errors.append("color_tone_contract.surface_color_language.policy_id must be non-empty")
+        if surface_language.get("policy_status") not in VALID_SURFACE_LANGUAGE_POLICY_STATUS:
+            errors.append("color_tone_contract.surface_color_language.policy_status is invalid")
+        if surface_language.get("observation_scope") != observation_scope:
+            errors.append(
+                "color_tone_contract.surface_color_language.observation_scope must match the Color/Tone contract"
+            )
+        if not _nonempty_string(surface_language.get("profile_status")):
+            errors.append("color_tone_contract.surface_color_language.profile_status must be non-empty")
+        if surface_language.get("region_id") not in known_regions:
+            errors.append(
+                "color_tone_contract.surface_color_language.region_id references an unknown region"
+            )
+        if not _nonempty_strings(surface_language.get("source_evidence")):
+            errors.append(
+                "color_tone_contract.surface_color_language.source_evidence must contain measurement or visible evidence"
+            )
+
+        classifications = surface_language.get("axis_classification")
+        if not isinstance(classifications, dict):
+            errors.append(
+                "color_tone_contract.surface_color_language.axis_classification must be an object"
+            )
+            classifications = {}
+        valid_terms = {
+            "value_depth": VALID_SURFACE_VALUE_DEPTH,
+            "chroma": VALID_SURFACE_CHROMA,
+            "undertone": VALID_SURFACE_UNDERTONES,
+            "finish": VALID_SURFACE_FINISH,
+            "evenness": VALID_SURFACE_EVENNESS,
+        }
+        for axis, terms in valid_terms.items():
+            axis_label = f"color_tone_contract.surface_color_language.axis_classification.{axis}"
+            axis_spec = classifications.get(axis)
+            if not isinstance(axis_spec, dict):
+                errors.append(f"{axis_label} must be an object")
+                continue
+            if axis_spec.get("term") not in terms:
+                errors.append(f"{axis_label}.term is invalid")
+            if axis_spec.get("confidence") not in VALID_COLOR_CONFIDENCE:
+                errors.append(f"{axis_label}.confidence is invalid")
+
+        reviews = surface_language.get("friendly_label_review", [])
+        if not isinstance(reviews, list):
+            errors.append(
+                "color_tone_contract.surface_color_language.friendly_label_review must be a list"
+            )
+            reviews = []
+        seen_phrases: set[str] = set()
+        required_scope_axes = {
+            "value-depth": {"value_depth"},
+            "undertone": {"undertone"},
+            "surface-finish": {"finish"},
+            "composite-appearance": {"value_depth", "chroma", "undertone"},
+        }
+        for index, review in enumerate(reviews):
+            label = (
+                "color_tone_contract.surface_color_language."
+                f"friendly_label_review[{index}]"
+            )
+            if not isinstance(review, dict):
+                errors.append(f"{label} must be an object")
+                continue
+            phrase = review.get("phrase")
+            if not _nonempty_string(phrase):
+                errors.append(f"{label}.phrase must be non-empty")
+                continue
+            phrase = phrase.strip()
+            if phrase in seen_phrases:
+                errors.append(f"{label}.phrase is duplicated")
+            seen_phrases.add(phrase)
+            scope = review.get("label_scope")
+            if scope not in VALID_FRIENDLY_LABEL_SCOPES:
+                errors.append(f"{label}.label_scope is invalid")
+                continue
+            requirements = review.get("axis_requirements")
+            if not isinstance(requirements, dict) or not requirements:
+                errors.append(f"{label}.axis_requirements must be a non-empty object")
+                continue
+            unknown_axes = sorted(set(requirements) - set(valid_terms))
+            if unknown_axes:
+                errors.append(
+                    f"{label}.axis_requirements contains unknown axes: {', '.join(unknown_axes)}"
+                )
+            missing_scope_axes = required_scope_axes[scope] - set(requirements)
+            if scope == "composite-appearance" and not ({"finish", "evenness"} & set(requirements)):
+                missing_scope_axes.add("finish-or-evenness")
+            if missing_scope_axes:
+                errors.append(
+                    f"{label}.axis_requirements does not support its label scope: "
+                    + ", ".join(sorted(missing_scope_axes))
+                )
+
+            expected_matched: set[str] = set()
+            expected_conflicting: set[str] = set()
+            expected_unresolved: set[str] = set()
+            for axis, allowed in requirements.items():
+                if axis not in valid_terms:
+                    continue
+                if not isinstance(allowed, list) or not allowed or not all(
+                    isinstance(item, str) and item in valid_terms[axis] for item in allowed
+                ):
+                    errors.append(f"{label}.axis_requirements.{axis} contains invalid terms")
+                    continue
+                axis_spec = classifications.get(axis, {})
+                term = axis_spec.get("term") if isinstance(axis_spec, dict) else None
+                confidence = axis_spec.get("confidence") if isinstance(axis_spec, dict) else None
+                if term == "uncertain" or confidence == "low":
+                    expected_unresolved.add(axis)
+                elif term in allowed:
+                    expected_matched.add(axis)
+                else:
+                    expected_conflicting.add(axis)
+
+            reported_sets: dict[str, set[str]] = {}
+            for field in ("matched_axes", "conflicting_axes", "unresolved_axes"):
+                value = review.get(field, [])
+                if not _string_list(value):
+                    errors.append(f"{label}.{field} must be a list of strings")
+                    value = []
+                reported_sets[field] = set(value)
+            expected_sets = {
+                "matched_axes": expected_matched,
+                "conflicting_axes": expected_conflicting,
+                "unresolved_axes": expected_unresolved,
+            }
+            if reported_sets != expected_sets:
+                errors.append(f"{label} axis review does not match the classified evidence")
+            expected_status = (
+                "conflicting"
+                if expected_conflicting
+                else "inconclusive"
+                if expected_unresolved
+                else "compatible"
+            )
+            if review.get("review_status") not in VALID_FRIENDLY_LABEL_REVIEWS:
+                errors.append(f"{label}.review_status is invalid")
+            elif review.get("review_status") != expected_status:
+                errors.append(f"{label}.review_status does not match its axis review")
+            if expected_status == "compatible":
+                compatible_friendly_labels.add(phrase)
 
     appearance_metaphors = color_contract.get("appearance_metaphors", [])
     if not isinstance(appearance_metaphors, list):
@@ -705,6 +991,14 @@ def _audit_color_tone_contract(
         if emit and not _nonempty_strings(metaphor.get("calibration_evidence")):
             errors.append(
                 f"{label}.calibration_evidence is required for an emitted metaphor"
+            )
+        metaphor_phrase = metaphor.get("phrase")
+        if emit and (
+            not _nonempty_string(metaphor_phrase)
+            or metaphor_phrase.strip() not in compatible_friendly_labels
+        ):
+            errors.append(
+                f"{label}: an emitted friendly label requires a compatible surface-color-language review"
             )
         decomposed_ids = metaphor.get("decomposed_control_ids", [])
         if not isinstance(decomposed_ids, list) or not all(
@@ -771,6 +1065,16 @@ def _audit_light_form_contract(
         errors.append(
             "light_form_contract.observed_result.local_form_contrast is invalid"
         )
+    observed_enums = (
+        ("bright_plane_coverage", VALID_LIGHT_BRIGHT_COVERAGE),
+        ("gradient_extent", VALID_LIGHT_GRADIENT_EXTENT),
+        ("background_spill_relation", VALID_LIGHT_BACKGROUND_SPILL),
+    )
+    for field, allowed in observed_enums:
+        if observed.get(field) not in allowed:
+            errors.append(
+                f"light_form_contract.observed_result.{field} is invalid"
+            )
     for field in ("largest_bright_masses", "largest_dark_masses"):
         value = observed.get(field, [])
         if not _string_list(value):
@@ -830,6 +1134,7 @@ def _audit_light_form_contract(
         )
     region_effect_ids: set[str] = set()
     spill_region_count = 0
+    region_effect_roles: set[str] = set()
     for index, effect in enumerate(region_effects):
         label = f"light_form_contract.region_effects[{index}]"
         if not isinstance(effect, dict):
@@ -846,8 +1151,10 @@ def _audit_light_form_contract(
             errors.append(f"{label}.region_id references an unknown region")
         if effect.get("role") not in VALID_LIGHT_REGION_EFFECT_ROLES:
             errors.append(f"{label}.role is invalid")
-        elif effect.get("role") == "spill":
-            spill_region_count += 1
+        else:
+            region_effect_roles.add(str(effect.get("role")))
+            if effect.get("role") == "spill":
+                spill_region_count += 1
         if not _nonempty_string(effect.get("value_relation")):
             errors.append(f"{label}.value_relation must be non-empty")
         if effect.get("gradient_strength") not in VALID_STRENGTHS:
@@ -1028,6 +1335,14 @@ def _audit_light_form_contract(
         errors.append("a material-response effect requires observed material response")
     if "background-spill" in effect_axes and spill_region_count == 0:
         errors.append("a background-spill effect requires an observed spill region")
+    if "bright-plane-coverage" in effect_axes and "broad-plane" not in region_effect_roles:
+        errors.append(
+            "a bright-plane-coverage effect requires an observed broad-plane region"
+        )
+    if "gradient-extent" in effect_axes and "gradient" not in region_effect_roles:
+        errors.append(
+            "a gradient-extent effect requires an observed gradient region"
+        )
 
     light_claim_ids = light_contract.get("claim_ids")
     if not _nonempty_strings(light_claim_ids):

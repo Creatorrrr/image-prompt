@@ -12701,12 +12701,27 @@ def candidate_pack_visual_concept_candidates(
             and str(hit.get("profile_id") or "")
         }
     else:
-        if not candidate_pack_visual_obligation_adult_context(
+        adult_context = candidate_pack_visual_obligation_adult_context(
             source_rows,
             moe_response,
-        ):
-            return None
+        )
         matches = candidate_pack_auto_visual_concept_matches(registry, source_rows)
+        profiles_by_id = {
+            str(profile.get("id") or ""): profile
+            for profile in registry.get("profiles") or []
+            if isinstance(profile, dict) and str(profile.get("id") or "").strip()
+        }
+        matches = {
+            profile_id: rows
+            for profile_id, rows in matches.items()
+            if (
+                (profiles_by_id.get(profile_id, {}).get("activation") or {}).get(
+                    "requires_adult_character"
+                )
+                is not True
+                or adult_context
+            )
+        }
     active_hard_ids = {
         str(item.get("id") or "")
         for item in (visual_obligations or {}).get("obligations") or []

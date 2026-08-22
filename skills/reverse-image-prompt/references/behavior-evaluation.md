@@ -126,6 +126,16 @@ color_tone_contract:
     contrast_and_tone_curve: "global and local tone behavior"
     processing_shift: "visible grading or processing behavior"
     source_evidence: []
+  displayed_tone_response:
+    - region_id: "known region id or global"
+      axis: displayed-key-level | shadow-floor | highlight-rolloff | microcontrast
+      class: "axis-specific controlled class"
+      role: primary | supporting
+      confidence: high | medium | low
+      emission: required | diagnostic-only
+      aggregate_effect_id: "required only when emission is required"
+      non_emission_reason: "required only when diagnostic-only"
+      source_evidence: []
   regions:
     - id: "region id"
       role: dominant | supporting | edge-frame | low-legibility
@@ -152,11 +162,32 @@ color_tone_contract:
     - region_id: "known region id"
       confidence: high | medium | low
       source_evidence: []
+  surface_color_language:
+    policy_id: "versioned policy id"
+    policy_status: uncalibrated-language-prototype | model-calibrated
+    observation_scope: source-visible | color-managed | user-specified
+    profile_status: "observed profile state"
+    region_id: "known region id"
+    source_evidence: []
+    axis_classification:
+      value_depth: {term: very-light | light | medium | deep | uncertain, confidence: high | medium | low}
+      chroma: {term: very-low | low | moderate | rich | uncertain, confidence: high | medium | low}
+      undertone: {term: rosy | peach | neutral | golden | olive | mixed | uncertain, confidence: high | medium | low}
+      finish: {term: matte | satin | luminous | dewy | uncertain, confidence: high | medium | low}
+      evenness: {term: even | naturally-varied | freckled | uncertain, confidence: high | medium | low}
+    friendly_label_review:
+      - phrase: "analyst-authored candidate"
+        label_scope: value-depth | undertone | surface-finish | composite-appearance
+        axis_requirements: {}
+        matched_axes: []
+        conflicting_axes: []
+        unresolved_axes: []
+        review_status: compatible | conflicting | inconclusive
   claim_ids: []
   aggregate_effects:
     - id: "canonical effect id"
       region_id: "known region id or global"
-      axis: value | chroma | hue | contrast
+      axis: value | chroma | hue | contrast | displayed-key-level | shadow-floor | highlight-rolloff | microcontrast
       direction: "canonical source-relative direction"
       role: primary | supporting
       target_strength: subtle | moderate | strong
@@ -170,7 +201,7 @@ color_tone_contract:
       causal_layer: intrinsic | illumination | global-cast | exposure | processing | hierarchy
       control_role: axis-control | compound-control
       region_id: "required for axis-control"
-      axis: value | chroma | hue | contrast
+      axis: value | chroma | hue | contrast | displayed-key-level | shadow-floor | highlight-rolloff | microcontrast
       compound_justification: "required only for compound-control"
       aggregate_effect_ids: ["every aggregate effect referenced by that claim"]
   appearance_metaphors:
@@ -182,7 +213,9 @@ color_tone_contract:
 
 Every claim listed by the contract carries `perceptual_effects`, each naming one aggregate effect, one causal layer (`intrinsic`, `illumination`, `global-cast`, `exposure`, `processing`, or `hierarchy`), confidence, and evidence. Claims sharing a region, axis, and direction use one canonical effect even when their semantic-slot names differ. Repeating one causal layer is a merge failure. Multiple causal layers are valid only when each layer and their combined pull are independently source-supported.
 
-Every listed color/tone claim is represented exactly once in `emitted_controls`. Its literal final-prompt excerpt must match that claim's sole causal layer and complete aggregate-effect set. Every required intrinsic axis links to one same-region/same-axis effect and its own intrinsic axis-control. A compound-control may compress secondary evidence but cannot satisfy a required intrinsic axis. The structural validator checks ownership and consistency; the reviewer verifies that the excerpt was copied literally and that no omitted phrase elsewhere in the prompt also changes color or tone.
+Every listed color/tone claim is represented exactly once in `emitted_controls`. Its literal final-prompt excerpt must match that claim's sole causal layer and complete aggregate-effect set. Every required intrinsic or displayed-tone axis links to one same-region/same-axis effect and its own axis-control. A compound-control may compress secondary evidence but cannot satisfy a required axis. The structural validator checks ownership and consistency; the reviewer verifies that the excerpt was copied literally and that no omitted phrase elsewhere in the prompt also changes color or tone.
+
+`surface_color_language` is optional unless measured surface color is being translated or a friendly label is considered. Classify value depth, chroma, and undertone independently; finish and evenness require separate visual evidence. A compatible review does not by itself authorize prompt emission. Any emitted friendly label must also be `model-calibrated`, carry calibration evidence, and summarize already-owned literal axis controls.
 
 The schema deliberately contains no preferred hue, skin value, palette, metaphor, adjective blacklist, numeric color, identity proxy, or generator workaround. A hierarchy-layer hue effect additionally requires source evidence that hue contrast itself is invariant.
 
@@ -205,14 +238,17 @@ Review the standalone prompt with the source visible and score distinct question
 - Are intrinsic properties separated from pose/deformation, perspective, lighting/shadow, material interaction/occlusion, and processing?
 - Are intrinsic surface color, illumination, global cast, and exposure kept distinct?
 - When color or tone is material, are value, chroma, hue, tone-zone response, processing, and neutral-anchor confidence represented at source-relative strength?
+- Are displayed key level, shadow floor, highlight rolloff, and microcontrast kept distinct rather than collapsed into `light intensity`?
 - Does every required intrinsic axis continue through a same-region/same-axis effect and literal intrinsic axis-control, instead of being replaced by hierarchy, exposure, or illumination?
+- Does every required displayed-tone axis continue through its own effect and axis-control without substituting for a Light/Form spatial axis?
 - Is displayed intrinsic color based on comparable midtone or flat evidence rather than a pooled highlight/midtone/shadow range?
 - Is the observation scope limited to what the image/profile evidence supports rather than claiming biological, material, or scene-referred true color?
 - Was each appearance metaphor decomposed before use, and does any retained metaphor merely summarize rather than add color, finish, illumination, or polish?
+- When friendly surface-color language is used, were value depth, chroma, and undertone classified first, with ambiguous or conflicting labels left non-emitted?
 - Does every literal color-changing phrase in the final prompt appear once in the control ledger with one causal layer and a complete effect budget?
 - Do differently named claims avoid accumulating the same color or tone direction beyond one supported aggregate target?
 - When lighting is material, is the visible result recorded before the physical-light hypothesis, with confidence and evidence for any emitted source geometry?
-- Are apparent source size, fill, global tonal range, local form contrast, shadow ownership, material response, and background spill kept causally distinct?
+- Are apparent source size, fill, global tonal range, bright-plane coverage, local form contrast, gradient extent, shadow ownership, material response, and background spill kept causally distinct?
 - Does every literal lighting-changing phrase appear once in the Light/Form control ledger with one owner and a complete effect set?
 - When pose or geometry is flexible, does the prompt preserve the light-to-form relation without overlocking incidental highlight coordinates?
 - Do the Light/Form and Color/Tone contracts avoid duplicate claims, excerpts, and contrast directions?
@@ -251,12 +287,16 @@ Include held-out causal pairs spanning materially different subjects and media:
 - the same intrinsic surface under different illumination
 - different intrinsic surfaces under comparable illumination
 - similar hue with changed exposure, chroma, or tone curve
+- the same local form contrast at different displayed key levels
+- the same displayed key level with different bright-plane coverage or shadow floor
 - local colored illumination versus a global cast or palette shift
 - low saturation versus simple underexposure
 - monochrome, flat-color, mixed-light, photographic, and non-photographic sources
 - human and non-human subjects without making either category the runtime default
 - the same displayed target relation under different global exposure or cast
 - a color/finish metaphor versus an axis-equivalent description across human and non-human surfaces
+- the same undertone class across different value-depth classes, including olive without treating it as a depth category
+- boundary and missing-profile cases where no friendly label should be forced
 - embedded-profile, missing-profile, and failed-profile cases
 - local target drift versus a shared target-and-context drift
 - large near-axis versus large off-axis illumination
@@ -276,7 +316,7 @@ Promote a change only when it improves unrelated held-out behavior without mater
 
 - Put source-relative axes and causal distinctions in runtime instructions, not example-specific desired values.
 - Do not add a fixed adjective blacklist, fixed global word count, exact source proportions, or generator-specific workaround to solve one case.
-- Do not install a preferred human color, demographic-to-color mapping, fixed metaphor dictionary, or subject-specific measurement region.
+- Do not install a preferred human color, demographic-to-color mapping, fixed image-specific metaphor dictionary, or subject-specific measurement region. A versioned source-visible axis vocabulary is allowed only when it records uncertainty and does not select a preferred label.
 - Do not install a preferred source direction, fill level, light-to-form strength, shadow owner, material response, or subject-specific lighting coordinate.
 - Prefer changing the merge or attribution rule over adding another subject exception.
 - Corrections replace or remove amplifying claims; they do not accumulate counter-negatives.

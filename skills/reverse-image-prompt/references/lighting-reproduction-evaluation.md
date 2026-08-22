@@ -27,7 +27,10 @@ light_form_contract:
   observed_result:
     global_tonal_range: "source-relative scene range"
     local_form_contrast: flattening | subtle | moderate | strong
+    bright_plane_coverage: narrow | balanced | broad | mixed | uncertain
     gradient_character: "long and shallow, short and steep, stepped, mixed, or uncertain"
+    gradient_extent: short | medium | long | mixed | uncertain
+    background_spill_relation: suppressed | low | moderate | high | mixed | uncertain
     largest_bright_masses: []
     largest_dark_masses: []
     source_evidence: []
@@ -74,7 +77,7 @@ light_form_contract:
   aggregate_effects:
     - id: "canonical light effect"
       region_id: "known major region or global"
-      axis: source-geometry | fill | local-form-contrast | shadow-topology | material-response | background-spill
+      axis: source-geometry | fill | bright-plane-coverage | local-form-contrast | gradient-extent | shadow-topology | material-response | background-spill
       direction: "canonical source-relative direction"
       role: primary | supporting
       target_strength: subtle | moderate | strong
@@ -85,7 +88,7 @@ light_form_contract:
     - id: "control id"
       prompt_excerpt: "literal excerpt copied from the final production prompt"
       claim_id: "one listed emitted lighting claim"
-      owner: source-geometry | fill | local-form-contrast | shadow-topology | material-response | background-spill
+      owner: source-geometry | fill | bright-plane-coverage | local-form-contrast | gradient-extent | shadow-topology | material-response | background-spill
       aggregate_effect_ids: []
 ```
 
@@ -100,6 +103,15 @@ Candidate claims listed by this contract carry `lighting_effects`, each with an 
 - Low-confidence source hypotheses use `result-space-only` or `diagnostic-only`.
 
 Apparent source size owns penumbra or edge softness. Fill owns key/fill separation. Local form contrast owns the amplitude of internal modeling. Keep these effects separate even when one compact sentence carries several clauses.
+
+## Apparent illumination signature
+
+Do not reduce the visible result to physical `light intensity`. Build an apparent-illumination signature from independently observed axes:
+
+- Color/Tone owns displayed key level, shadow floor, highlight rolloff, and microcontrast.
+- Light/Form owns bright-plane coverage, local form contrast, gradient extent, and background spill.
+
+Displayed key level says how high the major relevant tones sit. Bright-plane coverage says how much of the relevant form occupies its broad bright side. Local form contrast says how far adjacent bright and dark form regions separate. Gradient extent says how much surface distance the main transition consumes. Thus a higher-key image may retain the same local contrast, and broad bright coverage may coexist with a deep shadow floor. Preserve these distinctions in analysis, aggregate effects, and prompt controls.
 
 ## Shadow attribution
 
@@ -116,7 +128,7 @@ Do not infer source direction from one ambiguous dark patch. Prefer corroboratin
 
 ## Color/Tone ownership boundary
 
-The Light/Form Contract owns spatial distribution and form modeling. The Color/Tone Contract owns displayed value, chroma, hue, illumination color, white balance, exposure, rolloff, black-level compression, and processing response.
+The Light/Form Contract owns bright-plane coverage, local form contrast, gradient extent, spatial distribution, and background spill. The Color/Tone Contract owns displayed value, chroma, hue, illumination color, white balance, displayed key level, shadow floor, highlight rolloff, microcontrast, exposure, and processing response.
 
 When both are present:
 
@@ -132,14 +144,20 @@ Use measurement only when it resolves a real uncertainty or supports source/rend
 
 ```json
 {
+  "metrics_policy": {
+    "bright_plateau_delta_l": 5.0,
+    "near_clip_l": 98.0
+  },
   "regions": [
     {
       "name": "major-plane-a",
+      "role": "major-plane",
       "source_bounds": [0.10, 0.20, 0.25, 0.35],
       "comparison_bounds": [0.12, 0.22, 0.27, 0.37]
     },
     {
       "name": "supporting-field",
+      "role": "background",
       "source_bounds": [0.70, 0.15, 0.90, 0.35],
       "comparison_bounds": [0.68, 0.16, 0.88, 0.36]
     }
@@ -169,9 +187,13 @@ Run:
 python tools/light_probe.py SOURCE --compare RENDER --spec SAMPLING.json
 ```
 
+The task-specific `metrics_policy` makes threshold-dependent measurements explicit; its illustrated values are not runtime defaults. Region roles may be `major-plane`, `shadow`, `highlight`, `context`, `background`, `material`, or `diagnostic`.
+
 The report may include:
 
-- regional median displayed lightness and IQR
+- regional median displayed lightness, shadow-floor p10, high-side p90, robust p90-p10 range, and within-region IQR
+- local-neighbor median and p90 lightness differences as scale-dependent microcontrast diagnostics
+- optional bright-plateau coverage and near-clip fractions under the declared task policy
 - analyst-named regional lightness relations
 - profile p10/p50/p90, robust range, net change, and total variation
 - monotonicity and a 10–90% transition width only when the profile is sufficiently monotonic
@@ -187,7 +209,11 @@ When revision is allowed, change only the largest source-supported lighting resi
 - source geometry
 - apparent source size or edge softness
 - fill structure
+- displayed key level and shadow floor, owned by Color/Tone
+- bright-plane coverage
 - local form contrast
+- gradient extent
+- highlight rolloff and microcontrast, owned by Color/Tone
 - shadow topology
 - material response
 - background spill
@@ -203,6 +229,9 @@ This matrix is for building and promoting a skill-level evaluation suite, not fo
 - small near-axis versus small off-axis source
 - high global range with low local form contrast
 - low global range with a sharp contact shadow
+- the same local robust range shifted to a different displayed key level
+- similar displayed key level with broad versus narrow bright-plane coverage
+- similar bright-plane coverage with different shadow floors
 - same surface and geometry under different light
 - same light under different geometry or pose
 - backlight, rim light, mixed light, flash, and ambient-dominant cases

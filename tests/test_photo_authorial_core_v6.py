@@ -42,6 +42,17 @@ YANDERE_BASELINE = (
     "is already visible on the bedside chart. Affection and boundary control coexist in "
     "one frame, while the same white clinical uniform keeps her identity continuous."
 )
+REALITY_ERROR_REQUEST = (
+    "푸른 바다에서 밀짚모자와 흰 원피스를 입은 성인 여성, 현실 오류"
+)
+REALITY_ERROR_BASELINE = (
+    "An adult woman in a white summer dress and straw hat stands beside a blue sea. "
+    "An optically clean camera record establishes an ordinary physical beach baseline. "
+    "One spatial coordinate rule fails at an invisible vertical boundary, shifting the "
+    "horizon, wave crests, her shadow, and the dress hem by the same measured offset. "
+    "The unaffected sand, anatomy, lighting, and perspective remain physically coherent, "
+    "so the frame feels ordinary at first glance and impossible on a second look."
+)
 
 
 def envelope(request_id: str = "v6-request") -> dict:
@@ -367,6 +378,116 @@ def yandere_core() -> dict:
             "evidence": ["quiet recovery room", "bedside access traces"],
         },
         "variation_key": "typed-v6-yandere-test",
+    }
+
+
+def reality_error_envelope(request_id: str = "v6-reality-error-request") -> dict:
+    return {
+        "contract_version": "photo-request-envelope/v1",
+        "provenance": "requesting_user",
+        "request_id": request_id,
+        "request_text": REALITY_ERROR_REQUEST,
+        "request_sha256": hashlib.sha256(
+            REALITY_ERROR_REQUEST.encode("utf-8")
+        ).hexdigest(),
+        "active_spans": [
+            {
+                "span_id": "topic",
+                "start": 0,
+                "end": len(REALITY_ERROR_REQUEST),
+                "text": REALITY_ERROR_REQUEST,
+            }
+        ],
+    }
+
+
+def reality_error_core() -> dict:
+    return {
+        "contract_version": "photo-authorial-core/v3",
+        "provenance": "agent_prepack",
+        "source_request": REALITY_ERROR_REQUEST,
+        "interpreted_intent": (
+            "A cleanly photographed beach world violates one spatial invariant while "
+            "the requested adult subject, sea, straw hat, and white dress remain intact"
+        ),
+        "subject": "one adult woman wearing a white summer dress and straw hat",
+        "setting": "a physically coherent blue seaside under natural daylight",
+        "event": (
+            "one invisible coordinate boundary shifts several crossed surfaces by the "
+            "same measured offset"
+        ),
+        "visual_priorities": [
+            "clean photographic capture",
+            "one repeated world-rule failure",
+            "ordinary first read and impossible second read",
+        ],
+        "baseline_prompt_en": REALITY_ERROR_BASELINE,
+        "user_definitions": [],
+        "interpretation_provenance": [
+            {
+                "term": "현실 오류",
+                "source_text": "현실 오류",
+                "basis": "request_context",
+                "resolution": (
+                    "the captured world violates one invariant while the photographic "
+                    "medium remains optically clean"
+                ),
+                "sources": [],
+            }
+        ],
+        "unresolved_ambiguities": [],
+        "user_exclusions": [],
+        "runtime_forbidden_labels": [],
+        "intent_lock": {
+            "contract_version": "photo-intent-lock/v1",
+            "priority": "requesting_user",
+            "semantic_anchors": [
+                {
+                    "anchor_id": "concept",
+                    "source_text": "현실 오류",
+                    "dimension": "concept",
+                    "prompt_evidence": (
+                        "One spatial coordinate rule fails at an invisible vertical boundary"
+                    ),
+                },
+                {
+                    "anchor_id": "subject",
+                    "source_text": REALITY_ERROR_REQUEST,
+                    "dimension": "subject",
+                    "prompt_evidence": (
+                        "An adult woman in a white summer dress and straw hat"
+                    ),
+                },
+                {
+                    "anchor_id": "event",
+                    "source_text": REALITY_ERROR_REQUEST,
+                    "dimension": "event",
+                    "prompt_evidence": (
+                        "shifting the horizon, wave crests, her shadow, and the dress hem "
+                        "by the same measured offset"
+                    ),
+                },
+            ],
+            "locked_dimensions": ["concept", "subject", "event"],
+            "open_dimensions": [
+                "framing",
+                "composition",
+                "lighting",
+                "camera",
+                "color",
+            ],
+        },
+        "semantic_assertions": [],
+        "request_lineage": None,
+        "style": {
+            "domain": "general_photo",
+            "family": "restrained coastal reality-error editorial",
+            "evidence": [
+                "clean natural daylight",
+                "coherent blue seaside depth",
+            ],
+        },
+        "variation_key": "typed-v6-reality-error-test",
     }
 
 
@@ -990,6 +1111,63 @@ class PhotoAuthorialCoreV6Tests(unittest.TestCase):
         self.assertIn(
             "syringe_weapon_blood_or_red_light_only",
             obligation["reject_substitutes"],
+        )
+
+    def test_reality_error_v6_pack_carries_world_invariant_obligation(self):
+        data = self.runtime_data()
+        normalized_envelope = prompt_generator.normalize_request_envelope(
+            reality_error_envelope()
+        )
+        normalized_core = prompt_generator.normalize_authorial_core(
+            reality_error_core(),
+            request_envelope=normalized_envelope,
+        )
+        result = prompt_generator.generate_once(
+            data,
+            random.Random(1421),
+            "character_attribute_composition_scene",
+            ["en"],
+            True,
+            12,
+            True,
+            selection_mode="rule",
+            include_trace=True,
+            concept_locks=[REALITY_ERROR_REQUEST],
+            seed=1421,
+            creativity=0.0,
+            authorial_core=normalized_core,
+        )
+        pack = prompt_generator.build_candidate_pack(result, data, "v6")
+        self.assertEqual(pack["contract_version"], "photo-candidate-pack/v6")
+        self.assertEqual(
+            [row["id"] for row in pack["visual_obligations"]["obligations"]],
+            ["diegetic_reality_invariant_failure"],
+        )
+        obligation = pack["visual_obligations"]["obligations"][0]
+        registry_profile = next(
+            row
+            for row in data[prompt_generator.VISUAL_OBLIGATIONS_DATA_KEY][
+                "profiles"
+            ]
+            if row["id"] == "diegetic_reality_invariant_failure"
+        )
+        self.assertFalse(
+            registry_profile["activation"]["requires_adult_character"]
+        )
+        self.assertIn(
+            "select exactly one world invariant",
+            obligation["composition_instruction"],
+        )
+        self.assertIn(
+            "vo_reality_error_cross_surface_consistency",
+            pack["visual_obligations"]["required_hard_gates"],
+        )
+        self.assertNotIn(
+            "medium_native_glitch",
+            {
+                row["id"]
+                for row in pack["visual_obligations"]["obligations"]
+            },
         )
 
     def test_retry_preserves_yandere_as_a_hard_visual_obligation(self):

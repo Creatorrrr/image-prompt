@@ -2238,6 +2238,704 @@
         "abrupt_full_personality_switch",
         "reference_face_treated_as_personality_evidence"
       ]
+    },
+    {
+      "id": "medium_native_glitch",
+      "category": "media_failure_aesthetic",
+      "activation": {
+        "exact_terms": [
+          "glitch art",
+          "pure glitch",
+          "signal glitch",
+          "video glitch",
+          "codec glitch",
+          "media-native glitch",
+          "글리치 아트",
+          "신호 글리치",
+          "비디오 글리치",
+          "코덱 글리치",
+          "メディアグリッチ"
+        ],
+        "exclude_if_any_terms": [
+          "no glitch",
+          "without glitch",
+          "글리치 제외",
+          "글리치 없이",
+          "reality error",
+          "reality glitch",
+          "world glitch",
+          "현실 오류",
+          "현실 글리치",
+          "software bug",
+          "debugging",
+          "system log",
+          "error message",
+          "소프트웨어 버그",
+          "코드 오류"
+        ],
+        "requires_adult_character": false
+      },
+      "semantics": {
+        "definition": "A visible break in one identified image, video, signal, or file process exposes that medium's own technological structure through one coherent family of mechanism-native artifacts while the underlying subject remains partly continuous and recognizable.",
+        "paraphrase_examples": [
+          "glitch driven by one broken image process",
+          "the medium exposes its own failure fingerprint",
+          "codec blocks displace along a damaged motion-vector field",
+          "horizontal synchronization loss bends one CRT signal path",
+          "하나의 영상 처리 과정이 깨지며 매체 구조가 드러나는 글리치",
+          "코덱 블록과 움직임 벡터가 같은 고장 원리를 따르는 영상 오류",
+          "単一の信号経路の故障が媒体固有の痕跡として現れる"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 3,
+          "required_group_ids": [
+            "identified_source_medium",
+            "mechanism_native_artifact"
+          ],
+          "groups": [
+            {
+              "id": "identified_source_medium",
+              "any_terms": [
+                "video compression stream",
+                "digital image file",
+                "CRT signal path",
+                "camera data pipeline",
+                "codec stream",
+                "영상 압축 스트림",
+                "디지털 이미지 파일",
+                "CRT 신호 경로",
+                "카메라 데이터 파이프라인"
+              ]
+            },
+            {
+              "id": "mechanism_native_artifact",
+              "any_terms": [
+                "motion-vector displacement",
+                "macroblock corruption",
+                "horizontal sync loss",
+                "scanline timing rupture",
+                "packet dropout",
+                "움직임 벡터 변위",
+                "매크로블록 손상",
+                "수평 동기 손실",
+                "주사선 타이밍 파열"
+              ]
+            },
+            {
+              "id": "bounded_rupture",
+              "any_terms": [
+                "one localized rupture",
+                "bounded failure zone",
+                "single artifact family",
+                "localized signal break",
+                "하나의 국소 파열",
+                "제한된 고장 영역",
+                "단일 아티팩트 계열"
+              ]
+            },
+            {
+              "id": "underlying_content_continuity",
+              "any_terms": [
+                "subject continues across the rupture",
+                "scene remains recognizable",
+                "underlying content stays continuous",
+                "content persists through the break",
+                "파열을 가로질러 피사체가 이어짐",
+                "원래 장면이 알아볼 수 있게 남음"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "a generic RGB split filter pasted uniformly over a clean image",
+          "an unrelated stack of VHS noise, pixels, portals, and scanlines",
+          "a clean photograph in which the physical world itself breaks one rule",
+          "a software debugging screen or an ordinary error message"
+        ]
+      },
+      "composition_instruction": "Choose one source medium or protocol and one failure mechanism native to it, confine that mechanism to a deliberate rupture zone, preserve recognizable content across the break, and repeat the same technological fingerprint wherever the rupture crosses the subject or background.",
+      "concept_candidate": {
+        "concept_terms": [
+          "one identified image video signal or file process",
+          "one mechanism-native artifact family",
+          "codec macroblock displacement",
+          "motion-vector smear",
+          "CRT horizontal synchronization loss",
+          "scanline timing rupture",
+          "bounded failure zone",
+          "recognizable content continuity",
+          "medium-specific technological fingerprint"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [
+          "glitch art",
+          "media-native glitch"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "required_evidence_fields": [
+        "source_medium_phrase",
+        "native_failure_mechanism_phrase",
+        "bounded_rupture_phrase",
+        "content_continuity_phrase",
+        "artifact_fingerprint_phrase"
+      ],
+      "evidence_requirements": {
+        "source_medium_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "video compression stream",
+            "digital image file",
+            "CRT signal path",
+            "camera data pipeline",
+            "codec stream"
+          ]
+        },
+        "native_failure_mechanism_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "motion-vector displacement",
+            "macroblock corruption",
+            "horizontal sync loss",
+            "scanline timing rupture",
+            "packet dropout"
+          ]
+        },
+        "bounded_rupture_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "one localized rupture",
+            "bounded failure zone",
+            "single artifact family",
+            "localized signal break"
+          ]
+        },
+        "content_continuity_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "subject continues across the rupture",
+            "scene remains recognizable",
+            "underlying content stays continuous",
+            "content persists through the break"
+          ]
+        },
+        "artifact_fingerprint_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "codec-native block geometry",
+            "signal-native horizontal tearing",
+            "file-native scanline displacement",
+            "medium-specific technological fingerprint"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_glitch_identified_source_medium",
+          "review_scale": "both",
+          "description": "The image visibly commits to one identifiable source medium or protocol rather than an unspecified digital mood."
+        },
+        {
+          "id": "vo_glitch_native_failure_mechanism",
+          "review_scale": "native",
+          "description": "Artifacts share one technically coherent failure family native to the selected medium or protocol."
+        },
+        {
+          "id": "vo_glitch_bounded_rupture",
+          "review_scale": "thumbnail",
+          "description": "A deliberate bounded rupture is compositionally legible instead of uniform decorative noise across the whole frame."
+        },
+        {
+          "id": "vo_glitch_content_continuity",
+          "review_scale": "both",
+          "description": "Enough subject and scene continuity survives across the break for the failed flow to remain perceptible."
+        },
+        {
+          "id": "vo_glitch_not_generic_filter_stack",
+          "review_scale": "native",
+          "description": "The result is not carried by generic RGB separation, random static, scanlines, VHS texture, or unrelated effect stacking alone."
+        }
+      ],
+      "reject_substitutes": [
+        "uniform_rgb_split_filter",
+        "random_noise_or_scanline_overlay",
+        "unrelated_vhs_pixel_portal_effect_stack",
+        "generic_error_message_or_debug_screen",
+        "world_rule_failure_with_clean_capture_medium",
+        "artifact_family_inconsistent_with_selected_medium"
+      ]
+    },
+    {
+      "id": "diegetic_reality_invariant_failure",
+      "category": "world_invariant_failure",
+      "activation": {
+        "exact_terms": [
+          "reality error",
+          "reality glitch",
+          "world glitch",
+          "world-rule error",
+          "diegetic reality error",
+          "현실 오류",
+          "현실 글리치",
+          "세계 오류",
+          "현실의 버그",
+          "現実エラー",
+          "世界のバグ"
+        ],
+        "exclude_if_any_terms": [
+          "no reality error",
+          "without reality glitch",
+          "현실 오류 제외",
+          "현실 오류 없이",
+          "현실 글리치 제외",
+          "현실 글리치 없이"
+        ],
+        "requires_adult_character": false
+      },
+      "semantics": {
+        "definition": "An optically clean camera records an otherwise ordinary world in which exactly one spatial, temporal, causal, optical, or topological invariant fails, and the same measurable failure propagates consistently across several affected surfaces while unaffected regions remain physically coherent.",
+        "paraphrase_examples": [
+          "the world itself obeys one broken rule while the photograph stays clean",
+          "one invisible coordinate boundary shifts every crossed surface by the same amount",
+          "one temporal phase lag repeats across waves, cloth, shadow, and reflection",
+          "an effect appears while its visible cause is absent but every consequence remains consistent",
+          "깨끗한 사진 속에서 세계 자체의 한 가지 물리 규칙만 어긋난다",
+          "보이지 않는 경계를 지나는 모든 표면이 같은 거리만큼 어긋난다",
+          "파도와 옷자락과 그림자에 동일한 시간 지연이 반복된다",
+          "媒体ではなく世界そのものの一つの法則だけが破綻する"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 3,
+          "required_group_ids": [
+            "normal_world_baseline",
+            "single_failed_invariant",
+            "repeated_cross_surface_consequence"
+          ],
+          "groups": [
+            {
+              "id": "normal_world_baseline",
+              "any_terms": [
+                "ordinary physical baseline",
+                "normal coherent world",
+                "familiar everyday scene",
+                "plausible photographic baseline",
+                "평범한 물리적 기준선",
+                "정상적이고 일관된 세계",
+                "익숙한 일상 장면"
+              ]
+            },
+            {
+              "id": "single_failed_invariant",
+              "any_terms": [
+                "one spatial coordinate rule fails",
+                "one temporal phase rule fails",
+                "one causal dependency rule fails",
+                "one optical correspondence rule fails",
+                "one topological rule fails",
+                "하나의 공간 좌표 규칙 위반",
+                "하나의 시간 위상 규칙 위반",
+                "하나의 인과 규칙 위반",
+                "하나의 광학 대응 규칙 위반"
+              ]
+            },
+            {
+              "id": "repeated_cross_surface_consequence",
+              "any_terms": [
+                "same displacement repeats across surfaces",
+                "same temporal lag repeats across materials",
+                "same causal orphan repeats throughout the scene",
+                "same rule affects horizon shadow reflection and cloth",
+                "여러 표면에 같은 변위가 반복",
+                "여러 재질에 같은 시간 지연이 반복",
+                "수평선 그림자 반사 옷감에 같은 규칙이 적용"
+              ]
+            },
+            {
+              "id": "clean_capture_medium",
+              "any_terms": [
+                "optically clean photographic capture",
+                "clean camera record",
+                "unbroken photographic medium",
+                "natural lens and sensor response",
+                "광학적으로 깨끗한 사진 기록",
+                "정상적인 카메라 기록"
+              ]
+            },
+            {
+              "id": "unaffected_region_coherence",
+              "any_terms": [
+                "unaffected scene remains coherent",
+                "intact body and object geometry",
+                "ordinary perspective outside the failure",
+                "unaffected sand and sky stay physical",
+                "영향받지 않은 장면은 일관됨",
+                "오류 밖의 원근과 형태는 정상"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "RGB channel separation, codec blocks, scanlines, or VHS noise on the captured image",
+          "a split-screen collage divided by a visible graphic seam",
+          "a glowing portal or magical rift with an obvious fantasy cause",
+          "many unrelated surreal anomalies competing without one governing rule"
+        ]
+      },
+      "composition_instruction": "Establish a familiar physically coherent scene through clean photographic capture, select exactly one world invariant to fail, apply its same measurable offset, delay, dependency, correspondence, or recursion across at least three affected surfaces, and keep every unaffected region convincingly ordinary so the contradiction emerges on a second look.",
+      "concept_candidate": {
+        "concept_terms": [
+          "clean photographic capture of an ordinary world",
+          "one broken world invariant",
+          "invisible spatial coordinate discontinuity",
+          "temporal phase lag",
+          "causal orphan",
+          "observer-dependent rendering",
+          "topological recursion",
+          "semantic binding swap",
+          "same measurable consequence across several surfaces",
+          "coherent unaffected regions",
+          "quiet second-look contradiction"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [
+          "reality error",
+          "world-rule failure"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "required_evidence_fields": [
+        "clean_capture_phrase",
+        "normal_world_baseline_phrase",
+        "single_invariant_failure_phrase",
+        "cross_surface_repetition_phrase",
+        "unaffected_coherence_phrase",
+        "delayed_discovery_phrase"
+      ],
+      "evidence_requirements": {
+        "clean_capture_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "optically clean photographic capture",
+            "clean camera record",
+            "unbroken photographic medium",
+            "natural lens and sensor response"
+          ]
+        },
+        "normal_world_baseline_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "ordinary physical baseline",
+            "normal coherent world",
+            "familiar everyday scene",
+            "plausible photographic baseline"
+          ]
+        },
+        "single_invariant_failure_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "one spatial coordinate rule fails",
+            "one temporal phase rule fails",
+            "one causal dependency rule fails",
+            "one optical correspondence rule fails",
+            "one topological rule fails"
+          ]
+        },
+        "cross_surface_repetition_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "same displacement repeats across surfaces",
+            "same temporal lag repeats across materials",
+            "same causal orphan repeats throughout the scene",
+            "same rule affects horizon shadow reflection and cloth"
+          ]
+        },
+        "unaffected_coherence_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "unaffected scene remains coherent",
+            "intact body and object geometry",
+            "ordinary perspective outside the failure",
+            "unaffected sand and sky stay physical"
+          ]
+        },
+        "delayed_discovery_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "first glance ordinary second glance impossible",
+            "quiet second-look contradiction",
+            "delayed-read anomaly",
+            "subtle discovery after the ordinary first read"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_reality_error_clean_capture",
+          "review_scale": "both",
+          "description": "Lens, sensor, exposure, and image surface read as clean photographic capture rather than a damaged display or file."
+        },
+        {
+          "id": "vo_reality_error_normal_baseline",
+          "review_scale": "thumbnail",
+          "description": "The scene establishes an immediately familiar and physically coherent baseline before the contradiction is inspected."
+        },
+        {
+          "id": "vo_reality_error_single_invariant",
+          "review_scale": "both",
+          "description": "Exactly one spatial, temporal, causal, optical, or topological invariant supplies the governing error rule."
+        },
+        {
+          "id": "vo_reality_error_cross_surface_consistency",
+          "review_scale": "native",
+          "description": "At least three affected surfaces repeat the same measurable displacement, lag, dependency, correspondence, or recursion."
+        },
+        {
+          "id": "vo_reality_error_unaffected_coherence",
+          "review_scale": "native",
+          "description": "Unaffected anatomy, objects, perspective, lighting, and materials remain internally coherent and physically plausible."
+        },
+        {
+          "id": "vo_reality_error_delayed_discovery",
+          "review_scale": "both",
+          "description": "The frame reads as ordinary at first glance and becomes impossible through a legible second-look contradiction."
+        },
+        {
+          "id": "vo_reality_error_not_media_or_portal_substitute",
+          "review_scale": "both",
+          "description": "A screen effect, split seam, collage, portal, magical rift, or random anomaly stack does not substitute for the repeated world rule."
+        }
+      ],
+      "reject_substitutes": [
+        "rgb_split_or_channel_offset",
+        "codec_blocks_scanlines_or_vhs_noise",
+        "visible_split_screen_or_collage_seam",
+        "glowing_portal_or_magical_rift",
+        "random_multi_anomaly_surrealism",
+        "single_local_deformation_without_cross_surface_rule",
+        "inconsistent_offsets_or_lags_across_affected_surfaces"
+      ]
+    },
+    {
+      "id": "uncanny_coherence_mismatch",
+      "category": "perceptual_coherence_mismatch",
+      "activation": {
+        "exact_terms": [
+          "uncanny valley",
+          "uncanny mismatch",
+          "near-human uncanny",
+          "불쾌한 골짜기",
+          "언캐니 밸리",
+          "기묘한 인간 유사성",
+          "不気味の谷"
+        ],
+        "exclude_if_any_terms": [
+          "no uncanny valley",
+          "without uncanny valley",
+          "불쾌한 골짜기 제외",
+          "불쾌한 골짜기 없이",
+          "언캐니 밸리 제외"
+        ],
+        "requires_adult_character": false
+      },
+      "semantics": {
+        "definition": "A highly coherent near-human subject or humanlike scene produces unease because one narrowly localized realism, motion, affect, gaze, reflection, or response channel contradicts the otherwise convincing whole, making the result feel almost right rather than openly monstrous.",
+        "paraphrase_examples": [
+          "nearly perfect human realism disrupted by one quiet behavioral mismatch",
+          "natural skin and anatomy paired with eye dynamics that follow a different realism level",
+          "a socially appropriate smile whose timing conflicts with the visible event",
+          "a reflection preserves the face but answers with a fractionally different affect",
+          "거의 완전한 사람다움 속 한 가지 반응 채널만 어긋나 생기는 불편함",
+          "자연스러운 피부와 해부학에 비해 눈 움직임만 다른 현실성을 보인다",
+          "표정의 모양은 맞지만 사건에 대한 반응 타이밍만 어긋난다",
+          "ほぼ自然な人間らしさの中で一つの反応経路だけがずれる"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 3,
+          "required_group_ids": [
+            "high_coherence_baseline",
+            "localized_mismatch_channel",
+            "matched_comparison_channel"
+          ],
+          "groups": [
+            {
+              "id": "high_coherence_baseline",
+              "any_terms": [
+                "convincing near-human realism",
+                "natural anatomy and skin",
+                "plausible human behavior baseline",
+                "almost perfectly lifelike",
+                "설득력 있는 인간 유사성",
+                "자연스러운 해부학과 피부",
+                "거의 완벽하게 살아 있는 듯함"
+              ]
+            },
+            {
+              "id": "localized_mismatch_channel",
+              "any_terms": [
+                "eye dynamics use a different realism level",
+                "smile timing conflicts with the event",
+                "gaze target and head response disagree",
+                "reflection answers with a different affect",
+                "motion and appearance realism disagree",
+                "눈 움직임만 다른 현실성",
+                "미소의 타이밍이 사건과 어긋남",
+                "시선 목표와 머리 반응이 불일치",
+                "반사상이 다른 감정으로 반응"
+              ]
+            },
+            {
+              "id": "matched_comparison_channel",
+              "any_terms": [
+                "everything except the eyes remains natural",
+                "same face with one affect difference",
+                "same event with one response timing offset",
+                "matched anatomy isolates one contradiction",
+                "눈을 제외한 모든 요소는 자연스러움",
+                "같은 얼굴에서 감정 하나만 다름",
+                "같은 사건에 반응 타이밍 하나만 어긋남"
+              ]
+            },
+            {
+              "id": "quiet_almost_right_unease",
+              "any_terms": [
+                "quiet almost-right discomfort",
+                "subtle near-human unease",
+                "localized realism contradiction creates unease",
+                "second-look social discomfort",
+                "조용한 거의 맞는 듯한 불편함",
+                "국소적 현실성 모순이 만드는 불안"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "obvious monster anatomy, gore, or horror makeup",
+          "randomly deformed facial features with no coherent human baseline",
+          "blank eyes alone without a matched realism or behavior comparison",
+          "a fully stylized cartoon whose channels share one consistent abstraction level"
+        ]
+      },
+      "composition_instruction": "Build a convincing near-human or humanlike baseline, select one narrow mismatch channel such as eye dynamics, affect timing, gaze response, motion realism, or reflection behavior, provide a matched surrounding channel that makes the difference observable, and keep anatomy, identity, lighting, and every other realism cue coherent.",
+      "concept_candidate": {
+        "concept_terms": [
+          "convincing near-human baseline",
+          "one localized realism mismatch",
+          "eye dynamics versus skin realism",
+          "affect timing versus visible event",
+          "gaze target versus head response",
+          "appearance realism versus motion realism",
+          "subject affect versus reflection affect",
+          "matched comparison cue",
+          "quiet almost-right unease",
+          "coherent anatomy identity and lighting"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [
+          "uncanny valley",
+          "localized uncanny mismatch"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "required_evidence_fields": [
+        "high_realism_baseline_phrase",
+        "localized_mismatch_channel_phrase",
+        "matched_comparison_phrase",
+        "coherent_remainder_phrase",
+        "almost_right_unease_phrase"
+      ],
+      "evidence_requirements": {
+        "high_realism_baseline_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "convincing near-human realism",
+            "natural anatomy and skin",
+            "plausible human behavior baseline",
+            "almost perfectly lifelike"
+          ]
+        },
+        "localized_mismatch_channel_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "eye dynamics use a different realism level",
+            "smile timing conflicts with the event",
+            "gaze target and head response disagree",
+            "reflection answers with a different affect",
+            "motion and appearance realism disagree"
+          ]
+        },
+        "matched_comparison_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "everything except the eyes remains natural",
+            "same face with one affect difference",
+            "same event with one response timing offset",
+            "matched anatomy isolates one contradiction"
+          ]
+        },
+        "coherent_remainder_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "anatomy identity and lighting remain coherent",
+            "all other realism cues stay coherent",
+            "the surrounding human baseline stays natural",
+            "one localized channel carries the contradiction"
+          ]
+        },
+        "almost_right_unease_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "quiet almost-right discomfort",
+            "subtle near-human unease",
+            "localized realism contradiction creates unease",
+            "second-look social discomfort"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_uncanny_high_coherence_baseline",
+          "review_scale": "both",
+          "description": "The subject or scene first reads as convincingly lifelike with coherent anatomy, identity, lighting, and material response."
+        },
+        {
+          "id": "vo_uncanny_one_localized_mismatch",
+          "review_scale": "native",
+          "description": "One narrow realism, motion, affect, gaze, reflection, or response channel carries the perceptual contradiction."
+        },
+        {
+          "id": "vo_uncanny_matched_comparison",
+          "review_scale": "native",
+          "description": "A closely matched surrounding channel makes the localized mismatch observable instead of merely asserted."
+        },
+        {
+          "id": "vo_uncanny_almost_right_read",
+          "review_scale": "thumbnail",
+          "description": "The first impression is almost right and the unease emerges from subtle incoherence rather than immediate spectacle."
+        },
+        {
+          "id": "vo_uncanny_not_monster_or_deformation",
+          "review_scale": "both",
+          "description": "Gore, monster anatomy, random face deformation, horror makeup, or blank eyes alone do not substitute for the matched coherence mismatch."
+        }
+      ],
+      "reject_substitutes": [
+        "gore_or_monster_anatomy",
+        "random_face_deformation",
+        "generic_horror_makeup",
+        "blank_or_dead_eyes_alone",
+        "fully_stylized_consistent_cartoon",
+        "multiple_unrelated_mismatch_channels",
+        "unease_asserted_without_matched_visual_comparison"
+      ]
     }
   ]
 }
