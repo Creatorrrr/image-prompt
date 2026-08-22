@@ -255,10 +255,17 @@ class PhotoVisualObligationTests(unittest.TestCase):
             "diegetic_reality_invariant_failure": {
                 "evidence": "authored_rule_legibility_phrase",
                 "gates": {
+                    "vo_reality_error_affected_surface_coherence",
                     "vo_reality_error_authored_rule_legibility",
                     "vo_reality_error_not_generation_defect_substitute",
+                    "vo_reality_error_reveal_legibility",
                 },
                 "rejects": {
+                    "visible_translucent_shell_or_water_sheet",
+                    "enclosing_splash_ring_as_field_boundary",
+                    "flat_image_plane_slice_ignoring_depth_and_material",
+                    "particle_dissolve_without_measurable_cross_surface_correspondence",
+                    "facial_texture_stamped_onto_unrelated_surface",
                     "isolated_generation_defect_without_inferable_rule",
                     "malformed_anatomy_object_merge_or_texture_failure",
                     "anomaly_requires_prompt_or_caption_to_be_understood",
@@ -298,6 +305,36 @@ class PhotoVisualObligationTests(unittest.TestCase):
             "diegetic_reality_invariant_failure",
         )
         self.assertIsNotNone(reality_profile)
+        self.assertIn(
+            "affected_surface_material_coherence",
+            reality_profile["semantics"]["component_semantics"][
+                "required_group_ids"
+            ],
+        )
+        self.assertIn(
+            "affected_surface_coherence_phrase",
+            reality_profile["required_evidence_fields"],
+        )
+        self.assertIn(
+            "reveal_legibility_phrase",
+            reality_profile["required_evidence_fields"],
+        )
+        self.assertNotIn(
+            "delayed_discovery_phrase",
+            reality_profile["required_evidence_fields"],
+        )
+        self.assertIn(
+            "immediate authored contradiction",
+            reality_profile["evidence_requirements"]["reveal_legibility_phrase"][
+                "must_mention_any"
+            ],
+        )
+        self.assertIn(
+            "quiet second-look contradiction",
+            reality_profile["evidence_requirements"]["reveal_legibility_phrase"][
+                "must_mention_any"
+            ],
+        )
         obligation = {
             "id": reality_profile["id"],
             "prompt_binding": {
@@ -463,6 +500,36 @@ class PhotoVisualObligationTests(unittest.TestCase):
         self.assertTrue(
             any(
                 "activation.requires_adult_character: must be boolean" in error
+                for error in errors
+            ),
+            errors,
+        )
+
+    def test_semantic_discovery_component_guard_must_be_boolean(self):
+        mutated = copy.deepcopy(self.registry)
+        profile = next(
+            row
+            for row in mutated["profiles"]
+            if row["id"] == "yandere_affection_control_relation"
+        )
+        profile["activation"][
+            "semantic_discovery_requires_component_evidence"
+        ] = "true"
+        with tempfile.TemporaryDirectory() as tmp:
+            registry_path = Path(tmp) / "registry.json"
+            registry_path.write_text(
+                json.dumps(mutated, ensure_ascii=False),
+                encoding="utf-8",
+            )
+            errors: list[str] = []
+            validate_photo_prompt_dictionary.validate_visual_obligation_registry(
+                registry_path,
+                errors,
+            )
+        self.assertTrue(
+            any(
+                "semantic_discovery_requires_component_evidence: must be boolean"
+                in error
                 for error in errors
             ),
             errors,

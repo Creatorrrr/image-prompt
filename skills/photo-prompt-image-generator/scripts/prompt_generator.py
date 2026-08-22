@@ -10939,6 +10939,10 @@ def resolve_visual_profile_hits(
         best_score_margin = 0.08
         candidate_limit = 2
     blocked_by_exact = exact_evidence_ids | exact_negated_ids | user_override_ids
+    # Some profiles encode a multi-part relation whose participants, action,
+    # and consequence must not be invented from a nearby portrait embedding.
+    # Those profiles may require their existing component semantics as
+    # positive context proof while leaving ordinary embedding discovery intact.
     semantically_applicable_ids = {
         profile_id
         for profile_id, profile in profiles.items()
@@ -10948,6 +10952,14 @@ def resolve_visual_profile_hits(
             has_authorial_core_context=has_authorial_core_context,
             require_positive_context_terms=False,
         )[0]
+        and (
+            (profile.get("activation") or {}).get(
+                "semantic_discovery_requires_component_evidence"
+            )
+            is not True
+            or candidate_pack_visual_component_match(profile, context_text)
+            is not None
+        )
     }
 
     bm25f_rows: List[JsonDict] = []

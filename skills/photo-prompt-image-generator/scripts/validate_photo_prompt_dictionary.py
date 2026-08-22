@@ -2959,6 +2959,7 @@ def validate_visual_obligation_registry(path: Path, errors: list[str]) -> None:
                     "exclude_if_any_terms",
                     "context_disambiguation",
                     "requires_adult_character",
+                    "semantic_discovery_requires_component_evidence",
                 }
             )
             if unknown_activation:
@@ -2999,6 +3000,19 @@ def validate_visual_obligation_registry(path: Path, errors: list[str]) -> None:
             ):
                 errors.append(
                     f"{label}.activation.requires_adult_character: must be boolean"
+                )
+            if (
+                "semantic_discovery_requires_component_evidence" in activation
+                and not isinstance(
+                    activation.get(
+                        "semantic_discovery_requires_component_evidence"
+                    ),
+                    bool,
+                )
+            ):
+                errors.append(
+                    f"{label}.activation."
+                    "semantic_discovery_requires_component_evidence: must be boolean"
                 )
             for term_key in ("exclude_if_any_terms",):
                 values = normalize_list(activation.get(term_key))
