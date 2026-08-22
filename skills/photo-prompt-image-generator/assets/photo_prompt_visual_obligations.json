@@ -2350,10 +2350,11 @@
           "a generic RGB split filter pasted uniformly over a clean image",
           "an unrelated stack of VHS noise, pixels, portals, and scanlines",
           "a clean photograph in which the physical world itself breaks one rule",
-          "a software debugging screen or an ordinary error message"
+          "a software debugging screen or an ordinary error message",
+          "a malformed hand, fused object, broken text, or muddy texture with no repeated source-medium mechanism"
         ]
       },
-      "composition_instruction": "Choose one source medium or protocol and one failure mechanism native to it, confine that mechanism to a deliberate rupture zone, preserve recognizable content across the break, and repeat the same technological fingerprint wherever the rupture crosses the subject or background.",
+      "composition_instruction": "Choose one source medium or protocol and one failure mechanism native to it, confine that mechanism to a deliberate rupture zone, preserve recognizable content across the break, and repeat the same technological fingerprint at three or more separated intersections with the subject or background. Keep ordinary anatomy, object boundaries, text, and texture coherent outside that mechanism, and size the repeated evidence so the authored failure process remains inferable from the image without prompt text or a caption.",
       "concept_candidate": {
         "concept_terms": [
           "one identified image video signal or file process",
@@ -2381,7 +2382,8 @@
         "native_failure_mechanism_phrase",
         "bounded_rupture_phrase",
         "content_continuity_phrase",
-        "artifact_fingerprint_phrase"
+        "artifact_fingerprint_phrase",
+        "authored_mechanism_legibility_phrase"
       ],
       "evidence_requirements": {
         "source_medium_phrase": {
@@ -2430,6 +2432,15 @@
             "file-native scanline displacement",
             "medium-specific technological fingerprint"
           ]
+        },
+        "authored_mechanism_legibility_phrase": {
+          "min_content_words": 5,
+          "must_mention_any": [
+            "repeated technological fingerprint makes the mechanism visibly intentional",
+            "matched rupture geometry reveals one authored failure process",
+            "the same bounded artifact pattern makes the selected medium failure unmistakable",
+            "the mechanism remains inferable from the image alone"
+          ]
         }
       },
       "render_gates": [
@@ -2457,6 +2468,16 @@
           "id": "vo_glitch_not_generic_filter_stack",
           "review_scale": "native",
           "description": "The result is not carried by generic RGB separation, random static, scanlines, VHS texture, or unrelated effect stacking alone."
+        },
+        {
+          "id": "vo_glitch_authored_mechanism_legibility",
+          "review_scale": "both",
+          "description": "Without prompt text, a caption, or metadata, a viewer can infer the selected source-medium failure mechanism from the same fingerprint repeated at three or more separated image locations; merely noticing that the image looks broken fails."
+        },
+        {
+          "id": "vo_glitch_not_generation_defect_substitute",
+          "review_scale": "native",
+          "description": "Malformed anatomy, fused objects, broken text, muddy texture, or one isolated synthesis defect does not carry the intended medium-native glitch."
         }
       ],
       "reject_substitutes": [
@@ -2465,7 +2486,10 @@
         "unrelated_vhs_pixel_portal_effect_stack",
         "generic_error_message_or_debug_screen",
         "world_rule_failure_with_clean_capture_medium",
-        "artifact_family_inconsistent_with_selected_medium"
+        "artifact_family_inconsistent_with_selected_medium",
+        "isolated_synthesis_defect_without_medium_pattern",
+        "malformed_anatomy_or_object_merge_as_glitch",
+        "viewer_can_only_identify_generic_image_failure"
       ]
     },
     {
@@ -2581,10 +2605,11 @@
           "RGB channel separation, codec blocks, scanlines, or VHS noise on the captured image",
           "a split-screen collage divided by a visible graphic seam",
           "a glowing portal or magical rift with an obvious fantasy cause",
-          "many unrelated surreal anomalies competing without one governing rule"
+          "many unrelated surreal anomalies competing without one governing rule",
+          "one malformed hand, face, reflection, shadow, merged object, or texture defect that does not repeat a measurable world rule"
         ]
       },
-      "composition_instruction": "Establish a familiar physically coherent scene through clean photographic capture, select exactly one world invariant to fail, apply its same measurable offset, delay, dependency, correspondence, or recursion across at least three affected surfaces, and keep every unaffected region convincingly ordinary so the contradiction emerges on a second look.",
+      "composition_instruction": "Establish a familiar physically coherent scene through clean photographic capture, select exactly one world invariant to fail, and include a clear normal control state against which the violation can be compared. Apply the same measurable offset, delay, dependency, correspondence, or recursion across at least three separated affected surfaces, size and place those instances so their shared rule can be inferred from the image without prompt text or a caption, and keep every unaffected hand, face, object boundary, material, perspective, and light response convincingly ordinary. The contradiction may emerge on a second look, but once found it must read as one authored system rather than generic image failure.",
       "concept_candidate": {
         "concept_terms": [
           "clean photographic capture of an ordinary world",
@@ -2615,7 +2640,8 @@
         "single_invariant_failure_phrase",
         "cross_surface_repetition_phrase",
         "unaffected_coherence_phrase",
-        "delayed_discovery_phrase"
+        "delayed_discovery_phrase",
+        "authored_rule_legibility_phrase"
       ],
       "evidence_requirements": {
         "clean_capture_phrase": {
@@ -2672,6 +2698,15 @@
             "delayed-read anomaly",
             "subtle discovery after the ordinary first read"
           ]
+        },
+        "authored_rule_legibility_phrase": {
+          "min_content_words": 5,
+          "must_mention_any": [
+            "three matched contradictions make one authored world rule unmistakable",
+            "the repeated correspondence makes the broken rule inferable from the image alone",
+            "one identical measurable relation links every anomalous surface",
+            "a matched normal control isolates the deliberate rule violation"
+          ]
         }
       },
       "render_gates": [
@@ -2709,6 +2744,16 @@
           "id": "vo_reality_error_not_media_or_portal_substitute",
           "review_scale": "both",
           "description": "A screen effect, split seam, collage, portal, magical rift, or random anomaly stack does not substitute for the repeated world rule."
+        },
+        {
+          "id": "vo_reality_error_authored_rule_legibility",
+          "review_scale": "both",
+          "description": "Without prompt text, a caption, or metadata, a viewer can state the single failed world rule and point to at least three separated instances that share its same measurable relation; merely saying that something looks wrong fails."
+        },
+        {
+          "id": "vo_reality_error_not_generation_defect_substitute",
+          "review_scale": "native",
+          "description": "An isolated malformed hand or face, fused object, broken texture or text, accidental reflection or shadow mismatch, or other familiar synthesis defect does not carry the reality-error concept."
         }
       ],
       "reject_substitutes": [
@@ -2718,7 +2763,11 @@
         "glowing_portal_or_magical_rift",
         "random_multi_anomaly_surrealism",
         "single_local_deformation_without_cross_surface_rule",
-        "inconsistent_offsets_or_lags_across_affected_surfaces"
+        "inconsistent_offsets_or_lags_across_affected_surfaces",
+        "isolated_generation_defect_without_inferable_rule",
+        "malformed_anatomy_object_merge_or_texture_failure",
+        "anomaly_requires_prompt_or_caption_to_be_understood",
+        "viewer_can_only_say_something_looks_wrong"
       ]
     },
     {

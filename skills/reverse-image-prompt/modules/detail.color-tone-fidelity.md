@@ -1,6 +1,6 @@
 ---
 id: detail.color-tone-fidelity
-version: 4
+version: 5
 priority: 79
 type: detail
 tier: 3
@@ -43,6 +43,7 @@ provides_anchors:
   - displayed_tone_response
   - surface_color_language_translation
   - friendly_label_review
+  - friendly_label_external_source
 ---
 
 # Detail: color and tone fidelity
@@ -78,6 +79,8 @@ Describe important regions through separate value, chroma, and hue observations 
 Decompose an appearance metaphor into value, chroma, hue, surface, and light response. Mark it `explanation-only`, `unverified`, or `model-calibrated`; only the last may appear once as a summary of already-owned controls, with evidence for the exact generator/version. Treat control effectiveness as generator-and-version-specific evidence.
 
 When measured surface color must become controlled natural language, read `references/surface-color-language.md`. Translate measured surface color through separate value-depth, chroma, and undertone classes before considering a friendly label. Treat finish and evenness as separate visual evidence, never as consequences of Lab alone. A friendly label is compatible only when its declared axis requirements match the classified evidence without unresolved conflicts. It remains explanation-only unless exact generator/version response evidence permits one summary use after literal axis controls.
+
+Review only a friendly label supplied by the user or an explicitly versioned task vocabulary; do not invent candidates from this skill.
 
 Map highlight, midtone, shadow, or flat-field behavior only at the granularity the source supports. Do not pool tone zones into an intrinsic target: use comparable midtone or flat patches for displayed intrinsic axes and separate groups for highlight and shadow response. Retain uncertainty for clipping, compression, mixed light, and low legibility.
 

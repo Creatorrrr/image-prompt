@@ -40,6 +40,16 @@ def observation(l_value: float, a_value: float, b_value: float) -> dict:
     }
 
 
+def candidate_payload(candidates: list[dict], *, kind: str = "user-supplied") -> dict:
+    return {
+        "candidate_source": {
+            "kind": kind,
+            "reference": "held-out test input",
+        },
+        "candidates": candidates,
+    }
+
+
 class ColorLanguageTests(unittest.TestCase):
     def test_same_undertone_survives_value_depth_change(self) -> None:
         light = classify_observation(observation(78.0, 7.0, 12.0), POLICY)
@@ -73,8 +83,8 @@ class ColorLanguageTests(unittest.TestCase):
         classification = classify_observation(observation(50.0, 1.0, 18.0), POLICY)
         reviewed = review_candidates(
             classification,
-            {
-                "candidates": [
+            candidate_payload(
+                [
                     {
                         "phrase": "candidate label",
                         "label_scope": "composite-appearance",
@@ -86,7 +96,7 @@ class ColorLanguageTests(unittest.TestCase):
                         },
                     }
                 ]
-            },
+            ),
         )
         self.assertEqual(reviewed[0]["review_status"], "conflicting")
         self.assertIn("value_depth", reviewed[0]["conflicting_axes"])
@@ -98,8 +108,8 @@ class ColorLanguageTests(unittest.TestCase):
         classification = classify_observation(payload, POLICY)
         reviewed = review_candidates(
             classification,
-            {
-                "candidates": [
+            candidate_payload(
+                [
                     {
                         "phrase": "candidate label",
                         "label_scope": "composite-appearance",
@@ -111,7 +121,7 @@ class ColorLanguageTests(unittest.TestCase):
                         },
                     }
                 ]
-            },
+            ),
         )
         self.assertEqual(reviewed[0]["review_status"], "inconclusive")
         self.assertIn("finish", reviewed[0]["unresolved_axes"])
@@ -121,16 +131,45 @@ class ColorLanguageTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "does not support its label scope"):
             review_candidates(
                 classification,
-                {
-                    "candidates": [
+                candidate_payload(
+                    [
                         {
                             "phrase": "incomplete candidate",
                             "label_scope": "composite-appearance",
                             "axis_requirements": {"finish": ["satin"]},
                         }
                     ]
-                },
+                ),
             )
+
+    def test_candidate_source_is_required(self) -> None:
+        classification = classify_observation(observation(70.0, 7.0, 10.0), POLICY)
+        with self.assertRaisesRegex(ValueError, "candidate_source must be an object"):
+            review_candidates(classification, {"candidates": []})
+
+    def test_versioned_vocabulary_source_is_preserved(self) -> None:
+        classification = classify_observation(observation(70.0, 7.0, 10.0), POLICY)
+        reviewed = review_candidates(
+            classification,
+            candidate_payload(
+                [
+                    {
+                        "phrase": "held-out vocabulary label",
+                        "label_scope": "undertone",
+                        "axis_requirements": {"undertone": ["peach", "golden"]},
+                    }
+                ],
+                kind="versioned-vocabulary",
+            ),
+        )
+        self.assertEqual(
+            reviewed[0]["candidate_source"],
+            {"kind": "versioned-vocabulary", "reference": "held-out test input"},
+        )
+
+    def test_classification_does_not_invent_a_friendly_label(self) -> None:
+        classification = classify_observation(observation(70.0, 7.0, 10.0), POLICY)
+        self.assertNotIn("friendly_label_review", classification)
 
 
 if __name__ == "__main__":

@@ -2,8 +2,8 @@
 """Classify analyst-supplied source-visible Lab evidence into a versioned vocabulary.
 
 The tool does not detect semantic regions, infer biological or material true color,
-choose a friendly label, or emit prompt prose. Optional analyst-authored label
-candidates are checked only for compatibility with the classified axes.
+invent or choose a friendly label, or emit prompt prose. Optional externally
+supplied label candidates are checked only for compatibility with the classified axes.
 """
 
 from __future__ import annotations
@@ -25,6 +25,7 @@ VALID_LABEL_SCOPES = {
     "surface-finish",
     "composite-appearance",
 }
+VALID_CANDIDATE_SOURCES = {"user-supplied", "versioned-vocabulary"}
 CLASSIFIED_AXES = {"value_depth", "chroma", "undertone", "finish", "evenness"}
 REQUIRED_SCOPE_AXES = {
     "value-depth": {"value_depth"},
@@ -259,6 +260,14 @@ def classify_observation(
 def review_candidates(
     classification: dict[str, Any], candidate_payload: dict[str, Any]
 ) -> list[dict[str, Any]]:
+    raw_source = _object(candidate_payload.get("candidate_source"), "candidate_source")
+    source_kind = _string(raw_source.get("kind"), "candidate_source.kind")
+    if source_kind not in VALID_CANDIDATE_SOURCES:
+        raise ValueError("candidate_source.kind is invalid")
+    candidate_source = {
+        "kind": source_kind,
+        "reference": _string(raw_source.get("reference"), "candidate_source.reference"),
+    }
     raw_candidates = candidate_payload.get("candidates")
     if not isinstance(raw_candidates, list):
         raise ValueError("candidates must be a list")
@@ -299,6 +308,7 @@ def review_candidates(
         reports.append(
             {
                 "phrase": phrase,
+                "candidate_source": candidate_source,
                 "label_scope": scope,
                 "review_status": status,
                 "matched_axes": matched,
@@ -314,7 +324,7 @@ def main(argv: list[str]) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("observation", help="analyst-authored Lab observation JSON")
     parser.add_argument("--policy", required=True, help="versioned language policy JSON")
-    parser.add_argument("--candidates", default="", help="optional analyst-authored label candidates JSON")
+    parser.add_argument("--candidates", default="", help="optional externally supplied label candidates JSON")
     args = parser.parse_args(argv)
     try:
         observation = _load(Path(args.observation), "observation")
@@ -327,6 +337,7 @@ def main(argv: list[str]) -> int:
                 "source-visible language classification only",
                 "no semantic region detection",
                 "no biological, demographic, or material true-color inference",
+                "no friendly-label candidate invention",
                 "no automatic friendly-label selection",
                 "no automatic production prompt wording",
             ],

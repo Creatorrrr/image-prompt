@@ -236,6 +236,122 @@ class PhotoVisualObligationTests(unittest.TestCase):
             ["visual-concept:medium_native_glitch"],
         )
 
+    def test_glitch_and_reality_error_require_prompt_independent_authored_legibility(
+        self,
+    ):
+        expected = {
+            "medium_native_glitch": {
+                "evidence": "authored_mechanism_legibility_phrase",
+                "gates": {
+                    "vo_glitch_authored_mechanism_legibility",
+                    "vo_glitch_not_generation_defect_substitute",
+                },
+                "rejects": {
+                    "isolated_synthesis_defect_without_medium_pattern",
+                    "malformed_anatomy_or_object_merge_as_glitch",
+                    "viewer_can_only_identify_generic_image_failure",
+                },
+            },
+            "diegetic_reality_invariant_failure": {
+                "evidence": "authored_rule_legibility_phrase",
+                "gates": {
+                    "vo_reality_error_authored_rule_legibility",
+                    "vo_reality_error_not_generation_defect_substitute",
+                },
+                "rejects": {
+                    "isolated_generation_defect_without_inferable_rule",
+                    "malformed_anatomy_object_merge_or_texture_failure",
+                    "anomaly_requires_prompt_or_caption_to_be_understood",
+                    "viewer_can_only_say_something_looks_wrong",
+                },
+            },
+        }
+        for profile_id, contract in expected.items():
+            with self.subTest(profile_id=profile_id):
+                profile = prompt_generator.visual_obligation_profile_by_id(
+                    self.registry,
+                    profile_id,
+                )
+                self.assertIsNotNone(profile)
+                self.assertIn(
+                    contract["evidence"],
+                    profile["required_evidence_fields"],
+                )
+                self.assertIn(
+                    contract["evidence"],
+                    profile["evidence_requirements"],
+                )
+                self.assertTrue(
+                    contract["gates"]
+                    <= {gate["id"] for gate in profile["render_gates"]}
+                )
+                self.assertTrue(
+                    contract["rejects"] <= set(profile["reject_substitutes"])
+                )
+                self.assertIn(
+                    "without prompt text or a caption",
+                    profile["composition_instruction"],
+                )
+
+        reality_profile = prompt_generator.visual_obligation_profile_by_id(
+            self.registry,
+            "diegetic_reality_invariant_failure",
+        )
+        self.assertIsNotNone(reality_profile)
+        obligation = {
+            "id": reality_profile["id"],
+            "prompt_binding": {
+                "required_evidence_fields": reality_profile[
+                    "required_evidence_fields"
+                ],
+                "minimum_distinct_evidence_phrases": len(
+                    reality_profile["required_evidence_fields"]
+                ),
+                "prompt_evidence_must_be_literal": True,
+            },
+            "evidence_requirements": reality_profile["evidence_requirements"],
+            "render_gates": copy.deepcopy(reality_profile["render_gates"]),
+            "bindings": {},
+        }
+        evidence = self.visual_evidence_for_obligation(obligation)
+        pack = {
+            "visual_obligations": {
+                "enabled": True,
+                "contract_version": "photo-visual-obligations/v1",
+                "strict_gate_set": True,
+                "obligations": [obligation],
+                "required_hard_gates": [
+                    gate["id"] for gate in obligation["render_gates"]
+                ],
+            }
+        }
+        prompt_en = "; ".join(evidence.values()) + "."
+        composed = {
+            "prompt_en": prompt_en,
+            "visual_obligation_evidence": {reality_profile["id"]: evidence},
+        }
+        self.assertEqual(
+            audit_composed_prompt.audit_visual_obligations(
+                pack,
+                composed,
+                prompt_en,
+            ),
+            [],
+        )
+        missing_legibility = copy.deepcopy(composed)
+        missing_legibility["visual_obligation_evidence"][reality_profile["id"]].pop(
+            "authored_rule_legibility_phrase"
+        )
+        failures = audit_composed_prompt.audit_visual_obligations(
+            pack,
+            missing_legibility,
+            prompt_en,
+        )
+        self.assertIn(
+            "visual_obligation_evidence",
+            {failure["check"] for failure in failures},
+        )
+
     def test_named_challenge_materializes_prompt_and_render_obligations(self):
         pack = self.moe_pack(
             "Photorealistic explicitly nonsexual behavior-led moe scene of an adult "
