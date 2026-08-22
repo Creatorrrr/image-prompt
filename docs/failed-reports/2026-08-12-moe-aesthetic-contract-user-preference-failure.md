@@ -5,7 +5,7 @@
 - Goal/checkpoint: user pixel acceptance for the natural-language moe response contract
 - Affected scope: four `aesthetic_contract` renders in `output/moe-response-review-v1`
 - Search terms: user moe judgment, not better than prior, tsundere care closer, fixed identity control
-- Related paths: `output/moe-response-review-v1/review_summary.json`, `output/moe-response-review-v1/contact_sheet.png`, `output/moe-response-review-v1/identity_control_comparison.png`, `skills/photo-prompt-image-generator/references/moe-response-contract.md`
+- Related paths: `output/moe-response-review-v1/review_summary.json`, `temps/output/moe-response-review-v1/contact_sheet.png`, `temps/output/moe-response-review-v1/identity_control_comparison.png`, `skills/photo-prompt-image-generator/references/moe-response-contract.md`
 - Related failed reports: `docs/failed-reports/2026-08-11-moe-element-supplement-underintegration.md`
 
 ## Failure
@@ -17,7 +17,7 @@
 
 ## Evidence
 
-- Sanitized command, test, log, trace, artifact, or access-controlled reference: Direct user feedback on 2026-08-12 against `output/moe-response-review-v1/contact_sheet.png`.
+- Sanitized command, test, log, trace, artifact, or access-controlled reference: Direct user feedback on 2026-08-12 against `temps/output/moe-response-review-v1/contact_sheet.png`.
 - Result: `observed_tone=nonsexual` without treating that observation as acceptance; `better_than_prior=fail` for every NEW candidate; `TSUNDERE CARE=closer but not accepted`.
 
 ## Cause assessment
