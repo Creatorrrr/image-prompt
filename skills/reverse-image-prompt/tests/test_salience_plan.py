@@ -281,7 +281,10 @@ def valid_light_plan() -> dict:
         "observed_result": {
             "global_tonal_range": "wide separation between the central form and surrounding field",
             "local_form_contrast": "subtle",
+            "bright_plane_coverage": "broad",
             "gradient_character": "long shallow transitions across the dominant plane",
+            "gradient_extent": "long",
+            "background_spill_relation": "low",
             "largest_bright_masses": ["central-form"],
             "largest_dark_masses": ["surrounding-field"],
             "source_evidence": ["continuous source-visible value massing"],
@@ -358,6 +361,111 @@ def valid_color_and_light_plan() -> dict:
     return plan
 
 
+def with_displayed_key_response(plan: dict) -> dict:
+    contract = plan["render_contract"]
+    contract["candidate_claims"].append(
+        {
+            "id": "claim-displayed-key",
+            "semantic_slot": "displayed-key-level",
+            "owner": "detail.color-tone-fidelity",
+            "role": "supporting",
+            "polarity": "affirmative",
+            "target_strength": "moderate",
+            "source_kind": "translated-causal-control",
+            "source_evidence": ["major relevant tones sit high without clipping"],
+            "emit": True,
+            "perceptual_effects": [
+                {
+                    "aggregate_effect_id": "central-displayed-key",
+                    "causal_layer": "exposure",
+                    "confidence": "high",
+                    "source_evidence": ["midtone and high-side evidence move together"],
+                }
+            ],
+        }
+    )
+    color_contract = contract["color_tone_contract"]
+    color_contract["displayed_tone_response"] = [
+        {
+            "region_id": "central-form",
+            "axis": "displayed-key-level",
+            "class": "high",
+            "role": "supporting",
+            "confidence": "high",
+            "emission": "required",
+            "aggregate_effect_id": "central-displayed-key",
+            "source_evidence": ["broad high-side tones remain below clipping"],
+        }
+    ]
+    color_contract["claim_ids"].append("claim-displayed-key")
+    color_contract["aggregate_effects"].append(
+        {
+            "id": "central-displayed-key",
+            "region_id": "central-form",
+            "axis": "displayed-key-level",
+            "direction": "high-displayed-key-with-detail",
+            "role": "supporting",
+            "target_strength": "moderate",
+            "claim_ids": ["claim-displayed-key"],
+            "source_supported": True,
+            "source_evidence": ["major relevant tones sit high without clipping"],
+        }
+    )
+    color_contract["emitted_controls"].append(
+        {
+            "id": "control-displayed-key",
+            "prompt_excerpt": "a high displayed key while preserving highlight detail",
+            "claim_id": "claim-displayed-key",
+            "causal_layer": "exposure",
+            "control_role": "axis-control",
+            "region_id": "central-form",
+            "axis": "displayed-key-level",
+            "aggregate_effect_ids": ["central-displayed-key"],
+        }
+    )
+    return plan
+
+
+def add_surface_language_review(plan: dict, *, conflicting: bool = False) -> dict:
+    review = {
+        "phrase": "analyst candidate label",
+        "label_scope": "composite-appearance",
+        "axis_requirements": {
+            "value_depth": ["light"],
+            "chroma": ["low"],
+            "undertone": ["olive"],
+            "finish": ["satin"],
+        },
+        "matched_axes": ["value_depth", "chroma", "undertone", "finish"],
+        "conflicting_axes": [],
+        "unresolved_axes": [],
+        "review_status": "compatible",
+    }
+    if conflicting:
+        review["axis_requirements"]["undertone"] = ["rosy"]
+        review["matched_axes"] = ["value_depth", "chroma", "finish"]
+        review["conflicting_axes"] = ["undertone"]
+        review["review_status"] = "conflicting"
+    color_contract = plan["render_contract"]["color_tone_contract"]
+    color_contract["surface_color_language"] = {
+        "policy_id": "source-visible-surface-language-v1",
+        "policy_status": "uncalibrated-language-prototype",
+        "observation_scope": "source-visible",
+        "profile_status": "missing-profile-assumed-srgb",
+        "region_id": "central-form",
+        "source_evidence": ["analyst-selected comparable flat patches"],
+        "axis_classification": {
+            "value_depth": {"term": "light", "confidence": "high"},
+            "chroma": {"term": "low", "confidence": "high"},
+            "undertone": {"term": "olive", "confidence": "high"},
+            "finish": {"term": "satin", "confidence": "medium"},
+            "evenness": {"term": "uncertain", "confidence": "low"},
+        },
+        "friendly_label_review": [review],
+    }
+    return plan
+
+
 class SaliencePlanTests(unittest.TestCase):
     def test_valid_source_relative_plan_passes(self) -> None:
         self.assertEqual(audit_plan(valid_plan()), [])
@@ -375,8 +483,101 @@ class SaliencePlanTests(unittest.TestCase):
     def test_valid_color_tone_contract_passes(self) -> None:
         self.assertEqual(audit_plan(valid_color_plan()), [])
 
+    def test_displayed_key_and_local_form_contrast_can_coexist_independently(self) -> None:
+        plan = with_displayed_key_response(valid_color_and_light_plan())
+        self.assertEqual(audit_plan(plan), [])
+
+    def test_required_displayed_tone_axis_needs_its_own_axis_control(self) -> None:
+        plan = with_displayed_key_response(valid_color_plan())
+        controls = plan["render_contract"]["color_tone_contract"]["emitted_controls"]
+        controls[-1]["control_role"] = "compound-control"
+        controls[-1]["compound_justification"] = "generic brightness shorthand"
+        self.assertTrue(
+            any(
+                "required displayed-tone axis needs its own axis-control" in error
+                for error in audit_plan(plan)
+            )
+        )
+
+    def test_displayed_tone_axis_rejects_wrong_causal_owner(self) -> None:
+        plan = with_displayed_key_response(valid_color_plan())
+        contract = plan["render_contract"]
+        contract["candidate_claims"][-1]["perceptual_effects"][0][
+            "causal_layer"
+        ] = "intrinsic"
+        contract["color_tone_contract"]["emitted_controls"][-1][
+            "causal_layer"
+        ] = "intrinsic"
+        self.assertTrue(
+            any(
+                "displayed-key-level cannot be owned" in error
+                for error in audit_plan(plan)
+            )
+        )
+
+    def test_compatible_surface_language_review_can_remain_non_emitted(self) -> None:
+        plan = add_surface_language_review(valid_color_plan())
+        plan["render_contract"]["color_tone_contract"]["appearance_metaphors"] = [
+            {
+                "phrase": "analyst candidate label",
+                "status": "explanation-only",
+                "emit": False,
+                "decomposed_control_ids": ["control-surface-tone"],
+            }
+        ]
+        self.assertEqual(audit_plan(plan), [])
+
+    def test_conflicting_surface_label_cannot_be_emitted(self) -> None:
+        plan = add_surface_language_review(valid_color_plan(), conflicting=True)
+        plan["render_contract"]["color_tone_contract"]["appearance_metaphors"] = [
+            {
+                "phrase": "analyst candidate label",
+                "status": "model-calibrated",
+                "emit": True,
+                "calibration_evidence": ["matched generator/version response study"],
+                "decomposed_control_ids": ["control-surface-tone"],
+            }
+        ]
+        self.assertTrue(
+            any(
+                "requires a compatible surface-color-language review" in error
+                for error in audit_plan(plan)
+            )
+        )
+
     def test_valid_light_form_contract_passes(self) -> None:
         self.assertEqual(audit_plan(valid_light_plan()), [])
+
+    def test_light_observation_requires_separate_coverage_extent_and_spill(self) -> None:
+        plan = valid_light_plan()
+        observed = plan["render_contract"]["light_form_contract"]["observed_result"]
+        del observed["bright_plane_coverage"]
+        del observed["gradient_extent"]
+        del observed["background_spill_relation"]
+        errors = audit_plan(plan)
+        self.assertTrue(any("bright_plane_coverage" in error for error in errors))
+        self.assertTrue(any("gradient_extent" in error for error in errors))
+        self.assertTrue(any("background_spill_relation" in error for error in errors))
+
+    def test_bright_plane_coverage_is_a_separate_valid_light_owner(self) -> None:
+        plan = valid_light_plan()
+        light_contract = plan["render_contract"]["light_form_contract"]
+        light_contract["aggregate_effects"][0]["axis"] = "bright-plane-coverage"
+        light_contract["aggregate_effects"][0]["direction"] = "broad-bright-side-coverage"
+        light_contract["emitted_controls"][0]["owner"] = "bright-plane-coverage"
+        self.assertEqual(audit_plan(plan), [])
+
+    def test_gradient_extent_effect_requires_an_observed_gradient_region(self) -> None:
+        plan = valid_light_plan()
+        light_contract = plan["render_contract"]["light_form_contract"]
+        light_contract["aggregate_effects"][0]["axis"] = "gradient-extent"
+        light_contract["emitted_controls"][0]["owner"] = "gradient-extent"
+        self.assertTrue(
+            any(
+                "gradient-extent effect requires" in error
+                for error in audit_plan(plan)
+            )
+        )
 
     def test_primary_light_invariant_requires_light_form_contract(self) -> None:
         plan = valid_light_plan()
@@ -642,6 +843,21 @@ class SaliencePlanTests(unittest.TestCase):
                 "only a model-calibrated appearance metaphor" in error
                 for error in audit_plan(plan)
             )
+        )
+
+    def test_invalid_appearance_metaphor_phrase_reports_instead_of_crashing(self) -> None:
+        plan = valid_color_plan()
+        plan["render_contract"]["color_tone_contract"]["appearance_metaphors"] = [
+            {
+                "phrase": 7,
+                "status": "model-calibrated",
+                "emit": True,
+                "calibration_evidence": ["matched response study"],
+                "decomposed_control_ids": ["control-surface-tone"],
+            }
+        ]
+        self.assertTrue(
+            any("phrase must be non-empty" in error for error in audit_plan(plan))
         )
 
     def test_same_color_effect_cannot_repeat_one_causal_layer(self) -> None:

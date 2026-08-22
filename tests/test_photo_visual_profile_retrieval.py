@@ -111,6 +111,20 @@ class PhotoVisualProfileRetrievalTests(unittest.TestCase):
                 "text"
             ],
         )
+        reality_terms = {
+            row["term"]
+            for row in self.index["exact_lookup"]
+            if row["profile_id"] == "diegetic_reality_invariant_failure"
+        }
+        self.assertIn("현실 오류", reality_terms)
+        self.assertNotIn(
+            "the world itself obeys one broken rule while the photograph stays clean",
+            reality_terms,
+        )
+        self.assertIn(
+            "the world itself obeys one broken rule while the photograph stays clean",
+            self.index["entries"]["diegetic_reality_invariant_failure"]["text"],
+        )
         self.assertEqual(self.index["retrieval_policy"]["minimum_similarity"], 0.7)
 
         changed = copy.deepcopy(self.registry)

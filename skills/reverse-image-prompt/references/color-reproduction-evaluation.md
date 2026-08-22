@@ -115,6 +115,33 @@ Prefer equal weighting of region medians so a large patch does not overpower sma
 
 An embedded profile converted successfully to sRGB supports a color-managed relative comparison. Missing or failed profiles support only an assumed-display-space relative comparison. Neither establishes scene reflectance or intrinsic biological color.
 
+## Source-visible surface language
+
+When measured color must become stable human-readable language, read `surface-color-language.md` and preserve this order:
+
+```text
+profile-aware measurement
+-> causal review
+-> value-depth, chroma, and undertone classification
+-> separately observed finish and evenness
+-> optional analyst-authored friendly-label compatibility review
+```
+
+The controlled terms are source-visible axes, not identity categories. `olive` is an undertone independent of value depth. Composite labels such as `milky` or `porcelain-like` are never sufficient controls by themselves: review their declared axis requirements, emit literal axes first, and retain a friendly label only with exact generator/version response evidence. An ambiguous or conflicting candidate remains non-emitted.
+
+When persisted, place the classifier result under `surface_color_language` with `policy_id`, `policy_status`, `observation_scope`, `profile_status`, `region_id`, source evidence, all five axis classifications, and optional `friendly_label_review` entries. Each review retains its `axis_requirements`, `matched_axes`, `conflicting_axes`, `unresolved_axes`, and `review_status`. Do not store image-specific target values or preferred labels in the policy file.
+
+## Displayed tone-response axes
+
+When apparent illumination is material, keep four Color/Tone-owned axes separate:
+
+- `displayed-key-level`: `very-low`, `low`, `middle`, `high`, `very-high`, or `uncertain`
+- `shadow-floor`: `crushed`, `deep`, `open`, `lifted`, `mixed`, or `uncertain`
+- `highlight-rolloff`: `clipped`, `abrupt-unclipped`, `gradual-unclipped`, `compressed`, `mixed`, or `uncertain`
+- `microcontrast`: `suppressed`, `natural`, `emphasized`, `mixed`, or `uncertain`
+
+These are displayed results, not a claim about physical lamp power. Record them under `displayed_tone_response` as region-and-axis entries with `class`, `role`, `confidence`, `emission`, source evidence, and either an aggregate effect ID or a diagnostic non-emission reason. A required axis follows the same effect/claim/axis-control chain as a required intrinsic axis. Light/Form separately owns bright-plane coverage and gradient extent.
+
 ## Global and target-local decomposition
 
 For matching groups, compute each render-minus-source Lab movement. Let `G` be the component-wise median movement across contextual groups. For a target group with movement `T`, compute the target-local residual `R = T - G`.
@@ -155,6 +182,8 @@ region intrinsic axis
 ```
 
 An axis-control owns one region, one axis, and one causal layer. Split literal prompt excerpts when a sentence contains several clauses. A hierarchy or exposure relationship cannot replace a missing intrinsic surface-value control. A justified compound-control may compress secondary multi-axis evidence, but it cannot satisfy a required intrinsic axis.
+
+For each required displayed-tone axis, use the same chain but restrict causal ownership: displayed key and shadow floor may be illumination, exposure, or processing; highlight rolloff may be exposure or processing; microcontrast may be illumination or processing. One generic `stronger lighting` clause cannot satisfy several of these axes or any Light/Form spatial axis.
 
 Appearance metaphors are `explanation-only` or `unverified` by default. They may be emitted only when an exact generator-and-version evaluation shows that the phrase reinforces already-owned axes without unacceptable cross-axis leakage.
 

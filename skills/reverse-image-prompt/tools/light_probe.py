@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 from dataclasses import dataclass
 import json
+import math
 from pathlib import Path
 import statistics
 import sys
@@ -19,10 +20,21 @@ from color_probe import (  # local sibling; shares profile handling and Lab conv
     RegionSpec,
     _load_srgb,
     _percentile,
-    analyze_image,
+    _sample_pixels,
     comparison_context,
     srgb_to_lab,
 )
+
+
+VALID_LIGHT_REGION_ROLES = {
+    "major-plane",
+    "shadow",
+    "highlight",
+    "context",
+    "background",
+    "material",
+    "diagnostic",
+}
 
 
 @dataclass(frozen=True)
@@ -38,6 +50,12 @@ class ProfileSpec:
     line: tuple[float, float, float, float]
     samples: int = 64
     width_px: int = 1
+
+
+@dataclass(frozen=True)
+class MetricPolicy:
+    bright_plateau_delta_l: float | None = None
+    near_clip_l: float | None = None
 
 
 def _nonempty_string(value: Any, label: str) -> str:
@@ -103,8 +121,11 @@ def load_spec(
             item.get("comparison_bounds", item.get("source_bounds")),
             f"{label}.comparison_bounds",
         )
-        source_regions.append(RegionSpec(name, source_bounds))
-        comparison_regions.append(RegionSpec(name, comparison_bounds))
+        role = item.get("role", "diagnostic")
+        if role not in VALID_LIGHT_REGION_ROLES:
+            raise ValueError(f"{label}.role is invalid")
+        source_regions.append(RegionSpec(name, source_bounds, str(role)))
+        comparison_regions.append(RegionSpec(name, comparison_bounds, str(role)))
 
     raw_relations = payload.get("relations", [])
     if not isinstance(raw_relations, list):
@@ -171,6 +192,32 @@ def load_spec(
     )
 
 
+def load_metric_policy(path: Path) -> MetricPolicy:
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(payload, dict):
+        raise ValueError("sampling spec must be an object")
+    raw = payload.get("metrics_policy", {})
+    if not isinstance(raw, dict):
+        raise ValueError("sampling spec metrics_policy must be an object")
+
+    def optional_positive(name: str) -> float | None:
+        value = raw.get(name)
+        if value is None:
+            return None
+        if not isinstance(value, (int, float)) or isinstance(value, bool):
+            raise ValueError(f"metrics_policy.{name} must be numeric")
+        value = float(value)
+        if value <= 0.0:
+            raise ValueError(f"metrics_policy.{name} must be positive")
+        return value
+
+    plateau = optional_positive("bright_plateau_delta_l")
+    near_clip = optional_positive("near_clip_l")
+    if near_clip is not None and near_clip > 100.0:
+        raise ValueError("metrics_policy.near_clip_l must not exceed 100")
+    return MetricPolicy(plateau, near_clip)
+
+
 def _sample_lightness_profile(image: Any, spec: ProfileSpec) -> list[float]:
     width, height = image.size
     x0, y0, x1, y1 = spec.line
@@ -234,28 +281,99 @@ def summarize_profile(values: list[float]) -> dict[str, Any]:
     }
 
 
+def _summarize_region_lightness(
+    image: Any,
+    region: RegionSpec,
+    metric_policy: MetricPolicy,
+) -> dict[str, Any]:
+    width, height = image.size
+    x0, y0, x1, y1 = region.bounds
+    pixel_bounds = (
+        math.floor(x0 * width),
+        math.floor(y0 * height),
+        math.ceil(x1 * width),
+        math.ceil(y1 * height),
+    )
+    region_image = image.crop(pixel_bounds)
+    pixels = _sample_pixels(region_image, 50_000)
+    values = [srgb_to_lab(pixel)[0] for pixel in pixels]
+    p10 = _percentile(values, 0.10)
+    p25 = _percentile(values, 0.25)
+    p50 = _percentile(values, 0.50)
+    p75 = _percentile(values, 0.75)
+    p90 = _percentile(values, 0.90)
+    p95 = _percentile(values, 0.95)
+    p99 = _percentile(values, 0.99)
+    plateau_fraction: float | None = None
+    plateau_threshold: float | None = None
+    if metric_policy.bright_plateau_delta_l is not None:
+        plateau_threshold = p90 - metric_policy.bright_plateau_delta_l
+        plateau_fraction = sum(value >= plateau_threshold for value in values) / len(values)
+    near_clip_fraction: float | None = None
+    if metric_policy.near_clip_l is not None:
+        near_clip_fraction = sum(value >= metric_policy.near_clip_l for value in values) / len(values)
+
+    neighbor_image = region_image.copy()
+    neighbor_image.thumbnail((256, 256))
+    neighbor_pixels = neighbor_image.load()
+    neighbor_lightness = [
+        [srgb_to_lab(neighbor_pixels[x, y])[0] for x in range(neighbor_image.width)]
+        for y in range(neighbor_image.height)
+    ]
+    neighbor_differences: list[float] = []
+    for y, row in enumerate(neighbor_lightness):
+        for x, value in enumerate(row):
+            if x + 1 < len(row):
+                neighbor_differences.append(abs(row[x + 1] - value))
+            if y + 1 < len(neighbor_lightness):
+                neighbor_differences.append(abs(neighbor_lightness[y + 1][x] - value))
+    neighbor_median = _percentile(neighbor_differences, 0.50) if neighbor_differences else 0.0
+    neighbor_p90 = _percentile(neighbor_differences, 0.90) if neighbor_differences else 0.0
+    return {
+        "name": region.name,
+        "role": region.semantic_role or "diagnostic",
+        "normalized_bounds": [round(value, 6) for value in region.bounds],
+        "pixel_bounds": list(pixel_bounds),
+        "sample_count": len(values),
+        "median_lightness": round(p50, 3),
+        "shadow_floor_p10": round(p10, 3),
+        "high_side_p90": round(p90, 3),
+        "highlight_p95": round(p95, 3),
+        "highlight_p99": round(p99, 3),
+        "robust_range_p90_p10": round(p90 - p10, 3),
+        "within_region_iqr": round(p75 - p25, 3),
+        "iqr_lightness": round(p75 - p25, 3),
+        "local_neighbor_difference_median": round(neighbor_median, 3),
+        "local_neighbor_difference_p90": round(neighbor_p90, 3),
+        "upper_tail_p99_p90": round(p99 - p90, 3),
+        "bright_plateau_fraction": (
+            round(plateau_fraction, 6) if plateau_fraction is not None else None
+        ),
+        "bright_plateau_threshold_l": (
+            round(plateau_threshold, 3) if plateau_threshold is not None else None
+        ),
+        "near_clip_fraction": (
+            round(near_clip_fraction, 6) if near_clip_fraction is not None else None
+        ),
+    }
+
+
 def analyze_light(
     path: Path,
     regions: list[RegionSpec],
     relations: list[RelationSpec],
     profiles: list[ProfileSpec],
+    metric_policy: MetricPolicy | None = None,
 ) -> dict[str, Any]:
+    metric_policy = metric_policy or MetricPolicy()
     image, profile_status, warnings = _load_srgb(path)
-    region_report = analyze_image(path, regions) if regions else {"regions": []}
-    simplified_regions = []
-    region_lightness: dict[str, float] = {}
-    for region in region_report["regions"]:
-        lightness = float(region["median"]["lab_d65"][0])
-        region_lightness[region["name"]] = lightness
-        simplified_regions.append(
-            {
-                "name": region["name"],
-                "normalized_bounds": region["normalized_bounds"],
-                "median_lightness": round(lightness, 3),
-                "iqr_lightness": region["iqr"]["lightness"],
-                "sample_count": region["sample_count"],
-            }
-        )
+    simplified_regions = [
+        _summarize_region_lightness(image, region, metric_policy) for region in regions
+    ]
+    region_lightness = {
+        str(region["name"]): float(region["median_lightness"])
+        for region in simplified_regions
+    }
     relation_report = [
         {
             "name": relation.name,
@@ -285,6 +403,10 @@ def analyze_light(
         "size": {"width": image.width, "height": image.height},
         "profile_status": profile_status,
         "warnings": warnings,
+        "metrics_policy": {
+            "bright_plateau_delta_l": metric_policy.bright_plateau_delta_l,
+            "near_clip_l": metric_policy.near_clip_l,
+        },
         "regions": simplified_regions,
         "relations": relation_report,
         "profiles": profile_report,
@@ -303,10 +425,7 @@ def compare_light_reports(source: dict[str, Any], target: dict[str, Any]) -> dic
         "profiles": [],
         "evaluation_status": "diagnostic-unscored",
     }
-    for key, metric in (
-        ("regions", "median_lightness"),
-        ("relations", "left_minus_right_lightness"),
-    ):
+    for key, metric in (("relations", "left_minus_right_lightness"),):
         source_items = _named(source[key])
         target_items = _named(target[key])
         if set(source_items) != set(target_items):
@@ -323,6 +442,42 @@ def compare_light_reports(source: dict[str, Any], target: dict[str, Any]) -> dic
                     "metric": metric,
                 }
             )
+
+    source_regions = _named(source["regions"])
+    target_regions = _named(target["regions"])
+    if set(source_regions) != set(target_regions):
+        raise ValueError("source and comparison regions names must match")
+    region_metrics = (
+        "median_lightness",
+        "shadow_floor_p10",
+        "high_side_p90",
+        "robust_range_p90_p10",
+        "within_region_iqr",
+        "local_neighbor_difference_median",
+        "local_neighbor_difference_p90",
+        "upper_tail_p99_p90",
+        "bright_plateau_fraction",
+        "near_clip_fraction",
+    )
+    for name in sorted(source_regions):
+        deltas: dict[str, float | None] = {}
+        for metric in region_metrics:
+            source_value = source_regions[name].get(metric)
+            target_value = target_regions[name].get(metric)
+            deltas[metric] = (
+                round(float(target_value) - float(source_value), 6)
+                if source_value is not None and target_value is not None
+                else None
+            )
+        result["regions"].append(
+            {
+                "name": name,
+                "role": source_regions[name].get("role"),
+                "target_minus_source": deltas["median_lightness"],
+                "metric": "median_lightness",
+                "metric_deltas": deltas,
+            }
+        )
 
     source_profiles = _named(source["profiles"])
     target_profiles = _named(target["profiles"])
@@ -370,8 +525,9 @@ def main(argv: list[str]) -> int:
             source_profiles,
             comparison_profiles,
         ) = load_spec(Path(args.spec))
+        metric_policy = load_metric_policy(Path(args.spec))
         source = analyze_light(
-            Path(args.source), source_regions, relations, source_profiles
+            Path(args.source), source_regions, relations, source_profiles, metric_policy
         )
         payload: dict[str, Any] = {
             "scope": "analyst-selected-display-relative-lightness",
@@ -389,6 +545,7 @@ def main(argv: list[str]) -> int:
                 comparison_regions,
                 relations,
                 comparison_profiles,
+                metric_policy,
             )
             payload["comparison"] = target
             payload["delta"] = compare_light_reports(source, target)

@@ -1,0 +1,649 @@
+{
+  "direct_appeal_read": "A tightly cropped adult fashion photograph whose appeal is carried by the relaxed diagonal torso-and-thigh silhouette, the exposed warm midriff set against layered near-black clothing, and smooth directional light that models the body without hard sculpture.",
+  "render_contract": {
+    "mode": "appearance-led",
+    "perceptual_proposition": "A face-excluding vertical adult fashion crop centered on a relaxed bare abdomen and angled hips, with near-black layered garments framing warm skin and smooth moderate light-to-form modeling.",
+    "invariants": [
+      {
+        "id": "crop_hierarchy",
+        "axis": "hierarchy",
+        "role": "primary",
+        "observation": "Narrow portrait crop from upper chest to below the knees; the face, head, feet, and most of the right hand remain outside or at the edge, while abdomen, hips, and thighs dominate.",
+        "causal_origin": "layout",
+        "target_strength": "strong",
+        "source_evidence": [
+          "853 by 1280 portrait frame",
+          "top edge cuts the upper torso before the head",
+          "bottom edge cuts both ribbed stockings below the knees",
+          "abdomen and thighs occupy the central and lower frame"
+        ],
+        "clause_owner": "core.frame-coordinates"
+      },
+      {
+        "id": "relaxed_body_form",
+        "axis": "form",
+        "role": "primary",
+        "observation": "Relaxed asymmetric recline with diagonally angled hips, slight waist compression, a narrow waist-to-hip transition, soft abdominal contours, and smooth unexaggerated thighs.",
+        "causal_origin": "pose-deformation",
+        "target_strength": "moderate",
+        "source_evidence": [
+          "torso leans diagonally across the frame",
+          "waist bends slightly above the shorts",
+          "thigh contours remain smooth without hard muscular definition"
+        ],
+        "clause_owner": "detail.human-body-form"
+      },
+      {
+        "id": "skin_value",
+        "axis": "color",
+        "role": "primary",
+        "observation": "Exposed skin reads as a light displayed midtone that remains below clipping.",
+        "causal_origin": "intrinsic",
+        "target_strength": "strong",
+        "source_evidence": [
+          "abdomen and thighs form the largest light-valued continuous regions",
+          "highlight areas retain visible gradation"
+        ],
+        "clause_owner": "detail.color-tone-fidelity"
+      },
+      {
+        "id": "skin_chroma",
+        "axis": "color",
+        "role": "primary",
+        "observation": "Skin chroma is restrained rather than vivid or gray.",
+        "causal_origin": "intrinsic",
+        "target_strength": "moderate",
+        "source_evidence": [
+          "mid-abdomen and thigh midtones show low-to-moderate saturation",
+          "skin remains distinctly colored against neutral and black surroundings"
+        ],
+        "clause_owner": "detail.color-tone-fidelity"
+      },
+      {
+        "id": "skin_hue",
+        "axis": "color",
+        "role": "primary",
+        "observation": "Displayed skin hue is warm peach-beige with a faint rosy-golden undertone.",
+        "causal_origin": "intrinsic",
+        "target_strength": "moderate",
+        "source_evidence": [
+          "comparable abdomen and thigh midtones share a warm peach-beige family",
+          "the hue remains warmer than the gray wall field"
+        ],
+        "clause_owner": "detail.color-tone-fidelity"
+      },
+      {
+        "id": "garment_value",
+        "axis": "color",
+        "role": "supporting",
+        "observation": "Top, shorts, stockings, and open jacket remain near-black framing masses.",
+        "causal_origin": "intrinsic",
+        "target_strength": "strong",
+        "source_evidence": [
+          "garments form the darkest repeated masses around the skin",
+          "denim, knit, and leather retain material separation inside the near-black range"
+        ],
+        "clause_owner": "detail.color-tone-fidelity"
+      },
+      {
+        "id": "light_modeling",
+        "axis": "light-to-form",
+        "role": "primary",
+        "observation": "Abdomen and thighs read as broad illuminated planes with moderate local form contrast and long gradual light-to-shadow transitions.",
+        "causal_origin": "lighting-shadow",
+        "target_strength": "moderate",
+        "source_evidence": [
+          "abdomen shows a long smooth lateral gradient",
+          "thigh highlights transition gradually into self-shaded sides",
+          "local modeling is softer than the global skin-versus-garment value contrast"
+        ],
+        "clause_owner": "detail.light-form-fidelity"
+      },
+      {
+        "id": "garment_geometry",
+        "axis": "hierarchy",
+        "role": "supporting",
+        "observation": "A fitted cropped top ends under the ribs, low-rise frayed denim shorts cross the hips, ribbed thigh-high stockings enter from the bottom, and an open jacket frames the sides.",
+        "causal_origin": "layout",
+        "target_strength": "moderate",
+        "source_evidence": [
+          "top hem creates the upper boundary of the exposed abdomen",
+          "shorts waistband crosses the angled hips",
+          "stockings are cropped by the bottom edge",
+          "jacket panels remain edge-bound"
+        ],
+        "clause_owner": "detail.clothing-fashion"
+      }
+    ],
+    "flexible_dimensions": [
+      "minor_hair_strand_placement",
+      "exact_finger_position",
+      "fine_wall_texture"
+    ],
+    "major_regions": [
+      {
+        "id": "skin-plane",
+        "role": "dominant",
+        "relative_area": "large",
+        "attention": "primary",
+        "source_evidence": [
+          "bare abdomen occupies the center",
+          "both thighs fill most of the lower frame"
+        ]
+      },
+      {
+        "id": "garment-mass",
+        "role": "supporting",
+        "relative_area": "large",
+        "attention": "secondary",
+        "source_evidence": [
+          "near-black top, shorts, stockings, and jacket surround the skin",
+          "garments touch top, side, and bottom edges"
+        ]
+      },
+      {
+        "id": "wall-seat-field",
+        "role": "edge-frame",
+        "relative_area": "medium",
+        "attention": "background",
+        "source_evidence": [
+          "rough plaster wall occupies the upper-left background",
+          "low-legibility leather seating fills remaining edge gaps"
+        ]
+      }
+    ],
+    "candidate_claims": [
+      {
+        "id": "claim_crop_hierarchy",
+        "semantic_slot": "crop_hierarchy",
+        "owner": "core.frame-coordinates",
+        "role": "primary",
+        "polarity": "affirmative",
+        "target_strength": "strong",
+        "source_kind": "translated-causal-control",
+        "source_evidence": [
+          "source frame and edge cuts"
+        ],
+        "emit": true
+      },
+      {
+        "id": "claim_relaxed_body_form",
+        "semantic_slot": "relaxed_body_form",
+        "owner": "detail.human-body-form",
+        "role": "primary",
+        "polarity": "affirmative",
+        "target_strength": "moderate",
+        "source_kind": "translated-causal-control",
+        "source_evidence": [
+          "relaxed diagonal torso and smooth thigh contours"
+        ],
+        "emit": true
+      },
+      {
+        "id": "claim_skin_value",
+        "semantic_slot": "skin_value",
+        "owner": "detail.color-tone-fidelity",
+        "role": "primary",
+        "polarity": "affirmative",
+        "target_strength": "strong",
+        "source_kind": "translated-causal-control",
+        "source_evidence": [
+          "skin is the dominant light-valued region"
+        ],
+        "emit": true,
+        "perceptual_effects": [
+          {
+            "aggregate_effect_id": "fx_skin_value",
+            "causal_layer": "intrinsic",
+            "confidence": "high",
+            "source_evidence": [
+              "skin midtones are consistently light relative to garments"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "claim_skin_chroma",
+        "semantic_slot": "skin_chroma",
+        "owner": "detail.color-tone-fidelity",
+        "role": "primary",
+        "polarity": "affirmative",
+        "target_strength": "moderate",
+        "source_kind": "translated-causal-control",
+        "source_evidence": [
+          "skin midtones show restrained saturation"
+        ],
+        "emit": true,
+        "perceptual_effects": [
+          {
+            "aggregate_effect_id": "fx_skin_chroma",
+            "causal_layer": "intrinsic",
+            "confidence": "medium",
+            "source_evidence": [
+              "multiple visible skin planes share low-to-moderate chroma"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "claim_skin_hue",
+        "semantic_slot": "skin_hue",
+        "owner": "detail.color-tone-fidelity",
+        "role": "primary",
+        "polarity": "affirmative",
+        "target_strength": "moderate",
+        "source_kind": "translated-causal-control",
+        "source_evidence": [
+          "skin midtones are warm peach-beige"
+        ],
+        "emit": true,
+        "perceptual_effects": [
+          {
+            "aggregate_effect_id": "fx_skin_hue",
+            "causal_layer": "intrinsic",
+            "confidence": "medium",
+            "source_evidence": [
+              "abdomen and thigh midtones share the same warm hue family"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "claim_garment_value",
+        "semantic_slot": "garment_value",
+        "owner": "detail.color-tone-fidelity",
+        "role": "supporting",
+        "polarity": "affirmative",
+        "target_strength": "strong",
+        "source_kind": "translated-causal-control",
+        "source_evidence": [
+          "repeated near-black garment masses frame the skin"
+        ],
+        "emit": true,
+        "perceptual_effects": [
+          {
+            "aggregate_effect_id": "fx_garment_value",
+            "causal_layer": "intrinsic",
+            "confidence": "high",
+            "source_evidence": [
+              "top, shorts, stockings, and jacket are all near-black"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "claim_light_modeling",
+        "semantic_slot": "light_modeling",
+        "owner": "detail.light-form-fidelity",
+        "role": "primary",
+        "polarity": "affirmative",
+        "target_strength": "moderate",
+        "source_kind": "translated-causal-control",
+        "source_evidence": [
+          "broad skin planes show gradual moderate modeling"
+        ],
+        "emit": true,
+        "lighting_effects": [
+          {
+            "aggregate_effect_id": "fx_skin_local_form",
+            "confidence": "high",
+            "source_evidence": [
+              "abdomen and thighs show long continuous light-to-shadow gradients"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "claim_garment_geometry",
+        "semantic_slot": "garment_geometry",
+        "owner": "detail.clothing-fashion",
+        "role": "supporting",
+        "polarity": "affirmative",
+        "target_strength": "moderate",
+        "source_kind": "translated-causal-control",
+        "source_evidence": [
+          "visible garment boundaries and edge cuts"
+        ],
+        "emit": true
+      }
+    ],
+    "prior_clusters": [],
+    "color_tone_contract": {
+      "importance": "primary",
+      "observation_scope": "source-visible",
+      "global": {
+        "cast_or_palette_shift": "Global cast is uncertain; the reliable target is the relative warm-skin versus near-black garment palette.",
+        "exposure_behavior": "Skin remains below clipping while dark regions retain selective material separation.",
+        "contrast_and_tone_curve": "Wide global value separation coexists with smooth local skin gradation.",
+        "processing_shift": "No calibrated scene-referred processing claim is available.",
+        "source_evidence": [
+          "embedded sRGB profile supports display-relative observation",
+          "gray wall is only a low-confidence neutral-like region",
+          "skin and garments preserve stable relative value separation"
+        ]
+      },
+      "regions": [
+        {
+          "id": "skin-plane",
+          "role": "dominant",
+          "source_evidence": [
+            "abdomen and thighs are the dominant continuous color region"
+          ],
+          "intrinsic_axes": [
+            {
+              "axis": "value",
+              "observation": "light displayed midtone",
+              "confidence": "high",
+              "source_evidence": [
+                "skin is consistently much lighter than garments"
+              ],
+              "role": "primary",
+              "evidence_scope": "midtone",
+              "emission": "required",
+              "aggregate_effect_id": "fx_skin_value"
+            },
+            {
+              "axis": "chroma",
+              "observation": "restrained low-to-moderate chroma",
+              "confidence": "medium",
+              "source_evidence": [
+                "comparable midtone skin planes remain colored but not vivid"
+              ],
+              "role": "primary",
+              "evidence_scope": "midtone",
+              "emission": "required",
+              "aggregate_effect_id": "fx_skin_chroma"
+            },
+            {
+              "axis": "hue",
+              "observation": "warm peach-beige with a faint rosy-golden undertone",
+              "confidence": "medium",
+              "source_evidence": [
+                "abdomen and thigh midtones share a warm hue family"
+              ],
+              "role": "primary",
+              "evidence_scope": "midtone",
+              "emission": "required",
+              "aggregate_effect_id": "fx_skin_hue"
+            }
+          ],
+          "tone_zones": [
+            {
+              "zone": "highlight",
+              "observation": "broad highlights retain gradation without obvious clipping",
+              "confidence": "medium",
+              "source_evidence": [
+                "bright thigh and abdomen planes preserve smooth transitions"
+              ]
+            },
+            {
+              "zone": "midtone",
+              "observation": "midtone skin carries the displayed warm hue and restrained chroma",
+              "confidence": "high",
+              "source_evidence": [
+                "large coherent midtone areas exist on abdomen and thighs"
+              ]
+            },
+            {
+              "zone": "shadow",
+              "observation": "self-shaded sides deepen gradually without a hard color break",
+              "confidence": "medium",
+              "source_evidence": [
+                "waist and thigh side gradients remain smooth"
+              ]
+            }
+          ],
+          "relative_relations": [
+            "Skin is much lighter and warmer than the garment mass.",
+            "Skin remains more chromatic than the gray wall field."
+          ]
+        },
+        {
+          "id": "garment-mass",
+          "role": "supporting",
+          "source_evidence": [
+            "top, denim, knit, and leather form repeated dark masses"
+          ],
+          "intrinsic_axes": [
+            {
+              "axis": "value",
+              "observation": "near-black displayed value with selective internal separation",
+              "confidence": "high",
+              "source_evidence": [
+                "garments are the darkest non-background regions"
+              ],
+              "role": "supporting",
+              "evidence_scope": "midtone",
+              "emission": "required",
+              "aggregate_effect_id": "fx_garment_value"
+            }
+          ],
+          "tone_zones": [],
+          "relative_relations": [
+            "Garments remain far darker than exposed skin."
+          ]
+        }
+      ],
+      "neutral_anchor_status": "uncertain",
+      "uncertainty_note": "The gray wall is neutral-like but its illumination and capture processing are not calibrated, so no global white-balance correction is emitted.",
+      "neutral_anchors": [
+        {
+          "region_id": "wall-seat-field",
+          "confidence": "low",
+          "source_evidence": [
+            "upper-left plaster wall is low-chroma but not calibrated"
+          ]
+        }
+      ],
+      "aggregate_effects": [
+        {
+          "id": "fx_skin_value",
+          "axis": "value",
+          "direction": "light displayed midtone below clipping",
+          "region_id": "skin-plane",
+          "role": "primary",
+          "target_strength": "strong",
+          "source_supported": true,
+          "source_evidence": [
+            "skin dominates the light-valued image regions"
+          ],
+          "claim_ids": [
+            "claim_skin_value"
+          ]
+        },
+        {
+          "id": "fx_skin_chroma",
+          "axis": "chroma",
+          "direction": "restrained low-to-moderate chroma",
+          "region_id": "skin-plane",
+          "role": "primary",
+          "target_strength": "moderate",
+          "source_supported": true,
+          "source_evidence": [
+            "skin midtones are colored but not vivid"
+          ],
+          "claim_ids": [
+            "claim_skin_chroma"
+          ]
+        },
+        {
+          "id": "fx_skin_hue",
+          "axis": "hue",
+          "direction": "warm peach-beige with faint rosy-golden undertone",
+          "region_id": "skin-plane",
+          "role": "primary",
+          "target_strength": "moderate",
+          "source_supported": true,
+          "source_evidence": [
+            "abdomen and thigh midtones share a warm hue family"
+          ],
+          "claim_ids": [
+            "claim_skin_hue"
+          ]
+        },
+        {
+          "id": "fx_garment_value",
+          "axis": "value",
+          "direction": "near-black framing mass",
+          "region_id": "garment-mass",
+          "role": "supporting",
+          "target_strength": "strong",
+          "source_supported": true,
+          "source_evidence": [
+            "all major garment regions are near-black"
+          ],
+          "claim_ids": [
+            "claim_garment_value"
+          ]
+        }
+      ],
+      "claim_ids": [
+        "claim_skin_value",
+        "claim_skin_chroma",
+        "claim_skin_hue",
+        "claim_garment_value"
+      ],
+      "emitted_controls": [
+        {
+          "id": "ctl_skin_value",
+          "prompt_excerpt": "The exposed skin stays light in value",
+          "claim_id": "claim_skin_value",
+          "causal_layer": "intrinsic",
+          "control_role": "axis-control",
+          "region_id": "skin-plane",
+          "axis": "value",
+          "aggregate_effect_ids": [
+            "fx_skin_value"
+          ]
+        },
+        {
+          "id": "ctl_skin_chroma",
+          "prompt_excerpt": "with restrained chroma",
+          "claim_id": "claim_skin_chroma",
+          "causal_layer": "intrinsic",
+          "control_role": "axis-control",
+          "region_id": "skin-plane",
+          "axis": "chroma",
+          "aggregate_effect_ids": [
+            "fx_skin_chroma"
+          ]
+        },
+        {
+          "id": "ctl_skin_hue",
+          "prompt_excerpt": "and a warm peach-beige hue with a faint rosy-golden undertone",
+          "claim_id": "claim_skin_hue",
+          "causal_layer": "intrinsic",
+          "control_role": "axis-control",
+          "region_id": "skin-plane",
+          "axis": "hue",
+          "aggregate_effect_ids": [
+            "fx_skin_hue"
+          ]
+        },
+        {
+          "id": "ctl_garment_value",
+          "prompt_excerpt": "The cropped top, frayed denim shorts, ribbed thigh-high stockings, and open leather jacket remain near-black in value",
+          "claim_id": "claim_garment_value",
+          "causal_layer": "intrinsic",
+          "control_role": "axis-control",
+          "region_id": "garment-mass",
+          "axis": "value",
+          "aggregate_effect_ids": [
+            "fx_garment_value"
+          ]
+        }
+      ],
+      "appearance_metaphors": []
+    },
+    "light_form_contract": {
+      "importance": "primary",
+      "observation_scope": "source-visible",
+      "observed_result": {
+        "global_tonal_range": "Wide scene range from light skin planes to near-black garments and seating.",
+        "local_form_contrast": "moderate",
+        "gradient_character": "Long, smooth, continuous gradients over the abdomen and thighs.",
+        "largest_bright_masses": [
+          "central bare abdomen",
+          "front planes of both thighs"
+        ],
+        "largest_dark_masses": [
+          "top and shorts across the upper and middle frame",
+          "jacket, stockings, and seating at the side and bottom edges"
+        ],
+        "source_evidence": [
+          "skin planes contain broad gradual transitions",
+          "global garment contrast is stronger than local skin modeling"
+        ]
+      },
+      "source_hypothesis": {
+        "model_type": "physical-light",
+        "source_count": "one-dominant",
+        "camera_axis_offset": "moderate",
+        "elevation": "slight-above",
+        "front_side_back_relation": "A front-side source is plausible, but the single image does not uniquely identify the rig.",
+        "apparent_angular_size": "large",
+        "fill_structure": "uncertain",
+        "confidence": "low",
+        "actuation": "result-space-only",
+        "source_evidence": [
+          "smooth repeated gradients suggest a broad source",
+          "no unique cast-shadow geometry identifies an exact setup"
+        ]
+      },
+      "region_effects": [
+        {
+          "id": "obs_skin_gradient",
+          "region_id": "skin-plane",
+          "role": "gradient",
+          "value_relation": "Broad illuminated planes transition gradually into self-shaded sides.",
+          "gradient_strength": "moderate",
+          "edge_character": "long and soft-edged",
+          "source_evidence": [
+            "abdomen and thigh gradients have no abrupt boundary"
+          ]
+        }
+      ],
+      "shadow_events": [],
+      "material_responses": [],
+      "pose_light_dependency": {
+        "geometry_dependency": "pose-bound",
+        "preserved_result": "The source pose retains broad bright front planes and gradual side shading.",
+        "flexible_effects": [],
+        "source_evidence": [
+          "gradient placement follows the visible reclined torso and thigh geometry"
+        ]
+      },
+      "aggregate_effects": [
+        {
+          "id": "fx_skin_local_form",
+          "region_id": "skin-plane",
+          "axis": "local-form-contrast",
+          "direction": "moderate modeling with long gradual transitions",
+          "role": "primary",
+          "target_strength": "moderate",
+          "claim_ids": [
+            "claim_light_modeling"
+          ],
+          "source_supported": true,
+          "source_evidence": [
+            "abdomen and thighs show broad planes and continuous gradual shading"
+          ]
+        }
+      ],
+      "claim_ids": [
+        "claim_light_modeling"
+      ],
+      "emitted_controls": [
+        {
+          "id": "ctl_skin_local_form",
+          "prompt_excerpt": "The abdomen and thighs read as broad illuminated planes with moderate local form contrast and long gradual light-to-shadow transitions",
+          "claim_id": "claim_light_modeling",
+          "owner": "local-form-contrast",
+          "aggregate_effect_ids": [
+            "fx_skin_local_form"
+          ]
+        }
+      ]
+    }
+  }
+}
