@@ -6358,7 +6358,19 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertTrue({"environment_binding", "optical_depth", "human_trace"} <= set(integration["required_categories"]))
         self.assertIn("environment_binding", integration["suggested_phrases"])
         self.assertIn("optical_depth", integration["suggested_phrases"])
+        self.assertIn(
+            "parallax",
+            integration["category_terms"]["optical_depth"],
+        )
+        self.assertIn(
+            "native material identity",
+            integration["category_terms"]["material_trace"],
+        )
         self.assertIn("centered beauty headshot pasted over a scenic background", integration["anti_patterns"])
+        self.assertIn(
+            "a visible effect shell or flat image-plane slice that ignores local material identity, depth, and occlusion",
+            integration["anti_patterns"],
+        )
 
     def test_candidate_pack_composes_quality_axes_across_domains(self):
         cases = [

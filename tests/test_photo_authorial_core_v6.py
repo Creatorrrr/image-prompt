@@ -1167,6 +1167,26 @@ class PhotoAuthorialCoreV6Tests(unittest.TestCase):
             obligation["prompt_binding"]["required_evidence_fields"],
         )
         self.assertIn(
+            "affected_surface_coherence_phrase",
+            obligation["prompt_binding"]["required_evidence_fields"],
+        )
+        self.assertIn(
+            "reveal_legibility_phrase",
+            obligation["prompt_binding"]["required_evidence_fields"],
+        )
+        self.assertNotIn(
+            "delayed_discovery_phrase",
+            obligation["prompt_binding"]["required_evidence_fields"],
+        )
+        self.assertIn(
+            "vo_reality_error_affected_surface_coherence",
+            pack["visual_obligations"]["required_hard_gates"],
+        )
+        self.assertIn(
+            "vo_reality_error_reveal_legibility",
+            pack["visual_obligations"]["required_hard_gates"],
+        )
+        self.assertIn(
             "vo_reality_error_authored_rule_legibility",
             pack["visual_obligations"]["required_hard_gates"],
         )

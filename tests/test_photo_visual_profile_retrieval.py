@@ -534,6 +534,80 @@ class PhotoVisualProfileRetrievalTests(unittest.TestCase):
         self.assertFalse(mismatch_hit["hard_eligible"])
         self.assertFalse(mismatch_hit["optional_eligible"])
 
+    def test_relation_profile_requires_component_evidence_for_semantic_discovery(self):
+        vectors = {
+            str(profile["id"]): (
+                [1.0, 0.0]
+                if profile["id"] == "yandere_affection_control_relation"
+                else [0.0, 1.0]
+            )
+            for profile in self.registry["profiles"]
+        }
+        fake_index = prompt_generator.build_visual_profile_index_payload(
+            self.registry,
+            vectors=vectors,
+            dimensions=2,
+        )
+
+        unrelated = prompt_generator.resolve_visual_profile_hits(
+            self.registry,
+            [
+                {
+                    "source": "concept_lock",
+                    "text": (
+                        "An adult woman smiles in a blue-sea reality error portrait"
+                    ),
+                    "polarity": "required",
+                },
+                {
+                    "source": "authorial_core_interpretation",
+                    "text": (
+                        "Her face and reflection diverge under one spatial rule, with "
+                        "no affection target, boundary action, or relationship consequence"
+                    ),
+                    "polarity": "advisory",
+                },
+            ],
+            visual_profile_index=fake_index,
+            query_text="adult woman warm smile uncanny face reality error",
+            query_vector=[1.0, 0.0],
+            adult_context=True,
+        )
+        self.assertNotIn(
+            "yandere_affection_control_relation",
+            {row["profile_id"] for row in unrelated["hits"]},
+        )
+        self.assertIn(
+            "diegetic_reality_invariant_failure",
+            {row["profile_id"] for row in unrelated["hits"]},
+        )
+
+        related = prompt_generator.resolve_visual_profile_hits(
+            self.registry,
+            [
+                {
+                    "source": "authorial_core_interpretation",
+                    "text": (
+                        "Devoted care toward the same adult counterpart takes control "
+                        "of the schedule, and that counterpart's choice has visibly "
+                        "narrowed."
+                    ),
+                    "polarity": "advisory",
+                }
+            ],
+            visual_profile_index=fake_index,
+            query_text="possessive care relation",
+            query_vector=[1.0, 0.0],
+            adult_context=True,
+        )
+        relation_hit = next(
+            row
+            for row in related["hits"]
+            if row["profile_id"] == "yandere_affection_control_relation"
+        )
+        self.assertEqual(relation_hit["match_basis"], "embedding")
+        self.assertTrue(relation_hit["optional_eligible"])
+
 
 if __name__ == "__main__":
     unittest.main()

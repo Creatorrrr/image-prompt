@@ -1402,7 +1402,8 @@
             "実際のストーカー事件"
           ]
         },
-        "requires_adult_character": true
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
       },
       "semantics": {
         "definition": "An adult fictional character's sincere but obsessive love toward one identifiable adult counterpart becomes a possessive target-directed action that crosses a personal boundary or appropriates access, with one visible consequence for that same counterpart. For first-look outward legibility, the character herself dominates the frame while affection, target-locked attention, and visibly ecstatic or barely controlled instability coexist on her face, posture, and action. Non-graphic blood, a weapon, a syringe, or horror lighting may amplify this direct character reading when requested, but none can replace the obsessive-love relationship.",
@@ -1602,7 +1603,8 @@
           "professional surveillance with no sincere affection toward the observed person",
           "a photo wall, red string, phone, weapon, blood, fixed stare, or smile used as the whole meaning",
           "a restrained or captive victim used to prove possession",
-          "a gentle affectionate portrait whose expression never becomes visibly obsessive or unstable"
+          "a gentle affectionate portrait whose expression never becomes visibly obsessive or unstable",
+          "an adult beauty portrait with a warm smile, uncanny facial distortion, or a reality glitch but no identifiable affection target, same-target boundary action, or visible consequence"
         ]
       },
       "concept_candidate": {
@@ -2520,23 +2522,27 @@
         "requires_adult_character": false
       },
       "semantics": {
-        "definition": "An optically clean camera records an otherwise ordinary world in which exactly one spatial, temporal, causal, optical, or topological invariant fails, and the same measurable failure propagates consistently across several affected surfaces while unaffected regions remain physically coherent.",
+        "definition": "An optically clean camera records an otherwise ordinary world in which exactly one spatial, temporal, causal, optical, or topological invariant fails. The same measurable failure propagates consistently across several affected surfaces, each affected region remains internally coherent and preserves its native material identity under that rule, and unaffected regions remain physically coherent.",
         "paraphrase_examples": [
           "the world itself obeys one broken rule while the photograph stays clean",
           "one invisible coordinate boundary shifts every crossed surface by the same amount",
           "one temporal phase lag repeats across waves, cloth, shadow, and reflection",
           "an effect appears while its visible cause is absent but every consequence remains consistent",
+          "one invisible three-dimensional field reveals itself only through the same depth-aware transformation of skin, straw, cloth, water, shadow, and air",
+          "affected skin, straw, linen, water, and air keep their own texture, lighting, thickness, and occlusion while one shared transform changes their coordinates",
           "깨끗한 사진 속에서 세계 자체의 한 가지 물리 규칙만 어긋난다",
           "보이지 않는 경계를 지나는 모든 표면이 같은 거리만큼 어긋난다",
           "파도와 옷자락과 그림자에 동일한 시간 지연이 반복된다",
+          "피부와 밀짚과 천과 물은 각자의 재질을 유지한 채 하나의 공간 변환에 같은 방식으로 반응한다",
           "媒体ではなく世界そのものの一つの法則だけが破綻する"
         ],
         "component_semantics": {
-          "minimum_component_groups": 3,
+          "minimum_component_groups": 4,
           "required_group_ids": [
             "normal_world_baseline",
             "single_failed_invariant",
-            "repeated_cross_surface_consequence"
+            "repeated_cross_surface_consequence",
+            "affected_surface_material_coherence"
           ],
           "groups": [
             {
@@ -2589,6 +2595,18 @@
               ]
             },
             {
+              "id": "affected_surface_material_coherence",
+              "any_terms": [
+                "affected surfaces preserve native material identity",
+                "each transformed material keeps its own texture lighting thickness and occlusion",
+                "skin straw cloth water and air retain material-specific continuity",
+                "the shared transform follows local surface topology and depth",
+                "영향받은 표면도 고유한 재질 정체성을 유지",
+                "피부 밀짚 천 물 공기가 각자의 질감과 조명을 유지",
+                "공통 변환이 표면의 굴곡과 깊이를 따라감"
+              ]
+            },
+            {
               "id": "unaffected_region_coherence",
               "any_terms": [
                 "unaffected scene remains coherent",
@@ -2605,11 +2623,15 @@
           "RGB channel separation, codec blocks, scanlines, or VHS noise on the captured image",
           "a split-screen collage divided by a visible graphic seam",
           "a glowing portal or magical rift with an obvious fantasy cause",
+          "a translucent water-like shell or enclosing splash ring that visibly draws the boundary instead of letting material consequences reveal an invisible field",
+          "a flat image-plane slice that moves copied pixels without following depth, local material response, or occlusion",
+          "facial texture stamped onto a shoulder, hat, dress, water, or sky instead of each surface retaining its native material identity",
+          "a particle dissolve or noisy disintegration with no measurable correspondence across separated surfaces",
           "many unrelated surreal anomalies competing without one governing rule",
           "one malformed hand, face, reflection, shadow, merged object, or texture defect that does not repeat a measurable world rule"
         ]
       },
-      "composition_instruction": "Establish a familiar physically coherent scene through clean photographic capture, select exactly one world invariant to fail, and include a clear normal control state against which the violation can be compared. Apply the same measurable offset, delay, dependency, correspondence, or recursion across at least three separated affected surfaces, size and place those instances so their shared rule can be inferred from the image without prompt text or a caption, and keep every unaffected hand, face, object boundary, material, perspective, and light response convincingly ordinary. The contradiction may emerge on a second look, but once found it must read as one authored system rather than generic image failure.",
+      "composition_instruction": "Establish a familiar physically coherent scene through clean photographic capture, select exactly one world invariant to fail, and include a clear normal control state against which the violation can be compared. Apply the same measurable offset, delay, dependency, correspondence, or recursion across at least three separated affected surfaces. Within every affected region, preserve the source surface's native material identity, local texture, thickness, lighting, depth, boundary shape, and occlusion while the chosen rule changes its coordinates or correspondence; the error must follow the three-dimensional scene rather than cut and move a flat image plane. Size and place the matched instances so their shared rule can be inferred from the image without prompt text or a caption, and keep every unaffected hand, face, object boundary, material, perspective, and light response convincingly ordinary. Choose a deliberate reveal strength: either an immediate authored contradiction or a quiet second-look contradiction. In either mode, it must read as one integrated world system rather than a visible effect shell, portal, particle dissolve, or generic image failure.",
       "concept_candidate": {
         "concept_terms": [
           "clean photographic capture of an ordinary world",
@@ -2621,8 +2643,14 @@
           "topological recursion",
           "semantic binding swap",
           "same measurable consequence across several surfaces",
+          "invisible three-dimensional field revealed only through material consequences",
+          "native material identity preserved under one shared transform",
+          "surface-following refraction parallax and micro-occlusion",
+          "depth-aware irregular feathered boundary",
+          "material-specific phase sampling across separated depths",
           "coherent unaffected regions",
-          "quiet second-look contradiction"
+          "quiet second-look contradiction",
+          "immediate authored contradiction"
         ]
       },
       "runtime_expression": {
@@ -2639,8 +2667,9 @@
         "normal_world_baseline_phrase",
         "single_invariant_failure_phrase",
         "cross_surface_repetition_phrase",
+        "affected_surface_coherence_phrase",
         "unaffected_coherence_phrase",
-        "delayed_discovery_phrase",
+        "reveal_legibility_phrase",
         "authored_rule_legibility_phrase"
       ],
       "evidence_requirements": {
@@ -2681,6 +2710,15 @@
             "same rule affects horizon shadow reflection and cloth"
           ]
         },
+        "affected_surface_coherence_phrase": {
+          "min_content_words": 5,
+          "must_mention_any": [
+            "affected surfaces preserve native material identity",
+            "each transformed material keeps its own texture lighting thickness and occlusion",
+            "skin straw cloth water and air retain material-specific continuity",
+            "the shared transform follows local surface topology and depth"
+          ]
+        },
         "unaffected_coherence_phrase": {
           "min_content_words": 3,
           "must_mention_any": [
@@ -2690,13 +2728,14 @@
             "unaffected sand and sky stay physical"
           ]
         },
-        "delayed_discovery_phrase": {
+        "reveal_legibility_phrase": {
           "min_content_words": 3,
           "must_mention_any": [
+            "immediate authored contradiction",
+            "deliberate anomaly legible on the first read",
             "first glance ordinary second glance impossible",
             "quiet second-look contradiction",
-            "delayed-read anomaly",
-            "subtle discovery after the ordinary first read"
+            "intended reveal timing remains clear"
           ]
         },
         "authored_rule_legibility_phrase": {
@@ -2731,19 +2770,24 @@
           "description": "At least three affected surfaces repeat the same measurable displacement, lag, dependency, correspondence, or recursion."
         },
         {
+          "id": "vo_reality_error_affected_surface_coherence",
+          "review_scale": "native",
+          "description": "Within every affected region, native material identity, local texture, lighting, thickness, depth, boundary shape, and occlusion remain coherent under the shared rule; source pixels or facial texture are not stamped onto unrelated surfaces."
+        },
+        {
           "id": "vo_reality_error_unaffected_coherence",
           "review_scale": "native",
           "description": "Unaffected anatomy, objects, perspective, lighting, and materials remain internally coherent and physically plausible."
         },
         {
-          "id": "vo_reality_error_delayed_discovery",
+          "id": "vo_reality_error_reveal_legibility",
           "review_scale": "both",
-          "description": "The frame reads as ordinary at first glance and becomes impossible through a legible second-look contradiction."
+          "description": "The contradiction appears at the deliberately selected reveal strength, immediate or delayed, while remaining clearly authored, subordinate to one inferable world rule, and distinguishable from generic image failure."
         },
         {
           "id": "vo_reality_error_not_media_or_portal_substitute",
           "review_scale": "both",
-          "description": "A screen effect, split seam, collage, portal, magical rift, or random anomaly stack does not substitute for the repeated world rule."
+          "description": "A screen effect, split seam, collage, visible translucent shell, enclosing splash ring, portal, magical rift, flat image-plane slice, particle dissolve, or random anomaly stack does not substitute for the repeated world rule."
         },
         {
           "id": "vo_reality_error_authored_rule_legibility",
@@ -2761,6 +2805,11 @@
         "codec_blocks_scanlines_or_vhs_noise",
         "visible_split_screen_or_collage_seam",
         "glowing_portal_or_magical_rift",
+        "visible_translucent_shell_or_water_sheet",
+        "enclosing_splash_ring_as_field_boundary",
+        "flat_image_plane_slice_ignoring_depth_and_material",
+        "particle_dissolve_without_measurable_cross_surface_correspondence",
+        "facial_texture_stamped_onto_unrelated_surface",
         "random_multi_anomaly_surrealism",
         "single_local_deformation_without_cross_surface_rule",
         "inconsistent_offsets_or_lags_across_affected_surfaces",
