@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Classify analyst-supplied source-visible Lab evidence into a versioned vocabulary.
+"""Classify source-visible color axes and compose controlled axis language.
 
 The tool does not detect semantic regions, infer biological or material true color,
-invent or choose a friendly label, or emit prompt prose. Optional externally
-supplied label candidates are checked only for compatibility with the classified axes.
+or invent or choose a friendly label.  An analyst may request a deterministic
+natural-language composition of the classified axes for a named visible surface;
+the calling plan still decides whether that phrase is emitted.
 """
 
 from __future__ import annotations
@@ -33,6 +34,8 @@ REQUIRED_SCOPE_AXES = {
     "surface-finish": {"finish"},
     "composite-appearance": {"value_depth", "chroma", "undertone"},
 }
+CONTROLLED_DESCRIPTOR_CORE_AXES = ("value_depth", "chroma", "undertone")
+UNRESOLVED_DESCRIPTOR_TERMS = {"mixed", "uncertain"}
 
 
 def _object(value: Any, label: str) -> dict[str, Any]:
@@ -257,6 +260,88 @@ def classify_observation(
     }
 
 
+def _controlled_axis_excerpt(axis: str, term: str) -> str | None:
+    """Serialize one controlled axis term without a preferred term lookup table."""
+
+    if term in UNRESOLVED_DESCRIPTOR_TERMS:
+        return None
+    words = " ".join(term.replace("_", "-").split("-")).strip()
+    if not words:
+        return None
+    if axis == "value_depth":
+        return f"a {words} value"
+    if axis == "chroma":
+        return f"{words} chroma"
+    if axis in {"undertone", "finish"}:
+        article = "an" if words[0].casefold() in "aeiou" else "a"
+        noun = "undertone" if axis == "undertone" else "finish"
+        return f"{article} {words} {noun}"
+    raise ValueError(f"unsupported controlled descriptor axis: {axis}")
+
+
+def compose_controlled_descriptor(
+    classification: dict[str, Any],
+    surface_term: str,
+    *,
+    include_finish: bool = True,
+) -> dict[str, Any]:
+    """Compose literal classified axes without inventing a semantic label.
+
+    ``surface_term`` is supplied by the analyst (for example, the visible region
+    name).  Low-confidence, mixed, or uncertain required evidence fails closed.
+    The return value deliberately contains no production ``emit`` decision.
+    """
+
+    surface = _string(surface_term, "surface_term")
+    axes = _object(classification.get("axis_classification"), "axis_classification")
+    requested_axes = list(CONTROLLED_DESCRIPTOR_CORE_AXES)
+    if include_finish:
+        requested_axes.append("finish")
+
+    excerpts: dict[str, str] = {}
+    unresolved: list[str] = []
+    for axis in requested_axes:
+        axis_spec = _object(axes.get(axis), f"axis_classification.{axis}")
+        term = _string(axis_spec.get("term"), f"axis_classification.{axis}.term")
+        confidence = _string(
+            axis_spec.get("confidence"), f"axis_classification.{axis}.confidence"
+        )
+        if confidence not in VALID_CONFIDENCE:
+            raise ValueError(f"axis_classification.{axis}.confidence is invalid")
+        phrase = _controlled_axis_excerpt(axis, term)
+        if confidence == "low" or phrase is None:
+            unresolved.append(axis)
+        else:
+            excerpts[axis] = phrase
+
+    if unresolved:
+        return {
+            "status": "inconclusive",
+            "surface_term": surface,
+            "included_axes": requested_axes,
+            "axis_excerpts": excerpts,
+            "unresolved_axes": unresolved,
+            "composition_source": "axis-composed",
+        }
+
+    ordered_excerpts = [excerpts[axis] for axis in requested_axes]
+    if len(ordered_excerpts) == 1:
+        joined = ordered_excerpts[0]
+    elif len(ordered_excerpts) == 2:
+        joined = " and ".join(ordered_excerpts)
+    else:
+        joined = ", ".join(ordered_excerpts[:-1]) + ", and " + ordered_excerpts[-1]
+    return {
+        "status": "ready",
+        "surface_term": surface,
+        "phrase": f"{surface} with {joined}",
+        "included_axes": requested_axes,
+        "axis_excerpts": excerpts,
+        "unresolved_axes": [],
+        "composition_source": "axis-composed",
+    }
+
+
 def review_candidates(
     classification: dict[str, Any], candidate_payload: dict[str, Any]
 ) -> list[dict[str, Any]]:
@@ -325,6 +410,16 @@ def main(argv: list[str]) -> int:
     parser.add_argument("observation", help="analyst-authored Lab observation JSON")
     parser.add_argument("--policy", required=True, help="versioned language policy JSON")
     parser.add_argument("--candidates", default="", help="optional externally supplied label candidates JSON")
+    parser.add_argument(
+        "--compose-for",
+        default="",
+        help="optional analyst-supplied visible surface term for an axis-composed descriptor",
+    )
+    parser.add_argument(
+        "--without-finish",
+        action="store_true",
+        help="compose only value depth, chroma, and undertone",
+    )
     args = parser.parse_args(argv)
     try:
         observation = _load(Path(args.observation), "observation")
@@ -339,9 +434,15 @@ def main(argv: list[str]) -> int:
                 "no biological, demographic, or material true-color inference",
                 "no friendly-label candidate invention",
                 "no automatic friendly-label selection",
-                "no automatic production prompt wording",
+                "controlled descriptor composition does not decide prompt emission",
             ],
         }
+        if args.compose_for:
+            payload["controlled_descriptor"] = compose_controlled_descriptor(
+                classification,
+                args.compose_for,
+                include_finish=not args.without_finish,
+            )
         if args.candidates:
             payload["friendly_label_review"] = review_candidates(
                 classification, _load(Path(args.candidates), "candidate payload")

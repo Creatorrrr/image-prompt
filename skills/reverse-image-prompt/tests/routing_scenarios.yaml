@@ -503,6 +503,30 @@
       "max_non_core_modules": 3
     },
     {
+      "id": "source-render-regional-light-residual",
+      "facets": {
+        "subjects": ["generic-object"],
+        "medium": ["photographic"],
+        "relationships": ["ordinary"],
+        "detail_risks": ["light-to-form", "material-light-response"]
+      },
+      "expect_includes": [
+        "subject.generic-object",
+        "medium.photographic-capture",
+        "detail.light-form-fidelity"
+      ],
+      "expect_excludes": [
+        "detail.human-body-form",
+        "detail.color-tone-fidelity"
+      ],
+      "required_anchors": [
+        "light_form_contract",
+        "material_light_response",
+        "light_control_ledger"
+      ],
+      "max_non_core_modules": 3
+    },
+    {
       "id": "unknown-facet-value-fails-visibly",
       "facets": {
         "subjects": ["generic-object"],

@@ -40,7 +40,7 @@ If the target generator is known, read `references/model-adapters.md` and apply 
 
 When `detail.color-tone-fidelity` is selected and the request requires measured color fidelity, source/render comparison, actual generation, or controlled color revision, also read `references/color-reproduction-evaluation.md`. Keep ordinary incidental-color prompt extraction on the shorter module path.
 
-When measured surface color must be converted into controlled human-readable classes or a friendly appearance label is considered, also read `references/surface-color-language.md`. Use its versioned policy only as source-visible vocabulary translation, never as biological color truth or a demographic proxy. Review friendly-label candidates only when the user supplied them or an explicitly versioned task vocabulary supplied them; do not originate candidates from this skill.
+When measured surface color must be converted into controlled human-readable classes, an axis-composed surface descriptor, or a friendly appearance label, also read `references/surface-color-language.md`. Use its versioned policy only as source-visible vocabulary translation, never as biological color truth or a demographic proxy. A controlled descriptor deterministically combines current-source axes but does not decide emission. Review friendly-label candidates only when the user or an explicitly versioned task vocabulary supplied them; do not originate candidates from this skill.
 
 When `detail.light-form-fidelity` is selected and the request requires measured lighting fidelity, source/render comparison, actual generation, or controlled lighting revision, also read `references/lighting-reproduction-evaluation.md`. Keep ordinary incidental lighting on the shorter medium-module path.
 
@@ -62,13 +62,13 @@ When evaluating or revising this skill, also read `references/behavior-evaluatio
 3. Analyze silently with an adaptive hierarchy:
    1. Record the direct, source-supported appeal separately from the render contract. State it plainly in diagnostic mode, but do not copy evaluative appeal language into a generation prompt; translate it into visible causal controls first.
    2. Classify the dominant fidelity axis as `relationship-led`, `appearance-led`, `information-led`, or `mixed`.
-   3. Separate a small set of aesthetic or structural invariants from dimensions that may vary without losing the proposition. For each invariant, record its semantic slot, hierarchy role, causal origin, source-relative strength, evidence, and one clause owner. Record the smallest causal cue set rather than every visible field.
-   4. Lock frame ratio, crop, subject scale, major zones, boundary sides, and edge interactions.
-   5. Map the few largest coherent image regions by relative area, tonal role, edge contact, legibility, and attention. For relationship-led or mixed images, map major-component topology, contact/support, containment, boundary crossing, occlusion, and negative space. For appearance-led images, map form, surface, light-to-form, color, material roles, and subject/environment hierarchy first. For information-led images, map layout, reading order, legibility, and container hierarchy first.
-   6. Analyze visible subjects and their image-plane roles. Use a compact broad person-gestalt anchor only when it materially reduces ambiguity; decompose salient human form or appearance into visible causes.
+   3. Separate a small set of aesthetic or structural invariants from dimensions that may vary without losing the proposition. For each invariant, record its semantic slot, hierarchy role, causal origin, source-relative strength, evidence, and one clause owner. Record the smallest causal cue set rather than every visible field. For non-color and non-light invariants, merge shared pulls into source-relative aggregate effects and reconcile each emitted claim with one exact final-prompt control.
+   4. Build a spatial/orientation coverage ledger for every primary or structurally material orientation-bearing subject before selecting pose prose. Give frame placement, subject principal axis, viewpoint elevation/azimuth/roll/distance and foreshortening, and cross-component orientation exactly one disposition: `invariant`, `flexible`, `not-material`, `not-visible`, or `uncertain`. For a human, also dispose independently of body orientation, head-to-body relation, shoulder line, and attention direction. The ledger is direction-neutral: centered, offset, frontal, oblique, aligned, opposed, and mirrored source observations are all valid. A frame-zone relation alone does not cover orientation. Each invariant decision must reach one source-relative relation, invariant, aggregate effect, emitted claim, and exact prompt control under one `control_axis_id` and one `causal_origin`; every non-invariant decision records why it emits nothing. Viewpoint dimensions are perspective-owned; human body/head/shoulder dimensions are pose-owned; placement and cross-component dimensions are spatial/layout-owned. Keep placement separate from orientation, camera elevation from head pitch, camera azimuth from head/body yaw, garment boundaries from shoulder pose, and perspective- or pose-induced appearance from intrinsic anatomy.
+   5. Map the few largest coherent image regions by relative area, tonal role, edge contact, legibility, and attention. Record only material component relations: region-to-region or region-to-frame reference, relation kind, source-relative observation, evidence, and role. When partial visibility matters, record the surviving fragments, cropped or hidden counterparts, and completion risk. For relationship-led or mixed images, map major-component topology, contact/support, containment, boundary crossing, occlusion, and negative space. For appearance-led images, map form, surface, light-to-form, color, material roles, and subject/environment hierarchy first. For information-led images, map layout, reading order, legibility, and container hierarchy first.
+   6. Analyze visible subjects and their image-plane roles. For every routed human, add one `human_appearance_decisions` record keyed to its spatial subject. Independently dispose of the broad person prior as `emit`, `omit`, or `uncertain`, and visible skin as `material`, `not-material`, `not-visible`, or `uncertain`; every non-emitted path records why. Emit at most one compact non-identifying person-gestalt anchor only for a sufficiently readable person when it materially reduces ambiguity. Record whether it came from user context, a source-visible approximation, or model calibration, and link its claim through `geometry_claim_ids` to separate visible geometry claims and exact controls. For material skin, name the Color/Tone region, visible coverage (`exposed`, `through-sheer`, or `mixed`), and whether a controlled descriptor is emitted. Never install a motivating category or target surface combination as a default.
    7. Before treating shape, scale, color, surface, or definition as intrinsic, separate effects caused by pose/deformation, perspective, lighting/shadow, material interaction or occlusion, and capture/processing.
-   8. When color or tonal behavior is material, build the source-relative Color/Tone Contract from `detail.color-tone-fidelity`: set the source-visible/color-managed/user-specified observation scope; separate region value, chroma, and hue from illumination, global cast or palette shift, exposure or tone curve, and processing; keep intrinsic midtone evidence separate from highlight and shadow response; record displayed key level, shadow floor, highlight rolloff, and microcontrast when material; decompose appearance metaphors; record neutral-anchor confidence and cross-layer aggregate effects. For every material intrinsic or displayed-tone axis, declare whether it requires a final prompt control or remains diagnostic-only, and link every required axis through one aggregate effect, claim, and axis-specific emitted control. When controlled color language is requested, classify value depth, chroma, and undertone before reviewing a friendly label supplied by the user or an explicitly versioned task vocabulary.
-   9. When illumination, shadow topology, or light-induced form is material, build the source-relative Light/Form Contract from `detail.light-form-fidelity`. Record the visible result before any physical-light hypothesis; separate source geometry, apparent source size, fill, global tonal range, bright-plane coverage, local form contrast, gradient extent, shadow ownership, material response, background spill, and pose dependence. A low-confidence rig hypothesis remains diagnostic or is paired with result-space controls rather than carrying the prompt alone. Link every emitted lighting effect through one claim and one exact final-prompt control. When compact lighting language is requested, classify displayed key, shadow floor, edge softness, local form contrast, bright-plane coverage, gradient extent, directionality, and fill independently before composing an explanation-only controlled summary or reviewing an externally supplied friendly label.
+   8. When color or tonal behavior is material, build the source-relative Color/Tone Contract from `detail.color-tone-fidelity`: set the source-visible/color-managed/user-specified observation scope; separate region value, chroma, and hue from illumination, global cast or palette shift, exposure or tone curve, and processing; keep intrinsic midtone evidence separate from highlight and shadow response; record displayed key level, shadow floor, highlight rolloff, and microcontrast when material; decompose appearance metaphors; record neutral-anchor confidence and cross-layer aggregate effects. For every material intrinsic or displayed-tone axis, declare whether it requires a final prompt control or remains diagnostic-only, and link every required axis through one aggregate effect, claim, and axis-specific emitted control. When controlled surface language is material, classify value depth, chroma, and undertone, then optionally compose them in that order with separately observed finish. The composed phrase may emit only by reusing exact owned axis excerpts; low-confidence, mixed, or uncertain core evidence fails closed. Friendly labels remain externally supplied and generator/version calibrated.
+   9. When illumination, shadow topology, or light-induced form is material, build the source-relative Light/Form Contract from `detail.light-form-fidelity`. Record the visible result before any physical-light hypothesis; separate source geometry, apparent source size, fill, global tonal range, bright-plane coverage, local form contrast, gradient extent, shadow ownership, material response, background spill, and pose dependence. Treat a material source/render change in regional value separation across one surface as light-to-form evidence even when the lighting is otherwise ordinary; name the compared regions with a distinct `reference_region_id` in both observation and aggregate actuation. A low-confidence rig hypothesis remains diagnostic or is paired with result-space controls rather than carrying the prompt alone. Link every emitted lighting effect through one claim and one exact final-prompt control. When compact lighting language is requested, classify displayed key, shadow floor, edge softness, local form contrast, bright-plane coverage, gradient extent, directionality, and fill independently before composing an explanation-only controlled summary or reviewing an externally supplied friendly label.
    10. Add only materially important pose, camera/perspective, focus, lighting, background, medium, texture, artifact, UI, and text evidence.
 
    Use this sparse internal map; leave irrelevant fields empty rather than completing a checklist:
@@ -89,7 +89,14 @@ render_contract:
       clause_owner: ""
   flexible_dimensions: []
   major_regions: []     # relative area, tonal/material role, edge contact, legibility, attention
+  component_relations: []  # material region/frame relation, evidence, and optional partial-visibility budget
+  spatial_orientation_coverage:  # required for routed humans and other material orientation-bearing subjects
+    subjects: []        # material orientation-bearing subject id, kind, visibility, major-region id, evidence
+    decisions: []       # dimension, family, disposition, observation, cause, confidence, control_axis_id, evidence; invariant path ids or non-emission reason
+  human_appearance_decisions: [] # one per routed human: face visibility, person-prior decision, skin-surface/coverage/descriptor decision, evidence, links or non-emission reasons
   candidate_claims: []  # evidence candidates from modules; not automatic prompt sentences
+  aggregate_effects: [] # non-color/non-light source-relative effects after cross-slot merge
+  emitted_controls: []  # exact final-prompt excerpts for the generic emitted claims
   color_tone_contract: {}  # when material: observation scope, causal effects, then exact post-draft emitted_controls
   light_form_contract: {}  # when material: observed result, confidence-rated cause, spatial effects, then exact emitted_controls
 ```
@@ -106,7 +113,7 @@ detected_facets:
   style: []           # stylized-character-maturity or another narrow risk
 ```
 
-5. Treat selected modules as evidence contributors, not prose entitlements. Merge candidate claims by semantic slot before drafting; one module owns each emitted slot while other modules may strengthen its evidence. For material color and tone, also merge claims by shared perceptual effect across intrinsic surface, illumination, global cast, exposure, processing, and hierarchy even when their semantic-slot names differ. For material lighting, merge effects across source geometry, fill, local form contrast, shadow topology, material response, and background spill. Let the Light/Form Contract own spatial illumination structure and the Color/Tone Contract own displayed color, exposure, and tone response; split or cross-reference rather than duplicate a shared effect. Resolve conflicts and allocate prompt weight using this priority:
+5. Treat selected modules as evidence contributors, not prose entitlements. Merge candidate claims by semantic slot before drafting; one module owns each emitted slot while other modules may strengthen its evidence. For spatial decisions, merge repeated ownership by `control_axis_id` across camera, pose, face, body, clothing, composition, and lighting; the same causal axis cannot survive under differently named slots. For form, surface, sharpness, hierarchy, topology, and information, also merge claims that push the same source-relative axis, direction, regions, and relations; one aggregate effect has one emitted owner even when several modules support it. For material color and tone, merge claims by shared perceptual effect across intrinsic surface, illumination, global cast, exposure, processing, and hierarchy even when their semantic-slot names differ. For material lighting, merge effects across source geometry, fill, local form contrast, shadow topology, material response, and background spill. Let the generic, Light/Form, and Color/Tone ledgers have disjoint claims and exact prompt excerpts. Resolve conflicts and allocate prompt weight using this priority:
    1. Visible-evidence and safety limits.
    2. Primary perceptual proposition, dominant fidelity axis, and invariants.
    3. The mode-leading evidence: topology for relationship-led, causal appearance signature for appearance-led, information hierarchy for information-led, or the named co-primary pair for mixed.
@@ -114,9 +121,11 @@ detected_facets:
    5. Subject, medium, camera, lighting, focus, artifact, background, and color fidelity that supports the proposition.
    6. Flexible pose or placement detail, secondary elements, and generic shorthand.
 
-6. Draft the smallest prompt that carries every invariant and concept-critical constraint. Let its order follow the dominant fidelity axis. If the source look is high-salience, place one compact Aesthetic Causal Signature near the beginning; if neutral, use only one or two ordinary cues. Translate broad appeal words into form, surface, light, color, hierarchy, or spatial mechanisms. Normally express a semantic slot once and add at most one source-supported drift boundary for a genuinely high-risk failure. For material color or tone, assign every emitted direction to one causal layer and one aggregate effect budget; do not let hierarchy repeat a surface hue unless hue contrast itself is invariant. Give each required intrinsic value, chroma, hue, or displayed-tone axis its own literal axis-control. Write literal axis terms before any friendly color label; retain an externally sourced label at most once, only as a compatible model-calibrated summary. After drafting, copy the exact final color-changing excerpts into the Color/Tone Contract's `emitted_controls` ledger and reconcile each with one claim, one causal layer, one region, one axis, and its complete aggregate-effect list. For material lighting, copy every exact lighting-changing excerpt into the Light/Form Contract's `emitted_controls`; keep source geometry, fill, bright-plane coverage, local form contrast, gradient extent, shadow topology, material response, and background spill separately owned, and preserve result-space controls when the physical cause is uncertain. Literal lighting controls remain authoritative. Retain an externally sourced friendly lighting label at most once and only when it is compatible, generator/version calibrated, and immediately unpacked by its already-owned literal controls; never emit the explanation-only controlled summary as an extra control. Split or replace unowned, cross-axis, and multi-layer compounds. Correct an overstrong draft by replacing or deleting the amplifying language, not by appending a negative counterweight. Give each major component one relation and each inversion-prone interaction one relation clause, but do not let flexible pose coordinates or secondary details outrank the primary proposition.
+6. Draft the smallest prompt that carries every invariant and concept-critical constraint. Let its order follow the dominant fidelity axis. If the source look is high-salience, place one compact Aesthetic Causal Signature near the beginning; if neutral, use only one or two ordinary cues. Translate broad appeal words into form, surface, light, color, hierarchy, or spatial mechanisms. Normally express a semantic slot once and add at most one source-supported drift boundary for a genuinely high-risk failure. Emit only spatial/orientation decisions marked `invariant`, once per `control_axis_id`; do not leak controls from non-invariant decisions. Emit a person prior or skin descriptor only from its explicit human-appearance decision. After drafting, copy each exact non-color/non-light control into the generic `emitted_controls` ledger and reconcile it with one emitted claim and its complete aggregate-effect set. Reconcile every material placement or orientation clause with the source-relative component and pose relations; omit any generic neutral alignment that contradicts them. For material color or tone, assign every emitted direction to one causal layer and one aggregate effect budget; do not let hierarchy repeat a surface hue unless hue contrast itself is invariant. Give each required intrinsic value, chroma, hue, or displayed-tone axis its own literal axis-control. An emitted axis-composed descriptor is one wrapper containing those exact excerpts, not an extra direction; optional finish uses a separately owned generic surface control. Write literal axes before any externally supplied friendly label, retained at most once as a compatible model-calibrated summary. After drafting, copy exact color-changing excerpts into the Color/Tone ledger and reconcile each with one claim, causal layer, region, axis, and complete effect list. For material lighting, copy every exact lighting-changing excerpt into the Light/Form Contract's `emitted_controls`; keep source geometry, fill, bright-plane coverage, local form contrast, gradient extent, shadow topology, material response, and background spill separately owned, and preserve result-space controls when the physical cause is uncertain. Literal lighting controls remain authoritative. Retain an externally sourced friendly lighting label at most once and only when it is compatible, generator/version calibrated, and immediately unpacked by its already-owned literal controls; never emit the explanation-only controlled summary as an extra control. Split or replace unowned, cross-axis, and multi-layer compounds. Correct an overstrong draft by replacing or deleting the amplifying language, not by appending a negative counterweight. Give each major component one relation and each inversion-prone interaction one relation clause, but do not let flexible pose coordinates or secondary details outrank the primary proposition.
 
 7. Apply the pre-emit gate and report prompt-only limits honestly.
+
+8. For actual generation or source/render evaluation, persist the reconciled `plan.json`, exact `prompt.txt` and SHA-256, a settings record with source frame, target size, size-binding status, and reference handling, plus an attempt log. Run `python tools/salience_plan.py PLAN.json --prompt PROMPT.txt` immediately before freezing the prompt. Use `tools/size_adapter.py` for a supported target and delivered-frame evidence; `auto`, unsupported, or unbound size remains unscored for composition-frame delivery. Ordinary prompt-only extraction does not require these artifacts.
 
 ## Routing rules
 
@@ -127,7 +136,7 @@ detected_facets:
 - For a prominent or clearly readable human face, add `face-detail`; for a small, blurred, shadowed, or heavily occluded face, keep only scale-appropriate human evidence and do not invent micro-features.
 - Add a human body-form risk only when visible proportion, contour/tissue, muscle definition, skin surface, tension, or body-region hierarchy is first-order. Do not route it merely because a person or torso is visible.
 - Add `detail.color-tone-fidelity` only when color or tonal behavior is first-order, the user explicitly prioritizes tone fidelity, or confusion among intrinsic color, illumination, cast, exposure, and processing would materially change the image. Do not route it for ordinary incidental color.
-- Add `detail.light-form-fidelity` only when lighting, shadow topology, light-induced form, material response, or background spill is first-order; when the user explicitly prioritizes lighting fidelity; or when a source/render comparison identifies lighting as a material residual. Do not route it for ordinary incidental lighting already handled by the selected medium module.
+- Add `detail.light-form-fidelity` only when lighting, shadow topology, light-induced form, material response, or background spill is first-order; when the user explicitly prioritizes lighting fidelity; or when a source/render comparison identifies lighting as a material residual, including lost regional value separation across the same material. Do not route it for ordinary incidental lighting already handled by the selected medium module.
 - Treat the spatial topology of major components as Tier 0 evidence, but let the dominant fidelity axis determine its prompt weight. Do not force ordinary topology to outrank appearance or information invariants.
 - Treat adaptive aesthetic analysis as Tier 0 evidence, not as a style preset. Do not load extra style modules merely to fill an aesthetic checklist.
 - Module selection controls what must be checked, not how many words it receives. A routed detail module may contribute no standalone sentence when its evidence is already owned by a primary invariant.
@@ -209,17 +218,17 @@ Always.
 - Do not invent exact dimensions from a viewer preview.
 - Put frame shape, crop, subject scale, and edge interactions before small object detail.
 - Lock subject frame share and negative-space share before adding face or object micro-detail.
-- Describe which evidence occupies the top, middle, bottom, left, center, and right zones when those bands control the composition.
+- Describe which evidence occupies the frame zones, including any material source-visible axis offset.
 
 ## Major-region hierarchy
 
-Map the few largest visually coherent regions as a major-region hierarchy before local detail. For each, record relative area, tonal or material role, first-attention priority, legibility, and contact with the frame edge. Use source-relative roles such as dominant field, supporting mass, edge frame, or low-legibility zone rather than fixed percentages.
+Map the few largest visually coherent regions as a major-region hierarchy before local detail. Record relative area, role, attention, legibility, and frame contact without fixed percentages.
 
-Preserve the hierarchy of region shares even when a flexible pose, viewpoint, or placement changes. Exact coordinates may move while the balance among dominant, supporting, and framing regions remains stable.
+Preserve region-share hierarchy when flexible pose, viewpoint, or placement changes; exact coordinates may move.
 
 ## Spatial language
 
-Prefer generator-friendly relations such as `left third`, `near the bottom edge`, `occupies roughly half the frame height`, `touches the left edge`, or `leaves a narrow background band`.
+Prefer generator-friendly frame relations. Before drafting, give each material placement, principal-axis, viewpoint, and cross-component dimension a direction-neutral disposition: `invariant`, `flexible`, `not-material`, `not-visible`, or `uncertain`. A frame-zone record alone does not cover orientation.
 
 ## Relational coordinate frames
 
@@ -281,6 +290,8 @@ Form internally:
 5. Build an invariant salience ledger. Give each invariant a semantic slot, primary or supporting role, observed target, causal origin, source-relative strength, evidence, and one clause owner.
 6. For relationship-led or mixed images, the stable zones and each critical pair's side, containment, contact, support, depth, occlusion, and boundary crossing.
 7. One to three likely failures, including a category default replacing source-specific evidence.
+
+Merge synonymous non-color and non-light pulls into one source-relative aggregate effect with one claim and control.
 
 Build a sparse relation graph and group elements sharing a relation. Keep ordinary premises ordinary. In appearance-led images, do not let minor coordinates outrank appearance; in information-led images, prioritize layout and legibility.
 
@@ -418,6 +429,7 @@ Apply this as a rewrite pass, not a checklist appended to the draft.
 - Confirm that `PROMPT:` contains the primary visual concept.
 - Merge candidate claims by semantic slot before writing prose; each emitted slot has one clause owner.
 - Give each primary invariant one affirmative control; keep flexible dimensions supporting. Order by the dominant fidelity axis.
+- Give each generic effect one claim and exact prompt control; keep specialized ledgers separate.
 
 ### Net salience
 
@@ -438,7 +450,7 @@ Apply this as a rewrite pass, not a checklist appended to the draft.
 - For every required intrinsic value, chroma, or hue observation, trace one uninterrupted path from region axis to same-region/same-axis aggregate effect, emitted claim, and intrinsic axis-control. A relative hierarchy, exposure, illumination, or processing clause cannot satisfy missing intrinsic surface value or chroma.
 - Give an axis-control one region and one perceptual axis. If one phrase changes several axes, split its literal excerpts or mark it as a justified secondary compound-control; never use a compound-control to satisfy a required intrinsic axis.
 - Keep midtone or flat evidence that establishes displayed intrinsic color separate from highlight and shadow evidence that establishes tone response. Mixed tone-zone evidence may remain diagnostic but cannot drive an intrinsic axis-control.
-- Treat an appearance metaphor as explanation-only unless it has generator-and-version-specific response evidence. An unverified metaphor cannot be the sole carrier of a material color axis.
+- For every routed human, require explicit person-prior and skin-surface decisions. Emitted priors need visible geometry; emitted controlled descriptors must deterministically wrap separately owned axes. Friendly metaphors remain explanation-only without exact generator/version evidence.
 - Check global cast against reliable neutral or multi-region evidence; otherwise retain uncertainty.
 
 ### Lighting and light-to-form consistency
@@ -454,12 +466,12 @@ Apply this as a rewrite pass, not a checklist appended to the draft.
 
 ### Spatial and fidelity checks
 
-- Audit coordinate contradictions before emitting. Remove conflicting numeric anchors; use at most five unless a dense UI or diagram benefits.
+- Audit coordinate contradictions before emitting. Then audit the direction-neutral spatial coverage ledger: a frame zone alone cannot cover orientation; each invariant needs one relation/effect/claim/control path and causal axis; non-invariants emit nothing; duplicate ownership is merged.
 - Relate every major component or coherent group to another component or stable zone. Make inversion-prone side, contact, support, containment, and depth order explicit; distinguish 2D overlap from scene-space contact.
 - Preserve the relative area and attention order of major regions. Keep partial or edge-adjacent bodies, garments, objects, reflections, screens, posters, and text blocks incomplete.
 - Confirm that detail has not increased subject scale, sharpness, background legibility, retouching, contrast, lighting polish, or a category's default silhouette beyond the source.
 - Retain scale-appropriate face evidence: selective likeness anchors when readable, only orientation, hair mass, tone, and visibility when small or obscured.
-- Remove unsupported camera, lens, identity, brand, artist, hidden-content, and quality assumptions. Report prompt-only limits honestly for unreliable exact details.
+- Remove unsupported camera, lens, identity, brand, artist, hidden-content, and quality assumptions. Report prompt-only limits honestly; before generation, audit the reconciled plan and final prompt; separate setting and pixel evidence.
 
 ## Length and clarity
 
@@ -501,6 +513,8 @@ Selected modules contribute evidence candidates, not mandatory prose. Merge them
 
 Assign one clause owner to each emitted semantic slot. State its affirmative target once; add only a distinct high-risk boundary.
 
+Give each generic aggregate effect one emitted claim and exact control. Emit only invariant spatial decisions, once per causal control axis; keep every other disposition non-emitted.
+
 When color or tone is material, assign each emitted control to one causal layer and one perceptual effect budget. Use source-relative value, chroma, and hue; keep intrinsic surface, illumination, global cast, exposure, processing, and hierarchy consistent.
 
 Draft intrinsic surface, illumination, global response, and processing as distinct compact clauses when more than one is supported. Before emission, make every exact color-changing phrase traceable to the final color-control ledger; a metaphor may summarize resolved axes but cannot create another directional control.
@@ -511,11 +525,11 @@ When lighting is material, assign each emitted control to one Light/Form owner a
 
 Lead with the visible result; add physical cause only at supported confidence. Reconcile every exact lighting-changing phrase with one ledger owner and complete effect list. The ledger is internal, not output prose or grounds for repetition. Keep spatial illumination there and displayed color, exposure, and tone response in Color/Tone. Controlled summaries stay diagnostic. An externally sourced friendly label may appear once only after compatible-axis and exact generator/version calibration, immediately before its literal decomposition.
 
-Use compact blocks for complex images and no fixed word cap; every clause must add a control. Keep essential crop, partial visibility, and interactions affirmative. Relate major components and state inversion-prone topology directly.
+Use compact blocks for complex images and no fixed word cap; every clause must add a control. Keep essential crop, partial visibility, interactions, placement, orientation, and viewpoint causally distinct and affirmative.
 
 For a high-salience look, put one supported Aesthetic Signature before inventory; for a neutral look, use one or two cues. Preserve major-region area, role, edge contact, legibility, and attention.
 
-When face likeness is selected, use one scale-appropriate passage; a gestalt anchor cannot replace visible geometry or raise polish.
+When face likeness is selected, use one scale-appropriate passage; a gestalt anchor cannot replace visible geometry or raise polish. Retain provenance and visible-geometry evidence for any broad human prior.
 
 ## NEGATIVE PROMPT
 
@@ -613,6 +627,16 @@ python3 tools/size_adapter.py WIDTH HEIGHT
 ```
 
 Use its target size or choose `auto`. State that the target is a ratio-preserving adapter size, not the source file dimensions.
+
+For actual generation or source/render evaluation, also record how the size reached the tool. Use one of `explicitly-applied`, `auto`, `unsupported`, or `unbound`. After delivery, add the actual frame:
+
+```bash
+python3 tools/size_adapter.py WIDTH HEIGHT \
+  --binding-status explicitly-applied \
+  --delivered-width OUTPUT_WIDTH --delivered-height OUTPUT_HEIGHT
+```
+
+Only an explicitly applied target delivered at that exact size passes the frame-setting layer. An explicit mismatch fails; `auto`, unsupported, unbound, or missing delivered dimensions remain unscored, with continuous ratio errors reported when available. This setting evidence does not replace rendered-pixel composition review. Do not try to repair an unavailable size control by repeating aspect-ratio or framing adjectives in the prompt.
 
 ## Other generators
 

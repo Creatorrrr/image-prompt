@@ -54,6 +54,16 @@ python3 tools/size_adapter.py WIDTH HEIGHT
 
 Use its target size or choose `auto`. State that the target is a ratio-preserving adapter size, not the source file dimensions.
 
+For actual generation or source/render evaluation, also record how the size reached the tool. Use one of `explicitly-applied`, `auto`, `unsupported`, or `unbound`. After delivery, add the actual frame:
+
+```bash
+python3 tools/size_adapter.py WIDTH HEIGHT \
+  --binding-status explicitly-applied \
+  --delivered-width OUTPUT_WIDTH --delivered-height OUTPUT_HEIGHT
+```
+
+Only an explicitly applied target delivered at that exact size passes the frame-setting layer. An explicit mismatch fails; `auto`, unsupported, unbound, or missing delivered dimensions remain unscored, with continuous ratio errors reported when available. This setting evidence does not replace rendered-pixel composition review. Do not try to repair an unavailable size control by repeating aspect-ratio or framing adjectives in the prompt.
+
 ## Other generators
 
 - Emit `NEGATIVE PROMPT:` only when the downstream tool exposes a separate negative-prompt input or the user explicitly requests a reusable negative list.

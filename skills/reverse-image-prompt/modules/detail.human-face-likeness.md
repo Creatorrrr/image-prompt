@@ -1,6 +1,6 @@
 ---
 id: detail.human-face-likeness
-version: 3
+version: 6
 priority: 80
 type: detail
 tier: 3
@@ -53,6 +53,8 @@ An anchor must describe a distinctive visible relationship, not a generic adject
 When `subject.human` selects a broad person-gestalt anchor, treat it as one high-level generation prior rather than as the likeness description itself.
 
 - Place it once before local face geometry; do not repeat the racial, ethnic, regional-appearance, or attractiveness category in later clauses.
+- Preserve a user-supplied broad appearance judgment as user evidence, not as an inferred factual identity. Record its provenance in the owning claim and keep the category phrase out of reusable runtime defaults and unrelated held-out expectations.
+- Link `geometry_claim_ids` to separate emitted source-visible human or face geometry claims with exact generic controls. Neither prose evidence nor the prior clause satisfies this link.
 - Use the full scale-appropriate geometry budget to correct the category prototype with the source's face silhouette, feature relationships, expression, hair boundary, surface treatment, and visible asymmetry.
 - If the broad anchor conflicts with reliable local geometry, revise or omit the broad anchor. Geometry wins.
 - Keep attractiveness at the level of overall facial reading; do not let it enlarge the face, idealize proportions, clean the skin, strengthen makeup, sharpen focus, or upgrade lighting.
@@ -69,7 +71,7 @@ Select only the strongest supported anchors across these groups:
 6. **Skin, makeup, and surface treatment:** tone depth and undertone, matte/reflective balance, visible texture, freckles or marks, under-eye treatment, facial hair, makeup placement and strength, capture smoothing or retouching.
 7. **Facial lighting:** which planes receive highlight or shadow, how light changes the readable eye/nose/mouth/jaw geometry, and whether features remain soft, flat, hazy, or contrasty.
 
-Preserve expression, gaze, and hair-to-face occlusion as likeness-critical geometry.
+Preserve expression, gaze, and hair-to-face occlusion as likeness-critical geometry. Keep viewpoint separate from head pose and attention; do not repeat perspective-induced nostril, jaw, neck, eye, or far-side changes as intrinsic geometry.
 
 Distinguish optical or processing softness from beauty retouching. A globally soft face should remain optically soft rather than becoming a crisp face with smoothed skin.
 
@@ -93,6 +95,8 @@ Create one compact human-likeness passage after composition:
 4. expression and gaze
 5. hair silhouette and occlusion
 6. skin/makeup/rendering and facial lighting when legible
+
+Treat the passage as one owned face-gestalt effect when its clauses jointly preserve one likeness direction. If separate clauses push the same symmetry, feature scale, projection, polish, or face-type direction, merge or replace them rather than allowing the category anchor and local geometry to amplify one another.
 
 Repeat at most one or two highest-risk anchors in the final constraint block. Do not copy the full passage into negative prompt or settings.
 

@@ -1,6 +1,6 @@
 ---
 id: core.output-contract
-version: 15
+version: 17
 priority: 98
 type: core
 tier: 0
@@ -58,6 +58,8 @@ Selected modules contribute evidence candidates, not mandatory prose. Merge them
 
 Assign one clause owner to each emitted semantic slot. State its affirmative target once; add only a distinct high-risk boundary.
 
+Give each generic aggregate effect one emitted claim and exact control. Emit only invariant spatial decisions, once per causal control axis; keep every other disposition non-emitted.
+
 When color or tone is material, assign each emitted control to one causal layer and one perceptual effect budget. Use source-relative value, chroma, and hue; keep intrinsic surface, illumination, global cast, exposure, processing, and hierarchy consistent.
 
 Draft intrinsic surface, illumination, global response, and processing as distinct compact clauses when more than one is supported. Before emission, make every exact color-changing phrase traceable to the final color-control ledger; a metaphor may summarize resolved axes but cannot create another directional control.
@@ -68,11 +70,11 @@ When lighting is material, assign each emitted control to one Light/Form owner a
 
 Lead with the visible result; add physical cause only at supported confidence. Reconcile every exact lighting-changing phrase with one ledger owner and complete effect list. The ledger is internal, not output prose or grounds for repetition. Keep spatial illumination there and displayed color, exposure, and tone response in Color/Tone. Controlled summaries stay diagnostic. An externally sourced friendly label may appear once only after compatible-axis and exact generator/version calibration, immediately before its literal decomposition.
 
-Use compact blocks for complex images and no fixed word cap; every clause must add a control. Keep essential crop, partial visibility, and interactions affirmative. Relate major components and state inversion-prone topology directly.
+Use compact blocks for complex images and no fixed word cap; every clause must add a control. Keep essential crop, partial visibility, interactions, placement, orientation, and viewpoint causally distinct and affirmative.
 
 For a high-salience look, put one supported Aesthetic Signature before inventory; for a neutral look, use one or two cues. Preserve major-region area, role, edge contact, legibility, and attention.
 
-When face likeness is selected, use one scale-appropriate passage; a gestalt anchor cannot replace visible geometry or raise polish.
+When face likeness is selected, use one scale-appropriate passage; a gestalt anchor cannot replace visible geometry or raise polish. Retain provenance and visible-geometry evidence for any broad human prior.
 
 ## NEGATIVE PROMPT
 

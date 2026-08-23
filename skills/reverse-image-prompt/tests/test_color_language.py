@@ -10,7 +10,11 @@ import unittest
 TOOLS = Path(__file__).resolve().parents[1] / "tools"
 sys.path.insert(0, str(TOOLS))
 
-from color_language import classify_observation, review_candidates  # noqa: E402
+from color_language import (  # noqa: E402
+    classify_observation,
+    compose_controlled_descriptor,
+    review_candidates,
+)
 
 
 POLICY = json.loads(
@@ -51,6 +55,50 @@ def candidate_payload(candidates: list[dict], *, kind: str = "user-supplied") ->
 
 
 class ColorLanguageTests(unittest.TestCase):
+    def test_controlled_descriptor_composes_current_axes_in_fixed_order(self) -> None:
+        classification = classify_observation(observation(70.0, 7.0, 10.0), POLICY)
+        descriptor = compose_controlled_descriptor(classification, "visible skin")
+        self.assertEqual(descriptor["status"], "ready")
+        self.assertEqual(
+            descriptor["phrase"],
+            "visible skin with a light value, low chroma, a golden undertone, and a satin finish",
+        )
+        self.assertEqual(
+            descriptor["included_axes"],
+            ["value_depth", "chroma", "undertone", "finish"],
+        )
+        self.assertNotIn("emit", descriptor)
+
+    def test_controlled_descriptor_changes_with_held_out_axis_values(self) -> None:
+        light = compose_controlled_descriptor(
+            classify_observation(observation(70.0, 7.0, 10.0), POLICY),
+            "selected surface",
+            include_finish=False,
+        )
+        deep = compose_controlled_descriptor(
+            classify_observation(observation(34.0, 1.0, 18.0), POLICY),
+            "selected surface",
+            include_finish=False,
+        )
+        self.assertNotEqual(light["phrase"], deep["phrase"])
+        self.assertIn("a deep value", deep["phrase"])
+        self.assertIn("an olive undertone", deep["phrase"])
+
+    def test_controlled_descriptor_fails_closed_on_unresolved_core_axis(self) -> None:
+        classification = classify_observation(observation(70.0, 7.0, 10.0), POLICY)
+        classification["axis_classification"]["undertone"]["confidence"] = "low"
+        descriptor = compose_controlled_descriptor(
+            classification, "selected surface", include_finish=False
+        )
+        self.assertEqual(descriptor["status"], "inconclusive")
+        self.assertNotIn("phrase", descriptor)
+        self.assertEqual(descriptor["unresolved_axes"], ["undertone"])
+
+    def test_controlled_descriptor_requires_analyst_supplied_surface_term(self) -> None:
+        classification = classify_observation(observation(70.0, 7.0, 10.0), POLICY)
+        with self.assertRaisesRegex(ValueError, "surface_term"):
+            compose_controlled_descriptor(classification, "  ")
+
     def test_same_undertone_survives_value_depth_change(self) -> None:
         light = classify_observation(observation(78.0, 7.0, 12.0), POLICY)
         medium = classify_observation(observation(50.0, 7.0, 12.0), POLICY)
