@@ -11,20 +11,22 @@ profile-aware source-visible measurement
 -> causal review of intrinsic color, illumination, cast, exposure, and processing
 -> separate value-depth, chroma, and undertone classes
 -> optional finish and evenness evidence
+-> optional deterministic axis-composed descriptor for an analyst-named surface
 -> externally supplied friendly-label candidate with provenance
 -> compatibility review
--> literal axis controls first, optional calibrated summary label second
+-> explicit plan emission decision and exact control linkage
 ```
 
 The versioned policy in `surface-color-language-policy.json` is an uncalibrated language prototype. Its bins make repeated descriptions consistent; they are not scientific skin categories or preferred targets. Record its policy ID and classification uncertainty. A different validated policy may be supplied when the task has a color-managed or user-specified target.
 
-This skill contains no semantic friendly-label examples or preferred friendly-label list. A candidate may come only from the user's request or an explicitly versioned task vocabulary. If neither exists, stop after axis classification rather than inventing a label.
+This skill contains no semantic friendly-label examples or preferred friendly-label list. A candidate may come only from the user's request or an explicitly versioned task vocabulary. A controlled descriptor is different: it contains only the current classification's literal axes and an analyst-supplied surface term, so it may be composed without inventing a category label.
 
-Use `tools/color_language.py` only after an analyst has selected a comparable midtone or flat group. The tool classifies provided Lab evidence; it never locates skin, objects, food, paint, or fabric and never emits a production prompt.
+Use `tools/color_language.py` only after an analyst has selected a comparable midtone or flat group. The tool classifies provided Lab evidence; it never locates skin, objects, food, paint, or fabric. `--compose-for` returns a reviewable phrase candidate but never decides production emission.
 
 ```bash
 python tools/color_language.py OBSERVATION.json \
   --policy references/surface-color-language-policy.json \
+  --compose-for "<analyst-supplied-visible-surface-term>" \
   --candidates LABEL-CANDIDATES.json
 ```
 
@@ -77,9 +79,17 @@ Treat every undertone term as independent of value depth. A composite appearance
 
 For `composite-appearance`, the requirements must cover value depth, chroma, undertone, and at least one of finish or evenness. Other scopes require their corresponding axis. A candidate with conflicting axes is rejected; one with unresolved finish, evenness, profile, or boundary evidence remains inconclusive. Do not force one label near a classification boundary.
 
+## Controlled axis composition
+
+`compose_controlled_descriptor` accepts the classifier result and one analyst-supplied visible surface term. It deterministically orders value depth, chroma, and undertone, with finish last only when requested and separately observed. It returns `ready` only when every included axis has medium/high confidence and a controlled term; `mixed`, `uncertain`, or low-confidence included evidence returns `inconclusive` with no phrase. It never returns an `emit` decision.
+
+A persisted `controlled_descriptor` copies the reconstructed `status`, `surface_term`, `phrase`, `included_axes`, `axis_excerpts`, `unresolved_axes`, and `composition_source`, then adds current-source evidence, `emit`, and `axis_control_ids`. On emission, value depth, chroma, and undertone IDs must reference same-region Color/Tone axis-controls whose literal excerpts equal the composed substrings. Optional finish references a separately owned generic surface control. The full phrase appears exactly once in the prompt, containing rather than repeating those excerpts.
+
+The surface term names the visible region; it must not smuggle in a preferred axis combination, demographic identity, or friendly category. The tool's fixed grammar is an axis serializer, not a learned response claim. Generator-specific effectiveness still requires rendered evidence.
+
 ## Prompt actuation
 
-Write literal value, chroma, and undertone controls before any friendly label. Add finish or evenness only when separately visible. A friendly label may summarize those controls once only when its requirements match and exact generator/version response testing has shown acceptable cross-axis behavior. It never replaces an intrinsic axis-control.
+Write literal value, chroma, and undertone controls before any friendly label. A controlled descriptor may wrap those exact excerpts once; it cannot add or replace an axis. Add finish only with its own visible evidence and surface control. A friendly label may summarize the controls once only when its requirements match and exact generator/version response testing has shown acceptable cross-axis behavior.
 
 Write a compact sequence in the order value depth, chroma, and undertone, followed only by separately observed finish or evenness. Select every term from current-source classification; do not copy a target combination from this reference.
 
@@ -87,6 +97,7 @@ Write a compact sequence in the order value depth, chroma, and undertone, follow
 
 - Do not store image-specific Lab values, regions, desired words, or coordinates in the policy.
 - Do not map color terms to race, ethnicity, nationality, or identity.
+- Do not store a preferred composed phrase; reconstruct it from each case's classified axes.
 - Do not promote a vocabulary chart, a single render, or one generator version into universal semantics.
 - Do not place named friendly-label examples or concrete preferred axis combinations in runtime instructions; keep semantic cases in held-out evaluation only.
 - Keep the motivating image as a regression sample only.

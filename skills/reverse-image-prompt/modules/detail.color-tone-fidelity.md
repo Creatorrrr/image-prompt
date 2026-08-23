@@ -1,6 +1,6 @@
 ---
 id: detail.color-tone-fidelity
-version: 5
+version: 6
 priority: 79
 type: detail
 tier: 3
@@ -78,9 +78,9 @@ Describe important regions through separate value, chroma, and hue observations 
 
 Decompose an appearance metaphor into value, chroma, hue, surface, and light response. Mark it `explanation-only`, `unverified`, or `model-calibrated`; only the last may appear once as a summary of already-owned controls, with evidence for the exact generator/version. Treat control effectiveness as generator-and-version-specific evidence.
 
-When measured surface color must become controlled natural language, read `references/surface-color-language.md`. Translate measured surface color through separate value-depth, chroma, and undertone classes before considering a friendly label. Treat finish and evenness as separate visual evidence, never as consequences of Lab alone. A friendly label is compatible only when its declared axis requirements match the classified evidence without unresolved conflicts. It remains explanation-only unless exact generator/version response evidence permits one summary use after literal axis controls.
+When measured surface color needs natural language, read `references/surface-color-language.md`. Classify value depth, chroma, and undertone independently. With medium/high confidence, a controlled descriptor may deterministically compose those current-source axes in order; include finish only from separate visible evidence. It is not a friendly label and may emit only as one wrapper containing the exact owned axis-control excerpts. Mixed, uncertain, or low-confidence core evidence yields no phrase.
 
-Review only a friendly label supplied by the user or an explicitly versioned task vocabulary; do not invent candidates from this skill.
+Friendly labels remain separate: review only user-supplied or explicitly versioned vocabulary candidates, and emit only a compatible exact-generator/version-calibrated summary. Never map surface axes to demographic identity.
 
 Map highlight, midtone, shadow, or flat-field behavior only at the granularity the source supports. Do not pool tone zones into an intrinsic target: use comparable midtone or flat patches for displayed intrinsic axes and separate groups for highlight and shadow response. Retain uncertainty for clipping, compression, mixed light, and low legibility.
 
@@ -103,10 +103,10 @@ The optional probe accepts analyst-selected normalized regions and never chooses
 ```bash
 python tools/color_probe.py SOURCE --compare RENDER --spec SAMPLING.json
 python tools/color_fidelity_eval.py COMPARISON.json --policy POLICY.json
-python tools/color_language.py OBSERVATION.json --policy references/surface-color-language-policy.json --candidates LABELS.json
+python tools/color_language.py OBSERVATION.json --policy references/surface-color-language-policy.json --compose-for "<analyst-supplied-surface>" --candidates LABELS.json
 ```
 
-Use measurements as diagnostic evidence, never as automatic prompt wording or proof of intrinsic color. The language tool returns reviewable axis terms and label compatibility, not a prompt. Keep exact values out unless the generator supports them and evidence justifies the precision.
+Use measurements as diagnostic evidence, never as proof of intrinsic color. The language tool can return reviewable axes, a deterministic descriptor candidate, and label compatibility; the plan still decides emission and supplies semantic region ownership. Keep exact values out unless the generator supports them and evidence justifies the precision.
 
 Estimate the shared Lab movement from contextual groups, then subtract it from each target group's movement to expose the target-local residual. Without an explicit tolerance policy, report the decomposition as unscored.
 
@@ -123,7 +123,7 @@ Give each material effect a source-relative identifier covering region, axis, di
 
 ## Final prompt control ledger
 
-Copy every exact prompt excerpt that changes color/tone into `emitted_controls`. Give an `axis-control` one claim, causal layer, region, axis, and complete effect list. A required intrinsic axis is complete only when it has its own intrinsic axis-control; hierarchy, exposure, or illumination cannot substitute. A justified secondary `compound-control` cannot satisfy a required axis. Cover each claim exactly once and split ambiguous compounds.
+Copy every exact prompt excerpt that changes color/tone into `emitted_controls`. Give an `axis-control` one claim, causal layer, region, axis, and complete effect list. A required intrinsic axis needs its own intrinsic axis-control; hierarchy, exposure, or illumination cannot substitute. A composed descriptor must reproduce those literal excerpts exactly once. A secondary `compound-control` cannot satisfy a required axis.
 
 When a draft over-pulls an axis, replace or remove its positive control rather than appending an opposing negative.
 

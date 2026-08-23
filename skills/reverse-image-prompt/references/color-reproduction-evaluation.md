@@ -124,12 +124,13 @@ profile-aware measurement
 -> causal review
 -> value-depth, chroma, and undertone classification
 -> separately observed finish and evenness
+-> optional deterministic axis composition for an analyst-named surface
 -> optional externally supplied friendly-label compatibility review
 ```
 
-The controlled terms are source-visible axes, not identity categories. Undertone remains independent of value depth. A composite friendly label is never a sufficient control by itself: review the declared axis requirements of a label supplied by the user or an explicitly versioned task vocabulary, emit literal axes first, and retain the label only with exact generator/version response evidence. Do not originate a candidate from this reference. An ambiguous or conflicting candidate remains non-emitted.
+The controlled terms are source-visible axes, not identity categories. Undertone remains independent of value depth. A controlled descriptor is a deterministic wrapper around the current literal axes, not a demographic or friendly label; mixed, uncertain, or low-confidence included evidence yields no phrase. The plan, not the classifier, decides emission and must link every substring to an owned control. A friendly label is never sufficient by itself: review only user or versioned-vocabulary candidates and retain one only with exact generator/version response evidence.
 
-When persisted, place the classifier result under `surface_color_language` with `policy_id`, `policy_status`, `observation_scope`, `profile_status`, `region_id`, source evidence, all five axis classifications, and optional `friendly_label_review` entries. Each review retains `candidate_source` (`kind` and `reference`), `axis_requirements`, `matched_axes`, `conflicting_axes`, `unresolved_axes`, and `review_status`. Do not store image-specific target values or preferred labels in the policy file.
+When persisted, place the classifier result under `surface_color_language` with `policy_id`, `policy_status`, `observation_scope`, `profile_status`, `region_id`, source evidence, and all five axis classifications. An optional `controlled_descriptor` retains reconstructed fields plus evidence, emission decision, and axis-control IDs. Friendly-label reviews retain provenance, requirements, matched/conflicting/unresolved axes, and status. Do not store image-specific target values, composed phrases, or preferred labels in the policy file.
 
 ## Displayed tone-response axes
 
@@ -187,11 +188,13 @@ For each required displayed-tone axis, use the same chain but restrict causal ow
 
 Appearance metaphors are `explanation-only` or `unverified` by default. They may be emitted only when an exact generator-and-version evaluation shows that the phrase reinforces already-owned axes without unacceptable cross-axis leakage.
 
+An emitted controlled descriptor follows a different rule: its full phrase must be exactly reconstructible from current classified axes, and its `axis_control_ids` must point to literal same-region value, chroma, and hue controls. Optional finish points to a separately owned generic surface control. The wrapper appears once and contains those excerpts; it is not an additional color direction or proof that the generator obeyed them.
+
 Exact RGB, hex, Lab, or color-temperature values remain evaluation evidence unless the named generator documents numeric color control and the task supports that precision.
 
 ## Generator response calibration
 
-Natural-language color controls are model actuators, not universal color definitions. Maintain response evidence by exact model and version only when enough independent evaluation exists.
+Natural-language color controls, including deterministic axis compositions, are model actuators rather than universal color definitions. Maintain response evidence by exact model and version only when enough independent evaluation exists.
 
 For each tested descriptor, record:
 

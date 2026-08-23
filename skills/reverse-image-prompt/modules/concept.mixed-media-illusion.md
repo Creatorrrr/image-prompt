@@ -1,6 +1,6 @@
 ---
 id: concept.mixed-media-illusion
-version: 4
+version: 5
 priority: 84
 type: concept
 tier: 1
@@ -39,6 +39,7 @@ Load when the image combines different media or realism levels, such as a flat s
 
 - Describe the element's visual role first: flat graphic overlay, sticker, decal, printed mark, cel-shaded insert, collage fragment, or stylized overlay.
 - Lock simplified contour, outline weight, shape count, color-block treatment, limited shading, flatness, and exact overlap with the real subject.
+- When the secondary layer is cropped or partial, name only one to three source-salient visible fragments, their frame or foreground overlap, and the counterpart parts that stay cropped, hidden, or indistinct. Preserve its source-visible offset and completion budget; do not turn a partial layer into a complete centered subject.
 - If related stems, labels, marks, leaves, symbols, or secondary shapes share the same graphic treatment, treat them as part of the same overlay family.
 - Preserve the coherence ceiling: do not make the mixed-media element physically plausible, seamlessly 3D, or material-matched unless the source is visibly that way.
 

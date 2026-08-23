@@ -17,6 +17,7 @@ from lighting_language import (
     classify_observation as classify_lighting_observation,
     review_candidates as review_lighting_candidates,
 )
+from color_language import compose_controlled_descriptor
 
 
 VALID_MODES = {"relationship-led", "appearance-led", "information-led", "mixed"}
@@ -52,6 +53,105 @@ VALID_SOURCE_KINDS = {
 VALID_REGION_ROLES = {"dominant", "supporting", "edge-frame", "low-legibility"}
 VALID_RELATIVE_AREAS = {"small", "medium", "large"}
 VALID_ATTENTION = {"primary", "secondary", "background"}
+VALID_GENERIC_EFFECT_AXES = VALID_AXES - {"color", "light-to-form"}
+VALID_COMPONENT_RELATION_KINDS = {
+    "frame-zone",
+    "axis-offset",
+    "principal-axis",
+    "viewpoint",
+    "part-whole-orientation",
+    "attention-direction",
+    "cross-component-orientation",
+    "edge-contact",
+    "overlap",
+    "layer-order",
+    "partial-visibility",
+    "contact",
+    "support",
+    "containment",
+    "boundary-crossing",
+}
+VALID_COMPONENT_RELATION_ROLES = {"primary", "supporting"}
+VALID_FRAME_EDGES = {"top", "bottom", "left", "right"}
+VALID_COMPLETION_RISKS = {"low", "medium", "high"}
+VALID_SPATIAL_SUBJECT_KINDS = {"human", "non-human", "group", "component"}
+VALID_SPATIAL_VISIBILITY = {"readable", "partial", "indistinct"}
+VALID_SPATIAL_DISPOSITIONS = {
+    "invariant",
+    "flexible",
+    "not-material",
+    "not-visible",
+    "uncertain",
+}
+VALID_SPATIAL_CONFIDENCE = {"high", "medium", "low"}
+SPATIAL_DIMENSION_FAMILIES = {
+    "frame-placement": "frame-placement",
+    "subject-principal-axis": "principal-axis",
+    "viewpoint-elevation": "viewpoint",
+    "viewpoint-azimuth": "viewpoint",
+    "viewpoint-roll": "viewpoint",
+    "viewpoint-distance-foreshortening": "viewpoint",
+    "human-body-orientation": "principal-axis",
+    "human-head-body-relation": "part-whole",
+    "human-shoulder-line": "part-whole",
+    "human-attention-direction": "attention-direction",
+    "cross-component-orientation": "cross-component",
+}
+BASE_SPATIAL_DIMENSIONS = {
+    "frame-placement",
+    "subject-principal-axis",
+    "viewpoint-elevation",
+    "viewpoint-azimuth",
+    "viewpoint-roll",
+    "viewpoint-distance-foreshortening",
+    "cross-component-orientation",
+}
+HUMAN_SPATIAL_DIMENSIONS = {
+    "human-body-orientation",
+    "human-head-body-relation",
+    "human-shoulder-line",
+    "human-attention-direction",
+}
+SPATIAL_DIMENSION_ALLOWED_ORIGINS = {
+    "frame-placement": {"spatial-relation", "layout"},
+    "subject-principal-axis": {"spatial-relation", "pose-deformation", "layout"},
+    "viewpoint-elevation": {"perspective"},
+    "viewpoint-azimuth": {"perspective"},
+    "viewpoint-roll": {"perspective"},
+    "viewpoint-distance-foreshortening": {"perspective"},
+    "human-body-orientation": {"pose-deformation"},
+    "human-head-body-relation": {"pose-deformation"},
+    "human-shoulder-line": {"pose-deformation"},
+    "human-attention-direction": {"pose-deformation", "spatial-relation"},
+    "cross-component-orientation": {"spatial-relation", "layout"},
+}
+VALID_GENERATION_PRIOR_SCOPES = {"person-gestalt", "attractiveness"}
+VALID_GENERATION_PRIOR_SOURCES = {
+    "user-supplied",
+    "source-visible-approximation",
+    "model-calibrated",
+}
+VALID_HUMAN_FACE_VISIBILITY = {
+    "readable",
+    "partial",
+    "indistinct",
+    "not-visible",
+    "uncertain",
+}
+VALID_PERSON_PRIOR_DISPOSITIONS = {"emit", "omit", "uncertain"}
+VALID_SKIN_SURFACE_DISPOSITIONS = {
+    "material",
+    "not-material",
+    "not-visible",
+    "uncertain",
+}
+VALID_SKIN_COVERAGE = {"exposed", "through-sheer", "mixed"}
+VALID_DESCRIPTOR_DISPOSITIONS = {"emit", "omit", "uncertain"}
+CONTROLLED_DESCRIPTOR_AXIS_TO_COLOR_AXIS = {
+    "value_depth": "value",
+    "chroma": "chroma",
+    "undertone": "hue",
+}
 VALID_COLOR_IMPORTANCE = {"primary", "supporting"}
 VALID_COLOR_OBSERVATION_SCOPES = {"source-visible", "color-managed", "user-specified"}
 VALID_DISPLAYED_TONE_AXES = {
@@ -222,6 +322,1173 @@ def _nonempty_string(value: Any) -> bool:
 
 def _string_list(value: Any) -> bool:
     return isinstance(value, list) and all(_nonempty_string(item) for item in value)
+
+
+def _audit_generation_prior(claim: dict[str, Any], label: str) -> list[str]:
+    """Validate an optional broad human generation prior without judging its phrase."""
+
+    prior = claim.get("generation_prior")
+    if prior is None:
+        return []
+    if not isinstance(prior, dict):
+        return [f"{label}.generation_prior must be an object"]
+
+    errors: list[str] = []
+    prefix = f"{label}.generation_prior"
+    if prior.get("scope") not in VALID_GENERATION_PRIOR_SCOPES:
+        errors.append(f"{prefix}.scope is invalid")
+
+    source = prior.get("candidate_source")
+    if not isinstance(source, dict):
+        errors.append(f"{prefix}.candidate_source must be an object")
+    else:
+        if source.get("kind") not in VALID_GENERATION_PRIOR_SOURCES:
+            errors.append(f"{prefix}.candidate_source.kind is invalid")
+        if not _nonempty_string(source.get("reference")):
+            errors.append(f"{prefix}.candidate_source.reference must be non-empty")
+
+    if prior.get("non_identifying") is not True:
+        errors.append(f"{prefix}.non_identifying must be true")
+    if not _nonempty_strings(prior.get("visible_geometry_evidence")):
+        errors.append(
+            f"{prefix}.visible_geometry_evidence must contain source-visible geometry"
+        )
+    geometry_claim_ids = prior.get("geometry_claim_ids")
+    if not _nonempty_strings(geometry_claim_ids):
+        errors.append(
+            f"{prefix}.geometry_claim_ids must contain emitted geometry claim ids"
+        )
+    elif len(geometry_claim_ids) != len(set(geometry_claim_ids)):
+        errors.append(f"{prefix}.geometry_claim_ids contains duplicates")
+    if claim.get("owner") not in {"subject.human", "detail.human-face-likeness"}:
+        errors.append(f"{prefix} may be owned only by a human subject or face module")
+    return errors
+
+
+def _audit_generation_prior_links(
+    prior_claim_id: str,
+    claim: dict[str, Any],
+    claim_map: dict[str, dict[str, Any]],
+    specialized_claim_ids: set[str],
+    controlled_claim_counts: dict[str, int],
+) -> list[str]:
+    """Require a broad human prior to terminate in separate visible geometry controls."""
+
+    prior = claim.get("generation_prior")
+    if not isinstance(prior, dict):
+        return []
+    geometry_claim_ids = prior.get("geometry_claim_ids")
+    if not _nonempty_strings(geometry_claim_ids):
+        return []
+
+    errors: list[str] = []
+    prefix = f"candidate claim {prior_claim_id!r}.generation_prior"
+    if prior_claim_id in specialized_claim_ids:
+        errors.append(f"{prefix} must be owned by the generic prompt-control ledger")
+    for geometry_claim_id in geometry_claim_ids:
+        if geometry_claim_id == prior_claim_id:
+            errors.append(
+                f"{prefix}.geometry_claim_ids must reference a separate geometry claim"
+            )
+            continue
+        geometry_claim = claim_map.get(geometry_claim_id)
+        if geometry_claim is None:
+            errors.append(
+                f"{prefix}.geometry_claim_ids references unknown geometry claim "
+                f"{geometry_claim_id!r}"
+            )
+            continue
+        if (
+            geometry_claim.get("emit") is not True
+            or geometry_claim.get("polarity") != "affirmative"
+        ):
+            errors.append(
+                f"{prefix}.geometry_claim_ids must reference emitted affirmative geometry claims"
+            )
+        if geometry_claim.get("owner") not in {
+            "subject.human",
+            "detail.human-face-likeness",
+        }:
+            errors.append(
+                f"{prefix}.geometry_claim_ids may reference only a human or face module"
+            )
+        if geometry_claim_id in specialized_claim_ids:
+            errors.append(
+                f"{prefix}.geometry_claim_ids must reference generic geometry claims"
+            )
+        if controlled_claim_counts.get(geometry_claim_id, 0) != 1:
+            errors.append(
+                f"{prefix}.geometry_claim_ids needs exactly one generic prompt control "
+                f"for {geometry_claim_id!r}"
+            )
+    return errors
+
+
+def _audit_component_relations(
+    contract: dict[str, Any], known_regions: set[str]
+) -> tuple[list[str], dict[str, dict[str, Any]]]:
+    """Validate sparse source-relative component and frame relations."""
+
+    errors: list[str] = []
+    relations = contract.get("component_relations", [])
+    if not isinstance(relations, list):
+        return ["component_relations must be a list"], {}
+
+    relation_map: dict[str, dict[str, Any]] = {}
+    for index, relation in enumerate(relations):
+        label = f"component_relations[{index}]"
+        if not isinstance(relation, dict):
+            errors.append(f"{label} must be an object")
+            continue
+        relation_id = relation.get("id")
+        if not _nonempty_string(relation_id):
+            errors.append(f"{label}.id must be non-empty")
+            continue
+        relation_id = relation_id.strip()
+        if relation_id in relation_map:
+            errors.append(f"duplicate component relation id: {relation_id}")
+        relation_map[relation_id] = relation
+
+        kind = relation.get("kind")
+        if kind not in VALID_COMPONENT_RELATION_KINDS:
+            errors.append(f"{label}.kind is invalid")
+        subject_region_id = relation.get("subject_region_id")
+        if subject_region_id not in known_regions:
+            errors.append(f"{label}.subject_region_id must reference a major region")
+
+        reference_region_id = relation.get("reference_region_id")
+        frame_reference = relation.get("frame_reference")
+        has_region_reference = _nonempty_string(reference_region_id)
+        has_frame_reference = _nonempty_string(frame_reference)
+        if has_region_reference == has_frame_reference:
+            errors.append(
+                f"{label} must name exactly one reference_region_id or frame_reference"
+            )
+        elif has_region_reference and reference_region_id not in known_regions:
+            errors.append(f"{label}.reference_region_id must reference a major region")
+
+        if not _nonempty_string(relation.get("observation")):
+            errors.append(f"{label}.observation must be source-relative and non-empty")
+        if relation.get("role") not in VALID_COMPONENT_RELATION_ROLES:
+            errors.append(f"{label}.role is invalid")
+        if not _nonempty_strings(relation.get("source_evidence")):
+            errors.append(f"{label}.source_evidence must contain visible evidence")
+
+        edge_contacts = relation.get("edge_contacts", [])
+        if not _string_list(edge_contacts):
+            errors.append(f"{label}.edge_contacts must be a list of frame edges")
+            edge_contacts = []
+        unknown_edges = sorted(set(edge_contacts) - VALID_FRAME_EDGES)
+        if unknown_edges:
+            errors.append(f"{label}.edge_contacts contains invalid frame edges")
+        if len(edge_contacts) != len(set(edge_contacts)):
+            errors.append(f"{label}.edge_contacts contains duplicates")
+        if kind == "edge-contact" and not edge_contacts:
+            errors.append(f"{label}.edge_contacts must be non-empty for edge-contact")
+
+        visible_fragments = relation.get("visible_fragments", [])
+        hidden_or_cropped = relation.get("hidden_or_cropped", [])
+        if not _string_list(visible_fragments):
+            errors.append(f"{label}.visible_fragments must be a list of strings")
+            visible_fragments = []
+        if not _string_list(hidden_or_cropped):
+            errors.append(f"{label}.hidden_or_cropped must be a list of strings")
+            hidden_or_cropped = []
+        completion_risk = relation.get("completion_risk")
+        if completion_risk is not None and completion_risk not in VALID_COMPLETION_RISKS:
+            errors.append(f"{label}.completion_risk is invalid")
+        if kind == "partial-visibility":
+            if not visible_fragments:
+                errors.append(
+                    f"{label}.visible_fragments must name the surviving fragments"
+                )
+            if not hidden_or_cropped:
+                errors.append(
+                    f"{label}.hidden_or_cropped must name cropped or hidden counterparts"
+                )
+            if completion_risk not in VALID_COMPLETION_RISKS:
+                errors.append(
+                    f"{label}.completion_risk is required for partial-visibility"
+                )
+
+    return errors, relation_map
+
+
+def _audit_spatial_orientation_coverage(
+    plan: dict[str, Any],
+    contract: dict[str, Any],
+    known_regions: set[str],
+    relation_map: dict[str, dict[str, Any]],
+    invariant_map: dict[str, dict[str, Any]],
+    claim_map: dict[str, dict[str, Any]],
+) -> list[str]:
+    """Require an explicit disposition for spatial degrees of freedom.
+
+    This is a coverage and ownership check, not a preferred-pose policy.  The
+    validator never assigns a centered, off-center, frontal, profile, left, or
+    right target; it only verifies that every generic degree of freedom was
+    considered and that invariant decisions reach one relation/effect/claim/
+    literal-control path.
+    """
+
+    routing = plan.get("routing")
+    routed_modules: set[str] = set()
+    if isinstance(routing, dict):
+        resolved = routing.get("resolved_non_core_modules", [])
+        if isinstance(resolved, list):
+            routed_modules = {
+                item for item in resolved if isinstance(item, str) and item.strip()
+            }
+    human_routed = "subject.human" in routed_modules
+
+    coverage = contract.get("spatial_orientation_coverage")
+    if coverage is None:
+        return (
+            [
+                "a routed subject.human requires spatial_orientation_coverage; "
+                "a frame-zone relation alone cannot prove pose/orientation coverage"
+            ]
+            if human_routed
+            else []
+        )
+    if not isinstance(coverage, dict):
+        return ["spatial_orientation_coverage must be an object"]
+
+    errors: list[str] = []
+    subjects = coverage.get("subjects")
+    if not isinstance(subjects, list) or not subjects:
+        errors.append(
+            "spatial_orientation_coverage.subjects must contain at least one subject"
+        )
+        subjects = []
+
+    subject_map: dict[str, dict[str, Any]] = {}
+    for index, subject in enumerate(subjects):
+        label = f"spatial_orientation_coverage.subjects[{index}]"
+        if not isinstance(subject, dict):
+            errors.append(f"{label} must be an object")
+            continue
+        subject_id = subject.get("id")
+        if not _nonempty_string(subject_id):
+            errors.append(f"{label}.id must be non-empty")
+            continue
+        subject_id = subject_id.strip()
+        if subject_id in subject_map:
+            errors.append(f"duplicate spatial coverage subject id: {subject_id}")
+        subject_map[subject_id] = subject
+        if subject.get("kind") not in VALID_SPATIAL_SUBJECT_KINDS:
+            errors.append(f"{label}.kind is invalid")
+        if subject.get("visibility") not in VALID_SPATIAL_VISIBILITY:
+            errors.append(f"{label}.visibility is invalid")
+        region_id = subject.get("region_id")
+        if region_id not in known_regions:
+            errors.append(f"{label}.region_id must reference a major region")
+        if not _nonempty_strings(subject.get("source_evidence")):
+            errors.append(f"{label}.source_evidence must contain visible evidence")
+
+    if human_routed and not any(
+        subject.get("kind") == "human" for subject in subject_map.values()
+    ):
+        errors.append(
+            "a routed subject.human requires at least one human spatial coverage subject"
+        )
+
+    decisions = coverage.get("decisions")
+    if not isinstance(decisions, list) or not decisions:
+        errors.append(
+            "spatial_orientation_coverage.decisions must contain disposition records"
+        )
+        decisions = []
+
+    effect_map = {
+        item.get("id"): item
+        for item in contract.get("aggregate_effects", [])
+        if isinstance(item, dict) and _nonempty_string(item.get("id"))
+    }
+    control_map = {
+        item.get("id"): item
+        for item in contract.get("emitted_controls", [])
+        if isinstance(item, dict) and _nonempty_string(item.get("id"))
+    }
+
+    decisions_by_subject: dict[str, dict[str, dict[str, Any]]] = {}
+    decision_ids: set[str] = set()
+    decision_axes: dict[str, str] = {}
+    invariant_axes: dict[str, str] = {}
+    flexible_set = {
+        item
+        for item in contract.get("flexible_dimensions", [])
+        if isinstance(item, str)
+    }
+
+    link_fields = (
+        "relation_id",
+        "invariant_id",
+        "claim_id",
+        "aggregate_effect_id",
+        "control_id",
+    )
+    for index, decision in enumerate(decisions):
+        label = f"spatial_orientation_coverage.decisions[{index}]"
+        if not isinstance(decision, dict):
+            errors.append(f"{label} must be an object")
+            continue
+        decision_id = decision.get("id")
+        if not _nonempty_string(decision_id):
+            errors.append(f"{label}.id must be non-empty")
+            continue
+        decision_id = decision_id.strip()
+        if decision_id in decision_ids:
+            errors.append(f"duplicate spatial coverage decision id: {decision_id}")
+        decision_ids.add(decision_id)
+
+        subject_id = decision.get("subject_id")
+        if subject_id not in subject_map:
+            errors.append(f"{label}.subject_id references an unknown coverage subject")
+        dimension = decision.get("dimension")
+        expected_family = SPATIAL_DIMENSION_FAMILIES.get(dimension)
+        if expected_family is None:
+            errors.append(f"{label}.dimension is invalid")
+        elif decision.get("family") != expected_family:
+            errors.append(
+                f"{label}.family must be {expected_family!r} for dimension {dimension!r}"
+            )
+        if isinstance(subject_id, str) and isinstance(dimension, str):
+            bucket = decisions_by_subject.setdefault(subject_id, {})
+            if dimension in bucket:
+                errors.append(
+                    f"coverage subject {subject_id!r} repeats dimension {dimension!r}"
+                )
+            bucket[dimension] = decision
+
+        disposition = decision.get("disposition")
+        if disposition not in VALID_SPATIAL_DISPOSITIONS:
+            errors.append(f"{label}.disposition is invalid")
+        if decision.get("confidence") not in VALID_SPATIAL_CONFIDENCE:
+            errors.append(f"{label}.confidence is invalid")
+        causal_origin = decision.get("causal_origin")
+        if causal_origin not in VALID_CAUSAL_ORIGINS:
+            errors.append(f"{label}.causal_origin is invalid")
+        elif causal_origin not in SPATIAL_DIMENSION_ALLOWED_ORIGINS.get(
+            dimension, set()
+        ):
+            errors.append(
+                f"{label}.causal_origin {causal_origin!r} is not allowed for "
+                f"dimension {dimension!r}"
+            )
+        if not _nonempty_string(decision.get("observation")):
+            errors.append(f"{label}.observation must be source-relative and non-empty")
+        if not _nonempty_strings(decision.get("source_evidence")):
+            errors.append(f"{label}.source_evidence must contain visible evidence")
+
+        control_axis_id = decision.get("control_axis_id")
+        if not _nonempty_string(control_axis_id):
+            errors.append(f"{label}.control_axis_id must be non-empty")
+            control_axis_id = ""
+        elif control_axis_id in decision_axes:
+            errors.append(
+                "spatial coverage decisions must merge a shared control_axis_id: "
+                f"{decision_axes[control_axis_id]}, {decision_id}"
+            )
+        else:
+            decision_axes[control_axis_id] = decision_id
+
+        if disposition != "invariant":
+            if not _nonempty_string(decision.get("non_emission_reason")):
+                errors.append(
+                    f"{label}.non_emission_reason is required for {disposition!r}"
+                )
+            linked = [field for field in link_fields if _nonempty_string(decision.get(field))]
+            if linked:
+                errors.append(
+                    f"{label} is {disposition!r} and cannot carry emitted-path fields: "
+                    + ", ".join(linked)
+                )
+            if disposition == "flexible" and decision_id not in flexible_set:
+                errors.append(
+                    f"{label} is flexible and its id must appear in flexible_dimensions"
+                )
+            continue
+
+        missing_links = [
+            field for field in link_fields if not _nonempty_string(decision.get(field))
+        ]
+        if missing_links:
+            errors.append(
+                f"{label} is invariant and needs a complete relation/effect/claim/control path: "
+                + ", ".join(missing_links)
+            )
+            continue
+
+        relation_id = decision["relation_id"]
+        invariant_id = decision["invariant_id"]
+        claim_id = decision["claim_id"]
+        effect_id = decision["aggregate_effect_id"]
+        control_id = decision["control_id"]
+        relation = relation_map.get(relation_id)
+        invariant = invariant_map.get(invariant_id)
+        claim = claim_map.get(claim_id)
+        effect = effect_map.get(effect_id)
+        control = control_map.get(control_id)
+        for field, value, mapping in (
+            ("relation_id", relation_id, relation_map),
+            ("invariant_id", invariant_id, invariant_map),
+            ("claim_id", claim_id, claim_map),
+            ("aggregate_effect_id", effect_id, effect_map),
+            ("control_id", control_id, control_map),
+        ):
+            if value not in mapping:
+                errors.append(f"{label}.{field} references an unknown id")
+        if relation is not None and relation.get("subject_region_id") != subject_map.get(
+            subject_id, {}
+        ).get("region_id"):
+            errors.append(f"{label}.relation_id must describe the covered subject region")
+        if invariant is not None and invariant.get("causal_origin") != causal_origin:
+            errors.append(f"{label}.causal_origin must match its invariant")
+        if claim is not None:
+            if claim.get("semantic_slot") != invariant_id:
+                errors.append(f"{label}.claim_id must own its linked invariant slot")
+            if claim.get("emit") is not True or claim.get("polarity") != "affirmative":
+                errors.append(f"{label}.claim_id must be emitted and affirmative")
+        if effect is not None:
+            if claim_id not in effect.get("claim_ids", []):
+                errors.append(f"{label}.aggregate_effect_id must contain its claim_id")
+            if relation_id not in effect.get("relation_ids", []):
+                errors.append(f"{label}.aggregate_effect_id must contain its relation_id")
+            if effect.get("control_axis_id") != control_axis_id:
+                errors.append(f"{label}.control_axis_id must match its aggregate effect")
+            if effect.get("causal_origin") != causal_origin:
+                errors.append(f"{label}.causal_origin must match its aggregate effect")
+        if control is not None:
+            if control.get("claim_id") != claim_id:
+                errors.append(f"{label}.control_id must actuate its claim_id")
+            if effect_id not in control.get("aggregate_effect_ids", []):
+                errors.append(f"{label}.control_id must actuate its aggregate_effect_id")
+            if control.get("control_axis_id") != control_axis_id:
+                errors.append(f"{label}.control_axis_id must match its emitted control")
+            if control.get("causal_origin") != causal_origin:
+                errors.append(f"{label}.causal_origin must match its emitted control")
+        if control_axis_id:
+            invariant_axes[control_axis_id] = decision_id
+
+    for subject_id, subject in subject_map.items():
+        required = set(BASE_SPATIAL_DIMENSIONS)
+        if subject.get("kind") == "human":
+            required |= HUMAN_SPATIAL_DIMENSIONS
+        present = set(decisions_by_subject.get(subject_id, {}))
+        missing = sorted(required - present)
+        if missing:
+            errors.append(
+                f"spatial coverage subject {subject_id!r} is missing dispositions for: "
+                + ", ".join(missing)
+            )
+
+    effect_axes: dict[str, str] = {}
+    for effect_id, effect in effect_map.items():
+        control_axis_id = effect.get("control_axis_id")
+        if control_axis_id is None:
+            continue
+        if not _nonempty_string(control_axis_id):
+            errors.append(
+                f"generic aggregate effect {effect_id!r}.control_axis_id must be non-empty"
+            )
+            continue
+        if control_axis_id in effect_axes:
+            errors.append(
+                "generic aggregate effects duplicate one spatial control_axis_id across slots: "
+                f"{effect_axes[control_axis_id]}, {effect_id}"
+            )
+        else:
+            effect_axes[control_axis_id] = effect_id
+        if control_axis_id not in invariant_axes:
+            errors.append(
+                f"generic aggregate effect {effect_id!r} emits unowned or non-invariant "
+                f"spatial control axis {control_axis_id!r}"
+            )
+
+    control_axes: dict[str, str] = {}
+    for control_id, control in control_map.items():
+        control_axis_id = control.get("control_axis_id")
+        if control_axis_id is None:
+            continue
+        if not _nonempty_string(control_axis_id):
+            errors.append(
+                f"generic emitted control {control_id!r}.control_axis_id must be non-empty"
+            )
+            continue
+        if control_axis_id in control_axes:
+            errors.append(
+                "generic emitted controls duplicate one spatial control_axis_id across slots: "
+                f"{control_axes[control_axis_id]}, {control_id}"
+            )
+        else:
+            control_axes[control_axis_id] = control_id
+        if control_axis_id not in invariant_axes:
+            errors.append(
+                f"generic emitted control {control_id!r} emits unowned or non-invariant "
+                f"spatial control axis {control_axis_id!r}"
+            )
+
+    return errors
+
+
+def _audit_human_appearance_decisions(
+    plan: dict[str, Any],
+    contract: dict[str, Any],
+    claim_map: dict[str, dict[str, Any]],
+) -> list[str]:
+    """Require explicit, source-relative decisions for human priors and skin language."""
+
+    routing = plan.get("routing")
+    routed_modules = (
+        routing.get("resolved_non_core_modules", [])
+        if isinstance(routing, dict)
+        else []
+    )
+    human_routed = (
+        isinstance(routed_modules, list) and "subject.human" in routed_modules
+    )
+
+    coverage = contract.get("spatial_orientation_coverage")
+    subjects = coverage.get("subjects", []) if isinstance(coverage, dict) else []
+    human_subjects = {
+        item.get("id"): item
+        for item in subjects
+        if isinstance(item, dict)
+        and item.get("kind") == "human"
+        and _nonempty_string(item.get("id"))
+    }
+
+    decisions = contract.get("human_appearance_decisions")
+    if decisions is None:
+        return (
+            [
+                "a routed subject.human requires human_appearance_decisions; "
+                "person prior and skin-surface handling cannot be silently omitted"
+            ]
+            if human_routed
+            else []
+        )
+    if not isinstance(decisions, list):
+        return ["human_appearance_decisions must be a list"]
+
+    errors: list[str] = []
+    decision_ids: set[str] = set()
+    decisions_by_subject: dict[str, int] = {}
+    emitted_prior_claim_ids: set[str] = set()
+
+    color_contract = contract.get("color_tone_contract")
+    color_regions = (
+        color_contract.get("regions", []) if isinstance(color_contract, dict) else []
+    )
+    color_region_ids = {
+        item.get("id")
+        for item in color_regions
+        if isinstance(item, dict) and _nonempty_string(item.get("id"))
+    }
+    surface_language = (
+        color_contract.get("surface_color_language")
+        if isinstance(color_contract, dict)
+        else None
+    )
+    controlled_descriptor = (
+        surface_language.get("controlled_descriptor")
+        if isinstance(surface_language, dict)
+        else None
+    )
+
+    for index, decision in enumerate(decisions):
+        label = f"human_appearance_decisions[{index}]"
+        if not isinstance(decision, dict):
+            errors.append(f"{label} must be an object")
+            continue
+        decision_id = decision.get("id")
+        if not _nonempty_string(decision_id):
+            errors.append(f"{label}.id must be non-empty")
+        elif decision_id in decision_ids:
+            errors.append(f"duplicate human appearance decision id: {decision_id}")
+        else:
+            decision_ids.add(decision_id)
+
+        subject_id = decision.get("subject_id")
+        if not _nonempty_string(subject_id) or subject_id not in human_subjects:
+            errors.append(f"{label}.subject_id must reference a human coverage subject")
+        else:
+            decisions_by_subject[subject_id] = decisions_by_subject.get(subject_id, 0) + 1
+        face_visibility = decision.get("face_visibility")
+        if face_visibility not in VALID_HUMAN_FACE_VISIBILITY:
+            errors.append(f"{label}.face_visibility is invalid")
+        if not _nonempty_strings(decision.get("source_evidence")):
+            errors.append(f"{label}.source_evidence must contain visible evidence")
+
+        prior = decision.get("person_prior")
+        if not isinstance(prior, dict):
+            errors.append(f"{label}.person_prior must be an object")
+        else:
+            disposition = prior.get("disposition")
+            if disposition not in VALID_PERSON_PRIOR_DISPOSITIONS:
+                errors.append(f"{label}.person_prior.disposition is invalid")
+            if prior.get("confidence") not in VALID_SPATIAL_CONFIDENCE:
+                errors.append(f"{label}.person_prior.confidence is invalid")
+            if not _nonempty_strings(prior.get("source_evidence")):
+                errors.append(
+                    f"{label}.person_prior.source_evidence must contain visible evidence"
+                )
+            claim_id = prior.get("claim_id")
+            if disposition == "emit":
+                if face_visibility not in {"readable", "partial"}:
+                    errors.append(
+                        f"{label}.person_prior cannot emit for face visibility {face_visibility!r}"
+                    )
+                if not _nonempty_string(claim_id):
+                    claim = None
+                    errors.append(f"{label}.person_prior.claim_id must be non-empty")
+                else:
+                    claim = claim_map.get(claim_id)
+                if _nonempty_string(claim_id) and claim is None:
+                    errors.append(
+                        f"{label}.person_prior.claim_id references an unknown claim"
+                    )
+                elif claim is not None:
+                    emitted_prior_claim_ids.add(str(claim_id))
+                    generation_prior = claim.get("generation_prior")
+                    if (
+                        claim.get("emit") is not True
+                        or claim.get("polarity") != "affirmative"
+                    ):
+                        errors.append(
+                            f"{label}.person_prior.claim_id must be emitted and affirmative"
+                        )
+                    if claim.get("owner") not in {
+                        "subject.human",
+                        "detail.human-face-likeness",
+                    }:
+                        errors.append(
+                            f"{label}.person_prior.claim_id must have a human owner"
+                        )
+                    if (
+                        not isinstance(generation_prior, dict)
+                        or generation_prior.get("scope") != "person-gestalt"
+                    ):
+                        errors.append(
+                            f"{label}.person_prior.claim_id must own a person-gestalt "
+                            "generation_prior"
+                        )
+            else:
+                if not _nonempty_string(prior.get("non_emission_reason")):
+                    errors.append(
+                        f"{label}.person_prior.non_emission_reason is required for {disposition!r}"
+                    )
+                if _nonempty_string(claim_id):
+                    errors.append(
+                        f"{label}.person_prior cannot reference a claim when not emitted"
+                    )
+
+        skin = decision.get("skin_surface")
+        if not isinstance(skin, dict):
+            errors.append(f"{label}.skin_surface must be an object")
+            continue
+        skin_disposition = skin.get("disposition")
+        if skin_disposition not in VALID_SKIN_SURFACE_DISPOSITIONS:
+            errors.append(f"{label}.skin_surface.disposition is invalid")
+        if skin.get("confidence") not in VALID_SPATIAL_CONFIDENCE:
+            errors.append(f"{label}.skin_surface.confidence is invalid")
+        if not _nonempty_strings(skin.get("source_evidence")):
+            errors.append(
+                f"{label}.skin_surface.source_evidence must contain visible evidence"
+            )
+        region_ids = skin.get("region_ids", [])
+        if not isinstance(region_ids, list) or not all(
+            _nonempty_string(item) for item in region_ids
+        ):
+            errors.append(
+                f"{label}.skin_surface.region_ids must be a list of region ids"
+            )
+            region_ids = []
+        elif len(region_ids) != len(set(region_ids)):
+            errors.append(f"{label}.skin_surface.region_ids contains duplicates")
+
+        descriptor_disposition = skin.get("descriptor_disposition")
+        if descriptor_disposition not in VALID_DESCRIPTOR_DISPOSITIONS:
+            errors.append(f"{label}.skin_surface.descriptor_disposition is invalid")
+        if skin_disposition != "material":
+            if region_ids:
+                errors.append(
+                    f"{label}.skin_surface.region_ids must be empty when not material"
+                )
+            if not _nonempty_string(skin.get("non_emission_reason")):
+                errors.append(
+                    f"{label}.skin_surface.non_emission_reason is required for {skin_disposition!r}"
+                )
+            if descriptor_disposition == "emit":
+                errors.append(
+                    f"{label}.skin_surface descriptor cannot emit when skin is not material"
+                )
+            if not _nonempty_string(skin.get("descriptor_non_emission_reason")):
+                errors.append(
+                    f"{label}.skin_surface.descriptor_non_emission_reason is "
+                    "required when not emitted"
+                )
+            continue
+
+        if skin.get("coverage") not in VALID_SKIN_COVERAGE:
+            errors.append(f"{label}.skin_surface.coverage is invalid")
+        if not region_ids:
+            errors.append(f"{label}.skin_surface.region_ids must name material skin regions")
+        unknown_regions = sorted(set(region_ids) - color_region_ids)
+        if unknown_regions:
+            errors.append(
+                f"{label}.skin_surface.region_ids require matching Color/Tone regions: "
+                + ", ".join(unknown_regions)
+            )
+        if descriptor_disposition == "emit":
+            if not isinstance(surface_language, dict):
+                errors.append(
+                    f"{label}.skin_surface descriptor emission requires surface_color_language"
+                )
+            elif surface_language.get("region_id") not in region_ids:
+                errors.append(
+                    f"{label}.skin_surface descriptor must target one listed skin region"
+                )
+            if (
+                not isinstance(controlled_descriptor, dict)
+                or controlled_descriptor.get("emit") is not True
+            ):
+                errors.append(
+                    f"{label}.skin_surface descriptor emission requires an emitted controlled_descriptor"
+                )
+        else:
+            if not _nonempty_string(skin.get("descriptor_non_emission_reason")):
+                errors.append(
+                    f"{label}.skin_surface.descriptor_non_emission_reason is required for {descriptor_disposition!r}"
+                )
+            if (
+                isinstance(controlled_descriptor, dict)
+                and controlled_descriptor.get("emit") is True
+                and isinstance(surface_language, dict)
+                and surface_language.get("region_id") in region_ids
+            ):
+                errors.append(
+                    f"{label}.skin_surface descriptor decision contradicts the emitted controlled_descriptor"
+                )
+
+    for subject_id in human_subjects:
+        count = decisions_by_subject.get(subject_id, 0)
+        if count != 1:
+            errors.append(
+                f"human coverage subject {subject_id!r} requires exactly one human appearance decision"
+            )
+
+    if human_routed:
+        person_prior_claim_ids = {
+            str(claim_id)
+            for claim_id, claim in claim_map.items()
+            if claim.get("emit") is True
+            and isinstance(claim.get("generation_prior"), dict)
+            and claim["generation_prior"].get("scope") == "person-gestalt"
+        }
+        unowned = sorted(person_prior_claim_ids - emitted_prior_claim_ids)
+        if unowned:
+            errors.append(
+                "emitted person-gestalt generation priors require a human appearance decision: "
+                + ", ".join(unowned)
+            )
+
+    return errors
+
+
+def _specialized_claim_ids(contract: dict[str, Any]) -> tuple[set[str], set[str]]:
+    def claim_ids(name: str) -> set[str]:
+        specialized = contract.get(name)
+        if not isinstance(specialized, dict):
+            return set()
+        values = specialized.get("claim_ids", [])
+        return {value for value in values if _nonempty_string(value)} if isinstance(values, list) else set()
+
+    return claim_ids("color_tone_contract"), claim_ids("light_form_contract")
+
+
+def _audit_generic_contract(
+    contract: dict[str, Any],
+    claim_map: dict[str, dict[str, Any]],
+    invariant_map: dict[str, dict[str, Any]],
+    known_regions: set[str],
+    relation_map: dict[str, dict[str, Any]],
+) -> list[str]:
+    """Validate non-color/non-light effects and literal final-prompt controls."""
+
+    errors: list[str] = []
+    color_claim_ids, light_claim_ids = _specialized_claim_ids(contract)
+    specialized_claim_ids = color_claim_ids | light_claim_ids
+    emitted_claim_ids = {
+        claim_id
+        for claim_id, claim in claim_map.items()
+        if bool(claim.get("emit"))
+    }
+    generic_emitted_claim_ids = emitted_claim_ids - specialized_claim_ids
+
+    effects = contract.get("aggregate_effects", [])
+    if not isinstance(effects, list):
+        errors.append("aggregate_effects must be a list")
+        effects = []
+    if generic_emitted_claim_ids and not effects:
+        errors.append(
+            "aggregate_effects must contain source-relative effects for generic emitted claims"
+        )
+
+    effect_map: dict[str, dict[str, Any]] = {}
+    canonical_effects: dict[tuple[Any, ...], str] = {}
+    for index, effect in enumerate(effects):
+        label = f"aggregate_effects[{index}]"
+        if not isinstance(effect, dict):
+            errors.append(f"{label} must be an object")
+            continue
+        effect_id = effect.get("id")
+        if not _nonempty_string(effect_id):
+            errors.append(f"{label}.id must be non-empty")
+            continue
+        effect_id = effect_id.strip()
+        if effect_id in effect_map:
+            errors.append(f"duplicate generic aggregate effect id: {effect_id}")
+        effect_map[effect_id] = effect
+
+        axis = effect.get("axis")
+        if axis not in VALID_GENERIC_EFFECT_AXES:
+            errors.append(
+                f"{label}.axis must be a non-color, non-light salience axis"
+            )
+        direction = effect.get("direction")
+        if not _nonempty_string(direction):
+            errors.append(f"{label}.direction must be source-relative and non-empty")
+            direction = ""
+        if effect.get("role") not in VALID_INVARIANT_ROLES:
+            errors.append(f"{label}.role is invalid")
+        if effect.get("target_strength") not in VALID_STRENGTHS:
+            errors.append(f"{label}.target_strength is invalid")
+        if not isinstance(effect.get("source_supported"), bool):
+            errors.append(f"{label}.source_supported must be boolean")
+        if not _nonempty_strings(effect.get("source_evidence")):
+            errors.append(f"{label}.source_evidence must contain visible evidence")
+
+        members = effect.get("claim_ids")
+        if not _nonempty_strings(members):
+            errors.append(f"{label}.claim_ids must contain claim ids")
+            members = []
+        elif len(members) != len(set(members)):
+            errors.append(f"{label}.claim_ids contains duplicates")
+        unknown_claims = sorted(set(members) - set(claim_map))
+        if unknown_claims:
+            errors.append(f"{label} references unknown claims: {', '.join(unknown_claims)}")
+
+        region_ids = effect.get("region_ids", [])
+        if not _string_list(region_ids):
+            errors.append(f"{label}.region_ids must be a list of major region ids")
+            region_ids = []
+        unknown_regions = sorted(set(region_ids) - known_regions)
+        if unknown_regions:
+            errors.append(f"{label} references unknown regions: {', '.join(unknown_regions)}")
+        if len(region_ids) != len(set(region_ids)):
+            errors.append(f"{label}.region_ids contains duplicates")
+
+        relation_ids = effect.get("relation_ids", [])
+        if not _string_list(relation_ids):
+            errors.append(f"{label}.relation_ids must be a list of component relation ids")
+            relation_ids = []
+        unknown_relations = sorted(set(relation_ids) - set(relation_map))
+        if unknown_relations:
+            errors.append(
+                f"{label} references unknown component relations: {', '.join(unknown_relations)}"
+            )
+        if len(relation_ids) != len(set(relation_ids)):
+            errors.append(f"{label}.relation_ids contains duplicates")
+
+        canonical = (
+            axis,
+            direction.strip().lower() if isinstance(direction, str) else "",
+            tuple(sorted(region_ids)),
+            tuple(sorted(relation_ids)),
+        )
+        if canonical in canonical_effects:
+            errors.append(
+                "generic aggregate effects split one axis/direction/region/relation "
+                f"across effect ids: {canonical_effects[canonical]}, {effect_id}"
+            )
+        else:
+            canonical_effects[canonical] = effect_id
+
+    claim_effect_ids: dict[str, set[str]] = {}
+    for claim_id, claim in claim_map.items():
+        label = f"candidate claim {claim_id!r}"
+        errors.extend(_audit_generation_prior(claim, label))
+        raw_effects = claim.get("salience_effects")
+        if claim_id in generic_emitted_claim_ids and not isinstance(raw_effects, list):
+            errors.append(
+                f"{label}.salience_effects must link generic emitted claims to aggregate effects"
+            )
+            raw_effects = []
+        elif raw_effects is None:
+            raw_effects = []
+        elif not isinstance(raw_effects, list):
+            errors.append(f"{label}.salience_effects must be a list")
+            raw_effects = []
+
+        linked_ids: set[str] = set()
+        for index, item in enumerate(raw_effects):
+            effect_label = f"{label}.salience_effects[{index}]"
+            if not isinstance(item, dict):
+                errors.append(f"{effect_label} must be an object")
+                continue
+            effect_id = item.get("aggregate_effect_id")
+            if not _nonempty_string(effect_id):
+                errors.append(f"{effect_label}.aggregate_effect_id must be non-empty")
+                continue
+            effect_id = effect_id.strip()
+            if effect_id in linked_ids:
+                errors.append(f"{label}.salience_effects contains duplicate effects")
+            linked_ids.add(effect_id)
+            if effect_id not in effect_map:
+                errors.append(f"{effect_label} references unknown effect {effect_id!r}")
+            if not _nonempty_strings(item.get("source_evidence")):
+                errors.append(f"{effect_label}.source_evidence must be non-empty")
+        claim_effect_ids[claim_id] = linked_ids
+        if claim_id in generic_emitted_claim_ids and not linked_ids:
+            errors.append(f"{label}.salience_effects must contain at least one effect")
+        if claim_id in specialized_claim_ids and linked_ids:
+            errors.append(
+                f"Generic and specialized contracts cannot own the same claims: {claim_id}"
+            )
+
+    for effect_id, effect in effect_map.items():
+        declared_claims = {
+            item for item in effect.get("claim_ids", []) if _nonempty_string(item)
+        }
+        linked_claims = {
+            claim_id
+            for claim_id, linked_ids in claim_effect_ids.items()
+            if effect_id in linked_ids
+        }
+        if declared_claims != linked_claims:
+            errors.append(
+                f"generic aggregate effect {effect_id!r} claim_ids must exactly match claim salience_effects"
+            )
+        emitted_members = declared_claims & generic_emitted_claim_ids
+        if len(emitted_members) > 1:
+            errors.append(
+                f"generic aggregate effect {effect_id!r} has multiple emitted claims"
+            )
+        elif len(emitted_members) == 0:
+            errors.append(
+                f"generic aggregate effect {effect_id!r} needs exactly one emitted generic claim"
+            )
+        if effect.get("source_supported") is False and emitted_members:
+            errors.append(
+                f"generic aggregate effect {effect_id!r} is unsupported but emitted"
+            )
+        if len(emitted_members) == 1:
+            claim = claim_map[next(iter(emitted_members))]
+            if effect.get("target_strength") != claim.get("target_strength"):
+                errors.append(
+                    f"generic aggregate effect {effect_id!r} strength must match its emitted claim"
+                )
+
+    controls = contract.get("emitted_controls", [])
+    if not isinstance(controls, list):
+        errors.append("emitted_controls must be a list")
+        controls = []
+    if generic_emitted_claim_ids and not controls:
+        errors.append("emitted_controls must contain exact generic final-prompt controls")
+
+    control_ids: set[str] = set()
+    prompt_excerpts: set[str] = set()
+    controlled_claim_counts: dict[str, int] = {}
+    generic_control_claim_ids: set[str] = set()
+    for index, control in enumerate(controls):
+        label = f"emitted_controls[{index}]"
+        if not isinstance(control, dict):
+            errors.append(f"{label} must be an object")
+            continue
+        control_id = control.get("id")
+        if not _nonempty_string(control_id):
+            errors.append(f"{label}.id must be non-empty")
+        elif control_id in control_ids:
+            errors.append(f"duplicate generic emitted control id: {control_id}")
+        else:
+            control_ids.add(control_id)
+
+        excerpt = control.get("prompt_excerpt")
+        if not _nonempty_string(excerpt):
+            errors.append(f"{label}.prompt_excerpt must be non-empty")
+        elif excerpt.strip() in prompt_excerpts:
+            errors.append("generic emitted controls must use distinct prompt excerpts")
+        else:
+            prompt_excerpts.add(excerpt.strip())
+
+        claim_id = control.get("claim_id")
+        if claim_id not in claim_map:
+            errors.append(f"{label}.claim_id references an unknown claim")
+            continue
+        generic_control_claim_ids.add(claim_id)
+        controlled_claim_counts[claim_id] = controlled_claim_counts.get(claim_id, 0) + 1
+        claim = claim_map[claim_id]
+        if claim_id in specialized_claim_ids:
+            errors.append(
+                f"Generic and specialized contracts cannot own the same claims: {claim_id}"
+            )
+        if control.get("owner") != claim.get("owner"):
+            errors.append(f"{label}.owner must match the claim owner")
+        effect_ids = control.get("aggregate_effect_ids")
+        if not _nonempty_strings(effect_ids):
+            errors.append(f"{label}.aggregate_effect_ids must contain effect ids")
+            effect_ids = []
+        unknown_effects = sorted(set(effect_ids) - set(effect_map))
+        if unknown_effects:
+            errors.append(f"{label} references unknown effects: {', '.join(unknown_effects)}")
+        if set(effect_ids) != claim_effect_ids.get(claim_id, set()):
+            errors.append(
+                f"{label}.aggregate_effect_ids must exactly match the claim salience effects"
+            )
+
+    for claim_id in sorted(generic_emitted_claim_ids):
+        if controlled_claim_counts.get(claim_id, 0) != 1:
+            errors.append(
+                f"generic claim {claim_id!r} must have exactly one emitted final-prompt control"
+            )
+
+    for claim_id, claim in claim_map.items():
+        errors.extend(
+            _audit_generation_prior_links(
+                claim_id,
+                claim,
+                claim_map,
+                specialized_claim_ids,
+                controlled_claim_counts,
+            )
+        )
+
+    used_relation_ids = {
+        relation_id
+        for effect in effect_map.values()
+        for relation_id in effect.get("relation_ids", [])
+        if _nonempty_string(relation_id)
+    }
+    for relation_id in relation_map:
+        if relation_id not in used_relation_ids:
+            errors.append(
+                f"component relation {relation_id!r} must terminate in a generic aggregate effect"
+            )
+
+    for invariant_id, invariant in invariant_map.items():
+        axis = invariant.get("axis")
+        if axis not in VALID_GENERIC_EFFECT_AXES:
+            continue
+        matching_claims = [
+            claim
+            for claim in claim_map.values()
+            if claim.get("semantic_slot") == invariant_id
+            and claim.get("emit") is True
+            and claim.get("polarity") == "affirmative"
+        ]
+        if len(matching_claims) != 1:
+            continue
+        claim_id = matching_claims[0].get("id")
+        linked_effects = [
+            effect_map[effect_id]
+            for effect_id in claim_effect_ids.get(claim_id, set())
+            if effect_id in effect_map
+        ]
+        if not any(effect.get("axis") == axis for effect in linked_effects):
+            errors.append(
+                f"invariant {invariant_id!r} needs a same-axis generic aggregate effect"
+            )
+        if invariant.get("causal_origin") == "spatial-relation" or axis == "topology":
+            if not any(effect.get("relation_ids") for effect in linked_effects):
+                errors.append(
+                    f"spatial-relation invariant {invariant_id!r} needs a linked component relation"
+                )
+
+    specialized_contracts = (
+        ("Color/Tone", contract.get("color_tone_contract"), color_claim_ids),
+        ("Light/Form", contract.get("light_form_contract"), light_claim_ids),
+    )
+    generic_owned_claim_ids = set().union(
+        *(set(effect.get("claim_ids", [])) for effect in effect_map.values())
+    ) | generic_control_claim_ids
+    for name, specialized, listed_claim_ids in specialized_contracts:
+        if not isinstance(specialized, dict):
+            continue
+        claim_overlap = sorted(generic_owned_claim_ids & listed_claim_ids)
+        if claim_overlap:
+            errors.append(
+                f"Generic and {name} contracts cannot own the same claims: "
+                + ", ".join(claim_overlap)
+            )
+        specialized_excerpts = {
+            item.get("prompt_excerpt", "").strip()
+            for item in specialized.get("emitted_controls", [])
+            if isinstance(item, dict) and _nonempty_string(item.get("prompt_excerpt"))
+        }
+        if prompt_excerpts & specialized_excerpts:
+            errors.append(
+                f"Generic and {name} contracts cannot own the same prompt excerpts"
+            )
+
+    return errors
+
+
+def _audit_authored_prompt(contract: dict[str, Any], prompt_text: Any) -> list[str]:
+    """Check literal ledger excerpts against an explicitly supplied authored prompt."""
+
+    if not isinstance(prompt_text, str):
+        return ["authored prompt text must be a string"]
+    errors: list[str] = []
+    ledgers = [
+        ("emitted_controls", contract.get("emitted_controls", [])),
+        (
+            "color_tone_contract.emitted_controls",
+            contract.get("color_tone_contract", {}).get("emitted_controls", [])
+            if isinstance(contract.get("color_tone_contract"), dict)
+            else [],
+        ),
+        (
+            "light_form_contract.emitted_controls",
+            contract.get("light_form_contract", {}).get("emitted_controls", [])
+            if isinstance(contract.get("light_form_contract"), dict)
+            else [],
+        ),
+    ]
+    for ledger_name, controls in ledgers:
+        if not isinstance(controls, list):
+            continue
+        for index, control in enumerate(controls):
+            if not isinstance(control, dict):
+                continue
+            excerpt = control.get("prompt_excerpt")
+            if not _nonempty_string(excerpt):
+                continue
+            count = prompt_text.count(excerpt.strip())
+            if count != 1:
+                errors.append(
+                    f"{ledger_name}[{index}].prompt_excerpt appears {count} times "
+                    "in the authored prompt; expected exactly once"
+                )
+    color_contract = contract.get("color_tone_contract")
+    if isinstance(color_contract, dict):
+        surface_language = color_contract.get("surface_color_language")
+        descriptor = (
+            surface_language.get("controlled_descriptor")
+            if isinstance(surface_language, dict)
+            else None
+        )
+        if isinstance(descriptor, dict) and descriptor.get("emit") is True:
+            phrase = descriptor.get("phrase")
+            if _nonempty_string(phrase):
+                count = prompt_text.count(phrase.strip())
+                if count != 1:
+                    errors.append(
+                        "controlled_descriptor.phrase appears "
+                        f"{count} times in the authored prompt; expected exactly once"
+                    )
+    return errors
 
 
 def _audit_lighting_language(
@@ -434,6 +1701,144 @@ def _audit_lighting_language(
 
     if emitted_label_count > 1:
         errors.append("light_form_contract may emit at most one friendly lighting label")
+
+    return errors
+
+
+def _audit_controlled_surface_descriptor(
+    surface_language: dict[str, Any],
+    classifications: dict[str, Any],
+    color_control_map: dict[str, dict[str, Any]],
+    generic_control_map: dict[str, dict[str, Any]],
+    generic_effect_map: dict[str, dict[str, Any]],
+) -> list[str]:
+    """Validate a deterministic axis-composed surface phrase and its controls."""
+
+    descriptor = surface_language.get("controlled_descriptor")
+    if descriptor is None:
+        return []
+    prefix = "color_tone_contract.surface_color_language.controlled_descriptor"
+    if not isinstance(descriptor, dict):
+        return [f"{prefix} must be an object"]
+
+    errors: list[str] = []
+    included_axes = descriptor.get("included_axes")
+    allowed_axis_orders = [
+        ["value_depth", "chroma", "undertone"],
+        ["value_depth", "chroma", "undertone", "finish"],
+    ]
+    if included_axes not in allowed_axis_orders:
+        errors.append(
+            f"{prefix}.included_axes must contain the three core axes in order, "
+            "with optional finish last"
+        )
+        return errors
+
+    surface_term = descriptor.get("surface_term")
+    if not _nonempty_string(surface_term):
+        errors.append(f"{prefix}.surface_term must be an analyst-supplied region phrase")
+        return errors
+    try:
+        expected = compose_controlled_descriptor(
+            {"axis_classification": classifications},
+            surface_term,
+            include_finish="finish" in included_axes,
+        )
+    except ValueError as exc:
+        errors.append(f"{prefix} cannot be reconstructed: {exc}")
+        return errors
+
+    for field in (
+        "status",
+        "surface_term",
+        "included_axes",
+        "axis_excerpts",
+        "unresolved_axes",
+        "composition_source",
+    ):
+        if descriptor.get(field) != expected.get(field):
+            errors.append(f"{prefix}.{field} does not match the classified axes")
+    if expected.get("status") == "ready":
+        if descriptor.get("phrase") != expected.get("phrase"):
+            errors.append(f"{prefix}.phrase does not match the classified axes")
+    elif "phrase" in descriptor:
+        errors.append(f"{prefix}.phrase must be absent while classification is inconclusive")
+
+    emit = descriptor.get("emit")
+    if not isinstance(emit, bool):
+        errors.append(f"{prefix}.emit must be boolean")
+        return errors
+    if not _nonempty_strings(descriptor.get("source_evidence")):
+        errors.append(f"{prefix}.source_evidence must contain current-source evidence")
+
+    axis_control_ids = descriptor.get("axis_control_ids", {})
+    if not isinstance(axis_control_ids, dict):
+        errors.append(f"{prefix}.axis_control_ids must be an object")
+        axis_control_ids = {}
+
+    if not emit:
+        if not _nonempty_string(descriptor.get("non_emission_reason")):
+            errors.append(f"{prefix}.non_emission_reason is required when not emitted")
+        if axis_control_ids:
+            errors.append(f"{prefix}.axis_control_ids must be empty when not emitted")
+        return errors
+
+    if expected.get("status") != "ready":
+        errors.append(f"{prefix} cannot emit while classified axes are inconclusive")
+    if set(axis_control_ids) != set(included_axes):
+        errors.append(f"{prefix}.axis_control_ids must cover exactly included_axes")
+
+    expected_excerpts = expected.get("axis_excerpts", {})
+    surface_region_id = surface_language.get("region_id")
+    for axis in included_axes:
+        control_id = axis_control_ids.get(axis)
+        if not _nonempty_string(control_id):
+            continue
+        if axis == "finish":
+            control = generic_control_map.get(control_id)
+            if control is None:
+                errors.append(
+                    f"{prefix}.axis_control_ids.finish must reference a generic surface control"
+                )
+                continue
+            effect_ids = control.get("aggregate_effect_ids", [])
+            resolved_effects = (
+                [
+                    generic_effect_map[effect_id]
+                    for effect_id in effect_ids
+                    if effect_id in generic_effect_map
+                ]
+                if isinstance(effect_ids, list)
+                else []
+            )
+            if len(resolved_effects) != 1:
+                errors.append(
+                    f"{prefix}.axis_control_ids.finish must own one generic surface effect"
+                )
+            elif (
+                resolved_effects[0].get("axis") != "surface"
+                or surface_region_id not in resolved_effects[0].get("region_ids", [])
+            ):
+                errors.append(
+                    f"{prefix}.axis_control_ids.finish must control the same region's surface axis"
+                )
+        else:
+            control = color_control_map.get(control_id)
+            if control is None:
+                errors.append(
+                    f"{prefix}.axis_control_ids.{axis} references an unknown color control"
+                )
+                continue
+            if control.get("control_role") != "axis-control":
+                errors.append(f"{prefix}.axis_control_ids.{axis} must reference an axis-control")
+            if control.get("region_id") != surface_region_id:
+                errors.append(f"{prefix}.axis_control_ids.{axis} must control the same region")
+            if control.get("axis") != CONTROLLED_DESCRIPTOR_AXIS_TO_COLOR_AXIS[axis]:
+                errors.append(f"{prefix}.axis_control_ids.{axis} controls the wrong color axis")
+        if control.get("prompt_excerpt") != expected_excerpts.get(axis):
+            errors.append(
+                f"{prefix}.axis_control_ids.{axis} prompt excerpt must equal its composed axis excerpt"
+            )
 
     return errors
 
@@ -907,6 +2312,7 @@ def _audit_color_tone_contract(
         emitted_controls = []
 
     control_ids: set[str] = set()
+    control_map: dict[str, dict[str, Any]] = {}
     prompt_excerpts: set[str] = set()
     controlled_claim_counts: dict[str, int] = {}
     axis_control_effects: set[str] = set()
@@ -924,6 +2330,7 @@ def _audit_color_tone_contract(
             errors.append(f"duplicate emitted color control id: {control_id}")
         else:
             control_ids.add(control_id)
+            control_map[control_id] = control
 
         prompt_excerpt = control.get("prompt_excerpt")
         if not _nonempty_string(prompt_excerpt):
@@ -1101,6 +2508,26 @@ def _audit_color_tone_contract(
                 errors.append(f"{axis_label}.term is invalid")
             if axis_spec.get("confidence") not in VALID_COLOR_CONFIDENCE:
                 errors.append(f"{axis_label}.confidence is invalid")
+
+        generic_control_map = {
+            item.get("id"): item
+            for item in contract.get("emitted_controls", [])
+            if isinstance(item, dict) and _nonempty_string(item.get("id"))
+        }
+        generic_effect_map = {
+            item.get("id"): item
+            for item in contract.get("aggregate_effects", [])
+            if isinstance(item, dict) and _nonempty_string(item.get("id"))
+        }
+        errors.extend(
+            _audit_controlled_surface_descriptor(
+                surface_language,
+                classifications,
+                control_map,
+                generic_control_map,
+                generic_effect_map,
+            )
+        )
 
         reviews = surface_language.get("friendly_label_review", [])
         if not isinstance(reviews, list):
@@ -1378,6 +2805,7 @@ def _audit_light_form_contract(
     region_effect_ids: set[str] = set()
     spill_region_count = 0
     region_effect_roles: set[str] = set()
+    observed_region_pairs: set[tuple[str, str]] = set()
     for index, effect in enumerate(region_effects):
         label = f"light_form_contract.region_effects[{index}]"
         if not isinstance(effect, dict):
@@ -1390,8 +2818,29 @@ def _audit_light_form_contract(
             errors.append(f"duplicate observed lighting region effect id: {effect_id}")
         else:
             region_effect_ids.add(effect_id)
-        if effect.get("region_id") not in known_regions:
+        region_id = effect.get("region_id")
+        if region_id not in known_regions:
             errors.append(f"{label}.region_id references an unknown region")
+        reference_region_id = effect.get("reference_region_id")
+        if reference_region_id is not None:
+            if not _nonempty_string(reference_region_id):
+                errors.append(
+                    f"{label}.reference_region_id must be non-empty when present"
+                )
+            elif region_id not in major_region_ids:
+                errors.append(
+                    f"{label}.region_id must reference a major region for comparison"
+                )
+            elif reference_region_id not in major_region_ids:
+                errors.append(
+                    f"{label}.reference_region_id references an unknown region"
+                )
+            elif reference_region_id == region_id:
+                errors.append(
+                    f"{label}.reference_region_id must reference a distinct region"
+                )
+            else:
+                observed_region_pairs.add((str(region_id), reference_region_id))
         if effect.get("role") not in VALID_LIGHT_REGION_EFFECT_ROLES:
             errors.append(f"{label}.role is invalid")
         else:
@@ -1496,7 +2945,8 @@ def _audit_light_form_contract(
         )
         aggregate_effects = []
     aggregate_map: dict[str, dict[str, Any]] = {}
-    aggregate_signatures: dict[tuple[str, str, str], str] = {}
+    aggregate_signatures: dict[tuple[str, str, str, str], str] = {}
+    aggregate_region_pairs: set[tuple[str, str]] = set()
     primary_effect_count = 0
     effect_axes: set[str] = set()
     for index, effect in enumerate(aggregate_effects):
@@ -1522,6 +2972,26 @@ def _audit_light_form_contract(
         region_id = effect.get("region_id")
         if region_id not in known_regions:
             errors.append(f"{label}.region_id references an unknown region")
+        reference_region_id = effect.get("reference_region_id")
+        if reference_region_id is not None:
+            if not _nonempty_string(reference_region_id):
+                errors.append(
+                    f"{label}.reference_region_id must be non-empty when present"
+                )
+            elif region_id not in major_region_ids:
+                errors.append(
+                    f"{label}.region_id must reference a major region for comparison"
+                )
+            elif reference_region_id not in major_region_ids:
+                errors.append(
+                    f"{label}.reference_region_id references an unknown region"
+                )
+            elif reference_region_id == region_id:
+                errors.append(
+                    f"{label}.reference_region_id must reference a distinct region"
+                )
+            else:
+                aggregate_region_pairs.add((str(region_id), reference_region_id))
         if (
             axis in VALID_LIGHT_EFFECT_AXES
             and _nonempty_string(direction)
@@ -1530,11 +3000,16 @@ def _audit_light_form_contract(
             normalized_direction = "-".join(
                 direction.casefold().replace("_", " ").replace("-", " ").split()
             )
-            signature = (str(region_id), str(axis), normalized_direction)
+            signature = (
+                str(region_id),
+                str(reference_region_id or ""),
+                str(axis),
+                normalized_direction,
+            )
             previous = aggregate_signatures.get(signature)
             if previous is not None:
                 errors.append(
-                    f"aggregate lighting effects {previous!r} and {effect_id!r} split one region/axis/direction"
+                    f"aggregate lighting effects {previous!r} and {effect_id!r} split one region/reference/axis/direction"
                 )
             else:
                 aggregate_signatures[signature] = str(effect_id)
@@ -1553,6 +3028,17 @@ def _audit_light_form_contract(
     if importance == "primary" and primary_effect_count == 0:
         errors.append(
             "a primary light_form_contract must contain a primary aggregate effect"
+        )
+
+    for region_pair in sorted(observed_region_pairs - aggregate_region_pairs):
+        errors.append(
+            "observed regional light relation must terminate in an aggregate effect: "
+            + " -> ".join(region_pair)
+        )
+    for region_pair in sorted(aggregate_region_pairs - observed_region_pairs):
+        errors.append(
+            "aggregate regional light relation needs a matching observed region effect: "
+            + " -> ".join(region_pair)
         )
 
     actuation = hypothesis.get("actuation")
@@ -1755,7 +3241,7 @@ def _audit_light_form_contract(
     return errors
 
 
-def audit_plan(plan: dict[str, Any]) -> list[str]:
+def audit_plan(plan: dict[str, Any], prompt_text: str | None = None) -> list[str]:
     """Return actionable contract errors for one salience plan."""
 
     errors: list[str] = []
@@ -1940,6 +3426,28 @@ def audit_plan(plan: dict[str, Any]) -> list[str]:
         if not _nonempty_strings(region.get("source_evidence")):
             errors.append(f"{label}.source_evidence must contain visible evidence")
 
+    relation_errors, relation_map = _audit_component_relations(contract, region_ids)
+    errors.extend(relation_errors)
+    errors.extend(
+        _audit_generic_contract(
+            contract,
+            claim_map,
+            invariant_map,
+            region_ids,
+            relation_map,
+        )
+    )
+    errors.extend(
+        _audit_spatial_orientation_coverage(
+            plan,
+            contract,
+            region_ids,
+            relation_map,
+            invariant_map,
+            claim_map,
+        )
+    )
+
     clusters = contract.get("prior_clusters", [])
     if not isinstance(clusters, list):
         errors.append("prior_clusters must be a list")
@@ -1973,6 +3481,7 @@ def audit_plan(plan: dict[str, Any]) -> list[str]:
             "a color invariant requires a source-relative color_tone_contract"
         )
     errors.extend(_audit_color_tone_contract(contract, claim_map, region_ids))
+    errors.extend(_audit_human_appearance_decisions(plan, contract, claim_map))
 
     if any(
         isinstance(invariant, dict)
@@ -1985,6 +3494,9 @@ def audit_plan(plan: dict[str, Any]) -> list[str]:
         )
     errors.extend(_audit_light_form_contract(contract, claim_map, region_ids))
 
+    if prompt_text is not None:
+        errors.extend(_audit_authored_prompt(contract, prompt_text))
+
     return errors
 
 
@@ -1995,6 +3507,19 @@ def primary_signature(plan: dict[str, Any]) -> set[tuple[str, str, str]]:
         for item in contract.get("invariants", [])
         if isinstance(item, dict) and item.get("role") == "primary"
     }
+    signature.update(
+        (
+            f"generic-effect:{item.get('id')}",
+            (
+                f"{item.get('axis')}:regions="
+                f"{','.join(sorted(item.get('region_ids', [])))}:relations="
+                f"{','.join(sorted(item.get('relation_ids', [])))}"
+            ),
+            f"{item.get('direction')}:{item.get('target_strength')}",
+        )
+        for item in contract.get("aggregate_effects", [])
+        if isinstance(item, dict) and item.get("role") == "primary"
+    )
     color_contract = contract.get("color_tone_contract")
     if isinstance(color_contract, dict):
         signature.update(
@@ -2011,7 +3536,10 @@ def primary_signature(plan: dict[str, Any]) -> set[tuple[str, str, str]]:
         signature.update(
             (
                 f"light-effect:{item.get('id')}",
-                f"{item.get('axis')}:{item.get('region_id')}",
+                (
+                    f"{item.get('axis')}:{item.get('region_id')}:"
+                    f"reference={item.get('reference_region_id')}"
+                ),
                 f"{item.get('direction')}:{item.get('target_strength')}",
             )
             for item in light_contract.get("aggregate_effects", [])
@@ -2024,11 +3552,19 @@ def compare_plans(
     baseline: dict[str, Any],
     variant: dict[str, Any],
     relation: str,
+    baseline_prompt_text: str | None = None,
+    variant_prompt_text: str | None = None,
 ) -> list[str]:
     """Check a matched pair without comparing generated wording."""
 
-    errors = [f"baseline: {error}" for error in audit_plan(baseline)]
-    errors.extend(f"variant: {error}" for error in audit_plan(variant))
+    errors = [
+        f"baseline: {error}"
+        for error in audit_plan(baseline, prompt_text=baseline_prompt_text)
+    ]
+    errors.extend(
+        f"variant: {error}"
+        for error in audit_plan(variant, prompt_text=variant_prompt_text)
+    )
     if errors:
         return errors
 
@@ -2061,6 +3597,16 @@ def main(argv: list[str]) -> int:
     parser.add_argument("plan", help="salience-plan JSON file")
     parser.add_argument("--compare", default="", help="matched variant plan JSON file")
     parser.add_argument(
+        "--prompt",
+        default="",
+        help="authored prompt text for literal emitted-control reconciliation",
+    )
+    parser.add_argument(
+        "--compare-prompt",
+        default="",
+        help="authored prompt text for the matched variant plan",
+    )
+    parser.add_argument(
         "--relation",
         choices=["invariant-preserving", "aesthetic-changing"],
         default="invariant-preserving",
@@ -2069,10 +3615,26 @@ def main(argv: list[str]) -> int:
 
     try:
         baseline = _load_json(args.plan)
+        baseline_prompt = (
+            Path(args.prompt).read_text(encoding="utf-8") if args.prompt else None
+        )
+        variant_prompt = (
+            Path(args.compare_prompt).read_text(encoding="utf-8")
+            if args.compare_prompt
+            else None
+        )
+        if args.compare_prompt and not args.compare:
+            raise ValueError("--compare-prompt requires --compare")
         errors = (
-            compare_plans(baseline, _load_json(args.compare), args.relation)
+            compare_plans(
+                baseline,
+                _load_json(args.compare),
+                args.relation,
+                baseline_prompt_text=baseline_prompt,
+                variant_prompt_text=variant_prompt,
+            )
             if args.compare
-            else audit_plan(baseline)
+            else audit_plan(baseline, prompt_text=baseline_prompt)
         )
     except (OSError, ValueError, json.JSONDecodeError) as exc:
         errors = [str(exc)]

@@ -1,6 +1,6 @@
 ---
 id: concept.primary-relationship
-version: 7
+version: 8
 priority: 106
 type: concept
 tier: 0
@@ -56,6 +56,8 @@ Form internally:
 5. Build an invariant salience ledger. Give each invariant a semantic slot, primary or supporting role, observed target, causal origin, source-relative strength, evidence, and one clause owner.
 6. For relationship-led or mixed images, the stable zones and each critical pair's side, containment, contact, support, depth, occlusion, and boundary crossing.
 7. One to three likely failures, including a category default replacing source-specific evidence.
+
+Merge synonymous non-color and non-light pulls into one source-relative aggregate effect with one claim and control.
 
 Build a sparse relation graph and group elements sharing a relation. Keep ordinary premises ordinary. In appearance-led images, do not let minor coordinates outrank appearance; in information-led images, prioritize layout and legibility.
 

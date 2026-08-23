@@ -12,7 +12,13 @@ import unittest
 TOOLS = Path(__file__).resolve().parents[1] / "tools"
 sys.path.insert(0, str(TOOLS))
 
-from salience_plan import audit_plan, compare_plans  # noqa: E402
+from salience_plan import (  # noqa: E402
+    BASE_SPATIAL_DIMENSIONS,
+    HUMAN_SPATIAL_DIMENSIONS,
+    SPATIAL_DIMENSION_FAMILIES,
+    audit_plan,
+    compare_plans,
+)
 
 
 def valid_plan() -> dict:
@@ -59,6 +65,26 @@ def valid_plan() -> dict:
                     "source_evidence": ["largest continuous low-detail region"],
                 },
             ],
+            "component_relations": [
+                {
+                    "id": "central-field-relation",
+                    "kind": "frame-zone",
+                    "subject_region_id": "central-form",
+                    "frame_reference": "full frame",
+                    "observation": "the compact form remains nested inside a broader surrounding field",
+                    "role": "primary",
+                    "source_evidence": ["surrounding field remains visible on every side"],
+                },
+                {
+                    "id": "minor-placement-relation",
+                    "kind": "axis-offset",
+                    "subject_region_id": "central-form",
+                    "frame_reference": "frame centerline",
+                    "observation": "a small source-supported offset may vary without changing the hierarchy",
+                    "role": "supporting",
+                    "source_evidence": ["minor displacement within the surrounding field"],
+                },
+            ],
             "candidate_claims": [
                 {
                     "id": "claim-form",
@@ -70,6 +96,12 @@ def valid_plan() -> dict:
                     "source_kind": "translated-causal-control",
                     "source_evidence": ["continuous outer boundary"],
                     "emit": True,
+                    "salience_effects": [
+                        {
+                            "aggregate_effect_id": "compact-silhouette-effect",
+                            "source_evidence": ["continuous outer boundary"],
+                        }
+                    ],
                 },
                 {
                     "id": "claim-balance",
@@ -81,6 +113,12 @@ def valid_plan() -> dict:
                     "source_kind": "visible-evidence",
                     "source_evidence": ["broad low-detail area around the subject"],
                     "emit": True,
+                    "salience_effects": [
+                        {
+                            "aggregate_effect_id": "field-balance-effect",
+                            "source_evidence": ["broad low-detail area around the subject"],
+                        }
+                    ],
                 },
                 {
                     "id": "claim-placement",
@@ -92,6 +130,73 @@ def valid_plan() -> dict:
                     "source_kind": "visible-evidence",
                     "source_evidence": ["small offset from frame center"],
                     "emit": True,
+                    "salience_effects": [
+                        {
+                            "aggregate_effect_id": "minor-placement-effect",
+                            "source_evidence": ["small offset from frame center"],
+                        }
+                    ],
+                },
+            ],
+            "aggregate_effects": [
+                {
+                    "id": "compact-silhouette-effect",
+                    "axis": "form",
+                    "direction": "compact-silhouette-with-gradual-transitions",
+                    "role": "primary",
+                    "target_strength": "moderate",
+                    "claim_ids": ["claim-form"],
+                    "region_ids": ["central-form"],
+                    "relation_ids": [],
+                    "source_supported": True,
+                    "source_evidence": ["continuous outer boundary"],
+                },
+                {
+                    "id": "field-balance-effect",
+                    "axis": "hierarchy",
+                    "direction": "compact-form-subordinate-to-broader-field",
+                    "role": "primary",
+                    "target_strength": "subtle",
+                    "claim_ids": ["claim-balance"],
+                    "region_ids": ["central-form", "surrounding-field"],
+                    "relation_ids": ["central-field-relation"],
+                    "source_supported": True,
+                    "source_evidence": ["broad low-detail area around the subject"],
+                },
+                {
+                    "id": "minor-placement-effect",
+                    "axis": "hierarchy",
+                    "direction": "small-source-relative-frame-offset",
+                    "role": "supporting",
+                    "target_strength": "subtle",
+                    "claim_ids": ["claim-placement"],
+                    "region_ids": ["central-form"],
+                    "relation_ids": ["minor-placement-relation"],
+                    "source_supported": True,
+                    "source_evidence": ["small offset from frame center"],
+                },
+            ],
+            "emitted_controls": [
+                {
+                    "id": "control-form",
+                    "prompt_excerpt": "a compact silhouette with gradual width transitions",
+                    "claim_id": "claim-form",
+                    "owner": "subject.generic-object",
+                    "aggregate_effect_ids": ["compact-silhouette-effect"],
+                },
+                {
+                    "id": "control-balance",
+                    "prompt_excerpt": "the form remains smaller than the surrounding field",
+                    "claim_id": "claim-balance",
+                    "owner": "core.frame-coordinates",
+                    "aggregate_effect_ids": ["field-balance-effect"],
+                },
+                {
+                    "id": "control-placement",
+                    "prompt_excerpt": "a small source-supported offset from the frame center",
+                    "claim_id": "claim-placement",
+                    "owner": "core.frame-coordinates",
+                    "aggregate_effect_ids": ["minor-placement-effect"],
                 },
             ],
             "prior_clusters": [
@@ -103,6 +208,268 @@ def valid_plan() -> dict:
             ],
         },
     }
+
+
+def authored_prompt_text(plan: dict) -> str:
+    contract = plan["render_contract"]
+    color_contract = contract.get("color_tone_contract", {})
+    surface_language = color_contract.get("surface_color_language", {})
+    descriptor = surface_language.get("controlled_descriptor", {})
+    composed_control_ids = (
+        set(descriptor.get("axis_control_ids", {}).values())
+        if descriptor.get("emit") is True
+        else set()
+    )
+    excerpts = [
+        item["prompt_excerpt"]
+        for item in contract.get("emitted_controls", [])
+        if item.get("id") not in composed_control_ids
+    ]
+    for specialized in ("color_tone_contract", "light_form_contract"):
+        excerpts.extend(
+            item["prompt_excerpt"]
+            for item in contract.get(specialized, {}).get("emitted_controls", [])
+            if item.get("id") not in composed_control_ids
+        )
+    if descriptor.get("emit") is True:
+        excerpts.append(descriptor["phrase"])
+    return "PROMPT:\n" + ". ".join(excerpts)
+
+
+def add_generic_claim(
+    contract: dict,
+    *,
+    invariant_id: str,
+    axis: str,
+    owner: str,
+    role: str,
+    target_strength: str,
+    observation: str,
+    causal_origin: str,
+    evidence: str,
+    direction: str,
+    prompt_excerpt: str,
+    region_ids: list[str] | None = None,
+    relation_ids: list[str] | None = None,
+) -> None:
+    claim_id = f"claim-{invariant_id}"
+    effect_id = f"effect-{invariant_id}"
+    contract["invariants"].append(
+        {
+            "id": invariant_id,
+            "axis": axis,
+            "role": role,
+            "observation": observation,
+            "causal_origin": causal_origin,
+            "target_strength": target_strength,
+            "source_evidence": [evidence],
+            "clause_owner": owner,
+        }
+    )
+    contract["candidate_claims"].append(
+        {
+            "id": claim_id,
+            "semantic_slot": invariant_id,
+            "owner": owner,
+            "role": role,
+            "polarity": "affirmative",
+            "target_strength": target_strength,
+            "source_kind": "visible-evidence",
+            "source_evidence": [evidence],
+            "emit": True,
+            "salience_effects": [
+                {
+                    "aggregate_effect_id": effect_id,
+                    "source_evidence": [evidence],
+                }
+            ],
+        }
+    )
+    contract["aggregate_effects"].append(
+        {
+            "id": effect_id,
+            "axis": axis,
+            "direction": direction,
+            "role": role,
+            "target_strength": target_strength,
+            "claim_ids": [claim_id],
+            "region_ids": region_ids or [],
+            "relation_ids": relation_ids or [],
+            "source_supported": True,
+            "source_evidence": [evidence],
+        }
+    )
+    contract["emitted_controls"].append(
+        {
+            "id": f"control-{invariant_id}",
+            "prompt_excerpt": prompt_excerpt,
+            "claim_id": claim_id,
+            "owner": owner,
+            "aggregate_effect_ids": [effect_id],
+        }
+    )
+
+
+def with_spatial_coverage(
+    plan: dict,
+    *,
+    kind: str = "human",
+    visibility: str = "readable",
+) -> dict:
+    """Add a direction-neutral coverage ledger to a synthetic plan."""
+
+    contract = plan["render_contract"]
+    plan["routing"] = {
+        "resolved_non_core_modules": [
+            "subject.human" if kind == "human" else "subject.generic-object"
+        ]
+    }
+    dimensions = set(BASE_SPATIAL_DIMENSIONS)
+    if kind == "human":
+        dimensions |= HUMAN_SPATIAL_DIMENSIONS
+    origins = {
+        "frame-placement": "spatial-relation",
+        "subject-principal-axis": "spatial-relation",
+        "viewpoint-elevation": "perspective",
+        "viewpoint-azimuth": "perspective",
+        "viewpoint-roll": "perspective",
+        "viewpoint-distance-foreshortening": "perspective",
+        "human-body-orientation": "pose-deformation",
+        "human-head-body-relation": "pose-deformation",
+        "human-shoulder-line": "pose-deformation",
+        "human-attention-direction": "pose-deformation",
+        "cross-component-orientation": "spatial-relation",
+    }
+    contract["spatial_orientation_coverage"] = {
+        "subjects": [
+            {
+                "id": "subject-a",
+                "kind": kind,
+                "visibility": visibility,
+                "region_id": "central-form",
+                "source_evidence": ["held-out source-visible subject region"],
+            }
+        ],
+        "decisions": [
+            {
+                "id": f"coverage-{dimension}",
+                "subject_id": "subject-a",
+                "dimension": dimension,
+                "family": SPATIAL_DIMENSION_FAMILIES[dimension],
+                "disposition": "not-material",
+                "observation": f"the held-out source does not make {dimension} material",
+                "causal_origin": origins[dimension],
+                "confidence": "high",
+                "source_evidence": [f"held-out evidence for {dimension}"],
+                "control_axis_id": f"subject-a/{dimension}",
+                "non_emission_reason": "no separate prompt control is warranted",
+            }
+            for dimension in sorted(dimensions)
+        ],
+    }
+    if kind == "human":
+        contract["human_appearance_decisions"] = [
+            {
+                "id": "appearance-subject-a",
+                "subject_id": "subject-a",
+                "face_visibility": visibility,
+                "source_evidence": ["held-out source-visible human appearance"],
+                "person_prior": {
+                    "disposition": "omit",
+                    "confidence": "high",
+                    "source_evidence": ["no broad person prior is material in this fixture"],
+                    "non_emission_reason": "local visible geometry is sufficient",
+                },
+                "skin_surface": {
+                    "disposition": "not-material",
+                    "confidence": "high",
+                    "source_evidence": ["skin color does not carry this fixture's proposition"],
+                    "region_ids": [],
+                    "descriptor_disposition": "omit",
+                    "non_emission_reason": "skin surface is not material",
+                    "descriptor_non_emission_reason": "no skin descriptor is warranted",
+                },
+            }
+        ]
+    return plan
+
+
+def promote_spatial_decision(
+    plan: dict,
+    dimension: str,
+    *,
+    direction: str = "held-out-source-relative-direction",
+    prompt_excerpt: str | None = None,
+) -> dict:
+    """Give one coverage decision a complete source-relative actuation path."""
+
+    contract = plan["render_contract"]
+    decision = next(
+        item
+        for item in contract["spatial_orientation_coverage"]["decisions"]
+        if item["dimension"] == dimension
+    )
+    relation_id = f"relation-{dimension}"
+    invariant_id = f"spatial-{dimension}"
+    relation_kind = {
+        "frame-placement": "frame-zone",
+        "principal-axis": "principal-axis",
+        "viewpoint": "viewpoint",
+        "part-whole": "part-whole-orientation",
+        "attention-direction": "attention-direction",
+        "cross-component": "cross-component-orientation",
+    }[decision["family"]]
+    contract["component_relations"].append(
+        {
+            "id": relation_id,
+            "kind": relation_kind,
+            "subject_region_id": "central-form",
+            "frame_reference": "source-relative frame and visible subject",
+            "observation": direction,
+            "role": "primary",
+            "source_evidence": [f"held-out source evidence for {dimension}"],
+        }
+    )
+    add_generic_claim(
+        contract,
+        invariant_id=invariant_id,
+        axis="hierarchy" if dimension in {"frame-placement", "cross-component-orientation"} else "form",
+        owner="subject.human" if dimension.startswith("human-") else "core.frame-coordinates",
+        role="primary",
+        target_strength="moderate",
+        observation=direction,
+        causal_origin=decision["causal_origin"],
+        evidence=f"held-out source evidence for {dimension}",
+        direction=direction,
+        prompt_excerpt=prompt_excerpt or f"preserve {direction}",
+        region_ids=["central-form"],
+        relation_ids=[relation_id],
+    )
+    effect_id = f"effect-{invariant_id}"
+    control_id = f"control-{invariant_id}"
+    effect = next(
+        item for item in contract["aggregate_effects"] if item["id"] == effect_id
+    )
+    control = next(
+        item for item in contract["emitted_controls"] if item["id"] == control_id
+    )
+    for item in (effect, control):
+        item["control_axis_id"] = decision["control_axis_id"]
+        item["causal_origin"] = decision["causal_origin"]
+    decision.update(
+        {
+            "disposition": "invariant",
+            "observation": direction,
+            "source_evidence": [f"held-out source evidence for {dimension}"],
+            "relation_id": relation_id,
+            "invariant_id": invariant_id,
+            "claim_id": f"claim-{invariant_id}",
+            "aggregate_effect_id": effect_id,
+            "control_id": control_id,
+        }
+    )
+    decision.pop("non_emission_reason", None)
+    return plan
 
 
 def valid_color_plan() -> dict:
@@ -305,6 +672,7 @@ def valid_light_plan() -> dict:
             {
                 "id": "central-broad-plane",
                 "region_id": "central-form",
+                "reference_region_id": "surrounding-field",
                 "role": "broad-plane",
                 "value_relation": "internally even relative to the surrounding field",
                 "gradient_strength": "subtle",
@@ -325,6 +693,7 @@ def valid_light_plan() -> dict:
             {
                 "id": "dominant-local-form-contrast",
                 "region_id": "central-form",
+                "reference_region_id": "surrounding-field",
                 "axis": "local-form-contrast",
                 "direction": "shallow-internal-modeling",
                 "role": "primary",
@@ -470,6 +839,157 @@ def add_surface_language_review(plan: dict, *, conflicting: bool = False) -> dic
     return plan
 
 
+def add_controlled_surface_descriptor(plan: dict) -> dict:
+    """Add a held-out axis-composed surface phrase with complete control ownership."""
+
+    contract = plan["render_contract"]
+    color_contract = contract["color_tone_contract"]
+    color_contract["emitted_controls"][0]["prompt_excerpt"] = "a light value"
+    for axis_spec in color_contract["regions"][0]["intrinsic_axes"]:
+        if axis_spec["axis"] == "chroma":
+            axis_spec.update(
+                {
+                    "emission": "required",
+                    "aggregate_effect_id": "central-chroma",
+                }
+            )
+            axis_spec.pop("non_emission_reason", None)
+        elif axis_spec["axis"] == "hue":
+            axis_spec.update(
+                {
+                    "emission": "required",
+                    "aggregate_effect_id": "central-hue",
+                }
+            )
+            axis_spec.pop("non_emission_reason", None)
+
+    for axis, effect_id, claim_id, direction, excerpt in (
+        ("chroma", "central-chroma", "claim-surface-chroma", "low-chroma", "low chroma"),
+        ("hue", "central-hue", "claim-surface-hue", "olive-undertone", "an olive undertone"),
+    ):
+        contract["candidate_claims"].append(
+            {
+                "id": claim_id,
+                "semantic_slot": f"surface-{axis}",
+                "owner": "detail.color-tone-fidelity",
+                "role": "supporting",
+                "polarity": "affirmative",
+                "target_strength": "subtle",
+                "source_kind": "translated-causal-control",
+                "source_evidence": [f"held-out source-visible {axis}"],
+                "emit": True,
+                "perceptual_effects": [
+                    {
+                        "aggregate_effect_id": effect_id,
+                        "causal_layer": "intrinsic",
+                        "confidence": "high",
+                        "source_evidence": [f"held-out flat-region {axis} evidence"],
+                    }
+                ],
+            }
+        )
+        color_contract["claim_ids"].append(claim_id)
+        color_contract["aggregate_effects"].append(
+            {
+                "id": effect_id,
+                "region_id": "central-form",
+                "axis": axis,
+                "direction": direction,
+                "role": "supporting",
+                "target_strength": "subtle",
+                "claim_ids": [claim_id],
+                "source_supported": True,
+                "source_evidence": [f"held-out flat-region {axis} evidence"],
+            }
+        )
+        color_contract["emitted_controls"].append(
+            {
+                "id": f"control-surface-{axis}",
+                "prompt_excerpt": excerpt,
+                "claim_id": claim_id,
+                "causal_layer": "intrinsic",
+                "control_role": "axis-control",
+                "region_id": "central-form",
+                "axis": axis,
+                "aggregate_effect_ids": [effect_id],
+            }
+        )
+
+    add_generic_claim(
+        contract,
+        invariant_id="visible-surface-finish",
+        axis="surface",
+        owner="subject.human",
+        role="supporting",
+        target_strength="subtle",
+        observation="a source-visible satin finish",
+        causal_origin="intrinsic",
+        evidence="held-out broad soft reflection",
+        direction="satin-surface-finish",
+        prompt_excerpt="a satin finish",
+        region_ids=["central-form"],
+    )
+    color_contract["surface_color_language"] = {
+        "policy_id": "source-visible-surface-language-v1",
+        "policy_status": "uncalibrated-language-prototype",
+        "observation_scope": "source-visible",
+        "profile_status": "missing-profile-assumed-srgb",
+        "region_id": "central-form",
+        "source_evidence": ["analyst-selected comparable flat patches"],
+        "axis_classification": {
+            "value_depth": {"term": "light", "confidence": "high"},
+            "chroma": {"term": "low", "confidence": "high"},
+            "undertone": {"term": "olive", "confidence": "high"},
+            "finish": {"term": "satin", "confidence": "medium"},
+            "evenness": {"term": "uncertain", "confidence": "low"},
+        },
+        "controlled_descriptor": {
+            "status": "ready",
+            "surface_term": "visible skin",
+            "phrase": "visible skin with a light value, low chroma, an olive undertone, and a satin finish",
+            "included_axes": ["value_depth", "chroma", "undertone", "finish"],
+            "axis_excerpts": {
+                "value_depth": "a light value",
+                "chroma": "low chroma",
+                "undertone": "an olive undertone",
+                "finish": "a satin finish",
+            },
+            "unresolved_axes": [],
+            "composition_source": "axis-composed",
+            "emit": True,
+            "axis_control_ids": {
+                "value_depth": "control-surface-tone",
+                "chroma": "control-surface-chroma",
+                "undertone": "control-surface-hue",
+                "finish": "control-visible-surface-finish",
+            },
+            "source_evidence": ["current-source axis classification"],
+        },
+        "friendly_label_review": [],
+    }
+    return plan
+
+
+def with_material_skin_descriptor(plan: dict) -> dict:
+    """Route a human and mark the held-out skin surface descriptor as material."""
+
+    plan = with_spatial_coverage(add_controlled_surface_descriptor(plan))
+    skin = plan["render_contract"]["human_appearance_decisions"][0]["skin_surface"]
+    skin.update(
+        {
+            "disposition": "material",
+            "confidence": "high",
+            "source_evidence": ["held-out visible skin occupies a material region"],
+            "region_ids": ["central-form"],
+            "coverage": "exposed",
+            "descriptor_disposition": "emit",
+        }
+    )
+    skin.pop("non_emission_reason", None)
+    skin.pop("descriptor_non_emission_reason", None)
+    return plan
+
+
 def add_lighting_language_review(plan: dict, *, conflicting: bool = False) -> dict:
     review = {
         "phrase": "held-out candidate lighting label",
@@ -551,6 +1071,856 @@ def add_lighting_language_review(plan: dict, *, conflicting: bool = False) -> di
 class SaliencePlanTests(unittest.TestCase):
     def test_valid_source_relative_plan_passes(self) -> None:
         self.assertEqual(audit_plan(valid_plan()), [])
+
+    def test_generic_emitted_claim_requires_effect_and_final_control(self) -> None:
+        plan = valid_plan()
+        contract = plan["render_contract"]
+        del contract["candidate_claims"][0]["salience_effects"]
+        del contract["emitted_controls"][0]
+        errors = audit_plan(plan)
+        self.assertTrue(any("salience_effects" in error for error in errors))
+        self.assertTrue(
+            any("exactly one emitted final-prompt control" in error for error in errors)
+        )
+
+    def test_one_generic_effect_cannot_have_two_emitted_claims(self) -> None:
+        plan = valid_plan()
+        contract = plan["render_contract"]
+        duplicate = deepcopy(contract["candidate_claims"][0])
+        duplicate["id"] = "claim-form-support"
+        duplicate["semantic_slot"] = "silhouette-support"
+        duplicate["role"] = "supporting"
+        contract["candidate_claims"].append(duplicate)
+        contract["aggregate_effects"][0]["claim_ids"].append(duplicate["id"])
+        contract["emitted_controls"].append(
+            {
+                "id": "control-form-support",
+                "prompt_excerpt": "the same compact silhouette repeated as support",
+                "claim_id": duplicate["id"],
+                "owner": duplicate["owner"],
+                "aggregate_effect_ids": ["compact-silhouette-effect"],
+            }
+        )
+        self.assertTrue(
+            any(
+                "generic aggregate effect" in error
+                and "multiple emitted claims" in error
+                for error in audit_plan(plan)
+            )
+        )
+
+    def test_same_generic_direction_cannot_hide_behind_two_effect_ids(self) -> None:
+        plan = valid_plan()
+        contract = plan["render_contract"]
+        duplicate_claim = deepcopy(contract["candidate_claims"][0])
+        duplicate_claim["id"] = "claim-form-split"
+        duplicate_claim["semantic_slot"] = "silhouette-support"
+        duplicate_claim["role"] = "supporting"
+        duplicate_claim["salience_effects"][0]["aggregate_effect_id"] = (
+            "compact-silhouette-effect-split"
+        )
+        contract["candidate_claims"].append(duplicate_claim)
+        duplicate_effect = deepcopy(contract["aggregate_effects"][0])
+        duplicate_effect["id"] = "compact-silhouette-effect-split"
+        duplicate_effect["role"] = "supporting"
+        duplicate_effect["claim_ids"] = [duplicate_claim["id"]]
+        contract["aggregate_effects"].append(duplicate_effect)
+        contract["emitted_controls"].append(
+            {
+                "id": "control-form-split",
+                "prompt_excerpt": "a second phrase pushing the same compact form",
+                "claim_id": duplicate_claim["id"],
+                "owner": duplicate_claim["owner"],
+                "aggregate_effect_ids": [duplicate_effect["id"]],
+            }
+        )
+        self.assertTrue(
+            any(
+                "split one axis/direction/region/relation" in error
+                for error in audit_plan(plan)
+            )
+        )
+
+    def test_spatial_invariant_requires_linked_component_relation(self) -> None:
+        plan = valid_plan()
+        plan["render_contract"]["aggregate_effects"][1]["relation_ids"] = []
+        self.assertTrue(
+            any(
+                "spatial-relation invariant" in error
+                for error in audit_plan(plan)
+            )
+        )
+
+    def test_flexible_center_and_opposite_offsets_remain_valid_nonhuman_variants(self) -> None:
+        baseline = valid_plan()
+        relation = baseline["render_contract"]["component_relations"][1]
+        effect = baseline["render_contract"]["aggregate_effects"][2]
+        control = baseline["render_contract"]["emitted_controls"][2]
+        relation["observation"] = "the source axis coincides with the frame centerline"
+        effect["direction"] = "source-axis-on-frame-centerline"
+        control["prompt_excerpt"] = "the principal axis follows the frame centerline"
+
+        for observation, direction, excerpt in (
+            (
+                "the source axis sits to the viewer-left of the frame centerline",
+                "source-axis-offset-viewer-left",
+                "the principal axis stays to the viewer-left of the frame centerline",
+            ),
+            (
+                "the source axis sits to the viewer-right of the frame centerline",
+                "source-axis-offset-viewer-right",
+                "the principal axis stays to the viewer-right of the frame centerline",
+            ),
+        ):
+            variant = deepcopy(baseline)
+            variant_relation = variant["render_contract"]["component_relations"][1]
+            variant_effect = variant["render_contract"]["aggregate_effects"][2]
+            variant_control = variant["render_contract"]["emitted_controls"][2]
+            variant_relation["observation"] = observation
+            variant_effect["direction"] = direction
+            variant_control["prompt_excerpt"] = excerpt
+            self.assertEqual(audit_plan(variant), [])
+            self.assertEqual(
+                compare_plans(baseline, variant, "invariant-preserving"), []
+            )
+
+    def test_material_human_orientation_changes_signature_without_a_direction_default(self) -> None:
+        baseline = valid_plan()
+        contract = baseline["render_contract"]
+        add_generic_claim(
+            contract,
+            invariant_id="head-torso-axis-relation",
+            axis="form",
+            owner="subject.human",
+            role="primary",
+            target_strength="moderate",
+            observation="the head and torso retain source-visible relative orientation A",
+            causal_origin="pose-deformation",
+            evidence="visible head turn, shoulder line, and torso axis",
+            direction="source-visible-head-torso-relation-a",
+            prompt_excerpt="the head turn and shoulder line retain relation A",
+            region_ids=["central-form"],
+        )
+        variant = deepcopy(baseline)
+        variant_contract = variant["render_contract"]
+        variant_invariant = variant_contract["invariants"][-1]
+        variant_effect = variant_contract["aggregate_effects"][-1]
+        variant_control = variant_contract["emitted_controls"][-1]
+        variant_invariant["observation"] = (
+            "the head and torso retain source-visible relative orientation B"
+        )
+        variant_effect["direction"] = "source-visible-head-torso-relation-b"
+        variant_control["prompt_excerpt"] = (
+            "the head turn and shoulder line retain relation B"
+        )
+        self.assertEqual(audit_plan(baseline), [])
+        self.assertEqual(audit_plan(variant), [])
+        self.assertTrue(
+            any(
+                "changed the primary salience signature" in error
+                for error in compare_plans(
+                    baseline, variant, "invariant-preserving"
+                )
+            )
+        )
+
+    def test_routed_human_needs_coverage_beyond_a_frame_zone_relation(self) -> None:
+        plan = valid_plan()
+        plan["routing"] = {"resolved_non_core_modules": ["subject.human"]}
+        self.assertTrue(
+            any(
+                "frame-zone relation alone" in error
+                for error in audit_plan(plan)
+            )
+        )
+
+    def test_readable_human_coverage_requires_every_generic_dimension(self) -> None:
+        plan = with_spatial_coverage(valid_plan())
+        decisions = plan["render_contract"]["spatial_orientation_coverage"][
+            "decisions"
+        ]
+        decisions[:] = [
+            item
+            for item in decisions
+            if item["dimension"] != "human-head-body-relation"
+        ]
+        self.assertTrue(
+            any(
+                "missing dispositions" in error
+                and "human-head-body-relation" in error
+                for error in audit_plan(plan)
+            )
+        )
+
+    def test_spatial_invariant_needs_relation_effect_claim_and_control_path(self) -> None:
+        plan = promote_spatial_decision(
+            with_spatial_coverage(valid_plan()),
+            "subject-principal-axis",
+        )
+        self.assertEqual(audit_plan(plan), [])
+        decision = next(
+            item
+            for item in plan["render_contract"]["spatial_orientation_coverage"][
+                "decisions"
+            ]
+            if item["dimension"] == "subject-principal-axis"
+        )
+        decision.pop("control_id", None)
+        self.assertTrue(
+            any(
+                "complete relation/effect/claim/control path" in error
+                for error in audit_plan(plan)
+            )
+        )
+
+    def test_flexible_and_not_visible_spatial_dimensions_cannot_emit(self) -> None:
+        plan = with_spatial_coverage(valid_plan(), visibility="indistinct")
+        contract = plan["render_contract"]
+        head = next(
+            item
+            for item in contract["spatial_orientation_coverage"]["decisions"]
+            if item["dimension"] == "human-head-body-relation"
+        )
+        head["disposition"] = "not-visible"
+        head["observation"] = "the head-to-body relation is not separable at this scale"
+        head["non_emission_reason"] = "the relevant parts are indistinct"
+        principal = next(
+            item
+            for item in contract["spatial_orientation_coverage"]["decisions"]
+            if item["dimension"] == "subject-principal-axis"
+        )
+        principal["disposition"] = "flexible"
+        principal["non_emission_reason"] = "axis variation preserves the proposition"
+        contract["flexible_dimensions"].append(principal["id"])
+        self.assertEqual(audit_plan(plan), [])
+
+        promoted = promote_spatial_decision(
+            deepcopy(plan), "human-head-body-relation"
+        )
+        promoted_head = next(
+            item
+            for item in promoted["render_contract"]["spatial_orientation_coverage"][
+                "decisions"
+            ]
+            if item["dimension"] == "human-head-body-relation"
+        )
+        promoted_head["disposition"] = "not-visible"
+        promoted_head["non_emission_reason"] = "the relevant parts are indistinct"
+        self.assertTrue(
+            any(
+                "cannot carry emitted-path fields" in error
+                for error in audit_plan(promoted)
+            )
+        )
+
+    def test_camera_elevation_and_head_body_pitch_need_distinct_causal_axes(self) -> None:
+        plan = with_spatial_coverage(valid_plan())
+        promote_spatial_decision(
+            plan,
+            "viewpoint-elevation",
+            direction="source-relative camera elevation",
+        )
+        promote_spatial_decision(
+            plan,
+            "human-head-body-relation",
+            direction="source-relative head pitch against the torso",
+        )
+        self.assertEqual(audit_plan(plan), [])
+
+        duplicate = deepcopy(plan)
+        contract = duplicate["render_contract"]
+        decisions = contract["spatial_orientation_coverage"]["decisions"]
+        camera = next(
+            item for item in decisions if item["dimension"] == "viewpoint-elevation"
+        )
+        head = next(
+            item
+            for item in decisions
+            if item["dimension"] == "human-head-body-relation"
+        )
+        head["control_axis_id"] = camera["control_axis_id"]
+        next(
+            item
+            for item in contract["aggregate_effects"]
+            if item["id"] == head["aggregate_effect_id"]
+        )["control_axis_id"] = camera["control_axis_id"]
+        next(
+            item
+            for item in contract["emitted_controls"]
+            if item["id"] == head["control_id"]
+        )["control_axis_id"] = camera["control_axis_id"]
+        self.assertTrue(
+            any(
+                "shared control_axis_id" in error
+                or "duplicate one spatial control_axis_id" in error
+                for error in audit_plan(duplicate)
+            )
+        )
+
+    def test_centered_opposite_and_mirrored_axes_are_all_valid_values(self) -> None:
+        for direction in (
+            "principal axis coincides with the source frame centerline",
+            "principal axis remains offset toward source side A",
+            "principal axis remains offset toward source side B",
+        ):
+            plan = promote_spatial_decision(
+                with_spatial_coverage(valid_plan()),
+                "subject-principal-axis",
+                direction=direction,
+                prompt_excerpt=direction,
+            )
+            self.assertEqual(audit_plan(plan), [])
+
+    def test_nonhuman_principal_axis_uses_the_same_coverage_contract(self) -> None:
+        plan = promote_spatial_decision(
+            with_spatial_coverage(valid_plan(), kind="non-human"),
+            "subject-principal-axis",
+            direction="source-visible diagonal product axis",
+        )
+        self.assertEqual(audit_plan(plan), [])
+
+    def test_routed_human_cannot_silently_skip_appearance_decisions(self) -> None:
+        plan = with_spatial_coverage(valid_plan())
+        del plan["render_contract"]["human_appearance_decisions"]
+        self.assertTrue(
+            any(
+                "person prior and skin-surface handling cannot be silently omitted"
+                in error
+                for error in audit_plan(plan)
+            )
+        )
+
+        malformed = with_spatial_coverage(valid_plan())
+        malformed["render_contract"]["human_appearance_decisions"][0][
+            "subject_id"
+        ] = []
+        self.assertTrue(
+            any(
+                "subject_id must reference a human coverage subject" in error
+                for error in audit_plan(malformed)
+            )
+        )
+
+    def test_person_prior_emit_requires_one_linked_generation_prior(self) -> None:
+        plan = with_spatial_coverage(valid_plan())
+        contract = plan["render_contract"]
+        add_generic_claim(
+            contract,
+            invariant_id="broad-person-gestalt",
+            axis="form",
+            owner="subject.human",
+            role="supporting",
+            target_strength="subtle",
+            observation="one source-visible non-identifying person gestalt",
+            causal_origin="intrinsic",
+            evidence="held-out broad face gestalt",
+            direction="source-relative-person-gestalt",
+            prompt_excerpt="one source-relative non-identifying person gestalt",
+            region_ids=["central-form"],
+        )
+        prior_claim = contract["candidate_claims"][-1]
+        add_generic_claim(
+            contract,
+            invariant_id="person-geometry-correction",
+            axis="form",
+            owner="detail.human-face-likeness",
+            role="supporting",
+            target_strength="subtle",
+            observation="visible geometry constrains the broad person gestalt",
+            causal_origin="intrinsic",
+            evidence="held-out silhouette and feature relations",
+            direction="source-relative-person-geometry",
+            prompt_excerpt="visible silhouette and feature relations constrain that gestalt",
+            region_ids=["central-form"],
+        )
+        prior_claim["generation_prior"] = {
+            "scope": "person-gestalt",
+            "candidate_source": {
+                "kind": "source-visible-approximation",
+                "reference": "held-out source observation",
+            },
+            "non_identifying": True,
+            "visible_geometry_evidence": ["held-out silhouette and feature relations"],
+            "geometry_claim_ids": ["claim-person-geometry-correction"],
+        }
+        decision = contract["human_appearance_decisions"][0]["person_prior"]
+        decision.update(
+            {
+                "disposition": "emit",
+                "confidence": "medium",
+                "source_evidence": ["held-out broad person gestalt is readable"],
+                "claim_id": "claim-broad-person-gestalt",
+            }
+        )
+        decision.pop("non_emission_reason", None)
+        self.assertEqual(audit_plan(plan), [])
+
+        unlinked = deepcopy(plan)
+        del unlinked["render_contract"]["human_appearance_decisions"][0][
+            "person_prior"
+        ]["claim_id"]
+        self.assertTrue(
+            any("person_prior.claim_id" in error for error in audit_plan(unlinked))
+        )
+
+        malformed_claim = deepcopy(plan)
+        malformed_claim["render_contract"]["human_appearance_decisions"][0][
+            "person_prior"
+        ]["claim_id"] = []
+        self.assertTrue(
+            any(
+                "person_prior.claim_id must be non-empty" in error
+                for error in audit_plan(malformed_claim)
+            )
+        )
+
+        unreadable = deepcopy(plan)
+        unreadable["render_contract"]["human_appearance_decisions"][0][
+            "face_visibility"
+        ] = "indistinct"
+        self.assertTrue(
+            any("cannot emit for face visibility" in error for error in audit_plan(unreadable))
+        )
+
+    def test_axis_composed_skin_descriptor_reaches_the_exact_prompt(self) -> None:
+        plan = with_material_skin_descriptor(valid_color_plan())
+        prompt = authored_prompt_text(plan)
+        self.assertEqual(audit_plan(plan, prompt), [])
+        self.assertIn(
+            "visible skin with a light value, low chroma, an olive undertone, and a satin finish",
+            prompt,
+        )
+
+        missing_phrase = prompt.replace(
+            "visible skin with a light value, low chroma, an olive undertone, and a satin finish",
+            "visible skin",
+        )
+        self.assertTrue(
+            any(
+                "controlled_descriptor.phrase appears 0 times" in error
+                for error in audit_plan(plan, missing_phrase)
+            )
+        )
+
+    def test_controlled_descriptor_rejects_hardcoded_or_misowned_axes(self) -> None:
+        phrase_tamper = with_material_skin_descriptor(valid_color_plan())
+        descriptor = phrase_tamper["render_contract"]["color_tone_contract"][
+            "surface_color_language"
+        ]["controlled_descriptor"]
+        descriptor["phrase"] = descriptor["phrase"].replace(
+            "a light value", "a very light value"
+        )
+        self.assertTrue(
+            any(
+                "phrase does not match the classified axes" in error
+                for error in audit_plan(phrase_tamper)
+            )
+        )
+
+        wrong_owner = with_material_skin_descriptor(valid_color_plan())
+        descriptor = wrong_owner["render_contract"]["color_tone_contract"][
+            "surface_color_language"
+        ]["controlled_descriptor"]
+        descriptor["axis_control_ids"]["undertone"] = "control-surface-chroma"
+        self.assertTrue(
+            any(
+                "axis_control_ids.undertone controls the wrong color axis" in error
+                for error in audit_plan(wrong_owner)
+            )
+        )
+
+        wrong_finish = with_material_skin_descriptor(valid_color_plan())
+        finish_effect = next(
+            item
+            for item in wrong_finish["render_contract"]["aggregate_effects"]
+            if item["id"] == "effect-visible-surface-finish"
+        )
+        finish_effect["region_ids"] = ["surrounding-field"]
+        self.assertTrue(
+            any(
+                "finish must control the same region's surface axis" in error
+                for error in audit_plan(wrong_finish)
+            )
+        )
+
+    def test_material_skin_requires_a_matching_color_region(self) -> None:
+        plan = with_material_skin_descriptor(valid_color_plan())
+        plan["render_contract"]["human_appearance_decisions"][0]["skin_surface"][
+            "region_ids"
+        ] = ["untracked-skin-region"]
+        self.assertTrue(
+            any(
+                "require matching Color/Tone regions" in error
+                for error in audit_plan(plan)
+            )
+        )
+
+        contradictory = with_material_skin_descriptor(valid_color_plan())
+        skin = contradictory["render_contract"]["human_appearance_decisions"][0][
+            "skin_surface"
+        ]
+        skin["descriptor_disposition"] = "omit"
+        skin["descriptor_non_emission_reason"] = "prompt budget"
+        self.assertTrue(
+            any(
+                "descriptor decision contradicts" in error
+                for error in audit_plan(contradictory)
+            )
+        )
+
+    def test_cross_component_alignment_and_offset_are_both_valid(self) -> None:
+        for direction in (
+            "the source components share one aligned axis",
+            "the source components keep visibly offset axes",
+        ):
+            plan = promote_spatial_decision(
+                with_spatial_coverage(valid_plan(), kind="non-human"),
+                "cross-component-orientation",
+                direction=direction,
+            )
+            self.assertEqual(audit_plan(plan), [])
+
+    def test_pose_owned_axis_cannot_be_relabelled_as_intrinsic_anatomy(self) -> None:
+        plan = promote_spatial_decision(
+            with_spatial_coverage(valid_plan()),
+            "human-shoulder-line",
+            direction="source-visible shoulder-line relation",
+        )
+        invariant_id = next(
+            item
+            for item in plan["render_contract"]["spatial_orientation_coverage"][
+                "decisions"
+            ]
+            if item["dimension"] == "human-shoulder-line"
+        )["invariant_id"]
+        next(
+            item
+            for item in plan["render_contract"]["invariants"]
+            if item["id"] == invariant_id
+        )["causal_origin"] = "intrinsic"
+        self.assertTrue(
+            any(
+                "causal_origin must match its invariant" in error
+                for error in audit_plan(plan)
+            )
+        )
+
+    def test_spatial_dimension_rejects_a_consistently_wrong_causal_owner(self) -> None:
+        plan = promote_spatial_decision(
+            with_spatial_coverage(valid_plan()),
+            "human-head-body-relation",
+        )
+        contract = plan["render_contract"]
+        decision = next(
+            item
+            for item in contract["spatial_orientation_coverage"]["decisions"]
+            if item["dimension"] == "human-head-body-relation"
+        )
+        decision["causal_origin"] = "intrinsic"
+        next(
+            item
+            for item in contract["invariants"]
+            if item["id"] == decision["invariant_id"]
+        )["causal_origin"] = "intrinsic"
+        next(
+            item
+            for item in contract["aggregate_effects"]
+            if item["id"] == decision["aggregate_effect_id"]
+        )["causal_origin"] = "intrinsic"
+        next(
+            item
+            for item in contract["emitted_controls"]
+            if item["id"] == decision["control_id"]
+        )["causal_origin"] = "intrinsic"
+        self.assertTrue(
+            any(
+                "is not allowed for dimension" in error
+                for error in audit_plan(plan)
+            )
+        )
+
+    def test_partial_component_relation_requires_fragment_and_completion_budget(self) -> None:
+        plan = valid_plan()
+        contract = plan["render_contract"]
+        contract["component_relations"].append(
+            {
+                "id": "partial-secondary-layer",
+                "kind": "partial-visibility",
+                "subject_region_id": "surrounding-field",
+                "reference_region_id": "central-form",
+                "observation": "only a few secondary-layer fragments remain inside the crop",
+                "role": "supporting",
+                "visible_fragments": ["one contour fragment", "one low-detail mark"],
+                "hidden_or_cropped": ["the counterpart stays outside the frame"],
+                "completion_risk": "high",
+                "source_evidence": ["hard crop interrupts the secondary layer"],
+            }
+        )
+        contract["aggregate_effects"][1]["relation_ids"].append(
+            "partial-secondary-layer"
+        )
+        self.assertEqual(audit_plan(plan), [])
+        del contract["component_relations"][-1]["hidden_or_cropped"]
+        self.assertTrue(
+            any("hidden_or_cropped" in error for error in audit_plan(plan))
+        )
+
+    def test_person_gestalt_generation_prior_requires_provenance_and_geometry(self) -> None:
+        plan = valid_plan()
+        contract = plan["render_contract"]
+        add_generic_claim(
+            contract,
+            invariant_id="readable-face-gestalt",
+            axis="form",
+            owner="subject.human",
+            role="supporting",
+            target_strength="subtle",
+            observation="a source-relative readable face gestalt",
+            causal_origin="intrinsic",
+            evidence="visible face silhouette and feature relationships",
+            direction="preserve-source-relative-face-gestalt",
+            prompt_excerpt="one compact face passage constrained by visible geometry",
+            region_ids=["central-form"],
+        )
+        prior_claim = contract["candidate_claims"][-1]
+        add_generic_claim(
+            contract,
+            invariant_id="source-face-geometry",
+            axis="form",
+            owner="detail.human-face-likeness",
+            role="supporting",
+            target_strength="subtle",
+            observation="source-visible face silhouette and feature relationships",
+            causal_origin="intrinsic",
+            evidence="visible jaw taper, feature spacing, and asymmetry",
+            direction="source-relative-face-geometry",
+            prompt_excerpt="visible jaw taper and feature spacing constrain the face gestalt",
+            region_ids=["central-form"],
+        )
+        prior_claim["generation_prior"] = {
+            "scope": "person-gestalt",
+            "candidate_source": {
+                "kind": "user-supplied",
+                "reference": "held-out request context",
+            },
+            "non_identifying": True,
+            "visible_geometry_evidence": [
+                "source-visible silhouette, feature relations, and asymmetry"
+            ],
+            "geometry_claim_ids": ["claim-source-face-geometry"],
+        }
+        self.assertEqual(audit_plan(plan), [])
+
+        missing_source = deepcopy(plan)
+        missing_source_claim = next(
+            item
+            for item in missing_source["render_contract"]["candidate_claims"]
+            if item["id"] == "claim-readable-face-gestalt"
+        )
+        del missing_source_claim["generation_prior"]["candidate_source"]
+        self.assertTrue(
+            any("candidate_source" in error for error in audit_plan(missing_source))
+        )
+
+        missing_geometry = deepcopy(plan)
+        missing_geometry_claim = next(
+            item
+            for item in missing_geometry["render_contract"]["candidate_claims"]
+            if item["id"] == "claim-readable-face-gestalt"
+        )
+        missing_geometry_claim["generation_prior"]["visible_geometry_evidence"] = []
+        self.assertTrue(
+            any(
+                "visible_geometry_evidence" in error
+                for error in audit_plan(missing_geometry)
+            )
+        )
+
+    def test_generation_prior_geometry_claim_ids_must_reach_owned_prompt_controls(self) -> None:
+        plan = valid_plan()
+        contract = plan["render_contract"]
+        add_generic_claim(
+            contract,
+            invariant_id="broad-person-anchor",
+            axis="form",
+            owner="subject.human",
+            role="supporting",
+            target_strength="subtle",
+            observation="one non-identifying source-relative person anchor",
+            causal_origin="intrinsic",
+            evidence="readable broad face gestalt",
+            direction="bounded-source-relative-person-anchor",
+            prompt_excerpt="one bounded non-identifying person anchor",
+            region_ids=["central-form"],
+        )
+        prior_claim = contract["candidate_claims"][-1]
+        add_generic_claim(
+            contract,
+            invariant_id="local-face-geometry",
+            axis="form",
+            owner="detail.human-face-likeness",
+            role="supporting",
+            target_strength="subtle",
+            observation="local visible geometry corrects the broad person prior",
+            causal_origin="intrinsic",
+            evidence="source-visible silhouette and feature relations",
+            direction="source-relative-local-face-geometry",
+            prompt_excerpt="local silhouette and feature relations correct the broad anchor",
+            region_ids=["central-form"],
+        )
+        prior_claim["generation_prior"] = {
+            "scope": "person-gestalt",
+            "candidate_source": {
+                "kind": "source-visible-approximation",
+                "reference": "held-out source observation",
+            },
+            "non_identifying": True,
+            "visible_geometry_evidence": ["local silhouette and feature relations"],
+            "geometry_claim_ids": ["claim-local-face-geometry"],
+        }
+        self.assertEqual(audit_plan(plan), [])
+
+        missing_ids = deepcopy(plan)
+        next(
+            item
+            for item in missing_ids["render_contract"]["candidate_claims"]
+            if item["id"] == "claim-broad-person-anchor"
+        )["generation_prior"]["geometry_claim_ids"] = []
+        self.assertTrue(
+            any("geometry_claim_ids" in error for error in audit_plan(missing_ids))
+        )
+
+        unknown = deepcopy(plan)
+        next(
+            item
+            for item in unknown["render_contract"]["candidate_claims"]
+            if item["id"] == "claim-broad-person-anchor"
+        )["generation_prior"]["geometry_claim_ids"] = ["claim-not-present"]
+        self.assertTrue(
+            any("unknown geometry claim" in error for error in audit_plan(unknown))
+        )
+
+        self_reference = deepcopy(plan)
+        next(
+            item
+            for item in self_reference["render_contract"]["candidate_claims"]
+            if item["id"] == "claim-broad-person-anchor"
+        )["generation_prior"]["geometry_claim_ids"] = [
+            "claim-broad-person-anchor"
+        ]
+        self.assertTrue(
+            any("separate geometry claim" in error for error in audit_plan(self_reference))
+        )
+
+        wrong_owner = deepcopy(plan)
+        wrong_contract = wrong_owner["render_contract"]
+        geometry_claim = next(
+            item
+            for item in wrong_contract["candidate_claims"]
+            if item["id"] == "claim-local-face-geometry"
+        )
+        geometry_claim["owner"] = "subject.generic-object"
+        next(
+            item
+            for item in wrong_contract["invariants"]
+            if item["id"] == "local-face-geometry"
+        )["clause_owner"] = "subject.generic-object"
+        next(
+            item
+            for item in wrong_contract["emitted_controls"]
+            if item["claim_id"] == "claim-local-face-geometry"
+        )["owner"] = "subject.generic-object"
+        self.assertTrue(
+            any("human or face module" in error for error in audit_plan(wrong_owner))
+        )
+
+        uncontrolled = deepcopy(plan)
+        uncontrolled["render_contract"]["emitted_controls"] = [
+            item
+            for item in uncontrolled["render_contract"]["emitted_controls"]
+            if item["claim_id"] != "claim-local-face-geometry"
+        ]
+        self.assertTrue(
+            any(
+                "exactly one generic prompt control" in error
+                for error in audit_plan(uncontrolled)
+            )
+        )
+
+    def test_authored_prompt_must_contain_each_control_excerpt_exactly_once(self) -> None:
+        plan = valid_plan()
+        prompt = authored_prompt_text(plan)
+        self.assertEqual(audit_plan(plan, prompt_text=prompt), [])
+
+        duplicated = prompt + ". " + plan["render_contract"]["emitted_controls"][0][
+            "prompt_excerpt"
+        ]
+        self.assertTrue(
+            any("appears 2 times" in error for error in audit_plan(plan, duplicated))
+        )
+
+        self.assertTrue(
+            any(
+                "appears 0 times" in error
+                for error in audit_plan(plan, "PROMPT: unrelated wording")
+            )
+        )
+
+    def test_generic_and_light_contracts_cannot_share_claim_or_excerpt(self) -> None:
+        plan = valid_light_plan()
+        contract = plan["render_contract"]
+        light_claim = contract["candidate_claims"][-1]
+        light_claim["salience_effects"] = [
+            {
+                "aggregate_effect_id": "generic-light-duplicate",
+                "source_evidence": ["duplicated light direction"],
+            }
+        ]
+        contract["aggregate_effects"].append(
+            {
+                "id": "generic-light-duplicate",
+                "axis": "form",
+                "direction": "duplicate-light-induced-form",
+                "role": "primary",
+                "target_strength": "moderate",
+                "claim_ids": [light_claim["id"]],
+                "region_ids": ["central-form"],
+                "relation_ids": [],
+                "source_supported": True,
+                "source_evidence": ["duplicated light direction"],
+            }
+        )
+        contract["emitted_controls"].append(
+            {
+                "id": "control-generic-light-duplicate",
+                "prompt_excerpt": contract["light_form_contract"][
+                    "emitted_controls"
+                ][0]["prompt_excerpt"],
+                "claim_id": light_claim["id"],
+                "owner": light_claim["owner"],
+                "aggregate_effect_ids": ["generic-light-duplicate"],
+            }
+        )
+        errors = audit_plan(plan)
+        self.assertTrue(any("cannot own the same claims" in error for error in errors))
+        self.assertTrue(
+            any("cannot own the same prompt excerpts" in error for error in errors)
+        )
+
+    def test_primary_generic_effect_changes_pair_signature(self) -> None:
+        baseline = valid_plan()
+        variant = deepcopy(baseline)
+        variant["render_contract"]["aggregate_effects"][0]["direction"] = (
+            "expanded-silhouette-with-abrupt-transitions"
+        )
+        self.assertTrue(
+            any(
+                "changed the primary salience signature" in error
+                for error in compare_plans(
+                    baseline, variant, "invariant-preserving"
+                )
+            )
+        )
 
     def test_documented_evaluation_schema_passes(self) -> None:
         reference = (
@@ -655,6 +2025,89 @@ class SaliencePlanTests(unittest.TestCase):
 
     def test_valid_light_form_contract_passes(self) -> None:
         self.assertEqual(audit_plan(valid_light_plan()), [])
+
+    def test_pairwise_light_regions_must_reference_known_distinct_regions(self) -> None:
+        unknown = valid_light_plan()
+        unknown["render_contract"]["light_form_contract"]["region_effects"][0][
+            "reference_region_id"
+        ] = "missing-region"
+        self.assertTrue(
+            any(
+                "reference_region_id references an unknown region" in error
+                for error in audit_plan(unknown)
+            )
+        )
+
+        same = valid_light_plan()
+        same["render_contract"]["light_form_contract"]["region_effects"][0][
+            "reference_region_id"
+        ] = "central-form"
+        self.assertTrue(
+            any("reference a distinct region" in error for error in audit_plan(same))
+        )
+
+        global_target = valid_light_plan()
+        light_contract = global_target["render_contract"]["light_form_contract"]
+        light_contract["region_effects"][0]["region_id"] = "global"
+        light_contract["region_effects"][0]["reference_region_id"] = "central-form"
+        self.assertTrue(
+            any(
+                "region_id must reference a major region for comparison" in error
+                for error in audit_plan(global_target)
+            )
+        )
+
+    def test_pairwise_light_observation_and_aggregate_actuation_must_match(self) -> None:
+        missing_actuation = valid_light_plan()
+        del missing_actuation["render_contract"]["light_form_contract"][
+            "aggregate_effects"
+        ][0]["reference_region_id"]
+        self.assertTrue(
+            any(
+                "observed regional light relation" in error
+                for error in audit_plan(missing_actuation)
+            )
+        )
+
+        missing_observation = valid_light_plan()
+        del missing_observation["render_contract"]["light_form_contract"][
+            "region_effects"
+        ][0]["reference_region_id"]
+        self.assertTrue(
+            any(
+                "aggregate regional light relation" in error
+                for error in audit_plan(missing_observation)
+            )
+        )
+
+    def test_pairwise_light_reference_changes_primary_signature(self) -> None:
+        baseline = valid_light_plan()
+        variant = deepcopy(baseline)
+        variant["render_contract"]["major_regions"].append(
+            {
+                "id": "comparison-field",
+                "role": "supporting",
+                "relative_area": "small",
+                "attention": "secondary",
+                "source_evidence": ["a separate held-out comparison region"],
+            }
+        )
+        light_contract = variant["render_contract"]["light_form_contract"]
+        light_contract["region_effects"][0]["reference_region_id"] = (
+            "comparison-field"
+        )
+        light_contract["aggregate_effects"][0]["reference_region_id"] = (
+            "comparison-field"
+        )
+        self.assertEqual(audit_plan(variant), [])
+        self.assertTrue(
+            any(
+                "changed the primary salience signature" in error
+                for error in compare_plans(
+                    baseline, variant, "invariant-preserving"
+                )
+            )
+        )
 
     def test_valid_axis_first_lighting_language_review_passes(self) -> None:
         self.assertEqual(
@@ -1226,30 +2679,18 @@ class SaliencePlanTests(unittest.TestCase):
         contract["mode"] = "information-led"
         for index in range(3):
             invariant_id = f"information-band-{index}"
-            contract["invariants"].append(
-                {
-                    "id": invariant_id,
-                    "axis": "information",
-                    "role": "supporting",
-                    "observation": f"distinct reading-order band {index}",
-                    "causal_origin": "layout",
-                    "target_strength": "subtle",
-                    "source_evidence": [f"separate visible container {index}"],
-                    "clause_owner": "subject.document-data-diagram",
-                }
-            )
-            contract["candidate_claims"].append(
-                {
-                    "id": f"claim-information-{index}",
-                    "semantic_slot": invariant_id,
-                    "owner": "subject.document-data-diagram",
-                    "role": "supporting",
-                    "polarity": "affirmative",
-                    "target_strength": "subtle",
-                    "source_kind": "visible-evidence",
-                    "source_evidence": [f"separate visible container {index}"],
-                    "emit": True,
-                }
+            add_generic_claim(
+                contract,
+                invariant_id=invariant_id,
+                axis="information",
+                owner="subject.document-data-diagram",
+                role="supporting",
+                target_strength="subtle",
+                observation=f"distinct reading-order band {index}",
+                causal_origin="layout",
+                evidence=f"separate visible container {index}",
+                direction=f"separate-reading-order-band-{index}",
+                prompt_excerpt=f"a distinct reading-order band {index}",
             )
         self.assertEqual(audit_plan(plan), [])
 
@@ -1305,6 +2746,9 @@ class SaliencePlanTests(unittest.TestCase):
         variant = deepcopy(baseline)
         variant["render_contract"]["invariants"][0]["target_strength"] = "strong"
         variant["render_contract"]["candidate_claims"][0]["target_strength"] = "strong"
+        variant["render_contract"]["aggregate_effects"][0]["target_strength"] = (
+            "strong"
+        )
         self.assertTrue(
             any(
                 "changed the primary salience signature" in error

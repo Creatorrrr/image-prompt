@@ -1,6 +1,6 @@
 ---
 id: detail.human-body-form
-version: 4
+version: 5
 priority: 80
 type: detail
 tier: 3
@@ -42,7 +42,7 @@ Start with the large-scale form proposition before region detail. State directly
 
 Build a visible human-body form signature from source-supported proportion, contour, tissue, tension, and region hierarchy rather than from a body-type label.
 
-Split persistent body-form evidence from induced appearance before selecting prompt controls. Persistent evidence comes from repeated contour and proportion relationships; induced evidence may come from pose, compression, perspective, garment pressure, highlight, self-shadow, cast shadow, occlusion, or processing. Preserve the visible combination without promoting an induced effect into an intrinsic body invariant.
+Split persistent body-form evidence from induced appearance before selecting prompt controls. Give pose-, perspective-, garment-, light-, occlusion-, or processing-induced shape one causal owner; do not restate it as intrinsic anatomy.
 
 Use only the axes that materially distinguish the source:
 
@@ -53,7 +53,7 @@ Use only the axes that materially distinguish the source:
 - **Surface:** Describe skin as a surface system: lightness, hue family, saturation, undertone, tonal variation, finish, texture, and response to light only where visible.
 - **Hierarchy:** Assign each visible body region a hierarchy role—primary form, structural connector, supporting mass, edge crop, or low-legibility background evidence.
 
-Analyze the transitions between regions, not only isolated sizes. A waist, shoulder, joint, torso, or limb reads through its relation to adjacent forms, garment boundaries, negative space, and the direction of light.
+Analyze transitions between regions, not only isolated sizes. Garment asymmetry and pose asymmetry remain independent; neither may supply the other's missing evidence.
 
 ## Perspective and light separation
 

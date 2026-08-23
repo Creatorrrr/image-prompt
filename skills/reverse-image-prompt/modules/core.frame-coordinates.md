@@ -1,6 +1,6 @@
 ---
 id: core.frame-coordinates
-version: 7
+version: 9
 priority: 108
 type: core
 tier: 0
@@ -38,17 +38,17 @@ Always.
 - Do not invent exact dimensions from a viewer preview.
 - Put frame shape, crop, subject scale, and edge interactions before small object detail.
 - Lock subject frame share and negative-space share before adding face or object micro-detail.
-- Describe which evidence occupies the top, middle, bottom, left, center, and right zones when those bands control the composition.
+- Describe which evidence occupies the frame zones, including any material source-visible axis offset.
 
 ## Major-region hierarchy
 
-Map the few largest visually coherent regions as a major-region hierarchy before local detail. For each, record relative area, tonal or material role, first-attention priority, legibility, and contact with the frame edge. Use source-relative roles such as dominant field, supporting mass, edge frame, or low-legibility zone rather than fixed percentages.
+Map the few largest visually coherent regions as a major-region hierarchy before local detail. Record relative area, role, attention, legibility, and frame contact without fixed percentages.
 
-Preserve the hierarchy of region shares even when a flexible pose, viewpoint, or placement changes. Exact coordinates may move while the balance among dominant, supporting, and framing regions remains stable.
+Preserve region-share hierarchy when flexible pose, viewpoint, or placement changes; exact coordinates may move.
 
 ## Spatial language
 
-Prefer generator-friendly relations such as `left third`, `near the bottom edge`, `occupies roughly half the frame height`, `touches the left edge`, or `leaves a narrow background band`.
+Prefer generator-friendly frame relations. Before drafting, give each material placement, principal-axis, viewpoint, and cross-component dimension a direction-neutral disposition: `invariant`, `flexible`, `not-material`, `not-visible`, or `uncertain`. A frame-zone record alone does not cover orientation.
 
 ## Relational coordinate frames
 

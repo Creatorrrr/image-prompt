@@ -1,6 +1,6 @@
 ---
 id: core.pre-emit-gate
-version: 15
+version: 19
 priority: 100
 type: core
 tier: 0
@@ -54,6 +54,7 @@ Apply this as a rewrite pass, not a checklist appended to the draft.
 - Confirm that `PROMPT:` contains the primary visual concept.
 - Merge candidate claims by semantic slot before writing prose; each emitted slot has one clause owner.
 - Give each primary invariant one affirmative control; keep flexible dimensions supporting. Order by the dominant fidelity axis.
+- Give each generic effect one claim and exact prompt control; keep specialized ledgers separate.
 
 ### Net salience
 
@@ -74,7 +75,7 @@ Apply this as a rewrite pass, not a checklist appended to the draft.
 - For every required intrinsic value, chroma, or hue observation, trace one uninterrupted path from region axis to same-region/same-axis aggregate effect, emitted claim, and intrinsic axis-control. A relative hierarchy, exposure, illumination, or processing clause cannot satisfy missing intrinsic surface value or chroma.
 - Give an axis-control one region and one perceptual axis. If one phrase changes several axes, split its literal excerpts or mark it as a justified secondary compound-control; never use a compound-control to satisfy a required intrinsic axis.
 - Keep midtone or flat evidence that establishes displayed intrinsic color separate from highlight and shadow evidence that establishes tone response. Mixed tone-zone evidence may remain diagnostic but cannot drive an intrinsic axis-control.
-- Treat an appearance metaphor as explanation-only unless it has generator-and-version-specific response evidence. An unverified metaphor cannot be the sole carrier of a material color axis.
+- For every routed human, require explicit person-prior and skin-surface decisions. Emitted priors need visible geometry; emitted controlled descriptors must deterministically wrap separately owned axes. Friendly metaphors remain explanation-only without exact generator/version evidence.
 - Check global cast against reliable neutral or multi-region evidence; otherwise retain uncertainty.
 
 ### Lighting and light-to-form consistency
@@ -90,12 +91,12 @@ Apply this as a rewrite pass, not a checklist appended to the draft.
 
 ### Spatial and fidelity checks
 
-- Audit coordinate contradictions before emitting. Remove conflicting numeric anchors; use at most five unless a dense UI or diagram benefits.
+- Audit coordinate contradictions before emitting. Then audit the direction-neutral spatial coverage ledger: a frame zone alone cannot cover orientation; each invariant needs one relation/effect/claim/control path and causal axis; non-invariants emit nothing; duplicate ownership is merged.
 - Relate every major component or coherent group to another component or stable zone. Make inversion-prone side, contact, support, containment, and depth order explicit; distinguish 2D overlap from scene-space contact.
 - Preserve the relative area and attention order of major regions. Keep partial or edge-adjacent bodies, garments, objects, reflections, screens, posters, and text blocks incomplete.
 - Confirm that detail has not increased subject scale, sharpness, background legibility, retouching, contrast, lighting polish, or a category's default silhouette beyond the source.
 - Retain scale-appropriate face evidence: selective likeness anchors when readable, only orientation, hair mass, tone, and visibility when small or obscured.
-- Remove unsupported camera, lens, identity, brand, artist, hidden-content, and quality assumptions. Report prompt-only limits honestly for unreliable exact details.
+- Remove unsupported camera, lens, identity, brand, artist, hidden-content, and quality assumptions. Report prompt-only limits honestly; before generation, audit the reconciled plan and final prompt; separate setting and pixel evidence.
 
 ## Length and clarity
 

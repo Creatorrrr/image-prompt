@@ -48,6 +48,7 @@ light_form_contract:
   region_effects:
     - id: "effect observation id"
       region_id: "known major region"
+      reference_region_id: "optional distinct known major region for a comparative spatial effect"
       role: broad-plane | gradient | highlight | shadow | rim | spill
       value_relation: "source-relative relation"
       gradient_strength: subtle | moderate | strong
@@ -108,6 +109,7 @@ light_form_contract:
   aggregate_effects:
     - id: "canonical light effect"
       region_id: "known major region or global"
+      reference_region_id: "optional distinct known major region matching a comparative observation"
       axis: source-geometry | fill | bright-plane-coverage | local-form-contrast | gradient-extent | shadow-topology | material-response | background-spill
       direction: "canonical source-relative direction"
       role: primary | supporting
@@ -124,6 +126,8 @@ light_form_contract:
 ```
 
 Candidate claims listed by this contract carry `lighting_effects`, each with an `aggregate_effect_id`, confidence, and source evidence. Every listed claim is emitted, represented exactly once in `emitted_controls`, and references the same complete effect set. A `prompt_excerpt` may be the smallest exact clause inside a compact sentence; it need not be a standalone sentence or visible output section. Two effect IDs may not hide the same region, axis, and direction.
+
+When adjacent regions belong to the same visible surface, a material source/render change in their value separation is evidence for a spatial Light/Form residual, not automatically for intrinsic form or surface color. Record the compared major regions as `region_id` and a distinct known `reference_region_id`; the same ordered pair must appear in an aggregate actuation rather than remaining diagnostic-only. Omit the optional reference for genuinely one-region effects. Then assign any visible transition to gradient extent, local form contrast, shadow topology, or material response. Use `result-space-only` when the image does not identify a reliable physical cause.
 
 `lighting_language` is optional unless source-visible lighting is being translated into a compact composite or an externally supplied friendly label is considered. Use `references/lighting-language.md` and its versioned policy. Classify every axis independently, preserve evidence and uncertainty, and keep its deterministic `controlled_summary` explanation-only. Every named friendly-label review records user or versioned-vocabulary provenance. Compatibility does not authorize emission: an emitted entry in `lighting_labels` must additionally be model-calibrated for the exact generator/version, carry calibration evidence, and reference already-owned literal controls.
 
@@ -266,6 +270,7 @@ This matrix is for building and promoting a skill-level evaluation suite, not fo
 - similar displayed key level with broad versus narrow bright-plane coverage
 - similar bright-plane coverage with different shadow floors
 - same surface and geometry under different light
+- the same surface with regional light-to-form separation versus spatially uniform illumination
 - same light under different geometry or pose
 - backlight, rim light, mixed light, flash, and ambient-dominant cases
 - diffuse, absorbent, glossy, metallic, translucent, and woven responses
