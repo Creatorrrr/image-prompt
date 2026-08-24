@@ -1,9 +1,199 @@
 {
   "name": "reverse-image-prompt",
-  "architecture": "modular facet router",
-  "version": "3.3.0-color-control-ledger",
+  "architecture": "distributed modular facet router",
+  "version": "3.4.0-distributed-analysis",
   "entrypoint": "SKILL.md",
-  "source": "generated from modules/*.md frontmatter by tools/gen_manifest.py",
+  "source": "generated from modules/*.md and lanes/*.md frontmatter by tools/gen_manifest.py",
+  "analysis_orchestration": {
+    "route_schema": "reverse-image-analysis-route/v1",
+    "report_schema": "reverse-image-analysis-lane-report/v1",
+    "bundle_schema": "reverse-image-analysis-bundle/v1",
+    "reference": "references/analysis-orchestration.md"
+  },
+  "analysis_lanes": [
+    {
+      "id": "lane.global-composition",
+      "version": 1,
+      "file": "lanes/lane.global-composition.md",
+      "priority": 100,
+      "activation": "always",
+      "select_types": [
+        "core"
+      ],
+      "select_facets": [],
+      "select_module_ids": [
+        "concept.primary-relationship"
+      ],
+      "required_common_modules": [],
+      "owns_sections": [
+        "direct-appeal",
+        "global-composition",
+        "major-region-hierarchy"
+      ],
+      "required_topics": [
+        "perceptual-proposition",
+        "frame-and-crop",
+        "major-regions",
+        "fidelity-mode"
+      ]
+    },
+    {
+      "id": "lane.spatial-topology",
+      "version": 1,
+      "file": "lanes/lane.spatial-topology.md",
+      "priority": 90,
+      "activation": "matched",
+      "select_types": [
+        "concept"
+      ],
+      "select_facets": [],
+      "select_module_ids": [
+        "subject.human",
+        "detail.pose-hands-gesture",
+        "detail.tight-selfie-hierarchy",
+        "detail.accessory-torso-budget",
+        "detail.face-hand-gesture"
+      ],
+      "required_common_modules": [
+        "core.visual-evidence",
+        "core.frame-coordinates",
+        "core.fidelity-discipline"
+      ],
+      "owns_sections": [
+        "spatial-orientation",
+        "component-topology",
+        "contact-occlusion-support"
+      ],
+      "required_topics": [
+        "orientation-coverage",
+        "component-relations",
+        "contact-and-occlusion",
+        "completion-risk"
+      ]
+    },
+    {
+      "id": "lane.subject-appearance",
+      "version": 1,
+      "file": "lanes/lane.subject-appearance.md",
+      "priority": 85,
+      "activation": "matched",
+      "select_types": [
+        "subject",
+        "style"
+      ],
+      "select_facets": [],
+      "select_module_ids": [
+        "detail.human-face-likeness",
+        "detail.human-body-form",
+        "detail.clothing-fashion"
+      ],
+      "required_common_modules": [
+        "core.visual-evidence",
+        "core.fidelity-discipline"
+      ],
+      "owns_sections": [
+        "subject-form",
+        "human-appearance-evidence",
+        "person-prior-candidate",
+        "skin-visibility-evidence"
+      ],
+      "required_topics": [
+        "subject-role",
+        "visible-form",
+        "appearance-drift-risk",
+        "intrinsic-induced-confounds"
+      ]
+    },
+    {
+      "id": "lane.color-light-material",
+      "version": 1,
+      "file": "lanes/lane.color-light-material.md",
+      "priority": 82,
+      "activation": "matched",
+      "select_types": [],
+      "select_facets": [],
+      "select_module_ids": [
+        "detail.color-tone-fidelity",
+        "detail.light-form-fidelity"
+      ],
+      "required_common_modules": [
+        "core.visual-evidence",
+        "core.background-color",
+        "core.fidelity-discipline"
+      ],
+      "owns_sections": [
+        "color-tone",
+        "light-form",
+        "material-response"
+      ],
+      "required_topics": [
+        "intrinsic-color",
+        "displayed-tone-scope",
+        "illumination-and-shadow",
+        "material-response"
+      ]
+    },
+    {
+      "id": "lane.medium-aesthetic-capture",
+      "version": 1,
+      "file": "lanes/lane.medium-aesthetic-capture.md",
+      "priority": 78,
+      "activation": "matched",
+      "select_types": [
+        "medium"
+      ],
+      "select_facets": [],
+      "select_module_ids": [
+        "detail.low-quality-artifacts"
+      ],
+      "required_common_modules": [
+        "core.visual-evidence",
+        "core.fidelity-discipline"
+      ],
+      "owns_sections": [
+        "medium-evidence",
+        "capture-character",
+        "portrait-production-aesthetic"
+      ],
+      "required_topics": [
+        "medium-and-process",
+        "capture-fidelity-ceiling",
+        "production-aesthetic",
+        "artifact-preservation"
+      ]
+    },
+    {
+      "id": "lane.information-layout",
+      "version": 1,
+      "file": "lanes/lane.information-layout.md",
+      "priority": 75,
+      "activation": "matched",
+      "select_types": [],
+      "select_facets": [],
+      "select_module_ids": [
+        "subject.document-data-diagram",
+        "medium.screenshot-ui",
+        "concept.screen-frame-within-frame",
+        "detail.text-logo-label"
+      ],
+      "required_common_modules": [
+        "core.visual-evidence",
+        "core.frame-coordinates",
+        "core.fidelity-discipline"
+      ],
+      "owns_sections": [
+        "information-hierarchy",
+        "reading-order",
+        "text-and-ui-legibility"
+      ],
+      "required_topics": [
+        "container-hierarchy",
+        "reading-order",
+        "text-legibility",
+        "interface-boundaries"
+      ]
+    }
+  ],
   "tiers": {
     "0": "always-on core",
     "1": "concept and relationship",
@@ -46,7 +236,7 @@
     },
     {
       "id": "core.frame-coordinates",
-      "version": 9,
+      "version": 10,
       "file": "modules/core.frame-coordinates.md",
       "type": "core",
       "tier": 0,
@@ -179,7 +369,7 @@
     },
     {
       "id": "core.pre-emit-gate",
-      "version": 19,
+      "version": 20,
       "file": "modules/core.pre-emit-gate.md",
       "type": "core",
       "tier": 0,
@@ -224,7 +414,7 @@
     },
     {
       "id": "core.output-contract",
-      "version": 17,
+      "version": 18,
       "file": "modules/core.output-contract.md",
       "type": "core",
       "tier": 0,
@@ -403,7 +593,7 @@
     },
     {
       "id": "subject.human",
-      "version": 13,
+      "version": 15,
       "file": "modules/subject.human.md",
       "type": "subject",
       "tier": 2,
@@ -826,7 +1016,7 @@
     },
     {
       "id": "detail.human-body-form",
-      "version": 5,
+      "version": 6,
       "file": "modules/detail.human-body-form.md",
       "type": "detail",
       "tier": 3,
@@ -863,7 +1053,7 @@
     },
     {
       "id": "detail.human-face-likeness",
-      "version": 6,
+      "version": 8,
       "file": "modules/detail.human-face-likeness.md",
       "type": "detail",
       "tier": 3,
@@ -898,7 +1088,7 @@
     },
     {
       "id": "detail.color-tone-fidelity",
-      "version": 6,
+      "version": 7,
       "file": "modules/detail.color-tone-fidelity.md",
       "type": "detail",
       "tier": 3,

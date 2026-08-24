@@ -11,7 +11,11 @@ sys.path.insert(0, str(TOOLS))
 
 from module_metadata import ROOT, load_manifest, module_map  # noqa: E402
 from anchor_catalog import CORE_ANCHOR_IDS  # noqa: E402
-from route_resolver import MAX_NON_CORE_MODULES, resolve_modules  # noqa: E402
+from route_resolver import (  # noqa: E402
+    MAX_NON_CORE_MODULES,
+    resolve_analysis_route,
+    resolve_modules,
+)
 
 
 class RouteResolverTests(unittest.TestCase):
@@ -292,6 +296,62 @@ class RouteResolverTests(unittest.TestCase):
 
     def test_declared_budget_matches_contract(self) -> None:
         self.assertEqual(MAX_NON_CORE_MODULES, 8)
+
+    def test_analysis_route_activates_compact_portrait_lanes(self) -> None:
+        route = resolve_analysis_route(
+            {
+                "subjects": ["human"],
+                "medium": ["photographic"],
+                "relationships": ["ordinary"],
+                "detail_risks": ["face-detail", "color-tone", "lighting-fidelity"],
+            },
+            self.manifest,
+        )
+        self.assertEqual(route["schema_version"], "reverse-image-analysis-route/v1")
+        self.assertEqual(
+            set(route["required_lane_ids"]),
+            {
+                "lane.global-composition",
+                "lane.spatial-topology",
+                "lane.subject-appearance",
+                "lane.color-light-material",
+                "lane.medium-aesthetic-capture",
+            },
+        )
+        self.assertNotIn("lane.information-layout", route["required_lane_ids"])
+
+    def test_information_route_adds_information_lane_without_color_lane(self) -> None:
+        route = resolve_analysis_route(
+            {
+                "subjects": ["document"],
+                "medium": ["screenshot-ui"],
+                "relationships": ["screen-frame-within-frame"],
+                "detail_risks": ["text-logo"],
+            },
+            self.manifest,
+        )
+        self.assertIn("lane.information-layout", route["required_lane_ids"])
+        self.assertIn("lane.spatial-topology", route["required_lane_ids"])
+        self.assertNotIn("lane.color-light-material", route["required_lane_ids"])
+
+    def test_analysis_route_fingerprint_is_alias_and_order_stable(self) -> None:
+        left = resolve_analysis_route(
+            {
+                "subjects": ["human"],
+                "medium": ["photographic"],
+                "detail-risks": ["face-detail", "color-tone"],
+            },
+            self.manifest,
+        )
+        right = resolve_analysis_route(
+            {
+                "detail-risk": ["color-tone", "face-detail"],
+                "subject": ["human"],
+                "media": ["photographic"],
+            },
+            self.manifest,
+        )
+        self.assertEqual(left, right)
 
 
 if __name__ == "__main__":

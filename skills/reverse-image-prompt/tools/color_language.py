@@ -119,23 +119,44 @@ def _classify_undertone(
 ) -> dict[str, Any]:
     chroma = math.hypot(a_value, b_value)
     neutral_max = _number(policy.get("neutral_max_chroma"), "undertone.neutral_max_chroma")
-    if chroma <= neutral_max:
-        confidence = "high" if chroma <= neutral_max * 0.75 else "medium"
-        return {
-            "term": "neutral",
-            "confidence": confidence,
-            "runner_up": None,
-            "hue_degrees": None if chroma == 0.0 else round(math.degrees(math.atan2(b_value, a_value)) % 360.0, 3),
-        }
-    hue = math.degrees(math.atan2(b_value, a_value)) % 360.0
     prototypes = policy.get("prototypes")
     if not isinstance(prototypes, list) or len(prototypes) < 2:
         raise ValueError("undertone.prototypes must contain at least two entries")
-    distances: list[tuple[float, str]] = []
+    prototype_specs: list[tuple[str, float]] = []
     for index, item in enumerate(prototypes):
         spec = _object(item, f"undertone.prototypes[{index}]")
         term = _string(spec.get("term"), f"undertone.prototypes[{index}].term")
-        angle = _number(spec.get("hue_degrees"), f"undertone.prototypes[{index}].hue_degrees")
+        angle = _number(
+            spec.get("hue_degrees"), f"undertone.prototypes[{index}].hue_degrees"
+        )
+        prototype_specs.append((term, angle))
+    if chroma <= neutral_max:
+        confidence = "high" if chroma <= neutral_max * 0.75 else "medium"
+        hue = (
+            None
+            if chroma == 0.0
+            else math.degrees(math.atan2(b_value, a_value)) % 360.0
+        )
+        runner_up = (
+            min(
+                (
+                    _circular_distance(hue, angle),
+                    term,
+                )
+                for term, angle in prototype_specs
+            )[1]
+            if confidence == "medium" and hue is not None
+            else None
+        )
+        return {
+            "term": "neutral",
+            "confidence": confidence,
+            "runner_up": runner_up,
+            "hue_degrees": None if hue is None else round(hue, 3),
+        }
+    hue = math.degrees(math.atan2(b_value, a_value)) % 360.0
+    distances: list[tuple[float, str]] = []
+    for term, angle in prototype_specs:
         distances.append((_circular_distance(hue, angle), term))
     distances.sort()
     nearest, runner_up = distances[0], distances[1]
@@ -287,9 +308,9 @@ def compose_controlled_descriptor(
 ) -> dict[str, Any]:
     """Compose literal classified axes without inventing a semantic label.
 
-    ``surface_term`` is supplied by the analyst (for example, the visible region
-    name).  Low-confidence, mixed, or uncertain required evidence fails closed.
-    The return value deliberately contains no production ``emit`` decision.
+    ``surface_term`` is supplied by the analyst. Stable axes compose in canonical
+    order even when another requested axis is unresolved. Boundary candidates
+    remain diagnostic. The return value contains no production ``emit`` decision.
     """
 
     surface = _string(surface_term, "surface_term")
@@ -299,6 +320,7 @@ def compose_controlled_descriptor(
         requested_axes.append("finish")
 
     excerpts: dict[str, str] = {}
+    bounded: dict[str, dict[str, str]] = {}
     unresolved: list[str] = []
     for axis in requested_axes:
         axis_spec = _object(axes.get(axis), f"axis_classification.{axis}")
@@ -309,22 +331,28 @@ def compose_controlled_descriptor(
         if confidence not in VALID_CONFIDENCE:
             raise ValueError(f"axis_classification.{axis}.confidence is invalid")
         phrase = _controlled_axis_excerpt(axis, term)
+        runner_up = axis_spec.get("runner_up")
         if confidence == "low" or phrase is None:
             unresolved.append(axis)
+        elif confidence == "medium" and isinstance(runner_up, str) and runner_up.strip():
+            bounded[axis] = {"term": term, "runner_up": str(runner_up).strip()}
         else:
             excerpts[axis] = phrase
 
-    if unresolved:
+    included_axes = [axis for axis in requested_axes if axis in excerpts]
+    if not included_axes:
         return {
-            "status": "inconclusive",
+            "status": "bounded" if bounded else "inconclusive",
             "surface_term": surface,
-            "included_axes": requested_axes,
+            "requested_axes": requested_axes,
+            "included_axes": [],
             "axis_excerpts": excerpts,
             "unresolved_axes": unresolved,
+            "bounded_axes": bounded,
             "composition_source": "axis-composed",
         }
 
-    ordered_excerpts = [excerpts[axis] for axis in requested_axes]
+    ordered_excerpts = [excerpts[axis] for axis in included_axes]
     if len(ordered_excerpts) == 1:
         joined = ordered_excerpts[0]
     elif len(ordered_excerpts) == 2:
@@ -332,12 +360,18 @@ def compose_controlled_descriptor(
     else:
         joined = ", ".join(ordered_excerpts[:-1]) + ", and " + ordered_excerpts[-1]
     return {
-        "status": "ready",
+        "status": (
+            "complete"
+            if included_axes == requested_axes and not bounded and not unresolved
+            else "partial"
+        ),
         "surface_term": surface,
         "phrase": f"{surface} with {joined}",
-        "included_axes": requested_axes,
+        "requested_axes": requested_axes,
+        "included_axes": included_axes,
         "axis_excerpts": excerpts,
-        "unresolved_axes": [],
+        "unresolved_axes": unresolved,
+        "bounded_axes": bounded,
         "composition_source": "axis-composed",
     }
 

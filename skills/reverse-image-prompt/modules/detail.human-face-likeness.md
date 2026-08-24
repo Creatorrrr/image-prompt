@@ -1,6 +1,6 @@
 ---
 id: detail.human-face-likeness
-version: 6
+version: 8
 priority: 80
 type: detail
 tier: 3
@@ -36,7 +36,7 @@ Load only when at least one human face is prominent or clearly readable. Do not 
 
 ## Detail tier
 
-Allocate human detail by visible face scale and legibility.
+Allocate anchor count by visible face scale and legibility, but assign fidelity role independently. A readable-secondary face may remain a primary invariant when changing its broad reading changes the image.
 
 - **Prominent and legible:** the face is a primary image anchor and individual feature relationships are separable. Use six to ten selective likeness anchors.
 - **Readable but secondary:** the face is smaller but several feature groups remain reliable. Use three to six anchors.
@@ -44,17 +44,17 @@ Allocate human detail by visible face scale and legibility.
 
 For a prominent legible face, choose six to ten likeness-bearing visible anchors instead of listing every facial field.
 
-Use the lower end of the anchor range when global softness, haze, compression, low microcontrast, or small face scale limits feature separation. Face-detail anchors preserve geometry; they do not authorize a larger crop, stronger focus, added skin texture, cleaner makeup, brighter catchlights, or sharper hair than the source aesthetic supports.
+Use fewer anchors when softness, compression, low contrast, or scale limits separation. Anchors preserve geometry; they do not authorize larger crop, sharper focus, cleaner makeup, extra detail, or a supporting-role downgrade.
 
-An anchor must describe a distinctive visible relationship, not a generic adjective. `Narrow lower face with a short rounded chin` is useful; `beautiful detailed face` is not.
+An anchor describes a visible relationship, not a generic adjective.
 
 ## Coarse-to-fine likeness
 
 When `subject.human` selects a broad person-gestalt anchor, treat it as one high-level generation prior rather than as the likeness description itself.
 
 - Place it once before local face geometry; do not repeat the racial, ethnic, regional-appearance, or attractiveness category in later clauses.
-- Preserve a user-supplied broad appearance judgment as user evidence, not as an inferred factual identity. Record its provenance in the owning claim and keep the category phrase out of reusable runtime defaults and unrelated held-out expectations.
-- Link `geometry_claim_ids` to separate emitted source-visible human or face geometry claims with exact generic controls. Neither prose evidence nor the prior clause satisfies this link.
+- Preserve user/trusted identity only as external context. Treat source-visible broad appearance as a non-identifying generation approximation, never inferred nationality; keep case labels out of runtime defaults and unrelated holdouts.
+- Link `geometry_claim_ids` to separate emitted source-visible form claims with exact generic controls. Neither prose evidence, skin color, nor the prior clause satisfies this link.
 - Use the full scale-appropriate geometry budget to correct the category prototype with the source's face silhouette, feature relationships, expression, hair boundary, surface treatment, and visible asymmetry.
 - If the broad anchor conflicts with reliable local geometry, revise or omit the broad anchor. Geometry wins.
 - Keep attractiveness at the level of overall facial reading; do not let it enlarge the face, idealize proportions, clean the skin, strengthen makeup, sharpen focus, or upgrade lighting.
@@ -73,7 +73,9 @@ Select only the strongest supported anchors across these groups:
 
 Preserve expression, gaze, and hair-to-face occlusion as likeness-critical geometry. Keep viewpoint separate from head pose and attention; do not repeat perspective-induced nostril, jaw, neck, eye, or far-side changes as intrinsic geometry.
 
-Distinguish optical or processing softness from beauty retouching. A globally soft face should remain optically soft rather than becoming a crisp face with smoothed skin.
+Infer face orientation from multiple relations—near/far feature exposure, side contour, nose-cheek spacing, compression, and occlusion—not both eyes alone. Record occluders as confounders; if camera/head separation is uncertain, preserve the visible side relation.
+
+Keep optical softness distinct from beauty retouching; do not convert it into crisp, smoothed skin.
 
 Use relational wording: wider than, closer together, higher than, partly hidden by, aligned with, shorter relative to, or more visible on the viewer-left/right. Do not infer unobserved feature geometry.
 

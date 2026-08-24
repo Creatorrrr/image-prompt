@@ -1,6 +1,6 @@
 ---
 id: detail.human-body-form
-version: 5
+version: 6
 priority: 80
 type: detail
 tier: 3
@@ -38,7 +38,7 @@ Load only when visible body form is a first-order part of the image's identity o
 
 ## Analysis
 
-Start with the large-scale form proposition before region detail. State directly what visible quality carries the impression—such as long-lined, compact, broad, narrow, soft, firm, relaxed, tense, delicate, sturdy, or strongly defined—then test it against observable causes. A broad descriptor is a hypothesis, not a substitute for evidence.
+Start with the large-scale form proposition, then test its visible quality against observable causes. A broad descriptor is a hypothesis, not evidence.
 
 Build a visible human-body form signature from source-supported proportion, contour, tissue, tension, and region hierarchy rather than from a body-type label.
 
@@ -54,6 +54,8 @@ Use only the axes that materially distinguish the source:
 - **Hierarchy:** Assign each visible body region a hierarchy role—primary form, structural connector, supporting mass, edge crop, or low-legibility background evidence.
 
 Analyze transitions between regions, not only isolated sizes. Garment asymmetry and pose asymmetry remain independent; neither may supply the other's missing evidence.
+
+Inspect torso yaw/pitch/roll plus shoulder slope and depth order from visible part relations. Record garment, hair, crop, and foreshortening confounders; preserve a material result-space relation when intrinsic geometry is hidden.
 
 ## Perspective and light separation
 

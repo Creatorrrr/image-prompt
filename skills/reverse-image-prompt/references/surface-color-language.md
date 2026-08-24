@@ -81,15 +81,22 @@ For `composite-appearance`, the requirements must cover value depth, chroma, und
 
 ## Controlled axis composition
 
-`compose_controlled_descriptor` accepts the classifier result and one analyst-supplied visible surface term. It deterministically orders value depth, chroma, and undertone, with finish last only when requested and separately observed. It returns `ready` only when every included axis has medium/high confidence and a controlled term; `mixed`, `uncertain`, or low-confidence included evidence returns `inconclusive` with no phrase. It never returns an `emit` decision.
+`compose_controlled_descriptor` accepts the classifier result and one analyst-supplied visible surface term. It requests value depth, chroma, and undertone, with finish last only when separately observed, and partitions them into stable included axes, boundary candidates, and unresolved axes. Stable axes serialize once in canonical order; an unresolved axis is omitted rather than invented. It never returns an `emit` decision.
 
-A persisted `controlled_descriptor` copies the reconstructed `status`, `surface_term`, `phrase`, `included_axes`, `axis_excerpts`, `unresolved_axes`, and `composition_source`, then adds current-source evidence, `emit`, and `axis_control_ids`. On emission, value depth, chroma, and undertone IDs must reference same-region Color/Tone axis-controls whose literal excerpts equal the composed substrings. Optional finish references a separately owned generic surface control. The full phrase appears exactly once in the prompt, containing rather than repeating those excerpts.
+Statuses are evidence states, not preferred labels:
+
+- `complete`: every requested axis is stable and included;
+- `partial`: at least one axis is stable and included while another is bounded or unresolved;
+- `bounded`: only adjacent boundary candidates remain, so no phrase is produced;
+- `inconclusive`: no stable or bounded axis is available.
+
+A persisted descriptor copies `status`, `surface_term`, `phrase` when present, `requested_axes`, `included_axes`, `axis_excerpts`, `bounded_axes`, `unresolved_axes`, and `composition_source`, then adds current-source evidence, `emit`, and `axis_control_ids`. `complete` or `partial` may emit; `bounded` and `inconclusive` may not. Axis-control IDs cover exactly `included_axes`. Core color axes reference same-region Color/Tone controls whose literal excerpts equal the composed substrings; optional finish references a separately owned generic surface control. The full wrapper appears exactly once, containing rather than repeating those excerpts.
 
 The surface term names the visible region; it must not smuggle in a preferred axis combination, demographic identity, or friendly category. The tool's fixed grammar is an axis serializer, not a learned response claim. Generator-specific effectiveness still requires rendered evidence.
 
 ## Prompt actuation
 
-Write literal value, chroma, and undertone controls before any friendly label. A controlled descriptor may wrap those exact excerpts once; it cannot add or replace an axis. Add finish only with its own visible evidence and surface control. A friendly label may summarize the controls once only when its requirements match and exact generator/version response testing has shown acceptable cross-axis behavior.
+Write the stable literal axes before any friendly label. A controlled descriptor may wrap exactly the included excerpts once; it cannot add or replace an unresolved/bounded axis. Add finish only with its own visible evidence and surface control. A friendly label may summarize the controls once only when its requirements match and exact generator/version response testing has shown acceptable cross-axis behavior.
 
 Write a compact sequence in the order value depth, chroma, and undertone, followed only by separately observed finish or evenness. Select every term from current-source classification; do not copy a target combination from this reference.
 

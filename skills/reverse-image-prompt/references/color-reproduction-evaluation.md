@@ -141,7 +141,7 @@ When apparent illumination is material, keep four Color/Tone-owned axes separate
 - `highlight-rolloff`: `clipped`, `abrupt-unclipped`, `gradual-unclipped`, `compressed`, `mixed`, or `uncertain`
 - `microcontrast`: `suppressed`, `natural`, `emphasized`, `mixed`, or `uncertain`
 
-These are displayed results, not a claim about physical lamp power. Record them under `displayed_tone_response` as region-and-axis entries with `class`, `role`, `confidence`, `emission`, source evidence, and either an aggregate effect ID or a diagnostic non-emission reason. A required axis follows the same effect/claim/axis-control chain as a required intrinsic axis. Light/Form separately owns bright-plane coverage and gradient extent.
+These are displayed results, not a claim about physical lamp power. Record them under `displayed_tone_response` as region-and-axis entries with `class`, `role`, `confidence`, `emission`, source evidence, and either an aggregate effect ID or a diagnostic non-emission reason. Give every Color/Tone region a non-trivial exact prompt anchor. Add `tone_scope`: `global`, one Color/Tone `region`, or a declared `region-group`, plus affected/protected region IDs and evidence; regional scopes reuse the declared anchor. A required axis follows the same effect/claim/axis-control chain as a required intrinsic axis, and its literal excerpt retains that anchor as a token-bounded span. Split a coarse region when it mixes materially bright and dark subregions. Light/Form separately owns bright-plane coverage and gradient extent.
 
 ## Global and target-local decomposition
 
@@ -184,7 +184,7 @@ region intrinsic axis
 
 An axis-control owns one region, one axis, and one causal layer. Split literal prompt excerpts when a sentence contains several clauses. A hierarchy or exposure relationship cannot replace a missing intrinsic surface-value control. A justified compound-control may compress secondary multi-axis evidence, but it cannot satisfy a required intrinsic axis.
 
-For each required displayed-tone axis, use the same chain but restrict causal ownership: displayed key and shadow floor may be illumination, exposure, or processing; highlight rolloff may be exposure or processing; microcontrast may be illumination or processing. One generic `stronger lighting` clause cannot satisfy several of these axes or any Light/Form spatial axis.
+For each required displayed-tone axis, use the same chain but restrict causal ownership: displayed key and shadow floor may be illumination, exposure, or processing; highlight rolloff may be exposure or processing; microcontrast may be illumination or processing. Its scope cannot include protected regions, and a global claim needs global evidence. One generic `stronger lighting` clause cannot satisfy several axes or any Light/Form spatial axis.
 
 Appearance metaphors are `explanation-only` or `unverified` by default. They may be emitted only when an exact generator-and-version evaluation shows that the phrase reinforces already-owned axes without unacceptable cross-axis leakage.
 

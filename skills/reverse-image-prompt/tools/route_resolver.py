@@ -4,13 +4,21 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 from pathlib import Path
 import re
 import sys
 from typing import Any
 
-from module_metadata import ROOT, expand_dependencies, load_manifest, module_map, module_sort_key
+from module_metadata import (
+    ROOT,
+    expand_dependencies,
+    load_manifest,
+    module_map,
+    module_sort_key,
+    resolve_analysis_lanes,
+)
 
 FACET_KEY_ALIASES = {
     "subject": "subject",
@@ -170,6 +178,71 @@ def resolve_modules(facets: dict[str, Any], manifest: dict[str, Any] | None = No
     return [m["id"] for m in sorted((modules[mid] for mid in expanded), key=module_sort_key)]
 
 
+def _canonical_facets(facets: dict[str, Any]) -> dict[str, list[str]]:
+    return {
+        key: sorted(values)
+        for key, values in sorted(normalize_facets(facets).items())
+        if values
+    }
+
+
+def analysis_route_fingerprint(route_without_fingerprint: dict[str, Any]) -> str:
+    encoded = json.dumps(
+        route_without_fingerprint,
+        sort_keys=True,
+        separators=(",", ":"),
+        ensure_ascii=False,
+    ).encode("utf-8")
+    return hashlib.sha256(encoded).hexdigest()
+
+
+def resolve_analysis_route(
+    facets: dict[str, Any], manifest: dict[str, Any] | None = None
+) -> dict[str, Any]:
+    """Resolve modules, then assign a compact set of independent analysis lanes."""
+
+    manifest = manifest or load_manifest(ROOT)
+    resolved_modules = resolve_modules(facets, manifest)
+    lane_entries = resolve_analysis_lanes(resolved_modules, manifest)
+    covered_non_core = {
+        module_id
+        for lane in lane_entries
+        for module_id in lane.get("module_ids", [])
+        if module_id not in manifest.get("required_core_modules", [])
+    }
+    modules = module_map(manifest)
+    required_non_core = {
+        module_id
+        for module_id in resolved_modules
+        if int(modules[module_id].get("tier", 99)) != 0
+    }
+    missing = sorted(required_non_core - covered_non_core)
+    if missing:
+        raise ValueError(
+            "analysis lane coverage missing for routed module(s): " + ", ".join(missing)
+        )
+
+    lanes = [
+        {
+            "id": lane["id"],
+            "version": lane["version"],
+            "instruction_file": lane["file"],
+            "module_ids": lane["module_ids"],
+            "owns_sections": lane["owns_sections"],
+            "required_topics": lane["required_topics"],
+        }
+        for lane in lane_entries
+    ]
+    route = {
+        "schema_version": "reverse-image-analysis-route/v1",
+        "normalized_facets": _canonical_facets(facets),
+        "resolved_modules": resolved_modules,
+        "required_lane_ids": [lane["id"] for lane in lanes],
+        "lanes": lanes,
+    }
+    return {**route, "route_fingerprint": analysis_route_fingerprint(route)}
+
+
 def load_scenarios(path: Path) -> list[dict[str, Any]]:
     data = json.loads(path.read_text(encoding="utf-8"))
     if isinstance(data, dict):
@@ -231,13 +304,28 @@ def main(argv: list[str]) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--facets", default="", help="JSON object containing detected facets")
     parser.add_argument("--scenarios", default="", help="JSON-compatible YAML scenario fixture")
+    parser.add_argument(
+        "--analysis-route",
+        action="store_true",
+        help="include the deterministic distributed-analysis lane route",
+    )
     args = parser.parse_args(argv)
 
     manifest = load_manifest(ROOT)
     if args.scenarios:
         return check_scenarios(Path(args.scenarios), manifest)
     if args.facets:
-        resolved = resolve_modules(json.loads(args.facets), manifest)
+        facets = json.loads(args.facets)
+        if args.analysis_route:
+            print(
+                json.dumps(
+                    resolve_analysis_route(facets, manifest),
+                    indent=2,
+                    ensure_ascii=False,
+                )
+            )
+            return 0
+        resolved = resolve_modules(facets, manifest)
         modules = module_map(manifest)
         non_core_count = sum(int(modules[mid].get("tier", 99)) != 0 for mid in resolved)
         print(json.dumps({"non_core_count": non_core_count, "modules": resolved}, indent=2, ensure_ascii=False))

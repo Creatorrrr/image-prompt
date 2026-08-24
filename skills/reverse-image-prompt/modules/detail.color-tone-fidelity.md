@@ -1,6 +1,6 @@
 ---
 id: detail.color-tone-fidelity
-version: 6
+version: 7
 priority: 79
 type: detail
 tier: 3
@@ -78,13 +78,13 @@ Describe important regions through separate value, chroma, and hue observations 
 
 Decompose an appearance metaphor into value, chroma, hue, surface, and light response. Mark it `explanation-only`, `unverified`, or `model-calibrated`; only the last may appear once as a summary of already-owned controls, with evidence for the exact generator/version. Treat control effectiveness as generator-and-version-specific evidence.
 
-When measured surface color needs natural language, read `references/surface-color-language.md`. Classify value depth, chroma, and undertone independently. With medium/high confidence, a controlled descriptor may deterministically compose those current-source axes in order; include finish only from separate visible evidence. It is not a friendly label and may emit only as one wrapper containing the exact owned axis-control excerpts. Mixed, uncertain, or low-confidence core evidence yields no phrase.
+When measured surface color needs natural language, read `references/surface-color-language.md`. Classify value depth, chroma, undertone, and optional separately observed finish independently. Compose stable axes in canonical order, omitting unresolved axes without invention. A boundary-only result stays diagnostic until exact model calibration. The descriptor is not a friendly label and may emit only as one wrapper containing the exact included axis-control excerpts.
 
 Friendly labels remain separate: review only user-supplied or explicitly versioned vocabulary candidates, and emit only a compatible exact-generator/version-calibrated summary. Never map surface axes to demographic identity.
 
 Map highlight, midtone, shadow, or flat-field behavior only at the granularity the source supports. Do not pool tone zones into an intrinsic target: use comparable midtone or flat patches for displayed intrinsic axes and separate groups for highlight and shadow response. Retain uncertainty for clipping, compression, mixed light, and low legibility.
 
-Record displayed key level, shadow floor, highlight rolloff, and microcontrast as separate tone-response axes when they materially affect apparent illumination. Do not call their combination physical light intensity. Link every required displayed-tone axis to its own region, aggregate effect, claim, and axis-control, while Light/Form separately owns bright-plane coverage and spatial gradients.
+Record displayed key level, shadow floor, highlight rolloff, and microcontrast as separate tone-response axes. Give every Color/Tone region a non-trivial prompt anchor. Each required control declares global, region, or declared region-group scope, affected/protected regions, evidence, and reuses the declared exact anchor in its prompt excerpt. Split mixed bright/dark coarse regions before applying one shadow floor. Light/Form separately owns bright-plane coverage and spatial gradients.
 
 ## Calibration evidence
 

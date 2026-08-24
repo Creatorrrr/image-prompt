@@ -1,6 +1,6 @@
 ---
 id: core.frame-coordinates
-version: 9
+version: 10
 priority: 108
 type: core
 tier: 0
@@ -48,7 +48,7 @@ Preserve region-share hierarchy when flexible pose, viewpoint, or placement chan
 
 ## Spatial language
 
-Prefer generator-friendly frame relations. Before drafting, give each material placement, principal-axis, viewpoint, and cross-component dimension a direction-neutral disposition: `invariant`, `flexible`, `not-material`, `not-visible`, or `uncertain`. A frame-zone record alone does not cover orientation.
+Before drafting, give each material placement, principal axis, viewpoint, and cross-component dimension a direction-neutral disposition. Placement never proves orientation; require separate axis, side-visibility, occlusion, depth-order, silhouette, or perspective cues. Centered may be oblique and offset may be frontal.
 
 ## Relational coordinate frames
 

@@ -8,6 +8,7 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 MODULES_DIR = ROOT / "modules"
+LANES_DIR = ROOT / "lanes"
 
 TIERS = {
     0: "always-on core",
@@ -79,6 +80,11 @@ def module_files(root: Path = ROOT) -> list[Path]:
     return sorted(p for p in modules_dir.glob("*.md") if p.name != "_registry.md")
 
 
+def lane_files(root: Path = ROOT) -> list[Path]:
+    lanes_dir = root / "lanes"
+    return sorted(lanes_dir.glob("*.md")) if lanes_dir.exists() else []
+
+
 def module_sort_key(module: dict[str, Any]) -> tuple[int, int, str]:
     return (
         int(module.get("tier", 99)),
@@ -101,6 +107,55 @@ def read_json_manifest(path: Path) -> dict[str, Any]:
 
 def module_map(manifest: dict[str, Any]) -> dict[str, dict[str, Any]]:
     return {m["id"]: m for m in manifest.get("modules", [])}
+
+
+def lane_map(manifest: dict[str, Any]) -> dict[str, dict[str, Any]]:
+    return {lane["id"]: lane for lane in manifest.get("analysis_lanes", [])}
+
+
+def lane_matches_module(lane: dict[str, Any], module: dict[str, Any]) -> bool:
+    return (
+        module.get("type") in set(lane.get("select_types", []))
+        or module.get("facet") in set(lane.get("select_facets", []))
+        or module.get("id") in set(lane.get("select_module_ids", []))
+    )
+
+
+def resolve_analysis_lanes(
+    module_ids: list[str], manifest: dict[str, Any]
+) -> list[dict[str, Any]]:
+    """Return active lane contracts and their exact routed module context."""
+
+    modules = module_map(manifest)
+    selected = [modules[module_id] for module_id in module_ids if module_id in modules]
+    resolved: list[dict[str, Any]] = []
+    for lane in manifest.get("analysis_lanes", []):
+        matched_ids = [
+            module["id"]
+            for module in selected
+            if lane_matches_module(lane, module)
+            and (
+                lane.get("activation") == "always"
+                or int(module.get("tier", 99)) != 0
+            )
+        ]
+        if lane.get("activation") != "always" and not matched_ids:
+            continue
+        context_ids = set(matched_ids)
+        context_ids.update(
+            module_id
+            for module_id in lane.get("required_common_modules", [])
+            if module_id in module_ids
+        )
+        entry = dict(lane)
+        entry["module_ids"] = [
+            module_id for module_id in module_ids if module_id in context_ids
+        ]
+        resolved.append(entry)
+    return sorted(
+        resolved,
+        key=lambda lane: (-int(lane.get("priority", 0)), str(lane.get("id", ""))),
+    )
 
 
 def build_manifest(root: Path = ROOT) -> dict[str, Any]:
@@ -126,12 +181,40 @@ def build_manifest(root: Path = ROOT) -> dict[str, Any]:
         modules.append(entry)
 
     modules.sort(key=module_sort_key)
+    lanes: list[dict[str, Any]] = []
+    for path in lane_files(root):
+        meta, _body = parse_frontmatter(path)
+        lanes.append(
+            {
+                "id": meta["id"],
+                "version": int(meta["version"]),
+                "file": path.relative_to(root).as_posix(),
+                "priority": int(meta["priority"]),
+                "activation": meta["activation"],
+                "select_types": list(meta.get("select_types", [])),
+                "select_facets": list(meta.get("select_facets", [])),
+                "select_module_ids": list(meta.get("select_module_ids", [])),
+                "required_common_modules": list(
+                    meta.get("required_common_modules", [])
+                ),
+                "owns_sections": list(meta.get("owns_sections", [])),
+                "required_topics": list(meta.get("required_topics", [])),
+            }
+        )
+    lanes.sort(key=lambda lane: (-int(lane["priority"]), str(lane["id"])))
     return {
         "name": "reverse-image-prompt",
-        "architecture": "modular facet router",
-        "version": "3.3.0-color-control-ledger",
+        "architecture": "distributed modular facet router",
+        "version": "3.4.0-distributed-analysis",
         "entrypoint": "SKILL.md",
-        "source": "generated from modules/*.md frontmatter by tools/gen_manifest.py",
+        "source": "generated from modules/*.md and lanes/*.md frontmatter by tools/gen_manifest.py",
+        "analysis_orchestration": {
+            "route_schema": "reverse-image-analysis-route/v1",
+            "report_schema": "reverse-image-analysis-lane-report/v1",
+            "bundle_schema": "reverse-image-analysis-bundle/v1",
+            "reference": "references/analysis-orchestration.md",
+        },
+        "analysis_lanes": lanes,
         "tiers": {str(k): v for k, v in TIERS.items()},
         "required_core_modules": [m["id"] for m in modules if int(m["tier"]) == 0],
         "modules": modules,
@@ -146,6 +229,27 @@ def registry_markdown(manifest: dict[str, Any]) -> str:
         "",
     ]
     modules = manifest.get("modules", [])
+    lanes = manifest.get("analysis_lanes", [])
+    if lanes:
+        lines += [
+            "## Analysis lanes",
+            "",
+            "| Lane | Version | Activation | Selectors | Common modules | Owns |",
+            "|---|---:|---|---|---|---|",
+        ]
+        for lane in lanes:
+            selectors = ", ".join(
+                [f"type:{item}" for item in lane.get("select_types", [])]
+                + [f"facet:{item}" for item in lane.get("select_facets", [])]
+                + [f"module:{item}" for item in lane.get("select_module_ids", [])]
+            ) or "-"
+            common = ", ".join(lane.get("required_common_modules", [])) or "-"
+            owns = ", ".join(lane.get("owns_sections", [])) or "-"
+            lines.append(
+                f"| `{lane['id']}` | {lane['version']} | `{lane['activation']}` | "
+                f"{selectors} | {common} | {owns} |"
+            )
+        lines.append("")
     for tier_key, tier_name in manifest.get("tiers", {}).items():
         tier = int(tier_key)
         tier_modules = [m for m in modules if int(m.get("tier", -1)) == tier]
