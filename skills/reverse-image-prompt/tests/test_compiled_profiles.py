@@ -40,6 +40,50 @@ class CompiledProfileTests(unittest.TestCase):
                         (ROOT / filename).read_text(encoding="utf-8"),
                     )
 
+    def test_profiles_include_only_applicable_lane_contracts(self) -> None:
+        manifest = load_manifest(ROOT)
+        expectations = {
+            "core": {"lane.global-composition"},
+            "portrait": {
+                "lane.global-composition",
+                "lane.spatial-topology",
+                "lane.subject-appearance",
+                "lane.color-light-material",
+                "lane.medium-aesthetic-capture",
+            },
+            "product": {
+                "lane.global-composition",
+                "lane.spatial-topology",
+                "lane.subject-appearance",
+                "lane.color-light-material",
+                "lane.medium-aesthetic-capture",
+                "lane.information-layout",
+            },
+            "screenshot": {
+                "lane.global-composition",
+                "lane.spatial-topology",
+                "lane.subject-appearance",
+                "lane.color-light-material",
+                "lane.medium-aesthetic-capture",
+                "lane.information-layout",
+            },
+            "all": {lane["id"] for lane in manifest.get("analysis_lanes", [])},
+        }
+        all_lane_ids = {lane["id"] for lane in manifest.get("analysis_lanes", [])}
+        with tempfile.TemporaryDirectory() as temp_dir:
+            for profile, expected in expectations.items():
+                with self.subTest(profile=profile):
+                    output = Path(temp_dir) / f"{profile}.md"
+                    with redirect_stdout(io.StringIO()):
+                        compile_skill(default_modules(manifest, profile, []), output)
+                    text = output.read_text(encoding="utf-8")
+                    present = {
+                        lane_id
+                        for lane_id in all_lane_ids
+                        if f"# Included analysis lane: `{lane_id}`" in text
+                    }
+                    self.assertEqual(present, expected)
+
 
 if __name__ == "__main__":
     unittest.main()

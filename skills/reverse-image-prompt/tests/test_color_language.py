@@ -58,7 +58,7 @@ class ColorLanguageTests(unittest.TestCase):
     def test_controlled_descriptor_composes_current_axes_in_fixed_order(self) -> None:
         classification = classify_observation(observation(70.0, 7.0, 10.0), POLICY)
         descriptor = compose_controlled_descriptor(classification, "visible skin")
-        self.assertEqual(descriptor["status"], "ready")
+        self.assertEqual(descriptor["status"], "complete")
         self.assertEqual(
             descriptor["phrase"],
             "visible skin with a light value, low chroma, a golden undertone, and a satin finish",
@@ -84,15 +84,62 @@ class ColorLanguageTests(unittest.TestCase):
         self.assertIn("a deep value", deep["phrase"])
         self.assertIn("an olive undertone", deep["phrase"])
 
-    def test_controlled_descriptor_fails_closed_on_unresolved_core_axis(self) -> None:
+    def test_controlled_descriptor_emits_stable_axes_when_one_axis_is_unresolved(self) -> None:
         classification = classify_observation(observation(70.0, 7.0, 10.0), POLICY)
         classification["axis_classification"]["undertone"]["confidence"] = "low"
         descriptor = compose_controlled_descriptor(
             classification, "selected surface", include_finish=False
         )
+        self.assertEqual(descriptor["status"], "partial")
+        self.assertEqual(
+            descriptor["phrase"],
+            "selected surface with a light value and low chroma",
+        )
+        self.assertEqual(descriptor["included_axes"], ["value_depth", "chroma"])
+        self.assertEqual(descriptor["unresolved_axes"], ["undertone"])
+
+    def test_boundary_only_axes_remain_non_emitted(self) -> None:
+        classification = classify_observation(observation(70.0, 7.0, 10.0), POLICY)
+        for axis in ("value_depth", "chroma", "undertone"):
+            classification["axis_classification"][axis].update(
+                {"confidence": "medium", "runner_up": "adjacent-held-out-class"}
+            )
+        descriptor = compose_controlled_descriptor(
+            classification, "selected surface", include_finish=False
+        )
+        self.assertEqual(descriptor["status"], "bounded")
+        self.assertEqual(descriptor["included_axes"], [])
+        self.assertNotIn("phrase", descriptor)
+        self.assertEqual(
+            set(descriptor["bounded_axes"]),
+            {"value_depth", "chroma", "undertone"},
+        )
+
+    def test_neutral_undertone_boundary_is_bounded_not_emitted(self) -> None:
+        classification = classify_observation(observation(70.0, 5.0, 0.0), POLICY)
+        undertone = classification["axis_classification"]["undertone"]
+        self.assertEqual(undertone["term"], "neutral")
+        self.assertEqual(undertone["confidence"], "medium")
+        self.assertIsInstance(undertone["runner_up"], str)
+
+        descriptor = compose_controlled_descriptor(
+            classification, "selected surface", include_finish=False
+        )
+        self.assertNotIn("undertone", descriptor["included_axes"])
+        self.assertEqual(
+            descriptor["bounded_axes"]["undertone"]["term"], "neutral"
+        )
+        self.assertNotIn("a neutral undertone", descriptor.get("phrase", ""))
+
+    def test_no_stable_or_bounded_axis_is_inconclusive(self) -> None:
+        classification = classify_observation(observation(70.0, 7.0, 10.0), POLICY)
+        for axis in ("value_depth", "chroma", "undertone"):
+            classification["axis_classification"][axis]["confidence"] = "low"
+        descriptor = compose_controlled_descriptor(
+            classification, "selected surface", include_finish=False
+        )
         self.assertEqual(descriptor["status"], "inconclusive")
         self.assertNotIn("phrase", descriptor)
-        self.assertEqual(descriptor["unresolved_axes"], ["undertone"])
 
     def test_controlled_descriptor_requires_analyst_supplied_surface_term(self) -> None:
         classification = classify_observation(observation(70.0, 7.0, 10.0), POLICY)

@@ -32,9 +32,9 @@ Always read the complete Tier 0 core:
 - `modules/core.pre-emit-gate.md`
 - `modules/core.output-contract.md`
 
-Then resolve only the applicable routed modules from `manifest.json` or `modules/_registry.md`. When tools are available, run `tools/route_resolver.py` so unsupported facet values and over-budget routes fail visibly.
+Then resolve only the applicable routed modules from `manifest.json` or `modules/_registry.md`. When tools are available, run `tools/route_resolver.py --analysis-route` so unsupported facets, over-budget module sets, and uncovered analysis lanes fail visibly. Read `references/analysis-orchestration.md` and every selected lane file.
 
-Read the full contents of every selected module before drafting. If sibling files cannot be read, use the smallest matching compiled profile; use `SKILL.compiled.all.md` only as the final fallback.
+Each lane analyst reads the full contents of its assigned modules before reporting. The main integrator reads Tier 0 plus compact lane reports and only reopens a non-core module for a declared conflict or audit; do not make one context absorb every routed detail module by default. If sibling files cannot be read, use the smallest matching compiled profile; use `SKILL.compiled.all.md` only as the final fallback.
 
 If the target generator is known, read `references/model-adapters.md` and apply only that generator's adapter.
 
@@ -59,15 +59,33 @@ When evaluating or revising this skill, also read `references/behavior-evaluatio
    - Do not identify people, characters, brands, artists, cameras, lenses, film stocks, or private identities from appearance.
    - Keep uncertainty internal during analysis. In the final generation prompt, describe the visible ambiguity itself with terms such as `indistinct`, `partially obscured`, `low-legibility`, or `soft-edged`; avoid weakening commands with repeated `likely` or `appears`.
 
-3. Analyze silently with an adaptive hierarchy:
+3. Build and resolve this preliminary facet map before making domain conclusions:
+
+```yaml
+detected_facets:
+  subjects: []        # human, animal, product, food, architecture, landscape, vehicle, document/data, generic-object
+  medium: []          # photographic, screenshot-ui, non-photographic, unspecified
+  relationships: []   # ordinary, occlusion, replacement, reflection, screen-frame-within-frame, scale-miniature, mixed-media
+  capture_quality: [] # low-quality, compressed, underexposed, motion-blurred, flash, casual-phone
+  detail_risks: []    # face-detail, body-form, skin-surface, color-tone, lighting-fidelity, clothing, hands, text-logo, ui, and other visible routed risks
+  style: []           # a visible narrow risk only
+```
+
+4. Run the routed analysis lanes before building the salience plan.
+   - When clean-context delegation is available and permitted, run every required lane concurrently as a separate read-only worker. Give it the same source bytes/hash, raw request, intent, route fingerprint, lane file, assigned modules, and report schema—never another lane's result, a preferred conclusion, a prior prompt/render, or draft prose. Workers do not write files, author the final prompt, generate, or delegate again.
+   - Otherwise complete the same lane contracts sequentially, freezing each report before the next and marking `sequential-fallback`; do not claim independent analysis.
+   - The main session integrates reports by owner key and causal effect, not prose concatenation. Preserve each material primary finding as primary. Send only unresolved material conflicts to a clean-context adjudicator and retain uncertainty when evidence cannot decide.
+   - Give an independent coverage critic the source, route, compact reports, and integrated plan without the main reasoning transcript. Bind retained findings to invariant IDs in the canonical-SHA-256 plan payload, and bind the critic to that plan hash plus every finding/invariant ID. Do not freeze a prompt until the independent critic passes, including under sequential fallback. Persist and validate one `reverse-image-analysis-bundle/v1` for generation or evaluation work.
+
+5. Integrate the lane reports with an adaptive hierarchy:
    1. Record the direct, source-supported appeal separately from the render contract. State it plainly in diagnostic mode, but do not copy evaluative appeal language into a generation prompt; translate it into visible causal controls first.
    2. Classify the dominant fidelity axis as `relationship-led`, `appearance-led`, `information-led`, or `mixed`.
    3. Separate a small set of aesthetic or structural invariants from dimensions that may vary without losing the proposition. For each invariant, record its semantic slot, hierarchy role, causal origin, source-relative strength, evidence, and one clause owner. Record the smallest causal cue set rather than every visible field. For non-color and non-light invariants, merge shared pulls into source-relative aggregate effects and reconcile each emitted claim with one exact final-prompt control.
-   4. Build a spatial/orientation coverage ledger for every primary or structurally material orientation-bearing subject before selecting pose prose. Give frame placement, subject principal axis, viewpoint elevation/azimuth/roll/distance and foreshortening, and cross-component orientation exactly one disposition: `invariant`, `flexible`, `not-material`, `not-visible`, or `uncertain`. For a human, also dispose independently of body orientation, head-to-body relation, shoulder line, and attention direction. The ledger is direction-neutral: centered, offset, frontal, oblique, aligned, opposed, and mirrored source observations are all valid. A frame-zone relation alone does not cover orientation. Each invariant decision must reach one source-relative relation, invariant, aggregate effect, emitted claim, and exact prompt control under one `control_axis_id` and one `causal_origin`; every non-invariant decision records why it emits nothing. Viewpoint dimensions are perspective-owned; human body/head/shoulder dimensions are pose-owned; placement and cross-component dimensions are spatial/layout-owned. Keep placement separate from orientation, camera elevation from head pitch, camera azimuth from head/body yaw, garment boundaries from shoulder pose, and perspective- or pose-induced appearance from intrinsic anatomy.
+   4. Build a `spatial-orientation/v2` ledger for every material orientation-bearing subject. Dispose independently of placement, principal axis, viewpoint axes/foreshortening, and cross-component orientation; for humans also cover torso yaw/pitch/roll, head-to-body yaw/pitch/roll/lateral offset, shoulder slope/depth order, and attention. Link each decision to subject-owned visible cues and explicit confounders, then run a neutral-axial-alignment counterfactual. Material change requires an invariant decomposed pose axis; `flexible` or `not-material` needs a preservation reason; `not-visible` or `uncertain` needs an evidence limit. Coarse legacy labels and frame placement cannot cover orientation. Keep the ledger direction-neutral, preserve supported result-space relations when the physical split is uncertain, and give each invariant one relation-to-control path under one causal owner.
    5. Map the few largest coherent image regions by relative area, tonal role, edge contact, legibility, and attention. Record only material component relations: region-to-region or region-to-frame reference, relation kind, source-relative observation, evidence, and role. When partial visibility matters, record the surviving fragments, cropped or hidden counterparts, and completion risk. For relationship-led or mixed images, map major-component topology, contact/support, containment, boundary crossing, occlusion, and negative space. For appearance-led images, map form, surface, light-to-form, color, material roles, and subject/environment hierarchy first. For information-led images, map layout, reading order, legibility, and container hierarchy first.
-   6. Analyze visible subjects and their image-plane roles. For every routed human, add one `human_appearance_decisions` record keyed to its spatial subject. Independently dispose of the broad person prior as `emit`, `omit`, or `uncertain`, and visible skin as `material`, `not-material`, `not-visible`, or `uncertain`; every non-emitted path records why. Emit at most one compact non-identifying person-gestalt anchor only for a sufficiently readable person when it materially reduces ambiguity. Record whether it came from user context, a source-visible approximation, or model calibration, and link its claim through `geometry_claim_ids` to separate visible geometry claims and exact controls. For material skin, name the Color/Tone region, visible coverage (`exposed`, `through-sheer`, or `mixed`), and whether a controlled descriptor is emitted. Never install a motivating category or target surface combination as a default.
+   6. Analyze visible subjects and their image-plane roles. For every routed human, add one `human-appearance/v2` decision keyed to its spatial subject. Record frame prominence separately from fidelity salience; a small or secondary face may still be fidelity-primary. Keep user/trusted identity context separate from a non-identifying source-visible generation approximation—never infer nationality or factual identity from pixels. Dispose the person prior as `emit`, `omit`, or `uncertain` with candidate support, model-default drift risk, local-geometry sufficiency, linked geometry claims, and an omission counterfactual. A readable fidelity-material person may omit the broad anchor only when emitted geometry is sufficient, default drift risk is low, and neutral omission preserves the source reading; otherwise emit supported approximation or retain uncertainty. For material skin, name the Color/Tone region and visible coverage (`exposed`, `through-sheer`, or `mixed`), then decide whether stable descriptor axes emit. Never install a motivating category or surface combination as a default.
    7. Before treating shape, scale, color, surface, or definition as intrinsic, separate effects caused by pose/deformation, perspective, lighting/shadow, material interaction or occlusion, and capture/processing.
-   8. When color or tonal behavior is material, build the source-relative Color/Tone Contract from `detail.color-tone-fidelity`: set the source-visible/color-managed/user-specified observation scope; separate region value, chroma, and hue from illumination, global cast or palette shift, exposure or tone curve, and processing; keep intrinsic midtone evidence separate from highlight and shadow response; record displayed key level, shadow floor, highlight rolloff, and microcontrast when material; decompose appearance metaphors; record neutral-anchor confidence and cross-layer aggregate effects. For every material intrinsic or displayed-tone axis, declare whether it requires a final prompt control or remains diagnostic-only, and link every required axis through one aggregate effect, claim, and axis-specific emitted control. When controlled surface language is material, classify value depth, chroma, and undertone, then optionally compose them in that order with separately observed finish. The composed phrase may emit only by reusing exact owned axis excerpts; low-confidence, mixed, or uncertain core evidence fails closed. Friendly labels remain externally supplied and generator/version calibrated.
+   8. When color or tonal behavior is material, build the source-relative Color/Tone Contract from `detail.color-tone-fidelity`: set observation scope; separate regional value, chroma, and hue from illumination, cast, exposure, and processing; keep intrinsic midtone evidence separate from highlight/shadow response; record neutral confidence and cross-layer effects. Every required intrinsic or displayed-tone axis has one same-region effect, claim, and axis control. A displayed-tone control declares `global`, `region`, or `region-group` scope, affected and protected regions, visible evidence, and a prompt anchor; never apply a coarse shadow floor across mixed bright/dark subregions. For controlled surface language, request value depth, chroma, undertone, and optional separately observed finish. Compose stable axes in canonical order even when another axis remains unresolved; omit—not invent—unresolved axes. Boundary-only candidates stay non-emitted until exact model calibration. Friendly labels remain externally supplied and generator/version calibrated.
    9. When illumination, shadow topology, or light-induced form is material, build the source-relative Light/Form Contract from `detail.light-form-fidelity`. Record the visible result before any physical-light hypothesis; separate source geometry, apparent source size, fill, global tonal range, bright-plane coverage, local form contrast, gradient extent, shadow ownership, material response, background spill, and pose dependence. Treat a material source/render change in regional value separation across one surface as light-to-form evidence even when the lighting is otherwise ordinary; name the compared regions with a distinct `reference_region_id` in both observation and aggregate actuation. A low-confidence rig hypothesis remains diagnostic or is paired with result-space controls rather than carrying the prompt alone. Link every emitted lighting effect through one claim and one exact final-prompt control. When compact lighting language is requested, classify displayed key, shadow floor, edge softness, local form contrast, bright-plane coverage, gradient extent, directionality, and fill independently before composing an explanation-only controlled summary or reviewing an externally supplied friendly label.
    10. Add only materially important pose, camera/perspective, focus, lighting, background, medium, texture, artifact, UI, and text evidence.
 
@@ -91,29 +109,21 @@ render_contract:
   major_regions: []     # relative area, tonal/material role, edge contact, legibility, attention
   component_relations: []  # material region/frame relation, evidence, and optional partial-visibility budget
   spatial_orientation_coverage:  # required for routed humans and other material orientation-bearing subjects
+    schema_version: spatial-orientation/v2
     subjects: []        # material orientation-bearing subject id, kind, visibility, major-region id, evidence
-    decisions: []       # dimension, family, disposition, observation, cause, confidence, control_axis_id, evidence; invariant path ids or non-emission reason
-  human_appearance_decisions: [] # one per routed human: face visibility, person-prior decision, skin-surface/coverage/descriptor decision, evidence, links or non-emission reasons
+    evidence_cues: []   # subject-owned visible cue family, observation, evidence, confounders
+    neutralization_checks: [] # one per human: neutral-alignment counterfactual and evidence
+    decisions: []       # decomposed dimension, disposition, cue ids, owner, emitted path or bounded non-emission
+  human_appearance_decisions: [] # human-appearance/v2: frame prominence, fidelity salience, identity context, prior drift/geometry/counterfactual, and skin decision
   candidate_claims: []  # evidence candidates from modules; not automatic prompt sentences
   aggregate_effects: [] # non-color/non-light source-relative effects after cross-slot merge
   emitted_controls: []  # exact final-prompt excerpts for the generic emitted claims
+  prior_clusters: []    # broad aesthetic/capture/genre shorthand provenance, calibration, and literal decomposition
   color_tone_contract: {}  # when material: observation scope, causal effects, then exact post-draft emitted_controls
   light_form_contract: {}  # when material: observed result, confidence-rated cause, spatial effects, then exact emitted_controls
 ```
 
-4. Build and resolve this internal facet map:
-
-```yaml
-detected_facets:
-  subjects: []        # human, animal, product, food, architecture, landscape, vehicle, document/data, generic-object
-  medium: []          # photographic, screenshot-ui, non-photographic, unspecified
-  relationships: []   # ordinary, occlusion, replacement, reflection, screen-frame-within-frame, scale-miniature, mixed-media
-  capture_quality: [] # low-quality, compressed, underexposed, motion-blurred, flash, casual-phone
-  detail_risks: []    # face-detail, body-form, body-proportion, muscle-definition, body-tension, skin-surface, body-region-hierarchy, color-tone, color-fidelity, tone-fidelity, surface-color, global-cast, white-balance, exposure-tone, palette-relationship, lighting-fidelity, light-direction, shadow-topology, light-to-form, material-light-response, background-spill, clothing, hands, text-logo, ui, small-props, cropped-edges, tight-selfie, face-hand-gesture, accessory-torso-budget
-  style: []           # stylized-character-maturity or another narrow risk
-```
-
-5. Treat selected modules as evidence contributors, not prose entitlements. Merge candidate claims by semantic slot before drafting; one module owns each emitted slot while other modules may strengthen its evidence. For spatial decisions, merge repeated ownership by `control_axis_id` across camera, pose, face, body, clothing, composition, and lighting; the same causal axis cannot survive under differently named slots. For form, surface, sharpness, hierarchy, topology, and information, also merge claims that push the same source-relative axis, direction, regions, and relations; one aggregate effect has one emitted owner even when several modules support it. For material color and tone, merge claims by shared perceptual effect across intrinsic surface, illumination, global cast, exposure, processing, and hierarchy even when their semantic-slot names differ. For material lighting, merge effects across source geometry, fill, local form contrast, shadow topology, material response, and background spill. Let the generic, Light/Form, and Color/Tone ledgers have disjoint claims and exact prompt excerpts. Resolve conflicts and allocate prompt weight using this priority:
+6. Treat selected modules as evidence contributors, not prose entitlements. Merge candidate claims by semantic slot before drafting; one module owns each emitted slot while other modules may strengthen its evidence. For spatial decisions, merge repeated ownership by `control_axis_id` across camera, pose, face, body, clothing, composition, and lighting; the same causal axis cannot survive under differently named slots. For form, surface, sharpness, hierarchy, topology, and information, also merge claims that push the same source-relative axis, direction, regions, and relations; one aggregate effect has one emitted owner even when several modules support it. For material color and tone, merge claims by shared perceptual effect across intrinsic surface, illumination, global cast, exposure, processing, and hierarchy even when their semantic-slot names differ. For material lighting, merge effects across source geometry, fill, local form contrast, shadow topology, material response, and background spill. Let the generic, Light/Form, and Color/Tone ledgers have disjoint claims and exact prompt excerpts. Resolve conflicts and allocate prompt weight using this priority:
    1. Visible-evidence and safety limits.
    2. Primary perceptual proposition, dominant fidelity axis, and invariants.
    3. The mode-leading evidence: topology for relationship-led, causal appearance signature for appearance-led, information hierarchy for information-led, or the named co-primary pair for mixed.
@@ -121,11 +131,11 @@ detected_facets:
    5. Subject, medium, camera, lighting, focus, artifact, background, and color fidelity that supports the proposition.
    6. Flexible pose or placement detail, secondary elements, and generic shorthand.
 
-6. Draft the smallest prompt that carries every invariant and concept-critical constraint. Let its order follow the dominant fidelity axis. If the source look is high-salience, place one compact Aesthetic Causal Signature near the beginning; if neutral, use only one or two ordinary cues. Translate broad appeal words into form, surface, light, color, hierarchy, or spatial mechanisms. Normally express a semantic slot once and add at most one source-supported drift boundary for a genuinely high-risk failure. Emit only spatial/orientation decisions marked `invariant`, once per `control_axis_id`; do not leak controls from non-invariant decisions. Emit a person prior or skin descriptor only from its explicit human-appearance decision. After drafting, copy each exact non-color/non-light control into the generic `emitted_controls` ledger and reconcile it with one emitted claim and its complete aggregate-effect set. Reconcile every material placement or orientation clause with the source-relative component and pose relations; omit any generic neutral alignment that contradicts them. For material color or tone, assign every emitted direction to one causal layer and one aggregate effect budget; do not let hierarchy repeat a surface hue unless hue contrast itself is invariant. Give each required intrinsic value, chroma, hue, or displayed-tone axis its own literal axis-control. An emitted axis-composed descriptor is one wrapper containing those exact excerpts, not an extra direction; optional finish uses a separately owned generic surface control. Write literal axes before any externally supplied friendly label, retained at most once as a compatible model-calibrated summary. After drafting, copy exact color-changing excerpts into the Color/Tone ledger and reconcile each with one claim, causal layer, region, axis, and complete effect list. For material lighting, copy every exact lighting-changing excerpt into the Light/Form Contract's `emitted_controls`; keep source geometry, fill, bright-plane coverage, local form contrast, gradient extent, shadow topology, material response, and background spill separately owned, and preserve result-space controls when the physical cause is uncertain. Literal lighting controls remain authoritative. Retain an externally sourced friendly lighting label at most once and only when it is compatible, generator/version calibrated, and immediately unpacked by its already-owned literal controls; never emit the explanation-only controlled summary as an extra control. Split or replace unowned, cross-axis, and multi-layer compounds. Correct an overstrong draft by replacing or deleting the amplifying language, not by appending a negative counterweight. Give each major component one relation and each inversion-prone interaction one relation clause, but do not let flexible pose coordinates or secondary details outrank the primary proposition.
+7. Draft the smallest prompt that carries every invariant and concept-critical constraint. Let its order follow the dominant fidelity axis. If the source look is high-salience, place one compact Aesthetic Causal Signature near the beginning; if neutral, use only one or two ordinary cues. Translate broad appeal words into form, surface, light, color, hierarchy, or spatial mechanisms. A broad aesthetic/capture/genre shorthand may emit only through a provenance-bearing prior cluster that points to its already-owned causal controls; uncalibrated shorthand stays diagnostic. Normally express a semantic slot once and add at most one source-supported drift boundary for a genuinely high-risk failure. Emit only spatial/orientation decisions marked `invariant`, once per `control_axis_id`; do not leak controls from non-invariant decisions. Placement controls only position and frame share. Put material human pose after camera/scale and before face, hair, and clothing; later appearance inherits rather than replaces it. Emit a person prior or skin descriptor only from its explicit human-appearance decision. After drafting, copy each exact non-color/non-light control into the generic `emitted_controls` ledger and reconcile it with one emitted claim and its complete aggregate-effect set. Reconcile every material placement or orientation clause with the source-relative component and pose relations; remove unsupported axial normalization instead of adding a negative counterweight. For material color or tone, assign every emitted direction to one causal layer and one aggregate effect budget; do not let hierarchy repeat a surface hue unless hue contrast itself is invariant. Give each required intrinsic value, chroma, hue, or displayed-tone axis its own literal axis-control. An emitted axis-composed descriptor is one wrapper containing only its exact stable owned excerpts; optional finish uses a separately owned generic surface control. Write literal axes before any externally supplied friendly label, retained at most once as a compatible model-calibrated summary. After drafting, copy exact color-changing excerpts into the Color/Tone ledger and reconcile each with one claim, causal layer, region, axis, scope, and complete effect list. For material lighting, copy every exact lighting-changing excerpt into the Light/Form Contract's `emitted_controls`; keep source geometry, fill, bright-plane coverage, local form contrast, gradient extent, shadow topology, material response, and background spill separately owned, and preserve result-space controls when the physical cause is uncertain. Literal lighting controls remain authoritative. Retain an externally sourced friendly lighting label at most once and only when it is compatible, generator/version calibrated, and immediately unpacked by its already-owned literal controls; never emit the explanation-only controlled summary as an extra control. Split or replace unowned, cross-axis, and multi-layer compounds. Correct an overstrong draft by replacing or deleting the amplifying language, not by appending a negative counterweight. Give each major component one relation and each inversion-prone interaction one relation clause, but do not let flexible pose coordinates or secondary details outrank the primary proposition.
 
-7. Apply the pre-emit gate and report prompt-only limits honestly.
+8. Apply the pre-emit gate and report prompt-only limits honestly.
 
-8. For actual generation or source/render evaluation, persist the reconciled `plan.json`, exact `prompt.txt` and SHA-256, a settings record with source frame, target size, size-binding status, and reference handling, plus an attempt log. Run `python tools/salience_plan.py PLAN.json --prompt PROMPT.txt` immediately before freezing the prompt. Use `tools/size_adapter.py` for a supported target and delivered-frame evidence; `auto`, unsupported, or unbound size remains unscored for composition-frame delivery. Ordinary prompt-only extraction does not require these artifacts.
+9. For actual generation or source/render evaluation, persist the validated analysis bundle, reconciled `plan.json`, exact `prompt.txt` and SHA-256, a settings record with source frame, target size, size-binding status, and reference handling, plus an attempt log. Run `python tools/analysis_bundle.py ANALYSIS_BUNDLE.json` and `python tools/salience_plan.py PLAN.json --prompt PROMPT.txt` immediately before freezing the prompt. Use `tools/size_adapter.py` for a supported target and delivered-frame evidence; `auto`, unsupported, or unbound size remains unscored for composition-frame delivery. Ordinary prompt-only extraction does not require persisted artifacts.
 
 ## Routing rules
 
@@ -156,6 +166,233 @@ Always write the production prompt in English. Match the response language for d
 - Essential crop, relationship, occlusion, high-salience aesthetic, and medium constraints must remain in `PROMPT:` even when optional sections are present.
 
 Do not mention the attached/reference image inside the generated prompt.
+
+
+---
+
+# Distributed analysis orchestration reference
+
+# Distributed analysis orchestration
+
+Use this contract after facet/module routing and before the salience plan. The existing `modules/*.md` files remain the only domain-analysis source of truth; lane files own separation of responsibility, inputs, outputs, and completion gates.
+
+## 1. Build the route
+
+Resolve modules first, then produce `reverse-image-analysis-route/v1` with `tools/route_resolver.py --analysis-route`. Routing is shallow: it selects analysis lanes but does not make visual conclusions. A non-core module that reaches no lane is a visible route failure.
+
+Use three to five material lanes for an ordinary image; do not create one worker per module. `lane.global-composition` is always required. Other lanes activate from the selected modules.
+
+## 2. Isolate lane analysis
+
+When the host supports delegation and the user permits it, run all required lanes concurrently in separate clean contexts. Each worker is read-only and receives only:
+
+- the exact same source bytes or accessible artifact plus SHA-256;
+- the raw user request and resolved intent mode;
+- the route fingerprint;
+- its complete lane file;
+- its route-assigned modules, including required common modules; and
+- the `reverse-image-analysis-lane-report/v1` schema below.
+
+Do not pass another lane's report, an expected conclusion, a failure diagnosis, a prior prompt/render, a preferred label, or main-session draft prose. A worker must not edit the skill, author the final prompt, generate an image, or delegate again.
+
+If delegation is unavailable, process the same lanes sequentially into the same report schema. Finish and freeze each report before starting the next; do not feed earlier conclusions forward. Mark `execution.mode=sequential-fallback` and every report `independent_context=false`. This preserves coverage, not independence.
+
+## 3. Lane report schema
+
+Each lane returns one compact JSON object:
+
+```json
+{
+  "schema_version": "reverse-image-analysis-lane-report/v1",
+  "route_fingerprint": "...",
+  "lane_id": "lane.subject-appearance",
+  "source_artifact": {"sha256": "...", "frame": "1024x1280"},
+  "execution": {"mode": "delegated", "independent_context": true},
+  "status": "complete",
+  "reviewed_modules": [{"id": "subject.human", "version": 15}],
+  "topic_dispositions": [
+    {"topic": "appearance-drift-risk", "disposition": "analyzed", "finding_ids": ["lane.subject-appearance:f1"], "reason": ""}
+  ],
+  "findings": [
+    {
+      "id": "lane.subject-appearance:f1",
+      "owner_key": "human-visible-gestalt",
+      "scale": "regional",
+      "axis": "form",
+      "observation": "source-relative observation",
+      "source_evidence": ["visible cue"],
+      "confidence": "medium",
+      "causal_origin": "intrinsic",
+      "materiality": "material",
+      "proposed_role": "primary",
+      "default_drift_risk": "high",
+      "confounders": []
+    }
+  ],
+  "control_requirements": [],
+  "omission_checks": [],
+  "handoffs": [],
+  "conflicts": []
+}
+```
+
+Every required topic is disposed as `analyzed`, `not-material`, `uncertain`, or `blocked`. Findings use source-relative observations, not final prompt excerpts. There is no fixed finding count. Human appearance findings are non-identifying generation approximations; factual identity or nationality requires user/trusted metadata outside image inference.
+
+## 4. Integrate by owner key
+
+The main session combines reports into one `reverse-image-analysis-bundle/v1`; it does not concatenate their prose. Merge by `owner_key`, semantic axis, region/subject, causal owner, direction, and role. Keep one final invariant/control owner per material effect.
+
+Every finding is disposed exactly once as `retained`, `merged`, `diagnostic-only`, `rejected`, or `uncertain`. `rejected` and `uncertain` require reasons. A material primary finding may not be dropped or demoted; it must reach a primary final invariant, or integration remains incomplete. Embed the reconciled plan as `integrated_plan.payload` and record the SHA-256 of its canonical JSON as `integrated_plan.sha256`. Every retained or merged `final_invariant_id` and `final_role` must exist unchanged in that hash-bound plan.
+
+Treat these as material conflicts: opposite directions for one owner key; competing causal owners for one effect; primary-to-supporting demotion; intrinsic-versus-induced attribution disagreement; or a broad label that adds unsupported content. Resolve obvious duplicates and lane ownership mechanically. Send only the unresolved issue and source evidence to a separate clean-context adjudicator. Do not vote; preserve `uncertain` when evidence does not decide.
+
+## 5. Independent coverage review
+
+After integration, give an independent read-only critic the raw request, exact source/hash, route, compact reports, and integrated plan—without the main reasoning transcript. The critic reports only `route-gap`, `topic-gap`, `merge-loss`, `unsupported-addition`, `ownership-conflict`, `role-strength-drift`, `scope-leakage`, or `unresolved-uncertainty`.
+
+The critic binds its report to the same source SHA-256, route fingerprint, and integrated-plan SHA-256 and lists every reviewed finding and plan-invariant ID. It returns `pass`, `revise-route`, `revise-integration`, or `blocked`; it neither edits the plan nor writes prompt prose. Do not freeze the prompt before an independent critic returns `pass`, including under sequential fallback. A `revise-route` result adds the missing lane and reruns it; `revise-integration` repeats the merge. Persist route, reports, adjudications, critic result, plan, and prompt as distinct evidence when generation or evaluation is requested.
+
+## 6. Validation and evidence boundary
+
+Validate the bundle with `tools/analysis_bundle.py`. The validator proves route/report coverage, source/route/plan hashes, finding-to-plan invariant binding, independence claims, role continuity, conflict adjudication, and critic gating. Validate the embedded plan separately with `tools/salience_plan.py`; the bundle checker does not prove either plan semantics or visual correctness. Package validity, lane coverage, salience-plan validity, prompt fidelity, delivered pixels, and user judgment remain separate evidence layers.
+
+
+---
+
+# Included analysis lane: `lane.global-composition`
+
+# Analysis lane: global composition
+
+## Role
+
+Own the image-wide proposition, frame, crop, major-region hierarchy, and dominant fidelity mode. Apply the assigned core modules; this file does not redefine their visual rules.
+
+## Input boundary
+
+Read only the raw request, intent mode, exact source artifact and hash, route fingerprint, this lane contract, and the route-assigned modules. Do not receive another lane's findings or a draft prompt.
+
+## Output contract
+
+Return one `reverse-image-analysis-lane-report/v1` object. Record source observations, material findings, uncertainties, omission checks, and handoffs under the owned sections. Propose control requirements, not final prompt prose.
+
+## Completion gate
+
+Dispose every required topic, review every assigned module, retain source uncertainty, and report cross-lane dependencies without resolving them by assumption.
+
+
+---
+
+# Included analysis lane: `lane.spatial-topology`
+
+# Analysis lane: spatial topology
+
+## Role
+
+Own source-visible orientation, component topology, contact, support, occlusion, and completion risk. Use the assigned modules as the sole domain instructions.
+
+## Input boundary
+
+Read only the raw request, intent mode, exact source artifact and hash, route fingerprint, this lane contract, and assigned modules. Do not receive appearance conclusions or prompt wording.
+
+## Output contract
+
+Return one `reverse-image-analysis-lane-report/v1` object. Findings state visible relations, evidence, confounders, materiality, and proposed role. Hand off appearance, color, or capture questions without answering them here.
+
+## Completion gate
+
+Dispose every required topic and assigned module. Do not normalize ambiguous axes, complete hidden structure, or convert an uncertainty into a final direction.
+
+
+---
+
+# Included analysis lane: `lane.subject-appearance`
+
+# Analysis lane: subject appearance
+
+## Role
+
+Own visible subject form and non-identifying appearance evidence. For humans, separate frame prominence from fidelity salience, identity context from generation approximation, and intrinsic surface evidence from induced effects.
+
+## Input boundary
+
+Read only the raw request, intent mode, exact source artifact and hash, route fingerprint, this lane contract, and assigned modules. Do not receive a preferred demographic label, another lane's conclusions, or draft prompt prose.
+
+## Output contract
+
+Return one `reverse-image-analysis-lane-report/v1` object. A broad human finding is a source-visible generation approximation, never inferred nationality or factual identity. Record default-drift risk, geometry sufficiency, and omission counterfactual; hand surface-color and lighting attribution to the color/light lane.
+
+## Completion gate
+
+Dispose every required topic and assigned module. A small or secondary subject may still be fidelity-primary. Unsupported identity inference and silent broad-prior omission both fail this lane.
+
+
+---
+
+# Included analysis lane: `lane.color-light-material`
+
+# Analysis lane: color, light, and material
+
+## Role
+
+Own causal separation of intrinsic color, displayed tone, illumination, shadow, and material response. Apply the routed fidelity modules rather than duplicating their rules here.
+
+## Input boundary
+
+Read only the raw request, intent mode, exact source artifact and hash, route fingerprint, this lane contract, and assigned modules. Receive subject/region identifiers as neutral handoff keys, not appearance conclusions.
+
+## Output contract
+
+Return one `reverse-image-analysis-lane-report/v1` object. Keep region scope and protected regions explicit, expose unresolved causal attribution, and propose axis-level requirements rather than final adjectives or composite labels.
+
+## Completion gate
+
+Dispose every required topic and assigned module. Do not pool mixed regions, convert display color into biological truth, or let a global control erase a protected local relation.
+
+
+---
+
+# Included analysis lane: `lane.medium-aesthetic-capture`
+
+# Analysis lane: medium, aesthetic, and capture
+
+## Role
+
+Own medium/process evidence, capture character, production aesthetic, and meaningful artifacts. Keep regional or cultural portrait aesthetics separate from a person's identity.
+
+## Input boundary
+
+Read only the raw request, intent mode, exact source artifact and hash, route fingerprint, this lane contract, and assigned modules. Do not receive a preferred genre label or a draft prompt.
+
+## Output contract
+
+Return one `reverse-image-analysis-lane-report/v1` object. Decompose any broad aesthetic candidate into visible causal findings and flag uncalibrated shorthand as an omission risk or uncertainty.
+
+## Completion gate
+
+Dispose every required topic and assigned module. Do not upgrade fidelity, infer an artist/camera, or use a broad genre label as a substitute for visible controls.
+
+
+---
+
+# Included analysis lane: `lane.information-layout`
+
+# Analysis lane: information layout
+
+## Role
+
+Own information hierarchy, reading order, text/UI legibility, and nested frame boundaries. Existing routed modules remain the domain source of truth.
+
+## Input boundary
+
+Read only the raw request, intent mode, exact source artifact and hash, route fingerprint, this lane contract, and assigned modules. Do not receive other lane conclusions or final wording.
+
+## Output contract
+
+Return one `reverse-image-analysis-lane-report/v1` object with evidence-scoped layout findings, uncertainties, completion risks, and handoffs. Do not transcribe unreadable content or write the final prompt.
+
+## Completion gate
+
+Dispose every required topic and assigned module. Preserve low legibility and distinguish the source image frame from screens, documents, or embedded panels.
 
 
 ---
@@ -228,7 +465,7 @@ Preserve region-share hierarchy when flexible pose, viewpoint, or placement chan
 
 ## Spatial language
 
-Prefer generator-friendly frame relations. Before drafting, give each material placement, principal-axis, viewpoint, and cross-component dimension a direction-neutral disposition: `invariant`, `flexible`, `not-material`, `not-visible`, or `uncertain`. A frame-zone record alone does not cover orientation.
+Before drafting, give each material placement, principal axis, viewpoint, and cross-component dimension a direction-neutral disposition. Placement never proves orientation; require separate axis, side-visibility, occlusion, depth-order, silhouette, or perspective cues. Centered may be oblique and offset may be frontal.
 
 ## Relational coordinate frames
 
@@ -434,8 +671,8 @@ Apply this as a rewrite pass, not a checklist appended to the draft.
 ### Net salience
 
 - Audit semantic salience amplification across exact repeats, synonyms, paraphrases, labels, negatives, and settings; a repeatedly described dimension gains visual priority even when no sentence is duplicated verbatim.
-- Compare each slot's aggregate direction and strength with its source target. Plausible cues still fail when their combined pull exaggerates an invariant.
-- Correct an overstrong draft by replacing or deleting the amplifying language, not by appending a negative counterweight. Keep at most one distinct high-risk boundary per slot.
+- Compare each slot's aggregate direction and strength with its source target. Plausible cues still fail when combined too strongly.
+- Correct an overstrong draft by replacing or deleting the amplifying language, not by appending a negative counterweight. Keep one distinct high-risk boundary per slot.
 - Check whether a secondary element receives more words than its visible importance supports; compress it when it competes with a primary invariant.
 - Rewrite unsupported category defaults from evidence.
 
@@ -466,7 +703,7 @@ Apply this as a rewrite pass, not a checklist appended to the draft.
 
 ### Spatial and fidelity checks
 
-- Audit coordinate contradictions before emitting. Then audit the direction-neutral spatial coverage ledger: a frame zone alone cannot cover orientation; each invariant needs one relation/effect/claim/control path and causal axis; non-invariants emit nothing; duplicate ownership is merged.
+- Audit coordinate contradictions before emitting. Then audit `spatial-orientation/v2`: placement cannot cover orientation; human subaxes need cue-linked dispositions and a neutral-alignment counterfactual. Invariants need a full relation/control path; non-invariants need a preservation or visibility reason and emit nothing. Delete unsupported axial normalization by net clause meaning, not a word blacklist.
 - Relate every major component or coherent group to another component or stable zone. Make inversion-prone side, contact, support, containment, and depth order explicit; distinguish 2D overlap from scene-space contact.
 - Preserve the relative area and attention order of major regions. Keep partial or edge-adjacent bodies, garments, objects, reflections, screens, posters, and text blocks incomplete.
 - Confirm that detail has not increased subject scale, sharpness, background legibility, retouching, contrast, lighting polish, or a category's default silhouette beyond the source.
@@ -515,9 +752,11 @@ Assign one clause owner to each emitted semantic slot. State its affirmative tar
 
 Give each generic aggregate effect one emitted claim and exact control. Emit only invariant spatial decisions, once per causal control axis; keep every other disposition non-emitted.
 
+Placement controls position, scale, and frame share. Put material human pose before face, hair, and clothing, which inherit rather than replace it.
+
 When color or tone is material, assign each emitted control to one causal layer and one perceptual effect budget. Use source-relative value, chroma, and hue; keep intrinsic surface, illumination, global cast, exposure, processing, and hierarchy consistent.
 
-Draft intrinsic surface, illumination, global response, and processing as distinct compact clauses when more than one is supported. Before emission, make every exact color-changing phrase traceable to the final color-control ledger; a metaphor may summarize resolved axes but cannot create another directional control.
+Keep supported surface, illumination, global response, and processing distinct. Trace every color-changing phrase to the final ledger; a metaphor cannot add direction.
 
 Place one compact color-tone passage early when primary; when supporting, use the smallest relational control. Hierarchy normally owns area, value, chroma, or contrast, not repeated surface hue.
 
@@ -525,7 +764,7 @@ When lighting is material, assign each emitted control to one Light/Form owner a
 
 Lead with the visible result; add physical cause only at supported confidence. Reconcile every exact lighting-changing phrase with one ledger owner and complete effect list. The ledger is internal, not output prose or grounds for repetition. Keep spatial illumination there and displayed color, exposure, and tone response in Color/Tone. Controlled summaries stay diagnostic. An externally sourced friendly label may appear once only after compatible-axis and exact generator/version calibration, immediately before its literal decomposition.
 
-Use compact blocks for complex images and no fixed word cap; every clause must add a control. Keep essential crop, partial visibility, interactions, placement, orientation, and viewpoint causally distinct and affirmative.
+Use compact blocks without a fixed cap; every clause adds a control. Keep essential spatial axes distinct and affirmative.
 
 For a high-salience look, put one supported Aesthetic Signature before inventory; for a neutral look, use one or two cues. Preserve major-region area, role, edge contact, legibility, and attention.
 
@@ -770,13 +1009,15 @@ Record these before micro-detail:
 - number of people and primary/secondary roles
 - each person's frame share, crop, depth plane, and overlap order
 - head position and scale relative to the frame and body
-- independently dispose of body orientation, head-to-body relation, shoulder line, attention direction, and visible action as invariant, flexible, not-material, not-visible, or uncertain
+- independently dispose of torso yaw/pitch/roll; head-to-body yaw/pitch/roll and lateral offset; shoulder image-plane slope and depth order; attention direction; and visible action as invariant, flexible, not-material, not-visible, or uncertain
 - the visible floor/seat/support region, which side of any nearby boundary contains the person's main mass, and which body parts contact or cross it
 - which face, hair, limbs, clothing, or accessories are cropped, hidden, soft, or outside the frame
 
-Allocate detail in proportion to visibility. A primary close face can carry more description; a distant, blurred, reflected, screen-contained, or background person must remain simpler and lower-detail.
+Allocate detail by legibility; keep distant, blurred, reflected, screen-contained, or background people simple.
 
-Before appearance prose, create one `human_appearance_decisions` record per spatial human. Record face visibility plus separate person-prior and skin-surface dispositions, evidence, confidence, and either emitted links or a non-emission reason. Distinguish obscured features from an actually cropped face.
+Link each pose decision to subject-owned cues and confounders. Under neutral axial alignment, material changed relations require an invariant decomposed axis; `flexible` or `not-material` needs a preservation reason, while `not-visible` or `uncertain` names the evidence limit.
+
+Before appearance prose, create one `human-appearance/v2` decision per spatial human. Record face visibility, frame prominence, fidelity salience, appearance invariant IDs, identity context, person-prior risk/geometry/counterfactual, and skin handling. Distinguish occlusion from crop.
 
 ## Visible appearance
 
@@ -784,18 +1025,18 @@ Describe each non-identifying fictional person coarse-to-fine: use one compact b
 
 ### Broad person-gestalt anchor
 
-- Set the person prior to `emit`, `omit`, or `uncertain`. Emit at most one compact anchor for a sufficiently readable primary person when a broad apparent racial, ethnic, or regional appearance category, or calibrated attractiveness type, is supported and likely to stabilize generation. Otherwise record why it emits nothing.
-- Treat any image-derived category as a generation-oriented visual approximation, not a factual identity claim. Do not infer nationality or exact ethnicity. Retain user-supplied identity context when requested, but never let it replace visible geometry.
-- Record an emitted anchor as a `generation_prior` with provenance and constraining visible geometry. Link `geometry_claim_ids` to separate emitted human or face geometry claims and exact controls. Never reuse a motivating label without current source or user evidence.
-- Prefer direct, generator-friendly wording for the fictional subject, then correct the category prior with face silhouette, proportions, feature relationships, skin tone and treatment, hair mass, expression, and lighting. Geometry wins when it conflicts with the broad anchor.
-- When attractiveness is salient to the visible gestalt, calibrate its character rather than stacking intensity; for example, `conventionally attractive with a soft, approachable everyday appearance` or `striking and angular rather than polished`. Use one such phrase, not multiple beauty synonyms.
-- Keep the attractive impression in the subject's visible facial harmony, expression, and grooming. Preserve asymmetry, ordinary traits, skin treatment, makeup level, capture softness, and crop instead of translating attractiveness into flawless skin, perfect symmetry, larger eyes, heavier makeup, beauty lighting, or a closer portrait.
+- Frame prominence measures image size/attention; fidelity salience measures whether changing this person's reading changes reconstruction. A readable secondary figure may be fidelity-primary.
+- Keep factual identity context `user-supplied`, `trusted-metadata`, or `absent`. Image-derived broad appearance is only a non-identifying, source-visible generation approximation; never infer nationality or exact ethnicity.
+- Set the person prior to `emit`, `omit`, or `uncertain`. Record candidate support, model-default drift risk, local-geometry sufficiency, geometry claim IDs, and an omission counterfactual.
+- For readable fidelity-material appearance, omit only when separate emitted form geometry is sufficient, default drift risk is low, and omission preserves the source reading. Unsupported high-risk cases remain uncertain rather than forcing a demographic guess.
+- An emitted `generation_prior` carries provenance and exactly matching separate human/face/body-form controls. Geometry wins over the compact anchor; skin color alone cannot justify it.
+- If attractiveness materially carries the visible gestalt, use one source-relative generation approximation and preserve asymmetry, grooming, skin treatment, makeup, capture softness, crop, and scale. Do not turn it into flawless symmetry, retouching, beauty lighting, or a closer portrait.
 
-After the optional gestalt anchor, prioritize the strongest source-specific corrections:
+After the optional anchor, prioritize source-specific corrections:
 
 - Describe broad apparent age presentation or gender presentation only when visually important and sufficiently supported.
 - Treat hair first as silhouette and occlusion: hairline, part, fringe, side masses, length, texture group, volume, flyaways, and which facial regions it covers.
-- Set visible skin to `material`, `not-material`, `not-visible`, or `uncertain`. When material, name its Color/Tone regions, `exposed`, `through-sheer`, or `mixed` coverage, and an `emit`, `omit`, or `uncertain` descriptor decision. Describe only legible tone axes, finish, texture, marks, makeup, facial hair, and retouching.
+- Set visible skin to `material`, `not-material`, `not-visible`, or `uncertain`. When material, name its Color/Tone regions and `exposed`, `through-sheer`, or `mixed` coverage. A descriptor may combine stable current-source axes while omitting unresolved ones; describe only legible tone, finish, texture, marks, makeup, facial hair, and retouching.
 
 Prevent the generated person from drifting into a different visible face type.
 Check portrait prompts for aesthetic-upgrade drift.
@@ -805,7 +1046,7 @@ Check portrait prompts for aesthetic-upgrade drift.
 Describe only visible image-plane structure shaped by pose, crop, clothing, lens perspective, light, shadow, blur, and occlusion. Do not infer hidden anatomy.
 
 - First decide whether visible body form is a primary aesthetic invariant, a structural connector, or secondary support. Do not allocate detail merely because a body region is large in the crop.
-- Preserve source-relative shoulder span, torso length, waist and hip placement, limb thickness, contour rhythm, stance, and clothing-shaped silhouette only to the degree visible; a garment boundary does not establish shoulder pose.
+- Preserve source-relative shoulder span, torso length, waist and hip placement, limb thickness, contour rhythm, stance, and clothing-shaped silhouette only to the degree visible. A garment boundary neither proves nor erases pose supported by independent contours or depth cues.
 - Separate anatomical proportion from near-camera enlargement, foreshortening, pose compression, garment pressure, and light/shadow shaping. Do not convert a bright edge or dark groove into unsupported anatomy.
 - Keep the torso, pelvis, and center of mass in the source-visible spatial zone; do not let a contact pose silently relocate the person across a barrier, edge, opening, or support surface.
 - Preserve a clearly visible large-scale body silhouette without exaggeration or reduction.
@@ -825,7 +1066,7 @@ Describe only visible image-plane structure shaped by pose, crop, clothing, lens
 
 ## Prompt contribution
 
-Place human description after concept and composition: scale/crop, head/body orientation, only emitted person-gestalt anchor, visible-tier face detail, hair occlusion, expression/gaze, pose/contact, clothing silhouette, then texture. Omit non-emitted appearance paths and generic posture that conflicts with recorded relations.
+After concept and composition, order human controls as scale/crop, camera, material head/torso/shoulder relation, fidelity-primary gestalt, face, hair, gaze, contact, clothing, texture. Frame prominence cannot demote fidelity salience. Placement stays positional; appearance inherits pose. Omit non-emitted paths and conflicting generic posture.
 
 For multiple people, describe each person separately by frame role and do not blend their face, hair, clothing, pose, or lighting anchors.
 
@@ -1270,7 +1511,7 @@ Load only when visible body form is a first-order part of the image's identity o
 
 ## Analysis
 
-Start with the large-scale form proposition before region detail. State directly what visible quality carries the impression—such as long-lined, compact, broad, narrow, soft, firm, relaxed, tense, delicate, sturdy, or strongly defined—then test it against observable causes. A broad descriptor is a hypothesis, not a substitute for evidence.
+Start with the large-scale form proposition, then test its visible quality against observable causes. A broad descriptor is a hypothesis, not evidence.
 
 Build a visible human-body form signature from source-supported proportion, contour, tissue, tension, and region hierarchy rather than from a body-type label.
 
@@ -1286,6 +1527,8 @@ Use only the axes that materially distinguish the source:
 - **Hierarchy:** Assign each visible body region a hierarchy role—primary form, structural connector, supporting mass, edge crop, or low-legibility background evidence.
 
 Analyze transitions between regions, not only isolated sizes. Garment asymmetry and pose asymmetry remain independent; neither may supply the other's missing evidence.
+
+Inspect torso yaw/pitch/roll plus shoulder slope and depth order from visible part relations. Record garment, hair, crop, and foreshortening confounders; preserve a material result-space relation when intrinsic geometry is hidden.
 
 ## Perspective and light separation
 
@@ -1335,7 +1578,7 @@ Load only when at least one human face is prominent or clearly readable. Do not 
 
 ## Detail tier
 
-Allocate human detail by visible face scale and legibility.
+Allocate anchor count by visible face scale and legibility, but assign fidelity role independently. A readable-secondary face may remain a primary invariant when changing its broad reading changes the image.
 
 - **Prominent and legible:** the face is a primary image anchor and individual feature relationships are separable. Use six to ten selective likeness anchors.
 - **Readable but secondary:** the face is smaller but several feature groups remain reliable. Use three to six anchors.
@@ -1343,17 +1586,17 @@ Allocate human detail by visible face scale and legibility.
 
 For a prominent legible face, choose six to ten likeness-bearing visible anchors instead of listing every facial field.
 
-Use the lower end of the anchor range when global softness, haze, compression, low microcontrast, or small face scale limits feature separation. Face-detail anchors preserve geometry; they do not authorize a larger crop, stronger focus, added skin texture, cleaner makeup, brighter catchlights, or sharper hair than the source aesthetic supports.
+Use fewer anchors when softness, compression, low contrast, or scale limits separation. Anchors preserve geometry; they do not authorize larger crop, sharper focus, cleaner makeup, extra detail, or a supporting-role downgrade.
 
-An anchor must describe a distinctive visible relationship, not a generic adjective. `Narrow lower face with a short rounded chin` is useful; `beautiful detailed face` is not.
+An anchor describes a visible relationship, not a generic adjective.
 
 ## Coarse-to-fine likeness
 
 When `subject.human` selects a broad person-gestalt anchor, treat it as one high-level generation prior rather than as the likeness description itself.
 
 - Place it once before local face geometry; do not repeat the racial, ethnic, regional-appearance, or attractiveness category in later clauses.
-- Preserve a user-supplied broad appearance judgment as user evidence, not as an inferred factual identity. Record its provenance in the owning claim and keep the category phrase out of reusable runtime defaults and unrelated held-out expectations.
-- Link `geometry_claim_ids` to separate emitted source-visible human or face geometry claims with exact generic controls. Neither prose evidence nor the prior clause satisfies this link.
+- Preserve user/trusted identity only as external context. Treat source-visible broad appearance as a non-identifying generation approximation, never inferred nationality; keep case labels out of runtime defaults and unrelated holdouts.
+- Link `geometry_claim_ids` to separate emitted source-visible form claims with exact generic controls. Neither prose evidence, skin color, nor the prior clause satisfies this link.
 - Use the full scale-appropriate geometry budget to correct the category prototype with the source's face silhouette, feature relationships, expression, hair boundary, surface treatment, and visible asymmetry.
 - If the broad anchor conflicts with reliable local geometry, revise or omit the broad anchor. Geometry wins.
 - Keep attractiveness at the level of overall facial reading; do not let it enlarge the face, idealize proportions, clean the skin, strengthen makeup, sharpen focus, or upgrade lighting.
@@ -1372,7 +1615,9 @@ Select only the strongest supported anchors across these groups:
 
 Preserve expression, gaze, and hair-to-face occlusion as likeness-critical geometry. Keep viewpoint separate from head pose and attention; do not repeat perspective-induced nostril, jaw, neck, eye, or far-side changes as intrinsic geometry.
 
-Distinguish optical or processing softness from beauty retouching. A globally soft face should remain optically soft rather than becoming a crisp face with smoothed skin.
+Infer face orientation from multiple relations—near/far feature exposure, side contour, nose-cheek spacing, compression, and occlusion—not both eyes alone. Record occluders as confounders; if camera/head separation is uncertain, preserve the visible side relation.
+
+Keep optical softness distinct from beauty retouching; do not convert it into crisp, smoothed skin.
 
 Use relational wording: wider than, closer together, higher than, partly hidden by, aligned with, shorter relative to, or more visible on the viewer-left/right. Do not infer unobserved feature geometry.
 
@@ -1440,13 +1685,13 @@ Describe important regions through separate value, chroma, and hue observations 
 
 Decompose an appearance metaphor into value, chroma, hue, surface, and light response. Mark it `explanation-only`, `unverified`, or `model-calibrated`; only the last may appear once as a summary of already-owned controls, with evidence for the exact generator/version. Treat control effectiveness as generator-and-version-specific evidence.
 
-When measured surface color needs natural language, read `references/surface-color-language.md`. Classify value depth, chroma, and undertone independently. With medium/high confidence, a controlled descriptor may deterministically compose those current-source axes in order; include finish only from separate visible evidence. It is not a friendly label and may emit only as one wrapper containing the exact owned axis-control excerpts. Mixed, uncertain, or low-confidence core evidence yields no phrase.
+When measured surface color needs natural language, read `references/surface-color-language.md`. Classify value depth, chroma, undertone, and optional separately observed finish independently. Compose stable axes in canonical order, omitting unresolved axes without invention. A boundary-only result stays diagnostic until exact model calibration. The descriptor is not a friendly label and may emit only as one wrapper containing the exact included axis-control excerpts.
 
 Friendly labels remain separate: review only user-supplied or explicitly versioned vocabulary candidates, and emit only a compatible exact-generator/version-calibrated summary. Never map surface axes to demographic identity.
 
 Map highlight, midtone, shadow, or flat-field behavior only at the granularity the source supports. Do not pool tone zones into an intrinsic target: use comparable midtone or flat patches for displayed intrinsic axes and separate groups for highlight and shadow response. Retain uncertainty for clipping, compression, mixed light, and low legibility.
 
-Record displayed key level, shadow floor, highlight rolloff, and microcontrast as separate tone-response axes when they materially affect apparent illumination. Do not call their combination physical light intensity. Link every required displayed-tone axis to its own region, aggregate effect, claim, and axis-control, while Light/Form separately owns bright-plane coverage and spatial gradients.
+Record displayed key level, shadow floor, highlight rolloff, and microcontrast as separate tone-response axes. Give every Color/Tone region a non-trivial prompt anchor. Each required control declares global, region, or declared region-group scope, affected/protected regions, evidence, and reuses the declared exact anchor in its prompt excerpt. Split mixed bright/dark coarse regions before applying one shadow floor. Light/Form separately owns bright-plane coverage and spatial gradients.
 
 ## Calibration evidence
 

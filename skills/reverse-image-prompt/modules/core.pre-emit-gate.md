@@ -1,6 +1,6 @@
 ---
 id: core.pre-emit-gate
-version: 19
+version: 20
 priority: 100
 type: core
 tier: 0
@@ -59,8 +59,8 @@ Apply this as a rewrite pass, not a checklist appended to the draft.
 ### Net salience
 
 - Audit semantic salience amplification across exact repeats, synonyms, paraphrases, labels, negatives, and settings; a repeatedly described dimension gains visual priority even when no sentence is duplicated verbatim.
-- Compare each slot's aggregate direction and strength with its source target. Plausible cues still fail when their combined pull exaggerates an invariant.
-- Correct an overstrong draft by replacing or deleting the amplifying language, not by appending a negative counterweight. Keep at most one distinct high-risk boundary per slot.
+- Compare each slot's aggregate direction and strength with its source target. Plausible cues still fail when combined too strongly.
+- Correct an overstrong draft by replacing or deleting the amplifying language, not by appending a negative counterweight. Keep one distinct high-risk boundary per slot.
 - Check whether a secondary element receives more words than its visible importance supports; compress it when it competes with a primary invariant.
 - Rewrite unsupported category defaults from evidence.
 
@@ -91,7 +91,7 @@ Apply this as a rewrite pass, not a checklist appended to the draft.
 
 ### Spatial and fidelity checks
 
-- Audit coordinate contradictions before emitting. Then audit the direction-neutral spatial coverage ledger: a frame zone alone cannot cover orientation; each invariant needs one relation/effect/claim/control path and causal axis; non-invariants emit nothing; duplicate ownership is merged.
+- Audit coordinate contradictions before emitting. Then audit `spatial-orientation/v2`: placement cannot cover orientation; human subaxes need cue-linked dispositions and a neutral-alignment counterfactual. Invariants need a full relation/control path; non-invariants need a preservation or visibility reason and emit nothing. Delete unsupported axial normalization by net clause meaning, not a word blacklist.
 - Relate every major component or coherent group to another component or stable zone. Make inversion-prone side, contact, support, containment, and depth order explicit; distinguish 2D overlap from scene-space contact.
 - Preserve the relative area and attention order of major regions. Keep partial or edge-adjacent bodies, garments, objects, reflections, screens, posters, and text blocks incomplete.
 - Confirm that detail has not increased subject scale, sharpness, background legibility, retouching, contrast, lighting polish, or a category's default silhouette beyond the source.

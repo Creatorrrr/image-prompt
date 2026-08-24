@@ -12,7 +12,15 @@ import argparse
 from pathlib import Path
 import sys
 
-from module_metadata import ROOT, expand_dependencies, load_manifest, module_map, module_sort_key, strip_frontmatter
+from module_metadata import (
+    ROOT,
+    expand_dependencies,
+    load_manifest,
+    module_map,
+    module_sort_key,
+    resolve_analysis_lanes,
+    strip_frontmatter,
+)
 
 PROFILE_MODULES = {
     "portrait": [
@@ -66,6 +74,18 @@ def compile_skill(module_ids: list[str], output: Path) -> None:
 
     root_skill = ROOT / "SKILL.md"
     parts = [root_skill.read_text(encoding="utf-8").rstrip()]
+    orchestration_reference = ROOT / "references" / "analysis-orchestration.md"
+    if orchestration_reference.exists():
+        parts.append(
+            "\n\n---\n\n# Distributed analysis orchestration reference\n\n"
+            + orchestration_reference.read_text(encoding="utf-8").rstrip()
+        )
+    for lane in resolve_analysis_lanes(module_ids, manifest):
+        path = ROOT / lane["file"]
+        parts.append(
+            f"\n\n---\n\n# Included analysis lane: `{lane['id']}`\n\n"
+            + strip_frontmatter(path.read_text(encoding="utf-8")).rstrip()
+        )
     parts.append(
         "\n\n---\n\n# Compiled module bundle\n\n"
         "The following module files were appended for runtimes that cannot read sibling files dynamically.\n"
