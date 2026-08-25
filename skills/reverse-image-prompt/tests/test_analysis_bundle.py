@@ -2,19 +2,19 @@
 
 from __future__ import annotations
 
-from copy import deepcopy
 import hashlib
 import json
-from pathlib import Path
 import sys
 import unittest
+from copy import deepcopy
+from pathlib import Path
 
 TOOLS = Path(__file__).resolve().parents[1] / "tools"
 sys.path.insert(0, str(TOOLS))
 
-from analysis_bundle import validate_bundle  # noqa: E402
-from module_metadata import ROOT, load_manifest, module_map  # noqa: E402
-from route_resolver import resolve_analysis_route  # noqa: E402
+from analysis_bundle import validate_bundle
+from module_metadata import ROOT, load_manifest, module_map
+from route_resolver import resolve_analysis_route
 
 
 def valid_bundle() -> dict:
@@ -31,12 +31,14 @@ def valid_bundle() -> dict:
     source = {"sha256": "a" * 64, "frame": "1200x900"}
     reports = []
     dispositions = []
+    obligation_dispositions = []
     for lane_index, lane in enumerate(route["lanes"]):
         finding_id = f"{lane['id']}:f1"
+        obligation_id = f"{finding_id}:o1"
         role = "primary" if lane_index == 0 else "supporting"
         reports.append(
             {
-                "schema_version": "reverse-image-analysis-lane-report/v1",
+                "schema_version": "reverse-image-analysis-lane-report/v2",
                 "route_fingerprint": route["route_fingerprint"],
                 "lane_id": lane["id"],
                 "source_artifact": deepcopy(source),
@@ -69,6 +71,24 @@ def valid_bundle() -> dict:
                         "proposed_role": role,
                         "default_drift_risk": "medium",
                         "confounders": [],
+                        "atomic_obligations": [
+                            {
+                                "id": obligation_id,
+                                "axis": "hierarchy" if lane_index == 0 else "form",
+                                "visible_result": "one independently drifting visible relation",
+                                "result_direction": "source-relative held-out direction",
+                                "subject_or_region_ids": [f"region-{lane_index}"],
+                                "relation_kind": "source-visible relation",
+                                "source_evidence": ["visible held-out cue"],
+                                "confidence": "high",
+                                "causal_origin": "layout" if lane_index == 0 else "intrinsic",
+                                "attribution_status": "resolved",
+                                "materiality": "material",
+                                "proposed_role": role,
+                                "target_strength": "moderate",
+                                "confounders": [],
+                            }
+                        ],
                     }
                 ],
                 "control_requirements": [],
@@ -85,14 +105,25 @@ def valid_bundle() -> dict:
                 "final_role": role,
             }
         )
+        obligation_dispositions.append(
+            {
+                "obligation_ids": [obligation_id],
+                "disposition": "retained",
+                "final_invariant_id": f"invariant-{lane_index}",
+                "final_role": role,
+            }
+        )
     plan_payload = {
         "render_contract": {
             "invariants": [
                 {
                     "id": disposition["final_invariant_id"],
                     "role": disposition["final_role"],
+                    "source_obligation_ids": obligation_dispositions[index][
+                        "obligation_ids"
+                    ],
                 }
-                for disposition in dispositions
+                for index, disposition in enumerate(dispositions)
             ]
         }
     }
@@ -105,7 +136,7 @@ def valid_bundle() -> dict:
         ).encode("utf-8")
     ).hexdigest()
     return {
-        "schema_version": "reverse-image-analysis-bundle/v1",
+        "schema_version": "reverse-image-analysis-bundle/v2",
         "request": {"user_request": "reconstruct the held-out image", "intent_mode": "faithful"},
         "source_artifact": source,
         "route": route,
@@ -119,6 +150,7 @@ def valid_bundle() -> dict:
         "integration": {
             "status": "complete",
             "finding_dispositions": dispositions,
+            "obligation_dispositions": obligation_dispositions,
             "conflicts": [],
         },
         "adjudications": [],
@@ -131,6 +163,12 @@ def valid_bundle() -> dict:
                 finding_id
                 for report in reports
                 for finding_id in [report["findings"][0]["id"]]
+            ],
+            "reviewed_obligation_ids": [
+                obligation["id"]
+                for report in reports
+                for finding in report["findings"]
+                for obligation in finding["atomic_obligations"]
             ],
             "reviewed_invariant_ids": [
                 invariant["id"]
@@ -176,6 +214,58 @@ class AnalysisBundleTests(unittest.TestCase):
         bundle["integration"]["finding_dispositions"][0]["final_role"] = "supporting"
         self.assertTrue(
             any("cannot be demoted" in error for error in validate_bundle(bundle))
+        )
+
+    def test_material_finding_requires_atomic_obligations(self) -> None:
+        bundle = valid_bundle()
+        bundle["lane_reports"][0]["findings"][0]["atomic_obligations"] = []
+        self.assertTrue(
+            any(
+                "material findings require atomic obligations" in error
+                for error in validate_bundle(bundle)
+            )
+        )
+
+    def test_material_atomic_obligation_cannot_be_dropped_or_lose_direction(self) -> None:
+        bundle = valid_bundle()
+        bundle["integration"]["obligation_dispositions"][0].update(
+            {"disposition": "diagnostic-only", "reason": "incorrectly dropped"}
+        )
+        errors = validate_bundle(bundle)
+        self.assertTrue(
+            any("material atomic obligation cannot be dropped" in error for error in errors)
+        )
+
+        missing_direction = valid_bundle()
+        del missing_direction["lane_reports"][0]["findings"][0][
+            "atomic_obligations"
+        ][0]["result_direction"]
+        self.assertTrue(
+            any("result_direction" in error for error in validate_bundle(missing_direction))
+        )
+
+    def test_atomic_obligation_must_survive_in_hash_bound_invariant(self) -> None:
+        bundle = valid_bundle()
+        bundle["integrated_plan"]["payload"]["render_contract"]["invariants"][0][
+            "source_obligation_ids"
+        ] = []
+        bundle["integrated_plan"]["sha256"] = hashlib.sha256(
+            json.dumps(
+                bundle["integrated_plan"]["payload"],
+                ensure_ascii=False,
+                sort_keys=True,
+                separators=(",", ":"),
+            ).encode("utf-8")
+        ).hexdigest()
+        bundle["coverage_review"]["integrated_plan_sha256"] = bundle[
+            "integrated_plan"
+        ]["sha256"]
+        self.assertTrue(
+            any(
+                "must bind source_obligation_ids" in error
+                or "must survive in the integrated plan invariant" in error
+                for error in validate_bundle(bundle)
+            )
         )
 
     def test_final_invariant_must_exist_in_hash_bound_integrated_plan(self) -> None:
@@ -257,6 +347,12 @@ class AnalysisBundleTests(unittest.TestCase):
                 finding["id"]
                 for report in bundle["lane_reports"]
                 for finding in report["findings"]
+            ],
+            "reviewed_obligation_ids": [
+                obligation["id"]
+                for report in bundle["lane_reports"]
+                for finding in report["findings"]
+                for obligation in finding["atomic_obligations"]
             ],
             "reviewed_invariant_ids": [
                 invariant["id"]

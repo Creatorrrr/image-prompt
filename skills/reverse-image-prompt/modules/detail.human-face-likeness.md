@@ -1,6 +1,6 @@
 ---
 id: detail.human-face-likeness
-version: 8
+version: 11
 priority: 80
 type: detail
 tier: 3
@@ -38,11 +38,11 @@ Load only when at least one human face is prominent or clearly readable. Do not 
 
 Allocate anchor count by visible face scale and legibility, but assign fidelity role independently. A readable-secondary face may remain a primary invariant when changing its broad reading changes the image.
 
-- **Prominent and legible:** the face is a primary image anchor and individual feature relationships are separable. Use six to ten selective likeness anchors.
-- **Readable but secondary:** the face is smaller but several feature groups remain reliable. Use three to six anchors.
+- **Prominent and legible:** the face is a primary image anchor and individual feature relationships are separable. In `prompt`, use two to five decisive anchors; in `audited`, use six to ten when supported.
+- **Readable but secondary:** the face is smaller but several feature groups remain reliable. In `prompt`, use one to three decisive anchors; in `audited`, use three to six.
 - **Small or indistinct:** do not use this module. Preserve head orientation, hair mass, skin-tone massing, and visibility only through `subject.human`.
 
-For a prominent legible face, choose six to ten likeness-bearing visible anchors instead of listing every facial field.
+Choose anchors by viewer impact and default-drift risk, never to fill every facial group. A material attractiveness reading is one optional gestalt anchor, never local likeness geometry; bind it to separate visible-geometry anchors.
 
 Use fewer anchors when softness, compression, low contrast, or scale limits separation. Anchors preserve geometry; they do not authorize larger crop, sharper focus, cleaner makeup, extra detail, or a supporting-role downgrade.
 
@@ -54,22 +54,22 @@ When `subject.human` selects a broad person-gestalt anchor, treat it as one high
 
 - Place it once before local face geometry; do not repeat the racial, ethnic, regional-appearance, or attractiveness category in later clauses.
 - Preserve user/trusted identity only as external context. Treat source-visible broad appearance as a non-identifying generation approximation, never inferred nationality; keep case labels out of runtime defaults and unrelated holdouts.
-- Link `geometry_claim_ids` to separate emitted source-visible form claims with exact generic controls. Neither prose evidence, skin color, nor the prior clause satisfies this link.
-- Use the full scale-appropriate geometry budget to correct the category prototype with the source's face silhouette, feature relationships, expression, hair boundary, surface treatment, and visible asymmetry.
+- Link `geometry_claim_ids` to exact source-visible form controls. Keep them contiguous after the prior so local geometry corrects it. Prose, skin color, or the prior itself cannot satisfy the link.
+- Use the scale-appropriate geometry budget to correct the category prototype with only the source-material face silhouette, feature relationships, expression, hair boundary, surface treatment, and visible asymmetry.
 - If the broad anchor conflicts with reliable local geometry, revise or omit the broad anchor. Geometry wins.
-- Keep attractiveness at the level of overall facial reading; do not let it enlarge the face, idealize proportions, clean the skin, strengthen makeup, sharpen focus, or upgrade lighting.
+- Keep attractiveness at the source-visible overall facial reading. State it once only when P0/P1 and omission-sensitive, followed by local geometry; it must not idealize, clean, enlarge, sharpen, or relight the face.
 
 ## Likeness anchor selection
 
 Select only the strongest supported anchors across these groups:
 
-1. **Head and face silhouette:** head width-to-height, forehead height, cheek fullness, cheekbone width, jaw taper or squareness, chin length/shape, visible asymmetry.
-2. **Eyes and brows:** eye size relative to the face, spacing, tilt, lid exposure, fold visibility, far-eye reduction in three-quarter/profile view, brow thickness/shape/distance, catchlight pattern, gaze direction.
-3. **Midface and nose:** bridge height/width, nose length, frontal or profile projection, tip shape, nostril visibility, relationship to cheek and upper lip.
-4. **Mouth, jaw, and expression:** mouth width, lip line/fullness, corners, teeth visibility, closure/parting, chin tension, cheek lift, brow tension, squint, smile asymmetry, neutral or strained expression.
-5. **Hair and face boundary:** hairline, part, fringe shape, temple coverage, side masses, curl/wave group, volume, flyaways, shadow color, and exact facial regions hidden by hair.
-6. **Skin, makeup, and surface treatment:** tone depth and undertone, matte/reflective balance, visible texture, freckles or marks, under-eye treatment, facial hair, makeup placement and strength, capture smoothing or retouching.
-7. **Facial lighting:** which planes receive highlight or shadow, how light changes the readable eye/nose/mouth/jaw geometry, and whether features remain soft, flat, hazy, or contrasty.
+1. **Silhouette:** head proportions, forehead/cheek/jaw/chin relationship, and visible asymmetry.
+2. **Eyes and brows:** relative size, spacing, tilt, lid exposure, far-eye compression, brow relation, and gaze.
+3. **Midface and nose:** bridge, length, projection, tip, nostril visibility, and cheek/lip relation.
+4. **Mouth and expression:** width, line/fullness, closure, corners, teeth, and decisive facial tension.
+5. **Hair boundary:** hairline, part/fringe, side masses, volume, texture group, and covered facial regions.
+6. **Skin and makeup:** displayed tone/undertone, finish, texture/marks, makeup, facial hair, and capture treatment.
+7. **Facial light:** material highlight/shadow planes and their effect on readable geometry.
 
 Preserve expression, gaze, and hair-to-face occlusion as likeness-critical geometry. Keep viewpoint separate from head pose and attention; do not repeat perspective-induced nostril, jaw, neck, eye, or far-side changes as intrinsic geometry.
 
@@ -89,14 +89,14 @@ Use relational wording: wider than, closer together, higher than, partly hidden 
 
 ## Prompt contribution
 
-Create one compact human-likeness passage after composition:
+Create one compact human-likeness passage at the position assigned by viewer priority:
 
 1. optional one-sentence person-gestalt anchor
 2. face scale, angle, crop, and visible side
 3. the selected likeness anchors in source hierarchy
 4. expression and gaze
 5. hair silhouette and occlusion
-6. skin/makeup/rendering and facial lighting when legible
+6. skin/makeup/rendering and facial lighting only when material
 
 Treat the passage as one owned face-gestalt effect when its clauses jointly preserve one likeness direction. If separate clauses push the same symmetry, feature scale, projection, polish, or face-type direction, merge or replace them rather than allowing the category anchor and local geometry to amplify one another.
 

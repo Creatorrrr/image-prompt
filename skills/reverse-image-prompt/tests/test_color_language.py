@@ -262,6 +262,39 @@ class ColorLanguageTests(unittest.TestCase):
             {"kind": "versioned-vocabulary", "reference": "held-out test input"},
         )
 
+    def test_current_source_candidate_provenance_is_preserved(self) -> None:
+        for l_value, a_value, b_value, expected_depth in (
+            (70.0, 7.0, 10.0, "light"),
+            (34.0, 1.0, 18.0, "deep"),
+        ):
+            with self.subTest(expected_depth=expected_depth):
+                classification = classify_observation(
+                    observation(l_value, a_value, b_value), POLICY
+                )
+                reviewed = review_candidates(
+                    classification,
+                    candidate_payload(
+                        [
+                            {
+                                "phrase": "held-out source-visible surface reading",
+                                "label_scope": "value-depth",
+                                "axis_requirements": {
+                                    "value_depth": [expected_depth]
+                                },
+                            }
+                        ],
+                        kind="source-visible-approximation",
+                    ),
+                )
+                self.assertEqual(reviewed[0]["review_status"], "compatible")
+                self.assertEqual(
+                    reviewed[0]["candidate_source"],
+                    {
+                        "kind": "source-visible-approximation",
+                        "reference": "held-out test input",
+                    },
+                )
+
     def test_classification_does_not_invent_a_friendly_label(self) -> None:
         classification = classify_observation(observation(70.0, 7.0, 10.0), POLICY)
         self.assertNotIn("friendly_label_review", classification)

@@ -16,7 +16,7 @@ Official references:
 - Describe framing, viewpoint, placement, interaction, medium, lighting, and only the quality cues that matter.
 - Treat detailed camera specifications as high-level visual cues, not exact physical simulation.
 - Put essential exclusions and invariants in the main prompt. The official Image API output controls do not document a separate negative-prompt field.
-- For material color fidelity, keep intrinsic value, chroma, and hue in separate short controls. Treat broad color/finish metaphors as unverified unless response evidence matches the exact model version.
+- For material color fidelity, keep intrinsic value, chroma, and hue in separate short controls. A current-source aggregate color/finish descriptor may lead them once through source-evidence qualification; treat its generator effectiveness as unverified unless response evidence matches the exact model version.
 
 ### Visual color conditioning
 

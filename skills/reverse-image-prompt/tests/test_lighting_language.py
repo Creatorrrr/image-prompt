@@ -172,6 +172,31 @@ class LightingLanguageTests(unittest.TestCase):
             {"kind": "versioned-vocabulary", "reference": "held-out test input"},
         )
 
+    def test_current_source_candidate_provenance_is_preserved(self) -> None:
+        classification = classify_observation(observation(), POLICY)
+        reviewed = review_candidates(
+            classification,
+            candidate_payload(
+                [
+                    {
+                        "phrase": "held-out source-visible lighting reading",
+                        "label_scope": "modeling-character",
+                        "axis_requirements": {"local_form_contrast": ["strong"]},
+                    }
+                ],
+                kind="source-visible-approximation",
+            ),
+            POLICY,
+        )
+        self.assertEqual(reviewed[0]["review_status"], "compatible")
+        self.assertEqual(
+            reviewed[0]["candidate_source"],
+            {
+                "kind": "source-visible-approximation",
+                "reference": "held-out test input",
+            },
+        )
+
     def test_classification_does_not_invent_a_friendly_label(self) -> None:
         result = classify_observation(observation(), POLICY)
         self.assertNotIn("friendly_label_review", result)

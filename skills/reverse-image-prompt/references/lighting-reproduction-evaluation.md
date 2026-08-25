@@ -96,10 +96,14 @@ light_form_contract:
       decomposed_axes: []
       unresolved_axes: []
     friendly_label_review: []
-  lighting_labels:  # optional externally sourced shorthand after compatibility review
+  lighting_labels:  # optional provenance-bound shorthand after compatibility review
     - phrase: "candidate label"
-      status: explanation-only | unverified | model-calibrated
+      status: explanation-only | unverified | source-evidence-qualified | model-calibrated
       emit: false
+      source_evidence: []
+      confidence: high | medium | low
+      viewer_priority: P0 | P1 | P2 | P3
+      omission_counterfactual: preserved | material-drift | uncertain
       generator_id: "required only for model-calibrated status"
       generator_version: "required only for model-calibrated status"
       conditioning_route: "required only for model-calibrated status"
@@ -129,7 +133,7 @@ Candidate claims listed by this contract carry `lighting_effects`, each with an 
 
 When adjacent regions belong to the same visible surface, a material source/render change in their value separation is evidence for a spatial Light/Form residual, not automatically for intrinsic form or surface color. Record the compared major regions as `region_id` and a distinct known `reference_region_id`; the same ordered pair must appear in an aggregate actuation rather than remaining diagnostic-only. Omit the optional reference for genuinely one-region effects. Then assign any visible transition to gradient extent, local form contrast, shadow topology, or material response. Use `result-space-only` when the image does not identify a reliable physical cause.
 
-`lighting_language` is optional unless source-visible lighting is being translated into a compact composite or an externally supplied friendly label is considered. Use `references/lighting-language.md` and its versioned policy. Classify every axis independently, preserve evidence and uncertainty, and keep its deterministic `controlled_summary` explanation-only. Every named friendly-label review records user or versioned-vocabulary provenance. Compatibility does not authorize emission: an emitted entry in `lighting_labels` must additionally be model-calibrated for the exact generator/version, carry calibration evidence, and reference already-owned literal controls.
+`lighting_language` is optional unless source-visible lighting is being translated into a compact composite or a friendly label is considered. Use `references/lighting-language.md` and its versioned policy. Classify every axis independently, preserve evidence and uncertainty, and keep its deterministic `controlled_summary` explanation-only. Every named review records user, versioned-vocabulary, or current-source provenance. Compatibility alone does not authorize emission: a `source-evidence-qualified` entry must also have high/medium confidence, P0/P1 priority, a `material-drift` omission counterfactual, and immediately adjacent already-owned literal controls. A `model-calibrated` entry instead carries exact generator/version response evidence.
 
 ## Cause and result rules
 
@@ -173,7 +177,8 @@ When both are present:
 - do not list one claim in both contracts;
 - do not use exposure to satisfy a missing spatial-light effect;
 - do not use source geometry to satisfy a missing intrinsic value or hue control;
-- review shared contrast language manually because a structural validator cannot infer prose semantics.
+- every overlapping Color/Tone value, displayed-key, shadow-floor, contrast, or microcontrast control lists the primary spatial light effects it protects;
+- place the primary visible Light/Form result before those overlapping tone controls, then review shared contrast language manually because structural validation cannot infer all prose semantics.
 
 ## Analyst-selected measurement
 
@@ -278,7 +283,7 @@ This matrix is for building and promoting a skill-level evaluation suite, not fo
 - photographic and non-photographic media
 - the same displayed key with different edge softness or local form contrast
 - the same edge softness with flattening versus strong local modeling
-- compatible, conflicting, unresolved, and missing externally supplied label candidates
+- compatible, conflicting, unresolved, and missing user, current-source, and versioned-vocabulary label candidates
 - label-present versus axis-equivalent literal-only prompts on the exact target generator/version
 
 Score prompt validity, delivered pixels, pixel fidelity, and user judgment separately. The motivating case is one regression sample, never a runtime default or proof of general success.

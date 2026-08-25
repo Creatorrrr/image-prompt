@@ -1,6 +1,6 @@
 ---
 id: lane.information-layout
-version: 1
+version: 3
 priority: 75
 activation: matched
 select_types: []
@@ -37,8 +37,8 @@ Read only the raw request, intent mode, exact source artifact and hash, route fi
 
 ## Output contract
 
-Return one `reverse-image-analysis-lane-report/v1` object with evidence-scoped layout findings, uncertainties, completion risks, and handoffs. Do not transcribe unreadable content or write the final prompt.
+In `prompt`, return `reverse-image-analysis-lane-report/compact-v1` with only P0/P1 container hierarchy, reading order, legibility, or nested-boundary findings; compress supporting structure and group unreadable or incidental detail. In `audited`, return `reverse-image-analysis-lane-report/v2` with atomic layout obligations. Never transcribe unreadable content or write final prose.
 
 ## Completion gate
 
-Dispose every required topic and assigned module. Preserve low legibility and distinguish the source image frame from screens, documents, or embedded panels.
+Dispose every required topic at the profile's depth. Preserve low legibility and distinguish the source image frame from screens, documents, or embedded panels.

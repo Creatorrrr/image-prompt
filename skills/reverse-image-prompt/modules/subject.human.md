@@ -1,6 +1,6 @@
 ---
 id: subject.human
-version: 15
+version: 19
 priority: 82
 type: subject
 tier: 2
@@ -39,7 +39,7 @@ Load whenever a real or fictional person is visibly present. Add `detail.human-f
 
 ## Human hierarchy
 
-Record these before micro-detail:
+In `prompt`, record only P0/P1 entries from this hierarchy before micro-detail; group the rest. In `audited`, dispose every listed axis:
 
 - number of people and primary/secondary roles
 - each person's frame share, crop, depth plane, and overlap order
@@ -50,22 +50,24 @@ Record these before micro-detail:
 
 Allocate detail by legibility; keep distant, blurred, reflected, screen-contained, or background people simple.
 
-Link each pose decision to subject-owned cues and confounders. Under neutral axial alignment, material changed relations require an invariant decomposed axis; `flexible` or `not-material` needs a preservation reason, while `not-visible` or `uncertain` names the evidence limit.
+In `prompt`, preserve one macro pose result and only decisive residual relations when pose is P0/P1. In `audited`, link every pose decision to cues/confounders, compare whole with viewpoint-held residual neutralization, and apply coupled-member summary coverage.
 
-Before appearance prose, create one `human-appearance/v2` decision per spatial human. Record face visibility, frame prominence, fidelity salience, appearance invariant IDs, identity context, person-prior risk/geometry/counterfactual, and skin handling. Distinguish occlusion from crop.
+Before appearance prose, build a compact appearance signature in `prompt`; create one `human-appearance/v2` decision per spatial human only in `audited`. Distinguish occlusion from crop in either profile.
 
 ## Visible appearance
 
 Describe each non-identifying fictional person coarse-to-fine: use one compact broad person-gestalt anchor when it materially reduces ambiguity, then constrain it with visible geometry and source-specific corrections.
 
+For `prompt`, select only source-material fields from broad visual prior, local face/body geometry, displayed skin axes and finish, hair boundary, expression/gaze, and capture treatment. A field earns detail only when changing it would alter P0/P1 or when model-default drift is high.
+
 ### Broad person-gestalt anchor
 
 - Frame prominence measures image size/attention; fidelity salience measures whether changing this person's reading changes reconstruction. A readable secondary figure may be fidelity-primary.
 - Keep factual identity context `user-supplied`, `trusted-metadata`, or `absent`. Image-derived broad appearance is only a non-identifying, source-visible generation approximation; never infer nationality or exact ethnicity.
-- Set the person prior to `emit`, `omit`, or `uncertain`. Record candidate support, model-default drift risk, local-geometry sufficiency, geometry claim IDs, and an omission counterfactual.
+- Set the person prior to `emit`, `omit`, or `uncertain`. In `prompt`, record candidate support, default-drift risk, geometry sufficiency, and one omission counterfactual only when that decision is P0/P1. In `audited`, also record the full claim bindings.
 - For readable fidelity-material appearance, omit only when separate emitted form geometry is sufficient, default drift risk is low, and omission preserves the source reading. Unsupported high-risk cases remain uncertain rather than forcing a demographic guess.
-- An emitted `generation_prior` carries provenance and exactly matching separate human/face/body-form controls. Geometry wins over the compact anchor; skin color alone cannot justify it.
-- If attractiveness materially carries the visible gestalt, use one source-relative generation approximation and preserve asymmetry, grooming, skin treatment, makeup, capture softness, crop, and scale. Do not turn it into flawless symmetry, retouching, beauty lighting, or a closer portrait.
+- An emitted `generation_prior` carries provenance and matching human/face/body-form controls. Keep them contiguous so geometry corrects the anchor; skin color cannot justify it.
+- If attractiveness materially carries the gestalt, use an optional `generation_prior` with scope `attractiveness`. Retain it once with P0/P1 source evidence and material-drift omission, then constrain it with geometry, asymmetry, grooming, skin/makeup, capture, crop, and scale. It cannot authorize retouching, idealization, relighting, or a closer portrait.
 
 After the optional anchor, prioritize source-specific corrections:
 
@@ -101,7 +103,7 @@ Describe only visible image-plane structure shaped by pose, crop, clothing, lens
 
 ## Prompt contribution
 
-After concept and composition, order human controls as scale/crop, camera, material head/torso/shoulder relation, fidelity-primary gestalt, face, hair, gaze, contact, clothing, texture. Frame prominence cannot demote fidelity salience. Placement stays positional; appearance inherits pose. Omit non-emitted paths and conflicting generic posture.
+Order human controls by cross-lane viewer priority, while preserving dependencies: scale/crop and camera before a material pose result; any broad prior immediately before correcting local geometry; then material skin/surface, hair, expression, and capture. In `audited`, coupled pose controls retain the macro summary and only `partial` or `lost` residuals. Placement stays positional and appearance inherits pose.
 
 For multiple people, describe each person separately by frame role and do not blend their face, hair, clothing, pose, or lighting anchors.
 

@@ -1,6 +1,6 @@
 ---
 id: core.frame-coordinates
-version: 10
+version: 12
 priority: 108
 type: core
 tier: 0
@@ -48,7 +48,9 @@ Preserve region-share hierarchy when flexible pose, viewpoint, or placement chan
 
 ## Spatial language
 
-Before drafting, give each material placement, principal axis, viewpoint, and cross-component dimension a direction-neutral disposition. Placement never proves orientation; require separate axis, side-visibility, occlusion, depth-order, silhouette, or perspective cues. Centered may be oblique and offset may be frontal.
+In `prompt`, first decide whether spatial orientation is P0/P1. If so, preserve one macro visible result plus only decisive placement, viewpoint, pose, and cross-component relations; group non-material axes. Placement proves no orientation. Centered may be oblique and offset may be frontal.
+
+In `audited`, disposition every material placement, principal axis, viewpoint, cross-component orientation, and human pose axis. For humans test whole orientation, then residual pose with viewpoint fixed; merge jointly material weak axes once.
 
 ## Relational coordinate frames
 

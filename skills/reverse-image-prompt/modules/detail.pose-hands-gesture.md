@@ -1,6 +1,6 @@
 ---
 id: detail.pose-hands-gesture
-version: 5
+version: 6
 priority: 78
 type: detail
 tier: 3
@@ -33,6 +33,8 @@ Load when pose mechanics, hands, fingers, object grip, contact, limb placement, 
 ## Prompt additions
 
 Describe mechanics rather than generic pose labels:
+
+In `prompt`, select only the macro action and decisive P0/P1 relations from the list below. Group non-material joints, fingers, coordinates, and hidden mechanics; never complete them for checklist coverage. Use exhaustive axis disposal only in `audited`.
 
 - body crop and visible body parts
 - head direction, head tilt, chin angle, gaze, neck visibility

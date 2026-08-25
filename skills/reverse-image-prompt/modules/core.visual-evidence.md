@@ -1,6 +1,6 @@
 ---
 id: core.visual-evidence
-version: 6
+version: 8
 priority: 110
 type: core
 tier: 0
@@ -36,7 +36,9 @@ Always.
 - In `polished-fidelity` mode, improve only the dimensions requested by the user; do not silently alter crop, pose, relationships, identity-relevant appearance, or geometry.
 - Give partial elements a visibility budget: what remains visible, how large it is, where it touches the frame, and whether it stays secondary or low-detail.
 - Do not complete hidden anatomy, objects, clothing, text, reflections, or background fragments.
-- Before treating an observed contour, scale, color, surface, or definition as intrinsic, separate effects caused by pose or deformation, perspective, lighting or shadow, material interaction or occlusion, and capture or processing. Preserve the visible result while assigning each prompt control to the most plausible visible cause.
+- Before treating an observed contour, scale, color, surface, or definition as intrinsic, separate effects caused by pose or deformation, perspective, lighting or shadow, material interaction or occlusion, and capture or processing.
+- In the default `prompt` profile, keep only P0/P1 viewer-material results, compress P2 support, and group P3 or non-material evidence instead of enumerating it.
+- In `audited`, preserve independently drifting material results as atomic obligations; uncertain attribution never erases a supported direction.
 
 ## Prompt contribution
 

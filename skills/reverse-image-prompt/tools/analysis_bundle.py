@@ -6,17 +6,16 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
-from pathlib import Path
 import re
 import sys
+from pathlib import Path
 from typing import Any
 
 from module_metadata import ROOT, load_manifest, module_map
 from route_resolver import resolve_analysis_route
 
-
-BUNDLE_SCHEMA = "reverse-image-analysis-bundle/v1"
-REPORT_SCHEMA = "reverse-image-analysis-lane-report/v1"
+BUNDLE_SCHEMA = "reverse-image-analysis-bundle/v2"
+REPORT_SCHEMA = "reverse-image-analysis-lane-report/v2"
 VALID_INTENT_MODES = {"faithful", "semantic", "polished-fidelity", "diagnostic"}
 VALID_EXECUTION_MODES = {"delegated", "sequential-fallback", "mixed"}
 VALID_REPORT_MODES = {"delegated", "sequential-fallback"}
@@ -47,8 +46,17 @@ VALID_CAUSAL_ORIGINS = {
 VALID_MATERIALITY = {"material", "uncertain", "diagnostic"}
 VALID_ROLES = {"primary", "supporting"}
 VALID_DRIFT_RISK = {"high", "medium", "low", "uncertain"}
+VALID_ATTRIBUTION_STATUS = {"resolved", "confounded", "uncertain", "not-applicable"}
+VALID_STRENGTHS = {"subtle", "moderate", "strong"}
 VALID_INTEGRATION_STATUS = {"complete", "revise", "blocked"}
 VALID_FINDING_DISPOSITIONS = {
+    "retained",
+    "merged",
+    "diagnostic-only",
+    "rejected",
+    "uncertain",
+}
+VALID_OBLIGATION_DISPOSITIONS = {
     "retained",
     "merged",
     "diagnostic-only",
@@ -65,6 +73,12 @@ VALID_CRITIC_ISSUES = {
     "role-strength-drift",
     "scope-leakage",
     "unresolved-uncertainty",
+    "obligation-loss",
+    "result-direction-loss",
+    "coupling-loss",
+    "topology-collapse",
+    "net-neutralization",
+    "salience-order-drift",
 }
 VALID_CONFLICT_RESOLUTIONS = {"automatic", "adjudicated", "uncertain"}
 
@@ -210,6 +224,7 @@ def validate_bundle(
     report_modes_seen: set[str] = set()
     non_independent_report_seen = False
     finding_map: dict[str, dict[str, Any]] = {}
+    obligation_map: dict[str, dict[str, Any]] = {}
     conflict_ids: set[str] = set()
     modules = module_map(manifest)
 
@@ -336,6 +351,80 @@ def validate_bundle(
             if not _string_list(finding.get("confounders")):
                 errors.append(f"{finding_label}.confounders must be a list of strings")
 
+            obligations = finding.get("atomic_obligations")
+            if not isinstance(obligations, list):
+                errors.append(f"{finding_label}.atomic_obligations must be a list")
+                obligations = []
+            if finding.get("materiality") == "material" and not obligations:
+                errors.append(
+                    f"{finding_label}: material findings require atomic obligations"
+                )
+            local_obligation_ids: set[str] = set()
+            for obligation_index, obligation in enumerate(obligations):
+                obligation_label = (
+                    f"{finding_label}.atomic_obligations[{obligation_index}]"
+                )
+                if not isinstance(obligation, dict):
+                    errors.append(f"{obligation_label} must be an object")
+                    continue
+                obligation_id = obligation.get("id")
+                if not _nonempty_string(obligation_id) or not str(
+                    obligation_id
+                ).startswith(f"{finding_id}:"):
+                    errors.append(
+                        f"{obligation_label}.id must use the finding namespace"
+                    )
+                    continue
+                obligation_id = str(obligation_id)
+                if obligation_id in obligation_map:
+                    errors.append(f"duplicate atomic obligation id: {obligation_id}")
+                if obligation_id in local_obligation_ids:
+                    errors.append(
+                        f"{finding_label}.atomic_obligations repeats {obligation_id!r}"
+                    )
+                local_obligation_ids.add(obligation_id)
+                obligation_map[obligation_id] = obligation
+                if obligation.get("axis") not in VALID_FINDING_AXES:
+                    errors.append(f"{obligation_label}.axis is invalid")
+                if not _nonempty_string(obligation.get("visible_result")):
+                    errors.append(
+                        f"{obligation_label}.visible_result must be source-relative and non-empty"
+                    )
+                if not _nonempty_string(obligation.get("result_direction")):
+                    errors.append(
+                        f"{obligation_label}.result_direction must be source-relative and non-empty"
+                    )
+                if not _string_list(
+                    obligation.get("subject_or_region_ids"), nonempty=True
+                ):
+                    errors.append(
+                        f"{obligation_label}.subject_or_region_ids must be non-empty"
+                    )
+                if not _nonempty_string(obligation.get("relation_kind")):
+                    errors.append(f"{obligation_label}.relation_kind must be non-empty")
+                if not _string_list(
+                    obligation.get("source_evidence"), nonempty=True
+                ):
+                    errors.append(
+                        f"{obligation_label}.source_evidence must be non-empty"
+                    )
+                if obligation.get("confidence") not in VALID_CONFIDENCE:
+                    errors.append(f"{obligation_label}.confidence is invalid")
+                if obligation.get("causal_origin") not in VALID_CAUSAL_ORIGINS:
+                    errors.append(f"{obligation_label}.causal_origin is invalid")
+                if obligation.get("attribution_status") not in VALID_ATTRIBUTION_STATUS:
+                    errors.append(f"{obligation_label}.attribution_status is invalid")
+                if obligation.get("materiality") not in VALID_MATERIALITY:
+                    errors.append(f"{obligation_label}.materiality is invalid")
+                if obligation.get("proposed_role") not in VALID_ROLES:
+                    errors.append(f"{obligation_label}.proposed_role is invalid")
+                if obligation.get("target_strength") not in VALID_STRENGTHS:
+                    errors.append(f"{obligation_label}.target_strength is invalid")
+                if not _string_list(obligation.get("confounders")):
+                    errors.append(
+                        f"{obligation_label}.confounders must be a list of strings"
+                    )
+
         dispositions = report.get("topic_dispositions")
         if not isinstance(dispositions, list):
             errors.append(f"{label}.topic_dispositions must be a list")
@@ -400,6 +489,7 @@ def validate_bundle(
         errors.append("integration must be an object")
         integration_status = ""
         finding_dispositions: list[Any] = []
+        obligation_dispositions: list[Any] = []
         integrated_conflicts: list[Any] = []
     else:
         integration_status = integration.get("status")
@@ -409,6 +499,10 @@ def validate_bundle(
         if not isinstance(finding_dispositions, list):
             errors.append("integration.finding_dispositions must be a list")
             finding_dispositions = []
+        obligation_dispositions = integration.get("obligation_dispositions")
+        if not isinstance(obligation_dispositions, list):
+            errors.append("integration.obligation_dispositions must be a list")
+            obligation_dispositions = []
         integrated_conflicts = integration.get("conflicts")
         if not isinstance(integrated_conflicts, list):
             errors.append("integration.conflicts must be a list")
@@ -473,6 +567,102 @@ def validate_bundle(
         errors.append("integration omits findings: " + ", ".join(missing_findings))
     if repeated_findings:
         errors.append("integration disposes findings more than once: " + ", ".join(repeated_findings))
+
+    disposed_obligations: dict[str, int] = {}
+    for index, disposition in enumerate(obligation_dispositions):
+        label = f"integration.obligation_dispositions[{index}]"
+        if not isinstance(disposition, dict):
+            errors.append(f"{label} must be an object")
+            continue
+        ids = disposition.get("obligation_ids")
+        if not _string_list(ids, nonempty=True):
+            errors.append(f"{label}.obligation_ids must be non-empty")
+            ids = []
+        unknown = sorted(set(ids) - set(obligation_map))
+        if unknown:
+            errors.append(
+                f"{label} references unknown obligations: {', '.join(unknown)}"
+            )
+        for obligation_id in ids:
+            disposed_obligations[obligation_id] = (
+                disposed_obligations.get(obligation_id, 0) + 1
+            )
+        status = disposition.get("disposition")
+        if status not in VALID_OBLIGATION_DISPOSITIONS:
+            errors.append(f"{label}.disposition is invalid")
+        if status in {"rejected", "uncertain", "diagnostic-only"} and not _nonempty_string(
+            disposition.get("reason")
+        ):
+            errors.append(f"{label}.reason is required for {status!r}")
+
+        material = any(
+            obligation_map.get(obligation_id, {}).get("materiality") == "material"
+            for obligation_id in ids
+        )
+        primary = any(
+            obligation_map.get(obligation_id, {}).get("materiality") == "material"
+            and obligation_map.get(obligation_id, {}).get("proposed_role") == "primary"
+            for obligation_id in ids
+        )
+        if material and status not in {"retained", "merged"}:
+            errors.append(f"{label}: a material atomic obligation cannot be dropped")
+        if primary and disposition.get("final_role") != "primary":
+            errors.append(f"{label}: a primary atomic obligation cannot be demoted")
+        if status in {"retained", "merged"}:
+            if disposition.get("final_role") not in VALID_ROLES:
+                errors.append(f"{label}.final_role is invalid")
+            final_invariant_id = disposition.get("final_invariant_id")
+            if not _nonempty_string(final_invariant_id):
+                errors.append(f"{label}.final_invariant_id must be non-empty")
+            elif final_invariant_id not in plan_invariant_map:
+                errors.append(
+                    f"{label}.final_invariant_id is absent from the integrated plan"
+                )
+            else:
+                invariant = plan_invariant_map[str(final_invariant_id)]
+                if invariant.get("role") != disposition.get("final_role"):
+                    errors.append(
+                        f"{label}.final_role does not match the integrated plan invariant"
+                    )
+                bound_ids = invariant.get("source_obligation_ids")
+                if not _string_list(bound_ids, nonempty=True):
+                    errors.append(
+                        f"integrated plan invariant {final_invariant_id!r} must bind source_obligation_ids"
+                    )
+                elif not set(ids).issubset(set(bound_ids)):
+                    errors.append(
+                        f"{label}.obligation_ids must survive in the integrated plan invariant"
+                    )
+
+    missing_obligations = sorted(set(obligation_map) - set(disposed_obligations))
+    repeated_obligations = sorted(
+        obligation_id
+        for obligation_id, count in disposed_obligations.items()
+        if count != 1
+    )
+    if missing_obligations:
+        errors.append(
+            "integration omits atomic obligations: " + ", ".join(missing_obligations)
+        )
+    if repeated_obligations:
+        errors.append(
+            "integration disposes atomic obligations more than once: "
+            + ", ".join(repeated_obligations)
+        )
+
+    for invariant_id, invariant in plan_invariant_map.items():
+        source_obligation_ids = invariant.get("source_obligation_ids", [])
+        if not _string_list(source_obligation_ids):
+            errors.append(
+                f"integrated plan invariant {invariant_id!r}.source_obligation_ids must be a list"
+            )
+            continue
+        unknown = sorted(set(source_obligation_ids) - set(obligation_map))
+        if unknown:
+            errors.append(
+                f"integrated plan invariant {invariant_id!r} references unknown atomic obligations: "
+                + ", ".join(unknown)
+            )
 
     adjudications = bundle.get("adjudications")
     if not isinstance(adjudications, list):
@@ -549,6 +739,16 @@ def validate_bundle(
             errors.append("coverage_review must inspect every lane finding exactly once")
         elif len(reviewed_finding_ids) != len(set(reviewed_finding_ids)):
             errors.append("coverage_review.reviewed_finding_ids contains duplicates")
+        reviewed_obligation_ids = review.get("reviewed_obligation_ids")
+        if not _string_list(reviewed_obligation_ids):
+            errors.append("coverage_review.reviewed_obligation_ids must be a list")
+            reviewed_obligation_ids = []
+        if set(reviewed_obligation_ids) != set(obligation_map):
+            errors.append(
+                "coverage_review must inspect every atomic obligation exactly once"
+            )
+        elif len(reviewed_obligation_ids) != len(set(reviewed_obligation_ids)):
+            errors.append("coverage_review.reviewed_obligation_ids contains duplicates")
         reviewed_invariant_ids = review.get("reviewed_invariant_ids")
         if not _string_list(reviewed_invariant_ids):
             errors.append("coverage_review.reviewed_invariant_ids must be a list")
@@ -604,14 +804,14 @@ def validate_bundle(
 
 def main(argv: list[str]) -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("bundle", help="reverse-image-analysis-bundle/v1 JSON")
+    parser.add_argument("bundle", help=f"{BUNDLE_SCHEMA} JSON")
     args = parser.parse_args(argv)
     try:
         payload = json.loads(Path(args.bundle).read_text(encoding="utf-8"))
         if not isinstance(payload, dict):
-            raise ValueError("bundle root must be an object")
+            raise TypeError("bundle root must be an object")
         errors = validate_bundle(payload)
-    except (OSError, ValueError, json.JSONDecodeError) as exc:
+    except (OSError, TypeError, ValueError, json.JSONDecodeError) as exc:
         errors = [str(exc)]
     if errors:
         print(json.dumps({"status": "failed", "errors": errors}, indent=2))

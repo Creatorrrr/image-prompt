@@ -297,6 +297,20 @@ class RouteResolverTests(unittest.TestCase):
     def test_declared_budget_matches_contract(self) -> None:
         self.assertEqual(MAX_NON_CORE_MODULES, 8)
 
+    def test_manifest_advertises_adaptive_analysis_profiles(self) -> None:
+        orchestration = self.manifest["analysis_orchestration"]
+        self.assertEqual(orchestration["route_schema"], "reverse-image-analysis-route/v2")
+        self.assertEqual(orchestration["default_profile"], "prompt")
+        self.assertEqual(orchestration["supported_profiles"], ["prompt", "audited"])
+        self.assertEqual(
+            orchestration["prompt_report_schema"],
+            "reverse-image-analysis-lane-report/compact-v1",
+        )
+        self.assertEqual(
+            orchestration["audited_bundle_schema"],
+            "reverse-image-analysis-bundle/v2",
+        )
+
     def test_analysis_route_activates_compact_portrait_lanes(self) -> None:
         route = resolve_analysis_route(
             {
@@ -307,7 +321,23 @@ class RouteResolverTests(unittest.TestCase):
             },
             self.manifest,
         )
-        self.assertEqual(route["schema_version"], "reverse-image-analysis-route/v1")
+        self.assertEqual(route["schema_version"], "reverse-image-analysis-route/v2")
+        self.assertEqual(route["analysis_profile"], "prompt")
+        self.assertEqual(route["execution_budget"]["lane_waves"], 1)
+        self.assertEqual(route["execution_budget"]["critic_passes"], 1)
+        self.assertEqual(route["execution_budget"]["targeted_repairs"], 1)
+        self.assertEqual(route["execution_budget"]["max_full_reroutes"], 1)
+        self.assertFalse(route["execution_budget"]["full_precision_ledgers"])
+        self.assertTrue(
+            all(lane["analysis_depth"] == "compact" for lane in route["lanes"])
+        )
+        self.assertTrue(
+            all(
+                lane["report_schema"]
+                == "reverse-image-analysis-lane-report/compact-v1"
+                for lane in route["lanes"]
+            )
+        )
         self.assertEqual(
             set(route["required_lane_ids"]),
             {
@@ -319,6 +349,33 @@ class RouteResolverTests(unittest.TestCase):
             },
         )
         self.assertNotIn("lane.information-layout", route["required_lane_ids"])
+
+    def test_audited_analysis_profile_preserves_full_contract(self) -> None:
+        route = resolve_analysis_route(
+            {
+                "subjects": ["human"],
+                "medium": ["photographic"],
+                "relationships": ["ordinary"],
+                "detail_risks": ["face-detail", "color-tone", "lighting-fidelity"],
+            },
+            self.manifest,
+            analysis_profile="audited",
+        )
+        self.assertEqual(route["analysis_profile"], "audited")
+        self.assertTrue(route["execution_budget"]["full_precision_ledgers"])
+        self.assertTrue(
+            all(lane["analysis_depth"] == "audited" for lane in route["lanes"])
+        )
+        self.assertTrue(
+            all(
+                lane["report_schema"] == "reverse-image-analysis-lane-report/v2"
+                for lane in route["lanes"]
+            )
+        )
+
+    def test_unknown_analysis_profile_fails(self) -> None:
+        with self.assertRaisesRegex(ValueError, "unknown analysis profile"):
+            resolve_analysis_route({}, self.manifest, analysis_profile="exhaustive")
 
     def test_information_route_adds_information_lane_without_color_lane(self) -> None:
         route = resolve_analysis_route(
@@ -352,6 +409,18 @@ class RouteResolverTests(unittest.TestCase):
             self.manifest,
         )
         self.assertEqual(left, right)
+
+    def test_analysis_profile_changes_route_fingerprint(self) -> None:
+        facets = {
+            "subjects": ["human"],
+            "medium": ["photographic"],
+            "detail-risks": ["face-detail"],
+        }
+        prompt = resolve_analysis_route(facets, self.manifest)
+        audited = resolve_analysis_route(
+            facets, self.manifest, analysis_profile="audited"
+        )
+        self.assertNotEqual(prompt["route_fingerprint"], audited["route_fingerprint"])
 
 
 if __name__ == "__main__":

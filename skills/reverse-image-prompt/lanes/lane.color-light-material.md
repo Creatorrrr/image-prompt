@@ -1,6 +1,6 @@
 ---
 id: lane.color-light-material
-version: 1
+version: 3
 priority: 82
 activation: matched
 select_types: []
@@ -35,8 +35,10 @@ Read only the raw request, intent mode, exact source artifact and hash, route fi
 
 ## Output contract
 
-Return one `reverse-image-analysis-lane-report/v1` object. Keep region scope and protected regions explicit, expose unresolved causal attribution, and propose axis-level requirements rather than final adjectives or composite labels.
+In `prompt`, return `reverse-image-analysis-lane-report/compact-v1`. Report only P0/P1 regional color, displayed-tone, light-to-form, or material-response effects and the minimum protected relation needed to avoid drift. Prefer stable visible results when physical attribution is uncertain; group non-material axes instead of completing full ledgers.
+
+In `audited`, return `reverse-image-analysis-lane-report/v2`, keep region/protected scope explicit, and split material intrinsic color, displayed tone, light, shadow, response, and cross-region results into atomic obligations.
 
 ## Completion gate
 
-Dispose every required topic and assigned module. Do not pool mixed regions, convert display color into biological truth, or let a global control erase a protected local relation.
+Dispose every required topic at the profile's depth. Do not pool mixed regions, convert displayed skin color into biological truth, or let a global control erase a protected P0/P1 relation.

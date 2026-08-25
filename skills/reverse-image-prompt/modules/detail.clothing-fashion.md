@@ -1,6 +1,6 @@
 ---
 id: detail.clothing-fashion
-version: 6
+version: 8
 priority: 78
 type: detail
 tier: 3
@@ -46,16 +46,18 @@ Assign each visible garment or accessory a material role: primary subject, silho
 
 Route selection does not entitle clothing to prompt space. Cap material and construction detail to the garment's hierarchy role; a framing or supporting garment must not receive more semantic emphasis, sharpness, or completion than the primary invariant.
 
+In `prompt`, first decide whether garment silhouette, coverage boundary, or material response is P0/P1. If none is, contribute at most one P2 cue and stop; do not run the construction or completion inventory. Use the fuller inventory only for audited evidence or when clothing itself is source-signature-critical.
+
 - fit, visible thickness and weight, opacity/transparency, stiffness/looseness
 - fabric tension, wrinkles, folds, material sheen, pattern scale
 - weave or knit scale, nap, grain, coating, reflectivity, and edge behavior only where legible
 - neckline depth/width, collar, shirt opening, sleeve opening, strap position
 - seams, waist seam, under-bust seam if visible, buttons, lace, closures, hems
-- garment layers and how they interact with body shape, pose, props, hair, hands, shadow, and crop
+- garment-layer interactions; edges may corroborate but never replace owned pose
 
 Before using a garment category label, specify the visible opacity, thickness, weight, weave or knit scale, finish, and construction cues that must override its default prior. Omit dimensions that cannot be seen; the point is to disambiguate the material, not to fill a fabric checklist.
 
-Create a coverage map when clothing placement matters:
+Create a coverage map when placement matters. Preserve material boundary components and region relations rather than collapsing them to a category:
 
 - which image regions are skin
 - which regions are fabric

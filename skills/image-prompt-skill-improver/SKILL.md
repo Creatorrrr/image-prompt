@@ -59,7 +59,7 @@ A blocked or absent render is a generation outcome, not pixel evidence.
 
 ### 2. Define the perceptual success contract
 
-State the primary visual proposition or appeal before enumerating parts. When the user has said what attracts them or what feels wrong, preserve that language as judgment evidence, then decompose it into visible causal controls rather than copying evaluative prose into runtime prompts.
+State the primary visual proposition or appeal before enumerating parts. When the user has said what attracts them or what feels wrong, preserve that language as judgment evidence. If the same aggregate property is independently visible and material in the source, retain it once as a bounded semantic anchor and immediately decompose it into visible causal controls. Decomposition constrains an abstract descriptor; it does not automatically replace or erase its global meaning.
 
 Analyze at three scales:
 
@@ -102,7 +102,7 @@ case symptom -> observable mismatch -> causal mechanism
 -> deterministic aid or test -> held-out behavior
 ```
 
-Prefer source-relative axes, relations, effect ownership, confidence, and invariant/flexible distinctions over a desired adjective, coordinate, subject, or numeric value from one case. A friendly label may summarize already classified axes; it must not define them or introduce an untested target.
+Prefer source-relative axes, relations, effect ownership, confidence, and invariant/flexible distinctions over a desired adjective, coordinate, subject, or numeric value from one case. Treat aggregate language and detailed controls as non-substitutable when both are source-supported: the aggregate retains the perceptual direction, while the decomposition bounds what it means in this image. A current-source descriptor must carry provenance, confidence, P0/P1 priority, a material-drift omission counterfactual, compatibility where applicable, and immediate literal decomposition. Generator/version calibration measures effectiveness; it is not the sole permission to state visible evidence.
 
 Choose the narrowest correct layer:
 
@@ -117,7 +117,7 @@ Prefer replacing a faulty merge, attribution, or priority rule over accumulating
 
 ### 6. Implement the smallest coherent change
 
-Keep case-specific nouns, pixels, desired labels, coordinates, and measurements out of runtime instructions. Store them only in clearly marked regression fixtures when they are useful evidence.
+Keep case-specific nouns, pixels, preferred defaults, coordinates, and measurements out of runtime instructions. Store motivating literals only in clearly marked regression fixtures when they are useful evidence. A general rule allowing the analyst to retain whichever abstract descriptor the current source supports is not a case-specific default.
 
 When a change introduces a structured intermediate representation, ensure its fields have single owners and that the final prompt contains the literal controls needed to actuate the representation. Diagnostic ledgers and abstract labels are not automatically generator controls.
 
@@ -156,7 +156,7 @@ Do not call a structural PASS a pixel PASS. Do not call one successful render un
 - The motivating case may remain a regression sample, never a runtime default or the sole promotion proof.
 - Do not install a preferred subject, anatomy, palette, surface value, lighting direction, contrast level, crop, label, or generator workaround.
 - Do not turn one sample's measurement thresholds into a universal taxonomy without independent calibration.
-- Do not originate a closed list of friendly appearance or lighting labels merely to make prompting convenient. Classify observable axes first; review externally supplied labels afterward.
+- Do not originate a closed list of preferred appearance, attractiveness, mood, or lighting labels merely to make prompting convenient. Classify observable axes and global gestalt independently. A label may come from the user, a versioned vocabulary, or a provenance-bound current-source observation; retain it only when material and immediately decomposed.
 - Do not fix weak positive actuation by stacking synonyms or broad negatives. Repair ownership, strength, ordering, or causal separation.
 - Do not add unrelated content, policy, moderation, or safety gates while addressing a fidelity mechanism.
 - Preserve unsupported or unavailable evidence as uncertainty rather than filling it with plausible defaults.

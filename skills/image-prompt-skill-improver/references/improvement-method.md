@@ -7,8 +7,8 @@ Use this method to improve an image-prompt skill from real source/render feedbac
 The work that motivated this skill progressed through four changes in reasoning quality:
 
 1. **Inventory became proposition.** Early reconstruction could match clothing, pose, setting, or objects while missing why the image was appealing. Improvement began by naming the primary perceptual proposition, ranking global before regional before local evidence, and separating invariants from flexible pose or placement.
-2. **Adjectives became causal axes.** Broad appearance words were not reliable controls. Form was decomposed into proportion, contour, tissue, tension, perspective, and hierarchy. Color was separated into intrinsic surface, illumination, global cast, exposure, tone response, and processing. Lighting was separated into visible result, source geometry, fill, local form contrast, gradient, shadow ownership, material response, and spill.
-3. **Labels became summaries, not priors.** Familiar composite labels could communicate an appearance but also bias the analysis toward the examples installed in the skill. The robust direction was axis-first classification, optional external label provenance, compatibility review, literal control emission, and model/version calibration before a label was allowed to influence a production prompt.
+2. **Adjectives gained causal axes without losing their gestalt.** Broad appearance words alone were unreliable controls, but detailed axes alone could also discard a material global reading. Form was decomposed into proportion, contour, tissue, tension, perspective, and hierarchy. Color was separated into intrinsic surface, illumination, global cast, exposure, tone response, and processing. Lighting was separated into visible result, source geometry, fill, local form contrast, gradient, shadow ownership, material response, and spill. When the source clearly supports an aggregate descriptor, retain it once and use those axes to constrain it.
+3. **Labels became evidence-bound semantic anchors plus decomposition.** Familiar composite labels can preserve a large perceptual direction but can also bias analysis toward examples installed in a skill. The robust direction is independent source observation, provenance, compatibility review where applicable, P0/P1 materiality and omission checks, then one aggregate anchor immediately followed by literal controls. Exact model/version calibration evaluates whether the generator obeys the wording; it is not a speech-permission gate for current visible evidence.
 4. **A valid prompt became only one evidence layer.** Package validation, routed-plan validation, prompt behavior, generation delivery, pixel fidelity, and user judgment answer different questions. Prompt freezing and independent evaluation made retries comparable; a blocked render remained unscored rather than being misreported as a visual failure.
 
 This is not a fixed sequence of feature additions. It is an abstraction pattern: identify the user's perceptual criterion, find the earliest causal gap, represent it explicitly, actuate it once, and test it outside the motivating case.
@@ -96,7 +96,7 @@ Good reusable units include:
 - relation or topology ownership
 - source-relative target strength
 - clause ownership and aggregate-effect budgets
-- external label provenance and compatibility
+- user, current-source, or versioned-vocabulary label provenance and compatibility
 - versioned model-response calibration
 
 Poor reusable units include:
@@ -132,7 +132,7 @@ For every material runtime phrase, be able to answer:
 - Which unintended axes can it move?
 - How will the output be checked?
 
-An internal measurement, category, or summary label does not improve generation until a literal prompt clause actuates it. Conversely, repeating literal synonyms can overweight a single effect even when every phrase is individually correct.
+An internal measurement, category, or summary label does not improve generation until it reaches the production prompt with literal controls that bound its meaning. The aggregate anchor and its decomposition may both be necessary: one carries the global direction, the other constrains causal axes. Conversely, repeating the anchor or literal synonyms can overweight a single effect even when every phrase is individually correct.
 
 ## Design evaluations that can disprove the change
 
@@ -174,7 +174,7 @@ Promotion requires claim-scope evidence and at least one unrelated held-out succ
 ## Common failure patterns
 
 - **Detail-first repair:** adds accurate local wording while the global proposition remains wrong. Rebuild the global and regional contract first.
-- **Label-first repair:** treats a familiar adjective as ground truth. Classify independent axes first and use a label only as a reviewed summary.
+- **Label-only repair:** treats a familiar adjective as sufficient ground truth. Establish independent evidence and literal controls, while retaining one reviewed aggregate anchor when removing it would cause material semantic drift.
 - **Negative accumulation:** adds prohibitions to offset overstrong positive wording. Remove or reassign the positive cause.
 - **Prompt-only success claim:** equates route or lint PASS with visual success. Keep evidence layers separate.
 - **Single-render causality:** credits the edit for stochastic output. Freeze conditions and repeat or narrow the claim.
