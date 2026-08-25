@@ -1,6 +1,6 @@
 ---
 id: detail.human-body-form
-version: 6
+version: 8
 priority: 80
 type: detail
 tier: 3
@@ -40,6 +40,8 @@ Load only when visible body form is a first-order part of the image's identity o
 
 Start with the large-scale form proposition, then test its visible quality against observable causes. A broad descriptor is a hypothesis, not evidence.
 
+In `prompt`, stop after the P0/P1 form proposition and its few decisive proportion, contour, tissue, surface, or hierarchy cues. Compress P2 and do not enumerate the remaining axes. In `audited`, dispose every material axis and retain the full causal handoffs.
+
 Build a visible human-body form signature from source-supported proportion, contour, tissue, tension, and region hierarchy rather than from a body-type label.
 
 Split persistent body-form evidence from induced appearance before selecting prompt controls. Give pose-, perspective-, garment-, light-, occlusion-, or processing-induced shape one causal owner; do not restate it as intrinsic anatomy.
@@ -55,7 +57,7 @@ Use only the axes that materially distinguish the source:
 
 Analyze transitions between regions, not only isolated sizes. Garment asymmetry and pose asymmetry remain independent; neither may supply the other's missing evidence.
 
-Inspect torso yaw/pitch/roll plus shoulder slope and depth order from visible part relations. Record garment, hair, crop, and foreshortening confounders; preserve a material result-space relation when intrinsic geometry is hidden.
+Inspect torso and shoulder axes from visible relations, then retest with viewpoint fixed. Garment, hair, crop, and foreshortening corroborate or confound but never substitute; weak axes may share one coupled result.
 
 ## Perspective and light separation
 

@@ -2,17 +2,18 @@
 
 from __future__ import annotations
 
-from copy import deepcopy
 import json
-from pathlib import Path
 import re
 import sys
 import unittest
+from copy import deepcopy
+from pathlib import Path
 
 TOOLS = Path(__file__).resolve().parents[1] / "tools"
 sys.path.insert(0, str(TOOLS))
 
-from salience_plan import (  # noqa: E402
+from color_language import compose_controlled_descriptor
+from salience_plan import (
     BASE_SPATIAL_DIMENSIONS,
     HUMAN_SPATIAL_DIMENSIONS,
     SPATIAL_COVERAGE_SCHEMA_VERSION,
@@ -20,7 +21,6 @@ from salience_plan import (  # noqa: E402
     audit_plan,
     compare_plans,
 )
-from color_language import compose_controlled_descriptor  # noqa: E402
 
 
 def valid_plan() -> dict:
@@ -215,6 +215,7 @@ def valid_plan() -> dict:
 def authored_prompt_text(plan: dict) -> str:
     contract = plan["render_contract"]
     color_contract = contract.get("color_tone_contract", {})
+    light_contract = contract.get("light_form_contract", {})
     surface_language = color_contract.get("surface_color_language", {})
     descriptor = surface_language.get("controlled_descriptor", {})
     composed_control_ids = (
@@ -222,17 +223,80 @@ def authored_prompt_text(plan: dict) -> str:
         if descriptor.get("emit") is True
         else set()
     )
-    excerpts = [
-        item["prompt_excerpt"]
-        for item in contract.get("emitted_controls", [])
-        if item.get("id") not in composed_control_ids
+    generic_controls = contract.get("emitted_controls", [])
+    color_controls = color_contract.get("emitted_controls", [])
+    light_controls = light_contract.get("emitted_controls", [])
+    all_controls = {
+        item["id"]: item
+        for item in [*generic_controls, *color_controls, *light_controls]
+        if isinstance(item, dict) and item.get("id") and item.get("prompt_excerpt")
+    }
+    excerpts: list[str] = []
+    used_control_ids: set[str] = set(composed_control_ids)
+
+    emitted_clusters = [
+        cluster
+        for cluster in contract.get("prior_clusters", [])
+        if isinstance(cluster, dict)
+        and cluster.get("schema_version") == "prior-cluster/v2"
+        and cluster.get("disposition") == "emit"
     ]
-    for specialized in ("color_tone_contract", "light_form_contract"):
-        excerpts.extend(
-            item["prompt_excerpt"]
-            for item in contract.get(specialized, {}).get("emitted_controls", [])
-            if item.get("id") not in composed_control_ids
-        )
+    cluster_by_summary = {
+        cluster.get("summary_control_id"): cluster for cluster in emitted_clusters
+    }
+    cluster_decomposed_ids = {
+        control_id
+        for cluster in emitted_clusters
+        for control_id in cluster.get("decomposed_control_ids", [])
+    }
+    for control in generic_controls:
+        control_id = control.get("id")
+        if control_id in used_control_ids or control_id in cluster_decomposed_ids:
+            continue
+        excerpts.append(control["prompt_excerpt"])
+        used_control_ids.add(control_id)
+        cluster = cluster_by_summary.get(control_id)
+        if cluster is not None:
+            for decomposed_id in cluster.get("decomposed_control_ids", []):
+                decomposed = all_controls.get(decomposed_id)
+                if decomposed is not None and decomposed_id not in used_control_ids:
+                    excerpts.append(decomposed["prompt_excerpt"])
+                    used_control_ids.add(decomposed_id)
+
+    lighting_labels = light_contract.get("lighting_labels", [])
+    for lighting_label in (
+        lighting_labels if isinstance(lighting_labels, list) else []
+    ):
+        if not isinstance(lighting_label, dict) or lighting_label.get("emit") is not True:
+            continue
+        excerpts.append(lighting_label["phrase"])
+        for control_id in lighting_label.get("decomposed_control_ids", []):
+            control = all_controls.get(control_id)
+            if control is not None and control_id not in used_control_ids:
+                excerpts.append(control["prompt_excerpt"])
+                used_control_ids.add(control_id)
+    for control in light_controls:
+        if control.get("id") not in used_control_ids:
+            excerpts.append(control["prompt_excerpt"])
+            used_control_ids.add(control.get("id"))
+
+    appearance_metaphors = color_contract.get("appearance_metaphors", [])
+    for metaphor in (
+        appearance_metaphors if isinstance(appearance_metaphors, list) else []
+    ):
+        if not isinstance(metaphor, dict) or metaphor.get("emit") is not True:
+            continue
+        excerpts.append(metaphor["phrase"])
+        for control_id in metaphor.get("decomposed_control_ids", []):
+            control = all_controls.get(control_id)
+            if control is not None and control_id not in used_control_ids:
+                excerpts.append(control["prompt_excerpt"])
+                used_control_ids.add(control_id)
+    for control in color_controls:
+        if control.get("id") not in used_control_ids:
+            excerpts.append(control["prompt_excerpt"])
+            used_control_ids.add(control.get("id"))
+
     if descriptor.get("emit") is True:
         excerpts.append(descriptor["phrase"])
     return "PROMPT:\n" + ". ".join(excerpts)
@@ -379,10 +443,12 @@ def with_spatial_coverage(
             }
         ],
         "evidence_cues": evidence_cues,
-        "neutralization_checks": (
+        "counterfactual_checks": (
             [
                 {
+                    "id": "counterfactual-subject-a-whole",
                     "subject_id": "subject-a",
+                    "scope": "whole-orientation",
                     "tested_change": "replace the source relation with neutral axial alignment",
                     "verdict": "not-material",
                     "changed_relations": [],
@@ -394,14 +460,54 @@ def with_spatial_coverage(
                         for item in evidence_cues
                         if item["family"] != "frame-placement"
                     ],
+                    "neutralized_decision_ids": [
+                        f"coverage-{dimension}"
+                        for dimension in sorted(dimensions - {"frame-placement"})
+                    ],
+                    "held_fixed_decision_ids": [],
                     "source_evidence": [
                         "held-out comparison against neutral axial alignment"
+                    ],
+                },
+                {
+                    "id": "counterfactual-subject-a-residual",
+                    "subject_id": "subject-a",
+                    "scope": "residual-alignment",
+                    "tested_change": "hold viewpoint fixed and neutralize residual human pose alignment",
+                    "verdict": "not-material",
+                    "changed_relations": [],
+                    "preserved_relations": [
+                        "the held-out proposition survives residual pose neutralization"
+                    ],
+                    "evidence_cue_ids": [
+                        item["id"]
+                        for item in evidence_cues
+                        if item["family"] != "frame-placement"
+                    ],
+                    "neutralized_decision_ids": [
+                        f"coverage-{dimension}"
+                        for dimension in sorted(HUMAN_SPATIAL_DIMENSIONS - {"human-attention-direction"})
+                    ],
+                    "held_fixed_decision_ids": [
+                        f"coverage-{dimension}"
+                        for dimension in sorted(
+                            {
+                                "viewpoint-elevation",
+                                "viewpoint-azimuth",
+                                "viewpoint-roll",
+                                "viewpoint-distance-foreshortening",
+                            }
+                        )
+                    ],
+                    "source_evidence": [
+                        "held-out comparison with viewpoint held fixed"
                     ],
                 }
             ]
             if kind == "human"
             else []
         ),
+        "coupled_effects": [],
         "decisions": [
             {
                 "id": f"coverage-{dimension}",
@@ -540,6 +646,196 @@ def promote_spatial_decision(
     decision.pop("non_emission_reason", None)
     decision.pop("counterfactual_preservation_reason", None)
     decision.pop("visibility_limit", None)
+    return plan
+
+
+def promote_coupled_orientation(
+    plan: dict,
+    *,
+    member_dimensions: tuple[str, ...] = (
+        "human-torso-yaw",
+        "human-head-body-yaw",
+        "human-shoulder-depth-order",
+    ),
+    result_direction: str = "source-relative coupled orientation result",
+    summary_excerpt: str = "retain one source-relative coupled orientation across the visible subject",
+    summary_adequacy: str = "lossy",
+    residual_dimensions: tuple[str, ...] | None = None,
+) -> dict:
+    """Merge weak decisions under one summary plus owned residual actuations."""
+
+    contract = plan["render_contract"]
+    coverage = contract["spatial_orientation_coverage"]
+    subject_kind = coverage["subjects"][0]["kind"]
+    member_decisions = [
+        next(
+            decision
+            for decision in coverage["decisions"]
+            if decision["dimension"] == dimension
+        )
+        for dimension in member_dimensions
+    ]
+    if residual_dimensions is None:
+        residual_dimensions = member_dimensions if summary_adequacy != "sufficient" else ()
+    residual_dimension_set = set(residual_dimensions)
+    residual_excerpts = {
+        dimension: f"preserve the source-visible residual relation for {dimension}"
+        for dimension in residual_dimensions
+    }
+    prompt_excerpt = ". ".join(
+        [summary_excerpt, *(residual_excerpts[dimension] for dimension in residual_dimensions)]
+    )
+    for decision in member_decisions:
+        dimension = decision["dimension"]
+        decision["observation"] = f"source-visible weak contribution for {dimension}"
+        decision["source_evidence"] = [f"held-out weak cue for {dimension}"]
+    relation_id = "relation-coupled-orientation"
+    invariant_id = "coupled-orientation"
+    effect_id = "effect-coupled-orientation"
+    control_id = "control-coupled-orientation"
+    control_axis_id = "subject-a/coupled-orientation"
+    contract["component_relations"].append(
+        {
+            "id": relation_id,
+            "kind": "part-whole-orientation",
+            "subject_region_id": "central-form",
+            "frame_reference": "source-relative visible subject axes",
+            "observation": result_direction,
+            "role": "primary",
+            "source_evidence": ["jointly readable held-out pose cues"],
+        }
+    )
+    add_generic_claim(
+        contract,
+        invariant_id=invariant_id,
+        axis="form",
+        owner="subject.human" if subject_kind == "human" else "core.frame-coordinates",
+        role="primary",
+        target_strength="moderate",
+        observation=result_direction,
+        causal_origin="pose-deformation",
+        evidence="jointly readable held-out pose cues",
+        direction=result_direction,
+        prompt_excerpt=prompt_excerpt,
+        region_ids=["central-form"],
+        relation_ids=[relation_id],
+    )
+    effect = next(
+        item for item in contract["aggregate_effects"] if item["id"] == effect_id
+    )
+    control = next(
+        item for item in contract["emitted_controls"] if item["id"] == control_id
+    )
+    for item in (effect, control):
+        item["control_axis_id"] = control_axis_id
+        item["causal_origin"] = "pose-deformation"
+    coverage["coupled_effects"].append(
+        {
+            "id": "coupled-subject-a",
+            "subject_id": "subject-a",
+            "member_decision_ids": [item["id"] for item in member_decisions],
+            "evidence_cue_ids": [
+                cue_id
+                for item in member_decisions
+                for cue_id in item["evidence_cue_ids"]
+            ],
+            "visible_result": "the weak cues jointly establish one non-neutral orientation",
+            "result_direction": result_direction,
+            "result_direction_confidence": "medium",
+            "physical_attribution": "confounded",
+            "confounders": ["individual pose axes are weak in isolation"],
+            "causal_origin": "pose-deformation",
+            "disposition": "invariant",
+            "role": "primary",
+            "target_strength": "moderate",
+            "source_evidence": ["jointly readable held-out pose cues"],
+            "control_axis_id": control_axis_id,
+            "relation_id": relation_id,
+            "invariant_id": invariant_id,
+            "claim_id": f"claim-{invariant_id}",
+            "aggregate_effect_id": effect_id,
+            "control_id": control_id,
+            "prompt_decomposition": {
+                "summary_anchor": {
+                    "visible_result": "the source-relative orientation remains one coherent whole",
+                    "prompt_excerpt": summary_excerpt,
+                    "source_evidence": ["jointly readable held-out pose cues"],
+                },
+                "summary_adequacy": {
+                    "verdict": summary_adequacy,
+                    "at_risk_decision_ids": [
+                        item["id"]
+                        for item in member_decisions
+                        if item["dimension"] in residual_dimension_set
+                    ],
+                    "rationale": (
+                        "the compact summary preserves every material member"
+                        if summary_adequacy == "sufficient"
+                        else "the compact summary would neutralize source-visible residual relations"
+                    ),
+                    "source_evidence": ["summary-only neutralization comparison"],
+                    **(
+                        {
+                            "uncertainty_note": (
+                                "the macro summary's member coverage is not fully "
+                                "separable from the visible evidence"
+                            )
+                        }
+                        if summary_adequacy == "uncertain"
+                        else {}
+                    ),
+                },
+                "member_actuations": [
+                    {
+                        "decision_id": item["id"],
+                        "summary_coverage": (
+                            "lost"
+                            if item["dimension"] in residual_dimension_set
+                            else "complete"
+                        ),
+                        "visible_result": item["observation"],
+                        "source_evidence": item["source_evidence"],
+                        **(
+                            {"prompt_excerpt": residual_excerpts[item["dimension"]]}
+                            if item["dimension"] in residual_dimension_set
+                            else {
+                                "non_emission_reason": (
+                                    "the summary anchor preserves this member without an extra clause"
+                                )
+                            }
+                        ),
+                    }
+                    for item in member_decisions
+                ],
+            },
+            "prompt_order_after_control_ids": [],
+            "prompt_order_before_control_ids": ["control-form"],
+            "net_effect_audit": {
+                "included_control_ids": [control_id],
+                "verdict": "source-consistent",
+                "rationale": "one coupled control preserves the joint result without separately amplifying its weak members",
+                "source_evidence": ["jointly readable held-out pose cues"],
+            },
+        }
+    )
+    residual = next(
+        (
+            item
+            for item in coverage["counterfactual_checks"]
+            if item["scope"] == "residual-alignment"
+        ),
+        None,
+    )
+    if residual is not None:
+        residual.update(
+            {
+                "verdict": "material",
+                "changed_relations": [
+                    "residual neutralization removes the jointly readable orientation"
+                ],
+                "preserved_relations": [],
+            }
+        )
     return plan
 
 
@@ -848,6 +1144,10 @@ def valid_color_and_light_plan() -> dict:
     plan_contract["light_form_contract"] = deepcopy(
         light_plan["light_form_contract"]
     )
+    for control in plan_contract["color_tone_contract"]["emitted_controls"]:
+        control["protected_light_effect_ids"] = [
+            "dominant-local-form-contrast"
+        ]
     return plan
 
 
@@ -918,16 +1218,30 @@ def with_displayed_key_response(plan: dict) -> dict:
             "region_id": "central-form",
             "axis": "displayed-key-level",
             "aggregate_effect_ids": ["central-displayed-key"],
+            **(
+                {
+                    "protected_light_effect_ids": [
+                        "dominant-local-form-contrast"
+                    ]
+                }
+                if "light_form_contract" in contract
+                else {}
+            ),
         }
     )
     return plan
 
 
-def add_surface_language_review(plan: dict, *, conflicting: bool = False) -> dict:
+def add_surface_language_review(
+    plan: dict,
+    *,
+    conflicting: bool = False,
+    source_kind: str = "user-supplied",
+) -> dict:
     review = {
         "phrase": "analyst candidate label",
         "candidate_source": {
-            "kind": "user-supplied",
+            "kind": source_kind,
             "reference": "held-out test input",
         },
         "label_scope": "composite-appearance",
@@ -1120,11 +1434,16 @@ def with_material_skin_descriptor(plan: dict) -> dict:
     return plan
 
 
-def add_lighting_language_review(plan: dict, *, conflicting: bool = False) -> dict:
+def add_lighting_language_review(
+    plan: dict,
+    *,
+    conflicting: bool = False,
+    source_kind: str = "user-supplied",
+) -> dict:
     review = {
         "phrase": "held-out candidate lighting label",
         "candidate_source": {
-            "kind": "user-supplied",
+            "kind": source_kind,
             "reference": "held-out test input",
         },
         "label_scope": "composite-lighting",
@@ -1371,12 +1690,12 @@ class SaliencePlanTests(unittest.TestCase):
         ]
         self.assertTrue(
             any(
-                "schema_version" in error and "spatial-orientation/v2" in error
+                "schema_version" in error and "spatial-orientation/v4" in error
                 for error in audit_plan(plan)
             )
         )
 
-    def test_legacy_coarse_human_pose_dimension_cannot_satisfy_v2(self) -> None:
+    def test_legacy_coarse_human_pose_dimension_cannot_satisfy_v4(self) -> None:
         plan = with_spatial_coverage(valid_plan())
         decision = next(
             item
@@ -1469,11 +1788,15 @@ class SaliencePlanTests(unittest.TestCase):
             any("visibility_limit" in error for error in audit_plan(plan))
         )
 
-    def test_material_neutralization_requires_an_invariant_human_pose_axis(self) -> None:
+    def test_material_residual_counterfactual_requires_an_orientation_effect(self) -> None:
         plan = with_spatial_coverage(valid_plan())
-        check = plan["render_contract"]["spatial_orientation_coverage"][
-            "neutralization_checks"
-        ][0]
+        check = next(
+            item
+            for item in plan["render_contract"]["spatial_orientation_coverage"][
+                "counterfactual_checks"
+            ]
+            if item["scope"] == "residual-alignment"
+        )
         check.update(
             {
                 "verdict": "material",
@@ -1485,8 +1808,7 @@ class SaliencePlanTests(unittest.TestCase):
         )
         self.assertTrue(
             any(
-                "material neutralization requires at least one invariant human pose axis"
-                in error
+                "material residual-alignment counterfactual" in error
                 for error in audit_plan(plan)
             )
         )
@@ -1497,6 +1819,245 @@ class SaliencePlanTests(unittest.TestCase):
             direction="source-visible head-to-body yaw relation",
         )
         self.assertEqual(audit_plan(plan), [])
+
+    def test_human_orientation_requires_whole_and_residual_counterfactuals(self) -> None:
+        plan = with_spatial_coverage(valid_plan())
+        checks = plan["render_contract"]["spatial_orientation_coverage"][
+            "counterfactual_checks"
+        ]
+        checks[:] = [item for item in checks if item["scope"] != "residual-alignment"]
+        self.assertTrue(
+            any(
+                "requires counterfactual scopes" in error
+                and "residual-alignment" in error
+                for error in audit_plan(plan)
+            )
+        )
+
+    def test_residual_counterfactual_holds_viewpoint_fixed(self) -> None:
+        plan = with_spatial_coverage(valid_plan())
+        residual = next(
+            item
+            for item in plan["render_contract"]["spatial_orientation_coverage"][
+                "counterfactual_checks"
+            ]
+            if item["scope"] == "residual-alignment"
+        )
+        residual["held_fixed_decision_ids"].remove("coverage-viewpoint-elevation")
+        self.assertTrue(
+            any(
+                "must hold every viewpoint decision fixed" in error
+                for error in audit_plan(plan)
+            )
+        )
+
+    def test_individually_weak_pose_cues_can_emit_one_coupled_effect(self) -> None:
+        plan = promote_coupled_orientation(with_spatial_coverage(valid_plan()))
+        self.assertEqual(audit_plan(plan), [])
+
+        duplicated = deepcopy(plan)
+        promote_spatial_decision(duplicated, "human-torso-yaw")
+        self.assertTrue(
+            any(
+                "must merge individually non-emitted decisions" in error
+                for error in audit_plan(duplicated)
+            )
+        )
+
+        lost_direction = deepcopy(plan)
+        lost_direction["render_contract"]["spatial_orientation_coverage"][
+            "coupled_effects"
+        ][0]["result_direction"] = "a different integrated direction"
+        self.assertTrue(
+            any(
+                "result_direction must match its aggregate effect" in error
+                for error in audit_plan(lost_direction)
+            )
+        )
+
+    def test_coupled_pose_prompt_order_and_net_effect_are_enforced(self) -> None:
+        plan = promote_coupled_orientation(with_spatial_coverage(valid_plan()))
+        contract = plan["render_contract"]
+        controls = {item["id"]: item for item in contract["emitted_controls"]}
+        ordered_ids = [
+            "control-coupled-orientation",
+            "control-form",
+            "control-balance",
+            "control-placement",
+        ]
+        prompt = "PROMPT:\n" + ". ".join(
+            controls[control_id]["prompt_excerpt"] for control_id in ordered_ids
+        )
+        self.assertEqual(audit_plan(plan, prompt_text=prompt), [])
+
+        wrong_order = authored_prompt_text(plan)
+        self.assertTrue(
+            any(
+                "must appear before control 'control-form'" in error
+                for error in audit_plan(plan, prompt_text=wrong_order)
+            )
+        )
+
+        incomplete_net = deepcopy(plan)
+        incomplete_net["render_contract"]["spatial_orientation_coverage"][
+            "coupled_effects"
+        ][0]["net_effect_audit"]["included_control_ids"] = []
+        self.assertTrue(
+            any(
+                "included_control_ids must be non-empty" in error
+                for error in audit_plan(incomplete_net)
+            )
+        )
+
+    def test_lossy_coupled_summary_requires_every_at_risk_residual(self) -> None:
+        plan = promote_coupled_orientation(with_spatial_coverage(valid_plan()))
+        coupled = plan["render_contract"]["spatial_orientation_coverage"][
+            "coupled_effects"
+        ][0]
+        actuation = coupled["prompt_decomposition"]["member_actuations"][0]
+        del actuation["prompt_excerpt"]
+        self.assertTrue(
+            any(
+                "prompt_excerpt is required" in error
+                and "summary coverage" in error
+                for error in audit_plan(plan)
+            )
+        )
+
+    def test_coupled_summary_cannot_hide_residuals_outside_its_control(self) -> None:
+        plan = promote_coupled_orientation(with_spatial_coverage(valid_plan()))
+        contract = plan["render_contract"]
+        coupled = contract["spatial_orientation_coverage"]["coupled_effects"][0]
+        control = next(
+            item
+            for item in contract["emitted_controls"]
+            if item["id"] == coupled["control_id"]
+        )
+        control["prompt_excerpt"] = coupled["prompt_decomposition"]["summary_anchor"][
+            "prompt_excerpt"
+        ]
+        self.assertTrue(
+            any(
+                "must be contained in its coupled control" in error
+                for error in audit_plan(plan)
+            )
+        )
+
+    def test_coupled_summary_precedes_its_residual_actuations(self) -> None:
+        plan = promote_coupled_orientation(with_spatial_coverage(valid_plan()))
+        contract = plan["render_contract"]
+        coupled = contract["spatial_orientation_coverage"]["coupled_effects"][0]
+        decomposition = coupled["prompt_decomposition"]
+        summary_excerpt = decomposition["summary_anchor"]["prompt_excerpt"]
+        residual_excerpts = [
+            item["prompt_excerpt"]
+            for item in decomposition["member_actuations"]
+            if "prompt_excerpt" in item
+        ]
+        control = next(
+            item
+            for item in contract["emitted_controls"]
+            if item["id"] == coupled["control_id"]
+        )
+        control["prompt_excerpt"] = ". ".join([*residual_excerpts, summary_excerpt])
+        self.assertTrue(
+            any(
+                "summary anchor must appear before residual actuation" in error
+                for error in audit_plan(plan)
+            )
+        )
+
+    def test_sufficient_coupled_summary_does_not_force_residual_details(self) -> None:
+        plan = promote_coupled_orientation(
+            with_spatial_coverage(valid_plan()),
+            summary_adequacy="sufficient",
+            residual_dimensions=(),
+        )
+        self.assertEqual(audit_plan(plan), [])
+        coupled = plan["render_contract"]["spatial_orientation_coverage"][
+            "coupled_effects"
+        ][0]
+        self.assertTrue(
+            all(
+                item["summary_coverage"] == "complete"
+                and "prompt_excerpt" not in item
+                for item in coupled["prompt_decomposition"]["member_actuations"]
+            )
+        )
+
+    def test_lossy_coupled_summary_emits_only_at_risk_member_residuals(self) -> None:
+        plan = promote_coupled_orientation(
+            with_spatial_coverage(valid_plan()),
+            residual_dimensions=("human-head-body-yaw",),
+        )
+        self.assertEqual(audit_plan(plan), [])
+        coupled = plan["render_contract"]["spatial_orientation_coverage"][
+            "coupled_effects"
+        ][0]
+        actuations = coupled["prompt_decomposition"]["member_actuations"]
+        self.assertEqual(
+            [item["decision_id"] for item in actuations if "prompt_excerpt" in item],
+            ["coverage-human-head-body-yaw"],
+        )
+
+    def test_uncertain_coupled_summary_retains_supported_partial_residual(self) -> None:
+        plan = promote_coupled_orientation(
+            with_spatial_coverage(valid_plan()),
+            summary_adequacy="uncertain",
+            residual_dimensions=("human-shoulder-depth-order",),
+        )
+        coupled = plan["render_contract"]["spatial_orientation_coverage"][
+            "coupled_effects"
+        ][0]
+        residual = next(
+            item
+            for item in coupled["prompt_decomposition"]["member_actuations"]
+            if item["decision_id"] == "coverage-human-shoulder-depth-order"
+        )
+        residual["summary_coverage"] = "partial"
+        self.assertEqual(audit_plan(plan), [])
+
+    def test_non_human_coupled_summary_uses_the_same_loss_audit(self) -> None:
+        plan = promote_coupled_orientation(
+            with_spatial_coverage(valid_plan(), kind="non-human"),
+            member_dimensions=(
+                "subject-principal-axis",
+                "cross-component-orientation",
+            ),
+            residual_dimensions=("cross-component-orientation",),
+        )
+        self.assertEqual(audit_plan(plan), [])
+
+    def test_coupled_member_actuation_covers_every_member_once(self) -> None:
+        plan = promote_coupled_orientation(with_spatial_coverage(valid_plan()))
+        coupled = plan["render_contract"]["spatial_orientation_coverage"][
+            "coupled_effects"
+        ][0]
+        coupled["prompt_decomposition"]["member_actuations"].pop()
+        self.assertTrue(
+            any(
+                "must cover every coupled member exactly once" in error
+                for error in audit_plan(plan)
+            )
+        )
+
+    def test_authored_prompt_rejects_duplicate_coupled_residual_excerpt(self) -> None:
+        plan = promote_coupled_orientation(with_spatial_coverage(valid_plan()))
+        coupled = plan["render_contract"]["spatial_orientation_coverage"][
+            "coupled_effects"
+        ][0]
+        residual_excerpt = next(
+            item["prompt_excerpt"]
+            for item in coupled["prompt_decomposition"]["member_actuations"]
+            if "prompt_excerpt" in item
+        )
+        prompt = authored_prompt_text(plan) + ". " + residual_excerpt
+        self.assertTrue(
+            any(
+                "residual excerpt appears 2 times" in error
+                for error in audit_plan(plan, prompt_text=prompt)
+            )
+        )
 
     def test_readable_human_coverage_requires_every_decomposed_pose_dimension(self) -> None:
         plan = with_spatial_coverage(valid_plan())
@@ -1666,9 +2227,13 @@ class SaliencePlanTests(unittest.TestCase):
             ("the head and torso remain source-frontally aligned", "not-material"),
         ):
             plan = with_spatial_coverage(valid_plan())
-            check = plan["render_contract"]["spatial_orientation_coverage"][
-                "neutralization_checks"
-            ][0]
+            check = next(
+                item
+                for item in plan["render_contract"]["spatial_orientation_coverage"][
+                    "counterfactual_checks"
+                ]
+                if item["scope"] == "residual-alignment"
+            )
             if verdict == "material":
                 check.update(
                     {
@@ -2198,6 +2763,47 @@ class SaliencePlanTests(unittest.TestCase):
             any("hidden_or_cropped" in error for error in audit_plan(plan))
         )
 
+    def test_multi_region_form_topology_requires_a_region_boundary_relation(self) -> None:
+        plan = valid_plan()
+        contract = plan["render_contract"]
+        add_generic_claim(
+            contract,
+            invariant_id="multi-region-boundary",
+            axis="topology",
+            owner="concept.primary-relationship",
+            role="primary",
+            target_strength="moderate",
+            observation="two visible regions keep their source-relative boundary topology",
+            causal_origin="material-interaction",
+            evidence="two independently visible boundary components",
+            direction="source-relative-multi-boundary-topology",
+            prompt_excerpt="two visible regions retain their source-relative boundary topology",
+            region_ids=["central-form", "surrounding-field"],
+            relation_ids=["central-field-relation"],
+        )
+        self.assertTrue(
+            any(
+                "must preserve a region-to-region boundary relation" in error
+                for error in audit_plan(plan)
+            )
+        )
+
+        contract["component_relations"].append(
+            {
+                "id": "central-to-surround-boundary",
+                "kind": "boundary-crossing",
+                "subject_region_id": "central-form",
+                "reference_region_id": "surrounding-field",
+                "observation": "the two regions meet along the source-visible asymmetric boundary",
+                "role": "primary",
+                "source_evidence": ["continuous shared boundary"],
+            }
+        )
+        contract["aggregate_effects"][-1]["relation_ids"] = [
+            "central-to-surround-boundary"
+        ]
+        self.assertEqual(audit_plan(plan), [])
+
     def test_person_gestalt_generation_prior_requires_provenance_and_geometry(self) -> None:
         plan = valid_plan()
         contract = plan["render_contract"]
@@ -2243,6 +2849,29 @@ class SaliencePlanTests(unittest.TestCase):
             "geometry_claim_ids": ["claim-source-face-geometry"],
         }
         self.assertEqual(audit_plan(plan), [])
+        self.assertEqual(
+            audit_plan(plan, prompt_text=authored_prompt_text(plan)), []
+        )
+
+        controls = {
+            item["id"]: item for item in contract["emitted_controls"]
+        }
+        separated_prompt = "PROMPT:\n" + ". ".join(
+            controls[control_id]["prompt_excerpt"]
+            for control_id in (
+                "control-readable-face-gestalt",
+                "control-form",
+                "control-source-face-geometry",
+                "control-balance",
+                "control-placement",
+            )
+        )
+        self.assertTrue(
+            any(
+                "must remain adjacent to linked local geometry" in error
+                for error in audit_plan(plan, prompt_text=separated_prompt)
+            )
+        )
 
         missing_source = deepcopy(plan)
         missing_source_claim = next(
@@ -2383,6 +3012,59 @@ class SaliencePlanTests(unittest.TestCase):
             )
         )
 
+    def test_source_visible_attractiveness_anchor_is_retained_with_local_geometry(self) -> None:
+        plan = valid_plan()
+        contract = plan["render_contract"]
+        add_generic_claim(
+            contract,
+            invariant_id="overall-face-reading",
+            axis="form",
+            owner="detail.human-face-likeness",
+            role="primary",
+            target_strength="moderate",
+            observation="a material source-visible overall attractiveness reading",
+            causal_origin="intrinsic",
+            evidence="coherent visible facial gestalt",
+            direction="retain-source-visible-overall-face-reading",
+            prompt_excerpt="a distinctly attractive overall facial reading",
+            region_ids=["central-form"],
+        )
+        prior_claim = contract["candidate_claims"][-1]
+        add_generic_claim(
+            contract,
+            invariant_id="decisive-face-relations",
+            axis="form",
+            owner="detail.human-face-likeness",
+            role="primary",
+            target_strength="moderate",
+            observation="decisive local feature relationships constrain the overall reading",
+            causal_origin="intrinsic",
+            evidence="source-visible eye spacing, jaw taper, and feature projection",
+            direction="source-relative-decisive-face-relations",
+            prompt_excerpt="large readable eyes, clear feature definition, and a long tapered facial outline",
+            region_ids=["central-form"],
+        )
+        prior_claim["generation_prior"] = {
+            "scope": "attractiveness",
+            "candidate_source": {
+                "kind": "source-visible-approximation",
+                "reference": "held-out current-source observation",
+            },
+            "non_identifying": True,
+            "visible_geometry_evidence": [
+                "source-visible eye spacing, jaw taper, and feature projection"
+            ],
+            "geometry_claim_ids": ["claim-decisive-face-relations"],
+        }
+        prompt = authored_prompt_text(plan)
+        self.assertEqual(audit_plan(plan, prompt), [])
+        self.assertLess(
+            prompt.index("a distinctly attractive overall facial reading"),
+            prompt.index(
+                "large readable eyes, clear feature definition, and a long tapered facial outline"
+            ),
+        )
+
     def test_authored_prompt_must_contain_each_control_excerpt_exactly_once(self) -> None:
         plan = valid_plan()
         prompt = authored_prompt_text(plan)
@@ -2474,6 +3156,40 @@ class SaliencePlanTests(unittest.TestCase):
     def test_displayed_key_and_local_form_contrast_can_coexist_independently(self) -> None:
         plan = with_displayed_key_response(valid_color_and_light_plan())
         self.assertEqual(audit_plan(plan), [])
+        self.assertEqual(
+            audit_plan(plan, prompt_text=authored_prompt_text(plan)), []
+        )
+
+        missing_protection = deepcopy(plan)
+        del missing_protection["render_contract"]["color_tone_contract"][
+            "emitted_controls"
+        ][0]["protected_light_effect_ids"]
+        self.assertTrue(
+            any(
+                "must protect overlapping primary Light/Form effects" in error
+                for error in audit_plan(missing_protection)
+            )
+        )
+
+        contract = plan["render_contract"]
+        generic = [
+            item["prompt_excerpt"] for item in contract["emitted_controls"]
+        ]
+        color = [
+            item["prompt_excerpt"]
+            for item in contract["color_tone_contract"]["emitted_controls"]
+        ]
+        light = [
+            item["prompt_excerpt"]
+            for item in contract["light_form_contract"]["emitted_controls"]
+        ]
+        buried_light_prompt = "PROMPT:\n" + ". ".join(generic + color + light)
+        self.assertTrue(
+            any(
+                "must appear before overlapping tone control" in error
+                for error in audit_plan(plan, prompt_text=buried_light_prompt)
+            )
+        )
 
     def test_regional_displayed_tone_requires_color_region_and_exact_prompt_anchor(self) -> None:
         coarse = with_displayed_key_response(valid_color_plan())
@@ -2623,7 +3339,7 @@ class SaliencePlanTests(unittest.TestCase):
         ]
         self.assertEqual(audit_plan(plan), [])
 
-    def test_surface_language_review_requires_external_candidate_source(self) -> None:
+    def test_surface_language_review_requires_candidate_provenance(self) -> None:
         plan = add_surface_language_review(valid_color_plan())
         review = plan["render_contract"]["color_tone_contract"][
             "surface_color_language"
@@ -2648,6 +3364,63 @@ class SaliencePlanTests(unittest.TestCase):
                 for error in audit_plan(plan)
             )
         )
+
+    def test_source_visible_surface_descriptor_may_lead_literal_controls(self) -> None:
+        plan = add_surface_language_review(
+            valid_color_plan(), source_kind="source-visible-approximation"
+        )
+        plan["render_contract"]["color_tone_contract"]["appearance_metaphors"] = [
+            {
+                "phrase": "analyst candidate label",
+                "status": "source-evidence-qualified",
+                "emit": True,
+                "source_evidence": ["current-source surface reading and stable axis evidence"],
+                "confidence": "high",
+                "viewer_priority": "P0",
+                "omission_counterfactual": "material-drift",
+                "decomposed_control_ids": ["control-surface-tone"],
+            }
+        ]
+        self.assertEqual(audit_plan(plan), [])
+        prompt = authored_prompt_text(plan)
+        self.assertEqual(audit_plan(plan, prompt), [])
+        self.assertLess(
+            prompt.index("analyst candidate label"),
+            prompt.index("a central field visibly lighter than the surround"),
+        )
+
+        wrong_order = prompt.replace(
+            "analyst candidate label. a central field visibly lighter than the surround",
+            "a central field visibly lighter than the surround. analyst candidate label",
+        )
+        self.assertTrue(
+            any(
+                "must lead its literal decomposed controls" in error
+                for error in audit_plan(plan, wrong_order)
+            )
+        )
+
+    def test_source_visible_surface_descriptor_requires_material_evidence(self) -> None:
+        plan = add_surface_language_review(
+            valid_color_plan(), source_kind="source-visible-approximation"
+        )
+        plan["render_contract"]["color_tone_contract"]["appearance_metaphors"] = [
+            {
+                "phrase": "analyst candidate label",
+                "status": "source-evidence-qualified",
+                "emit": True,
+                "source_evidence": [],
+                "confidence": "low",
+                "viewer_priority": "P2",
+                "omission_counterfactual": "preserved",
+                "decomposed_control_ids": ["control-surface-tone"],
+            }
+        ]
+        errors = audit_plan(plan)
+        self.assertTrue(any("source_evidence" in error for error in errors))
+        self.assertTrue(any("confidence must be high or medium" in error for error in errors))
+        self.assertTrue(any("viewer_priority must be P0 or P1" in error for error in errors))
+        self.assertTrue(any("must be material-drift" in error for error in errors))
 
     def test_conflicting_surface_label_cannot_be_emitted(self) -> None:
         plan = add_surface_language_review(valid_color_plan(), conflicting=True)
@@ -2792,7 +3565,7 @@ class SaliencePlanTests(unittest.TestCase):
             )
         )
 
-    def test_uncalibrated_friendly_lighting_label_cannot_be_emitted(self) -> None:
+    def test_unqualified_friendly_lighting_label_cannot_be_emitted(self) -> None:
         plan = add_lighting_language_review(valid_light_plan())
         lighting_label = plan["render_contract"]["light_form_contract"][
             "lighting_labels"
@@ -2800,9 +3573,34 @@ class SaliencePlanTests(unittest.TestCase):
         lighting_label["emit"] = True
         self.assertTrue(
             any(
-                "only a model-calibrated lighting label" in error
+                "must be model-calibrated or source-evidence-qualified" in error
                 for error in audit_plan(plan)
             )
+        )
+
+    def test_source_visible_lighting_descriptor_may_lead_literal_controls(self) -> None:
+        plan = add_lighting_language_review(
+            valid_light_plan(), source_kind="source-visible-approximation"
+        )
+        lighting_label = plan["render_contract"]["light_form_contract"][
+            "lighting_labels"
+        ][0]
+        lighting_label.update(
+            {
+                "status": "source-evidence-qualified",
+                "emit": True,
+                "source_evidence": ["current-source global lighting gestalt"],
+                "confidence": "medium",
+                "viewer_priority": "P1",
+                "omission_counterfactual": "material-drift",
+            }
+        )
+        self.assertEqual(audit_plan(plan), [])
+        prompt = authored_prompt_text(plan)
+        self.assertEqual(audit_plan(plan, prompt), [])
+        self.assertLess(
+            prompt.index("held-out candidate lighting label"),
+            prompt.index("broad planes revealed only by long shallow gradients"),
         )
 
     def test_model_calibrated_friendly_lighting_label_may_lead_literal_controls(self) -> None:
@@ -3161,7 +3959,7 @@ class SaliencePlanTests(unittest.TestCase):
         ]
         self.assertTrue(
             any(
-                "only a model-calibrated appearance metaphor" in error
+                "must be model-calibrated or source-evidence-qualified" in error
                 for error in audit_plan(plan)
             )
         )
@@ -3377,7 +4175,7 @@ class SaliencePlanTests(unittest.TestCase):
             any("unsupported prior cluster" in error for error in audit_plan(plan))
         )
 
-    def test_source_visible_aesthetic_shorthand_requires_calibrated_decomposition(self) -> None:
+    def test_source_visible_aesthetic_shorthand_retains_qualified_summary_and_decomposition(self) -> None:
         plan = valid_plan()
         contract = plan["render_contract"]
         add_generic_claim(
@@ -3407,15 +4205,32 @@ class SaliencePlanTests(unittest.TestCase):
                     "reference": "held-out source observation",
                 },
                 "source_evidence": ["held-out softness and restrained contrast"],
+                "confidence": "high",
+                "viewer_priority": "P0",
+                "omission_counterfactual": "material-drift",
                 "calibration_status": "unverified",
                 "summary_control_id": "control-aesthetic-summary",
                 "decomposed_claim_ids": ["claim-balance"],
                 "decomposed_control_ids": ["control-balance"],
             }
         ]
-        self.assertTrue(
-            any("requires model calibration" in error for error in audit_plan(plan))
+        self.assertEqual(audit_plan(plan), [])
+        prompt = authored_prompt_text(plan)
+        self.assertEqual(audit_plan(plan, prompt), [])
+        self.assertLess(
+            prompt.index("held-out broad aesthetic shorthand"),
+            prompt.index("the form remains smaller than the surrounding field"),
         )
+
+        unqualified = deepcopy(plan)
+        cluster = unqualified["render_contract"]["prior_clusters"][0]
+        cluster["confidence"] = "low"
+        cluster["viewer_priority"] = "P2"
+        cluster["omission_counterfactual"] = "preserved"
+        errors = audit_plan(unqualified)
+        self.assertTrue(any("confidence must be high or medium" in error for error in errors))
+        self.assertTrue(any("viewer_priority must be P0 or P1" in error for error in errors))
+        self.assertTrue(any("must be material-drift" in error for error in errors))
 
         calibrated = deepcopy(plan)
         cluster = calibrated["render_contract"]["prior_clusters"][0]

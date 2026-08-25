@@ -1,6 +1,6 @@
 ---
 id: lane.global-composition
-version: 1
+version: 3
 priority: 100
 activation: always
 select_types:
@@ -32,8 +32,10 @@ Read only the raw request, intent mode, exact source artifact and hash, route fi
 
 ## Output contract
 
-Return one `reverse-image-analysis-lane-report/v1` object. Record source observations, material findings, uncertainties, omission checks, and handoffs under the owned sections. Propose control requirements, not final prompt prose.
+In `prompt`, return `reverse-image-analysis-lane-report/compact-v1`: one primary viewer read, only P0/P1 proposition, frame/crop, and major-region findings, compact P2 support, and grouped P3/non-material topics. Use a change counterfactual only to decide whether a region or crop is identity-bearing. Propose controls, not prompt prose.
+
+In `audited`, return `reverse-image-analysis-lane-report/v2` and split material frame, crop, and region-hierarchy results into independently drifting atomic obligations.
 
 ## Completion gate
 
-Dispose every required topic, review every assigned module, retain source uncertainty, and report cross-lane dependencies without resolving them by assumption.
+Dispose every required topic at the profile's depth, review every assigned module, retain source uncertainty, and report cross-lane dependencies without resolving them by assumption. Do not itemize minor scenery merely because it is visible.

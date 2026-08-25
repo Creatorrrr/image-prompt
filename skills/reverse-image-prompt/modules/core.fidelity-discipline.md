@@ -1,6 +1,6 @@
 ---
 id: core.fidelity-discipline
-version: 10
+version: 11
 priority: 104
 type: core
 tier: 0
@@ -50,7 +50,7 @@ Decide whether changing visible form, surface, light, color, or hierarchy while 
 
 In diagnostic mode, name the source-supported perceptual appeal directly before its visible mechanisms; do not infer motive, identity, or story.
 
-Keep appeal language out of the prompt until translated into bounded controls; evaluation is not an invariant.
+An evaluative term is neither automatically valid nor disposable. When an aggregate appeal reading is high-confidence P0/P1 source evidence and its omission causes material drift, retain it once and immediately constrain it with visible controls. Otherwise keep it diagnostic.
 
 Build a sparse Aesthetic Causal Signature from only the form, surface, light-to-form, color, sharpness, and hierarchy axes that materially create the image's perceptual proposition.
 
@@ -64,11 +64,11 @@ Select only causal axes. Use three to six mutually supporting look anchors only 
 
 Treat descriptive detail and rendered sharpness as independent controls. Detail must not raise sharpness, scale, polish, or priority.
 
-Translate evaluative or mood words into visible mechanisms. Use a broad descriptor at most once; it cannot replace causal evidence.
+For a material evaluative or mood term, retain the aggregate once, then immediately unpack visible mechanisms. Neither abstraction nor detail substitutes for the other.
 
 Treat a broad color descriptor as a hypothesis about one causal layer, not as shorthand for hue, value, chroma, lighting, mood, and processing at once. Replace overload with source-supported axes.
 
-Decompose an appearance metaphor into observable color axes, surface behavior, and illumination before using it as a non-directional summary. A metaphor may summarize resolved evidence once; it must not add a second color, gloss, softness, luminosity, or grading instruction.
+Decompose an appearance metaphor into observable color axes, surface behavior, and illumination before using it once as a non-directional summary. Current-source emission requires provenance, high/medium confidence, P0/P1 priority, material-drift omission, compatibility, and immediate owned controls. Calibration remains separate effectiveness evidence; the descriptor adds no second direction.
 
 Audit prior-heavy cues as a combined cluster, not only as isolated labels. Ignore subject nouns temporarily; rewrite unsupported quality, lighting, surface, framing, or style defaults from evidence without a universal blacklist.
 

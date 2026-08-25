@@ -1,6 +1,6 @@
 ---
 id: lane.medium-aesthetic-capture
-version: 1
+version: 4
 priority: 78
 activation: matched
 select_types:
@@ -34,8 +34,10 @@ Read only the raw request, intent mode, exact source artifact and hash, route fi
 
 ## Output contract
 
-Return one `reverse-image-analysis-lane-report/v1` object. Decompose any broad aesthetic candidate into visible causal findings and flag uncalibrated shorthand as an omission risk or uncertainty.
+In `prompt`, return `reverse-image-analysis-lane-report/compact-v1` with the fidelity ceiling and only the P0/P1 capture or production cues whose change would alter the viewer's read. Compress P2 artifacts and omit P3 inventory. A broad aesthetic or mood reading may become one provenance-bound aggregate candidate when it is high-confidence P0/P1 evidence and omission causes material drift; report its literal causal controls separately so integration can retain-and-decompose it.
+
+In `audited`, return `reverse-image-analysis-lane-report/v2` and decompose a material aesthetic candidate into independently drifting visible obligations.
 
 ## Completion gate
 
-Dispose every required topic and assigned module. Do not upgrade fidelity, infer an artist/camera, or use a broad genre label as a substitute for visible controls.
+Dispose every required topic at the profile's depth. Do not upgrade fidelity, infer an artist/camera, or use a genre, quality, mood, or beauty label as a substitute for visible controls. Do not erase a material aggregate reading merely because the controls have been decomposed.

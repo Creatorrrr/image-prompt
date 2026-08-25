@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
-"""Validate analyst-supplied lighting axes and review external friendly labels.
+"""Validate analyst-supplied lighting axes and review friendly-label candidates.
 
-The tool does not inspect images, infer a physical rig, invent a friendly label,
-or emit production prompt prose. It may compose one explanation-only summary from
-literal axis tokens declared by the selected versioned policy.
+The tool does not inspect images, infer a physical rig, choose a preferred label,
+or emit production prompt prose. An analyst may supply a candidate observed in
+the current source, from the user, or from a versioned vocabulary. The tool may
+compose one explanation-only summary from literal axis tokens declared by the
+selected versioned policy.
 """
 
 from __future__ import annotations
@@ -16,7 +18,11 @@ from typing import Any
 
 
 VALID_CONFIDENCE = {"high", "medium", "low"}
-VALID_CANDIDATE_SOURCES = {"user-supplied", "versioned-vocabulary"}
+VALID_CANDIDATE_SOURCES = {
+    "user-supplied",
+    "source-visible-approximation",
+    "versioned-vocabulary",
+}
 VALID_LABEL_SCOPES = {
     "key-character",
     "edge-character",
@@ -302,7 +308,7 @@ def main(argv: list[str]) -> int:
     parser.add_argument(
         "--candidates",
         default="",
-        help="optional externally supplied friendly-label candidates JSON",
+        help="optional reviewed current-source, user, or versioned-vocabulary friendly-label candidates JSON",
     )
     args = parser.parse_args(argv)
     try:
@@ -317,7 +323,8 @@ def main(argv: list[str]) -> int:
                 "no image or semantic region detection",
                 "no physical-light or lamp-power inference",
                 "controlled summary is explanation-only",
-                "no friendly-label candidate invention",
+                "no preferred-label or closed-vocabulary invention",
+                "candidate provenance required",
                 "no automatic friendly-label selection",
                 "no automatic production prompt wording",
             ],

@@ -1,6 +1,6 @@
 ---
 id: detail.light-form-fidelity
-version: 6
+version: 9
 priority: 79
 type: detail
 tier: 3
@@ -52,7 +52,9 @@ A source/render loss of source-visible value separation between adjacent regions
 
 ## Three-stage Light/Form Contract
 
-Build a source-relative Light/Form Contract only when illumination materially carries fidelity.
+In `prompt`, preserve only the P0/P1 visible light result, its named region relation, and any protected local effect. Prefer result-space language when cause is uncertain; do not enumerate every lighting axis or build a final ledger.
+
+In `audited`, measured lighting work, or source/render evaluation: Build a source-relative Light/Form Contract only when illumination materially carries fidelity.
 
 Keep three stages separate:
 
@@ -104,19 +106,19 @@ Let the Light/Form Contract own spatial illumination structure and the Color/Ton
 
 When compact human-readable lighting language is useful, read `references/lighting-language.md`. Classify displayed key level, shadow floor, edge softness, local form contrast, bright-plane coverage, gradient extent, directionality, and fill structure independently before composing any summary. This language layer may read evidence owned by both contracts, but it owns no new lighting or tone effect.
 
-The versioned policy may deterministically compose one explanation-only summary from resolved axis tokens. It contains no preferred combination or named lighting preset. A named friendly-label candidate may come only from the user or an explicitly versioned task vocabulary; the skill does not invent candidates. Keep conflicting or inconclusive candidates non-emitted.
+The policy may compose one explanation-only axis summary without a preferred preset. A named candidate may come from the user, versioned vocabulary, or a provenance-bound current-source reading after independent observation. Keep conflicts and uncertainty non-emitted.
 
-Literal region, direction, coverage, gradient, contrast, shadow, displayed-tone, and fill controls remain authoritative. Emit an externally sourced friendly label at most once only when exact generator/version evidence marks it compatible and model-calibrated, and immediately unpack it with already-owned literal controls. The label never satisfies a missing axis or justifies a physical rig.
+Literal lighting controls remain authoritative. Emit a current-source label once only with compatibility, high/medium confidence, P0/P1 priority, material-drift omission, and immediate owned decomposition. Model calibration adds exact response evidence. A label never fills a missing axis or justifies a rig.
 
 ## Final prompt control ledger
 
-Copy every exact prompt excerpt that changes lighting or light-to-form into the final lighting control ledger. Link it to one emitted claim, one owner among source geometry, fill, local form contrast, shadow topology, material response, or background spill, and its complete effect list. The ledger is an internal trace, not an output template: copy the smallest exact clause that carries the control, omit non-material observations, and do not add headings, repetitions, or prose merely to make the ledger look complete. Split cross-owner compounds and replace overstrong positive controls rather than appending counter-negatives.
+In `audited`: Copy every exact prompt excerpt that changes lighting or light-to-form into the final lighting control ledger. Link it to one claim, owner, and complete effect list. In `prompt`, retain one owner and the decisive visible effect without copying prose into a ledger. In either profile, split cross-owner compounds and replace overstrong positive controls rather than appending counter-negatives.
 
 When measured comparison is warranted, read `references/lighting-reproduction-evaluation.md`. Use only analyst-selected regions and profiles, retain source/profile uncertainty, and never convert diagnostic measurements directly into prompt wording.
 
 ## Output and diagnosis
 
-When lighting is primary, emit one compact causal passage ordered by visible effect: source-supported topology when reliable, fill and local form contrast, decisive shadow ownership, then material or background response. When supporting, use only the smallest relational control.
+When primary, order one passage by visible topology, fill/local contrast, shadow owner, then material/spill. Put this spatial result before overlapping Color/Tone controls. When supporting, use the smallest relation.
 
 Diagnose source/render differences as source geometry, apparent size, fill, local form contrast, shadow topology, material response, background spill, exposure or processing, or unresolved. Prompt validation never substitutes for rendered-pixel lighting verification.
 

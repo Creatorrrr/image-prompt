@@ -1,6 +1,6 @@
 ---
 id: core.output-contract
-version: 18
+version: 22
 priority: 98
 type: core
 tier: 0
@@ -45,7 +45,10 @@ PROMPT:
 ...
 ```
 
-Write a standalone English prompt ordered by the dominant fidelity axis:
+Write a standalone English prompt ordered first by viewer importance, then by the dominant fidelity axis:
+
+- Put P0 source-signature controls first, followed by P1 structural identity.
+- Merge P2 support into an owned clause or one short later cue; omit P3 unless the user requests it.
 
 - Begin with frame shape, medium, fidelity ceiling, and the perceptual proposition.
 - **Relationship-led:** crop, major zones, topology, interaction, then appearance.
@@ -54,29 +57,27 @@ Write a standalone English prompt ordered by the dominant fidelity axis:
 - **Mixed:** name co-primary invariants and only cues showing their dependency.
 - Finish with supporting subject, capture, background, artifact, and drift controls.
 
-Selected modules contribute evidence candidates, not mandatory prose. Merge them by semantic slot; module count must not determine prompt length.
+Selected modules contribute evidence candidates, not mandatory prose. Merge them by semantic slot; module count and analysis detail must not determine prompt length.
 
 Assign one clause owner to each emitted semantic slot. State its affirmative target once; add only a distinct high-risk boundary.
 
-Give each generic aggregate effect one emitted claim and exact control. Emit only invariant spatial decisions, once per causal control axis; keep every other disposition non-emitted.
+Emit each generic effect once. A coupled effect uses one control: its macro summary first, then only `partial` or `lost` member residuals.
 
-Placement controls position, scale, and frame share. Put material human pose before face, hair, and clothing, which inherit rather than replace it.
+Placement controls position, scale, and frame share. Order camera/scale, material pose, then contiguous person prior/local geometry and remaining appearance.
 
-When color or tone is material, assign each emitted control to one causal layer and one perceptual effect budget. Use source-relative value, chroma, and hue; keep intrinsic surface, illumination, global cast, exposure, processing, and hierarchy consistent.
+When color or tone is material, assign each emitted control to one causal layer and one perceptual effect budget. Use source-relative value, chroma, and hue; keep intrinsic surface, illumination, global cast, exposure, processing, and hierarchy consistent. Require the full ledger only in `audited`.
 
-Keep supported surface, illumination, global response, and processing distinct. Trace every color-changing phrase to the final ledger; a metaphor cannot add direction.
+In `prompt`, place one compact regional color/tone result early only when P0/P1. A source-evidence-qualified surface descriptor may lead its literal axes once without adding a second direction. In `audited`, trace exact controls.
 
-Place one compact color-tone passage early when primary; when supporting, use the smallest relational control. Hierarchy normally owns area, value, chroma, or contrast, not repeated surface hue.
+When lighting is material, assign each emitted control to one Light/Form owner and source-relative effect budget. In `prompt`, state the decisive visible result and protected relation; in `audited`, keep source geometry, apparent size, fill, local contrast, shadow topology, material response, and spill separately ledgered. Generic adjectives cannot own several.
 
-When lighting is material, assign each emitted control to one Light/Form owner and source-relative effect budget. Keep source geometry, apparent size, fill, local contrast, shadow topology, material response, and spill separate; generic adjectives cannot own several.
-
-Lead with the visible result; add physical cause only at supported confidence. Reconcile every exact lighting-changing phrase with one ledger owner and complete effect list. The ledger is internal, not output prose or grounds for repetition. Keep spatial illumination there and displayed color, exposure, and tone response in Color/Tone. Controlled summaries stay diagnostic. An externally sourced friendly label may appear once only after compatible-axis and exact generator/version calibration, immediately before its literal decomposition.
+Lead with the visible result; add physical cause only at supported confidence. Keep spatial illumination separate from displayed color/tone. A qualified user or current-source descriptor may lead one literal-control block; calibration remains effectiveness evidence.
 
 Use compact blocks without a fixed cap; every clause adds a control. Keep essential spatial axes distinct and affirmative.
 
-For a high-salience look, put one supported Aesthetic Signature before inventory; for a neutral look, use one or two cues. Preserve major-region area, role, edge contact, legibility, and attention.
+For a high-salience look, put one supported source-specific Appearance or Aesthetic Signature before inventory; for a neutral look, use one or two cues. Preserve only material major-region area, role, edge contact, legibility, and attention.
 
-When face likeness is selected, use one scale-appropriate passage; a gestalt anchor cannot replace visible geometry or raise polish. Retain provenance and visible-geometry evidence for any broad human prior.
+When face likeness is selected, order one scale-appropriate passage as optional broad visual or attractiveness prior, correcting geometry, material skin, hair, expression, and capture. An attractiveness anchor may carry the overall reading once but cannot replace geometry or raise polish. Retain provenance and geometry evidence.
 
 ## NEGATIVE PROMPT
 

@@ -12,14 +12,15 @@ profile-aware source-visible measurement
 -> separate value-depth, chroma, and undertone classes
 -> optional finish and evenness evidence
 -> optional deterministic axis-composed descriptor for an analyst-named surface
--> externally supplied friendly-label candidate with provenance
+-> optional user, versioned-vocabulary, or current-source aggregate candidate with provenance
 -> compatibility review
--> explicit plan emission decision and exact control linkage
+-> source qualification or model calibration
+-> explicit plan emission decision and immediate exact control linkage
 ```
 
 The versioned policy in `surface-color-language-policy.json` is an uncalibrated language prototype. Its bins make repeated descriptions consistent; they are not scientific skin categories or preferred targets. Record its policy ID and classification uncertainty. A different validated policy may be supplied when the task has a color-managed or user-specified target.
 
-This skill contains no semantic friendly-label examples or preferred friendly-label list. A candidate may come only from the user's request or an explicitly versioned task vocabulary. A controlled descriptor is different: it contains only the current classification's literal axes and an analyst-supplied surface term, so it may be composed without inventing a category label.
+This skill contains no semantic friendly-label examples or preferred friendly-label list. A candidate may come from the user's request, an explicitly versioned task vocabulary, or a provenance-bound aggregate reading formed from the current source after independent axis observation. The last is not a vocabulary default: its reference identifies the current artifact or observation. A controlled descriptor is different: it contains only the current classification's literal axes and an analyst-supplied surface term, so it may be composed without inventing a category label.
 
 Use `tools/color_language.py` only after an analyst has selected a comparable midtone or flat group. The tool classifies provided Lab evidence; it never locates skin, objects, food, paint, or fabric. `--compose-for` returns a reviewable phrase candidate but never decides production emission.
 
@@ -54,17 +55,17 @@ Observation shape (replace every placeholder with current-source evidence before
 - finish: `matte`, `satin`, `luminous`, `dewy`, `uncertain`
 - evenness: `even`, `naturally-varied`, `freckled`, `uncertain`
 
-Treat every undertone term as independent of value depth. A composite appearance label is not an exclusive color bin. Its candidate file must preserve external provenance and declare the axis terms it requires. The following is a non-runnable schema shape; placeholders are structural variables, not suggested values:
+Treat every undertone term as independent of value depth. A composite appearance label is not an exclusive color bin. Its candidate file must preserve provenance and declare the axis terms it requires. The following is a non-runnable schema shape; placeholders are structural variables, not suggested values:
 
 ```json
 {
   "candidate_source": {
-    "kind": "<user-supplied-or-versioned-vocabulary>",
+    "kind": "<user-supplied-source-visible-approximation-or-versioned-vocabulary>",
     "reference": "<request-field-vocabulary-id-or-artifact-reference>"
   },
   "candidates": [
     {
-      "phrase": "<externally-supplied-label>",
+      "phrase": "<provenance-bound-candidate-label>",
       "label_scope": "<declared-label-scope>",
       "axis_requirements": {
         "value_depth": ["<allowed-value-depth-class>"],
@@ -96,7 +97,7 @@ The surface term names the visible region; it must not smuggle in a preferred ax
 
 ## Prompt actuation
 
-Write the stable literal axes before any friendly label. A controlled descriptor may wrap exactly the included excerpts once; it cannot add or replace an unresolved/bounded axis. Add finish only with its own visible evidence and surface control. A friendly label may summarize the controls once only when its requirements match and exact generator/version response testing has shown acceptable cross-axis behavior.
+For a source-material aggregate reading, write the friendly label once before its stable literal axes so it carries the global direction and the following controls immediately bound its meaning. A controlled descriptor may instead wrap exactly the included excerpts once; it cannot add or replace an unresolved/bounded axis. Add finish only with its own visible evidence and surface control. A current-source label may emit without model calibration only when provenance is `source-visible-approximation`, compatibility matches, confidence is high or medium, viewer priority is P0/P1, omission would cause `material-drift`, and all literal controls are already owned. Exact generator/version testing separately establishes response reliability and cross-axis leakage.
 
 Write a compact sequence in the order value depth, chroma, and undertone, followed only by separately observed finish or evenness. Select every term from current-source classification; do not copy a target combination from this reference.
 
@@ -106,5 +107,5 @@ Write a compact sequence in the order value depth, chroma, and undertone, follow
 - Do not map color terms to race, ethnicity, nationality, or identity.
 - Do not store a preferred composed phrase; reconstruct it from each case's classified axes.
 - Do not promote a vocabulary chart, a single render, or one generator version into universal semantics.
-- Do not place named friendly-label examples or concrete preferred axis combinations in runtime instructions; keep semantic cases in held-out evaluation only.
+- Do not place named friendly-label examples or concrete preferred axis combinations in runtime instructions; keep semantic cases in held-out evaluation only. The runtime rule must accept any supported current-source direction rather than favoring the motivating label.
 - Keep the motivating image as a regression sample only.

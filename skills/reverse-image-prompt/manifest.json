@@ -1,19 +1,25 @@
 {
   "name": "reverse-image-prompt",
   "architecture": "distributed modular facet router",
-  "version": "3.4.0-distributed-analysis",
+  "version": "3.6.0-adaptive-prompt-analysis",
   "entrypoint": "SKILL.md",
   "source": "generated from modules/*.md and lanes/*.md frontmatter by tools/gen_manifest.py",
   "analysis_orchestration": {
-    "route_schema": "reverse-image-analysis-route/v1",
-    "report_schema": "reverse-image-analysis-lane-report/v1",
-    "bundle_schema": "reverse-image-analysis-bundle/v1",
+    "route_schema": "reverse-image-analysis-route/v2",
+    "default_profile": "prompt",
+    "supported_profiles": [
+      "prompt",
+      "audited"
+    ],
+    "prompt_report_schema": "reverse-image-analysis-lane-report/compact-v1",
+    "audited_report_schema": "reverse-image-analysis-lane-report/v2",
+    "audited_bundle_schema": "reverse-image-analysis-bundle/v2",
     "reference": "references/analysis-orchestration.md"
   },
   "analysis_lanes": [
     {
       "id": "lane.global-composition",
-      "version": 1,
+      "version": 3,
       "file": "lanes/lane.global-composition.md",
       "priority": 100,
       "activation": "always",
@@ -39,7 +45,7 @@
     },
     {
       "id": "lane.spatial-topology",
-      "version": 1,
+      "version": 4,
       "file": "lanes/lane.spatial-topology.md",
       "priority": 90,
       "activation": "matched",
@@ -73,7 +79,7 @@
     },
     {
       "id": "lane.subject-appearance",
-      "version": 1,
+      "version": 4,
       "file": "lanes/lane.subject-appearance.md",
       "priority": 85,
       "activation": "matched",
@@ -106,7 +112,7 @@
     },
     {
       "id": "lane.color-light-material",
-      "version": 1,
+      "version": 3,
       "file": "lanes/lane.color-light-material.md",
       "priority": 82,
       "activation": "matched",
@@ -135,7 +141,7 @@
     },
     {
       "id": "lane.medium-aesthetic-capture",
-      "version": 1,
+      "version": 4,
       "file": "lanes/lane.medium-aesthetic-capture.md",
       "priority": 78,
       "activation": "matched",
@@ -164,7 +170,7 @@
     },
     {
       "id": "lane.information-layout",
-      "version": 1,
+      "version": 3,
       "file": "lanes/lane.information-layout.md",
       "priority": 75,
       "activation": "matched",
@@ -213,7 +219,7 @@
   "modules": [
     {
       "id": "core.visual-evidence",
-      "version": 6,
+      "version": 8,
       "file": "modules/core.visual-evidence.md",
       "type": "core",
       "tier": 0,
@@ -236,7 +242,7 @@
     },
     {
       "id": "core.frame-coordinates",
-      "version": 10,
+      "version": 12,
       "file": "modules/core.frame-coordinates.md",
       "type": "core",
       "tier": 0,
@@ -265,7 +271,7 @@
     },
     {
       "id": "concept.primary-relationship",
-      "version": 8,
+      "version": 11,
       "file": "modules/concept.primary-relationship.md",
       "type": "concept",
       "tier": 0,
@@ -300,7 +306,7 @@
     },
     {
       "id": "core.fidelity-discipline",
-      "version": 10,
+      "version": 11,
       "file": "modules/core.fidelity-discipline.md",
       "type": "core",
       "tier": 0,
@@ -369,7 +375,7 @@
     },
     {
       "id": "core.pre-emit-gate",
-      "version": 20,
+      "version": 24,
       "file": "modules/core.pre-emit-gate.md",
       "type": "core",
       "tier": 0,
@@ -414,7 +420,7 @@
     },
     {
       "id": "core.output-contract",
-      "version": 18,
+      "version": 22,
       "file": "modules/core.output-contract.md",
       "type": "core",
       "tier": 0,
@@ -593,7 +599,7 @@
     },
     {
       "id": "subject.human",
-      "version": 15,
+      "version": 19,
       "file": "modules/subject.human.md",
       "type": "subject",
       "tier": 2,
@@ -1016,7 +1022,7 @@
     },
     {
       "id": "detail.human-body-form",
-      "version": 6,
+      "version": 8,
       "file": "modules/detail.human-body-form.md",
       "type": "detail",
       "tier": 3,
@@ -1053,7 +1059,7 @@
     },
     {
       "id": "detail.human-face-likeness",
-      "version": 8,
+      "version": 11,
       "file": "modules/detail.human-face-likeness.md",
       "type": "detail",
       "tier": 3,
@@ -1088,7 +1094,7 @@
     },
     {
       "id": "detail.color-tone-fidelity",
-      "version": 7,
+      "version": 10,
       "file": "modules/detail.color-tone-fidelity.md",
       "type": "detail",
       "tier": 3,
@@ -1141,7 +1147,7 @@
     },
     {
       "id": "detail.light-form-fidelity",
-      "version": 6,
+      "version": 9,
       "file": "modules/detail.light-form-fidelity.md",
       "type": "detail",
       "tier": 3,
@@ -1190,7 +1196,7 @@
     },
     {
       "id": "detail.clothing-fashion",
-      "version": 6,
+      "version": 8,
       "file": "modules/detail.clothing-fashion.md",
       "type": "detail",
       "tier": 3,
@@ -1227,7 +1233,7 @@
     },
     {
       "id": "detail.pose-hands-gesture",
-      "version": 5,
+      "version": 6,
       "file": "modules/detail.pose-hands-gesture.md",
       "type": "detail",
       "tier": 3,

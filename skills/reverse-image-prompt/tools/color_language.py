@@ -2,9 +2,10 @@
 """Classify source-visible color axes and compose controlled axis language.
 
 The tool does not detect semantic regions, infer biological or material true color,
-or invent or choose a friendly label.  An analyst may request a deterministic
-natural-language composition of the classified axes for a named visible surface;
-the calling plan still decides whether that phrase is emitted.
+or choose a preferred friendly label. An analyst may supply a candidate observed
+in the current source, from the user, or from a versioned vocabulary, and may
+request a deterministic natural-language composition of classified axes. The
+calling plan still decides whether any phrase is emitted.
 """
 
 from __future__ import annotations
@@ -26,7 +27,11 @@ VALID_LABEL_SCOPES = {
     "surface-finish",
     "composite-appearance",
 }
-VALID_CANDIDATE_SOURCES = {"user-supplied", "versioned-vocabulary"}
+VALID_CANDIDATE_SOURCES = {
+    "user-supplied",
+    "source-visible-approximation",
+    "versioned-vocabulary",
+}
 CLASSIFIED_AXES = {"value_depth", "chroma", "undertone", "finish", "evenness"}
 REQUIRED_SCOPE_AXES = {
     "value-depth": {"value_depth"},
@@ -443,7 +448,11 @@ def main(argv: list[str]) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("observation", help="analyst-authored Lab observation JSON")
     parser.add_argument("--policy", required=True, help="versioned language policy JSON")
-    parser.add_argument("--candidates", default="", help="optional externally supplied label candidates JSON")
+    parser.add_argument(
+        "--candidates",
+        default="",
+        help="optional reviewed current-source, user, or versioned-vocabulary label candidates JSON",
+    )
     parser.add_argument(
         "--compose-for",
         default="",
@@ -466,7 +475,8 @@ def main(argv: list[str]) -> int:
                 "source-visible language classification only",
                 "no semantic region detection",
                 "no biological, demographic, or material true-color inference",
-                "no friendly-label candidate invention",
+                "no preferred-label or closed-vocabulary invention",
+                "candidate provenance required",
                 "no automatic friendly-label selection",
                 "controlled descriptor composition does not decide prompt emission",
             ],

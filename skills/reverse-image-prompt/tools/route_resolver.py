@@ -73,6 +73,40 @@ MANDATORY_FALLBACKS = {
     "subject": "subject.generic-object",
 }
 MAX_NON_CORE_MODULES = 8
+ANALYSIS_PROFILES = {"prompt", "audited"}
+PROMPT_REPORT_SCHEMA = "reverse-image-analysis-lane-report/compact-v1"
+AUDITED_REPORT_SCHEMA = "reverse-image-analysis-lane-report/v2"
+
+
+def analysis_execution_budget(profile: str) -> dict[str, Any]:
+    """Return the bounded execution contract for a routed analysis profile."""
+
+    if profile not in ANALYSIS_PROFILES:
+        allowed = ", ".join(sorted(ANALYSIS_PROFILES))
+        raise ValueError(f"unknown analysis profile '{profile}'; expected one of: {allowed}")
+    if profile == "prompt":
+        return {
+            "lane_waves": 1,
+            "malformed_lane_retries": 1,
+            "critic_passes": 1,
+            "targeted_repairs": 1,
+            "max_full_reroutes": 1,
+            "full_reroute_on": ["route-gap", "source-artifact-mismatch"],
+            "detail_policy": "material-visible-results-only",
+            "non_material_topics": "grouped-disposition",
+            "full_precision_ledgers": False,
+        }
+    return {
+        "lane_waves": 1,
+        "malformed_lane_retries": 1,
+        "critic_passes": 2,
+        "targeted_repairs": 1,
+        "max_full_reroutes": 1,
+        "full_reroute_on": ["route-gap", "source-artifact-mismatch"],
+        "detail_policy": "audited-obligation-completeness",
+        "non_material_topics": "individual-disposition",
+        "full_precision_ledgers": True,
+    }
 
 
 def norm(value: Any) -> str:
@@ -197,10 +231,14 @@ def analysis_route_fingerprint(route_without_fingerprint: dict[str, Any]) -> str
 
 
 def resolve_analysis_route(
-    facets: dict[str, Any], manifest: dict[str, Any] | None = None
+    facets: dict[str, Any],
+    manifest: dict[str, Any] | None = None,
+    analysis_profile: str = "prompt",
 ) -> dict[str, Any]:
     """Resolve modules, then assign a compact set of independent analysis lanes."""
 
+    profile = norm(analysis_profile)
+    execution_budget = analysis_execution_budget(profile)
     manifest = manifest or load_manifest(ROOT)
     resolved_modules = resolve_modules(facets, manifest)
     lane_entries = resolve_analysis_lanes(resolved_modules, manifest)
@@ -227,6 +265,10 @@ def resolve_analysis_route(
             "id": lane["id"],
             "version": lane["version"],
             "instruction_file": lane["file"],
+            "analysis_depth": "compact" if profile == "prompt" else "audited",
+            "report_schema": (
+                PROMPT_REPORT_SCHEMA if profile == "prompt" else AUDITED_REPORT_SCHEMA
+            ),
             "module_ids": lane["module_ids"],
             "owns_sections": lane["owns_sections"],
             "required_topics": lane["required_topics"],
@@ -234,7 +276,9 @@ def resolve_analysis_route(
         for lane in lane_entries
     ]
     route = {
-        "schema_version": "reverse-image-analysis-route/v1",
+        "schema_version": "reverse-image-analysis-route/v2",
+        "analysis_profile": profile,
+        "execution_budget": execution_budget,
         "normalized_facets": _canonical_facets(facets),
         "resolved_modules": resolved_modules,
         "required_lane_ids": [lane["id"] for lane in lanes],
@@ -309,6 +353,12 @@ def main(argv: list[str]) -> int:
         action="store_true",
         help="include the deterministic distributed-analysis lane route",
     )
+    parser.add_argument(
+        "--analysis-profile",
+        choices=sorted(ANALYSIS_PROFILES),
+        default="prompt",
+        help="analysis depth for --analysis-route (default: prompt)",
+    )
     args = parser.parse_args(argv)
 
     manifest = load_manifest(ROOT)
@@ -319,7 +369,11 @@ def main(argv: list[str]) -> int:
         if args.analysis_route:
             print(
                 json.dumps(
-                    resolve_analysis_route(facets, manifest),
+                    resolve_analysis_route(
+                        facets,
+                        manifest,
+                        analysis_profile=args.analysis_profile,
+                    ),
                     indent=2,
                     ensure_ascii=False,
                 )
