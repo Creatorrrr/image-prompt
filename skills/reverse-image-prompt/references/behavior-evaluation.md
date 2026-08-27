@@ -119,6 +119,46 @@ Use source-relative identifiers rather than required wording. The evaluator may 
         "observation": "the dominant region keeps its source-visible frame relation",
         "role": "supporting",
         "source_evidence": ["visible frame and region boundary"]
+      },
+      {
+        "id": "region-to-region-direction",
+        "kind": "cross-component-orientation",
+        "subject_region_id": "region-id",
+        "reference_region_id": "supporting-region-id",
+        "placement_axes": ["direction", "proximity"],
+        "degenerate_satisfaction_risk": "high",
+        "degeneracy_rationale": "direction survives a material separation change",
+        "placement_closure_id": "closed-placement-id",
+        "observation": "source-relative inter-region placement",
+        "role": "primary",
+        "source_evidence": ["visible relation between both regions"]
+      },
+      {
+        "id": "supporting-region-to-frame-relation",
+        "kind": "frame-zone",
+        "subject_region_id": "supporting-region-id",
+        "frame_reference": "source-relative frame zone",
+        "observation": "the supporting region keeps its source-visible frame relation",
+        "role": "supporting",
+        "source_evidence": ["visible supporting-region frame boundary"]
+      }
+    ],
+    "placement_closures": [
+      {
+        "id": "closed-placement-id",
+        "subject_region_id": "region-id",
+        "reference_region_id": "supporting-region-id",
+        "subject_frame_relation_id": "region-to-frame-relation",
+        "reference_frame_relation_id": "supporting-region-to-frame-relation",
+        "inter_region_relation_ids": ["region-to-region-direction"],
+        "protected_axes": ["frame-position", "direction", "proximity"],
+        "degenerate_satisfaction_check": {
+          "tested_change": "change separation while holding direction fixed",
+          "held_fixed_axes": ["direction"],
+          "changed_axes": ["proximity"],
+          "verdict": "material-drift",
+          "source_evidence": ["direction-held comparison"]
+        }
       }
     ],
     "candidate_claims": [
@@ -148,8 +188,8 @@ Use source-relative identifiers rather than required wording. The evaluator may 
         "role": "primary",
         "target_strength": "moderate",
         "claim_ids": ["claim-id"],
-        "region_ids": ["region-id"],
-        "relation_ids": ["region-to-frame-relation"],
+        "region_ids": ["region-id", "supporting-region-id"],
+        "relation_ids": ["region-to-frame-relation", "region-to-region-direction", "supporting-region-to-frame-relation"],
         "source_supported": true,
         "source_evidence": ["visible evidence"]
       }
@@ -176,7 +216,7 @@ Use source-relative identifiers rather than required wording. The evaluator may 
 
 Valid axes, causes, strengths, roles, and comparison relations are defined by `tools/salience_plan.py`. A negative emitted claim must be a distinct high-risk drift boundary; it cannot serve as a counterweight for an overstrong affirmative cluster.
 
-`component_relations` is sparse. Record a relation only when a region-to-region or region-to-frame relation materially affects an invariant or likely drift. Valid relations carry one source region, exactly one frame or region reference, a source-relative observation, evidence, and a role. Partial visibility additionally records the surviving fragments, cropped or hidden counterparts, and a completion risk. Every recorded relation terminates in a generic aggregate effect rather than remaining an unused diagnostic field.
+`component_relations` is sparse. Record a relation only when a region-to-region or region-to-frame relation materially affects an invariant or likely drift. Valid relations carry one source region, exactly one frame or region reference, a source-relative observation, evidence, and a role. A `frame-placement` decision uses a frame relation; `cross-component-orientation` uses a named reference region and records its material placement axes. If direction alone can remain true after an extreme displacement, mark its degeneracy risk and reference one `placement_closure`: both regions bind separately to the frame, the inter-region relation protects direction plus proximity, overlap, or visibility budget, and a direction-held counterfactual must classify the residual change as material, preserved, or uncertain. Partial visibility additionally records the surviving fragments, cropped or hidden counterparts, and a completion risk. Every recorded relation terminates in a generic aggregate effect rather than remaining an unused diagnostic field.
 
 ### Atomic lane obligations
 
@@ -186,11 +226,11 @@ Integration disposes every finding and obligation exactly once. A retained or me
 
 ### Spatial/Orientation Coverage schema
 
-When an orientation-bearing subject is material, and always when `subject.human` is routed, add `spatial_orientation_coverage` using `spatial-orientation/v5`. This is a direction-neutral evidence, non-emission, and prompt-actuation ledger, not a target-pose template:
+When an orientation-bearing subject is material, and always when `subject.human` is routed, add `spatial_orientation_coverage` using `spatial-orientation/v6`. This is a direction-neutral evidence, non-emission, placement-closure, and prompt-actuation ledger, not a target-pose template:
 
 ```yaml
 spatial_orientation_coverage:
-  schema_version: spatial-orientation/v5
+  schema_version: spatial-orientation/v6
   subjects:
     - id: "subject-local-id"
       kind: human | non-human | group | component
@@ -320,7 +360,9 @@ Every emitted spatial control has exactly one `prompt_effect_audit` over its exa
 
 No disposition or dimension implies a preferred value. Centered and offset, frontal and oblique, aligned and opposed, and either mirrored direction all remain valid source-relative outcomes when supported and owned. Keep placement controls positional. Put a material human pose relation after camera/scale and before local face, hair, and clothing inventory; validate the literal prompt order, complete prompt-effect audit, and source-consistent net effect. Hair and garment evidence may corroborate but never substitute for pose. Do not put case-specific coordinates, directions, body parts, garments, exact angles, or adjective exclusions into runtime expectations.
 
-For form, surface, sharpness, hierarchy, topology, and information, every emitted claim carries `salience_effects`. The top-level `aggregate_effects` merges claims by the same axis, source-relative direction, regions, and relations; one aggregate effect has one emitted generic claim. The top-level `emitted_controls` then represents each generic emitted claim exactly once with a literal excerpt from the authored prompt. Generic, Color/Tone, and Light/Form contracts may not own the same claim or exact excerpt. The checker compares declared strings and ownership; a reviewer still audits synonymous prose because the tool does not infer semantics.
+Direction is not a complete placement contract when proximity, overlap, or surviving visibility carries the source read. A relation such as above/below or viewer-left/viewer-right can be satisfied at arbitrary distance. The closed placement check therefore protects both frame positions plus the independently material inter-region axes without turning any motivating coordinate into a default.
+
+For form, surface, sharpness, hierarchy, topology, and information, every emitted claim carries `salience_effects`. The top-level `aggregate_effects` merges claims by the same axis, source-relative direction, regions, and relations; one aggregate effect has one emitted generic claim. The top-level `emitted_controls` then represents each generic emitted claim exactly once with a literal excerpt from the authored prompt. Generic, Color/Tone, and Light/Form contracts may not own the same claim or exact excerpt. For an authored audited prompt, mask every owned excerpt and qualified emitted summary; after removing only structural labels and punctuation, any remaining semantic text is an ownership failure. A reviewer still audits whether an owned phrase has undeclared synonymous or implicit effects because the tool does not infer its full meaning.
 
 An emitted human generation prior has scope `person-gestalt`, `attractiveness`, or `person-aesthetic`, a provenance-bound candidate source, and `non_identifying: true`. `person-gestalt` and `attractiveness` retain visible geometry evidence and separately actuated `geometry_claim_ids`; `attractiveness` and `person-aesthetic` also bind `decomposed_control_ids`. A person-aesthetic prior uses visible appearance evidence. Each decomposition control declares one valid `appearance_dimension` and an owner authorized for it. Exact race, ethnicity, nationality, or other protected identity context is never a generation prior and never comes from pixels.
 
@@ -582,7 +624,7 @@ Review the standalone prompt with the source visible and score distinct question
 - Are delegated lane reports genuinely clean-context, while sequential fallback is disclosed as non-independent?
 - Does integration dispose every finding and atomic obligation once, bind every retained obligation through `source_obligation_ids`, preserve result direction and role, adjudicate conflicts, and pass an independent coverage critic before prompt freeze?
 - Does each generic emitted claim terminate in one literal control, and have synonymous cross-slot pulls been merged into one source-relative aggregate effect?
-- Does each orientation-bearing subject use `spatial-orientation/v5`, with human torso, head/body, shoulder, and attention subaxes present even when they are non-emitted?
+- Does each orientation-bearing subject use `spatial-orientation/v6`, with human torso, head/body, shoulder, and attention subaxes present even when they are non-emitted?
 - Does every spatial decision link to subject-owned structured cues, with frame-placement evidence excluded as the sole basis for orientation?
 - Does every `flexible` or `not-material` decision pass an isolated dimension-neutralization test with adjacent spatial relations held fixed, rather than relying on a free-form assertion that variation is minor?
 - Are low-confidence or wholly confounded axes marked uncertain unless an invariant coupled effect preserves their joint source-visible result?
@@ -595,6 +637,8 @@ Review the standalone prompt with the source visible and score distinct question
 - Does every exact emitted spatial clause have one complete explicit/implicit prompt-effect audit, with all affected decisions source-owned and a `source-consistent` verdict?
 - Has the raw-source critic treated neutral-looking alignment language as positive multi-axis actuation and caught synonymous effects omitted from the structured audit?
 - Are placement, principal axis, viewpoint, part-whole pose, attention, and cross-component orientation kept distinct without selecting a preferred direction?
+- Does frame placement terminate at the frame and cross-component orientation terminate at another region, rather than letting either relation substitute for the other?
+- When cross-component direction remains true after extreme displacement, does a closed placement contract also bind both frame positions and every material proximity, overlap, or visibility axis, with a direction-held counterfactual?
 - Do material frame bias, principal-axis offset, edge contact, and partial-layer completion budgets remain source-relative rather than defaulting to centered completion?
 - Does every material placement and orientation clause agree with the recorded component, head/body, shoulder, gaze, and frame relations rather than importing a neutral alignment?
 - Is frame placement wording limited to position and frame share, with a material pose relation stated before face, hair, and garment inventory?
@@ -617,9 +661,11 @@ Review the standalone prompt with the source visible and score distinct question
 - When friendly surface-color language is used, were value depth, chroma, and undertone classified first, with ambiguous or conflicting labels left non-emitted?
 - If an axis-composed descriptor is emitted, is it reconstructible from current-source axes, limited to stable included axes, and free of invented bounded/unresolved terms?
 - Does every literal color-changing phrase in the final prompt appear once in the control ledger with one causal layer and a complete effect budget?
+- After exact control and qualified-summary spans are removed, is no unowned color, tone, light, shadow, gradient, material-response, negative, or settings prose left in the authored prompt?
 - Do differently named claims avoid accumulating the same color or tone direction beyond one supported aggregate target?
 - When lighting is material, is the visible result recorded before the physical-light hypothesis, with confidence and evidence for any emitted source geometry?
 - When one material carries distinct regional light-to-form values, is their spatial relation owned by Light/Form rather than repeated as intrinsic anatomy, volume, fit, or surface color?
+- When a coarse major region mixes a main plane, shadow zone, transition, or material mass, are only the material Light/Form subregions declared, and does each emitted comparison retain both exact anchors?
 - Are apparent source size, fill, global tonal range, bright-plane coverage, local form contrast, gradient extent, shadow ownership, material response, and background spill kept causally distinct?
 - When compact lighting language is used, were displayed key, shadow floor, edge softness, local form contrast, bright-plane coverage, gradient extent, directionality, and fill classified independently before the summary, with unresolved or conflicting labels left non-emitted?
 - Does any emitted friendly lighting label have explicit provenance plus either source-evidence qualification or exact generator/version calibration, and immediate literal decomposition without adding a second lighting direction?
@@ -693,6 +739,9 @@ Include held-out causal pairs spanning materially different subjects and media:
 - identical core lighting axes with unrelated subjects and media, so a controlled summary remains stable without becoming a preferred preset
 - centered versus source-offset principal axes with otherwise similar inventory
 - centered-frontal versus centered-oblique, and off-center-frontal versus centered-oblique, so frame placement cannot stand in for pose
+- the same cross-component direction with materially different proximity, overlap, and surviving visibility, including direction-preserving extreme displacement
+- the same subject-to-frame position with changed reference-to-frame position, and the inverse, so neither frame relation disappears inside a relative direction
+- the same pose and viewpoint with materially different headroom or frame share, so pose cannot stand in for position
 - source-side-A oblique, source-side-B mirrored oblique, and source-frontal orientation cases, all without a direction default
 - readable versus partial or indistinct humans where non-visible pose dimensions remain non-emitted
 - camera-elevation changes with head pitch held fixed, and head-pitch changes with camera elevation held fixed
@@ -716,6 +765,7 @@ Include held-out causal pairs spanning materially different subjects and media:
 - material, not-material, not-visible, and uncertain skin decisions across unrelated human compositions and coverage states
 - scoped displayed-tone controls for one region, declared region groups, and global response with protected bright/dark regions
 - spatially uniform dark/light surfaces versus the same displayed value with a primary regional Light/Form separation, including reversed prompt order
+- valid owned control-only prompts versus the same prompts with one extra unowned color/tone clause or Light/Form gradient clause
 - ordinary generic, portrait, product, document/UI, and non-photographic routes with lane coverage, merge-loss, conflict, critic, and sequential-fallback fixtures
 - prompt routes where a P0/P1 Light/Form handoff target is present versus absent, including required-module mismatch and a successful one-reroute closure
 - the same non-human material with regional light-to-form separation versus spatially uniform illumination

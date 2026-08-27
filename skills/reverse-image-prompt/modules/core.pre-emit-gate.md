@@ -1,6 +1,6 @@
 ---
 id: core.pre-emit-gate
-version: 28
+version: 29
 priority: 100
 type: core
 tier: 0
@@ -55,8 +55,9 @@ Always. Apply immediately before the final answer as a rewrite pass, not an appe
 - Compare each slot's aggregate direction and strength with its source target. Generic beauty, style, quality, or demographic-looking shorthand cannot replace source-specific appearance, geometry, skin presentation, space, clothing, pose, light, or color.
 - Correct an overstrong draft by replacing or deleting the amplifying language, not by appending a negative counterweight.
 - Reject unresolved provenance labels and missing-artifact comparisons; allow physical `light source` and self-contained state verbs.
-- Audit coordinate contradictions before emitting. In `prompt`, a coupled macro declares `sufficient`, `lossy`, or `uncertain`: sufficient emits no residuals; otherwise retain only supported P0/P1 at-risk relations. A missing cross-lane owner or module is `route-gap`. In `audited`, validate the full spatial contract.
+- Audit coordinate contradictions. In `prompt`, a coupled macro is `sufficient`, `lossy`, or `uncertain`; only supported P0/P1 at-risk residuals survive. A missing owner or module is `route-gap`. In `audited`, validate the full spatial contract.
 - Treat alignment prose as multi-axis control. Record each exact clause's explicit and implicit effects; rewrite it if any affected spatial axis is unowned. Negatives cannot repair the conflict.
+- Frame placement uses a frame reference; cross-component placement uses a region. If direction survives material displacement, require both frame relations plus the inter-region relation and protect proximity, overlap, or visibility.
 - For a material human, verify external identity provenance and output use, displayed-skin scope and priority, and one bounded appearance gestalt. Exact external identity context precedes the gestalt; a broad person prior stays contiguous with correcting geometry.
 - Retained human or general aggregate descriptors require provenance, P0/P1 materiality, a material-drift omission check, intended/protected dimensions, and adjacent owned decomposition. Beauty and skin wording cannot act as likeness or demographic evidence.
 
@@ -76,12 +77,9 @@ Always. Apply immediately before the final answer as a rewrite pass, not an appe
 
 Apply this section only in `audited`, measured fidelity, or source/render evaluation:
 
-- For a material color or tone effect, verify one aggregate source-relative target and the evidence for every emitted intrinsic, illumination, global-cast, exposure, processing, or hierarchy contribution.
-- For every required intrinsic value, chroma, or hue observation, trace one uninterrupted path from region axis to same-region/same-axis aggregate effect, emitted claim, and intrinsic axis-control.
-- Reconcile every exact color-changing excerpt in the final prompt with one emitted claim, one causal layer, and its complete aggregate effect budget.
-- For material lighting, verify one source-relative Light/Form target and evidence for every emitted source-geometry, fill, local-form-contrast, shadow-topology, material-response, or background-spill contribution.
-- Reconcile every exact lighting-changing excerpt with one emitted claim, one owner, and its complete lighting-effect list.
-- Before generation, validate human appearance, per-axis neutralization, whole/residual spatial counterfactuals, exact prompt-effect audits, obligation binding, and ledger separation.
+- For color/tone, verify each aggregate source-relative target and causal contribution. Trace every required intrinsic axis through same-region/same-axis effect, claim, and axis-control; reconcile each exact excerpt with its layer and full effect budget.
+- For Light/Form, verify each target and emitted causal contribution, then reconcile every exact excerpt with one owner and complete effect list.
+- Before generation, validate appearance, spatial counterfactuals, exact effect audits, obligation binding, and ledger separation. Mask every owned control or qualified summary in the complete prompt; after structural labels and punctuation, reject semantic residue. Expected excerpts alone do not prove ownership.
 
 ## Final checks
 

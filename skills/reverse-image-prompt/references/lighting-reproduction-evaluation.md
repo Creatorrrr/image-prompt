@@ -45,10 +45,16 @@ light_form_contract:
     confidence: high | medium | low
     actuation: physical-cause | physical-plus-result | result-space-only | diagnostic-only
     source_evidence: []
+  regions:  # optional source-derived Light/Form subregions inside major regions
+    - id: "light-region-id"
+      parent_region_id: "known major region"
+      prompt_anchor: "non-trivial exact prompt phrase"
+      role: major-plane | shadow-zone | transition | material-mass | context | spill-field
+      source_evidence: []
   region_effects:
     - id: "effect observation id"
-      region_id: "known major region"
-      reference_region_id: "optional distinct known major region for a comparative spatial effect"
+      region_id: "known major region or declared Light/Form subregion"
+      reference_region_id: "optional distinct known major or Light/Form region for a comparative spatial effect"
       role: broad-plane | gradient | highlight | shadow | rim | spill
       value_relation: "source-relative relation"
       gradient_strength: subtle | moderate | strong
@@ -112,8 +118,8 @@ light_form_contract:
   claim_ids: []
   aggregate_effects:
     - id: "canonical light effect"
-      region_id: "known major region or global"
-      reference_region_id: "optional distinct known major region matching a comparative observation"
+      region_id: "known major region, declared Light/Form subregion, or global"
+      reference_region_id: "optional distinct known major or Light/Form region matching a comparative observation"
       axis: source-geometry | fill | bright-plane-coverage | local-form-contrast | gradient-extent | shadow-topology | material-response | background-spill
       direction: "canonical source-relative direction"
       role: primary | supporting
@@ -131,7 +137,7 @@ light_form_contract:
 
 Candidate claims listed by this contract carry `lighting_effects`, each with an `aggregate_effect_id`, confidence, and source evidence. Every listed claim is emitted, represented exactly once in `emitted_controls`, and references the same complete effect set. A `prompt_excerpt` may be the smallest exact clause inside a compact sentence; it need not be a standalone sentence or visible output section. Two effect IDs may not hide the same region, axis, and direction.
 
-When adjacent regions belong to the same visible surface, a material source/render change in their value separation is evidence for a spatial Light/Form residual, not automatically for intrinsic form or surface color. Record the compared major regions as `region_id` and a distinct known `reference_region_id`; the same ordered pair must appear in an aggregate actuation rather than remaining diagnostic-only. Omit the optional reference for genuinely one-region effects. Then assign any visible transition to gradient extent, local form contrast, shadow topology, or material response. Use `result-space-only` when the image does not identify a reliable physical cause.
+When adjacent regions belong to the same visible surface, a material source/render change in their value separation is evidence for a spatial Light/Form residual, not automatically for intrinsic form or surface color. If one coarse major region contains both sides of that material relation, declare only the necessary Light/Form subregions—such as major plane, shadow zone, transition, or material mass—under their parent major region. Each subregion carries source evidence and a non-trivial exact prompt anchor. Record the compared regions as `region_id` and a distinct known `reference_region_id`; the same ordered pair must appear in an aggregate actuation rather than remaining diagnostic-only, and every emitted control for that comparison must retain both exact anchors. Omit the optional reference for genuinely one-region effects. Then assign any visible transition to gradient extent, local form contrast, shadow topology, or material response. Use `result-space-only` when the image does not identify a reliable physical cause.
 
 `lighting_language` is optional unless source-visible lighting is being translated into a compact composite or a friendly label is considered. Use `references/lighting-language.md` and its versioned policy. Classify every axis independently, preserve evidence and uncertainty, and keep its deterministic `controlled_summary` explanation-only. Every named review records user, versioned-vocabulary, or current-source provenance. Compatibility alone does not authorize emission: a `source-evidence-qualified` entry must also have high/medium confidence, P0/P1 priority, a `material-drift` omission counterfactual, and immediately adjacent already-owned literal controls. A `model-calibrated` entry instead carries exact generator/version response evidence.
 
@@ -179,6 +185,8 @@ When both are present:
 - do not use source geometry to satisfy a missing intrinsic value or hue control;
 - every overlapping Color/Tone value, displayed-key, shadow-floor, contrast, or microcontrast control lists the primary spatial light effects it protects;
 - place the primary visible Light/Form result before those overlapping tone controls, then review shared contrast language manually because structural validation cannot infer all prose semantics.
+
+After the ledgers are reconciled, no additional lighting or tone prose may be added as a bridge during final composition. Every semantic span in the authored audited prompt must be an exact owned control or a qualified emitted summary; otherwise route it to the correct contract or remove it.
 
 ## Analyst-selected measurement
 

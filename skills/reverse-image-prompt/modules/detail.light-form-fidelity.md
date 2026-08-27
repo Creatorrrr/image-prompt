@@ -1,6 +1,6 @@
 ---
 id: detail.light-form-fidelity
-version: 9
+version: 10
 priority: 79
 type: detail
 tier: 3
@@ -86,7 +86,9 @@ Use `physical-cause` or `physical-plus-result` actuation only with medium- or hi
 
 For each material region effect, record its role as broad plane, gradient, highlight, shadow, rim, or spill; its source-relative strength; edge character; and evidence. Use semantic region relations rather than fixed coordinates unless exact placement is itself invariant.
 
-When adjacent regions of the same material differ because of light-to-form, record the target `region_id` and distinct `reference_region_id` in both the observed region effect and aggregate actuation, then record the transition as a gradient or shadow event when visible. Let the emitted result-space control preserve that relation; do not turn one motivating region name, direction, value, or threshold into a reusable default.
+When a major region mixes material lighting topology, declare only the needed source-derived Light/Form subregions: major plane, shadow zone, transition, material mass, context, or spill. Each needs an exact prompt anchor and visible evidence; never install a fixed part, direction, or coordinate.
+
+When adjacent regions of the same material differ because of light-to-form, record the target `region_id` and distinct `reference_region_id` in both the observed region effect and aggregate actuation, then record the transition as a gradient or shadow event when visible. Let the emitted result-space control preserve that relation and contain the exact anchors for every declared Light/Form subregion it compares; do not turn one motivating region name, direction, value, or threshold into a reusable default.
 
 Assign each material dark region to cast shadow, self-shadow, contact or occlusion, material response, processing, mixed, or uncertain ownership. Do not promote a small contact shadow into a broad directional-light field, and do not encode an illumination-induced contour as intrinsic form.
 
@@ -112,7 +114,7 @@ Literal lighting controls remain authoritative. Emit a current-source label once
 
 ## Final prompt control ledger
 
-In `audited`: Copy every exact prompt excerpt that changes lighting or light-to-form into the final lighting control ledger. Link it to one claim, owner, and complete effect list. In `prompt`, retain one owner and the decisive visible effect without copying prose into a ledger. In either profile, split cross-owner compounds and replace overstrong positive controls rather than appending counter-negatives.
+In `audited`: Copy every exact lighting excerpt into the ledger with one claim, owner, complete effects, and declared regional anchors. Final composition adds no lighting, shadow, gradient, or material-response prose. In `prompt`, retain one owner and decisive visible effect without a ledger. In either profile, split cross-owner compounds and replace overstrong controls rather than appending counter-negatives.
 
 When measured comparison is warranted, read `references/lighting-reproduction-evaluation.md`. Use only analyst-selected regions and profiles, retain source/profile uncertainty, and never convert diagnostic measurements directly into prompt wording.
 
