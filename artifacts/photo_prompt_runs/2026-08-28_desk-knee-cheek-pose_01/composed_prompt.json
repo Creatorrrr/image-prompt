@@ -1,0 +1,93 @@
+{
+  "pack_id": "0009c0c780944fae",
+  "prompt_en": "Create a natural vertical classroom portrait of the same fictional 18-year-old Korean high-school senior shown in the attached reference image. She sits sideways on a wooden classroom chair beside a desk. One polished loafer rests flat on the desktop, bringing that bent knee close to her face, while the other shoe stays firmly on the floor. Her torso folds gently around the raised leg; one cheek rests in clear contact with the raised knee, her hands loosely circle the shin, and she looks directly into the camera with a quiet, intent expression. Retain the reference's long straight dark hair, airy bangs, large brown eyes, soft pink lips, navy blazer, white shirt, plaid ribbon bow, dark pleated skirt, knee-high socks, and loafers. Frame from head to both shoes at a slightly elevated three-quarter angle, with the desk edge forming a diagonal that keeps the elevated foot, knee, cheek contact, and grounded foot visible in one plane. A soft side window light grazes her cheek and knee together, reinforcing their contact against a clean green chalkboard. Preserve realistic anatomy, fabric folds, skin texture, and a calm after-class atmosphere.",
+  "negative_en": "fake-looking background, broken facial features, cartoon style, illustration look, distorted fingers, body distortion, unrealistic hands",
+  "chosen_candidate_ids": [],
+  "semantic_clarification_decisions": [
+    {
+      "clarification_id": "clarification:authorial-core:interpreted-intent",
+      "decision": "applied",
+      "rationale": "The frozen interpretation directly defines the requested foot-on-desk, knee-to-cheek contact, seated support, and camera-facing gaze.",
+      "prompt_evidence": "one cheek rests in clear contact with the raised knee"
+    },
+    {
+      "clarification_id": "clarification:visual-profile:hands_free_supported_drink_load",
+      "decision": "rejected",
+      "rationale": "The request contains no drink or supported load, and this adult-context-gated interpretation would invent a new object relation."
+    },
+    {
+      "clarification_id": "clarification:visual-profile:kuudere_composed_warmth_relation",
+      "decision": "rejected",
+      "rationale": "The request establishes no counterpart or relationship behavior, so this profile would replace the direct portrait gaze with a different scene."
+    }
+  ],
+  "creative_augmentation_brief": {
+    "decisions": [
+      {
+        "candidate_id": "slot:medium:lifestyle_photo",
+        "decision": "rejected",
+        "rationale": "Natural classroom photography is already independently authored in the frozen baseline."
+      },
+      {
+        "candidate_id": "slot:light_intensity:soft_low_contrast",
+        "decision": "rejected",
+        "rationale": "The final side-window treatment is authored from the contact geometry, not adopted as a generic low-contrast preset."
+      },
+      {
+        "candidate_id": "slot:subject_framing:upper_body_framing",
+        "decision": "rejected",
+        "rationale": "An upper-body crop would hide the elevated loafer and grounded second foot required to verify the pose."
+      },
+      {
+        "candidate_id": "slot:light_shape:window_rectangle",
+        "decision": "rejected",
+        "rationale": "A hard rectangular patch would distract from the cheek-to-knee contact."
+      },
+      {
+        "candidate_id": "slot:light_direction:side_light_left",
+        "decision": "rejected",
+        "rationale": "The requester did not specify a side, so the light remains naturally side-directed without an arbitrary left assignment."
+      },
+      {
+        "candidate_id": "preset:editorial_full_body_pose_study",
+        "decision": "rejected",
+        "rationale": "A generic editorial pose study could revise the exact locked desk-foot-knee-cheek topology."
+      }
+    ]
+  },
+  "authorial_core_binding": {
+    "source_authorial_core_sha256": "dc6ea611afecd2e30db6d7baa83b7f8dff7d2ff29c969760b275fd1f354ad5ab",
+    "source_intent_lock_sha256": "2e908157bc2c97a68454487f1a06e120313e599fc0034d6f7a73ea9f26b917b6",
+    "preserved_anchor_ids": [
+      "core_concept",
+      "core_subject",
+      "core_setting",
+      "core_event",
+      "core_body_geometry",
+      "core_expression",
+      "core_appearance"
+    ],
+    "preserved_evidence": [
+      "a natural vertical classroom portrait",
+      "the same fictional 18-year-old Korean high-school senior shown in the attached reference image",
+      "a wooden classroom chair beside a desk",
+      "One polished loafer rests flat on the desktop, bringing that bent knee close to her face",
+      "one cheek rests in clear contact with the raised knee",
+      "looks directly into the camera",
+      "Retain the reference's long straight dark hair, airy bangs, large brown eyes, soft pink lips, navy blazer, white shirt, plaid ribbon bow, dark pleated skirt, knee-high socks, and loafers"
+    ],
+    "authorial_decisions": [
+      {
+        "dimension": "framing",
+        "decision": "Use a slightly elevated three-quarter angle that keeps the elevated shoe, raised knee, cheek contact, and grounded second foot in one readable frame.",
+        "rationale": "The complete topology matters more than a close beauty crop."
+      },
+      {
+        "dimension": "lighting",
+        "decision": "Let one soft side-window source graze the contacting cheek and knee together.",
+        "rationale": "Shared light makes the physical contact legible without exaggerating the pose."
+      }
+    ]
+  },
+  "composer": "agent"
+}
