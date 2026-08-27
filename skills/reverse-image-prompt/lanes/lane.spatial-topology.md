@@ -1,6 +1,6 @@
 ---
 id: lane.spatial-topology
-version: 6
+version: 7
 priority: 90
 activation: matched
 select_types:
@@ -39,9 +39,9 @@ Read only the raw request, intent mode, exact source artifact and hash, route fi
 
 ## Output contract
 
-In `prompt`, return `reverse-image-analysis-lane-report/compact-v2`. First decide whether orientation or topology is P0/P1. If it is, report one macro visible result, then hold the observed viewpoint and crop fixed and test whether that summary preserves the source-visible component-to-subject, subject-to-frame, facing or gaze, depth-order, support, contact, boundary, occlusion, and completion relations that jointly create the read. This is not a fixed checklist: inspect only relations supported by the current source. Mark the macro `sufficient`, `lossy`, or `uncertain`, and retain only decisive P0/P1 at-risk relations that the macro does not carry. Before handoff, treat each alignment-style phrase as a positive control and enumerate every spatial axis it would explicitly or implicitly actuate; never recommend a clause that normalizes an unsupported axis. Hand off appearance, color, and capture questions through the structured compact handoff.
+In `prompt`, return `reverse-image-analysis-lane-report/compact-v2`. First decide whether orientation or topology is P0/P1. If so, report one macro, then hold viewpoint and crop while testing its source-visible component, frame, facing/gaze, depth, support/contact, boundary, occlusion, and completion relations. Inspect only current-source evidence. Mark the macro `sufficient`, `lossy`, or `uncertain`; retain only decisive P0/P1 residuals. Distinguish region-to-frame position from inter-region direction. Separately disposition material proximity, overlap, and surviving visibility; if direction survives extreme displacement, hand off both frame relations, the inter-region relation, and a direction-held counterfactual. Treat alignment phrases as positive controls over every explicit or implicit axis. Hand off appearance, color, and capture questions structurally.
 
-In `audited`, return `reverse-image-analysis-lane-report/v2`, split independently drifting spatial results into atomic obligations, and retain confounded result directions.
+In `audited`, return `reverse-image-analysis-lane-report/v2`, split independently drifting results into atomic obligations, retain confounded directions, and close every high-degeneracy cross-component placement.
 
 ## Completion gate
 

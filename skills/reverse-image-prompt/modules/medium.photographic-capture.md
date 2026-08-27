@@ -1,6 +1,6 @@
 ---
 id: medium.photographic-capture
-version: 12
+version: 13
 priority: 72
 type: medium
 tier: 2
@@ -57,6 +57,7 @@ Map contrast topology separately at the global scene, major subject masses, loca
 - Identify the largest bright and dark masses before small accents.
 - Separate global range from local contrast; either can be strong while the other is soft.
 - State whether shadows flatten, reveal, separate, or sculpt form. Distinguish material responses only when visible.
+- For a large dark photographic mass, separate its displayed shadow floor, spatial black-level distribution, and capture-level texture or microcontrast visibility. Similar darkness can hide materially different gradients or surface detail, and soft light does not by itself determine any of those three results.
 
 Decompose photographic appearance into intrinsic subject evidence, pose or deformation, perspective, illumination and shadow, material interaction or occlusion, and capture or processing. Preserve their combined visible result, but do not let one cause rewrite another.
 
@@ -76,7 +77,7 @@ In source/render comparison, compare target and contextual patches. Estimate the
 
 Distinguish global softness, diffusion, haze, or compression from depth-of-field blur. Invoke shallow depth only when a sharper focus plane separates from defocused layers; if the subject is also soft, preserve it.
 
-Describe edge sharpness and microcontrast separately. Preserve highlight rolloff, bloom radius, black level, shadow lift, local contrast, and texture suppression only when visible; do not infer a lens or filter.
+Describe edge sharpness and microcontrast separately. Preserve highlight rolloff, bloom radius, black level, shadow lift, local contrast, and texture suppression only when visible; do not infer a lens or filter. Hand displayed shadow floor, highlight rolloff, and microcontrast to Color/Tone, while Light/Form owns where dark and bright masses fall and how their transition traverses the surface.
 
 Describe lighting-to-volume:
 

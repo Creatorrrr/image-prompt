@@ -1,6 +1,6 @@
 ---
 id: detail.color-tone-fidelity
-version: 10
+version: 11
 priority: 79
 type: detail
 tier: 3
@@ -125,7 +125,7 @@ Give each material effect a source-relative identifier covering region, axis, di
 
 ## Final prompt control ledger
 
-In `audited`, copy every color/tone excerpt into `emitted_controls` with one claim, layer, region, axis, and effect list. Overlapping value/tone controls list `protected_light_effect_ids` and follow the primary light result. A required intrinsic axis needs its own intrinsic axis-control; compounds cannot satisfy it. In `prompt`, ownership and protected relations are sufficient without duplicating the excerpt in a ledger.
+In `audited`, copy every color/tone excerpt into `emitted_controls` with one claim, layer, region, axis, and effect list. Overlapping value/tone controls list `protected_light_effect_ids` and follow the primary light result. A required intrinsic axis needs its own intrinsic axis-control; compounds cannot satisfy it. After reconciliation, remove any final-prompt phrase about displayed key, shadow floor, highlight rolloff, microcontrast, surface value/chroma/hue, cast, exposure, or processing that is absent from the Color/Tone ledger; it cannot survive as generic bridge prose or borrow ownership from Light/Form. In `prompt`, ownership and protected relations are sufficient without duplicating the excerpt in a ledger.
 
 When a draft over-pulls an axis, replace or remove its positive control rather than appending an opposing negative.
 

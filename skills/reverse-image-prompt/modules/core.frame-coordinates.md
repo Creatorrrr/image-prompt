@@ -1,6 +1,6 @@
 ---
 id: core.frame-coordinates
-version: 13
+version: 14
 priority: 108
 type: core
 tier: 0
@@ -47,16 +47,18 @@ Preserve region-share hierarchy when flexible pose, viewpoint, or placement chan
 
 ## Spatial language
 
-In `prompt`, when orientation is P0/P1, emit one macro result plus decisive residual relations. Placement proves no orientation. Treat alignment semantics as positive controls; enumerate every axis each exact clause affects explicitly or implicitly.
+In `prompt`, emit one P0/P1 macro plus decisive residuals. Placement proves no orientation. Treat alignment wording as positive control and enumerate every affected axis.
 
-In `audited`, disposition every spatial axis. `flexible` or `not-material` requires isolated neutralization with adjacent relations held; low-confidence or wholly confounded axes become uncertain unless coupled. Run both human counterfactuals, merge joint effects once, and block a spatial clause affecting any unowned axis.
+In `audited`, disposition every axis. `flexible` or `not-material` needs isolated neutralization; uncertain evidence stays uncertain unless coupled. Run both human counterfactuals, merge joint effects once, and block unowned spatial pulls.
 
 ## Relational coordinate frames
 
-- Use frame-relative directions for composition and object- or scene-relative zones for physical relationships. Qualify `left`, `right`, `front`, or `behind` when viewpoint could reverse them.
-- Establish a visible shared reference plane when it disambiguates the scene: floor, ground, seat, platform, tabletop, interior volume, or another support region.
-- Record which side of a boundary holds the main mass and which parts cross it. Separate 2D overlap from contact, containment, support, and depth order.
-- Prefer a stable natural-language relation over extra coordinates. Coordinates lock placement in the frame but cannot by themselves establish physical topology.
+- Frame placement references the frame. Cross-component placement references another region and separates direction, proximity, overlap, and surviving visibility.
+- If direction survives material displacement, close subject-to-frame, reference-to-frame, and inter-region relations, then test residual drift with direction held.
+- Use frame-relative directions for composition and scene-relative zones for physical relations. Qualify viewpoint-dependent sides.
+- Establish a visible support plane only when it disambiguates the scene.
+- Separate 2D overlap from contact, containment, support, and depth order.
+- Prefer stable natural language; coordinates lock frame position, not physical topology.
 
 Use normalized coordinates only for concept-critical anchors.
 

@@ -129,6 +129,20 @@ VALID_COMPONENT_RELATION_KINDS = {
 VALID_COMPONENT_RELATION_ROLES = {"primary", "supporting"}
 VALID_FRAME_EDGES = {"top", "bottom", "left", "right"}
 VALID_COMPLETION_RISKS = {"low", "medium", "high"}
+VALID_PLACEMENT_RELATION_AXES = {
+    "frame-position",
+    "frame-share",
+    "direction",
+    "proximity",
+    "overlap",
+    "visibility-budget",
+}
+VALID_DEGENERATE_SATISFACTION_RISKS = {"low", "high", "uncertain"}
+VALID_PLACEMENT_CLOSURE_VERDICTS = {
+    "material-drift",
+    "preserved",
+    "uncertain",
+}
 VALID_SPATIAL_SUBJECT_KINDS = {"human", "non-human", "group", "component"}
 VALID_SPATIAL_VISIBILITY = {"readable", "partial", "indistinct"}
 VALID_SPATIAL_DISPOSITIONS = {
@@ -139,7 +153,7 @@ VALID_SPATIAL_DISPOSITIONS = {
     "uncertain",
 }
 VALID_SPATIAL_CONFIDENCE = {"high", "medium", "low"}
-SPATIAL_COVERAGE_SCHEMA_VERSION = "spatial-orientation/v5"
+SPATIAL_COVERAGE_SCHEMA_VERSION = "spatial-orientation/v6"
 VALID_SPATIAL_EVIDENCE_CUE_FAMILIES = {
     "frame-placement",
     "axis-relation",
@@ -515,6 +529,14 @@ VALID_LIGHT_MATERIAL_RESPONSES = {
     "woven",
     "mixed",
 }
+VALID_LIGHT_REGION_ROLES = {
+    "major-plane",
+    "shadow-zone",
+    "transition",
+    "material-mass",
+    "context",
+    "spill-field",
+}
 VALID_LIGHT_GEOMETRY_DEPENDENCIES = {
     "pose-bound",
     "pose-robust",
@@ -843,7 +865,268 @@ def _audit_component_relations(
                     f"{label}.completion_risk is required for partial-visibility"
                 )
 
+        placement_axes = relation.get("placement_axes")
+        if placement_axes is not None:
+            if not _nonempty_strings(placement_axes):
+                errors.append(
+                    f"{label}.placement_axes must contain source-relative placement axes"
+                )
+                placement_axes = []
+            elif len(placement_axes) != len(set(placement_axes)):
+                errors.append(f"{label}.placement_axes contains duplicates")
+            unknown_axes = sorted(
+                set(placement_axes) - VALID_PLACEMENT_RELATION_AXES
+            )
+            if unknown_axes:
+                errors.append(
+                    f"{label}.placement_axes contains invalid axes: "
+                    + ", ".join(unknown_axes)
+                )
+        else:
+            placement_axes = []
+
+        degeneracy_risk = relation.get("degenerate_satisfaction_risk")
+        if kind == "cross-component-orientation":
+            if not has_region_reference:
+                errors.append(
+                    f"{label} cross-component orientation must reference another region"
+                )
+            if "direction" not in placement_axes:
+                errors.append(
+                    f"{label}.placement_axes must include 'direction' for cross-component orientation"
+                )
+            if degeneracy_risk not in VALID_DEGENERATE_SATISFACTION_RISKS:
+                errors.append(
+                    f"{label}.degenerate_satisfaction_risk is required for cross-component orientation"
+                )
+
+        if degeneracy_risk is not None:
+            if degeneracy_risk not in VALID_DEGENERATE_SATISFACTION_RISKS:
+                errors.append(f"{label}.degenerate_satisfaction_risk is invalid")
+            if not _nonempty_string(relation.get("degeneracy_rationale")):
+                errors.append(f"{label}.degeneracy_rationale must be non-empty")
+            if degeneracy_risk == "high" and not _nonempty_string(
+                relation.get("placement_closure_id")
+            ):
+                errors.append(
+                    f"{label}.placement_closure_id is required for high degeneracy risk"
+                )
+
     return errors, relation_map
+
+
+def _audit_placement_closures(
+    contract: dict[str, Any],
+    relation_map: dict[str, dict[str, Any]],
+    known_regions: set[str],
+) -> list[str]:
+    """Validate closed subject/frame/reference placement relations.
+
+    Direction alone can remain literally true after a generator moves two
+    components arbitrarily far apart. A closure binds both components to the
+    frame and preserves the material inter-component distance, overlap, or
+    surviving-visibility axis.
+    """
+
+    errors: list[str] = []
+    closures = contract.get("placement_closures", [])
+    if not isinstance(closures, list):
+        return ["placement_closures must be a list"]
+
+    closure_map: dict[str, dict[str, Any]] = {}
+    closure_relation_ids: dict[str, set[str]] = {}
+    for index, closure in enumerate(closures):
+        label = f"placement_closures[{index}]"
+        if not isinstance(closure, dict):
+            errors.append(f"{label} must be an object")
+            continue
+        closure_id = closure.get("id")
+        if not _nonempty_string(closure_id):
+            errors.append(f"{label}.id must be non-empty")
+            continue
+        closure_id = str(closure_id)
+        if closure_id in closure_map:
+            errors.append(f"duplicate placement closure id: {closure_id}")
+        closure_map[closure_id] = closure
+
+        subject_region_id = closure.get("subject_region_id")
+        reference_region_id = closure.get("reference_region_id")
+        if subject_region_id not in known_regions:
+            errors.append(f"{label}.subject_region_id references an unknown region")
+        if reference_region_id not in known_regions:
+            errors.append(f"{label}.reference_region_id references an unknown region")
+        if (
+            subject_region_id in known_regions
+            and reference_region_id in known_regions
+            and subject_region_id == reference_region_id
+        ):
+            errors.append(f"{label} must bind two distinct regions")
+
+        subject_frame_id = closure.get("subject_frame_relation_id")
+        reference_frame_id = closure.get("reference_frame_relation_id")
+        inter_region_ids = closure.get("inter_region_relation_ids")
+        if not _nonempty_string(subject_frame_id):
+            errors.append(f"{label}.subject_frame_relation_id must be non-empty")
+        if not _nonempty_string(reference_frame_id):
+            errors.append(f"{label}.reference_frame_relation_id must be non-empty")
+        if not _nonempty_strings(inter_region_ids):
+            errors.append(
+                f"{label}.inter_region_relation_ids must contain material region relations"
+            )
+            inter_region_ids = []
+        elif len(inter_region_ids) != len(set(inter_region_ids)):
+            errors.append(f"{label}.inter_region_relation_ids contains duplicates")
+
+        referenced_ids = {
+            relation_id
+            for relation_id in [subject_frame_id, reference_frame_id, *inter_region_ids]
+            if _nonempty_string(relation_id)
+        }
+        closure_relation_ids[closure_id] = referenced_ids
+        unknown_relations = sorted(referenced_ids - set(relation_map))
+        if unknown_relations:
+            errors.append(
+                f"{label} references unknown component relations: "
+                + ", ".join(unknown_relations)
+            )
+
+        for relation_id, expected_region, relation_role in (
+            (subject_frame_id, subject_region_id, "subject-frame"),
+            (reference_frame_id, reference_region_id, "reference-frame"),
+        ):
+            relation = relation_map.get(relation_id)
+            if not isinstance(relation, dict):
+                continue
+            if relation.get("subject_region_id") != expected_region:
+                errors.append(
+                    f"{label}.{relation_role} relation must describe its bound region"
+                )
+            if not _nonempty_string(relation.get("frame_reference")):
+                errors.append(
+                    f"{label}.{relation_role} relation must reference the frame"
+                )
+
+        inter_relation_axes: set[str] = set()
+        for relation_id in inter_region_ids:
+            relation = relation_map.get(relation_id)
+            if not isinstance(relation, dict):
+                continue
+            pair = {
+                relation.get("subject_region_id"),
+                relation.get("reference_region_id"),
+            }
+            if pair != {subject_region_id, reference_region_id}:
+                errors.append(
+                    f"{label}.inter_region_relation_ids must connect the closure regions"
+                )
+            relation_axes = relation.get("placement_axes", [])
+            if isinstance(relation_axes, list):
+                inter_relation_axes.update(
+                    axis for axis in relation_axes if isinstance(axis, str)
+                )
+
+        protected_axes = closure.get("protected_axes")
+        if not _nonempty_strings(protected_axes):
+            errors.append(f"{label}.protected_axes must contain placement axes")
+            protected_axes = []
+        elif len(protected_axes) != len(set(protected_axes)):
+            errors.append(f"{label}.protected_axes contains duplicates")
+        unknown_axes = sorted(set(protected_axes) - VALID_PLACEMENT_RELATION_AXES)
+        if unknown_axes:
+            errors.append(
+                f"{label}.protected_axes contains invalid axes: "
+                + ", ".join(unknown_axes)
+            )
+        if "frame-position" not in protected_axes or "direction" not in protected_axes:
+            errors.append(
+                f"{label}.protected_axes must bind frame-position and direction"
+            )
+        residual_axes = {"proximity", "overlap", "visibility-budget"}
+        if not residual_axes & set(protected_axes):
+            errors.append(
+                f"{label}.protected_axes must include proximity, overlap, or visibility-budget"
+            )
+        required_inter_axes = set(protected_axes) - {
+            "frame-position",
+            "frame-share",
+        }
+        missing_inter_axes = sorted(required_inter_axes - inter_relation_axes)
+        if missing_inter_axes:
+            errors.append(
+                f"{label}.protected_axes must be declared by its inter-region relations: "
+                + ", ".join(missing_inter_axes)
+            )
+
+        check = closure.get("degenerate_satisfaction_check")
+        check_label = f"{label}.degenerate_satisfaction_check"
+        if not isinstance(check, dict):
+            errors.append(f"{check_label} must be an object")
+            continue
+        if not _nonempty_string(check.get("tested_change")):
+            errors.append(
+                f"{check_label}.tested_change must isolate extreme displacement or overlap loss"
+            )
+        held_fixed_axes = check.get("held_fixed_axes")
+        changed_axes = check.get("changed_axes")
+        if not _nonempty_strings(held_fixed_axes):
+            errors.append(f"{check_label}.held_fixed_axes must be non-empty")
+            held_fixed_axes = []
+        if "direction" not in held_fixed_axes:
+            errors.append(
+                f"{check_label}.held_fixed_axes must keep direction fixed"
+            )
+        if not _nonempty_strings(changed_axes):
+            errors.append(f"{check_label}.changed_axes must be non-empty")
+            changed_axes = []
+        if set(changed_axes) - set(protected_axes):
+            errors.append(
+                f"{check_label}.changed_axes must be included in protected_axes"
+            )
+        if not residual_axes & set(changed_axes):
+            errors.append(
+                f"{check_label}.changed_axes must test proximity, overlap, or visibility-budget"
+            )
+        verdict = check.get("verdict")
+        if verdict not in VALID_PLACEMENT_CLOSURE_VERDICTS:
+            errors.append(f"{check_label}.verdict is invalid")
+        if verdict == "uncertain" and not _nonempty_string(
+            check.get("uncertainty_note")
+        ):
+            errors.append(f"{check_label}.uncertainty_note is required for uncertain")
+        if not _nonempty_strings(check.get("source_evidence")):
+            errors.append(f"{check_label}.source_evidence must contain visible evidence")
+
+    referenced_closures: set[str] = set()
+    for relation_id, relation in relation_map.items():
+        closure_id = relation.get("placement_closure_id")
+        if not _nonempty_string(closure_id):
+            continue
+        closure_id = str(closure_id)
+        referenced_closures.add(closure_id)
+        closure = closure_map.get(closure_id)
+        if closure is None:
+            errors.append(
+                f"component relation {relation_id!r} references unknown placement closure {closure_id!r}"
+            )
+            continue
+        if relation_id not in closure_relation_ids.get(closure_id, set()):
+            errors.append(
+                f"component relation {relation_id!r} must be included in placement closure {closure_id!r}"
+            )
+        if relation.get("degenerate_satisfaction_risk") == "high":
+            check = closure.get("degenerate_satisfaction_check", {})
+            if not isinstance(check, dict) or check.get("verdict") != "material-drift":
+                errors.append(
+                    f"high-risk component relation {relation_id!r} requires a material-drift closure check"
+                )
+
+    unused_closures = sorted(set(closure_map) - referenced_closures)
+    if unused_closures:
+        errors.append(
+            "placement closures must be referenced by a material component relation: "
+            + ", ".join(unused_closures)
+        )
+    return errors
 
 
 def _audit_spatial_orientation_coverage(
@@ -1419,6 +1702,28 @@ def _audit_spatial_orientation_coverage(
             subject_id, {}
         ).get("region_id"):
             errors.append(f"{label}.relation_id must describe the covered subject region")
+        if relation is not None and dimension == "frame-placement":
+            if not _nonempty_string(relation.get("frame_reference")):
+                errors.append(
+                    f"{label}.relation_id must use a region-to-frame relation for frame placement"
+                )
+            if relation.get("kind") not in {
+                "frame-zone",
+                "axis-offset",
+                "edge-contact",
+            }:
+                errors.append(
+                    f"{label}.relation_id kind cannot satisfy frame placement"
+                )
+        if relation is not None and dimension == "cross-component-orientation":
+            if not _nonempty_string(relation.get("reference_region_id")):
+                errors.append(
+                    f"{label}.relation_id must reference another region for cross-component orientation"
+                )
+            if relation.get("kind") != "cross-component-orientation":
+                errors.append(
+                    f"{label}.relation_id kind must be 'cross-component-orientation'"
+                )
         if invariant is not None and invariant.get("causal_origin") != causal_origin:
             errors.append(f"{label}.causal_origin must match its invariant")
         if claim is not None:
@@ -3609,6 +3914,113 @@ def _audit_leading_descriptor_block(
     return errors
 
 
+def _owned_authored_prompt_phrases(contract: dict[str, Any]) -> list[str]:
+    """Return every semantic span explicitly owned by the render contract."""
+
+    phrases: list[str] = []
+    for ledger_name in (
+        "emitted_controls",
+        "color_tone_contract",
+        "light_form_contract",
+    ):
+        if ledger_name == "emitted_controls":
+            controls = contract.get(ledger_name, [])
+        else:
+            specialized = contract.get(ledger_name, {})
+            controls = (
+                specialized.get("emitted_controls", [])
+                if isinstance(specialized, dict)
+                else []
+            )
+        if not isinstance(controls, list):
+            continue
+        phrases.extend(
+            control["prompt_excerpt"].strip()
+            for control in controls
+            if isinstance(control, dict)
+            and _nonempty_string(control.get("prompt_excerpt"))
+        )
+
+    color_contract = contract.get("color_tone_contract")
+    if isinstance(color_contract, dict):
+        surface_language = color_contract.get("surface_color_language")
+        descriptor = (
+            surface_language.get("controlled_descriptor")
+            if isinstance(surface_language, dict)
+            else None
+        )
+        if (
+            isinstance(descriptor, dict)
+            and descriptor.get("emit") is True
+            and _nonempty_string(descriptor.get("phrase"))
+        ):
+            phrases.append(descriptor["phrase"].strip())
+        metaphors = color_contract.get("appearance_metaphors", [])
+        if isinstance(metaphors, list):
+            phrases.extend(
+                metaphor["phrase"].strip()
+                for metaphor in metaphors
+                if isinstance(metaphor, dict)
+                and metaphor.get("emit") is True
+                and _nonempty_string(metaphor.get("phrase"))
+            )
+
+    light_contract = contract.get("light_form_contract")
+    if isinstance(light_contract, dict):
+        labels = light_contract.get("lighting_labels", [])
+        if isinstance(labels, list):
+            phrases.extend(
+                label["phrase"].strip()
+                for label in labels
+                if isinstance(label, dict)
+                and label.get("emit") is True
+                and _nonempty_string(label.get("phrase"))
+            )
+    return list(dict.fromkeys(phrases))
+
+
+def _audit_complete_prompt_ownership(
+    contract: dict[str, Any], prompt_text: str
+) -> list[str]:
+    """Reject semantic prompt prose that is absent from every owned control.
+
+    Ledger reconciliation used to prove only that expected excerpts appeared.
+    It did not reject extra, generator-active prose added during final
+    composition. Mask every owned span and permit only output labels,
+    punctuation, and whitespace in the residue.
+    """
+
+    owned_phrases = _owned_authored_prompt_phrases(contract)
+    occupied: list[tuple[int, int]] = []
+    for phrase in sorted(owned_phrases, key=len, reverse=True):
+        start = 0
+        while True:
+            index = prompt_text.find(phrase, start)
+            if index < 0:
+                break
+            occupied.append((index, index + len(phrase)))
+            start = index + len(phrase)
+
+    masked = list(prompt_text)
+    for start, end in occupied:
+        masked[start:end] = " " * (end - start)
+    residue = "".join(masked)
+    residue = re.sub(
+        r"(?i)\b(?:PROMPT|NEGATIVE\s+PROMPT|RECOMMENDED\s+SETTINGS)\s*:",
+        "",
+        residue,
+    )
+    semantic_residue = re.sub(r"[\W_]+", "", residue, flags=re.UNICODE)
+    if not semantic_residue:
+        return []
+    residue_words = re.findall(r"[\w'-]+", residue, flags=re.UNICODE)
+    preview = " ".join(residue_words[:16])
+    return [
+        "authored prompt contains unowned semantic text outside all emitted "
+        f"controls or qualified summaries: {preview!r}"
+    ]
+
+
 def _audit_authored_prompt(contract: dict[str, Any], prompt_text: Any) -> list[str]:
     """Check literal ledger excerpts against an explicitly supplied authored prompt."""
 
@@ -3964,6 +4376,7 @@ def _audit_authored_prompt(contract: dict[str, Any], prompt_text: Any) -> list[s
                 lead_control_id=summary_control_id,
             )
         )
+    errors.extend(_audit_complete_prompt_ownership(contract, prompt_text))
     return errors
 
 
@@ -5425,7 +5838,40 @@ def _audit_light_form_contract(
             "a low-confidence source hypothesis cannot emit a physical-light cause"
         )
 
-    known_regions = major_region_ids | {"global"}
+    light_regions = light_contract.get("regions", [])
+    if not isinstance(light_regions, list):
+        errors.append("light_form_contract.regions must be a list")
+        light_regions = []
+    light_region_ids: set[str] = set()
+    light_region_anchors: dict[str, str] = {}
+    for index, region in enumerate(light_regions):
+        label = f"light_form_contract.regions[{index}]"
+        if not isinstance(region, dict):
+            errors.append(f"{label} must be an object")
+            continue
+        region_id = region.get("id")
+        if not _nonempty_string(region_id):
+            errors.append(f"{label}.id must be non-empty")
+            continue
+        region_id = str(region_id)
+        if region_id in light_region_ids or region_id in major_region_ids:
+            errors.append(f"duplicate or shadowing Light/Form region id: {region_id}")
+        light_region_ids.add(region_id)
+        parent_region_id = region.get("parent_region_id")
+        if parent_region_id not in major_region_ids:
+            errors.append(f"{label}.parent_region_id must reference a major region")
+        prompt_anchor = region.get("prompt_anchor")
+        if not _meaningful_prompt_anchor(prompt_anchor):
+            errors.append(f"{label}.prompt_anchor must be non-trivial")
+        else:
+            light_region_anchors[region_id] = str(prompt_anchor).strip()
+        if region.get("role") not in VALID_LIGHT_REGION_ROLES:
+            errors.append(f"{label}.role is invalid")
+        if not _nonempty_strings(region.get("source_evidence")):
+            errors.append(f"{label}.source_evidence must contain visible evidence")
+
+    comparable_regions = major_region_ids | light_region_ids
+    known_regions = comparable_regions | {"global"}
     region_effects = light_contract.get("region_effects", [])
     if not isinstance(region_effects, list):
         errors.append("light_form_contract.region_effects must be a list")
@@ -5459,11 +5905,9 @@ def _audit_light_form_contract(
                 errors.append(
                     f"{label}.reference_region_id must be non-empty when present"
                 )
-            elif region_id not in major_region_ids:
-                errors.append(
-                    f"{label}.region_id must reference a major region for comparison"
-                )
-            elif reference_region_id not in major_region_ids:
+            elif region_id not in comparable_regions:
+                errors.append(f"{label}.region_id must reference a known light region")
+            elif reference_region_id not in comparable_regions:
                 errors.append(
                     f"{label}.reference_region_id references an unknown region"
                 )
@@ -5610,11 +6054,9 @@ def _audit_light_form_contract(
                 errors.append(
                     f"{label}.reference_region_id must be non-empty when present"
                 )
-            elif region_id not in major_region_ids:
-                errors.append(
-                    f"{label}.region_id must reference a major region for comparison"
-                )
-            elif reference_region_id not in major_region_ids:
+            elif region_id not in comparable_regions:
+                errors.append(f"{label}.region_id must reference a known light region")
+            elif reference_region_id not in comparable_regions:
                 errors.append(
                     f"{label}.reference_region_id references an unknown region"
                 )
@@ -5833,6 +6275,24 @@ def _audit_light_form_contract(
             errors.append(
                 f"{label} must represent exactly one Light/Form owner matching its effects"
             )
+        if _nonempty_string(excerpt):
+            owned_region_ids = {
+                str(region_id)
+                for effect_id in effect_ids
+                if effect_id in aggregate_map
+                for region_id in (
+                    aggregate_map[effect_id].get("region_id"),
+                    aggregate_map[effect_id].get("reference_region_id"),
+                )
+                if region_id in light_region_anchors
+            }
+            for region_id in sorted(owned_region_ids):
+                anchor = light_region_anchors[region_id]
+                if not _excerpt_contains_exact_anchor(excerpt, anchor):
+                    errors.append(
+                        f"{label}.prompt_excerpt must contain the exact Light/Form "
+                        f"region anchor {anchor!r} for {region_id!r}"
+                    )
 
     for claim_id in sorted(listed_claim_ids & set(claim_map)):
         count = controlled_claim_counts.get(claim_id, 0)
@@ -6156,6 +6616,7 @@ def audit_plan(plan: dict[str, Any], prompt_text: str | None = None) -> list[str
 
     relation_errors, relation_map = _audit_component_relations(contract, region_ids)
     errors.extend(relation_errors)
+    errors.extend(_audit_placement_closures(contract, relation_map, region_ids))
     errors.extend(
         _audit_generic_contract(
             contract,

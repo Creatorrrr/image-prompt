@@ -109,6 +109,7 @@ def valid_plan() -> dict:
                     "source_evidence": ["minor displacement within the surrounding field"],
                 },
             ],
+            "placement_closures": [],
             "candidate_claims": [
                 {
                     "id": "claim-form",
@@ -676,17 +677,28 @@ def promote_spatial_decision(
         "attention-direction": "attention-direction",
         "cross-component": "cross-component-orientation",
     }[decision["family"]]
-    contract["component_relations"].append(
-        {
-            "id": relation_id,
-            "kind": relation_kind,
-            "subject_region_id": "central-form",
-            "frame_reference": "source-relative frame and visible subject",
-            "observation": direction,
-            "role": "primary",
-            "source_evidence": [f"held-out source evidence for {dimension}"],
-        }
-    )
+    relation = {
+        "id": relation_id,
+        "kind": relation_kind,
+        "subject_region_id": "central-form",
+        "observation": direction,
+        "role": "primary",
+        "source_evidence": [f"held-out source evidence for {dimension}"],
+    }
+    if dimension == "cross-component-orientation":
+        relation.update(
+            {
+                "reference_region_id": "surrounding-field",
+                "placement_axes": ["direction"],
+                "degenerate_satisfaction_risk": "low",
+                "degeneracy_rationale": (
+                    "direction alone carries this held-out fixture relation"
+                ),
+            }
+        )
+    else:
+        relation["frame_reference"] = "source-relative frame and visible subject"
+    contract["component_relations"].append(relation)
     add_generic_claim(
         contract,
         invariant_id=invariant_id,
@@ -2018,7 +2030,7 @@ class SaliencePlanTests(unittest.TestCase):
         ]
         self.assertTrue(
             any(
-                "schema_version" in error and "spatial-orientation/v5" in error
+                "schema_version" in error and "spatial-orientation/v6" in error
                 for error in audit_plan(plan)
             )
         )
@@ -2527,6 +2539,148 @@ class SaliencePlanTests(unittest.TestCase):
             any(
                 "complete relation/effect/claim/control path" in error
                 for error in audit_plan(plan)
+            )
+        )
+
+    def test_frame_and_cross_component_decisions_use_distinct_relation_types(self) -> None:
+        frame_plan = promote_spatial_decision(
+            with_spatial_coverage(valid_plan()),
+            "frame-placement",
+        )
+        self.assertEqual(audit_plan(frame_plan), [])
+        frame_relation = next(
+            item
+            for item in frame_plan["render_contract"]["component_relations"]
+            if item["id"] == "relation-frame-placement"
+        )
+        frame_relation["reference_region_id"] = "surrounding-field"
+        frame_relation.pop("frame_reference")
+        self.assertTrue(
+            any(
+                "region-to-frame relation for frame placement" in error
+                for error in audit_plan(frame_plan)
+            )
+        )
+
+        cross_plan = promote_spatial_decision(
+            with_spatial_coverage(valid_plan()),
+            "cross-component-orientation",
+        )
+        self.assertEqual(audit_plan(cross_plan), [])
+        cross_relation = next(
+            item
+            for item in cross_plan["render_contract"]["component_relations"]
+            if item["id"] == "relation-cross-component-orientation"
+        )
+        cross_relation["frame_reference"] = "full frame"
+        cross_relation.pop("reference_region_id")
+        self.assertTrue(
+            any(
+                "must reference another region" in error
+                for error in audit_plan(cross_plan)
+            )
+        )
+
+    def test_high_risk_direction_relation_requires_closed_placement_contract(self) -> None:
+        plan = with_spatial_coverage(valid_plan())
+        promote_spatial_decision(plan, "frame-placement")
+        promote_spatial_decision(plan, "cross-component-orientation")
+        contract = plan["render_contract"]
+        contract["component_relations"].append(
+            {
+                "id": "relation-reference-frame",
+                "kind": "frame-zone",
+                "subject_region_id": "surrounding-field",
+                "frame_reference": "full frame",
+                "observation": "the supporting field retains its source-visible frame share",
+                "role": "primary",
+                "source_evidence": ["held-out supporting-field frame evidence"],
+            }
+        )
+        next(
+            effect
+            for effect in contract["aggregate_effects"]
+            if effect["id"] == "field-balance-effect"
+        )["relation_ids"].append("relation-reference-frame")
+        cross_relation = next(
+            item
+            for item in contract["component_relations"]
+            if item["id"] == "relation-cross-component-orientation"
+        )
+        cross_relation.update(
+            {
+                "placement_axes": ["direction", "proximity", "overlap"],
+                "degenerate_satisfaction_risk": "high",
+                "degeneracy_rationale": (
+                    "direction remains literally true after material separation"
+                ),
+                "placement_closure_id": "closure-central-supporting",
+            }
+        )
+        contract["placement_closures"] = [
+            {
+                "id": "closure-central-supporting",
+                "subject_region_id": "central-form",
+                "reference_region_id": "surrounding-field",
+                "subject_frame_relation_id": "relation-frame-placement",
+                "reference_frame_relation_id": "relation-reference-frame",
+                "inter_region_relation_ids": [
+                    "relation-cross-component-orientation"
+                ],
+                "protected_axes": [
+                    "frame-position",
+                    "direction",
+                    "proximity",
+                    "overlap",
+                ],
+                "degenerate_satisfaction_check": {
+                    "tested_change": (
+                        "move the two regions far apart while keeping their direction"
+                    ),
+                    "held_fixed_axes": ["direction"],
+                    "changed_axes": ["proximity", "overlap"],
+                    "verdict": "material-drift",
+                    "source_evidence": [
+                        "held-out direction-preserving displacement comparison"
+                    ],
+                },
+            }
+        ]
+        self.assertEqual(audit_plan(plan), [])
+
+        missing_closure = deepcopy(plan)
+        missing_closure["render_contract"]["placement_closures"] = []
+        self.assertTrue(
+            any(
+                "unknown placement closure" in error
+                for error in audit_plan(missing_closure)
+            )
+        )
+
+        direction_only = deepcopy(plan)
+        direction_only["render_contract"]["placement_closures"][0][
+            "protected_axes"
+        ] = ["frame-position", "direction"]
+        self.assertTrue(
+            any(
+                "must include proximity, overlap, or visibility-budget" in error
+                for error in audit_plan(direction_only)
+            )
+        )
+
+        unowned_overlap = deepcopy(plan)
+        unowned_cross = next(
+            relation
+            for relation in unowned_overlap["render_contract"][
+                "component_relations"
+            ]
+            if relation["id"] == "relation-cross-component-orientation"
+        )
+        unowned_cross["placement_axes"] = ["direction", "proximity"]
+        self.assertTrue(
+            any(
+                "must be declared by its inter-region relations: overlap" in error
+                for error in audit_plan(unowned_overlap)
             )
         )
 
@@ -3907,6 +4061,25 @@ class SaliencePlanTests(unittest.TestCase):
             )
         )
 
+    def test_authored_prompt_rejects_semantic_prose_without_an_owner(self) -> None:
+        plan = valid_plan()
+        prompt = authored_prompt_text(plan)
+        unowned_clauses = (
+            "the displayed surface shifts to a warmer brighter tone",
+            "a long soft transition descends across the dark material mass",
+        )
+        for clause in unowned_clauses:
+            with self.subTest(clause=clause):
+                errors = audit_plan(plan, prompt + ". " + clause)
+                self.assertTrue(
+                    any("unowned semantic text" in error for error in errors)
+                )
+
+    def test_authored_prompt_ownership_allows_only_structural_labels_and_punctuation(self) -> None:
+        plan = valid_plan()
+        prompt = authored_prompt_text(plan) + "\nNEGATIVE PROMPT:\n;;;"
+        self.assertEqual(audit_plan(plan, prompt), [])
+
     def test_generic_and_light_contracts_cannot_share_claim_or_excerpt(self) -> None:
         plan = valid_light_plan()
         contract = plan["render_contract"]
@@ -4292,8 +4465,62 @@ class SaliencePlanTests(unittest.TestCase):
         light_contract["region_effects"][0]["reference_region_id"] = "central-form"
         self.assertTrue(
             any(
-                "region_id must reference a major region for comparison" in error
+                "region_id must reference a known light region" in error
                 for error in audit_plan(global_target)
+            )
+        )
+
+    def test_light_subregions_require_owned_exact_prompt_anchors(self) -> None:
+        plan = valid_light_plan()
+        light_contract = plan["render_contract"]["light_form_contract"]
+        light_contract["regions"] = [
+            {
+                "id": "central-main-plane",
+                "parent_region_id": "central-form",
+                "prompt_anchor": "main plane",
+                "role": "major-plane",
+                "source_evidence": ["held-out broad visible plane"],
+            },
+            {
+                "id": "central-shadow-zone",
+                "parent_region_id": "central-form",
+                "prompt_anchor": "shadow zone",
+                "role": "shadow-zone",
+                "source_evidence": ["held-out adjacent dark region"],
+            },
+        ]
+        for effect in (
+            light_contract["region_effects"][0],
+            light_contract["aggregate_effects"][0],
+        ):
+            effect["region_id"] = "central-main-plane"
+            effect["reference_region_id"] = "central-shadow-zone"
+        light_contract["emitted_controls"][0]["prompt_excerpt"] = (
+            "the main plane stays softly separated from the shadow zone"
+        )
+        self.assertEqual(audit_plan(plan, authored_prompt_text(plan)), [])
+
+        missing_anchor = deepcopy(plan)
+        missing_anchor["render_contract"]["light_form_contract"][
+            "emitted_controls"
+        ][0]["prompt_excerpt"] = "the main plane keeps a shallow value transition"
+        self.assertTrue(
+            any(
+                "exact Light/Form region anchor 'shadow zone'" in error
+                for error in audit_plan(
+                    missing_anchor, authored_prompt_text(missing_anchor)
+                )
+            )
+        )
+
+        unknown_parent = deepcopy(plan)
+        unknown_parent["render_contract"]["light_form_contract"]["regions"][0][
+            "parent_region_id"
+        ] = "missing-major-region"
+        self.assertTrue(
+            any(
+                "parent_region_id must reference a major region" in error
+                for error in audit_plan(unknown_parent)
             )
         )
 
