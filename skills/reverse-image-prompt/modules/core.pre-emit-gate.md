@@ -1,6 +1,6 @@
 ---
 id: core.pre-emit-gate
-version: 24
+version: 28
 priority: 100
 type: core
 tier: 0
@@ -54,9 +54,11 @@ Always. Apply immediately before the final answer as a rewrite pass, not an appe
 - Audit semantic salience amplification across exact repeats, synonyms, paraphrases, labels, negatives, and settings; a repeatedly described dimension gains visual priority even when no sentence is duplicated verbatim.
 - Compare each slot's aggregate direction and strength with its source target. Generic beauty, style, quality, or demographic-looking shorthand cannot replace source-specific appearance, geometry, skin presentation, space, clothing, pose, light, or color.
 - Correct an overstrong draft by replacing or deleting the amplifying language, not by appending a negative counterweight.
-- Audit coordinate contradictions before emitting. In `prompt`, preserve only the P0/P1 macro spatial result and decisive relations; in `audited`, validate the full spatial contract.
-- For a material human, keep any non-identifying broad prior contiguous with correcting local geometry. Beauty and skin wording cannot act as likeness by themselves.
-- Retained aggregate descriptors require provenance, P0/P1 materiality, and adjacent owned decomposition. Remove free-floating labels, not qualified anchors whose controls are detailed.
+- Reject unresolved provenance labels and missing-artifact comparisons; allow physical `light source` and self-contained state verbs.
+- Audit coordinate contradictions before emitting. In `prompt`, a coupled macro declares `sufficient`, `lossy`, or `uncertain`: sufficient emits no residuals; otherwise retain only supported P0/P1 at-risk relations. A missing cross-lane owner or module is `route-gap`. In `audited`, validate the full spatial contract.
+- Treat alignment prose as multi-axis control. Record each exact clause's explicit and implicit effects; rewrite it if any affected spatial axis is unowned. Negatives cannot repair the conflict.
+- For a material human, verify external identity provenance and output use, displayed-skin scope and priority, and one bounded appearance gestalt. Exact external identity context precedes the gestalt; a broad person prior stays contiguous with correcting geometry.
+- Retained human or general aggregate descriptors require provenance, P0/P1 materiality, a material-drift omission check, intended/protected dimensions, and adjacent owned decomposition. Beauty and skin wording cannot act as likeness or demographic evidence.
 
 ## Causal ownership
 
@@ -66,6 +68,7 @@ Always. Apply immediately before the final answer as a rewrite pass, not an appe
 - Split an ambiguous color phrase when one modifier could silently control intrinsic surface, illumination, exposure, or processing at the same time.
 - Give an axis-control one region and one perceptual axis. Split a compound that would silently change several material axes.
 - Assign every lighting-changing phrase to one Light/Form owner. Keep the visible result authoritative when physical cause is uncertain.
+- Do not let a compact lighting summary replace an at-risk regional or pose-dependent Light/Form relation.
 - Keep global tonal range and local form contrast as separate effects.
 - Give every material shadow event a source-supported owner or mark it mixed or uncertain.
 
@@ -78,12 +81,12 @@ Apply this section only in `audited`, measured fidelity, or source/render evalua
 - Reconcile every exact color-changing excerpt in the final prompt with one emitted claim, one causal layer, and its complete aggregate effect budget.
 - For material lighting, verify one source-relative Light/Form target and evidence for every emitted source-geometry, fill, local-form-contrast, shadow-topology, material-response, or background-spill contribution.
 - Reconcile every exact lighting-changing excerpt with one emitted claim, one owner, and its complete lighting-effect list.
-- Validate routed human appearance decisions, spatial counterfactuals, obligation binding, and specialized-ledger separation with the audited tools before generation evidence is frozen.
+- Before generation, validate human appearance, per-axis neutralization, whole/residual spatial counterfactuals, exact prompt-effect audits, obligation binding, and ledger separation.
 
 ## Final checks
 
 - Preserve major-region area and attention order, partial visibility, fidelity ceiling, and scale-appropriate detail.
 - Remove unsupported camera, lens, identity, brand, artist, hidden-content, and quality assumptions.
-- Confirm that later face, hair, garment, background, color, or lighting language does not neutralize an earlier P0/P1 relation.
+- When pose and light jointly shape form, keep camera/crop, spatial macro and residuals, then pose-bound Light/Form; later clauses must not neutralize that relation.
 - Report prompt-only limits honestly. Package validity, prompt quality, pixels, and user judgment remain separate.
 - If the prompt reads as a checklist, rewrite around the proposition and its smallest causal cue set.

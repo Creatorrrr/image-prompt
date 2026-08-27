@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Validate source-relative salience plans and matched behavior-test pairs.
 
-The tool checks the structured decision contract used by the skill. It does not
-score prose style or infer semantics from keywords.
+The tool checks the structured decision contract and a narrow standalone-output
+boundary. It does not score prose style or infer visual fidelity from keywords.
 """
 
 from __future__ import annotations
@@ -52,6 +52,59 @@ VALID_SOURCE_KINDS = {
     "translated-causal-control",
     "diagnostic-appeal",
 }
+STANDALONE_PROMPT_BOUNDARY_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = (
+    (
+        "internal provenance label",
+        re.compile(
+            r"\b(?:current[-\s]+source|source[-\s]+(?:relative|visible|specific|"
+            r"supported|derived|based|qualified|matching|evidence[-\s]+qualified))\b",
+            re.IGNORECASE,
+        ),
+    ),
+    (
+        "unavailable image artifact",
+        re.compile(
+            r"\b(?:attached|source|reference|input|provided|original)[-\s]+"
+            r"(?:image|photo(?:graph)?|picture|render|frame|attachment)\b",
+            re.IGNORECASE,
+        ),
+    ),
+    (
+        "unresolved comparison target",
+        re.compile(
+            r"\b(?:match(?:es|ed|ing)?|reproduc(?:e|es|ed|ing)|"
+            r"reconstruct(?:s|ed|ing)?|cop(?:y|ies|ied|ying)|mirror(?:s|ed|ing)?|"
+            r"preserv(?:e|es|ed|ing)|retain(?:s|ed|ing)?|keep(?:s|ing)?|kept|"
+            r"maintain(?:s|ed|ing)?)\s+(?:the\s+)?(?:source|reference|original)\b",
+            re.IGNORECASE,
+        ),
+    ),
+    (
+        "unresolved source placeholder",
+        re.compile(
+            r"\bsource[-\s]+(?:side|subject|components?|placement|pose|orientation|"
+            r"relation|appearance|reading|aesthetic|silhouette|topology|axis|"
+            r"viewpoint|crop|garment|hair|face|body)\b",
+            re.IGNORECASE,
+        ),
+    ),
+    (
+        "unresolved original-state placeholder",
+        re.compile(
+            r"\boriginal[-\s]+(?:composition|pose|appearance|lighting|colou?rs?|"
+            r"geometry|crop|framing|layout|proportions?|silhouette)\b",
+            re.IGNORECASE,
+        ),
+    ),
+    (
+        "deictic image instruction",
+        re.compile(
+            r"\b(?:as|exactly\s+as)\s+(?:shown|seen|pictured|depicted)\s+"
+            r"(?:in|on)\s+(?:the\s+)?(?:source|reference|image|photo|picture|attachment)\b",
+            re.IGNORECASE,
+        ),
+    ),
+)
 VALID_REGION_ROLES = {"dominant", "supporting", "edge-frame", "low-legibility"}
 VALID_RELATIVE_AREAS = {"small", "medium", "large"}
 VALID_ATTENTION = {"primary", "secondary", "background"}
@@ -86,7 +139,7 @@ VALID_SPATIAL_DISPOSITIONS = {
     "uncertain",
 }
 VALID_SPATIAL_CONFIDENCE = {"high", "medium", "low"}
-SPATIAL_COVERAGE_SCHEMA_VERSION = "spatial-orientation/v4"
+SPATIAL_COVERAGE_SCHEMA_VERSION = "spatial-orientation/v5"
 VALID_SPATIAL_EVIDENCE_CUE_FAMILIES = {
     "frame-placement",
     "axis-relation",
@@ -99,6 +152,20 @@ VALID_SPATIAL_EVIDENCE_CUE_FAMILIES = {
     "visibility-limit",
 }
 VALID_NEUTRALIZATION_VERDICTS = {"material", "not-material", "uncertain"}
+VALID_DIMENSION_NEUTRALIZATION_VERDICTS = {
+    "preserved",
+    "material-drift",
+    "uncertain",
+}
+DIMENSION_NEUTRALIZATION_TEST_SCOPE = (
+    "single-dimension-with-adjacent-spatial-relations-held"
+)
+VALID_SPATIAL_PROMPT_EFFECT_VERDICTS = {
+    "source-consistent",
+    "neutralizing",
+    "uncertain",
+}
+SPATIAL_PROMPT_EFFECT_SCOPE = "explicit-and-implicit-spatial-effects"
 VALID_COUNTERFACTUAL_SCOPES = {"whole-orientation", "residual-alignment"}
 VALID_COUPLED_EFFECT_DISPOSITIONS = {"invariant", "not-material", "uncertain"}
 VALID_PHYSICAL_ATTRIBUTIONS = {"resolved", "confounded", "uncertain"}
@@ -192,7 +259,11 @@ SPATIAL_DIMENSION_ALLOWED_ORIGINS = {
     "human-attention-direction": {"pose-deformation", "spatial-relation"},
     "cross-component-orientation": {"spatial-relation", "layout"},
 }
-VALID_GENERATION_PRIOR_SCOPES = {"person-gestalt", "attractiveness"}
+VALID_GENERATION_PRIOR_SCOPES = {
+    "person-gestalt",
+    "attractiveness",
+    "person-aesthetic",
+}
 VALID_GENERATION_PRIOR_SOURCES = {
     "user-supplied",
     "source-visible-approximation",
@@ -213,7 +284,81 @@ VALID_HUMAN_FACE_VISIBILITY = {
     "uncertain",
 }
 VALID_PERSON_PRIOR_DISPOSITIONS = {"emit", "omit", "uncertain"}
-HUMAN_APPEARANCE_SCHEMA_VERSION = "human-appearance/v2"
+VALID_APPEARANCE_GESTALT_DISPOSITIONS = {"emit", "omit", "uncertain"}
+VALID_APPEARANCE_GESTALT_SCOPES = {"attractiveness", "person-aesthetic"}
+VALID_APPEARANCE_VIEWER_PRIORITIES = {
+    "P0",
+    "P1",
+    "P2",
+    "P3",
+    "not-material",
+    "uncertain",
+}
+VALID_APPEARANCE_EFFECT_DIMENSIONS = {
+    "face-form",
+    "body-form",
+    "hair-boundary",
+    "expression-gaze",
+    "displayed-skin",
+    "cosmetic-visibility",
+    "garment-coverage",
+    "pose-occlusion",
+    "scale-crop",
+    "capture-treatment",
+    "light-form",
+    "color-tone",
+    "identity-context",
+    "age-presentation",
+}
+APPEARANCE_DIMENSION_ALLOWED_OWNERS = {
+    "face-form": {"subject.human", "detail.human-face-likeness"},
+    "body-form": {"subject.human", "detail.human-body-form"},
+    "hair-boundary": {"subject.human", "detail.human-face-likeness"},
+    "expression-gaze": {
+        "subject.human",
+        "detail.human-face-likeness",
+        "detail.pose-hands-gesture",
+    },
+    "displayed-skin": {
+        "subject.human",
+        "detail.human-face-likeness",
+        "detail.human-body-form",
+        "detail.color-tone-fidelity",
+        "medium.photographic-capture",
+    },
+    "cosmetic-visibility": {
+        "subject.human",
+        "detail.human-face-likeness",
+        "medium.photographic-capture",
+    },
+    "garment-coverage": {"subject.human", "detail.clothing-fashion"},
+    "pose-occlusion": {
+        "subject.human",
+        "detail.pose-hands-gesture",
+        "detail.human-face-likeness",
+    },
+    "scale-crop": {
+        "core.frame-coordinates",
+        "subject.human",
+        "detail.clothing-fashion",
+    },
+    "capture-treatment": {
+        "core.fidelity-discipline",
+        "subject.human",
+        "detail.human-face-likeness",
+        "medium.photographic-capture",
+    },
+    "light-form": {
+        "detail.light-form-fidelity",
+        "medium.photographic-capture",
+    },
+    "color-tone": {
+        "detail.color-tone-fidelity",
+        "medium.photographic-capture",
+    },
+    "age-presentation": {"subject.human", "detail.human-face-likeness"},
+}
+HUMAN_APPEARANCE_SCHEMA_VERSION = "human-appearance/v3"
 VALID_FRAME_PROMINENCE = {"primary", "secondary", "background"}
 VALID_FIDELITY_SALIENCE = {"primary", "supporting", "not-material", "uncertain"}
 VALID_IDENTITY_CONTEXT_DISPOSITIONS = {
@@ -221,6 +366,13 @@ VALID_IDENTITY_CONTEXT_DISPOSITIONS = {
     "trusted-metadata",
     "absent",
 }
+VALID_IDENTITY_CONTEXT_USES = {
+    "creative-target",
+    "user-asserted-context",
+    "trusted-factual-context",
+    "none",
+}
+VALID_IDENTITY_PROMPT_DISPOSITIONS = {"emit", "diagnostic-only", "omit"}
 VALID_PERSON_PRIOR_SUPPORT = {"supported", "unsupported", "uncertain"}
 VALID_DEFAULT_DRIFT_RISK = {"low", "medium", "high", "uncertain"}
 VALID_LOCAL_GEOMETRY_SUFFICIENCY = {"sufficient", "insufficient", "uncertain"}
@@ -232,6 +384,7 @@ VALID_SKIN_SURFACE_DISPOSITIONS = {
     "uncertain",
 }
 VALID_SKIN_COVERAGE = {"exposed", "through-sheer", "mixed"}
+VALID_SKIN_SEMANTIC_USES = {"displayed-surface"}
 VALID_DESCRIPTOR_DISPOSITIONS = {"emit", "omit", "uncertain"}
 CONTROLLED_DESCRIPTOR_AXIS_TO_COLOR_AXIS = {
     "value_depth": "value",
@@ -413,6 +566,33 @@ def _nonempty_string(value: Any) -> bool:
     return isinstance(value, str) and bool(value.strip())
 
 
+def audit_standalone_prompt_text(prompt_text: Any) -> list[str]:
+    """Reject literal prompt text that still depends on unavailable evidence.
+
+    This is intentionally a narrow output-boundary check rather than a style
+    linter. Physical scene language such as ``light source`` and self-contained
+    state verbs such as ``remains outside the frame`` are valid.
+    """
+
+    if not isinstance(prompt_text, str):
+        return ["authored prompt text must be a string"]
+
+    errors: list[str] = []
+    occupied_spans: list[tuple[int, int]] = []
+    for category, pattern in STANDALONE_PROMPT_BOUNDARY_PATTERNS:
+        for match in pattern.finditer(prompt_text):
+            span = match.span()
+            if any(span[0] < end and start < span[1] for start, end in occupied_spans):
+                continue
+            occupied_spans.append(span)
+            errors.append(
+                "authored prompt is not standalone: "
+                f"{category} {match.group(0)!r}; replace it with the literal visible "
+                "target state or relation"
+            )
+    return errors
+
+
 def _string_list(value: Any) -> bool:
     return isinstance(value, list) and all(_nonempty_string(item) for item in value)
 
@@ -469,7 +649,8 @@ def _audit_generation_prior(claim: dict[str, Any], label: str) -> list[str]:
 
     errors: list[str] = []
     prefix = f"{label}.generation_prior"
-    if prior.get("scope") not in VALID_GENERATION_PRIOR_SCOPES:
+    scope = prior.get("scope")
+    if scope not in VALID_GENERATION_PRIOR_SCOPES:
         errors.append(f"{prefix}.scope is invalid")
 
     source = prior.get("candidate_source")
@@ -483,17 +664,33 @@ def _audit_generation_prior(claim: dict[str, Any], label: str) -> list[str]:
 
     if prior.get("non_identifying") is not True:
         errors.append(f"{prefix}.non_identifying must be true")
-    if not _nonempty_strings(prior.get("visible_geometry_evidence")):
+    if scope in {"person-gestalt", "attractiveness"}:
+        if not _nonempty_strings(prior.get("visible_geometry_evidence")):
+            errors.append(
+                f"{prefix}.visible_geometry_evidence must contain source-visible geometry"
+            )
+        geometry_claim_ids = prior.get("geometry_claim_ids")
+        if not _nonempty_strings(geometry_claim_ids):
+            errors.append(
+                f"{prefix}.geometry_claim_ids must contain emitted geometry claim ids"
+            )
+        elif len(geometry_claim_ids) != len(set(geometry_claim_ids)):
+            errors.append(f"{prefix}.geometry_claim_ids contains duplicates")
+    elif scope == "person-aesthetic" and not _nonempty_strings(
+        prior.get("visible_appearance_evidence")
+    ):
         errors.append(
-            f"{prefix}.visible_geometry_evidence must contain source-visible geometry"
+            f"{prefix}.visible_appearance_evidence must contain source-visible appearance evidence"
         )
-    geometry_claim_ids = prior.get("geometry_claim_ids")
-    if not _nonempty_strings(geometry_claim_ids):
-        errors.append(
-            f"{prefix}.geometry_claim_ids must contain emitted geometry claim ids"
-        )
-    elif len(geometry_claim_ids) != len(set(geometry_claim_ids)):
-        errors.append(f"{prefix}.geometry_claim_ids contains duplicates")
+
+    if scope in VALID_APPEARANCE_GESTALT_SCOPES:
+        decomposed_control_ids = prior.get("decomposed_control_ids")
+        if not _nonempty_strings(decomposed_control_ids):
+            errors.append(
+                f"{prefix}.decomposed_control_ids must contain literal appearance control ids"
+            )
+        elif len(decomposed_control_ids) != len(set(decomposed_control_ids)):
+            errors.append(f"{prefix}.decomposed_control_ids contains duplicates")
     if claim.get("owner") not in {"subject.human", "detail.human-face-likeness"}:
         errors.append(f"{prefix} may be owned only by a human subject or face module")
     return errors
@@ -908,6 +1105,7 @@ def _audit_spatial_orientation_coverage(
     decision_map: dict[str, dict[str, Any]] = {}
     decision_axes: dict[str, str] = {}
     invariant_axes: dict[str, str] = {}
+    discard_evidence_risk_ids: set[str] = set()
     flexible_set = {
         item
         for item in contract.get("flexible_dimensions", [])
@@ -1046,13 +1244,140 @@ def _audit_spatial_orientation_coverage(
                 errors.append(
                     f"{label} is flexible and its id must appear in flexible_dimensions"
                 )
-            if disposition in {"flexible", "not-material"} and not _nonempty_string(
-                decision.get("counterfactual_preservation_reason")
-            ):
-                errors.append(
-                    f"{label}.counterfactual_preservation_reason is required for "
-                    f"{disposition!r}"
-                )
+            if disposition in {"flexible", "not-material"}:
+                neutralization = decision.get("neutralization_test")
+                neutralization_label = f"{label}.neutralization_test"
+                if not isinstance(neutralization, dict):
+                    errors.append(
+                        f"{neutralization_label} must be an object for "
+                        f"{disposition!r}"
+                    )
+                else:
+                    if (
+                        neutralization.get("test_scope")
+                        != DIMENSION_NEUTRALIZATION_TEST_SCOPE
+                    ):
+                        errors.append(
+                            f"{neutralization_label}.test_scope must be "
+                            f"{DIMENSION_NEUTRALIZATION_TEST_SCOPE!r}"
+                        )
+                    if not _nonempty_string(neutralization.get("tested_change")):
+                        errors.append(
+                            f"{neutralization_label}.tested_change must isolate this "
+                            "dimension"
+                        )
+                    neutralization_verdict = neutralization.get("verdict")
+                    if (
+                        neutralization_verdict
+                        not in VALID_DIMENSION_NEUTRALIZATION_VERDICTS
+                    ):
+                        errors.append(
+                            f"{neutralization_label}.verdict is invalid"
+                        )
+                    elif neutralization_verdict != "preserved":
+                        errors.append(
+                            f"{neutralization_label}.verdict must be 'preserved' "
+                            f"before a {disposition!r} decision can be non-emitted"
+                        )
+
+                    preserved_relations = neutralization.get("preserved_relations")
+                    changed_relations = neutralization.get("changed_relations")
+                    if not _string_list(preserved_relations):
+                        errors.append(
+                            f"{neutralization_label}.preserved_relations must be a list"
+                        )
+                        preserved_relations = []
+                    if not _string_list(changed_relations):
+                        errors.append(
+                            f"{neutralization_label}.changed_relations must be a list"
+                        )
+                        changed_relations = []
+                    if neutralization_verdict == "preserved" and not preserved_relations:
+                        errors.append(
+                            f"{neutralization_label}.preserved_relations is required "
+                            "for a preserved verdict"
+                        )
+                    if neutralization_verdict == "preserved" and changed_relations:
+                        errors.append(
+                            f"{neutralization_label}.changed_relations must be empty "
+                            "for a preserved verdict"
+                        )
+                    if neutralization_verdict == "material-drift" and not changed_relations:
+                        errors.append(
+                            f"{neutralization_label}.changed_relations is required "
+                            "for material-drift"
+                        )
+                    if neutralization_verdict == "uncertain" and not _nonempty_string(
+                        neutralization.get("uncertainty_note")
+                    ):
+                        errors.append(
+                            f"{neutralization_label}.uncertainty_note is required "
+                            "for uncertain"
+                        )
+
+                    held_fixed_ids = neutralization.get("held_fixed_decision_ids")
+                    if not _nonempty_strings(held_fixed_ids):
+                        errors.append(
+                            f"{neutralization_label}.held_fixed_decision_ids must "
+                            "contain adjacent spatial decisions"
+                        )
+                    elif len(held_fixed_ids) != len(set(held_fixed_ids)):
+                        errors.append(
+                            f"{neutralization_label}.held_fixed_decision_ids contains "
+                            "duplicates"
+                        )
+                    elif decision_id in held_fixed_ids:
+                        errors.append(
+                            f"{neutralization_label} cannot hold its own decision fixed"
+                        )
+
+                    neutralization_cue_ids = neutralization.get("evidence_cue_ids")
+                    if not _nonempty_strings(neutralization_cue_ids):
+                        errors.append(
+                            f"{neutralization_label}.evidence_cue_ids must contain "
+                            "source-visible cues"
+                        )
+                        neutralization_cue_ids = []
+                    else:
+                        if len(neutralization_cue_ids) != len(
+                            set(neutralization_cue_ids)
+                        ):
+                            errors.append(
+                                f"{neutralization_label}.evidence_cue_ids contains "
+                                "duplicates"
+                            )
+                        unowned_cues = sorted(
+                            set(neutralization_cue_ids) - set(cue_ids)
+                        )
+                        if unowned_cues:
+                            errors.append(
+                                f"{neutralization_label}.evidence_cue_ids must be "
+                                "owned by its decision: " + ", ".join(unowned_cues)
+                            )
+                    if neutralization.get("confidence") not in VALID_SPATIAL_CONFIDENCE:
+                        errors.append(
+                            f"{neutralization_label}.confidence is invalid"
+                        )
+                    if not _nonempty_strings(neutralization.get("source_evidence")):
+                        errors.append(
+                            f"{neutralization_label}.source_evidence must contain "
+                            "visible evidence"
+                        )
+
+                    known_neutralization_cues = [
+                        cue_map[cue_id]
+                        for cue_id in neutralization_cue_ids
+                        if cue_id in cue_map
+                    ]
+                    if (
+                        decision.get("confidence") == "low"
+                        or neutralization.get("confidence") == "low"
+                        or (
+                            known_neutralization_cues
+                            and all(cue.get("confounders") for cue in known_neutralization_cues)
+                        )
+                    ):
+                        discard_evidence_risk_ids.add(decision_id)
             if disposition in {"not-visible", "uncertain"} and not _nonempty_string(
                 decision.get("visibility_limit")
             ):
@@ -1121,6 +1446,33 @@ def _audit_spatial_orientation_coverage(
                 errors.append(f"{label}.causal_origin must match its emitted control")
         if control_axis_id:
             invariant_axes[control_axis_id] = decision_id
+
+    for decision_id, decision in decision_map.items():
+        if decision.get("disposition") not in {"flexible", "not-material"}:
+            continue
+        neutralization = decision.get("neutralization_test")
+        if not isinstance(neutralization, dict):
+            continue
+        label = f"spatial decision {decision_id!r}.neutralization_test"
+        held_fixed_ids = neutralization.get("held_fixed_decision_ids", [])
+        if not isinstance(held_fixed_ids, list):
+            continue
+        unknown_ids = sorted(set(held_fixed_ids) - set(decision_map))
+        if unknown_ids:
+            errors.append(
+                f"{label}.held_fixed_decision_ids references unknown decisions: "
+                + ", ".join(unknown_ids)
+            )
+        wrong_subject_ids = sorted(
+            held_id
+            for held_id in set(held_fixed_ids) & set(decision_map)
+            if decision_map[held_id].get("subject_id") != decision.get("subject_id")
+        )
+        if wrong_subject_ids:
+            errors.append(
+                f"{label}.held_fixed_decision_ids must belong to its subject: "
+                + ", ".join(wrong_subject_ids)
+            )
 
     for subject_id, checks_by_scope in counterfactual_by_subject.items():
         for scope, check in checks_by_scope.items():
@@ -1672,6 +2024,185 @@ def _audit_spatial_orientation_coverage(
             set(member_ids)
         )
 
+    coupled_licensed_member_ids = {
+        decision_id
+        for member_sets in coupled_invariants_by_subject.values()
+        for member_ids in member_sets
+        for decision_id in member_ids
+    }
+    for decision_id in sorted(discard_evidence_risk_ids):
+        if decision_id not in coupled_licensed_member_ids:
+            errors.append(
+                f"spatial decision {decision_id!r} cannot be discarded from low-confidence "
+                "or fully confounded evidence; mark it uncertain or preserve it through an "
+                "invariant coupled effect"
+            )
+
+    spatial_control_owners: dict[str, tuple[str, set[str]]] = {}
+    for decision_id, decision in decision_map.items():
+        control_id = decision.get("control_id")
+        subject_id = decision.get("subject_id")
+        if (
+            decision.get("disposition") == "invariant"
+            and _nonempty_string(control_id)
+            and isinstance(subject_id, str)
+        ):
+            spatial_control_owners[str(control_id)] = (
+                subject_id,
+                {decision_id},
+            )
+    for coupled in coupled_effects:
+        if not isinstance(coupled, dict) or coupled.get("disposition") != "invariant":
+            continue
+        control_id = coupled.get("control_id")
+        subject_id = coupled.get("subject_id")
+        member_ids = coupled.get("member_decision_ids")
+        if (
+            _nonempty_string(control_id)
+            and isinstance(subject_id, str)
+            and _nonempty_strings(member_ids)
+        ):
+            if str(control_id) in spatial_control_owners:
+                errors.append(
+                    f"spatial control {control_id!r} cannot be owned by both an "
+                    "individual decision and a coupled effect"
+                )
+            spatial_control_owners[str(control_id)] = (
+                subject_id,
+                set(member_ids),
+            )
+
+    licensed_decision_ids = {
+        decision_id
+        for decision_id, decision in decision_map.items()
+        if decision.get("disposition") == "invariant"
+    } | coupled_licensed_member_ids
+    prompt_effect_audits = coverage.get("prompt_effect_audits")
+    if not isinstance(prompt_effect_audits, list):
+        errors.append(
+            "spatial_orientation_coverage.prompt_effect_audits must be a list"
+        )
+        prompt_effect_audits = []
+    audited_control_ids: list[str] = []
+    prompt_effect_ids: set[str] = set()
+    for index, audit in enumerate(prompt_effect_audits):
+        label = f"spatial_orientation_coverage.prompt_effect_audits[{index}]"
+        if not isinstance(audit, dict):
+            errors.append(f"{label} must be an object")
+            continue
+        audit_id = audit.get("id")
+        if not _nonempty_string(audit_id):
+            errors.append(f"{label}.id must be non-empty")
+        elif audit_id in prompt_effect_ids:
+            errors.append(f"duplicate spatial prompt effect audit id: {audit_id}")
+        else:
+            prompt_effect_ids.add(str(audit_id))
+
+        control_id = audit.get("control_id")
+        if not _nonempty_string(control_id):
+            errors.append(f"{label}.control_id must be non-empty")
+            continue
+        control_id = str(control_id)
+        audited_control_ids.append(control_id)
+        owner_record = spatial_control_owners.get(control_id)
+        if owner_record is None:
+            errors.append(
+                f"{label}.control_id must reference an emitted spatial control"
+            )
+            continue
+        owner_subject_id, required_owner_ids = owner_record
+        if audit.get("subject_id") != owner_subject_id:
+            errors.append(f"{label}.subject_id must match its spatial control owner")
+        if audit.get("effect_scope") != SPATIAL_PROMPT_EFFECT_SCOPE:
+            errors.append(
+                f"{label}.effect_scope must be {SPATIAL_PROMPT_EFFECT_SCOPE!r}"
+            )
+
+        control = control_map.get(control_id, {})
+        if audit.get("prompt_excerpt") != control.get("prompt_excerpt"):
+            errors.append(
+                f"{label}.prompt_excerpt must exactly match its emitted control"
+            )
+
+        explicit_ids = audit.get("explicit_decision_ids")
+        implicit_ids = audit.get("implicit_decision_ids")
+        if not _nonempty_strings(explicit_ids):
+            errors.append(
+                f"{label}.explicit_decision_ids must contain explicit spatial effects"
+            )
+            explicit_ids = []
+        elif len(explicit_ids) != len(set(explicit_ids)):
+            errors.append(f"{label}.explicit_decision_ids contains duplicates")
+        if not _string_list(implicit_ids):
+            errors.append(f"{label}.implicit_decision_ids must be a list")
+            implicit_ids = []
+        elif len(implicit_ids) != len(set(implicit_ids)):
+            errors.append(f"{label}.implicit_decision_ids contains duplicates")
+        overlap = sorted(set(explicit_ids) & set(implicit_ids))
+        if overlap:
+            errors.append(
+                f"{label} cannot classify decisions as both explicit and implicit: "
+                + ", ".join(overlap)
+            )
+        affected_ids = set(explicit_ids) | set(implicit_ids)
+        unknown_ids = sorted(affected_ids - set(decision_map))
+        if unknown_ids:
+            errors.append(
+                f"{label} references unknown spatial decisions: "
+                + ", ".join(unknown_ids)
+            )
+        wrong_subject_ids = sorted(
+            decision_id
+            for decision_id in affected_ids & set(decision_map)
+            if decision_map[decision_id].get("subject_id") != owner_subject_id
+        )
+        if wrong_subject_ids:
+            errors.append(
+                f"{label} may affect only decisions for its subject: "
+                + ", ".join(wrong_subject_ids)
+            )
+        missing_owner_ids = sorted(required_owner_ids - affected_ids)
+        if missing_owner_ids:
+            errors.append(
+                f"{label} must include every decision owned by its spatial control: "
+                + ", ".join(missing_owner_ids)
+            )
+        unlicensed_ids = sorted(affected_ids - licensed_decision_ids)
+        if unlicensed_ids:
+            errors.append(
+                f"{label} would actuate non-invariant or uncertain spatial decisions: "
+                + ", ".join(unlicensed_ids)
+            )
+
+        verdict = audit.get("verdict")
+        if verdict not in VALID_SPATIAL_PROMPT_EFFECT_VERDICTS:
+            errors.append(f"{label}.verdict is invalid")
+        elif verdict != "source-consistent":
+            errors.append(
+                f"{label}.verdict must be 'source-consistent' before emission"
+            )
+        if not _nonempty_string(audit.get("rationale")):
+            errors.append(f"{label}.rationale must be non-empty")
+        if not _nonempty_strings(audit.get("source_evidence")):
+            errors.append(f"{label}.source_evidence must contain visible evidence")
+
+    duplicate_audits = sorted(
+        control_id
+        for control_id in set(audited_control_ids)
+        if audited_control_ids.count(control_id) > 1
+    )
+    if duplicate_audits:
+        errors.append(
+            "spatial prompt effect audits duplicate controls: "
+            + ", ".join(duplicate_audits)
+        )
+    missing_audits = sorted(set(spatial_control_owners) - set(audited_control_ids))
+    if missing_audits:
+        errors.append(
+            "spatial prompt effect audits must cover every emitted spatial control: "
+            + ", ".join(missing_audits)
+        )
+
     for subject_id, subject in subject_map.items():
         required = set(BASE_SPATIAL_DIMENSIONS)
         if subject.get("kind") == "human":
@@ -1760,13 +2291,66 @@ def _audit_spatial_orientation_coverage(
     return errors
 
 
+def _audit_appearance_effect_budget(
+    budget: Any,
+    label: str,
+    *,
+    require_intended: bool,
+) -> tuple[list[str], set[str], set[str]]:
+    """Validate the bounded dimensions of one human appearance semantic anchor."""
+
+    if not isinstance(budget, dict):
+        return [f"{label} must be an object"], set(), set()
+
+    errors: list[str] = []
+    intended = budget.get("intended_dimensions")
+    protected = budget.get("protected_dimensions")
+    if not _string_list(intended):
+        errors.append(f"{label}.intended_dimensions must be a list")
+        intended = []
+    if not _string_list(protected):
+        errors.append(f"{label}.protected_dimensions must be a list")
+        protected = []
+    intended_set = set(intended)
+    protected_set = set(protected)
+    if len(intended) != len(intended_set):
+        errors.append(f"{label}.intended_dimensions contains duplicates")
+    if len(protected) != len(protected_set):
+        errors.append(f"{label}.protected_dimensions contains duplicates")
+    unknown = sorted(
+        (intended_set | protected_set) - VALID_APPEARANCE_EFFECT_DIMENSIONS
+    )
+    if unknown:
+        errors.append(
+            f"{label} contains unknown appearance dimensions: " + ", ".join(unknown)
+        )
+    overlap = sorted(intended_set & protected_set)
+    if overlap:
+        errors.append(
+            f"{label} cannot both intend and protect dimensions: " + ", ".join(overlap)
+        )
+    if "identity-context" in intended_set:
+        errors.append(
+            f"{label}.intended_dimensions cannot control identity-context"
+        )
+    if "identity-context" not in protected_set:
+        errors.append(
+            f"{label}.protected_dimensions must include identity-context"
+        )
+    if require_intended and not intended_set:
+        errors.append(f"{label}.intended_dimensions must be non-empty for emission")
+    if not _nonempty_strings(budget.get("source_evidence")):
+        errors.append(f"{label}.source_evidence must be non-empty")
+    return errors, intended_set, protected_set
+
+
 def _audit_human_appearance_decisions(
     plan: dict[str, Any],
     contract: dict[str, Any],
     claim_map: dict[str, dict[str, Any]],
     invariant_map: dict[str, dict[str, Any]],
 ) -> list[str]:
-    """Require explicit, source-relative decisions for human priors and skin language."""
+    """Require source-relative identity, gestalt, skin, and actuation decisions."""
 
     routing = plan.get("routing")
     routed_modules = (
@@ -1776,6 +2360,13 @@ def _audit_human_appearance_decisions(
     )
     human_routed = (
         isinstance(routed_modules, list) and "subject.human" in routed_modules
+    )
+    emitted_human_prior = any(
+        isinstance(claim, dict)
+        and claim.get("emit") is True
+        and isinstance(claim.get("generation_prior"), dict)
+        and claim["generation_prior"].get("scope") in VALID_GENERATION_PRIOR_SCOPES
+        for claim in claim_map.values()
     )
 
     coverage = contract.get("spatial_orientation_coverage")
@@ -1794,10 +2385,11 @@ def _audit_human_appearance_decisions(
             [
                 (
                     "a routed subject.human requires human_appearance_decisions; "
-                    "person prior and skin-surface handling cannot be silently omitted"
+                    "identity, person prior, appearance gestalt, and skin handling "
+                    "cannot be silently omitted"
                 )
             ]
-            if human_routed
+            if human_routed or emitted_human_prior
             else []
         )
     if not isinstance(decisions, list):
@@ -1807,11 +2399,44 @@ def _audit_human_appearance_decisions(
     decision_ids: set[str] = set()
     decisions_by_subject: dict[str, int] = {}
     emitted_prior_claim_ids: set[str] = set()
+    emitted_appearance_claim_ids: set[str] = set()
     generic_control_counts: dict[str, int] = {}
     for control in contract.get("emitted_controls", []):
         if isinstance(control, dict) and _nonempty_string(control.get("claim_id")):
             claim_id = str(control["claim_id"])
             generic_control_counts[claim_id] = generic_control_counts.get(claim_id, 0) + 1
+
+    appearance_control_map: dict[str, dict[str, Any]] = {}
+    for ledger_name, controls in (
+        ("generic", contract.get("emitted_controls", [])),
+        (
+            "color",
+            contract.get("color_tone_contract", {}).get("emitted_controls", [])
+            if isinstance(contract.get("color_tone_contract"), dict)
+            else [],
+        ),
+        (
+            "light",
+            contract.get("light_form_contract", {}).get("emitted_controls", [])
+            if isinstance(contract.get("light_form_contract"), dict)
+            else [],
+        ),
+    ):
+        if not isinstance(controls, list):
+            continue
+        for control in controls:
+            if not isinstance(control, dict) or not _nonempty_string(control.get("id")):
+                continue
+            control_id = str(control["id"])
+            if control_id in appearance_control_map:
+                continue
+            claim = claim_map.get(str(control.get("claim_id", "")), {})
+            appearance_control_map[control_id] = {
+                "control": control,
+                "claim": claim,
+                "owner": claim.get("owner", control.get("owner")),
+                "ledger": ledger_name,
+            }
 
     color_contract = contract.get("color_tone_contract")
     color_regions = (
@@ -1888,12 +2513,19 @@ def _audit_human_appearance_decisions(
                 errors.append(f"{label}.appearance_invariant_ids references an unknown invariant")
                 continue
             if invariant.get("clause_owner") not in {
+                "core.fidelity-discipline",
+                "core.frame-coordinates",
                 "subject.human",
                 "detail.human-face-likeness",
                 "detail.human-body-form",
+                "detail.clothing-fashion",
+                "detail.pose-hands-gesture",
+                "detail.color-tone-fidelity",
+                "detail.light-form-fidelity",
+                "medium.photographic-capture",
             }:
                 errors.append(
-                    f"{label}.appearance_invariant_ids requires a human, face, or body-form owner"
+                    f"{label}.appearance_invariant_ids requires an appearance-contract owner"
                 )
             if fidelity_salience in {"primary", "supporting"} and invariant.get(
                 "role"
@@ -1909,16 +2541,99 @@ def _audit_human_appearance_decisions(
             identity_disposition = identity_context.get("disposition")
             if identity_disposition not in VALID_IDENTITY_CONTEXT_DISPOSITIONS:
                 errors.append(f"{label}.identity_context.disposition is invalid")
+            context_use = identity_context.get("context_use")
+            if context_use not in VALID_IDENTITY_CONTEXT_USES:
+                errors.append(f"{label}.identity_context.context_use is invalid")
+            prompt_disposition = identity_context.get("prompt_disposition")
+            if prompt_disposition not in VALID_IDENTITY_PROMPT_DISPOSITIONS:
+                errors.append(
+                    f"{label}.identity_context.prompt_disposition is invalid"
+                )
+            identity_priority = identity_context.get("viewer_priority")
+            if identity_priority not in VALID_APPEARANCE_VIEWER_PRIORITIES:
+                errors.append(f"{label}.identity_context.viewer_priority is invalid")
             if identity_disposition in {"user-supplied", "trusted-metadata"}:
                 if not _nonempty_string(identity_context.get("source_reference")):
                     errors.append(
                         f"{label}.identity_context.source_reference is required for external identity context"
                     )
-            elif _nonempty_string(identity_context.get("source_reference")) or _nonempty_string(
-                identity_context.get("claim_id")
-            ):
+                valid_uses = (
+                    {"creative-target", "user-asserted-context"}
+                    if identity_disposition == "user-supplied"
+                    else {"trusted-factual-context"}
+                )
+                if context_use not in valid_uses:
+                    errors.append(
+                        f"{label}.identity_context.context_use does not match its external provenance"
+                    )
+            else:
+                if context_use != "none":
+                    errors.append(
+                        f"{label}.identity_context.context_use must be 'none' when absent"
+                    )
+                if prompt_disposition != "omit":
+                    errors.append(
+                        f"{label}.identity_context.prompt_disposition must be 'omit' when absent"
+                    )
+                if identity_priority != "not-material":
+                    errors.append(
+                        f"{label}.identity_context.viewer_priority must be 'not-material' when absent"
+                    )
+                if _nonempty_string(
+                    identity_context.get("source_reference")
+                ) or _nonempty_string(identity_context.get("claim_id")):
+                    errors.append(
+                        f"{label}.identity_context cannot infer identity from source-visible appearance"
+                    )
+
+            identity_claim_id = identity_context.get("claim_id")
+            if prompt_disposition == "emit":
+                if identity_disposition == "absent":
+                    errors.append(
+                        f"{label}.identity_context cannot emit without external provenance"
+                    )
+                if identity_priority not in {"P0", "P1"}:
+                    errors.append(
+                        f"{label}.identity_context emit requires P0 or P1 viewer priority"
+                    )
+                expected_fidelity = (
+                    "primary" if identity_priority == "P0" else "supporting"
+                )
+                if fidelity_salience != expected_fidelity:
+                    errors.append(
+                        f"{label}.identity_context viewer priority must match fidelity_salience"
+                    )
+                if not _nonempty_string(identity_claim_id):
+                    errors.append(
+                        f"{label}.identity_context.claim_id is required for emission"
+                    )
+                    identity_claim = None
+                else:
+                    identity_claim = claim_map.get(str(identity_claim_id))
+                if _nonempty_string(identity_claim_id) and identity_claim is None:
+                    errors.append(
+                        f"{label}.identity_context.claim_id references an unknown claim"
+                    )
+                elif isinstance(identity_claim, dict):
+                    if (
+                        identity_claim.get("emit") is not True
+                        or identity_claim.get("polarity") != "affirmative"
+                        or identity_claim.get("owner") != "subject.human"
+                    ):
+                        errors.append(
+                            f"{label}.identity_context.claim_id must reference an emitted affirmative subject.human claim"
+                        )
+                    if isinstance(identity_claim.get("generation_prior"), dict):
+                        errors.append(
+                            f"{label}.identity_context must not masquerade as a non-identifying generation prior"
+                        )
+                    if generic_control_counts.get(str(identity_claim_id), 0) != 1:
+                        errors.append(
+                            f"{label}.identity_context emit requires exactly one generic prompt control"
+                        )
+            elif _nonempty_string(identity_claim_id):
                 errors.append(
-                    f"{label}.identity_context cannot infer identity from source-visible appearance"
+                    f"{label}.identity_context.claim_id must be absent when not emitted"
                 )
 
         prior = decision.get("person_prior")
@@ -2080,6 +2795,223 @@ def _audit_human_appearance_decisions(
                         f"{label}.person_prior.residual_risk is required while uncertain"
                     )
 
+        appearance = decision.get("appearance_gestalt")
+        if not isinstance(appearance, dict):
+            errors.append(f"{label}.appearance_gestalt must be an object")
+        else:
+            appearance_disposition = appearance.get("disposition")
+            if appearance_disposition not in VALID_APPEARANCE_GESTALT_DISPOSITIONS:
+                errors.append(f"{label}.appearance_gestalt.disposition is invalid")
+            appearance_scope = appearance.get("scope")
+            if appearance_scope not in VALID_APPEARANCE_GESTALT_SCOPES:
+                errors.append(f"{label}.appearance_gestalt.scope is invalid")
+            appearance_confidence = appearance.get("confidence")
+            if appearance_confidence not in VALID_SPATIAL_CONFIDENCE:
+                errors.append(f"{label}.appearance_gestalt.confidence is invalid")
+            appearance_support = appearance.get("candidate_support")
+            if appearance_support not in VALID_PERSON_PRIOR_SUPPORT:
+                errors.append(
+                    f"{label}.appearance_gestalt.candidate_support is invalid"
+                )
+            appearance_priority = appearance.get("viewer_priority")
+            if appearance_priority not in VALID_APPEARANCE_VIEWER_PRIORITIES:
+                errors.append(
+                    f"{label}.appearance_gestalt.viewer_priority is invalid"
+                )
+            if appearance.get("default_drift_risk") not in VALID_DEFAULT_DRIFT_RISK:
+                errors.append(
+                    f"{label}.appearance_gestalt.default_drift_risk is invalid"
+                )
+            if not _nonempty_strings(appearance.get("source_evidence")):
+                errors.append(
+                    f"{label}.appearance_gestalt.source_evidence must contain current-source or user evidence"
+                )
+
+            decomposition_control_ids = appearance.get("decomposition_control_ids")
+            if not _string_list(decomposition_control_ids):
+                errors.append(
+                    f"{label}.appearance_gestalt.decomposition_control_ids must be a list of control ids"
+                )
+                decomposition_control_ids = []
+            elif len(decomposition_control_ids) != len(
+                set(decomposition_control_ids)
+            ):
+                errors.append(
+                    f"{label}.appearance_gestalt.decomposition_control_ids contains duplicates"
+                )
+
+            budget_errors, intended_dimensions, protected_dimensions = (
+                _audit_appearance_effect_budget(
+                    appearance.get("effect_budget"),
+                    f"{label}.appearance_gestalt.effect_budget",
+                    require_intended=appearance_disposition == "emit",
+                )
+            )
+            errors.extend(budget_errors)
+
+            covered_dimensions: set[str] = set()
+            for control_id in decomposition_control_ids:
+                entry = appearance_control_map.get(control_id)
+                if entry is None:
+                    errors.append(
+                        f"{label}.appearance_gestalt.decomposition_control_ids references an unknown control"
+                    )
+                    continue
+                control = entry["control"]
+                dimension = control.get("appearance_dimension")
+                if dimension not in VALID_APPEARANCE_EFFECT_DIMENSIONS:
+                    errors.append(
+                        f"{label}.appearance_gestalt decomposition control {control_id!r} requires a valid appearance_dimension"
+                    )
+                    continue
+                covered_dimensions.add(str(dimension))
+                if dimension not in intended_dimensions:
+                    errors.append(
+                        f"{label}.appearance_gestalt decomposition control {control_id!r} is outside intended_dimensions"
+                    )
+                if dimension in protected_dimensions:
+                    errors.append(
+                        f"{label}.appearance_gestalt decomposition control {control_id!r} targets a protected dimension"
+                    )
+                allowed_owners = APPEARANCE_DIMENSION_ALLOWED_OWNERS.get(
+                    str(dimension), set()
+                )
+                if entry["owner"] not in allowed_owners:
+                    errors.append(
+                        f"{label}.appearance_gestalt decomposition control {control_id!r} has an invalid owner for {dimension!r}"
+                    )
+            if covered_dimensions != intended_dimensions:
+                missing_dimensions = sorted(intended_dimensions - covered_dimensions)
+                if missing_dimensions:
+                    errors.append(
+                        f"{label}.appearance_gestalt intended dimensions lack literal controls: "
+                        + ", ".join(missing_dimensions)
+                    )
+
+            appearance_counterfactual = appearance.get("omission_counterfactual")
+            if not isinstance(appearance_counterfactual, dict):
+                errors.append(
+                    f"{label}.appearance_gestalt.omission_counterfactual must be an object"
+                )
+                appearance_counterfactual_verdict = None
+            else:
+                appearance_counterfactual_verdict = appearance_counterfactual.get(
+                    "verdict"
+                )
+                if appearance_counterfactual_verdict not in VALID_OMISSION_COUNTERFACTUALS:
+                    errors.append(
+                        f"{label}.appearance_gestalt.omission_counterfactual.verdict is invalid"
+                    )
+                if not _nonempty_strings(
+                    appearance_counterfactual.get("source_evidence")
+                ):
+                    errors.append(
+                        f"{label}.appearance_gestalt.omission_counterfactual.source_evidence must be non-empty"
+                    )
+
+            appearance_claim_id = appearance.get("claim_id")
+            if appearance_disposition == "emit":
+                if appearance_support != "supported":
+                    errors.append(
+                        f"{label}.appearance_gestalt emit requires supported current-source or user evidence"
+                    )
+                if appearance_confidence not in VALID_RETAINED_DESCRIPTOR_CONFIDENCE:
+                    errors.append(
+                        f"{label}.appearance_gestalt emit requires high or medium confidence"
+                    )
+                if appearance_priority not in {"P0", "P1"}:
+                    errors.append(
+                        f"{label}.appearance_gestalt emit requires P0 or P1 viewer priority"
+                    )
+                expected_fidelity = (
+                    "primary" if appearance_priority == "P0" else "supporting"
+                )
+                if fidelity_salience != expected_fidelity:
+                    errors.append(
+                        f"{label}.appearance_gestalt viewer priority must match fidelity_salience"
+                    )
+                if appearance_counterfactual_verdict != "material-drift":
+                    errors.append(
+                        f"{label}.appearance_gestalt emit requires a material-drift omission counterfactual"
+                    )
+                if not decomposition_control_ids:
+                    errors.append(
+                        f"{label}.appearance_gestalt emit requires literal decomposition controls"
+                    )
+                if not _nonempty_string(appearance_claim_id):
+                    appearance_claim = None
+                    errors.append(
+                        f"{label}.appearance_gestalt.claim_id is required for emission"
+                    )
+                else:
+                    appearance_claim = claim_map.get(str(appearance_claim_id))
+                if _nonempty_string(appearance_claim_id) and appearance_claim is None:
+                    errors.append(
+                        f"{label}.appearance_gestalt.claim_id references an unknown claim"
+                    )
+                elif isinstance(appearance_claim, dict):
+                    emitted_appearance_claim_ids.add(str(appearance_claim_id))
+                    generation_prior = appearance_claim.get("generation_prior")
+                    if (
+                        appearance_claim.get("emit") is not True
+                        or appearance_claim.get("polarity") != "affirmative"
+                        or appearance_claim.get("owner")
+                        not in {"subject.human", "detail.human-face-likeness"}
+                    ):
+                        errors.append(
+                            f"{label}.appearance_gestalt.claim_id must reference an emitted affirmative human appearance claim"
+                        )
+                    if (
+                        not isinstance(generation_prior, dict)
+                        or generation_prior.get("scope") != appearance_scope
+                    ):
+                        errors.append(
+                            f"{label}.appearance_gestalt.claim_id must own the matching generation_prior scope"
+                        )
+                    elif set(
+                        generation_prior.get("decomposed_control_ids", [])
+                    ) != set(decomposition_control_ids):
+                        errors.append(
+                            f"{label}.appearance_gestalt.decomposition_control_ids must match the emitted generation prior"
+                        )
+                    if generic_control_counts.get(str(appearance_claim_id), 0) != 1:
+                        errors.append(
+                            f"{label}.appearance_gestalt emit requires exactly one generic summary control"
+                        )
+                    summary_control_ids = {
+                        control_id
+                        for control_id, entry in appearance_control_map.items()
+                        if entry["control"].get("claim_id") == appearance_claim_id
+                        and entry["ledger"] == "generic"
+                    }
+                    if summary_control_ids & set(decomposition_control_ids):
+                        errors.append(
+                            f"{label}.appearance_gestalt summary control must be separate from decomposition"
+                        )
+            else:
+                if _nonempty_string(appearance_claim_id):
+                    errors.append(
+                        f"{label}.appearance_gestalt.claim_id must be absent when not emitted"
+                    )
+                if not _nonempty_string(appearance.get("non_emission_reason")):
+                    errors.append(
+                        f"{label}.appearance_gestalt.non_emission_reason is required when not emitted"
+                    )
+                if (
+                    appearance_priority in {"P0", "P1"}
+                    and appearance_support == "supported"
+                    and appearance_counterfactual_verdict == "material-drift"
+                ):
+                    errors.append(
+                        f"{label}.appearance_gestalt cannot omit a qualified material semantic anchor"
+                    )
+                if appearance_disposition == "uncertain" and not _nonempty_string(
+                    appearance.get("residual_risk")
+                ):
+                    errors.append(
+                        f"{label}.appearance_gestalt.residual_risk is required while uncertain"
+                    )
+
         skin = decision.get("skin_surface")
         if not isinstance(skin, dict):
             errors.append(f"{label}.skin_surface must be an object")
@@ -2087,6 +3019,16 @@ def _audit_human_appearance_decisions(
         skin_disposition = skin.get("disposition")
         if skin_disposition not in VALID_SKIN_SURFACE_DISPOSITIONS:
             errors.append(f"{label}.skin_surface.disposition is invalid")
+        skin_priority = skin.get("viewer_priority")
+        if skin_priority not in VALID_APPEARANCE_VIEWER_PRIORITIES:
+            errors.append(f"{label}.skin_surface.viewer_priority is invalid")
+        skin_observation_scope = skin.get("observation_scope")
+        if skin_observation_scope not in VALID_COLOR_OBSERVATION_SCOPES:
+            errors.append(f"{label}.skin_surface.observation_scope is invalid")
+        if skin.get("semantic_use") not in VALID_SKIN_SEMANTIC_USES:
+            errors.append(
+                f"{label}.skin_surface.semantic_use must remain displayed-surface"
+            )
         if skin.get("confidence") not in VALID_SPATIAL_CONFIDENCE:
             errors.append(f"{label}.skin_surface.confidence is invalid")
         if not _nonempty_strings(skin.get("source_evidence")):
@@ -2108,6 +3050,13 @@ def _audit_human_appearance_decisions(
         if descriptor_disposition not in VALID_DESCRIPTOR_DISPOSITIONS:
             errors.append(f"{label}.skin_surface.descriptor_disposition is invalid")
         if skin_disposition != "material":
+            expected_priority = (
+                "uncertain" if skin_disposition == "uncertain" else "not-material"
+            )
+            if skin_priority != expected_priority:
+                errors.append(
+                    f"{label}.skin_surface.viewer_priority must be {expected_priority!r} for {skin_disposition!r}"
+                )
             if region_ids:
                 errors.append(
                     f"{label}.skin_surface.region_ids must be empty when not material"
@@ -2127,6 +3076,18 @@ def _audit_human_appearance_decisions(
                 )
             continue
 
+        if skin_priority not in {"P0", "P1", "P2", "P3"}:
+            errors.append(
+                f"{label}.skin_surface material evidence requires a concrete viewer priority"
+            )
+        if skin_priority in {"P0", "P1"}:
+            expected_fidelity = (
+                "primary" if skin_priority == "P0" else "supporting"
+            )
+            if fidelity_salience != expected_fidelity:
+                errors.append(
+                    f"{label}.skin_surface viewer priority must match fidelity_salience"
+                )
         if skin.get("coverage") not in VALID_SKIN_COVERAGE:
             errors.append(f"{label}.skin_surface.coverage is invalid")
         if not region_ids:
@@ -2138,6 +3099,10 @@ def _audit_human_appearance_decisions(
                 + ", ".join(unknown_regions)
             )
         if descriptor_disposition == "emit":
+            if skin_priority not in {"P0", "P1"}:
+                errors.append(
+                    f"{label}.skin_surface descriptor emission requires P0 or P1 viewer priority"
+                )
             if not isinstance(surface_language, dict):
                 errors.append(
                     f"{label}.skin_surface descriptor emission requires surface_color_language"
@@ -2145,6 +3110,10 @@ def _audit_human_appearance_decisions(
             elif surface_language.get("region_id") not in region_ids:
                 errors.append(
                     f"{label}.skin_surface descriptor must target one listed skin region"
+                )
+            elif surface_language.get("observation_scope") != skin_observation_scope:
+                errors.append(
+                    f"{label}.skin_surface observation_scope must match surface_color_language"
                 )
             if (
                 not isinstance(controlled_descriptor, dict)
@@ -2175,7 +3144,7 @@ def _audit_human_appearance_decisions(
                 f"human coverage subject {subject_id!r} requires exactly one human appearance decision"
             )
 
-    if human_routed:
+    if human_routed or emitted_human_prior:
         person_prior_claim_ids = {
             str(claim_id)
             for claim_id, claim in claim_map.items()
@@ -2188,6 +3157,23 @@ def _audit_human_appearance_decisions(
             errors.append(
                 "emitted person-gestalt generation priors require a human appearance decision: "
                 + ", ".join(unowned)
+            )
+        appearance_prior_claim_ids = {
+            str(claim_id)
+            for claim_id, claim in claim_map.items()
+            if claim.get("emit") is True
+            and isinstance(claim.get("generation_prior"), dict)
+            and claim["generation_prior"].get("scope")
+            in VALID_APPEARANCE_GESTALT_SCOPES
+        }
+        unowned_appearance = sorted(
+            appearance_prior_claim_ids - emitted_appearance_claim_ids
+        )
+        if unowned_appearance:
+            errors.append(
+                "emitted attractiveness or person-aesthetic generation priors require "
+                "an appearance_gestalt decision: "
+                + ", ".join(unowned_appearance)
             )
 
     return errors
@@ -2628,7 +3614,7 @@ def _audit_authored_prompt(contract: dict[str, Any], prompt_text: Any) -> list[s
 
     if not isinstance(prompt_text, str):
         return ["authored prompt text must be a string"]
-    errors: list[str] = []
+    errors = audit_standalone_prompt_text(prompt_text)
     ledgers = [
         ("emitted_controls", contract.get("emitted_controls", [])),
         (
@@ -2850,6 +3836,56 @@ def _audit_authored_prompt(contract: dict[str, Any], prompt_text: Any) -> list[s
                 f"generation prior claim {claim_id!r} must remain adjacent to linked local geometry; intervening controls: "
                 + ", ".join(intervening)
             )
+
+    human_appearance_decisions = contract.get("human_appearance_decisions", [])
+    if isinstance(human_appearance_decisions, list):
+        for index, decision in enumerate(human_appearance_decisions):
+            if not isinstance(decision, dict):
+                continue
+            appearance = decision.get("appearance_gestalt")
+            if not isinstance(appearance, dict) or appearance.get("disposition") != "emit":
+                continue
+            appearance_claim_id = appearance.get("claim_id")
+            summary_control = control_by_claim.get(appearance_claim_id)
+            if not isinstance(summary_control, dict):
+                continue
+            summary_control_id = summary_control.get("id")
+            errors.extend(
+                _audit_leading_descriptor_block(
+                    prompt_text,
+                    summary_control.get("prompt_excerpt"),
+                    appearance.get("decomposition_control_ids"),
+                    all_control_map,
+                    f"human_appearance_decisions[{index}].appearance_gestalt summary",
+                    lead_control_id=(
+                        str(summary_control_id)
+                        if _nonempty_string(summary_control_id)
+                        else None
+                    ),
+                )
+            )
+
+            identity_context = decision.get("identity_context")
+            if (
+                isinstance(identity_context, dict)
+                and identity_context.get("prompt_disposition") == "emit"
+            ):
+                identity_control = control_by_claim.get(identity_context.get("claim_id"))
+                if isinstance(identity_control, dict):
+                    identity_position = prompt_text.find(
+                        str(identity_control.get("prompt_excerpt", "")).strip()
+                    )
+                    summary_position = prompt_text.find(
+                        str(summary_control.get("prompt_excerpt", "")).strip()
+                    )
+                    if (
+                        identity_position >= 0
+                        and summary_position >= 0
+                        and identity_position >= summary_position
+                    ):
+                        errors.append(
+                            f"human_appearance_decisions[{index}] external identity context must precede the appearance gestalt summary"
+                        )
     color_contract = contract.get("color_tone_contract")
     if isinstance(color_contract, dict):
         surface_language = color_contract.get("surface_color_language")

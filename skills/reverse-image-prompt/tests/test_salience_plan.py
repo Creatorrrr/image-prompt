@@ -19,8 +19,30 @@ from salience_plan import (
     SPATIAL_COVERAGE_SCHEMA_VERSION,
     SPATIAL_DIMENSION_FAMILIES,
     audit_plan,
+    audit_standalone_prompt_text,
     compare_plans,
 )
+
+
+STANDALONE_SPATIAL_TARGETS = {
+    "frame-placement": "the subject sits slightly left of frame center",
+    "subject-principal-axis": "the subject has a diagonal principal axis rising toward viewer-right",
+    "viewpoint-elevation": "a low upward-looking camera viewpoint",
+    "viewpoint-azimuth": "a three-quarter camera view from viewer-left",
+    "viewpoint-roll": "a slight clockwise camera roll",
+    "viewpoint-distance-foreshortening": "close camera distance with visible near-side enlargement",
+    "human-torso-yaw": "the torso turns three-quarters toward viewer-left",
+    "human-torso-pitch": "the torso leans slightly back",
+    "human-torso-roll": "the torso axis tilts toward viewer-right",
+    "human-head-body-yaw": "the head turns farther toward viewer-left than the torso",
+    "human-head-body-pitch": "the chin tilts upward relative to the torso",
+    "human-head-body-roll": "the head tilts toward viewer-left relative to the torso",
+    "human-head-body-lateral-offset": "the head sits slightly viewer-left of the torso axis",
+    "human-shoulder-image-slope": "the shoulder line slopes downward toward viewer-right",
+    "human-shoulder-depth-order": "the viewer-right shoulder sits farther back",
+    "human-attention-direction": "the gaze aims above and past viewer-left",
+    "cross-component-orientation": "the two components keep visibly offset diagonal axes",
+}
 
 
 def valid_plan() -> dict:
@@ -195,7 +217,7 @@ def valid_plan() -> dict:
                 },
                 {
                     "id": "control-placement",
-                    "prompt_excerpt": "a small source-supported offset from the frame center",
+                    "prompt_excerpt": "a small offset from the frame center",
                     "claim_id": "claim-placement",
                     "owner": "core.frame-coordinates",
                     "aggregate_effect_ids": ["minor-placement-effect"],
@@ -508,6 +530,7 @@ def with_spatial_coverage(
             else []
         ),
         "coupled_effects": [],
+        "prompt_effect_audits": [],
         "decisions": [
             {
                 "id": f"coverage-{dimension}",
@@ -522,9 +545,28 @@ def with_spatial_coverage(
                 "evidence_cue_ids": [f"cue-{dimension}"],
                 "control_axis_id": f"subject-a/{dimension}",
                 "non_emission_reason": "no separate prompt control is warranted",
-                "counterfactual_preservation_reason": (
-                    "varying this axis preserves the held-out visible relations"
-                ),
+                "neutralization_test": {
+                    "test_scope": (
+                        "single-dimension-with-adjacent-spatial-relations-held"
+                    ),
+                    "tested_change": (
+                        f"neutralize only {dimension} while holding adjacent relations"
+                    ),
+                    "verdict": "preserved",
+                    "preserved_relations": [
+                        "the held-out visible proposition and adjacent relations survive"
+                    ],
+                    "changed_relations": [],
+                    "held_fixed_decision_ids": [
+                        f"coverage-{held_dimension}"
+                        for held_dimension in sorted(dimensions - {dimension})
+                    ],
+                    "evidence_cue_ids": [f"cue-{dimension}"],
+                    "confidence": "high",
+                    "source_evidence": [
+                        f"held-out isolated neutralization evidence for {dimension}"
+                    ],
+                },
             }
             for dimension in sorted(dimensions)
         ],
@@ -533,14 +575,19 @@ def with_spatial_coverage(
         contract["human_appearance_decisions"] = [
             {
                 "id": "appearance-subject-a",
-                "schema_version": "human-appearance/v2",
+                "schema_version": "human-appearance/v3",
                 "subject_id": "subject-a",
                 "face_visibility": visibility,
                 "frame_prominence": "secondary",
                 "fidelity_salience": "not-material",
                 "appearance_invariant_ids": [],
                 "source_evidence": ["held-out source-visible human appearance"],
-                "identity_context": {"disposition": "absent"},
+                "identity_context": {
+                    "disposition": "absent",
+                    "context_use": "none",
+                    "prompt_disposition": "omit",
+                    "viewer_priority": "not-material",
+                },
                 "person_prior": {
                     "disposition": "omit",
                     "confidence": "high",
@@ -555,8 +602,39 @@ def with_spatial_coverage(
                         "source_evidence": ["appearance is not material in this held-out fixture"],
                     },
                 },
+                "appearance_gestalt": {
+                    "scope": "person-aesthetic",
+                    "disposition": "omit",
+                    "confidence": "high",
+                    "candidate_support": "unsupported",
+                    "viewer_priority": "not-material",
+                    "default_drift_risk": "low",
+                    "source_evidence": [
+                        "no aggregate person aesthetic is material in this fixture"
+                    ],
+                    "decomposition_control_ids": [],
+                    "effect_budget": {
+                        "intended_dimensions": [],
+                        "protected_dimensions": ["identity-context"],
+                        "source_evidence": [
+                            "the omitted aggregate cannot alter identity context"
+                        ],
+                    },
+                    "non_emission_reason": (
+                        "no P0 or P1 aggregate person aesthetic is supported"
+                    ),
+                    "omission_counterfactual": {
+                        "verdict": "preserved",
+                        "source_evidence": [
+                            "omitting an aggregate person aesthetic preserves this fixture"
+                        ],
+                    },
+                },
                 "skin_surface": {
                     "disposition": "not-material",
+                    "viewer_priority": "not-material",
+                    "observation_scope": "source-visible",
+                    "semantic_use": "displayed-surface",
                     "confidence": "high",
                     "source_evidence": ["skin color does not carry this fixture's proposition"],
                     "region_ids": [],
@@ -576,7 +654,11 @@ def promote_spatial_decision(
     direction: str = "held-out-source-relative-direction",
     prompt_excerpt: str | None = None,
 ) -> dict:
-    """Give one coverage decision a complete source-relative actuation path."""
+    """Give one coverage decision a complete source-relative actuation path.
+
+    Internal direction metadata may remain source-relative. The emitted fixture
+    always uses a self-contained visible target.
+    """
 
     contract = plan["render_contract"]
     decision = next(
@@ -616,7 +698,7 @@ def promote_spatial_decision(
         causal_origin=decision["causal_origin"],
         evidence=f"held-out source evidence for {dimension}",
         direction=direction,
-        prompt_excerpt=prompt_excerpt or f"preserve {direction}",
+        prompt_excerpt=prompt_excerpt or STANDALONE_SPATIAL_TARGETS[dimension],
         region_ids=["central-form"],
         relation_ids=[relation_id],
     )
@@ -644,8 +726,22 @@ def promote_spatial_decision(
         }
     )
     decision.pop("non_emission_reason", None)
-    decision.pop("counterfactual_preservation_reason", None)
+    decision.pop("neutralization_test", None)
     decision.pop("visibility_limit", None)
+    contract["spatial_orientation_coverage"]["prompt_effect_audits"].append(
+        {
+            "id": f"prompt-effect-{control_id}",
+            "control_id": control_id,
+            "subject_id": decision["subject_id"],
+            "effect_scope": "explicit-and-implicit-spatial-effects",
+            "prompt_excerpt": control["prompt_excerpt"],
+            "explicit_decision_ids": [decision["id"]],
+            "implicit_decision_ids": [],
+            "verdict": "source-consistent",
+            "rationale": "the source-relative clause actuates only its owned spatial axis",
+            "source_evidence": decision["source_evidence"],
+        }
+    )
     return plan
 
 
@@ -658,7 +754,7 @@ def promote_coupled_orientation(
         "human-shoulder-depth-order",
     ),
     result_direction: str = "source-relative coupled orientation result",
-    summary_excerpt: str = "retain one source-relative coupled orientation across the visible subject",
+    summary_excerpt: str = "the torso, head, and shoulder depth form one three-quarter turn toward viewer-left",
     summary_adequacy: str = "lossy",
     residual_dimensions: tuple[str, ...] | None = None,
 ) -> dict:
@@ -679,7 +775,7 @@ def promote_coupled_orientation(
         residual_dimensions = member_dimensions if summary_adequacy != "sufficient" else ()
     residual_dimension_set = set(residual_dimensions)
     residual_excerpts = {
-        dimension: f"preserve the source-visible residual relation for {dimension}"
+        dimension: STANDALONE_SPATIAL_TARGETS[dimension]
         for dimension in residual_dimensions
     }
     prompt_excerpt = ". ".join(
@@ -818,6 +914,20 @@ def promote_coupled_orientation(
             },
         }
     )
+    coverage["prompt_effect_audits"].append(
+        {
+            "id": "prompt-effect-control-coupled-orientation",
+            "control_id": control_id,
+            "subject_id": "subject-a",
+            "effect_scope": "explicit-and-implicit-spatial-effects",
+            "prompt_excerpt": control["prompt_excerpt"],
+            "explicit_decision_ids": [item["id"] for item in member_decisions],
+            "implicit_decision_ids": [],
+            "verdict": "source-consistent",
+            "rationale": "the coupled clause preserves only its source-supported member result",
+            "source_evidence": ["jointly readable held-out pose cues"],
+        }
+    )
     residual = next(
         (
             item
@@ -861,7 +971,7 @@ def with_material_human_appearance_omission(
         causal_origin="intrinsic",
         evidence="held-out readable face geometry",
         direction="source-relative-face-geometry",
-        prompt_excerpt="source-relative face silhouette and feature relations",
+        prompt_excerpt="the visible face silhouette and feature relations",
         region_ids=["central-form"],
     )
     decision = contract["human_appearance_decisions"][0]
@@ -885,6 +995,169 @@ def with_material_human_appearance_omission(
             "non_emission_reason": "testing explicit omission gate",
         }
     )
+    return plan
+
+
+def with_emitted_person_aesthetic(plan: dict) -> dict:
+    """Add one source-qualified person aesthetic and cross-module decomposition."""
+
+    plan = with_spatial_coverage(plan)
+    contract = plan["render_contract"]
+    additions = [
+        (
+            "person-aesthetic-summary",
+            "hierarchy",
+            "subject.human",
+            "one material source-relative person aesthetic",
+            "source-relative-person-aesthetic",
+            "a bounded restrained editorial person aesthetic",
+            None,
+        ),
+        (
+            "person-face-form",
+            "form",
+            "detail.human-face-likeness",
+            "source-specific face form constrains the aesthetic",
+            "source-relative-person-face-form",
+            "visible face form constrains that aesthetic",
+            "face-form",
+        ),
+        (
+            "person-hair-boundary",
+            "form",
+            "detail.human-face-likeness",
+            "source-specific hair mass and occlusion constrain the aesthetic",
+            "source-relative-person-hair-boundary",
+            "the visible hair mass and face occlusion remain authoritative",
+            "hair-boundary",
+        ),
+        (
+            "person-garment-coverage",
+            "form",
+            "detail.clothing-fashion",
+            "source-specific garment coverage constrains the aesthetic",
+            "source-relative-person-garment-coverage",
+            "the visible garment coverage and construction legibility remain bounded",
+            "garment-coverage",
+        ),
+        (
+            "person-capture-treatment",
+            "sharpness",
+            "medium.photographic-capture",
+            "source-specific softness and polish ceiling constrain the aesthetic",
+            "source-relative-person-capture-treatment",
+            "soft capture and a restrained polish ceiling remain unchanged",
+            "capture-treatment",
+        ),
+    ]
+    for (
+        invariant_id,
+        axis,
+        owner,
+        observation,
+        direction,
+        excerpt,
+        appearance_dimension,
+    ) in additions:
+        add_generic_claim(
+            contract,
+            invariant_id=invariant_id,
+            axis=axis,
+            owner=owner,
+            role="primary",
+            target_strength="moderate",
+            observation=observation,
+            causal_origin="processing" if axis == "sharpness" else "intrinsic",
+            evidence=f"held-out current-source evidence for {invariant_id}",
+            direction=direction,
+            prompt_excerpt=excerpt,
+            region_ids=["central-form"],
+        )
+        if appearance_dimension is not None:
+            contract["emitted_controls"][-1][
+                "appearance_dimension"
+            ] = appearance_dimension
+
+    decomposition_control_ids = [
+        "control-person-face-form",
+        "control-person-hair-boundary",
+        "control-person-garment-coverage",
+        "control-person-capture-treatment",
+    ]
+    summary_claim = next(
+        claim
+        for claim in contract["candidate_claims"]
+        if claim["id"] == "claim-person-aesthetic-summary"
+    )
+    summary_claim["generation_prior"] = {
+        "scope": "person-aesthetic",
+        "candidate_source": {
+            "kind": "source-visible-approximation",
+            "reference": "held-out current-source observation",
+        },
+        "non_identifying": True,
+        "visible_appearance_evidence": [
+            "the overall person styling remains independently readable"
+        ],
+        "decomposed_control_ids": decomposition_control_ids,
+    }
+
+    decision = contract["human_appearance_decisions"][0]
+    decision.update(
+        {
+            "fidelity_salience": "primary",
+            "appearance_invariant_ids": [item[0] for item in additions],
+        }
+    )
+    decision["person_prior"].update(
+        {
+            "default_drift_risk": "low",
+            "local_geometry_sufficiency": "sufficient",
+            "geometry_claim_ids": ["claim-person-face-form"],
+            "omission_counterfactual": {
+                "verdict": "preserved",
+                "source_evidence": [
+                    "the separate face-form control preserves non-demographic geometry"
+                ],
+            },
+        }
+    )
+    decision["appearance_gestalt"] = {
+        "scope": "person-aesthetic",
+        "disposition": "emit",
+        "confidence": "high",
+        "candidate_support": "supported",
+        "viewer_priority": "P0",
+        "default_drift_risk": "high",
+        "source_evidence": [
+            "the held-out person aesthetic is independently source-material"
+        ],
+        "claim_id": "claim-person-aesthetic-summary",
+        "decomposition_control_ids": decomposition_control_ids,
+        "effect_budget": {
+            "intended_dimensions": [
+                "face-form",
+                "hair-boundary",
+                "garment-coverage",
+                "capture-treatment",
+            ],
+            "protected_dimensions": [
+                "identity-context",
+                "pose-occlusion",
+                "scale-crop",
+                "age-presentation",
+            ],
+            "source_evidence": [
+                "the aggregate direction is bounded by independent visible controls"
+            ],
+        },
+        "omission_counterfactual": {
+            "verdict": "material-drift",
+            "source_evidence": [
+                "detail-only wording loses the material overall person aesthetic"
+            ],
+        },
+    }
     return plan
 
 
@@ -1418,10 +1691,19 @@ def with_material_skin_descriptor(plan: dict) -> dict:
     """Route a human and mark the held-out skin surface descriptor as material."""
 
     plan = with_spatial_coverage(add_controlled_surface_descriptor(plan))
-    skin = plan["render_contract"]["human_appearance_decisions"][0]["skin_surface"]
+    decision = plan["render_contract"]["human_appearance_decisions"][0]
+    decision.update(
+        {
+            "face_visibility": "indistinct",
+            "fidelity_salience": "primary",
+            "appearance_invariant_ids": ["surface-tone"],
+        }
+    )
+    skin = decision["skin_surface"]
     skin.update(
         {
             "disposition": "material",
+            "viewer_priority": "P0",
             "confidence": "high",
             "source_evidence": ["held-out visible skin occupies a material region"],
             "region_ids": ["central-form"],
@@ -1520,6 +1802,52 @@ def add_lighting_language_review(
 class SaliencePlanTests(unittest.TestCase):
     def test_valid_source_relative_plan_passes(self) -> None:
         self.assertEqual(audit_plan(valid_plan()), [])
+
+    def test_authored_prompt_must_compile_internal_provenance_into_visible_state(self) -> None:
+        phrases = (
+            "a poised, source-relative high-glamour presentation",
+            "source-visible shoulder geometry",
+            "source-specific garment coverage",
+            "source-supported shadow topology",
+            "the current-source lighting reading",
+        )
+        for phrase in phrases:
+            with self.subTest(phrase=phrase):
+                errors = audit_standalone_prompt_text(f"PROMPT:\n{phrase}.")
+                self.assertTrue(
+                    any("internal provenance label" in error for error in errors)
+                )
+
+    def test_plan_ledger_cannot_normalize_non_standalone_prompt_text(self) -> None:
+        plan = valid_plan()
+        plan["render_contract"]["emitted_controls"][2]["prompt_excerpt"] = (
+            "a small source-relative offset from the frame center"
+        )
+        errors = audit_plan(plan, authored_prompt_text(plan))
+        self.assertTrue(
+            any("authored prompt is not standalone" in error for error in errors)
+        )
+
+    def test_authored_prompt_rejects_unavailable_artifact_instructions(self) -> None:
+        prompts = (
+            "PROMPT:\nMatch the reference while keeping the same crop.",
+            "PROMPT:\nPreserve the original pose and lighting.",
+            "PROMPT:\nUse the attached image as shown in the reference image.",
+            "PROMPT:\nThe head turns toward source side A.",
+        )
+        for prompt in prompts:
+            with self.subTest(prompt=prompt):
+                self.assertTrue(audit_standalone_prompt_text(prompt))
+
+    def test_authored_prompt_allows_physical_sources_and_self_contained_state_verbs(self) -> None:
+        prompt = (
+            "PROMPT:\nA large soft light source above viewer-left creates broad "
+            "highlight coverage. Keep the head turned three-quarters toward "
+            "viewer-right, preserve the diagonal shoulder line, let the lower "
+            "half remain outside the frame, and keep the text small and indistinct."
+        )
+        self.assertEqual(audit_standalone_prompt_text(prompt), [])
+        self.assertEqual(audit_plan(valid_plan(), authored_prompt_text(valid_plan())), [])
 
     def test_generic_emitted_claim_requires_effect_and_final_control(self) -> None:
         plan = valid_plan()
@@ -1690,12 +2018,12 @@ class SaliencePlanTests(unittest.TestCase):
         ]
         self.assertTrue(
             any(
-                "schema_version" in error and "spatial-orientation/v4" in error
+                "schema_version" in error and "spatial-orientation/v5" in error
                 for error in audit_plan(plan)
             )
         )
 
-    def test_legacy_coarse_human_pose_dimension_cannot_satisfy_v4(self) -> None:
+    def test_legacy_coarse_human_pose_dimension_cannot_satisfy_v5(self) -> None:
         plan = with_spatial_coverage(valid_plan())
         decision = next(
             item
@@ -1755,7 +2083,7 @@ class SaliencePlanTests(unittest.TestCase):
             )
         )
 
-    def test_nonmaterial_pose_needs_counterfactual_preservation_reason(self) -> None:
+    def test_nonmaterial_pose_needs_dimension_neutralization_test(self) -> None:
         plan = with_spatial_coverage(valid_plan())
         decision = next(
             item
@@ -1764,13 +2092,96 @@ class SaliencePlanTests(unittest.TestCase):
             ]
             if item["dimension"] == "human-torso-yaw"
         )
-        del decision["counterfactual_preservation_reason"]
+        del decision["neutralization_test"]
         self.assertTrue(
             any(
-                "counterfactual_preservation_reason" in error
+                "neutralization_test must be an object" in error
                 for error in audit_plan(plan)
             )
         )
+
+    def test_nonmaterial_pose_cannot_hide_material_drift_in_free_prose(self) -> None:
+        plan = with_spatial_coverage(valid_plan())
+        decision = next(
+            item
+            for item in plan["render_contract"]["spatial_orientation_coverage"][
+                "decisions"
+            ]
+            if item["dimension"] == "human-torso-yaw"
+        )
+        decision["non_emission_reason"] = "minor variation is acceptable"
+        decision["neutralization_test"].update(
+            {
+                "verdict": "material-drift",
+                "preserved_relations": [],
+                "changed_relations": [
+                    "neutralizing torso yaw changes the visible side-depth relation"
+                ],
+            }
+        )
+        self.assertTrue(
+            any(
+                "must be 'preserved'" in error
+                for error in audit_plan(plan)
+            )
+        )
+
+    def test_low_confidence_pose_cannot_be_discarded_without_coupled_owner(self) -> None:
+        plan = with_spatial_coverage(valid_plan())
+        decision = next(
+            item
+            for item in plan["render_contract"]["spatial_orientation_coverage"][
+                "decisions"
+            ]
+            if item["dimension"] == "human-torso-yaw"
+        )
+        decision["confidence"] = "low"
+        self.assertTrue(
+            any(
+                "cannot be discarded from low-confidence" in error
+                for error in audit_plan(plan)
+            )
+        )
+
+    def test_fully_confounded_pose_cannot_be_discarded_without_coupled_owner(self) -> None:
+        plan = with_spatial_coverage(valid_plan())
+        coverage = plan["render_contract"]["spatial_orientation_coverage"]
+        decision = next(
+            item
+            for item in coverage["decisions"]
+            if item["dimension"] == "human-shoulder-depth-order"
+        )
+        for cue in coverage["evidence_cues"]:
+            if cue["id"] in decision["evidence_cue_ids"]:
+                cue["confounders"] = ["garment and perspective cues cannot be separated"]
+        self.assertTrue(
+            any(
+                "cannot be discarded from low-confidence or fully confounded evidence"
+                in error
+                for error in audit_plan(plan)
+            )
+        )
+
+    def test_confounded_weak_pose_can_survive_through_one_coupled_owner(self) -> None:
+        plan = with_spatial_coverage(valid_plan())
+        coverage = plan["render_contract"]["spatial_orientation_coverage"]
+        member_dimensions = {
+            "human-torso-yaw",
+            "human-head-body-yaw",
+            "human-shoulder-depth-order",
+        }
+        for decision in coverage["decisions"]:
+            if decision["dimension"] not in member_dimensions:
+                continue
+            decision["confidence"] = "low"
+            cue = next(
+                cue
+                for cue in coverage["evidence_cues"]
+                if cue["id"] in decision["evidence_cue_ids"]
+            )
+            cue["confounders"] = ["the individual axis is weak in isolation"]
+        promote_coupled_orientation(plan)
+        self.assertEqual(audit_plan(plan), [])
 
     def test_uncertain_pose_needs_a_visibility_or_confound_limit(self) -> None:
         plan = with_spatial_coverage(valid_plan())
@@ -1783,7 +2194,6 @@ class SaliencePlanTests(unittest.TestCase):
         )
         decision["disposition"] = "uncertain"
         decision["non_emission_reason"] = "the visible evidence conflicts"
-        decision.pop("counterfactual_preservation_reason", None)
         self.assertTrue(
             any("visibility_limit" in error for error in audit_plan(plan))
         )
@@ -2120,6 +2530,56 @@ class SaliencePlanTests(unittest.TestCase):
             )
         )
 
+    def test_every_emitted_spatial_control_needs_a_prompt_effect_audit(self) -> None:
+        plan = promote_spatial_decision(
+            with_spatial_coverage(valid_plan()),
+            "subject-principal-axis",
+        )
+        plan["render_contract"]["spatial_orientation_coverage"][
+            "prompt_effect_audits"
+        ] = []
+        self.assertTrue(
+            any(
+                "must cover every emitted spatial control" in error
+                for error in audit_plan(plan)
+            )
+        )
+
+    def test_prompt_alignment_clause_cannot_implicitly_actuate_discarded_axis(self) -> None:
+        plan = promote_spatial_decision(
+            with_spatial_coverage(valid_plan()),
+            "frame-placement",
+            direction="source-supported frame placement",
+            prompt_excerpt="place the subject slightly left of frame center",
+        )
+        audit = plan["render_contract"]["spatial_orientation_coverage"][
+            "prompt_effect_audits"
+        ][0]
+        audit["implicit_decision_ids"] = ["coverage-human-torso-yaw"]
+        self.assertTrue(
+            any(
+                "would actuate non-invariant or uncertain spatial decisions" in error
+                and "coverage-human-torso-yaw" in error
+                for error in audit_plan(plan)
+            )
+        )
+
+    def test_prompt_effect_audit_must_match_the_exact_spatial_clause(self) -> None:
+        plan = promote_spatial_decision(
+            with_spatial_coverage(valid_plan()),
+            "human-head-body-yaw",
+        )
+        audit = plan["render_contract"]["spatial_orientation_coverage"][
+            "prompt_effect_audits"
+        ][0]
+        audit["prompt_excerpt"] = "a softened paraphrase"
+        self.assertTrue(
+            any(
+                "prompt_excerpt must exactly match" in error
+                for error in audit_plan(plan)
+            )
+        )
+
     def test_flexible_and_not_visible_spatial_dimensions_cannot_emit(self) -> None:
         plan = with_spatial_coverage(valid_plan(), visibility="indistinct")
         contract = plan["render_contract"]
@@ -2132,7 +2592,6 @@ class SaliencePlanTests(unittest.TestCase):
         head["observation"] = "the head-to-body relation is not separable at this scale"
         head["non_emission_reason"] = "the relevant parts are indistinct"
         head["visibility_limit"] = "the head and torso axes are not separately readable"
-        head.pop("counterfactual_preservation_reason", None)
         principal = next(
             item
             for item in contract["spatial_orientation_coverage"]["decisions"]
@@ -2208,9 +2667,9 @@ class SaliencePlanTests(unittest.TestCase):
 
     def test_centered_opposite_and_mirrored_axes_are_all_valid_values(self) -> None:
         for direction in (
-            "principal axis coincides with the source frame centerline",
-            "principal axis remains offset toward source side A",
-            "principal axis remains offset toward source side B",
+            "the principal axis coincides with the frame vertical centerline",
+            "the principal axis remains offset toward viewer-left",
+            "the principal axis remains offset toward viewer-right",
         ):
             plan = promote_spatial_decision(
                 with_spatial_coverage(valid_plan()),
@@ -2222,9 +2681,9 @@ class SaliencePlanTests(unittest.TestCase):
 
     def test_mirrored_head_body_yaw_relations_are_equally_valid(self) -> None:
         for direction, verdict in (
-            ("the head turns toward source side A relative to the torso", "material"),
-            ("the head turns toward source side B relative to the torso", "material"),
-            ("the head and torso remain source-frontally aligned", "not-material"),
+            ("the head turns toward viewer-left relative to the torso", "material"),
+            ("the head turns toward viewer-right relative to the torso", "material"),
+            ("the head and torso remain frontally aligned", "not-material"),
         ):
             plan = with_spatial_coverage(valid_plan())
             check = next(
@@ -2265,7 +2724,7 @@ class SaliencePlanTests(unittest.TestCase):
         del plan["render_contract"]["human_appearance_decisions"]
         self.assertTrue(
             any(
-                "person prior and skin-surface handling cannot be silently omitted"
+                "appearance gestalt, and skin handling cannot be silently omitted"
                 in error
                 for error in audit_plan(plan)
             )
@@ -2296,7 +2755,7 @@ class SaliencePlanTests(unittest.TestCase):
             causal_origin="intrinsic",
             evidence="held-out broad face gestalt",
             direction="source-relative-person-gestalt",
-            prompt_excerpt="one source-relative non-identifying person gestalt",
+            prompt_excerpt="one bounded non-identifying person gestalt",
             region_ids=["central-form"],
         )
         prior_claim = contract["candidate_claims"][-1]
@@ -2433,6 +2892,9 @@ class SaliencePlanTests(unittest.TestCase):
             "identity_context"
         ] = {
             "disposition": "trusted-metadata",
+            "context_use": "trusted-factual-context",
+            "prompt_disposition": "diagnostic-only",
+            "viewer_priority": "P1",
             "source_reference": "verified casting metadata record 42",
         }
         self.assertEqual(audit_plan(trusted), [])
@@ -2440,11 +2902,232 @@ class SaliencePlanTests(unittest.TestCase):
         missing_provenance = with_spatial_coverage(valid_plan())
         missing_provenance["render_contract"]["human_appearance_decisions"][0][
             "identity_context"
-        ] = {"disposition": "trusted-metadata"}
+        ] = {
+            "disposition": "trusted-metadata",
+            "context_use": "trusted-factual-context",
+            "prompt_disposition": "diagnostic-only",
+            "viewer_priority": "P1",
+        }
         self.assertTrue(
             any(
                 "source_reference is required for external identity context" in error
                 for error in audit_plan(missing_provenance)
+            )
+        )
+
+    def test_user_supplied_identity_can_be_prioritized_only_as_external_context(self) -> None:
+        plan = with_spatial_coverage(valid_plan())
+        contract = plan["render_contract"]
+        add_generic_claim(
+            contract,
+            invariant_id="user-identity-context",
+            axis="form",
+            owner="subject.human",
+            role="primary",
+            target_strength="subtle",
+            observation="one explicit user-supplied casting target",
+            causal_origin="intrinsic",
+            evidence="held-out user request field",
+            direction="retain-explicit-user-casting-target",
+            prompt_excerpt="one explicit user-supplied casting target",
+            region_ids=["central-form"],
+        )
+        contract["emitted_controls"][-1][
+            "appearance_dimension"
+        ] = "identity-context"
+        decision = contract["human_appearance_decisions"][0]
+        decision.update(
+            {
+                "face_visibility": "indistinct",
+                "fidelity_salience": "primary",
+                "appearance_invariant_ids": ["user-identity-context"],
+            }
+        )
+        decision["identity_context"] = {
+            "disposition": "user-supplied",
+            "context_use": "creative-target",
+            "prompt_disposition": "emit",
+            "viewer_priority": "P0",
+            "source_reference": "held-out user request field",
+            "claim_id": "claim-user-identity-context",
+        }
+        self.assertEqual(audit_plan(plan, authored_prompt_text(plan)), [])
+
+        low_priority = deepcopy(plan)
+        low_priority["render_contract"]["human_appearance_decisions"][0][
+            "identity_context"
+        ]["viewer_priority"] = "P2"
+        self.assertTrue(
+            any(
+                "identity_context emit requires P0 or P1" in error
+                for error in audit_plan(low_priority)
+            )
+        )
+
+        mismatched_use = deepcopy(plan)
+        mismatched_use["render_contract"]["human_appearance_decisions"][0][
+            "identity_context"
+        ]["context_use"] = "trusted-factual-context"
+        self.assertTrue(
+            any(
+                "does not match its external provenance" in error
+                for error in audit_plan(mismatched_use)
+            )
+        )
+
+    def test_external_identity_context_precedes_person_aesthetic_decomposition(self) -> None:
+        plan = with_emitted_person_aesthetic(valid_plan())
+        contract = plan["render_contract"]
+        add_generic_claim(
+            contract,
+            invariant_id="external-identity-context",
+            axis="form",
+            owner="subject.human",
+            role="primary",
+            target_strength="subtle",
+            observation="one explicit externally supplied casting context",
+            causal_origin="intrinsic",
+            evidence="held-out user request field",
+            direction="retain-external-casting-context",
+            prompt_excerpt="one explicit externally supplied casting context",
+            region_ids=["central-form"],
+        )
+        identity_control = contract["emitted_controls"].pop()
+        summary_index = next(
+            index
+            for index, control in enumerate(contract["emitted_controls"])
+            if control["id"] == "control-person-aesthetic-summary"
+        )
+        contract["emitted_controls"].insert(summary_index, identity_control)
+
+        decision = contract["human_appearance_decisions"][0]
+        decision["appearance_invariant_ids"].append("external-identity-context")
+        decision["identity_context"] = {
+            "disposition": "user-supplied",
+            "context_use": "creative-target",
+            "prompt_disposition": "emit",
+            "viewer_priority": "P0",
+            "source_reference": "held-out user request field",
+            "claim_id": "claim-external-identity-context",
+        }
+
+        prompt = authored_prompt_text(plan)
+        self.assertEqual(audit_plan(plan, prompt), [])
+        reversed_prompt = prompt.replace(
+            (
+                "one explicit externally supplied casting context. "
+                "a bounded restrained editorial person aesthetic"
+            ),
+            (
+                "a bounded restrained editorial person aesthetic. "
+                "one explicit externally supplied casting context"
+            ),
+        )
+        self.assertTrue(
+            any(
+                "external identity context must precede" in error
+                for error in audit_plan(plan, reversed_prompt)
+            )
+        )
+
+    def test_person_aesthetic_anchor_leads_owned_cross_module_decomposition(self) -> None:
+        plan = with_emitted_person_aesthetic(valid_plan())
+        prompt = authored_prompt_text(plan)
+        self.assertEqual(audit_plan(plan, prompt), [])
+        summary = "a bounded restrained editorial person aesthetic"
+        for excerpt in (
+            "visible face form constrains that aesthetic",
+            "the visible hair mass and face occlusion remain authoritative",
+            "the visible garment coverage and construction legibility remain bounded",
+            "soft capture and a restrained polish ceiling remain unchanged",
+        ):
+            self.assertLess(prompt.index(summary), prompt.index(excerpt))
+
+        reversed_prompt = prompt.replace(
+            (
+                "a bounded restrained editorial person aesthetic. "
+                "visible face form constrains that aesthetic"
+            ),
+            (
+                "visible face form constrains that aesthetic. "
+                "a bounded restrained editorial person aesthetic"
+            ),
+        )
+        self.assertTrue(
+            any(
+                "must lead its literal decomposed controls" in error
+                for error in audit_plan(plan, reversed_prompt)
+            )
+        )
+
+    def test_person_aesthetic_effect_budget_rejects_missing_or_misowned_controls(self) -> None:
+        plan = with_emitted_person_aesthetic(valid_plan())
+
+        missing_dimension = deepcopy(plan)
+        next(
+            control
+            for control in missing_dimension["render_contract"]["emitted_controls"]
+            if control["id"] == "control-person-hair-boundary"
+        ).pop("appearance_dimension")
+        self.assertTrue(
+            any(
+                "requires a valid appearance_dimension" in error
+                for error in audit_plan(missing_dimension)
+            )
+        )
+
+        wrong_owner = deepcopy(plan)
+        wrong_contract = wrong_owner["render_contract"]
+        wrong_invariant = next(
+            item
+            for item in wrong_contract["invariants"]
+            if item["id"] == "person-hair-boundary"
+        )
+        wrong_claim = next(
+            item
+            for item in wrong_contract["candidate_claims"]
+            if item["id"] == "claim-person-hair-boundary"
+        )
+        wrong_control = next(
+            item
+            for item in wrong_contract["emitted_controls"]
+            if item["id"] == "control-person-hair-boundary"
+        )
+        for entry in (wrong_invariant, wrong_claim, wrong_control):
+            if "clause_owner" in entry:
+                entry["clause_owner"] = "detail.clothing-fashion"
+            else:
+                entry["owner"] = "detail.clothing-fashion"
+        self.assertTrue(
+            any(
+                "invalid owner for 'hair-boundary'" in error
+                for error in audit_plan(wrong_owner)
+            )
+        )
+
+        identity_leak = deepcopy(plan)
+        identity_leak["render_contract"]["human_appearance_decisions"][0][
+            "appearance_gestalt"
+        ]["effect_budget"]["protected_dimensions"].remove("identity-context")
+        self.assertTrue(
+            any(
+                "must include identity-context" in error
+                for error in audit_plan(identity_leak)
+            )
+        )
+
+    def test_person_aesthetic_generation_prior_requires_a_v3_decision(self) -> None:
+        plan = with_emitted_person_aesthetic(valid_plan())
+        del plan["render_contract"]["human_appearance_decisions"][0][
+            "appearance_gestalt"
+        ]
+        errors = audit_plan(plan)
+        self.assertTrue(
+            any("appearance_gestalt must be an object" in error for error in errors)
+        )
+        self.assertTrue(
+            any(
+                "require an appearance_gestalt decision" in error for error in errors
             )
         )
 
@@ -2520,6 +3203,43 @@ class SaliencePlanTests(unittest.TestCase):
             any(
                 "controlled_descriptor.phrase appears 0 times" in error
                 for error in audit_plan(plan, missing_phrase)
+            )
+        )
+
+    def test_skin_surface_is_prioritized_as_displayed_color_not_identity(self) -> None:
+        plan = with_material_skin_descriptor(valid_color_plan())
+        self.assertEqual(audit_plan(plan, authored_prompt_text(plan)), [])
+
+        identity_proxy = deepcopy(plan)
+        identity_proxy["render_contract"]["human_appearance_decisions"][0][
+            "skin_surface"
+        ]["semantic_use"] = "demographic-identity"
+        self.assertTrue(
+            any(
+                "semantic_use must remain displayed-surface" in error
+                for error in audit_plan(identity_proxy)
+            )
+        )
+
+        low_priority = deepcopy(plan)
+        low_priority["render_contract"]["human_appearance_decisions"][0][
+            "skin_surface"
+        ]["viewer_priority"] = "P2"
+        self.assertTrue(
+            any(
+                "descriptor emission requires P0 or P1" in error
+                for error in audit_plan(low_priority)
+            )
+        )
+
+        scope_mismatch = deepcopy(plan)
+        scope_mismatch["render_contract"]["human_appearance_decisions"][0][
+            "skin_surface"
+        ]["observation_scope"] = "user-specified"
+        self.assertTrue(
+            any(
+                "observation_scope must match surface_color_language" in error
+                for error in audit_plan(scope_mismatch)
             )
         )
 
@@ -2777,7 +3497,7 @@ class SaliencePlanTests(unittest.TestCase):
             causal_origin="material-interaction",
             evidence="two independently visible boundary components",
             direction="source-relative-multi-boundary-topology",
-            prompt_excerpt="two visible regions retain their source-relative boundary topology",
+            prompt_excerpt="two visible regions retain an asymmetric interlocking boundary topology",
             region_ids=["central-form", "surrounding-field"],
             relation_ids=["central-field-relation"],
         )
@@ -2805,7 +3525,7 @@ class SaliencePlanTests(unittest.TestCase):
         self.assertEqual(audit_plan(plan), [])
 
     def test_person_gestalt_generation_prior_requires_provenance_and_geometry(self) -> None:
-        plan = valid_plan()
+        plan = with_spatial_coverage(valid_plan())
         contract = plan["render_contract"]
         add_generic_claim(
             contract,
@@ -2848,6 +3568,27 @@ class SaliencePlanTests(unittest.TestCase):
             ],
             "geometry_claim_ids": ["claim-source-face-geometry"],
         }
+        appearance_decision = contract["human_appearance_decisions"][0]
+        appearance_decision.update(
+            {
+                "fidelity_salience": "supporting",
+                "appearance_invariant_ids": ["readable-face-gestalt"],
+            }
+        )
+        appearance_decision["person_prior"].update(
+            {
+                "disposition": "emit",
+                "confidence": "medium",
+                "candidate_support": "supported",
+                "default_drift_risk": "high",
+                "local_geometry_sufficiency": "sufficient",
+                "geometry_claim_ids": ["claim-source-face-geometry"],
+                "source_evidence": ["source-relative readable face gestalt"],
+                "claim_id": "claim-readable-face-gestalt",
+            }
+        )
+        appearance_decision["person_prior"].pop("non_emission_reason", None)
+        appearance_decision["person_prior"].pop("omission_counterfactual", None)
         self.assertEqual(audit_plan(plan), [])
         self.assertEqual(
             audit_plan(plan, prompt_text=authored_prompt_text(plan)), []
@@ -2899,7 +3640,7 @@ class SaliencePlanTests(unittest.TestCase):
         )
 
     def test_generation_prior_geometry_claim_ids_must_reach_owned_prompt_controls(self) -> None:
-        plan = valid_plan()
+        plan = with_spatial_coverage(valid_plan())
         contract = plan["render_contract"]
         add_generic_claim(
             contract,
@@ -2940,6 +3681,27 @@ class SaliencePlanTests(unittest.TestCase):
             "visible_geometry_evidence": ["local silhouette and feature relations"],
             "geometry_claim_ids": ["claim-local-face-geometry"],
         }
+        appearance_decision = contract["human_appearance_decisions"][0]
+        appearance_decision.update(
+            {
+                "fidelity_salience": "supporting",
+                "appearance_invariant_ids": ["broad-person-anchor"],
+            }
+        )
+        appearance_decision["person_prior"].update(
+            {
+                "disposition": "emit",
+                "confidence": "medium",
+                "candidate_support": "supported",
+                "default_drift_risk": "high",
+                "local_geometry_sufficiency": "sufficient",
+                "geometry_claim_ids": ["claim-local-face-geometry"],
+                "source_evidence": ["one non-identifying source-relative person anchor"],
+                "claim_id": "claim-broad-person-anchor",
+            }
+        )
+        appearance_decision["person_prior"].pop("non_emission_reason", None)
+        appearance_decision["person_prior"].pop("omission_counterfactual", None)
         self.assertEqual(audit_plan(plan), [])
 
         missing_ids = deepcopy(plan)
@@ -3013,7 +3775,7 @@ class SaliencePlanTests(unittest.TestCase):
         )
 
     def test_source_visible_attractiveness_anchor_is_retained_with_local_geometry(self) -> None:
-        plan = valid_plan()
+        plan = with_spatial_coverage(valid_plan())
         contract = plan["render_contract"]
         add_generic_claim(
             contract,
@@ -3055,6 +3817,67 @@ class SaliencePlanTests(unittest.TestCase):
                 "source-visible eye spacing, jaw taper, and feature projection"
             ],
             "geometry_claim_ids": ["claim-decisive-face-relations"],
+            "decomposed_control_ids": ["control-decisive-face-relations"],
+        }
+        geometry_control = next(
+            control
+            for control in contract["emitted_controls"]
+            if control["id"] == "control-decisive-face-relations"
+        )
+        geometry_control["appearance_dimension"] = "face-form"
+        decision = contract["human_appearance_decisions"][0]
+        decision.update(
+            {
+                "fidelity_salience": "primary",
+                "appearance_invariant_ids": [
+                    "overall-face-reading",
+                    "decisive-face-relations",
+                ],
+            }
+        )
+        decision["person_prior"].update(
+            {
+                "default_drift_risk": "low",
+                "local_geometry_sufficiency": "sufficient",
+                "geometry_claim_ids": ["claim-decisive-face-relations"],
+                "omission_counterfactual": {
+                    "verdict": "preserved",
+                    "source_evidence": [
+                        "local geometry preserves the non-demographic face reading"
+                    ],
+                },
+            }
+        )
+        decision["appearance_gestalt"] = {
+            "scope": "attractiveness",
+            "disposition": "emit",
+            "confidence": "high",
+            "candidate_support": "supported",
+            "viewer_priority": "P0",
+            "default_drift_risk": "high",
+            "source_evidence": [
+                "coherent visible facial gestalt carries the overall reading"
+            ],
+            "claim_id": "claim-overall-face-reading",
+            "decomposition_control_ids": ["control-decisive-face-relations"],
+            "effect_budget": {
+                "intended_dimensions": ["face-form"],
+                "protected_dimensions": [
+                    "identity-context",
+                    "cosmetic-visibility",
+                    "capture-treatment",
+                    "scale-crop",
+                ],
+                "source_evidence": [
+                    "the aggregate must not add demographic, makeup, polish, or crop changes"
+                ],
+            },
+            "omission_counterfactual": {
+                "verdict": "material-drift",
+                "source_evidence": [
+                    "geometry alone loses the material overall facial reading"
+                ],
+            },
         }
         prompt = authored_prompt_text(plan)
         self.assertEqual(audit_plan(plan, prompt), [])
@@ -4057,7 +4880,7 @@ class SaliencePlanTests(unittest.TestCase):
         color_contract["emitted_controls"].append(
             {
                 "id": "control-supported-light-shift",
-                "prompt_excerpt": "a matching source-visible illumination shift",
+                "prompt_excerpt": "a warm illumination shift across both materials",
                 "claim_id": illumination["id"],
                 "causal_layer": "illumination",
                 "control_role": "axis-control",

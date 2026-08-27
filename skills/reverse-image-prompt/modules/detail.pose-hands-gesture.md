@@ -1,6 +1,6 @@
 ---
 id: detail.pose-hands-gesture
-version: 6
+version: 7
 priority: 78
 type: detail
 tier: 3
@@ -36,29 +36,21 @@ Describe mechanics rather than generic pose labels:
 
 In `prompt`, select only the macro action and decisive P0/P1 relations from the list below. Group non-material joints, fingers, coordinates, and hidden mechanics; never complete them for checklist coverage. Use exhaustive axis disposal only in `audited`.
 
-- body crop and visible body parts
-- head direction, head tilt, chin angle, gaze, neck visibility
-- shoulder line angle, torso orientation, twist, lean, posture, spine/action line
-- shoulder/hip height difference, weight distribution
-- the support plane under the body, the side of any nearby boundary containing the torso and center of mass, and which parts cross or overlap that boundary
-- arm direction, elbow bend, forearm angle, wrist angle
-- hand placement, finger visibility, object grip, contact point
-- leg placement, knee bend, ankle/foot placement if visible
-- negative space and crop boundaries
-- approximate pose landmark coordinates when helpful
+- crop, visible parts, negative space, and useful landmarks
+- head/chin/gaze/neck; shoulder line, torso twist/lean, action line, and weight distribution
+- support plane, torso/center-of-mass side of nearby boundaries, and crossings
+- arm/elbow/forearm/wrist; hand/finger/grip/contact; visible leg/knee/foot placement
 
 For side/back, over-shoulder, profile-glimpse, or partly turned human poses, preserve asymmetry separately from category labels. State which side profile, shoulder edge, torso twist, cropped limb, visible side/back/front plane, and hidden planes are present. Avoid summarizing as `back view`, `rear view`, `over shoulder`, or a generic fashion pose if that would square the body to camera, lose the visible face/profile evidence, or complete hidden regions.
 
+Treat pose, hand placement, and occlusion as independent from a person-aesthetic anchor. Keep them protected unless the anchor explicitly intends `pose-occlusion`, cites P0/P1 evidence, and decomposes into this module's control. Emit the material pose result before the appearance passage so aesthetic wording cannot silently frontalize, straighten, or restage it.
+
 For contact gestures, describe the contact as a spatial relationship:
 
-- both participating elements and the exact body/object regions involved
-- approximate size and angle of each contacting part
-- visible fingers or endpoints
-- contact point and compression
-- overlap and hidden portions
-- where the interacting element begins and ends
-- which side or zone contains the subject before and after the contact boundary
-- whether there is pinch gap, pulling tension, weight, pressure, load-bearing support, stabilizing contact, or only passive touch
+- participating elements, exact regions, size/angle, and visible endpoints
+- contact point, compression, overlap, hidden portions, and element extent
+- subject zones on either side of the contact boundary
+- pinch gap, tension, pressure, load-bearing, stabilization, or passive touch only when visible
 
 Do not infer that a touched element carries body weight. When a structure or edge divides space, keep the torso and center of mass on the source-visible side unless the image clearly shows a crossing, straddling, hanging, or suspended pose.
 
@@ -66,7 +58,7 @@ If the source bounds length, volume, or reach by crop or occlusion, state those 
 
 ## Optional negative contribution
 
-Reject mirrored pose, changed head tilt/gaze/shoulder angle/torso lean, altered arm/elbow/wrist/hand/finger positions, added or removed hands, extra/missing fingers, malformed grip, generic fashion/action pose, contact point moved, wrong side of a boundary, invented body-weight support, unintended crossing or hanging, pinching/pulling/holding invented, longer limbs or props, and occlusion changes that reveal hidden areas.
+Reject mirrored or generic pose, changed head/shoulder/torso/limb/hand relations, malformed grip or fingers, moved contact, wrong boundary side, invented load/crossing/tension, extended parts, or revealed occlusion.
 
 ## Optional settings contribution
 

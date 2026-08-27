@@ -31,7 +31,7 @@ The first pair should retain the primary salience signature without overlocking 
 
 Balance appearance-led cases with relationship-led, information-led, mixed, neutral, photographic, and non-photographic cases. Include both human and non-human subjects when those routes are in scope. The current motivating case may remain one regression sample, but its subject parts, colors, garments, pose, or desired values must not become runtime defaults or expected wording.
 
-Include appearance cases where generic attractiveness stays similar while broad visual reading, local geometry, displayed skin, space, clothing, or pose changes independently. The expected distinction is source-specific priority, never a preferred demographic or beauty preset.
+Include appearance cases where generic attractiveness stays similar while local geometry, displayed skin, hair, cosmetics, garment coverage, pose, light, or capture changes independently. Also vary user/trusted identity context independently of identical pixels. The expected distinction is source-specific priority and external provenance, never a preferred demographic or beauty preset.
 
 ## Independent prompt-profile pass
 
@@ -40,11 +40,12 @@ For a before/after comparison, give each arm only the raw request, source artifa
 For each arm:
 
 1. Resolve `reverse-image-analysis-route/v2` with `analysis_profile=prompt` and run exactly one isolated lane wave.
-2. Confirm every lane returns `reverse-image-analysis-lane-report/compact-v1`, details P0/P1, compresses P2, groups P3/non-material topics, and does not create v4/v2 ledgers.
-3. Integrate one viewer-priority map and draft from P0 to P2. Check that one lane's inventory cannot acquire weight through length or repetition.
-4. Run one independent compact critic. Record `pass`, one `targeted-repair`, or `blocked`; advisories and P2/P3 completeness must not cause reruns.
-5. Record route time, lane wall time, integration time, critic time, end-to-end time, report bytes/tokens, lane retry count, full-reroute count, and repair count. Compare medians and tails across identical held-out requests; do not infer latency improvement from one run.
-6. Score the standalone prompt without requiring shared wording, a persisted bundle, or an actual render. Keep pixel and user-judgment layers unscored unless separately obtained.
+2. Confirm every lane returns `reverse-image-analysis-lane-report/compact-v2`, details P0/P1, compresses P2, groups P3/non-material topics, and does not create audited ledgers. For every macro finding, require a sufficient/lossy/uncertain verdict and only the at-risk residual relations justified by that verdict.
+3. Validate the route-bound report set with `python tools/compact_reports.py COMPACT_SET.json`. Treat an absent target lane, missing required module, or unclosed cross-lane residual as `route-gap`; use at most the declared one-reroute budget.
+4. Integrate one viewer-priority map and draft from P0 to P2. Check that one lane's inventory cannot acquire weight through length or repetition, that pose-bound Light/Form follows its owning spatial relation, and that later prose does not normalize it.
+5. Run one independent compact critic. Record `pass`, one `targeted-repair`, or `blocked`; advisories and P2/P3 completeness must not cause reruns.
+6. Record route time, lane wall time, integration time, critic time, end-to-end time, report bytes/tokens, lane retry count, full-reroute count, and repair count. Compare medians and tails across identical held-out requests; do not infer latency improvement from one run.
+7. Score the standalone prompt without requiring shared wording, a persisted bundle, or an actual render. Keep pixel and user-judgment layers unscored unless separately obtained.
 
 ## Independent audited pass
 
@@ -185,11 +186,11 @@ Integration disposes every finding and obligation exactly once. A retained or me
 
 ### Spatial/Orientation Coverage schema
 
-When an orientation-bearing subject is material, and always when `subject.human` is routed, add `spatial_orientation_coverage` using `spatial-orientation/v4`. This is a direction-neutral evidence and coverage ledger, not a target-pose template:
+When an orientation-bearing subject is material, and always when `subject.human` is routed, add `spatial_orientation_coverage` using `spatial-orientation/v5`. This is a direction-neutral evidence, non-emission, and prompt-actuation ledger, not a target-pose template:
 
 ```yaml
 spatial_orientation_coverage:
-  schema_version: spatial-orientation/v4
+  schema_version: spatial-orientation/v5
   subjects:
     - id: "subject-local-id"
       kind: human | non-human | group | component
@@ -234,7 +235,17 @@ spatial_orientation_coverage:
       aggregate_effect_id: "required only for invariant"
       control_id: "required only for invariant"
       non_emission_reason: "required only for non-invariant dispositions"
-      counterfactual_preservation_reason: "required for flexible or not-material"
+      neutralization_test: # required for flexible or not-material
+        test_scope: single-dimension-with-adjacent-spatial-relations-held
+        tested_change: "neutralize only this dimension"
+        verdict: preserved | material-drift | uncertain
+        preserved_relations: []
+        changed_relations: []
+        held_fixed_decision_ids: []
+        evidence_cue_ids: []
+        confidence: high | medium | low
+        source_evidence: []
+        uncertainty_note: "required only when uncertain"
       visibility_limit: "required for not-visible or uncertain"
   coupled_effects:
     - id: "case-local coupled effect id"
@@ -284,21 +295,34 @@ spatial_orientation_coverage:
         source_evidence: []
       non_emission_reason: "required only for non-invariant dispositions"
       uncertainty_note: "required only when uncertain"
+  prompt_effect_audits:
+    - id: "case-local prompt-effect audit id"
+      control_id: "one emitted spatial control id"
+      subject_id: "matching spatial subject id"
+      effect_scope: explicit-and-implicit-spatial-effects
+      prompt_excerpt: "exact complete emitted spatial control"
+      explicit_decision_ids: []
+      implicit_decision_ids: []
+      verdict: source-consistent | neutralizing | uncertain
+      rationale: "why every semantic spatial effect is source-owned"
+      source_evidence: []
 ```
 
-Every covered subject disposes of frame placement, principal axis, the four viewpoint dimensions, and cross-component orientation. A human additionally disposes of torso yaw/pitch/roll; head-to-body yaw/pitch/roll and lateral offset; shoulder image-plane slope and depth order; and attention direction even when a partial or indistinct view makes one `not-visible` or `uncertain`. The former coarse `human-body-orientation`, `human-head-body-relation`, and `human-shoulder-line` dimensions are legacy-only and cannot establish v4 completeness. `flexible` decision ids also appear in `flexible_dimensions`.
+Every covered subject disposes of frame placement, principal axis, the four viewpoint dimensions, and cross-component orientation. A human additionally disposes of torso yaw/pitch/roll; head-to-body yaw/pitch/roll and lateral offset; shoulder image-plane slope and depth order; and attention direction even when a partial or indistinct view makes one `not-visible` or `uncertain`. The former coarse `human-body-orientation`, `human-head-body-relation`, and `human-shoulder-line` dimensions are legacy-only and cannot establish v5 completeness. `flexible` decision ids also appear in `flexible_dimensions`.
 
 Each evidence cue belongs to one subject and records a generic visible relation plus its confounders; decisions link to those cue ids. Orientation cannot rely only on a frame-placement cue. Cue families contain no preferred body part, direction, angle, garment, or composition. Viewpoint dimensions accept `perspective`; human torso and rotational head/body axes accept `pose-deformation`; lateral head/body offset and shoulder depth order may use a visible `spatial-relation`; attention accepts pose or a visible spatial relation; frame placement and cross-component orientation accept spatial relation or layout; the principal subject axis accepts spatial relation, pose, or layout. These are causal owners, not desired visual values.
 
 Every human has two counterfactuals. `whole-orientation` neutralizes every orientation decision together. `residual-alignment` holds all viewpoint decisions fixed while neutralizing every human pose-geometry decision; this isolates a pose result that a dominant camera angle could otherwise mask. A `material` verdict names changed visible relations and requires an invariant individual or coupled effect inside the tested decision set. `not-material` names preserved relations; `uncertain` records the visibility or confound limit. Neither check prefers asymmetry: a genuinely frontal source can remain valid.
 
-An invariant decision terminates in exactly one generic component relation, invariant, affirmative claim, aggregate effect, and literal prompt control. Its aggregate effect and control carry the same `control_axis_id` and `causal_origin`. A non-invariant decision carries none of those path ids and emits no separate spatial control. `flexible` and `not-material` also record why varying that axis preserves the visible proposition; `not-visible` and `uncertain` record the limiting evidence. When two or more individually non-emitted decisions jointly change the visible result, one invariant `coupled_effect` owns their result direction and full path. Its members remain non-emitted as independent paths, its physical attribution may stay confounded, and its net-effect audit includes every emitted spatial control for the subject. The coupled control is decomposed hierarchically: one source-relative macro summary appears first, then a coverage decision for every member. `complete` and `not-applicable` members add no prose; `partial` and `lost` members require one literal residual subclause inside the same control. A `sufficient` summary has no at-risk members; a `lossy` or `uncertain` summary names exactly the members whose residuals emit. This preserves one owner without allowing a compact label to erase supported relations. Merge duplicate control axes before drafting.
+An invariant decision terminates in exactly one generic component relation, invariant, affirmative claim, aggregate effect, and literal prompt control. Its aggregate effect and control carry the same `control_axis_id` and `causal_origin`. A non-invariant decision carries none of those path ids and emits no separate spatial control. Each `flexible` or `not-material` decision must pass a structured single-dimension neutralization test with adjacent spatial decisions held fixed; a free-form claim that variation is minor does not establish preservation. A `preserved` verdict names surviving relations, uses decision-owned cues, and has high or medium confidence. Low-confidence or wholly confounded evidence becomes `uncertain` unless one invariant coupled effect preserves the joint result. `not-visible` and `uncertain` record the limiting evidence. When two or more individually non-emitted decisions jointly change the visible result, one invariant `coupled_effect` owns their result direction and full path. Its members remain non-emitted as independent paths, its physical attribution may stay confounded, and its net-effect audit includes every emitted spatial control for the subject. The coupled control is decomposed hierarchically: one source-relative macro summary appears first, then a coverage decision for every member. `complete` and `not-applicable` members add no prose; `partial` and `lost` members require one literal residual subclause inside the same control. A `sufficient` summary has no at-risk members; a `lossy` or `uncertain` summary names exactly the members whose residuals emit. This preserves one owner without allowing a compact label to erase supported relations. Merge duplicate control axes before drafting.
 
-No disposition or dimension implies a preferred value. Centered and offset, frontal and oblique, aligned and opposed, and either mirrored direction all remain valid source-relative outcomes. Keep placement controls positional. Put a material human pose relation after camera/scale and before local face, hair, and clothing inventory; validate the literal prompt order and source-consistent net effect. Hair and garment evidence may corroborate but never substitute for pose. Do not put case-specific coordinates, directions, body parts, garments, exact angles, or adjective exclusions into runtime expectations.
+Every emitted spatial control has exactly one `prompt_effect_audit` over its exact complete excerpt. The audit separates directly named decision effects from implicit semantic pulls and must include the individual owner or every coupled member. Treat alignment semantics—centered, frontal, upright, vertical, straight, balanced, aligned, and source-specific equivalents—as positive multi-axis actuations, not harmless defaults or a forbidden-word list. A clause may emit only when every affected decision has individual invariant ownership or belongs to an invariant coupled effect and the audit verdict is `source-consistent`. Rewrite or delete a neutralizing or uncertain clause; do not append a negative counterweight. The validator checks declared ids and literal ownership, while the independent raw-source critic is responsible for finding omitted synonymous or implicit effects.
+
+No disposition or dimension implies a preferred value. Centered and offset, frontal and oblique, aligned and opposed, and either mirrored direction all remain valid source-relative outcomes when supported and owned. Keep placement controls positional. Put a material human pose relation after camera/scale and before local face, hair, and clothing inventory; validate the literal prompt order, complete prompt-effect audit, and source-consistent net effect. Hair and garment evidence may corroborate but never substitute for pose. Do not put case-specific coordinates, directions, body parts, garments, exact angles, or adjective exclusions into runtime expectations.
 
 For form, surface, sharpness, hierarchy, topology, and information, every emitted claim carries `salience_effects`. The top-level `aggregate_effects` merges claims by the same axis, source-relative direction, regions, and relations; one aggregate effect has one emitted generic claim. The top-level `emitted_controls` then represents each generic emitted claim exactly once with a literal excerpt from the authored prompt. Generic, Color/Tone, and Light/Form contracts may not own the same claim or exact excerpt. The checker compares declared strings and ownership; a reviewer still audits synonymous prose because the tool does not infer semantics.
 
-An emitted broad human category or attractiveness anchor may add a `generation_prior` object to its owning claim. It records `scope`, a `candidate_source` with `kind` (`user-supplied`, `source-visible-approximation`, or `model-calibrated`) and a non-empty reference, `non_identifying: true`, `visible_geometry_evidence`, and non-empty `geometry_claim_ids`. Each ID references a separate emitted affirmative form claim owned by `subject.human`, `detail.human-face-likeness`, or `detail.human-body-form`, kept in the generic ledger, and represented by exactly one prompt control. The runtime skill contains no named preferred category, and neither diagnostic evidence, a skin/surface claim, nor the prior clause itself can replace local face or body geometry.
+An emitted human generation prior has scope `person-gestalt`, `attractiveness`, or `person-aesthetic`, a provenance-bound candidate source, and `non_identifying: true`. `person-gestalt` and `attractiveness` retain visible geometry evidence and separately actuated `geometry_claim_ids`; `attractiveness` and `person-aesthetic` also bind `decomposed_control_ids`. A person-aesthetic prior uses visible appearance evidence. Each decomposition control declares one valid `appearance_dimension` and an owner authorized for it. Exact race, ethnicity, nationality, or other protected identity context is never a generation prior and never comes from pixels.
 
 Broad aesthetic, capture, mood, or genre shorthand uses `prior-cluster/v2`, not an unowned adjective. Record `scope`, `disposition`, source provenance/evidence, calibration status, a summary control only for emission, and decomposed claim/control IDs. A source-visible unverified summary may emit when confidence is high/medium, viewer priority is P0/P1, its omission counterfactual is `material-drift`, and the summary immediately leads its owned decomposition. User-supplied wording remains explicit user intent. Model calibration separately records exact generator/version response evidence. Human appearance remains in the dedicated decision/generation-prior path.
 
@@ -309,7 +333,7 @@ Whenever `subject.human` is routed, add exactly one record for every human in `s
 ```yaml
 human_appearance_decisions:
   - id: "case-local decision id"
-    schema_version: human-appearance/v2
+    schema_version: human-appearance/v3
     subject_id: "matching human spatial subject id"
     face_visibility: readable | partial | indistinct | not-visible | uncertain
     frame_prominence: primary | secondary | background
@@ -318,8 +342,11 @@ human_appearance_decisions:
     source_evidence: []
     identity_context:
       disposition: user-supplied | trusted-metadata | absent
-      source_reference: "required for user-supplied or trusted metadata"
-      claim_id: "optional user-context claim"
+      context_use: creative-target | user-asserted-context | trusted-factual-context | none
+      prompt_disposition: emit | diagnostic-only | omit
+      viewer_priority: P0 | P1 | P2 | P3 | not-material | uncertain
+      source_reference: "required for externally supplied context"
+      claim_id: "required only for emitted external context"
     person_prior:
       disposition: emit | omit | uncertain
       confidence: high | medium | low
@@ -334,8 +361,30 @@ human_appearance_decisions:
         verdict: preserved | material-drift | uncertain
         source_evidence: []
       residual_risk: "required while uncertain"
+    appearance_gestalt:
+      scope: attractiveness | person-aesthetic
+      disposition: emit | omit | uncertain
+      confidence: high | medium | low
+      candidate_support: supported | unsupported | uncertain
+      viewer_priority: P0 | P1 | P2 | P3 | not-material | uncertain
+      default_drift_risk: low | medium | high | uncertain
+      source_evidence: []
+      claim_id: "required only for emit"
+      decomposition_control_ids: []
+      effect_budget:
+        intended_dimensions: []
+        protected_dimensions: [identity-context]
+        source_evidence: []
+      omission_counterfactual:
+        verdict: preserved | material-drift | uncertain
+        source_evidence: []
+      non_emission_reason: "required unless emitted"
+      residual_risk: "required while uncertain"
     skin_surface:
       disposition: material | not-material | not-visible | uncertain
+      viewer_priority: P0 | P1 | P2 | P3 | not-material | uncertain
+      observation_scope: source-visible | color-managed | user-specified
+      semantic_use: displayed-surface
       confidence: high | medium | low
       source_evidence: []
       region_ids: []
@@ -345,7 +394,7 @@ human_appearance_decisions:
       non_emission_reason: "required when skin is not material"
 ```
 
-This is a processing-completeness contract, not an instruction to emit a category or color. Frame prominence does not set fidelity salience. Factual identity/nationality can enter only as user-supplied or trusted metadata with an external source reference; pixels can support only a non-identifying generation approximation. For a readable fidelity-material person, `omit` requires sufficient emitted form geometry, low default-drift risk, and a preserved omission counterfactual. Otherwise emit a supported prior or keep uncertainty with residual risk. Skin color cannot substitute for form geometry. Material skin names matching Color/Tone regions and coverage; an emitted descriptor targets one and may contain only stable included axes.
+This is a processing-completeness contract, not an instruction to emit identity, aesthetic, or skin wording. Frame prominence does not set fidelity salience. Exact identity context enters only from user/trusted external provenance, emits only at P0/P1, and remains separate from pixel evidence and generation priors. For a readable fidelity-material person, omitting a broad prior requires sufficient geometry, low drift risk, and a preserved counterfactual. A qualified P0/P1 appearance gestalt emits once, declares intended/protected dimensions, and immediately leads every intended owner-correct control; identity context is always protected. Displayed skin has independent priority and scope, names matching Color/Tone regions when material, and never substitutes for geometry or demographic identity.
 
 ### Optional Color/Tone Contract schema
 
@@ -510,10 +559,12 @@ Every listed lighting claim is represented exactly once in `emitted_controls`. A
 - Does every P0/P1 finding name a visible change counterfactual and causal control requirement?
 - Are P2 findings compressed and P3/non-material topics grouped rather than exhaustively analyzed?
 - Does the integrated order reflect what a viewer would notice and miss first, independent of lane report length?
-- Can face, displayed skin, space, clothing, pose, topology, light, color, or capture become P0/P1 when the source makes it identity-bearing?
-- For a material human, does the compact appearance signature retain the source-supported broad visual prior when needed, authoritative local geometry, stable displayed-skin axes, and only material hair/expression/capture cues?
-- Is a broad person prior non-identifying and immediately corrected by local geometry, with generic attractiveness unable to replace or override it?
+- Can face, displayed skin, space, clothing, pose, topology, light, color, or capture become P0/P1 when the source makes it signature-bearing?
+- Does each material human separate externally sourced identity context, non-identifying person prior, displayed-skin surface, and appearance gestalt, assigning each its own priority?
+- Is exact race, ethnicity, nationality, or other protected identity omitted unless supplied by the user or trusted metadata, and emitted once only when P0/P1?
+- Is a broad person prior immediately corrected by local geometry, while a material person-aesthetic anchor leads only its declared intended controls and preserves protected dimensions?
 - Does each P0/P1 effect appear once, while incidental inventory and generic quality/style language remain subordinate?
+- Is every final clause self-contained after removing the source image, analysis records, and conversation, with internal provenance labels compiled into literal visual targets?
 - Is there exactly one compact critic pass, no rerun for advisories, and at most one targeted repair or one affected-lane reroute for a true route/source failure?
 - Are runtime and report-size metrics recorded separately from prompt, pixel, and user-judgment evidence?
 
@@ -522,6 +573,8 @@ Every listed lighting claim is represented exactly once in `emitted_controls`. A
 Review the standalone prompt with the source visible and score distinct questions:
 
 - Does the first-order proposition survive without the source image?
+- Does the literal prompt avoid unresolved internal provenance terms and instructions to match, preserve, or infer an attached/source/reference/input/provided/original image?
+- Are ordinary scene uses such as `light source` and self-contained verbs such as `the lower half remains outside the frame` preserved rather than rejected by a broad word blacklist?
 - Are primary invariants expressed affirmatively at their source-relative strength?
 - Are flexible dimensions allowed to vary without becoming primary locks?
 - Does each semantic slot have one owner rather than repeated synonymous emphasis?
@@ -529,23 +582,29 @@ Review the standalone prompt with the source visible and score distinct question
 - Are delegated lane reports genuinely clean-context, while sequential fallback is disclosed as non-independent?
 - Does integration dispose every finding and atomic obligation once, bind every retained obligation through `source_obligation_ids`, preserve result direction and role, adjudicate conflicts, and pass an independent coverage critic before prompt freeze?
 - Does each generic emitted claim terminate in one literal control, and have synonymous cross-slot pulls been merged into one source-relative aggregate effect?
-- Does each orientation-bearing subject use `spatial-orientation/v4`, with human torso, head/body, shoulder, and attention subaxes present even when they are non-emitted?
+- Does each orientation-bearing subject use `spatial-orientation/v5`, with human torso, head/body, shoulder, and attention subaxes present even when they are non-emitted?
 - Does every spatial decision link to subject-owned structured cues, with frame-placement evidence excluded as the sole basis for orientation?
+- Does every `flexible` or `not-material` decision pass an isolated dimension-neutralization test with adjacent spatial relations held fixed, rather than relying on a free-form assertion that variation is minor?
+- Are low-confidence or wholly confounded axes marked uncertain unless an invariant coupled effect preserves their joint source-visible result?
 - Does each human have both whole-orientation and viewpoint-held residual-alignment counterfactuals, naming what changes, remains preserved, or is uncertain without preferring asymmetry?
 - When individually weak cues jointly matter, does one coupled effect preserve their visible result direction while its member decisions remain non-emitted as separate paths and physical attribution may remain confounded?
 - Does every invariant coupled effect state a source-relative macro summary first, assess that summary against every coupled member exactly once, and retain a literal residual subclause for each `partial` or `lost` member inside the same control?
 - Does a `sufficient` summary avoid unnecessary residual detail, while a `lossy` or `uncertain` summary names exactly the at-risk members without inventing unsupported physical attribution?
 - Does every material coupled effect pass a source-consistent net-effect audit and appear after camera/scale but before non-spatial face, hair, body-form, and clothing controls?
 - Does each invariant spatial decision reach one relation/effect/claim/control path under one causal control axis, while every non-invariant decision remains non-emitted?
+- Does every exact emitted spatial clause have one complete explicit/implicit prompt-effect audit, with all affected decisions source-owned and a `source-consistent` verdict?
+- Has the raw-source critic treated neutral-looking alignment language as positive multi-axis actuation and caught synonymous effects omitted from the structured audit?
 - Are placement, principal axis, viewpoint, part-whole pose, attention, and cross-component orientation kept distinct without selecting a preferred direction?
 - Do material frame bias, principal-axis offset, edge contact, and partial-layer completion budgets remain source-relative rather than defaulting to centered completion?
 - Does every material placement and orientation clause agree with the recorded component, head/body, shoulder, gaze, and frame relations rather than importing a neutral alignment?
 - Is frame placement wording limited to position and frame share, with a material pose relation stated before face, hair, and garment inventory?
 - Do hair and garment clauses preserve the recorded side visibility and depth relation instead of supplying pose evidence or restoring bilateral symmetry?
 - If a broad human generation prior is emitted, is its provenance recorded, non-identifying, and kept contiguous with separately actuated visible geometry that immediately corrects it instead of letting the prior act as the likeness description?
-- Does every routed human separate frame prominence, fidelity salience, user/trusted identity context, generation approximation, person-prior drift risk, geometry sufficiency, omission counterfactual, and skin handling?
+- Does every routed human use `human-appearance/v3` to separate frame prominence, fidelity salience, external identity context/use/output priority, person prior, appearance gestalt/effect budget, and displayed-skin handling?
+- Can no pixel-derived identity claim emit, and does each external identity claim have user/trusted provenance, P0/P1 priority, one subject-owned claim/control, and no `generation_prior`?
 - For readable fidelity-material appearance, does omission have sufficient emitted form geometry, low default-drift risk, and a preserved counterfactual—or remain explicitly uncertain?
-- If skin is material, are visibility/coverage and matching Color/Tone regions recorded instead of inferred from demographic identity?
+- If an appearance gestalt emits, is it high/medium-confidence P0/P1 with a material-drift omission counterfactual, one summary, immediate decomposition, complete intended-dimension coverage, owner-correct controls, and identity always protected?
+- If skin is material, are viewer priority, source-visible scope, visibility/coverage, stable axes, and matching Color/Tone regions recorded as displayed surface instead of demographic or biological identity?
 - Are intrinsic properties separated from pose/deformation, perspective, lighting/shadow, material interaction/occlusion, and processing?
 - Are intrinsic surface color, illumination, global cast, and exposure kept distinct?
 - When color or tone is material, are value, chroma, hue, tone-zone response, processing, and neutral-anchor confidence represented at source-relative strength?
@@ -603,11 +662,16 @@ When comparing a source and render, include multiple analyst-selected patches fr
 
 Include held-out causal pairs spanning materially different subjects and media:
 
+- prompts containing internal labels such as `source-relative` or `source-visible` versus prompts that spell out the same viewer-relative direction, part relation, displayed surface, or illumination result
+- explicit missing-artifact instructions such as `match the reference` or `preserve the original pose` versus self-contained `keep`, `preserve`, `remain`, and `stay` clauses whose subject and state are fully named
+- physical scene uses of `light source` versus `source image` or an unresolved bare `source`, so the output gate enforces the semantic boundary rather than banning a useful noun
+
 - the same intrinsic surface under different illumination
 - different intrinsic surfaces under comparable illumination
 - similar hue with changed exposure, chroma, or tone curve
 - the same local form contrast at different displayed key levels
 - the same displayed key level with different bright-plane coverage or shadow floor
+- similar shadow darkness with different spatial footprint or gradient extent
 - local colored illumination versus a global cast or palette shift
 - low saturation versus simple underexposure
 - monochrome, flat-color, mixed-light, photographic, and non-photographic sources
@@ -632,6 +696,7 @@ Include held-out causal pairs spanning materially different subjects and media:
 - source-side-A oblique, source-side-B mirrored oblique, and source-frontal orientation cases, all without a direction default
 - readable versus partial or indistinct humans where non-visible pose dimensions remain non-emitted
 - camera-elevation changes with head pitch held fixed, and head-pitch changes with camera elevation held fixed
+- low camera elevation with centered versus source-offset subject axes, so elevation cannot stand in for subject-to-frame or gaze alignment
 - whole-orientation neutralization versus viewpoint-held residual alignment, including a strong viewpoint with subtle but jointly material pose cues
 - head/body yaw, pitch, roll, and lateral-offset changes with the adjacent axes held fixed
 - individually weak torso, head/body, shoulder, silhouette, and depth cues whose coupled result is material, versus the same cues whose joint result remains neutral
@@ -643,13 +708,16 @@ Include held-out causal pairs spanning materially different subjects and media:
 - complete versus partial secondary layers with otherwise similar medium contrast
 - one-boundary versus multi-boundary objects, garments, UI containers, and architecture, including reordered, merged, and missing boundary components
 - a broad person prior adjacent to its linked geometry versus the same controls separated or reversed in prompt order
-- a provenance-bound broad person or attractiveness cue versus no aggregate cue, while local geometry remains authoritative in both arms
+- a provenance-bound broad person or person-aesthetic cue versus no aggregate cue, while local geometry remains authoritative in both arms
 - readable-secondary/fidelity-primary people with low versus high default-drift risk, sufficient versus insufficient geometry, and preserved versus material-drift omission counterfactuals
-- the same broad person reading under different lighting, different broad readings with similar skin axes, and the same person under different portrait-production aesthetics
+- identical pixels with absent, user-supplied, and trusted identity context; the same displayed-skin axes across different external identities; and different displayed-skin axes under the same external identity
+- the same person aesthetic with different pose or lighting, and the same local geometry with different hair, cosmetic visibility, garment coverage, or capture treatment
+- effect budgets with one intended dimension changed at a time, plus attempts to leak into protected identity, pose, crop, age presentation, garment, skin, light/color, or polish dimensions
 - material, not-material, not-visible, and uncertain skin decisions across unrelated human compositions and coverage states
 - scoped displayed-tone controls for one region, declared region groups, and global response with protected bright/dark regions
 - spatially uniform dark/light surfaces versus the same displayed value with a primary regional Light/Form separation, including reversed prompt order
 - ordinary generic, portrait, product, document/UI, and non-photographic routes with lane coverage, merge-loss, conflict, critic, and sequential-fallback fixtures
+- prompt routes where a P0/P1 Light/Form handoff target is present versus absent, including required-module mismatch and a successful one-reroute closure
 - the same non-human material with regional light-to-form separation versus spatially uniform illumination
 - one-axis lighting changes that keep the other axes fixed, especially edge softness versus local form contrast and displayed key versus bright-plane coverage
 - compatible, conflicting, inconclusive, missing-candidate, and stale-generator-calibration label cases

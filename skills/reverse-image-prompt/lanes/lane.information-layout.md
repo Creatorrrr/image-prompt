@@ -1,6 +1,6 @@
 ---
 id: lane.information-layout
-version: 3
+version: 4
 priority: 75
 activation: matched
 select_types: []
@@ -37,7 +37,7 @@ Read only the raw request, intent mode, exact source artifact and hash, route fi
 
 ## Output contract
 
-In `prompt`, return `reverse-image-analysis-lane-report/compact-v1` with only P0/P1 container hierarchy, reading order, legibility, or nested-boundary findings; compress supporting structure and group unreadable or incidental detail. In `audited`, return `reverse-image-analysis-lane-report/v2` with atomic layout obligations. Never transcribe unreadable content or write final prose.
+In `prompt`, return `reverse-image-analysis-lane-report/compact-v2` with only P0/P1 container hierarchy, reading order, legibility, or nested-boundary findings; mark a coupled macro finding with summary adequacy and only at-risk residuals, compress supporting structure, and group unreadable or incidental detail. In `audited`, return `reverse-image-analysis-lane-report/v2` with atomic layout obligations. Never transcribe unreadable content or write final prose.
 
 ## Completion gate
 

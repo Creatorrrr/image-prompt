@@ -1,6 +1,6 @@
 ---
 id: subject.human
-version: 19
+version: 22
 priority: 82
 type: subject
 tier: 2
@@ -50,30 +50,30 @@ In `prompt`, record only P0/P1 entries from this hierarchy before micro-detail; 
 
 Allocate detail by legibility; keep distant, blurred, reflected, screen-contained, or background people simple.
 
-In `prompt`, preserve one macro pose result and only decisive residual relations when pose is P0/P1. In `audited`, link every pose decision to cues/confounders, compare whole with viewpoint-held residual neutralization, and apply coupled-member summary coverage.
+In `prompt`, preserve one macro pose result and decisive residuals when pose is P0/P1. Alignment semantics can jointly actuate torso, head/body, shoulder, attention, placement, and viewpoint; inspect every clause's explicit and implicit effects. In `audited`, link decisions to cues/confounders, test each discarded axis in isolation, compare whole with viewpoint-held residual neutralization, cover coupled members, and reject clauses affecting non-invariant or uncertain axes.
 
-Before appearance prose, build a compact appearance signature in `prompt`; create one `human-appearance/v2` decision per spatial human only in `audited`. Distinguish occlusion from crop in either profile.
+Before appearance prose, build a compact appearance signature in `prompt`; create one `human-appearance/v3` decision per spatial human only in `audited`. Distinguish occlusion from crop in either profile.
 
 ## Visible appearance
 
 Describe each non-identifying fictional person coarse-to-fine: use one compact broad person-gestalt anchor when it materially reduces ambiguity, then constrain it with visible geometry and source-specific corrections.
 
-For `prompt`, select only source-material fields from broad visual prior, local face/body geometry, displayed skin axes and finish, hair boundary, expression/gaze, and capture treatment. A field earns detail only when changing it would alter P0/P1 or when model-default drift is high.
+For `prompt`, decide four lanes independently: externally sourced identity context, optional non-identifying person prior, displayed-skin surface, and optional appearance gestalt. A field earns detail only when it is P0/P1 or has high model-default drift.
 
 ### Broad person-gestalt anchor
 
-- Frame prominence measures image size/attention; fidelity salience measures whether changing this person's reading changes reconstruction. A readable secondary figure may be fidelity-primary.
-- Keep factual identity context `user-supplied`, `trusted-metadata`, or `absent`. Image-derived broad appearance is only a non-identifying, source-visible generation approximation; never infer nationality or exact ethnicity.
-- Set the person prior to `emit`, `omit`, or `uncertain`. In `prompt`, record candidate support, default-drift risk, geometry sufficiency, and one omission counterfactual only when that decision is P0/P1. In `audited`, also record the full claim bindings.
-- For readable fidelity-material appearance, omit only when separate emitted form geometry is sufficient, default drift risk is low, and omission preserves the source reading. Unsupported high-risk cases remain uncertain rather than forcing a demographic guess.
-- An emitted `generation_prior` carries provenance and matching human/face/body-form controls. Keep them contiguous so geometry corrects the anchor; skin color cannot justify it.
-- If attractiveness materially carries the gestalt, use an optional `generation_prior` with scope `attractiveness`. Retain it once with P0/P1 source evidence and material-drift omission, then constrain it with geometry, asymmetry, grooming, skin/makeup, capture, crop, and scale. It cannot authorize retouching, idealization, relighting, or a closer portrait.
+- Frame prominence measures image size/attention; fidelity salience measures reconstruction impact. A readable secondary figure may be fidelity-primary.
+- Keep exact race, ethnicity, nationality, or other identity context `user-supplied`, `trusted-metadata`, or `absent`. Emit externally sourced context once only when its viewer priority is P0/P1; never derive or corroborate it from pixels, skin, hair, face geometry, or aesthetic reading.
+- Set the non-identifying person prior to `emit`, `omit`, or `uncertain`. Record support, default-drift risk, geometry sufficiency, and one omission counterfactual. Omit only when emitted form geometry is sufficient, drift risk is low, and the source reading survives; never force a protected-category guess.
+- An emitted person prior carries provenance and matching human/face/body-form controls. Keep them contiguous so visible geometry corrects the anchor; skin and identity context cannot justify it.
+- Decide a separate appearance gestalt for attractiveness or another broad person aesthetic. Emit one high/medium-confidence P0/P1 anchor only when omission causes material drift. Declare intended and protected dimensions, then immediately decompose every intended dimension into an owner-correct face, body, hair, expression, displayed-skin, garment, pose, scale, capture, light, or color control. Identity context is always protected; unowned dimensions cannot change.
+- Keep the appearance anchor source-relative in analysis but emit only the visible presentation; never emit `source-relative` or a missing-image comparison. It cannot silently idealize, retouch, relight, reveal clothing, change cosmetics, alter pose/crop/scale/age presentation, or upgrade capture; those directions require their own source evidence and ownership.
 
 After the optional anchor, prioritize source-specific corrections:
 
 - Describe broad apparent age presentation or gender presentation only when visually important and sufficiently supported.
 - Treat hair first as silhouette and occlusion: hairline, part, fringe, side masses, length, texture group, volume, flyaways, and which facial regions it covers.
-- Set visible skin to `material`, `not-material`, `not-visible`, or `uncertain`. When material, name its Color/Tone regions and `exposed`, `through-sheer`, or `mixed` coverage. A descriptor may combine stable current-source axes while omitting unresolved ones; describe only legible tone, finish, texture, marks, makeup, facial hair, and retouching.
+- Set displayed skin to `material`, `not-material`, `not-visible`, or `uncertain` with its own P0-P3 priority. When material, name its Color/Tone regions, observation scope, and `exposed`, `through-sheer`, or `mixed` coverage. Describe stable visible value, chroma, undertone, finish, texture, marks, makeup, facial hair, and retouching as captured surface output, never identity or biological color.
 
 Prevent the generated person from drifting into a different visible face type.
 Check portrait prompts for aesthetic-upgrade drift.
@@ -83,7 +83,7 @@ Check portrait prompts for aesthetic-upgrade drift.
 Describe only visible image-plane structure shaped by pose, crop, clothing, lens perspective, light, shadow, blur, and occlusion. Do not infer hidden anatomy.
 
 - First decide whether visible body form is a primary aesthetic invariant, a structural connector, or secondary support. Do not allocate detail merely because a body region is large in the crop.
-- Preserve source-relative shoulder span, torso length, waist and hip placement, limb thickness, contour rhythm, stance, and clothing-shaped silhouette only to the degree visible. A garment boundary neither proves nor erases pose supported by independent contours or depth cues.
+- Preserve visible shoulder span, torso length, waist and hip placement, limb thickness, contour rhythm, stance, and clothing-shaped silhouette. Compare them source-relatively in analysis but state actual proportions and relations in final prose. A garment boundary neither proves nor erases pose supported by independent contours or depth cues.
 - Separate anatomical proportion from near-camera enlargement, foreshortening, pose compression, garment pressure, and light/shadow shaping. Do not convert a bright edge or dark groove into unsupported anatomy.
 - Keep the torso, pelvis, and center of mass in the source-visible spatial zone; do not let a contact pose silently relocate the person across a barrier, edge, opening, or support surface.
 - Preserve a clearly visible large-scale body silhouette without exaggeration or reduction.
@@ -103,7 +103,7 @@ Describe only visible image-plane structure shaped by pose, crop, clothing, lens
 
 ## Prompt contribution
 
-Order human controls by cross-lane viewer priority, while preserving dependencies: scale/crop and camera before a material pose result; any broad prior immediately before correcting local geometry; then material skin/surface, hair, expression, and capture. In `audited`, coupled pose controls retain the macro summary and only `partial` or `lost` residuals. Placement stays positional and appearance inherits pose.
+Order human controls by cross-lane priority while preserving dependencies: scale/crop and camera; material pose; one P0/P1 external identity context; any broad person prior with correcting geometry; one appearance gestalt with its contiguous owned decomposition; then remaining displayed skin, hair, expression, garment, light/color, and capture controls. In `audited`, coupled pose controls retain the macro summary and only `partial` or `lost` residuals, and every spatial control carries a complete explicit/implicit effect audit against the final literal excerpt. Placement stays positional and appearance inherits pose.
 
 For multiple people, describe each person separately by frame role and do not blend their face, hair, clothing, pose, or lighting anchors.
 

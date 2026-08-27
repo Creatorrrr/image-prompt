@@ -1,6 +1,6 @@
 ---
 id: lane.spatial-topology
-version: 4
+version: 6
 priority: 90
 activation: matched
 select_types:
@@ -39,10 +39,10 @@ Read only the raw request, intent mode, exact source artifact and hash, route fi
 
 ## Output contract
 
-In `prompt`, return `reverse-image-analysis-lane-report/compact-v1`. First decide whether orientation or topology is P0/P1. If it is, report the macro visible result and only the decisive placement, direction, depth, contact, boundary, occlusion, or completion relations needed to preserve it. Group non-material axes; do not enumerate a fixed orientation checklist. Hand off appearance, color, and capture questions.
+In `prompt`, return `reverse-image-analysis-lane-report/compact-v2`. First decide whether orientation or topology is P0/P1. If it is, report one macro visible result, then hold the observed viewpoint and crop fixed and test whether that summary preserves the source-visible component-to-subject, subject-to-frame, facing or gaze, depth-order, support, contact, boundary, occlusion, and completion relations that jointly create the read. This is not a fixed checklist: inspect only relations supported by the current source. Mark the macro `sufficient`, `lossy`, or `uncertain`, and retain only decisive P0/P1 at-risk relations that the macro does not carry. Before handoff, treat each alignment-style phrase as a positive control and enumerate every spatial axis it would explicitly or implicitly actuate; never recommend a clause that normalizes an unsupported axis. Hand off appearance, color, and capture questions through the structured compact handoff.
 
 In `audited`, return `reverse-image-analysis-lane-report/v2`, split independently drifting spatial results into atomic obligations, and retain confounded result directions.
 
 ## Completion gate
 
-Dispose every required topic at the profile's depth. In `prompt`, run at most the counterfactual needed to establish P0/P1 materiality; a concise macro pose or topology plus decisive residual relations is sufficient. In `audited`, require whole-orientation and viewpoint-held residual-alignment counterfactuals and full coupled-obligation handling. Hair, garment, and boundaries may corroborate but never replace subject geometry. Never normalize ambiguous axes or complete hidden structure.
+Dispose every required topic at the profile's depth. In `prompt`, run at most the counterfactual needed to establish P0/P1 materiality and the lightweight viewpoint-held summary-adequacy check above; a concise macro pose or topology plus only at-risk residual relations is sufficient. In `audited`, require an isolated per-axis neutralization test for each `flexible` or `not-material` decision, whole-orientation and viewpoint-held residual-alignment counterfactuals, full coupled-obligation handling, and an exact explicit/implicit effect audit for every emitted spatial clause. Low-confidence or wholly confounded axes become `uncertain` unless an invariant coupled effect preserves the joint result. Surface, garment, and boundary cues may corroborate but never replace source geometry. Never normalize ambiguous axes or complete hidden structure.

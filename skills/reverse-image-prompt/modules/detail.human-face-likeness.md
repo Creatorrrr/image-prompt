@@ -1,6 +1,6 @@
 ---
 id: detail.human-face-likeness
-version: 11
+version: 13
 priority: 80
 type: detail
 tier: 3
@@ -42,7 +42,7 @@ Allocate anchor count by visible face scale and legibility, but assign fidelity 
 - **Readable but secondary:** the face is smaller but several feature groups remain reliable. In `prompt`, use one to three decisive anchors; in `audited`, use three to six.
 - **Small or indistinct:** do not use this module. Preserve head orientation, hair mass, skin-tone massing, and visibility only through `subject.human`.
 
-Choose anchors by viewer impact and default-drift risk, never to fill every facial group. A material attractiveness reading is one optional gestalt anchor, never local likeness geometry; bind it to separate visible-geometry anchors.
+Choose anchors by viewer impact and default-drift risk, never to fill every facial group. A material person-aesthetic or attractiveness reading is one optional gestalt anchor, never local likeness geometry; bind each intended effect to a separate visible control.
 
 Use fewer anchors when softness, compression, low contrast, or scale limits separation. Anchors preserve geometry; they do not authorize larger crop, sharper focus, cleaner makeup, extra detail, or a supporting-role downgrade.
 
@@ -52,12 +52,12 @@ An anchor describes a visible relationship, not a generic adjective.
 
 When `subject.human` selects a broad person-gestalt anchor, treat it as one high-level generation prior rather than as the likeness description itself.
 
-- Place it once before local face geometry; do not repeat the racial, ethnic, regional-appearance, or attractiveness category in later clauses.
-- Preserve user/trusted identity only as external context. Treat source-visible broad appearance as a non-identifying generation approximation, never inferred nationality; keep case labels out of runtime defaults and unrelated holdouts.
+- Place it once before local face geometry; do not repeat the broad prior in later clauses.
+- Never infer race, ethnicity, nationality, or another protected identity label from a face. Preserve exact user/trusted identity context once as external intent before the appearance passage when it is P0/P1; it is not visual evidence or a generation prior.
 - Link `geometry_claim_ids` to exact source-visible form controls. Keep them contiguous after the prior so local geometry corrects it. Prose, skin color, or the prior itself cannot satisfy the link.
 - Use the scale-appropriate geometry budget to correct the category prototype with only the source-material face silhouette, feature relationships, expression, hair boundary, surface treatment, and visible asymmetry.
 - If the broad anchor conflicts with reliable local geometry, revise or omit the broad anchor. Geometry wins.
-- Keep attractiveness at the source-visible overall facial reading. State it once only when P0/P1 and omission-sensitive, followed by local geometry; it must not idealize, clean, enlarge, sharpen, or relight the face.
+- Keep a person-aesthetic or attractiveness anchor at the source-visible overall reading during analysis, then express the actual bounded presentation in the final prompt without the internal phrase `source-visible` or another missing-image comparison. State it once only when P0/P1 and omission-sensitive, followed immediately by controls for every intended dimension. Protect identity, pose, crop, scale, age presentation, cosmetics, garment coverage, light, color, and capture treatment unless separately owned; do not idealize, clean, enlarge, sharpen, or relight by implication.
 
 ## Likeness anchor selection
 
@@ -91,12 +91,11 @@ Use relational wording: wider than, closer together, higher than, partly hidden 
 
 Create one compact human-likeness passage at the position assigned by viewer priority:
 
-1. optional one-sentence person-gestalt anchor
-2. face scale, angle, crop, and visible side
-3. the selected likeness anchors in source hierarchy
-4. expression and gaze
-5. hair silhouette and occlusion
-6. skin/makeup/rendering and facial lighting only when material
+1. optional P0/P1 external identity context, once
+2. optional person prior, then face scale, angle, crop, visible side, and correcting geometry
+3. optional appearance gestalt and its owned decomposition
+4. remaining expression, gaze, hair silhouette, and occlusion
+5. displayed skin, makeup, rendering, and facial lighting only when independently material
 
 Treat the passage as one owned face-gestalt effect when its clauses jointly preserve one likeness direction. If separate clauses push the same symmetry, feature scale, projection, polish, or face-type direction, merge or replace them rather than allowing the category anchor and local geometry to amplify one another.
 
