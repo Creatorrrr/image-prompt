@@ -1,6 +1,6 @@
 ---
 id: core.frame-coordinates
-version: 12
+version: 13
 priority: 108
 type: core
 tier: 0
@@ -31,13 +31,12 @@ Always.
 
 ## Source frame
 
-- Inspect the exact file dimensions when available and record them internally as source metadata.
+- Record exact source dimensions when available.
 - Treat aspect-ratio drift as a major fidelity failure.
-- Separate source dimensions from the requested target size. Never assume the source pixel dimensions are accepted by the target generator.
-- Preserve the measured ratio in plain language such as `narrow portrait`, `wide landscape`, or `source-specific portrait ratio`; add a decimal ratio only when it helps distinguish nearby shapes.
+- Keep source dimensions separate from target size; do not assume generator support.
+- Preserve measured ratio in plain language; add a decimal only to distinguish nearby shapes.
 - Do not invent exact dimensions from a viewer preview.
-- Put frame shape, crop, subject scale, and edge interactions before small object detail.
-- Lock subject frame share and negative-space share before adding face or object micro-detail.
+- Put frame shape, crop, and edge interactions first. Lock subject frame share and negative-space share before adding face or object micro-detail.
 - Describe which evidence occupies the frame zones, including any material source-visible axis offset.
 
 ## Major-region hierarchy
@@ -48,17 +47,15 @@ Preserve region-share hierarchy when flexible pose, viewpoint, or placement chan
 
 ## Spatial language
 
-In `prompt`, first decide whether spatial orientation is P0/P1. If so, preserve one macro visible result plus only decisive placement, viewpoint, pose, and cross-component relations; group non-material axes. Placement proves no orientation. Centered may be oblique and offset may be frontal.
+In `prompt`, when orientation is P0/P1, emit one macro result plus decisive residual relations. Placement proves no orientation. Treat alignment semantics as positive controls; enumerate every axis each exact clause affects explicitly or implicitly.
 
-In `audited`, disposition every material placement, principal axis, viewpoint, cross-component orientation, and human pose axis. For humans test whole orientation, then residual pose with viewpoint fixed; merge jointly material weak axes once.
+In `audited`, disposition every spatial axis. `flexible` or `not-material` requires isolated neutralization with adjacent relations held; low-confidence or wholly confounded axes become uncertain unless coupled. Run both human counterfactuals, merge joint effects once, and block a spatial clause affecting any unowned axis.
 
 ## Relational coordinate frames
 
-- Use frame-relative directions for composition and object- or scene-relative zones for physical relationships.
-- Do not let `left`, `right`, `front`, or `behind` stand alone when viewpoint changes could reverse the intended side of a barrier, opening, surface, or container.
+- Use frame-relative directions for composition and object- or scene-relative zones for physical relationships. Qualify `left`, `right`, `front`, or `behind` when viewpoint could reverse them.
 - Establish a visible shared reference plane when it disambiguates the scene: floor, ground, seat, platform, tabletop, interior volume, or another support region.
-- Record which side of a boundary contains the subject's main mass and which parts, if any, cross, overlap, or remain on the other side.
-- Separate apparent 2D overlap from 3D contact, containment, weight support, and depth ordering.
+- Record which side of a boundary holds the main mass and which parts cross it. Separate 2D overlap from contact, containment, support, and depth order.
 - Prefer a stable natural-language relation over extra coordinates. Coordinates lock placement in the frame but cannot by themselves establish physical topology.
 
 Use normalized coordinates only for concept-critical anchors.

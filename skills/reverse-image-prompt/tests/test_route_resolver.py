@@ -304,7 +304,11 @@ class RouteResolverTests(unittest.TestCase):
         self.assertEqual(orchestration["supported_profiles"], ["prompt", "audited"])
         self.assertEqual(
             orchestration["prompt_report_schema"],
-            "reverse-image-analysis-lane-report/compact-v1",
+            "reverse-image-analysis-lane-report/compact-v2",
+        )
+        self.assertEqual(
+            orchestration["prompt_set_schema"],
+            "reverse-image-analysis-compact-set/v2",
         )
         self.assertEqual(
             orchestration["audited_bundle_schema"],
@@ -334,7 +338,7 @@ class RouteResolverTests(unittest.TestCase):
         self.assertTrue(
             all(
                 lane["report_schema"]
-                == "reverse-image-analysis-lane-report/compact-v1"
+                == "reverse-image-analysis-lane-report/compact-v2"
                 for lane in route["lanes"]
             )
         )

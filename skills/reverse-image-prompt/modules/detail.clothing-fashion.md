@@ -1,6 +1,6 @@
 ---
 id: detail.clothing-fashion
-version: 8
+version: 9
 priority: 78
 type: detail
 tier: 3
@@ -46,48 +46,33 @@ Assign each visible garment or accessory a material role: primary subject, silho
 
 Route selection does not entitle clothing to prompt space. Cap material and construction detail to the garment's hierarchy role; a framing or supporting garment must not receive more semantic emphasis, sharpness, or completion than the primary invariant.
 
-In `prompt`, first decide whether garment silhouette, coverage boundary, or material response is P0/P1. If none is, contribute at most one P2 cue and stop; do not run the construction or completion inventory. Use the fuller inventory only for audited evidence or when clothing itself is source-signature-critical.
+In `prompt`, first decide whether silhouette, coverage, or material response is P0/P1. Otherwise contribute at most one P2 cue; reserve the inventory for audited or clothing-critical work.
 
-- fit, visible thickness and weight, opacity/transparency, stiffness/looseness
-- fabric tension, wrinkles, folds, material sheen, pattern scale
-- weave or knit scale, nap, grain, coating, reflectivity, and edge behavior only where legible
-- neckline depth/width, collar, shirt opening, sleeve opening, strap position
-- seams, waist seam, under-bust seam if visible, buttons, lace, closures, hems
-- garment-layer interactions; edges may corroborate but never replace owned pose
+- fit, thickness/weight, opacity, stiffness, tension, folds, sheen, and pattern scale
+- legible weave, nap, grain, coating, reflectivity, and edge behavior
+- neckline/collar/opening, sleeve/strap, seams/closures/hems, and layer interaction; garment edges never replace owned pose
 
 Before using a garment category label, specify the visible opacity, thickness, weight, weave or knit scale, finish, and construction cues that must override its default prior. Omit dimensions that cannot be seen; the point is to disambiguate the material, not to fill a fabric checklist.
 
-Create a coverage map when placement matters. Preserve material boundary components and region relations rather than collapsing them to a category:
-
-- which image regions are skin
-- which regions are fabric
-- which regions are shadow-hidden
-- which regions are cropped away
-- which garment edges are interrupted, softened, shadowed, blurred, or blocked
+When placement matters, map skin, fabric, shadow-hidden, and cropped regions plus interrupted or softened garment edges; preserve boundary components instead of collapsing them to a category.
 
 Treat close upper-torso edges as measured boundary bands, not fashion labels. Lock neckline/garment-edge width, lowest y-position, visible skin/underlayer area above and below it, sleeve/shoulder fabric area, and bottom crop.
 
-Avoid broad labels such as `off-shoulder`, `low neckline`, `camisole`, `dress`, `lingerie`, `corset`, `crop top`, or `fashion portrait` if their category prior would deepen, widen, clarify, center, tighten, reveal, structure, or glamorize the garment beyond the source. Category labels follow geometry and material role; they do not define them.
+When a person-aesthetic anchor is retained, garment coverage remains an independent dimension. Include it in the anchor's intended effect budget only with P0/P1 source evidence and this module's owned boundary control; otherwise protect it. The anchor cannot imply a deeper opening, fitted bodice, different sleeve, changed opacity, or altered exposure.
 
-For bottom-edge or side-edge clothing/body crops, distinguish a narrow visible band from a completed outfit or body region. If the source only shows a hem, waistband, partial pocket, side edge, lower garment strip, or crop-boundary gap, describe it as a bounded edge band with height/area and nearby anchors. Avoid wording that invites centered body construction, full pockets, completed legs, or a wider exposed/covered band than the source.
+Avoid broad fashion or garment labels when their prior would deepen, widen, clarify, center, tighten, reveal, structure, or glamorize beyond the source. Category follows geometry and role.
 
-For accessories such as chokers, collars, necklaces, straps, lace trim, bows, patches, pins, bags, or jewelry, describe only visible silhouette, density, low-legibility, shadow, and occlusion. Do not upgrade them into crisp ornate symmetrical fashion accessories unless visible.
+For edge crops, distinguish a narrow visible band from a completed outfit or body. Describe partial hems, waistbands, pockets, or gaps by bounded height/area and nearby anchors; do not invite centered completion or wider exposure.
 
-For straps, bags, chains, handles, and edge-adjacent accessories, lock footprint and crop before material detail. If the accessory is secondary or partly outside the frame, keep it partial, low-detail, and edge-bound in affirmative prompt language rather than relying only on the negative prompt.
+For accessories, lock visible silhouette, footprint, crop, density, shadow, and occlusion before detail. Keep secondary or edge-cropped pieces partial and low-legibility; do not upgrade them into crisp, complete, symmetrical ornament.
 
-For close portraits or tight human crops where clothing is secondary below the face, create a secondary garment completion budget before using broad fashion labels:
+For tight portraits with secondary clothing, budget visible garment bands, frame range, completeness, interruptions, symmetry, and lower-torso extent before a broad label. Keep compressed or unclear construction unresolved.
 
-- visible garment bands and approximate frame ranges
-- whether collar, neckline, tie, ribbon, scarf, vest, jacket, sleeve, trim, button, patch, strap, or accessory is complete, partial, folded, cropped, occluded, or low-legibility
-- which garment parts are interrupted by chin, hair, hand, prop, shadow, blur, or bottom crop
-- whether symmetry, openings, knots, edges, seams, and trim should remain compressed or unclear instead of becoming clean outfit construction
-- how much lower torso is visible before the prompt would turn a close portrait into a fashion, costume, or uniform study
-
-Do not let secondary formal, uniform-like, costume-like, layered, or accessory-heavy clothing become a clean centered outfit view when the source uses it only as cropped lower-frame or side-frame bands. Use clothing category labels only after locking incomplete garment geometry, and keep the clothing secondary when the face, hand, prop, or crop is the real visual anchor.
+Do not let cropped secondary clothing become a clean centered outfit. Lock incomplete geometry before category language and preserve its supporting role.
 
 ## Optional negative contribution
 
-Reject wrong neckline depth/width, strap position, sleeve position, seam placement, hem shift, deeper openings, larger exposed skin bands, tighter/looser fabric, more structured/corseted/lingerie-like garment, more revealing or more modest clothing, completed hidden garment regions, cleaner fashion-editorial styling, and accessory enlargement or sharpening. For secondary clothing in close portraits, reject complete centered outfit views, overly symmetrical collars/necklines, clarified knots/openings/trim/buttons/patches, and lower torso expansion when the source clothing is cropped, compressed, occluded, or low-detail.
+Reject wrong neckline, strap, sleeve, seam, hem, fit, opacity, exposure, completed hidden regions, cleaner fashion styling, enlarged accessories, centered outfit completion, clarified low-legibility construction, or expanded lower torso.
 
 ## Optional settings contribution
 

@@ -1,6 +1,6 @@
 ---
 id: lane.global-composition
-version: 3
+version: 4
 priority: 100
 activation: always
 select_types:
@@ -32,7 +32,7 @@ Read only the raw request, intent mode, exact source artifact and hash, route fi
 
 ## Output contract
 
-In `prompt`, return `reverse-image-analysis-lane-report/compact-v1`: one primary viewer read, only P0/P1 proposition, frame/crop, and major-region findings, compact P2 support, and grouped P3/non-material topics. Use a change counterfactual only to decide whether a region or crop is identity-bearing. Propose controls, not prompt prose.
+In `prompt`, return `reverse-image-analysis-lane-report/compact-v2`: one primary viewer read, only P0/P1 proposition, frame/crop, and major-region findings, compact P2 support, and grouped P3/non-material topics. Use a change counterfactual only to decide whether a region or crop is identity-bearing. Mark any coupled macro finding with summary adequacy and only at-risk residuals. Propose controls, not prompt prose.
 
 In `audited`, return `reverse-image-analysis-lane-report/v2` and split material frame, crop, and region-hierarchy results into independently drifting atomic obligations.
 

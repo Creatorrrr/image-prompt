@@ -1,6 +1,6 @@
 ---
 id: core.visual-evidence
-version: 8
+version: 10
 priority: 110
 type: core
 tier: 0
@@ -26,9 +26,10 @@ Always.
 
 ## Rules
 
-- Never refer to the source image in the final prompt. The prompt must remain usable after the image is removed.
+- Never refer to the source image in the final prompt.
+- Compile `source-*` and `current-source` provenance labels into literal visible targets before emission.
 - Describe visible evidence only; do not invent hidden structure or context.
-- Do not assert identity, nationality, exact ethnicity, religion, personality, measurements, metadata, brands, artists, cameras, lenses, or film stocks from appearance. When `subject.human` permits one broad racial, ethnic, regional-appearance, or attractiveness category as a generation-oriented visual prior, treat it as a non-identifying approximation rather than a factual identity claim.
+- Do not assert identity, nationality, race, exact ethnicity, religion, personality, measurements, metadata, brands, artists, cameras, lenses, or film stocks from appearance. Exact demographic or nationality context may enter only from a user statement or trusted metadata and remains externally sourced; pixels support non-identifying form, hair, displayed-surface, and aesthetic evidence rather than a protected-category claim.
 - Distinguish absence from uncertainty. Use `absent` only when the frame supports it; otherwise use visual descriptions such as `hidden`, `cropped out`, `indistinct`, `shadow-obscured`, or `low-legibility`.
 - Keep epistemic qualifiers in analysis. In the final prompt, describe the visible ambiguity rather than repeatedly saying `appears`, `likely`, or `possibly`.
 - In `faithful` mode, preserve visible softness, compression, blur, exposure problems, asymmetry, awkward crop, partial elements, and edge artifacts.

@@ -74,7 +74,7 @@ MANDATORY_FALLBACKS = {
 }
 MAX_NON_CORE_MODULES = 8
 ANALYSIS_PROFILES = {"prompt", "audited"}
-PROMPT_REPORT_SCHEMA = "reverse-image-analysis-lane-report/compact-v1"
+PROMPT_REPORT_SCHEMA = "reverse-image-analysis-lane-report/compact-v2"
 AUDITED_REPORT_SCHEMA = "reverse-image-analysis-lane-report/v2"
 
 

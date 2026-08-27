@@ -1,6 +1,6 @@
 ---
 id: core.output-contract
-version: 22
+version: 24
 priority: 98
 type: core
 tier: 0
@@ -47,6 +47,8 @@ PROMPT:
 
 Write a standalone English prompt ordered first by viewer importance, then by the dominant fidelity axis:
 
+- Compile provenance labels into literal targets; never ask for an unavailable artifact. Physical `light source` remains valid.
+
 - Put P0 source-signature controls first, followed by P1 structural identity.
 - Merge P2 support into an owned clause or one short later cue; omit P3 unless the user requests it.
 
@@ -77,7 +79,7 @@ Use compact blocks without a fixed cap; every clause adds a control. Keep essent
 
 For a high-salience look, put one supported source-specific Appearance or Aesthetic Signature before inventory; for a neutral look, use one or two cues. Preserve only material major-region area, role, edge contact, legibility, and attention.
 
-When face likeness is selected, order one scale-appropriate passage as optional broad visual or attractiveness prior, correcting geometry, material skin, hair, expression, and capture. An attractiveness anchor may carry the overall reading once but cannot replace geometry or raise polish. Retain provenance and geometry evidence.
+For a material human, keep user/trusted identity context external and use it once only when P0/P1. Then order one scale-appropriate passage as optional broad person prior, correcting geometry, one bounded person-aesthetic or attractiveness anchor with contiguous owned decomposition, displayed skin, hair, expression, garment coverage, and capture. The aggregate cannot replace controls or alter protected pose, crop, identity, age, lighting, or polish dimensions.
 
 ## NEGATIVE PROMPT
 
@@ -111,4 +113,4 @@ For `diagnostic`, state the source-supported proposition, then its visible causa
 
 ## Final rule
 
-Read `PROMPT:` as if the source image and every optional section disappeared. If the primary proposition, its invariants, crop, required relationship, subject hierarchy, medium, or fidelity ceiling would be lost, revise the prompt itself.
+Read `PROMPT:` as if the source image, analysis, conversation, and every optional section disappeared. If any target or the primary proposition, its invariants, crop, required relationship, subject hierarchy, medium, or fidelity ceiling would be lost, revise the prompt itself.
